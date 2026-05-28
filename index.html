@@ -1,8 +1,1016 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=https://mnt-user-data-outputs.github.io/gerenciador_nfe_completo.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Notas Fiscais</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
+        .header p { color: #666; font-size: 14px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .form-group { margin-bottom: 15px; }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn:hover { background: #5568d3; transform: translateY(-2px); }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background: #d0d0d0; }
+        .btn-danger { background: #ff6b6b; }
+        .btn-danger:hover { background: #ee5a52; }
+        .btn-small { padding: 6px 12px; font-size: 12px; width: auto; margin: 0; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            color: #666;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-size: 14px;
+            margin-bottom: -2px;
+        }
+        .tab-btn.active { color: #667eea; border-bottom-color: #667eea; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .alert-success { background: #d4edda; color: #155724; }
+        .alert-error { background: #f8d7da; color: #721c24; }
+        .alert-info { background: #d1ecf1; color: #0c5460; }
+        .product-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .product-card h3 { color: #333; margin-bottom: 10px; font-size: 15px; }
+        .product-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .product-info-item { display: flex; justify-content: space-between; }
+        .product-info-item label { color: #999; font-weight: 400; margin: 0; }
+        .product-info-item span { color: #333; font-weight: 600; }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-validated { background: #d4edda; color: #155724; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .status-warning { background: #fff3cd; color: #856404; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 15px; }
+        table th { background: #f5f5f5; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; }
+        table td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+        table tr:hover { background: #f9f9f9; }
+        .empty-state { text-align: center; padding: 40px 20px; color: #999; }
+        .btn-group { display: flex; gap: 5px; margin-top: 10px; }
+        .btn-group .btn { flex: 1; margin: 0; padding: 8px; }
+    </style>
 </head>
-<body>Redirecionando...</body>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Gerenciador de Notas Fiscais e Estoque</h1>
+            <p>Sistema integrado com cadastro de produtos (EAN), importação Excel, leitura de PDFs e histórico completo</p>
+        </div>
+        
+        <div class="card">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="abrirAba(event, 'nfe')">Nova NFe</button>
+                <button class="tab-btn" onclick="abrirAba(event, 'pdf-nfe')">Ler PDF como NFe</button>
+                <button class="tab-btn" onclick="abrirAba(event, 'produtos-cadastro')">Cadastro de Produtos</button>
+                <button class="tab-btn" onclick="abrirAba(event, 'import-excel')">Importar Excel</button>
+                <button class="tab-btn" onclick="abrirAba(event, 'nfes-lista')">Notas Fiscais</button>
+                <button class="tab-btn" onclick="abrirAba(event, 'estoque')">Estoque</button>
+                <button class="tab-btn" onclick="abrirAba(event, 'validacoes')">Validações</button>
+            </div>
+            
+            <!-- ABA: NOVA NFE -->
+            <div id="nfe" class="tab-content active">
+                <div class="grid-2">
+                    <div>
+                        <h2>Registrar Nova NFe</h2>
+                        <div id="alertNFe"></div>
+                        
+                        <div class="form-group">
+                            <label>Número da NFe *</label>
+                            <input type="text" id="nfeNumero" placeholder="000000000000001">
+                        </div>
+                        <div class="form-group">
+                            <label>Série *</label>
+                            <input type="number" id="nfeSerie" value="1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Data de Emissão *</label>
+                            <input type="date" id="nfeData">
+                        </div>
+                        <div class="form-group">
+                            <label>Fornecedor *</label>
+                            <input type="text" id="nfeFornecedor">
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Total (R$) *</label>
+                            <input type="number" id="nfeValorTotal" step="0.01" min="0">
+                        </div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px; color: #333; font-size: 16px;">Adicionar Produtos</h3>
+                        <div class="form-group">
+                            <label>Produto *</label>
+                            <select id="nfeProdutoSelect"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade *</label>
+                            <input type="number" id="nfeProdutoQtd" step="1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Unitário (R$) *</label>
+                            <input type="number" id="nfeProdutoValor" step="0.01" min="0">
+                        </div>
+                        <button class="btn btn-secondary" onclick="adicionarProdutoNFe()">+ Adicionar Produto</button>
+                        <button class="btn" onclick="salvarNFe()">✓ Salvar NFe</button>
+                    </div>
+                    <div>
+                        <h2>Produtos Adicionados</h2>
+                        <div id="nfeProdutosLista" style="max-height: 600px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: PDF COMO NFE -->
+            <div id="pdf-nfe" class="tab-content">
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <h2>Registrar NFe via PDF</h2>
+                    <div id="alertPDF"></div>
+                    <div class="form-group">
+                        <label>Selecione arquivo PDF 📄</label>
+                        <input type="file" id="pdfFile" accept=".pdf" onchange="lerPDF()">
+                    </div>
+                    <div id="pdfDados" style="display: none; margin-top: 20px;">
+                        <div class="grid-2">
+                            <div>
+                                <div class="form-group">
+                                    <label>Número NFe *</label>
+                                    <input type="text" id="pdfNumero">
+                                </div>
+                                <div class="form-group">
+                                    <label>Série *</label>
+                                    <input type="number" id="pdfSerie" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Data *</label>
+                                    <input type="date" id="pdfData">
+                                </div>
+                                <div class="form-group">
+                                    <label>Fornecedor *</label>
+                                    <input type="text" id="pdfFornecedor">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label>Valor Total (R$) *</label>
+                                    <input type="number" id="pdfValorTotal" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label>Produto *</label>
+                                    <select id="pdfProdutoSelect"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantidade *</label>
+                                    <input type="number" id="pdfQtd" step="1" min="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Valor Unit. (R$) *</label>
+                                    <input type="number" id="pdfValorUnit" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="adicionarProdutoPDF()">+ Adicionar Produto</button>
+                        <div id="pdfProdutosLista" style="margin-top: 20px;"></div>
+                        <button class="btn" onclick="salvarNFePDF()" style="margin-top: 20px;">✓ Salvar NFe</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: CADASTRO PRODUTOS -->
+            <div id="produtos-cadastro" class="tab-content">
+                <div class="grid-2">
+                    <div>
+                        <h2>Cadastrar Produto</h2>
+                        <div id="alertProduto"></div>
+                        <div class="form-group">
+                            <label>Nome *</label>
+                            <input type="text" id="cadNome">
+                        </div>
+                        <div class="form-group">
+                            <label>Código/SKU *</label>
+                            <input type="text" id="cadCodigo">
+                        </div>
+                        <div class="form-group">
+                            <label>EAN</label>
+                            <input type="text" id="cadEAN">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <input type="text" id="cadCategoria">
+                        </div>
+                        <div class="form-group">
+                            <label>Preço Base (R$)</label>
+                            <input type="number" id="cadPreco" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Fornecedor</label>
+                            <input type="text" id="cadFornecedor">
+                        </div>
+                        <div class="form-group">
+                            <label>Estoque Mínimo</label>
+                            <input type="number" id="cadEstoqueMin" step="1" min="0" value="0">
+                        </div>
+                        <button class="btn" onclick="salvarProduto()">✓ Cadastrar</button>
+                    </div>
+                    <div>
+                        <h2>Produtos Cadastrados</h2>
+                        <div id="listaProdutos" style="max-height: 700px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: IMPORTAR EXCEL -->
+            <div id="import-excel" class="tab-content">
+                <div style="max-width: 1000px; margin: 0 auto;">
+                    <h2>Importar Produtos via Excel</h2>
+                    <div id="alertExcel"></div>
+                    <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 20px; font-size: 12px;">
+                        <p><strong>Colunas esperadas:</strong> codigo, nome, ean, categoria, preco, fornecedor, estoqueMinimo</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Selecione arquivo Excel (.xlsx, .xls, .csv)</label>
+                        <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" onchange="processarExcel()">
+                    </div>
+                    <div id="excelPreview"></div>
+                </div>
+            </div>
+
+            <!-- ABA: NOTAS FISCAIS -->
+            <div id="nfes-lista" class="tab-content">
+                <h2>Notas Fiscais Registradas</h2>
+                <div id="listaNotasFiscais"></div>
+            </div>
+
+            <!-- ABA: ESTOQUE -->
+            <div id="estoque" class="tab-content">
+                <h2>Estoque de Produtos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>EAN</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Mínimo</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoEstoque"></tbody>
+                </table>
+            </div>
+
+            <!-- ABA: VALIDAÇÕES -->
+            <div id="validacoes" class="tab-content">
+                <h2>Validações e Alertas</h2>
+                <div id="listaValidacoes"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // ================== STORAGE ==================
+        const STORAGE_KEY = 'nfe_system_data';
+        let dados = carregarDados();
+        let produtosNFe = [];
+        let produtosPDF = [];
+
+        function carregarDados() {
+            const d = localStorage.getItem(STORAGE_KEY);
+            return d ? JSON.parse(d) : { produtosCadastrados: {}, nfes: [], estoque: {} };
+        }
+
+        function salvarDados() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
+            atualizarInterface();
+        }
+
+        // ================== TABS ==================
+        function abrirAba(event, tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tab === 'produtos-cadastro') atualizarListaProdutos();
+            if (tab === 'nfes-lista') atualizarNotasFiscais();
+            if (tab === 'estoque') atualizarEstoque();
+            if (tab === 'validacoes') atualizarValidacoes();
+            if (tab === 'nfe' || tab === 'pdf-nfe') atualizarSelectProdutos();
+        }
+
+        // ================== PRODUTOS ==================
+        function salvarProduto() {
+            const nome = document.getElementById('cadNome').value.trim();
+            const codigo = document.getElementById('cadCodigo').value.trim();
+            const ean = document.getElementById('cadEAN').value.trim();
+            const categoria = document.getElementById('cadCategoria').value.trim();
+            const preco = parseFloat(document.getElementById('cadPreco').value) || 0;
+            const fornecedor = document.getElementById('cadFornecedor').value.trim();
+            const estoqueMin = parseInt(document.getElementById('cadEstoqueMin').value) || 0;
+
+            if (!nome || !codigo) {
+                mostrarAlerta('alertProduto', 'Nome e Código são obrigatórios!', 'error');
+                return;
+            }
+
+            if (dados.produtosCadastrados[codigo]) {
+                mostrarAlerta('alertProduto', 'Produto já existe!', 'error');
+                return;
+            }
+
+            dados.produtosCadastrados[codigo] = {
+                codigo, nome, ean: ean || 'N/A', categoria: categoria || 'Sem categoria',
+                preco, fornecedor: fornecedor || 'N/A', estoqueMinimo: estoqueMin,
+                dataCadastro: new Date().toISOString()
+            };
+
+            if (!dados.estoque[codigo]) {
+                dados.estoque[codigo] = { codigo, quantidade: 0, historico: [] };
+            }
+
+            salvarDados();
+            document.getElementById('cadNome').value = '';
+            document.getElementById('cadCodigo').value = '';
+            document.getElementById('cadEAN').value = '';
+            document.getElementById('cadCategoria').value = '';
+            document.getElementById('cadPreco').value = '';
+            document.getElementById('cadFornecedor').value = '';
+            document.getElementById('cadEstoqueMin').value = '0';
+            mostrarAlerta('alertProduto', 'Produto cadastrado!', 'success');
+        }
+
+        function atualizarListaProdutos() {
+            const container = document.getElementById('listaProdutos');
+            const produtos = Object.values(dados.produtosCadastrados);
+
+            if (produtos.length === 0) {
+                container.innerHTML = '<div class="empty-state">Nenhum produto cadastrado</div>';
+                return;
+            }
+
+            container.innerHTML = produtos.map(p => {
+                const est = dados.estoque[p.codigo]?.quantidade || 0;
+                const alerta = est < p.estoqueMinimo ? 'status-warning' : 'status-validated';
+                return `
+                    <div class="product-card">
+                        <h3>${p.nome}</h3>
+                        <div class="product-info">
+                            <div class="product-info-item"><label>SKU:</label><span>${p.codigo}</span></div>
+                            <div class="product-info-item"><label>EAN:</label><span>${p.ean}</span></div>
+                            <div class="product-info-item"><label>Estoque:</label><span>${est}</span></div>
+                            <div class="product-info-item"><label>Mín:</label><span>${p.estoqueMinimo}</span></div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-small" onclick="verHistoricoProduto('${p.codigo}')">Histórico</button>
+                            <button class="btn btn-danger btn-small" onclick="deletarProduto('${p.codigo}')">Deletar</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deletarProduto(codigo) {
+            if (confirm('Deletar este produto?')) {
+                delete dados.produtosCadastrados[codigo];
+                salvarDados();
+            }
+        }
+
+        function verHistoricoProduto(codigo) {
+            const produto = dados.produtosCadastrados[codigo];
+            const est = dados.estoque[codigo];
+
+            if (!est || est.historico.length === 0) {
+                mostrarAlerta('alertProduto', 'Nenhuma movimentação!', 'info');
+                return;
+            }
+
+            let html = `<div style="margin-top: 20px;">
+                <h3 style="margin-bottom: 15px;">📦 ${produto.nome} (${produto.codigo})</h3>
+                <table>
+                    <thead><tr>
+                        <th>Data/Hora</th><th>NFe</th><th>Movimento</th><th>Qtd</th><th>Saldo</th>
+                    </tr></thead><tbody>`;
+
+            let saldo = 0;
+            est.historico.forEach(h => {
+                const data = new Date(h.data);
+                saldo += h.quantidade;
+                const tipo = h.quantidade > 0 ? 'ENTRADA' : 'SAÍDA';
+                html += `<tr>
+                    <td>${data.toLocaleDateString('pt-BR')} ${data.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})}</td>
+                    <td>${h.nfe}</td><td>${tipo}</td><td>${h.quantidade}</td><td>${saldo}</td>
+                </tr>`;
+            });
+
+            html += `</tbody></table></div>`;
+            document.getElementById('listaProdutos').innerHTML = html;
+        }
+
+        // ================== NFE ==================
+        function atualizarSelectProdutos() {
+            const sel1 = document.getElementById('nfeProdutoSelect');
+            const sel2 = document.getElementById('pdfProdutoSelect');
+            [sel1, sel2].forEach(sel => {
+                if (!sel) return;
+                sel.innerHTML = '<option value="">-- Selecione --</option>';
+                Object.values(dados.produtosCadastrados).forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.codigo;
+                    opt.textContent = `${p.nome} (${p.codigo})`;
+                    sel.appendChild(opt);
+                });
+            });
+        }
+
+        function adicionarProdutoNFe() {
+            const codigo = document.getElementById('nfeProdutoSelect').value;
+            const qtd = parseInt(document.getElementById('nfeProdutoQtd').value);
+            const valor = parseFloat(document.getElementById('nfeProdutoValor').value);
+
+            if (!codigo || !qtd || !valor) {
+                mostrarAlerta('alertNFe', 'Preencha todos os campos!', 'error');
+                return;
+            }
+
+            if (produtosNFe.find(p => p.codigo === codigo)) {
+                mostrarAlerta('alertNFe', 'Produto já adicionado!', 'error');
+                return;
+            }
+
+            const p = dados.produtosCadastrados[codigo];
+            produtosNFe.push({
+                codigo, nome: p.nome, ean: p.ean,
+                quantidade: qtd, valorUnitario: valor,
+                valorTotal: (qtd * valor).toFixed(2)
+            });
+
+            atualizarListaProdutosNFe();
+            document.getElementById('nfeProdutoSelect').value = '';
+            document.getElementById('nfeProdutoQtd').value = '';
+            document.getElementById('nfeProdutoValor').value = '';
+        }
+
+        function atualizarListaProdutosNFe() {
+            const container = document.getElementById('nfeProdutosLista');
+            if (produtosNFe.length === 0) {
+                container.innerHTML = '<div class="empty-state">Nenhum produto</div>';
+                return;
+            }
+
+            const total = produtosNFe.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            container.innerHTML = produtosNFe.map((p, i) => `
+                <div class="product-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>${p.nome}</h3>
+                        <button class="btn btn-danger btn-small" onclick="removerProdutoNFe(${i})">Remover</button>
+                    </div>
+                    <div style="font-size: 12px; color: #666;">
+                        ${p.quantidade}x R$ ${parseFloat(p.valorUnitario).toFixed(2)} = <strong>R$ ${parseFloat(p.valorTotal).toFixed(2)}</strong>
+                    </div>
+                </div>
+            `).join('') + `
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-weight: 600;">
+                    TOTAL: R$ ${total.toFixed(2)}
+                </div>
+            `;
+        }
+
+        function removerProdutoNFe(i) {
+            produtosNFe.splice(i, 1);
+            atualizarListaProdutosNFe();
+        }
+
+        function salvarNFe() {
+            const numero = document.getElementById('nfeNumero').value.trim();
+            const serie = parseInt(document.getElementById('nfeSerie').value);
+            const data = document.getElementById('nfeData').value;
+            const fornecedor = document.getElementById('nfeFornecedor').value.trim();
+            const valorTotal = parseFloat(document.getElementById('nfeValorTotal').value);
+
+            if (!numero || !data || !fornecedor || !valorTotal || produtosNFe.length === 0) {
+                mostrarAlerta('alertNFe', 'Preencha todos os campos!', 'error');
+                return;
+            }
+
+            const valorCalculado = produtosNFe.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            const nfe = {
+                id: Date.now(),
+                numero, serie, data, dataRegistro: new Date().toISOString(),
+                fornecedor, valorTotal: valorTotal.toFixed(2),
+                valorCalculado: valorCalculado.toFixed(2),
+                produtos: JSON.parse(JSON.stringify(produtosNFe)),
+                status: Math.abs(valorCalculado - valorTotal) <= 0.01 ? 'valida' : 'alerta'
+            };
+
+            dados.nfes.push(nfe);
+
+            produtosNFe.forEach(p => {
+                if (!dados.estoque[p.codigo]) dados.estoque[p.codigo] = { codigo: p.codigo, quantidade: 0, historico: [] };
+                dados.estoque[p.codigo].quantidade += p.quantidade;
+                dados.estoque[p.codigo].historico.push({
+                    data: new Date().toISOString(),
+                    nfe: numero,
+                    quantidade: p.quantidade
+                });
+            });
+
+            salvarDados();
+            produtosNFe = [];
+            atualizarListaProdutosNFe();
+            document.getElementById('nfeNumero').value = '';
+            document.getElementById('nfeSerie').value = '1';
+            document.getElementById('nfeData').value = '';
+            document.getElementById('nfeFornecedor').value = '';
+            document.getElementById('nfeValorTotal').value = '';
+            mostrarAlerta('alertNFe', 'NFe registrada!', 'success');
+        }
+
+        // ================== PDF ==================
+        function lerPDF() {
+            const file = document.getElementById('pdfFile').files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const pdf = pdfjsLib.getDocument(e.target.result);
+                    pdf.promise.then(doc => {
+                        doc.getPage(1).then(pg => {
+                            pg.getTextContent().then(content => {
+                                let texto = content.items.map(i => i.str).join(' ');
+                                
+                                const nfeMatch = texto.match(/NFe[:\s]*(\d{15,})/i);
+                                const valorMatch = texto.match(/total[:\s]*R?\$?\s*([\d.,]+)/i);
+                                
+                                if (nfeMatch) document.getElementById('pdfNumero').value = nfeMatch[1];
+                                if (valorMatch) {
+                                    const valor = valorMatch[1].replace(',', '.');
+                                    document.getElementById('pdfValorTotal').value = valor;
+                                }
+                                document.getElementById('pdfData').valueAsDate = new Date();
+                                
+                                document.getElementById('pdfDados').style.display = 'block';
+                                mostrarAlerta('alertPDF', 'PDF lido com sucesso!', 'success');
+                            });
+                        });
+                    });
+                } catch (err) {
+                    mostrarAlerta('alertPDF', 'Erro ao ler PDF: ' + err.message, 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function adicionarProdutoPDF() {
+            const codigo = document.getElementById('pdfProdutoSelect').value;
+            const qtd = parseInt(document.getElementById('pdfQtd').value);
+            const valor = parseFloat(document.getElementById('pdfValorUnit').value);
+
+            if (!codigo || !qtd || !valor) {
+                mostrarAlerta('alertPDF', 'Preencha todos!', 'error');
+                return;
+            }
+
+            if (produtosPDF.find(p => p.codigo === codigo)) {
+                mostrarAlerta('alertPDF', 'Já adicionado!', 'error');
+                return;
+            }
+
+            const p = dados.produtosCadastrados[codigo];
+            produtosPDF.push({
+                codigo, nome: p.nome, ean: p.ean,
+                quantidade: qtd, valorUnitario: valor,
+                valorTotal: (qtd * valor).toFixed(2)
+            });
+
+            atualizarListaProdutosPDF();
+            document.getElementById('pdfProdutoSelect').value = '';
+            document.getElementById('pdfQtd').value = '';
+            document.getElementById('pdfValorUnit').value = '';
+        }
+
+        function atualizarListaProdutosPDF() {
+            const container = document.getElementById('pdfProdutosLista');
+            if (produtosPDF.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const total = produtosPDF.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            container.innerHTML = produtosPDF.map((p, i) => `
+                <div class="product-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>${p.nome}</h3>
+                        <button class="btn btn-danger btn-small" onclick="removerProdutoPDF(${i})">Remover</button>
+                    </div>
+                    <div style="font-size: 12px;">
+                        ${p.quantidade}x R$ ${parseFloat(p.valorUnitario).toFixed(2)} = <strong>R$ ${parseFloat(p.valorTotal).toFixed(2)}</strong>
+                    </div>
+                </div>
+            `).join('') + `
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-weight: 600; margin-top: 15px;">
+                    TOTAL: R$ ${total.toFixed(2)}
+                </div>
+            `;
+        }
+
+        function removerProdutoPDF(i) {
+            produtosPDF.splice(i, 1);
+            atualizarListaProdutosPDF();
+        }
+
+        function salvarNFePDF() {
+            const numero = document.getElementById('pdfNumero').value.trim();
+            const serie = parseInt(document.getElementById('pdfSerie').value);
+            const data = document.getElementById('pdfData').value;
+            const fornecedor = document.getElementById('pdfFornecedor').value.trim();
+            const valorTotal = parseFloat(document.getElementById('pdfValorTotal').value);
+
+            if (!numero || !data || !fornecedor || !valorTotal || produtosPDF.length === 0) {
+                mostrarAlerta('alertPDF', 'Preencha todos os campos!', 'error');
+                return;
+            }
+
+            const valorCalculado = produtosPDF.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            const nfe = {
+                id: Date.now(),
+                numero, serie, data, dataRegistro: new Date().toISOString(),
+                fornecedor, valorTotal: valorTotal.toFixed(2),
+                valorCalculado: valorCalculado.toFixed(2),
+                produtos: JSON.parse(JSON.stringify(produtosPDF)),
+                status: 'valida'
+            };
+
+            dados.nfes.push(nfe);
+
+            produtosPDF.forEach(p => {
+                if (!dados.estoque[p.codigo]) dados.estoque[p.codigo] = { codigo: p.codigo, quantidade: 0, historico: [] };
+                dados.estoque[p.codigo].quantidade += p.quantidade;
+                dados.estoque[p.codigo].historico.push({
+                    data: new Date().toISOString(),
+                    nfe: numero,
+                    quantidade: p.quantidade
+                });
+            });
+
+            salvarDados();
+            produtosPDF = [];
+            atualizarListaProdutosPDF();
+            document.getElementById('pdfFile').value = '';
+            document.getElementById('pdfDados').style.display = 'none';
+            mostrarAlerta('alertPDF', 'NFe do PDF registrada!', 'success');
+        }
+
+        // ================== EXCEL ==================
+        function processarExcel() {
+            const file = document.getElementById('excelFile').files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    let dados_excel = [];
+                    
+                    if (file.name.endsWith('.csv')) {
+                        const texto = e.target.result;
+                        const linhas = texto.split('\n');
+                        const headers = linhas[0].split(',').map(h => h.trim().toLowerCase());
+                        
+                        for (let i = 1; i < linhas.length; i++) {
+                            if (!linhas[i].trim()) continue;
+                            const valores = linhas[i].split(',');
+                            const row = {};
+                            headers.forEach((h, idx) => row[h] = valores[idx]?.trim() || '');
+                            dados_excel.push(row);
+                        }
+                    } else {
+                        const workbook = XLSX.read(e.target.result, { type: 'array' });
+                        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+                        dados_excel = json.map(row => {
+                            const novaRow = {};
+                            Object.keys(row).forEach(key => {
+                                novaRow[key.toLowerCase().trim()] = row[key];
+                            });
+                            return novaRow;
+                        });
+                    }
+
+                    visualizarExcel(dados_excel);
+                } catch (err) {
+                    mostrarAlerta('alertExcel', 'Erro: ' + err.message, 'error');
+                }
+            };
+
+            if (file.name.endsWith('.csv')) {
+                reader.readAsText(file);
+            } else {
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function visualizarExcel(dados) {
+            if (!dados.length) {
+                mostrarAlerta('alertExcel', 'Arquivo vazio!', 'error');
+                return;
+            }
+
+            let html = `<div style="margin-top: 20px;">
+                <h3 style="color: #333; margin-bottom: 15px;">Preview (${dados.length} produtos)</h3>
+                <table style="font-size: 12px;">
+                    <thead><tr style="background: #667eea; color: white;">
+                        <th>SKU</th><th>Nome</th><th>EAN</th><th>Categoria</th><th>Preço</th><th>Fornecedor</th><th>Mín.</th>
+                    </tr></thead><tbody>`;
+
+            dados.forEach(row => {
+                html += `<tr>
+                    <td>${row.codigo || row.sku || 'ERRO'}</td>
+                    <td>${row.nome || 'ERRO'}</td>
+                    <td>${row.ean || '-'}</td>
+                    <td>${row.categoria || '-'}</td>
+                    <td>R$ ${parseFloat(row.preco || 0).toFixed(2)}</td>
+                    <td>${row.fornecedor || '-'}</td>
+                    <td>${row.estoqueminimo || '0'}</td>
+                </tr>`;
+            });
+
+            html += `</tbody></table>
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn" onclick="importarExcel('${btoa(JSON.stringify(dados))}')">✓ Importar</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('excelFile').value=''; document.getElementById('excelPreview').innerHTML='';">Cancelar</button>
+                </div></div>`;
+
+            document.getElementById('excelPreview').innerHTML = html;
+        }
+
+        function importarExcel(dados64) {
+            const dados_excel = JSON.parse(atob(dados64));
+            let importados = 0, duplicados = 0;
+
+            dados_excel.forEach(row => {
+                const codigo = (row.codigo || row.sku || '').trim();
+                const nome = (row.nome || '').trim();
+
+                if (!codigo || !nome) return;
+                if (dados.produtosCadastrados[codigo]) {
+                    duplicados++;
+                    return;
+                }
+
+                dados.produtosCadastrados[codigo] = {
+                    codigo, nome,
+                    ean: (row.ean || '').trim() || 'N/A',
+                    categoria: (row.categoria || '').trim() || 'Sem categoria',
+                    preco: parseFloat(row.preco) || 0,
+                    fornecedor: (row.fornecedor || '').trim() || 'N/A',
+                    estoqueMinimo: parseInt(row.estoqueminimo) || 0,
+                    dataCadastro: new Date().toISOString()
+                };
+
+                if (!dados.estoque[codigo]) {
+                    dados.estoque[codigo] = { codigo, quantidade: 0, historico: [] };
+                }
+                importados++;
+            });
+
+            salvarDados();
+            document.getElementById('excelFile').value = '';
+            document.getElementById('excelPreview').innerHTML = '';
+            
+            let msg = `✓ Importados: ${importados}`;
+            if (duplicados) msg += ` | ⚠️ Duplicados: ${duplicados}`;
+            mostrarAlerta('alertExcel', msg, 'success');
+        }
+
+        // ================== INTERFACE ==================
+        function atualizarNotasFiscais() {
+            const container = document.getElementById('listaNotasFiscais');
+            if (!dados.nfes.length) {
+                container.innerHTML = '<div class="empty-state">Nenhuma NFe registrada</div>';
+                return;
+            }
+
+            container.innerHTML = dados.nfes.map(nfe => `
+                <div class="product-card">
+                    <h3>NFe ${nfe.numero} - Série ${nfe.serie}</h3>
+                    <div class="product-info">
+                        <div class="product-info-item"><label>Fornecedor:</label><span>${nfe.fornecedor}</span></div>
+                        <div class="product-info-item"><label>Data:</label><span>${new Date(nfe.data).toLocaleDateString('pt-BR')}</span></div>
+                        <div class="product-info-item"><label>Valor:</label><span>R$ ${parseFloat(nfe.valorTotal).toFixed(2)}</span></div>
+                        <div class="product-info-item"><label>Produtos:</label><span>${nfe.produtos.length}</span></div>
+                    </div>
+                    <div style="background: #f5f5f5; padding: 12px; border-radius: 5px; margin-top: 12px; font-size: 12px;">
+                        ${nfe.produtos.map(p => `
+                            <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd;">
+                                <span>${p.nome}</span>
+                                <span>${p.quantidade}x R$ ${parseFloat(p.valorUnitario).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="btn btn-danger btn-small" onclick="deletarNFe(${nfe.id})" style="margin-top: 12px; width: auto;">Deletar</button>
+                </div>
+            `).join('');
+        }
+
+        function deletarNFe(id) {
+            if (confirm('Deletar NFe?')) {
+                const nfe = dados.nfes.find(n => n.id === id);
+                nfe.produtos.forEach(p => {
+                    dados.estoque[p.codigo].quantidade -= p.quantidade;
+                    dados.estoque[p.codigo].historico.push({
+                        data: new Date().toISOString(),
+                        nfe: nfe.numero,
+                        quantidade: -p.quantidade
+                    });
+                });
+                dados.nfes = dados.nfes.filter(n => n.id !== id);
+                salvarDados();
+            }
+        }
+
+        function atualizarEstoque() {
+            const corpo = document.getElementById('corpoEstoque');
+            const produtos = Object.values(dados.produtosCadastrados);
+
+            if (!produtos.length) {
+                corpo.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">Nenhum produto</td></tr>';
+                return;
+            }
+
+            corpo.innerHTML = produtos.map(p => {
+                const est = dados.estoque[p.codigo]?.quantidade || 0;
+                const alerta = est < p.estoqueMinimo ? 'status-warning' : est === 0 ? 'status-error' : 'status-validated';
+                const texto = est < p.estoqueMinimo ? '⚠️ Mínimo' : est === 0 ? '✗ Vazio' : '✓ Normal';
+
+                return `<tr>
+                    <td>${p.codigo}</td>
+                    <td>${p.ean}</td>
+                    <td>${p.nome}</td>
+                    <td style="font-weight: 600;">${est}</td>
+                    <td>${p.estoqueMinimo}</td>
+                    <td><span class="status-badge ${alerta}">${texto}</span></td>
+                    <td><button class="btn btn-secondary btn-small" onclick="verHistoricoProduto('${p.codigo}'); document.querySelector('.tab-btn:nth-child(3)').click();">Ver</button></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function atualizarValidacoes() {
+            const container = document.getElementById('listaValidacoes');
+            const nfesAlerta = dados.nfes.filter(n => Math.abs(parseFloat(n.valorTotal) - parseFloat(n.valorCalculado)) > 0.01);
+            const prodMin = Object.values(dados.produtosCadastrados).filter(p => (dados.estoque[p.codigo]?.quantidade || 0) < p.estoqueMinimo);
+
+            if (!nfesAlerta.length && !prodMin.length) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #27ae60;"><p>✓ Tudo ok!</p></div>';
+                return;
+            }
+
+            let html = '';
+            if (nfesAlerta.length) {
+                html += nfesAlerta.map(nfe => `
+                    <div class="product-card" style="border-left-color: #ff6b6b;">
+                        <h3 style="color: #ff6b6b;">NFe ${nfe.numero}</h3>
+                        <p style="color: #721c24;">⚠️ Diferença: R$ ${(Math.abs(parseFloat(nfe.valorTotal) - parseFloat(nfe.valorCalculado))).toFixed(2)}</p>
+                    </div>
+                `).join('');
+            }
+            if (prodMin.length) {
+                html += prodMin.map(p => `
+                    <div class="product-card" style="border-left-color: #ffc107;">
+                        <h3>${p.nome}</h3>
+                        <p>Estoque: ${dados.estoque[p.codigo]?.quantidade || 0} / Mín: ${p.estoqueMinimo}</p>
+                    </div>
+                `).join('');
+            }
+            container.innerHTML = html;
+        }
+
+        function atualizarInterface() {
+            atualizarListaProdutos();
+            atualizarListaProdutosNFe();
+            atualizarSelectProdutos();
+        }
+
+        function mostrarAlerta(id, msg, tipo) {
+            const container = document.getElementById(id);
+            const alerta = document.createElement('div');
+            alerta.className = `alert alert-${tipo}`;
+            alerta.textContent = msg;
+            container.innerHTML = '';
+            container.appendChild(alerta);
+            setTimeout(() => alerta.remove(), 4000);
+        }
+
+        // ================== INICIAR ==================
+        document.getElementById('nfeData').valueAsDate = new Date();
+        document.getElementById('pdfData').valueAsDate = new Date();
+        atualizarInterface();
+    </script>
+</body>
 </html>
