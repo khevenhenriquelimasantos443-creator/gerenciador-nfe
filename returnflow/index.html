@@ -701,7 +701,7 @@ tbody tr:last-child td { border-bottom: none; }
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script>
 /* ===================================================================
    ReturnFlow — Gestão de Devoluções
@@ -898,7 +898,6 @@ async function doAuth() {
             if (data.session && data.user) {
                 await enterApp(data.user);
             } else {
-                // Sem sessão: tenta logar na hora (caso a confirmação de e-mail esteja desligada)
                 const { data: d2 } = await client.auth.signInWithPassword({ email, password: pass });
                 if (d2 && d2.session && d2.user) {
                     await enterApp(d2.user);
@@ -1039,33 +1038,48 @@ async function removeSku(id) {
     toast('SKU removido.', 'success');
 }
 
+function pick(low, keys) {
+    for (const k of keys) {
+        if (low[k] !== undefined && String(low[k]).trim() !== '') return low[k];
+    }
+    return '';
+}
+
 function importSkus() {
     const file = el('file-sku').files[0];
     if (!file) { toast('Selecione um arquivo.', 'error'); return; }
+    if (typeof XLSX === 'undefined') { toast('A biblioteca de Excel não carregou. Recarregue a página (F5) e tente de novo.', 'error'); return; }
     const reader = new FileReader();
     reader.onload = async (e) => {
         try {
             const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
-            const ws = wb.Sheets[wb.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
-            const norm = rows.map(r => {
-                const low = {};
-                Object.keys(r).forEach(k => low[k.toString().toLowerCase().trim()] = r[k]);
-                const sku = (low['sku'] || low['código'] || low['codigo'] || low['cod'] || '').toString().trim();
-                const nome = (low['produto'] || low['nome'] || low['descrição'] || low['descricao'] || '').toString().trim();
-                const preco = parseNum(low['preço'] || low['preco'] || low['price'] || low['valor'] || low['valor unitário'] || 0);
-                return { sku, nome, preco };
-            }).filter(x => x.sku);
-
-            if (!norm.length) { toast('Nenhum SKU válido encontrado. Confira as colunas.', 'error'); return; }
-
-            const payload = norm.map(x => ({ user_id: currentUser.id, sku: x.sku, nome: x.nome, preco: x.preco }));
-            const { error } = await client.from('skus').upsert(payload, { onConflict: 'user_id,sku' });
-            if (error) throw error;
-
+            const map = new Map(); // lê TODAS as abas e junta por SKU
+            wb.SheetNames.forEach(name => {
+                const rows = XLSX.utils.sheet_to_json(wb.Sheets[name], { defval: '' });
+                rows.forEach(r => {
+                    const low = {};
+                    Object.keys(r).forEach(k => low[k.toString().toLowerCase().trim()] = r[k]);
+                    const sku = String(pick(low, ['sku principal', 'sku', 'vendedorsku', 'código', 'codigo', 'cod', 'sku variação', 'sku variacao'])).trim();
+                    if (!sku) return;
+                    const nome = String(pick(low, ['nome do produto', 'produto', 'nome', 'descrição', 'descricao'])).trim();
+                    const preco = parseNum(pick(low, ['custo', 'preço', 'preco', 'price', 'valor', 'valor unitário', 'valor unitario']));
+                    if (!nome && !preco) return; // ignora abas que só têm códigos
+                    const cur = map.get(sku) || { sku, nome: '', preco: 0 };
+                    if (nome && !cur.nome) cur.nome = nome;
+                    if (preco && !cur.preco) cur.preco = preco;
+                    map.set(sku, cur);
+                });
+            });
+            const list = [...map.values()];
+            if (!list.length) { toast('Nenhum SKU encontrado. A planilha precisa de uma coluna de SKU e de Produto ou Custo.', 'error'); return; }
+            const payload = list.map(x => ({ user_id: currentUser.id, sku: x.sku, nome: x.nome, preco: x.preco }));
+            for (let i = 0; i < payload.length; i += 500) {
+                const { error } = await client.from('skus').upsert(payload.slice(i, i + 500), { onConflict: 'user_id,sku' });
+                if (error) throw error;
+            }
             await loadSkus(); refreshSkuSelect(); renderSkuTable();
             el('file-sku').value = '';
-            toast(`${norm.length} SKU(s) importados/atualizados.`, 'success');
+            toast(`${list.length} SKU(s) importados/atualizados.`, 'success');
         } catch (err) {
             toast('Erro ao importar: ' + (err.message || err), 'error');
         }
