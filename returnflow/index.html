@@ -721,6 +721,13 @@ let disputaLink = null;     // {devolucao_id, pedido, valor} ao abrir disputa a 
 
 const CFG_KEY = 'rf_supabase_cfg';
 
+// Conexão fixa (preenchida automaticamente). A chave "publishable" é PÚBLICA por
+// design — a proteção vem do login + das regras de segurança (RLS) no banco.
+const BAKED_CONFIG = {
+    url: 'https://axytwuwonpiqfxylyxsp.supabase.co',
+    key: 'sb_publishable_gD5Yx1t882-vRlf6DM2SnQ_OzNpj0R9'
+};
+
 const DEFAULT_MKTS = [
     'Shein - Luz Cosméticos',
     'Shopee - Paris Perfumaria',
@@ -775,9 +782,9 @@ function toast(msg, type = '') {
     box.appendChild(t);
     setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 250); }, 3200);
 }
-function inlineMsg(id, msg, type) {
+function inlineMsg(id, msg, type, persist) {
     el(id).innerHTML = `<div class="message ${type}">${esc(msg)}</div>`;
-    setTimeout(() => { const c = el(id); if (c) c.innerHTML = ''; }, 5000);
+    if (!persist) setTimeout(() => { const c = el(id); if (c) c.innerHTML = ''; }, 6000);
 }
 function setSync(state, text) {
     const pill = el('sync-pill');
@@ -787,7 +794,12 @@ function setSync(state, text) {
 
 /* --------------------------- Config Supabase ---------------------- */
 function getConfig() {
-    try { return JSON.parse(localStorage.getItem(CFG_KEY)); } catch { return null; }
+    try {
+        const saved = JSON.parse(localStorage.getItem(CFG_KEY));
+        if (saved && saved.url && saved.key) return saved;
+    } catch {}
+    if (BAKED_CONFIG && BAKED_CONFIG.url && BAKED_CONFIG.key) return BAKED_CONFIG;
+    return null;
 }
 function saveConfig(url, key) {
     localStorage.setItem(CFG_KEY, JSON.stringify({ url, key }));
@@ -886,12 +898,18 @@ async function doAuth() {
             if (data.session && data.user) {
                 await enterApp(data.user);
             } else {
-                inlineMsg('auth-msg', 'Conta criada! Confirme pelo e-mail (ou desative a confirmação no Supabase) e faça login.', 'info');
-                setAuthMode('login');
+                // Sem sessão: tenta logar na hora (caso a confirmação de e-mail esteja desligada)
+                const { data: d2 } = await client.auth.signInWithPassword({ email, password: pass });
+                if (d2 && d2.session && d2.user) {
+                    await enterApp(d2.user);
+                } else {
+                    inlineMsg('auth-msg', 'Conta criada! Mas falta confirmar o e-mail. Desligue "Confirm email" em Authentication → Email no Supabase e clique em Entrar.', 'info', true);
+                    setAuthMode('login');
+                }
             }
         }
     } catch (e) {
-        inlineMsg('auth-msg', traduzErro(e.message || String(e)), 'error');
+        inlineMsg('auth-msg', traduzErro(e.message || String(e)), 'error', true);
     } finally {
         btn.disabled = false;
         btn.textContent = authMode === 'login' ? 'Entrar' : 'Criar conta';
