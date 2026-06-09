@@ -1,4 +1,4 @@
-import { Order, Invoice, OrderStatus } from '@shared/types';
+import { Order, Invoice, OrderStatus } from '../types';
 import { OrderModel } from '../models/Order';
 import { CustomerModel } from '../models/Customer';
 import { query } from '../database/connection';
