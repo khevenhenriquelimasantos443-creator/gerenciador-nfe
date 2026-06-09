@@ -989,8 +989,7 @@ const S = {
 };
 
 /* ══════════════════════════════════════
-   OAUTH — Authorization Code + PKCE
-   (suporta também o fluxo implícito legado)
+   OAUTH — Token implícito (fluxo simples)
 ══════════════════════════════════════ */
 function getToken() {
   try {
@@ -1003,71 +1002,31 @@ function saveToken(tok, expSec) {
   localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (expSec - 60) * 1000 }));
 }
 
-/* PKCE helpers */
-function _b64url(buf) {
-  return btoa(String.fromCharCode(...new Uint8Array(buf)))
-    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-function _pkceVerifier() {
-  const a = new Uint8Array(48); crypto.getRandomValues(a); return _b64url(a);
-}
-async function _pkceChallenge(v) {
-  const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
-  return _b64url(d);
-}
-
-async function startMLAuth() {
+function startMLAuth() {
   const c = cfg.get();
   if (!c) { showScreen('setup'); return; }
-  const verifier = _pkceVerifier();
-  sessionStorage.setItem('ml_pkce_v', verifier);
-  const challenge = await _pkceChallenge(verifier);
   const p = new URLSearchParams({
-    response_type: 'code',
+    response_type: 'token',
     client_id: c.appId,
-    redirect_uri: c.redirect,
-    code_challenge: challenge,
-    code_challenge_method: 'S256'
+    redirect_uri: c.redirect
   });
   location.href = `${ML_AUTH}?${p}`;
 }
 
-/* Detecta retorno OAuth (PKCE code ou token implícito legado) */
-async function handleOAuthCallback() {
-  /* 1) Token implícito no hash (fluxo antigo) */
+function readHashToken() {
   const hp = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
   if (hp.access_token) {
     saveToken(hp.access_token, parseInt(hp.expires_in) || 21600);
     history.replaceState(null, '', location.pathname);
     return hp.access_token;
   }
-  /* 2) Authorization Code no query string (PKCE) */
-  const sp = new URLSearchParams(location.search);
-  const code = sp.get('code');
-  if (code) {
-    history.replaceState(null, '', location.pathname);
-    const verifier = sessionStorage.getItem('ml_pkce_v');
-    const c = cfg.get();
-    if (!verifier || !c) return null;
-    try {
-      const res = await fetch('https://api.mercadolibre.com/oauth/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          grant_type: 'authorization_code',
-          client_id: c.appId,
-          code,
-          redirect_uri: c.redirect,
-          code_verifier: verifier
-        })
-      });
-      const data = await res.json();
-      if (data.access_token) { saveToken(data.access_token, data.expires_in || 21600); return data.access_token; }
-      console.error('Token exchange error:', data);
-    } catch (e) { console.error('Token exchange fetch error:', e); }
-  }
   return null;
 }
+
+async function handleOAuthCallback() {
+  return readHashToken();
+}
+
 function logout() {
   localStorage.removeItem('ml_tok');
   S.token = null; S.seller = null;
