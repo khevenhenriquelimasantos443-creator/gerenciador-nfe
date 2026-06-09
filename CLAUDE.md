@@ -84,21 +84,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development Setup
 ```bash
-# Install dependencies (both apps)
-npm install --prefix erp-server
-npm install --prefix erp-ui
+# Install dependencies
+cd erp-server && npm install && cd ..
+cd erp-ui && npm install && cd ..
 
-# Run database migrations
-npm run --prefix erp-server migrate:latest
+# Configure environment
+cp erp-server/.env.example erp-server/.env
+# Edit erp-server/.env with your database credentials
 
-# Start development mode (Electron with hot reload)
-npm run --prefix erp-server dev    # Terminal 1: backend on :3000
-npm run --prefix erp-ui dev        # Terminal 2: Electron with HMR
+# Initialize PostgreSQL (if needed)
+createdb erp_db  # or docker run ... postgres:15
+
+# Start development mode (two terminals)
+# Terminal 1: Backend
+cd erp-server && npm run dev    # Runs on http://localhost:3000/api
+
+# Terminal 2: Frontend
+cd erp-ui && npm run dev        # Runs on http://localhost:3000 (React)
 
 # Build for production
 npm run --prefix erp-server build
 npm run --prefix erp-ui build
-npm run package                     # Create distributable Electron app
+npm run package                 # Create Electron app
 ```
 
 ### Database
