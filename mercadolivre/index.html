@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML Envios — Painel de Envios</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0d0d1a;
+      --card: #16162a;
+      --card2: #1e1e38;
+      --ml-orange: #ff6900;
+      --ml-yellow: #ffe600;
+      --success: #00c896;
+      --warning: #f0a500;
+      --danger: #e63946;
+      --blue: #4361ee;
+      --text: #e8e8f0;
+      --text-muted: #7878a0;
+      --border: #2a2a48;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── Setup / Auth screens ── */
+    .center-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .setup-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 40px; max-width: 480px; width: 100%; }
+    .setup-box .logo { text-align: center; margin-bottom: 28px; }
+    .setup-box .logo i { font-size: 3rem; color: var(--ml-orange); }
+    .setup-box h1 { font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 6px; }
+    .setup-box p { color: var(--text-muted); text-align: center; font-size: 0.9rem; margin-bottom: 28px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; background: var(--card2); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); padding: 10px 14px; font-size: 0.95rem; outline: none; transition: border-color .2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--ml-orange); }
+    .form-group textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; transition: all .2s; text-decoration: none; }
+    .btn-primary { background: var(--ml-orange); color: #fff; }
+    .btn-primary:hover { background: #e05c00; }
+    .btn-secondary { background: var(--card2); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--ml-orange); color: var(--ml-orange); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 6px 14px; font-size: 0.82rem; }
+    .btn-block { width: 100%; justify-content: center; }
+    .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
+    .hint code { background: var(--card2); padding: 1px 5px; border-radius: 4px; font-size: 0.78rem; color: var(--ml-orange); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    /* ── App Layout ── */
+    #screen-app { display: none; flex-direction: column; min-height: 100vh; }
+    #screen-app.active { display: flex; }
+
+    /* Header */
+    .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; }
+    .header-logo { display: flex; align-items: center; gap: 10px; }
+    .header-logo i { color: var(--ml-orange); font-size: 1.4rem; }
+    .header-logo span { font-size: 1rem; font-weight: 700; }
+    .header-clock { font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ml-orange); margin: 0 auto; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .seller-badge { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; }
+    .seller-badge i { color: var(--ml-orange); font-size: 0.9rem; }
+    .logout-btn { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: all .2s; }
+    .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* Daily Code Bar */
+    .daily-code-bar { background: linear-gradient(135deg, #1a1000, #2a1800); border-bottom: 2px solid var(--ml-orange); padding: 12px 20px; display: flex; align-items: center; gap: 16px; }
+    .daily-code-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); white-space: nowrap; }
+    .daily-code-value { font-size: 1.5rem; font-weight: 800; font-family: 'Courier New', monospace; color: var(--ml-yellow); letter-spacing: 0.1em; cursor: pointer; flex: 1; }
+    .daily-code-value:hover { opacity: 0.8; }
+    .daily-code-empty { font-size: 1rem; font-weight: 600; color: var(--text-muted); cursor: pointer; flex: 1; font-style: italic; }
+    .daily-code-meta { font-size: 0.78rem; color: var(--text-muted); text-align: right; white-space: nowrap; }
+    .daily-code-edit-btn { background: rgba(255,105,0,.15); border: 1px solid var(--ml-orange); color: var(--ml-orange); padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; white-space: nowrap; transition: all .2s; }
+    .daily-code-edit-btn:hover { background: rgba(255,105,0,.3); }
+
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 16px 20px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+    .stat-card .stat-value { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+    .stat-card .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+    .stat-card.orange .stat-value { color: var(--ml-orange); }
+    .stat-card.blue .stat-value { color: var(--blue); }
+    .stat-card.yellow .stat-value { color: var(--ml-yellow); }
+    .stat-card.green .stat-value { color: var(--success); }
+
+    /* Tabs */
+    .tabs-bar { display: flex; gap: 4px; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--card); }
+    .tab-btn { padding: 12px 20px; font-size: 0.88rem; font-weight: 600; color: var(--text-muted); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; display: flex; align-items: center; gap: 7px; }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--ml-orange); border-bottom-color: var(--ml-orange); }
+    .tab-badge { background: var(--ml-orange); color: #fff; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; font-weight: 700; }
+
+    /* Tab Content */
+    .tab-content { flex: 1; padding: 20px; overflow-y: auto; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Order / Shipment Cards */
+    .cards-grid { display: grid; gap: 12px; }
+    .order-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: border-color .2s; }
+    .order-card:hover { border-color: rgba(255,105,0,.4); }
+    .order-card-header { display: flex; align-items: flex-start; gap: 12px; }
+    .order-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .icon-full { background: rgba(67,97,238,.15); color: var(--blue); }
+    .icon-ship { background: rgba(255,105,0,.15); color: var(--ml-orange); }
+    .order-card-info { flex: 1; min-width: 0; }
+    .order-id { font-size: 0.82rem; color: var(--text-muted); font-family: monospace; }
+    .order-title { font-size: 0.95rem; font-weight: 600; margin: 2px 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .order-buyer { font-size: 0.82rem; color: var(--text-muted); }
+    .order-card-right { text-align: right; flex-shrink: 0; }
+
+    /* Status badges */
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .badge-full { background: rgba(67,97,238,.15); color: var(--blue); border: 1px solid rgba(67,97,238,.3); }
+    .badge-shipped { background: rgba(0,200,150,.12); color: var(--success); border: 1px solid rgba(0,200,150,.3); }
+    .badge-ready { background: rgba(240,165,0,.12); color: var(--warning); border: 1px solid rgba(240,165,0,.3); }
+    .badge-pending { background: rgba(230,57,70,.12); color: var(--danger); border: 1px solid rgba(230,57,70,.3); }
+    .badge-delivered { background: rgba(0,200,150,.2); color: var(--success); }
+    .badge-cancelled { background: rgba(120,120,160,.15); color: var(--text-muted); }
+
+    /* Countdown */
+    .countdown { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .countdown.urgent { color: var(--danger); animation: pulse 1s ease-in-out infinite; }
+    .countdown.warning { color: var(--warning); }
+    .countdown.ok { color: var(--success); }
+    .countdown.overdue { color: var(--text-muted); text-decoration: line-through; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .deadline-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Order details row */
+    .order-details { display: flex; gap: 20px; flex-wrap: wrap; }
+    .order-detail { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-muted); }
+    .order-detail i { font-size: 0.75rem; }
+    .order-detail strong { color: var(--text); }
+
+    /* Actions row */
+    .order-actions { display: flex; gap: 8px; justify-content: flex-end; align-items: center; }
+
+    /* Confirmation gallery */
+    .confirm-list { display: grid; gap: 12px; }
+    .confirm-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; gap: 14px; align-items: flex-start; }
+    .confirm-photo { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0; cursor: pointer; border: 2px solid var(--border); transition: border-color .2s; }
+    .confirm-photo:hover { border-color: var(--ml-orange); }
+    .confirm-no-photo { width: 80px; height: 80px; border-radius: 8px; background: var(--card2); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-muted); font-size: 1.5rem; }
+    .confirm-info { flex: 1; }
+    .confirm-order-id { font-size: 0.82rem; color: var(--text-muted); font-family: monospace; }
+    .confirm-title { font-weight: 600; margin: 2px 0 6px; }
+    .confirm-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .confirm-reason { font-size: 0.82rem; color: var(--warning); margin-top: 4px; font-style: italic; }
+    .confirm-card.confirmed { border-left: 3px solid var(--success); }
+    .confirm-card.missing { border-left: 3px solid var(--danger); }
+    .confirm-card.with-reason { border-left: 3px solid var(--warning); }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 60px 20px; }
+    .empty-state i { font-size: 3rem; color: var(--text-muted); opacity: .4; margin-bottom: 16px; }
+    .empty-state p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* Refresh bar */
+    .refresh-bar { padding: 8px 20px; background: var(--card); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--text-muted); }
+    .refresh-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+    .refresh-dot.spinning { animation: spin-dot 1s linear infinite; }
+    @keyframes spin-dot { to { transform: rotate(360deg); } }
+    .refresh-bar .spacer { flex: 1; }
+
+    /* Modals */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+    .modal-header { padding: 20px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+    .modal-header h2 { font-size: 1.1rem; font-weight: 700; }
+    .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 4px; }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 20px 24px; }
+    .modal-footer { padding: 0 24px 20px; display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* Photo upload area */
+    .photo-drop-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
+    .photo-drop-zone:hover, .photo-drop-zone.drag-over { border-color: var(--ml-orange); background: rgba(255,105,0,.05); }
+    .photo-drop-zone i { font-size: 2rem; color: var(--text-muted); margin-bottom: 10px; }
+    .photo-drop-zone p { font-size: 0.85rem; color: var(--text-muted); }
+    .photo-drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .photo-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 12px; }
+
+    /* Lightbox */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 300; align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; }
+    .lightbox-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,.1); border: none; color: #fff; font-size: 1.5rem; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+
+    /* Alerts */
+    .alert { padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 14px; }
+    .alert-info { background: rgba(67,97,238,.12); border: 1px solid rgba(67,97,238,.3); color: #8ba4ff; }
+    .alert-warning { background: rgba(240,165,0,.12); border: 1px solid rgba(240,165,0,.3); color: var(--warning); }
+    .alert-error { background: rgba(230,57,70,.12); border: 1px solid rgba(230,57,70,.3); color: var(--danger); }
+
+    /* Loading */
+    .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,105,0,.3); border-top-color: var(--ml-orange); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-overlay { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 40px; color: var(--text-muted); }
+
+    /* Filter bar */
+    .filter-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-bar input { background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 7px 12px; font-size: 0.85rem; outline: none; }
+    .filter-bar input:focus { border-color: var(--ml-orange); }
+
+    /* Progress bar */
+    .progress-bar { background: var(--card2); border-radius: 4px; height: 6px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--success); transition: width .4s; }
+    .confirm-progress { margin-bottom: 16px; }
+    .confirm-progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .header-clock { font-size: 1.1rem; }
+      .daily-code-value { font-size: 1.1rem; }
+      .tabs-bar { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SETUP SCREEN ── -->
+<div id="screen-setup" class="screen center-screen">
+  <div class="setup-box">
+    <div class="logo"><i class="fa-solid fa-truck-fast"></i></div>
+    <h1>ML Envios</h1>
+    <p>Configure suas credenciais do Mercado Livre para começar.</p>
+    <div id="setup-error" class="alert alert-error" style="display:none"></div>
+    <div class="form-group">
+      <label>Client ID do App Mercado Livre</label>
+      <input id="setup-client-id" type="text" placeholder="Ex: 123456789">
+      <div class="hint">Crie um app em <code>developers.mercadolivre.com.br</code> e copie o App ID aqui.</div>
+    </div>
+    <div class="form-group">
+      <label>Redirect URI</label>
+      <input id="setup-redirect-uri" type="text" placeholder="https://seu-site.com/mercadolivre/">
+      <div class="hint">Deve ser registrado no painel do seu app ML. A URL atual é detectada automaticamente.</div>
+    </div>
+    <div class="form-group">
+      <label>Horário de Corte (envios regulares)</label>
+      <input id="setup-cutoff" type="time" value="14:00">
+      <div class="hint">Horário limite para despachar pedidos no dia.</div>
+    </div>
+    <hr class="divider">
+    <button class="btn btn-primary btn-block" onclick="saveSetup()"><i class="fa-solid fa-check"></i> Salvar e Continuar</button>
+  </div>
+</div>
+
+<!-- ── AUTH SCREEN ── -->
+<div id="screen-auth" class="screen center-screen">
+  <div class="setup-box">
+    <div class="logo"><i class="fa-solid fa-lock-open"></i></div>
+    <h1>Conectar ao Mercado Livre</h1>
+    <p>Autorize o acesso para visualizar seus pedidos e envios.</p>
+    <div id="auth-error" class="alert alert-error" style="display:none"></div>
+    <button class="btn btn-primary btn-block" onclick="startMLAuth()" style="font-size:1rem;padding:14px;">
+      <i class="fa-solid fa-right-to-bracket"></i> Entrar com Mercado Livre
+    </button>
+    <hr class="divider">
+    <button class="btn btn-secondary btn-sm" onclick="showSetup()"><i class="fa-solid fa-gear"></i> Configurações</button>
+  </div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="screen-app" class="screen">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo">
+      <i class="fa-solid fa-truck-fast"></i>
+      <span>ML Envios</span>
+    </div>
+    <div class="header-clock" id="clock">00:00:00</div>
+    <div class="header-right">
+      <div class="seller-badge" id="seller-badge">
+        <i class="fa-solid fa-store"></i>
+        <span id="seller-name">Carregando...</span>
+      </div>
+      <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+    </div>
+  </div>
+
+  <!-- Daily Code Bar -->
+  <div class="daily-code-bar">
+    <div class="daily-code-label"><i class="fa-solid fa-key"></i> Código do Dia</div>
+    <div id="daily-code-display" class="daily-code-empty" onclick="openDailyCodeModal()">Clique para inserir o código de hoje…</div>
+    <div class="daily-code-meta" id="daily-code-meta"></div>
+    <button class="daily-code-edit-btn" onclick="openDailyCodeModal()"><i class="fa-solid fa-pen"></i> Editar</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card orange">
+      <div class="stat-value" id="stat-total">—</div>
+      <div class="stat-label">Pedidos Hoje</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-value" id="stat-full">—</div>
+      <div class="stat-label">Envios Full</div>
+    </div>
+    <div class="stat-card yellow">
+      <div class="stat-value" id="stat-pending">—</div>
+      <div class="stat-label">Aguardando Envio</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-value" id="stat-confirmed">—</div>
+      <div class="stat-label">Confirmados Hoje</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" data-tab="full" onclick="switchTab('full')">
+      <i class="fa-solid fa-warehouse"></i> Envios Full <span class="tab-badge" id="badge-full">0</span>
+    </button>
+    <button class="tab-btn" data-tab="ship" onclick="switchTab('ship')">
+      <i class="fa-solid fa-box"></i> Para Enviar <span class="tab-badge" id="badge-ship">0</span>
+    </button>
+    <button class="tab-btn" data-tab="confirm" onclick="switchTab('confirm')">
+      <i class="fa-solid fa-camera"></i> Confirmações <span class="tab-badge" id="badge-confirm">0</span>
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+
+    <!-- Tab: Envios Full -->
+    <div class="tab-pane active" id="pane-full">
+      <div class="filter-bar">
+        <input id="filter-full" type="text" placeholder="Buscar por pedido, produto..." oninput="renderFullTab()">
+        <button class="btn btn-secondary btn-sm" onclick="fetchData()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+      </div>
+      <div class="cards-grid" id="list-full"></div>
+    </div>
+
+    <!-- Tab: Para Enviar -->
+    <div class="tab-pane" id="pane-ship">
+      <div class="filter-bar">
+        <input id="filter-ship" type="text" placeholder="Buscar por pedido, produto..." oninput="renderShipTab()">
+        <button class="btn btn-secondary btn-sm" onclick="fetchData()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+      </div>
+      <div id="cutoff-alert" class="alert alert-warning" style="display:none"></div>
+      <div class="cards-grid" id="list-ship"></div>
+    </div>
+
+    <!-- Tab: Confirmações -->
+    <div class="tab-pane" id="pane-confirm">
+      <div class="filter-bar">
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal(null)"><i class="fa-solid fa-camera"></i> Novo Registro</button>
+        <button class="btn btn-secondary btn-sm" onclick="loadConfirmacoes()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+      </div>
+      <div class="confirm-progress">
+        <div class="confirm-progress-label">
+          <span>Confirmações de hoje</span>
+          <span id="confirm-progress-text">0 / 0</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="confirm-progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="confirm-list" id="list-confirm"></div>
+    </div>
+
+  </div><!-- /tab-content -->
+
+  <!-- Refresh Bar -->
+  <div class="refresh-bar">
+    <div class="refresh-dot" id="refresh-dot"></div>
+    <span id="refresh-label">Aguardando...</span>
+    <span class="spacer"></span>
+    <span id="next-refresh-label"></span>
+  </div>
+</div><!-- /screen-app -->
+
+<!-- ── MODAL: Daily Code ── -->
+<div class="modal-overlay" id="modal-daily-code">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-key"></i> Código do Dia</h2>
+      <button class="modal-close" onclick="closeModal('modal-daily-code')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-info">O código é atualizado automaticamente todo dia. Insira o código gerado pelo painel do Mercado Livre.</div>
+      <div class="form-group">
+        <label>Código de Hoje</label>
+        <input id="dc-code-input" type="text" placeholder="Ex: A1B2C3" style="font-size:1.3rem;font-family:monospace;letter-spacing:.15em;text-transform:uppercase;">
+      </div>
+      <div class="form-group">
+        <label>Observações (opcional)</label>
+        <textarea id="dc-notes-input" placeholder="Informações adicionais..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-daily-code')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveDailyCode()"><i class="fa-solid fa-check"></i> Salvar Código</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL: Confirmation Upload ── -->
+<div class="modal-overlay" id="modal-upload">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-camera"></i> Confirmar Envio</h2>
+      <button class="modal-close" onclick="closeModal('modal-upload')">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="upload-order-info" style="margin-bottom:14px;"></div>
+      <div class="form-group">
+        <label>Número do Pedido</label>
+        <input id="upload-order-id" type="text" placeholder="Ex: 1234567890">
+      </div>
+      <div class="form-group">
+        <label>Enviado? <span id="upload-confirmed-toggle" style="float:right;cursor:pointer;" onclick="toggleConfirmed()"><span id="toggle-icon">⬜</span> Não enviado</span></label>
+        <input type="hidden" id="upload-confirmed" value="0">
+      </div>
+      <div id="upload-reason-group" class="form-group">
+        <label>Motivo (se não enviado)</label>
+        <textarea id="upload-reason" placeholder="Descreva o motivo do não envio..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Foto de Confirmação</label>
+        <div class="photo-drop-zone" id="photo-drop-zone">
+          <input type="file" id="photo-file-input" accept="image/*" onchange="handlePhotoSelect(event)">
+          <i class="fa-solid fa-image"></i>
+          <p>Clique ou arraste uma foto aqui</p>
+        </div>
+        <img id="photo-preview" class="photo-preview" style="display:none;">
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea id="upload-notes" placeholder="Notas adicionais..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-upload')">Cancelar</button>
+      <button class="btn btn-primary" id="upload-save-btn" onclick="saveConfirmacao()"><i class="fa-solid fa-check"></i> Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">×</button>
+  <img id="lightbox-img" src="">
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// CONSTANTS
+// ─────────────────────────────────────────
+const ML_AUTH_URL  = 'https://auth.mercadolivre.com.br/authorization';
+const ML_API       = 'https://api.mercadolibre.com';
+const SB_URL       = 'https://axytwuwonpiqfxylyxsp.supabase.co';
+const SB_KEY       = 'sb_publishable_gD5Yx1t882-vRlf6DM2SnQ_OzNpj0R9';
+const REFRESH_MS   = 5 * 60 * 1000; // 5 min
+
+// ─────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────
+function getConfig() {
+  try { return JSON.parse(localStorage.getItem('ml_config') || 'null'); } catch { return null; }
+}
+function saveConfig(cfg) {
+  localStorage.setItem('ml_config', JSON.stringify(cfg));
+}
+
+// ─────────────────────────────────────────
+// SUPABASE
+// ─────────────────────────────────────────
+let sb = null;
+function initSupabase() {
+  sb = window.supabase.createClient(SB_URL, SB_KEY);
+}
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+const state = {
+  token: null, tokenExpiry: 0,
+  seller: null,
+  fullOrders: [], shipOrders: [],
+  confirmacoes: [],
+  dailyCode: null,
+  refreshTimer: null, countdownTimer: null,
+  nextRefreshAt: null,
+  uploading: false,
+  pendingOrderId: null,
+  selectedPhotoFile: null,
+  confirmedToggle: false,
+};
+
+// ─────────────────────────────────────────
+// OAUTH
+// ─────────────────────────────────────────
+function getStoredToken() {
+  try {
+    const t = JSON.parse(localStorage.getItem('ml_token') || 'null');
+    if (t && t.expiry > Date.now()) return t.access_token;
+    localStorage.removeItem('ml_token');
+    return null;
+  } catch { return null; }
+}
+function storeToken(token, expiresIn) {
+  localStorage.setItem('ml_token', JSON.stringify({
+    access_token: token,
+    expiry: Date.now() + (expiresIn - 60) * 1000
+  }));
+}
+function parseHashToken() {
+  const hash = window.location.hash.slice(1);
+  const params = Object.fromEntries(new URLSearchParams(hash));
+  if (params.access_token) {
+    storeToken(params.access_token, parseInt(params.expires_in) || 21600);
+    history.replaceState(null, '', window.location.pathname);
+    return params.access_token;
+  }
+  return null;
+}
+function startMLAuth() {
+  const cfg = getConfig();
+  if (!cfg) { showScreen('setup'); return; }
+  const redirect = encodeURIComponent(cfg.redirectUri);
+  const url = `${ML_AUTH_URL}?response_type=token&client_id=${cfg.clientId}&redirect_uri=${redirect}`;
+  window.location.href = url;
+}
+function logout() {
+  localStorage.removeItem('ml_token');
+  state.token = null; state.seller = null;
+  clearInterval(state.refreshTimer);
+  clearInterval(state.countdownTimer);
+  showScreen('auth');
+}
+
+// ─────────────────────────────────────────
+// ML API
+// ─────────────────────────────────────────
+async function mlGet(path) {
+  const res = await fetch(`${ML_API}${path}`, {
+    headers: { 'Authorization': `Bearer ${state.token}` }
+  });
+  if (res.status === 401) { logout(); throw new Error('Token expirado'); }
+  if (!res.ok) throw new Error(`API ${res.status}: ${path}`);
+  return res.json();
+}
+
+async function fetchSeller() {
+  return mlGet('/users/me');
+}
+
+function todayRange() {
+  const now = new Date();
+  const tzOffset = -3 * 60;
+  const localNow = new Date(now.getTime() + (tzOffset - now.getTimezoneOffset()) * 60000);
+  const yyyy = localNow.getUTCFullYear();
+  const mm   = String(localNow.getUTCMonth() + 1).padStart(2, '0');
+  const dd   = String(localNow.getUTCDate()).padStart(2, '0');
+  const from = `${yyyy}-${mm}-${dd}T00:00:00.000-03:00`;
+  const to   = `${yyyy}-${mm}-${dd}T23:59:59.999-03:00`;
+  return { from, to, dateStr: `${yyyy}-${mm}-${dd}` };
+}
+
+async function fetchOrders(sellerId) {
+  const { from, to } = todayRange();
+  const fromEnc = encodeURIComponent(from);
+  const toEnc   = encodeURIComponent(to);
+
+  // Fetch paid + paid_with_mp orders placed today, up to 50
+  const url = `/orders/search?seller=${sellerId}&sort=date_desc&limit=50&order.status=paid&order.date_created.from=${fromEnc}&order.date_created.to=${toEnc}`;
+  let data;
+  try {
+    data = await mlGet(url);
+  } catch (e) {
+    console.error('fetchOrders error:', e);
+    return [];
+  }
+  return data.results || [];
+}
+
+async function fetchPendingShipOrders(sellerId) {
+  // Orders from last 3 days that are ready_to_ship (not yet sent)
+  const pastDate = new Date();
+  pastDate.setDate(pastDate.getDate() - 3);
+  const from = pastDate.toISOString().replace('Z', '').slice(0, 19) + '.000-03:00';
+  const url = `/orders/search?seller=${sellerId}&sort=date_asc&limit=50&order.status=paid&shipping.status=ready_to_ship`;
+  let data;
+  try {
+    data = await mlGet(url);
+  } catch (e) {
+    console.error('fetchPendingShipOrders error:', e);
+    return [];
+  }
+  return data.results || [];
+}
+
+async function fetchShipmentDetails(shipmentId) {
+  try {
+    return await mlGet(`/shipments/${shipmentId}`);
+  } catch { return null; }
+}
+
+// ─────────────────────────────────────────
+// SUPABASE OPERATIONS
+// ─────────────────────────────────────────
+async function loadDailyCode() {
+  if (!sb || !state.seller) return;
+  const { dateStr } = todayRange();
+  const { data } = await sb.from('ml_daily_codes')
+    .select('*').eq('seller_id', String(state.seller.id)).eq('code_date', dateStr)
+    .maybeSingle();
+  state.dailyCode = data;
+  renderDailyCode();
+}
+
+async function saveDailyCodeToDB(code, notes) {
+  if (!sb || !state.seller) return;
+  const { dateStr } = todayRange();
+  const { error } = await sb.from('ml_daily_codes').upsert({
+    seller_id: String(state.seller.id), code, notes: notes || null,
+    code_date: dateStr, updated_at: new Date().toISOString()
+  }, { onConflict: 'seller_id,code_date' });
+  if (!error) { state.dailyCode = { code, notes, code_date: dateStr, updated_at: new Date().toISOString() }; renderDailyCode(); }
+  return error;
+}
+
+async function loadConfirmacoes() {
+  if (!sb || !state.seller) return;
+  const { dateStr } = todayRange();
+  const { data } = await sb.from('ml_confirmacoes')
+    .select('*').eq('seller_id', String(state.seller.id)).eq('shipping_date', dateStr)
+    .order('created_at', { ascending: false });
+  state.confirmacoes = data || [];
+  renderConfirmTab();
+}
+
+async function saveConfirmacaoToDB(orderId, confirmed, reason, notes, photoFile) {
+  if (!sb || !state.seller) return { error: 'Sem conexão' };
+  const { dateStr } = todayRange();
+  let photo_url = null;
+
+  if (photoFile) {
+    const ext = photoFile.name.split('.').pop() || 'jpg';
+    const path = `ml_confirmacoes/${state.seller.id}/${dateStr}/${orderId}_${Date.now()}.${ext}`;
+    const { error: upErr } = await sb.storage.from('fotos').upload(path, photoFile, { upsert: true });
+    if (upErr) return { error: 'Erro ao enviar foto: ' + upErr.message };
+    const { data: urlData } = sb.storage.from('fotos').getPublicUrl(path);
+    photo_url = urlData.publicUrl;
+  }
+
+  const { error } = await sb.from('ml_confirmacoes').upsert({
+    seller_id: String(state.seller.id),
+    order_id: String(orderId),
+    confirmed: !!confirmed,
+    reason: reason || null,
+    notes: notes || null,
+    photo_url,
+    shipping_date: dateStr,
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'seller_id,order_id,shipping_date' });
+  return { error };
+}
+
+// ─────────────────────────────────────────
+// FETCH & PROCESS DATA
+// ─────────────────────────────────────────
+async function fetchData() {
+  if (!state.seller) return;
+  setRefreshDot(true);
+  updateRefreshLabel('Atualizando...');
+
+  try {
+    const sellerId = state.seller.id;
+    const [todayOrders, pendingOrders] = await Promise.all([
+      fetchOrders(sellerId),
+      fetchPendingShipOrders(sellerId)
+    ]);
+
+    // Split today's orders into Full vs normal
+    state.fullOrders = todayOrders.filter(o =>
+      o.shipping && o.shipping.logistic_type === 'fulfillment'
+    );
+
+    // Pending ship = ready_to_ship, non-fulfillment orders (from last 3 days)
+    const pendingNonFull = pendingOrders.filter(o =>
+      !o.shipping || o.shipping.logistic_type !== 'fulfillment'
+    );
+    // Also include today's non-full paid orders that are ready_to_ship
+    const todayNonFull = todayOrders.filter(o =>
+      (!o.shipping || o.shipping.logistic_type !== 'fulfillment') &&
+      o.shipping && o.shipping.status === 'ready_to_ship'
+    );
+    // Merge, deduplicate
+    const pendingMap = {};
+    [...pendingNonFull, ...todayNonFull].forEach(o => { pendingMap[o.id] = o; });
+    state.shipOrders = Object.values(pendingMap).sort((a, b) =>
+      new Date(a.date_closed) - new Date(b.date_closed)
+    );
+
+    updateStats();
+    renderFullTab();
+    renderShipTab();
+  } catch (e) {
+    console.error('fetchData error:', e);
+  }
+
+  setRefreshDot(false);
+  const now = new Date();
+  updateRefreshLabel(`Atualizado às ${fmtTime(now)}`);
+  scheduleNextRefresh();
+}
+
+function scheduleNextRefresh() {
+  clearInterval(state.refreshTimer);
+  state.nextRefreshAt = Date.now() + REFRESH_MS;
+  state.refreshTimer = setTimeout(fetchData, REFRESH_MS);
+}
+
+// ─────────────────────────────────────────
+// RENDER HELPERS
+// ─────────────────────────────────────────
+function fmtTime(d) {
+  return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+function fmtDateTime(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+function orderTitle(order) {
+  if (!order.order_items || !order.order_items.length) return 'Pedido #' + order.id;
+  const first = order.order_items[0].item?.title || 'Produto';
+  return order.order_items.length > 1 ? `${first} +${order.order_items.length - 1}` : first;
+}
+function orderQty(order) {
+  return (order.order_items || []).reduce((s, i) => s + (i.quantity || 1), 0);
+}
+function shippingStatusBadge(status) {
+  const map = {
+    ready_to_ship: ['badge-ready', 'Aguardando'],
+    shipped: ['badge-shipped', 'Enviado'],
+    delivered: ['badge-delivered', 'Entregue'],
+    cancelled: ['badge-cancelled', 'Cancelado'],
+    handling: ['badge-ready', 'Preparando'],
+    in_hub: ['badge-shipped', 'No Hub'],
+    not_delivered: ['badge-pending', 'Não Entregue'],
+  };
+  const [cls, label] = map[status] || ['badge-pending', status || '—'];
+  return `<span class="badge ${cls}">${label}</span>`;
+}
+function deadlineCountdown(order) {
+  const cfg = getConfig();
+  const cutoffTime = cfg ? cfg.cutoff : '14:00';
+  const closedAt = new Date(order.date_closed || order.date_created);
+  const today = new Date();
+  const [ch, cm] = cutoffTime.split(':').map(Number);
+  const cutoff = new Date(today.getFullYear(), today.getMonth(), today.getDate(), ch, cm, 0);
+
+  const diff = cutoff - Date.now();
+  if (diff < 0) return `<span class="countdown overdue">Prazo encerrado</span><div class="deadline-label">Corte: ${cutoffTime}</div>`;
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const cls = diff < 3600000 ? 'urgent' : diff < 7200000 ? 'warning' : 'ok';
+  return `<span class="countdown ${cls}" data-deadline="cutoff">${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</span><div class="deadline-label">Corte: ${cutoffTime}</div>`;
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent =
+    state.fullOrders.length + state.shipOrders.length;
+  document.getElementById('stat-full').textContent = state.fullOrders.length;
+  document.getElementById('stat-pending').textContent = state.shipOrders.length;
+  document.getElementById('stat-confirmed').textContent =
+    state.confirmacoes.filter(c => c.confirmed).length;
+  document.getElementById('badge-full').textContent = state.fullOrders.length;
+  document.getElementById('badge-ship').textContent = state.shipOrders.length;
+  document.getElementById('badge-confirm').textContent = state.confirmacoes.length;
+}
+
+// ─────────────────────────────────────────
+// RENDER TABS
+// ─────────────────────────────────────────
+function renderFullTab() {
+  const q = (document.getElementById('filter-full').value || '').toLowerCase();
+  let orders = state.fullOrders;
+  if (q) orders = orders.filter(o =>
+    String(o.id).includes(q) || orderTitle(o).toLowerCase().includes(q)
+  );
+  const el = document.getElementById('list-full');
+  if (!orders.length) {
+    el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-warehouse"></i><p>Nenhum envio Full encontrado hoje.</p></div>`;
+    return;
+  }
+  el.innerHTML = orders.map(o => {
+    const items = (o.order_items || []).map(i => `
+      <div class="order-detail">
+        <i class="fa-solid fa-box"></i>
+        <span>${i.quantity || 1}x <strong>${i.item?.title || 'Produto'}</strong></span>
+      </div>`).join('');
+    return `
+    <div class="order-card">
+      <div class="order-card-header">
+        <div class="order-card-icon icon-full"><i class="fa-solid fa-warehouse"></i></div>
+        <div class="order-card-info">
+          <div class="order-id">#${o.id}</div>
+          <div class="order-title">${orderTitle(o)}</div>
+          <div class="order-buyer"><i class="fa-solid fa-user"></i> ${o.buyer?.nickname || '—'}</div>
+        </div>
+        <div class="order-card-right">
+          <span class="badge badge-full"><i class="fa-solid fa-warehouse"></i> Full</span><br><br>
+          ${shippingStatusBadge(o.shipping?.status)}
+          <div class="deadline-label">${fmtDateTime(o.date_closed)}</div>
+        </div>
+      </div>
+      <div class="order-details">${items}</div>
+      <div class="order-actions">
+        <a href="https://www.mercadolivre.com.br/vendas/${o.id}/detalhe" target="_blank" class="btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no ML</a>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal(${o.id})"><i class="fa-solid fa-camera"></i> Confirmar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderShipTab() {
+  const cfg = getConfig();
+  const cutoffTime = cfg ? cfg.cutoff : '14:00';
+  const q = (document.getElementById('filter-ship').value || '').toLowerCase();
+  let orders = state.shipOrders;
+  if (q) orders = orders.filter(o =>
+    String(o.id).includes(q) || orderTitle(o).toLowerCase().includes(q)
+  );
+
+  // Cutoff alert
+  const [ch, cm] = cutoffTime.split(':').map(Number);
+  const cutoff = new Date();
+  cutoff.setHours(ch, cm, 0, 0);
+  const diffMs = cutoff - Date.now();
+  const alertEl = document.getElementById('cutoff-alert');
+  if (diffMs > 0 && diffMs < 7200000) {
+    const h = Math.floor(diffMs / 3600000);
+    const m = Math.floor((diffMs % 3600000) / 60000);
+    alertEl.style.display = '';
+    alertEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <strong>${h}h ${m}min</strong> para o horário de corte (${cutoffTime}). Despacho seus pedidos com urgência!`;
+  } else { alertEl.style.display = 'none'; }
+
+  const el = document.getElementById('list-ship');
+  if (!orders.length) {
+    el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-box-open"></i><p>Nenhum pedido pendente de envio.</p></div>`;
+    return;
+  }
+  el.innerHTML = orders.map(o => {
+    const logType = o.shipping?.logistic_type || '';
+    const logLabel = { self_service: 'Agência', xd_drop_off: 'Drop-off', me2: 'ME2', me1: 'ME1', not_specified: 'Livre' }[logType] || logType;
+    return `
+    <div class="order-card">
+      <div class="order-card-header">
+        <div class="order-card-icon icon-ship"><i class="fa-solid fa-box"></i></div>
+        <div class="order-card-info">
+          <div class="order-id">#${o.id}</div>
+          <div class="order-title">${orderTitle(o)}</div>
+          <div class="order-buyer"><i class="fa-solid fa-user"></i> ${o.buyer?.nickname || '—'}&nbsp;&nbsp;<i class="fa-solid fa-location-dot"></i> ${o.buyer?.address?.city || '—'} / ${o.buyer?.address?.state?.id || '—'}</div>
+        </div>
+        <div class="order-card-right">
+          ${deadlineCountdown(o)}
+        </div>
+      </div>
+      <div class="order-details">
+        ${(o.order_items || []).map(i => `<div class="order-detail"><i class="fa-solid fa-box"></i><span>${i.quantity || 1}x <strong>${i.item?.title || 'Produto'}</strong></span></div>`).join('')}
+        ${logLabel ? `<div class="order-detail"><i class="fa-solid fa-truck"></i><strong>${logLabel}</strong></div>` : ''}
+        <div class="order-detail"><i class="fa-solid fa-calendar"></i><span>${fmtDateTime(o.date_closed)}</span></div>
+      </div>
+      <div class="order-actions">
+        <a href="https://www.mercadolivre.com.br/vendas/${o.id}/detalhe" target="_blank" class="btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no ML</a>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal(${o.id})"><i class="fa-solid fa-camera"></i> Confirmar Envio</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderConfirmTab() {
+  const el = document.getElementById('list-confirm');
+  const confirmed = state.confirmacoes.filter(c => c.confirmed).length;
+  const total = state.confirmacoes.length;
+  const pct = total ? Math.round((confirmed / total) * 100) : 0;
+  document.getElementById('confirm-progress-text').textContent = `${confirmed} / ${total}`;
+  document.getElementById('confirm-progress-fill').style.width = pct + '%';
+  document.getElementById('badge-confirm').textContent = total;
+  document.getElementById('stat-confirmed').textContent = confirmed;
+
+  if (!state.confirmacoes.length) {
+    el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-camera"></i><p>Nenhum registro de confirmação hoje.</p></div>`;
+    return;
+  }
+  el.innerHTML = state.confirmacoes.map(c => {
+    const statusClass = c.confirmed ? 'confirmed' : c.reason ? 'with-reason' : 'missing';
+    const photoHtml = c.photo_url
+      ? `<img class="confirm-photo" src="${c.photo_url}" onclick="openLightbox('${c.photo_url}')" alt="Foto de confirmação">`
+      : `<div class="confirm-no-photo"><i class="fa-solid fa-image-slash"></i></div>`;
+    return `
+    <div class="confirm-card ${statusClass}">
+      ${photoHtml}
+      <div class="confirm-info">
+        <div class="confirm-order-id">#${c.order_id}</div>
+        <div class="confirm-title">${c.confirmed ? '<span style="color:var(--success)">✓ Enviado</span>' : '<span style="color:var(--danger)">✗ Não enviado</span>'}</div>
+        <div class="confirm-meta">${fmtDateTime(c.updated_at || c.created_at)}</div>
+        ${c.reason ? `<div class="confirm-reason"><i class="fa-solid fa-circle-info"></i> ${c.reason}</div>` : ''}
+        ${c.notes ? `<div class="confirm-meta" style="margin-top:4px">${c.notes}</div>` : ''}
+      </div>
+      <div style="flex-shrink:0">
+        <button class="btn btn-secondary btn-sm" onclick="openUploadModal('${c.order_id}')"><i class="fa-solid fa-pen"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderDailyCode() {
+  const el = document.getElementById('daily-code-display');
+  const metaEl = document.getElementById('daily-code-meta');
+  if (state.dailyCode && state.dailyCode.code) {
+    el.className = 'daily-code-value';
+    el.textContent = state.dailyCode.code.toUpperCase();
+    const ts = state.dailyCode.updated_at
+      ? `Atualizado às ${fmtTime(new Date(state.dailyCode.updated_at))}`
+      : '';
+    metaEl.textContent = ts;
+  } else {
+    el.className = 'daily-code-empty';
+    el.textContent = 'Clique para inserir o código de hoje…';
+    metaEl.textContent = '';
+  }
+}
+
+// ─────────────────────────────────────────
+// CLOCK
+// ─────────────────────────────────────────
+function startClock() {
+  setInterval(() => {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleTimeString('pt-BR');
+    // Live countdown refresh
+    if (document.querySelector('#pane-ship.active')) {
+      document.querySelectorAll('.countdown[data-deadline="cutoff"]').forEach(el => {
+        const cfg = getConfig();
+        const cutoffTime = cfg ? cfg.cutoff : '14:00';
+        const [ch, cm] = cutoffTime.split(':').map(Number);
+        const cutoff = new Date();
+        cutoff.setHours(ch, cm, 0, 0);
+        const diff = cutoff - Date.now();
+        if (diff < 0) { el.textContent = 'Prazo encerrado'; el.className = 'countdown overdue'; return; }
+        const h = Math.floor(diff / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        const cls = diff < 3600000 ? 'urgent' : diff < 7200000 ? 'warning' : 'ok';
+        el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        el.className = `countdown ${cls}`;
+      });
+    }
+  }, 1000);
+}
+
+function setRefreshDot(spinning) {
+  document.getElementById('refresh-dot').classList.toggle('spinning', spinning);
+}
+function updateRefreshLabel(text) {
+  document.getElementById('refresh-label').textContent = text;
+}
+
+// ─────────────────────────────────────────
+// UI HELPERS
+// ─────────────────────────────────────────
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+}
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'pane-' + tab));
+}
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function openDailyCodeModal() {
+  document.getElementById('dc-code-input').value = state.dailyCode?.code || '';
+  document.getElementById('dc-notes-input').value = state.dailyCode?.notes || '';
+  openModal('modal-daily-code');
+}
+async function saveDailyCode() {
+  const code = document.getElementById('dc-code-input').value.trim().toUpperCase();
+  if (!code) { alert('Insira o código.'); return; }
+  const notes = document.getElementById('dc-notes-input').value.trim();
+  const err = await saveDailyCodeToDB(code, notes);
+  if (err) { alert('Erro ao salvar: ' + err.message); return; }
+  closeModal('modal-daily-code');
+}
+
+function openUploadModal(orderId) {
+  state.pendingOrderId = orderId;
+  state.selectedPhotoFile = null;
+  state.confirmedToggle = false;
+  document.getElementById('upload-order-id').value = orderId || '';
+  document.getElementById('upload-reason').value = '';
+  document.getElementById('upload-notes').value = '';
+  document.getElementById('upload-confirmed').value = '0';
+  document.getElementById('toggle-icon').textContent = '⬜';
+  document.getElementById('upload-confirmed-toggle').innerHTML = `<span id="toggle-icon">⬜</span> Não enviado`;
+  document.getElementById('upload-reason-group').style.display = '';
+  document.getElementById('photo-preview').style.display = 'none';
+  document.getElementById('photo-file-input').value = '';
+
+  // Pre-fill if exists
+  const existing = state.confirmacoes.find(c => String(c.order_id) === String(orderId));
+  if (existing) {
+    document.getElementById('upload-reason').value = existing.reason || '';
+    document.getElementById('upload-notes').value = existing.notes || '';
+    if (existing.confirmed) {
+      state.confirmedToggle = true;
+      document.getElementById('upload-confirmed').value = '1';
+      document.getElementById('upload-confirmed-toggle').innerHTML = `<span id="toggle-icon">✅</span> Enviado`;
+      document.getElementById('upload-reason-group').style.display = 'none';
+    }
+  }
+  openModal('modal-upload');
+}
+
+function toggleConfirmed() {
+  state.confirmedToggle = !state.confirmedToggle;
+  document.getElementById('upload-confirmed').value = state.confirmedToggle ? '1' : '0';
+  const icon = document.getElementById('toggle-icon');
+  icon.textContent = state.confirmedToggle ? '✅' : '⬜';
+  document.getElementById('upload-confirmed-toggle').innerHTML =
+    `<span id="toggle-icon">${state.confirmedToggle ? '✅' : '⬜'}</span> ${state.confirmedToggle ? 'Enviado' : 'Não enviado'}`;
+  document.getElementById('upload-reason-group').style.display = state.confirmedToggle ? 'none' : '';
+}
+
+function handlePhotoSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  state.selectedPhotoFile = file;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById('photo-preview');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveConfirmacao() {
+  const orderId = document.getElementById('upload-order-id').value.trim();
+  if (!orderId) { alert('Informe o número do pedido.'); return; }
+  const confirmed = document.getElementById('upload-confirmed').value === '1';
+  const reason = document.getElementById('upload-reason').value.trim();
+  const notes = document.getElementById('upload-notes').value.trim();
+
+  const btn = document.getElementById('upload-save-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="loading-spinner"></span> Salvando...';
+
+  const { error } = await saveConfirmacaoToDB(orderId, confirmed, reason, notes, state.selectedPhotoFile);
+
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Salvar';
+
+  if (error) { alert('Erro: ' + error); return; }
+  closeModal('modal-upload');
+  await loadConfirmacoes();
+  updateStats();
+}
+
+function openLightbox(url) {
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+
+// ─────────────────────────────────────────
+// SETUP SCREEN
+// ─────────────────────────────────────────
+function showSetup() {
+  const cfg = getConfig();
+  if (cfg) {
+    document.getElementById('setup-client-id').value = cfg.clientId || '';
+    document.getElementById('setup-redirect-uri').value = cfg.redirectUri || '';
+    document.getElementById('setup-cutoff').value = cfg.cutoff || '14:00';
+  } else {
+    document.getElementById('setup-redirect-uri').value =
+      window.location.origin + window.location.pathname;
+  }
+  showScreen('setup');
+}
+function saveSetup() {
+  const clientId = document.getElementById('setup-client-id').value.trim();
+  const redirectUri = document.getElementById('setup-redirect-uri').value.trim();
+  const cutoff = document.getElementById('setup-cutoff').value || '14:00';
+  const errEl = document.getElementById('setup-error');
+  if (!clientId) { errEl.textContent = 'App ID é obrigatório.'; errEl.style.display = ''; return; }
+  if (!redirectUri) { errEl.textContent = 'Redirect URI é obrigatório.'; errEl.style.display = ''; return; }
+  errEl.style.display = 'none';
+  saveConfig({ clientId, redirectUri, cutoff });
+  showScreen('auth');
+}
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+async function init() {
+  initSupabase();
+  startClock();
+
+  // Check for OAuth callback
+  const hashToken = parseHashToken();
+  const storedToken = getStoredToken();
+  const token = hashToken || storedToken;
+
+  const cfg = getConfig();
+  if (!cfg) { showSetup(); return; }
+
+  if (!token) { showScreen('auth'); return; }
+  state.token = token;
+
+  showScreen('app');
+
+  // Fetch seller info
+  try {
+    state.seller = await fetchSeller();
+    document.getElementById('seller-name').textContent = state.seller.nickname || 'Vendedor';
+  } catch (e) {
+    console.error(e);
+    showScreen('auth');
+    return;
+  }
+
+  // Load all data in parallel
+  await Promise.all([
+    fetchData(),
+    loadDailyCode(),
+    loadConfirmacoes(),
+  ]);
+}
+
+// Drag-and-drop on photo zone
+document.getElementById('photo-drop-zone').addEventListener('dragover', e => {
+  e.preventDefault();
+  document.getElementById('photo-drop-zone').classList.add('drag-over');
+});
+document.getElementById('photo-drop-zone').addEventListener('dragleave', () => {
+  document.getElementById('photo-drop-zone').classList.remove('drag-over');
+});
+document.getElementById('photo-drop-zone').addEventListener('drop', e => {
+  e.preventDefault();
+  document.getElementById('photo-drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    state.selectedPhotoFile = file;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.getElementById('photo-preview');
+      img.src = ev.target.result; img.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+<!-- ── SUPABASE TABLE SETUP HELPER ── -->
+<!--
+To create the required tables in Supabase, run this SQL in the Supabase SQL editor:
+
+CREATE TABLE IF NOT EXISTS ml_daily_codes (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  seller_id TEXT NOT NULL,
+  code TEXT NOT NULL,
+  notes TEXT,
+  code_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(seller_id, code_date)
+);
+
+CREATE TABLE IF NOT EXISTS ml_confirmacoes (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  seller_id TEXT NOT NULL,
+  order_id TEXT NOT NULL,
+  confirmed BOOLEAN DEFAULT false,
+  reason TEXT,
+  notes TEXT,
+  photo_url TEXT,
+  shipping_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(seller_id, order_id, shipping_date)
+);
+
+ALTER TABLE ml_daily_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ml_confirmacoes ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "anon_all_daily_codes" ON ml_daily_codes FOR ALL TO anon USING (true) WITH CHECK (true);
+CREATE POLICY "anon_all_confirmacoes" ON ml_confirmacoes FOR ALL TO anon USING (true) WITH CHECK (true);
+-->
+
+</body>
+</html>
