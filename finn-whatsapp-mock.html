@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Finn. — WhatsApp Bot Mock</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ====================================================
+   RESET & BASE
+==================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --wa-bg: #111B21;
+  --wa-chat-bg: #0B141A;
+  --wa-header: #202C33;
+  --wa-bubble-in: #202C33;
+  --wa-bubble-out: #005C4B;
+  --wa-text: #E9EDEF;
+  --wa-text-secondary: #8696A0;
+  --wa-divider: #222D34;
+  --wa-green: #00A884;
+  --wa-green-light: #25D366;
+  --wa-blue: #53BDEB;
+  --wa-sheet-bg: #233138;
+  --finn-orange: #F97316;
+  --finn-dark: #1E293B;
+}
+html { font-size: 16px; }
+body {
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  background: #0D1117;
+  color: var(--wa-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 40px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ====================================================
+   PAGE HEADER
+==================================================== */
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 720px;
+}
+.page-header .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.page-header .logo-icon {
+  width: 40px; height: 40px;
+  background: var(--finn-dark);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: var(--finn-orange);
+  letter-spacing: -0.5px;
+}
+.page-header h1 {
+  font-size: 22px; font-weight: 800;
+  background: linear-gradient(135deg, #F97316, #FB923C);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.page-header p {
+  color: var(--wa-text-secondary);
+  font-size: 14px; line-height: 1.5;
+}
+
+/* ====================================================
+   SCENARIO TABS
+==================================================== */
+.scenario-tabs {
+  display: flex; gap: 8px;
+  margin-bottom: 24px;
+  background: var(--wa-header);
+  padding: 6px;
+  border-radius: 14px;
+  width: 100%; max-width: 375px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--wa-text-secondary);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  line-height: 1.3;
+}
+.tab-btn.active {
+  background: var(--wa-green);
+  color: #fff;
+}
+.tab-btn:hover:not(.active) {
+  background: rgba(255,255,255,0.06);
+  color: var(--wa-text);
+}
+
+/* ====================================================
+   PHONE DEVICE FRAME
+==================================================== */
+.device-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 375px;
+}
+.phone-device {
+  width: 375px;
+  background: var(--wa-chat-bg);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 24px 80px rgba(0,0,0,0.7),
+    0 8px 24px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ====================================================
+   STATUS BAR
+==================================================== */
+.status-bar {
+  background: var(--wa-header);
+  padding: 8px 20px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--wa-text);
+}
+.status-bar .time { font-weight: 700; font-size: 13px; }
+.status-bar .icons { display: flex; gap: 5px; align-items: center; }
+.status-bar .icons svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* ====================================================
+   WHATSAPP HEADER
+==================================================== */
+.wa-header {
+  background: var(--wa-header);
+  padding: 8px 16px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.wa-header .back-btn {
+  color: var(--wa-green);
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: -4px;
+}
+.wa-header .avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--finn-orange), #FB923C);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -0.5px;
+}
+.wa-header .contact-info { flex: 1; }
+.wa-header .contact-name {
+  font-size: 15px; font-weight: 700; color: var(--wa-text);
+  line-height: 1.2;
+}
+.wa-header .contact-status {
+  font-size: 11.5px; color: var(--wa-text-secondary);
+}
+.wa-header .header-actions {
+  display: flex; gap: 16px; color: var(--wa-text-secondary);
+  font-size: 18px; cursor: pointer;
+}
+
+/* ====================================================
+   CHAT BACKGROUND & MESSAGES CONTAINER
+==================================================== */
+.chat-body {
+  flex: 1;
+  background-color: var(--wa-chat-bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23182229' fill-opacity='0.6'%3E%3Cpath d='M30 30c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10S30 35.523 30 30zm-20 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10S10 35.523 10 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  overflow-y: auto;
+  padding: 12px 10px;
+  min-height: 420px;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scroll-behavior: smooth;
+}
+.chat-body::-webkit-scrollbar { width: 3px; }
+.chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+/* ====================================================
+   DATE DIVIDER
+==================================================== */
+.date-divider {
+  text-align: center;
+  margin: 8px 0;
+}
+.date-divider span {
+  background: rgba(17,27,33,0.85);
+  color: var(--wa-text-secondary);
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+
+/* ====================================================
+   MESSAGE BUBBLES
+==================================================== */
+.msg-row {
+  display: flex;
+  margin-bottom: 2px;
+  animation: msgIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+.msg-row.out { justify-content: flex-end; }
+.msg-row.in { justify-content: flex-start; }
+
+@keyframes msgIn {
+  from { opacity: 0; transform: scale(0.85) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.bubble {
+  max-width: 72%;
+  padding: 7px 10px 5px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--wa-text);
+  position: relative;
+  word-break: break-word;
+}
+.bubble.in {
+  background: var(--wa-bubble-in);
+  border-top-left-radius: 2px;
+}
+.bubble.out {
+  background: var(--wa-bubble-out);
+  border-top-right-radius: 2px;
+}
+.bubble.in::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -7px;
+  border: 7px solid transparent;
+  border-top-color: var(--wa-bubble-in);
+  border-right: none;
+}
+.bubble.out::after {
+  content: '';
+  position: absolute;
+  top: 0; right: -7px;
+  border: 7px solid transparent;
+  border-top-color: var(--wa-bubble-out);
+  border-left: none;
+}
+
+.bubble .msg-text { white-space: pre-wrap; }
+.bubble .msg-text strong { font-weight: 700; }
+.bubble .msg-text em { font-style: italic; opacity: 0.82; }
+
+.bubble .msg-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 3px;
+}
+.bubble .msg-time {
+  font-size: 10.5px;
+  color: var(--wa-text-secondary);
+  white-space: nowrap;
+}
+.bubble.out .msg-time { color: rgba(255,255,255,0.55); }
+.read-tick {
+  color: var(--wa-blue);
+  font-size: 12px;
+}
+
+/* ====================================================
+   LIST MESSAGE BUBBLE
+==================================================== */
+.list-bubble {
+  max-width: 82%;
+}
+.list-bubble .list-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wa-text);
+  margin-bottom: 2px;
+}
+.list-bubble .list-footer {
+  font-size: 11.5px;
+  color: var(--wa-text-secondary);
+  margin-top: 4px;
+}
+.list-bubble-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 9px;
+  background: rgba(0,168,132,0.15);
+  border-radius: 6px;
+  border: 1px solid rgba(0,168,132,0.3);
+  color: var(--wa-green);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s;
+  user-select: none;
+}
+.list-bubble-btn:hover, .list-bubble-btn:active {
+  background: rgba(0,168,132,0.28);
+}
+.list-bubble-btn svg { width: 16px; height: 16px; fill: var(--wa-green); }
+
+/* ====================================================
+   BOTTOM SHEET (list message overlay)
+==================================================== */
+.sheet-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation: overlayIn 0.2s ease both;
+  border-radius: 28px;
+}
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.sheet-overlay.hiding {
+  animation: overlayOut 0.2s ease both;
+}
+@keyframes overlayOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.bottom-sheet {
+  background: var(--wa-sheet-bg);
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  animation: sheetIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1) both;
+  max-height: 82%;
+  display: flex; flex-direction: column;
+}
+@keyframes sheetIn {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.sheet-handle {
+  width: 36px; height: 4px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 2px;
+  margin: 10px auto 0;
+}
+.sheet-header {
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sheet-header .sheet-title {
+  font-size: 15px; font-weight: 700; color: var(--wa-text);
+}
+.sheet-header .sheet-desc {
+  font-size: 12px; color: var(--wa-text-secondary); margin-top: 3px;
+  line-height: 1.4;
+}
+.sheet-search {
+  padding: 10px 14px;
+}
+.sheet-search input {
+  width: 100%;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  border-radius: 8px;
+  padding: 9px 14px;
+  color: var(--wa-text);
+  font-family: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+.sheet-search input::placeholder { color: var(--wa-text-secondary); }
+.sheet-sections {
+  overflow-y: auto;
+  flex: 1;
+  padding-bottom: 16px;
+}
+.sheet-sections::-webkit-scrollbar { width: 3px; }
+.sheet-sections::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+.sheet-section-title {
+  padding: 12px 18px 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--wa-green);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.sheet-row {
+  padding: 11px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.sheet-row:hover, .sheet-row:active {
+  background: rgba(255,255,255,0.06);
+}
+.sheet-row .row-radio {
+  width: 18px; height: 18px;
+  border: 2px solid var(--wa-text-secondary);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: border-color 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.sheet-row:hover .row-radio { border-color: var(--wa-green); }
+.sheet-row .row-texts { flex: 1; }
+.sheet-row .row-title {
+  font-size: 14px; font-weight: 600; color: var(--wa-text);
+}
+.sheet-row .row-desc {
+  font-size: 12px; color: var(--wa-text-secondary); margin-top: 2px;
+  line-height: 1.3;
+}
+.sheet-footer-btn {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.sheet-footer-btn button {
+  width: 100%;
+  background: var(--wa-green);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sheet-footer-btn button:disabled {
+  background: rgba(255,255,255,0.12);
+  color: var(--wa-text-secondary);
+  cursor: not-allowed;
+}
+
+/* ====================================================
+   QUICK REPLY / BUTTON BUBBLES
+==================================================== */
+.btn-reply-bubble {
+  max-width: 82%;
+  background: var(--wa-bubble-in);
+  border-radius: 8px;
+  overflow: hidden;
+  border-top-left-radius: 2px;
+}
+.btn-reply-bubble .btn-reply-text {
+  padding: 8px 10px 6px;
+  font-size: 13.5px;
+  color: var(--wa-text);
+  line-height: 1.45;
+}
+.btn-reply-divider { height: 1px; background: rgba(255,255,255,0.07); }
+.btn-reply-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: var(--wa-green);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.btn-reply-option:last-child { border-bottom: none; }
+.btn-reply-option:hover, .btn-reply-option:active {
+  background: rgba(0,168,132,0.1);
+}
+.btn-reply-option svg { width: 14px; height: 14px; margin-right: 6px; fill: var(--wa-green); }
+
+/* ====================================================
+   INPUT BAR
+==================================================== */
+.wa-input-bar {
+  background: var(--wa-header);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.wa-input-bar .emoji-btn, .wa-input-bar .attach-btn, .wa-input-bar .mic-btn {
+  color: var(--wa-text-secondary);
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.wa-input-bar .emoji-btn:hover, .wa-input-bar .attach-btn:hover, .wa-input-bar .mic-btn:hover {
+  color: var(--wa-text);
+}
+.wa-input-bar .input-field {
+  flex: 1;
+  background: var(--wa-chat-bg);
+  border: none;
+  border-radius: 20px;
+  padding: 9px 14px;
+  color: var(--wa-text);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  min-height: 38px;
+}
+.wa-input-bar .input-field::placeholder { color: var(--wa-text-secondary); }
+.wa-input-bar .send-btn {
+  width: 38px; height: 38px;
+  background: var(--wa-green);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+.wa-input-bar .send-btn:hover { background: var(--wa-green-light); }
+.wa-input-bar .send-btn:active { transform: scale(0.93); }
+
+/* ====================================================
+   TYPING INDICATOR
+==================================================== */
+.typing-indicator {
+  display: flex; align-items: center; gap: 3px;
+  padding: 8px 12px;
+  background: var(--wa-bubble-in);
+  border-radius: 8px;
+  border-top-left-radius: 2px;
+  width: fit-content;
+  animation: msgIn 0.2s ease both;
+}
+.typing-dot {
+  width: 7px; height: 7px;
+  background: var(--wa-text-secondary);
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* ====================================================
+   LINK IN MESSAGE
+==================================================== */
+.msg-link {
+  color: var(--wa-blue);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ====================================================
+   DEEP LINK CARD (Abrir Finn button)
+==================================================== */
+.deeplink-card {
+  background: rgba(0,168,132,0.1);
+  border: 1px solid rgba(0,168,132,0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.deeplink-card:hover { background: rgba(0,168,132,0.2); }
+.deeplink-card .dl-icon {
+  width: 34px; height: 34px;
+  background: var(--finn-dark);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: var(--finn-orange);
+  flex-shrink: 0;
+}
+.deeplink-card .dl-texts .dl-title {
+  font-size: 13px; font-weight: 700; color: var(--wa-text);
+}
+.deeplink-card .dl-texts .dl-sub {
+  font-size: 11.5px; color: var(--wa-text-secondary);
+}
+
+/* ====================================================
+   SCENARIO DESCRIPTIONS
+==================================================== */
+.scenario-info {
+  width: 100%;
+  max-width: 375px;
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--wa-header);
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--wa-text-secondary);
+  line-height: 1.5;
+}
+.scenario-info strong { color: var(--wa-text); }
+
+/* ====================================================
+   RESTART BUTTON
+==================================================== */
+.restart-btn {
+  margin-top: 12px;
+  padding: 9px 20px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--wa-text-secondary);
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.restart-btn:hover {
+  border-color: var(--wa-green);
+  color: var(--wa-green);
+}
+
+/* ====================================================
+   HIDDEN UTILITY
+==================================================== */
+.hidden { display: none !important; }
+
+/* ====================================================
+   RESPONSIVE
+==================================================== */
+@media (max-width: 420px) {
+  body { padding: 12px 0 40px; }
+  .phone-device { border-radius: 0; width: 100%; }
+  .device-wrapper { max-width: 100%; }
+  .scenario-tabs { margin: 0 12px 20px; }
+  .scenario-info, .restart-btn { margin-left: 12px; margin-right: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="logo">
+    <div class="logo-icon">F.</div>
+    <h1>Finn. × WhatsApp Bot</h1>
+  </div>
+  <p>Mock interativo do bot de finanças pessoais.<br>Toque nas opções para simular os fluxos.</p>
+</div>
+
+<!-- SCENARIO TABS -->
+<div class="scenario-tabs" role="tablist" aria-label="Cenários">
+  <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchScenario(0)">📋 Menu</button>
+  <button class="tab-btn" role="tab" aria-selected="false" onclick="switchScenario(1)">💸 Despesa</button>
+  <button class="tab-btn" role="tab" aria-selected="false" onclick="switchScenario(2)">📊 Dashboard</button>
+</div>
+
+<!-- PHONE DEVICE -->
+<div class="device-wrapper">
+  <div class="phone-device" id="phoneDevice">
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+      <span class="time" id="statusTime">22:00</span>
+      <div class="icons">
+        <svg viewBox="0 0 24 24"><path d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M22 11V13"/></svg>
+      </div>
+    </div>
+
+    <!-- WA HEADER -->
+    <div class="wa-header">
+      <div class="back-btn">‹</div>
+      <div class="avatar">F.</div>
+      <div class="contact-info">
+        <div class="contact-name">Finn.</div>
+        <div class="contact-status" id="contactStatus">online</div>
+      </div>
+      <div class="header-actions">
+        <span>📹</span>
+        <span>📞</span>
+        <span>⋮</span>
+      </div>
+    </div>
+
+    <!-- CHAT BODY -->
+    <div class="chat-body" id="chatBody">
+      <!-- Messages injected by JS -->
+    </div>
+
+    <!-- INPUT BAR -->
+    <div class="wa-input-bar">
+      <span class="emoji-btn">😊</span>
+      <input type="text" class="input-field" id="inputField" placeholder="Mensagem" readonly>
+      <span class="attach-btn">📎</span>
+      <button class="send-btn" id="sendBtn" onclick="handleSend()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+  </div><!-- .phone-device -->
+</div><!-- .device-wrapper -->
+
+<!-- SCENARIO INFO + RESTART -->
+<div class="scenario-info" id="scenarioInfo"></div>
+<button class="restart-btn" onclick="restartScenario()">↺ Reiniciar cenário</button>
+
+<script>
+// =============================================================================
+// UTILITIES
+// =============================================================================
+function getTime() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
+function parseMarkdown(text) {
+  return text
+    .replace(/\*([^*]+)\*/g, '<strong>$1</strong>')
+    .replace(/_([^_]+)_/g, '<em>$1</em>')
+    .replace(/~([^~]+)~/g, '<s>$1</s>');
+}
+
+function scrollBottom() {
+  const cb = document.getElementById('chatBody');
+  requestAnimationFrame(() => { cb.scrollTop = cb.scrollHeight; });
+}
+
+let msgCounter = 0;
+function uid() { return 'msg_' + (++msgCounter); }
+
+// =============================================================================
+// MESSAGE FACTORIES
+// =============================================================================
+function createDateDivider(label) {
+  const div = document.createElement('div');
+  div.className = 'date-divider';
+  div.innerHTML = `<span>${label}</span>`;
+  return div;
+}
+
+function createBubble({ dir, text, time, showTick }) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${dir}`;
+  const bubble = document.createElement('div');
+  bubble.className = `bubble ${dir}`;
+  bubble.innerHTML = `
+    <div class="msg-text">${parseMarkdown(text)}</div>
+    <div class="msg-meta">
+      <span class="msg-time">${time || getTime()}</span>
+      ${showTick ? '<span class="read-tick">✓✓</span>' : ''}
+    </div>`;
+  row.appendChild(bubble);
+  return row;
+}
+
+function createListBubble({ time }) {
+  const row = document.createElement('div');
+  row.className = 'msg-row in';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble in list-bubble';
+  bubble.innerHTML = `
+    <div class="list-header">Finn. — Controle Financeiro</div>
+    <div class="msg-text">👋 Olá! Sou o Finn., seu assistente financeiro no WhatsApp.\n\nEscolha uma opção:</div>
+    <div class="list-footer">Finn. • Seu dinheiro, no controle.</div>
+    <div class="list-bubble-btn" onclick="openSheet()">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Ver opções
+    </div>
+    <div class="msg-meta">
+      <span class="msg-time">${time || getTime()}</span>
+    </div>`;
+  row.appendChild(bubble);
+  return row;
+}
+
+function createButtonsBubble({ text, buttons, time, onSelect }) {
+  const row = document.createElement('div');
+  row.className = 'msg-row in';
+  const bubble = document.createElement('div');
+  bubble.className = 'btn-reply-bubble';
+
+  const textDiv = document.createElement('div');
+  textDiv.className = 'btn-reply-text';
+  textDiv.innerHTML = parseMarkdown(text);
+  bubble.appendChild(textDiv);
+
+  buttons.forEach((btn, i) => {
+    const div = document.createElement('div');
+    div.className = 'btn-reply-divider';
+    bubble.appendChild(div);
+    const opt = document.createElement('div');
+    opt.className = 'btn-reply-option';
+    opt.innerHTML = `
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 8 16 12 12 16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      ${btn.label}`;
+    opt.onclick = () => {
+      // Disable all buttons in this bubble
+      bubble.querySelectorAll('.btn-reply-option').forEach(b => {
+        b.style.opacity = '0.4';
+        b.style.pointerEvents = 'none';
+      });
+      opt.style.opacity = '1';
+      opt.style.background = 'rgba(0,168,132,0.15)';
+      onSelect && onSelect(btn);
+    };
+    bubble.appendChild(opt);
+  });
+
+  const meta = document.createElement('div');
+  meta.style.cssText = 'padding:4px 10px 6px;display:flex;justify-content:flex-end;';
+  meta.innerHTML = `<span class="msg-time">${time || getTime()}</span>`;
+  bubble.appendChild(meta);
+
+  row.appendChild(bubble);
+  return row;
+}
+
+function createDeepLinkBubble({ text, time }) {
+  const row = document.createElement('div');
+  row.className = 'msg-row in';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble in';
+  bubble.style.maxWidth = '82%';
+  bubble.innerHTML = `
+    <div class="msg-text">${parseMarkdown(text)}</div>
+    <div class="deeplink-card" onclick="alert('Abrindo Finn... (demo)')">
+      <div class="dl-icon">F.</div>
+      <div class="dl-texts">
+        <div class="dl-title">Abrir Finn.</div>
+        <div class="dl-sub">finn.app • Controle Financeiro</div>
+      </div>
+    </div>
+    <div class="msg-meta">
+      <span class="msg-time">${time || getTime()}</span>
+    </div>`;
+  row.appendChild(bubble);
+  return row;
+}
+
+function createTypingIndicator() {
+  const row = document.createElement('div');
+  row.className = 'msg-row in';
+  row.id = 'typingIndicator';
+  const ind = document.createElement('div');
+  ind.className = 'typing-indicator';
+  ind.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  row.appendChild(ind);
+  return row;
+}
+
+// =============================================================================
+// CHAT APPEND HELPERS
+// =============================================================================
+const chatBody = document.getElementById('chatBody');
+
+function appendEl(el) {
+  chatBody.appendChild(el);
+  scrollBottom();
+  return el;
+}
+
+function appendMsg(opts) {
+  return appendEl(createBubble(opts));
+}
+
+function showTyping(ms = 900) {
+  return new Promise(resolve => {
+    document.getElementById('contactStatus').textContent = 'digitando...';
+    const el = appendEl(createTypingIndicator());
+    setTimeout(() => {
+      el.remove();
+      document.getElementById('contactStatus').textContent = 'online';
+      resolve();
+    }, ms);
+  });
+}
+
+function delay(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// =============================================================================
+// BOTTOM SHEET
+// =============================================================================
+const MENU_SECTIONS = [
+  {
+    title: '💰 Lançamentos',
+    rows: [
+      { id: 'lancar_despesa', title: 'Lançar Despesa', desc: 'Registre um gasto rapidinho' },
+      { id: 'lancar_receita', title: 'Lançar Receita', desc: 'Registre uma entrada de dinheiro' },
+    ]
+  },
+  {
+    title: '📊 Consultas',
+    rows: [
+      { id: 'resumo_mes', title: 'Resumo do Mês', desc: 'Receitas, despesas e saldo atual' },
+      { id: 'alertas_limite', title: 'Alertas de Limite', desc: 'Categorias próximas ou acima do limite' },
+      { id: 'status_metas', title: 'Status das Metas', desc: 'Progresso de todas as suas metas' },
+      { id: 'contas_fixas', title: 'Contas Fixas', desc: 'Pagas e pendentes do mês' },
+    ]
+  },
+  {
+    title: '🛠️ Ferramentas',
+    rows: [
+      { id: 'previsao_saldo', title: 'Previsão de Saldo', desc: 'Projeção do saldo até o fim do mês' },
+      { id: 'modo_panico', title: 'Modo Pânico 🚨', desc: 'Análise de emergência dos gastos' },
+      { id: 'abrir_finn', title: 'Abrir Finn', desc: 'Link direto para o app completo' },
+    ]
+  }
+];
+
+let selectedSheetRow = null;
+
+function openSheet() {
+  if (document.querySelector('.sheet-overlay')) return;
+  selectedSheetRow = null;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'sheet-overlay';
+  overlay.id = 'sheetOverlay';
+  overlay.onclick = (e) => { if (e.target === overlay) closeSheet(); };
+
+  const sheet = document.createElement('div');
+  sheet.className = 'bottom-sheet';
+
+  const handleEl = document.createElement('div');
+  handleEl.className = 'sheet-handle';
+  sheet.appendChild(handleEl);
+
+  const header = document.createElement('div');
+  header.className = 'sheet-header';
+  header.innerHTML = `
+    <div class="sheet-title">Finn. — Controle Financeiro</div>
+    <div class="sheet-desc">Finn. • Seu dinheiro, no controle.</div>`;
+  sheet.appendChild(header);
+
+  const searchDiv = document.createElement('div');
+  searchDiv.className = 'sheet-search';
+  searchDiv.innerHTML = `<input type="text" placeholder="🔍  Buscar" id="sheetSearch" oninput="filterSheet(this.value)">`;
+  sheet.appendChild(searchDiv);
+
+  const sections = document.createElement('div');
+  sections.className = 'sheet-sections';
+  sections.id = 'sheetSections';
+
+  MENU_SECTIONS.forEach(section => {
+    const titleEl = document.createElement('div');
+    titleEl.className = 'sheet-section-title';
+    titleEl.textContent = section.title;
+    sections.appendChild(titleEl);
+
+    section.rows.forEach(row => {
+      const rowEl = document.createElement('div');
+      rowEl.className = 'sheet-row';
+      rowEl.dataset.id = row.id;
+      rowEl.dataset.title = row.title;
+      rowEl.innerHTML = `
+        <div class="row-radio" id="radio_${row.id}"></div>
+        <div class="row-texts">
+          <div class="row-title">${row.title}</div>
+          <div class="row-desc">${row.desc}</div>
+        </div>`;
+      rowEl.onclick = () => selectSheetRow(row, rowEl);
+      sections.appendChild(rowEl);
+    });
+  });
+
+  sheet.appendChild(sections);
+
+  const footer = document.createElement('div');
+  footer.className = 'sheet-footer-btn';
+  footer.innerHTML = `<button id="sheetConfirmBtn" disabled onclick="confirmSheetSelection()">Enviar</button>`;
+  sheet.appendChild(footer);
+
+  overlay.appendChild(sheet);
+  document.getElementById('phoneDevice').appendChild(overlay);
+}
+
+function filterSheet(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.sheet-row').forEach(row => {
+    const title = row.dataset.title.toLowerCase();
+    row.style.display = title.includes(q) ? '' : 'none';
+  });
+}
+
+function selectSheetRow(row, rowEl) {
+  selectedSheetRow = row;
+  // Update radio visuals
+  document.querySelectorAll('.row-radio').forEach(r => {
+    r.style.borderColor = '';
+    r.innerHTML = '';
+  });
+  const radio = rowEl.querySelector('.row-radio');
+  radio.style.borderColor = 'var(--wa-green)';
+  radio.innerHTML = `<div style="width:10px;height:10px;background:var(--wa-green);border-radius:50%;"></div>`;
+  document.getElementById('sheetConfirmBtn').disabled = false;
+}
+
+function closeSheet() {
+  const overlay = document.getElementById('sheetOverlay');
+  if (!overlay) return;
+  overlay.classList.add('hiding');
+  setTimeout(() => overlay.remove(), 200);
+}
+
+async function confirmSheetSelection() {
+  if (!selectedSheetRow) return;
+  const row = selectedSheetRow;
+  closeSheet();
+
+  // Show user's selection as sent message
+  await delay(150);
+  appendMsg({ dir: 'out', text: row.title, showTick: true });
+  await showTyping(800);
+  await handleMenuSelection(row.id);
+}
+
+async function handleMenuSelection(id) {
+  if (currentScenario !== 0) return;
+  switch (id) {
+    case 'lancar_despesa':
+      appendMsg({ dir: 'in', text: '💸 *Lançar despesa!*\n\nQual o valor? (Ex: 45,90)' });
+      updateInfo('💸 Selecionou <strong>Lançar Despesa</strong>. O bot aguarda o valor. Tente o Cenário 2 para o fluxo completo!');
+      break;
+    case 'lancar_receita':
+      appendMsg({ dir: 'in', text: '💰 *Lançar receita!*\n\nQual o valor recebido? (Ex: 3200,00)' });
+      updateInfo('💰 Selecionou <strong>Lançar Receita</strong>.');
+      break;
+    case 'resumo_mes':
+      appendMsg({ dir: 'in', text: '📊 *Resumo de Junho*\n━━━━━━━━━━━━━━━\n💰 Receitas:  R$ 5.200,00\n💸 Despesas: R$ 3.847,50\n📈 Saldo:      R$ 1.352,50\n━━━━━━━━━━━━━━━\n*Top categorias:*\n  🍔 Alimentacao: R$ 980,00\n  🚗 Transporte: R$ 620,00\n  🏠 Moradia: R$ 1.500,00\n\n_47 lançamento(s) no mês_' });
+      break;
+    case 'alertas_limite':
+      appendMsg({ dir: 'in', text: '🚨 *Alertas de Limite — junho*\n━━━━━━━━━━━━━━━\n🔴 *Alimentacao*: R$ 980,00 / R$ 800,00 (123%) — LIMITE ESTOURADO\n🟡 *Lazer*: R$ 320,00 / R$ 400,00 (80%) — Atenção\n🟢 *Transporte*: R$ 620,00 / R$ 700,00 (89%) — Atenção\n\n_Abra o Finn para ajustar seus limites_ 👉 finn.app' });
+      break;
+    case 'status_metas':
+      appendMsg({ dir: 'in', text: '🎯 *Status das Metas*\n━━━━━━━━━━━━━━━\n🚀 *Reserva de emergência*\n   ██████░░ 75%\n   R$ 7.500,00 / R$ 10.000,00\n\n💪 *Viagem Europa*\n   █████░░░ 62%\n   R$ 9.300,00 / R$ 15.000,00\n\n🌱 *Notebook novo*\n   ███░░░░░ 35%\n   R$ 1.750,00 / R$ 5.000,00\n\n_Abra o Finn para aportar_ 👉 finn.app' });
+      break;
+    case 'contas_fixas':
+      appendMsg({ dir: 'in', text: '📋 *Contas Fixas — junho 2026*\n━━━━━━━━━━━━━━━\n*A pagar (R$ 1.650,00):*\n  ⏳ Netflix — R$ 45,90 (dia 15)\n  ⏳ Plano celular — R$ 89,90 (dia 20)\n  ⏳ Academia — R$ 99,90 (dia 25)\n  ⏳ Internet — R$ 114,90 (dia 28)\n\n*Pagas (R$ 1.500,00):*\n  ✅ Aluguel — R$ 1.500,00\n\n_Abra o Finn para marcar como pagas_ 👉 finn.app' });
+      break;
+    case 'previsao_saldo':
+      appendMsg({ dir: 'in', text: '🔮 *Previsão de Saldo*\n━━━━━━━━━━━━━━━\n💰 Saldo atual: R$ 1.352,50\n📋 Fixas pendentes: R$ 350,70\n📊 Gasto médio/dia: R$ 128,25\n📅 Dias restantes: 21\n━━━━━━━━━━━━━━━\n🎯 *Previsão fim do mês:*\n   R$ -692,45\n\n_Baseado no seu ritmo atual de gastos_' });
+      break;
+    case 'modo_panico':
+      appendMsg({ dir: 'in', text: '🚨 *MODO PÂNICO ATIVADO* 🚨\n━━━━━━━━━━━━━━━\nTotal gasto no mês: *R$ 3.847,50*\n\n💣 *Maiores despesas:*\n  1. Aluguel — R$ 1.500,00 (Moradia)\n  2. iFood março — R$ 380,00 (Alimentacao)\n  3. Passagem aérea — R$ 350,00 (Transporte)\n\n💡 *Dicas de emergência:*\n  • Cancele assinaturas que não usa\n  • Evite delivery por 7 dias\n  • Revise gastos recorrentes\n  • Considere vender algo que não usa\n\n_Respira fundo. Você tem isso. 💪_\nAbra o Finn para um plano detalhado 👉 finn.app' });
+      break;
+    case 'abrir_finn':
+      appendEl(createDeepLinkBubble({ text: '📱 *Abrir Finn*\n\nToque no link para abrir o app:' }));
+      break;
+    default:
+      appendMsg({ dir: 'in', text: '❓ Opção não reconhecida. Digite *menu* para tentar novamente.' });
+  }
+  scrollBottom();
+}
+
+// =============================================================================
+// SCENARIO SYSTEM
+// =============================================================================
+let currentScenario = 0;
+
+const SCENARIO_INFOS = [
+  `<strong>Cenário 1: Menu Principal</strong> — Toque em <em>"Ver opções"</em> na mensagem do bot para abrir o seletor de lista. Escolha qualquer opção e confirme.`,
+  `<strong>Cenário 2: Lançar Despesa</strong> — Fluxo animado completo. Toque nas mensagens/botões conforme elas aparecem. A conversa avança automaticamente.`,
+  `<strong>Cenário 3: Dashboard das 22h</strong> — Mensagem automática enviada todo dia às 22h BRT. Role para ver o relatório completo.`
+];
+
+function updateInfo(text) {
+  document.getElementById('scenarioInfo').innerHTML = text;
+}
+
+function switchScenario(idx) {
+  currentScenario = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+  });
+  loadScenario(idx);
+}
+
+function restartScenario() {
+  loadScenario(currentScenario);
+}
+
+function clearChat() {
+  chatBody.innerHTML = '';
+  // Close sheet if open
+  const overlay = document.getElementById('sheetOverlay');
+  if (overlay) overlay.remove();
+}
+
+async function loadScenario(idx) {
+  clearChat();
+  switch (idx) {
+    case 0: await loadScenario0(); break;
+    case 1: await loadScenario1(); break;
+    case 2: await loadScenario2(); break;
+  }
+  updateInfo(SCENARIO_INFOS[idx]);
+}
+
+// =============================================================================
+// SCENARIO 0: MENU PRINCIPAL
+// =============================================================================
+async function loadScenario0() {
+  appendEl(createDateDivider('HOJE'));
+  await delay(300);
+  appendMsg({ dir: 'out', text: 'oi', showTick: true, time: '21:59' });
+  await showTyping(700);
+  appendEl(createListBubble({ time: '21:59' }));
+  scrollBottom();
+}
+
+// =============================================================================
+// SCENARIO 1: LANÇAR DESPESA — fully animated
+// =============================================================================
+let scenario1Step = 0;
+
+async function loadScenario1() {
+  scenario1Step = 0;
+  appendEl(createDateDivider('HOJE'));
+
+  // Step 1: user taps "Lançar Despesa" (simulated as if they selected from menu)
+  await delay(300);
+  appendMsg({ dir: 'out', text: 'Lançar Despesa', showTick: true, time: '21:58' });
+  await showTyping(700);
+
+  // Step 2: Bot asks for value
+  appendMsg({ dir: 'in', text: '💸 *Lançar despesa!*\n\nQual o valor? (Ex: 45,90)', time: '21:58' });
+  await delay(800);
+
+  // Step 3: User types value
+  await simulateTyping('45.90');
+  appendMsg({ dir: 'out', text: '45.90', showTick: true, time: '21:58' });
+  await showTyping(600);
+
+  // Step 4: Bot sends category buttons
+  const catButtons = [
+    { id: 'btn_alimentacao', label: '🍔 Alimentação' },
+    { id: 'btn_transporte', label: '🚗 Transporte' },
+    { id: 'btn_lazer', label: '🎮 Lazer' },
+    { id: 'btn_saude', label: '🏥 Saúde' },
+    { id: 'btn_educacao', label: '📚 Educação' },
+    { id: 'btn_moradia', label: '🏠 Moradia' },
+    { id: 'btn_outros', label: '📦 Outros' },
+  ];
+
+  appendEl(createButtonsBubble({
+    text: 'Qual a categoria?',
+    buttons: catButtons.slice(0, 3),
+    time: '21:58',
+    onSelect: (btn) => handleCatSelect1(btn)
+  }));
+  appendEl(createButtonsBubble({
+    text: 'Mais opções:',
+    buttons: catButtons.slice(3),
+    time: '21:58',
+    onSelect: (btn) => handleCatSelect1(btn)
+  }));
+  scrollBottom();
+}
+
+async function handleCatSelect1(btn) {
+  await delay(200);
+  appendMsg({ dir: 'out', text: btn.label, showTick: true });
+  await showTyping(600);
+
+  // Step 5: Bot asks for description
+  appendMsg({ dir: 'in', text: '📝 Descrição? _(ex: Almoço, iFood, mercado...)_' });
+  await delay(1200);
+
+  // Step 6: User types description
+  await simulateTyping('Almoço restaurante');
+  appendMsg({ dir: 'out', text: 'Almoço restaurante', showTick: true });
+  await showTyping(900);
+
+  // Step 7: Confirmation message
+  const today = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  appendEl(createDeepLinkBubble({
+    text: `✅ *Despesa registrada!*\n\n💸 R$ 45,90 — 🍔 Alimentacao\n📝 Almoço restaurante\n📅 ${today}\n\n_Abra o Finn para ver no extrato_ 👉`
+  }));
+  scrollBottom();
+}
+
+async function simulateTyping(text) {
+  const input = document.getElementById('inputField');
+  input.removeAttribute('readonly');
+  input.value = '';
+  await delay(400);
+  for (let i = 0; i < text.length; i++) {
+    input.value += text[i];
+    await delay(50 + Math.random() * 40);
+  }
+  await delay(300);
+  input.value = '';
+  input.setAttribute('readonly', true);
+}
+
+// =============================================================================
+// SCENARIO 2: DASHBOARD DAS 22H
+// =============================================================================
+async function loadScenario2() {
+  appendEl(createDateDivider('HOJE • 22:00'));
+  await delay(400);
+
+  const today = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: 'numeric', month: 'long'
+  });
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+  const dashboardText =
+`📊 *FINN. — DASHBOARD DAS 22H*
+━━━━━━━━━━━━━━━
+📅 ${cap(today)}
+
+*Hoje:*
+  💰 Receitas: R$ 0,00
+  💸 Despesas: R$ 128,90
+  📉 Saldo do dia: R$ -128,90
+
+*Mês a mês:*
+  💰 Receitas: R$ 5.200,00
+  💸 Despesas: R$ 3.976,40
+  📈 Saldo: R$ 1.223,60
+
+*Limites por categoria:*
+  🔴 🍔 Alimentacao: 123%
+  🟡 🎮 Lazer: 80%
+  🟢 🚗 Transporte: 89%
+
+🎯 *Meta mais próxima:* Reserva de emergência — 75% (R$ 7.500,00 / R$ 10.000,00)
+
+━━━━━━━━━━━━━━━
+_No limite, mas no controle. Segura a onda! 🏄_`;
+
+  appendEl(createDeepLinkBubble({ text: dashboardText, time: '22:00' }));
+  scrollBottom();
+
+  await delay(1200);
+  appendMsg({
+    dir: 'out',
+    text: 'obrigado Finn! 🙏',
+    showTick: true,
+    time: '22:01'
+  });
+  await showTyping(500);
+  appendMsg({
+    dir: 'in',
+    text: '😊 De nada! Lembre-se: cada real bem gerido é um passo para a liberdade financeira.\n\nAté amanhã às 22h! 👋',
+    time: '22:01'
+  });
+  scrollBottom();
+}
+
+// =============================================================================
+// SEND BUTTON HANDLER (scenario 0 — user can type "menu")
+// =============================================================================
+function handleSend() {
+  const input = document.getElementById('inputField');
+  if (input.hasAttribute('readonly')) return;
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+}
+
+// =============================================================================
+// STATUS BAR CLOCK
+// =============================================================================
+function updateClock() {
+  document.getElementById('statusTime').textContent = getTime();
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+// =============================================================================
+// INIT
+// =============================================================================
+loadScenario(0);
+</script>
+</body>
+</html>
