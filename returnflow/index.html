@@ -998,9 +998,18 @@ function renderMktTable() {
 
 /* ------------------------------- SKUs ----------------------------- */
 async function loadSkus() {
-    const { data, error } = await client.from('skus').select('id, sku, nome, preco').order('sku');
-    if (error) throw error;
-    skus = data || [];
+    // carrega TODOS os SKUs em páginas de 1000 (o Supabase devolve no máx. 1000 por vez)
+    let all = [], from = 0;
+    const size = 1000;
+    for (;;) {
+        const { data, error } = await client.from('skus')
+            .select('id, sku, nome, preco').order('sku').range(from, from + size - 1);
+        if (error) throw error;
+        all = all.concat(data || []);
+        if (!data || data.length < size) break;
+        from += size;
+    }
+    skus = all;
 }
 
 function refreshSkuSelect() {
