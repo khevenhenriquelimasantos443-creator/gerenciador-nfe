@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta de Nome & Logo — ReturnFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0A0E1A;
+    color: #fff;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+  .page-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .page-header h1 {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-header p {
+    color: #64748B;
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(249,115,22,.15);
+    color: #FB923C;
+    border: 1px solid rgba(249,115,22,.3);
+    border-radius: 99px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.06);
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0,0,0,.4);
+  }
+  .card-hero {
+    padding: 36px 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 110% -20%, var(--accent-a) 0%, transparent 60%);
+    opacity: .3;
+    pointer-events: none;
+  }
+  .logo-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--logo-bg);
+    box-shadow: 0 8px 24px var(--shadow);
+    flex-shrink: 0;
+  }
+  .name {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .tagline {
+    font-size: 13px;
+    color: #94A3B8;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .card-body {
+    background: #111827;
+    padding: 20px 24px 24px;
+  }
+  .palette {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    position: relative;
+  }
+  .swatch[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1E293B;
+    color: #fff;
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-family: monospace;
+  }
+  .why {
+    font-size: 12.5px;
+    color: #64748B;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .why strong { color: #CBD5E1; }
+  .mockup-bar {
+    background: #1E293B;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #94A3B8;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .mockup-bar .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-a);
+    flex-shrink: 0;
+  }
+  .mockup-bar .brand { font-weight: 800; font-size: 13px; color: #fff; }
+  .section-divider {
+    text-align: center;
+    margin: 60px auto 40px;
+    max-width: 1140px;
+  }
+  .section-divider h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #475569;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  /* ── CARD 1: REVERSA ── */
+  .c1 { --accent-a: #06B6D4; --accent-b: #0EA5E9; --logo-bg: rgba(6,182,212,.15); --shadow: rgba(6,182,212,.25); background: linear-gradient(145deg, #0C1929, #0F2132); }
+  .c1 .name { background: linear-gradient(90deg, #06B6D4, #38BDF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 2: BUMÉRANG ── */
+  .c2 { --accent-a: #FF6B35; --accent-b: #FFD23F; --logo-bg: rgba(255,107,53,.15); --shadow: rgba(255,107,53,.25); background: linear-gradient(145deg, #1A0F0A, #1F1008); }
+  .c2 .name { background: linear-gradient(90deg, #FF6B35, #FFD23F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 3: DEVOLT ── */
+  .c3 { --accent-a: #8B5CF6; --accent-b: #EC4899; --logo-bg: rgba(139,92,246,.15); --shadow: rgba(139,92,246,.25); background: linear-gradient(145deg, #0F0A1E, #130D22); }
+  .c3 .name { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 4: REVVY ── */
+  .c4 { --accent-a: #10B981; --accent-b: #34D399; --logo-bg: rgba(16,185,129,.15); --shadow: rgba(16,185,129,.25); background: linear-gradient(145deg, #061812, #071C14); }
+  .c4 .name { background: linear-gradient(90deg, #10B981, #34D399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 5: VOLTA ── */
+  .c5 { --accent-a: #E879F9; --accent-b: #818CF8; --logo-bg: rgba(232,121,249,.15); --shadow: rgba(232,121,249,.25); background: linear-gradient(145deg, #14061E, #160A22); }
+  .c5 .name { background: linear-gradient(90deg, #E879F9, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 6: FLIPBACK ── */
+  .c6 { --accent-a: #F59E0B; --accent-b: #FCD34D; --logo-bg: rgba(245,158,11,.15); --shadow: rgba(245,158,11,.25); background: linear-gradient(145deg, #14100A, #1A1206); }
+  .c6 .name { background: linear-gradient(90deg, #F59E0B, #FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 7: DEVOO ── */
+  .c7 { --accent-a: #3B82F6; --accent-b: #60A5FA; --logo-bg: rgba(59,130,246,.15); --shadow: rgba(59,130,246,.25); background: linear-gradient(145deg, #080F20, #0A1226); }
+  .c7 .name { background: linear-gradient(90deg, #3B82F6, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── CARD 8: RECUPO ── */
+  .c8 { --accent-a: #F43F5E; --accent-b: #FB7185; --logo-bg: rgba(244,63,94,.15); --shadow: rgba(244,63,94,.25); background: linear-gradient(145deg, #18060C, #1C080E); }
+  .c8 .name { background: linear-gradient(90deg, #F43F5E, #FB923C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 60px;
+    color: #334155;
+    font-size: 13px;
+  }
+  .footer-note strong { color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">Proposta de Rebrand</div>
+  <h1>Qual nome combina<br>com o produto?</h1>
+  <p>8 sugestões de nomes únicos com identidade visual para o seu app de gestão de devoluções.</p>
+</div>
+
+<div class="grid">
+
+  <!-- 1. REVERSA -->
+  <div class="card c1">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <path d="M28 10 Q36 18 28 26" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M8 10 Q0 18 8 26" stroke="#0EA5E9" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="3 2"/>
+          <path d="M28 10 L18 7 M28 10 L31 20" stroke="#06B6D4" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="18" cy="18" r="4" fill="#06B6D4" opacity=".9"/>
+          <circle cx="18" cy="18" r="2" fill="#0A1929"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Reversa</div>
+        <div class="tagline">Gestão de logística reversa para<br>marketplaces brasileiros</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#06B6D4" title="#06B6D4"></div>
+        <div class="swatch" style="background:#0EA5E9" title="#0EA5E9"></div>
+        <div class="swatch" style="background:#0C1929" title="#0C1929"></div>
+        <div class="swatch" style="background:#1E293B" title="#1E293B"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> "Logística reversa" é o termo técnico padrão no e-commerce BR para devoluções. O nome é imediatamente reconhecível por lojistas, mas soa como <em>tech startup</em>. Domínio <code>reversa.app</code> provavelmente disponível.
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Reversa</span>
+        <span style="margin-left:auto">reversa.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. BUMÉRANG -->
+  <div class="card c2">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <path d="M6 28 Q8 8 28 8 Q22 20 10 22 Q14 18 20 16" stroke="#FF6B35" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M6 28 L9 21 L3 23 Z" fill="#FFD23F"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Bumérang</div>
+        <div class="tagline">O que vai, volta. Rastreie,<br>dispute e recupere.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#FF6B35" title="#FF6B35"></div>
+        <div class="swatch" style="background:#FFD23F" title="#FFD23F"></div>
+        <div class="swatch" style="background:#1A0F0A" title="#1A0F0A"></div>
+        <div class="swatch" style="background:#2D1A10" title="#2D1A10"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> Bumerangue é uma metáfora perfeita para devoluções — <em>"o que sai, volta"</em>. Nome memorável, fácil de pronunciar, sem concorrente direto. Versão abreviada <strong>Bumé</strong> funciona muito bem como app mobile.
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Bumérang</span>
+        <span style="margin-left:auto">bumerang.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. DEVOLT -->
+  <div class="card c3">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <text x="5" y="26" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="#8B5CF6">D</text>
+          <path d="M22 14 L30 14 L30 22 M30 14 L24 20" stroke="#EC4899" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Devolt</div>
+        <div class="tagline">Dev(olução) + Volt — energia<br>no controle de retornos</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#8B5CF6" title="#8B5CF6"></div>
+        <div class="swatch" style="background:#EC4899" title="#EC4899"></div>
+        <div class="swatch" style="background:#0F0A1E" title="#0F0A1E"></div>
+        <div class="swatch" style="background:#1E1040" title="#1E1040"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> Contração de <em>devolução</em> + <em>volt</em> (energia, tecnologia). Curto, forte, sem acento — funciona em inglês e português. Soa como uma startup de fintech/tech séria.
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Devolt</span>
+        <span style="margin-left:auto">devolt.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. REVVY -->
+  <div class="card c4">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="11" stroke="#10B981" stroke-width="2.5" stroke-dasharray="18 15" stroke-linecap="round"/>
+          <path d="M14 12 L22 18 L14 24" fill="#10B981" opacity=".9"/>
+          <path d="M24 11 L29 11 L29 16" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Revvy</div>
+        <div class="tagline">Reverse flow made simple.<br>Disputas. Devoluções. Dados.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#10B981" title="#10B981"></div>
+        <div class="swatch" style="background:#34D399" title="#34D399"></div>
+        <div class="swatch" style="background:#061812" title="#061812"></div>
+        <div class="swatch" style="background:#0D2E20" title="#0D2E20"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> <em>Rev</em> de <em>reverse/reversal</em>, terminação <em>-vy</em> no estilo startup moderna (Savvy, Wavy, Divvy). Soa internacional, fácil de lembrar, ótimo para pitch em inglês também.
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Revvy</span>
+        <span style="margin-left:auto">revvy.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. VOLTA -->
+  <div class="card c5">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <path d="M10 10 L18 26 L26 10" stroke="#E879F9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M22 23 Q30 18 26 10" stroke="#818CF8" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Volta</div>
+        <div class="tagline">Simples como a palavra.<br>Poderoso como a plataforma.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#E879F9" title="#E879F9"></div>
+        <div class="swatch" style="background:#818CF8" title="#818CF8"></div>
+        <div class="swatch" style="background:#14061E" title="#14061E"></div>
+        <div class="swatch" style="background:#1E0A2E" title="#1E0A2E"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> Uma palavra só, todo mundo entende. Em português <em>volta</em> = retorno. Em italiano <em>volta</em> = vez/turno. Em inglês soa diferente e moderno. Minimalismo total — uma startup que não precisa explicar o que faz.
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Volta</span>
+        <span style="margin-left:auto">voltahq.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FLIPBACK -->
+  <div class="card c6">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <!-- Arrow going right -->
+          <path d="M8 13 L22 13 M18 9 L22 13 L18 17" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Arrow going left (flipped back) -->
+          <path d="M28 23 L14 23 M18 19 L14 23 L18 27" stroke="#FCD34D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">FlipBack</div>
+        <div class="tagline">Gerencie devoluções com<br>agilidade. Flip. Track. Win.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#F59E0B" title="#F59E0B"></div>
+        <div class="swatch" style="background:#FCD34D" title="#FCD34D"></div>
+        <div class="swatch" style="background:#14100A" title="#14100A"></div>
+        <div class="swatch" style="background:#221A08" title="#221A08"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> <em>Flip</em> = viragem rápida, <em>Back</em> = de volta. Juntos descrevem exatamente o ciclo de devolução. Vibes de startup ágil. Funciona como slogan ("Give it a flipback") e é bilíngue naturalmente.
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">FlipBack</span>
+        <span style="margin-left:auto">flipback.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. DEVOO -->
+  <div class="card c7">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <text x="4" y="27" font-family="Arial Black,sans-serif" font-weight="900" font-size="20" fill="#3B82F6">de</text>
+          <circle cx="26" cy="18" r="7" stroke="#60A5FA" stroke-width="2.5" fill="none"/>
+          <circle cx="26" cy="18" r="3" fill="#3B82F6"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Devoo</div>
+        <div class="tagline">"Dev" de devolução + "oo" de<br>loop contínuo. Rastreie tudo.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#3B82F6" title="#3B82F6"></div>
+        <div class="swatch" style="background:#818CF8" title="#818CF8"></div>
+        <div class="swatch" style="background:#080F20" title="#080F20"></div>
+        <div class="swatch" style="background:#0F1E3A" title="#0F1E3A"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> O "oo" no final cria uma sensação de loop/ciclo (devoo = devolução em loop). Nome curto e pronunciável. Domínios .app e .io muito provavelmente disponíveis. Fácil de criar branding verbal (<em>"Devoo it"</em>).
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Devoo</span>
+        <span style="margin-left:auto">devoo.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. RECUPO -->
+  <div class="card c8">
+    <div class="card-hero">
+      <div class="logo-wrap">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <!-- Shield shape -->
+          <path d="M18 6 L30 11 L30 20 Q30 27 18 32 Q6 27 6 20 L6 11 Z" stroke="#F43F5E" stroke-width="2.5" fill="rgba(244,63,94,.1)" stroke-linejoin="round"/>
+          <!-- Check inside -->
+          <path d="M12 18 L16 22 L24 14" stroke="#FB7185" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="name">Recupo</div>
+        <div class="tagline">Recupere o que é seu. Disputas,<br>devoluções e reembolsos.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="palette">
+        <div class="swatch" style="background:#F43F5E" title="#F43F5E"></div>
+        <div class="swatch" style="background:#FB923C" title="#FB923C"></div>
+        <div class="swatch" style="background:#18060C" title="#18060C"></div>
+        <div class="swatch" style="background:#2A0C14" title="#2A0C14"></div>
+      </div>
+      <div class="why">
+        <strong>Por quê funciona:</strong> Vem de <em>recupero</em> (recuperar + eco = recobrar). Transmite <strong>poder e proteção</strong> — o escudo do logo reforça isso. Ideal para quem quer passar a mensagem de "você não vai perder dinheiro com devoluções".
+      </div>
+      <div class="mockup-bar">
+        <div class="dot"></div>
+        <span class="brand">Recupo</span>
+        <span style="margin-left:auto">recupo.app</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  <p>Nenhuma alteração foi feita no código do app. <strong>Escolha um nome e aprove — só então vamos implementar.</strong></p>
+</div>
+
+</body>
+</html>
