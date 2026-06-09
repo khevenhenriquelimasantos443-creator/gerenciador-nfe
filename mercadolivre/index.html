@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML Envios — Painel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:        #070b14;
+      --surface:   #0e1422;
+      --card:      #131929;
+      --card-hover:#18203a;
+      --border:    rgba(255,255,255,0.07);
+      --border-hi: rgba(255,255,255,0.14);
+      --orange:    #ff7200;
+      --orange-dim:rgba(255,114,0,0.15);
+      --yellow:    #ffd000;
+      --green:     #10b981;
+      --green-dim: rgba(16,185,129,0.15);
+      --blue:      #6366f1;
+      --blue-dim:  rgba(99,102,241,0.15);
+      --amber:     #f59e0b;
+      --amber-dim: rgba(245,158,11,0.15);
+      --red:       #ef4444;
+      --red-dim:   rgba(239,68,68,0.15);
+      --text:      #f1f5f9;
+      --muted:     #64748b;
+      --muted2:    #94a3b8;
+      --r:         14px;
+      --r-sm:      8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,114,0,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(99,102,241,0.05) 0%, transparent 50%);
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+    #screen-app { display: none; flex-direction: column; min-height: 100vh; }
+    #screen-app.active { display: flex; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+    /* ════════════════════════════════════════
+       AUTH / SETUP SCREENS
+    ════════════════════════════════════════ */
+    .auth-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .auth-card {
+      background: var(--card);
+      border: 1px solid var(--border-hi);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .auth-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--orange), #ff4500);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; color: #fff;
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 24px rgba(255,114,0,0.35);
+    }
+    .auth-title {
+      font-size: 1.5rem; font-weight: 800; text-align: center;
+      background: linear-gradient(135deg, #fff 30%, var(--orange));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .auth-sub { color: var(--muted2); text-align: center; font-size: 0.9rem; margin-bottom: 32px; line-height: 1.5; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block; font-size: 0.75rem; font-weight: 600;
+      color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 7px;
+    }
+    .form-input {
+      width: 100%; background: var(--surface);
+      border: 1px solid var(--border-hi);
+      border-radius: var(--r-sm); color: var(--text);
+      padding: 11px 14px; font-size: 0.92rem;
+      font-family: inherit; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255,114,0,0.12);
+    }
+    textarea.form-input { resize: vertical; min-height: 80px; }
+    .form-hint { font-size: 0.78rem; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+    .form-hint code {
+      background: var(--surface); padding: 1px 6px; border-radius: 4px;
+      color: var(--orange); font-size: 0.76rem;
+    }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 20px; border-radius: var(--r-sm);
+      font-size: 0.88rem; font-weight: 600; font-family: inherit;
+      border: none; cursor: pointer; transition: all .18s; text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange), #e85d00);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(255,114,0,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,114,0,0.4); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.05); color: var(--muted2);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.09); color: var(--text); border-color: var(--border-hi); }
+    .btn-danger { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+    .btn-danger:hover { background: rgba(239,68,68,0.25); }
+    .btn-sm { padding: 7px 14px; font-size: 0.8rem; }
+    .btn-xs { padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; }
+    .btn-block { width: 100%; }
+    .btn-lg { padding: 14px 28px; font-size: 1rem; border-radius: 12px; }
+
+    .alert {
+      padding: 12px 16px; border-radius: var(--r-sm);
+      font-size: 0.84rem; margin-bottom: 16px; line-height: 1.5;
+    }
+    .alert-info { background: var(--blue-dim); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; }
+    .alert-warn { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.3); color: #fcd34d; }
+    .alert-error { background: var(--red-dim); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+
+    /* ════════════════════════════════════════
+       HEADER
+    ════════════════════════════════════════ */
+    .header {
+      background: rgba(13,18,30,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 1rem;
+    }
+    .header-brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--orange), #e85d00);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: #fff;
+      box-shadow: 0 2px 8px rgba(255,114,0,0.4);
+    }
+    .header-clock {
+      font-size: 1.25rem; font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background: linear-gradient(135deg, var(--orange), var(--yellow));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin: 0 auto;
+      letter-spacing: 0.02em;
+    }
+    .header-seller {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border-hi);
+      border-radius: 8px; padding: 6px 12px;
+      font-size: 0.82rem; font-weight: 500; color: var(--muted2);
+    }
+    .header-seller i { color: var(--orange); }
+    .header-seller span { color: var(--text); font-weight: 600; }
+    .header-logout {
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); padding: 6px 10px; border-radius: 6px;
+      cursor: pointer; font-size: 0.78rem; font-family: inherit;
+      transition: all .2s;
+    }
+    .header-logout:hover { border-color: var(--red); color: var(--red); }
+
+    /* ════════════════════════════════════════
+       DAILY CODE BAR
+    ════════════════════════════════════════ */
+    .daily-bar {
+      background: linear-gradient(135deg, #111820 0%, #1a1008 50%, #110a00 100%);
+      border-bottom: 1px solid rgba(255,114,0,0.25);
+      padding: 14px 24px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .daily-bar-left {
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .daily-bar-icon {
+      width: 36px; height: 36px;
+      background: rgba(255,114,0,0.15);
+      border: 1px solid rgba(255,114,0,0.3);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--orange); font-size: 0.9rem;
+    }
+    .daily-bar-label {
+      font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); line-height: 1;
+    }
+    .daily-bar-sublabel { font-size: 0.75rem; color: var(--muted2); margin-top: 2px; }
+    .daily-code-box {
+      flex: 1;
+      display: flex; align-items: center;
+      background: rgba(255,208,0,0.06);
+      border: 1px solid rgba(255,208,0,0.2);
+      border-radius: 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all .2s;
+      min-height: 48px;
+    }
+    .daily-code-box:hover {
+      background: rgba(255,208,0,0.1);
+      border-color: rgba(255,208,0,0.4);
+    }
+    .daily-code-text {
+      font-size: 1.6rem; font-weight: 900;
+      font-family: 'Courier New', monospace;
+      color: var(--yellow); letter-spacing: 0.2em;
+      text-shadow: 0 0 20px rgba(255,208,0,0.4);
+    }
+    .daily-code-placeholder {
+      font-size: 0.88rem; color: var(--muted); font-style: italic;
+    }
+    .daily-code-ts {
+      font-size: 0.72rem; color: var(--muted); margin-left: auto; flex-shrink: 0;
+    }
+    .daily-bar-btn {
+      background: rgba(255,114,0,0.12);
+      border: 1px solid rgba(255,114,0,0.3);
+      color: var(--orange); padding: 8px 16px;
+      border-radius: 8px; cursor: pointer; font-size: 0.8rem;
+      font-weight: 600; font-family: inherit;
+      transition: all .2s; display: flex; align-items: center; gap: 6px;
+      flex-shrink: 0;
+    }
+    .daily-bar-btn:hover { background: rgba(255,114,0,0.22); border-color: var(--orange); }
+
+    /* ════════════════════════════════════════
+       STATS
+    ════════════════════════════════════════ */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 14px; padding: 20px 24px 0;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px;
+      transition: transform .2s, border-color .2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); border-color: var(--border-hi); }
+    .stat-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .stat-icon.orange { background: var(--orange-dim); color: var(--orange); }
+    .stat-icon.blue   { background: var(--blue-dim);   color: var(--blue);   }
+    .stat-icon.amber  { background: var(--amber-dim);  color: var(--amber);  }
+    .stat-icon.green  { background: var(--green-dim);  color: var(--green);  }
+    .stat-num {
+      font-size: 2rem; font-weight: 900; line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-num.orange { color: var(--orange); }
+    .stat-num.blue   { color: var(--blue);   }
+    .stat-num.amber  { color: var(--amber);  }
+    .stat-num.green  { color: var(--green);  }
+    .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 3px; font-weight: 500; }
+
+    /* ════════════════════════════════════════
+       TABS
+    ════════════════════════════════════════ */
+    .tabs-wrap {
+      padding: 16px 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tabs-inner {
+      display: inline-flex; gap: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 3px;
+    }
+    .tab-btn {
+      padding: 8px 18px;
+      font-size: 0.85rem; font-weight: 600; font-family: inherit;
+      color: var(--muted); background: none; border: none;
+      border-radius: 8px; cursor: pointer;
+      transition: all .2s;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .tab-btn.active {
+      color: var(--text); background: var(--card);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .tab-badge {
+      background: var(--orange); color: #fff;
+      font-size: 0.68rem; padding: 1px 6px;
+      border-radius: 10px; font-weight: 700; min-width: 18px;
+      text-align: center;
+    }
+    .tab-badge.zero { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+
+    /* ════════════════════════════════════════
+       TAB CONTENT
+    ════════════════════════════════════════ */
+    .tab-content { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Filter bar */
+    .filter-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .filter-input {
+      flex: 1; min-width: 200px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-sm); color: var(--text);
+      padding: 9px 14px; font-size: 0.85rem; font-family: inherit;
+      outline: none; transition: border-color .2s;
+    }
+    .filter-input:focus { border-color: rgba(255,114,0,0.5); }
+    .filter-input::placeholder { color: var(--muted); }
+
+    /* ════════════════════════════════════════
+       ORDER CARDS
+    ════════════════════════════════════════ */
+    .cards-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .order-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: border-color .2s, background .2s;
+      position: relative; overflow: hidden;
+    }
+    .order-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--stripe-color, var(--border));
+      border-radius: 3px 0 0 3px;
+    }
+    .order-card.full::before   { --stripe-color: var(--blue);  }
+    .order-card.ship::before   { --stripe-color: var(--orange);}
+    .order-card:hover { background: var(--card-hover); border-color: var(--border-hi); }
+
+    .oc-top { display: flex; align-items: flex-start; gap: 14px; }
+    .oc-type-badge {
+      width: 42px; height: 42px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .oc-type-badge.full { background: var(--blue-dim); color: var(--blue); }
+    .oc-type-badge.ship { background: var(--orange-dim); color: var(--orange); }
+
+    .oc-info { flex: 1; min-width: 0; }
+    .oc-id { font-size: 0.75rem; color: var(--muted); font-family: monospace; margin-bottom: 3px; }
+    .oc-title {
+      font-size: 0.96rem; font-weight: 700;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 5px;
+    }
+    .oc-buyer { font-size: 0.8rem; color: var(--muted2); display: flex; align-items: center; gap: 6px; }
+
+    .oc-right { text-align: right; flex-shrink: 0; }
+    .oc-timer-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 14px; text-align: center;
+      min-width: 110px;
+    }
+    .oc-timer-box.ok     { border-color: rgba(16,185,129,0.3); background: var(--green-dim); }
+    .oc-timer-box.warn   { border-color: rgba(245,158,11,0.3); background: var(--amber-dim); }
+    .oc-timer-box.urgent { border-color: rgba(239,68,68,0.3);  background: var(--red-dim); animation: pulse-border 1.5s ease-in-out infinite; }
+    .oc-timer-box.over   { border-color: var(--border); background: var(--surface); opacity: 0.5; }
+    @keyframes pulse-border { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .oc-timer-val {
+      font-size: 1.05rem; font-weight: 800; font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em; line-height: 1;
+    }
+    .oc-timer-val.ok     { color: var(--green); }
+    .oc-timer-val.warn   { color: var(--amber); }
+    .oc-timer-val.urgent { color: var(--red); }
+    .oc-timer-val.over   { color: var(--muted); }
+    .oc-timer-label { font-size: 0.68rem; color: var(--muted); margin-top: 3px; }
+
+    .oc-details {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding: 10px 14px;
+      background: var(--surface);
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+    }
+    .oc-detail {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; color: var(--muted2);
+    }
+    .oc-detail i { font-size: 0.72rem; color: var(--muted); }
+    .oc-detail strong { color: var(--text); font-weight: 600; }
+
+    .oc-actions {
+      display: flex; gap: 8px; justify-content: flex-end;
+    }
+
+    /* Status badges */
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
+    }
+    .badge-full     { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(99,102,241,0.25); }
+    .badge-shipped  { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+    .badge-ready    { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+    .badge-danger   { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(239,68,68,0.25); }
+    .badge-muted    { background: rgba(100,116,139,0.1); color: var(--muted); border: 1px solid var(--border); }
+
+    /* ════════════════════════════════════════
+       CONFIRMAÇÕES
+    ════════════════════════════════════════ */
+    .progress-section { margin-bottom: 20px; }
+    .progress-header {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; color: var(--muted2); margin-bottom: 8px;
+    }
+    .progress-track {
+      height: 6px; background: var(--surface);
+      border-radius: 10px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), #34d399);
+      border-radius: 10px; transition: width .5s ease;
+    }
+
+    .confirm-grid { display: flex; flex-direction: column; gap: 10px; }
+    .confirm-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 18px;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: border-color .2s;
+    }
+    .confirm-card.confirmed { border-left: 3px solid var(--green); }
+    .confirm-card.missing   { border-left: 3px solid var(--red); }
+    .confirm-card.warned    { border-left: 3px solid var(--amber); }
+    .confirm-card:hover { border-top-color: var(--border-hi); border-right-color: var(--border-hi); border-bottom-color: var(--border-hi); }
+
+    .confirm-thumb {
+      width: 76px; height: 76px; border-radius: 10px;
+      object-fit: cover; flex-shrink: 0; cursor: pointer;
+      border: 2px solid var(--border);
+      transition: border-color .2s, transform .2s;
+    }
+    .confirm-thumb:hover { border-color: var(--orange); transform: scale(1.03); }
+    .confirm-no-thumb {
+      width: 76px; height: 76px; border-radius: 10px;
+      background: var(--surface); border: 2px dashed var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--muted); font-size: 1.4rem;
+    }
+    .confirm-info { flex: 1; min-width: 0; }
+    .confirm-id { font-size: 0.75rem; color: var(--muted); font-family: monospace; }
+    .confirm-status { font-weight: 700; margin: 3px 0 5px; font-size: 0.9rem; }
+    .confirm-status.ok  { color: var(--green); }
+    .confirm-status.bad { color: var(--red); }
+    .confirm-meta { font-size: 0.78rem; color: var(--muted); }
+    .confirm-reason { font-size: 0.8rem; color: var(--amber); margin-top: 5px; font-style: italic; display: flex; align-items: flex-start; gap: 5px; }
+
+    /* ════════════════════════════════════════
+       EMPTY STATE
+    ════════════════════════════════════════ */
+    .empty {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 64px 20px; gap: 12px;
+    }
+    .empty-icon {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--muted);
+    }
+    .empty p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ════════════════════════════════════════
+       FOOTER BAR
+    ════════════════════════════════════════ */
+    .footer-bar {
+      padding: 8px 24px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.77rem; color: var(--muted);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
+    }
+    .status-dot.loading {
+      animation: blink 1s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+    .footer-spacer { flex: 1; }
+
+    /* ════════════════════════════════════════
+       MODALS
+    ════════════════════════════════════════ */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      z-index: 200; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border-hi);
+      border-radius: 20px;
+      width: 100%; max-width: 480px;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+    }
+    .modal-head {
+      padding: 22px 24px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-head h2 { font-size: 1.05rem; font-weight: 800; }
+    .modal-close {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); width: 30px; height: 30px;
+      border-radius: 8px; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .modal-close:hover { color: var(--text); border-color: var(--border-hi); }
+    .modal-body { padding: 20px 24px; }
+    .modal-foot { padding: 0 24px 22px; display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* Toggle switch */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .toggle-row:hover { border-color: var(--border-hi); }
+    .toggle-label { font-size: 0.88rem; font-weight: 600; }
+    .toggle-switch {
+      width: 42px; height: 24px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 12px; position: relative;
+      transition: all .2s;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute; left: 2px; top: 2px;
+      width: 16px; height: 16px;
+      background: var(--muted);
+      border-radius: 50%; transition: all .2s;
+    }
+    .toggle-switch.on { background: rgba(16,185,129,0.2); border-color: var(--green); }
+    .toggle-switch.on::after { left: 18px; background: var(--green); }
+
+    /* Photo drop */
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--r-sm); padding: 28px 20px;
+      text-align: center; cursor: pointer;
+      transition: all .2s; position: relative;
+    }
+    .drop-zone:hover, .drop-zone.over {
+      border-color: var(--orange);
+      background: rgba(255,114,0,0.04);
+    }
+    .drop-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .drop-zone i { font-size: 1.8rem; color: var(--muted); display: block; margin-bottom: 8px; }
+    .drop-zone p { font-size: 0.82rem; color: var(--muted); }
+    .photo-preview-img {
+      width: 100%; max-height: 180px;
+      object-fit: cover; border-radius: var(--r-sm);
+      margin-top: 12px; border: 1px solid var(--border);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.93);
+      z-index: 300; align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 92vw; max-height: 92vh; border-radius: var(--r-sm); }
+    .lb-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.1); border: none; color: #fff;
+      width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,114,0,0.3);
+      border-top-color: var(--orange);
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .header-clock { font-size: 1rem; }
+      .daily-code-text { font-size: 1.1rem; }
+      .tab-content { padding: 16px; }
+      .tabs-wrap { padding: 12px 16px 0; }
+      .header { padding: 0 16px; }
+      .daily-bar { padding: 12px 16px; }
+      .stats-grid { padding: 14px 16px 0; }
+    }
+    @media (max-width: 480px) {
+      .auth-card { padding: 32px 24px; }
+      .oc-top { flex-wrap: wrap; }
+      .oc-timer-box { min-width: 90px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     SETUP SCREEN
+══════════════════════════════════════ -->
+<div id="screen-setup" class="screen">
+  <div class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-icon"><i class="fa-solid fa-gear"></i></div>
+      <h1 class="auth-title">Configuração Inicial</h1>
+      <p class="auth-sub">Configure as credenciais do Mercado Livre para começar a usar o painel.</p>
+      <div id="setup-err" class="alert alert-error" style="display:none"></div>
+      <div class="form-group">
+        <label class="form-label">App ID — Mercado Livre</label>
+        <input id="cfg-appid" class="form-input" type="text" placeholder="Ex: 1234567890">
+        <p class="form-hint">Crie um app em <code>developers.mercadolivre.com.br</code> e copie o App ID.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Redirect URI</label>
+        <input id="cfg-redirect" class="form-input" type="text" placeholder="https://...">
+        <p class="form-hint">A URL desta página — deve estar registrada no app do ML.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Horário de Corte</label>
+        <input id="cfg-cutoff" class="form-input" type="time" value="14:00">
+        <p class="form-hint">Limite diário para despachar pedidos regulares.</p>
+      </div>
+      <hr class="divider">
+      <button class="btn btn-primary btn-block btn-lg" onclick="saveSetup()">
+        <i class="fa-solid fa-arrow-right"></i> Salvar e Continuar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AUTH SCREEN
+══════════════════════════════════════ -->
+<div id="screen-auth" class="screen">
+  <div class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-icon"><i class="fa-solid fa-truck-fast"></i></div>
+      <h1 class="auth-title">ML Envios</h1>
+      <p class="auth-sub">Painel de controle para Envios Full e pedidos diários do Mercado Livre.</p>
+      <div id="auth-err" class="alert alert-error" style="display:none"></div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="startMLAuth()">
+        <i class="fa-solid fa-right-to-bracket"></i> Entrar com Mercado Livre
+      </button>
+      <hr class="divider">
+      <button class="btn btn-ghost btn-sm" onclick="showSetup()">
+        <i class="fa-solid fa-gear"></i> Configurações
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════ -->
+<div id="screen-app" class="screen">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="header-brand-icon"><i class="fa-solid fa-truck-fast"></i></div>
+      ML Envios
+    </div>
+    <div class="header-clock" id="clock">00:00:00</div>
+    <div class="header-seller">
+      <i class="fa-solid fa-store"></i>
+      <span id="seller-name">Carregando…</span>
+    </div>
+    <button class="header-logout" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Sair
+    </button>
+  </header>
+
+  <!-- Daily Code Bar -->
+  <div class="daily-bar">
+    <div class="daily-bar-left">
+      <div class="daily-bar-icon"><i class="fa-solid fa-key"></i></div>
+      <div>
+        <div class="daily-bar-label">Código do Dia</div>
+        <div class="daily-bar-sublabel" id="daily-code-ts">Não definido</div>
+      </div>
+    </div>
+    <div class="daily-code-box" onclick="openDailyCodeModal()" id="daily-code-box">
+      <span id="daily-code-display" class="daily-code-placeholder">Clique para inserir o código de hoje…</span>
+    </div>
+    <button class="daily-bar-btn" onclick="openDailyCodeModal()">
+      <i class="fa-solid fa-pen"></i> Editar
+    </button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon orange"><i class="fa-solid fa-receipt"></i></div>
+      <div>
+        <div class="stat-num orange" id="stat-total">—</div>
+        <div class="stat-label">Pedidos Hoje</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon blue"><i class="fa-solid fa-warehouse"></i></div>
+      <div>
+        <div class="stat-num blue" id="stat-full">—</div>
+        <div class="stat-label">Envios Full</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon amber"><i class="fa-solid fa-box-open"></i></div>
+      <div>
+        <div class="stat-num amber" id="stat-pending">—</div>
+        <div class="stat-label">Aguardando Envio</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+      <div>
+        <div class="stat-num green" id="stat-confirmed">—</div>
+        <div class="stat-label">Confirmados Hoje</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-wrap">
+    <div class="tabs-inner">
+      <button class="tab-btn active" data-tab="full" onclick="switchTab('full')">
+        <i class="fa-solid fa-warehouse"></i> Envios Full
+        <span class="tab-badge" id="badge-full">0</span>
+      </button>
+      <button class="tab-btn" data-tab="ship" onclick="switchTab('ship')">
+        <i class="fa-solid fa-box"></i> Para Enviar
+        <span class="tab-badge" id="badge-ship">0</span>
+      </button>
+      <button class="tab-btn" data-tab="confirm" onclick="switchTab('confirm')">
+        <i class="fa-solid fa-camera"></i> Confirmações
+        <span class="tab-badge zero" id="badge-confirm">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+
+    <!-- Full -->
+    <div class="tab-pane active" id="pane-full">
+      <div class="filter-row">
+        <input class="filter-input" id="filter-full" type="text" placeholder="🔍  Buscar por pedido ou produto…" oninput="renderFullTab()">
+        <button class="btn btn-ghost btn-sm" onclick="fetchData()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+      </div>
+      <div class="cards-list" id="list-full"></div>
+    </div>
+
+    <!-- Ship -->
+    <div class="tab-pane" id="pane-ship">
+      <div class="filter-row">
+        <input class="filter-input" id="filter-ship" type="text" placeholder="🔍  Buscar por pedido ou produto…" oninput="renderShipTab()">
+        <button class="btn btn-ghost btn-sm" onclick="fetchData()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+      </div>
+      <div id="cutoff-alert" class="alert alert-warn" style="display:none;margin-bottom:16px;"></div>
+      <div class="cards-list" id="list-ship"></div>
+    </div>
+
+    <!-- Confirm -->
+    <div class="tab-pane" id="pane-confirm">
+      <div class="filter-row">
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal(null)">
+          <i class="fa-solid fa-camera"></i> Novo Registro
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="loadConfirmacoes()">
+          <i class="fa-solid fa-rotate"></i> Atualizar
+        </button>
+      </div>
+      <div class="progress-section">
+        <div class="progress-header">
+          <span>Progresso de confirmações — hoje</span>
+          <span id="prog-text">0 / 0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="confirm-grid" id="list-confirm"></div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-bar">
+    <div class="status-dot" id="status-dot"></div>
+    <span id="refresh-label">Iniciando…</span>
+    <span class="footer-spacer"></span>
+    <span id="next-label" style="color:var(--muted)"></span>
+  </div>
+
+</div><!-- /screen-app -->
+
+<!-- ══════════════════════════════════════
+     MODAL: Código do Dia
+══════════════════════════════════════ -->
+<div class="modal-bg" id="modal-code">
+  <div class="modal">
+    <div class="modal-head">
+      <h2><i class="fa-solid fa-key" style="color:var(--orange);margin-right:8px"></i>Código do Dia</h2>
+      <button class="modal-close" onclick="closeModal('modal-code')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-info" style="margin-bottom:18px">
+        <i class="fa-solid fa-circle-info"></i> Insira o código gerado pelo painel do Mercado Livre. Ele é renovado automaticamente a cada dia e fica visível para toda a equipe.
+      </div>
+      <div class="form-group">
+        <label class="form-label">Código</label>
+        <input id="code-input" class="form-input" type="text"
+          placeholder="Ex: A1B2C3"
+          style="font-size:1.3rem;font-family:monospace;letter-spacing:.18em;text-transform:uppercase;text-align:center">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Observações (opcional)</label>
+        <textarea id="code-notes" class="form-input" placeholder="Informações adicionais…"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modal-code')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveDailyCode()"><i class="fa-solid fa-check"></i> Salvar Código</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL: Confirmar Envio
+══════════════════════════════════════ -->
+<div class="modal-bg" id="modal-upload">
+  <div class="modal">
+    <div class="modal-head">
+      <h2><i class="fa-solid fa-camera" style="color:var(--orange);margin-right:8px"></i>Confirmar Envio</h2>
+      <button class="modal-close" onclick="closeModal('modal-upload')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Número do Pedido</label>
+        <input id="up-order" class="form-input" type="text" placeholder="Ex: 1234567890">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status do Envio</label>
+        <div class="toggle-row" onclick="toggleConfirmed()" id="toggle-row">
+          <span class="toggle-label" id="toggle-label">Não enviado</span>
+          <div class="toggle-switch" id="toggle-sw"></div>
+        </div>
+        <input type="hidden" id="up-confirmed" value="0">
+      </div>
+      <div class="form-group" id="reason-group">
+        <label class="form-label">Motivo do não envio</label>
+        <textarea id="up-reason" class="form-input" placeholder="Descreva o motivo…"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Foto de Confirmação</label>
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" id="file-input" accept="image/*" onchange="handlePhoto(event)">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <p>Clique ou arraste uma foto aqui</p>
+        </div>
+        <img id="preview-img" class="photo-preview-img" style="display:none">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Observações</label>
+        <textarea id="up-notes" class="form-input" placeholder="Notas adicionais…"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modal-upload')">Cancelar</button>
+      <button class="btn btn-primary" id="save-btn" onclick="saveConfirmacao()">
+        <i class="fa-solid fa-check"></i> Salvar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close">×</button>
+  <img id="lb-img" src="">
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   CONSTANTS
+══════════════════════════════════════ */
+const ML_AUTH = 'https://auth.mercadolivre.com.br/authorization';
+const ML_API  = 'https://api.mercadolibre.com';
+const SB_URL  = 'https://axytwuwonpiqfxylyxsp.supabase.co';
+const SB_KEY  = 'sb_publishable_gD5Yx1t882-vRlf6DM2SnQ_OzNpj0R9';
+const REFRESH = 5 * 60 * 1000;
+
+/* ══════════════════════════════════════
+   CONFIG
+══════════════════════════════════════ */
+const cfg = {
+  get() { try { return JSON.parse(localStorage.getItem('ml_cfg') || 'null'); } catch { return null; } },
+  set(v) { localStorage.setItem('ml_cfg', JSON.stringify(v)); }
+};
+
+/* ══════════════════════════════════════
+   SUPABASE
+══════════════════════════════════════ */
+let sb = null;
+function initSB() { sb = window.supabase.createClient(SB_URL, SB_KEY); }
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+const S = {
+  token: null, seller: null,
+  fullOrders: [], shipOrders: [], confirmacoes: [],
+  dailyCode: null, refreshTimer: null,
+  photoFile: null, confirmedOn: false
+};
+
+/* ══════════════════════════════════════
+   OAUTH
+══════════════════════════════════════ */
+function getToken() {
+  try {
+    const t = JSON.parse(localStorage.getItem('ml_tok') || 'null');
+    if (t && t.exp > Date.now()) return t.tok;
+    localStorage.removeItem('ml_tok'); return null;
+  } catch { return null; }
+}
+function saveToken(tok, exp) {
+  localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (exp - 60) * 1000 }));
+}
+function readHashToken() {
+  const p = Object.fromEntries(new URLSearchParams(window.location.hash.slice(1)));
+  if (p.access_token) {
+    saveToken(p.access_token, parseInt(p.expires_in) || 21600);
+    history.replaceState(null, '', location.pathname);
+    return p.access_token;
+  }
+  return null;
+}
+function startMLAuth() {
+  const c = cfg.get();
+  if (!c) { showScreen('setup'); return; }
+  location.href = `${ML_AUTH}?response_type=token&client_id=${c.appId}&redirect_uri=${encodeURIComponent(c.redirect)}`;
+}
+function logout() {
+  localStorage.removeItem('ml_tok');
+  S.token = null; S.seller = null;
+  clearTimeout(S.refreshTimer);
+  showScreen('auth');
+}
+
+/* ══════════════════════════════════════
+   ML API
+══════════════════════════════════════ */
+async function mGet(path) {
+  const r = await fetch(`${ML_API}${path}`, { headers: { Authorization: `Bearer ${S.token}` } });
+  if (r.status === 401) { logout(); throw new Error('Token expirado'); }
+  if (!r.ok) throw new Error(`API ${r.status}`);
+  return r.json();
+}
+
+function todayRange() {
+  const now = new Date();
+  const tz = -3 * 60;
+  const loc = new Date(now.getTime() + (tz - now.getTimezoneOffset()) * 60000);
+  const y = loc.getUTCFullYear(), mo = String(loc.getUTCMonth()+1).padStart(2,'0'), d = String(loc.getUTCDate()).padStart(2,'0');
+  return { from: `${y}-${mo}-${d}T00:00:00.000-03:00`, to: `${y}-${mo}-${d}T23:59:59.999-03:00`, date: `${y}-${mo}-${d}` };
+}
+
+async function fetchOrders(sid) {
+  const { from, to } = todayRange();
+  try {
+    const d = await mGet(`/orders/search?seller=${sid}&sort=date_desc&limit=50&order.status=paid&order.date_created.from=${encodeURIComponent(from)}&order.date_created.to=${encodeURIComponent(to)}`);
+    return d.results || [];
+  } catch { return []; }
+}
+
+async function fetchPending(sid) {
+  const p = new Date(); p.setDate(p.getDate() - 3);
+  try {
+    const d = await mGet(`/orders/search?seller=${sid}&sort=date_asc&limit=50&order.status=paid&shipping.status=ready_to_ship`);
+    return d.results || [];
+  } catch { return []; }
+}
+
+/* ══════════════════════════════════════
+   SUPABASE OPS
+══════════════════════════════════════ */
+async function loadDailyCode() {
+  if (!sb || !S.seller) return;
+  const { data } = await sb.from('ml_daily_codes').select('*')
+    .eq('seller_id', String(S.seller.id)).eq('code_date', todayRange().date).maybeSingle();
+  S.dailyCode = data;
+  renderDailyCode();
+}
+
+async function saveDailyCodeDB(code, notes) {
+  if (!sb || !S.seller) return null;
+  const { error } = await sb.from('ml_daily_codes').upsert({
+    seller_id: String(S.seller.id), code, notes: notes || null,
+    code_date: todayRange().date, updated_at: new Date().toISOString()
+  }, { onConflict: 'seller_id,code_date' });
+  if (!error) { S.dailyCode = { code, notes, code_date: todayRange().date, updated_at: new Date().toISOString() }; renderDailyCode(); }
+  return error;
+}
+
+async function loadConfirmacoes() {
+  if (!sb || !S.seller) return;
+  const { data } = await sb.from('ml_confirmacoes').select('*')
+    .eq('seller_id', String(S.seller.id)).eq('shipping_date', todayRange().date)
+    .order('created_at', { ascending: false });
+  S.confirmacoes = data || [];
+  renderConfirmTab();
+}
+
+async function saveConfirmDB(orderId, confirmed, reason, notes, photoFile) {
+  if (!sb || !S.seller) return 'Sem conexão com Supabase';
+  let photo_url = null;
+  if (photoFile) {
+    const ext = photoFile.name.split('.').pop() || 'jpg';
+    const path = `ml_confirmacoes/${S.seller.id}/${todayRange().date}/${orderId}_${Date.now()}.${ext}`;
+    const { error: ue } = await sb.storage.from('fotos').upload(path, photoFile, { upsert: true });
+    if (ue) return 'Erro ao enviar foto: ' + ue.message;
+    const { data: ud } = sb.storage.from('fotos').getPublicUrl(path);
+    photo_url = ud.publicUrl;
+  }
+  const { error } = await sb.from('ml_confirmacoes').upsert({
+    seller_id: String(S.seller.id), order_id: String(orderId),
+    confirmed: !!confirmed, reason: reason || null, notes: notes || null,
+    photo_url, shipping_date: todayRange().date, updated_at: new Date().toISOString()
+  }, { onConflict: 'seller_id,order_id,shipping_date' });
+  return error ? error.message : null;
+}
+
+/* ══════════════════════════════════════
+   DATA FETCH
+══════════════════════════════════════ */
+async function fetchData() {
+  if (!S.seller) return;
+  setDot(true); setLabel('Atualizando…');
+
+  const [today, pending] = await Promise.all([fetchOrders(S.seller.id), fetchPending(S.seller.id)]);
+
+  S.fullOrders = today.filter(o => o.shipping?.logistic_type === 'fulfillment');
+
+  const map = {};
+  pending.filter(o => o.shipping?.logistic_type !== 'fulfillment').forEach(o => map[o.id] = o);
+  today.filter(o => o.shipping?.logistic_type !== 'fulfillment' && o.shipping?.status === 'ready_to_ship').forEach(o => map[o.id] = o);
+  S.shipOrders = Object.values(map).sort((a,b) => new Date(a.date_closed) - new Date(b.date_closed));
+
+  updateStats(); renderFullTab(); renderShipTab();
+  setDot(false); setLabel(`Atualizado às ${fmt(new Date())}`);
+  clearTimeout(S.refreshTimer);
+  S.refreshTimer = setTimeout(fetchData, REFRESH);
+}
+
+/* ══════════════════════════════════════
+   HELPERS
+══════════════════════════════════════ */
+function fmt(d) { return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+function fmtDT(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+function title(o) {
+  if (!o.order_items?.length) return `Pedido #${o.id}`;
+  const t = o.order_items[0].item?.title || 'Produto';
+  return o.order_items.length > 1 ? `${t} +${o.order_items.length-1}` : t;
+}
+function statusBadge(s) {
+  const m = { ready_to_ship:['badge-ready','Aguardando'], shipped:['badge-shipped','Enviado'],
+    delivered:['badge-shipped','Entregue'], cancelled:['badge-muted','Cancelado'],
+    handling:['badge-ready','Preparando'], in_hub:['badge-shipped','No Hub'] };
+  const [c,l] = m[s] || ['badge-muted', s||'—'];
+  return `<span class="badge ${c}">${l}</span>`;
+}
+
+function deadlineBox(o) {
+  const c = cfg.get(); const ct = c?.cutoff || '14:00';
+  const [ch,cm] = ct.split(':').map(Number);
+  const cutoff = new Date(); cutoff.setHours(ch,cm,0,0);
+  const diff = cutoff - Date.now();
+  if (diff < 0) return `<div class="oc-timer-box over"><div class="oc-timer-val over">Encerrado</div><div class="oc-timer-label">Corte ${ct}</div></div>`;
+  const h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
+  const cls = diff < 3600000 ? 'urgent' : diff < 7200000 ? 'warn' : 'ok';
+  const val = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `<div class="oc-timer-box ${cls}"><div class="oc-timer-val ${cls} countdown-cell" data-cutoff="${ct}">${val}</div><div class="oc-timer-label">Corte ${ct}</div></div>`;
+}
+
+/* ══════════════════════════════════════
+   STATS
+══════════════════════════════════════ */
+function updateStats() {
+  document.getElementById('stat-total').textContent = S.fullOrders.length + S.shipOrders.length;
+  document.getElementById('stat-full').textContent = S.fullOrders.length;
+  document.getElementById('stat-pending').textContent = S.shipOrders.length;
+  document.getElementById('stat-confirmed').textContent = S.confirmacoes.filter(c=>c.confirmed).length;
+  const setBadge = (id, n) => {
+    const el = document.getElementById(id); el.textContent = n;
+    el.classList.toggle('zero', n === 0);
+  };
+  setBadge('badge-full', S.fullOrders.length);
+  setBadge('badge-ship', S.shipOrders.length);
+  setBadge('badge-confirm', S.confirmacoes.length);
+}
+
+/* ══════════════════════════════════════
+   RENDER TABS
+══════════════════════════════════════ */
+function renderFullTab() {
+  const q = document.getElementById('filter-full').value.toLowerCase();
+  const orders = S.fullOrders.filter(o => !q || String(o.id).includes(q) || title(o).toLowerCase().includes(q));
+  const el = document.getElementById('list-full');
+  if (!orders.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon"><i class="fa-solid fa-warehouse"></i></div><p>Nenhum Envio Full encontrado hoje.</p></div>`;
+    return;
+  }
+  el.innerHTML = orders.map(o => `
+    <div class="order-card full">
+      <div class="oc-top">
+        <div class="oc-type-badge full"><i class="fa-solid fa-warehouse"></i></div>
+        <div class="oc-info">
+          <div class="oc-id">#${o.id}</div>
+          <div class="oc-title">${title(o)}</div>
+          <div class="oc-buyer"><i class="fa-solid fa-user"></i> ${o.buyer?.nickname||'—'}</div>
+        </div>
+        <div class="oc-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="badge badge-full"><i class="fa-solid fa-warehouse"></i> Full</span>
+          ${statusBadge(o.shipping?.status)}
+          <div style="font-size:.72rem;color:var(--muted)">${fmtDT(o.date_closed)}</div>
+        </div>
+      </div>
+      <div class="oc-details">
+        ${(o.order_items||[]).map(i=>`<div class="oc-detail"><i class="fa-solid fa-box"></i><span>${i.quantity||1}× <strong>${i.item?.title||'Produto'}</strong></span></div>`).join('')}
+      </div>
+      <div class="oc-actions">
+        <a href="https://www.mercadolivre.com.br/vendas/${o.id}/detalhe" target="_blank" class="btn btn-ghost btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no ML</a>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal(${o.id})"><i class="fa-solid fa-camera"></i> Confirmar</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderShipTab() {
+  const c = cfg.get(); const ct = c?.cutoff||'14:00';
+  const q = document.getElementById('filter-ship').value.toLowerCase();
+  const orders = S.shipOrders.filter(o => !q || String(o.id).includes(q) || title(o).toLowerCase().includes(q));
+
+  const [ch,cm] = ct.split(':').map(Number);
+  const cutoff = new Date(); cutoff.setHours(ch,cm,0,0);
+  const diff = cutoff - Date.now();
+  const alertEl = document.getElementById('cutoff-alert');
+  if (diff > 0 && diff < 7200000) {
+    const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000);
+    alertEl.style.display='';
+    alertEl.innerHTML=`<i class="fa-solid fa-triangle-exclamation"></i> <strong>${h}h ${m}min</strong> para o corte das ${ct}. Despache seus pedidos com urgência!`;
+  } else alertEl.style.display='none';
+
+  const el = document.getElementById('list-ship');
+  if (!orders.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon"><i class="fa-solid fa-box-open"></i></div><p>Nenhum pedido pendente de envio.</p></div>`;
+    return;
+  }
+  const logMap = { self_service:'Agência', xd_drop_off:'Drop-off', me2:'ME2', me1:'ME1', not_specified:'Livre' };
+  el.innerHTML = orders.map(o => `
+    <div class="order-card ship">
+      <div class="oc-top">
+        <div class="oc-type-badge ship"><i class="fa-solid fa-box"></i></div>
+        <div class="oc-info">
+          <div class="oc-id">#${o.id}</div>
+          <div class="oc-title">${title(o)}</div>
+          <div class="oc-buyer">
+            <i class="fa-solid fa-user"></i> ${o.buyer?.nickname||'—'}
+            &nbsp;<i class="fa-solid fa-location-dot"></i> ${o.buyer?.address?.city||'—'}/${o.buyer?.address?.state?.id||'—'}
+          </div>
+        </div>
+        <div class="oc-right">${deadlineBox(o)}</div>
+      </div>
+      <div class="oc-details">
+        ${(o.order_items||[]).map(i=>`<div class="oc-detail"><i class="fa-solid fa-box"></i><span>${i.quantity||1}× <strong>${i.item?.title||'Produto'}</strong></span></div>`).join('')}
+        ${logMap[o.shipping?.logistic_type] ? `<div class="oc-detail"><i class="fa-solid fa-truck"></i><strong>${logMap[o.shipping.logistic_type]}</strong></div>` : ''}
+        <div class="oc-detail"><i class="fa-solid fa-calendar"></i><span>${fmtDT(o.date_closed)}</span></div>
+      </div>
+      <div class="oc-actions">
+        <a href="https://www.mercadolivre.com.br/vendas/${o.id}/detalhe" target="_blank" class="btn btn-ghost btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no ML</a>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal(${o.id})"><i class="fa-solid fa-camera"></i> Confirmar Envio</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderConfirmTab() {
+  const confirmed = S.confirmacoes.filter(c=>c.confirmed).length;
+  const total = S.confirmacoes.length;
+  const pct = total ? Math.round(confirmed/total*100) : 0;
+  document.getElementById('prog-text').textContent = `${confirmed} / ${total}`;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('badge-confirm').textContent = total;
+  document.getElementById('badge-confirm').classList.toggle('zero', total === 0);
+  document.getElementById('stat-confirmed').textContent = confirmed;
+
+  const el = document.getElementById('list-confirm');
+  if (!S.confirmacoes.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon"><i class="fa-solid fa-camera"></i></div><p>Nenhuma confirmação registrada hoje.</p></div>`;
+    return;
+  }
+  el.innerHTML = S.confirmacoes.map(c => {
+    const sc = c.confirmed ? 'confirmed' : c.reason ? 'warned' : 'missing';
+    const ph = c.photo_url
+      ? `<img class="confirm-thumb" src="${c.photo_url}" onclick="openLightbox('${c.photo_url}')" alt="">`
+      : `<div class="confirm-no-thumb"><i class="fa-solid fa-image-slash"></i></div>`;
+    return `
+    <div class="confirm-card ${sc}">
+      ${ph}
+      <div class="confirm-info">
+        <div class="confirm-id">#${c.order_id}</div>
+        <div class="confirm-status ${c.confirmed?'ok':'bad'}">${c.confirmed?'✓ Enviado':'✗ Não enviado'}</div>
+        <div class="confirm-meta">${fmtDT(c.updated_at||c.created_at)}</div>
+        ${c.reason?`<div class="confirm-reason"><i class="fa-solid fa-circle-info"></i> ${c.reason}</div>`:''}
+        ${c.notes?`<div class="confirm-meta" style="margin-top:4px;font-style:italic">${c.notes}</div>`:''}
+      </div>
+      <button class="btn btn-ghost btn-xs" onclick="openUploadModal('${c.order_id}')"><i class="fa-solid fa-pen"></i></button>
+    </div>`;
+  }).join('');
+}
+
+function renderDailyCode() {
+  const disp = document.getElementById('daily-code-display');
+  const ts   = document.getElementById('daily-code-ts');
+  if (S.dailyCode?.code) {
+    disp.className = 'daily-code-text';
+    disp.textContent = S.dailyCode.code.toUpperCase();
+    ts.textContent = S.dailyCode.updated_at ? `Atualizado às ${fmt(new Date(S.dailyCode.updated_at))}` : 'Hoje';
+  } else {
+    disp.className = 'daily-code-placeholder';
+    disp.textContent = 'Clique para inserir o código de hoje…';
+    ts.textContent = 'Não definido';
+  }
+}
+
+/* ══════════════════════════════════════
+   CLOCK + COUNTDOWN
+══════════════════════════════════════ */
+function startClock() {
+  setInterval(() => {
+    document.getElementById('clock').textContent = new Date().toLocaleTimeString('pt-BR');
+    document.querySelectorAll('.countdown-cell').forEach(el => {
+      const ct = el.dataset.cutoff || '14:00';
+      const [h2,m2] = ct.split(':').map(Number);
+      const cut = new Date(); cut.setHours(h2,m2,0,0);
+      const diff = cut - Date.now();
+      if (diff <= 0) { el.textContent = 'Encerrado'; el.className = 'oc-timer-val over countdown-cell'; el.dataset.cutoff = ct; return; }
+      const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+      el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      const cls = diff < 3600000 ? 'urgent' : diff < 7200000 ? 'warn' : 'ok';
+      el.className = `oc-timer-val ${cls} countdown-cell`;
+      el.dataset.cutoff = ct;
+      el.closest('.oc-timer-box').className = `oc-timer-box ${cls}`;
+    });
+  }, 1000);
+}
+
+/* ══════════════════════════════════════
+   UI CONTROLS
+══════════════════════════════════════ */
+function showScreen(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + n).classList.add('active');
+}
+function switchTab(t) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===t));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id==='pane-'+t));
+}
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function setDot(on)   { document.getElementById('status-dot').classList.toggle('loading', on); }
+function setLabel(t)  { document.getElementById('refresh-label').textContent = t; }
+
+/* Daily code modal */
+function openDailyCodeModal() {
+  document.getElementById('code-input').value = S.dailyCode?.code || '';
+  document.getElementById('code-notes').value = S.dailyCode?.notes || '';
+  openModal('modal-code');
+}
+async function saveDailyCode() {
+  const code = document.getElementById('code-input').value.trim().toUpperCase();
+  if (!code) return;
+  const err = await saveDailyCodeDB(code, document.getElementById('code-notes').value.trim());
+  if (err) { alert('Erro: ' + err.message); return; }
+  closeModal('modal-code');
+}
+
+/* Upload modal */
+function openUploadModal(orderId) {
+  S.photoFile = null; S.confirmedOn = false;
+  document.getElementById('up-order').value = orderId || '';
+  document.getElementById('up-reason').value = '';
+  document.getElementById('up-notes').value = '';
+  document.getElementById('up-confirmed').value = '0';
+  document.getElementById('preview-img').style.display = 'none';
+  document.getElementById('file-input').value = '';
+  document.getElementById('reason-group').style.display = '';
+  const sw = document.getElementById('toggle-sw');
+  sw.className = 'toggle-switch';
+  document.getElementById('toggle-label').textContent = 'Não enviado';
+
+  const ex = S.confirmacoes.find(c => String(c.order_id)===String(orderId));
+  if (ex) {
+    document.getElementById('up-reason').value = ex.reason || '';
+    document.getElementById('up-notes').value  = ex.notes  || '';
+    if (ex.confirmed) {
+      S.confirmedOn = true;
+      document.getElementById('up-confirmed').value = '1';
+      document.getElementById('toggle-label').textContent = 'Enviado';
+      sw.className = 'toggle-switch on';
+      document.getElementById('reason-group').style.display = 'none';
+    }
+  }
+  openModal('modal-upload');
+}
+function toggleConfirmed() {
+  S.confirmedOn = !S.confirmedOn;
+  document.getElementById('up-confirmed').value = S.confirmedOn ? '1' : '0';
+  document.getElementById('toggle-label').textContent = S.confirmedOn ? 'Enviado' : 'Não enviado';
+  document.getElementById('toggle-sw').className = 'toggle-switch' + (S.confirmedOn ? ' on' : '');
+  document.getElementById('reason-group').style.display = S.confirmedOn ? 'none' : '';
+}
+function handlePhoto(e) {
+  const f = e.target.files[0]; if (!f) return;
+  S.photoFile = f;
+  const r = new FileReader();
+  r.onload = ev => { const img = document.getElementById('preview-img'); img.src = ev.target.result; img.style.display = 'block'; };
+  r.readAsDataURL(f);
+}
+async function saveConfirmacao() {
+  const orderId = document.getElementById('up-order').value.trim();
+  if (!orderId) { alert('Informe o número do pedido.'); return; }
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Salvando…';
+  const err = await saveConfirmDB(orderId,
+    document.getElementById('up-confirmed').value==='1',
+    document.getElementById('up-reason').value.trim(),
+    document.getElementById('up-notes').value.trim(),
+    S.photoFile);
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-check"></i> Salvar';
+  if (err) { alert('Erro: ' + err); return; }
+  closeModal('modal-upload');
+  await loadConfirmacoes(); updateStats();
+}
+
+function openLightbox(url) { document.getElementById('lb-img').src = url; document.getElementById('lightbox').classList.add('open'); }
+function closeLightbox()   { document.getElementById('lightbox').classList.remove('open'); }
+
+/* ══════════════════════════════════════
+   SETUP
+══════════════════════════════════════ */
+function showSetup() {
+  const c = cfg.get();
+  document.getElementById('cfg-appid').value    = c?.appId    || '';
+  document.getElementById('cfg-redirect').value = c?.redirect || (location.origin + location.pathname);
+  document.getElementById('cfg-cutoff').value   = c?.cutoff   || '14:00';
+  showScreen('setup');
+}
+function saveSetup() {
+  const appId    = document.getElementById('cfg-appid').value.trim();
+  const redirect = document.getElementById('cfg-redirect').value.trim();
+  const cutoff   = document.getElementById('cfg-cutoff').value || '14:00';
+  const errEl    = document.getElementById('setup-err');
+  if (!appId)    { errEl.textContent = 'App ID é obrigatório.'; errEl.style.display=''; return; }
+  if (!redirect) { errEl.textContent = 'Redirect URI é obrigatório.'; errEl.style.display=''; return; }
+  errEl.style.display = 'none';
+  cfg.set({ appId, redirect, cutoff });
+  showScreen('auth');
+}
+
+/* ══════════════════════════════════════
+   DRAG & DROP
+══════════════════════════════════════ */
+document.getElementById('drop-zone').addEventListener('dragover', e => { e.preventDefault(); document.getElementById('drop-zone').classList.add('over'); });
+document.getElementById('drop-zone').addEventListener('dragleave', () => document.getElementById('drop-zone').classList.remove('over'));
+document.getElementById('drop-zone').addEventListener('drop', e => {
+  e.preventDefault(); document.getElementById('drop-zone').classList.remove('over');
+  const f = e.dataTransfer.files[0];
+  if (f?.type.startsWith('image/')) {
+    S.photoFile = f;
+    const r = new FileReader();
+    r.onload = ev => { const img = document.getElementById('preview-img'); img.src = ev.target.result; img.style.display = 'block'; };
+    r.readAsDataURL(f);
+  }
+});
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+async function init() {
+  initSB(); startClock();
+  const tok = readHashToken() || getToken();
+  if (!cfg.get()) { showSetup(); return; }
+  if (!tok) { showScreen('auth'); return; }
+  S.token = tok;
+  showScreen('app');
+  try {
+    S.seller = await mGet('/users/me');
+    document.getElementById('seller-name').textContent = S.seller.nickname || 'Vendedor';
+  } catch { showScreen('auth'); return; }
+  await Promise.all([fetchData(), loadDailyCode(), loadConfirmacoes()]);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+<!--
+SQL para criar tabelas no Supabase:
+
+CREATE TABLE IF NOT EXISTS ml_daily_codes (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  seller_id TEXT NOT NULL,
+  code TEXT NOT NULL,
+  notes TEXT,
+  code_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(seller_id, code_date)
+);
+
+CREATE TABLE IF NOT EXISTS ml_confirmacoes (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  seller_id TEXT NOT NULL,
+  order_id TEXT NOT NULL,
+  confirmed BOOLEAN DEFAULT false,
+  reason TEXT, notes TEXT, photo_url TEXT,
+  shipping_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(seller_id, order_id, shipping_date)
+);
+
+ALTER TABLE ml_daily_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ml_confirmacoes ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "open_daily_codes"   ON ml_daily_codes   FOR ALL TO anon USING (true) WITH CHECK (true);
+CREATE POLICY "open_confirmacoes"  ON ml_confirmacoes  FOR ALL TO anon USING (true) WITH CHECK (true);
+-->
+</body>
+</html>
