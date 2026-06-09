@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Faturador - Levantamento de Requisitos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-item,
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .radio-item label,
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .question-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 ERP Faturador</h1>
+            <p>Levantamento de Requisitos - Responda as perguntas para definirmos sua solução</p>
+        </div>
+
+        <form id="form" onsubmit="handleSubmit(event)">
+
+            <!-- Pergunta 1 -->
+            <div class="form-group">
+                <div class="question-title">
+                    <span class="question-number">1</span>
+                    <label>Qual é seu faturamento imediato?</label>
+                </div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="q1_a" name="faturamento" value="avulsa" required>
+                        <label for="q1_a">Apenas NF-e avulsa/manual</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q1_b" name="faturamento" value="pedidos">
+                        <label for="q1_b">Pedidos → NF-e automática</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q1_c" name="faturamento" value="completo">
+                        <label for="q1_c">Pedidos + Estoque + NF-e</label>
+                    </div>
+                </div>
+                <div class="subtitle">Ajuda-nos a definir a complexidade inicial</div>
+            </div>
+
+            <!-- Pergunta 2 -->
+            <div class="form-group">
+                <div class="question-title">
+                    <span class="question-number">2</span>
+                    <label>Quantos usuários no início?</label>
+                </div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="q2_a" name="usuarios" value="voce" required>
+                        <label for="q2_a">Só você</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q2_b" name="usuarios" value="vendedores">
+                        <label for="q2_b">Você + 1-2 vendedores</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q2_c" name="usuarios" value="equipe">
+                        <label for="q2_c">Você + equipe (5+ pessoas)</label>
+                    </div>
+                </div>
+                <div class="subtitle">Isso define permissões e multi-usuário</div>
+            </div>
+
+            <!-- Pergunta 3 -->
+            <div class="form-group">
+                <div class="question-title">
+                    <span class="question-number">3</span>
+                    <label>Volume de faturamento mensal?</label>
+                </div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="q3_a" name="volume" value="pequeno" required>
+                        <label for="q3_a">Até 100 pedidos/mês</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q3_b" name="volume" value="medio">
+                        <label for="q3_b">100-1000 pedidos/mês</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q3_c" name="volume" value="grande">
+                        <label for="q3_c">Mais de 1000 pedidos/mês</label>
+                    </div>
+                </div>
+                <div class="subtitle">Define performance e escalabilidade</div>
+            </div>
+
+            <!-- Pergunta 4 -->
+            <div class="form-group">
+                <div class="question-title">
+                    <span class="question-number">4</span>
+                    <label>Como você acessa agora? Web ou Desktop?</label>
+                </div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="q4_a" name="acesso" value="web" required>
+                        <label for="q4_a">Web (no navegador, anywhere)</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q4_b" name="acesso" value="desktop">
+                        <label for="q4_b">Desktop (instalado no computador)</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q4_c" name="acesso" value="ambos">
+                        <label for="q4_c">Ambos (web + mobile)</label>
+                    </div>
+                </div>
+                <div class="subtitle">Define a plataforma de desenvolvimento</div>
+            </div>
+
+            <!-- Pergunta 5 -->
+            <div class="form-group">
+                <div class="question-title">
+                    <span class="question-number">5</span>
+                    <label>Quanto tempo pode esperar?</label>
+                </div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="q5_a" name="prazo" value="urgente" required>
+                        <label for="q5_a">Muito urgente (preciso em dias)</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q5_b" name="prazo" value="semana">
+                        <label for="q5_b">Esta semana</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="q5_c" name="prazo" value="normal">
+                        <label for="q5_c">Próximas 2-3 semanas é ok</label>
+                    </div>
+                </div>
+                <div class="subtitle">Define priorização de features</div>
+            </div>
+
+            <!-- Informações adicionais (opcional) -->
+            <div class="form-group">
+                <div class="question-title">
+                    <span class="question-number">+</span>
+                    <label>Algo mais que precisamos saber?</label>
+                </div>
+                <textarea
+                    id="observacoes"
+                    name="observacoes"
+                    rows="4"
+                    placeholder="Detalhes adicionais, tipos de produtos, integrações necessárias, etc..."
+                ></textarea>
+                <div class="subtitle">Opcional - mas ajuda muito!</div>
+            </div>
+
+            <button type="submit">🚀 Enviar e Começar Desenvolvimento</button>
+            <div class="success-message" id="successMessage">
+                ✅ Respostas coletadas! Começando o desenvolvimento agora...
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            // Coletar dados
+            const formData = {
+                faturamento: document.querySelector('input[name="faturamento"]:checked').value,
+                usuarios: document.querySelector('input[name="usuarios"]:checked').value,
+                volume: document.querySelector('input[name="volume"]:checked').value,
+                acesso: document.querySelector('input[name="acesso"]:checked').value,
+                prazo: document.querySelector('input[name="prazo"]:checked').value,
+                observacoes: document.getElementById('observacoes').value
+            };
+
+            // Exibir resultado
+            console.log('Dados do formulário:', formData);
+
+            // Copiar para clipboard em formato JSON
+            const jsonString = JSON.stringify(formData, null, 2);
+            navigator.clipboard.writeText(jsonString).then(() => {
+                document.getElementById('successMessage').style.display = 'block';
+                document.querySelector('button').style.display = 'none';
+
+                // Também exibir em alerta
+                setTimeout(() => {
+                    alert('✅ Dados copiados para a área de transferência!\n\n' + jsonString + '\n\nOs dados foram copiados. Cola no chat para continuar!');
+                }, 500);
+            });
+        }
+    </script>
+</body>
+</html>
