@@ -715,7 +715,7 @@
       <h1 class="auth-title">ML Envios</h1>
       <p class="auth-sub">Painel de controle para Envios Full e pedidos diários do Mercado Livre.</p>
       <div id="auth-err" class="alert alert-error" style="display:none"></div>
-      <button class="btn btn-primary btn-block btn-lg" onclick="startMLAuth()">
+      <button class="btn btn-primary btn-block btn-lg" onclick="startMLAuth().catch(e=>console.error(e))">
         <i class="fa-solid fa-right-to-bracket"></i> Entrar com Mercado Livre
       </button>
       <hr class="divider">
@@ -991,7 +991,7 @@ const S = {
 };
 
 /* ══════════════════════════════════════
-   OAUTH — Fluxo Implícito (token no hash)
+   OAUTH — Authorization Code + PKCE
 ══════════════════════════════════════ */
 function getToken() {
   try {
@@ -1004,29 +1004,61 @@ function saveToken(tok, expSec) {
   localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (expSec - 60) * 1000 }));
 }
 
-function readHashToken() {
-  const hp = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
-  if (hp.access_token) {
-    saveToken(hp.access_token, parseInt(hp.expires_in) || 21600);
-    history.replaceState(null, '', location.pathname);
-    return hp.access_token;
-  }
-  return null;
+function pkceVerifier() {
+  const arr = new Uint8Array(32);
+  crypto.getRandomValues(arr);
+  return btoa(String.fromCharCode(...arr)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+}
+async function pkceChallenge(verifier) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
+  return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
 }
 
-function startMLAuth() {
+async function startMLAuth() {
   const c = cfg.get();
   if (!c) { showScreen('setup'); return; }
+  const v = pkceVerifier();
+  sessionStorage.setItem('pkce_v', v);
+  const challenge = await pkceChallenge(v);
   const p = new URLSearchParams({
-    response_type: 'token',
+    response_type: 'code',
     client_id: c.appId,
-    redirect_uri: c.redirect
+    redirect_uri: c.redirect,
+    code_challenge: challenge,
+    code_challenge_method: 'S256'
   });
   location.href = `${ML_AUTH}?${p}`;
 }
 
+async function exchangeCode(code) {
+  const c = cfg.get();
+  const v = sessionStorage.getItem('pkce_v');
+  if (!v) throw new Error('Sessão PKCE expirada. Tente fazer login novamente.');
+  const body = new URLSearchParams({
+    grant_type: 'authorization_code',
+    client_id: c.appId,
+    code,
+    redirect_uri: c.redirect,
+    code_verifier: v
+  });
+  const r = await fetch('https://api.mercadolibre.com/oauth/token', {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body
+  });
+  const data = await r.json();
+  sessionStorage.removeItem('pkce_v');
+  if (data.access_token) {
+    saveToken(data.access_token, data.expires_in || 21600);
+    history.replaceState(null, '', location.pathname);
+    return data.access_token;
+  }
+  throw new Error(data.message || data.error_description || 'Falha na autenticação.');
+}
+
 function logout() {
   localStorage.removeItem('ml_tok');
+  sessionStorage.removeItem('pkce_v');
   S.token = null; S.seller = null;
   clearTimeout(S.refreshTimer);
   showScreen('auth');
@@ -1475,11 +1507,27 @@ document.getElementById('drop-zone').addEventListener('drop', e => {
 ══════════════════════════════════════ */
 async function init() {
   initSB(); startClock();
-  const tok = readHashToken() || getToken();
   if (!cfg.get()) { showSetup(); return; }
+
+  const params = new URLSearchParams(location.search);
+  const code = params.get('code');
+  let tok;
+
+  if (code) {
+    const errEl = document.getElementById('auth-err');
+    try {
+      tok = await exchangeCode(code);
+    } catch (e) {
+      errEl.textContent = e.message;
+      errEl.style.display = '';
+      showScreen('auth'); return;
+    }
+  } else {
+    tok = getToken();
+  }
+
   if (!tok) { showScreen('auth'); return; }
   S.token = tok;
-  
   showScreen('app');
   try {
     S.seller = await mGet('/users/me');
