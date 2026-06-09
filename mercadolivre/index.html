@@ -688,7 +688,13 @@
       <div class="form-group">
         <label class="form-label">Redirect URI</label>
         <input id="cfg-redirect" class="form-input" type="text" placeholder="https://...">
-        <p class="form-hint">A URL exata desta página.</p>
+        <p class="form-hint">A URL exata desta página (com barra no final).</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">URL do Worker (Cloudflare)</label>
+        <input id="cfg-worker" class="form-input" type="text" placeholder="https://ml-oauth.SEU-USUARIO.workers.dev">
+        <p class="form-hint">URL do Worker que faz a troca do código OAuth. <a href="#" style="color:var(--orange)" onclick="return false">Ver instruções abaixo</a>.</p>
       </div>
 
       <div class="form-group">
@@ -715,7 +721,7 @@
       <h1 class="auth-title">ML Envios</h1>
       <p class="auth-sub">Painel de controle para Envios Full e pedidos diários do Mercado Livre.</p>
       <div id="auth-err" class="alert alert-error" style="display:none"></div>
-      <button class="btn btn-primary btn-block btn-lg" onclick="startMLAuth().catch(e=>console.error(e))">
+      <button class="btn btn-primary btn-block btn-lg" onclick="startMLAuth()">
         <i class="fa-solid fa-right-to-bracket"></i> Entrar com Mercado Livre
       </button>
       <hr class="divider">
@@ -991,7 +997,7 @@ const S = {
 };
 
 /* ══════════════════════════════════════
-   OAUTH — Authorization Code + PKCE
+   OAUTH — Authorization Code + CF Worker
 ══════════════════════════════════════ */
 function getToken() {
   try {
@@ -1004,61 +1010,42 @@ function saveToken(tok, expSec) {
   localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (expSec - 60) * 1000 }));
 }
 
-function pkceVerifier() {
-  const arr = new Uint8Array(32);
-  crypto.getRandomValues(arr);
-  return btoa(String.fromCharCode(...arr)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
-}
-async function pkceChallenge(verifier) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
-  return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
-}
-
-async function startMLAuth() {
+function startMLAuth() {
   const c = cfg.get();
   if (!c) { showScreen('setup'); return; }
-  const v = pkceVerifier();
-  sessionStorage.setItem('pkce_v', v);
-  const challenge = await pkceChallenge(v);
+  if (!c.workerUrl) {
+    const errEl = document.getElementById('auth-err');
+    errEl.textContent = 'Configure a URL do Worker nas configurações antes de continuar.';
+    errEl.style.display = '';
+    return;
+  }
   const p = new URLSearchParams({
     response_type: 'code',
     client_id: c.appId,
-    redirect_uri: c.redirect,
-    code_challenge: challenge,
-    code_challenge_method: 'S256'
+    redirect_uri: c.redirect
   });
   location.href = `${ML_AUTH}?${p}`;
 }
 
 async function exchangeCode(code) {
   const c = cfg.get();
-  const v = sessionStorage.getItem('pkce_v');
-  if (!v) throw new Error('Sessão PKCE expirada. Tente fazer login novamente.');
-  const body = new URLSearchParams({
-    grant_type: 'authorization_code',
-    client_id: c.appId,
-    code,
-    redirect_uri: c.redirect,
-    code_verifier: v
-  });
-  const r = await fetch('https://api.mercadolibre.com/oauth/token', {
+  if (!c.workerUrl) throw new Error('URL do Worker não configurada.');
+  const r = await fetch(c.workerUrl, {
     method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, clientId: c.appId, redirectUri: c.redirect })
   });
   const data = await r.json();
-  sessionStorage.removeItem('pkce_v');
   if (data.access_token) {
     saveToken(data.access_token, data.expires_in || 21600);
     history.replaceState(null, '', location.pathname);
     return data.access_token;
   }
-  throw new Error(data.message || data.error_description || 'Falha na autenticação.');
+  throw new Error(data.message || data.error_description || 'Falha na autenticação via Worker.');
 }
 
 function logout() {
   localStorage.removeItem('ml_tok');
-  sessionStorage.removeItem('pkce_v');
   S.token = null; S.seller = null;
   clearTimeout(S.refreshTimer);
   showScreen('auth');
@@ -1469,20 +1456,23 @@ function closeLightbox()   { document.getElementById('lightbox').classList.remov
 ══════════════════════════════════════ */
 function showSetup() {
   const c = cfg.get();
-  document.getElementById('cfg-appid').value    = c?.appId    || '7360008968815532';
-  document.getElementById('cfg-redirect').value = c?.redirect || 'https://khevenhenriquelimasantos443-creator.github.io/gerenciador-nfe/mercadolivre/';
-  document.getElementById('cfg-cutoff').value   = c?.cutoff   || '14:00';
+  document.getElementById('cfg-appid').value    = c?.appId     || '7360008968815532';
+  document.getElementById('cfg-redirect').value = c?.redirect  || 'https://khevenhenriquelimasantos443-creator.github.io/gerenciador-nfe/mercadolivre/';
+  document.getElementById('cfg-worker').value   = c?.workerUrl || '';
+  document.getElementById('cfg-cutoff').value   = c?.cutoff    || '14:00';
   showScreen('setup');
 }
 function saveSetup() {
-  const appId    = document.getElementById('cfg-appid').value.trim();
-  const redirect = document.getElementById('cfg-redirect').value.trim();
-  const cutoff   = document.getElementById('cfg-cutoff').value || '14:00';
-  const errEl    = document.getElementById('setup-err');
-  if (!appId)    { errEl.textContent = 'App ID é obrigatório.'; errEl.style.display=''; return; }
-  if (!redirect) { errEl.textContent = 'Redirect URI é obrigatório.'; errEl.style.display=''; return; }
+  const appId     = document.getElementById('cfg-appid').value.trim();
+  const redirect  = document.getElementById('cfg-redirect').value.trim();
+  const workerUrl = document.getElementById('cfg-worker').value.trim();
+  const cutoff    = document.getElementById('cfg-cutoff').value || '14:00';
+  const errEl     = document.getElementById('setup-err');
+  if (!appId)     { errEl.textContent = 'App ID é obrigatório.'; errEl.style.display=''; return; }
+  if (!redirect)  { errEl.textContent = 'Redirect URI é obrigatório.'; errEl.style.display=''; return; }
+  if (!workerUrl) { errEl.textContent = 'URL do Worker é obrigatória.'; errEl.style.display=''; return; }
   errEl.style.display = 'none';
-  cfg.set({ appId, redirect, cutoff });
+  cfg.set({ appId, redirect, workerUrl, cutoff });
   showScreen('auth');
 }
 
