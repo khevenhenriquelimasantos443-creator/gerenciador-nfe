@@ -989,8 +989,7 @@ const S = {
 };
 
 /* ══════════════════════════════════════
-   OAUTH — Authorization Code + PKCE
-   (suporta também o fluxo implícito legado)
+   OAUTH
 ══════════════════════════════════════ */
 function getToken() {
   try {
@@ -999,74 +998,22 @@ function getToken() {
     localStorage.removeItem('ml_tok'); return null;
   } catch { return null; }
 }
-function saveToken(tok, expSec) {
-  localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (expSec - 60) * 1000 }));
+function saveToken(tok, exp) {
+  localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (exp - 60) * 1000 }));
 }
-
-/* PKCE helpers */
-function _b64url(buf) {
-  return btoa(String.fromCharCode(...new Uint8Array(buf)))
-    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-function _pkceVerifier() {
-  const a = new Uint8Array(48); crypto.getRandomValues(a); return _b64url(a);
-}
-async function _pkceChallenge(v) {
-  const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
-  return _b64url(d);
-}
-
-async function startMLAuth() {
-  const c = cfg.get();
-  if (!c) { showScreen('setup'); return; }
-  const verifier = _pkceVerifier();
-  sessionStorage.setItem('ml_pkce_v', verifier);
-  const challenge = await _pkceChallenge(verifier);
-  const p = new URLSearchParams({
-    response_type: 'code',
-    client_id: c.appId,
-    redirect_uri: c.redirect,
-    code_challenge: challenge,
-    code_challenge_method: 'S256'
-  });
-  location.href = `${ML_AUTH}?${p}`;
-}
-
-/* Detecta retorno OAuth (PKCE code ou token implícito legado) */
-async function handleOAuthCallback() {
-  /* 1) Token implícito no hash (fluxo antigo) */
-  const hp = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
-  if (hp.access_token) {
-    saveToken(hp.access_token, parseInt(hp.expires_in) || 21600);
+function readHashToken() {
+  const p = Object.fromEntries(new URLSearchParams(window.location.hash.slice(1)));
+  if (p.access_token) {
+    saveToken(p.access_token, parseInt(p.expires_in) || 21600);
     history.replaceState(null, '', location.pathname);
-    return hp.access_token;
-  }
-  /* 2) Authorization Code no query string (PKCE) */
-  const sp = new URLSearchParams(location.search);
-  const code = sp.get('code');
-  if (code) {
-    history.replaceState(null, '', location.pathname);
-    const verifier = sessionStorage.getItem('ml_pkce_v');
-    const c = cfg.get();
-    if (!verifier || !c) return null;
-    try {
-      const res = await fetch('https://api.mercadolibre.com/oauth/token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          grant_type: 'authorization_code',
-          client_id: c.appId,
-          code,
-          redirect_uri: c.redirect,
-          code_verifier: verifier
-        })
-      });
-      const data = await res.json();
-      if (data.access_token) { saveToken(data.access_token, data.expires_in || 21600); return data.access_token; }
-      console.error('Token exchange error:', data);
-    } catch (e) { console.error('Token exchange fetch error:', e); }
+    return p.access_token;
   }
   return null;
+}
+function startMLAuth() {
+  const c = cfg.get();
+  if (!c) { showScreen('setup'); return; }
+  location.href = `${ML_AUTH}?response_type=token&client_id=${c.appId}&redirect_uri=${encodeURIComponent(c.redirect)}`;
 }
 function logout() {
   localStorage.removeItem('ml_tok');
@@ -1480,8 +1427,8 @@ function closeLightbox()   { document.getElementById('lightbox').classList.remov
 ══════════════════════════════════════ */
 function showSetup() {
   const c = cfg.get();
-  document.getElementById('cfg-appid').value    = c?.appId    || '7360008968815532';
-  document.getElementById('cfg-redirect').value = c?.redirect || 'https://khevenhenriquelimasantos443-creator.github.io/gerenciador-nfe/mercadolivre/';
+  document.getElementById('cfg-appid').value    = c?.appId    || '';
+  document.getElementById('cfg-redirect').value = c?.redirect || (location.origin + location.pathname);
   document.getElementById('cfg-cutoff').value   = c?.cutoff   || '14:00';
   showScreen('setup');
 }
@@ -1518,7 +1465,7 @@ document.getElementById('drop-zone').addEventListener('drop', e => {
 ══════════════════════════════════════ */
 async function init() {
   initSB(); startClock();
-  const tok = (await handleOAuthCallback()) || getToken();
+  const tok = readHashToken() || getToken();
   if (!cfg.get()) { showSetup(); return; }
   if (!tok) { showScreen('auth'); return; }
   S.token = tok;
@@ -1532,37 +1479,5 @@ async function init() {
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
-
-<!--
-SQL para criar tabelas no Supabase:
-
-CREATE TABLE IF NOT EXISTS ml_daily_codes (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  seller_id TEXT NOT NULL,
-  code TEXT NOT NULL,
-  notes TEXT,
-  code_date DATE NOT NULL DEFAULT CURRENT_DATE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(seller_id, code_date)
-);
-
-CREATE TABLE IF NOT EXISTS ml_confirmacoes (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  seller_id TEXT NOT NULL,
-  order_id TEXT NOT NULL,
-  confirmed BOOLEAN DEFAULT false,
-  reason TEXT, notes TEXT, photo_url TEXT,
-  shipping_date DATE NOT NULL DEFAULT CURRENT_DATE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(seller_id, order_id, shipping_date)
-);
-
-ALTER TABLE ml_daily_codes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE ml_confirmacoes ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "open_daily_codes"   ON ml_daily_codes   FOR ALL TO anon USING (true) WITH CHECK (true);
-CREATE POLICY "open_confirmacoes"  ON ml_confirmacoes  FOR ALL TO anon USING (true) WITH CHECK (true);
--->
 </body>
 </html>
