@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReturnFlow — Gestão de Devoluções</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'8'%20fill%3D'%234f46e5'%2F%3E%3Cg%20fill%3D'none'%20stroke%3D'%23fff'%20stroke-width%3D'2.6'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M14%2020l-5-5%205-5'%2F%3E%3Cpath%20d%3D'M9%2015h9a5%205%200%200%201%200%2010h-4'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
-    <meta name="theme-color" content="#0f172a">
+    <title>Voluna — Gestão de Devoluções</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%3E%3Crect%20width%3D'24'%20height%3D'24'%20rx%3D'6'%20fill%3D'%234f46e5'%2F%3E%3Cg%20fill%3D'none'%20stroke%3D'%23fff'%20stroke-width%3D'2.1'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M5%2012a7%207%200%200%201%2012-5L19%208'%2F%3E%3Cpath%20d%3D'M19%205v3h-3'%2F%3E%3Cpath%20d%3D'M19%2012a7%207%200%200%201-12%205L5%2016'%2F%3E%3Cpath%20d%3D'M5%2019v-3h3'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+    <meta name="theme-color" content="#4f46e5">
     <style>
 /* ============================================================
-   ReturnFlow — identidade visual minimalista e formal
+   Voluna — identidade visual minimalista e formal
    ============================================================ */
 :root{
   --bg:#f6f7f9; --surface:#fff; --surface-2:#fbfbfc;
@@ -205,7 +205,7 @@ tbody tr:hover{background:var(--surface-2)}
     <!-- ===================== TELA DE CONFIGURAÇÃO (Supabase) ===================== -->
     <div id="setup-screen" class="overlay hidden">
         <div class="auth-card">
-            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13 4.5 8.5 9 4"/><path d="M4.5 8.5H15a4.5 4.5 0 0 1 0 9h-3"/></svg></span> <span class="wm">Return<span class="accent">Flow</span></span></div>
+            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 17-7.1L22 8"/><path d="M22 4v4h-4"/><path d="M22 12a10 10 0 0 1-17 7.1L2 16"/><path d="M2 20v-4h4"/></svg></span> <span class="wm">Vol<span class="accent">una</span></span></div>
             <h1>Conectar ao seu banco de dados</h1>
             <p class="muted">
                 Para sincronizar entre celular e PC, cole abaixo os dados do seu projeto
@@ -231,7 +231,7 @@ tbody tr:hover{background:var(--surface-2)}
     <!-- ===================== TELA DE LOGIN ===================== -->
     <div id="auth-screen" class="overlay hidden">
         <div class="auth-card">
-            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13 4.5 8.5 9 4"/><path d="M4.5 8.5H15a4.5 4.5 0 0 1 0 9h-3"/></svg></span> <span class="wm">Return<span class="accent">Flow</span></span></div>
+            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 17-7.1L22 8"/><path d="M22 4v4h-4"/><path d="M22 12a10 10 0 0 1-17 7.1L2 16"/><path d="M2 20v-4h4"/></svg></span> <span class="wm">Vol<span class="accent">una</span></span></div>
             <h1 id="auth-title">Entrar</h1>
             <p class="muted" id="auth-subtitle">Acesse com seu e-mail e senha.</p>
             <div id="auth-msg"></div>
@@ -262,9 +262,9 @@ tbody tr:hover{background:var(--surface-2)}
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13 4.5 8.5 9 4"/><path d="M4.5 8.5H15a4.5 4.5 0 0 1 0 9h-3"/></svg></span>
+                <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 17-7.1L22 8"/><path d="M22 4v4h-4"/><path d="M22 12a10 10 0 0 1-17 7.1L2 16"/><path d="M2 20v-4h4"/></svg></span>
                 <div>
-                    <div class="brand">Return<span class="accent">Flow</span></div>
+                    <div class="brand">Vol<span class="accent">una</span></div>
                     <div class="brand-sub">Devoluções &amp; Disputas</div>
                 </div>
             </div>
@@ -577,7 +577,7 @@ tbody tr:hover{background:var(--surface-2)}
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script>
 /* ===================================================================
-   ReturnFlow — Gestão de Devoluções
+   Voluna — Gestão de Devoluções
    Frontend estático + Supabase (banco, login e fotos na nuvem).
    =================================================================== */
 'use strict';
