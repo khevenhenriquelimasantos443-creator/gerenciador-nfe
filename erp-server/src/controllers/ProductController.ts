@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ProductModel } from '../models/Product';
-import { ApiResponse } from '../../shared/types';
+import { ApiResponse } from '@shared/types';
 
 export class ProductController {
   static async create(req: Request, res: Response) {

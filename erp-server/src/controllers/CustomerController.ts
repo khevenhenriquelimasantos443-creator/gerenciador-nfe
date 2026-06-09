@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { CustomerModel } from '../models/Customer';
-import { ApiResponse } from '../../shared/types';
+import { ApiResponse } from '@shared/types';
 
 export class CustomerController {
   static async create(req: Request, res: Response) {

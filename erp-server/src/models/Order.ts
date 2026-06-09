@@ -1,5 +1,5 @@
 import { transaction, query } from '../database/connection';
-import { Order, OrderItem, OrderStatus } from '../../shared/types';
+import { Order, OrderItem, OrderStatus } from '@shared/types';
 import { v4 as uuid } from 'uuid';
 
 export class OrderModel {

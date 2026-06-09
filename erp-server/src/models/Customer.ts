@@ -1,5 +1,5 @@
 import { query } from '../database/connection';
-import { Customer } from '../../shared/types';
+import { Customer } from '@shared/types';
 import { v4 as uuid } from 'uuid';
 
 export class CustomerModel {

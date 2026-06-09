@@ -3,7 +3,7 @@ import { OrderModel } from '../models/Order';
 import { CustomerModel } from '../models/Customer';
 import { ProductModel } from '../models/Product';
 import { NfeService } from '../services/NfeService';
-import { OrderStatus, ApiResponse } from '../../shared/types';
+import { OrderStatus, ApiResponse } from '@shared/types';
 
 export class OrderController {
   static async create(req: Request, res: Response) {
