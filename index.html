@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Notas Fiscais</title>
+    <title>Gerenciador de NFe</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -15,24 +15,48 @@
         .container { max-width: 1400px; margin: 0 auto; }
         .header {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 28px 30px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        .header h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
-        .header p { color: #666; font-size: 14px; }
+        .header-title h1 { color: #333; margin-bottom: 4px; font-size: 26px; }
+        .header-title p { color: #777; font-size: 13px; }
+        .wa-config-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #555;
+            background: #f0f9f0;
+            border: 1px solid #c3e6cb;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .wa-config-status:hover { background: #d4edda; }
+        .wa-config-status.unconfigured {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+        .wa-icon { font-size: 18px; }
         .card {
             background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
         }
         .card h2 {
             color: #333;
             margin-bottom: 20px;
-            font-size: 20px;
+            font-size: 18px;
             border-bottom: 2px solid #667eea;
             padding-bottom: 10px;
         }
@@ -46,93 +70,109 @@
         }
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 10px 12px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
             font-size: 14px;
             font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
         }
         .btn {
             background: #667eea;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
+            padding: 11px 22px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
-            transition: all 0.3s;
+            transition: background 0.2s, transform 0.15s;
             width: 100%;
             margin-top: 10px;
         }
-        .btn:hover { background: #5568d3; transform: translateY(-2px); }
-        .btn-secondary { background: #e0e0e0; color: #333; }
-        .btn-secondary:hover { background: #d0d0d0; }
-        .btn-danger { background: #ff6b6b; }
-        .btn-danger:hover { background: #ee5a52; }
+        .btn:hover { background: #5568d3; transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .btn-secondary { background: #e8e8e8; color: #444; }
+        .btn-secondary:hover { background: #d8d8d8; }
+        .btn-danger { background: #e74c3c; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-whatsapp { background: #25D366; }
+        .btn-whatsapp:hover { background: #1ebe57; }
         .btn-small { padding: 6px 12px; font-size: 12px; width: auto; margin: 0; }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #667eea;
+            color: #667eea;
+        }
+        .btn-outline:hover { background: #667eea; color: white; }
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 4px;
+            margin-bottom: 22px;
             border-bottom: 2px solid #eee;
             flex-wrap: wrap;
         }
         .tab-btn {
             background: none;
             border: none;
-            padding: 12px 20px;
+            padding: 11px 18px;
             cursor: pointer;
-            color: #666;
+            color: #777;
             font-weight: 600;
             border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            font-size: 14px;
+            transition: color 0.2s, border-color 0.2s;
+            font-size: 13px;
             margin-bottom: -2px;
         }
+        .tab-btn:hover { color: #667eea; }
         .tab-btn.active { color: #667eea; border-bottom-color: #667eea; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .alert {
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-        .alert-success { background: #d4edda; color: #155724; }
-        .alert-error { background: #f8d7da; color: #721c24; }
-        .alert-info { background: #d1ecf1; color: #0c5460; }
-        .product-card {
-            background: #f9f9f9;
-            border: 1px solid #e0e0e0;
+            padding: 13px 16px;
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            margin-bottom: 16px;
+            font-size: 13px;
+            font-weight: 500;
         }
+        .alert-success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .alert-error { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }
+        .alert-warning { background: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }
+        .product-card {
+            background: #fafafa;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border-left: 4px solid #667eea;
+            transition: box-shadow 0.2s;
+        }
+        .product-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .product-card h3 { color: #333; margin-bottom: 10px; font-size: 15px; }
         .product-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
             font-size: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
-        .product-info-item { display: flex; justify-content: space-between; }
-        .product-info-item label { color: #999; font-weight: 400; margin: 0; }
-        .product-info-item span { color: #333; font-weight: 600; }
+        .product-info-item { display: flex; justify-content: space-between; gap: 8px; }
+        .product-info-item label { color: #999; font-weight: 400; margin: 0; flex-shrink: 0; }
+        .product-info-item span { color: #333; font-weight: 600; text-align: right; }
         .status-badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
         .status-validated { background: #d4edda; color: #155724; }
         .status-error { background: #f8d7da; color: #721c24; }
@@ -142,48 +182,139 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
-        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
         table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 15px; }
-        table th { background: #f5f5f5; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; }
-        table td { padding: 10px 12px; border-bottom: 1px solid #eee; }
-        table tr:hover { background: #f9f9f9; }
-        .empty-state { text-align: center; padding: 40px 20px; color: #999; }
-        .btn-group { display: flex; gap: 5px; margin-top: 10px; }
-        .btn-group .btn { flex: 1; margin: 0; padding: 8px; }
+        table th {
+            background: #f5f6fa;
+            padding: 11px 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 12px;
+            color: #555;
+            border-bottom: 2px solid #e0e0e0;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; color: #333; }
+        table tr:hover td { background: #f9faff; }
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            color: #aaa;
+            font-size: 14px;
+        }
+        .empty-state::before { display: block; font-size: 36px; margin-bottom: 12px; content: attr(data-icon); }
+        .btn-group { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+        .btn-group .btn { flex: 1; margin: 0; padding: 8px 10px; font-size: 12px; min-width: 80px; }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-header h2 { margin: 0; border: none; padding: 0; }
+        .badge-count {
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            padding: 2px 9px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+        .wa-banner {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .wa-banner .wa-icon-lg { font-size: 32px; }
+        .wa-banner h3 { font-size: 15px; margin-bottom: 3px; }
+        .wa-banner p { font-size: 12px; opacity: 0.9; }
+        .config-section {
+            background: #f8f9ff;
+            border: 1px solid #e0e4ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .config-section h3 { color: #555; font-size: 14px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .divider { border: none; border-top: 1px solid #eee; margin: 20px 0; }
+        .text-muted { color: #999; font-size: 12px; }
+        .tag {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #555;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .tag-green { background: #d4edda; color: #155724; }
+        .tag-red { background: #f8d7da; color: #721c24; }
+        .tag-yellow { background: #fff3cd; color: #856404; }
+        .wa-test-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+        .wa-test-btn:hover { background: #1ebe57; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Gerenciador de Notas Fiscais e Estoque</h1>
-            <p>Sistema integrado com cadastro de produtos (EAN), importação Excel, leitura de PDFs e histórico completo</p>
+            <div class="header-title">
+                <h1>📊 Gerenciador de NFe</h1>
+                <p>Gestão de notas fiscais, produtos, estoque e integração com WhatsApp</p>
+            </div>
+            <div id="waStatusHeader" class="wa-config-status unconfigured" onclick="abrirAba(null,'configuracoes')">
+                <span class="wa-icon">📱</span>
+                <span id="waStatusText">Configurar WhatsApp</span>
+            </div>
         </div>
-        
+
         <div class="card">
             <div class="tabs">
-                <button class="tab-btn active" onclick="abrirAba(event, 'nfe')">Nova NFe</button>
-                <button class="tab-btn" onclick="abrirAba(event, 'pdf-nfe')">Ler PDF como NFe</button>
-                <button class="tab-btn" onclick="abrirAba(event, 'produtos-cadastro')">Cadastro de Produtos</button>
-                <button class="tab-btn" onclick="abrirAba(event, 'import-excel')">Importar Excel</button>
-                <button class="tab-btn" onclick="abrirAba(event, 'nfes-lista')">Notas Fiscais</button>
-                <button class="tab-btn" onclick="abrirAba(event, 'estoque')">Estoque</button>
-                <button class="tab-btn" onclick="abrirAba(event, 'validacoes')">Validações</button>
+                <button class="tab-btn active" data-tab="nfe" onclick="abrirAba(event,'nfe')">➕ Nova NFe</button>
+                <button class="tab-btn" data-tab="pdf-nfe" onclick="abrirAba(event,'pdf-nfe')">📄 Ler PDF</button>
+                <button class="tab-btn" data-tab="produtos-cadastro" onclick="abrirAba(event,'produtos-cadastro')">📦 Produtos</button>
+                <button class="tab-btn" data-tab="import-excel" onclick="abrirAba(event,'import-excel')">📊 Importar</button>
+                <button class="tab-btn" data-tab="nfes-lista" onclick="abrirAba(event,'nfes-lista')">📋 NFes</button>
+                <button class="tab-btn" data-tab="estoque" onclick="abrirAba(event,'estoque')">🏭 Estoque</button>
+                <button class="tab-btn" data-tab="validacoes" onclick="abrirAba(event,'validacoes')">⚠️ Validações</button>
+                <button class="tab-btn" data-tab="configuracoes" onclick="abrirAba(event,'configuracoes')">⚙️ WhatsApp</button>
             </div>
-            
-            <!-- ABA: NOVA NFE -->
+
+            <!-- ==================== NOVA NFe ==================== -->
             <div id="nfe" class="tab-content active">
                 <div class="grid-2">
                     <div>
                         <h2>Registrar Nova NFe</h2>
                         <div id="alertNFe"></div>
-                        
                         <div class="form-group">
                             <label>Número da NFe *</label>
-                            <input type="text" id="nfeNumero" placeholder="000000000000001">
+                            <input type="text" id="nfeNumero" placeholder="000000000000001" maxlength="44">
                         </div>
                         <div class="form-group">
                             <label>Série *</label>
-                            <input type="number" id="nfeSerie" value="1" min="1">
+                            <input type="number" id="nfeSerie" value="1" min="1" max="999">
                         </div>
                         <div class="form-group">
                             <label>Data de Emissão *</label>
@@ -191,55 +322,60 @@
                         </div>
                         <div class="form-group">
                             <label>Fornecedor *</label>
-                            <input type="text" id="nfeFornecedor">
+                            <input type="text" id="nfeFornecedor" placeholder="Nome do fornecedor" maxlength="200">
                         </div>
                         <div class="form-group">
-                            <label>Valor Total (R$) *</label>
-                            <input type="number" id="nfeValorTotal" step="0.01" min="0">
+                            <label>Valor Total da NFe (R$) *</label>
+                            <input type="number" id="nfeValorTotal" step="0.01" min="0.01" placeholder="0,00">
                         </div>
 
-                        <h3 style="margin-top: 25px; margin-bottom: 15px; color: #333; font-size: 16px;">Adicionar Produtos</h3>
+                        <hr class="divider">
+                        <h3 style="color: #555; font-size: 14px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.4px;">Adicionar Produto</h3>
                         <div class="form-group">
                             <label>Produto *</label>
-                            <select id="nfeProdutoSelect"></select>
+                            <select id="nfeProdutoSelect">
+                                <option value="">-- Selecione um produto --</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Quantidade *</label>
-                            <input type="number" id="nfeProdutoQtd" step="1" min="1">
+                            <input type="number" id="nfeProdutoQtd" step="1" min="1" placeholder="1">
                         </div>
                         <div class="form-group">
                             <label>Valor Unitário (R$) *</label>
-                            <input type="number" id="nfeProdutoValor" step="0.01" min="0">
+                            <input type="number" id="nfeProdutoValor" step="0.01" min="0.01" placeholder="0,00">
                         </div>
-                        <button class="btn btn-secondary" onclick="adicionarProdutoNFe()">+ Adicionar Produto</button>
+                        <button class="btn btn-secondary" onclick="adicionarProdutoNFe()">+ Adicionar à NFe</button>
                         <button class="btn" onclick="salvarNFe()">✓ Salvar NFe</button>
                     </div>
                     <div>
-                        <h2>Produtos Adicionados</h2>
-                        <div id="nfeProdutosLista" style="max-height: 600px; overflow-y: auto;"></div>
+                        <h2>Produtos na NFe</h2>
+                        <div id="nfeProdutosLista">
+                            <div class="empty-state" data-icon="📦">Nenhum produto adicionado</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ABA: PDF COMO NFE -->
+            <!-- ==================== PDF NFe ==================== -->
             <div id="pdf-nfe" class="tab-content">
-                <div style="max-width: 800px; margin: 0 auto;">
+                <div style="max-width: 820px; margin: 0 auto;">
                     <h2>Registrar NFe via PDF</h2>
                     <div id="alertPDF"></div>
                     <div class="form-group">
-                        <label>Selecione arquivo PDF 📄</label>
+                        <label>Selecione o arquivo PDF</label>
                         <input type="file" id="pdfFile" accept=".pdf" onchange="lerPDF()">
                     </div>
-                    <div id="pdfDados" style="display: none; margin-top: 20px;">
+                    <div id="pdfDados" style="display:none; margin-top: 20px;">
                         <div class="grid-2">
                             <div>
                                 <div class="form-group">
                                     <label>Número NFe *</label>
-                                    <input type="text" id="pdfNumero">
+                                    <input type="text" id="pdfNumero" maxlength="44">
                                 </div>
                                 <div class="form-group">
                                     <label>Série *</label>
-                                    <input type="number" id="pdfSerie" value="1">
+                                    <input type="number" id="pdfSerie" value="1" min="1" max="999">
                                 </div>
                                 <div class="form-group">
                                     <label>Data *</label>
@@ -247,36 +383,38 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Fornecedor *</label>
-                                    <input type="text" id="pdfFornecedor">
+                                    <input type="text" id="pdfFornecedor" maxlength="200">
                                 </div>
                             </div>
                             <div>
                                 <div class="form-group">
                                     <label>Valor Total (R$) *</label>
-                                    <input type="number" id="pdfValorTotal" step="0.01">
+                                    <input type="number" id="pdfValorTotal" step="0.01" min="0.01">
                                 </div>
                                 <div class="form-group">
                                     <label>Produto *</label>
-                                    <select id="pdfProdutoSelect"></select>
+                                    <select id="pdfProdutoSelect">
+                                        <option value="">-- Selecione --</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Quantidade *</label>
                                     <input type="number" id="pdfQtd" step="1" min="1">
                                 </div>
                                 <div class="form-group">
-                                    <label>Valor Unit. (R$) *</label>
-                                    <input type="number" id="pdfValorUnit" step="0.01">
+                                    <label>Valor Unitário (R$) *</label>
+                                    <input type="number" id="pdfValorUnit" step="0.01" min="0.01">
                                 </div>
                             </div>
                         </div>
                         <button class="btn btn-secondary" onclick="adicionarProdutoPDF()">+ Adicionar Produto</button>
-                        <div id="pdfProdutosLista" style="margin-top: 20px;"></div>
-                        <button class="btn" onclick="salvarNFePDF()" style="margin-top: 20px;">✓ Salvar NFe</button>
+                        <div id="pdfProdutosLista" style="margin-top: 16px;"></div>
+                        <button class="btn" onclick="salvarNFePDF()" style="margin-top: 16px;">✓ Salvar NFe</button>
                     </div>
                 </div>
             </div>
 
-            <!-- ABA: CADASTRO PRODUTOS -->
+            <!-- ==================== CADASTRO PRODUTOS ==================== -->
             <div id="produtos-cadastro" class="tab-content">
                 <div class="grid-2">
                     <div>
@@ -284,86 +422,174 @@
                         <div id="alertProduto"></div>
                         <div class="form-group">
                             <label>Nome *</label>
-                            <input type="text" id="cadNome">
+                            <input type="text" id="cadNome" placeholder="Nome do produto" maxlength="200">
                         </div>
                         <div class="form-group">
-                            <label>Código/SKU *</label>
-                            <input type="text" id="cadCodigo">
+                            <label>Código / SKU *</label>
+                            <input type="text" id="cadCodigo" placeholder="SKU-001" maxlength="50">
                         </div>
                         <div class="form-group">
-                            <label>EAN</label>
-                            <input type="text" id="cadEAN">
+                            <label>EAN (código de barras)</label>
+                            <input type="text" id="cadEAN" placeholder="7891234567890" maxlength="14">
                         </div>
                         <div class="form-group">
                             <label>Categoria</label>
-                            <input type="text" id="cadCategoria">
+                            <input type="text" id="cadCategoria" placeholder="Ex: Eletrônicos" maxlength="100">
                         </div>
                         <div class="form-group">
                             <label>Preço Base (R$)</label>
-                            <input type="number" id="cadPreco" step="0.01" min="0">
+                            <input type="number" id="cadPreco" step="0.01" min="0" placeholder="0,00">
                         </div>
                         <div class="form-group">
                             <label>Fornecedor</label>
-                            <input type="text" id="cadFornecedor">
+                            <input type="text" id="cadFornecedor" placeholder="Nome do fornecedor" maxlength="200">
                         </div>
                         <div class="form-group">
                             <label>Estoque Mínimo</label>
                             <input type="number" id="cadEstoqueMin" step="1" min="0" value="0">
                         </div>
-                        <button class="btn" onclick="salvarProduto()">✓ Cadastrar</button>
+                        <button class="btn" onclick="salvarProduto()">✓ Cadastrar Produto</button>
                     </div>
                     <div>
-                        <h2>Produtos Cadastrados</h2>
-                        <div id="listaProdutos" style="max-height: 700px; overflow-y: auto;"></div>
+                        <div class="section-header">
+                            <h2 style="margin:0; border:none; padding:0;">Produtos Cadastrados</h2>
+                        </div>
+                        <div id="listaProdutos">
+                            <div class="empty-state" data-icon="📦">Nenhum produto cadastrado</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ABA: IMPORTAR EXCEL -->
+            <!-- ==================== IMPORTAR EXCEL ==================== -->
             <div id="import-excel" class="tab-content">
                 <div style="max-width: 1000px; margin: 0 auto;">
-                    <h2>Importar Produtos via Excel</h2>
+                    <h2>Importar Produtos via Excel / CSV</h2>
                     <div id="alertExcel"></div>
-                    <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 20px; font-size: 12px;">
-                        <p><strong>Colunas esperadas:</strong> codigo, nome, ean, categoria, preco, fornecedor, estoqueMinimo</p>
+                    <div style="background: #f5f6fa; padding: 16px 20px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; border: 1px solid #e0e4ff;">
+                        <strong>Colunas suportadas:</strong> <code>codigo</code>, <code>nome</code>, <code>ean</code>, <code>categoria</code>, <code>preco</code>, <code>fornecedor</code>, <code>estoqueminimo</code>
+                        <br><span class="text-muted" style="margin-top: 4px; display:block;">Formatos aceitos: .xlsx, .xls, .csv — A primeira linha deve conter os nomes das colunas.</span>
                     </div>
                     <div class="form-group">
-                        <label>Selecione arquivo Excel (.xlsx, .xls, .csv)</label>
+                        <label>Selecionar arquivo</label>
                         <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" onchange="processarExcel()">
                     </div>
                     <div id="excelPreview"></div>
                 </div>
             </div>
 
-            <!-- ABA: NOTAS FISCAIS -->
+            <!-- ==================== NOTAS FISCAIS ==================== -->
             <div id="nfes-lista" class="tab-content">
-                <h2>Notas Fiscais Registradas</h2>
-                <div id="listaNotasFiscais"></div>
+                <div class="section-header">
+                    <h2>Notas Fiscais Registradas</h2>
+                    <button id="btnWaNfes" class="btn btn-whatsapp btn-small" onclick="compartilharResumoNFesWhatsApp()" style="display:none;">
+                        📱 Resumo via WhatsApp
+                    </button>
+                </div>
+                <div id="listaNotasFiscais">
+                    <div class="empty-state" data-icon="📋">Nenhuma NFe registrada</div>
+                </div>
             </div>
 
-            <!-- ABA: ESTOQUE -->
+            <!-- ==================== ESTOQUE ==================== -->
             <div id="estoque" class="tab-content">
-                <h2>Estoque de Produtos</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>SKU</th>
-                            <th>EAN</th>
-                            <th>Produto</th>
-                            <th>Quantidade</th>
-                            <th>Mínimo</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoEstoque"></tbody>
-                </table>
+                <div class="section-header">
+                    <h2>Controle de Estoque</h2>
+                    <button id="btnWaEstoque" class="btn btn-whatsapp btn-small" onclick="compartilharEstoqueWhatsApp()" style="display:none;">
+                        📱 Relatório via WhatsApp
+                    </button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>EAN</th>
+                                <th>Produto</th>
+                                <th>Qtd. Atual</th>
+                                <th>Mínimo</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoEstoque">
+                            <tr><td colspan="7" class="empty-state" data-icon="🏭">Nenhum produto</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- ABA: VALIDAÇÕES -->
+            <!-- ==================== VALIDAÇÕES ==================== -->
             <div id="validacoes" class="tab-content">
-                <h2>Validações e Alertas</h2>
+                <div class="section-header">
+                    <h2>Validações e Alertas</h2>
+                    <button id="btnWaValidacoes" class="btn btn-whatsapp btn-small" onclick="enviarAlertasWhatsApp()" style="display:none;">
+                        📱 Enviar Alertas via WhatsApp
+                    </button>
+                </div>
                 <div id="listaValidacoes"></div>
+            </div>
+
+            <!-- ==================== CONFIGURAÇÕES / WHATSAPP ==================== -->
+            <div id="configuracoes" class="tab-content">
+                <h2>Configurações do WhatsApp</h2>
+
+                <div class="wa-banner">
+                    <span class="wa-icon-lg">📱</span>
+                    <div>
+                        <h3>Integração com WhatsApp</h3>
+                        <p>Configure seu número para receber relatórios e alertas de estoque diretamente no WhatsApp.</p>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Número do WhatsApp</h3>
+                    <div class="form-group">
+                        <label>Número com DDD (Brasil)</label>
+                        <input type="tel" id="waNumero" placeholder="11 99999-9999" maxlength="20">
+                        <span class="text-muted" style="display:block; margin-top:4px;">
+                            O código do país (55) é adicionado automaticamente para Brasil.
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome / Identificação (opcional)</label>
+                        <input type="text" id="waNome" placeholder="Ex: Meu WhatsApp, João..." maxlength="100">
+                    </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn" style="width:auto; margin:0;" onclick="salvarConfigWhatsApp()">💾 Salvar Configuração</button>
+                        <button class="wa-test-btn" onclick="testarWhatsApp()">📱 Testar Conexão</button>
+                    </div>
+                </div>
+
+                <div id="alertConfig"></div>
+
+                <hr class="divider">
+                <h3 style="color:#555; font-size:14px; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.4px;">
+                    Ações Rápidas via WhatsApp
+                </h3>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:14px;">
+                    <div class="product-card" style="border-left-color: #25D366;">
+                        <h3 style="color:#128C7E;">⚠️ Alerta de Estoque Baixo</h3>
+                        <p class="text-muted" style="margin-bottom:10px;">Envia lista de produtos abaixo do estoque mínimo.</p>
+                        <button class="btn btn-whatsapp btn-small" onclick="enviarAlertaEstoqueBaixo()">Enviar Agora</button>
+                    </div>
+                    <div class="product-card" style="border-left-color: #25D366;">
+                        <h3 style="color:#128C7E;">📋 Resumo de NFes</h3>
+                        <p class="text-muted" style="margin-bottom:10px;">Envia um resumo das notas fiscais do mês atual.</p>
+                        <button class="btn btn-whatsapp btn-small" onclick="compartilharResumoNFesWhatsApp()">Enviar Agora</button>
+                    </div>
+                    <div class="product-card" style="border-left-color: #25D366;">
+                        <h3 style="color:#128C7E;">🏭 Relatório de Estoque</h3>
+                        <p class="text-muted" style="margin-bottom:10px;">Envia um relatório completo do estoque atual.</p>
+                        <button class="btn btn-whatsapp btn-small" onclick="compartilharEstoqueWhatsApp()">Enviar Agora</button>
+                    </div>
+                    <div class="product-card" style="border-left-color: #25D366;">
+                        <h3 style="color:#128C7E;">🔍 Validações Pendentes</h3>
+                        <p class="text-muted" style="margin-bottom:10px;">Envia alertas de NFes com divergência de valor.</p>
+                        <button class="btn btn-whatsapp btn-small" onclick="enviarAlertasWhatsApp()">Enviar Agora</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -373,60 +599,327 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        // ================== STORAGE ==================
+        // ==================== STORAGE ====================
         const STORAGE_KEY = 'nfe_system_data';
+        const WA_STORAGE_KEY = 'nfe_wa_config';
         let dados = carregarDados();
         let produtosNFe = [];
         let produtosPDF = [];
+        let excelPreviewData = [];
 
         function carregarDados() {
-            const d = localStorage.getItem(STORAGE_KEY);
-            return d ? JSON.parse(d) : { produtosCadastrados: {}, nfes: [], estoque: {} };
+            try {
+                const d = localStorage.getItem(STORAGE_KEY);
+                const parsed = d ? JSON.parse(d) : null;
+                return parsed && typeof parsed === 'object'
+                    ? { produtosCadastrados: parsed.produtosCadastrados || {}, nfes: parsed.nfes || [], estoque: parsed.estoque || {} }
+                    : { produtosCadastrados: {}, nfes: [], estoque: {} };
+            } catch {
+                return { produtosCadastrados: {}, nfes: [], estoque: {} };
+            }
         }
 
         function salvarDados() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
-            atualizarInterface();
+            atualizarTudo();
         }
 
-        // ================== TABS ==================
+        // ==================== UTILITÁRIOS ====================
+        function esc(str) {
+            return String(str ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#x27;');
+        }
+
+        function formatarMoeda(valor) {
+            return parseFloat(valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function formatarData(isoStr) {
+            if (!isoStr) return '—';
+            const partes = isoStr.split('-');
+            if (partes.length === 3) return `${partes[2]}/${partes[1]}/${partes[0]}`;
+            return new Date(isoStr).toLocaleDateString('pt-BR');
+        }
+
+        function mostrarAlerta(id, msg, tipo) {
+            const container = document.getElementById(id);
+            if (!container) return;
+            const alerta = document.createElement('div');
+            alerta.className = `alert alert-${tipo}`;
+            alerta.textContent = msg;
+            container.innerHTML = '';
+            container.appendChild(alerta);
+            setTimeout(() => { if (alerta.parentNode) alerta.remove(); }, 5000);
+        }
+
+        // ==================== TABS ====================
         function abrirAba(event, tab) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tab).classList.add('active');
-            event.target.classList.add('active');
 
-            if (tab === 'produtos-cadastro') atualizarListaProdutos();
-            if (tab === 'nfes-lista') atualizarNotasFiscais();
-            if (tab === 'estoque') atualizarEstoque();
-            if (tab === 'validacoes') atualizarValidacoes();
-            if (tab === 'nfe' || tab === 'pdf-nfe') atualizarSelectProdutos();
+            document.getElementById(tab).classList.add('active');
+
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+                if (btn) btn.classList.add('active');
+            }
+
+            const atualizadores = {
+                'produtos-cadastro': () => atualizarListaProdutos(),
+                'nfes-lista': () => atualizarNotasFiscais(),
+                'estoque': () => atualizarEstoque(),
+                'validacoes': () => atualizarValidacoes(),
+                'nfe': () => atualizarSelectProdutos(),
+                'pdf-nfe': () => atualizarSelectProdutos(),
+                'configuracoes': () => carregarConfigWhatsApp(),
+            };
+            atualizadores[tab]?.();
         }
 
-        // ================== PRODUTOS ==================
+        // ==================== WHATSAPP ====================
+        function carregarConfigWhatsApp() {
+            try {
+                const c = localStorage.getItem(WA_STORAGE_KEY);
+                if (!c) return;
+                const config = JSON.parse(c);
+                document.getElementById('waNumero').value = config.numero || '';
+                document.getElementById('waNome').value = config.nome || '';
+            } catch {}
+        }
+
+        function salvarConfigWhatsApp() {
+            const numeroRaw = document.getElementById('waNumero').value.trim();
+            const numero = numeroRaw.replace(/\D/g, '');
+            const nome = document.getElementById('waNome').value.trim();
+
+            if (!numero) {
+                mostrarAlerta('alertConfig', 'Informe o número do WhatsApp.', 'error');
+                return;
+            }
+            if (numero.length < 10 || numero.length > 13) {
+                mostrarAlerta('alertConfig', 'Número inválido. Use DDD + número (ex: 11 99999-9999).', 'error');
+                return;
+            }
+
+            const numeroCompleto = numero.startsWith('55') ? numero : '55' + numero;
+            localStorage.setItem(WA_STORAGE_KEY, JSON.stringify({ numero: numeroCompleto, nome, exibicao: numeroRaw }));
+            atualizarStatusWhatsApp();
+            mostrarAlerta('alertConfig', `WhatsApp configurado! Número: +${numeroCompleto}`, 'success');
+        }
+
+        function getWhatsAppConfig() {
+            try {
+                const c = localStorage.getItem(WA_STORAGE_KEY);
+                return c ? JSON.parse(c) : null;
+            } catch { return null; }
+        }
+
+        function abrirWhatsApp(numero, mensagem) {
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        function verificarConfigWhatsApp(alertId) {
+            const config = getWhatsAppConfig();
+            if (!config || !config.numero) {
+                const destino = alertId ? alertId : 'alertConfig';
+                mostrarAlerta(destino, 'Configure o número do WhatsApp na aba ⚙️ WhatsApp.', 'warning');
+                return null;
+            }
+            return config;
+        }
+
+        function atualizarStatusWhatsApp() {
+            const config = getWhatsAppConfig();
+            const statusEl = document.getElementById('waStatusHeader');
+            const textEl = document.getElementById('waStatusText');
+            if (config && config.numero) {
+                statusEl.classList.remove('unconfigured');
+                textEl.textContent = config.nome ? `WhatsApp: ${config.nome}` : `WhatsApp: +${config.numero}`;
+                document.getElementById('btnWaEstoque')?.removeAttribute('style');
+                document.getElementById('btnWaNfes')?.removeAttribute('style');
+            } else {
+                statusEl.classList.add('unconfigured');
+                textEl.textContent = 'Configurar WhatsApp';
+            }
+        }
+
+        function testarWhatsApp() {
+            const config = verificarConfigWhatsApp('alertConfig');
+            if (!config) return;
+            const msg = `✅ *Gerenciador de NFe*\n\nConexão com WhatsApp funcionando!\n\nNúmero configurado: +${config.numero}\n\nEste é um teste de notificação.`;
+            abrirWhatsApp(config.numero, msg);
+        }
+
+        function enviarAlertaEstoqueBaixo() {
+            const config = verificarConfigWhatsApp('alertConfig');
+            if (!config) return;
+            const prodMin = Object.values(dados.produtosCadastrados).filter(p =>
+                (dados.estoque[p.codigo]?.quantidade ?? 0) < p.estoqueMinimo
+            );
+            if (!prodMin.length) {
+                mostrarAlerta('alertConfig', 'Nenhum produto abaixo do estoque mínimo.', 'info');
+                return;
+            }
+            const linhas = prodMin.map(p =>
+                `• *${p.nome}* (${p.codigo}): ${dados.estoque[p.codigo]?.quantidade ?? 0} un (mín: ${p.estoqueMinimo})`
+            ).join('\n');
+            const msg = `⚠️ *ALERTA DE ESTOQUE BAIXO*\n📅 ${new Date().toLocaleDateString('pt-BR')}\n\n${linhas}\n\n_Total: ${prodMin.length} produto(s) abaixo do mínimo_\n\n— Gerenciador de NFe`;
+            abrirWhatsApp(config.numero, msg);
+        }
+
+        function enviarAlertasWhatsApp() {
+            const config = verificarConfigWhatsApp('alertConfig');
+            if (!config) return;
+            const nfesAlerta = dados.nfes.filter(n =>
+                Math.abs(parseFloat(n.valorTotal) - parseFloat(n.valorCalculado)) > 0.01
+            );
+            const prodMin = Object.values(dados.produtosCadastrados).filter(p =>
+                (dados.estoque[p.codigo]?.quantidade ?? 0) < p.estoqueMinimo
+            );
+
+            if (!nfesAlerta.length && !prodMin.length) {
+                mostrarAlerta('alertConfig', 'Nenhum alerta pendente.', 'info');
+                return;
+            }
+
+            let msg = `🔔 *ALERTAS DO SISTEMA*\n📅 ${new Date().toLocaleDateString('pt-BR')}\n\n`;
+
+            if (nfesAlerta.length) {
+                msg += `*📋 NFes com Divergência (${nfesAlerta.length}):*\n`;
+                nfesAlerta.forEach(n => {
+                    const diff = Math.abs(parseFloat(n.valorTotal) - parseFloat(n.valorCalculado)).toFixed(2);
+                    msg += `• NFe ${n.numero} — diferença: R$ ${diff}\n`;
+                });
+                msg += '\n';
+            }
+            if (prodMin.length) {
+                msg += `*⚠️ Estoque Abaixo do Mínimo (${prodMin.length}):*\n`;
+                prodMin.forEach(p => {
+                    msg += `• ${p.nome}: ${dados.estoque[p.codigo]?.quantidade ?? 0} un (mín: ${p.estoqueMinimo})\n`;
+                });
+            }
+            msg += '\n— Gerenciador de NFe';
+            abrirWhatsApp(config.numero, msg);
+        }
+
+        function compartilharResumoNFesWhatsApp() {
+            const config = verificarConfigWhatsApp('alertConfig');
+            if (!config) return;
+            if (!dados.nfes.length) {
+                mostrarAlerta('alertConfig', 'Nenhuma NFe registrada.', 'info');
+                return;
+            }
+
+            const agora = new Date();
+            const nfesMes = dados.nfes.filter(n => {
+                if (!n.data) return false;
+                const d = new Date(n.data + 'T00:00:00');
+                return d.getMonth() === agora.getMonth() && d.getFullYear() === agora.getFullYear();
+            });
+            const totalValor = nfesMes.reduce((s, n) => s + parseFloat(n.valorTotal || 0), 0);
+            const fornecedoresUnicos = [...new Set(nfesMes.map(n => n.fornecedor))];
+            const mesNome = agora.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+            let msg = `📋 *RESUMO DE NFes — ${mesNome.toUpperCase()}*\n\n`;
+            msg += `📊 Total de notas: *${nfesMes.length}*\n`;
+            msg += `💰 Valor total: *${formatarMoeda(totalValor)}*\n`;
+            msg += `🏭 Fornecedores: *${fornecedoresUnicos.length}*\n\n`;
+
+            if (nfesMes.length > 0) {
+                msg += `*Últimas NFes:*\n`;
+                nfesMes.slice(-5).reverse().forEach(n => {
+                    msg += `• NFe ${n.numero} — ${formatarData(n.data)} — ${formatarMoeda(n.valorTotal)}\n`;
+                });
+            }
+            msg += `\n— Gerenciador de NFe`;
+            abrirWhatsApp(config.numero, msg);
+        }
+
+        function compartilharNFeWhatsApp(id) {
+            const config = verificarConfigWhatsApp('alertNFe');
+            if (!config) return;
+            const nfe = dados.nfes.find(n => n.id === id);
+            if (!nfe) return;
+
+            const linhas = nfe.produtos.map(p =>
+                `  • ${p.nome}: ${p.quantidade}x ${formatarMoeda(p.valorUnitario)} = *${formatarMoeda(p.valorTotal)}*`
+            ).join('\n');
+            const statusStr = parseFloat(nfe.valorTotal) === parseFloat(nfe.valorCalculado) ? '✅ Validada' : '⚠️ Divergência de valor';
+
+            const msg = `📋 *NFe ${nfe.numero} — Série ${nfe.serie}*\n\n` +
+                `🏭 Fornecedor: ${nfe.fornecedor}\n` +
+                `📅 Data: ${formatarData(nfe.data)}\n` +
+                `💰 Valor Total: *${formatarMoeda(nfe.valorTotal)}*\n` +
+                `📌 Status: ${statusStr}\n\n` +
+                `*Produtos (${nfe.produtos.length}):*\n${linhas}\n\n` +
+                `— Gerenciador de NFe`;
+            abrirWhatsApp(config.numero, msg);
+        }
+
+        function compartilharEstoqueWhatsApp() {
+            const config = verificarConfigWhatsApp('alertConfig');
+            if (!config) return;
+            const produtos = Object.values(dados.produtosCadastrados);
+            if (!produtos.length) {
+                mostrarAlerta('alertConfig', 'Nenhum produto cadastrado.', 'info');
+                return;
+            }
+
+            const normais = produtos.filter(p => (dados.estoque[p.codigo]?.quantidade ?? 0) >= p.estoqueMinimo);
+            const alertas = produtos.filter(p => (dados.estoque[p.codigo]?.quantidade ?? 0) < p.estoqueMinimo);
+            const zerados = alertas.filter(p => (dados.estoque[p.codigo]?.quantidade ?? 0) === 0);
+
+            let msg = `🏭 *RELATÓRIO DE ESTOQUE*\n📅 ${new Date().toLocaleDateString('pt-BR')}\n\n`;
+            msg += `📦 Total de produtos: *${produtos.length}*\n`;
+            msg += `✅ Dentro do limite: *${normais.length}*\n`;
+            msg += `⚠️ Abaixo do mínimo: *${alertas.length}*\n`;
+            msg += `❌ Zerados: *${zerados.length}*\n`;
+
+            if (alertas.length) {
+                msg += `\n*⚠️ Produtos Críticos:*\n`;
+                alertas.slice(0, 10).forEach(p => {
+                    const qtd = dados.estoque[p.codigo]?.quantidade ?? 0;
+                    msg += `• ${p.nome}: ${qtd} un (mín: ${p.estoqueMinimo})\n`;
+                });
+                if (alertas.length > 10) msg += `_...e mais ${alertas.length - 10} produto(s)_\n`;
+            }
+            msg += `\n— Gerenciador de NFe`;
+            abrirWhatsApp(config.numero, msg);
+        }
+
+        // ==================== PRODUTOS ====================
         function salvarProduto() {
             const nome = document.getElementById('cadNome').value.trim();
             const codigo = document.getElementById('cadCodigo').value.trim();
+
+            if (!nome || !codigo) {
+                mostrarAlerta('alertProduto', 'Nome e Código/SKU são obrigatórios.', 'error');
+                return;
+            }
+            if (dados.produtosCadastrados[codigo]) {
+                mostrarAlerta('alertProduto', `Produto com código "${codigo}" já existe.`, 'error');
+                return;
+            }
+
             const ean = document.getElementById('cadEAN').value.trim();
             const categoria = document.getElementById('cadCategoria').value.trim();
             const preco = parseFloat(document.getElementById('cadPreco').value) || 0;
             const fornecedor = document.getElementById('cadFornecedor').value.trim();
             const estoqueMin = parseInt(document.getElementById('cadEstoqueMin').value) || 0;
 
-            if (!nome || !codigo) {
-                mostrarAlerta('alertProduto', 'Nome e Código são obrigatórios!', 'error');
-                return;
-            }
-
-            if (dados.produtosCadastrados[codigo]) {
-                mostrarAlerta('alertProduto', 'Produto já existe!', 'error');
-                return;
-            }
-
             dados.produtosCadastrados[codigo] = {
-                codigo, nome, ean: ean || 'N/A', categoria: categoria || 'Sem categoria',
-                preco, fornecedor: fornecedor || 'N/A', estoqueMinimo: estoqueMin,
+                codigo, nome,
+                ean: ean || 'N/A',
+                categoria: categoria || 'Sem categoria',
+                preco, fornecedor: fornecedor || 'N/A',
+                estoqueMinimo: estoqueMin,
                 dataCadastro: new Date().toISOString()
             };
 
@@ -435,121 +928,129 @@
             }
 
             salvarDados();
-            document.getElementById('cadNome').value = '';
-            document.getElementById('cadCodigo').value = '';
-            document.getElementById('cadEAN').value = '';
-            document.getElementById('cadCategoria').value = '';
-            document.getElementById('cadPreco').value = '';
-            document.getElementById('cadFornecedor').value = '';
+            ['cadNome','cadCodigo','cadEAN','cadCategoria','cadPreco','cadFornecedor'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
             document.getElementById('cadEstoqueMin').value = '0';
-            mostrarAlerta('alertProduto', 'Produto cadastrado!', 'success');
+            mostrarAlerta('alertProduto', `Produto "${nome}" cadastrado com sucesso!`, 'success');
         }
 
         function atualizarListaProdutos() {
             const container = document.getElementById('listaProdutos');
             const produtos = Object.values(dados.produtosCadastrados);
 
-            if (produtos.length === 0) {
-                container.innerHTML = '<div class="empty-state">Nenhum produto cadastrado</div>';
+            if (!produtos.length) {
+                container.innerHTML = '<div class="empty-state" data-icon="📦">Nenhum produto cadastrado</div>';
                 return;
             }
 
             container.innerHTML = produtos.map(p => {
-                const est = dados.estoque[p.codigo]?.quantidade || 0;
-                const alerta = est < p.estoqueMinimo ? 'status-warning' : 'status-validated';
-                return `
-                    <div class="product-card">
-                        <h3>${p.nome}</h3>
-                        <div class="product-info">
-                            <div class="product-info-item"><label>SKU:</label><span>${p.codigo}</span></div>
-                            <div class="product-info-item"><label>EAN:</label><span>${p.ean}</span></div>
-                            <div class="product-info-item"><label>Estoque:</label><span>${est}</span></div>
-                            <div class="product-info-item"><label>Mín:</label><span>${p.estoqueMinimo}</span></div>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-secondary btn-small" onclick="verHistoricoProduto('${p.codigo}')">Histórico</button>
-                            <button class="btn btn-danger btn-small" onclick="deletarProduto('${p.codigo}')">Deletar</button>
-                        </div>
+                const qtd = dados.estoque[p.codigo]?.quantidade ?? 0;
+                const statusClass = qtd === 0 ? 'tag-red' : qtd < p.estoqueMinimo ? 'tag-yellow' : 'tag-green';
+                const statusTxt = qtd === 0 ? '✗ Zerado' : qtd < p.estoqueMinimo ? '⚠ Baixo' : '✓ OK';
+                return `<div class="product-card">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <h3>${esc(p.nome)}</h3>
+                        <span class="tag ${statusClass}">${statusTxt}</span>
                     </div>
-                `;
+                    <div class="product-info">
+                        <div class="product-info-item"><label>SKU:</label><span>${esc(p.codigo)}</span></div>
+                        <div class="product-info-item"><label>EAN:</label><span>${esc(p.ean)}</span></div>
+                        <div class="product-info-item"><label>Estoque:</label><span>${qtd}</span></div>
+                        <div class="product-info-item"><label>Mínimo:</label><span>${p.estoqueMinimo}</span></div>
+                        <div class="product-info-item"><label>Preço:</label><span>${formatarMoeda(p.preco)}</span></div>
+                        <div class="product-info-item"><label>Categoria:</label><span>${esc(p.categoria)}</span></div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-small" onclick="verHistorico('${esc(p.codigo)}')">📜 Histórico</button>
+                        <button class="btn btn-danger btn-small" onclick="deletarProduto('${esc(p.codigo)}')">🗑 Deletar</button>
+                    </div>
+                </div>`;
             }).join('');
         }
 
         function deletarProduto(codigo) {
-            if (confirm('Deletar este produto?')) {
-                delete dados.produtosCadastrados[codigo];
-                salvarDados();
-            }
+            const prod = dados.produtosCadastrados[codigo];
+            if (!prod) return;
+            if (!confirm(`Deletar o produto "${prod.nome}"?\n\nAtenção: o estoque também será removido.`)) return;
+            delete dados.produtosCadastrados[codigo];
+            delete dados.estoque[codigo];
+            salvarDados();
+            mostrarAlerta('alertProduto', 'Produto removido.', 'success');
         }
 
-        function verHistoricoProduto(codigo) {
+        function verHistorico(codigo) {
             const produto = dados.produtosCadastrados[codigo];
             const est = dados.estoque[codigo];
+            const container = document.getElementById('listaProdutos');
 
-            if (!est || est.historico.length === 0) {
-                mostrarAlerta('alertProduto', 'Nenhuma movimentação!', 'info');
+            const backBtn = `<button class="btn btn-secondary" style="width:auto; margin-bottom:16px;" onclick="atualizarListaProdutos()">← Voltar</button>`;
+
+            if (!est || !est.historico.length) {
+                container.innerHTML = backBtn + `<div class="alert alert-info">Nenhuma movimentação para "${esc(produto?.nome ?? codigo)}".</div>`;
                 return;
             }
 
-            let html = `<div style="margin-top: 20px;">
-                <h3 style="margin-bottom: 15px;">📦 ${produto.nome} (${produto.codigo})</h3>
-                <table>
-                    <thead><tr>
-                        <th>Data/Hora</th><th>NFe</th><th>Movimento</th><th>Qtd</th><th>Saldo</th>
-                    </tr></thead><tbody>`;
-
             let saldo = 0;
-            est.historico.forEach(h => {
-                const data = new Date(h.data);
+            const linhas = est.historico.map(h => {
                 saldo += h.quantidade;
-                const tipo = h.quantidade > 0 ? 'ENTRADA' : 'SAÍDA';
-                html += `<tr>
+                const tipo = h.quantidade > 0 ? '<span class="tag tag-green">ENTRADA</span>' : '<span class="tag tag-red">SAÍDA</span>';
+                const data = new Date(h.data);
+                return `<tr>
                     <td>${data.toLocaleDateString('pt-BR')} ${data.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})}</td>
-                    <td>${h.nfe}</td><td>${tipo}</td><td>${h.quantidade}</td><td>${saldo}</td>
+                    <td>${esc(h.nfe)}</td>
+                    <td>${tipo}</td>
+                    <td style="font-weight:600;">${h.quantidade > 0 ? '+' : ''}${h.quantidade}</td>
+                    <td style="font-weight:600;">${saldo}</td>
                 </tr>`;
-            });
+            }).join('');
 
-            html += `</tbody></table></div>`;
-            document.getElementById('listaProdutos').innerHTML = html;
+            container.innerHTML = `${backBtn}
+                <h3 style="margin-bottom:14px;">📜 Histórico: ${esc(produto?.nome ?? codigo)} (${esc(codigo)})</h3>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead><tr><th>Data/Hora</th><th>NFe</th><th>Tipo</th><th>Qtd</th><th>Saldo</th></tr></thead>
+                        <tbody>${linhas}</tbody>
+                    </table>
+                </div>`;
         }
 
-        // ================== NFE ==================
+        // ==================== SELECTS ====================
         function atualizarSelectProdutos() {
-            const sel1 = document.getElementById('nfeProdutoSelect');
-            const sel2 = document.getElementById('pdfProdutoSelect');
-            [sel1, sel2].forEach(sel => {
+            const ids = ['nfeProdutoSelect', 'pdfProdutoSelect'];
+            ids.forEach(id => {
+                const sel = document.getElementById(id);
                 if (!sel) return;
-                sel.innerHTML = '<option value="">-- Selecione --</option>';
+                const anterior = sel.value;
+                sel.innerHTML = '<option value="">-- Selecione um produto --</option>';
                 Object.values(dados.produtosCadastrados).forEach(p => {
                     const opt = document.createElement('option');
                     opt.value = p.codigo;
                     opt.textContent = `${p.nome} (${p.codigo})`;
                     sel.appendChild(opt);
                 });
+                if (anterior) sel.value = anterior;
             });
         }
 
+        // ==================== NFe ====================
         function adicionarProdutoNFe() {
             const codigo = document.getElementById('nfeProdutoSelect').value;
-            const qtd = parseInt(document.getElementById('nfeProdutoQtd').value);
-            const valor = parseFloat(document.getElementById('nfeProdutoValor').value);
+            const qtdStr = document.getElementById('nfeProdutoQtd').value;
+            const valorStr = document.getElementById('nfeProdutoValor').value;
+            const qtd = parseInt(qtdStr);
+            const valor = parseFloat(valorStr);
 
-            if (!codigo || !qtd || !valor) {
-                mostrarAlerta('alertNFe', 'Preencha todos os campos!', 'error');
-                return;
-            }
-
+            if (!codigo) { mostrarAlerta('alertNFe', 'Selecione um produto.', 'error'); return; }
+            if (!qtd || qtd <= 0) { mostrarAlerta('alertNFe', 'Informe uma quantidade válida.', 'error'); return; }
+            if (!valor || valor <= 0) { mostrarAlerta('alertNFe', 'Informe um valor unitário válido.', 'error'); return; }
             if (produtosNFe.find(p => p.codigo === codigo)) {
-                mostrarAlerta('alertNFe', 'Produto já adicionado!', 'error');
+                mostrarAlerta('alertNFe', 'Produto já adicionado à NFe.', 'error');
                 return;
             }
 
             const p = dados.produtosCadastrados[codigo];
-            produtosNFe.push({
-                codigo, nome: p.nome, ean: p.ean,
-                quantidade: qtd, valorUnitario: valor,
-                valorTotal: (qtd * valor).toFixed(2)
-            });
+            produtosNFe.push({ codigo, nome: p.nome, ean: p.ean, quantidade: qtd, valorUnitario: valor, valorTotal: qtd * valor });
 
             atualizarListaProdutosNFe();
             document.getElementById('nfeProdutoSelect').value = '';
@@ -559,27 +1060,25 @@
 
         function atualizarListaProdutosNFe() {
             const container = document.getElementById('nfeProdutosLista');
-            if (produtosNFe.length === 0) {
-                container.innerHTML = '<div class="empty-state">Nenhum produto</div>';
+            if (!produtosNFe.length) {
+                container.innerHTML = '<div class="empty-state" data-icon="📦">Nenhum produto adicionado</div>';
                 return;
             }
-
-            const total = produtosNFe.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            const total = produtosNFe.reduce((s, p) => s + p.valorTotal, 0);
             container.innerHTML = produtosNFe.map((p, i) => `
                 <div class="product-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h3>${p.nome}</h3>
-                        <button class="btn btn-danger btn-small" onclick="removerProdutoNFe(${i})">Remover</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3>${esc(p.nome)}</h3>
+                        <button class="btn btn-danger btn-small" onclick="removerProdutoNFe(${i})">✕</button>
                     </div>
-                    <div style="font-size: 12px; color: #666;">
-                        ${p.quantidade}x R$ ${parseFloat(p.valorUnitario).toFixed(2)} = <strong>R$ ${parseFloat(p.valorTotal).toFixed(2)}</strong>
+                    <div style="font-size:13px; color:#666; margin-top:6px;">
+                        ${p.quantidade}x ${formatarMoeda(p.valorUnitario)} = <strong>${formatarMoeda(p.valorTotal)}</strong>
                     </div>
                 </div>
             `).join('') + `
-                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-weight: 600;">
-                    TOTAL: R$ ${total.toFixed(2)}
-                </div>
-            `;
+                <div style="background:#f5f6fa; padding:14px 16px; border-radius:8px; font-weight:700; color:#333;">
+                    Total calculado: ${formatarMoeda(total)}
+                </div>`;
         }
 
         function removerProdutoNFe(i) {
@@ -589,21 +1088,28 @@
 
         function salvarNFe() {
             const numero = document.getElementById('nfeNumero').value.trim();
-            const serie = parseInt(document.getElementById('nfeSerie').value);
+            const serie = parseInt(document.getElementById('nfeSerie').value) || 1;
             const data = document.getElementById('nfeData').value;
             const fornecedor = document.getElementById('nfeFornecedor').value.trim();
             const valorTotal = parseFloat(document.getElementById('nfeValorTotal').value);
 
-            if (!numero || !data || !fornecedor || !valorTotal || produtosNFe.length === 0) {
-                mostrarAlerta('alertNFe', 'Preencha todos os campos!', 'error');
+            if (!numero) { mostrarAlerta('alertNFe', 'Informe o número da NFe.', 'error'); return; }
+            if (!data) { mostrarAlerta('alertNFe', 'Informe a data de emissão.', 'error'); return; }
+            if (!fornecedor) { mostrarAlerta('alertNFe', 'Informe o fornecedor.', 'error'); return; }
+            if (!valorTotal || valorTotal <= 0) { mostrarAlerta('alertNFe', 'Informe o valor total.', 'error'); return; }
+            if (!produtosNFe.length) { mostrarAlerta('alertNFe', 'Adicione ao menos um produto.', 'error'); return; }
+
+            if (dados.nfes.some(n => n.numero === numero && n.serie === serie)) {
+                mostrarAlerta('alertNFe', `NFe ${numero} série ${serie} já está registrada.`, 'error');
                 return;
             }
 
-            const valorCalculado = produtosNFe.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            const valorCalculado = produtosNFe.reduce((s, p) => s + p.valorTotal, 0);
             const nfe = {
                 id: Date.now(),
                 numero, serie, data, dataRegistro: new Date().toISOString(),
-                fornecedor, valorTotal: valorTotal.toFixed(2),
+                fornecedor,
+                valorTotal: valorTotal.toFixed(2),
                 valorCalculado: valorCalculado.toFixed(2),
                 produtos: JSON.parse(JSON.stringify(produtosNFe)),
                 status: Math.abs(valorCalculado - valorTotal) <= 0.01 ? 'valida' : 'alerta'
@@ -614,11 +1120,7 @@
             produtosNFe.forEach(p => {
                 if (!dados.estoque[p.codigo]) dados.estoque[p.codigo] = { codigo: p.codigo, quantidade: 0, historico: [] };
                 dados.estoque[p.codigo].quantidade += p.quantidade;
-                dados.estoque[p.codigo].historico.push({
-                    data: new Date().toISOString(),
-                    nfe: numero,
-                    quantidade: p.quantidade
-                });
+                dados.estoque[p.codigo].historico.push({ data: new Date().toISOString(), nfe: numero, quantidade: p.quantidade });
             });
 
             salvarDados();
@@ -629,41 +1131,51 @@
             document.getElementById('nfeData').value = '';
             document.getElementById('nfeFornecedor').value = '';
             document.getElementById('nfeValorTotal').value = '';
-            mostrarAlerta('alertNFe', 'NFe registrada!', 'success');
+            document.getElementById('nfeData').valueAsDate = new Date();
+
+            if (nfe.status === 'alerta') {
+                mostrarAlerta('alertNFe', `NFe ${numero} salva com alerta: divergência de R$ ${Math.abs(valorCalculado - valorTotal).toFixed(2)}.`, 'warning');
+            } else {
+                mostrarAlerta('alertNFe', `NFe ${numero} registrada com sucesso!`, 'success');
+            }
+
+            const waConfig = getWhatsAppConfig();
+            if (waConfig) {
+                setTimeout(() => {
+                    if (confirm(`NFe registrada!\n\nDeseja compartilhar os detalhes via WhatsApp?`)) {
+                        compartilharNFeWhatsApp(nfe.id);
+                    }
+                }, 300);
+            }
         }
 
-        // ================== PDF ==================
+        // ==================== PDF ====================
         function lerPDF() {
             const file = document.getElementById('pdfFile').files[0];
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                try {
-                    const pdf = pdfjsLib.getDocument(e.target.result);
-                    pdf.promise.then(doc => {
-                        doc.getPage(1).then(pg => {
-                            pg.getTextContent().then(content => {
-                                let texto = content.items.map(i => i.str).join(' ');
-                                
-                                const nfeMatch = texto.match(/NFe[:\s]*(\d{15,})/i);
-                                const valorMatch = texto.match(/total[:\s]*R?\$?\s*([\d.,]+)/i);
-                                
-                                if (nfeMatch) document.getElementById('pdfNumero').value = nfeMatch[1];
-                                if (valorMatch) {
-                                    const valor = valorMatch[1].replace(',', '.');
-                                    document.getElementById('pdfValorTotal').value = valor;
-                                }
-                                document.getElementById('pdfData').valueAsDate = new Date();
-                                
-                                document.getElementById('pdfDados').style.display = 'block';
-                                mostrarAlerta('alertPDF', 'PDF lido com sucesso!', 'success');
-                            });
-                        });
-                    });
-                } catch (err) {
-                    mostrarAlerta('alertPDF', 'Erro ao ler PDF: ' + err.message, 'error');
-                }
+                pdfjsLib.getDocument({ data: e.target.result }).promise
+                    .then(doc => doc.getPage(1))
+                    .then(pg => pg.getTextContent())
+                    .then(content => {
+                        const texto = content.items.map(i => i.str).join(' ');
+                        const nfeMatch = texto.match(/NFe[:\s]*(\d{15,44})/i);
+                        const valorMatch = texto.match(/valor\s+total[:\s]*R?\$?\s*([\d.,]+)/i)
+                            || texto.match(/total\s*geral[:\s]*R?\$?\s*([\d.,]+)/i)
+                            || texto.match(/total[:\s]*R?\$?\s*([\d.,]+)/i);
+
+                        if (nfeMatch) document.getElementById('pdfNumero').value = nfeMatch[1];
+                        if (valorMatch) {
+                            const valor = valorMatch[1].replace(/\./g, '').replace(',', '.');
+                            document.getElementById('pdfValorTotal').value = parseFloat(valor).toFixed(2);
+                        }
+                        document.getElementById('pdfData').valueAsDate = new Date();
+                        document.getElementById('pdfDados').style.display = 'block';
+                        mostrarAlerta('alertPDF', 'PDF lido. Verifique e complete os dados.', 'success');
+                    })
+                    .catch(err => mostrarAlerta('alertPDF', 'Erro ao processar PDF: ' + err.message, 'error'));
             };
             reader.readAsArrayBuffer(file);
         }
@@ -673,22 +1185,16 @@
             const qtd = parseInt(document.getElementById('pdfQtd').value);
             const valor = parseFloat(document.getElementById('pdfValorUnit').value);
 
-            if (!codigo || !qtd || !valor) {
-                mostrarAlerta('alertPDF', 'Preencha todos!', 'error');
-                return;
-            }
-
+            if (!codigo) { mostrarAlerta('alertPDF', 'Selecione um produto.', 'error'); return; }
+            if (!qtd || qtd <= 0) { mostrarAlerta('alertPDF', 'Informe uma quantidade válida.', 'error'); return; }
+            if (!valor || valor <= 0) { mostrarAlerta('alertPDF', 'Informe um valor unitário válido.', 'error'); return; }
             if (produtosPDF.find(p => p.codigo === codigo)) {
-                mostrarAlerta('alertPDF', 'Já adicionado!', 'error');
+                mostrarAlerta('alertPDF', 'Produto já adicionado.', 'error');
                 return;
             }
 
             const p = dados.produtosCadastrados[codigo];
-            produtosPDF.push({
-                codigo, nome: p.nome, ean: p.ean,
-                quantidade: qtd, valorUnitario: valor,
-                valorTotal: (qtd * valor).toFixed(2)
-            });
+            produtosPDF.push({ codigo, nome: p.nome, ean: p.ean, quantidade: qtd, valorUnitario: valor, valorTotal: qtd * valor });
 
             atualizarListaProdutosPDF();
             document.getElementById('pdfProdutoSelect').value = '';
@@ -698,27 +1204,22 @@
 
         function atualizarListaProdutosPDF() {
             const container = document.getElementById('pdfProdutosLista');
-            if (produtosPDF.length === 0) {
-                container.innerHTML = '';
-                return;
-            }
-
-            const total = produtosPDF.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            if (!produtosPDF.length) { container.innerHTML = ''; return; }
+            const total = produtosPDF.reduce((s, p) => s + p.valorTotal, 0);
             container.innerHTML = produtosPDF.map((p, i) => `
                 <div class="product-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <h3>${p.nome}</h3>
-                        <button class="btn btn-danger btn-small" onclick="removerProdutoPDF(${i})">Remover</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3>${esc(p.nome)}</h3>
+                        <button class="btn btn-danger btn-small" onclick="removerProdutoPDF(${i})">✕</button>
                     </div>
-                    <div style="font-size: 12px;">
-                        ${p.quantidade}x R$ ${parseFloat(p.valorUnitario).toFixed(2)} = <strong>R$ ${parseFloat(p.valorTotal).toFixed(2)}</strong>
+                    <div style="font-size:13px; color:#666; margin-top:6px;">
+                        ${p.quantidade}x ${formatarMoeda(p.valorUnitario)} = <strong>${formatarMoeda(p.valorTotal)}</strong>
                     </div>
                 </div>
             `).join('') + `
-                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-weight: 600; margin-top: 15px;">
-                    TOTAL: R$ ${total.toFixed(2)}
-                </div>
-            `;
+                <div style="background:#f5f6fa; padding:14px 16px; border-radius:8px; font-weight:700; margin-top:14px;">
+                    Total calculado: ${formatarMoeda(total)}
+                </div>`;
         }
 
         function removerProdutoPDF(i) {
@@ -728,36 +1229,33 @@
 
         function salvarNFePDF() {
             const numero = document.getElementById('pdfNumero').value.trim();
-            const serie = parseInt(document.getElementById('pdfSerie').value);
+            const serie = parseInt(document.getElementById('pdfSerie').value) || 1;
             const data = document.getElementById('pdfData').value;
             const fornecedor = document.getElementById('pdfFornecedor').value.trim();
             const valorTotal = parseFloat(document.getElementById('pdfValorTotal').value);
 
-            if (!numero || !data || !fornecedor || !valorTotal || produtosPDF.length === 0) {
-                mostrarAlerta('alertPDF', 'Preencha todos os campos!', 'error');
-                return;
-            }
+            if (!numero) { mostrarAlerta('alertPDF', 'Informe o número da NFe.', 'error'); return; }
+            if (!data) { mostrarAlerta('alertPDF', 'Informe a data.', 'error'); return; }
+            if (!fornecedor) { mostrarAlerta('alertPDF', 'Informe o fornecedor.', 'error'); return; }
+            if (!valorTotal || valorTotal <= 0) { mostrarAlerta('alertPDF', 'Informe o valor total.', 'error'); return; }
+            if (!produtosPDF.length) { mostrarAlerta('alertPDF', 'Adicione ao menos um produto.', 'error'); return; }
 
-            const valorCalculado = produtosPDF.reduce((sum, p) => sum + parseFloat(p.valorTotal), 0);
+            const valorCalculado = produtosPDF.reduce((s, p) => s + p.valorTotal, 0);
             const nfe = {
                 id: Date.now(),
                 numero, serie, data, dataRegistro: new Date().toISOString(),
-                fornecedor, valorTotal: valorTotal.toFixed(2),
+                fornecedor,
+                valorTotal: valorTotal.toFixed(2),
                 valorCalculado: valorCalculado.toFixed(2),
                 produtos: JSON.parse(JSON.stringify(produtosPDF)),
-                status: 'valida'
+                status: Math.abs(valorCalculado - valorTotal) <= 0.01 ? 'valida' : 'alerta'
             };
 
             dados.nfes.push(nfe);
-
             produtosPDF.forEach(p => {
                 if (!dados.estoque[p.codigo]) dados.estoque[p.codigo] = { codigo: p.codigo, quantidade: 0, historico: [] };
                 dados.estoque[p.codigo].quantidade += p.quantidade;
-                dados.estoque[p.codigo].historico.push({
-                    data: new Date().toISOString(),
-                    nfe: numero,
-                    quantidade: p.quantidade
-                });
+                dados.estoque[p.codigo].historico.push({ data: new Date().toISOString(), nfe: numero, quantidade: p.quantidade });
             });
 
             salvarDados();
@@ -765,10 +1263,10 @@
             atualizarListaProdutosPDF();
             document.getElementById('pdfFile').value = '';
             document.getElementById('pdfDados').style.display = 'none';
-            mostrarAlerta('alertPDF', 'NFe do PDF registrada!', 'success');
+            mostrarAlerta('alertPDF', `NFe ${numero} registrada via PDF!`, 'success');
         }
 
-        // ================== EXCEL ==================
+        // ==================== EXCEL / CSV ====================
         function processarExcel() {
             const file = document.getElementById('excelFile').files[0];
             if (!file) return;
@@ -776,241 +1274,344 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    let dados_excel = [];
-                    
-                    if (file.name.endsWith('.csv')) {
-                        const texto = e.target.result;
-                        const linhas = texto.split('\n');
-                        const headers = linhas[0].split(',').map(h => h.trim().toLowerCase());
-                        
-                        for (let i = 1; i < linhas.length; i++) {
-                            if (!linhas[i].trim()) continue;
-                            const valores = linhas[i].split(',');
-                            const row = {};
-                            headers.forEach((h, idx) => row[h] = valores[idx]?.trim() || '');
-                            dados_excel.push(row);
-                        }
+                    let dadosExcel = [];
+
+                    if (file.name.toLowerCase().endsWith('.csv')) {
+                        dadosExcel = parsearCSV(e.target.result);
                     } else {
                         const workbook = XLSX.read(e.target.result, { type: 'array' });
                         const sheet = workbook.Sheets[workbook.SheetNames[0]];
                         const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-                        dados_excel = json.map(row => {
+                        dadosExcel = json.map(row => {
                             const novaRow = {};
-                            Object.keys(row).forEach(key => {
-                                novaRow[key.toLowerCase().trim()] = row[key];
-                            });
+                            Object.keys(row).forEach(key => { novaRow[key.toLowerCase().trim()] = row[key]; });
                             return novaRow;
                         });
                     }
 
-                    visualizarExcel(dados_excel);
+                    excelPreviewData = dadosExcel;
+                    visualizarExcel(dadosExcel);
                 } catch (err) {
-                    mostrarAlerta('alertExcel', 'Erro: ' + err.message, 'error');
+                    mostrarAlerta('alertExcel', 'Erro ao processar arquivo: ' + err.message, 'error');
                 }
             };
 
-            if (file.name.endsWith('.csv')) {
-                reader.readAsText(file);
+            if (file.name.toLowerCase().endsWith('.csv')) {
+                reader.readAsText(file, 'utf-8');
             } else {
                 reader.readAsArrayBuffer(file);
             }
         }
 
-        function visualizarExcel(dados) {
-            if (!dados.length) {
-                mostrarAlerta('alertExcel', 'Arquivo vazio!', 'error');
+        function parsearCSV(texto) {
+            const linhas = texto.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+            if (!linhas.length) return [];
+
+            const parseLinha = linha => {
+                const campos = [];
+                let i = 0, campo = '';
+                while (i < linha.length) {
+                    if (linha[i] === '"') {
+                        i++;
+                        while (i < linha.length) {
+                            if (linha[i] === '"' && linha[i + 1] === '"') { campo += '"'; i += 2; }
+                            else if (linha[i] === '"') { i++; break; }
+                            else { campo += linha[i++]; }
+                        }
+                        while (i < linha.length && linha[i] !== ',' && linha[i] !== ';') i++;
+                    } else {
+                        const separador = linha.includes(';') ? ';' : ',';
+                        const fim = linha.indexOf(separador, i);
+                        if (fim === -1) { campo += linha.slice(i); i = linha.length; }
+                        else { campo += linha.slice(i, fim); i = fim; }
+                    }
+                    campos.push(campo.trim());
+                    campo = '';
+                    i++;
+                }
+                return campos;
+            };
+
+            const separador = linhas[0].includes(';') ? ';' : ',';
+            const headers = linhas[0].split(separador).map(h => h.trim().toLowerCase().replace(/^"|"$/g, ''));
+            const resultado = [];
+            for (let i = 1; i < linhas.length; i++) {
+                if (!linhas[i].trim()) continue;
+                const valores = parseLinha(linhas[i]);
+                const row = {};
+                headers.forEach((h, idx) => { row[h] = (valores[idx] ?? '').trim(); });
+                resultado.push(row);
+            }
+            return resultado;
+        }
+
+        function visualizarExcel(dadosExcel) {
+            if (!dadosExcel.length) {
+                mostrarAlerta('alertExcel', 'Arquivo vazio ou sem dados.', 'error');
                 return;
             }
 
-            let html = `<div style="margin-top: 20px;">
-                <h3 style="color: #333; margin-bottom: 15px;">Preview (${dados.length} produtos)</h3>
-                <table style="font-size: 12px;">
-                    <thead><tr style="background: #667eea; color: white;">
-                        <th>SKU</th><th>Nome</th><th>EAN</th><th>Categoria</th><th>Preço</th><th>Fornecedor</th><th>Mín.</th>
-                    </tr></thead><tbody>`;
+            const tbody = dadosExcel.map(row => `<tr>
+                <td>${esc(row.codigo || row.sku || '—')}</td>
+                <td>${esc(row.nome || '—')}</td>
+                <td>${esc(row.ean || '—')}</td>
+                <td>${esc(row.categoria || '—')}</td>
+                <td>${formatarMoeda(row.preco)}</td>
+                <td>${esc(row.fornecedor || '—')}</td>
+                <td>${esc(row.estoqueminimo || '0')}</td>
+            </tr>`).join('');
 
-            dados.forEach(row => {
-                html += `<tr>
-                    <td>${row.codigo || row.sku || 'ERRO'}</td>
-                    <td>${row.nome || 'ERRO'}</td>
-                    <td>${row.ean || '-'}</td>
-                    <td>${row.categoria || '-'}</td>
-                    <td>R$ ${parseFloat(row.preco || 0).toFixed(2)}</td>
-                    <td>${row.fornecedor || '-'}</td>
-                    <td>${row.estoqueminimo || '0'}</td>
-                </tr>`;
-            });
+            const duplicados = dadosExcel.filter(r => dados.produtosCadastrados[(r.codigo || r.sku || '').trim()]).length;
 
-            html += `</tbody></table>
-                <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="btn" onclick="importarExcel('${btoa(JSON.stringify(dados))}')">✓ Importar</button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('excelFile').value=''; document.getElementById('excelPreview').innerHTML='';">Cancelar</button>
-                </div></div>`;
-
-            document.getElementById('excelPreview').innerHTML = html;
+            document.getElementById('excelPreview').innerHTML = `
+                <div style="margin-top:20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                        <h3 style="color:#333;">${dadosExcel.length} produto(s) encontrado(s)${duplicados ? ` — <span style="color:#e74c3c;">${duplicados} duplicado(s)</span>` : ''}</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table style="font-size:12px;">
+                            <thead><tr style="background:#667eea; color:white;">
+                                <th>SKU</th><th>Nome</th><th>EAN</th><th>Categoria</th><th>Preço</th><th>Fornecedor</th><th>Mín.</th>
+                            </tr></thead>
+                            <tbody>${tbody}</tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top:16px; display:flex; gap:10px;">
+                        <button class="btn" style="width:auto;" onclick="importarExcel()">✓ Importar ${dadosExcel.length - duplicados} novo(s)</button>
+                        <button class="btn btn-secondary" style="width:auto;" onclick="cancelarExcel()">Cancelar</button>
+                    </div>
+                </div>`;
         }
 
-        function importarExcel(dados64) {
-            const dados_excel = JSON.parse(atob(dados64));
+        function cancelarExcel() {
+            document.getElementById('excelFile').value = '';
+            document.getElementById('excelPreview').innerHTML = '';
+            excelPreviewData = [];
+        }
+
+        function importarExcel() {
+            if (!excelPreviewData.length) return;
             let importados = 0, duplicados = 0;
 
-            dados_excel.forEach(row => {
-                const codigo = (row.codigo || row.sku || '').trim();
-                const nome = (row.nome || '').trim();
-
+            excelPreviewData.forEach(row => {
+                const codigo = String(row.codigo || row.sku || '').trim();
+                const nome = String(row.nome || '').trim();
                 if (!codigo || !nome) return;
-                if (dados.produtosCadastrados[codigo]) {
-                    duplicados++;
-                    return;
-                }
+                if (dados.produtosCadastrados[codigo]) { duplicados++; return; }
 
                 dados.produtosCadastrados[codigo] = {
                     codigo, nome,
-                    ean: (row.ean || '').trim() || 'N/A',
-                    categoria: (row.categoria || '').trim() || 'Sem categoria',
+                    ean: String(row.ean || '').trim() || 'N/A',
+                    categoria: String(row.categoria || '').trim() || 'Sem categoria',
                     preco: parseFloat(row.preco) || 0,
-                    fornecedor: (row.fornecedor || '').trim() || 'N/A',
+                    fornecedor: String(row.fornecedor || '').trim() || 'N/A',
                     estoqueMinimo: parseInt(row.estoqueminimo) || 0,
                     dataCadastro: new Date().toISOString()
                 };
-
-                if (!dados.estoque[codigo]) {
-                    dados.estoque[codigo] = { codigo, quantidade: 0, historico: [] };
-                }
+                if (!dados.estoque[codigo]) dados.estoque[codigo] = { codigo, quantidade: 0, historico: [] };
                 importados++;
             });
 
             salvarDados();
-            document.getElementById('excelFile').value = '';
-            document.getElementById('excelPreview').innerHTML = '';
-            
-            let msg = `✓ Importados: ${importados}`;
-            if (duplicados) msg += ` | ⚠️ Duplicados: ${duplicados}`;
-            mostrarAlerta('alertExcel', msg, 'success');
+            cancelarExcel();
+
+            let msg = `${importados} produto(s) importado(s) com sucesso!`;
+            if (duplicados) msg += ` ${duplicados} duplicado(s) ignorado(s).`;
+            mostrarAlerta('alertExcel', msg, importados ? 'success' : 'warning');
         }
 
-        // ================== INTERFACE ==================
+        // ==================== NOTAS FISCAIS ====================
         function atualizarNotasFiscais() {
             const container = document.getElementById('listaNotasFiscais');
+            const waConfig = getWhatsAppConfig();
+            const btnWa = document.getElementById('btnWaNfes');
+
             if (!dados.nfes.length) {
-                container.innerHTML = '<div class="empty-state">Nenhuma NFe registrada</div>';
+                container.innerHTML = '<div class="empty-state" data-icon="📋">Nenhuma NFe registrada</div>';
+                if (btnWa) btnWa.style.display = 'none';
                 return;
             }
 
-            container.innerHTML = dados.nfes.map(nfe => `
-                <div class="product-card">
-                    <h3>NFe ${nfe.numero} - Série ${nfe.serie}</h3>
-                    <div class="product-info">
-                        <div class="product-info-item"><label>Fornecedor:</label><span>${nfe.fornecedor}</span></div>
-                        <div class="product-info-item"><label>Data:</label><span>${new Date(nfe.data).toLocaleDateString('pt-BR')}</span></div>
-                        <div class="product-info-item"><label>Valor:</label><span>R$ ${parseFloat(nfe.valorTotal).toFixed(2)}</span></div>
+            if (btnWa && waConfig) btnWa.style.display = '';
+
+            const nfesOrdenadas = [...dados.nfes].sort((a, b) => b.id - a.id);
+            container.innerHTML = nfesOrdenadas.map(nfe => {
+                const divergencia = Math.abs(parseFloat(nfe.valorTotal) - parseFloat(nfe.valorCalculado));
+                const statusBadge = divergencia > 0.01
+                    ? `<span class="status-badge status-warning">⚠ Divergência R$ ${divergencia.toFixed(2)}</span>`
+                    : `<span class="status-badge status-validated">✓ Validada</span>`;
+
+                const produtosHtml = nfe.produtos.map(p => `
+                    <div style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #f0f0f0; font-size:12px;">
+                        <span>${esc(p.nome)}</span>
+                        <span style="color:#555;">${p.quantidade}x ${formatarMoeda(p.valorUnitario)}</span>
+                    </div>
+                `).join('');
+
+                const waButtons = waConfig ? `
+                    <button class="btn btn-whatsapp btn-small" onclick="compartilharNFeWhatsApp(${nfe.id})">📱 WhatsApp</button>
+                ` : '';
+
+                return `<div class="product-card" style="${divergencia > 0.01 ? 'border-left-color:#e67e22;' : ''}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+                        <h3>NFe ${esc(nfe.numero)} — Série ${nfe.serie}</h3>
+                        ${statusBadge}
+                    </div>
+                    <div class="product-info" style="margin-top:10px;">
+                        <div class="product-info-item"><label>Fornecedor:</label><span>${esc(nfe.fornecedor)}</span></div>
+                        <div class="product-info-item"><label>Data:</label><span>${formatarData(nfe.data)}</span></div>
+                        <div class="product-info-item"><label>Valor NFe:</label><span>${formatarMoeda(nfe.valorTotal)}</span></div>
                         <div class="product-info-item"><label>Produtos:</label><span>${nfe.produtos.length}</span></div>
                     </div>
-                    <div style="background: #f5f5f5; padding: 12px; border-radius: 5px; margin-top: 12px; font-size: 12px;">
-                        ${nfe.produtos.map(p => `
-                            <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd;">
-                                <span>${p.nome}</span>
-                                <span>${p.quantidade}x R$ ${parseFloat(p.valorUnitario).toFixed(2)}</span>
-                            </div>
-                        `).join('')}
+                    <div style="background:#f9faff; padding:12px 14px; border-radius:8px; margin-top:12px;">
+                        ${produtosHtml}
                     </div>
-                    <button class="btn btn-danger btn-small" onclick="deletarNFe(${nfe.id})" style="margin-top: 12px; width: auto;">Deletar</button>
-                </div>
-            `).join('');
+                    <div class="btn-group">
+                        ${waButtons}
+                        <button class="btn btn-danger btn-small" onclick="deletarNFe(${nfe.id})">🗑 Deletar</button>
+                    </div>
+                </div>`;
+            }).join('');
         }
 
         function deletarNFe(id) {
-            if (confirm('Deletar NFe?')) {
-                const nfe = dados.nfes.find(n => n.id === id);
-                nfe.produtos.forEach(p => {
-                    dados.estoque[p.codigo].quantidade -= p.quantidade;
-                    dados.estoque[p.codigo].historico.push({
-                        data: new Date().toISOString(),
-                        nfe: nfe.numero,
-                        quantidade: -p.quantidade
-                    });
-                });
-                dados.nfes = dados.nfes.filter(n => n.id !== id);
-                salvarDados();
-            }
+            const nfe = dados.nfes.find(n => n.id === id);
+            if (!nfe) return;
+            if (!confirm(`Deletar NFe ${nfe.numero}?\n\nAtenção: o estoque dos produtos será revertido.`)) return;
+
+            nfe.produtos.forEach(p => {
+                const est = dados.estoque[p.codigo];
+                if (!est) return;
+                est.quantidade = Math.max(0, est.quantidade - p.quantidade);
+                est.historico.push({ data: new Date().toISOString(), nfe: nfe.numero, quantidade: -p.quantidade });
+            });
+
+            dados.nfes = dados.nfes.filter(n => n.id !== id);
+            salvarDados();
         }
 
+        // ==================== ESTOQUE ====================
         function atualizarEstoque() {
             const corpo = document.getElementById('corpoEstoque');
+            const waConfig = getWhatsAppConfig();
+            const btnWa = document.getElementById('btnWaEstoque');
             const produtos = Object.values(dados.produtosCadastrados);
 
             if (!produtos.length) {
-                corpo.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">Nenhum produto</td></tr>';
+                corpo.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px; color:#aaa;">Nenhum produto cadastrado</td></tr>';
+                if (btnWa) btnWa.style.display = 'none';
                 return;
             }
 
-            corpo.innerHTML = produtos.map(p => {
-                const est = dados.estoque[p.codigo]?.quantidade || 0;
-                const alerta = est < p.estoqueMinimo ? 'status-warning' : est === 0 ? 'status-error' : 'status-validated';
-                const texto = est < p.estoqueMinimo ? '⚠️ Mínimo' : est === 0 ? '✗ Vazio' : '✓ Normal';
+            if (btnWa && waConfig) btnWa.style.display = '';
+
+            const produtosOrdenados = [...produtos].sort((a, b) => {
+                const qtdA = dados.estoque[a.codigo]?.quantidade ?? 0;
+                const qtdB = dados.estoque[b.codigo]?.quantidade ?? 0;
+                const alertaA = qtdA < a.estoqueMinimo ? 0 : 1;
+                const alertaB = qtdB < b.estoqueMinimo ? 0 : 1;
+                return alertaA - alertaB;
+            });
+
+            corpo.innerHTML = produtosOrdenados.map(p => {
+                const qtd = dados.estoque[p.codigo]?.quantidade ?? 0;
+                let statusClass, statusTxt;
+                if (qtd === 0) { statusClass = 'status-error'; statusTxt = '✗ Zerado'; }
+                else if (qtd < p.estoqueMinimo) { statusClass = 'status-warning'; statusTxt = '⚠ Abaixo'; }
+                else { statusClass = 'status-validated'; statusTxt = '✓ Normal'; }
 
                 return `<tr>
-                    <td>${p.codigo}</td>
-                    <td>${p.ean}</td>
-                    <td>${p.nome}</td>
-                    <td style="font-weight: 600;">${est}</td>
-                    <td>${p.estoqueMinimo}</td>
-                    <td><span class="status-badge ${alerta}">${texto}</span></td>
-                    <td><button class="btn btn-secondary btn-small" onclick="verHistoricoProduto('${p.codigo}'); document.querySelector('.tab-btn:nth-child(3)').click();">Ver</button></td>
+                    <td><code>${esc(p.codigo)}</code></td>
+                    <td><code>${esc(p.ean)}</code></td>
+                    <td style="font-weight:500;">${esc(p.nome)}</td>
+                    <td style="font-weight:700; font-size:15px;">${qtd}</td>
+                    <td style="color:#777;">${p.estoqueMinimo}</td>
+                    <td><span class="status-badge ${statusClass}">${statusTxt}</span></td>
+                    <td>
+                        <button class="btn btn-secondary btn-small" onclick="abrirAba(null,'produtos-cadastro'); setTimeout(()=>verHistorico('${esc(p.codigo)}'),50);">📜 Ver</button>
+                    </td>
                 </tr>`;
             }).join('');
         }
 
+        // ==================== VALIDAÇÕES ====================
         function atualizarValidacoes() {
             const container = document.getElementById('listaValidacoes');
+            const btnWa = document.getElementById('btnWaValidacoes');
             const nfesAlerta = dados.nfes.filter(n => Math.abs(parseFloat(n.valorTotal) - parseFloat(n.valorCalculado)) > 0.01);
-            const prodMin = Object.values(dados.produtosCadastrados).filter(p => (dados.estoque[p.codigo]?.quantidade || 0) < p.estoqueMinimo);
+            const prodMin = Object.values(dados.produtosCadastrados).filter(p => (dados.estoque[p.codigo]?.quantidade ?? 0) < p.estoqueMinimo);
 
             if (!nfesAlerta.length && !prodMin.length) {
-                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #27ae60;"><p>✓ Tudo ok!</p></div>';
+                if (btnWa) btnWa.style.display = 'none';
+                container.innerHTML = `
+                    <div style="text-align:center; padding:48px 20px;">
+                        <div style="font-size:48px; margin-bottom:14px;">✅</div>
+                        <h3 style="color:#27ae60; margin-bottom:8px;">Tudo em ordem!</h3>
+                        <p style="color:#aaa; font-size:14px;">Nenhuma inconsistência encontrada.</p>
+                    </div>`;
                 return;
             }
 
+            const waConfig = getWhatsAppConfig();
+            if (btnWa && waConfig) btnWa.style.display = '';
+
             let html = '';
+
             if (nfesAlerta.length) {
-                html += nfesAlerta.map(nfe => `
-                    <div class="product-card" style="border-left-color: #ff6b6b;">
-                        <h3 style="color: #ff6b6b;">NFe ${nfe.numero}</h3>
-                        <p style="color: #721c24;">⚠️ Diferença: R$ ${(Math.abs(parseFloat(nfe.valorTotal) - parseFloat(nfe.valorCalculado))).toFixed(2)}</p>
-                    </div>
-                `).join('');
+                html += `<h3 style="color:#e74c3c; margin-bottom:14px; font-size:15px;">📋 NFes com Divergência de Valor (${nfesAlerta.length})</h3>`;
+                html += nfesAlerta.map(nfe => {
+                    const diff = Math.abs(parseFloat(nfe.valorTotal) - parseFloat(nfe.valorCalculado));
+                    return `<div class="product-card" style="border-left-color:#e74c3c;">
+                        <h3 style="color:#e74c3c;">NFe ${esc(nfe.numero)}</h3>
+                        <div class="product-info" style="margin-top:8px;">
+                            <div class="product-info-item"><label>Fornecedor:</label><span>${esc(nfe.fornecedor)}</span></div>
+                            <div class="product-info-item"><label>Data:</label><span>${formatarData(nfe.data)}</span></div>
+                            <div class="product-info-item"><label>Valor NFe:</label><span>${formatarMoeda(nfe.valorTotal)}</span></div>
+                            <div class="product-info-item"><label>Calculado:</label><span>${formatarMoeda(nfe.valorCalculado)}</span></div>
+                        </div>
+                        <p style="color:#e74c3c; font-weight:600; margin-top:10px; font-size:13px;">
+                            ⚠ Diferença: ${formatarMoeda(diff)}
+                        </p>
+                    </div>`;
+                }).join('');
+                html += '<hr class="divider">';
             }
+
             if (prodMin.length) {
-                html += prodMin.map(p => `
-                    <div class="product-card" style="border-left-color: #ffc107;">
-                        <h3>${p.nome}</h3>
-                        <p>Estoque: ${dados.estoque[p.codigo]?.quantidade || 0} / Mín: ${p.estoqueMinimo}</p>
-                    </div>
-                `).join('');
+                html += `<h3 style="color:#e67e22; margin-bottom:14px; font-size:15px;">⚠ Estoque Abaixo do Mínimo (${prodMin.length})</h3>`;
+                html += prodMin.map(p => {
+                    const qtd = dados.estoque[p.codigo]?.quantidade ?? 0;
+                    const pct = p.estoqueMinimo > 0 ? Math.round((qtd / p.estoqueMinimo) * 100) : 0;
+                    return `<div class="product-card" style="border-left-color:#e67e22;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <h3>${esc(p.nome)}</h3>
+                            <span class="tag tag-yellow">${qtd === 0 ? 'ZERADO' : `${pct}% do mínimo`}</span>
+                        </div>
+                        <div class="product-info" style="margin-top:8px;">
+                            <div class="product-info-item"><label>SKU:</label><span>${esc(p.codigo)}</span></div>
+                            <div class="product-info-item"><label>Categoria:</label><span>${esc(p.categoria)}</span></div>
+                            <div class="product-info-item"><label>Atual:</label><span style="color:${qtd===0?'#e74c3c':'#e67e22'};">${qtd} un</span></div>
+                            <div class="product-info-item"><label>Mínimo:</label><span>${p.estoqueMinimo} un</span></div>
+                        </div>
+                    </div>`;
+                }).join('');
             }
+
             container.innerHTML = html;
         }
 
-        function atualizarInterface() {
+        // ==================== ATUALIZAR TUDO ====================
+        function atualizarTudo() {
             atualizarListaProdutos();
-            atualizarListaProdutosNFe();
             atualizarSelectProdutos();
+            atualizarListaProdutosNFe();
+            atualizarStatusWhatsApp();
         }
 
-        function mostrarAlerta(id, msg, tipo) {
-            const container = document.getElementById(id);
-            const alerta = document.createElement('div');
-            alerta.className = `alert alert-${tipo}`;
-            alerta.textContent = msg;
-            container.innerHTML = '';
-            container.appendChild(alerta);
-            setTimeout(() => alerta.remove(), 4000);
-        }
-
-        // ================== INICIAR ==================
+        // ==================== INICIALIZAÇÃO ====================
         document.getElementById('nfeData').valueAsDate = new Date();
         document.getElementById('pdfData').valueAsDate = new Date();
-        atualizarInterface();
+        atualizarTudo();
     </script>
 </body>
 </html>
