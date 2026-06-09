@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Resumo P2 – Endomarketing | Renato Melo 2026</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.55;
+  }
+
+  /* ── Capa ─────────────────────────────────────── */
+  .capa {
+    text-align: center;
+    padding: 40px 0 30px;
+    border-bottom: 4px solid #0f3460;
+    margin-bottom: 30px;
+    page-break-after: always;
+  }
+  .capa .badge {
+    display: inline-block;
+    background: #0f3460;
+    color: #fff;
+    font-size: 9pt;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .capa h1 {
+    font-size: 32pt;
+    color: #0f3460;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .capa h2 {
+    font-size: 14pt;
+    color: #e94560;
+    margin-bottom: 18px;
+  }
+  .capa .meta {
+    font-size: 10pt;
+    color: #555;
+  }
+  .capa .nota {
+    margin-top: 22px;
+    display: inline-block;
+    background: #fff3cd;
+    border: 2px solid #f0a500;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #7a5200;
+  }
+
+  /* ── Índice ───────────────────────────────────── */
+  .indice {
+    border: 2px solid #0f3460;
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    page-break-after: always;
+  }
+  .indice h3 {
+    color: #0f3460;
+    font-size: 13pt;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .indice ol { padding-left: 20px; }
+  .indice li { margin: 5px 0; font-size: 10.5pt; }
+  .indice li a { color: #0f3460; text-decoration: none; }
+
+  /* ── Seção ────────────────────────────────────── */
+  .secao {
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+  }
+  .secao-titulo {
+    background: linear-gradient(135deg, #0f3460, #16213e);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px 8px 0 0;
+    font-size: 13pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .secao-titulo .numero {
+    background: #e94560;
+    color: #fff;
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10pt;
+    margin-right: 8px;
+  }
+  .secao-corpo {
+    border: 2px solid #0f3460;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 14px 18px;
+  }
+
+  /* ── Subseção ─────────────────────────────────── */
+  .sub {
+    margin: 14px 0 10px;
+  }
+  .sub-titulo {
+    background: #e8f0fe;
+    border-left: 5px solid #0f3460;
+    padding: 6px 12px;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0f3460;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 8px;
+  }
+
+  /* ── Cards coloridos ──────────────────────────── */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .card {
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 10.5pt;
+  }
+  .card-azul  { background: #dbeafe; border-left: 4px solid #2563eb; }
+  .card-verde { background: #dcfce7; border-left: 4px solid #16a34a; }
+  .card-rosa  { background: #fce7f3; border-left: 4px solid #db2777; }
+  .card-laranja { background: #ffedd5; border-left: 4px solid #ea580c; }
+  .card-roxo  { background: #ede9fe; border-left: 4px solid #7c3aed; }
+  .card-amarelo { background: #fef9c3; border-left: 4px solid #ca8a04; }
+  .card h4 { font-size: 10pt; margin-bottom: 4px; }
+
+  /* ── Destaque / Alerta ────────────────────────── */
+  .destaque {
+    background: #fff3cd;
+    border: 2px solid #f0a500;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 10.5pt;
+  }
+  .destaque::before { content: "⚡ ATENÇÃO: "; font-weight: 700; color: #7a5200; }
+
+  .dica {
+    background: #d1fae5;
+    border: 2px solid #059669;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 10.5pt;
+  }
+  .dica::before { content: "✔ DICA DE PROVA: "; font-weight: 700; color: #065f46; }
+
+  .conceito {
+    background: #ede9fe;
+    border: 2px solid #7c3aed;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 10.5pt;
+  }
+  .conceito strong { color: #5b21b6; }
+
+  /* ── Lista ────────────────────────────────────── */
+  ul.lista, ol.lista {
+    padding-left: 22px;
+    margin: 6px 0;
+  }
+  ul.lista li, ol.lista li {
+    margin: 4px 0;
+  }
+  ul.lista li::marker { color: #e94560; font-size: 14pt; }
+
+  /* ── Tabela ───────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 10pt;
+  }
+  th {
+    background: #0f3460;
+    color: #fff;
+    padding: 7px 10px;
+    text-align: left;
+  }
+  td { padding: 6px 10px; border-bottom: 1px solid #cdd; }
+  tr:nth-child(even) td { background: #f0f4ff; }
+
+  /* ── Linha divisória ──────────────────────────── */
+  hr { border: none; border-top: 2px dashed #ccd; margin: 18px 0; }
+
+  /* ── Print ────────────────────────────────────── */
+  @media print {
+    .page-break { page-break-before: always; }
+    .no-break   { page-break-inside: avoid; }
+  }
+
+  p { margin: 5px 0; }
+  strong { color: #0f3460; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ CAPA ══════════════ -->
+<div class="capa">
+  <div class="badge">Resumo P2 · 2026</div>
+  <h1>Endomarketing</h1>
+  <h2>Comunicação Interna, Gestão de Pessoas &amp; Marketing Pessoal</h2>
+  <p class="meta">Prof. Renato Melo &nbsp;|&nbsp; Material elaborado para estudo de prova</p>
+  <div class="nota">🎯 Objetivo: tirar 10 — leia com atenção, destaque o que não sabe e revise antes da prova!</div>
+</div>
+
+<!-- ══════════════ ÍNDICE ══════════════ -->
+<div class="indice">
+  <h3>📋 Sumário</h3>
+  <ol class="lista">
+    <li>O que é Endomarketing — Conceito Central</li>
+    <li>Comunicação em Crises</li>
+    <li>Contratação: Employer Branding e Onboarding</li>
+    <li>Demissão: Desligamento Humanizado</li>
+    <li>Marketing Pessoal</li>
+    <li>Networking</li>
+    <li>Plano de Endomarketing Passo a Passo</li>
+    <li>Ferramentas de Comunicação Interna</li>
+    <li>KPIs e Indicadores</li>
+    <li>Tendências: IA, Gamificação e Inovação</li>
+    <li>Tabela de Revisão Rápida</li>
+  </ol>
+</div>
+
+<!-- ══════════════ 1 · CONCEITO ══════════════ -->
+<div class="secao no-break">
+  <div class="secao-titulo"><span class="numero">1</span>O que é Endomarketing?</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Definição:</strong> Endomarketing (ou marketing interno) é o conjunto de estratégias voltadas para <strong>comunicação, integração, motivação e alinhamento do público interno</strong> — ou seja, os próprios colaboradores da empresa.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Por que é importante?</div>
+      <p>A empresa comunica, consciente ou inconscientemente, sua cultura e valores. O endomarketing garante que essa comunicação seja <strong>intencional e estratégica</strong>.</p>
+      <ul class="lista">
+        <li>Colaboradores satisfeitos e alinhados têm <strong>maior produtividade</strong></li>
+        <li>A comunicação interna impacta diretamente a <strong>imagem externa</strong> da empresa</li>
+        <li>Reduz boatos, conflitos e mal-entendidos organizacionais</li>
+        <li>Fortalece <strong>cultura, identidade</strong> e sentimento de pertencimento</li>
+      </ul>
+    </div>
+
+    <div class="destaque">O colaborador leva a informação para fora da empresa. Ele pode reforçar OU destruir a imagem da marca. Por isso, a comunicação interna é estratégica!</div>
+
+    <div class="sub">
+      <div class="sub-titulo">Objetivos mais comuns do Endomarketing</div>
+      <div class="cards">
+        <div class="card card-azul"><h4>Melhorar Clima</h4>Reduzir conflitos e aumentar satisfação no ambiente de trabalho.</div>
+        <div class="card card-verde"><h4>Reduzir Turnover</h4>Diminuir a rotatividade de funcionários através de engajamento.</div>
+        <div class="card card-laranja"><h4>Aumentar Produtividade</h4>Equipes motivadas e comunicadas entregam mais e melhor.</div>
+        <div class="card card-roxo"><h4>Fortalecer Cultura</h4>Garantir que missão, visão e valores sejam vividos no dia a dia.</div>
+        <div class="card card-rosa"><h4>Melhorar Comunicação</h4>Criar canais eficientes e reduzir ruídos internos.</div>
+        <div class="card card-amarelo"><h4>Reconhecer Pessoas</h4>Valorizar e reconhecer funcionários aumenta retenção.</div>
+      </div>
+    </div>
+
+    <div class="dica">Em prova: Endomarketing não é apenas "festinha de empresa". É uma estratégia de negócio que envolve comunicação, cultura e resultado. O público-alvo é o colaborador interno.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 2 · COMUNICAÇÃO EM CRISES ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">2</span>Comunicação em Crises</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Premissa:</strong> Crises são inevitáveis. O diferencial competitivo está na <strong>forma de resposta</strong>, não na ausência de problemas. A comunicação interna bem feita reduz impactos.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Como deve ser a comunicação durante crises?</div>
+      <div class="cards">
+        <div class="card card-azul"><h4>⚡ Rápida</h4>A demora em se comunicar cria espaço para boatos e interpretações incorretas.</div>
+        <div class="card card-verde"><h4>💡 Clara</h4>Mensagens ambíguas geram confusão. A linguagem deve ser simples e direta.</div>
+        <div class="card card-rosa"><h4>🔍 Transparente</h4>A transparência reduz danos reputacionais. Assumir erros reconstrói confiança mais rápido que esconder.</div>
+        <div class="card card-laranja"><h4>📋 Organizada</h4>Definir quem fala, o que fala e quando fala. Evita mensagens desencontradas.</div>
+      </div>
+    </div>
+
+    <div class="destaque">O silêncio organizacional é um dos MAIORES erros. Quando a empresa não comunica, surgem boatos. E boatos se espalham mais rápido que fatos.</div>
+
+    <div class="sub">
+      <div class="sub-titulo">Papel da Liderança na Crise</div>
+      <ul class="lista">
+        <li>A liderança deve ser <strong>visível e presente</strong> durante a crise</li>
+        <li>Funcionários esperam posicionamento claro da gestão</li>
+        <li>A ausência de liderança gera insegurança generalizada</li>
+        <li>Funcionários esperam posicionamento claro — líderes precisam se comunicar primeiro, não depois</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Transparência vs. Ocultação</div>
+      <table>
+        <tr><th>Transparência</th><th>Ocultação</th></tr>
+        <tr><td>Reduz danos reputacionais</td><td>Piora a crise quando a verdade vem à tona</td></tr>
+        <tr><td>Reconstrói confiança mais rápido</td><td>Destrói credibilidade da liderança</td></tr>
+        <tr><td>Gera colaboradores mais seguros</td><td>Alimenta boatos e insegurança</td></tr>
+        <tr><td>Comunicação interna bem feita reduz impacto</td><td>Comunicação ruim amplifica os danos</td></tr>
+      </table>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">O Colaborador como Porta-Voz (Involuntário)</div>
+      <p>O colaborador leva informação para fora da empresa. Ele pode:</p>
+      <ul class="lista">
+        <li><strong>Reforçar</strong> a imagem positiva da marca quando bem comunicado</li>
+        <li><strong>Destruir</strong> a imagem quando insatisfeito ou desinformado</li>
+      </ul>
+      <p>Tudo depende da qualidade da comunicação interna.</p>
+    </div>
+
+    <div class="dica">Questão clássica de prova: "Qual é o papel da comunicação interna durante uma crise?" → Resposta: ser rápida, clara e transparente. Definir quem fala, o que fala e quando. A liderança precisa ser visível.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 3 · CONTRATAÇÃO ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">3</span>Contratação: Employer Branding e Onboarding</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Premissa:</strong> O processo de contratação é o <strong>primeiro contato oficial</strong> do profissional com a empresa. Mais do que preencher uma vaga, ele inicia a construção da experiência do colaborador.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">🏢 Employer Branding (Marca Empregadora)</div>
+      <div class="conceito">
+        <strong>O que é:</strong> É a forma como a empresa <strong>comunica sua cultura</strong>, propósito e valores para atrair e reter talentos.
+      </div>
+      <ul class="lista">
+        <li>Profissionais buscam empresas com <strong>propósito, ambiente saudável</strong> e oportunidades de crescimento</li>
+        <li>A comunicação <strong>interna e externa</strong> se conectam: o que acontece dentro reflete lá fora</li>
+        <li>Uma boa marca empregadora reduz custos de recrutamento e atrai candidatos qualificados</li>
+        <li>Empresas com boa reputação recebem indicações espontâneas de candidatos</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">📋 O Processo Seletivo como Comunicação</div>
+      <ul class="lista">
+        <li>Clareza sobre etapas, feedbacks e expectativas <strong>melhora a percepção do candidato</strong></li>
+        <li>Mesmo quem <strong>não é contratado</strong> leva consigo a imagem da empresa</li>
+        <li>A experiência no processo <strong>também comunica cultura</strong> — um processo desorganizado passa mensagem negativa</li>
+        <li>O onboarding começa na fase de seleção (expectativas criadas)</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">🚀 Onboarding — A Integração do Novo Colaborador</div>
+      <div class="conceito">
+        <strong>Onboarding</strong> é o processo de integração do novo colaborador. É essencial para acelerar adaptação e produtividade.
+      </div>
+      <div class="cards">
+        <div class="card card-azul"><h4>Apresentar Missão e Valores</h4>Garantir que o novo colaborador entenda o propósito da empresa desde o primeiro dia.</div>
+        <div class="card card-verde"><h4>Processos e Ferramentas</h4>Apresentar sistemas, rotinas e ferramentas de trabalho reduz insegurança e erros.</div>
+        <div class="card card-rosa"><h4>Equipe e Relacionamentos</h4>Apresentar a equipe constrói vínculos e acelera integração social.</div>
+        <div class="card card-laranja"><h4>Pertencimento</h4>Onboarding bem feito fortalece senso de pertencimento desde o início — reduz turnover precoce.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Momento de Influência: Expectativas e Engajamento Inicial</div>
+      <p>O momento da contratação <strong>influencia expectativas e engajamento inicial</strong>. O engajamento começa antes mesmo do primeiro dia de trabalho. Um onboarding fraco pode fazer o colaborador questionar sua escolha logo de início.</p>
+    </div>
+
+    <div class="dica">Lembre: Employer Branding = como a empresa é vista como local de trabalho. Onboarding = como o novo colaborador é integrado. Ambos impactam diretamente a comunicação interna e a cultura.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 4 · DEMISSÃO ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">4</span>Demissão e Desligamento Humanizado</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Premissa:</strong> A demissão é um dos momentos mais delicados da gestão de pessoas. Ela impacta <strong>quem sai e também quem permanece</strong>. Exige preparo, respeito e estratégia de comunicação.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Por que o desligamento importa tanto?</div>
+      <ul class="lista">
+        <li>Os colaboradores que <strong>ficam</strong> observam como a empresa trata quem sai</li>
+        <li>Isso influencia diretamente <strong>confiança e engajamento</strong> da equipe restante</li>
+        <li>Ex-funcionários também influenciam a <strong>reputação da marca</strong> — são porta-vozes (positivos ou negativos)</li>
+        <li>Desligamentos mal conduzidos geram <strong>insegurança generalizada, boatos e queda de produtividade</strong></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">⚠️ Impactos dos Desligamentos Mal Conduzidos</div>
+      <div class="cards">
+        <div class="card card-rosa"><h4>Insegurança</h4>Quem fica se pergunta: "serei o próximo?" — reduz foco e produtividade.</div>
+        <div class="card card-laranja"><h4>Boatos</h4>Quando não há comunicação clara, o ruído organizacional aumenta.</div>
+        <div class="card card-azul"><h4>Queda de Produtividade</h4>Clima pesado afeta entrega e qualidade do trabalho.</div>
+        <div class="card card-roxo"><h4>Dano de Imagem</h4>Ex-colaboradores insatisfeitos comunicam a experiência negativa ao mercado.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">✅ Como Fazer um Desligamento Humanizado</div>
+      <ul class="lista">
+        <li>Comunicar a demissão de forma <strong>respeitosa e direta</strong>, sem deixar a pessoa sem resposta</li>
+        <li>Dar feedback claro sobre os motivos (quando possível)</li>
+        <li>Comunicar a equipe interna de forma estratégica, sem expor o demitido</li>
+        <li>Manter a <strong>dignidade e privacidade</strong> do colaborador desligado</li>
+        <li>Um processo respeitoso <strong>fortalece a imagem da empresa</strong></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">O Desligamento como Parte da Jornada</div>
+      <p>O desligamento faz parte da <strong>jornada do colaborador</strong>. Assim como o onboarding cuida da entrada, o offboarding (saída) deve ser tratado com a mesma atenção estratégica. Um ex-funcionário bem tratado pode se tornar:</p>
+      <ul class="lista">
+        <li>Um cliente da empresa</li>
+        <li>Um indicador de novos talentos</li>
+        <li>Um defensor da marca no mercado</li>
+      </ul>
+    </div>
+
+    <div class="destaque">O desligamento impacta os que ficam tanto quanto os que saem. A forma como a empresa lida com demissões revela seus valores reais — mais do que qualquer cartaz na parede.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 5 · MARKETING PESSOAL ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">5</span>Marketing Pessoal</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Definição:</strong> Marketing pessoal é a forma como uma pessoa <strong>comunica sua imagem, competências e valores</strong>. No ambiente corporativo, ele influencia reputação, oportunidades e crescimento profissional.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">🧩 Por que é uma habilidade estratégica?</div>
+      <p>Hoje, saber se posicionar profissionalmente é tão importante quanto ter as competências técnicas. No ambiente corporativo:</p>
+      <ul class="lista">
+        <li>A <strong>reputação</strong> define oportunidades de crescimento</li>
+        <li>A percepção que os outros têm de você influencia promoções, projetos e parcerias</li>
+        <li>Profissionais que sabem se comunicar ganham mais <strong>visibilidade</strong></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">📌 A Primeira Impressão ainda importa muito</div>
+      <ul class="lista">
+        <li>A construção da imagem começa nos <strong>primeiros contatos</strong></li>
+        <li>Postura, comunicação e comportamento influenciam percepção <strong>rapidamente</strong></li>
+        <li>A primeira impressão ainda possui <strong>grande peso profissional</strong></li>
+        <li>Mesmo quem não é contratado num processo seletivo carrega a imagem da empresa — e vice-versa</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">🗣️ Comunicação como Estratégia de Carreira</div>
+      <div class="cards">
+        <div class="card card-azul"><h4>Clareza</h4>Comunicar ideias de forma clara demonstra inteligência e preparo.</div>
+        <div class="card card-verde"><h4>Objetividade</h4>Ser direto ao ponto mostra respeito pelo tempo dos outros.</div>
+        <div class="card card-rosa"><h4>Postura Profissional</h4>Tom de voz, linguagem corporal e escrita também comunicam.</div>
+        <div class="card card-amarelo"><h4>Credibilidade</h4>Consistência entre discurso e prática constrói reputação sólida.</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">No Ambiente Físico</div>
+      <p>Pequenas atitudes constroem (ou destroem) reputação diariamente:</p>
+      <ul class="lista">
+        <li><strong>Pontualidade:</strong> demonstra comprometimento e respeito</li>
+        <li><strong>Responsabilidade:</strong> entregar o que prometeu, no prazo</li>
+        <li><strong>Colaboração:</strong> trabalhar em equipe fortalece a imagem de liderança</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">⚠️ Excesso de Autopromoção</div>
+      <div class="destaque">Marketing pessoal não significa excesso de autopromoção. Quando exagerado, pode gerar percepção negativa dentro da equipe e ser visto como arrogância.</div>
+    </div>
+
+    <div class="dica">Questão possível: "O que é marketing pessoal?" → É a forma como uma pessoa comunica sua imagem e competências. Envolve comunicação, postura, networking e presença digital. NÃO é só autopromoção.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 6 · NETWORKING ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">6</span>Networking</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Definição:</strong> Networking não é apenas "conhecer pessoas". É <strong>construir conexões profissionais genuínas e duradouras</strong>. Relacionamentos abrem oportunidades.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Networking Eficiente vs. Acúmulo de Contatos</div>
+      <table>
+        <tr><th>Networking Eficiente</th><th>Apenas Acumular Contatos</th></tr>
+        <tr><td>Baseado em troca e valor real</td><td>Superficial, sem profundidade</td></tr>
+        <tr><td>Confiança e presença constante</td><td>Contato apenas quando precisa de algo</td></tr>
+        <tr><td>Gera oportunidades no longo prazo</td><td>Raramente gera retorno real</td></tr>
+        <tr><td>Relações duradouras</td><td>Relações descartáveis</td></tr>
+      </table>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Como Ampliar Conexões</div>
+      <ul class="lista">
+        <li>Participar de <strong>eventos, palestras</strong> e conferências da área</li>
+        <li>Integrar <strong>grupos acadêmicos e projetos</strong> relevantes</li>
+        <li>Conversar, trocar experiências e manter contato ativo</li>
+        <li>Demonstrar atitudes fundamentais: <strong>escuta ativa, generosidade com o conhecimento</strong></li>
+      </ul>
+      <p>Networking depende de <strong>iniciativa</strong> — não acontece passivamente.</p>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">🌐 Networking Online</div>
+      <ul class="lista">
+        <li><strong>LinkedIn:</strong> principal plataforma profissional — perfil atualizado é fundamental</li>
+        <li>Comunidades profissionais e <strong>grupos de discussão</strong> ampliam visibilidade</li>
+        <li>Produzir <strong>conteúdo relevante</strong> fortalece presença profissional</li>
+        <li>Interagir com postagens de outros profissionais constrói relacionamento à distância</li>
+        <li>Produzir conteúdo e interagir <strong>fortalece presença profissional</strong></li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Networking no Contexto Corporativo</div>
+      <ul class="lista">
+        <li>No ambiente físico: pontualidade, responsabilidade e colaboração constroem reputação</li>
+        <li>Reputação se constrói <strong>diariamente</strong>, em cada atitude e interação</li>
+        <li>Networking interno (dentro da empresa) é tão importante quanto o externo</li>
+      </ul>
+    </div>
+
+    <div class="dica">Networking é componente do Marketing Pessoal. Relacionamentos profissionais fortes abrem portas que currículo sozinho não abre. A chave é reciprocidade, não apenas coleta de contatos.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 7 · PLANO DE ENDOMARKETING ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">7</span>Plano de Endomarketing — Passo a Passo</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>Definição:</strong> Um plano de endomarketing é um <strong>conjunto de estratégias</strong> voltadas para comunicação, integração, motivação e alinhamento do público interno. Seu objetivo é fortalecer cultura, produtividade e relacionamento dentro das organizações.
+    </div>
+
+    <hr>
+
+    <!-- PASSO 1 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 1 — Diagnóstico: Entender Como a Empresa Funciona</div>
+      <p>Antes de criar qualquer ação, é necessário entender como a empresa funciona internamente.</p>
+      <ul class="lista">
+        <li>Identificar <strong>problemas de comunicação, clima e produtividade</strong></li>
+        <li>Realizar a <strong>Pesquisa de Clima Organizacional</strong></li>
+        <li>A pesquisa revela problemas que muitas vezes a liderança <strong>não percebe</strong></li>
+        <li>Entender satisfação, motivação e percepção dos colaboradores</li>
+      </ul>
+      <p><strong>Problemas mais comuns identificados:</strong></p>
+      <div class="cards">
+        <div class="card card-rosa"><h4>Ruído na Comunicação</h4>Mensagens mal transmitidas ou perdidas.</div>
+        <div class="card card-laranja"><h4>Excesso de Reuniões</h4>Reuniões desnecessárias que consomem tempo produtivo.</div>
+        <div class="card card-azul"><h4>Baixa Motivação</h4>Colaboradores sem propósito ou reconhecimento.</div>
+        <div class="card card-roxo"><h4>Falta de Reconhecimento</h4>Trabalho bom que não é valorizado gera desmotivação.</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 2 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 2 — Definir Objetivos e KPIs</div>
+      <p>Após o diagnóstico, é preciso definir claramente o que se quer alcançar.</p>
+      <p><strong>KPIs (Key Performance Indicators) — Indicadores-Chave de Desempenho:</strong></p>
+      <p>São indicadores que ajudam a <strong>acompanhar resultados</strong> e medir se as ações estão funcionando.</p>
+      <table>
+        <tr><th>KPI</th><th>O que mede</th><th>Ideal</th></tr>
+        <tr><td><strong>Turnover</strong></td><td>Taxa de saída de colaboradores</td><td>Quanto menor, melhor</td></tr>
+        <tr><td><strong>Absenteísmo</strong></td><td>Taxa de faltas/ausências</td><td>Quanto menor, melhor</td></tr>
+        <tr><td><strong>Produtividade</strong></td><td>Entrega e desempenho</td><td>Quanto maior, melhor</td></tr>
+        <tr><td><strong>Satisfação Interna</strong></td><td>NPS interno, pesquisa de clima</td><td>Quanto maior, melhor</td></tr>
+        <tr><td><strong>Retenção</strong></td><td>Permanência de talentos</td><td>Quanto maior, melhor</td></tr>
+        <tr><td><strong>Participação em Campanhas</strong></td><td>Engajamento em ações internas</td><td>Quanto maior, melhor</td></tr>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 3 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 3 — Entender os Colaboradores (Público Interno)</div>
+      <ul class="lista">
+        <li>Cada empresa possui <strong>públicos internos diferentes</strong> (operacional, administrativo, liderança)</li>
+        <li>É necessário entender <strong>perfil, linguagem e necessidades</strong> de cada grupo</li>
+        <li>A comunicação precisa ser simples, objetiva e <strong>compatível com o público</strong></li>
+        <li>Mensagens complexas geram afastamento e desinformação</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 4 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 4 — Organizar a Comunicação Interna</div>
+      <ul class="lista">
+        <li>A comunicação interna precisa ser <strong>contínua, clara e organizada</strong></li>
+        <li>Ruídos prejudicam produtividade e clima</li>
+        <li>Estimular comunicação entre <strong>liderança e equipes</strong></li>
+        <li>Diálogo horizontal (entre pares) <strong>fortalece colaboração</strong></li>
+        <li><strong>Feedback</strong> é parte da comunicação — funcionários precisam de retorno sobre desempenho</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 5 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 5 — Definir Ferramentas de Comunicação</div>
+      <p>As ferramentas transformam estratégia em prática. Cada empresa deve escolher os <strong>canais mais eficientes</strong> para seu público.</p>
+      <div class="cards">
+        <div class="card card-azul"><h4>Intranet</h4>Centraliza informações, documentos e comunicados. Ideal para grandes empresas.</div>
+        <div class="card card-verde"><h4>Aplicativos Internos</h4>Ou WhatsApp corporativo accelara comunicação. Precisa de regras claras de uso.</div>
+        <div class="card card-rosa"><h4>Murais e Newsletter</h4>Comunicação visual e periódica mantém todos informados.</div>
+        <div class="card card-roxo"><h4>Reuniões Estratégicas</h4>Quando bem conduzidas, alinham equipes e fortalecem cultura.</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 6 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 6 — Desenvolver Pessoas</div>
+      <ul class="lista">
+        <li><strong>Treinamento</strong> fortalece produtividade e integração</li>
+        <li>Funcionários preparados sentem mais segurança e entregam mais</li>
+        <li>Empresas modernas investem em <strong>aprendizado constante</strong></li>
+        <li>O desenvolvimento melhora a adaptação às mudanças do mercado</li>
+        <li><strong>IA no aprendizado interno:</strong> Inteligência Artificial personaliza treinamentos corporativos</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 7 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 7 — Reconhecer e Engajar Pessoas</div>
+      <div class="cards">
+        <div class="card card-verde"><h4>Reconhecimento</h4>Funcionários valorizados tendem a produzir mais. Fortalece pertencimento e motivação.</div>
+        <div class="card card-azul"><h4>Benefícios Estratégicos</h4>Qualidade de vida virou diferencial. Ajudam na retenção e satisfação interna.</div>
+        <div class="card card-amarelo"><h4>Premiações e Incentivos</h4>Reforçam comportamentos positivos. Comunicação transparente é essencial.</div>
+        <div class="card card-roxo"><h4>Gamificação</h4>Jogos, rankings e desafios para aumentar engajamento e estimular participação.</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 8 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 8 — Fortalecer a Cultura Organizacional</div>
+      <div class="conceito">
+        <strong>Cultura Organizacional</strong> representa os valores, comportamentos e a identidade da empresa. Precisa ser reforçada diariamente.
+      </div>
+      <ul class="lista">
+        <li><strong>Missão, Visão e Valores:</strong> funcionários precisam entender e viver o propósito organizacional</li>
+        <li><strong>Liderança como exemplo:</strong> a liderança influencia diretamente a cultura — discurso sem prática perde credibilidade</li>
+        <li><strong>Endobranding:</strong> fazer o colaborador <em>viver</em> os valores da marca — criar conexão emocional com a empresa</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- PASSO 9 -->
+    <div class="sub">
+      <div class="sub-titulo">PASSO 9 — Acompanhar KPIs e Ajustar Continuamente</div>
+      <ul class="lista">
+        <li>Um plano eficiente precisa de <strong>acompanhamento constante</strong></li>
+        <li>Os resultados mostram o que precisa melhorar</li>
+        <li>As estratégias precisam ser <strong>atualizadas conforme resultados</strong> e mudanças internas</li>
+        <li>Endomarketing é um <strong>processo contínuo</strong>, não uma ação isolada</li>
+        <li>O plano precisa evoluir junto com a empresa</li>
+        <li>Empresas modernas trabalham com <strong>comunicação de mão dupla</strong> (escuta ativa)</li>
+      </ul>
+    </div>
+
+    <div class="dica">Questão de prova frequente: "Quais são as etapas de um plano de endomarketing?" → 1. Diagnóstico/pesquisa de clima; 2. Definir objetivos e KPIs; 3. Entender o público; 4. Organizar comunicação; 5. Definir ferramentas; 6. Desenvolver pessoas; 7. Reconhecer e engajar; 8. Fortalecer cultura; 9. Acompanhar e ajustar.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 8 · FERRAMENTAS ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">8</span>Ferramentas de Comunicação Interna</div>
+  <div class="secao-corpo">
+
+    <table>
+      <tr><th>Ferramenta</th><th>Finalidade</th><th>Vantagem</th><th>Atenção</th></tr>
+      <tr><td><strong>Intranet</strong></td><td>Centralizar informações e documentos</td><td>Organizada, acessível</td><td>Precisa ser atualizada constantemente</td></tr>
+      <tr><td><strong>WhatsApp / Apps internos</strong></td><td>Comunicação ágil e rápida</td><td>Velocidade e praticidade</td><td>Precisa de regras e organização</td></tr>
+      <tr><td><strong>Newsletter / E-mail</strong></td><td>Comunicados periódicos</td><td>Registro formal</td><td>Pode ser ignorada se não for atrativa</td></tr>
+      <tr><td><strong>Murais / Quadros</strong></td><td>Comunicação visual presencial</td><td>Visibilidade no espaço físico</td><td>Não alcança equipes remotas</td></tr>
+      <tr><td><strong>Reuniões</strong></td><td>Alinhamento e tomada de decisão</td><td>Interação direta</td><td>Excesso de reuniões é problema comum</td></tr>
+      <tr><td><strong>Plataformas digitais</strong></td><td>Colaboração e comunicação remota</td><td>Alcança equipes distribuídas</td><td>Exige treinamento e adoção</td></tr>
+    </table>
+
+    <div class="sub">
+      <div class="sub-titulo">Critérios para Escolha da Ferramenta Certa</div>
+      <ul class="lista">
+        <li>Compatibilidade com o <strong>perfil do público interno</strong> (operacional × administrativo)</li>
+        <li>Facilidade de uso e adoção pela equipe</li>
+        <li>Custo × benefício para o porte da empresa</li>
+        <li>Capacidade de gerar <strong>registro e rastreabilidade</strong> da comunicação</li>
+      </ul>
+    </div>
+
+    <div class="destaque">A ferramenta certa é aquela que o público interno realmente usa. A melhor tecnologia não vale nada se os colaboradores não a adotam.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 9 · KPIs ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">9</span>KPIs — Indicadores de Endomarketing</div>
+  <div class="secao-corpo">
+
+    <div class="conceito">
+      <strong>KPI (Key Performance Indicator):</strong> Indicadores que ajudam a acompanhar resultados e verificar se as ações de endomarketing estão atingindo os objetivos.
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Indicadores Essenciais para Visão Analítica</div>
+      <div class="cards">
+        <div class="card card-rosa">
+          <h4>📊 Turnover</h4>
+          Taxa de rotatividade de colaboradores.<br>
+          <strong>Fórmula simplificada:</strong> Saídas ÷ Total de colaboradores × 100<br>
+          Alta taxa indica problema de clima, liderança ou cultura.
+        </div>
+        <div class="card card-laranja">
+          <h4>📅 Absenteísmo</h4>
+          Frequência de faltas e ausências.<br>
+          Alta taxa indica desmotivação, problemas de saúde ou clima ruim.
+        </div>
+        <div class="card card-azul">
+          <h4>⚡ Produtividade</h4>
+          Entrega, qualidade e eficiência.<br>
+          Pode ser medida por metas individuais e coletivas.
+        </div>
+        <div class="card card-verde">
+          <h4>😊 Satisfação Interna</h4>
+          NPS interno, pesquisa de clima.<br>
+          Mede como o colaborador se sente na empresa.
+        </div>
+        <div class="card card-roxo">
+          <h4>🎯 Retenção</h4>
+          Porcentagem de colaboradores que ficam.<br>
+          Alta retenção indica cultura e clima positivos.
+        </div>
+        <div class="card card-amarelo">
+          <h4>🎪 Participação em Campanhas</h4>
+          Engajamento em ações de endomarketing.<br>
+          Indica grau de envolvimento com a cultura.
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">Como Usar os KPIs na Prática</div>
+      <ul class="lista">
+        <li>Definir a <strong>linha de base</strong> (situação atual) antes de iniciar o plano</li>
+        <li>Estabelecer <strong>metas realistas</strong> com prazos definidos</li>
+        <li>Monitorar periodicamente e ajustar as estratégias conforme necessário</li>
+        <li>Os resultados mostram o que precisa melhorar — <strong>endomarketing é processo contínuo</strong></li>
+      </ul>
+    </div>
+
+    <div class="dica">KPI de endomarketing mais cobrado em provas: Turnover e Absenteísmo. São os indicadores mais diretamente impactados por ações de endomarketing.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 10 · TENDÊNCIAS ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">10</span>Tendências: IA, Gamificação e Inovação</div>
+  <div class="secao-corpo">
+
+    <div class="sub">
+      <div class="sub-titulo">🤖 Inteligência Artificial no Endomarketing</div>
+      <ul class="lista">
+        <li>IA já é utilizada em <strong>treinamentos corporativos</strong> — personaliza o aprendizado de cada colaborador</li>
+        <li>Plataformas digitais transformaram a <strong>comunicação corporativa</strong></li>
+        <li>A tendência é a <strong>personalização</strong> da comunicação interna</li>
+        <li>Aplicativos internos e IA reduzem barreiras e aceleram o fluxo de informação</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">🎮 Gamificação</div>
+      <div class="conceito">
+        <strong>Gamificação:</strong> uso de elementos de jogos (rankings, pontos, desafios, recompensas) em contextos corporativos para <strong>aumentar engajamento</strong>.
+      </div>
+      <ul class="lista">
+        <li>Empresas usam jogos, rankings e desafios para aumentar engajamento</li>
+        <li>A estratégia estimula participação em treinamentos e campanhas</li>
+        <li>Torna atividades rotineiras mais motivadoras</li>
+        <li>Gera senso de competição saudável e reconhecimento</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <div class="sub-titulo">📱 Comunicação Digital e Escuta Permanente</div>
+      <ul class="lista">
+        <li>Empresas modernas trabalham com <strong>comunicação de mão dupla</strong> — não só falam, mas também ouvem</li>
+        <li>Canais de feedback contínuos e pesquisas periódicas são essenciais</li>
+        <li>Inovação na comunicação exige <strong>adaptação constante</strong></li>
+        <li>O plano de endomarketing precisa evoluir junto com a empresa e com a tecnologia</li>
+      </ul>
+    </div>
+
+    <div class="dica">Tendência mais atual: personalização via IA e gamificação para engajamento. Se aparecer numa questão dissertativa, mencione que endomarketing precisa se adaptar continuamente às mudanças tecnológicas e culturais.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════ 11 · REVISÃO RÁPIDA ══════════════ -->
+<div class="secao page-break">
+  <div class="secao-titulo"><span class="numero">11</span>Tabela de Revisão Rápida — Gabarito Mental</div>
+  <div class="secao-corpo">
+
+    <table>
+      <tr><th>Conceito</th><th>Definição Resumida</th><th>Palavra-Chave</th></tr>
+      <tr><td><strong>Endomarketing</strong></td><td>Estratégias de comunicação, motivação e alinhamento do público interno</td><td>Colaborador interno</td></tr>
+      <tr><td><strong>Comunicação em Crises</strong></td><td>Deve ser rápida, clara e transparente; liderança visível</td><td>Silêncio = boato</td></tr>
+      <tr><td><strong>Employer Branding</strong></td><td>Imagem da empresa como local de trabalho; atrai talentos</td><td>Marca empregadora</td></tr>
+      <tr><td><strong>Onboarding</strong></td><td>Integração do novo colaborador; apresentar missão, processos, equipe</td><td>Pertencimento inicial</td></tr>
+      <tr><td><strong>Offboarding</strong></td><td>Processo de desligamento humanizado; impacta quem fica e quem sai</td><td>Ex-colaborador = porta-voz</td></tr>
+      <tr><td><strong>Marketing Pessoal</strong></td><td>Como a pessoa comunica sua imagem, competências e valores</td><td>Posicionamento estratégico</td></tr>
+      <tr><td><strong>Networking</strong></td><td>Construir conexões profissionais genuínas baseadas em troca</td><td>Reciprocidade</td></tr>
+      <tr><td><strong>Pesquisa de Clima</strong></td><td>Ferramenta de diagnóstico do ambiente organizacional</td><td>Revelar o que a liderança não vê</td></tr>
+      <tr><td><strong>KPI</strong></td><td>Indicadores-chave para medir resultados do endomarketing</td><td>Turnover, absenteísmo</td></tr>
+      <tr><td><strong>Gamificação</strong></td><td>Uso de jogos e desafios para aumentar engajamento interno</td><td>Engajamento lúdico</td></tr>
+      <tr><td><strong>Cultura Organizacional</strong></td><td>Valores, comportamentos e identidade da empresa no dia a dia</td><td>Reforço diário</td></tr>
+      <tr><td><strong>Endobranding</strong></td><td>Fazer o colaborador viver os valores da marca emocionalmente</td><td>Conexão emocional</td></tr>
+      <tr><td><strong>Feedback</strong></td><td>Retorno sobre desempenho; reduz insegurança e orienta o colaborador</td><td>Comunicação bidirecional</td></tr>
+      <tr><td><strong>Intranet</strong></td><td>Plataforma interna para centralizar informações e documentos</td><td>Hub de informação</td></tr>
+    </table>
+
+    <hr>
+
+    <div class="sub">
+      <div class="sub-titulo">🔑 Frases-Chave para Não Esquecer</div>
+      <div class="cards">
+        <div class="card card-rosa"><h4>"O silêncio organizacional é um dos maiores erros."</h4>Quando a empresa não comunica, surgem boatos. E boatos se espalham mais rápido que fatos.</div>
+        <div class="card card-azul"><h4>"O colaborador leva a informação para fora."</h4>Ele pode reforçar ou destruir a imagem da marca. Tudo depende da comunicação interna.</div>
+        <div class="card card-verde"><h4>"Networking não é acumular contatos."</h4>É construir relações profissionais baseadas em troca, confiança e presença constante.</div>
+        <div class="card card-laranja"><h4>"Crises são inevitáveis."</h4>O diferencial está na forma de resposta. Comunicação interna bem feita reduz impactos.</div>
+        <div class="card card-roxo"><h4>"Endomarketing é processo contínuo."</h4>O plano precisa evoluir junto com a empresa. Mudanças internas exigem adaptação contínua.</div>
+        <div class="card card-amarelo"><h4>"Marketing pessoal não é autopromoção."</h4>Quando exagerado, pode gerar percepção negativa. É sobre posicionamento estratégico genuíno.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ RODAPÉ ══════════════ -->
+<div style="text-align:center; margin-top: 40px; padding-top: 18px; border-top: 3px solid #0f3460; font-size: 9.5pt; color: #555;">
+  <strong>Resumo P2 — Endomarketing &nbsp;|&nbsp; Prof. Renato Melo &nbsp;|&nbsp; 2026</strong><br>
+  Material de estudo elaborado com base nos slides da apresentação.
+  <br><em>Bons estudos — você consegue tirar 10! 🎯</em>
+</div>
+
+</body>
+</html>
