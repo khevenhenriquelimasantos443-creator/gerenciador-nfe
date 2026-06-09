@@ -678,21 +678,31 @@
       <h1 class="auth-title">Configuração Inicial</h1>
       <p class="auth-sub">Configure as credenciais do Mercado Livre para começar a usar o painel.</p>
       <div id="setup-err" class="alert alert-error" style="display:none"></div>
+      
       <div class="form-group">
         <label class="form-label">App ID — Mercado Livre</label>
         <input id="cfg-appid" class="form-input" type="text" placeholder="Ex: 1234567890">
         <p class="form-hint">Crie um app em <code>developers.mercadolivre.com.br</code> e copie o App ID.</p>
       </div>
+
+      <div class="form-group">
+        <label class="form-label">Client Secret (Senha Secreta)</label>
+        <input id="cfg-secret" class="form-input" type="password" placeholder="Ex: a1b2c3d4e5...">
+        <p class="form-hint">Fica logo abaixo do App ID no painel do Mercado Livre.</p>
+      </div>
+
       <div class="form-group">
         <label class="form-label">Redirect URI</label>
         <input id="cfg-redirect" class="form-input" type="text" placeholder="https://...">
-        <p class="form-hint">A URL desta página — deve estar registrada no app do ML.</p>
+        <p class="form-hint">A URL exata desta página.</p>
       </div>
+
       <div class="form-group">
         <label class="form-label">Horário de Corte</label>
         <input id="cfg-cutoff" class="form-input" type="time" value="14:00">
         <p class="form-hint">Limite diário para despachar pedidos regulares.</p>
       </div>
+
       <hr class="divider">
       <button class="btn btn-primary btn-block btn-lg" onclick="saveSetup()">
         <i class="fa-solid fa-arrow-right"></i> Salvar e Continuar
@@ -812,7 +822,6 @@
 
   <!-- Tab Content -->
   <div class="tab-content">
-
     <!-- Full -->
     <div class="tab-pane active" id="pane-full">
       <div class="filter-row">
@@ -853,7 +862,6 @@
       </div>
       <div class="confirm-grid" id="list-confirm"></div>
     </div>
-
   </div>
 
   <!-- Footer -->
@@ -989,7 +997,7 @@ const S = {
 };
 
 /* ══════════════════════════════════════
-   OAUTH
+   OAUTH (UPDATED TO AUTHORIZATION CODE FLOW)
 ══════════════════════════════════════ */
 function getToken() {
   try {
@@ -1001,20 +1009,36 @@ function getToken() {
 function saveToken(tok, exp) {
   localStorage.setItem('ml_tok', JSON.stringify({ tok, exp: Date.now() + (exp - 60) * 1000 }));
 }
-function readHashToken() {
-  const p = Object.fromEntries(new URLSearchParams(window.location.hash.slice(1)));
-  if (p.access_token) {
-    saveToken(p.access_token, parseInt(p.expires_in) || 21600);
+
+async function exchangeCode(code) {
+  const c = cfg.get();
+  const body = new URLSearchParams({
+    grant_type: 'authorization_code',
+    client_id: c.appId,
+    client_secret: c.secret,
+    code: code,
+    redirect_uri: c.redirect
+  });
+  const r = await fetch(`${ML_API}/oauth/token`, {
+    method: 'POST',
+    headers: { 'accept': 'application/json', 'content-type': 'application/x-www-form-urlencoded' },
+    body: body
+  });
+  const data = await r.json();
+  if (data.access_token) {
+    saveToken(data.access_token, data.expires_in);
     history.replaceState(null, '', location.pathname);
-    return p.access_token;
+    return data.access_token;
   }
-  return null;
+  throw new Error(data.message || 'Erro ao gerar token com a Senha Secreta.');
 }
+
 function startMLAuth() {
   const c = cfg.get();
-  if (!c) { showScreen('setup'); return; }
-  location.href = `${ML_AUTH}?response_type=token&client_id=${c.appId}&redirect_uri=${encodeURIComponent(c.redirect)}`;
+  if (!c || !c.secret) { showScreen('setup'); return; }
+  location.href = `${ML_AUTH}?response_type=code&client_id=${c.appId}&redirect_uri=${encodeURIComponent(c.redirect)}`;
 }
+
 function logout() {
   localStorage.removeItem('ml_tok');
   S.token = null; S.seller = null;
@@ -1428,19 +1452,22 @@ function closeLightbox()   { document.getElementById('lightbox').classList.remov
 function showSetup() {
   const c = cfg.get();
   document.getElementById('cfg-appid').value    = c?.appId    || '';
+  document.getElementById('cfg-secret').value   = c?.secret   || '';
   document.getElementById('cfg-redirect').value = c?.redirect || (location.origin + location.pathname);
   document.getElementById('cfg-cutoff').value   = c?.cutoff   || '14:00';
   showScreen('setup');
 }
 function saveSetup() {
   const appId    = document.getElementById('cfg-appid').value.trim();
+  const secret   = document.getElementById('cfg-secret').value.trim();
   const redirect = document.getElementById('cfg-redirect').value.trim();
   const cutoff   = document.getElementById('cfg-cutoff').value || '14:00';
   const errEl    = document.getElementById('setup-err');
   if (!appId)    { errEl.textContent = 'App ID é obrigatório.'; errEl.style.display=''; return; }
+  if (!secret)   { errEl.textContent = 'Client Secret é obrigatório.'; errEl.style.display=''; return; }
   if (!redirect) { errEl.textContent = 'Redirect URI é obrigatório.'; errEl.style.display=''; return; }
   errEl.style.display = 'none';
-  cfg.set({ appId, redirect, cutoff });
+  cfg.set({ appId, secret, redirect, cutoff });
   showScreen('auth');
 }
 
@@ -1465,10 +1492,25 @@ document.getElementById('drop-zone').addEventListener('drop', e => {
 ══════════════════════════════════════ */
 async function init() {
   initSB(); startClock();
-  const tok = readHashToken() || getToken();
   if (!cfg.get()) { showSetup(); return; }
-  if (!tok) { showScreen('auth'); return; }
-  S.token = tok;
+
+  // Check if returning from ML with a code
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+
+  if (code) {
+    try {
+      S.token = await exchangeCode(code);
+    } catch (e) {
+      alert(e.message);
+      showScreen('auth'); return;
+    }
+  } else {
+    S.token = getToken();
+  }
+
+  if (!S.token) { showScreen('auth'); return; }
+  
   showScreen('app');
   try {
     S.seller = await mGet('/users/me');
