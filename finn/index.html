@@ -446,5 +446,511 @@ react-dom/cjs/react-dom-client.production.js:
 })();
 </script>
 
+
+<!-- ===== FINN EXTENDED FEATURES ===== -->
+<script>
+(function(){
+  'use strict';
+
+  // ── helpers ──────────────────────────────────────────────────────────
+  const STORE = {
+    getData: id => { try { const d=localStorage.getItem('fiq_data_'+id); return d?JSON.parse(d):{txs:[],limits:{},goals:[]}; } catch(e){return{txs:[],limits:{},goals:[]};} },
+    getFixed: id => { try { return JSON.parse(localStorage.getItem('fiq_fixed_'+id)||'[]'); } catch(e){return[];} },
+    getProfiles: () => { try { return JSON.parse(localStorage.getItem('fiq_profiles')||'[]'); } catch(e){return[];} },
+    get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){return null;} },
+    set: (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
+  };
+  const DEFAULT_LIMITS = {Alimentacao:500,Transporte:150,Saude:200,Lazer:200,Educacao:700,Moradia:1200,Vestuario:300,Investimento:500,Salario:0,Outros:500};
+  const BRL = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
+  const pid = () => { const p=STORE.getProfiles(); return p.length?p[0].id:null; };
+  const mesAtual = txs => { const n=new Date(),y=n.getFullYear(),m=n.getMonth(); return (txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===y&&d.getMonth()===m;}); };
+
+  // ── CSS ──────────────────────────────────────────────────────────────
+  const style = document.createElement('style');
+  style.textContent = `
+    /* Privacy mode */
+    .finn-privacy #root { filter:blur(10px); user-select:none; pointer-events:none; }
+    #finn-privacy-shield { position:fixed;inset:0;z-index:9996;display:none;cursor:pointer;background:transparent; }
+    .finn-privacy #finn-privacy-shield { display:block; }
+    #finn-priv-btn { position:fixed;top:16px;right:16px;z-index:9997;background:rgba(30,41,59,.82);border:none;color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:background .15s; }
+    #finn-priv-btn:hover { background:#1E293B; }
+
+    /* Banner */
+    #finn-banner { position:fixed;top:0;left:0;right:0;z-index:9995;background:linear-gradient(90deg,#F97316,#fb923c);color:#fff;padding:10px 16px;font-size:13px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 2px 8px rgba(249,115,22,.4);animation:bannerIn .4s ease; }
+    @keyframes bannerIn{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+    #finn-banner span { flex:1; }
+    #finn-banner button { background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit; }
+    #finn-banner button:hover { background:rgba(255,255,255,.4); }
+
+    /* Finn+ button */
+    #finn-plus-btn { position:fixed;bottom:22px;left:22px;z-index:9998;width:52px;height:52px;border-radius:50%;background:#1E293B;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .18s,box-shadow .18s; }
+    #finn-plus-btn:hover { transform:scale(1.1); }
+
+    /* Finn+ overlay */
+    #finn-plus-ovl { position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:none;align-items:flex-end;justify-content:flex-start;padding:20px; }
+    #finn-plus-ovl.open { display:flex; }
+    #finn-plus-panel { background:#fff;border-radius:18px;width:min(400px,100%);max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.22);font-family:'Plus Jakarta Sans',sans-serif;animation:fpIn .22s ease; }
+    @keyframes fpIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .fp-head { background:linear-gradient(135deg,#1E293B,#334155);color:#fff;padding:18px 18px 14px;display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;z-index:1; }
+    .fp-head h3 { font-size:15px;font-weight:800;margin:0; }
+    .fp-head p { font-size:11.5px;margin:3px 0 0;opacity:.8; }
+    .fp-close { background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:13px; }
+    .fp-body { padding:14px; }
+    .fp-section { margin-bottom:16px; }
+    .fp-section-title { font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px; }
+    .fp-card { border:1.5px solid #E2E8F0;border-radius:12px;padding:13px 14px;margin-bottom:8px;cursor:pointer;transition:all .14s; }
+    .fp-card:hover { border-color:#F97316;background:#fff7ed; }
+    .fp-card-head { display:flex;align-items:center;gap:10px; }
+    .fp-card-icon { font-size:20px;flex-shrink:0; }
+    .fp-card-label { font-size:13px;font-weight:700;color:#1E293B; }
+    .fp-card-sub { font-size:11px;color:#94A3B8;margin-top:2px; }
+    .fp-card-arrow { margin-left:auto;font-size:16px;color:#CBD5E1; }
+    .fp-card.active { border-color:#F97316;background:#fff7ed; }
+    .fp-card.active .fp-card-arrow { color:#F97316; }
+
+    /* Feature panels inside Finn+ */
+    .fp-content { display:none;padding-top:10px;border-top:1px solid #F1F5F9;margin-top:10px; }
+    .fp-content.show { display:block; }
+    .fp-label { font-size:11px;font-weight:700;color:#475569;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em; }
+    .fp-input { width:100%;padding:9px 11px;border:1.5px solid #E2E8F0;border-radius:9px;font-size:13.5px;font-family:inherit;margin-bottom:10px;transition:border-color .15s; }
+    .fp-input:focus { outline:none;border-color:#F97316;box-shadow:0 0 0 3px rgba(249,115,22,.15); }
+    .fp-btn { padding:10px 18px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s; }
+    .fp-btn-primary { background:#F97316;color:#fff; }
+    .fp-btn-primary:hover { background:#ea6c0f; }
+    .fp-btn-secondary { background:#E2E8F0;color:#334155; }
+    .fp-btn-secondary:hover { background:#cbd5e1; }
+    .fp-result { background:#F8FAFF;border:1px solid #E2E8F0;border-radius:10px;padding:14px;margin-top:12px;font-size:13px;line-height:1.6; }
+    .fp-result strong { color:#1E293B; }
+    .fp-result .fp-highlight { font-size:17px;font-weight:800;color:#F97316; }
+    .fp-result .fp-good { color:#16a34a;font-weight:700; }
+    .fp-result .fp-warn { color:#d97706;font-weight:700; }
+    .fp-result .fp-bad { color:#dc2626;font-weight:700; }
+    .fp-debt-row { display:flex;gap:6px;margin-bottom:8px;align-items:center; }
+    .fp-debt-row input { flex:1;min-width:0; }
+    .fp-debt-row button { background:#fee2e2;border:none;color:#dc2626;border-radius:7px;padding:8px 10px;cursor:pointer;font-size:14px; }
+    .fp-challenge-item { display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F1F5F9; }
+    .fp-challenge-item:last-child { border:none; }
+    .fp-challenge-check { width:20px;height:20px;border-radius:50%;border:2px solid #E2E8F0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s; }
+    .fp-challenge-check.done { background:#25D366;border-color:#25D366;color:#fff; }
+    .fp-challenge-text { font-size:13px;color:#334155; }
+    .fp-challenge-text.done { text-decoration:line-through;color:#94A3B8; }
+    .fp-panic-active { background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fff;border-radius:12px;padding:16px;text-align:center;margin-top:10px; }
+    .fp-panic-active .daily { font-size:28px;font-weight:900;margin:8px 0; }
+    .fp-panic-active p { font-size:12px;opacity:.85; }
+  `;
+  document.head.appendChild(style);
+
+  // ── BANNER ────────────────────────────────────────────────────────────
+  const BANNER_KEY = 'finn_banner_v3';
+  function showBanner() {
+    if (STORE.get(BANNER_KEY)) return;
+    const b = document.createElement('div');
+    b.id = 'finn-banner';
+    b.innerHTML = '<span>🎉 Novidades: Modo Privacy, Previsão de Saldo, Simulador de Dívidas, Posso Comprar?, Botão do Pânico, Desafios e mais!</span>'
+      + '<button id="finn-banner-close">Fechar</button>';
+    document.body.prepend(b);
+    document.getElementById('finn-banner-close').addEventListener('click', function() {
+      b.remove();
+      STORE.set(BANNER_KEY, true);
+    });
+    setTimeout(function() { if (b.parentNode) { b.remove(); STORE.set(BANNER_KEY, true); } }, 12000);
+  }
+
+  // ── PRIVACY MODE ──────────────────────────────────────────────────────
+  function buildPrivacy() {
+    const shield = document.createElement('div');
+    shield.id = 'finn-privacy-shield';
+    shield.title = 'Clique para revelar';
+    shield.addEventListener('click', togglePrivacy);
+    document.body.appendChild(shield);
+
+    const btn = document.createElement('button');
+    btn.id = 'finn-priv-btn';
+    btn.title = 'Modo Privacidade';
+    btn.innerHTML = '🔒';
+    btn.addEventListener('click', togglePrivacy);
+    document.body.appendChild(btn);
+  }
+
+  function togglePrivacy() {
+    const on = document.body.classList.toggle('finn-privacy');
+    document.getElementById('finn-priv-btn').innerHTML = on ? '🔓' : '🔒';
+    document.getElementById('finn-priv-btn').title = on ? 'Revelar valores' : 'Modo Privacidade';
+  }
+
+  // ── FINN+ PANEL ───────────────────────────────────────────────────────
+  function buildFinnPlus() {
+    const btn = document.createElement('button');
+    btn.id = 'finn-plus-btn';
+    btn.title = 'Ferramentas Finn+';
+    btn.innerHTML = '✦';
+    btn.style.color = '#F97316';
+    document.body.appendChild(btn);
+
+    const ovl = document.createElement('div');
+    ovl.id = 'finn-plus-ovl';
+    ovl.innerHTML = '<div id="finn-plus-panel">'
+      + '<div class="fp-head"><div><h3>✦ Finn+ Ferramentas</h3><p>Calculadoras e insights financeiros</p></div>'
+      + '<button class="fp-close" id="fp-close-btn">✕</button></div>'
+      + '<div class="fp-body" id="fp-body"></div></div>';
+    document.body.appendChild(ovl);
+
+    document.getElementById('fp-close-btn').addEventListener('click', function() { ovl.classList.remove('open'); });
+    ovl.addEventListener('click', function(e) { if (e.target === ovl) ovl.classList.remove('open'); });
+    btn.addEventListener('click', function() { ovl.classList.add('open'); renderFinnPlus(); });
+  }
+
+  function renderFinnPlus() {
+    const body = document.getElementById('fp-body');
+    const tools = [
+      { id:'preview',   icon:'📈', label:'Previsão de Saldo',     sub:'Projeção para o fim do mês' },
+      { id:'panico',    icon:'🚨', label:'Botão do Pânico',       sub:'Diária máxima para fechar no azul' },
+      { id:'posso',     icon:'🛒', label:'Posso Comprar?',         sub:'Analisa o impacto no seu orçamento' },
+      { id:'divida',    icon:'💳', label:'Simulador de Dívidas',   sub:'Bola de neve vs juros mais altos' },
+      { id:'desafios',  icon:'🏆', label:'Desafios da Semana',     sub:'Missões para turbinar suas finanças' },
+    ];
+
+    body.innerHTML = '<div class="fp-section"><div class="fp-section-title">Ferramentas</div>'
+      + tools.map(function(t) {
+          return '<div class="fp-card" id="fp-card-'+t.id+'" data-tool="'+t.id+'">'
+            + '<div class="fp-card-head"><span class="fp-card-icon">'+t.icon+'</span>'
+            + '<div><div class="fp-card-label">'+t.label+'</div><div class="fp-card-sub">'+t.sub+'</div></div>'
+            + '<span class="fp-card-arrow">›</span></div>'
+            + '<div class="fp-content" id="fp-content-'+t.id+'"></div></div>';
+        }).join('')
+      + '</div>';
+
+    tools.forEach(function(t) {
+      document.getElementById('fp-card-'+t.id).addEventListener('click', function(e) {
+        if (e.target.closest('.fp-content')) return;
+        toggleTool(t.id);
+      });
+    });
+  }
+
+  var openTool = null;
+  function toggleTool(id) {
+    if (openTool && openTool !== id) {
+      const prev = document.getElementById('fp-card-'+openTool);
+      const prevC = document.getElementById('fp-content-'+openTool);
+      if (prev) prev.classList.remove('active');
+      if (prevC) prevC.classList.remove('show');
+    }
+    const card = document.getElementById('fp-card-'+id);
+    const content = document.getElementById('fp-content-'+id);
+    if (!card || !content) return;
+    const isOpen = content.classList.contains('show');
+    card.classList.toggle('active', !isOpen);
+    content.classList.toggle('show', !isOpen);
+    if (!isOpen) {
+      openTool = id;
+      renderTool(id, content);
+    } else {
+      openTool = null;
+    }
+  }
+
+  function renderTool(id, el) {
+    switch(id) {
+      case 'preview':  renderPreview(el); break;
+      case 'panico':   renderPanico(el); break;
+      case 'posso':    renderPosso(el); break;
+      case 'divida':   renderDivida(el); break;
+      case 'desafios': renderDesafios(el); break;
+    }
+  }
+
+  // ── PREVISÃO DE SALDO ─────────────────────────────────────────────────
+  function renderPreview(el) {
+    const id = pid();
+    const {txs} = STORE.getData(id);
+    const mes = mesAtual(txs);
+    const hoje = new Date();
+    const diasNoMes = new Date(hoje.getFullYear(), hoje.getMonth()+1, 0).getDate();
+    const diaAtual = hoje.getDate();
+    const diasRestantes = diasNoMes - diaAtual;
+
+    let rec = 0, desp = 0;
+    mes.forEach(function(tx){ if(tx.val>0) rec+=tx.val; else desp+=Math.abs(tx.val); });
+    const saldoAtual = rec - desp;
+    const mediaDesp = diaAtual > 0 ? desp / diaAtual : 0;
+    const despPrev = mediaDesp * diasRestantes;
+    const saldoPrev = saldoAtual - despPrev;
+
+    const cor = saldoPrev >= 0 ? 'fp-good' : 'fp-bad';
+    const emoji = saldoPrev >= 0 ? '✅' : '⚠️';
+
+    el.innerHTML = '<div class="fp-result">'
+      + '<div style="margin-bottom:10px"><strong>📅 Hoje:</strong> dia '+diaAtual+' de '+diasNoMes+' ('+diasRestantes+' dias restantes)</div>'
+      + '<div style="margin-bottom:6px">💰 Receitas até agora: <strong>'+BRL(rec)+'</strong></div>'
+      + '<div style="margin-bottom:6px">💸 Despesas até agora: <strong>'+BRL(desp)+'</strong></div>'
+      + '<div style="margin-bottom:6px">📊 Saldo atual: <strong>'+BRL(saldoAtual)+'</strong></div>'
+      + '<div style="margin-bottom:6px">📉 Média diária de gastos: <strong>'+BRL(mediaDesp)+'</strong></div>'
+      + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
+      + '<div style="margin-bottom:4px">'+emoji+' Projeção de despesas nos próximos '+diasRestantes+' dias: <strong>'+BRL(despPrev)+'</strong></div>'
+      + '<div class="fp-highlight '+cor+'" style="margin-top:8px">Saldo estimado em 30/'+String(hoje.getMonth()+1).padStart(2,'0')+': '+BRL(saldoPrev)+'</div>'
+      + (saldoPrev < 0 ? '<div style="font-size:12px;color:#dc2626;margin-top:6px">⚠️ Você ultrapassará seu orçamento se mantiver o ritmo atual.</div>' : '')
+      + '</div>';
+  }
+
+  // ── BOTÃO DO PÂNICO ───────────────────────────────────────────────────
+  function renderPanico(el) {
+    el.innerHTML = '<div style="text-align:center;padding:6px 0 10px">'
+      + '<p style="font-size:12.5px;color:#475569;margin-bottom:10px">Ativa o modo de sobrevivência: calcula quanto você pode gastar por dia para fechar o mês no azul.</p>'
+      + '<button class="fp-btn fp-btn-primary" id="fp-panico-btn" style="width:100%">🚨 Ativar Modo Pânico</button>'
+      + '</div><div id="fp-panico-result"></div>';
+    document.getElementById('fp-panico-btn').addEventListener('click', calcPanico);
+  }
+
+  function calcPanico() {
+    const id = pid();
+    const {txs} = STORE.getData(id);
+    const mes = mesAtual(txs);
+    const hoje = new Date();
+    const diasNoMes = new Date(hoje.getFullYear(), hoje.getMonth()+1, 0).getDate();
+    const diasRestantes = diasNoMes - hoje.getDate();
+
+    let rec = 0, desp = 0;
+    mes.forEach(function(tx){ if(tx.val>0) rec+=tx.val; else desp+=Math.abs(tx.val); });
+    const saldoAtual = rec - desp;
+
+    const r = document.getElementById('fp-panico-result');
+    if (diasRestantes <= 0) {
+      r.innerHTML = '<div class="fp-result"><strong>O mês acabou!</strong> Aguarde o próximo mês.</div>';
+      return;
+    }
+    if (saldoAtual <= 0) {
+      r.innerHTML = '<div class="fp-panic-active"><div>🚨 MODO PÂNICO</div><div class="daily">R$ 0,00</div><p>Seu saldo já está negativo. Foque em recuperação!</p></div>';
+      return;
+    }
+    const diaria = saldoAtual / diasRestantes;
+    r.innerHTML = '<div class="fp-panic-active">'
+      + '<div>🚨 MODO PÂNICO ATIVADO</div>'
+      + '<div class="daily">'+BRL(diaria)+'/dia</div>'
+      + '<p>Esse é o seu limite diário pelos próximos <strong>'+diasRestantes+' dias</strong> para fechar o mês no zero.</p>'
+      + '<p style="margin-top:6px;font-size:11px">Saldo atual: '+BRL(saldoAtual)+' ÷ '+diasRestantes+' dias</p>'
+      + '</div>';
+  }
+
+  // ── POSSO COMPRAR? ────────────────────────────────────────────────────
+  function renderPosso(el) {
+    el.innerHTML = '<label class="fp-label">Valor do item (R$)</label>'
+      + '<input type="number" class="fp-input" id="fp-posso-valor" placeholder="Ex: 2500" min="0" step="0.01">'
+      + '<label class="fp-label">Parcelas (1 = à vista)</label>'
+      + '<input type="number" class="fp-input" id="fp-posso-parcelas" placeholder="Ex: 12" min="1" max="60" value="1">'
+      + '<button class="fp-btn fp-btn-primary" id="fp-posso-btn" style="width:100%">🔍 Analisar</button>'
+      + '<div id="fp-posso-result"></div>';
+    document.getElementById('fp-posso-btn').addEventListener('click', calcPosso);
+  }
+
+  function calcPosso() {
+    const valor = parseFloat(document.getElementById('fp-posso-valor').value) || 0;
+    const parcelas = parseInt(document.getElementById('fp-posso-parcelas').value) || 1;
+    if (!valor || valor <= 0) {
+      document.getElementById('fp-posso-result').innerHTML = '<div class="fp-result fp-bad">Informe o valor do item.</div>';
+      return;
+    }
+
+    const id = pid();
+    const {txs, limits} = STORE.getData(id);
+    const lim = Object.assign({}, DEFAULT_LIMITS, limits||{});
+    const mes = mesAtual(txs);
+    let rec = 0, desp = 0;
+    mes.forEach(function(tx){ if(tx.val>0) rec+=tx.val; else desp+=Math.abs(tx.val); });
+    const saldoAtual = rec - desp;
+    const limiteOutros = lim.Outros || 500;
+    const parcela = valor / parcelas;
+    const impactoMensal = parcelas > 1 ? ((parcela / limiteOutros) * 100).toFixed(0) : null;
+
+    let html = '<div class="fp-result">';
+    html += '<div style="margin-bottom:8px">💳 <strong>'+BRL(valor)+'</strong>';
+    if (parcelas > 1) html += ' em <strong>'+parcelas+'x</strong> de <strong>'+BRL(parcela)+'</strong>';
+    else html += ' à vista';
+    html += '</div>';
+
+    if (parcelas === 1) {
+      const saldoApos = saldoAtual - valor;
+      const mesesReserva = rec > 0 ? (saldoApos / rec).toFixed(1) : '0';
+      const cor = saldoApos >= 0 ? 'fp-good' : 'fp-bad';
+      html += '<div class="'+cor+'" style="margin-bottom:6px">'+(saldoApos>=0?'✅':'❌')+' Saldo após compra: <strong>'+BRL(saldoApos)+'</strong></div>';
+      if (parseFloat(mesesReserva) < 1) html += '<div class="fp-bad">⚠️ Sua reserva cairia para menos de 1 mês de renda.</div>';
+      else if (parseFloat(mesesReserva) < 3) html += '<div class="fp-warn">⚠️ Reserva de '+mesesReserva+' meses — abaixo do recomendado (3 meses).</div>';
+      else html += '<div class="fp-good">✅ Reserva de '+mesesReserva+' meses — saudável.</div>';
+    } else {
+      html += '<div style="margin-bottom:6px">📊 Impacto mensal: <strong>'+BRL(parcela)+'</strong> nos seus gastos</div>';
+      if (impactoMensal) html += '<div class="'+(parseFloat(impactoMensal)>30?'fp-bad':parseFloat(impactoMensal)>15?'fp-warn':'fp-good')+'" style="margin-bottom:6px">';
+      html += 'Representa <strong>'+impactoMensal+'%</strong> do seu limite de lazer/outros.</div>';
+    }
+
+    // Recomendação
+    const pode = parcelas===1 ? saldoAtual >= valor : parcela <= limiteOutros * 0.3;
+    html += '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">';
+    html += '<div style="font-weight:700;font-size:13px">';
+    if (pode) html += '✅ <span class="fp-good">Parece viável!</span> Mas avalie se é prioridade.';
+    else if (parcelas===1) html += '⚠️ <span class="fp-warn">Considere parcelar ou esperar acumular mais saldo.</span>';
+    else html += '⚠️ <span class="fp-warn">Parcela alta em relação ao seu orçamento. Considere um prazo menor.</span>';
+    html += '</div></div>';
+
+    document.getElementById('fp-posso-result').innerHTML = html;
+  }
+
+  // ── SIMULADOR DE DÍVIDAS ──────────────────────────────────────────────
+  var debts = [];
+  function renderDivida(el) {
+    debts = STORE.get('finn_debts') || [];
+    el.innerHTML = '<p style="font-size:12px;color:#475569;margin-bottom:10px">Adicione suas dívidas e compare o método Bola de Neve (menor saldo primeiro) vs Avalanche (maior juros primeiro).</p>'
+      + '<div id="fp-debt-list"></div>'
+      + '<button class="fp-btn fp-btn-secondary" id="fp-add-debt" style="width:100%;margin-bottom:10px">+ Adicionar Dívida</button>'
+      + '<label class="fp-label">Pagamento extra mensal (R$)</label>'
+      + '<input type="number" class="fp-input" id="fp-debt-extra" placeholder="Ex: 200" min="0" step="0.01">'
+      + '<button class="fp-btn fp-btn-primary" id="fp-calc-debt" style="width:100%">📊 Calcular</button>'
+      + '<div id="fp-debt-result"></div>';
+    renderDebtList();
+    document.getElementById('fp-add-debt').addEventListener('click', function() {
+      debts.push({nome:'', saldo:0, juros:0, minimo:0});
+      STORE.set('finn_debts', debts);
+      renderDebtList();
+    });
+    document.getElementById('fp-calc-debt').addEventListener('click', calcDebts);
+  }
+
+  function renderDebtList() {
+    const list = document.getElementById('fp-debt-list');
+    if (!list) return;
+    if (!debts.length) {
+      list.innerHTML = '<p style="font-size:12px;color:#94A3B8;margin-bottom:10px">Nenhuma dívida adicionada ainda.</p>';
+      return;
+    }
+    list.innerHTML = debts.map(function(d, i) {
+      return '<div class="fp-debt-row">'
+        + '<input type="text" class="fp-input" style="min-width:80px;margin:0;flex:2" placeholder="Nome" value="'+d.nome+'" oninput="window._fDebt('+i+',\'nome\',this.value)">'
+        + '<input type="number" class="fp-input" style="margin:0;flex:2" placeholder="Saldo R$" value="'+(d.saldo||'')+'" oninput="window._fDebt('+i+',\'saldo\',+this.value)">'
+        + '<input type="number" class="fp-input" style="margin:0;flex:1" placeholder="Juros%" value="'+(d.juros||'')+'" oninput="window._fDebt('+i+',\'juros\',+this.value)">'
+        + '<input type="number" class="fp-input" style="margin:0;flex:1" placeholder="Mín R$" value="'+(d.minimo||'')+'" oninput="window._fDebt('+i+',\'minimo\',+this.value)">'
+        + '<button onclick="window._fDelDebt('+i+')" title="Remover">✕</button>'
+        + '</div>';
+    }).join('')
+    + '<div style="display:flex;gap:6px;font-size:10px;color:#94A3B8;margin:-4px 0 8px;padding:0 2px"><span style="flex:2">Nome</span><span style="flex:2">Saldo</span><span style="flex:1">Juros%</span><span style="flex:1">Mín/mês</span></div>';
+  }
+
+  window._fDebt = function(i, k, v) { if(debts[i]) { debts[i][k]=v; STORE.set('finn_debts', debts); } };
+  window._fDelDebt = function(i) { debts.splice(i,1); STORE.set('finn_debts', debts); renderDebtList(); };
+
+  function simDebt(sortedDebts, extra) {
+    var ds = sortedDebts.map(function(d){ return {nome:d.nome,saldo:+d.saldo,juros:+d.juros/100/12,minimo:+d.minimo}; });
+    var mes=0, totalJuros=0;
+    while (ds.some(function(d){return d.saldo>0;}) && mes<360) {
+      mes++;
+      var sobra = extra;
+      ds.forEach(function(d){ if(d.saldo<=0) return; var j=d.saldo*d.juros; totalJuros+=j; d.saldo+=j; var pg=Math.min(d.saldo, d.minimo); d.saldo-=pg; sobra-=pg; });
+      // Apply extra to first debt with balance
+      for (var i=0; i<ds.length; i++) {
+        if(ds[i].saldo>0 && sobra>0){ var pg=Math.min(ds[i].saldo,sobra); ds[i].saldo-=pg; sobra-=pg; }
+      }
+      ds.forEach(function(d){ if(d.saldo<0.01) d.saldo=0; });
+    }
+    return {meses:mes, juros:totalJuros};
+  }
+
+  function calcDebts() {
+    const extra = parseFloat(document.getElementById('fp-debt-extra').value) || 0;
+    const valid = debts.filter(function(d){ return d.saldo>0 && d.minimo>0; });
+    const r = document.getElementById('fp-debt-result');
+    if (!valid.length) { r.innerHTML='<div class="fp-result fp-warn">Adicione ao menos uma dívida com saldo e pagamento mínimo.</div>'; return; }
+
+    const snowball = simDebt([].concat(valid).sort(function(a,b){ return a.saldo-b.saldo; }), extra + valid.reduce(function(s,d){return s+d.minimo;},0));
+    const avalanche = simDebt([].concat(valid).sort(function(a,b){ return b.juros-a.juros; }), extra + valid.reduce(function(s,d){return s+d.minimo;},0));
+    const melhor = avalanche.juros <= snowball.juros ? 'avalanche' : 'snowball';
+
+    r.innerHTML = '<div class="fp-result">'
+      + '<div style="font-weight:700;margin-bottom:10px">Comparativo de Métodos</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">'
+      + '<div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:8px;padding:10px;text-align:center">'
+      + '<div style="font-size:11px;font-weight:700;color:#92400E">❄️ BOLA DE NEVE</div>'
+      + '<div style="font-size:16px;font-weight:800;color:#1E293B;margin:4px 0">'+snowball.meses+' meses</div>'
+      + '<div style="font-size:11px;color:#64748B">Juros: '+BRL(snowball.juros)+'</div>'
+      + '</div>'
+      + '<div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:8px;padding:10px;text-align:center">'
+      + '<div style="font-size:11px;font-weight:700;color:#92400E">🌊 AVALANCHE</div>'
+      + '<div style="font-size:16px;font-weight:800;color:#1E293B;margin:4px 0">'+avalanche.meses+' meses</div>'
+      + '<div style="font-size:11px;color:#64748B">Juros: '+BRL(avalanche.juros)+'</div>'
+      + '</div></div>'
+      + '<div class="fp-good" style="font-size:12px">💡 Recomendação: método <strong>'+(melhor==='avalanche'?'Avalanche (maiores juros primeiro)':'Bola de Neve (menores saldos primeiro)')+'</strong> — você economiza <strong>'+BRL(Math.abs(snowball.juros-avalanche.juros))+'</strong> em juros.</div>'
+      + '</div>';
+  }
+
+  // ── DESAFIOS DA SEMANA ────────────────────────────────────────────────
+  var CHALLENGES_POOL = [
+    'Passe um dia inteiro sem gastar nada',
+    'Cozinhe em casa no almoço e jantar hoje',
+    'Cancele uma assinatura que não usa há 30 dias',
+    'Pesquise o preço de 3 mercados antes de comprar',
+    'Evite compras supérfluas por 3 dias seguidos',
+    'Transfira R$ 50 para sua reserva de emergência',
+    'Liste todas as suas assinaturas recorrentes',
+    'Não faça pedidos de delivery esta semana',
+    'Compre apenas o que está na lista do mercado',
+    'Negocie um desconto em alguma conta ou serviço',
+    'Registre 100% dos seus gastos do dia no Finn',
+    'Pague à vista em vez de parcelar algo pequeno',
+  ];
+
+  function getWeekChallenges() {
+    const now = new Date();
+    const semana = Math.floor((now - new Date(now.getFullYear(),0,1)) / 604800000);
+    const idx = semana % Math.floor(CHALLENGES_POOL.length / 3);
+    return CHALLENGES_POOL.slice(idx*3, idx*3+3);
+  }
+
+  function renderDesafios(el) {
+    const challenges = getWeekChallenges();
+    const key = 'finn_challenges_' + Math.floor((new Date() - new Date(new Date().getFullYear(),0,1)) / 604800000);
+    const done = STORE.get(key) || {};
+
+    el.innerHTML = '<div style="margin-bottom:10px;font-size:12px;color:#475569">🗓️ Desafios desta semana — complete e marque como feito!</div>'
+      + '<div id="fp-challenges-list"></div>'
+      + '<div style="margin-top:10px;font-size:12px;color:#94A3B8;text-align:center" id="fp-ch-score"></div>';
+
+    function renderList() {
+      const list = document.getElementById('fp-challenges-list');
+      const score = document.getElementById('fp-ch-score');
+      if (!list) return;
+      list.innerHTML = challenges.map(function(c, i) {
+        const isDone = !!done[i];
+        return '<div class="fp-challenge-item">'
+          + '<div class="fp-challenge-check '+(isDone?'done':'')+'" id="fp-ch-'+i+'" data-idx="'+i+'">'+( isDone?'✓':'' )+'</div>'
+          + '<span class="fp-challenge-text '+(isDone?'done':'')+'" style="font-size:13px">'+c+'</span>'
+          + '</div>';
+      }).join('');
+      const total = Object.keys(done).length;
+      if (score) score.textContent = total + '/' + challenges.length + ' desafios completos esta semana' + (total===challenges.length?' 🎉':'');
+
+      list.querySelectorAll('.fp-challenge-check').forEach(function(el) {
+        el.addEventListener('click', function() {
+          const i = parseInt(el.getAttribute('data-idx'),10);
+          if (done[i]) delete done[i]; else done[i] = true;
+          STORE.set(key, done);
+          renderList();
+        });
+      });
+    }
+    renderList();
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────────────
+  function init() {
+    buildPrivacy();
+    buildFinnPlus();
+    setTimeout(showBanner, 1500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
 </body>
 </html>
