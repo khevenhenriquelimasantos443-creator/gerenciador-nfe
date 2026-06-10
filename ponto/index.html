@@ -420,6 +420,9 @@
         <input class="form-control" id="login-password" type="password" placeholder="••••••••">
       </div>
       <button class="btn btn-primary" onclick="doLogin()">Entrar</button>
+      <div style="text-align:right;margin-top:8px">
+        <button onclick="switchTab('forgot')" style="background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;text-decoration:underline;font-family:inherit">Esqueci minha senha</button>
+      </div>
       <div id="login-msg" class="auth-msg"></div>
       <div style="display:flex;align-items:center;gap:10px;margin:16px 0">
         <div style="flex:1;height:1px;background:var(--border)"></div>
@@ -456,6 +459,22 @@
         <svg width="18" height="18" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 537.8 28.3 420.3 28.3 307.4c0-176.3 115.5-269.7 230.9-269.7 61.3 0 112.4 40.5 150.4 40.5 36.4 0 93.7-42.9 163.8-42.9 26.4 0 108.2 2.6 168.6 80.6zm-87.4-183.3c28.4-34.6 48.8-82.9 48.8-131.2 0-6.7-.6-13.4-1.9-19.5-46.2 1.9-101.6 31.1-135.6 71.8-26 29.9-50.1 77.5-50.1 126.5 0 7.4 1.3 14.8 1.9 17.1 3.2.6 8.4 1.3 13.6 1.3 41.5 0 93.1-27.7 123.3-66z"/></svg>
         Criar conta com Apple
       </button>
+    </div>
+    <!-- Esqueci senha -->
+    <div id="tab-forgot" style="display:none">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:32px;margin-bottom:8px">🔑</div>
+        <p style="font-size:14px;color:var(--text-muted)">Digite seu e-mail e vamos enviar um link para redefinir sua senha.</p>
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input class="form-control" id="forgot-email" type="email" placeholder="seu@email.com">
+      </div>
+      <button class="btn btn-primary" onclick="doForgotPassword()">Enviar link de recuperação</button>
+      <div id="forgot-msg" class="auth-msg"></div>
+      <div style="text-align:center;margin-top:14px">
+        <button onclick="switchTab('login')" style="background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;font-family:inherit">← Voltar para o login</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1079,6 +1098,20 @@ function switchTab(tab) {
   });
   document.getElementById('tab-login').style.display = tab === 'login' ? '' : 'none';
   document.getElementById('tab-register').style.display = tab === 'register' ? '' : 'none';
+  document.getElementById('tab-forgot').style.display = tab === 'forgot' ? '' : 'none';
+}
+
+async function doForgotPassword() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const msg = document.getElementById('forgot-msg');
+  msg.className = 'auth-msg';
+  if (!email) { msg.textContent = 'Digite seu e-mail.'; msg.className = 'auth-msg error'; return; }
+  const { error } = await db.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.href
+  });
+  if (error) { msg.textContent = error.message; msg.className = 'auth-msg error'; return; }
+  msg.textContent = 'Link enviado! Verifique sua caixa de entrada (e o spam também).';
+  msg.className = 'auth-msg success';
 }
 
 async function doLogin() {
