@@ -103,16 +103,20 @@ CREATE POLICY "users_delete_holerites" ON storage.objects
   FOR DELETE USING (bucket_id = 'holerites' AND auth.uid()::text = (storage.foldername(name))[1]);
 
 -- Trigger: cria perfil automaticamente ao criar usuário
-CREATE OR REPLACE FUNCTION handle_new_user()
+-- ATENÇÃO: se já existir um trigger "on_auth_user_created" no projeto,
+-- adicione apenas as duas linhas INSERT dentro da função existente.
+CREATE OR REPLACE FUNCTION handle_new_user_ponto()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO perfis (id, nome) VALUES (NEW.id, NEW.raw_user_meta_data->>'nome');
-  INSERT INTO config_descontos (user_id) VALUES (NEW.id);
+  INSERT INTO perfis (id, nome) VALUES (NEW.id, NEW.raw_user_meta_data->>'nome')
+    ON CONFLICT (id) DO NOTHING;
+  INSERT INTO config_descontos (user_id) VALUES (NEW.id)
+    ON CONFLICT (user_id) DO NOTHING;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
-CREATE TRIGGER on_auth_user_created
+DROP TRIGGER IF EXISTS on_auth_user_created_ponto ON auth.users;
+CREATE TRIGGER on_auth_user_created_ponto
   AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION handle_new_user();
+  FOR EACH ROW EXECUTE FUNCTION handle_new_user_ponto();
