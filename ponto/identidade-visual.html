@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identidade Visual — Escolha seu app</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #08090d; color: #e2e8f0; min-height: 100vh; padding: 40px 20px; }
+
+h1 { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.subtitle { text-align: center; color: #64748b; font-size: 15px; margin-bottom: 60px; }
+
+.section-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: #475569; margin-bottom: 28px; text-align: center;
+}
+
+/* ── GRADE DE OPÇÕES ── */
+.options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1300px; margin: 0 auto 80px; }
+
+.brand-card {
+  border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform .2s, box-shadow .2s;
+  position: relative;
+}
+.brand-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.brand-card .pick-btn {
+  position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,.15);
+  backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.2); border-radius: 20px;
+  padding: 6px 14px; font-size: 12px; font-weight: 700; color: #fff; cursor: pointer;
+  transition: background .15s;
+}
+.brand-card .pick-btn:hover { background: rgba(255,255,255,.3); }
+.brand-card.selected .pick-btn { background: #fff; color: #000; }
+
+/* ── HERO DO CARD ── */
+.card-hero { padding: 48px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.app-icon { border-radius: 22px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.app-name { font-size: 28px; font-weight: 900; margin-bottom: 6px; line-height: 1.1; }
+.app-tagline { font-size: 14px; opacity: .7; margin-bottom: 28px; }
+.color-swatches { display: flex; gap: 8px; }
+.swatch { width: 28px; height: 28px; border-radius: 50%; }
+
+/* ── PREVIEW MINI DO APP ── */
+.card-preview { padding: 20px; border-top: 1px solid rgba(255,255,255,.08); }
+.preview-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; opacity: .4; margin-bottom: 12px; }
+.mock-screen { border-radius: 14px; padding: 16px; }
+.mock-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.mock-title { font-size: 13px; font-weight: 700; }
+.mock-clock { font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.mock-btn-row { display: flex; gap: 8px; }
+.mock-btn { flex: 1; padding: 10px 6px; border-radius: 10px; font-size: 11px; font-weight: 700; text-align: center; border: 2px solid; }
+.mock-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.mock-stat { border-radius: 10px; padding: 10px; }
+.mock-stat-label { font-size: 9px; opacity: .5; margin-bottom: 4px; text-transform: uppercase; }
+.mock-stat-val { font-size: 16px; font-weight: 800; }
+
+/* ────────────────────────────────────
+   OPÇÃO 1 — MARCA PONTO
+   Roxo elétrico + verde neon
+──────────────────────────────────── */
+.o1 .card-hero { background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 50%, #0a1628 100%); }
+.o1 .app-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #7c3aed, #4f46e5); box-shadow: 0 0 40px rgba(124,58,237,.5); }
+.o1 .app-name { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Space Grotesk', sans-serif; }
+.o1 .card-preview { background: #0d0d1a; }
+.o1 .mock-screen { background: #13111f; }
+.o1 .mock-clock { color: #a78bfa; }
+.o1 .mock-btn.entrada { border-color: #22c55e; color: #22c55e; background: rgba(34,197,94,.1); }
+.o1 .mock-btn.saida { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,.1); }
+.o1 .mock-stat { background: #1e1a35; }
+.o1 .mock-stat-val { color: #a78bfa; }
+
+/* ────────────────────────────────────
+   OPÇÃO 2 — HORA CERTA
+   Azul profundo + laranja vibrante
+──────────────────────────────────── */
+.o2 .card-hero { background: linear-gradient(135deg, #0a1628 0%, #0f2044 50%, #1a0f00 100%); }
+.o2 .app-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #1d4ed8, #0369a1); box-shadow: 0 0 40px rgba(29,78,216,.5); }
+.o2 .app-name { color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -.5px; }
+.o2 .app-name span { color: #fb923c; }
+.o2 .card-preview { background: #0a1628; }
+.o2 .mock-screen { background: #0f1e35; }
+.o2 .mock-clock { color: #fb923c; }
+.o2 .mock-btn.entrada { border-color: #22c55e; color: #22c55e; background: rgba(34,197,94,.1); }
+.o2 .mock-btn.saida { border-color: #f97316; color: #f97316; background: rgba(249,115,22,.1); }
+.o2 .mock-stat { background: #152540; }
+.o2 .mock-stat-val { color: #60a5fa; }
+
+/* ────────────────────────────────────
+   OPÇÃO 3 — JORNADA
+   Verde escuro + ciano
+──────────────────────────────────── */
+.o3 .card-hero { background: linear-gradient(135deg, #021a12 0%, #032b1a 50%, #001a20 100%); }
+.o3 .app-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #059669, #0891b2); box-shadow: 0 0 40px rgba(5,150,105,.5); }
+.o3 .app-name { color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
+.o3 .app-name span { color: #34d399; }
+.o3 .card-preview { background: #021a12; }
+.o3 .mock-screen { background: #032b1a; }
+.o3 .mock-clock { color: #34d399; }
+.o3 .mock-btn.entrada { border-color: #34d399; color: #34d399; background: rgba(52,211,153,.1); }
+.o3 .mock-btn.saida { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,.1); }
+.o3 .mock-stat { background: #053321; }
+.o3 .mock-stat-val { color: #34d399; }
+
+/* ────────────────────────────────────
+   OPÇÃO 4 — PONTUAL
+   Preto total + dourado premium
+──────────────────────────────────── */
+.o4 .card-hero { background: linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #0f0f0a 100%); }
+.o4 .app-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #a16207, #ca8a04); box-shadow: 0 0 40px rgba(202,138,4,.4); }
+.o4 .app-name { color: #fff; font-family: 'Space Grotesk', sans-serif; letter-spacing: -1px; }
+.o4 .app-name span { background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.o4 .card-preview { background: #0a0a0a; }
+.o4 .mock-screen { background: #111111; }
+.o4 .mock-clock { color: #fbbf24; }
+.o4 .mock-btn.entrada { border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,.08); }
+.o4 .mock-btn.saida { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,.1); }
+.o4 .mock-stat { background: #1a1a0f; }
+.o4 .mock-stat-val { color: #fbbf24; }
+
+/* ── ÍCONES SVG INLINE ── */
+.icon-relogio { font-size: 36px; }
+
+/* ── COMPARATIVO DE FONTES ── */
+.fonts-section { max-width: 900px; margin: 0 auto 80px; }
+.font-row { background: #111318; border: 1px solid #1e2130; border-radius: 14px; padding: 24px 28px; margin-bottom: 12px; display: flex; align-items: center; gap: 24px; }
+.font-name-tag { font-size: 11px; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; width: 140px; flex-shrink: 0; }
+.font-sample { font-size: 26px; font-weight: 800; color: #e2e8f0; }
+
+/* ── ESCOLHA FINAL ── */
+.choice-section { max-width: 600px; margin: 0 auto 60px; text-align: center; }
+.choice-box { background: #111318; border: 1px solid #1e2130; border-radius: 16px; padding: 28px; margin-top: 20px; }
+.choice-box p { color: #64748b; font-size: 14px; margin-bottom: 16px; }
+.choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice-opt {
+  padding: 12px; border-radius: 10px; border: 2px solid #1e2130; cursor: pointer;
+  font-size: 14px; font-weight: 700; background: none; color: #94a3b8; transition: all .15s; font-family: inherit;
+}
+.choice-opt:hover { border-color: #4f46e5; color: #a78bfa; background: rgba(79,70,229,.1); }
+
+/* ── MOBILE MOCKUP ── */
+.mobile-section { max-width: 1100px; margin: 0 auto 60px; }
+.mobile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.phone-frame {
+  background: #111318; border: 3px solid #1e2130; border-radius: 32px; padding: 12px;
+  aspect-ratio: 9/19.5; display: flex; flex-direction: column; overflow: hidden; position: relative;
+}
+.phone-notch { width: 60px; height: 6px; background: #1e2130; border-radius: 3px; margin: 0 auto 10px; }
+.phone-screen { flex: 1; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
+.phone-topbar { padding: 10px 14px 8px; display: flex; justify-content: space-between; align-items: center; }
+.phone-page { flex: 1; padding: 10px 14px; }
+.phone-nav { display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 0 4px; border-top: 1px solid rgba(255,255,255,.08); }
+.phone-nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 8px; opacity: .5; }
+.phone-nav-item.active { opacity: 1; }
+.phone-nav-icon { font-size: 14px; }
+.phone-clock-big { font-size: 32px; font-weight: 900; text-align: center; margin: 10px 0 4px; font-variant-numeric: tabular-nums; }
+.phone-date { font-size: 9px; text-align: center; opacity: .5; margin-bottom: 12px; }
+.phone-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.phone-btn { padding: 9px 4px; border-radius: 10px; font-size: 9px; font-weight: 700; text-align: center; border: 1.5px solid; }
+.phone-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+.phone-stat { border-radius: 9px; padding: 7px 8px; }
+.phone-stat-lbl { font-size: 7px; opacity: .45; text-transform: uppercase; }
+.phone-stat-val { font-size: 13px; font-weight: 800; }
+</style>
+</head>
+<body>
+
+<h1>Identidade Visual</h1>
+<p class="subtitle">Escolha o nome e a identidade do seu app de ponto</p>
+
+<!-- ════════════════════════════════════════
+     OPÇÕES DE MARCA
+════════════════════════════════════════ -->
+<p class="section-title">— 4 opções de identidade —</p>
+<div class="options-grid">
+
+  <!-- OPÇÃO 1: MARCA PONTO -->
+  <div class="brand-card o1">
+    <button class="pick-btn" onclick="escolher(1,this)">Escolher</button>
+    <div class="card-hero">
+      <div class="app-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="22" fill="url(#g1)"/>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs>
+          <circle cx="40" cy="38" r="18" stroke="white" stroke-width="2.5" fill="none" opacity=".9"/>
+          <line x1="40" y1="38" x2="40" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="40" y1="38" x2="49" y2="43" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="40" cy="38" r="2.5" fill="white"/>
+          <circle cx="56" cy="56" r="10" fill="#22c55e"/>
+          <path d="M52 56l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="app-name" style="font-family:'Space Grotesk',sans-serif">Marca<span style="color:#22c55e">Ponto</span></div>
+      <div class="app-tagline" style="color:#a78bfa">Seu tempo, no lugar certo.</div>
+      <div class="color-swatches">
+        <div class="swatch" style="background:#7c3aed"></div>
+        <div class="swatch" style="background:#4f46e5"></div>
+        <div class="swatch" style="background:#22c55e"></div>
+        <div class="swatch" style="background:#a78bfa"></div>
+        <div class="swatch" style="background:#0d0d1a"></div>
+      </div>
+    </div>
+    <div class="card-preview o1">
+      <div class="preview-label">Preview da interface</div>
+      <div class="mock-screen">
+        <div class="mock-topbar">
+          <span class="mock-title" style="color:#e2e8f0">MarcaPonto</span>
+          <span class="mock-clock o1">08:47:32</span>
+        </div>
+        <div class="mock-btn-row">
+          <div class="mock-btn entrada">✓ Entrada</div>
+          <div class="mock-btn saida" style="border-color:#7c3aed;color:#a78bfa;background:rgba(124,58,237,.1)">Saída Almoço</div>
+          <div class="mock-btn saida">Saída</div>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat o1"><div class="mock-stat-label">Horas hoje</div><div class="mock-stat-val">4h 12m</div></div>
+          <div class="mock-stat o1"><div class="mock-stat-label">HE mês</div><div class="mock-stat-val">6h 30m</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPÇÃO 2: HORA CERTA -->
+  <div class="brand-card o2">
+    <button class="pick-btn" onclick="escolher(2,this)">Escolher</button>
+    <div class="card-hero">
+      <div class="app-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="22" fill="url(#g2)"/>
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#1d4ed8"/><stop offset="1" stop-color="#0369a1"/></linearGradient></defs>
+          <circle cx="40" cy="38" r="18" stroke="white" stroke-width="2.5" fill="none" opacity=".9"/>
+          <line x1="40" y1="38" x2="40" y2="25" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="40" y1="38" x2="50" y2="44" stroke="#fb923c" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="40" cy="38" r="3" fill="#fb923c"/>
+          <line x1="40" y1="22" x2="40" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="40" y1="54" x2="40" y2="56" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="24" y1="38" x2="22" y2="38" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="56" y1="38" x2="58" y2="38" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="app-name" style="font-family:'Plus Jakarta Sans',sans-serif">Hora<span style="color:#fb923c">Certa</span></div>
+      <div class="app-tagline" style="color:#93c5fd">Precisão em cada batida.</div>
+      <div class="color-swatches">
+        <div class="swatch" style="background:#1d4ed8"></div>
+        <div class="swatch" style="background:#0369a1"></div>
+        <div class="swatch" style="background:#fb923c"></div>
+        <div class="swatch" style="background:#60a5fa"></div>
+        <div class="swatch" style="background:#0a1628"></div>
+      </div>
+    </div>
+    <div class="card-preview o2">
+      <div class="preview-label">Preview da interface</div>
+      <div class="mock-screen o2">
+        <div class="mock-topbar">
+          <span class="mock-title" style="color:#e2e8f0">HoraCerta</span>
+          <span class="mock-clock o2">08:47:32</span>
+        </div>
+        <div class="mock-btn-row">
+          <div class="mock-btn entrada">✓ Entrada</div>
+          <div class="mock-btn saida" style="border-color:#1d4ed8;color:#60a5fa;background:rgba(29,78,216,.1)">Saída Almoço</div>
+          <div class="mock-btn saida" style="border-color:#f97316;color:#f97316;background:rgba(249,115,22,.1)">Saída</div>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat o2"><div class="mock-stat-label">Horas hoje</div><div class="mock-stat-val" style="color:#60a5fa">4h 12m</div></div>
+          <div class="mock-stat o2"><div class="mock-stat-label">HE mês</div><div class="mock-stat-val" style="color:#fb923c">6h 30m</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPÇÃO 3: JORNADA -->
+  <div class="brand-card o3">
+    <button class="pick-btn" onclick="escolher(3,this)">Escolher</button>
+    <div class="card-hero">
+      <div class="app-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="22" fill="url(#g3)"/>
+          <defs><linearGradient id="g3" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#059669"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs>
+          <path d="M22 55 L32 35 L42 45 L52 28 L58 35" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/>
+          <circle cx="22" cy="55" r="3" fill="#34d399"/>
+          <circle cx="42" cy="45" r="3" fill="#34d399"/>
+          <circle cx="58" cy="35" r="3" fill="white"/>
+          <path d="M54 27 L59 27 L59 32" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="40" cy="58" r="1.5" fill="#34d399" opacity=".5"/>
+          <circle cx="32" cy="60" r="1.5" fill="#34d399" opacity=".3"/>
+          <circle cx="48" cy="60" r="1.5" fill="#34d399" opacity=".3"/>
+        </svg>
+      </div>
+      <div class="app-name" style="font-family:'Plus Jakarta Sans',sans-serif;color:#fff">Jor<span style="color:#34d399">nada</span></div>
+      <div class="app-tagline" style="color:#6ee7b7">Controle total da sua jornada.</div>
+      <div class="color-swatches">
+        <div class="swatch" style="background:#059669"></div>
+        <div class="swatch" style="background:#0891b2"></div>
+        <div class="swatch" style="background:#34d399"></div>
+        <div class="swatch" style="background:#06b6d4"></div>
+        <div class="swatch" style="background:#021a12"></div>
+      </div>
+    </div>
+    <div class="card-preview o3">
+      <div class="preview-label">Preview da interface</div>
+      <div class="mock-screen o3">
+        <div class="mock-topbar">
+          <span class="mock-title" style="color:#e2e8f0">Jornada</span>
+          <span class="mock-clock" style="color:#34d399">08:47:32</span>
+        </div>
+        <div class="mock-btn-row">
+          <div class="mock-btn" style="border-color:#34d399;color:#34d399;background:rgba(52,211,153,.1)">✓ Entrada</div>
+          <div class="mock-btn" style="border-color:#06b6d4;color:#06b6d4;background:rgba(6,182,212,.1)">Saída Almoço</div>
+          <div class="mock-btn" style="border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)">Saída</div>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat o3"><div class="mock-stat-label">Horas hoje</div><div class="mock-stat-val" style="color:#34d399">4h 12m</div></div>
+          <div class="mock-stat o3"><div class="mock-stat-label">HE mês</div><div class="mock-stat-val" style="color:#06b6d4">6h 30m</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPÇÃO 4: PONTUAL -->
+  <div class="brand-card o4">
+    <button class="pick-btn" onclick="escolher(4,this)">Escolher</button>
+    <div class="card-hero">
+      <div class="app-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="22" fill="url(#g4)"/>
+          <defs><linearGradient id="g4" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#a16207"/><stop offset="1" stop-color="#ca8a04"/></linearGradient></defs>
+          <circle cx="40" cy="38" r="20" stroke="#fbbf24" stroke-width="2" fill="none" opacity=".3"/>
+          <circle cx="40" cy="38" r="14" stroke="#fbbf24" stroke-width="2" fill="none" opacity=".6"/>
+          <circle cx="40" cy="38" r="8" fill="#fbbf24" opacity=".9"/>
+          <line x1="40" y1="38" x2="40" y2="22" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="40" y1="38" x2="51" y2="38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="40" cy="38" r="2.5" fill="white"/>
+        </svg>
+      </div>
+      <div class="app-name" style="font-family:'Space Grotesk',sans-serif"><span style="background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Pontual</span></div>
+      <div class="app-tagline" style="color:#fcd34d">Premium. Simples. No horário.</div>
+      <div class="color-swatches">
+        <div class="swatch" style="background:#a16207"></div>
+        <div class="swatch" style="background:#fbbf24"></div>
+        <div class="swatch" style="background:#f59e0b"></div>
+        <div class="swatch" style="background:#1c1c1c"></div>
+        <div class="swatch" style="background:#0a0a0a"></div>
+      </div>
+    </div>
+    <div class="card-preview o4">
+      <div class="preview-label">Preview da interface</div>
+      <div class="mock-screen o4">
+        <div class="mock-topbar">
+          <span class="mock-title" style="color:#e2e8f0">Pontual</span>
+          <span class="mock-clock" style="color:#fbbf24">08:47:32</span>
+        </div>
+        <div class="mock-btn-row">
+          <div class="mock-btn" style="border-color:#fbbf24;color:#fbbf24;background:rgba(251,191,36,.08)">✓ Entrada</div>
+          <div class="mock-btn" style="border-color:#6b7280;color:#9ca3af;background:rgba(107,114,128,.1)">Saída Almoço</div>
+          <div class="mock-btn" style="border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)">Saída</div>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat o4"><div class="mock-stat-label">Horas hoje</div><div class="mock-stat-val" style="color:#fbbf24">4h 12m</div></div>
+          <div class="mock-stat o4"><div class="mock-stat-label">HE mês</div><div class="mock-stat-val" style="color:#f59e0b">6h 30m</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     MOCKUP MOBILE
+════════════════════════════════════════ -->
+<p class="section-title">— versão mobile (como fica no celular) —</p>
+<div class="mobile-section">
+<div class="mobile-grid">
+
+  <!-- Phone 1 — MarcaPonto -->
+  <div>
+    <p style="text-align:center;font-size:11px;color:#475569;margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em">MarcaPonto</p>
+    <div class="phone-frame" style="border-color:#2a1f4a">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" style="background:#13111f">
+        <div class="phone-topbar" style="background:#0d0d1a">
+          <span style="font-size:11px;font-weight:800;color:#a78bfa">MarcaPonto</span>
+          <span style="font-size:13px;font-weight:800;color:#a78bfa;font-variant-numeric:tabular-nums">08:47</span>
+        </div>
+        <div class="phone-page">
+          <div class="phone-clock-big" style="color:#a78bfa">08:47:32</div>
+          <div class="phone-date" style="color:#64748b">Terça-feira, 10 jun</div>
+          <div class="phone-btn-grid">
+            <div class="phone-btn" style="border-color:#22c55e;color:#22c55e;background:rgba(34,197,94,.1)">✓ Entrada</div>
+            <div class="phone-btn" style="border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.1)">Saída Almoço</div>
+            <div class="phone-btn" style="border-color:#3b82f6;color:#3b82f6;background:rgba(59,130,246,.1)">Retorno</div>
+            <div class="phone-btn" style="border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)">Saída</div>
+          </div>
+          <div class="phone-stat-row">
+            <div class="phone-stat" style="background:#1e1a35"><div class="phone-stat-lbl">Hoje</div><div class="phone-stat-val" style="color:#a78bfa">4h12m</div></div>
+            <div class="phone-stat" style="background:#1e1a35"><div class="phone-stat-lbl">HE mês</div><div class="phone-stat-val" style="color:#22c55e">6h30m</div></div>
+          </div>
+        </div>
+        <div class="phone-nav" style="background:#0d0d1a">
+          <div class="phone-nav-item active" style="color:#a78bfa"><span class="phone-nav-icon">🏠</span><span>Início</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⏰</span><span>Ponto</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">📅</span><span>Histórico</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">💰</span><span>Salário</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⚙️</span><span>Config</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone 2 — HoraCerta -->
+  <div>
+    <p style="text-align:center;font-size:11px;color:#475569;margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em">HoraCerta</p>
+    <div class="phone-frame" style="border-color:#1e3a5f">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" style="background:#0f1e35">
+        <div class="phone-topbar" style="background:#0a1628">
+          <span style="font-size:11px;font-weight:800;color:#fff">Hora<span style="color:#fb923c">Certa</span></span>
+          <span style="font-size:13px;font-weight:800;color:#fb923c;font-variant-numeric:tabular-nums">08:47</span>
+        </div>
+        <div class="phone-page">
+          <div class="phone-clock-big" style="color:#fb923c">08:47:32</div>
+          <div class="phone-date" style="color:#64748b">Terça-feira, 10 jun</div>
+          <div class="phone-btn-grid">
+            <div class="phone-btn" style="border-color:#22c55e;color:#22c55e;background:rgba(34,197,94,.1)">✓ Entrada</div>
+            <div class="phone-btn" style="border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.1)">Saída Almoço</div>
+            <div class="phone-btn" style="border-color:#60a5fa;color:#60a5fa;background:rgba(96,165,250,.1)">Retorno</div>
+            <div class="phone-btn" style="border-color:#f97316;color:#f97316;background:rgba(249,115,22,.1)">Saída</div>
+          </div>
+          <div class="phone-stat-row">
+            <div class="phone-stat" style="background:#152540"><div class="phone-stat-lbl">Hoje</div><div class="phone-stat-val" style="color:#60a5fa">4h12m</div></div>
+            <div class="phone-stat" style="background:#152540"><div class="phone-stat-lbl">HE mês</div><div class="phone-stat-val" style="color:#fb923c">6h30m</div></div>
+          </div>
+        </div>
+        <div class="phone-nav" style="background:#0a1628">
+          <div class="phone-nav-item active" style="color:#fb923c"><span class="phone-nav-icon">🏠</span><span>Início</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⏰</span><span>Ponto</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">📅</span><span>Histórico</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">💰</span><span>Salário</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⚙️</span><span>Config</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone 3 — Jornada -->
+  <div>
+    <p style="text-align:center;font-size:11px;color:#475569;margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em">Jornada</p>
+    <div class="phone-frame" style="border-color:#053321">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" style="background:#032b1a">
+        <div class="phone-topbar" style="background:#021a12">
+          <span style="font-size:11px;font-weight:800;color:#fff">Jor<span style="color:#34d399">nada</span></span>
+          <span style="font-size:13px;font-weight:800;color:#34d399;font-variant-numeric:tabular-nums">08:47</span>
+        </div>
+        <div class="phone-page">
+          <div class="phone-clock-big" style="color:#34d399">08:47:32</div>
+          <div class="phone-date" style="color:#64748b">Terça-feira, 10 jun</div>
+          <div class="phone-btn-grid">
+            <div class="phone-btn" style="border-color:#34d399;color:#34d399;background:rgba(52,211,153,.1)">✓ Entrada</div>
+            <div class="phone-btn" style="border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.1)">Saída Almoço</div>
+            <div class="phone-btn" style="border-color:#06b6d4;color:#06b6d4;background:rgba(6,182,212,.1)">Retorno</div>
+            <div class="phone-btn" style="border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)">Saída</div>
+          </div>
+          <div class="phone-stat-row">
+            <div class="phone-stat" style="background:#053321"><div class="phone-stat-lbl">Hoje</div><div class="phone-stat-val" style="color:#34d399">4h12m</div></div>
+            <div class="phone-stat" style="background:#053321"><div class="phone-stat-lbl">HE mês</div><div class="phone-stat-val" style="color:#06b6d4">6h30m</div></div>
+          </div>
+        </div>
+        <div class="phone-nav" style="background:#021a12">
+          <div class="phone-nav-item active" style="color:#34d399"><span class="phone-nav-icon">🏠</span><span>Início</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⏰</span><span>Ponto</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">📅</span><span>Histórico</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">💰</span><span>Salário</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⚙️</span><span>Config</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone 4 — Pontual -->
+  <div>
+    <p style="text-align:center;font-size:11px;color:#475569;margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em">Pontual</p>
+    <div class="phone-frame" style="border-color:#2a2500">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" style="background:#111111">
+        <div class="phone-topbar" style="background:#0a0a0a">
+          <span style="font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Pontual</span>
+          <span style="font-size:13px;font-weight:800;color:#fbbf24;font-variant-numeric:tabular-nums">08:47</span>
+        </div>
+        <div class="phone-page">
+          <div class="phone-clock-big" style="color:#fbbf24">08:47:32</div>
+          <div class="phone-date" style="color:#64748b">Terça-feira, 10 jun</div>
+          <div class="phone-btn-grid">
+            <div class="phone-btn" style="border-color:#fbbf24;color:#fbbf24;background:rgba(251,191,36,.08)">✓ Entrada</div>
+            <div class="phone-btn" style="border-color:#6b7280;color:#9ca3af;background:rgba(107,114,128,.1)">Saída Almoço</div>
+            <div class="phone-btn" style="border-color:#6b7280;color:#9ca3af;background:rgba(107,114,128,.1)">Retorno</div>
+            <div class="phone-btn" style="border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)">Saída</div>
+          </div>
+          <div class="phone-stat-row">
+            <div class="phone-stat" style="background:#1a1a0f"><div class="phone-stat-lbl">Hoje</div><div class="phone-stat-val" style="color:#fbbf24">4h12m</div></div>
+            <div class="phone-stat" style="background:#1a1a0f"><div class="phone-stat-lbl">HE mês</div><div class="phone-stat-val" style="color:#f59e0b">6h30m</div></div>
+          </div>
+        </div>
+        <div class="phone-nav" style="background:#0a0a0a">
+          <div class="phone-nav-item active" style="color:#fbbf24"><span class="phone-nav-icon">🏠</span><span>Início</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⏰</span><span>Ponto</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">📅</span><span>Histórico</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">💰</span><span>Salário</span></div>
+          <div class="phone-nav-item" style="color:#475569"><span class="phone-nav-icon">⚙️</span><span>Config</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     FONTES
+════════════════════════════════════════ -->
+<p class="section-title">— opções de tipografia —</p>
+<div class="fonts-section">
+  <div class="font-row">
+    <span class="font-name-tag">Space Grotesk</span>
+    <span class="font-sample" style="font-family:'Space Grotesk',sans-serif">MarcaPonto · Pontual</span>
+    <span style="color:#475569;font-size:12px;margin-left:auto">Moderno, técnico, forte</span>
+  </div>
+  <div class="font-row">
+    <span class="font-name-tag">Plus Jakarta Sans</span>
+    <span class="font-sample" style="font-family:'Plus Jakarta Sans',sans-serif">HoraCerta · Jornada</span>
+    <span style="color:#475569;font-size:12px;margin-left:auto">Amigável, profissional</span>
+  </div>
+  <div class="font-row">
+    <span class="font-name-tag">Inter</span>
+    <span class="font-sample" style="font-family:'Inter',sans-serif">Ponto Inteligente</span>
+    <span style="color:#475569;font-size:12px;margin-left:auto">Neutro, legível, clássico</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SELEÇÃO FINAL
+════════════════════════════════════════ -->
+<div class="choice-section">
+  <p class="section-title">— sua escolha —</p>
+  <div class="choice-box">
+    <p id="choice-msg">Clique em <b>Escolher</b> em um dos cards acima ou selecione abaixo</p>
+    <div class="choice-grid">
+      <button class="choice-opt" onclick="escolher(1,null)" style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(79,70,229,.1));border-color:#4f46e5;color:#a78bfa">
+        🔮 MarcaPonto
+      </button>
+      <button class="choice-opt" onclick="escolher(2,null)" style="background:linear-gradient(135deg,rgba(29,78,216,.15),rgba(3,105,161,.1));border-color:#1d4ed8;color:#60a5fa">
+        🔵 HoraCerta
+      </button>
+      <button class="choice-opt" onclick="escolher(3,null)" style="background:linear-gradient(135deg,rgba(5,150,105,.15),rgba(8,145,178,.1));border-color:#059669;color:#34d399">
+        🌿 Jornada
+      </button>
+      <button class="choice-opt" onclick="escolher(4,null)" style="background:linear-gradient(135deg,rgba(161,98,7,.15),rgba(202,138,4,.1));border-color:#ca8a04;color:#fbbf24">
+        ✨ Pontual
+      </button>
+    </div>
+    <div id="chosen-result" style="display:none;margin-top:20px;padding:16px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:6px">Você escolheu:</p>
+      <p id="chosen-name" style="font-size:24px;font-weight:800"></p>
+      <p id="chosen-tag" style="font-size:13px;color:#64748b;margin-top:4px"></p>
+      <p style="margin-top:12px;font-size:13px;color:#64748b">Me diga qual escolheu e eu aplico no app completo! 🚀</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const brands = {
+  1: { name: 'MarcaPonto', tag: 'Roxo + Verde · Space Grotesk · "Seu tempo, no lugar certo."' },
+  2: { name: 'HoraCerta',  tag: 'Azul + Laranja · Plus Jakarta Sans · "Precisão em cada batida."' },
+  3: { name: 'Jornada',    tag: 'Verde + Ciano · Plus Jakarta Sans · "Controle total da sua jornada."' },
+  4: { name: 'Pontual',    tag: 'Preto + Dourado · Space Grotesk · "Premium. Simples. No horário."' },
+};
+let escolhido = null;
+function escolher(n, btn) {
+  escolhido = n;
+  document.querySelectorAll('.pick-btn').forEach(b => b.textContent = 'Escolher');
+  document.querySelectorAll('.brand-card').forEach(c => c.classList.remove('selected'));
+  if (btn) { btn.textContent = '✓ Escolhido'; btn.closest('.brand-card').classList.add('selected'); }
+  document.getElementById('chosen-result').style.display = 'block';
+  document.getElementById('chosen-name').textContent = brands[n].name;
+  document.getElementById('chosen-tag').textContent = brands[n].tag;
+  document.getElementById('choice-msg').textContent = 'Você selecionou:';
+}
+</script>
+</body>
+</html>
