@@ -2,1743 +2,1761 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ponto Inteligente</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Pontual — Relógio de Ponto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
-  :root {
-    --bg: #0f1117;
-    --surface: #1a1d2e;
-    --surface2: #252840;
-    --border: #2e3150;
-    --primary: #6c63ff;
-    --primary-light: #8b84ff;
-    --primary-dim: rgba(108,99,255,0.15);
-    --success: #22c55e;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --info: #3b82f6;
-    --text: #e2e8f0;
-    --text-muted: #94a3b8;
-    --text-dim: #64748b;
-    --sidebar-w: 240px;
-    --radius: 12px;
+:root {
+  --bg:    #080808;
+  --s1:    #101010;
+  --s2:    #161616;
+  --s3:    #1e1e1e;
+  --brd:   #2a2a2a;
+  --gold:  #c8913a;
+  --gold2: #e0a94a;
+  --gold-dim: rgba(200,145,58,0.12);
+  --txt:   #e8e8e8;
+  --muted: #888;
+  --dim:   #555;
+  --ok:    #4caf6e;
+  --warn:  #e8a83a;
+  --err:   #e05c5c;
+  --nav-h: 64px;
+  --r:     10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+input, button, select, textarea { font-family: inherit; }
+
+/* ───── SCROLLBAR ───── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--brd); border-radius: 2px; }
+
+/* ───── AUTH ───── */
+#auth-screen {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+}
+.auth-wrap {
+  width: 100%; max-width: 380px;
+}
+.auth-brand {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.auth-brand .logo-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px;
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+.auth-brand h1 { font-size: 26px; font-weight: 700; color: var(--txt); letter-spacing: -0.5px; }
+.auth-brand p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+.auth-card {
+  background: var(--s1);
+  border: 1px solid var(--brd);
+  border-radius: 16px;
+  padding: 32px 28px;
+}
+.auth-tabs {
+  display: flex;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 3px;
+  margin-bottom: 24px;
+}
+.auth-tab {
+  flex: 1; padding: 9px; text-align: center;
+  border-radius: 6px; cursor: pointer;
+  font-size: 14px; font-weight: 500;
+  color: var(--muted);
+  transition: all .2s;
+  border: none; background: none;
+}
+.auth-tab.active { background: var(--gold); color: #000; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.field input {
+  width: 100%; padding: 12px 14px;
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: var(--r); color: var(--txt); font-size: 14px;
+  transition: border-color .2s;
+  outline: none;
+}
+.field input:focus { border-color: var(--gold); }
+
+.btn-primary {
+  width: 100%; padding: 13px;
+  background: var(--gold); color: #000;
+  border: none; border-radius: var(--r);
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: opacity .2s;
+}
+.btn-primary:hover { opacity: .88; }
+.btn-primary:disabled { opacity: .45; cursor: default; }
+
+.auth-link {
+  text-align: center; margin-top: 16px;
+  font-size: 13px; color: var(--muted);
+}
+.auth-link a { color: var(--gold); cursor: pointer; text-decoration: none; }
+
+/* ───── APP SHELL ───── */
+#app-screen { display: none; min-height: 100vh; }
+
+/* Desktop sidebar */
+.sidebar {
+  display: none;
+  position: fixed; top: 0; left: 0;
+  width: 220px; height: 100vh;
+  background: var(--s1); border-right: 1px solid var(--brd);
+  flex-direction: column;
+  padding: 24px 0;
+  z-index: 100;
+}
+.sidebar-brand {
+  padding: 0 20px 28px;
+  border-bottom: 1px solid var(--brd);
+}
+.sidebar-brand h2 { font-size: 20px; font-weight: 700; color: var(--gold); letter-spacing: -0.5px; }
+.sidebar-brand p { font-size: 11px; color: var(--dim); margin-top: 2px; }
+.sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 14px; font-weight: 500; color: var(--muted);
+  cursor: pointer; transition: all .15s; border: none; background: none;
+  text-align: left; width: 100%;
+}
+.nav-item:hover { background: var(--s2); color: var(--txt); }
+.nav-item.active { background: var(--gold-dim); color: var(--gold); }
+.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.sidebar-footer { padding: 12px 16px; border-top: 1px solid var(--brd); }
+.sidebar-user { font-size: 12px; color: var(--muted); margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btn-logout {
+  width: 100%; padding: 9px; text-align: left;
+  background: none; border: 1px solid var(--brd);
+  border-radius: 8px; color: var(--err);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all .15s;
+}
+.btn-logout:hover { background: rgba(224,92,92,0.08); }
+
+/* Mobile bottom nav */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--s1); border-top: 1px solid var(--brd);
+  display: flex; align-items: center;
+  z-index: 100;
+}
+.bnav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; height: 100%;
+  cursor: pointer; transition: color .15s;
+  border: none; background: none; color: var(--dim);
+  font-size: 10px; font-weight: 500;
+}
+.bnav-item svg { width: 20px; height: 20px; }
+.bnav-item.active { color: var(--gold); }
+
+/* Main content area */
+.main {
+  padding: 20px 16px calc(var(--nav-h) + 20px);
+  max-width: 600px; margin: 0 auto;
+}
+
+/* ───── SECTIONS ───── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ───── PAGE HEADER ───── */
+.page-header { margin-bottom: 24px; }
+.page-header h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.page-header p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+/* ───── CARDS ───── */
+.card {
+  background: var(--s1); border: 1px solid var(--brd);
+  border-radius: 14px; padding: 20px;
+  margin-bottom: 14px;
+}
+.card-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--muted); margin-bottom: 14px;
+}
+
+/* ───── INÍCIO / DASHBOARD ───── */
+.clock-display {
+  text-align: center; padding: 28px 0 20px;
+}
+.clock-time {
+  font-size: 52px; font-weight: 700; letter-spacing: -2px;
+  color: var(--txt); line-height: 1;
+}
+.clock-date { font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+.status-bar {
+  display: flex; gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto; padding-bottom: 4px;
+}
+.status-bar::-webkit-scrollbar { display: none; }
+.stage-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 500;
+  background: var(--s2); border: 1px solid var(--brd);
+  color: var(--dim); white-space: nowrap;
+  transition: all .2s;
+}
+.stage-pill.done { background: rgba(76,175,110,0.1); border-color: rgba(76,175,110,0.3); color: var(--ok); }
+.stage-pill.current { background: var(--gold-dim); border-color: rgba(200,145,58,0.3); color: var(--gold); }
+.stage-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.btn-ponto {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px;
+  background: var(--gold); color: #000;
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: all .2s;
+  margin-bottom: 14px;
+}
+.btn-ponto:hover { background: var(--gold2); }
+.btn-ponto:disabled { opacity: .4; cursor: default; }
+.btn-ponto svg { width: 20px; height: 20px; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat-box {
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 10px; padding: 14px;
+}
+.stat-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 20px; font-weight: 700; color: var(--txt); }
+.stat-value.gold { color: var(--gold); }
+.stat-value.green { color: var(--ok); }
+
+/* ───── HISTÓRICO ───── */
+.month-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.month-nav h3 { font-size: 16px; font-weight: 600; text-transform: capitalize; }
+.month-btn {
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 8px; width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--txt); transition: all .15s;
+}
+.month-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+.day-row {
+  background: var(--s1); border: 1px solid var(--brd);
+  border-radius: 10px; padding: 14px;
+  margin-bottom: 8px; cursor: pointer;
+  transition: border-color .15s;
+}
+.day-row:hover { border-color: var(--brd); }
+.day-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.day-label { font-size: 13px; font-weight: 600; }
+.day-total { font-size: 13px; font-weight: 600; color: var(--ok); }
+.day-total.he { color: var(--gold); }
+.day-total.falha { color: var(--err); }
+.day-times {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.time-chip {
+  font-size: 11px; padding: 3px 8px;
+  background: var(--s2); border-radius: 5px;
+  color: var(--muted);
+}
+.time-chip.edited { border: 1px solid rgba(200,145,58,0.3); color: var(--gold); }
+.edited-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; color: var(--gold); margin-top: 6px;
+}
+.atestado-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; color: var(--ok); background: rgba(76,175,110,0.1);
+  border-radius: 4px; padding: 2px 7px; margin-top: 4px;
+}
+
+/* ───── MODAL ───── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200; align-items: flex-end; justify-content: center;
+  padding: 0;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--s1); border: 1px solid var(--brd);
+  border-radius: 18px 18px 0 0;
+  width: 100%; max-width: 500px;
+  padding: 24px 20px 32px;
+  animation: slideUp .25s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.modal-title { font-size: 16px; font-weight: 600; }
+.modal-close {
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 8px; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--muted); font-size: 16px;
+  transition: all .15s;
+}
+.modal-close:hover { color: var(--txt); }
+
+.edit-field { margin-bottom: 14px; }
+.edit-field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+.edit-field input, .edit-field textarea, .edit-field select {
+  width: 100%; padding: 10px 12px;
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 8px; color: var(--txt); font-size: 14px;
+  outline: none; transition: border-color .2s;
+}
+.edit-field input:focus, .edit-field textarea:focus { border-color: var(--gold); }
+.edit-field textarea { resize: vertical; min-height: 70px; }
+
+.btn-row { display: flex; gap: 8px; }
+.btn-secondary {
+  flex: 1; padding: 12px;
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: var(--r); color: var(--txt);
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s;
+}
+.btn-secondary:hover { border-color: var(--muted); }
+.btn-danger {
+  padding: 12px 18px;
+  background: rgba(224,92,92,0.1); border: 1px solid rgba(224,92,92,0.3);
+  border-radius: var(--r); color: var(--err);
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s;
+}
+.btn-danger:hover { background: rgba(224,92,92,0.15); }
+
+/* ───── SIMULAÇÃO ───── */
+.sim-result {
+  background: var(--s2); border-radius: 10px; padding: 16px; margin-top: 14px;
+}
+.sim-line {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; border-bottom: 1px solid var(--brd);
+  font-size: 14px;
+}
+.sim-line:last-child { border-bottom: none; }
+.sim-line .label { color: var(--muted); }
+.sim-line .value { font-weight: 600; }
+.sim-line .value.neg { color: var(--err); }
+.sim-line .value.pos { color: var(--ok); }
+.sim-line .value.gold { color: var(--gold); }
+.sim-total {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 14px; padding: 14px;
+  background: var(--gold-dim); border: 1px solid rgba(200,145,58,0.25);
+  border-radius: 10px;
+}
+.sim-total .label { font-size: 14px; font-weight: 600; }
+.sim-total .value { font-size: 22px; font-weight: 700; color: var(--gold); }
+
+/* ───── HOLERITES ───── */
+.upload-zone {
+  border: 2px dashed var(--brd); border-radius: 12px;
+  padding: 36px 20px; text-align: center;
+  cursor: pointer; transition: all .2s;
+  margin-bottom: 14px;
+}
+.upload-zone:hover, .upload-zone.drag { border-color: var(--gold); }
+.upload-zone p { font-size: 14px; color: var(--muted); margin-top: 8px; }
+.upload-zone strong { color: var(--txt); }
+
+.holerite-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 10px; margin-bottom: 8px;
+}
+.holerite-info { flex: 1; }
+.holerite-name { font-size: 14px; font-weight: 500; }
+.holerite-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.btn-icon {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); padding: 6px; border-radius: 6px;
+  transition: all .15s; font-size: 16px;
+}
+.btn-icon:hover { color: var(--txt); background: var(--s3); }
+
+/* ───── ATESTADOS ───── */
+.atestado-card {
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 10px; padding: 14px; margin-bottom: 8px;
+}
+.atestado-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 6px;
+}
+.atestado-titulo { font-size: 14px; font-weight: 600; }
+.atestado-datas { font-size: 12px; color: var(--muted); }
+.atestado-obs { font-size: 12px; color: var(--dim); margin-top: 4px; }
+.badge-abono {
+  font-size: 11px; padding: 3px 8px;
+  background: rgba(76,175,110,0.1); border: 1px solid rgba(76,175,110,0.25);
+  border-radius: 20px; color: var(--ok);
+}
+
+/* ───── CONFIGURAÇÕES ───── */
+.config-section { margin-bottom: 24px; }
+.config-section-title {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--muted); margin-bottom: 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--brd);
+}
+.config-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--s2);
+}
+.config-row:last-child { border-bottom: none; }
+.config-label { font-size: 14px; }
+.config-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.toggle-wrap { display: flex; align-items: center; gap: 8px; }
+.toggle {
+  position: relative; display: inline-block;
+  width: 40px; height: 22px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: var(--s3); border-radius: 22px; transition: .2s;
+}
+.toggle-slider::before {
+  content: ""; position: absolute;
+  width: 16px; height: 16px; left: 3px; bottom: 3px;
+  background: var(--muted); border-radius: 50%; transition: .2s;
+}
+.toggle input:checked + .toggle-slider { background: rgba(200,145,58,0.3); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(18px); background: var(--gold); }
+
+.inline-input {
+  width: 90px; padding: 7px 10px;
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 7px; color: var(--txt); font-size: 13px;
+  text-align: right; outline: none;
+  transition: border-color .2s;
+}
+.inline-input:focus { border-color: var(--gold); }
+
+/* ───── TOAST ───── */
+#toast {
+  position: fixed; bottom: calc(var(--nav-h) + 16px); left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--s2); border: 1px solid var(--brd);
+  border-radius: 8px; padding: 11px 18px;
+  font-size: 13px; font-weight: 500;
+  opacity: 0; transition: all .25s; pointer-events: none;
+  z-index: 300; white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+#toast.ok { border-color: rgba(76,175,110,0.4); color: var(--ok); }
+#toast.err { border-color: rgba(224,92,92,0.4); color: var(--err); }
+
+/* ───── LOADING ───── */
+#loading {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 999;
+}
+#loading .logo { font-size: 32px; font-weight: 700; color: var(--gold); letter-spacing: -1px; margin-bottom: 24px; }
+.spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--brd);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ───── EMPTY STATE ───── */
+.empty-state {
+  text-align: center; padding: 48px 20px;
+  color: var(--muted);
+}
+.empty-state svg { opacity: 0.3; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; }
+
+/* ───── DESKTOP ───── */
+@media (min-width: 768px) {
+  .sidebar { display: flex; }
+  .bottom-nav { display: none; }
+  #app-screen { padding-left: 220px; }
+  .main {
+    padding: 32px 40px;
+    max-width: none;
+    margin: 0;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  /* ───── AUTH ───── */
-  #auth-screen {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(ellipse at 30% 20%, rgba(108,99,255,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 80%, rgba(59,130,246,0.1) 0%, transparent 60%), var(--bg);
-  }
-  .auth-box {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
-    padding: 40px; width: 100%; max-width: 420px; box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-  }
-  .auth-logo { text-align: center; margin-bottom: 32px; }
-  .auth-logo .icon { width: 64px; height: 64px; background: var(--primary); border-radius: 16px;
-    display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 12px; }
-  .auth-logo h1 { font-size: 22px; font-weight: 700; }
-  .auth-logo p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
-  .auth-tabs { display: flex; background: var(--bg); border-radius: 10px; padding: 4px; margin-bottom: 28px; }
-  .auth-tab { flex: 1; padding: 9px; text-align: center; border-radius: 7px; cursor: pointer;
-    font-size: 14px; font-weight: 500; color: var(--text-muted); transition: all .2s; border: none; background: none; }
-  .auth-tab.active { background: var(--primary); color: #fff; }
-  .form-group { margin-bottom: 16px; }
-  .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
-  .form-control {
-    width: 100%; padding: 11px 14px; background: var(--bg); border: 1px solid var(--border);
-    border-radius: 9px; color: var(--text); font-size: 14px; font-family: inherit;
-    transition: border-color .2s; outline: none;
-  }
-  .form-control:focus { border-color: var(--primary); }
-  .btn { width: 100%; padding: 12px; border: none; border-radius: 9px; font-size: 15px;
-    font-weight: 600; cursor: pointer; transition: all .2s; font-family: inherit; }
-  .btn-primary { background: var(--primary); color: #fff; }
-  .btn-primary:hover { background: var(--primary-light); transform: translateY(-1px); }
-  .btn-primary:active { transform: translateY(0); }
-  .auth-msg { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px; display: none; }
-  .auth-msg.error { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); display: block; }
-  .auth-msg.success { background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3); display: block; }
-
-  /* ───── APP LAYOUT ───── */
-  #app { display: none; min-height: 100vh; }
-  .layout { display: flex; min-height: 100vh; }
-
-  /* ───── SIDEBAR ───── */
-  .sidebar {
-    width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border);
-    display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh;
-    z-index: 100; transition: transform .3s;
-  }
-  .sidebar-header { padding: 20px 16px; border-bottom: 1px solid var(--border); }
-  .sidebar-logo { display: flex; align-items: center; gap: 10px; }
-  .sidebar-logo .icon { width: 36px; height: 36px; background: var(--primary); border-radius: 9px;
-    display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .sidebar-logo span { font-weight: 700; font-size: 15px; }
-  .sidebar-nav { flex: 1; padding: 12px 8px; overflow-y: auto; }
-  .nav-item {
-    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px;
-    cursor: pointer; color: var(--text-muted); font-size: 14px; font-weight: 500;
-    transition: all .15s; margin-bottom: 2px; border: none; background: none; width: 100%; text-align: left;
-  }
-  .nav-item i { width: 18px; text-align: center; font-size: 15px; }
-  .nav-item:hover { background: var(--surface2); color: var(--text); }
-  .nav-item.active { background: var(--primary-dim); color: var(--primary-light); }
-  .nav-section { font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase;
-    letter-spacing: .08em; padding: 12px 12px 6px; }
-  .sidebar-footer { padding: 12px 8px; border-top: 1px solid var(--border); }
-  .user-card { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 9px; }
-  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--primary);
-    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-  .user-info { flex: 1; min-width: 0; }
-  .user-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .user-email { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .btn-logout { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 6px; border-radius: 6px; }
-  .btn-logout:hover { color: var(--danger); background: rgba(239,68,68,.1); }
-
-  /* ───── MAIN CONTENT ───── */
-  .main { flex: 1; margin-left: var(--sidebar-w); min-height: 100vh; }
-  .topbar {
-    position: sticky; top: 0; z-index: 50; background: rgba(15,17,23,0.85); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border); padding: 0 24px; height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .topbar-title { font-size: 17px; font-weight: 700; }
-  .topbar-right { display: flex; align-items: center; gap: 12px; }
-  .live-clock { font-size: 18px; font-weight: 700; color: var(--primary-light); font-variant-numeric: tabular-nums; }
-  .live-date { font-size: 12px; color: var(--text-muted); text-align: right; }
-  .page { padding: 24px; display: none; }
-  .page.active { display: block; }
-
-  /* ───── CARDS ───── */
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .card-title { font-size: 15px; font-weight: 600; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-
-  /* ───── STAT CARDS ───── */
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
-  .stat-card .label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
-  .stat-card .value { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
-  .stat-card .sub { font-size: 12px; color: var(--text-muted); }
-  .stat-card.accent { border-color: var(--primary); background: linear-gradient(135deg, var(--primary-dim), var(--surface)); }
-
-  /* ───── PONTO ───── */
-  .ponto-hero {
-    background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
-    border: 1px solid var(--border); border-radius: 20px; padding: 40px; text-align: center; margin-bottom: 24px;
-    position: relative; overflow: hidden;
-  }
-  .ponto-hero::before {
-    content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px;
-    background: radial-gradient(circle, var(--primary-dim) 0%, transparent 70%); border-radius: 50%;
-  }
-  .ponto-time { font-size: 56px; font-weight: 800; font-variant-numeric: tabular-nums;
-    color: var(--primary-light); line-height: 1; margin-bottom: 8px; }
-  .ponto-date { font-size: 16px; color: var(--text-muted); margin-bottom: 32px; }
-  .ponto-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .ponto-btn {
-    padding: 14px 28px; border: 2px solid; border-radius: 12px; font-size: 15px; font-weight: 700;
-    cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 8px; transition: all .2s;
-  }
-  .ponto-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
-  .ponto-btn:active { transform: translateY(0); }
-  .ponto-btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
-  .ponto-btn.entrada { background: rgba(34,197,94,.15); border-color: var(--success); color: var(--success); }
-  .ponto-btn.saida-almoco { background: rgba(245,158,11,.15); border-color: var(--warning); color: var(--warning); }
-  .ponto-btn.retorno-almoco { background: rgba(59,130,246,.15); border-color: var(--info); color: var(--info); }
-  .ponto-btn.saida { background: rgba(239,68,68,.15); border-color: var(--danger); color: var(--danger); }
-  .status-indicator { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
-  .status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .status-dot.green { background: var(--success); box-shadow: 0 0 8px var(--success); }
-  .status-dot.yellow { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
-  .status-dot.red { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
-  .status-dot.gray { background: var(--text-dim); }
-
-  /* Today's records */
-  .record-list { display: flex; flex-direction: column; gap: 8px; }
-  .record-item {
-    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
-    background: var(--bg); border: 1px solid var(--border); border-radius: 9px;
-  }
-  .record-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center;
-    justify-content: center; font-size: 14px; flex-shrink: 0; }
-  .record-icon.entrada { background: rgba(34,197,94,.15); color: var(--success); }
-  .record-icon.saida_almoco { background: rgba(245,158,11,.15); color: var(--warning); }
-  .record-icon.retorno_almoco { background: rgba(59,130,246,.15); color: var(--info); }
-  .record-icon.saida { background: rgba(239,68,68,.15); color: var(--danger); }
-  .record-type { font-size: 14px; font-weight: 600; flex: 1; }
-  .record-time { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--primary-light); }
-  .record-note { font-size: 12px; color: var(--text-muted); }
-
-  /* ───── HISTÓRICO ───── */
-  .month-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-  .month-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-family: inherit; font-size: 13px; }
-  .month-btn:hover { background: var(--border); }
-  .month-label { font-size: 16px; font-weight: 700; flex: 1; text-align: center; }
-  .day-card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 14px 16px; margin-bottom: 10px;
-  }
-  .day-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .day-name { font-size: 14px; font-weight: 600; }
-  .day-date { font-size: 12px; color: var(--text-muted); }
-  .day-total { font-size: 14px; font-weight: 700; }
-  .day-records { display: flex; gap: 8px; flex-wrap: wrap; }
-  .day-record-chip {
-    display: flex; align-items: center; gap: 6px; padding: 5px 10px;
-    background: var(--bg); border: 1px solid var(--border); border-radius: 20px; font-size: 12px;
-  }
-  .day-record-chip i { font-size: 10px; }
-  .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .badge-success { background: rgba(34,197,94,.15); color: var(--success); }
-  .badge-warning { background: rgba(245,158,11,.15); color: var(--warning); }
-  .badge-danger { background: rgba(239,68,68,.15); color: var(--danger); }
-  .badge-info { background: rgba(59,130,246,.15); color: var(--info); }
-  .badge-purple { background: var(--primary-dim); color: var(--primary-light); }
-
-  /* ───── SIMULAÇÃO ───── */
-  .sim-section { margin-bottom: 24px; }
-  .sim-section-title { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;
-    letter-spacing: .06em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-  .sim-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0;
-    border-bottom: 1px solid var(--border); }
-  .sim-row:last-child { border-bottom: none; }
-  .sim-row .label { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-  .sim-row .value { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .sim-row .value.positive { color: var(--success); }
-  .sim-row .value.negative { color: var(--danger); }
-  .sim-total { background: var(--primary-dim); border: 1px solid var(--primary); border-radius: 10px;
-    padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
-  .sim-total .label { font-size: 15px; font-weight: 700; color: var(--primary-light); }
-  .sim-total .value { font-size: 28px; font-weight: 800; color: var(--primary-light); }
-  .slider-group { margin-bottom: 12px; }
-  .slider-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
-  .slider-label span { color: var(--text); font-weight: 600; }
-  input[type="range"] { width: 100%; accent-color: var(--primary); height: 6px; border-radius: 3px; }
-
-  /* ───── HOLERITES ───── */
-  .upload-zone {
-    border: 2px dashed var(--border); border-radius: 12px; padding: 40px; text-align: center;
-    cursor: pointer; transition: all .2s;
-  }
-  .upload-zone:hover, .upload-zone.drag { border-color: var(--primary); background: var(--primary-dim); }
-  .upload-zone i { font-size: 36px; color: var(--text-dim); margin-bottom: 12px; }
-  .upload-zone p { color: var(--text-muted); font-size: 14px; }
-  .upload-zone .hint { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
-  .holerite-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 16px; display: flex; align-items: center; gap: 14px; }
-  .holerite-icon { width: 44px; height: 44px; background: rgba(239,68,68,.15); border-radius: 10px;
-    display: flex; align-items: center; justify-content: center; font-size: 20px; color: #f87171; flex-shrink: 0; }
-  .holerite-info { flex: 1; min-width: 0; }
-  .holerite-name { font-size: 14px; font-weight: 600; }
-  .holerite-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .holerite-actions { display: flex; gap: 6px; }
-  .icon-btn { background: none; border: 1px solid var(--border); border-radius: 7px; padding: 6px 10px;
-    color: var(--text-muted); cursor: pointer; font-size: 13px; transition: all .15s; }
-  .icon-btn:hover { background: var(--surface2); color: var(--text); }
-  .icon-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: rgba(239,68,68,.1); }
-
-  /* ───── CONFIG ───── */
-  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .settings-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-  .settings-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-  .settings-section h3 i { color: var(--primary); }
-  .input-group { margin-bottom: 14px; }
-  .input-group label { display: block; font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 5px; }
-  .input-group input, .input-group select { width: 100%; padding: 9px 12px; background: var(--bg);
-    border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; font-family: inherit;
-    outline: none; transition: border-color .2s; }
-  .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
-  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
-  .toggle-row:last-child { border-bottom: none; }
-  .toggle-row .info { flex: 1; }
-  .toggle-row .info span { display: block; font-size: 13px; font-weight: 500; }
-  .toggle-row .info small { color: var(--text-muted); font-size: 11px; }
-  .toggle-row .amount { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0 12px; }
-  .toggle { position: relative; display: inline-block; width: 40px; height: 22px; }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: var(--border); border-radius: 22px; transition: .2s; }
-  .toggle-slider:before { content: ''; position: absolute; height: 16px; width: 16px; left: 3px; bottom: 3px;
-    background: #fff; border-radius: 50%; transition: .2s; }
-  .toggle input:checked + .toggle-slider { background: var(--primary); }
-  .toggle input:checked + .toggle-slider:before { transform: translateX(18px); }
-
-  /* Discount extras */
-  .discount-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg);
-    border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; }
-  .discount-item .name { flex: 1; font-size: 13px; font-weight: 500; }
-  .discount-item .tipo { font-size: 11px; color: var(--text-muted); margin-right: 4px; }
-  .discount-item .valor { font-size: 13px; font-weight: 600; color: var(--danger); }
-
-  /* ───── MODAL ───── */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-    z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; display: none;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-    padding: 28px; width: 100%; max-width: 480px; }
-  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .modal-title { font-size: 16px; font-weight: 700; }
-  .modal-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; padding: 4px; }
-  .modal-close:hover { color: var(--text); }
-  .modal-footer { display: flex; gap: 10px; margin-top: 20px; }
-  .modal-footer .btn { flex: 1; padding: 10px; font-size: 14px; }
-  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-  .btn-secondary:hover { background: var(--border); }
-  .btn-danger { background: rgba(239,68,68,.2); color: var(--danger); border: 1px solid rgba(239,68,68,.3); }
-  .btn-danger:hover { background: rgba(239,68,68,.35); }
-
-  /* ───── TOASTS ───── */
-  #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-  .toast { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px;
-    font-size: 13px; font-weight: 500; max-width: 300px; display: flex; align-items: center; gap: 10px;
-    animation: slideIn .25s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-  .toast i { font-size: 15px; }
-  .toast.success { border-color: rgba(34,197,94,.4); }
-  .toast.success i { color: var(--success); }
-  .toast.error { border-color: rgba(239,68,68,.4); }
-  .toast.error i { color: var(--danger); }
-  .toast.info { border-color: rgba(59,130,246,.4); }
-  .toast.info i { color: var(--info); }
-  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-  /* ───── LOADING ───── */
-  .loader { display: flex; align-items: center; justify-content: center; padding: 40px; }
-  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--primary);
-    border-radius: 50%; animation: spin .7s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
-  .empty-state i { font-size: 40px; margin-bottom: 12px; opacity: .4; display: block; }
-  .empty-state p { font-size: 14px; }
-
-  /* ───── PROGRESS BAR ───── */
-  .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 6px; }
-  .progress-bar .fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width .3s; }
-  .progress-bar .fill.warning { background: var(--warning); }
-  .progress-bar .fill.success { background: var(--success); }
-
-  /* ───── RESPONSIVE ───── */
-  @media (max-width: 768px) {
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); }
-    .main { margin-left: 0; }
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    .settings-grid { grid-template-columns: 1fr; }
-    .ponto-time { font-size: 40px; }
-    .hamburger { display: flex; }
-  }
-  .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 20px;
-    cursor: pointer; padding: 4px 8px; }
-  .overlay-mask { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 99; }
-  .overlay-mask.open { display: block; }
-  .mb-4 { margin-bottom: 16px; }
-  .mb-6 { margin-bottom: 24px; }
-  .mt-4 { margin-top: 16px; }
-  .flex { display: flex; }
-  .items-center { align-items: center; }
-  .gap-2 { gap: 8px; }
-  .gap-3 { gap: 12px; }
-  .justify-between { justify-content: space-between; }
-  .text-muted { color: var(--text-muted); font-size: 13px; }
-  .font-bold { font-weight: 700; }
-  .w-full { width: 100%; }
-
-  /* Loading overlay */
-  #page-loader { position: fixed; inset: 0; background: var(--bg); z-index: 9999;
-    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
-  #page-loader .spinner { width: 40px; height: 40px; border-width: 4px; }
-  #page-loader p { color: var(--text-muted); font-size: 14px; }
+  .modal-overlay { align-items: center; }
+  .modal { border-radius: 16px; }
+  #toast { bottom: 24px; }
+}
 </style>
 </head>
 <body>
 
-<!-- Loading -->
-<div id="page-loader">
+<!-- LOADING -->
+<div id="loading">
+  <div class="logo">Pontual</div>
   <div class="spinner"></div>
-  <p>Carregando...</p>
 </div>
 
+<!-- TOAST -->
+<div id="toast"></div>
 
-<!-- Auth -->
+<!-- AUTH -->
 <div id="auth-screen" style="display:none">
-  <div class="auth-box">
-    <div class="auth-logo">
-      <div class="icon">⏰</div>
-      <h1>Ponto Inteligente</h1>
-      <p>Controle de jornada e salário</p>
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div class="logo-mark">P</div>
+      <h1>Pontual</h1>
+      <p>Premium. Simples. No horário.</p>
     </div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchTab('login')">Entrar</button>
-      <button class="auth-tab" onclick="switchTab('register')">Criar conta</button>
-    </div>
-    <!-- Login -->
-    <div id="tab-login">
-      <div class="form-group">
-        <label>E-mail</label>
-        <input class="form-control" id="login-email" type="email" placeholder="seu@email.com">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Entrar</button>
+        <button class="auth-tab" onclick="switchTab('register')">Criar conta</button>
       </div>
-      <div class="form-group">
-        <label>Senha</label>
-        <input class="form-control" id="login-password" type="password" placeholder="••••••••">
+
+      <!-- LOGIN -->
+      <div id="tab-login">
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="login-email" placeholder="seu@email.com">
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input type="password" id="login-pass" placeholder="••••••••">
+        </div>
+        <button class="btn-primary" id="btn-login" onclick="doLogin()">Entrar</button>
+        <div class="auth-link">
+          <a onclick="showForgot()">Esqueci minha senha</a>
+        </div>
       </div>
-      <button class="btn btn-primary" onclick="doLogin()">Entrar</button>
-      <div style="text-align:right;margin-top:8px">
-        <button onclick="switchTab('forgot')" style="background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;text-decoration:underline;font-family:inherit">Esqueci minha senha</button>
+
+      <!-- REGISTER -->
+      <div id="tab-register" style="display:none">
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" id="reg-nome" placeholder="João Silva">
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="reg-email" placeholder="seu@email.com">
+        </div>
+        <div class="field">
+          <label>Senha (mín. 6 caracteres)</label>
+          <input type="password" id="reg-pass" placeholder="••••••••">
+        </div>
+        <button class="btn-primary" id="btn-register" onclick="doRegister()">Criar conta</button>
       </div>
-      <div id="login-msg" class="auth-msg"></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:16px 0">
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-        <span style="font-size:12px;color:var(--text-dim)">ou</span>
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-      </div>
-      <button class="btn" onclick="doAppleLogin()" style="background:#fff;color:#000;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;border:none">
-        <svg width="18" height="18" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 537.8 28.3 420.3 28.3 307.4c0-176.3 115.5-269.7 230.9-269.7 61.3 0 112.4 40.5 150.4 40.5 36.4 0 93.7-42.9 163.8-42.9 26.4 0 108.2 2.6 168.6 80.6zm-87.4-183.3c28.4-34.6 48.8-82.9 48.8-131.2 0-6.7-.6-13.4-1.9-19.5-46.2 1.9-101.6 31.1-135.6 71.8-26 29.9-50.1 77.5-50.1 126.5 0 7.4 1.3 14.8 1.9 17.1 3.2.6 8.4 1.3 13.6 1.3 41.5 0 93.1-27.7 123.3-66z"/></svg>
-        Continuar com Apple
-      </button>
-    </div>
-    <!-- Register -->
-    <div id="tab-register" style="display:none">
-      <div class="form-group">
-        <label>Nome completo</label>
-        <input class="form-control" id="reg-nome" type="text" placeholder="João Silva">
-      </div>
-      <div class="form-group">
-        <label>E-mail</label>
-        <input class="form-control" id="reg-email" type="email" placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label>Senha (mín. 6 caracteres)</label>
-        <input class="form-control" id="reg-password" type="password" placeholder="••••••••">
-      </div>
-      <button class="btn btn-primary" onclick="doRegister()">Criar conta</button>
-      <div id="reg-msg" class="auth-msg"></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:16px 0">
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-        <span style="font-size:12px;color:var(--text-dim)">ou</span>
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-      </div>
-      <button class="btn" onclick="doAppleLogin()" style="background:#fff;color:#000;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;border:none">
-        <svg width="18" height="18" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 537.8 28.3 420.3 28.3 307.4c0-176.3 115.5-269.7 230.9-269.7 61.3 0 112.4 40.5 150.4 40.5 36.4 0 93.7-42.9 163.8-42.9 26.4 0 108.2 2.6 168.6 80.6zm-87.4-183.3c28.4-34.6 48.8-82.9 48.8-131.2 0-6.7-.6-13.4-1.9-19.5-46.2 1.9-101.6 31.1-135.6 71.8-26 29.9-50.1 77.5-50.1 126.5 0 7.4 1.3 14.8 1.9 17.1 3.2.6 8.4 1.3 13.6 1.3 41.5 0 93.1-27.7 123.3-66z"/></svg>
-        Criar conta com Apple
-      </button>
-    </div>
-    <!-- Esqueci senha -->
-    <div id="tab-forgot" style="display:none">
-      <div style="text-align:center;margin-bottom:20px">
-        <div style="font-size:32px;margin-bottom:8px">🔑</div>
-        <p style="font-size:14px;color:var(--text-muted)">Digite seu e-mail e vamos enviar um link para redefinir sua senha.</p>
-      </div>
-      <div class="form-group">
-        <label>E-mail</label>
-        <input class="form-control" id="forgot-email" type="email" placeholder="seu@email.com">
-      </div>
-      <button class="btn btn-primary" onclick="doForgotPassword()">Enviar link de recuperação</button>
-      <div id="forgot-msg" class="auth-msg"></div>
-      <div style="text-align:center;margin-top:14px">
-        <button onclick="switchTab('login')" style="background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;font-family:inherit">← Voltar para o login</button>
+
+      <!-- FORGOT -->
+      <div id="tab-forgot" style="display:none">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Informe seu e-mail e enviaremos um link para redefinir sua senha.</p>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="forgot-email" placeholder="seu@email.com">
+        </div>
+        <button class="btn-primary" onclick="doForgot()">Enviar link</button>
+        <div class="auth-link">
+          <a onclick="switchTab('login')">← Voltar ao login</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- App -->
-<div id="app">
-  <div class="overlay-mask" id="mask" onclick="closeSidebar()"></div>
-  <div class="layout">
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-logo">
-          <div class="icon">⏰</div>
-          <span>Ponto Inteligente</span>
+<!-- APP -->
+<div id="app-screen">
+
+  <!-- SIDEBAR (desktop) -->
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <h2>Pontual</h2>
+      <p>Relógio de ponto</p>
+    </div>
+    <div class="sidebar-nav">
+      <button class="nav-item active" onclick="goTo('inicio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Início
+      </button>
+      <button class="nav-item" onclick="goTo('historico')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Histórico
+      </button>
+      <button class="nav-item" onclick="goTo('simular')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Simular
+      </button>
+      <button class="nav-item" onclick="goTo('holerites')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Holerites
+      </button>
+      <button class="nav-item" onclick="goTo('atestados')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Atestados
+      </button>
+      <button class="nav-item" onclick="goTo('config')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Config
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="sidebar-user-email"></div>
+      <button class="btn-logout" onclick="doLogout()">Sair da conta</button>
+    </div>
+  </nav>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="bottom-nav">
+    <button class="bnav-item active" id="bnav-inicio" onclick="goTo('inicio')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Início
+    </button>
+    <button class="bnav-item" id="bnav-historico" onclick="goTo('historico')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Histórico
+    </button>
+    <button class="bnav-item" id="bnav-simular" onclick="goTo('simular')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Simular
+    </button>
+    <button class="bnav-item" id="bnav-holerites" onclick="goTo('holerites')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Holerites
+    </button>
+    <button class="bnav-item" id="bnav-config" onclick="goTo('config')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Config
+    </button>
+  </nav>
+
+  <div class="main">
+
+    <!-- ── INÍCIO ── -->
+    <div class="section active" id="sec-inicio">
+      <div class="card">
+        <div class="clock-display">
+          <div class="clock-time" id="clock-now">00:00:00</div>
+          <div class="clock-date" id="clock-date"></div>
         </div>
-      </div>
-      <nav class="sidebar-nav">
-        <div class="nav-section">Principal</div>
-        <button class="nav-item active" onclick="navigate('dashboard')">
-          <i class="fas fa-chart-pie"></i> Dashboard
+        <div class="status-bar" id="stages-bar"></div>
+        <button class="btn-ponto" id="btn-bater-ponto" onclick="baterPonto()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="btn-ponto-label">Bater Ponto</span>
         </button>
-        <button class="nav-item" onclick="navigate('ponto')">
-          <i class="fas fa-fingerprint"></i> Bater Ponto
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Horas hoje</div>
+          <div class="stat-value" id="stat-hoje">--:--</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Horas no mês</div>
+          <div class="stat-value" id="stat-mes">0h 00m</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">HE 75% (mês)</div>
+          <div class="stat-value gold" id="stat-he75">0h 00m</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">HE 100% (mês)</div>
+          <div class="stat-value gold" id="stat-he100">0h 00m</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HISTÓRICO ── -->
+    <div class="section" id="sec-historico">
+      <div class="page-header">
+        <h2>Histórico</h2>
+        <p>Registros de ponto mensais</p>
+      </div>
+      <div class="month-nav">
+        <button class="month-btn" onclick="changeMonth(-1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <button class="nav-item" onclick="navigate('historico')">
-          <i class="fas fa-calendar-alt"></i> Histórico
+        <h3 id="hist-month-label"></h3>
+        <button class="month-btn" onclick="changeMonth(1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
-        <div class="nav-section">Financeiro</div>
-        <button class="nav-item" onclick="navigate('simulacao')">
-          <i class="fas fa-calculator"></i> Simulação
-        </button>
-        <button class="nav-item" onclick="navigate('holerites')">
-          <i class="fas fa-file-invoice-dollar"></i> Holerites
-        </button>
-        <div class="nav-section">Sistema</div>
-        <button class="nav-item" onclick="navigate('configuracoes')">
-          <i class="fas fa-cog"></i> Configurações
-        </button>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="user-card">
-          <div class="user-avatar" id="user-avatar">U</div>
-          <div class="user-info">
-            <div class="user-name" id="user-name">Usuário</div>
-            <div class="user-email" id="user-email">email</div>
-          </div>
-          <button class="btn-logout" onclick="doLogout()" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
-        </div>
       </div>
-    </aside>
+      <div id="hist-list"></div>
+    </div>
 
-    <!-- Main -->
-    <main class="main">
-      <div class="topbar">
-        <div class="flex items-center gap-3">
-          <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-          <span class="topbar-title" id="page-title">Dashboard</span>
-        </div>
-        <div class="topbar-right">
-          <div>
-            <div class="live-clock" id="topbar-clock">00:00:00</div>
-            <div class="live-date" id="topbar-date"></div>
-          </div>
-        </div>
+    <!-- ── SIMULAR ── -->
+    <div class="section" id="sec-simular">
+      <div class="page-header">
+        <h2>Simulação Salarial</h2>
+        <p>Calcule seu salário líquido estimado</p>
       </div>
+      <div class="card">
+        <div class="card-title">Parâmetros</div>
+        <div class="field"><label>Salário base (R$)</label><input type="number" id="sim-salario" placeholder="3000.00" step="0.01"></div>
+        <div class="field"><label>Horas trabalhadas no mês</label><input type="number" id="sim-horas" placeholder="220" step="0.5"></div>
+        <div class="field"><label>Carga horária mensal contratada</label><input type="number" id="sim-carga" placeholder="220" step="1"></div>
+        <div class="field"><label>HE 75% — horas extras comuns (h)</label><input type="number" id="sim-he75" placeholder="0" step="0.5"></div>
+        <div class="field"><label>HE 100% — fins de semana/feriados (h)</label><input type="number" id="sim-he100" placeholder="0" step="0.5"></div>
+        <button class="btn-primary" onclick="calcSimulacao()">Calcular</button>
+      </div>
+      <div id="sim-resultado"></div>
+    </div>
 
-      <!-- ═══ DASHBOARD ═══ -->
-      <div class="page active" id="page-dashboard">
-        <div class="grid-4 mb-6" id="dash-stats">
-          <div class="stat-card accent">
-            <div class="label">Salário Líquido Estimado</div>
-            <div class="value" id="dash-liquido">R$ 0,00</div>
-            <div class="sub">mês atual</div>
+    <!-- ── HOLERITES ── -->
+    <div class="section" id="sec-holerites">
+      <div class="page-header">
+        <h2>Holerites</h2>
+        <p>Arquivo de contracheques</p>
+      </div>
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('hol-file').click()"
+           ondragover="event.preventDefault();this.classList.add('drag')"
+           ondragleave="this.classList.remove('drag')"
+           ondrop="handleDrop(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36" style="color:var(--gold)"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p><strong>Clique ou arraste</strong> o arquivo PDF/imagem</p>
+        <p style="font-size:12px;margin-top:4px">Selecione mês e ano antes de enviar</p>
+      </div>
+      <input type="file" id="hol-file" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="uploadHolerite(this)">
+      <div class="card" style="margin-bottom:14px">
+        <div style="display:flex;gap:8px">
+          <div class="field" style="flex:1;margin-bottom:0">
+            <label>Mês</label>
+            <select id="hol-mes" class="inline-input" style="width:100%;text-align:left">
+              <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
+              <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
+              <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
+              <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+            </select>
           </div>
-          <div class="stat-card">
-            <div class="label">Horas Trabalhadas</div>
-            <div class="value" id="dash-horas">0h 00m</div>
-            <div class="sub" id="dash-horas-sub">este mês</div>
-          </div>
-          <div class="stat-card">
-            <div class="label">Horas Extras</div>
-            <div class="value" id="dash-he" style="color:var(--warning)">0h 00m</div>
-            <div class="sub">HE 50% + HE 100%</div>
-          </div>
-          <div class="stat-card">
-            <div class="label">Dias Trabalhados</div>
-            <div class="value" id="dash-dias">0</div>
-            <div class="sub" id="dash-dias-sub">de 0 dias úteis</div>
-          </div>
-        </div>
-
-        <div class="grid-2 mb-6">
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title"><i class="fas fa-clock" style="color:var(--primary)"></i> Jornada hoje</span>
-              <span id="dash-status-hoje" class="badge badge-purple">—</span>
-            </div>
-            <div id="dash-hoje-records">
-              <div class="empty-state"><i class="fas fa-moon"></i><p>Nenhum registro hoje</p></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title"><i class="fas fa-chart-bar" style="color:var(--primary)"></i> Progresso do mês</span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:14px">
-              <div>
-                <div class="flex justify-between text-muted mb-4"><span>Horas trabalhadas</span><span id="prog-horas">0h / 0h</span></div>
-                <div class="progress-bar"><div class="fill" id="prog-horas-bar" style="width:0%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between text-muted mb-4"><span>Dias trabalhados</span><span id="prog-dias">0 / 0</span></div>
-                <div class="progress-bar"><div class="fill success" id="prog-dias-bar" style="width:0%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between text-muted mb-4"><span>Meta HE</span><span id="prog-he">0h / 0h</span></div>
-                <div class="progress-bar"><div class="fill warning" id="prog-he-bar" style="width:0%"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title"><i class="fas fa-receipt" style="color:var(--primary)"></i> Resumo financeiro do mês</span>
-          </div>
-          <div id="dash-financeiro">
-            <div class="loader"><div class="spinner"></div></div>
+          <div class="field" style="flex:1;margin-bottom:0">
+            <label>Ano</label>
+            <input type="number" id="hol-ano" class="inline-input" style="width:100%" value="2025">
           </div>
         </div>
       </div>
+      <div id="hol-list"></div>
+    </div>
 
-      <!-- ═══ PONTO ═══ -->
-      <div class="page" id="page-ponto">
-        <div class="ponto-hero">
-          <div class="ponto-time" id="ponto-clock">00:00:00</div>
-          <div class="ponto-date" id="ponto-date"></div>
-          <div class="status-indicator" id="ponto-status" style="justify-content:center">
-            <div class="status-dot gray"></div>
-            <span>Nenhum registro hoje</span>
-          </div>
-          <div class="ponto-buttons">
-            <button class="ponto-btn entrada" id="btn-entrada" onclick="registrarPonto('entrada')">
-              <i class="fas fa-sign-in-alt"></i> Entrada
-            </button>
-            <button class="ponto-btn saida-almoco" id="btn-saida-almoco" onclick="registrarPonto('saida_almoco')" disabled>
-              <i class="fas fa-utensils"></i> Saída Almoço
-            </button>
-            <button class="ponto-btn retorno-almoco" id="btn-retorno-almoco" onclick="registrarPonto('retorno_almoco')" disabled>
-              <i class="fas fa-undo"></i> Retorno Almoço
-            </button>
-            <button class="ponto-btn saida" id="btn-saida" onclick="registrarPonto('saida')" disabled>
-              <i class="fas fa-sign-out-alt"></i> Saída
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Registros de hoje</span>
-            <span class="text-muted" id="ponto-today-date"></span>
-          </div>
-          <div id="today-records">
-            <div class="empty-state"><i class="fas fa-fingerprint"></i><p>Nenhum registro hoje</p></div>
-          </div>
-        </div>
-        <!-- observação opcional -->
-        <div class="card mt-4">
-          <div class="card-header">
-            <span class="card-title">Observação (opcional)</span>
-          </div>
-          <div class="input-group">
-            <input class="form-control" id="ponto-obs" type="text" placeholder="Ex: chegou atrasado por causa do trânsito...">
-          </div>
-        </div>
+    <!-- ── ATESTADOS ── -->
+    <div class="section" id="sec-atestados">
+      <div class="page-header">
+        <h2>Atestados Médicos</h2>
+        <p>Abono de dias e horas</p>
       </div>
+      <button class="btn-primary" style="margin-bottom:16px" onclick="openAtestadoModal()">+ Novo atestado</button>
+      <div id="atestado-list"></div>
+    </div>
 
-      <!-- ═══ HISTÓRICO ═══ -->
-      <div class="page" id="page-historico">
-        <div class="month-nav">
-          <button class="month-btn" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
-          <span class="month-label" id="hist-month-label"></span>
-          <button class="month-btn" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
-        </div>
-
-        <div class="grid-4 mb-6">
-          <div class="stat-card"><div class="label">Horas Normais</div><div class="value" id="hist-hn">0h</div></div>
-          <div class="stat-card"><div class="label">HE 50%</div><div class="value" style="color:var(--warning)" id="hist-he50">0h</div></div>
-          <div class="stat-card"><div class="label">HE 100%</div><div class="value" style="color:var(--danger)" id="hist-he100">0h</div></div>
-          <div class="stat-card"><div class="label">Dias</div><div class="value" id="hist-dias">0</div></div>
-        </div>
-
-        <div id="hist-list">
-          <div class="loader"><div class="spinner"></div></div>
-        </div>
+    <!-- ── CONFIG ── -->
+    <div class="section" id="sec-config">
+      <div class="page-header">
+        <h2>Configurações</h2>
+        <p>Perfil e parâmetros de cálculo</p>
       </div>
-
-      <!-- ═══ SIMULAÇÃO ═══ -->
-      <div class="page" id="page-simulacao">
-        <div class="grid-2">
-          <!-- Parâmetros -->
-          <div>
-            <div class="card mb-4">
-              <div class="card-header">
-                <span class="card-title"><i class="fas fa-sliders-h" style="color:var(--primary)"></i> Parâmetros</span>
-              </div>
-              <div class="slider-group">
-                <div class="slider-label">Horas Extras 50% <span id="sim-he50-val">0h</span></div>
-                <input type="range" id="sim-he50" min="0" max="80" value="0" oninput="calcSimulacao()">
-              </div>
-              <div class="slider-group">
-                <div class="slider-label">Horas Extras 100% <span id="sim-he100-val">0h</span></div>
-                <input type="range" id="sim-he100" min="0" max="40" value="0" oninput="calcSimulacao()">
-              </div>
-              <div class="slider-group">
-                <div class="slider-label">Dias Trabalhados <span id="sim-dias-val">22</span></div>
-                <input type="range" id="sim-dias" min="0" max="31" value="22" oninput="calcSimulacao()">
-              </div>
-              <div class="input-group mt-4">
-                <label>Salário Base (substituir temporariamente)</label>
-                <input type="number" id="sim-salario-override" class="form-control" placeholder="Deixe vazio p/ usar o salário salvo" oninput="calcSimulacao()">
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <span class="card-title"><i class="fas fa-tags" style="color:var(--danger)"></i> Descontos ativos</span>
-              </div>
-              <div id="sim-descontos-lista"></div>
+      <div class="card">
+        <div class="config-section">
+          <div class="config-section-title">Perfil</div>
+          <div class="field"><label>Nome completo</label><input type="text" id="cfg-nome" class="field input" oninput="cfgDirty=true"></div>
+          <div class="field"><label>Salário base (R$)</label><input type="number" id="cfg-salario" step="0.01" oninput="cfgDirty=true"></div>
+        </div>
+        <div class="config-section">
+          <div class="config-section-title">Jornada</div>
+          <div class="config-row">
+            <div><div class="config-label">Carga diária (horas)</div></div>
+            <input type="number" id="cfg-carga-dia" class="inline-input" step="0.5" oninput="cfgDirty=true">
+          </div>
+          <div class="config-row">
+            <div><div class="config-label">Carga mensal (horas)</div></div>
+            <input type="number" id="cfg-carga-mes" class="inline-input" oninput="cfgDirty=true">
+          </div>
+          <div class="config-row">
+            <div><div class="config-label">HE adicional (%)</div><div class="config-sub">Padrão 75% (CLT mín. 50%)</div></div>
+            <input type="number" id="cfg-he50" class="inline-input" step="1" oninput="cfgDirty=true">
+          </div>
+          <div class="config-row">
+            <div><div class="config-label">HE feriados/fins semana (%)</div></div>
+            <input type="number" id="cfg-he100" class="inline-input" step="1" oninput="cfgDirty=true">
+          </div>
+        </div>
+        <div class="config-section">
+          <div class="config-section-title">Horário padrão</div>
+          <div class="config-row">
+            <div class="config-label">Entrada</div>
+            <input type="time" id="cfg-entrada" class="inline-input" oninput="cfgDirty=true">
+          </div>
+          <div class="config-row">
+            <div class="config-label">Saída</div>
+            <input type="time" id="cfg-saida" class="inline-input" oninput="cfgDirty=true">
+          </div>
+          <div class="config-row">
+            <div class="config-label">Intervalo (min)</div>
+            <input type="number" id="cfg-intervalo" class="inline-input" oninput="cfgDirty=true">
+          </div>
+        </div>
+        <div class="config-section">
+          <div class="config-section-title">Descontos padrão</div>
+          <div class="config-row">
+            <div><div class="config-label">INSS</div><div class="config-sub">Tabela 2024 progressiva</div></div>
+            <label class="toggle"><input type="checkbox" id="cfg-inss" onchange="cfgDirty=true"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="config-row">
+            <div><div class="config-label">IRRF</div><div class="config-sub">Tabela 2024</div></div>
+            <label class="toggle"><input type="checkbox" id="cfg-irrf" onchange="cfgDirty=true"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="config-row">
+            <div class="config-label">Vale transporte (R$)</div>
+            <div class="toggle-wrap">
+              <input type="number" id="cfg-vt" class="inline-input" step="0.01" oninput="cfgDirty=true">
+              <label class="toggle"><input type="checkbox" id="cfg-vt-ativo" onchange="cfgDirty=true"><span class="toggle-slider"></span></label>
             </div>
           </div>
-          <!-- Resultado -->
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title"><i class="fas fa-receipt" style="color:var(--primary)"></i> Resultado</span>
+          <div class="config-row">
+            <div class="config-label">Vale refeição (R$)</div>
+            <div class="toggle-wrap">
+              <input type="number" id="cfg-vr" class="inline-input" step="0.01" oninput="cfgDirty=true">
+              <label class="toggle"><input type="checkbox" id="cfg-vr-ativo" onchange="cfgDirty=true"><span class="toggle-slider"></span></label>
             </div>
-            <div class="sim-section">
-              <div class="sim-section-title"><i class="fas fa-plus-circle" style="color:var(--success)"></i> Proventos</div>
-              <div class="sim-row"><div class="label">Salário base</div><div class="value positive" id="res-salario">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">HE 50% (<span id="res-he50-h">0h</span>)</div><div class="value positive" id="res-he50">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">HE 100% (<span id="res-he100-h">0h</span>)</div><div class="value positive" id="res-he100">R$ 0,00</div></div>
-              <div class="sim-row" style="font-weight:700"><div class="label">Salário Bruto</div><div class="value" id="res-bruto">R$ 0,00</div></div>
-            </div>
-            <div class="sim-section">
-              <div class="sim-section-title"><i class="fas fa-minus-circle" style="color:var(--danger)"></i> Descontos</div>
-              <div class="sim-row"><div class="label">INSS</div><div class="value negative" id="res-inss">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">IRRF</div><div class="value negative" id="res-irrf">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">Vale Transporte</div><div class="value negative" id="res-vt">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">Vale Refeição</div><div class="value negative" id="res-vr">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">Plano de Saúde</div><div class="value negative" id="res-ps">R$ 0,00</div></div>
-              <div id="res-extras-list"></div>
-              <div class="sim-row" style="font-weight:700"><div class="label">Total Descontos</div><div class="value negative" id="res-total-desc">R$ 0,00</div></div>
-            </div>
-            <div class="sim-total">
-              <div class="label"><i class="fas fa-hand-holding-usd"></i> Salário Líquido</div>
-              <div class="value" id="res-liquido">R$ 0,00</div>
-            </div>
-            <div style="margin-top:12px;font-size:11px;color:var(--text-dim);text-align:center">
-              * Cálculo baseado na tabela INSS/IRRF 2024. Valores podem variar.
+          </div>
+          <div class="config-row">
+            <div class="config-label">Plano de saúde (R$)</div>
+            <div class="toggle-wrap">
+              <input type="number" id="cfg-ps" class="inline-input" step="0.01" oninput="cfgDirty=true">
+              <label class="toggle"><input type="checkbox" id="cfg-ps-ativo" onchange="cfgDirty=true"><span class="toggle-slider"></span></label>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- ═══ HOLERITES ═══ -->
-      <div class="page" id="page-holerites">
-        <div class="grid-2">
-          <div>
-            <div class="card mb-4">
-              <div class="card-header">
-                <span class="card-title"><i class="fas fa-upload" style="color:var(--primary)"></i> Enviar Holerite</span>
-              </div>
-              <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
-                   ondragover="event.preventDefault();this.classList.add('drag')"
-                   ondragleave="this.classList.remove('drag')"
-                   ondrop="handleFileDrop(event)">
-                <i class="fas fa-file-pdf"></i>
-                <p>Clique ou arraste o PDF do holerite aqui</p>
-                <p class="hint">Formatos aceitos: PDF, JPG, PNG · Máx 10 MB</p>
-              </div>
-              <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="handleFileSelect(event)">
-              <div id="upload-preview" style="display:none;margin-top:14px">
-                <div class="holerite-card">
-                  <div class="holerite-icon"><i class="fas fa-file-pdf"></i></div>
-                  <div class="holerite-info">
-                    <div class="holerite-name" id="upload-file-name">arquivo.pdf</div>
-                    <div class="holerite-meta" id="upload-file-size">0 KB</div>
-                  </div>
-                  <button class="icon-btn danger" onclick="clearFileUpload()"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="input-group mt-4">
-                <label>Mês/Ano</label>
-                <div class="flex gap-2">
-                  <select id="hol-mes" class="form-control">
-                    <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
-                    <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
-                    <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
-                    <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
-                  </select>
-                  <input type="number" id="hol-ano" class="form-control" placeholder="2024" style="width:100px">
-                </div>
-              </div>
-              <div class="grid-2">
-                <div class="input-group">
-                  <label>Salário Bruto (R$)</label>
-                  <input type="number" id="hol-bruto" class="form-control" placeholder="0,00">
-                </div>
-                <div class="input-group">
-                  <label>Salário Líquido (R$)</label>
-                  <input type="number" id="hol-liquido" class="form-control" placeholder="0,00">
-                </div>
-              </div>
-              <div class="input-group">
-                <label>Observações</label>
-                <input type="text" id="hol-obs" class="form-control" placeholder="Ex: 13º salário, bônus...">
-              </div>
-              <button class="btn btn-primary mt-4" onclick="uploadHolerite()">
-                <i class="fas fa-cloud-upload-alt"></i> Salvar Holerite
-              </button>
-            </div>
-          </div>
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <span class="card-title"><i class="fas fa-archive" style="color:var(--primary)"></i> Holerites salvos</span>
-              </div>
-              <div id="holerites-list">
-                <div class="loader"><div class="spinner"></div></div>
-              </div>
-            </div>
-          </div>
+        <div class="config-section">
+          <div class="config-section-title">Descontos extras</div>
+          <div id="extras-list"></div>
+          <button class="btn-secondary" style="margin-top:8px;width:100%" onclick="addExtraDesconto()">+ Adicionar desconto extra</button>
         </div>
+        <button class="btn-primary" id="btn-salvar-cfg" onclick="salvarConfig()">Salvar configurações</button>
+        <button class="btn-secondary" style="margin-top:8px;width:100%;color:var(--err);border-color:rgba(224,92,92,0.3)" onclick="doLogout()">Sair da conta</button>
       </div>
+    </div>
 
-      <!-- ═══ CONFIGURAÇÕES ═══ -->
-      <div class="page" id="page-configuracoes">
-        <div class="settings-grid">
-          <!-- Dados pessoais e salário -->
-          <div class="settings-section">
-            <h3><i class="fas fa-user"></i> Meu Perfil</h3>
-            <div class="input-group">
-              <label>Nome completo</label>
-              <input type="text" id="cfg-nome" class="form-control" placeholder="Seu nome">
-            </div>
-            <div class="input-group">
-              <label>Salário base bruto (R$)</label>
-              <input type="number" id="cfg-salario" class="form-control" placeholder="0,00" step="0.01">
-            </div>
-            <div class="input-group">
-              <label>Carga horária diária (h)</label>
-              <input type="number" id="cfg-ch-diaria" class="form-control" placeholder="8" step="0.5">
-            </div>
-            <div class="input-group">
-              <label>Carga horária mensal (h)</label>
-              <input type="number" id="cfg-ch-mensal" class="form-control" placeholder="220">
-            </div>
-            <div class="input-group">
-              <label>% Hora Extra 50%</label>
-              <input type="number" id="cfg-he50" class="form-control" value="50">
-            </div>
-            <div class="input-group">
-              <label>% Hora Extra 100%</label>
-              <input type="number" id="cfg-he100" class="form-control" value="100">
-            </div>
-            <div class="input-group">
-              <label>Horário de entrada padrão</label>
-              <input type="time" id="cfg-entrada" class="form-control" value="08:00">
-            </div>
-            <div class="input-group">
-              <label>Horário de saída padrão</label>
-              <input type="time" id="cfg-saida" class="form-control" value="17:00">
-            </div>
-            <div class="input-group">
-              <label>Intervalo de almoço (minutos)</label>
-              <input type="number" id="cfg-intervalo" class="form-control" value="60">
-            </div>
-            <button class="btn btn-primary" onclick="salvarPerfil()">
-              <i class="fas fa-save"></i> Salvar perfil
-            </button>
-          </div>
+  </div><!-- /main -->
+</div><!-- /app-screen -->
 
-          <!-- Descontos padrão -->
-          <div>
-            <div class="settings-section mb-4">
-              <h3><i class="fas fa-minus-circle"></i> Descontos Padrão</h3>
-              <div class="toggle-row">
-                <div class="info"><span>INSS</span><small>Calculado pela tabela 2024</small></div>
-                <label class="toggle"><input type="checkbox" id="cfg-inss" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div class="info"><span>IRRF</span><small>Calculado pela tabela 2024</small></div>
-                <label class="toggle"><input type="checkbox" id="cfg-irrf" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div class="info"><span>Vale Transporte</span></div>
-                <input type="number" class="form-control" id="cfg-vt-val" style="width:90px;margin:0 10px" placeholder="R$">
-                <label class="toggle"><input type="checkbox" id="cfg-vt" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div class="info"><span>Vale Refeição</span></div>
-                <input type="number" class="form-control" id="cfg-vr-val" style="width:90px;margin:0 10px" placeholder="R$">
-                <label class="toggle"><input type="checkbox" id="cfg-vr" checked><span class="toggle-slider"></span></label>
-              </div>
-              <div class="toggle-row">
-                <div class="info"><span>Plano de Saúde</span></div>
-                <input type="number" class="form-control" id="cfg-ps-val" style="width:90px;margin:0 10px" placeholder="R$">
-                <label class="toggle"><input type="checkbox" id="cfg-ps" checked><span class="toggle-slider"></span></label>
-              </div>
-              <button class="btn btn-primary mt-4" style="font-size:13px;padding:10px" onclick="salvarDescontos()">
-                <i class="fas fa-save"></i> Salvar descontos
-              </button>
-            </div>
-
-            <!-- Descontos extras -->
-            <div class="settings-section">
-              <h3><i class="fas fa-plus-circle"></i> Descontos Extras</h3>
-              <div id="extras-list" style="margin-bottom:14px"></div>
-              <div style="background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:14px">
-                <div class="flex gap-2 mb-4">
-                  <div class="input-group" style="flex:1;margin:0">
-                    <input type="text" id="extra-nome" class="form-control" placeholder="Nome do desconto">
-                  </div>
-                  <select id="extra-tipo" class="form-control" style="width:110px">
-                    <option value="fixo">R$ Fixo</option>
-                    <option value="percentual">% Percentual</option>
-                  </select>
-                  <div class="input-group" style="width:90px;margin:0">
-                    <input type="number" id="extra-valor" class="form-control" placeholder="0">
-                  </div>
-                </div>
-                <button class="btn btn-primary" style="font-size:13px;padding:10px" onclick="adicionarDesconto()">
-                  <i class="fas fa-plus"></i> Adicionar desconto
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
-</div>
-
-<!-- Modal desconto delete confirm -->
-<div class="modal-overlay" id="modal-del-desconto">
+<!-- MODAL: Editar registro -->
+<div class="modal-overlay" id="modal-edit">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">Remover desconto</span>
-      <button class="modal-close" onclick="closeModal('modal-del-desconto')">×</button>
+      <span class="modal-title">Editar Registro</span>
+      <button class="modal-close" onclick="closeModal('modal-edit')">×</button>
     </div>
-    <p style="color:var(--text-muted);font-size:14px">Tem certeza que deseja remover este desconto?</p>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('modal-del-desconto')">Cancelar</button>
-      <button class="btn btn-danger" onclick="confirmarDelDesconto()">Remover</button>
+    <div id="modal-edit-fields"></div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Edições ficam registradas no histórico com o motivo informado.</p>
+    <div class="edit-field">
+      <label>Motivo da edição</label>
+      <textarea id="edit-motivo" placeholder="Ex: Esqueci de bater na saída..."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="closeModal('modal-edit')">Cancelar</button>
+      <button class="btn-primary" style="flex:2" onclick="salvarEdicao()">Salvar</button>
     </div>
   </div>
 </div>
 
-<!-- Toast container -->
-<div id="toast-container"></div>
+<!-- MODAL: Atestado -->
+<div class="modal-overlay" id="modal-atestado">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Novo Atestado</span>
+      <button class="modal-close" onclick="closeModal('modal-atestado')">×</button>
+    </div>
+    <div class="edit-field">
+      <label>Tipo de abono</label>
+      <select id="at-tipo">
+        <option value="dia_completo">Dia completo</option>
+        <option value="horas_parciais">Horas parciais</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>Data inicial</label>
+      <input type="date" id="at-data-ini">
+    </div>
+    <div class="edit-field">
+      <label>Data final</label>
+      <input type="date" id="at-data-fim">
+    </div>
+    <div class="edit-field" id="at-horas-wrap" style="display:none">
+      <label>Horas abonadas</label>
+      <input type="number" id="at-horas" step="0.5" placeholder="2.5">
+    </div>
+    <div class="edit-field">
+      <label>Observação (opcional)</label>
+      <textarea id="at-obs" placeholder="Nome do médico, CID..."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="closeModal('modal-atestado')">Cancelar</button>
+      <button class="btn-primary" style="flex:2" onclick="salvarAtestado()">Salvar</button>
+    </div>
+  </div>
+</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// CONFIGURAÇÃO SUPABASE
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+//  SUPABASE
+// ══════════════════════════════════════════════
 const { createClient } = supabase;
 const db = createClient(
   'https://axytwuwonpiqfxylyxsp.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4eXR3dXdvbnBpcWZ4eWx5eHNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzIyOTYsImV4cCI6MjA5NjUwODI5Nn0.UKtFTxn-D5ZufaDBUtj4bEtup-9BMmDKueShp9qCPUY'
 );
 
-// ═══════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
 let currentUser = null;
 let perfil = {};
-let configDescontos = {};
-let descontosExtras = [];
-let registrosHoje = [];
-let histMonth = new Date().getMonth() + 1;
-let histYear = new Date().getFullYear();
-let uploadFile = null;
-let delDescontoId = null;
-let pontoBloqueado = false;
+let cfgDesconto = {};
+let extrasDesconto = [];
+let cfgDirty = false;
+let histMonth = new Date();
+let histMonth_year = new Date().getFullYear();
+let histMonth_month = new Date().getMonth(); // 0-based
+let editContext = {}; // {day records being edited}
+let atestados = [];
 
-// ═══════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════
-async function init() {
-  startClocks();
+const STAGES = [
+  { key: 'entrada',        label: 'Entrada' },
+  { key: 'saida_almoco',   label: 'Saída almoço' },
+  { key: 'retorno_almoco', label: 'Retorno almoço' },
+  { key: 'saida',          label: 'Saída' }
+];
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  startClock();
+  document.getElementById('at-tipo').addEventListener('change', e => {
+    document.getElementById('at-horas-wrap').style.display =
+      e.target.value === 'horas_parciais' ? '' : 'none';
+  });
+
   const { data: { session } } = await db.auth.getSession();
-  hideLoader();
   if (session) {
     currentUser = session.user;
-    await loadUserData();
-    showApp();
+    await initApp();
   } else {
     showAuth();
   }
-  db.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-      currentUser = session.user;
-      await loadUserData();
-      showApp();
-    } else if (event === 'SIGNED_OUT') {
-      showAuth();
+
+  db.auth.onAuthStateChange((_ev, sess) => {
+    if (sess && !currentUser) {
+      currentUser = sess.user;
+      initApp();
     }
   });
-}
+});
 
-function hideLoader() { document.getElementById('page-loader').style.display = 'none'; }
 function showAuth() {
+  document.getElementById('loading').style.display = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
 }
-function showApp() {
+
+async function initApp() {
+  document.getElementById('loading').style.display = 'none';
   document.getElementById('auth-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  updateUserUI();
-  navigate('dashboard');
+  document.getElementById('app-screen').style.display = 'block';
+  document.getElementById('sidebar-user-email').textContent = currentUser.email;
+
+  await loadPerfil();
+  await loadConfigDesconto();
+  await loadExtras();
+  renderConfigForm();
+  await loadHoje();
+  await loadStats();
+  await loadHistorico();
+  await loadHolerites();
+  await loadAtestados();
 }
 
-async function loadUserData() {
-  // Perfil
-  const { data: p } = await db.from('perfis').select('*').eq('id', currentUser.id).single();
-  perfil = p || {};
-
-  // Config descontos
-  const { data: cd } = await db.from('config_descontos').select('*').eq('user_id', currentUser.id).single();
-  configDescontos = cd || { inss_ativo: true, irrf_ativo: true, vt_ativo: true, vr_ativo: true, plano_saude_ativo: true };
-
-  // Descontos extras
-  const { data: de } = await db.from('descontos_extras').select('*').eq('user_id', currentUser.id).order('created_at');
-  descontosExtras = de || [];
-
-  // Registros hoje
-  await loadRegistrosHoje();
+// ══════════════════════════════════════════════
+//  CLOCK
+// ══════════════════════════════════════════════
+function startClock() {
+  const tick = () => {
+    const now = new Date();
+    document.getElementById('clock-now').textContent =
+      now.toLocaleTimeString('pt-BR');
+    document.getElementById('clock-date').textContent =
+      now.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  };
+  tick();
+  setInterval(tick, 1000);
 }
 
-function updateUserUI() {
-  const nome = perfil.nome || currentUser.email.split('@')[0];
-  const email = currentUser.email;
-  document.getElementById('user-name').textContent = nome;
-  document.getElementById('user-email').textContent = email;
-  document.getElementById('user-avatar').textContent = nome.charAt(0).toUpperCase();
-}
-
-// ═══════════════════════════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════════
 function switchTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach((t, i) => {
-    t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
+  ['login','register','forgot'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === tab ? '' : 'none';
   });
-  document.getElementById('tab-login').style.display = tab === 'login' ? '' : 'none';
-  document.getElementById('tab-register').style.display = tab === 'register' ? '' : 'none';
-  document.getElementById('tab-forgot').style.display = tab === 'forgot' ? '' : 'none';
+  document.querySelectorAll('.auth-tab').forEach((el, i) => {
+    el.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
+  });
 }
-
-async function doForgotPassword() {
-  const email = document.getElementById('forgot-email').value.trim();
-  const msg = document.getElementById('forgot-msg');
-  msg.className = 'auth-msg';
-  if (!email) { msg.textContent = 'Digite seu e-mail.'; msg.className = 'auth-msg error'; return; }
-  const { error } = await db.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.href
-  });
-  if (error) { msg.textContent = error.message; msg.className = 'auth-msg error'; return; }
-  msg.textContent = 'Link enviado! Verifique sua caixa de entrada (e o spam também).';
-  msg.className = 'auth-msg success';
+function showForgot() {
+  ['login','register','forgot'].forEach(t =>
+    document.getElementById('tab-' + t).style.display = t === 'forgot' ? '' : 'none');
+  document.querySelectorAll('.auth-tab').forEach(el => el.classList.remove('active'));
 }
 
 async function doLogin() {
   const email = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value;
-  const msg = document.getElementById('login-msg');
-  msg.className = 'auth-msg';
-  if (!email || !password) { msg.textContent = 'Preencha e-mail e senha.'; msg.className = 'auth-msg error'; return; }
-  const { error } = await db.auth.signInWithPassword({ email, password });
-  if (error) { msg.textContent = error.message; msg.className = 'auth-msg error'; }
+  const pass  = document.getElementById('login-pass').value;
+  const btn   = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'Entrando…';
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+  btn.disabled = false; btn.textContent = 'Entrar';
+  if (error) return toast('Erro: ' + error.message, 'err');
+  currentUser = data.user;
+  await initApp();
 }
 
 async function doRegister() {
-  const nome = document.getElementById('reg-nome').value.trim();
+  const nome  = document.getElementById('reg-nome').value.trim();
   const email = document.getElementById('reg-email').value.trim();
-  const password = document.getElementById('reg-password').value;
-  const msg = document.getElementById('reg-msg');
-  msg.className = 'auth-msg';
-  if (!nome || !email || !password) { msg.textContent = 'Preencha todos os campos.'; msg.className = 'auth-msg error'; return; }
-  if (password.length < 6) { msg.textContent = 'Senha deve ter mínimo 6 caracteres.'; msg.className = 'auth-msg error'; return; }
-  const { error } = await db.auth.signUp({ email, password, options: { data: { nome } } });
-  if (error) { msg.textContent = error.message; msg.className = 'auth-msg error'; }
-  else { msg.textContent = 'Conta criada! Verifique seu e-mail.'; msg.className = 'auth-msg success'; }
+  const pass  = document.getElementById('reg-pass').value;
+  const btn   = document.getElementById('btn-register');
+  if (!nome || !email || !pass) return toast('Preencha todos os campos', 'err');
+  btn.disabled = true; btn.textContent = 'Criando…';
+  const { data, error } = await db.auth.signUp({
+    email, password: pass,
+    options: { data: { nome } }
+  });
+  btn.disabled = false; btn.textContent = 'Criar conta';
+  if (error) return toast('Erro: ' + error.message, 'err');
+  toast('Conta criada! Verifique seu e-mail para confirmar.', 'ok');
+  switchTab('login');
 }
 
-async function doAppleLogin() {
-  const { error } = await db.auth.signInWithOAuth({
-    provider: 'apple',
-    options: { redirectTo: window.location.href }
-  });
-  if (error) toast('Erro ao entrar com Apple: ' + error.message, 'error');
+async function doForgot() {
+  const email = document.getElementById('forgot-email').value.trim();
+  if (!email) return toast('Informe seu e-mail', 'err');
+  const { error } = await db.auth.resetPasswordForEmail(email);
+  if (error) return toast('Erro: ' + error.message, 'err');
+  toast('Link enviado para ' + email, 'ok');
+  switchTab('login');
 }
 
 async function doLogout() {
   await db.auth.signOut();
-  currentUser = null; perfil = {}; configDescontos = {}; descontosExtras = []; registrosHoje = [];
+  currentUser = null; perfil = {}; cfgDesconto = {};
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+  switchTab('login');
 }
 
-// ═══════════════════════════════════════════════════════════
-// NAVEGAÇÃO
-// ═══════════════════════════════════════════════════════════
-const pageTitles = {
-  dashboard: 'Dashboard', ponto: 'Bater Ponto', historico: 'Histórico',
-  simulacao: 'Simulação Salarial', holerites: 'Holerites', configuracoes: 'Configurações'
-};
+// ══════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════
+const SECTIONS = ['inicio','historico','simular','holerites','atestados','config'];
+function goTo(id) {
+  SECTIONS.forEach(s => {
+    document.getElementById('sec-' + s).classList.toggle('active', s === id);
+  });
+  // sidebar
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    const labels = ['inicio','historico','simular','holerites','atestados','config'];
+    el.classList.toggle('active', labels[i] === id);
+  });
+  // bottom nav
+  ['inicio','historico','simular','holerites','config'].forEach(s => {
+    const el = document.getElementById('bnav-' + s);
+    if (el) el.classList.toggle('active', s === id);
+  });
+}
 
-async function navigate(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.textContent.toLowerCase().includes(pageTitles[page].toLowerCase().split(' ')[0].toLowerCase())) {
-      n.classList.add('active');
+// ══════════════════════════════════════════════
+//  PERFIL / CONFIG LOAD
+// ══════════════════════════════════════════════
+async function loadPerfil() {
+  const { data } = await db.from('perfis').select('*').eq('id', currentUser.id).single();
+  perfil = data || {};
+}
+
+async function loadConfigDesconto() {
+  const { data } = await db.from('config_descontos').select('*').eq('user_id', currentUser.id).single();
+  cfgDesconto = data || {};
+}
+
+async function loadExtras() {
+  const { data } = await db.from('descontos_extras').select('*').eq('user_id', currentUser.id).order('created_at');
+  extrasDesconto = data || [];
+}
+
+function renderConfigForm() {
+  const p = perfil;
+  setVal('cfg-nome',       p.nome || '');
+  setVal('cfg-salario',    p.salario_base || '');
+  setVal('cfg-carga-dia',  p.carga_horaria_diaria || 8);
+  setVal('cfg-carga-mes',  p.carga_horaria_mensal || 220);
+  setVal('cfg-he50',       p.percentual_he_50 || 75);
+  setVal('cfg-he100',      p.percentual_he_100 || 100);
+  setVal('cfg-entrada',    p.horario_entrada || '08:00');
+  setVal('cfg-saida',      p.horario_saida || '17:00');
+  setVal('cfg-intervalo',  p.intervalo_minutos || 60);
+
+  const d = cfgDesconto;
+  chk('cfg-inss',     d.inss_ativo !== false);
+  chk('cfg-irrf',     d.irrf_ativo !== false);
+  setVal('cfg-vt',    d.vt_valor || 0);
+  chk('cfg-vt-ativo', d.vt_ativo !== false);
+  setVal('cfg-vr',    d.vr_valor || 0);
+  chk('cfg-vr-ativo', d.vr_ativo !== false);
+  setVal('cfg-ps',    d.plano_saude_valor || 0);
+  chk('cfg-ps-ativo', d.plano_saude_ativo !== false);
+
+  renderExtras();
+  cfgDirty = false;
+}
+
+function renderExtras() {
+  const list = document.getElementById('extras-list');
+  list.innerHTML = extrasDesconto.map((e, i) => `
+    <div class="config-row" style="gap:8px">
+      <input type="text" value="${e.nome}" class="inline-input" style="flex:1;text-align:left;width:auto"
+        onchange="extrasDesconto[${i}].nome=this.value;cfgDirty=true">
+      <select class="inline-input" style="width:100px"
+        onchange="extrasDesconto[${i}].tipo=this.value;cfgDirty=true">
+        <option value="fixo" ${e.tipo==='fixo'?'selected':''}>R$ fixo</option>
+        <option value="percentual" ${e.tipo==='percentual'?'selected':''}>% base</option>
+      </select>
+      <input type="number" value="${e.valor}" class="inline-input" style="width:80px"
+        onchange="extrasDesconto[${i}].valor=+this.value;cfgDirty=true">
+      <label class="toggle"><input type="checkbox" ${e.ativo?'checked':''}
+        onchange="extrasDesconto[${i}].ativo=this.checked;cfgDirty=true"><span class="toggle-slider"></span></label>
+      <button class="btn-icon" style="color:var(--err)" onclick="removeExtra(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function addExtraDesconto() {
+  extrasDesconto.push({ nome:'Novo desconto', tipo:'fixo', valor:0, ativo:true, user_id: currentUser.id });
+  renderExtras(); cfgDirty = true;
+}
+
+async function removeExtra(i) {
+  const ex = extrasDesconto[i];
+  if (ex.id) {
+    await db.from('descontos_extras').delete().eq('id', ex.id);
+  }
+  extrasDesconto.splice(i, 1);
+  renderExtras(); cfgDirty = true;
+}
+
+async function salvarConfig() {
+  const btn = document.getElementById('btn-salvar-cfg');
+  btn.disabled = true; btn.textContent = 'Salvando…';
+
+  await db.from('perfis').upsert({
+    id: currentUser.id,
+    nome:                  getVal('cfg-nome'),
+    salario_base:          +getVal('cfg-salario'),
+    carga_horaria_diaria:  +getVal('cfg-carga-dia'),
+    carga_horaria_mensal:  +getVal('cfg-carga-mes'),
+    percentual_he_50:      +getVal('cfg-he50'),
+    percentual_he_100:     +getVal('cfg-he100'),
+    horario_entrada:       getVal('cfg-entrada'),
+    horario_saida:         getVal('cfg-saida'),
+    intervalo_minutos:     +getVal('cfg-intervalo'),
+    updated_at:            new Date().toISOString()
+  });
+
+  await db.from('config_descontos').upsert({
+    user_id:           currentUser.id,
+    inss_ativo:        isChk('cfg-inss'),
+    irrf_ativo:        isChk('cfg-irrf'),
+    vt_valor:          +getVal('cfg-vt'),
+    vt_ativo:          isChk('cfg-vt-ativo'),
+    vr_valor:          +getVal('cfg-vr'),
+    vr_ativo:          isChk('cfg-vr-ativo'),
+    plano_saude_valor: +getVal('cfg-ps'),
+    plano_saude_ativo: isChk('cfg-ps-ativo'),
+    updated_at:        new Date().toISOString()
+  });
+
+  // extras
+  for (const ex of extrasDesconto) {
+    if (ex.id) {
+      await db.from('descontos_extras').update({ nome: ex.nome, tipo: ex.tipo, valor: ex.valor, ativo: ex.ativo }).eq('id', ex.id);
+    } else {
+      const { data } = await db.from('descontos_extras').insert({ ...ex, user_id: currentUser.id }).select().single();
+      if (data) ex.id = data.id;
+    }
+  }
+
+  await loadPerfil(); await loadConfigDesconto();
+  btn.disabled = false; btn.textContent = 'Salvar configurações';
+  cfgDirty = false;
+  toast('Configurações salvas!', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  PONTO HOJE
+// ══════════════════════════════════════════════
+let todayRecords = [];
+
+async function loadHoje() {
+  const today = todayStr();
+  const { data } = await db.from('registros_ponto')
+    .select('*').eq('user_id', currentUser.id).eq('data', today)
+    .order('timestamp');
+  todayRecords = data || [];
+  renderStages();
+}
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function renderStages() {
+  const bar = document.getElementById('stages-bar');
+  const doneTypes = todayRecords.map(r => r.tipo);
+  bar.innerHTML = STAGES.map(s => {
+    const done = doneTypes.includes(s.key);
+    const current = !done && nextStage() === s.key;
+    return `<div class="stage-pill ${done?'done':current?'current':''}">
+      <span class="dot"></span>${s.label}
+    </div>`;
+  }).join('');
+
+  const next = nextStage();
+  const lbl = document.getElementById('btn-ponto-label');
+  const btn = document.getElementById('btn-bater-ponto');
+  if (!next) {
+    lbl.textContent = 'Jornada encerrada';
+    btn.disabled = true;
+  } else {
+    const found = STAGES.find(s => s.key === next);
+    lbl.textContent = 'Bater: ' + (found ? found.label : next);
+    btn.disabled = false;
+  }
+}
+
+function nextStage() {
+  const doneTypes = todayRecords.map(r => r.tipo);
+  for (const s of STAGES) {
+    if (!doneTypes.includes(s.key)) return s.key;
+  }
+  return null;
+}
+
+async function baterPonto() {
+  const tipo = nextStage();
+  if (!tipo) return;
+  const now = new Date();
+  const { data, error } = await db.from('registros_ponto').insert({
+    user_id:   currentUser.id,
+    tipo,
+    timestamp: now.toISOString(),
+    data:      todayStr()
+  }).select().single();
+  if (error) return toast('Erro ao registrar: ' + error.message, 'err');
+  todayRecords.push(data);
+  renderStages();
+  await loadStats();
+  toast('Ponto registrado: ' + now.toLocaleTimeString('pt-BR'), 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  STATS (dashboard)
+// ══════════════════════════════════════════════
+async function loadStats() {
+  const today = todayStr();
+  const { data: todayData } = await db.from('registros_ponto')
+    .select('*').eq('user_id', currentUser.id).eq('data', today).order('timestamp');
+
+  const minHoje = calcTrabalhado(todayData || []);
+  document.getElementById('stat-hoje').textContent = minHoje > 0 ? fmtHM(minHoje) : '--:--';
+
+  // mês
+  const start = new Date(); start.setDate(1);
+  const startStr = start.toISOString().slice(0,10);
+  const { data: mesData } = await db.from('registros_ponto')
+    .select('*').eq('user_id', currentUser.id).gte('data', startStr).order('timestamp');
+
+  const byDay = groupByDay(mesData || []);
+  let totalMin = 0; let he75min = 0; let he100min = 0;
+  const cargaDiariaMin = (perfil.carga_horaria_diaria || 8) * 60;
+  const he50pct = (perfil.percentual_he_50 || 75) / 100;
+  const he100pct = (perfil.percentual_he_100 || 100) / 100;
+
+  Object.entries(byDay).forEach(([d, recs]) => {
+    const min = calcTrabalhado(recs);
+    totalMin += min;
+    const extra = min - cargaDiariaMin;
+    if (extra > 0) {
+      const dt = new Date(d + 'T12:00:00');
+      const dow = dt.getDay();
+      if (dow === 0 || dow === 6) he100min += extra;
+      else he75min += extra;
     }
   });
-  document.getElementById('page-title').textContent = pageTitles[page];
-  closeSidebar();
-  if (page === 'dashboard') await renderDashboard();
-  if (page === 'ponto') renderPonto();
-  if (page === 'historico') await renderHistorico();
-  if (page === 'simulacao') renderSimulacao();
-  if (page === 'holerites') await renderHolerites();
-  if (page === 'configuracoes') renderConfiguracoes();
+
+  document.getElementById('stat-mes').textContent = fmtHM(totalMin);
+  document.getElementById('stat-he75').textContent = fmtHM(he75min);
+  document.getElementById('stat-he100').textContent = fmtHM(he100min);
 }
 
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('mask').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('mask').classList.remove('open');
-}
+// ══════════════════════════════════════════════
+//  HISTÓRICO
+// ══════════════════════════════════════════════
+async function loadHistorico() {
+  const y = histMonth_year; const m = histMonth_month;
+  const start = new Date(y, m, 1).toISOString().slice(0,10);
+  const end   = new Date(y, m+1, 0).toISOString().slice(0,10);
 
-// ═══════════════════════════════════════════════════════════
-// CLOCK
-// ═══════════════════════════════════════════════════════════
-function startClocks() {
-  function tick() {
-    const now = new Date();
-    const t = now.toLocaleTimeString('pt-BR');
-    const d = now.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
-    document.getElementById('topbar-clock').textContent = t;
-    document.getElementById('topbar-date').textContent = d;
-    const pc = document.getElementById('ponto-clock');
-    if (pc) pc.textContent = t;
-    const pd = document.getElementById('ponto-date');
-    if (pd) pd.textContent = now.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-  }
-  tick(); setInterval(tick, 1000);
-}
+  document.getElementById('hist-month-label').textContent =
+    new Date(y, m, 1).toLocaleDateString('pt-BR', { month:'long', year:'numeric' });
 
-// ═══════════════════════════════════════════════════════════
-// PONTO
-// ═══════════════════════════════════════════════════════════
-const TIPO_LABELS = {
-  entrada: 'Entrada', saida_almoco: 'Saída Almoço',
-  retorno_almoco: 'Retorno Almoço', saida: 'Saída'
-};
-const TIPO_ICONS = {
-  entrada: 'fa-sign-in-alt', saida_almoco: 'fa-utensils',
-  retorno_almoco: 'fa-undo', saida: 'fa-sign-out-alt'
-};
-const TIPO_ORDER = ['entrada', 'saida_almoco', 'retorno_almoco', 'saida'];
+  const { data } = await db.from('registros_ponto')
+    .select('*').eq('user_id', currentUser.id)
+    .gte('data', start).lte('data', end).order('timestamp');
 
-async function loadRegistrosHoje() {
-  const today = new Date().toISOString().split('T')[0];
-  const { data } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id).eq('data', today).order('timestamp');
-  registrosHoje = data || [];
-}
+  const byDay = groupByDay(data || []);
+  const list = document.getElementById('hist-list');
 
-function renderPonto() {
-  const today = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-  document.getElementById('ponto-today-date').textContent = today;
-
-  const tipos = registrosHoje.map(r => r.tipo);
-  const btns = {
-    'btn-entrada': !tipos.includes('entrada'),
-    'btn-saida-almoco': tipos.includes('entrada') && !tipos.includes('saida_almoco'),
-    'btn-retorno-almoco': tipos.includes('saida_almoco') && !tipos.includes('retorno_almoco'),
-    'btn-saida': (tipos.includes('retorno_almoco') || tipos.includes('entrada')) && !tipos.includes('saida')
-  };
-  Object.entries(btns).forEach(([id, enabled]) => {
-    document.getElementById(id).disabled = !enabled || pontoBloqueado;
-  });
-
-  const status = document.getElementById('ponto-status');
-  if (tipos.includes('saida')) {
-    status.innerHTML = '<div class="status-dot gray"></div><span>Jornada encerrada</span>';
-  } else if (tipos.includes('retorno_almoco')) {
-    status.innerHTML = '<div class="status-dot green"></div><span>Trabalhando</span>';
-  } else if (tipos.includes('saida_almoco')) {
-    status.innerHTML = '<div class="status-dot yellow"></div><span>Em intervalo de almoço</span>';
-  } else if (tipos.includes('entrada')) {
-    status.innerHTML = '<div class="status-dot green"></div><span>Trabalhando</span>';
-  } else {
-    status.innerHTML = '<div class="status-dot gray"></div><span>Nenhum registro hoje</span>';
-  }
-
-  const container = document.getElementById('today-records');
-  if (!registrosHoje.length) {
-    container.innerHTML = '<div class="empty-state"><i class="fas fa-fingerprint"></i><p>Nenhum registro hoje</p></div>';
-    return;
-  }
-  container.innerHTML = '<div class="record-list">' +
-    registrosHoje.map(r => `
-      <div class="record-item">
-        <div class="record-icon ${r.tipo}"><i class="fas ${TIPO_ICONS[r.tipo]}"></i></div>
-        <div style="flex:1">
-          <div class="record-type">${TIPO_LABELS[r.tipo]}</div>
-          ${r.observacao ? `<div class="record-note">${r.observacao}</div>` : ''}
-        </div>
-        <div class="record-time">${new Date(r.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
-      </div>`).join('') + '</div>';
-}
-
-async function registrarPonto(tipo) {
-  if (pontoBloqueado) return;
-  pontoBloqueado = true;
-  const now = new Date();
-  const obs = document.getElementById('ponto-obs').value.trim();
-  const { error } = await db.from('registros_ponto').insert({
-    user_id: currentUser.id, tipo, timestamp: now.toISOString(),
-    data: now.toISOString().split('T')[0], observacao: obs || null
-  });
-  if (error) { toast('Erro ao registrar ponto: ' + error.message, 'error'); pontoBloqueado = false; return; }
-  toast(TIPO_LABELS[tipo] + ' registrada com sucesso!', 'success');
-  document.getElementById('ponto-obs').value = '';
-  await loadRegistrosHoje();
-  renderPonto();
-  pontoBloqueado = false;
-}
-
-// ═══════════════════════════════════════════════════════════
-// CÁLCULO DE HORAS
-// ═══════════════════════════════════════════════════════════
-function calcHorasDia(registros) {
-  const find = tipo => registros.find(r => r.tipo === tipo);
-  const entrada = find('entrada');
-  const saidaAlmoco = find('saida_almoco');
-  const retornoAlmoco = find('retorno_almoco');
-  const saida = find('saida');
-  if (!entrada) return 0;
-  const fim = saida || { timestamp: new Date().toISOString() };
-  let total = (new Date(fim.timestamp) - new Date(entrada.timestamp)) / 3600000;
-  if (saidaAlmoco && retornoAlmoco) {
-    total -= (new Date(retornoAlmoco.timestamp) - new Date(saidaAlmoco.timestamp)) / 3600000;
-  } else if (saidaAlmoco && !retornoAlmoco) {
-    total = (new Date(saidaAlmoco.timestamp) - new Date(entrada.timestamp)) / 3600000;
-  }
-  return Math.max(0, total);
-}
-
-function horasExtras(horasDia) {
-  const limite = perfil.carga_horaria_diaria || 8;
-  const he = Math.max(0, horasDia - limite);
-  return he;
-}
-
-function formatHoras(h) {
-  const hh = Math.floor(h);
-  const mm = Math.round((h - hh) * 60);
-  return `${hh}h ${mm.toString().padStart(2, '0')}m`;
-}
-
-// ═══════════════════════════════════════════════════════════
-// DASHBOARD
-// ═══════════════════════════════════════════════════════════
-async function renderDashboard() {
-  const now = new Date();
-  const mes = now.getMonth() + 1;
-  const ano = now.getFullYear();
-  const { data: registros } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id)
-    .gte('data', `${ano}-${String(mes).padStart(2,'0')}-01`)
-    .lte('data', `${ano}-${String(mes).padStart(2,'0')}-31`)
-    .order('timestamp');
-
-  // Agrupar por dia
-  const porDia = {};
-  (registros || []).forEach(r => {
-    if (!porDia[r.data]) porDia[r.data] = [];
-    porDia[r.data].push(r);
-  });
-
-  let totalHoras = 0, totalHE50 = 0, totalHE100 = 0;
-  const diasTrabalhados = Object.keys(porDia).length;
-  Object.values(porDia).forEach(regs => {
-    const h = calcHorasDia(regs);
-    totalHoras += h;
-    const he = horasExtras(h);
-    // Sábados → 100%, demais → 50%
-    const data = new Date(regs[0].data + 'T12:00:00');
-    if (data.getDay() === 6 || data.getDay() === 0) totalHE100 += he;
-    else totalHE50 += he;
-  });
-
-  // Registros hoje
-  const hoje = now.toISOString().split('T')[0];
-  const hojeRegs = porDia[hoje] || [];
-
-  // Stats
-  document.getElementById('dash-horas').textContent = formatHoras(totalHoras);
-  document.getElementById('dash-he').textContent = formatHoras(totalHE50 + totalHE100);
-  document.getElementById('dash-dias').textContent = diasTrabalhados;
-
-  // Hoje
-  const dashHoje = document.getElementById('dash-hoje-records');
-  if (!hojeRegs.length) {
-    dashHoje.innerHTML = '<div class="empty-state"><i class="fas fa-moon"></i><p>Nenhum registro hoje</p></div>';
-    document.getElementById('dash-status-hoje').textContent = 'Dia livre';
-  } else {
-    dashHoje.innerHTML = '<div class="record-list" style="max-height:200px;overflow-y:auto">' +
-      hojeRegs.map(r => `
-        <div class="record-item">
-          <div class="record-icon ${r.tipo}"><i class="fas ${TIPO_ICONS[r.tipo]}"></i></div>
-          <div class="record-type" style="flex:1">${TIPO_LABELS[r.tipo]}</div>
-          <div class="record-time">${new Date(r.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</div>
-        </div>`).join('') + '</div>';
-    const tipos = hojeRegs.map(r => r.tipo);
-    if (tipos.includes('saida')) document.getElementById('dash-status-hoje').textContent = 'Encerrado';
-    else if (tipos.includes('retorno_almoco') || tipos.includes('entrada')) document.getElementById('dash-status-hoje').textContent = 'Trabalhando';
-    else document.getElementById('dash-status-hoje').textContent = 'Intervalo';
-  }
-
-  // Progresso
-  const chMensal = perfil.carga_horaria_mensal || 220;
-  const diasUteisNoMes = getDiasUteisNoMes(ano, mes);
-  document.getElementById('prog-horas').textContent = `${formatHoras(totalHoras)} / ${chMensal}h`;
-  document.getElementById('prog-horas-bar').style.width = Math.min(100, (totalHoras / chMensal) * 100) + '%';
-  document.getElementById('prog-dias').textContent = `${diasTrabalhados} / ${diasUteisNoMes}`;
-  document.getElementById('prog-dias-bar').style.width = Math.min(100, (diasTrabalhados / diasUteisNoMes) * 100) + '%';
-  document.getElementById('prog-he').textContent = `${formatHoras(totalHE50 + totalHE100)} / 40h`;
-  document.getElementById('prog-he-bar').style.width = Math.min(100, ((totalHE50 + totalHE100) / 40) * 100) + '%';
-  document.getElementById('dash-dias-sub').textContent = `de ${diasUteisNoMes} dias úteis`;
-
-  // Salário estimado
-  const sim = calcSalario(null, totalHE50, totalHE100);
-  document.getElementById('dash-liquido').textContent = fmtBRL(sim.liquido);
-
-  // Resumo financeiro
-  document.getElementById('dash-financeiro').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
-      ${[
-        ['Salário Bruto', sim.bruto, ''],
-        ['INSS', -sim.inss, 'negative'],
-        ['IRRF', -sim.irrf, 'negative'],
-        ['VT', -sim.vt, 'negative'],
-        ['VR', -sim.vr, 'negative'],
-        ['Plano de Saúde', -sim.planoSaude, 'negative'],
-        ['Extras', -sim.extras, 'negative'],
-        ['HE 50% ('+formatHoras(totalHE50)+')', sim.valorHE50, 'positive'],
-        ['HE 100% ('+formatHoras(totalHE100)+')', sim.valorHE100, 'positive'],
-      ].map(([l, v, cls]) => v !== 0 && v !== -0 ? `
-        <div class="sim-row"><div class="label">${l}</div><div class="value ${cls}">${v < 0 ? '- ' + fmtBRL(-v) : fmtBRL(v)}</div></div>
-      ` : '').join('')}
-    </div>
-    <div class="sim-total mt-4">
-      <div class="label"><i class="fas fa-hand-holding-usd"></i> Estimativa Líquida</div>
-      <div class="value">${fmtBRL(sim.liquido)}</div>
-    </div>
-  `;
-}
-
-function getDiasUteisNoMes(ano, mes) {
-  let count = 0;
-  const d = new Date(ano, mes - 1, 1);
-  while (d.getMonth() === mes - 1) {
-    if (d.getDay() !== 0 && d.getDay() !== 6) count++;
-    d.setDate(d.getDate() + 1);
-  }
-  return count;
-}
-
-// ═══════════════════════════════════════════════════════════
-// HISTÓRICO
-// ═══════════════════════════════════════════════════════════
-async function renderHistorico() {
-  const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  document.getElementById('hist-month-label').textContent = `${meses[histMonth-1]} ${histYear}`;
-  document.getElementById('hist-list').innerHTML = '<div class="loader"><div class="spinner"></div></div>';
-
-  const { data: registros } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id)
-    .gte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-01`)
-    .lte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-31`)
-    .order('timestamp');
-
-  const porDia = {};
-  (registros || []).forEach(r => {
-    if (!porDia[r.data]) porDia[r.data] = [];
-    porDia[r.data].push(r);
-  });
-
-  let totalHN = 0, totalHE50 = 0, totalHE100 = 0;
-  const limite = perfil.carga_horaria_diaria || 8;
-  Object.entries(porDia).forEach(([, regs]) => {
-    const h = calcHorasDia(regs);
-    const he = Math.max(0, h - limite);
-    totalHN += Math.min(h, limite);
-    const data = new Date(regs[0].data + 'T12:00:00');
-    if (data.getDay() === 6 || data.getDay() === 0) totalHE100 += he;
-    else totalHE50 += he;
-  });
-
-  document.getElementById('hist-hn').textContent = formatHoras(totalHN);
-  document.getElementById('hist-he50').textContent = formatHoras(totalHE50);
-  document.getElementById('hist-he100').textContent = formatHoras(totalHE100);
-  document.getElementById('hist-dias').textContent = Object.keys(porDia).length;
-
-  if (!Object.keys(porDia).length) {
-    document.getElementById('hist-list').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Nenhum registro neste mês</p></div>';
+  if (!Object.keys(byDay).length) {
+    list.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p>Nenhum registro neste mês</p></div>`;
     return;
   }
 
-  const diasOrdenados = Object.keys(porDia).sort((a, b) => b.localeCompare(a));
-  document.getElementById('hist-list').innerHTML = diasOrdenados.map(data => {
-    const regs = porDia[data];
-    const h = calcHorasDia(regs);
-    const he = horasExtras(h);
-    const d = new Date(data + 'T12:00:00');
-    const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'long' });
-    const diaFmt = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-    const badgeClass = h >= (perfil.carga_horaria_diaria || 8) ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
-    const ehFimDeSemana = d.getDay() === 0 || d.getDay() === 6;
-    return `
-      <div class="day-card">
-        <div class="day-header">
-          <div>
-            <div class="day-name">${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}</div>
-            <div class="day-date">${diaFmt}</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            ${he > 0 ? `<span class="badge ${ehFimDeSemana ? 'badge-danger' : 'badge-warning'}">+${formatHoras(he)} HE</span>` : ''}
-            <span class="badge ${badgeClass}">${formatHoras(h)}</span>
-          </div>
-        </div>
-        <div class="day-records">
-          ${regs.map(r => `
-            <div class="day-record-chip">
-              <i class="fas ${TIPO_ICONS[r.tipo]}"></i>
-              ${TIPO_LABELS[r.tipo]}: <strong>${new Date(r.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</strong>
-            </div>`).join('')}
-        </div>
-      </div>`;
+  const cargaDiariaMin = (perfil.carga_horaria_diaria || 8) * 60;
+
+  list.innerHTML = Object.entries(byDay).sort((a,b) => b[0].localeCompare(a[0])).map(([d, recs]) => {
+    const min = calcTrabalhado(recs);
+    const extra = min - cargaDiariaMin;
+    const dt = new Date(d + 'T12:00:00');
+    const diasem = dt.toLocaleDateString('pt-BR', { weekday:'short' });
+    const diaNum = dt.toLocaleDateString('pt-BR', { day:'numeric', month:'short' });
+
+    let totalClass = ''; let totalLabel = fmtHM(min);
+    if (extra > 10) { totalClass = 'he'; totalLabel += ` (+${fmtHM(extra)})`; }
+    else if (min < cargaDiariaMin - 10) { totalClass = 'falha'; }
+
+    const hasEdit = recs.some(r => r.editado);
+    const atestadoDia = atestados.find(a => {
+      const ini = new Date(a.data_inicio); const fim = new Date(a.data_fim);
+      const cur = new Date(d + 'T12:00:00');
+      return cur >= ini && cur <= fim;
+    });
+
+    const chips = recs.map(r => {
+      const t = new Date(r.timestamp).toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+      const label = STAGES.find(s => s.key === r.tipo)?.label || r.tipo;
+      return `<span class="time-chip ${r.editado?'edited':''}" title="${r.editado?'Editado — '+r.motivo_edicao:''}">${label}: ${t}</span>`;
+    }).join('');
+
+    return `<div class="day-row" onclick="openEditDay('${d}')">
+      <div class="day-header">
+        <span class="day-label">${diasem}, ${diaNum}</span>
+        <span class="day-total ${totalClass}">${totalLabel}</span>
+      </div>
+      <div class="day-times">${chips}</div>
+      ${hasEdit ? '<div class="edited-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Editado</div>' : ''}
+      ${atestadoDia ? '<div class="atestado-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg> Atestado médico</div>' : ''}
+    </div>`;
   }).join('');
 }
 
-function changeMonth(delta) {
-  histMonth += delta;
-  if (histMonth > 12) { histMonth = 1; histYear++; }
-  if (histMonth < 1) { histMonth = 12; histYear--; }
-  renderHistorico();
+function changeMonth(dir) {
+  histMonth_month += dir;
+  if (histMonth_month < 0) { histMonth_month = 11; histMonth_year--; }
+  if (histMonth_month > 11) { histMonth_month = 0; histMonth_year++; }
+  loadHistorico();
 }
 
-// ═══════════════════════════════════════════════════════════
-// CÁLCULO SALARIAL
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+//  EDITAR REGISTRO
+// ══════════════════════════════════════════════
+let editDayRecords = [];
+
+async function openEditDay(d) {
+  const { data } = await db.from('registros_ponto')
+    .select('*').eq('user_id', currentUser.id).eq('data', d).order('timestamp');
+  editDayRecords = data || [];
+  const fields = document.getElementById('modal-edit-fields');
+  fields.innerHTML = `<p style="font-size:13px;color:var(--muted);margin-bottom:14px">
+    ${new Date(d+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}
+  </p>` + editDayRecords.map((r, i) => {
+    const label = STAGES.find(s => s.key === r.tipo)?.label || r.tipo;
+    const tv = new Date(r.timestamp);
+    const hh = String(tv.getHours()).padStart(2,'0');
+    const mm = String(tv.getMinutes()).padStart(2,'0');
+    return `<div class="edit-field">
+      <label>${label}</label>
+      <input type="time" id="edit-time-${i}" value="${hh}:${mm}">
+    </div>`;
+  }).join('');
+  document.getElementById('edit-motivo').value = '';
+  openModal('modal-edit');
+}
+
+async function salvarEdicao() {
+  const motivo = document.getElementById('edit-motivo').value.trim();
+  if (!motivo) return toast('Informe o motivo da edição', 'err');
+
+  for (let i = 0; i < editDayRecords.length; i++) {
+    const r = editDayRecords[i];
+    const val = document.getElementById('edit-time-' + i).value;
+    if (!val) continue;
+    const [h, m] = val.split(':').map(Number);
+    const original = new Date(r.timestamp);
+    const updated = new Date(original);
+    updated.setHours(h, m, 0, 0);
+    if (updated.toISOString() === original.toISOString()) continue;
+
+    await db.from('registros_ponto').update({
+      timestamp:     updated.toISOString(),
+      editado:       true,
+      motivo_edicao: motivo,
+      editado_em:    new Date().toISOString()
+    }).eq('id', r.id);
+  }
+
+  closeModal('modal-edit');
+  toast('Registro atualizado!', 'ok');
+  await loadHistorico();
+  await loadHoje();
+}
+
+// ══════════════════════════════════════════════
+//  SIMULAÇÃO SALARIAL
+// ══════════════════════════════════════════════
+function calcSimulacao() {
+  const salario  = +getVal('sim-salario') || (perfil.salario_base || 0);
+  const horas    = +getVal('sim-horas') || (perfil.carga_horaria_mensal || 220);
+  const carga    = +getVal('sim-carga') || (perfil.carga_horaria_mensal || 220);
+  const he75h    = +getVal('sim-he75')  || 0;
+  const he100h   = +getVal('sim-he100') || 0;
+  const he50pct  = (perfil.percentual_he_50 || 75) / 100;
+  const he100pct = (perfil.percentual_he_100 || 100) / 100;
+
+  const valorHora = salario / carga;
+  const he75val   = he75h  * valorHora * (1 + he50pct);
+  const he100val  = he100h * valorHora * (1 + he100pct);
+  const bruto     = salario + he75val + he100val;
+
+  const inss = cfgDesconto.inss_ativo !== false ? calcINSS(bruto) : 0;
+  const irrf = cfgDesconto.irrf_ativo !== false ? calcIRRF(bruto, inss) : 0;
+  const vt   = (cfgDesconto.vt_ativo !== false)  ? (cfgDesconto.vt_valor || 0) : 0;
+  const vr   = (cfgDesconto.vr_ativo !== false)  ? (cfgDesconto.vr_valor || 0) : 0;
+  const ps   = (cfgDesconto.plano_saude_ativo !== false) ? (cfgDesconto.plano_saude_valor || 0) : 0;
+
+  let extrasTotal = 0;
+  extrasDesconto.forEach(e => {
+    if (!e.ativo) return;
+    if (e.tipo === 'fixo') extrasTotal += e.valor;
+    else extrasTotal += bruto * (e.valor / 100);
+  });
+
+  const totalDesc = inss + irrf + vt + vr + ps + extrasTotal;
+  const liquido   = bruto - totalDesc;
+
+  let extrasHtml = extrasDesconto.filter(e => e.ativo).map(e => {
+    const val = e.tipo === 'fixo' ? e.valor : bruto * (e.valor/100);
+    return `<div class="sim-line"><span class="label">${e.nome}</span><span class="value neg">- ${fmt(val)}</span></div>`;
+  }).join('');
+
+  document.getElementById('sim-resultado').innerHTML = `
+    <div class="sim-result">
+      <div class="sim-line"><span class="label">Salário base</span><span class="value">${fmt(salario)}</span></div>
+      ${he75val > 0 ? `<div class="sim-line"><span class="label">HE ${Math.round(he50pct*100)}% (${he75h}h)</span><span class="value pos">+ ${fmt(he75val)}</span></div>` : ''}
+      ${he100val > 0 ? `<div class="sim-line"><span class="label">HE 100% (${he100h}h)</span><span class="value pos">+ ${fmt(he100val)}</span></div>` : ''}
+      <div class="sim-line"><span class="label">Salário bruto</span><span class="value gold">${fmt(bruto)}</span></div>
+      ${inss > 0 ? `<div class="sim-line"><span class="label">INSS</span><span class="value neg">- ${fmt(inss)}</span></div>` : ''}
+      ${irrf > 0 ? `<div class="sim-line"><span class="label">IRRF</span><span class="value neg">- ${fmt(irrf)}</span></div>` : ''}
+      ${vt > 0   ? `<div class="sim-line"><span class="label">Vale transporte</span><span class="value neg">- ${fmt(vt)}</span></div>` : ''}
+      ${vr > 0   ? `<div class="sim-line"><span class="label">Vale refeição</span><span class="value neg">- ${fmt(vr)}</span></div>` : ''}
+      ${ps > 0   ? `<div class="sim-line"><span class="label">Plano de saúde</span><span class="value neg">- ${fmt(ps)}</span></div>` : ''}
+      ${extrasHtml}
+      <div class="sim-line"><span class="label">Total de descontos</span><span class="value neg">- ${fmt(totalDesc)}</span></div>
+    </div>
+    <div class="sim-total">
+      <span class="label">Salário líquido estimado</span>
+      <span class="value">${fmt(liquido)}</span>
+    </div>`;
+}
+
 function calcINSS(bruto) {
-  if (!configDescontos.inss_ativo) return 0;
-  const tabela = [
-    [1412.00, 0.075], [2666.68, 0.09], [4000.03, 0.12], [7786.02, 0.14]
-  ];
-  let inss = 0, anterior = 0;
-  for (const [limite, aliq] of tabela) {
-    if (bruto <= limite) { inss += (bruto - anterior) * aliq; break; }
-    inss += (limite - anterior) * aliq;
-    anterior = limite;
-    if (bruto > 7786.02) { inss += (bruto - 7786.02) * 0.14; break; }
+  const tabela = [[1412,7.5],[2666.68,9],[4000.03,12],[7786.02,14]];
+  let inss = 0; let resto = bruto;
+  let prev = 0;
+  for (const [teto, aliq] of tabela) {
+    if (bruto <= prev) break;
+    const base = Math.min(bruto, teto) - prev;
+    inss += base * (aliq / 100);
+    prev = teto;
+    if (bruto <= teto) break;
   }
   return Math.min(inss, bruto * 0.14);
 }
 
-function calcIRRF(brutoLiquidoINSS) {
-  if (!configDescontos.irrf_ativo) return 0;
-  const base = brutoLiquidoINSS;
-  const tabela = [
-    [2259.20, 0, 0],
-    [2826.65, 0.075, 169.44],
-    [3751.05, 0.15, 381.44],
-    [4664.68, 0.225, 662.77],
-    [Infinity, 0.275, 896.00]
-  ];
-  for (const [lim, aliq, deducao] of tabela) {
-    if (base <= lim) return Math.max(0, base * aliq - deducao);
+function calcIRRF(bruto, inss) {
+  const base = bruto - inss;
+  const tabela = [[2259.20,0,0],[2826.65,7.5,169.44],[3751.05,15,381.44],[4664.68,22.5,662.77],[Infinity,27.5,896.00]];
+  for (const [teto, aliq, ded] of tabela) {
+    if (base <= teto) return Math.max(0, base * (aliq/100) - ded);
   }
   return 0;
 }
 
-function calcSalario(salarioOverride = null, he50h = 0, he100h = 0) {
-  const salBase = salarioOverride !== null ? salarioOverride : (perfil.salario_base || 0);
-  const chMensal = perfil.carga_horaria_mensal || 220;
-  const pHE50 = (perfil.percentual_he_50 || 50) / 100;
-  const pHE100 = (perfil.percentual_he_100 || 100) / 100;
-  const valorHora = chMensal > 0 ? salBase / chMensal : 0;
-  const valorHE50 = he50h * valorHora * (1 + pHE50);
-  const valorHE100 = he100h * valorHora * (1 + pHE100);
-  const bruto = salBase + valorHE50 + valorHE100;
-  const inss = calcINSS(bruto);
-  const irrf = calcIRRF(bruto - inss);
-  const vt = configDescontos.vt_ativo ? (configDescontos.vt_valor || 0) : 0;
-  const vr = configDescontos.vr_ativo ? (configDescontos.vr_valor || 0) : 0;
-  const planoSaude = configDescontos.plano_saude_ativo ? (configDescontos.plano_saude_valor || 0) : 0;
-  let extras = 0;
-  const extrasDetalhe = descontosExtras.filter(d => d.ativo).map(d => {
-    const v = d.tipo === 'percentual' ? bruto * (d.valor / 100) : d.valor;
-    extras += v;
-    return { nome: d.nome, valor: v };
-  });
-  const totalDesc = inss + irrf + vt + vr + planoSaude + extras;
-  const liquido = Math.max(0, bruto - totalDesc);
-  return { bruto, inss, irrf, vt, vr, planoSaude, extras, extrasDetalhe, totalDesc, liquido, valorHE50, valorHE100, valorHora };
-}
-
-// ═══════════════════════════════════════════════════════════
-// SIMULAÇÃO
-// ═══════════════════════════════════════════════════════════
-function renderSimulacao() {
-  // Descontos ativos
-  document.getElementById('sim-descontos-lista').innerHTML = `
-    ${configDescontos.inss_ativo ? '<div class="sim-row"><div class="label"><span class="badge badge-danger">INSS</span></div><div class="value negative">tabela progressiva</div></div>' : ''}
-    ${configDescontos.irrf_ativo ? '<div class="sim-row"><div class="label"><span class="badge badge-danger">IRRF</span></div><div class="value negative">tabela progressiva</div></div>' : ''}
-    ${configDescontos.vt_ativo && configDescontos.vt_valor ? `<div class="sim-row"><div class="label"><span class="badge badge-warning">VT</span></div><div class="value negative">${fmtBRL(configDescontos.vt_valor)}</div></div>` : ''}
-    ${configDescontos.vr_ativo && configDescontos.vr_valor ? `<div class="sim-row"><div class="label"><span class="badge badge-warning">VR</span></div><div class="value negative">${fmtBRL(configDescontos.vr_valor)}</div></div>` : ''}
-    ${configDescontos.plano_saude_ativo && configDescontos.plano_saude_valor ? `<div class="sim-row"><div class="label"><span class="badge badge-info">Plano Saúde</span></div><div class="value negative">${fmtBRL(configDescontos.plano_saude_valor)}</div></div>` : ''}
-    ${descontosExtras.filter(d => d.ativo).map(d => `
-      <div class="sim-row"><div class="label"><span class="badge badge-purple">${d.nome}</span></div>
-      <div class="value negative">${d.tipo === 'percentual' ? d.valor + '%' : fmtBRL(d.valor)}</div></div>`).join('')}
-    ${!configDescontos.inss_ativo && !configDescontos.irrf_ativo && !descontosExtras.filter(d=>d.ativo).length ? '<div class="empty-state" style="padding:20px"><i class="fas fa-check-circle" style="color:var(--success)"></i><p>Nenhum desconto ativo</p></div>' : ''}
-  `;
-  calcSimulacao();
-}
-
-function calcSimulacao() {
-  const he50h = +document.getElementById('sim-he50').value;
-  const he100h = +document.getElementById('sim-he100').value;
-  const diasVal = +document.getElementById('sim-dias').value;
-  const salOverride = document.getElementById('sim-salario-override').value;
-  document.getElementById('sim-he50-val').textContent = he50h + 'h';
-  document.getElementById('sim-he100-val').textContent = he100h + 'h';
-  document.getElementById('sim-dias-val').textContent = diasVal;
-  const r = calcSalario(salOverride ? +salOverride : null, he50h, he100h);
-  document.getElementById('res-salario').textContent = fmtBRL(r.bruto - r.valorHE50 - r.valorHE100);
-  document.getElementById('res-he50-h').textContent = he50h + 'h';
-  document.getElementById('res-he50').textContent = fmtBRL(r.valorHE50);
-  document.getElementById('res-he100-h').textContent = he100h + 'h';
-  document.getElementById('res-he100').textContent = fmtBRL(r.valorHE100);
-  document.getElementById('res-bruto').textContent = fmtBRL(r.bruto);
-  document.getElementById('res-inss').textContent = '- ' + fmtBRL(r.inss);
-  document.getElementById('res-irrf').textContent = '- ' + fmtBRL(r.irrf);
-  document.getElementById('res-vt').textContent = '- ' + fmtBRL(r.vt);
-  document.getElementById('res-vr').textContent = '- ' + fmtBRL(r.vr);
-  document.getElementById('res-ps').textContent = '- ' + fmtBRL(r.planoSaude);
-  document.getElementById('res-extras-list').innerHTML = r.extrasDetalhe.map(e =>
-    `<div class="sim-row"><div class="label">${e.nome}</div><div class="value negative">- ${fmtBRL(e.valor)}</div></div>`
-  ).join('');
-  document.getElementById('res-total-desc').textContent = '- ' + fmtBRL(r.totalDesc);
-  document.getElementById('res-liquido').textContent = fmtBRL(r.liquido);
-}
-
-// ═══════════════════════════════════════════════════════════
-// HOLERITES
-// ═══════════════════════════════════════════════════════════
-async function renderHolerites() {
-  const now = new Date();
-  document.getElementById('hol-mes').value = now.getMonth() + 1;
-  document.getElementById('hol-ano').value = now.getFullYear();
-  await loadHolerites();
-}
-
+// ══════════════════════════════════════════════
+//  HOLERITES
+// ══════════════════════════════════════════════
 async function loadHolerites() {
-  document.getElementById('holerites-list').innerHTML = '<div class="loader"><div class="spinner"></div></div>';
-  const { data } = await db.from('holerites').select('*').eq('user_id', currentUser.id).order('ano', { ascending: false }).order('mes', { ascending: false });
+  const { data } = await db.from('holerites').select('*')
+    .eq('user_id', currentUser.id).order('ano', {ascending:false}).order('mes', {ascending:false});
+  const list = document.getElementById('hol-list');
   if (!data || !data.length) {
-    document.getElementById('holerites-list').innerHTML = '<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><p>Nenhum holerite salvo</p></div>';
+    list.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>Nenhum holerite enviado</p></div>`;
     return;
   }
-  const meses = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  document.getElementById('holerites-list').innerHTML = data.map(h => `
-    <div class="holerite-card mb-4">
-      <div class="holerite-icon"><i class="fas fa-file-pdf"></i></div>
+  const meses = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  list.innerHTML = data.map(h => `
+    <div class="holerite-row">
       <div class="holerite-info">
-        <div class="holerite-name">${meses[h.mes]}/${h.ano} ${h.arquivo_nome ? '— ' + h.arquivo_nome : ''}</div>
-        <div class="holerite-meta">
-          ${h.salario_bruto ? 'Bruto: ' + fmtBRL(h.salario_bruto) : ''}
-          ${h.salario_liquido ? ' · Líquido: ' + fmtBRL(h.salario_liquido) : ''}
-          ${h.observacoes ? ' · ' + h.observacoes : ''}
-        </div>
+        <div class="holerite-name">${meses[h.mes]} ${h.ano}</div>
+        <div class="holerite-meta">${h.arquivo_nome || 'Arquivo'} ${h.salario_liquido ? '• Líquido: '+fmt(h.salario_liquido) : ''}</div>
       </div>
-      <div class="holerite-actions">
-        ${h.arquivo_url ? `<button class="icon-btn" onclick="window.open('${h.arquivo_url}','_blank')"><i class="fas fa-eye"></i></button>` : ''}
-        <button class="icon-btn danger" onclick="deletarHolerite('${h.id}')"><i class="fas fa-trash"></i></button>
+      <div style="display:flex;gap:4px">
+        ${h.arquivo_url ? `<button class="btn-icon" onclick="window.open('${h.arquivo_url}')" title="Baixar">⬇</button>` : ''}
+        <button class="btn-icon" style="color:var(--err)" onclick="deletarHolerite('${h.id}')" title="Excluir">×</button>
       </div>
     </div>`).join('');
 }
 
-function handleFileSelect(e) { setUploadFile(e.target.files[0]); }
-function handleFileDrop(e) {
+async function uploadHolerite(input) {
+  const file = input.files[0]; if (!file) return;
+  const mes  = +document.getElementById('hol-mes').value;
+  const ano  = +document.getElementById('hol-ano').value;
+  const ext  = file.name.split('.').pop();
+  const path = `${currentUser.id}/${ano}-${String(mes).padStart(2,'0')}-${Date.now()}.${ext}`;
+
+  toast('Enviando arquivo…');
+  const { error: upErr } = await db.storage.from('holerites').upload(path, file, { upsert: true });
+  if (upErr) return toast('Erro no upload: ' + upErr.message, 'err');
+
+  const { data: urlData } = db.storage.from('holerites').getPublicUrl(path);
+
+  await db.from('holerites').insert({
+    user_id:       currentUser.id,
+    mes, ano,
+    arquivo_nome:  file.name,
+    arquivo_url:   urlData?.publicUrl || path
+  });
+
+  input.value = '';
+  toast('Holerite salvo!', 'ok');
+  await loadHolerites();
+}
+
+function handleDrop(e) {
   e.preventDefault();
   document.getElementById('upload-zone').classList.remove('drag');
-  setUploadFile(e.dataTransfer.files[0]);
-}
-function setUploadFile(file) {
-  if (!file) return;
-  if (file.size > 10 * 1024 * 1024) { toast('Arquivo muito grande (máx 10 MB)', 'error'); return; }
-  uploadFile = file;
-  document.getElementById('upload-file-name').textContent = file.name;
-  document.getElementById('upload-file-size').textContent = (file.size / 1024).toFixed(1) + ' KB';
-  document.getElementById('upload-preview').style.display = 'block';
-}
-function clearFileUpload() { uploadFile = null; document.getElementById('upload-preview').style.display = 'none'; document.getElementById('file-input').value = ''; }
-
-async function uploadHolerite() {
-  const mes = +document.getElementById('hol-mes').value;
-  const ano = +document.getElementById('hol-ano').value;
-  const bruto = +document.getElementById('hol-bruto').value || null;
-  const liquido = +document.getElementById('hol-liquido').value || null;
-  const obs = document.getElementById('hol-obs').value.trim() || null;
-  let arquivo_url = null, arquivo_nome = null;
-  if (uploadFile) {
-    const path = `${currentUser.id}/${ano}-${String(mes).padStart(2,'0')}-${Date.now()}-${uploadFile.name}`;
-    const { data: upData, error: upErr } = await db.storage.from('holerites').upload(path, uploadFile);
-    if (upErr) { toast('Erro ao enviar arquivo: ' + upErr.message, 'error'); return; }
-    const { data: urlData } = db.storage.from('holerites').getPublicUrl(path);
-    arquivo_url = urlData?.publicUrl;
-    arquivo_nome = uploadFile.name;
+  const file = e.dataTransfer.files[0];
+  if (file) {
+    const dt = new DataTransfer(); dt.items.add(file);
+    const inp = document.getElementById('hol-file');
+    inp.files = dt.files;
+    uploadHolerite(inp);
   }
-  const { error } = await db.from('holerites').insert({
-    user_id: currentUser.id, mes, ano, salario_bruto: bruto, salario_liquido: liquido,
-    observacoes: obs, arquivo_url, arquivo_nome
-  });
-  if (error) { toast('Erro ao salvar: ' + error.message, 'error'); return; }
-  toast('Holerite salvo com sucesso!', 'success');
-  clearFileUpload();
-  document.getElementById('hol-bruto').value = '';
-  document.getElementById('hol-liquido').value = '';
-  document.getElementById('hol-obs').value = '';
-  await loadHolerites();
 }
 
 async function deletarHolerite(id) {
   if (!confirm('Remover este holerite?')) return;
   await db.from('holerites').delete().eq('id', id);
-  toast('Holerite removido', 'info');
+  toast('Holerite removido', 'ok');
   await loadHolerites();
 }
 
-// ═══════════════════════════════════════════════════════════
-// CONFIGURAÇÕES
-// ═══════════════════════════════════════════════════════════
-function renderConfiguracoes() {
-  document.getElementById('cfg-nome').value = perfil.nome || '';
-  document.getElementById('cfg-salario').value = perfil.salario_base || '';
-  document.getElementById('cfg-ch-diaria').value = perfil.carga_horaria_diaria || 8;
-  document.getElementById('cfg-ch-mensal').value = perfil.carga_horaria_mensal || 220;
-  document.getElementById('cfg-he50').value = perfil.percentual_he_50 || 50;
-  document.getElementById('cfg-he100').value = perfil.percentual_he_100 || 100;
-  document.getElementById('cfg-entrada').value = perfil.horario_entrada || '08:00';
-  document.getElementById('cfg-saida').value = perfil.horario_saida || '17:00';
-  document.getElementById('cfg-intervalo').value = perfil.intervalo_minutos || 60;
-  document.getElementById('cfg-inss').checked = configDescontos.inss_ativo !== false;
-  document.getElementById('cfg-irrf').checked = configDescontos.irrf_ativo !== false;
-  document.getElementById('cfg-vt').checked = configDescontos.vt_ativo !== false;
-  document.getElementById('cfg-vt-val').value = configDescontos.vt_valor || '';
-  document.getElementById('cfg-vr').checked = configDescontos.vr_ativo !== false;
-  document.getElementById('cfg-vr-val').value = configDescontos.vr_valor || '';
-  document.getElementById('cfg-ps').checked = configDescontos.plano_saude_ativo !== false;
-  document.getElementById('cfg-ps-val').value = configDescontos.plano_saude_valor || '';
-  renderExtrasLista();
+// ══════════════════════════════════════════════
+//  ATESTADOS
+// ══════════════════════════════════════════════
+async function loadAtestados() {
+  const { data } = await db.from('atestados_medicos')
+    .select('*').eq('user_id', currentUser.id)
+    .order('data_inicio', {ascending:false})
+    .catch(() => ({ data: [] }));
+  atestados = data || [];
+  renderAtestados();
 }
 
-async function salvarPerfil() {
-  const dados = {
-    nome: document.getElementById('cfg-nome').value.trim(),
-    salario_base: +document.getElementById('cfg-salario').value || 0,
-    carga_horaria_diaria: +document.getElementById('cfg-ch-diaria').value || 8,
-    carga_horaria_mensal: +document.getElementById('cfg-ch-mensal').value || 220,
-    percentual_he_50: +document.getElementById('cfg-he50').value || 50,
-    percentual_he_100: +document.getElementById('cfg-he100').value || 100,
-    horario_entrada: document.getElementById('cfg-entrada').value,
-    horario_saida: document.getElementById('cfg-saida').value,
-    intervalo_minutos: +document.getElementById('cfg-intervalo').value || 60,
-    updated_at: new Date().toISOString()
-  };
-  const { error } = await db.from('perfis').upsert({ id: currentUser.id, ...dados });
-  if (error) { toast('Erro: ' + error.message, 'error'); return; }
-  perfil = { ...perfil, ...dados };
-  updateUserUI();
-  toast('Perfil salvo!', 'success');
-}
-
-async function salvarDescontos() {
-  const dados = {
-    user_id: currentUser.id,
-    inss_ativo: document.getElementById('cfg-inss').checked,
-    irrf_ativo: document.getElementById('cfg-irrf').checked,
-    vt_ativo: document.getElementById('cfg-vt').checked,
-    vt_valor: +document.getElementById('cfg-vt-val').value || 0,
-    vr_ativo: document.getElementById('cfg-vr').checked,
-    vr_valor: +document.getElementById('cfg-vr-val').value || 0,
-    plano_saude_ativo: document.getElementById('cfg-ps').checked,
-    plano_saude_valor: +document.getElementById('cfg-ps-val').value || 0,
-    updated_at: new Date().toISOString()
-  };
-  const { error } = await db.from('config_descontos').upsert(dados, { onConflict: 'user_id' });
-  if (error) { toast('Erro: ' + error.message, 'error'); return; }
-  configDescontos = dados;
-  toast('Descontos salvos!', 'success');
-}
-
-async function adicionarDesconto() {
-  const nome = document.getElementById('extra-nome').value.trim();
-  const tipo = document.getElementById('extra-tipo').value;
-  const valor = +document.getElementById('extra-valor').value;
-  if (!nome || !valor) { toast('Preencha nome e valor', 'error'); return; }
-  const { data, error } = await db.from('descontos_extras').insert({
-    user_id: currentUser.id, nome, tipo, valor, ativo: true
-  }).select().single();
-  if (error) { toast('Erro: ' + error.message, 'error'); return; }
-  descontosExtras.push(data);
-  document.getElementById('extra-nome').value = '';
-  document.getElementById('extra-valor').value = '';
-  renderExtrasLista();
-  toast('Desconto adicionado!', 'success');
-}
-
-function renderExtrasLista() {
-  const container = document.getElementById('extras-list');
-  if (!descontosExtras.length) {
-    container.innerHTML = '<div class="empty-state" style="padding:16px"><i class="fas fa-tag"></i><p>Nenhum desconto extra</p></div>';
+function renderAtestados() {
+  const list = document.getElementById('atestado-list');
+  if (!atestados.length) {
+    list.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><p>Nenhum atestado cadastrado</p></div>`;
     return;
   }
-  container.innerHTML = descontosExtras.map(d => `
-    <div class="discount-item">
-      <label class="toggle" style="margin-right:4px"><input type="checkbox" ${d.ativo ? 'checked' : ''} onchange="toggleDesconto('${d.id}',this.checked)"><span class="toggle-slider"></span></label>
-      <span class="name">${d.nome}</span>
-      <span class="tipo">${d.tipo === 'percentual' ? '%' : 'R$'}</span>
-      <span class="valor">${d.tipo === 'percentual' ? d.valor + '%' : fmtBRL(d.valor)}</span>
-      <button class="icon-btn danger" onclick="confirmarDelDescontoModal('${d.id}')"><i class="fas fa-trash"></i></button>
+  list.innerHTML = atestados.map(a => `
+    <div class="atestado-card">
+      <div class="atestado-header">
+        <div>
+          <div class="atestado-titulo">${a.tipo === 'dia_completo' ? 'Dia completo' : `${a.horas_abonadas || '?'}h abonadas`}</div>
+          <div class="atestado-datas">${fmtDate(a.data_inicio)}${a.data_fim !== a.data_inicio ? ' → '+fmtDate(a.data_fim) : ''}</div>
+        </div>
+        <span class="badge-abono">Abonado</span>
+      </div>
+      ${a.observacao ? `<div class="atestado-obs">${a.observacao}</div>` : ''}
+      <div style="margin-top:8px">
+        <button class="btn-icon" style="font-size:12px;color:var(--err)" onclick="deletarAtestado('${a.id}')">Remover</button>
+      </div>
     </div>`).join('');
 }
 
-async function toggleDesconto(id, ativo) {
-  await db.from('descontos_extras').update({ ativo }).eq('id', id);
-  descontosExtras = descontosExtras.map(d => d.id === id ? { ...d, ativo } : d);
+function openAtestadoModal() {
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('at-data-ini').value = today;
+  document.getElementById('at-data-fim').value = today;
+  document.getElementById('at-obs').value = '';
+  document.getElementById('at-horas').value = '';
+  document.getElementById('at-tipo').value = 'dia_completo';
+  document.getElementById('at-horas-wrap').style.display = 'none';
+  openModal('modal-atestado');
 }
 
-function confirmarDelDescontoModal(id) { delDescontoId = id; openModal('modal-del-desconto'); }
-async function confirmarDelDesconto() {
-  await db.from('descontos_extras').delete().eq('id', delDescontoId);
-  descontosExtras = descontosExtras.filter(d => d.id !== delDescontoId);
-  renderExtrasLista();
-  closeModal('modal-del-desconto');
-  toast('Desconto removido', 'info');
+async function salvarAtestado() {
+  const tipo     = document.getElementById('at-tipo').value;
+  const dataIni  = document.getElementById('at-data-ini').value;
+  const dataFim  = document.getElementById('at-data-fim').value;
+  const horas    = +document.getElementById('at-horas').value || null;
+  const obs      = document.getElementById('at-obs').value.trim();
+  if (!dataIni) return toast('Informe a data', 'err');
+
+  const { error } = await db.from('atestados_medicos').insert({
+    user_id:         currentUser.id,
+    tipo,
+    data_inicio:     dataIni,
+    data_fim:        dataFim || dataIni,
+    horas_abonadas:  horas,
+    observacao:      obs || null
+  });
+
+  if (error) {
+    if (error.code === '42P01') {
+      toast('Execute o SQL de migração para atestados no Supabase', 'err');
+    } else {
+      toast('Erro: ' + error.message, 'err');
+    }
+    return;
+  }
+
+  closeModal('modal-atestado');
+  toast('Atestado salvo!', 'ok');
+  await loadAtestados();
+  await loadHistorico();
 }
 
-// ═══════════════════════════════════════════════════════════
-// MODAIS & TOASTS
-// ═══════════════════════════════════════════════════════════
+async function deletarAtestado(id) {
+  if (!confirm('Remover este atestado?')) return;
+  await db.from('atestados_medicos').delete().eq('id', id);
+  toast('Atestado removido', 'ok');
+  await loadAtestados();
+  await loadHistorico();
+}
+
+// ══════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════
+function groupByDay(records) {
+  const map = {};
+  records.forEach(r => {
+    if (!map[r.data]) map[r.data] = [];
+    map[r.data].push(r);
+  });
+  return map;
+}
+
+function calcTrabalhado(records) {
+  const byTipo = {};
+  records.forEach(r => { byTipo[r.tipo] = new Date(r.timestamp); });
+  let total = 0;
+  if (byTipo.entrada && byTipo.saida_almoco)
+    total += byTipo.saida_almoco - byTipo.entrada;
+  if (byTipo.retorno_almoco && byTipo.saida)
+    total += byTipo.saida - byTipo.retorno_almoco;
+  if (byTipo.entrada && byTipo.saida && !byTipo.saida_almoco)
+    total += byTipo.saida - byTipo.entrada;
+  return Math.round(total / 60000);
+}
+
+function fmtHM(min) {
+  const h = Math.floor(min / 60); const m = min % 60;
+  return `${h}h ${String(m).padStart(2,'0')}m`;
+}
+
+function fmt(v) {
+  return 'R$ ' + (v || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  return new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', { day:'numeric', month:'short' });
+}
+
+function getVal(id) { return document.getElementById(id)?.value || ''; }
+function setVal(id, v) { const el = document.getElementById(id); if (el) el.value = v; }
+function isChk(id) { return document.getElementById(id)?.checked || false; }
+function chk(id, v) { const el = document.getElementById(id); if (el) el.checked = !!v; }
+
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-function toast(msg, type = 'info') {
-  const icons = { success: 'fa-check-circle', error: 'fa-times-circle', info: 'fa-info-circle', warning: 'fa-exclamation-circle' };
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.innerHTML = `<i class="fas ${icons[type]}"></i><span>${msg}</span>`;
-  document.getElementById('toast-container').appendChild(el);
-  setTimeout(() => el.remove(), 3500);
+let _toastTimer;
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (type ? ' ' + type : '');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { el.className = ''; }, 3000);
 }
 
-// ═══════════════════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════════════════
-function fmtBRL(v) {
-  return 'R$ ' + (v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-}
-
-// ═══════════════════════════════════════════════════════════
-// START
-// ═══════════════════════════════════════════════════════════
-init();
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
 </script>
 </body>
 </html>
