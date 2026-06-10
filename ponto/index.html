@@ -368,6 +368,35 @@
   <p>Carregando...</p>
 </div>
 
+<!-- Setup Supabase -->
+<div id="setup-screen" style="display:none;min-height:100vh;display:none;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 30% 20%,rgba(108,99,255,.15) 0%,transparent 60%),var(--bg)">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:100%;max-width:480px;box-shadow:0 25px 60px rgba(0,0,0,.4)">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="width:64px;height:64px;background:var(--primary);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px">⚙️</div>
+      <h2 style="font-size:20px;font-weight:700">Configurar Banco de Dados</h2>
+      <p style="color:var(--text-muted);font-size:13px;margin-top:6px">Cole as credenciais do seu projeto Supabase</p>
+    </div>
+    <div style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;color:#93c5fd">
+      <b>Como obter:</b> Acesse <b>supabase.com</b> → seu projeto → <b>Settings → API</b><br>
+      Copie a <b>Project URL</b> e a chave <b>anon public</b>.
+    </div>
+    <div class="form-group">
+      <label>Project URL</label>
+      <input class="form-control" id="setup-url" type="text" placeholder="https://xxxxxxxxxxxx.supabase.co">
+    </div>
+    <div class="form-group">
+      <label>Anon Key (public)</label>
+      <input class="form-control" id="setup-key" type="text" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+    </div>
+    <button class="btn btn-primary" onclick="salvarCredenciais()">Conectar e continuar</button>
+    <div id="setup-msg" class="auth-msg"></div>
+    <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim)">
+      As credenciais ficam salvas apenas no seu navegador (localStorage).
+    </p>
+  </div>
+</div>
+
 <!-- Auth -->
 <div id="auth-screen" style="display:none">
   <div class="auth-box">
@@ -455,9 +484,8 @@
             <div class="user-name" id="user-name">Usuário</div>
             <div class="user-email" id="user-email">email</div>
           </div>
-          <button class="btn-logout" onclick="doLogout()" title="Sair">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
+          <button class="btn-logout" onclick="doLogout()" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
+          <button class="btn-logout" onclick="showSetup()" title="Reconfigurar Supabase" style="font-size:12px"><i class="fas fa-database"></i></button>
         </div>
       </div>
     </aside>
@@ -873,12 +901,61 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// CONFIGURAÇÃO SUPABASE
+// CONFIGURAÇÃO SUPABASE (lida do localStorage)
 // ═══════════════════════════════════════════════════════════
-const SUPABASE_URL = 'COLE_SUA_SUPABASE_URL_AQUI';
-const SUPABASE_KEY = 'COLE_SUA_SUPABASE_ANON_KEY_AQUI';
 const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+let db = null;
+
+function getCredenciais() {
+  return {
+    url: localStorage.getItem('ponto_sb_url') || '',
+    key: localStorage.getItem('ponto_sb_key') || ''
+  };
+}
+
+function credenciaisValidas({ url, key }) {
+  return url.startsWith('https://') && url.includes('.supabase.co') && key.length > 20;
+}
+
+function inicializarDB() {
+  const creds = getCredenciais();
+  if (credenciaisValidas(creds)) {
+    db = createClient(creds.url, creds.key);
+    return true;
+  }
+  return false;
+}
+
+async function salvarCredenciais() {
+  const url = document.getElementById('setup-url').value.trim();
+  const key = document.getElementById('setup-key').value.trim();
+  const msg = document.getElementById('setup-msg');
+  msg.className = 'auth-msg';
+  if (!credenciaisValidas({ url, key })) {
+    msg.textContent = 'URL ou chave inválidas. Verifique e tente novamente.';
+    msg.className = 'auth-msg error';
+    return;
+  }
+  localStorage.setItem('ponto_sb_url', url);
+  localStorage.setItem('ponto_sb_key', key);
+  db = createClient(url, key);
+  // Testa conexão
+  try {
+    const { error } = await db.from('perfis').select('id').limit(1);
+    if (error && error.code !== 'PGRST116' && error.message.includes('relation')) {
+      msg.textContent = 'Conectado! Mas rode o schema.sql no Supabase primeiro.';
+      msg.className = 'auth-msg error';
+      return;
+    }
+  } catch(e) {
+    msg.textContent = 'Não foi possível conectar. Verifique as credenciais.';
+    msg.className = 'auth-msg error';
+    return;
+  }
+  hideSetup();
+  hideLoader();
+  showAuth();
+}
 
 // ═══════════════════════════════════════════════════════════
 // STATE
@@ -899,14 +976,25 @@ let pontoBloqueado = false;
 // ═══════════════════════════════════════════════════════════
 async function init() {
   startClocks();
-  const { data: { session } } = await db.auth.getSession();
-  hideLoader();
-  if (session) {
-    currentUser = session.user;
-    await loadUserData();
-    showApp();
-  } else {
-    showAuth();
+  if (!inicializarDB()) {
+    hideLoader();
+    showSetup();
+    return;
+  }
+  try {
+    const { data: { session } } = await db.auth.getSession();
+    hideLoader();
+    if (session) {
+      currentUser = session.user;
+      await loadUserData();
+      showApp();
+    } else {
+      showAuth();
+    }
+  } catch(e) {
+    hideLoader();
+    showSetup();
+    return;
   }
   db.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) {
@@ -920,11 +1008,19 @@ async function init() {
 }
 
 function hideLoader() { document.getElementById('page-loader').style.display = 'none'; }
+function showSetup() {
+  document.getElementById('setup-screen').style.display = 'flex';
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'none';
+}
+function hideSetup() { document.getElementById('setup-screen').style.display = 'none'; }
 function showAuth() {
+  document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
 }
 function showApp() {
+  document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   updateUserUI();
