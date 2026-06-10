@@ -298,6 +298,23 @@
   .btn-danger { background: rgba(239,68,68,.2); color: var(--danger); border: 1px solid rgba(239,68,68,.3); }
   .btn-danger:hover { background: rgba(239,68,68,.35); }
 
+  /* ───── ATESTADOS ───── */
+  .atestado-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
+  .atestado-icon { width: 44px; height: 44px; background: rgba(59,130,246,.15); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--info); flex-shrink: 0; }
+  .atestado-info { flex: 1; min-width: 0; }
+  .atestado-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .atestado-meta { font-size: 12px; color: var(--text-muted); }
+
+  /* ───── EDIT DAY ───── */
+  .edit-record-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; }
+  .edit-record-row .tipo-label { flex: 1; font-size: 13px; font-weight: 500; }
+  .edit-record-row input[type="time"] { padding: 6px 10px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 7px; color: var(--text); font-size: 13px; font-family: inherit; outline: none; }
+  .edit-record-row input[type="time"]:focus { border-color: var(--primary); }
+
   /* ───── TOASTS ───── */
   #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
   .toast { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px;
@@ -396,15 +413,6 @@
         <button onclick="switchTab('forgot')" style="background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;text-decoration:underline;font-family:inherit">Esqueci minha senha</button>
       </div>
       <div id="login-msg" class="auth-msg"></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:16px 0">
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-        <span style="font-size:12px;color:var(--text-dim)">ou</span>
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-      </div>
-      <button class="btn" onclick="doAppleLogin()" style="background:#fff;color:#000;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;border:none">
-        <svg width="18" height="18" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 537.8 28.3 420.3 28.3 307.4c0-176.3 115.5-269.7 230.9-269.7 61.3 0 112.4 40.5 150.4 40.5 36.4 0 93.7-42.9 163.8-42.9 26.4 0 108.2 2.6 168.6 80.6zm-87.4-183.3c28.4-34.6 48.8-82.9 48.8-131.2 0-6.7-.6-13.4-1.9-19.5-46.2 1.9-101.6 31.1-135.6 71.8-26 29.9-50.1 77.5-50.1 126.5 0 7.4 1.3 14.8 1.9 17.1 3.2.6 8.4 1.3 13.6 1.3 41.5 0 93.1-27.7 123.3-66z"/></svg>
-        Continuar com Apple
-      </button>
     </div>
     <!-- Register -->
     <div id="tab-register" style="display:none">
@@ -422,15 +430,6 @@
       </div>
       <button class="btn btn-primary" onclick="doRegister()">Criar conta</button>
       <div id="reg-msg" class="auth-msg"></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:16px 0">
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-        <span style="font-size:12px;color:var(--text-dim)">ou</span>
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-      </div>
-      <button class="btn" onclick="doAppleLogin()" style="background:#fff;color:#000;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;border:none">
-        <svg width="18" height="18" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 537.8 28.3 420.3 28.3 307.4c0-176.3 115.5-269.7 230.9-269.7 61.3 0 112.4 40.5 150.4 40.5 36.4 0 93.7-42.9 163.8-42.9 26.4 0 108.2 2.6 168.6 80.6zm-87.4-183.3c28.4-34.6 48.8-82.9 48.8-131.2 0-6.7-.6-13.4-1.9-19.5-46.2 1.9-101.6 31.1-135.6 71.8-26 29.9-50.1 77.5-50.1 126.5 0 7.4 1.3 14.8 1.9 17.1 3.2.6 8.4 1.3 13.6 1.3 41.5 0 93.1-27.7 123.3-66z"/></svg>
-        Criar conta com Apple
-      </button>
     </div>
     <!-- Esqueci senha -->
     <div id="tab-forgot" style="display:none">
@@ -481,6 +480,9 @@
         <button class="nav-item" onclick="navigate('holerites')">
           <i class="fas fa-file-invoice-dollar"></i> Holerites
         </button>
+        <button class="nav-item" onclick="navigate('atestados')">
+          <i class="fas fa-file-medical"></i> Atestados
+        </button>
         <div class="nav-section">Sistema</div>
         <button class="nav-item" onclick="navigate('configuracoes')">
           <i class="fas fa-cog"></i> Configurações
@@ -529,7 +531,7 @@
           <div class="stat-card">
             <div class="label">Horas Extras</div>
             <div class="value" id="dash-he" style="color:var(--warning)">0h 00m</div>
-            <div class="sub">HE 50% + HE 100%</div>
+            <div class="sub">HE 75% + HE 100%</div>
           </div>
           <div class="stat-card">
             <div class="label">Dias Trabalhados</div>
@@ -633,7 +635,7 @@
 
         <div class="grid-4 mb-6">
           <div class="stat-card"><div class="label">Horas Normais</div><div class="value" id="hist-hn">0h</div></div>
-          <div class="stat-card"><div class="label">HE 50%</div><div class="value" style="color:var(--warning)" id="hist-he50">0h</div></div>
+          <div class="stat-card"><div class="label">HE 75%</div><div class="value" style="color:var(--warning)" id="hist-he50">0h</div></div>
           <div class="stat-card"><div class="label">HE 100%</div><div class="value" style="color:var(--danger)" id="hist-he100">0h</div></div>
           <div class="stat-card"><div class="label">Dias</div><div class="value" id="hist-dias">0</div></div>
         </div>
@@ -684,7 +686,7 @@
             <div class="sim-section">
               <div class="sim-section-title"><i class="fas fa-plus-circle" style="color:var(--success)"></i> Proventos</div>
               <div class="sim-row"><div class="label">Salário base</div><div class="value positive" id="res-salario">R$ 0,00</div></div>
-              <div class="sim-row"><div class="label">HE 50% (<span id="res-he50-h">0h</span>)</div><div class="value positive" id="res-he50">R$ 0,00</div></div>
+              <div class="sim-row"><div class="label">HE 75% (<span id="res-he50-h">0h</span>)</div><div class="value positive" id="res-he50">R$ 0,00</div></div>
               <div class="sim-row"><div class="label">HE 100% (<span id="res-he100-h">0h</span>)</div><div class="value positive" id="res-he100">R$ 0,00</div></div>
               <div class="sim-row" style="font-weight:700"><div class="label">Salário Bruto</div><div class="value" id="res-bruto">R$ 0,00</div></div>
             </div>
@@ -780,6 +782,57 @@
         </div>
       </div>
 
+      <!-- ═══ ATESTADOS ═══ -->
+      <div class="page" id="page-atestados">
+        <div class="grid-2">
+          <div>
+            <div class="card mb-4">
+              <div class="card-header">
+                <span class="card-title"><i class="fas fa-file-medical" style="color:var(--info)"></i> Novo Atestado</span>
+              </div>
+              <div class="input-group">
+                <label>Tipo</label>
+                <select id="atst-tipo" class="form-control">
+                  <option value="dia_completo">Dia(s) completo(s)</option>
+                  <option value="horas_parciais">Horas parciais</option>
+                </select>
+              </div>
+              <div class="grid-2">
+                <div class="input-group">
+                  <label>Data início</label>
+                  <input type="date" id="atst-inicio" class="form-control">
+                </div>
+                <div class="input-group">
+                  <label>Data fim</label>
+                  <input type="date" id="atst-fim" class="form-control">
+                </div>
+              </div>
+              <div class="input-group" id="atst-horas-group" style="display:none">
+                <label>Horas abonadas</label>
+                <input type="number" id="atst-horas" class="form-control" placeholder="Ex: 4" step="0.5" min="0">
+              </div>
+              <div class="input-group">
+                <label>Observação (opcional)</label>
+                <input type="text" id="atst-obs" class="form-control" placeholder="Ex: consulta médica, exame...">
+              </div>
+              <button class="btn btn-primary mt-4" onclick="salvarAtestado()">
+                <i class="fas fa-plus"></i> Adicionar Atestado
+              </button>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"><i class="fas fa-archive" style="color:var(--info)"></i> Atestados cadastrados</span>
+              </div>
+              <div id="atestados-list">
+                <div class="loader"><div class="spinner"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ═══ CONFIGURAÇÕES ═══ -->
       <div class="page" id="page-configuracoes">
         <div class="settings-grid">
@@ -803,8 +856,8 @@
               <input type="number" id="cfg-ch-mensal" class="form-control" placeholder="220">
             </div>
             <div class="input-group">
-              <label>% Hora Extra 50%</label>
-              <input type="number" id="cfg-he50" class="form-control" value="50">
+              <label>% Hora Extra 75%</label>
+              <input type="number" id="cfg-he50" class="form-control" value="75">
             </div>
             <div class="input-group">
               <label>% Hora Extra 100%</label>
@@ -904,6 +957,41 @@
   </div>
 </div>
 
+<!-- Modal editar dia -->
+<div class="modal-overlay" id="modal-edit-day">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-edit" style="color:var(--primary)"></i> Editar registros do dia</span>
+      <button class="modal-close" onclick="closeModal('modal-edit-day')">×</button>
+    </div>
+    <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px" id="edit-day-label">Dia</p>
+    <div id="edit-day-records"></div>
+    <div class="input-group mt-4">
+      <label>Motivo da edição</label>
+      <input type="text" id="edit-motivo" class="form-control" placeholder="Ex: horário digitado errado...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-edit-day')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarEdicao()"><i class="fas fa-save"></i> Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete atestado -->
+<div class="modal-overlay" id="modal-del-atestado">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Remover atestado</span>
+      <button class="modal-close" onclick="closeModal('modal-del-atestado')">×</button>
+    </div>
+    <p style="color:var(--text-muted);font-size:14px">Tem certeza que deseja remover este atestado?</p>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-del-atestado')">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmarDelAtestado()">Remover</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast container -->
 <div id="toast-container"></div>
 
@@ -930,6 +1018,10 @@ let histYear = new Date().getFullYear();
 let uploadFile = null;
 let delDescontoId = null;
 let pontoBloqueado = false;
+let atestados = [];
+let editDayDate = null;
+let editDayRecords = [];
+let delAtestadoId = null;
 
 // ═══════════════════════════════════════════════════════════
 // INIT
@@ -983,6 +1075,8 @@ async function loadUserData() {
 
   // Registros hoje
   await loadRegistrosHoje();
+  // Atestados
+  await loadAtestados();
 }
 
 function updateUserUI() {
@@ -1059,7 +1153,8 @@ async function doLogout() {
 // ═══════════════════════════════════════════════════════════
 const pageTitles = {
   dashboard: 'Dashboard', ponto: 'Bater Ponto', historico: 'Histórico',
-  simulacao: 'Simulação Salarial', holerites: 'Holerites', configuracoes: 'Configurações'
+  simulacao: 'Simulação Salarial', holerites: 'Holerites',
+  atestados: 'Atestados Médicos', configuracoes: 'Configurações'
 };
 
 async function navigate(page) {
@@ -1078,6 +1173,7 @@ async function navigate(page) {
   if (page === 'historico') await renderHistorico();
   if (page === 'simulacao') renderSimulacao();
   if (page === 'holerites') await renderHolerites();
+  if (page === 'atestados') await renderAtestados();
   if (page === 'configuracoes') renderConfiguracoes();
 }
 
@@ -1308,7 +1404,7 @@ async function renderDashboard() {
         ['VR', -sim.vr, 'negative'],
         ['Plano de Saúde', -sim.planoSaude, 'negative'],
         ['Extras', -sim.extras, 'negative'],
-        ['HE 50% ('+formatHoras(totalHE50)+')', sim.valorHE50, 'positive'],
+        ['HE 75% ('+formatHoras(totalHE50)+')', sim.valorHE50, 'positive'],
         ['HE 100% ('+formatHoras(totalHE100)+')', sim.valorHE100, 'positive'],
       ].map(([l, v, cls]) => v !== 0 && v !== -0 ? `
         <div class="sim-row"><div class="label">${l}</div><div class="value ${cls}">${v < 0 ? '- ' + fmtBRL(-v) : fmtBRL(v)}</div></div>
@@ -1382,14 +1478,18 @@ async function renderHistorico() {
     const diaFmt = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
     const badgeClass = h >= (perfil.carga_horaria_diaria || 8) ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
     const ehFimDeSemana = d.getDay() === 0 || d.getDay() === 6;
+    const foiEditado = regs.some(r => r.editado);
+    const temAtestado = atestados.some(a => a.data_inicio <= data && a.data_fim >= data);
     return `
-      <div class="day-card">
+      <div class="day-card" onclick="openEditDay('${data}')" style="cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
         <div class="day-header">
           <div>
             <div class="day-name">${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}</div>
             <div class="day-date">${diaFmt}</div>
           </div>
-          <div style="display:flex;align-items:center;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+            ${temAtestado ? '<span class="badge badge-info"><i class="fas fa-file-medical"></i> Atestado</span>' : ''}
+            ${foiEditado ? '<span class="badge badge-purple"><i class="fas fa-edit"></i> Editado</span>' : ''}
             ${he > 0 ? `<span class="badge ${ehFimDeSemana ? 'badge-danger' : 'badge-warning'}">+${formatHoras(he)} HE</span>` : ''}
             <span class="badge ${badgeClass}">${formatHoras(h)}</span>
           </div>
@@ -1449,7 +1549,7 @@ function calcIRRF(brutoLiquidoINSS) {
 function calcSalario(salarioOverride = null, he50h = 0, he100h = 0) {
   const salBase = salarioOverride !== null ? salarioOverride : (perfil.salario_base || 0);
   const chMensal = perfil.carga_horaria_mensal || 220;
-  const pHE50 = (perfil.percentual_he_50 || 50) / 100;
+  const pHE50 = (perfil.percentual_he_50 || 75) / 100;
   const pHE100 = (perfil.percentual_he_100 || 100) / 100;
   const valorHora = chMensal > 0 ? salBase / chMensal : 0;
   const valorHE50 = he50h * valorHora * (1 + pHE50);
@@ -1612,7 +1712,7 @@ function renderConfiguracoes() {
   document.getElementById('cfg-salario').value = perfil.salario_base || '';
   document.getElementById('cfg-ch-diaria').value = perfil.carga_horaria_diaria || 8;
   document.getElementById('cfg-ch-mensal').value = perfil.carga_horaria_mensal || 220;
-  document.getElementById('cfg-he50').value = perfil.percentual_he_50 || 50;
+  document.getElementById('cfg-he50').value = perfil.percentual_he_50 || 75;
   document.getElementById('cfg-he100').value = perfil.percentual_he_100 || 100;
   document.getElementById('cfg-entrada').value = perfil.horario_entrada || '08:00';
   document.getElementById('cfg-saida').value = perfil.horario_saida || '17:00';
@@ -1733,6 +1833,136 @@ function toast(msg, type = 'info') {
 // ═══════════════════════════════════════════════════════════
 function fmtBRL(v) {
   return 'R$ ' + (v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ATESTADOS
+// ═══════════════════════════════════════════════════════════
+async function loadAtestados() {
+  const { data } = await db.from('atestados_medicos').select('*')
+    .eq('user_id', currentUser.id).order('data_inicio', { ascending: false });
+  atestados = data || [];
+}
+
+async function renderAtestados() {
+  await loadAtestados();
+  // wire up tipo select
+  const tipoSel = document.getElementById('atst-tipo');
+  tipoSel.onchange = () => {
+    document.getElementById('atst-horas-group').style.display =
+      tipoSel.value === 'horas_parciais' ? '' : 'none';
+  };
+  // set today as default dates
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('atst-inicio').value = today;
+  document.getElementById('atst-fim').value = today;
+  renderAtestadosList();
+}
+
+function renderAtestadosList() {
+  const container = document.getElementById('atestados-list');
+  if (!atestados.length) {
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-file-medical"></i><p>Nenhum atestado cadastrado</p></div>';
+    return;
+  }
+  const meses = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  container.innerHTML = atestados.map(a => {
+    const ini = new Date(a.data_inicio + 'T12:00:00');
+    const fim = new Date(a.data_fim + 'T12:00:00');
+    const fmtDate = d => `${d.getDate().toString().padStart(2,'0')}/${meses[d.getMonth()+1]}/${d.getFullYear()}`;
+    const periodo = a.data_inicio === a.data_fim ? fmtDate(ini) : `${fmtDate(ini)} a ${fmtDate(fim)}`;
+    return `
+      <div class="atestado-card">
+        <div class="atestado-icon"><i class="fas fa-file-medical"></i></div>
+        <div class="atestado-info">
+          <div class="atestado-title">${a.tipo === 'dia_completo' ? 'Dia completo' : 'Horas parciais'} — ${periodo}</div>
+          <div class="atestado-meta">
+            ${a.horas_abonadas ? a.horas_abonadas + 'h abonadas · ' : ''}
+            ${a.observacao || ''}
+          </div>
+        </div>
+        <button class="icon-btn danger" onclick="confirmarDelAtestadoModal('${a.id}')"><i class="fas fa-trash"></i></button>
+      </div>`;
+  }).join('');
+}
+
+async function salvarAtestado() {
+  const tipo = document.getElementById('atst-tipo').value;
+  const inicio = document.getElementById('atst-inicio').value;
+  const fim = document.getElementById('atst-fim').value;
+  const horas = tipo === 'horas_parciais' ? +document.getElementById('atst-horas').value || null : null;
+  const obs = document.getElementById('atst-obs').value.trim() || null;
+  if (!inicio || !fim) { toast('Preencha as datas', 'error'); return; }
+  if (fim < inicio) { toast('Data fim não pode ser anterior à data início', 'error'); return; }
+  const { error } = await db.from('atestados_medicos').insert({
+    user_id: currentUser.id, tipo, data_inicio: inicio, data_fim: fim,
+    horas_abonadas: horas, observacao: obs
+  });
+  if (error) { toast('Erro: ' + error.message, 'error'); return; }
+  toast('Atestado cadastrado!', 'success');
+  document.getElementById('atst-obs').value = '';
+  await loadAtestados();
+  renderAtestadosList();
+}
+
+function confirmarDelAtestadoModal(id) { delAtestadoId = id; openModal('modal-del-atestado'); }
+async function confirmarDelAtestado() {
+  await db.from('atestados_medicos').delete().eq('id', delAtestadoId);
+  atestados = atestados.filter(a => a.id !== delAtestadoId);
+  renderAtestadosList();
+  closeModal('modal-del-atestado');
+  toast('Atestado removido', 'info');
+}
+
+// ═══════════════════════════════════════════════════════════
+// EDIÇÃO DE REGISTROS
+// ═══════════════════════════════════════════════════════════
+async function openEditDay(data) {
+  editDayDate = data;
+  const { data: regs } = await db.from('registros_ponto').select('*')
+    .eq('user_id', currentUser.id).eq('data', data).order('timestamp');
+  editDayRecords = regs || [];
+
+  const d = new Date(data + 'T12:00:00');
+  document.getElementById('edit-day-label').textContent =
+    d.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+  document.getElementById('edit-motivo').value = '';
+
+  document.getElementById('edit-day-records').innerHTML = editDayRecords.map((r, i) => {
+    const hora = new Date(r.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const [hh, mm] = hora.split(':');
+    return `
+      <div class="edit-record-row">
+        <div class="record-icon ${r.tipo}" style="width:30px;height:30px;font-size:12px"><i class="fas ${TIPO_ICONS[r.tipo]}"></i></div>
+        <span class="tipo-label">${TIPO_LABELS[r.tipo]}</span>
+        <input type="time" id="edit-time-${i}" value="${hh}:${mm}">
+      </div>`;
+  }).join('');
+
+  openModal('modal-edit-day');
+}
+
+async function salvarEdicao() {
+  const motivo = document.getElementById('edit-motivo').value.trim();
+  if (!motivo) { toast('Informe o motivo da edição', 'error'); return; }
+
+  for (let i = 0; i < editDayRecords.length; i++) {
+    const r = editDayRecords[i];
+    const novoHorario = document.getElementById(`edit-time-${i}`).value;
+    if (!novoHorario) continue;
+    const [hh, mm] = novoHorario.split(':');
+    const novoTimestamp = new Date(`${editDayDate}T${hh}:${mm}:00`).toISOString();
+    await db.from('registros_ponto').update({
+      timestamp: novoTimestamp,
+      editado: true,
+      motivo_edicao: motivo,
+      editado_em: new Date().toISOString()
+    }).eq('id', r.id);
+  }
+
+  toast('Registros atualizados!', 'success');
+  closeModal('modal-edit-day');
+  await renderHistorico();
 }
 
 // ═══════════════════════════════════════════════════════════
