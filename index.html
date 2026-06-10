@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Notas Fiscais</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Gerenc. NFe">
+    <link rel="apple-touch-icon" href="icons/icon.svg">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -150,11 +160,79 @@
         .empty-state { text-align: center; padding: 40px 20px; color: #999; }
         .btn-group { display: flex; gap: 5px; margin-top: 10px; }
         .btn-group .btn { flex: 1; margin: 0; padding: 8px; }
+
+        /* Banner PWA */
+        #pwa-banner {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            padding: 16px 20px;
+            z-index: 9999;
+            max-width: 380px;
+            width: calc(100% - 40px);
+            animation: slideUp 0.4s ease;
+        }
+        #pwa-banner.show { display: flex; align-items: center; gap: 14px; }
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            to   { transform: translateX(-50%) translateY(0);    opacity: 1; }
+        }
+        #pwa-banner img { width: 52px; height: 52px; border-radius: 12px; }
+        #pwa-banner-texto { flex: 1; }
+        #pwa-banner-texto strong { display: block; font-size: 14px; color: #333; }
+        #pwa-banner-texto span   { font-size: 12px; color: #666; }
+        #pwa-banner-acoes { display: flex; flex-direction: column; gap: 6px; }
+        #btn-instalar {
+            background: #667eea; color: white; border: none;
+            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+            font-weight: 600; font-size: 13px; white-space: nowrap;
+        }
+        #btn-fechar-banner {
+            background: none; border: none; color: #999;
+            font-size: 12px; cursor: pointer; text-align: center;
+        }
+
+        /* Instrução iOS */
+        #ios-instrucao {
+            display: none;
+            background: #e8f0fe;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Banner de instalação (Android Chrome) -->
+    <div id="pwa-banner">
+        <img src="icons/icon.svg" alt="Ícone">
+        <div id="pwa-banner-texto">
+            <strong>Instalar no celular</strong>
+            <span>Acesse offline, sem abrir o navegador</span>
+        </div>
+        <div id="pwa-banner-acoes">
+            <button id="btn-instalar">Instalar</button>
+            <button id="btn-fechar-banner">Agora não</button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
+            <!-- Instrução iOS (Safari) -->
+            <div id="ios-instrucao">
+                <strong>Instalar no iPhone/iPad:</strong><br>
+                Toque em <strong>Compartilhar</strong> (&#x2B06; na barra inferior) &rarr; <strong>Adicionar à Tela de Início</strong> &rarr; <strong>Adicionar</strong>.
+            </div>
             <h1>📊 Gerenciador de Notas Fiscais e Estoque</h1>
             <p>Sistema integrado com cadastro de produtos (EAN), importação Excel, leitura de PDFs e histórico completo</p>
         </div>
@@ -1011,6 +1089,43 @@
         document.getElementById('nfeData').valueAsDate = new Date();
         document.getElementById('pdfData').valueAsDate = new Date();
         atualizarInterface();
+
+        // ================== PWA ==================
+        let promptInstalacao = null;
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js');
+        }
+
+        const eIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+        const eStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+
+        if (eIOS && !eStandalone) {
+            document.getElementById('ios-instrucao').style.display = 'block';
+        }
+
+        window.addEventListener('beforeinstallprompt', e => {
+            e.preventDefault();
+            promptInstalacao = e;
+            document.getElementById('pwa-banner').classList.add('show');
+        });
+
+        document.getElementById('btn-instalar').addEventListener('click', () => {
+            if (!promptInstalacao) return;
+            promptInstalacao.prompt();
+            promptInstalacao.userChoice.then(() => {
+                promptInstalacao = null;
+                document.getElementById('pwa-banner').classList.remove('show');
+            });
+        });
+
+        document.getElementById('btn-fechar-banner').addEventListener('click', () => {
+            document.getElementById('pwa-banner').classList.remove('show');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            document.getElementById('pwa-banner').classList.remove('show');
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+{
+  "name": "Gerenciador de Notas Fiscais",
+  "short_name": "Gerenc. NFe",
+  "description": "Sistema integrado de gestão de notas fiscais e estoque",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"],
+  "screenshots": []
+}
