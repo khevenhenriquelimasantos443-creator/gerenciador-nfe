@@ -2390,19 +2390,29 @@ async function salvarLancamentoManual() {
   const retornoAlmoco = document.getElementById('lanc-retorno-almoco').value;
   const saida = document.getElementById('lanc-saida').value;
   const obs = document.getElementById('lanc-obs').value.trim() || null;
+  const btnSalvar = document.querySelector('#modal-lancamento .btn-primary');
 
-  if (!data) { toast('Selecione a data', 'error'); return; }
-  if (!entrada) { toast('Horário de entrada é obrigatório', 'error'); return; }
+  if (!data) { alert('Selecione a data antes de salvar.'); return; }
+  if (!entrada) { alert('Horário de entrada é obrigatório.'); return; }
+  if (!currentUser) { alert('Sessão expirada. Faça login novamente.'); return; }
+
+  btnSalvar.disabled = true;
+  btnSalvar.textContent = 'Salvando…';
 
   try {
-    // Verifica se já tem registros nesse dia
-    const { data: existentes } = await db.from('registros_ponto').select('id')
+    const { data: existentes, error: errBusca } = await db.from('registros_ponto').select('id')
       .eq('user_id', currentUser.id).eq('data', data);
+
+    if (errBusca) { alert('Erro ao verificar registros: ' + errBusca.message); return; }
+
     if (existentes && existentes.length > 0) {
       const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
       const [ano, mes, dia] = data.split('-');
-      alert(`O dia ${dia} de ${meses[+mes-1]} já tem registros.\n\nPara editar, vá em Histórico e toque no dia.`);
-      return;
+      const substituir = confirm(`O dia ${dia} de ${meses[+mes-1]} já tem ${existentes.length} registro(s).\n\nDeseja substituir os registros existentes?`);
+      if (!substituir) return;
+      const ids = existentes.map(r => r.id);
+      const { error: errDel } = await db.from('registros_ponto').delete().in('id', ids);
+      if (errDel) { alert('Erro ao remover registros antigos: ' + errDel.message); return; }
     }
 
     const registros = [
@@ -2421,13 +2431,16 @@ async function salvarLancamentoManual() {
     }));
 
     const { error } = await db.from('registros_ponto').insert(inserts);
-    if (error) { toast('Erro ao salvar: ' + error.message, 'error'); return; }
+    if (error) { alert('Erro ao salvar: ' + error.message); return; }
 
     toast(`${registros.length} registro(s) lançado(s) com sucesso!`, 'success');
     closeModal('modal-lancamento');
     await renderHistorico();
   } catch (err) {
-    toast('Erro inesperado: ' + (err.message || err), 'error');
+    alert('Erro inesperado: ' + (err.message || String(err)));
+  } finally {
+    btnSalvar.disabled = false;
+    btnSalvar.innerHTML = '<i class="fas fa-save"></i> Salvar';
   }
 }
 
