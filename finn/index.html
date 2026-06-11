@@ -663,9 +663,10 @@ react-dom/cjs/react-dom-client.production.js:
         { id:'divida',   icon:'💳', bg:'#FFF1F2', label:'Simulador de Dívidas',    sub:'Bola de Neve vs Avalanche' },
       ]},
       { id:'acao', label:'Ação Rápida', tools:[
-        { id:'panico',   icon:'🚨', bg:'#FFF1F2', label:'Botão do Pânico',        sub:'Diária máxima para fechar no azul' },
-        { id:'desafios', icon:'🏆', bg:'#FFFBEB', label:'Desafios da Semana',     sub:'Missões para turbinar suas finanças' },
-        { id:'exportar', icon:'📥', bg:'#F0F9FF', label:'Exportar Dados CSV',     sub:'Baixe suas transações em planilha' },
+        { id:'panico',    icon:'🚨', bg:'#FFF1F2', label:'Botão do Pânico',       sub:'Diária máxima para fechar no azul' },
+        { id:'desafios',  icon:'🏆', bg:'#FFFBEB', label:'Desafios da Semana',    sub:'Missões para turbinar suas finanças' },
+        { id:'importpdf', icon:'📄', bg:'#EFF6FF', label:'Importar Extrato PDF', sub:'Nubank, Itaú, Bradesco, BB e mais' },
+        { id:'exportar',  icon:'📥', bg:'#F0F9FF', label:'Exportar Dados CSV',    sub:'Baixe suas transações em planilha' },
       ]},
     ];
 
@@ -726,8 +727,199 @@ react-dom/cjs/react-dom-client.production.js:
       case 'divida':   renderDivida(el);   break;
       case 'panico':   renderPanico(el);   break;
       case 'desafios': renderDesafios(el); break;
+      case 'importpdf': renderImportarPDF(el); break;
       case 'exportar': renderExportar(el); break;
     }
+  }
+
+  // ── IMPORTAR EXTRATO PDF ──────────────────────────────────────────────
+  function renderImportarPDF(el) {
+    el.innerHTML = '<p style="font-size:12.5px;color:#475569;margin-bottom:10px">Importe extratos bancários em PDF. Funciona com Nubank, Itaú, Bradesco, BB, Inter, C6 e outros.</p>'
+      + '<label class="fp-label">Arquivo PDF</label>'
+      + '<input type="file" accept=".pdf" id="fp-pdf-file" style="display:none">'
+      + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-select" style="width:100%;margin-bottom:10px">📄 Escolher PDF</button>'
+      + '<div id="fp-pdf-status" style="font-size:12px;color:#64748B;text-align:center;margin-bottom:6px"></div>'
+      + '<div id="fp-pdf-preview"></div>';
+    document.getElementById('fp-pdf-select').addEventListener('click', function(){
+      document.getElementById('fp-pdf-file').click();
+    });
+    document.getElementById('fp-pdf-file').addEventListener('change', function(e){
+      if(e.target.files[0]) processPDF(e.target.files[0]);
+    });
+  }
+
+  function processPDF(file) {
+    var status = document.getElementById('fp-pdf-status');
+    var preview = document.getElementById('fp-pdf-preview');
+    status.textContent = '⏳ Carregando leitor de PDF...';
+    preview.innerHTML = '';
+    if (!window.pdfjsLib) {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload = function(){
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        readPDF(file);
+      };
+      s.onerror = function(){ status.textContent = '❌ Erro ao carregar leitor. Verifique sua conexão.'; };
+      document.head.appendChild(s);
+    } else { readPDF(file); }
+  }
+
+  function readPDF(file) {
+    var status = document.getElementById('fp-pdf-status');
+    status.textContent = '📖 Lendo PDF...';
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      window.pdfjsLib.getDocument(new Uint8Array(e.target.result)).promise
+        .then(function(pdf){
+          status.textContent = '🔍 Extraindo texto de '+pdf.numPages+' página(s)...';
+          return extractPages(pdf, 1, []);
+        })
+        .then(function(lines){
+          var txs = parseBankLines(lines);
+          showPDFPreview(txs, lines);
+        })
+        .catch(function(err){ status.textContent = '❌ Erro ao ler PDF: '+err.message; });
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  function extractPages(pdf, n, acc) {
+    if (n > pdf.numPages) return Promise.resolve(acc);
+    return pdf.getPage(n).then(function(page){ return page.getTextContent(); })
+      .then(function(content){
+        var rows = {};
+        content.items.forEach(function(item){
+          var y = Math.round(item.transform[5]);
+          rows[y] = (rows[y]||[]);
+          rows[y].push(item.str);
+        });
+        var lines = Object.keys(rows).sort(function(a,b){return b-a;})
+          .map(function(y){ return rows[y].join(' ').replace(/\s+/g,' ').trim(); })
+          .filter(Boolean);
+        return extractPages(pdf, n+1, acc.concat(lines));
+      });
+  }
+
+  function parseBankLines(lines) {
+    var txs = [], seen = {};
+    var skip = /^(saldo|total|subtotal|anterior|rendim|imposto|iof|taxa|limite|fatura|pagamento\s+m|data\s|descri|valor\s|tipo\s|período|extrato|cliente|cpf|agência|conta\s)/i;
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (skip.test(line)) continue;
+      var m =
+        line.match(/^(\d{2}\/\d{2}\/\d{2,4})\s+(.{3,80}?)\s+([-+]?[\d.]*\d+,\d{2})\s*$/) ||
+        line.match(/^(\d{2}\/\d{2})\s+(.{3,80}?)\s+([-+]?[\d.]*\d+,\d{2})\s*$/) ||
+        line.match(/^(\d{2}\/\d{2}\/\d{2,4})\s+(.{3,80}?)\s+([-+]?[\d.]*\d+,\d{2})\s+[-+]?[\d.]*\d+,\d{2}\s*$/);
+      if (!m) continue;
+      var date = pdfDate(m[1]), desc = m[2].replace(/\s+/g,' ').trim(), val = pdfVal(m[3]);
+      if (!date || !desc || val === null) continue;
+      var key = date+'|'+desc+'|'+val;
+      if (seen[key]) continue;
+      seen[key] = 1;
+      txs.push({ id:'pdf_'+Date.now()+'_'+Math.random().toString(36).slice(2,6), date:date, desc:desc, val:val, cat:pdfCateg(desc), source:'pdf' });
+    }
+    return txs;
+  }
+
+  function pdfDate(str) {
+    var p = str.split('/');
+    if (p.length < 2) return null;
+    var y = p[2] ? (p[2].length===2?'20'+p[2]:p[2]) : String(new Date().getFullYear());
+    return y+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0');
+  }
+  function pdfVal(str) {
+    var v = parseFloat(str.replace(/\./g,'').replace(',','.'));
+    return isNaN(v) ? null : v;
+  }
+  function pdfCateg(d) {
+    if (/ifood|rappi|delivery|restaur|hambur|pizza|sushi|padaria|mercad|carref|pão de açúcar|superm/i.test(d)) return 'Alimentacao';
+    if (/uber|99pop|taxi|ônibus|metrô|combustível|gasolina|posto|estacion|pedágio/i.test(d)) return 'Transporte';
+    if (/farmá|medic|consul|clíni|hospital|plano.*saúde|unimed|hapvida|drogaria/i.test(d)) return 'Saude';
+    if (/netflix|spotify|steam|prime|cinemark|ingresso|lazer/i.test(d)) return 'Lazer';
+    if (/escola|facul|curso|livro|udemy|educação/i.test(d)) return 'Educacao';
+    if (/aluguel|condomín|iptu|energia|água|gás|claro|vivo|tim\b|oi\b|internet/i.test(d)) return 'Moradia';
+    if (/roupa|camiseta|calça|sapato|tênis|zara|renner|c&a|hm\b|forever/i.test(d)) return 'Vestuario';
+    if (/investim|cdb|tesouro|ação|fundo|xp\b|btg|nuinvest/i.test(d)) return 'Investimento';
+    if (/salário|pagamento|vencim|transferência.*receb|pix.*receb|crédito.*conta/i.test(d)) return 'Salario';
+    return 'Outros';
+  }
+
+  function showPDFPreview(txs, rawLines) {
+    var status = document.getElementById('fp-pdf-status');
+    var preview = document.getElementById('fp-pdf-preview');
+    if (!txs.length) {
+      status.innerHTML = '';
+      preview.innerHTML = '<div class="fp-result fp-warn" style="text-align:center">'
+        + '⚠️ Nenhuma transação detectada automaticamente.<br><small style="color:#64748B">Bancos com layouts muito diferentes podem não ser detectados.</small><br><br>'
+        + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-raw" style="font-size:11px;padding:6px 12px">Ver texto extraído</button></div>';
+      document.getElementById('fp-pdf-raw').addEventListener('click', function(){
+        preview.innerHTML = '<textarea style="width:100%;height:180px;font-size:10px;border:1px solid #E2E8F0;border-radius:8px;padding:8px;font-family:monospace;resize:vertical" readonly>'+rawLines.slice(0,80).join('\n')+'</textarea>';
+      });
+      return;
+    }
+    var rec=0, desp=0;
+    txs.forEach(function(t){if(t.val>=0)rec+=t.val;else desp+=Math.abs(t.val);});
+    status.innerHTML = '✅ <strong>'+txs.length+' transações detectadas</strong>';
+
+    var rows = txs.slice(0,60).map(function(tx){
+      var d = tx.date?tx.date.split('-').reverse().join('/'):'';
+      return '<tr style="border-bottom:1px solid #F1F5F9">'
+        + '<td style="padding:6px 8px;white-space:nowrap;color:#475569">'+d+'</td>'
+        + '<td style="padding:6px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+tx.desc+'">'+tx.desc+'</td>'
+        + '<td style="padding:6px 8px;text-align:right;font-weight:700;white-space:nowrap;color:'+(tx.val>=0?'#059669':'#DC2626')+'">'+(tx.val>0?'+':'')+BRL(tx.val)+'</td>'
+        + '<td style="padding:6px 8px;font-size:10px;color:#64748B">'+tx.cat+'</td>'
+        + '</tr>';
+    }).join('');
+    if(txs.length>60) rows += '<tr><td colspan="4" style="padding:8px;text-align:center;color:#94A3B8;font-size:11px">+mais '+(txs.length-60)+'</td></tr>';
+
+    preview.innerHTML = '<div style="display:flex;gap:8px;margin-bottom:10px;font-size:12px">'
+      + '<div style="flex:1;background:#D1FAE5;border-radius:8px;padding:8px;text-align:center"><div style="font-weight:800;color:#059669">'+BRL(rec)+'</div><div style="color:#065F46;font-size:11px">Receitas</div></div>'
+      + '<div style="flex:1;background:#FEE2E2;border-radius:8px;padding:8px;text-align:center"><div style="font-weight:800;color:#DC2626">'+BRL(desp)+'</div><div style="color:#991B1B;font-size:11px">Despesas</div></div>'
+      + '</div>'
+      + '<div style="max-height:200px;overflow-y:auto;border:1px solid #E2E8F0;border-radius:10px;font-size:12px">'
+      + '<table style="width:100%;border-collapse:collapse">'
+      + '<thead><tr style="background:#F8FAFC;position:sticky;top:0">'
+      + '<th style="padding:7px 8px;text-align:left;font-size:10px;color:#64748B;border-bottom:1px solid #E2E8F0">DATA</th>'
+      + '<th style="padding:7px 8px;text-align:left;font-size:10px;color:#64748B;border-bottom:1px solid #E2E8F0">DESCRIÇÃO</th>'
+      + '<th style="padding:7px 8px;text-align:right;font-size:10px;color:#64748B;border-bottom:1px solid #E2E8F0">VALOR</th>'
+      + '<th style="padding:7px 8px;text-align:left;font-size:10px;color:#64748B;border-bottom:1px solid #E2E8F0">CAT.</th>'
+      + '</tr></thead><tbody>'+rows+'</tbody></table></div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">'
+      + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-csv" style="font-size:12px">📥 Baixar CSV</button>'
+      + '<button class="fp-btn fp-btn-green" id="fp-pdf-import" style="font-size:12px">✅ Importar</button>'
+      + '</div>';
+
+    document.getElementById('fp-pdf-csv').addEventListener('click', function(){
+      var header = 'Data,Descricao,Valor,Categoria,Tipo';
+      var csvRows = txs.map(function(t){
+        return '"'+t.date+'","'+(t.desc||'').replace(/"/g,'""')+'","'+Math.abs(t.val).toFixed(2).replace('.',',')+'","'+t.cat+'","'+(t.val>=0?'Receita':'Despesa')+'"';
+      });
+      var csv = '﻿'+[header].concat(csvRows).join('\r\n');
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+      a.download = 'extrato_importado_'+new Date().toISOString().slice(0,10)+'.csv';
+      a.click();
+    });
+
+    document.getElementById('fp-pdf-import').addEventListener('click', function(){
+      var id = pid();
+      if (!id) {
+        document.getElementById('fp-pdf-status').innerHTML = '⚠️ Faça login no Finn primeiro. Use "Baixar CSV" e importe pelo menu do app.';
+        return;
+      }
+      var data = STORE.getData(id);
+      var existing = data.txs || [];
+      var existIds = {};
+      existing.forEach(function(t){existIds[t.id]=1;});
+      var newTxs = txs.filter(function(t){return !existIds[t.id];});
+      if (!newTxs.length) { document.getElementById('fp-pdf-status').innerHTML = '⚠️ Todas as transações já existem.'; return; }
+      data.txs = existing.concat(newTxs);
+      localStorage.setItem('fiq_data_'+id, JSON.stringify(data));
+      document.getElementById('fp-pdf-status').innerHTML = '✅ <strong>'+newTxs.length+' transações importadas!</strong>';
+      document.getElementById('fp-pdf-preview').innerHTML = '<div class="fp-result fp-good" style="text-align:center">✅ '+newTxs.length+' transações adicionadas!<br><br>'
+        + '<button class="fp-btn fp-btn-primary" onclick="location.reload()" style="font-size:12px">🔄 Recarregar app</button></div>';
+    });
   }
 
   // ── SCORE FINANCEIRO ─────────────────────────────────────────────────
