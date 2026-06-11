@@ -958,7 +958,7 @@
             </div>
             <div class="input-group">
               <label>Carga horária diária (h)</label>
-              <input type="number" id="cfg-ch-diaria" class="form-control" placeholder="8" step="0.5">
+              <input type="number" id="cfg-ch-diaria" class="form-control" placeholder="7.33" step="0.01">
             </div>
             <div class="input-group">
               <label>Carga horária mensal (h)</label>
@@ -1139,7 +1139,8 @@
       <label>Motivo da edição</label>
       <input type="text" id="edit-motivo" class="form-control" placeholder="Ex: horário digitado errado...">
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" style="flex-wrap:wrap;gap:8px">
+      <button class="btn btn-danger" style="flex:none" onclick="deletarDia()"><i class="fas fa-trash"></i> Deletar dia</button>
       <button class="btn btn-secondary" onclick="closeModal('modal-edit-day')">Cancelar</button>
       <button class="btn btn-primary" onclick="salvarEdicao()"><i class="fas fa-save"></i> Salvar</button>
     </div>
@@ -1476,7 +1477,7 @@ function calcHorasDia(registros) {
 }
 
 function horasExtras(horasDia) {
-  const limite = perfil.carga_horaria_diaria || 8;
+  const limite = perfil.carga_horaria_diaria || 7.33;
   const he = Math.max(0, horasDia - limite);
   return he;
 }
@@ -1514,9 +1515,9 @@ async function renderDashboard() {
     const h = calcHorasDia(regs);
     totalHoras += h;
     const he = horasExtras(h);
-    // Sábados → 100%, demais → 50%
+    // Domingo → 100%, Sábado e dias úteis → 75%
     const data = new Date(regs[0].data + 'T12:00:00');
-    if (data.getDay() === 6 || data.getDay() === 0) totalHE100 += he;
+    if (data.getDay() === 0) totalHE100 += he;
     else totalHE50 += he;
   });
 
@@ -1619,13 +1620,13 @@ async function renderHistorico() {
   });
 
   let totalHN = 0, totalHE50 = 0, totalHE100 = 0;
-  const limite = perfil.carga_horaria_diaria || 8;
+  const limite = perfil.carga_horaria_diaria || 7.33;
   Object.entries(porDia).forEach(([, regs]) => {
     const h = calcHorasDia(regs);
     const he = Math.max(0, h - limite);
     totalHN += Math.min(h, limite);
     const data = new Date(regs[0].data + 'T12:00:00');
-    if (data.getDay() === 6 || data.getDay() === 0) totalHE100 += he;
+    if (data.getDay() === 0) totalHE100 += he;
     else totalHE50 += he;
   });
 
@@ -1647,8 +1648,8 @@ async function renderHistorico() {
     const d = new Date(data + 'T12:00:00');
     const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'long' });
     const diaFmt = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-    const badgeClass = h >= (perfil.carga_horaria_diaria || 8) ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
-    const ehFimDeSemana = d.getDay() === 0 || d.getDay() === 6;
+    const badgeClass = h >= (perfil.carga_horaria_diaria || 7.33) ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
+    const ehFimDeSemana = d.getDay() === 0; // só domingo = HE 100%
     const foiEditado = regs.some(r => r.editado);
     const temAtestado = atestados.some(a => a.data_inicio <= data && a.data_fim >= data);
     return `
@@ -1881,7 +1882,7 @@ async function deletarHolerite(id) {
 function renderConfiguracoes() {
   document.getElementById('cfg-nome').value = perfil.nome || '';
   document.getElementById('cfg-salario').value = perfil.salario_base || '';
-  document.getElementById('cfg-ch-diaria').value = perfil.carga_horaria_diaria || 8;
+  document.getElementById('cfg-ch-diaria').value = perfil.carga_horaria_diaria || 7.33;
   document.getElementById('cfg-ch-mensal').value = perfil.carga_horaria_mensal || 220;
   document.getElementById('cfg-he50').value = perfil.percentual_he_50 || 75;
   document.getElementById('cfg-he100').value = perfil.percentual_he_100 || 100;
@@ -2256,6 +2257,16 @@ async function openEditDay(data) {
   }).join('');
 
   openModal('modal-edit-day');
+}
+
+async function deletarDia() {
+  if (!confirm(`Deletar todos os registros de ${editDayDate}? Esta ação não pode ser desfeita.`)) return;
+  const ids = editDayRecords.map(r => r.id);
+  const { error } = await db.from('registros_ponto').delete().in('id', ids);
+  if (error) { toast('Erro ao deletar: ' + error.message, 'error'); return; }
+  toast('Registros deletados', 'info');
+  closeModal('modal-edit-day');
+  await renderHistorico();
 }
 
 async function salvarEdicao() {
