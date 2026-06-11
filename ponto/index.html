@@ -206,6 +206,27 @@
     background: var(--bg); border: 1px solid var(--border); border-radius: 20px; font-size: 12px;
   }
   .day-record-chip i { font-size: 10px; }
+
+  /* ───── HIST CALENDAR GRID ───── */
+  .hist-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .hist-week-hdr { text-align: center; font-size: 10px; font-weight: 700; color: var(--text-dim); padding: 6px 0 8px; text-transform: uppercase; letter-spacing: .04em; }
+  .hist-day-cell { border-radius: 8px; border: 1px solid var(--border); background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 2px; text-align: center; transition: border-color .15s, background .15s; min-height: 54px; }
+  .hist-day-cell.clickable { cursor: pointer; }
+  .hist-day-cell.clickable:hover { border-color: var(--primary); background: var(--primary-dim); }
+  .hist-day-cell.day-empty-slot { background: transparent; border-color: transparent; }
+  .hist-day-cell.day-full { border-color: rgba(34,197,94,.4); background: rgba(34,197,94,.08); }
+  .hist-day-cell.day-partial { border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.08); }
+  .hist-day-cell.day-abonado { border-color: rgba(56,189,248,.4); background: rgba(56,189,248,.08); }
+  .hist-day-cell.day-hoje { border-color: var(--primary) !important; border-width: 2px; }
+  .hist-day-cell.day-weekend { background: rgba(255,255,255,.02); opacity: .5; }
+  .hist-day-cell.day-future { opacity: .3; }
+  .hist-day-num { font-size: 14px; font-weight: 700; line-height: 1; }
+  .hist-day-hrs { font-size: 9px; font-weight: 600; margin-top: 4px; color: var(--text-muted); }
+  .hist-day-hrs.clr-ok { color: var(--success); }
+  .hist-day-hrs.clr-parcial { color: var(--warning); }
+  .hist-day-hrs.clr-abonado { color: var(--info); }
+  .hist-day-he { font-size: 8px; color: var(--warning); margin-top: 2px; font-weight: 600; }
+
   .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .badge-success { background: rgba(34,197,94,.15); color: var(--success); }
   .badge-warning { background: rgba(245,158,11,.15); color: var(--warning); }
@@ -1549,16 +1570,22 @@ async function renderDashboard() {
     porDia[r.data].push(r);
   });
 
-  let totalHoras = 0, totalHE50 = 0, totalHE100 = 0;
-  const diasTrabalhados = Object.keys(porDia).length;
-  Object.values(porDia).forEach(regs => {
+  const diasAbonados = getDiasAbonados(ano, mes);
+  const limite = perfil.carga_horaria_diaria || 7.33;
+
+  let totalHoras = 0, totalHE50 = 0, totalHE100 = 0, diasTrabalhados = 0;
+  Object.entries(porDia).forEach(([data, regs]) => {
     const h = calcHorasDia(regs);
     totalHoras += h;
     const he = horasExtras(h);
-    // Domingo → 100%, Sábado e dias úteis → 75%
-    const data = new Date(regs[0].data + 'T12:00:00');
-    if (data.getDay() === 0) totalHE100 += he;
+    const d = new Date(data + 'T12:00:00');
+    if (d.getDay() === 0) totalHE100 += he;
     else totalHE50 += he;
+    diasTrabalhados++;
+  });
+  // Dias abonados sem ponto contam como jornada normal
+  Object.keys(diasAbonados).forEach(data => {
+    if (!porDia[data]) { totalHoras += limite; diasTrabalhados++; }
   });
 
   // Registros hoje
@@ -1710,54 +1737,57 @@ async function renderHistorico() {
   document.getElementById('hist-he100').textContent = formatHoras(totalHE100);
   document.getElementById('hist-dias').textContent = totalDias;
 
-  if (!todasDatas.size) {
-    document.getElementById('hist-list').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Nenhum registro neste mês</p></div>';
-    return;
+  // Render calendar grid — all days from 1 ascending
+  const hoje = new Date().toISOString().split('T')[0];
+  const primeroDia = new Date(histYear, histMonth - 1, 1).getDay(); // 0=Dom
+  const diasAbrevs = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+  let html = '<div class="hist-cal-grid">';
+  diasAbrevs.forEach(d => { html += `<div class="hist-week-hdr">${d}</div>`; });
+
+  for (let i = 0; i < primeroDia; i++) html += '<div class="hist-day-cell day-empty-slot"></div>';
+
+  for (let dia = 1; dia <= ultDia; dia++) {
+    const dataStr = `${histYear}-${String(histMonth).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+    const regs = porDia[dataStr] || [];
+    const abonado = diasAbonados[dataStr];
+    const ehAbonado = abonado && !regs.length;
+    const dObj = new Date(dataStr + 'T12:00:00');
+    const diaSem = dObj.getDay();
+    const ehFimDeSemana = diaSem === 0 || diaSem === 6;
+    const ehFuturo = dataStr > hoje;
+    const ehHoje = dataStr === hoje;
+
+    const h = ehAbonado ? limite : (regs.length ? calcHorasDia(regs) : 0);
+    const he = regs.length ? horasExtras(h) : 0;
+    const hasAction = regs.length > 0;
+
+    let cls = 'hist-day-cell';
+    if (hasAction) cls += ' clickable';
+    if (ehHoje) cls += ' day-hoje';
+    if (ehFuturo) cls += ' day-future';
+    else if (ehAbonado) cls += ' day-abonado';
+    else if (regs.length > 0) cls += h >= limite ? ' day-full' : ' day-partial';
+    else if (ehFimDeSemana) cls += ' day-weekend';
+
+    let hrsHtml = '';
+    if (ehAbonado) {
+      hrsHtml = `<div class="hist-day-hrs clr-abonado"><i class="fas ${abonado.icon}" style="font-size:8px"></i></div>`;
+    } else if (regs.length) {
+      const hrsClr = h >= limite ? 'clr-ok' : 'clr-parcial';
+      hrsHtml = `<div class="hist-day-hrs ${hrsClr}">${formatHoras(h)}</div>`;
+      if (he > 0) hrsHtml += `<div class="hist-day-he">+${formatHoras(he)}</div>`;
+    }
+
+    const titleAttr = abonado ? abonado.label : (regs.length ? formatHoras(h) : '');
+    html += `<div class="${cls}" ${hasAction ? `onclick="openEditDay('${dataStr}')"` : ''} title="${titleAttr}">
+      <div class="hist-day-num">${dia}</div>
+      ${hrsHtml}
+    </div>`;
   }
 
-  const diasOrdenados = [...todasDatas].sort((a, b) => b.localeCompare(a));
-  document.getElementById('hist-list').innerHTML = diasOrdenados.map(data => {
-    const regs = porDia[data] || [];
-    const abonado = diasAbonados[data];
-    const ehSoAbonado = abonado && !regs.length;
-    const h = ehSoAbonado ? limite : calcHorasDia(regs);
-    const he = horasExtras(h);
-    const d = new Date(data + 'T12:00:00');
-    const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'long' });
-    const diaFmt = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-    const badgeClass = h >= limite ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
-    const ehFimDeSemana = d.getDay() === 0;
-    const foiEditado = regs.some(r => r.editado);
-
-    const deleteEspBtn = abonado && abonado.id
-      ? `<button class="icon-btn danger" style="margin-left:4px" onclick="event.stopPropagation();deletarDiaEspecial('${abonado.id}')" title="Remover marcação"><i class="fas fa-times"></i></button>`
-      : '';
-
-    return `
-      <div class="day-card" onclick="${regs.length ? `openEditDay('${data}')` : 'void(0)'}" style="cursor:${regs.length ? 'pointer' : 'default'};transition:border-color .15s;${ehSoAbonado ? 'border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.05)' : ''}" ${regs.length ? `onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='${ehSoAbonado ? 'rgba(56,189,248,0.3)' : 'var(--border)'}}'"` : ''}>
-        <div class="day-header">
-          <div>
-            <div class="day-name">${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}</div>
-            <div class="day-date">${diaFmt}</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">
-            ${abonado ? `<span class="badge ${abonado.badge}"><i class="fas ${abonado.icon}"></i> ${abonado.label}</span>${deleteEspBtn}` : ''}
-            ${foiEditado ? '<span class="badge badge-purple"><i class="fas fa-edit"></i> Editado</span>' : ''}
-            ${he > 0 ? `<span class="badge ${ehFimDeSemana ? 'badge-danger' : 'badge-warning'}">+${formatHoras(he)} HE</span>` : ''}
-            <span class="badge ${badgeClass}">${formatHoras(h)}</span>
-          </div>
-        </div>
-        <div class="day-records">
-          ${ehSoAbonado
-            ? `<div class="day-record-chip" style="color:var(--info)"><i class="fas ${abonado.icon}"></i> Jornada normal contabilizada (${formatHoras(limite)})</div>`
-            : regs.map(r => `
-                <div class="day-record-chip">
-                  <i class="fas ${TIPO_ICONS[r.tipo]}"></i>
-                  ${TIPO_LABELS[r.tipo]}: <strong>${new Date(r.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</strong>
-                </div>`).join('')}
-        </div>
-      </div>`;
-  }).join('');
+  html += '</div>';
+  document.getElementById('hist-list').innerHTML = html;
 }
 
 function changeMonth(delta) {
