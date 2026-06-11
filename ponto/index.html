@@ -227,6 +227,24 @@
   .hist-day-hrs.clr-abonado { color: var(--info); }
   .hist-day-he { font-size: 8px; color: var(--warning); margin-top: 2px; font-weight: 600; }
 
+  /* ───── AJUDA ───── */
+  .ajuda-accordion { display: flex; flex-direction: column; gap: 8px; }
+  .ajuda-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .ajuda-title { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 700; user-select: none; }
+  .ajuda-title::-webkit-details-marker { display: none; }
+  .ajuda-title span { display: flex; align-items: center; gap: 10px; }
+  .ajuda-arrow { font-size: 11px; color: var(--text-dim); transition: transform .2s; }
+  details[open] .ajuda-arrow { transform: rotate(180deg); }
+  details[open] .ajuda-title { border-bottom: 1px solid var(--border); }
+  .ajuda-body { padding: 16px 18px; }
+  .ajuda-step { display: flex; gap: 12px; margin-bottom: 13px; align-items: flex-start; }
+  .ajuda-step:last-of-type { margin-bottom: 0; }
+  .ajuda-step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--primary-dim); border: 1px solid rgba(37,99,235,.35); color: var(--primary-light); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ajuda-step-text { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .ajuda-step-text strong { color: var(--text); }
+  .ajuda-tip { background: var(--primary-dim); border: 1px solid rgba(37,99,235,.2); border-radius: 8px; padding: 9px 13px; font-size: 12px; color: var(--primary-light); margin-top: 12px; display: flex; align-items: flex-start; gap: 8px; }
+  .ajuda-legend-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
+
   .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .badge-success { background: rgba(34,197,94,.15); color: var(--success); }
   .badge-warning { background: rgba(245,158,11,.15); color: var(--warning); }
@@ -560,6 +578,9 @@
         <div class="nav-section">Sistema</div>
         <button class="nav-item" onclick="navigate('configuracoes')">
           <i class="fas fa-cog"></i> Configurações
+        </button>
+        <button class="nav-item" onclick="navigate('ajuda')">
+          <i class="fas fa-question-circle"></i> Ajuda
         </button>
       </nav>
       <div class="sidebar-footer">
@@ -1075,6 +1096,136 @@
         </div>
       </div>
 
+      <!-- ═══ AJUDA ═══ -->
+      <div class="page" id="page-ajuda">
+        <div class="card mb-4" style="text-align:center;padding:24px 16px 16px">
+          <div style="width:52px;height:52px;border-radius:14px;background:var(--primary-dim);border:1px solid rgba(37,99,235,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px;color:var(--primary-light)">
+            <i class="fas fa-question-circle"></i>
+          </div>
+          <div style="font-size:18px;font-weight:800;margin-bottom:6px">Como usar o ClockIn</div>
+          <div style="font-size:13px;color:var(--text-muted)">Guia completo de funcionalidades — toque em cada seção para expandir</div>
+        </div>
+
+        <div class="ajuda-accordion">
+
+          <!-- 1 — Primeiros passos -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-rocket" style="color:var(--primary)"></i> Primeiros passos</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">Crie sua conta e faça <strong>login</strong> no app.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Acesse <strong>Configurações</strong> no menu lateral e preencha seu <strong>salário base</strong>.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">Informe seu horário padrão: <strong>entrada</strong>, <strong>saída</strong> e <strong>tempo de almoço</strong>. A carga horária diária é calculada automaticamente.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">4</div><div class="ajuda-step-text">Configure os <strong>descontos</strong>: VT, VR, plano de saúde e qualquer outro desconto presente no seu holerite.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">5</div><div class="ajuda-step-text">Salve — o sistema já está pronto para calcular seu salário automaticamente!</div></div>
+              <div class="ajuda-tip"><i class="fas fa-info-circle"></i> O divisor padrão é <strong>220h/mês</strong> (CLT). Ajuste em Configurações se o seu contrato for diferente.</div>
+            </div>
+          </details>
+
+          <!-- 2 — Bater ponto -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-clock" style="color:var(--success)"></i> Bater ponto</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">Acesse <strong>Bater Ponto</strong> no menu.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Ao chegar no trabalho: toque em <strong>Entrada</strong>.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">Ao sair para almoço: toque em <strong>Saída Almoço</strong>.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">4</div><div class="ajuda-step-text">Ao retornar: toque em <strong>Retorno Almoço</strong>.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">5</div><div class="ajuda-step-text">Ao encerrar: toque em <strong>Saída</strong>.</div></div>
+              <div class="ajuda-tip"><i class="fas fa-lightbulb"></i> Os botões aparecem na ordem correta automaticamente — você não pode pular etapas.</div>
+            </div>
+          </details>
+
+          <!-- 3 — Histórico -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-calendar-alt" style="color:var(--info)"></i> Histórico e edição</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">Acesse <strong>Histórico</strong> para ver o calendário do mês com todos os dias.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Use as setas <strong>◀ ▶</strong> para navegar entre meses.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">Toque em uma célula com registros para <strong>editar horários</strong> ou <strong>deletar o dia</strong>.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">4</div><div class="ajuda-step-text">Esqueceu de bater ponto? Use <strong>"Lançar dia"</strong> para adicionar um dia retroativamente.</div></div>
+              <div style="margin-top:14px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+                <div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">Legenda das cores</div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-muted)"><span class="ajuda-legend-dot" style="background:rgba(34,197,94,.5);border:1px solid rgba(34,197,94,.5)"></span><strong style="color:var(--text)">Verde</strong> — Jornada completa</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-muted)"><span class="ajuda-legend-dot" style="background:rgba(245,158,11,.5);border:1px solid rgba(245,158,11,.4)"></span><strong style="color:var(--text)">Laranja</strong> — Jornada parcial</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-muted)"><span class="ajuda-legend-dot" style="background:rgba(56,189,248,.5);border:1px solid rgba(56,189,248,.4)"></span><strong style="color:var(--text)">Azul</strong> — Atestado ou dia especial</div>
+                  <div style="display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-muted)"><span class="ajuda-legend-dot" style="background:var(--border)"></span><strong style="color:var(--text)">Cinza</strong> — Fim de semana / sem registro</div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- 4 — Atestados -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-file-medical" style="color:var(--warning)"></i> Atestados médicos</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">Acesse <strong>Atestados</strong> no menu lateral.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Clique em <strong>"Novo atestado"</strong> e preencha: tipo (dia completo ou horas parciais), data de início e data de fim.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">Salve. Os dias cobertos são automaticamente contabilizados como <strong>jornada normal</strong> — sem precisar bater ponto.</div></div>
+              <div class="ajuda-tip"><i class="fas fa-info-circle"></i> Dia completo = jornada inteira creditada. Horas parciais = apenas as horas informadas são abonadas.</div>
+            </div>
+          </details>
+
+          <!-- 5 — Dias especiais -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-star" style="color:#fbbf24"></i> Feriados, DSR e Folgas</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">No <strong>Histórico</strong>, clique em <strong>"Marcar especial"</strong> no topo da tela.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Escolha a data e o tipo: <strong>Feriado</strong>, <strong>DSR</strong> ou <strong>Folga</strong>.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">Salve. O dia é contabilizado como jornada normal sem precisar registrar ponto.</div></div>
+              <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--text-muted);padding:8px 12px;background:var(--bg);border-radius:7px;border:1px solid var(--border)"><strong style="color:var(--text)">Feriado</strong> — Nacional, estadual ou municipal</div>
+                <div style="font-size:12px;color:var(--text-muted);padding:8px 12px;background:var(--bg);border-radius:7px;border:1px solid var(--border)"><strong style="color:var(--text)">DSR</strong> — Descanso Semanal Remunerado (a empresa paga o dia de folga)</div>
+                <div style="font-size:12px;color:var(--text-muted);padding:8px 12px;background:var(--bg);border-radius:7px;border:1px solid var(--border)"><strong style="color:var(--text)">Folga</strong> — Folga acordada ou compensação de hora extra</div>
+              </div>
+            </div>
+          </details>
+
+          <!-- 6 — Simulação -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-calculator" style="color:var(--primary-light)"></i> Simulação salarial</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">O <strong>Dashboard</strong> mostra a estimativa do mês atual com base nos seus pontos, atestados e dias especiais.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Acesse <strong>Simulação</strong> para explorar cenários: ajuste as horas extras com os sliders e veja o líquido mudar em tempo real.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">Fórmula: <strong>Salário base + HE 75% + HE 100% − INSS − IRRF − descontos = Líquido estimado</strong>.</div></div>
+              <div class="ajuda-tip"><i class="fas fa-bolt"></i> <strong>HE 75%</strong> = horas extras em dias úteis e sábados. <strong>HE 100%</strong> = horas extras somente aos domingos.</div>
+            </div>
+          </details>
+
+          <!-- 7 — Holerites -->
+          <details class="ajuda-item">
+            <summary class="ajuda-title">
+              <span><i class="fas fa-file-invoice-dollar" style="color:#f87171"></i> Holerites digitais</span>
+              <i class="fas fa-chevron-down ajuda-arrow"></i>
+            </summary>
+            <div class="ajuda-body">
+              <div class="ajuda-step"><div class="ajuda-step-num">1</div><div class="ajuda-step-text">Acesse <strong>Holerites</strong> no menu lateral.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">2</div><div class="ajuda-step-text">Clique na área de upload ou <strong>arraste um PDF</strong> para a área indicada.</div></div>
+              <div class="ajuda-step"><div class="ajuda-step-num">3</div><div class="ajuda-step-text">O holerite fica salvo na sua conta. Clique nele para <strong>visualizar ou baixar</strong> a qualquer momento.</div></div>
+              <div class="ajuda-tip"><i class="fas fa-lock"></i> Seus holerites são armazenados de forma privada — apenas você tem acesso.</div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
@@ -1385,7 +1536,7 @@ async function doLogout() {
 const pageTitles = {
   dashboard: 'Dashboard', ponto: 'Bater Ponto', historico: 'Histórico',
   simulacao: 'Simulação Salarial', holerites: 'Holerites',
-  atestados: 'Atestados Médicos', configuracoes: 'Configurações'
+  atestados: 'Atestados Médicos', configuracoes: 'Configurações', ajuda: 'Ajuda'
 };
 
 async function navigate(page) {
