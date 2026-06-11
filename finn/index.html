@@ -447,113 +447,153 @@ react-dom/cjs/react-dom-client.production.js:
 </script>
 
 
-<!-- ===== FINN EXTENDED FEATURES ===== -->
+<!-- ===== FINN EXTENDED FEATURES v2 ===== -->
 <script>
 (function(){
   'use strict';
 
-  // ── helpers ──────────────────────────────────────────────────────────
+  // ── STORE: lê fiq_data_* (legacy) OU finn_tx_* (cache Supabase) ──────
   const STORE = {
-    getData: id => { try { const d=localStorage.getItem('fiq_data_'+id); return d?JSON.parse(d):{txs:[],limits:{},goals:[]}; } catch(e){return{txs:[],limits:{},goals:[]};} },
-    getFixed: id => { try { return JSON.parse(localStorage.getItem('fiq_fixed_'+id)||'[]'); } catch(e){return[];} },
-    getProfiles: () => { try { return JSON.parse(localStorage.getItem('fiq_profiles')||'[]'); } catch(e){return[];} },
-    get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){return null;} },
-    set: (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
+    getData: function(id) {
+      try {
+        if (id) { const d=localStorage.getItem('fiq_data_'+id); if(d){const p=JSON.parse(d);if(p&&(p.txs||p.limits))return p;} }
+        const sess=JSON.parse(localStorage.getItem('finn_supa_session')||'null');
+        const uid=sess&&sess.user&&sess.user.id;
+        let raw=uid?localStorage.getItem('finn_tx_'+uid):null;
+        if(!raw){for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('finn_tx_')){raw=localStorage.getItem(k);break;}}}
+        if(raw){const c=JSON.parse(raw);if(c){
+          const txs=(c.transactions||[]).map(function(tx){return{id:tx.id,date:tx.date,desc:tx.descricao||tx.desc||'',val:tx.type==='receita'?Math.abs(tx.value||0):-Math.abs(tx.value||0),cat:tx.cat||'Outros'};});
+          const limits={};(c.limits||[]).forEach(function(l){limits[l.cat]=l.max_value||l.max||0;});
+          const goals=(c.goals||[]).map(function(g){return{id:g.id,name:g.name,target:g.target||0,saved:g.saved||0};});
+          return{txs:txs,limits:limits,goals:goals};
+        }}
+        return{txs:[],limits:{},goals:[]};
+      } catch(e){return{txs:[],limits:{},goals:[]};}
+    },
+    getFixed: function(id) { try { return JSON.parse(localStorage.getItem('fiq_fixed_'+(id||''))||'[]'); } catch(e){return[];} },
+    getProfiles: function() { try { return JSON.parse(localStorage.getItem('fiq_profiles')||'[]'); } catch(e){return[];} },
+    get: function(k) { try { return JSON.parse(localStorage.getItem(k)); } catch(e){return null;} },
+    set: function(k,v) { try { localStorage.setItem(k,JSON.stringify(v)); } catch(e){} },
   };
   const DEFAULT_LIMITS = {Alimentacao:500,Transporte:150,Saude:200,Lazer:200,Educacao:700,Moradia:1200,Vestuario:300,Investimento:500,Salario:0,Outros:500};
-  const BRL = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);
-  const pid = () => { const p=STORE.getProfiles(); return p.length?p[0].id:null; };
-  const mesAtual = txs => { const n=new Date(),y=n.getFullYear(),m=n.getMonth(); return (txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===y&&d.getMonth()===m;}); };
+  const BRL = function(v){return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0);};
+  const pid = function(){const p=STORE.getProfiles();if(p.length)return p[0].id;try{const s=JSON.parse(localStorage.getItem('finn_supa_session')||'null');return s&&s.user&&s.user.id;}catch(e){return null;}};
+  const mesAtual = function(txs){const n=new Date(),y=n.getFullYear(),m=n.getMonth();return(txs||[]).filter(function(tx){const d=new Date(tx.date);return d.getFullYear()===y&&d.getMonth()===m;});};
+
+  // ── SCORE ─────────────────────────────────────────────────────────────
+  function calcScore(txs, limits) {
+    const lim=Object.assign({},DEFAULT_LIMITS,limits||{});
+    const mes=mesAtual(txs);
+    let rec=0,desp=0;
+    mes.forEach(function(tx){if(tx.val>0)rec+=tx.val;else desp+=Math.abs(tx.val);});
+    const sav=rec>0?(rec-desp)/rec*100:0;
+    let s=500;
+    if(sav>=30)s+=200;else if(sav>=20)s+=140;else if(sav>=10)s+=70;else if(sav<0)s-=200;else s-=40;
+    const byCat={};mes.filter(function(t){return t.val<0;}).forEach(function(t){byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
+    Object.keys(byCat).forEach(function(c){if(lim[c]>0&&byCat[c]>lim[c])s-=60;});
+    if(rec-desp>0)s+=80;
+    if(mes.length>5)s+=40;
+    return Math.max(100,Math.min(1000,Math.round(s)));
+  }
+  function scoreLabel(s){
+    if(s>=800)return{label:'Excelente',color:'#059669',bg:'#D1FAE5'};
+    if(s>=600)return{label:'Bom',color:'#0891B2',bg:'#CFFAFE'};
+    if(s>=400)return{label:'Regular',color:'#D97706',bg:'#FEF3C7'};
+    return{label:'Crítico',color:'#DC2626',bg:'#FEE2E2'};
+  }
 
   // ── CSS ──────────────────────────────────────────────────────────────
   const style = document.createElement('style');
   style.textContent = `
-    /* Privacy mode */
-    .finn-privacy #root { filter:blur(10px); user-select:none; pointer-events:none; }
-    #finn-privacy-shield { position:fixed;inset:0;z-index:9996;display:none;cursor:pointer;background:transparent; }
-    .finn-privacy #finn-privacy-shield { display:block; }
-    #finn-priv-btn { position:fixed;top:16px;right:16px;z-index:9997;background:rgba(30,41,59,.82);border:none;color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:background .15s; }
-    #finn-priv-btn:hover { background:#1E293B; }
-
-    /* Banner */
-    #finn-banner { position:fixed;top:0;left:0;right:0;z-index:9995;background:linear-gradient(90deg,#F97316,#fb923c);color:#fff;padding:10px 16px;font-size:13px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 2px 8px rgba(249,115,22,.4);animation:bannerIn .4s ease; }
+    .finn-privacy #root{filter:blur(10px);user-select:none;pointer-events:none;}
+    #finn-privacy-shield{position:fixed;inset:0;z-index:9996;display:none;cursor:pointer;background:transparent;}
+    .finn-privacy #finn-privacy-shield{display:block;}
+    #finn-priv-btn{position:fixed;top:16px;right:16px;z-index:9997;background:rgba(15,23,42,.85);backdrop-filter:blur(8px);border:none;color:#fff;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.35);transition:background .15s,transform .15s;}
+    #finn-priv-btn:hover{background:#0F172A;transform:scale(1.08);}
+    #finn-banner{position:fixed;top:0;left:0;right:0;z-index:9995;background:linear-gradient(90deg,#F97316,#fb923c);color:#fff;padding:11px 18px;font-size:13px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 2px 12px rgba(249,115,22,.45);animation:bannerIn .4s ease;}
     @keyframes bannerIn{from{transform:translateY(-100%)}to{transform:translateY(0)}}
-    #finn-banner span { flex:1; }
-    #finn-banner button { background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit; }
-    #finn-banner button:hover { background:rgba(255,255,255,.4); }
-
-    /* Finn+ button */
-    #finn-plus-btn { position:fixed;bottom:22px;left:22px;z-index:9998;width:52px;height:52px;border-radius:50%;background:#1E293B;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .18s,box-shadow .18s; }
-    #finn-plus-btn:hover { transform:scale(1.1); }
-
-    /* Finn+ overlay */
-    #finn-plus-ovl { position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:none;align-items:flex-end;justify-content:flex-start;padding:20px; }
-    #finn-plus-ovl.open { display:flex; }
-    #finn-plus-panel { background:#fff;border-radius:18px;width:min(400px,100%);max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.22);font-family:'Plus Jakarta Sans',sans-serif;animation:fpIn .22s ease; }
-    @keyframes fpIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-    .fp-head { background:linear-gradient(135deg,#1E293B,#334155);color:#fff;padding:18px 18px 14px;display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;z-index:1; }
-    .fp-head h3 { font-size:15px;font-weight:800;margin:0; }
-    .fp-head p { font-size:11.5px;margin:3px 0 0;opacity:.8; }
-    .fp-close { background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:13px; }
-    .fp-body { padding:14px; }
-    .fp-section { margin-bottom:16px; }
-    .fp-section-title { font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px; }
-    .fp-card { border:1.5px solid #E2E8F0;border-radius:12px;padding:13px 14px;margin-bottom:8px;cursor:pointer;transition:all .14s; }
-    .fp-card:hover { border-color:#F97316;background:#fff7ed; }
-    .fp-card-head { display:flex;align-items:center;gap:10px; }
-    .fp-card-icon { font-size:20px;flex-shrink:0; }
-    .fp-card-label { font-size:13px;font-weight:700;color:#1E293B; }
-    .fp-card-sub { font-size:11px;color:#94A3B8;margin-top:2px; }
-    .fp-card-arrow { margin-left:auto;font-size:16px;color:#CBD5E1; }
-    .fp-card.active { border-color:#F97316;background:#fff7ed; }
-    .fp-card.active .fp-card-arrow { color:#F97316; }
-
-    /* Feature panels inside Finn+ */
-    .fp-content { display:none;padding-top:10px;border-top:1px solid #F1F5F9;margin-top:10px; }
-    .fp-content.show { display:block; }
-    .fp-label { font-size:11px;font-weight:700;color:#475569;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em; }
-    .fp-input { width:100%;padding:9px 11px;border:1.5px solid #E2E8F0;border-radius:9px;font-size:13.5px;font-family:inherit;margin-bottom:10px;transition:border-color .15s; }
-    .fp-input:focus { outline:none;border-color:#F97316;box-shadow:0 0 0 3px rgba(249,115,22,.15); }
-    .fp-btn { padding:10px 18px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s; }
-    .fp-btn-primary { background:#F97316;color:#fff; }
-    .fp-btn-primary:hover { background:#ea6c0f; }
-    .fp-btn-secondary { background:#E2E8F0;color:#334155; }
-    .fp-btn-secondary:hover { background:#cbd5e1; }
-    .fp-result { background:#F8FAFF;border:1px solid #E2E8F0;border-radius:10px;padding:14px;margin-top:12px;font-size:13px;line-height:1.6; }
-    .fp-result strong { color:#1E293B; }
-    .fp-result .fp-highlight { font-size:17px;font-weight:800;color:#F97316; }
-    .fp-result .fp-good { color:#16a34a;font-weight:700; }
-    .fp-result .fp-warn { color:#d97706;font-weight:700; }
-    .fp-result .fp-bad { color:#dc2626;font-weight:700; }
-    .fp-debt-row { display:flex;gap:6px;margin-bottom:8px;align-items:center; }
-    .fp-debt-row input { flex:1;min-width:0; }
-    .fp-debt-row button { background:#fee2e2;border:none;color:#dc2626;border-radius:7px;padding:8px 10px;cursor:pointer;font-size:14px; }
-    .fp-challenge-item { display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F1F5F9; }
-    .fp-challenge-item:last-child { border:none; }
-    .fp-challenge-check { width:20px;height:20px;border-radius:50%;border:2px solid #E2E8F0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s; }
-    .fp-challenge-check.done { background:#25D366;border-color:#25D366;color:#fff; }
-    .fp-challenge-text { font-size:13px;color:#334155; }
-    .fp-challenge-text.done { text-decoration:line-through;color:#94A3B8; }
-    .fp-panic-active { background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fff;border-radius:12px;padding:16px;text-align:center;margin-top:10px; }
-    .fp-panic-active .daily { font-size:28px;font-weight:900;margin:8px 0; }
-    .fp-panic-active p { font-size:12px;opacity:.85; }
+    #finn-banner span{flex:1;}
+    #finn-banner button{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:7px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;}
+    #finn-banner button:hover{background:rgba(255,255,255,.4);}
+    #finn-plus-btn{position:fixed;bottom:22px;left:22px;z-index:9998;width:52px;height:52px;border-radius:50%;background:#1E293B;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .18s,box-shadow .18s;}
+    #finn-plus-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(0,0,0,.45);}
+    #finn-plus-ovl{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(3px);z-index:9999;display:none;align-items:flex-end;justify-content:flex-start;padding:84px 20px 20px;}
+    #finn-plus-ovl.open{display:flex;}
+    #finn-plus-panel{background:#fff;border-radius:20px;width:min(420px,100%);max-height:80vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25);font-family:'Plus Jakarta Sans',sans-serif;animation:fpIn .22s cubic-bezier(.16,1,.3,1);}
+    @keyframes fpIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+    .fp-head{background:linear-gradient(135deg,#0F172A,#1E293B);color:#fff;padding:18px 18px 14px;border-radius:20px 20px 0 0;display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;z-index:2;}
+    .fp-head h3{font-size:16px;font-weight:800;margin:0;letter-spacing:-.02em;}
+    .fp-head p{font-size:11.5px;margin:3px 0 0;opacity:.6;}
+    .fp-head-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+    .fp-score-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+    .fp-close{background:rgba(255,255,255,.12);border:none;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+    .fp-close:hover{background:rgba(255,255,255,.22);}
+    .fp-body{padding:16px;}
+    .fp-section{margin-bottom:18px;}
+    .fp-section-title{font-size:10px;font-weight:800;color:#94A3B8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+    .fp-section-line{flex:1;height:1px;background:#F1F5F9;}
+    .fp-card{border:1.5px solid #F1F5F9;border-radius:13px;padding:12px 13px;margin-bottom:8px;cursor:pointer;transition:all .15s;background:#FAFAFA;}
+    .fp-card:hover{border-color:#F97316;background:#fff7ed;transform:translateX(2px);}
+    .fp-card-head{display:flex;align-items:center;gap:10px;}
+    .fp-card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+    .fp-card-label{font-size:13px;font-weight:700;color:#1E293B;}
+    .fp-card-sub{font-size:11px;color:#94A3B8;margin-top:1px;}
+    .fp-card-arrow{margin-left:auto;font-size:16px;color:#CBD5E1;transition:transform .15s;}
+    .fp-card.active{border-color:#F97316;background:#fff7ed;}
+    .fp-card.active .fp-card-arrow{color:#F97316;transform:rotate(90deg);}
+    .fp-content{display:none;padding-top:12px;border-top:1px solid #FEF3C7;margin-top:10px;}
+    .fp-content.show{display:block;}
+    .fp-label{font-size:11px;font-weight:700;color:#475569;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+    .fp-input{width:100%;padding:10px 12px;border:1.5px solid #E2E8F0;border-radius:10px;font-size:13.5px;font-family:inherit;margin-bottom:10px;transition:border-color .15s;background:#fff;}
+    .fp-input:focus{outline:none;border-color:#F97316;box-shadow:0 0 0 3px rgba(249,115,22,.12);}
+    .fp-btn{padding:10px 18px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
+    .fp-btn-primary{background:#F97316;color:#fff;}
+    .fp-btn-primary:hover{background:#EA6C0F;}
+    .fp-btn-secondary{background:#F1F5F9;color:#334155;}
+    .fp-btn-secondary:hover{background:#E2E8F0;}
+    .fp-btn-green{background:#059669;color:#fff;}
+    .fp-btn-green:hover{background:#047857;}
+    .fp-result{background:#F8FAFF;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-top:12px;font-size:13px;line-height:1.65;}
+    .fp-result strong{color:#1E293B;}
+    .fp-highlight{font-size:22px;font-weight:900;color:#F97316;display:block;margin:4px 0;}
+    .fp-good{color:#16a34a;font-weight:700;}
+    .fp-warn{color:#d97706;font-weight:700;}
+    .fp-bad{color:#dc2626;font-weight:700;}
+    .fp-bar-wrap{height:7px;background:#E2E8F0;border-radius:99px;overflow:hidden;margin:5px 0 2px;}
+    .fp-bar{height:100%;border-radius:99px;transition:width .4s ease;}
+    .fp-debt-row{display:flex;gap:6px;margin-bottom:8px;align-items:center;}
+    .fp-debt-row input{flex:1;min-width:0;}
+    .fp-debt-row button{background:#FEE2E2;border:none;color:#dc2626;border-radius:8px;padding:9px 11px;cursor:pointer;font-size:14px;}
+    .fp-challenge-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F8FAFC;}
+    .fp-challenge-item:last-child{border:none;}
+    .fp-challenge-check{width:22px;height:22px;border-radius:50%;border:2px solid #E2E8F0;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+    .fp-challenge-check.done{background:#25D366;border-color:#25D366;color:#fff;}
+    .fp-challenge-text{font-size:13px;color:#334155;line-height:1.4;}
+    .fp-challenge-text.done{text-decoration:line-through;color:#94A3B8;}
+    .fp-panic-active{background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fff;border-radius:13px;padding:18px;text-align:center;margin-top:10px;}
+    .fp-panic-active .daily{font-size:30px;font-weight:900;margin:8px 0;}
+    .fp-panic-active p{font-size:12px;opacity:.9;}
+    .fp-score-display{text-align:center;padding:16px 12px;border-radius:12px;margin-bottom:4px;}
+    .fp-score-number{font-size:52px;font-weight:900;line-height:1;letter-spacing:-.04em;}
+    .fp-score-label{font-size:13px;font-weight:700;margin-top:4px;}
+    .fp-score-detail{font-size:11px;margin-top:6px;opacity:.7;}
   `;
   document.head.appendChild(style);
 
   // ── BANNER ────────────────────────────────────────────────────────────
-  const BANNER_KEY = 'finn_banner_v3';
+  const BANNER_KEY = 'finn_banner_v5';
   function showBanner() {
     if (STORE.get(BANNER_KEY)) return;
     const b = document.createElement('div');
     b.id = 'finn-banner';
-    b.innerHTML = '<span>🎉 Novidades: Modo Privacy, Previsão de Saldo, Simulador de Dívidas, Posso Comprar?, Botão do Pânico, Desafios e mais!</span>'
-      + '<button id="finn-banner-close">Fechar</button>';
+    b.innerHTML = '<span>✦ Finn+ v2: Score Financeiro, Regra 50/30/20, Calculadora de Juros, Exportar CSV e mais!</span>'
+      + '<button id="finn-banner-close">Entendi</button>';
     document.body.prepend(b);
     document.getElementById('finn-banner-close').addEventListener('click', function() {
       b.remove();
       STORE.set(BANNER_KEY, true);
     });
-    setTimeout(function() { if (b.parentNode) { b.remove(); STORE.set(BANNER_KEY, true); } }, 12000);
+    setTimeout(function() { if (b.parentNode) { b.remove(); STORE.set(BANNER_KEY, true); } }, 14000);
   }
 
   // ── PRIVACY MODE ──────────────────────────────────────────────────────
@@ -589,38 +629,64 @@ react-dom/cjs/react-dom-client.production.js:
 
     const ovl = document.createElement('div');
     ovl.id = 'finn-plus-ovl';
-    ovl.innerHTML = '<div id="finn-plus-panel">'
-      + '<div class="fp-head"><div><h3>✦ Finn+ Ferramentas</h3><p>Calculadoras e insights financeiros</p></div>'
-      + '<button class="fp-close" id="fp-close-btn">✕</button></div>'
-      + '<div class="fp-body" id="fp-body"></div></div>';
+    ovl.innerHTML = '<div id="finn-plus-panel"><div id="fp-head-wrap"></div><div class="fp-body" id="fp-body"></div></div>';
     document.body.appendChild(ovl);
 
-    document.getElementById('fp-close-btn').addEventListener('click', function() { ovl.classList.remove('open'); });
     ovl.addEventListener('click', function(e) { if (e.target === ovl) ovl.classList.remove('open'); });
     btn.addEventListener('click', function() { ovl.classList.add('open'); renderFinnPlus(); });
   }
 
   function renderFinnPlus() {
-    const body = document.getElementById('fp-body');
-    const tools = [
-      { id:'preview',   icon:'📈', label:'Previsão de Saldo',     sub:'Projeção para o fim do mês' },
-      { id:'panico',    icon:'🚨', label:'Botão do Pânico',       sub:'Diária máxima para fechar no azul' },
-      { id:'posso',     icon:'🛒', label:'Posso Comprar?',         sub:'Analisa o impacto no seu orçamento' },
-      { id:'divida',    icon:'💳', label:'Simulador de Dívidas',   sub:'Bola de neve vs juros mais altos' },
-      { id:'desafios',  icon:'🏆', label:'Desafios da Semana',     sub:'Missões para turbinar suas finanças' },
+    const headWrap = document.getElementById('fp-head-wrap');
+    const id = pid();
+    const { txs, limits } = STORE.getData(id);
+    const score = calcScore(txs, limits);
+    const sl = scoreLabel(score);
+    headWrap.innerHTML = '<div class="fp-head">'
+      + '<div><h3>✦ Finn+ Ferramentas</h3><p>Análise e calculadoras financeiras</p></div>'
+      + '<div class="fp-head-actions">'
+      + '<div class="fp-score-chip" style="background:'+sl.bg+';color:'+sl.color+'">'+score+' '+sl.label+'</div>'
+      + '<button class="fp-close" id="fp-close-btn">✕</button></div></div>';
+    document.getElementById('fp-close-btn').addEventListener('click', function() {
+      document.getElementById('finn-plus-ovl').classList.remove('open');
+    });
+
+    const sections = [
+      { id:'analise', label:'Análise', tools:[
+        { id:'score',    icon:'🎯', bg:'#FFF7ED', label:'Score Financeiro',       sub:'Saúde financeira em 0 a 1000' },
+        { id:'preview',  icon:'📈', bg:'#EFF6FF', label:'Previsão de Saldo',      sub:'Projeção para o fim do mês' },
+        { id:'regra',    icon:'⚖️', bg:'#F5F3FF', label:'Regra 50/30/20',         sub:'Distribua sua renda do jeito certo' },
+      ]},
+      { id:'plano', label:'Planejamento', tools:[
+        { id:'posso',    icon:'🛒', bg:'#F0FDF4', label:'Posso Comprar?',          sub:'Analisa o impacto no orçamento' },
+        { id:'juros',    icon:'💹', bg:'#F0FDF4', label:'Calculadora de Juros',    sub:'Simule juros compostos' },
+        { id:'divida',   icon:'💳', bg:'#FFF1F2', label:'Simulador de Dívidas',    sub:'Bola de Neve vs Avalanche' },
+      ]},
+      { id:'acao', label:'Ação Rápida', tools:[
+        { id:'panico',   icon:'🚨', bg:'#FFF1F2', label:'Botão do Pânico',        sub:'Diária máxima para fechar no azul' },
+        { id:'desafios', icon:'🏆', bg:'#FFFBEB', label:'Desafios da Semana',     sub:'Missões para turbinar suas finanças' },
+        { id:'exportar', icon:'📥', bg:'#F0F9FF', label:'Exportar Dados CSV',     sub:'Baixe suas transações em planilha' },
+      ]},
     ];
 
-    body.innerHTML = '<div class="fp-section"><div class="fp-section-title">Ferramentas</div>'
-      + tools.map(function(t) {
-          return '<div class="fp-card" id="fp-card-'+t.id+'" data-tool="'+t.id+'">'
-            + '<div class="fp-card-head"><span class="fp-card-icon">'+t.icon+'</span>'
-            + '<div><div class="fp-card-label">'+t.label+'</div><div class="fp-card-sub">'+t.sub+'</div></div>'
-            + '<span class="fp-card-arrow">›</span></div>'
-            + '<div class="fp-content" id="fp-content-'+t.id+'"></div></div>';
-        }).join('')
-      + '</div>';
+    const body = document.getElementById('fp-body');
+    let html = '';
+    sections.forEach(function(sec) {
+      html += '<div class="fp-section"><div class="fp-section-title">'+sec.label+'<span class="fp-section-line"></span></div>';
+      sec.tools.forEach(function(t) {
+        html += '<div class="fp-card" id="fp-card-'+t.id+'">'
+          + '<div class="fp-card-head">'
+          + '<div class="fp-card-icon" style="background:'+t.bg+'">'+t.icon+'</div>'
+          + '<div><div class="fp-card-label">'+t.label+'</div><div class="fp-card-sub">'+t.sub+'</div></div>'
+          + '<span class="fp-card-arrow">›</span></div>'
+          + '<div class="fp-content" id="fp-content-'+t.id+'"></div></div>';
+      });
+      html += '</div>';
+    });
+    body.innerHTML = html;
 
-    tools.forEach(function(t) {
+    const allTools = sections.reduce(function(a,s){return a.concat(s.tools);}, []);
+    allTools.forEach(function(t) {
       document.getElementById('fp-card-'+t.id).addEventListener('click', function(e) {
         if (e.target.closest('.fp-content')) return;
         toggleTool(t.id);
@@ -652,12 +718,151 @@ react-dom/cjs/react-dom-client.production.js:
 
   function renderTool(id, el) {
     switch(id) {
-      case 'preview':  renderPreview(el); break;
-      case 'panico':   renderPanico(el); break;
-      case 'posso':    renderPosso(el); break;
-      case 'divida':   renderDivida(el); break;
+      case 'score':    renderScore(el);    break;
+      case 'preview':  renderPreview(el);  break;
+      case 'regra':    renderRegra(el);    break;
+      case 'posso':    renderPosso(el);    break;
+      case 'juros':    renderJuros(el);    break;
+      case 'divida':   renderDivida(el);   break;
+      case 'panico':   renderPanico(el);   break;
       case 'desafios': renderDesafios(el); break;
+      case 'exportar': renderExportar(el); break;
     }
+  }
+
+  // ── SCORE FINANCEIRO ─────────────────────────────────────────────────
+  function renderScore(el) {
+    const id = pid();
+    const { txs, limits } = STORE.getData(id);
+    const score = calcScore(txs, limits);
+    const sl = scoreLabel(score);
+    const mes = mesAtual(txs);
+    let rec = 0, desp = 0;
+    mes.forEach(function(tx){ if(tx.val>0) rec+=tx.val; else desp+=Math.abs(tx.val); });
+    const sav = rec > 0 ? ((rec-desp)/rec*100).toFixed(1) : '0.0';
+    const nLimits = Object.keys(limits).filter(function(c){return limits[c]>0;}).length;
+    el.innerHTML = '<div class="fp-score-display" style="background:'+sl.bg+'">'
+      + '<div class="fp-score-number" style="color:'+sl.color+'">'+score+'</div>'
+      + '<div class="fp-score-label" style="color:'+sl.color+'">'+sl.label+'</div>'
+      + '<div class="fp-score-detail">Score Finn · escala 100–1000</div>'
+      + '</div>'
+      + '<div class="fp-result" style="margin-top:8px">'
+      + '<div style="margin-bottom:6px">'+(rec>0?'💰 Taxa de poupança: <strong>'+sav+'%</strong> (meta: 20%+)':'⚠️ Nenhuma receita registrada')+'</div>'
+      + '<div style="margin-bottom:6px">'+(mes.length>0?'📊 '+mes.length+' transações no mês':'⚠️ Nenhuma transação registrada')+'</div>'
+      + '<div style="margin-bottom:6px">'+(nLimits>0?'🎯 '+nLimits+' categorias com limite configurado':'💡 Configure limites para melhorar seu score')+'</div>'
+      + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
+      + '<div style="font-size:11.5px;color:#64748B;font-style:italic">Calculado por: taxa de poupança, limites por categoria, saldo positivo e frequência de registros.</div>'
+      + '</div>';
+  }
+
+  // ── REGRA 50/30/20 ────────────────────────────────────────────────────
+  function renderRegra(el) {
+    const id = pid();
+    const {txs} = STORE.getData(id);
+    const mes = mesAtual(txs);
+    let rec = 0; const cats = {};
+    mes.forEach(function(tx){
+      if(tx.val>0) rec+=tx.val;
+      else { const c=tx.cat||'Outros'; cats[c]=(cats[c]||0)+Math.abs(tx.val); }
+    });
+    if (rec <= 0) {
+      el.innerHTML = '<div class="fp-result" style="text-align:center;padding:18px"><span class="fp-warn">⚠️ Sem receitas no mês.<br>Registre sua renda para usar esta ferramenta.</span></div>';
+      return;
+    }
+    function sum(cs){return cs.reduce(function(s,c){return s+(cats[c]||0);},0);}
+    const needs = sum(['Alimentacao','Saude','Moradia','Transporte']);
+    const wants = sum(['Lazer','Vestuario','Educacao','Outros']);
+    const saves = sum(['Investimento']);
+    function pct(v){return rec>0?Math.round(v/rec*100):0;}
+    function row(label,val,ideal,color){
+      const p=pct(val), w=Math.min(100,Math.round(p/ideal*100));
+      return '<div style="margin-bottom:14px">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'
+        + '<span style="font-size:12.5px;font-weight:600">'+(p<=ideal?'✅':'⚠️')+' '+label+'</span>'
+        + '<span style="font-size:12px;font-weight:700;color:'+(p<=ideal?'#16a34a':'#d97706')+'">'+p+'% <span style="color:#94A3B8;font-weight:400">/ ideal '+ideal+'%</span></span>'
+        + '</div>'
+        + '<div class="fp-bar-wrap"><div class="fp-bar" style="width:'+w+'%;background:'+color+'"></div></div>'
+        + '<div style="font-size:11px;color:#64748B;display:flex;justify-content:space-between"><span>'+BRL(val)+'</span><span>ideal: '+BRL(rec*ideal/100)+'</span></div>'
+        + '</div>';
+    }
+    el.innerHTML = '<div class="fp-result">'
+      + '<div style="margin-bottom:14px;font-size:12.5px;color:#475569">Renda do mês: <strong>'+BRL(rec)+'</strong></div>'
+      + row('🏠 Necessidades (moradia, alimentação, saúde, transporte)', needs, 50, '#3B82F6')
+      + row('🎮 Desejos (lazer, roupa, educação, outros)', wants, 30, '#A855F7')
+      + row('💰 Poupança / Investimentos', saves, 20, '#10B981')
+      + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
+      + '<div style="font-size:11.5px;color:#64748B">Não categorizado: <strong>'+BRL(Math.max(0,rec-needs-wants-saves))+'</strong></div>'
+      + '</div>';
+  }
+
+  // ── CALCULADORA DE JUROS COMPOSTOS ────────────────────────────────────
+  function renderJuros(el) {
+    el.innerHTML = '<label class="fp-label">Valor inicial (R$)</label>'
+      + '<input type="number" class="fp-input" id="fp-j-inicial" placeholder="Ex: 1000" min="0" step="0.01">'
+      + '<label class="fp-label">Aporte mensal (R$)</label>'
+      + '<input type="number" class="fp-input" id="fp-j-aporte" placeholder="Ex: 200" min="0" step="0.01" value="0">'
+      + '<label class="fp-label">Taxa de juros ao mês (%)</label>'
+      + '<input type="number" class="fp-input" id="fp-j-taxa" placeholder="Ex: 0.8" min="0" step="0.01">'
+      + '<label class="fp-label">Período (meses)</label>'
+      + '<input type="number" class="fp-input" id="fp-j-meses" placeholder="Ex: 24" min="1" max="600">'
+      + '<button class="fp-btn fp-btn-primary" id="fp-j-btn" style="width:100%">💹 Calcular</button>'
+      + '<div id="fp-j-result"></div>';
+    document.getElementById('fp-j-btn').addEventListener('click', calcJuros);
+  }
+
+  function calcJuros() {
+    const inicial = parseFloat(document.getElementById('fp-j-inicial').value)||0;
+    const aporte  = parseFloat(document.getElementById('fp-j-aporte').value)||0;
+    const taxa    = parseFloat(document.getElementById('fp-j-taxa').value)||0;
+    const meses   = parseInt(document.getElementById('fp-j-meses').value)||0;
+    const r = document.getElementById('fp-j-result');
+    if(!taxa||!meses){r.innerHTML='<div class="fp-result fp-warn">Preencha taxa e período.</div>';return;}
+    const t=taxa/100;
+    let montante=inicial;
+    for(let i=0;i<meses;i++){montante=montante*(1+t)+aporte;}
+    const aportado=inicial+aporte*meses;
+    const ganhos=montante-aportado;
+    r.innerHTML = '<div class="fp-result">'
+      + '<div class="fp-highlight">'+BRL(montante)+'</div>'
+      + '<div style="font-size:12px;color:#64748B;margin-bottom:12px">Montante em '+meses+' meses ('+((meses/12).toFixed(1))+' anos)</div>'
+      + '<div style="margin-bottom:5px">💵 Total investido: <strong>'+BRL(aportado)+'</strong></div>'
+      + '<div style="margin-bottom:5px">📈 Juros ganhos: <strong class="fp-good">'+BRL(ganhos)+'</strong></div>'
+      + '<div style="margin-bottom:5px">🚀 Rendimento: <strong class="fp-good">+'+((ganhos/Math.max(1,aportado)*100).toFixed(1))+'%</strong></div>'
+      + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
+      + '<div style="font-size:11.5px;color:#64748B">'+BRL(ganhos)+' vieram dos juros compostos — o dinheiro trabalhando por você.</div>'
+      + '</div>';
+  }
+
+  // ── EXPORTAR DADOS CSV ────────────────────────────────────────────────
+  function renderExportar(el) {
+    el.innerHTML = '<div style="text-align:center;padding:6px 0 4px">'
+      + '<p style="font-size:12.5px;color:#475569;margin-bottom:14px">Baixe todas as suas transações como planilha CSV, compatível com Excel e Google Sheets.</p>'
+      + '<button class="fp-btn fp-btn-green" id="fp-export-btn" style="width:100%">📥 Baixar CSV</button>'
+      + '<div id="fp-export-result" style="margin-top:10px"></div></div>';
+    document.getElementById('fp-export-btn').addEventListener('click', exportCSV);
+  }
+
+  function exportCSV() {
+    const id = pid();
+    const {txs} = STORE.getData(id);
+    const r = document.getElementById('fp-export-result');
+    if (!txs || !txs.length) {
+      r.innerHTML = '<div class="fp-result fp-warn">Nenhuma transação encontrada. Certifique-se de estar logado no Finn.</div>';
+      return;
+    }
+    const header = 'Data,Descricao,Valor,Categoria,Tipo';
+    const rows = txs.map(function(tx){
+      const tipo = tx.val > 0 ? 'Receita' : 'Despesa';
+      const desc = (tx.desc||'').replace(/"/g,'""');
+      return '"'+tx.date+'","'+desc+'","'+Math.abs(tx.val).toFixed(2).replace('.',',')+'","'+(tx.cat||'')+'","'+tipo+'"';
+    });
+    const csv = '﻿'+[header].concat(rows).join('\r\n');
+    const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href=url; a.download='finn_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+    URL.revokeObjectURL(url);
+    r.innerHTML = '<div class="fp-result fp-good">✅ '+txs.length+' transações exportadas!</div>';
   }
 
   // ── PREVISÃO DE SALDO ─────────────────────────────────────────────────
@@ -697,7 +902,7 @@ react-dom/cjs/react-dom-client.production.js:
   function renderPanico(el) {
     el.innerHTML = '<div style="text-align:center;padding:6px 0 10px">'
       + '<p style="font-size:12.5px;color:#475569;margin-bottom:10px">Ativa o modo de sobrevivência: calcula quanto você pode gastar por dia para fechar o mês no azul.</p>'
-      + '<button class="fp-btn fp-btn-primary" id="fp-panico-btn" style="width:100%">🚨 Ativar Modo Pânico</button>'
+      + '<button class="fp-btn fp-btn-primary" id="fp-panico-btn" style="width:100%;background:#dc2626">🚨 Ativar Modo Pânico</button>'
       + '</div><div id="fp-panico-result"></div>';
     document.getElementById('fp-panico-btn').addEventListener('click', calcPanico);
   }
