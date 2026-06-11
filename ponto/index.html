@@ -687,6 +687,9 @@
           <button class="month-btn" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
           <span class="month-label" id="hist-month-label"></span>
           <button class="month-btn" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+          <button class="month-btn" onclick="abrirLancamentoManual()" style="background:var(--primary);border-color:var(--primary);color:#fff;display:flex;align-items:center;gap:6px;margin-left:auto">
+            <i class="fas fa-plus"></i> Lançar dia
+          </button>
         </div>
 
         <div class="grid-4 mb-6">
@@ -1076,6 +1079,49 @@
     <div style="padding:20px" id="holerite-demo-content"></div>
     <div class="modal-footer" style="padding:16px 20px;border-top:1px solid var(--border)">
       <button class="btn btn-secondary" onclick="closeModal('modal-holerite-demo')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal lançamento manual -->
+<div class="modal-overlay" id="modal-lancamento">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-calendar-plus" style="color:var(--primary)"></i> Lançar dia manualmente</span>
+      <button class="modal-close" onclick="closeModal('modal-lancamento')">×</button>
+    </div>
+    <div class="input-group">
+      <label>Data</label>
+      <input type="date" id="lanc-data" class="form-control">
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Preencha os horários que tiver. Saída almoço e retorno são opcionais.</p>
+    <div class="edit-record-row">
+      <div class="record-icon entrada" style="width:30px;height:30px;font-size:12px"><i class="fas fa-sign-in-alt"></i></div>
+      <span class="tipo-label">Entrada <span style="color:var(--danger)">*</span></span>
+      <input type="time" id="lanc-entrada">
+    </div>
+    <div class="edit-record-row">
+      <div class="record-icon saida_almoco" style="width:30px;height:30px;font-size:12px"><i class="fas fa-utensils"></i></div>
+      <span class="tipo-label">Saída Almoço</span>
+      <input type="time" id="lanc-saida-almoco">
+    </div>
+    <div class="edit-record-row">
+      <div class="record-icon retorno_almoco" style="width:30px;height:30px;font-size:12px"><i class="fas fa-undo"></i></div>
+      <span class="tipo-label">Retorno Almoço</span>
+      <input type="time" id="lanc-retorno-almoco">
+    </div>
+    <div class="edit-record-row">
+      <div class="record-icon saida" style="width:30px;height:30px;font-size:12px"><i class="fas fa-sign-out-alt"></i></div>
+      <span class="tipo-label">Saída</span>
+      <input type="time" id="lanc-saida">
+    </div>
+    <div class="input-group mt-4">
+      <label>Observação (opcional)</label>
+      <input type="text" id="lanc-obs" class="form-control" placeholder="Ex: home office, dia de treinamento...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-lancamento')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarLancamentoManual()"><i class="fas fa-save"></i> Salvar</button>
     </div>
   </div>
 </div>
@@ -1956,6 +2002,62 @@ function toast(msg, type = 'info') {
 // ═══════════════════════════════════════════════════════════
 function fmtBRL(v) {
   return 'R$ ' + (v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+// ═══════════════════════════════════════════════════════════
+// LANÇAMENTO MANUAL
+// ═══════════════════════════════════════════════════════════
+function abrirLancamentoManual() {
+  const hoje = new Date().toISOString().split('T')[0];
+  document.getElementById('lanc-data').value = hoje;
+  document.getElementById('lanc-data').max = hoje;
+  document.getElementById('lanc-entrada').value = perfil.horario_entrada || '08:00';
+  document.getElementById('lanc-saida-almoco').value = '';
+  document.getElementById('lanc-retorno-almoco').value = '';
+  document.getElementById('lanc-saida').value = perfil.horario_saida || '17:00';
+  document.getElementById('lanc-obs').value = '';
+  openModal('modal-lancamento');
+}
+
+async function salvarLancamentoManual() {
+  const data = document.getElementById('lanc-data').value;
+  const entrada = document.getElementById('lanc-entrada').value;
+  const saidaAlmoco = document.getElementById('lanc-saida-almoco').value;
+  const retornoAlmoco = document.getElementById('lanc-retorno-almoco').value;
+  const saida = document.getElementById('lanc-saida').value;
+  const obs = document.getElementById('lanc-obs').value.trim() || null;
+
+  if (!data) { toast('Selecione a data', 'error'); return; }
+  if (!entrada) { toast('Horário de entrada é obrigatório', 'error'); return; }
+
+  // Verifica se já tem registros nesse dia
+  const { data: existentes } = await db.from('registros_ponto').select('id')
+    .eq('user_id', currentUser.id).eq('data', data);
+  if (existentes && existentes.length > 0) {
+    toast('Esse dia já tem registros. Use o modo de edição clicando no dia.', 'warning'); return;
+  }
+
+  const registros = [
+    { tipo: 'entrada', hora: entrada },
+    saidaAlmoco ? { tipo: 'saida_almoco', hora: saidaAlmoco } : null,
+    retornoAlmoco ? { tipo: 'retorno_almoco', hora: retornoAlmoco } : null,
+    saida ? { tipo: 'saida', hora: saida } : null,
+  ].filter(Boolean);
+
+  const inserts = registros.map(r => ({
+    user_id: currentUser.id,
+    tipo: r.tipo,
+    data,
+    timestamp: new Date(`${data}T${r.hora}:00`).toISOString(),
+    observacao: obs
+  }));
+
+  const { error } = await db.from('registros_ponto').insert(inserts);
+  if (error) { toast('Erro ao salvar: ' + error.message, 'error'); return; }
+
+  toast(`${registros.length} registro(s) lançado(s) com sucesso!`, 'success');
+  closeModal('modal-lancamento');
+  await renderHistorico();
 }
 
 // ═══════════════════════════════════════════════════════════
