@@ -2366,34 +2366,41 @@ async function salvarLancamentoManual() {
   if (!data) { toast('Selecione a data', 'error'); return; }
   if (!entrada) { toast('Horário de entrada é obrigatório', 'error'); return; }
 
-  // Verifica se já tem registros nesse dia
-  const { data: existentes } = await db.from('registros_ponto').select('id')
-    .eq('user_id', currentUser.id).eq('data', data);
-  if (existentes && existentes.length > 0) {
-    toast('Esse dia já tem registros. Use o modo de edição clicando no dia.', 'warning'); return;
+  try {
+    // Verifica se já tem registros nesse dia
+    const { data: existentes } = await db.from('registros_ponto').select('id')
+      .eq('user_id', currentUser.id).eq('data', data);
+    if (existentes && existentes.length > 0) {
+      const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+      const [ano, mes, dia] = data.split('-');
+      alert(`O dia ${dia} de ${meses[+mes-1]} já tem registros.\n\nPara editar, vá em Histórico e toque no dia.`);
+      return;
+    }
+
+    const registros = [
+      { tipo: 'entrada', hora: entrada },
+      saidaAlmoco ? { tipo: 'saida_almoco', hora: saidaAlmoco } : null,
+      retornoAlmoco ? { tipo: 'retorno_almoco', hora: retornoAlmoco } : null,
+      saida ? { tipo: 'saida', hora: saida } : null,
+    ].filter(Boolean);
+
+    const inserts = registros.map(r => ({
+      user_id: currentUser.id,
+      tipo: r.tipo,
+      data,
+      timestamp: new Date(`${data}T${r.hora}:00`).toISOString(),
+      observacao: obs
+    }));
+
+    const { error } = await db.from('registros_ponto').insert(inserts);
+    if (error) { toast('Erro ao salvar: ' + error.message, 'error'); return; }
+
+    toast(`${registros.length} registro(s) lançado(s) com sucesso!`, 'success');
+    closeModal('modal-lancamento');
+    await renderHistorico();
+  } catch (err) {
+    toast('Erro inesperado: ' + (err.message || err), 'error');
   }
-
-  const registros = [
-    { tipo: 'entrada', hora: entrada },
-    saidaAlmoco ? { tipo: 'saida_almoco', hora: saidaAlmoco } : null,
-    retornoAlmoco ? { tipo: 'retorno_almoco', hora: retornoAlmoco } : null,
-    saida ? { tipo: 'saida', hora: saida } : null,
-  ].filter(Boolean);
-
-  const inserts = registros.map(r => ({
-    user_id: currentUser.id,
-    tipo: r.tipo,
-    data,
-    timestamp: new Date(`${data}T${r.hora}:00`).toISOString(),
-    observacao: obs
-  }));
-
-  const { error } = await db.from('registros_ponto').insert(inserts);
-  if (error) { toast('Erro ao salvar: ' + error.message, 'error'); return; }
-
-  toast(`${registros.length} registro(s) lançado(s) com sucesso!`, 'success');
-  closeModal('modal-lancamento');
-  await renderHistorico();
 }
 
 // ═══════════════════════════════════════════════════════════
