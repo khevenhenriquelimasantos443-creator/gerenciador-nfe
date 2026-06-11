@@ -960,10 +960,6 @@
               <input type="number" id="cfg-salario" class="form-control" placeholder="0,00" step="0.01">
             </div>
             <div class="input-group">
-              <label>Carga horária diária (h)</label>
-              <input type="number" id="cfg-ch-diaria" class="form-control" placeholder="7.33" step="0.01">
-            </div>
-            <div class="input-group">
               <label>Carga horária mensal (h)</label>
               <input type="number" id="cfg-ch-mensal" class="form-control" placeholder="220">
             </div>
@@ -977,15 +973,23 @@
             </div>
             <div class="input-group">
               <label>Horário de entrada padrão</label>
-              <input type="time" id="cfg-entrada" class="form-control" value="08:00">
+              <input type="time" id="cfg-entrada" class="form-control" value="08:00" oninput="recalcCargaDiaria()">
             </div>
             <div class="input-group">
               <label>Horário de saída padrão</label>
-              <input type="time" id="cfg-saida" class="form-control" value="17:00">
+              <input type="time" id="cfg-saida" class="form-control" value="17:00" oninput="recalcCargaDiaria()">
             </div>
             <div class="input-group">
               <label>Intervalo de almoço (minutos)</label>
-              <input type="number" id="cfg-intervalo" class="form-control" value="60">
+              <input type="number" id="cfg-intervalo" class="form-control" value="60" oninput="recalcCargaDiaria()">
+            </div>
+            <div style="background:var(--primary-dim);border:1px solid var(--primary);border-radius:9px;padding:12px 14px;margin-bottom:14px">
+              <div style="font-size:11px;color:var(--primary-light);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">
+                <i class="fas fa-calculator"></i> Carga horária diária calculada
+              </div>
+              <div style="font-size:22px;font-weight:800;color:var(--primary-light)" id="cfg-ch-diaria-display">—</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px">(saída − entrada − almoço)</div>
+              <input type="hidden" id="cfg-ch-diaria">
             </div>
             <button class="btn btn-primary" onclick="salvarPerfil()">
               <i class="fas fa-save"></i> Salvar perfil
@@ -1958,16 +1962,38 @@ async function deletarHolerite(id) {
 // ═══════════════════════════════════════════════════════════
 // CONFIGURAÇÕES
 // ═══════════════════════════════════════════════════════════
+function recalcCargaDiaria() {
+  const entrada  = document.getElementById('cfg-entrada').value;
+  const saida    = document.getElementById('cfg-saida').value;
+  const intervalo = +document.getElementById('cfg-intervalo').value || 0;
+  if (!entrada || !saida) return;
+  const [eh, em] = entrada.split(':').map(Number);
+  const [sh, sm] = saida.split(':').map(Number);
+  const totalMin = (sh * 60 + sm) - (eh * 60 + em) - intervalo;
+  if (totalMin <= 0) {
+    document.getElementById('cfg-ch-diaria-display').textContent = '—';
+    document.getElementById('cfg-ch-diaria').value = '';
+    return;
+  }
+  const horas = Math.floor(totalMin / 60);
+  const mins  = totalMin % 60;
+  const decimal = +(totalMin / 60).toFixed(4);
+  document.getElementById('cfg-ch-diaria-display').textContent =
+    `${horas}h ${String(mins).padStart(2,'0')}m  (${decimal}h)`;
+  document.getElementById('cfg-ch-diaria').value = decimal;
+}
+
+// ═══════════════════════════════════════════════════════════
 function renderConfiguracoes() {
   document.getElementById('cfg-nome').value = perfil.nome || '';
   document.getElementById('cfg-salario').value = perfil.salario_base || '';
-  document.getElementById('cfg-ch-diaria').value = perfil.carga_horaria_diaria || 7.33;
   document.getElementById('cfg-ch-mensal').value = perfil.carga_horaria_mensal || 220;
   document.getElementById('cfg-he50').value = perfil.percentual_he_50 || 75;
   document.getElementById('cfg-he100').value = perfil.percentual_he_100 || 100;
   document.getElementById('cfg-entrada').value = perfil.horario_entrada || '08:00';
   document.getElementById('cfg-saida').value = perfil.horario_saida || '17:00';
   document.getElementById('cfg-intervalo').value = perfil.intervalo_minutos || 60;
+  recalcCargaDiaria();
   document.getElementById('cfg-inss').checked = configDescontos.inss_ativo !== false;
   document.getElementById('cfg-irrf').checked = configDescontos.irrf_ativo !== false;
   document.getElementById('cfg-vt').checked = configDescontos.vt_ativo !== false;
@@ -1983,7 +2009,7 @@ async function salvarPerfil() {
   const dados = {
     nome: document.getElementById('cfg-nome').value.trim(),
     salario_base: +document.getElementById('cfg-salario').value || 0,
-    carga_horaria_diaria: +document.getElementById('cfg-ch-diaria').value || 8,
+    carga_horaria_diaria: +document.getElementById('cfg-ch-diaria').value || 7.33,
     carga_horaria_mensal: +document.getElementById('cfg-ch-mensal').value || 220,
     percentual_he_50: +document.getElementById('cfg-he50').value || 50,
     percentual_he_100: +document.getElementById('cfg-he100').value || 100,
