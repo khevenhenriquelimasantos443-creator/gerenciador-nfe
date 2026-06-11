@@ -113,7 +113,7 @@
   /* ───── MAIN CONTENT ───── */
   .main { flex: 1; margin-left: var(--sidebar-w); min-height: 100vh; }
   .topbar {
-    position: sticky; top: 0; z-index: 50; background: rgba(15,23,42,0.9); backdrop-filter: blur(12px);
+    position: -webkit-sticky; position: sticky; top: 0; z-index: 50; background: rgba(15,23,42,0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border); padding: 0 24px; height: 60px;
     display: flex; align-items: center; justify-content: space-between;
   }
@@ -335,7 +335,7 @@
 
   /* ───── MODAL ───── */
   .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
     z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; display: none;
   }
   .modal-overlay.open { display: flex; }
@@ -1701,6 +1701,13 @@ function horasExtras(horasDia) {
   return he;
 }
 
+// Constrói timestamp local de forma segura em todos os browsers (Safari incluso)
+function localTimestamp(dateStr, timeStr) {
+  const [y, mo, d] = dateStr.split('-').map(Number);
+  const [h, m] = timeStr.split(':').map(Number);
+  return new Date(y, mo - 1, d, h, m, 0).toISOString();
+}
+
 function formatHoras(h) {
   const hh = Math.floor(h);
   const mm = Math.round((h - hh) * 60);
@@ -2388,7 +2395,7 @@ async function salvarLancamentoManual() {
       user_id: currentUser.id,
       tipo: r.tipo,
       data,
-      timestamp: new Date(`${data}T${r.hora}:00`).toISOString(),
+      timestamp: localTimestamp(data, r.hora),
       observacao: obs
     }));
 
@@ -2618,7 +2625,7 @@ async function salvarEdicao() {
     const novoHorario = document.getElementById(`edit-time-${i}`).value;
     if (!novoHorario) continue;
     const [hh, mm] = novoHorario.split(':');
-    const novoTimestamp = new Date(`${editDayDate}T${hh}:${mm}:00`).toISOString();
+    const novoTimestamp = localTimestamp(editDayDate, `${hh}:${mm}`);
     await db.from('registros_ponto').update({
       timestamp: novoTimestamp,
       editado: true,
