@@ -474,6 +474,28 @@
     display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
   #page-loader .spinner { width: 40px; height: 40px; border-width: 4px; }
   #page-loader p { color: var(--text-muted); font-size: 14px; }
+
+  /* ───── UPDATE BANNER ───── */
+  #update-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9998;
+    padding: 14px 20px; background: var(--surface); border-top: 2px solid var(--primary);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.5);
+    animation: slideUpBanner .3s ease;
+  }
+  @keyframes slideUpBanner { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  #update-banner .upd-info { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  #update-banner .upd-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--primary-dim);
+    border: 1px solid rgba(37,99,235,.3); display: flex; align-items: center; justify-content: center;
+    color: var(--primary-light); font-size: 15px; flex-shrink: 0; }
+  #update-banner .upd-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  #update-banner .upd-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  #update-banner .upd-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  #update-banner .btn-upd { background: var(--primary); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 18px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  #update-banner .btn-upd:hover { background: #1d4ed8; }
+  #update-banner .btn-dismiss { background: none; border: 1px solid var(--border); color: var(--text-muted);
+    border-radius: 8px; padding: 9px 12px; cursor: pointer; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -2643,6 +2665,70 @@ async function salvarEdicao() {
 // START
 // ═══════════════════════════════════════════════════════════
 init();
+
+// ═══════════════════════════════════════════════════════════
+// SERVICE WORKER — UPDATE NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' }).then(reg => {
+      // Atualização já esperando (aba ficou aberta por muito tempo)
+      if (reg.waiting) showUpdateBanner(reg.waiting);
+
+      reg.addEventListener('updatefound', () => {
+        const newSW = reg.installing;
+        newSW.addEventListener('statechange', () => {
+          if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+            showUpdateBanner(newSW);
+          }
+        });
+      });
+    });
+
+    // Quando o novo SW assume o controle, recarrega a página
+    let reloading = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!reloading) { reloading = true; location.reload(); }
+    });
+  });
+}
+
+async function showUpdateBanner(sw) {
+  let version = '?', notes = '';
+  try {
+    const v = await fetch('./version.json?t=' + Date.now()).then(r => r.json());
+    version = v.version;
+    notes = v.notes || '';
+  } catch (_) {}
+
+  const existing = document.getElementById('update-banner');
+  if (existing) existing.remove();
+
+  const banner = document.createElement('div');
+  banner.id = 'update-banner';
+  banner.innerHTML = `
+    <div class="upd-info">
+      <div class="upd-icon"><i class="fas fa-bolt"></i></div>
+      <div>
+        <div class="upd-title">ClockIn v${version} disponível!</div>
+        <div class="upd-sub">${notes || 'Toque em Atualizar para aplicar as novidades'}</div>
+      </div>
+    </div>
+    <div class="upd-actions">
+      <button class="btn-upd" onclick="applyUpdate()">Atualizar</button>
+      <button class="btn-dismiss" onclick="document.getElementById('update-banner').remove()">×</button>
+    </div>`;
+  document.body.appendChild(banner);
+  window._pendingSW = sw;
+}
+
+function applyUpdate() {
+  if (window._pendingSW) {
+    window._pendingSW.postMessage({ type: 'SKIP_WAITING' });
+  } else {
+    location.reload(true);
+  }
+}
 </script>
 </body>
 </html>
