@@ -108,13 +108,15 @@ CREATE POLICY "users_delete_holerites" ON storage.objects
 CREATE OR REPLACE FUNCTION handle_new_user_ponto()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO perfis (id, nome) VALUES (NEW.id, NEW.raw_user_meta_data->>'nome')
+  INSERT INTO public.perfis (id, nome)
+    VALUES (NEW.id, COALESCE(NEW.raw_user_meta_data->>'nome', ''))
     ON CONFLICT (id) DO NOTHING;
-  INSERT INTO config_descontos (user_id) VALUES (NEW.id)
+  INSERT INTO public.config_descontos (user_id)
+    VALUES (NEW.id)
     ON CONFLICT (user_id) DO NOTHING;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 DROP TRIGGER IF EXISTS on_auth_user_created_ponto ON auth.users;
 CREATE TRIGGER on_auth_user_created_ponto
