@@ -1,4 +1,4 @@
 {
-  "version": "1.1",
-  "notes": "Correções iOS Safari, notificação de atualização, cadastro de novos usuários"
+  "version": "1.2",
+  "notes": "Corrige seleção de data no lançamento manual e SW network-first para HTML"
 }

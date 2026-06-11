@@ -2375,7 +2375,6 @@ async function deletarDiaEspecial(id) {
 function abrirLancamentoManual() {
   const hoje = new Date().toISOString().split('T')[0];
   document.getElementById('lanc-data').value = hoje;
-  document.getElementById('lanc-data').max = hoje;
   document.getElementById('lanc-entrada').value = perfil.horario_entrada || '08:00';
   document.getElementById('lanc-saida-almoco').value = '';
   document.getElementById('lanc-retorno-almoco').value = '';
