@@ -690,6 +690,9 @@
           <button class="month-btn" onclick="abrirLancamentoManual()" style="background:var(--primary);border-color:var(--primary);color:#fff;display:flex;align-items:center;gap:6px;margin-left:auto">
             <i class="fas fa-plus"></i> Lançar dia
           </button>
+          <button class="month-btn" onclick="abrirMarcadorEspecial()" style="background:var(--info);border-color:var(--info);color:#fff;display:flex;align-items:center;gap:6px">
+            <i class="fas fa-star"></i> Marcar especial
+          </button>
         </div>
 
         <div class="grid-4 mb-6">
@@ -1083,6 +1086,37 @@
   </div>
 </div>
 
+<!-- Modal dia especial (feriado/folga/DSR) -->
+<div class="modal-overlay" id="modal-dia-especial">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-star" style="color:var(--info)"></i> Marcar dia especial</span>
+      <button class="modal-close" onclick="closeModal('modal-dia-especial')">×</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Dias marcados contam como jornada normal completa (sem necessidade de bater ponto).</p>
+    <div class="input-group">
+      <label>Data</label>
+      <input type="date" id="esp-data" class="form-control">
+    </div>
+    <div class="input-group">
+      <label>Tipo</label>
+      <select id="esp-tipo" class="form-control">
+        <option value="feriado">🎉 Feriado (nacional/municipal)</option>
+        <option value="dsr">📅 DSR — Descanso Semanal Remunerado</option>
+        <option value="folga">💼 Folga acordada / compensação</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Observação (opcional)</label>
+      <input type="text" id="esp-obs" class="form-control" placeholder="Ex: Corpus Christi, folga compensada...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-dia-especial')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarDiaEspecial()"><i class="fas fa-save"></i> Salvar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal lançamento manual -->
 <div class="modal-overlay" id="modal-lancamento">
   <div class="modal" style="max-width:480px">
@@ -1189,6 +1223,7 @@ let uploadFile = null;
 let delDescontoId = null;
 let pontoBloqueado = false;
 let atestados = [];
+let diasJustificados = [];
 let editDayDate = null;
 let editDayRecords = [];
 let delAtestadoId = null;
@@ -1245,8 +1280,9 @@ async function loadUserData() {
 
   // Registros hoje
   await loadRegistrosHoje();
-  // Atestados
+  // Atestados e dias justificados
   await loadAtestados();
+  await loadDiasJustificados();
 }
 
 function updateUserUI() {
@@ -1601,6 +1637,31 @@ function getDiasUteisNoMes(ano, mes) {
 // ═══════════════════════════════════════════════════════════
 // HISTÓRICO
 // ═══════════════════════════════════════════════════════════
+function getDiasAbonados(ano, mes) {
+  const firstDay = `${ano}-${String(mes).padStart(2,'0')}-01`;
+  const lastDay  = `${ano}-${String(mes).padStart(2,'0')}-${String(new Date(ano, mes, 0).getDate()).padStart(2,'0')}`;
+  const mapa = {};
+  const tipoLabel = { feriado: 'Feriado', dsr: 'DSR', folga: 'Folga', atestado: 'Atestado' };
+  const tipoBadge = { feriado: 'badge-warning', dsr: 'badge-purple', folga: 'badge-info', atestado: 'badge-info' };
+  const tipoIcon  = { feriado: 'fa-star', dsr: 'fa-calendar-check', folga: 'fa-briefcase', atestado: 'fa-file-medical' };
+
+  diasJustificados.forEach(dj => {
+    if (dj.data >= firstDay && dj.data <= lastDay)
+      mapa[dj.data] = { tipo: dj.tipo, label: tipoLabel[dj.tipo], badge: tipoBadge[dj.tipo], icon: tipoIcon[dj.tipo], id: dj.id };
+  });
+  atestados.forEach(a => {
+    if (a.data_fim < firstDay || a.data_inicio > lastDay) return;
+    let d = new Date(Math.max(new Date(a.data_inicio+'T12:00:00'), new Date(firstDay+'T12:00:00')));
+    const end = new Date(Math.min(new Date(a.data_fim+'T12:00:00'), new Date(lastDay+'T12:00:00')));
+    while (d <= end) {
+      const ds = d.toISOString().split('T')[0];
+      if (!mapa[ds]) mapa[ds] = { tipo: 'atestado', label: 'Atestado', badge: 'badge-info', icon: 'fa-file-medical' };
+      d.setDate(d.getDate() + 1);
+    }
+  });
+  return mapa;
+}
+
 async function renderHistorico() {
   const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   document.getElementById('hist-month-label').textContent = `${meses[histMonth-1]} ${histYear}`;
@@ -1619,59 +1680,77 @@ async function renderHistorico() {
     porDia[r.data].push(r);
   });
 
-  let totalHN = 0, totalHE50 = 0, totalHE100 = 0;
+  const diasAbonados = getDiasAbonados(histYear, histMonth);
+  const todasDatas = new Set([...Object.keys(porDia), ...Object.keys(diasAbonados)]);
+
+  let totalHN = 0, totalHE50 = 0, totalHE100 = 0, totalDias = 0;
   const limite = perfil.carga_horaria_diaria || 7.33;
-  Object.entries(porDia).forEach(([, regs]) => {
-    const h = calcHorasDia(regs);
-    const he = Math.max(0, h - limite);
-    totalHN += Math.min(h, limite);
-    const data = new Date(regs[0].data + 'T12:00:00');
-    if (data.getDay() === 0) totalHE100 += he;
-    else totalHE50 += he;
+
+  todasDatas.forEach(data => {
+    const ehAbonado = diasAbonados[data] && !porDia[data];
+    if (ehAbonado) {
+      totalHN += limite;
+      totalDias++;
+    } else if (porDia[data]) {
+      const h = calcHorasDia(porDia[data]);
+      const he = Math.max(0, h - limite);
+      totalHN += Math.min(h, limite);
+      const d = new Date(data + 'T12:00:00');
+      if (d.getDay() === 0) totalHE100 += he; else totalHE50 += he;
+      totalDias++;
+    }
   });
 
   document.getElementById('hist-hn').textContent = formatHoras(totalHN);
   document.getElementById('hist-he50').textContent = formatHoras(totalHE50);
   document.getElementById('hist-he100').textContent = formatHoras(totalHE100);
-  document.getElementById('hist-dias').textContent = Object.keys(porDia).length;
+  document.getElementById('hist-dias').textContent = totalDias;
 
-  if (!Object.keys(porDia).length) {
+  if (!todasDatas.size) {
     document.getElementById('hist-list').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Nenhum registro neste mês</p></div>';
     return;
   }
 
-  const diasOrdenados = Object.keys(porDia).sort((a, b) => b.localeCompare(a));
+  const diasOrdenados = [...todasDatas].sort((a, b) => b.localeCompare(a));
   document.getElementById('hist-list').innerHTML = diasOrdenados.map(data => {
-    const regs = porDia[data];
-    const h = calcHorasDia(regs);
+    const regs = porDia[data] || [];
+    const abonado = diasAbonados[data];
+    const ehSoAbonado = abonado && !regs.length;
+    const h = ehSoAbonado ? limite : calcHorasDia(regs);
     const he = horasExtras(h);
     const d = new Date(data + 'T12:00:00');
     const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'long' });
     const diaFmt = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-    const badgeClass = h >= (perfil.carga_horaria_diaria || 7.33) ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
-    const ehFimDeSemana = d.getDay() === 0; // só domingo = HE 100%
+    const badgeClass = h >= limite ? 'badge-success' : (h > 0 ? 'badge-warning' : 'badge-danger');
+    const ehFimDeSemana = d.getDay() === 0;
     const foiEditado = regs.some(r => r.editado);
-    const temAtestado = atestados.some(a => a.data_inicio <= data && a.data_fim >= data);
+
+    const deleteEspBtn = abonado && abonado.id
+      ? `<button class="icon-btn danger" style="margin-left:4px" onclick="event.stopPropagation();deletarDiaEspecial('${abonado.id}')" title="Remover marcação"><i class="fas fa-times"></i></button>`
+      : '';
+
     return `
-      <div class="day-card" onclick="openEditDay('${data}')" style="cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div class="day-card" onclick="${regs.length ? `openEditDay('${data}')` : 'void(0)'}" style="cursor:${regs.length ? 'pointer' : 'default'};transition:border-color .15s;${ehSoAbonado ? 'border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.05)' : ''}" ${regs.length ? `onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='${ehSoAbonado ? 'rgba(56,189,248,0.3)' : 'var(--border)'}}'"` : ''}>
         <div class="day-header">
           <div>
             <div class="day-name">${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}</div>
             <div class="day-date">${diaFmt}</div>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end">
-            ${temAtestado ? '<span class="badge badge-info"><i class="fas fa-file-medical"></i> Atestado</span>' : ''}
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+            ${abonado ? `<span class="badge ${abonado.badge}"><i class="fas ${abonado.icon}"></i> ${abonado.label}</span>${deleteEspBtn}` : ''}
             ${foiEditado ? '<span class="badge badge-purple"><i class="fas fa-edit"></i> Editado</span>' : ''}
             ${he > 0 ? `<span class="badge ${ehFimDeSemana ? 'badge-danger' : 'badge-warning'}">+${formatHoras(he)} HE</span>` : ''}
             <span class="badge ${badgeClass}">${formatHoras(h)}</span>
           </div>
         </div>
         <div class="day-records">
-          ${regs.map(r => `
-            <div class="day-record-chip">
-              <i class="fas ${TIPO_ICONS[r.tipo]}"></i>
-              ${TIPO_LABELS[r.tipo]}: <strong>${new Date(r.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</strong>
-            </div>`).join('')}
+          ${ehSoAbonado
+            ? `<div class="day-record-chip" style="color:var(--info)"><i class="fas ${abonado.icon}"></i> Jornada normal contabilizada (${formatHoras(limite)})</div>`
+            : regs.map(r => `
+                <div class="day-record-chip">
+                  <i class="fas ${TIPO_ICONS[r.tipo]}"></i>
+                  ${TIPO_LABELS[r.tipo]}: <strong>${new Date(r.timestamp).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</strong>
+                </div>`).join('')}
         </div>
       </div>`;
   }).join('');
@@ -2005,6 +2084,46 @@ function toast(msg, type = 'info') {
 // ═══════════════════════════════════════════════════════════
 function fmtBRL(v) {
   return 'R$ ' + (v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+// ═══════════════════════════════════════════════════════════
+// DIAS JUSTIFICADOS (feriados, DSR, folgas)
+// ═══════════════════════════════════════════════════════════
+async function loadDiasJustificados() {
+  const { data } = await db.from('dias_justificados').select('*').eq('user_id', currentUser.id);
+  diasJustificados = data || [];
+}
+
+function abrirMarcadorEspecial() {
+  const hoje = new Date().toISOString().split('T')[0];
+  document.getElementById('esp-data').value = hoje;
+  document.getElementById('esp-obs').value = '';
+  openModal('modal-dia-especial');
+}
+
+async function salvarDiaEspecial() {
+  const data = document.getElementById('esp-data').value;
+  const tipo = document.getElementById('esp-tipo').value;
+  const obs  = document.getElementById('esp-obs').value.trim() || null;
+  if (!data) { toast('Selecione a data', 'error'); return; }
+
+  const { data: inserted, error } = await db.from('dias_justificados')
+    .upsert({ user_id: currentUser.id, data, tipo, observacao: obs }, { onConflict: 'user_id,data' })
+    .select().single();
+  if (error) { toast('Erro: ' + error.message, 'error'); return; }
+
+  const idx = diasJustificados.findIndex(d => d.data === data);
+  if (idx >= 0) diasJustificados[idx] = inserted; else diasJustificados.push(inserted);
+  toast('Dia marcado como especial!', 'success');
+  closeModal('modal-dia-especial');
+  await renderHistorico();
+}
+
+async function deletarDiaEspecial(id) {
+  await db.from('dias_justificados').delete().eq('id', id);
+  diasJustificados = diasJustificados.filter(d => d.id !== id);
+  toast('Marcação removida', 'info');
+  await renderHistorico();
 }
 
 // ═══════════════════════════════════════════════════════════
