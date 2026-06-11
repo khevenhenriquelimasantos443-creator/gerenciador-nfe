@@ -1494,10 +1494,11 @@ async function renderDashboard() {
   const now = new Date();
   const mes = now.getMonth() + 1;
   const ano = now.getFullYear();
+  const ultimoDia = new Date(ano, mes, 0).getDate();
   const { data: registros } = await db.from('registros_ponto').select('*')
     .eq('user_id', currentUser.id)
     .gte('data', `${ano}-${String(mes).padStart(2,'0')}-01`)
-    .lte('data', `${ano}-${String(mes).padStart(2,'0')}-31`)
+    .lte('data', `${ano}-${String(mes).padStart(2,'0')}-${String(ultimoDia).padStart(2,'0')}`)
     .order('timestamp');
 
   // Agrupar por dia
@@ -1604,10 +1605,11 @@ async function renderHistorico() {
   document.getElementById('hist-month-label').textContent = `${meses[histMonth-1]} ${histYear}`;
   document.getElementById('hist-list').innerHTML = '<div class="loader"><div class="spinner"></div></div>';
 
+  const ultDia = new Date(histYear, histMonth, 0).getDate();
   const { data: registros } = await db.from('registros_ponto').select('*')
     .eq('user_id', currentUser.id)
     .gte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-01`)
-    .lte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-31`)
+    .lte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-${String(ultDia).padStart(2,'0')}`)
     .order('timestamp');
 
   const porDia = {};
