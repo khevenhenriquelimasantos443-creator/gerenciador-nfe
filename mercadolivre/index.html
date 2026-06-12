@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ML Envios — Painel</title>
+  <title>K.CO — ML Envios</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%236D28D9'/%3E%3Cpath d='M5 5h30v8l-22 5v4l22 5v8H5Z' fill='white'/%3E%3C/svg%3E">
   <style>
     :root {
       --bg:        #070b14;
@@ -21,8 +22,8 @@
       --yellow:    #ffd000;
       --green:     #10b981;
       --green-dim: rgba(16,185,129,0.15);
-      --blue:      #6366f1;
-      --blue-dim:  rgba(99,102,241,0.15);
+      --blue:      #6D28D9;
+      --blue-dim:  rgba(109,40,217,0.15);
       --amber:     #f59e0b;
       --amber-dim: rgba(245,158,11,0.15);
       --red:       #ef4444;
@@ -718,7 +719,8 @@
   <div class="auth-screen">
     <div class="auth-card">
       <div class="auth-icon"><i class="fa-solid fa-truck-fast"></i></div>
-      <h1 class="auth-title">ML Envios</h1>
+              <h1 class="auth-title">K<span style="color:var(--orange)">.</span>CO</h1>
+              <p style="color:var(--muted);font-size:14px;margin-top:-6px">ML Envios</p>
       <p class="auth-sub">Painel de controle para Envios Full e pedidos diários do Mercado Livre.</p>
       <div id="auth-err" class="alert alert-error" style="display:none"></div>
       <button class="btn btn-primary btn-block btn-lg" onclick="startMLAuth()">
@@ -740,8 +742,8 @@
   <!-- Header -->
   <header class="header">
     <div class="header-brand">
-      <div class="header-brand-icon"><i class="fa-solid fa-truck-fast"></i></div>
-      ML Envios
+      <div class="header-brand-icon" style="background:linear-gradient(135deg,#6D28D9,#4C1D95)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 3h18v4.8l-13.2 3v2.4l13.2 3v4.8H3Z" fill="white"/></svg></div>
+      K<span style="color:var(--orange)">.</span>CO <span style="color:var(--muted);font-weight:500">· ML Envios</span>
     </div>
     <div class="header-clock" id="clock">00:00:00</div>
     <div class="header-seller">

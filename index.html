@@ -2,13 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%236D28D9'/%3E%3Cpath d='M5 5h30v8l-22 5v4l22 5v8H5Z' fill='white'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Notas Fiscais</title>
+    <title>K.CO — Notas Fiscais</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #3b0764 0%, #6D28D9 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -20,7 +23,7 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .header h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
+        .header h1 { color: #1a1a2e; margin-bottom: 10px; font-size: 28px; }
         .header p { color: #666; font-size: 14px; }
         .card {
             background: white;
@@ -33,7 +36,7 @@
             color: #333;
             margin-bottom: 20px;
             font-size: 20px;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid #6D28D9;
             padding-bottom: 10px;
         }
         .form-group { margin-bottom: 15px; }
@@ -54,11 +57,11 @@
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6D28D9;
+            box-shadow: 0 0 0 3px rgba(109,40,217,0.15);
         }
         .btn {
-            background: #667eea;
+            background: #6D28D9;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -70,7 +73,7 @@
             width: 100%;
             margin-top: 10px;
         }
-        .btn:hover { background: #5568d3; transform: translateY(-2px); }
+        .btn:hover { background: #5B21B6; transform: translateY(-2px); }
         .btn-secondary { background: #e0e0e0; color: #333; }
         .btn-secondary:hover { background: #d0d0d0; }
         .btn-danger { background: #ff6b6b; }
@@ -95,7 +98,7 @@
             font-size: 14px;
             margin-bottom: -2px;
         }
-        .tab-btn.active { color: #667eea; border-bottom-color: #667eea; }
+        .tab-btn.active { color: #6D28D9; border-bottom-color: #6D28D9; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .alert {
@@ -113,7 +116,7 @@
             border-radius: 8px;
             padding: 15px;
             margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #6D28D9;
         }
         .product-card h3 { color: #333; margin-bottom: 10px; font-size: 15px; }
         .product-info {
@@ -155,8 +158,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Gerenciador de Notas Fiscais e Estoque</h1>
-            <p>Sistema integrado com cadastro de produtos (EAN), importação Excel, leitura de PDFs e histórico completo</p>
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+                <svg viewBox="0 0 40 40" width="46" height="46" style="flex-shrink:0"><rect width="40" height="40" rx="9" fill="#6D28D9"/><path d="M5 5h30v8l-22 5v4l22 5v8H5Z" fill="white"/></svg>
+                <div>
+                    <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#1a1a2e;line-height:1">K<span style="color:#6D28D9">.</span>CO</div>
+                    <div style="font-size:11px;color:#888;margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px">Gestão Fiscal</div>
+                </div>
+            </div>
+            <h1>Notas Fiscais &amp; Estoque</h1>
+            <p>Cadastro de produtos (EAN), importação Excel, leitura de PDFs e histórico completo</p>
         </div>
         
         <div class="card">
@@ -825,7 +835,7 @@
             let html = `<div style="margin-top: 20px;">
                 <h3 style="color: #333; margin-bottom: 15px;">Preview (${dados.length} produtos)</h3>
                 <table style="font-size: 12px;">
-                    <thead><tr style="background: #667eea; color: white;">
+                    <thead><tr style="background: #6D28D9; color: white;">
                         <th>SKU</th><th>Nome</th><th>EAN</th><th>Categoria</th><th>Preço</th><th>Fornecedor</th><th>Mín.</th>
                     </tr></thead><tbody>`;
 

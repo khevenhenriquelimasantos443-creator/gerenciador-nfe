@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voluna — Gestão de Devoluções</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%3E%3Crect%20width%3D'24'%20height%3D'24'%20rx%3D'6'%20fill%3D'%234f46e5'%2F%3E%3Cg%20fill%3D'none'%20stroke%3D'%23fff'%20stroke-width%3D'2.1'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M5%2012a7%207%200%200%201%2012-5L19%208'%2F%3E%3Cpath%20d%3D'M19%205v3h-3'%2F%3E%3Cpath%20d%3D'M19%2012a7%207%200%200%201-12%205L5%2016'%2F%3E%3Cpath%20d%3D'M5%2019v-3h3'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
-    <meta name="theme-color" content="#4f46e5">
+    <title>K.CO — Voluna</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%236D28D9'/%3E%3Cpath d='M5 5h30v8l-22 5v4l22 5v8H5Z' fill='white'/%3E%3C/svg%3E">
+    <meta name="theme-color" content="#6D28D9">
     <style>
 /* ============================================================
    Voluna — identidade visual minimalista e formal
@@ -14,7 +14,7 @@
   --bg:#f6f7f9; --surface:#fff; --surface-2:#fbfbfc;
   --border:#e7e9ee; --border-strong:#d8dbe2;
   --ink:#15171c; --text:#41454f; --muted:#8b909c;
-  --accent:#4f46e5; --accent-ink:#4338ca; --accent-weak:#eef0fe;
+  --accent:#6D28D9; --accent-ink:#5B21B6; --accent-weak:#ede9fe;
   --success:#0e9f6e; --success-weak:#e7f7f0;
   --warn:#b45309; --warn-weak:#fbf3e6;
   --danger:#dc2626; --danger-weak:#fdeeee;
@@ -205,7 +205,7 @@ tbody tr:hover{background:var(--surface-2)}
     <!-- ===================== TELA DE CONFIGURAÇÃO (Supabase) ===================== -->
     <div id="setup-screen" class="overlay hidden">
         <div class="auth-card">
-            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 17-7.1L22 8"/><path d="M22 4v4h-4"/><path d="M22 12a10 10 0 0 1-17 7.1L2 16"/><path d="M2 20v-4h4"/></svg></span> <span class="wm">Vol<span class="accent">una</span></span></div>
+            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" width="19" height="19"><path d="M3 3h18v4.8l-13.2 3v2.4l13.2 3v4.8H3Z" fill="currentColor"/></svg></span> <span class="wm">Vol<span class="accent">una</span></span></div>
             <h1>Conectar ao seu banco de dados</h1>
             <p class="muted">
                 Para sincronizar entre celular e PC, cole abaixo os dados do seu projeto
@@ -231,7 +231,7 @@ tbody tr:hover{background:var(--surface-2)}
     <!-- ===================== TELA DE LOGIN ===================== -->
     <div id="auth-screen" class="overlay hidden">
         <div class="auth-card">
-            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 17-7.1L22 8"/><path d="M22 4v4h-4"/><path d="M22 12a10 10 0 0 1-17 7.1L2 16"/><path d="M2 20v-4h4"/></svg></span> <span class="wm">Vol<span class="accent">una</span></span></div>
+            <div class="auth-logo"><span class="logo-mark"><svg viewBox="0 0 24 24" width="19" height="19"><path d="M3 3h18v4.8l-13.2 3v2.4l13.2 3v4.8H3Z" fill="currentColor"/></svg></span> <span class="wm">Vol<span class="accent">una</span></span></div>
             <h1 id="auth-title">Entrar</h1>
             <p class="muted" id="auth-subtitle">Acesse com seu e-mail e senha.</p>
             <div id="auth-msg"></div>
@@ -262,10 +262,10 @@ tbody tr:hover{background:var(--surface-2)}
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 17-7.1L22 8"/><path d="M22 4v4h-4"/><path d="M22 12a10 10 0 0 1-17 7.1L2 16"/><path d="M2 20v-4h4"/></svg></span>
+                <span class="logo-mark"><svg viewBox="0 0 24 24" width="19" height="19"><path d="M3 3h18v4.8l-13.2 3v2.4l13.2 3v4.8H3Z" fill="currentColor"/></svg></span>
                 <div>
-                    <div class="brand">Vol<span class="accent">una</span></div>
-                    <div class="brand-sub">Devoluções &amp; Disputas</div>
+                    <div class="brand">K<span class="accent">.</span>CO</div>
+                    <div class="brand-sub">Voluna · Devoluções</div>
                 </div>
             </div>
             <nav class="sidebar-nav">
