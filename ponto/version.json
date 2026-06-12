@@ -1,4 +1,4 @@
 {
-  "version": "1.4",
-  "notes": "Adiciona painel admin com gestão de usuários"
+  "version": "1.5",
+  "notes": "Admin pode visualizar e editar app como qualquer usuário"
 }

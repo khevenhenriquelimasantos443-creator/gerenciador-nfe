@@ -496,6 +496,25 @@
   #update-banner .btn-upd:hover { background: #1d4ed8; }
   #update-banner .btn-dismiss { background: none; border: 1px solid var(--border); color: var(--text-muted);
     border-radius: 8px; padding: 9px 12px; cursor: pointer; font-size: 13px; }
+
+  /* ───── ADMIN IMPERSONATION BANNER ───── */
+  #admin-view-banner {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: linear-gradient(90deg, #b45309, #d97706);
+    color: #fff; padding: 8px 16px;
+    display: none; align-items: center; justify-content: space-between; gap: 12px;
+    font-size: 13px; font-weight: 600; box-shadow: 0 2px 12px rgba(0,0,0,.4);
+  }
+  #admin-view-banner.visible { display: flex; }
+  #admin-view-banner .adm-banner-info { display: flex; align-items: center; gap: 8px; }
+  #admin-view-banner button { background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.4);
+    color: #fff; border-radius: 6px; padding: 4px 12px; cursor: pointer; font-size: 12px; font-weight: 700; font-family: inherit; }
+  #admin-view-banner button:hover { background: rgba(255,255,255,.35); }
+  body.admin-view-mode .main { padding-top: calc(56px + 36px) !important; }
+  body.admin-view-mode .topbar { top: 36px !important; }
+  @media (max-width: 960px) {
+    body.admin-view-mode .main { padding-top: calc(56px + 36px) !important; }
+  }
 </style>
 </head>
 <body>
@@ -506,6 +525,15 @@
   <p>Carregando...</p>
 </div>
 
+
+<!-- Banner admin impersonação -->
+<div id="admin-view-banner">
+  <div class="adm-banner-info">
+    <i class="fas fa-shield-alt"></i>
+    <span>Admin — Visualizando como: <strong id="admin-view-nome">—</strong></span>
+  </div>
+  <button onclick="sairVisualizacaoAdmin()"><i class="fas fa-sign-out-alt"></i> Sair da visualização</button>
+</div>
 
 <!-- Auth -->
 <div id="auth-screen" style="display:none">
@@ -1405,8 +1433,9 @@
       <div class="input-group" style="margin:0"><label>Intervalo (min)</label><input type="number" id="adm-intervalo" class="form-control"></div>
       <div class="input-group" style="margin:0"><label>Dia pagamento</label><input type="number" id="adm-dia-pag" class="form-control" min="1" max="31"></div>
     </div>
-    <div style="margin-bottom:20px">
+    <div style="margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn btn-primary" style="width:auto;padding:9px 20px" onclick="salvarPerfilAdmin()"><i class="fas fa-save"></i> Salvar perfil</button>
+      <button class="btn" style="width:auto;padding:9px 20px;background:linear-gradient(135deg,#b45309,#d97706);color:#fff;border:none" onclick="entrarComoUsuario()"><i class="fas fa-user-secret"></i> Entrar como usuário</button>
     </div>
 
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:10px">Últimos registros de ponto</div>
@@ -1470,6 +1499,10 @@ let currentUser = null;
 let perfil = {};
 let configDescontos = {};
 let isAdmin = false;
+let viewingAsUser = null; // { id, nome } quando admin visualiza outro usuário
+let _savedPerfil = null, _savedConfig = null, _savedExtras = null;
+
+function activeId() { return viewingAsUser ? viewingAsUser.id : currentUser.id; }
 let descontosExtras = [];
 let registrosHoje = [];
 let histMonth = new Date().getMonth() + 1;
@@ -1522,15 +1555,15 @@ function showApp() {
 
 async function loadUserData() {
   // Perfil
-  const { data: p } = await db.from('perfis').select('*').eq('id', currentUser.id).single();
+  const { data: p } = await db.from('perfis').select('*').eq('id', activeId()).single();
   perfil = p || {};
 
   // Config descontos
-  const { data: cd } = await db.from('config_descontos').select('*').eq('user_id', currentUser.id).single();
+  const { data: cd } = await db.from('config_descontos').select('*').eq('user_id', activeId()).single();
   configDescontos = cd || { inss_ativo: true, irrf_ativo: true, vt_ativo: true, vr_ativo: true, plano_saude_ativo: true };
 
   // Descontos extras
-  const { data: de } = await db.from('descontos_extras').select('*').eq('user_id', currentUser.id).order('created_at');
+  const { data: de } = await db.from('descontos_extras').select('*').eq('user_id', activeId()).order('created_at');
   descontosExtras = de || [];
 
   // Registros hoje
@@ -1612,7 +1645,10 @@ async function doAppleLogin() {
 async function doLogout() {
   await db.auth.signOut();
   currentUser = null; perfil = {}; configDescontos = {}; descontosExtras = []; registrosHoje = []; isAdmin = false;
+  viewingAsUser = null; _savedPerfil = null; _savedConfig = null; _savedExtras = null;
   document.getElementById('nav-admin').style.display = 'none';
+  document.getElementById('admin-view-banner').classList.remove('visible');
+  document.body.classList.remove('admin-view-mode');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1688,7 +1724,7 @@ const TIPO_ORDER = ['entrada', 'saida_almoco', 'retorno_almoco', 'saida'];
 async function loadRegistrosHoje() {
   const today = new Date().toISOString().split('T')[0];
   const { data } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id).eq('data', today).order('timestamp');
+    .eq('user_id', activeId()).eq('data', today).order('timestamp');
   registrosHoje = data || [];
 }
 
@@ -1743,7 +1779,7 @@ async function registrarPonto(tipo) {
   const now = new Date();
   const obs = document.getElementById('ponto-obs').value.trim();
   const { error } = await db.from('registros_ponto').insert({
-    user_id: currentUser.id, tipo, timestamp: now.toISOString(),
+    user_id: activeId(), tipo, timestamp: now.toISOString(),
     data: now.toISOString().split('T')[0], observacao: obs || null
   });
   if (error) { toast('Erro ao registrar ponto: ' + error.message, 'error'); pontoBloqueado = false; return; }
@@ -1802,7 +1838,7 @@ async function renderDashboard() {
   const ano = now.getFullYear();
   const ultimoDia = new Date(ano, mes, 0).getDate();
   const { data: registros } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id)
+    .eq('user_id', activeId())
     .gte('data', `${ano}-${String(mes).padStart(2,'0')}-01`)
     .lte('data', `${ano}-${String(mes).padStart(2,'0')}-${String(ultimoDia).padStart(2,'0')}`)
     .order('timestamp');
@@ -1944,7 +1980,7 @@ async function renderHistorico() {
 
   const ultDia = new Date(histYear, histMonth, 0).getDate();
   const { data: registros } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id)
+    .eq('user_id', activeId())
     .gte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-01`)
     .lte('data', `${histYear}-${String(histMonth).padStart(2,'0')}-${String(ultDia).padStart(2,'0')}`)
     .order('timestamp');
@@ -2158,7 +2194,7 @@ async function renderHolerites() {
 
 async function loadHolerites() {
   document.getElementById('holerites-list').innerHTML = '<div class="loader"><div class="spinner"></div></div>';
-  const { data } = await db.from('holerites').select('*').eq('user_id', currentUser.id).order('ano', { ascending: false }).order('mes', { ascending: false });
+  const { data } = await db.from('holerites').select('*').eq('user_id', activeId()).order('ano', { ascending: false }).order('mes', { ascending: false });
   if (!data || !data.length) {
     document.getElementById('holerites-list').innerHTML = '<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><p>Nenhum holerite salvo</p></div>';
     return;
@@ -2206,7 +2242,7 @@ async function uploadHolerite() {
   const obs = document.getElementById('hol-obs').value.trim() || null;
   let arquivo_url = null, arquivo_nome = null;
   if (uploadFile) {
-    const path = `${currentUser.id}/${ano}-${String(mes).padStart(2,'0')}-${Date.now()}-${uploadFile.name}`;
+    const path = `${activeId()}/${ano}-${String(mes).padStart(2,'0')}-${Date.now()}-${uploadFile.name}`;
     const { data: upData, error: upErr } = await db.storage.from('holerites').upload(path, uploadFile);
     if (upErr) { toast('Erro ao enviar arquivo: ' + upErr.message, 'error'); return; }
     const { data: urlData } = db.storage.from('holerites').getPublicUrl(path);
@@ -2214,7 +2250,7 @@ async function uploadHolerite() {
     arquivo_nome = uploadFile.name;
   }
   const { error } = await db.from('holerites').insert({
-    user_id: currentUser.id, mes, ano, salario_bruto: bruto, salario_liquido: liquido,
+    user_id: activeId(), mes, ano, salario_bruto: bruto, salario_liquido: liquido,
     observacoes: obs, arquivo_url, arquivo_nome
   });
   if (error) { toast('Erro ao salvar: ' + error.message, 'error'); return; }
@@ -2292,7 +2328,7 @@ async function salvarPerfil() {
     intervalo_minutos: +document.getElementById('cfg-intervalo').value || 60,
     updated_at: new Date().toISOString()
   };
-  const { error } = await db.from('perfis').upsert({ id: currentUser.id, ...dados });
+  const { error } = await db.from('perfis').upsert({ id: activeId(), ...dados });
   if (error) { toast('Erro: ' + error.message, 'error'); return; }
   perfil = { ...perfil, ...dados };
   updateUserUI();
@@ -2301,7 +2337,7 @@ async function salvarPerfil() {
 
 async function salvarDescontos() {
   const dados = {
-    user_id: currentUser.id,
+    user_id: activeId(),
     inss_ativo: document.getElementById('cfg-inss').checked,
     irrf_ativo: document.getElementById('cfg-irrf').checked,
     vt_ativo: document.getElementById('cfg-vt').checked,
@@ -2324,7 +2360,7 @@ async function adicionarDesconto() {
   const valor = +document.getElementById('extra-valor').value;
   if (!nome || !valor) { toast('Preencha nome e valor', 'error'); return; }
   const { data, error } = await db.from('descontos_extras').insert({
-    user_id: currentUser.id, nome, tipo, valor, ativo: true
+    user_id: activeId(), nome, tipo, valor, ativo: true
   }).select().single();
   if (error) { toast('Erro: ' + error.message, 'error'); return; }
   descontosExtras.push(data);
@@ -2390,7 +2426,7 @@ function fmtBRL(v) {
 // DIAS JUSTIFICADOS (feriados, DSR, folgas)
 // ═══════════════════════════════════════════════════════════
 async function loadDiasJustificados() {
-  const { data } = await db.from('dias_justificados').select('*').eq('user_id', currentUser.id);
+  const { data } = await db.from('dias_justificados').select('*').eq('user_id', activeId());
   diasJustificados = data || [];
 }
 
@@ -2408,7 +2444,7 @@ async function salvarDiaEspecial() {
   if (!data) { toast('Selecione a data', 'error'); return; }
 
   const { data: inserted, error } = await db.from('dias_justificados')
-    .upsert({ user_id: currentUser.id, data, tipo, observacao: obs }, { onConflict: 'user_id,data' })
+    .upsert({ user_id: activeId(), data, tipo, observacao: obs }, { onConflict: 'user_id,data' })
     .select().single();
   if (error) { toast('Erro: ' + error.message, 'error'); return; }
 
@@ -2458,7 +2494,7 @@ async function salvarLancamentoManual() {
 
   try {
     const { data: existentes, error: errBusca } = await db.from('registros_ponto').select('id')
-      .eq('user_id', currentUser.id).eq('data', data);
+      .eq('user_id', activeId()).eq('data', data);
 
     if (errBusca) { alert('Erro ao verificar registros: ' + errBusca.message); return; }
 
@@ -2480,7 +2516,7 @@ async function salvarLancamentoManual() {
     ].filter(Boolean);
 
     const inserts = registros.map(r => ({
-      user_id: currentUser.id,
+      user_id: activeId(),
       tipo: r.tipo,
       data,
       timestamp: localTimestamp(data, r.hora),
@@ -2595,7 +2631,7 @@ function abrirHoleriteDemonstrativo() {
 // ═══════════════════════════════════════════════════════════
 async function loadAtestados() {
   const { data } = await db.from('atestados_medicos').select('*')
-    .eq('user_id', currentUser.id).order('data_inicio', { ascending: false });
+    .eq('user_id', activeId()).order('data_inicio', { ascending: false });
   atestados = data || [];
 }
 
@@ -2650,7 +2686,7 @@ async function salvarAtestado() {
   if (!inicio || !fim) { toast('Preencha as datas', 'error'); return; }
   if (fim < inicio) { toast('Data fim não pode ser anterior à data início', 'error'); return; }
   const { error } = await db.from('atestados_medicos').insert({
-    user_id: currentUser.id, tipo, data_inicio: inicio, data_fim: fim,
+    user_id: activeId(), tipo, data_inicio: inicio, data_fim: fim,
     horas_abonadas: horas, observacao: obs
   });
   if (error) { toast('Erro: ' + error.message, 'error'); return; }
@@ -2675,7 +2711,7 @@ async function confirmarDelAtestado() {
 async function openEditDay(data) {
   editDayDate = data;
   const { data: regs } = await db.from('registros_ponto').select('*')
-    .eq('user_id', currentUser.id).eq('data', data).order('timestamp');
+    .eq('user_id', activeId()).eq('data', data).order('timestamp');
   editDayRecords = regs || [];
 
   const d = new Date(data + 'T12:00:00');
@@ -2767,6 +2803,54 @@ if ('serviceWorker' in navigator) {
 // ═══════════════════════════════════════════════════════════
 let adminUsers = [];
 let adminTargetId = null;
+
+async function entrarComoUsuario() {
+  if (!adminTargetId) return;
+  const u = adminUsers.find(x => x.id === adminTargetId) || {};
+  const nome = document.getElementById('adm-nome').value || u.nome || '(sem nome)';
+
+  // Salva dados do próprio admin
+  _savedPerfil = { ...perfil };
+  _savedConfig = { ...configDescontos };
+  _savedExtras = [...descontosExtras];
+
+  // Carrega dados do usuário alvo
+  viewingAsUser = { id: adminTargetId, nome };
+  const { data: p } = await db.from('perfis').select('*').eq('id', adminTargetId).single();
+  perfil = p || {};
+  const { data: cd } = await db.from('config_descontos').select('*').eq('user_id', adminTargetId).single();
+  configDescontos = cd || { inss_ativo: true, irrf_ativo: true, vt_ativo: true, vr_ativo: true, plano_saude_ativo: true };
+  const { data: de } = await db.from('descontos_extras').select('*').eq('user_id', adminTargetId).order('created_at');
+  descontosExtras = de || [];
+  await loadRegistrosHoje();
+  await loadAtestados();
+  await loadDiasJustificados();
+
+  // Mostra banner
+  document.getElementById('admin-view-nome').textContent = nome;
+  document.getElementById('admin-view-banner').classList.add('visible');
+  document.body.classList.add('admin-view-mode');
+
+  closeModal('modal-admin-user');
+  await navigate('dashboard');
+}
+
+async function sairVisualizacaoAdmin() {
+  viewingAsUser = null;
+  // Restaura dados do admin
+  if (_savedPerfil) perfil = _savedPerfil;
+  if (_savedConfig) configDescontos = _savedConfig;
+  if (_savedExtras) descontosExtras = _savedExtras;
+  _savedPerfil = null; _savedConfig = null; _savedExtras = null;
+
+  await loadRegistrosHoje();
+  await loadAtestados();
+  await loadDiasJustificados();
+
+  document.getElementById('admin-view-banner').classList.remove('visible');
+  document.body.classList.remove('admin-view-mode');
+  await navigate('admin');
+}
 
 async function renderAdmin() {
   if (!isAdmin) return;
