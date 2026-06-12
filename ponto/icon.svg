@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="110" fill="#0f172a"/>
+  <!-- Blue glow -->
+  <circle cx="256" cy="256" r="180" fill="rgba(37,99,235,0.12)"/>
+  <!-- Clock ring -->
+  <circle cx="256" cy="256" r="158" fill="none" stroke="#2563eb" stroke-width="22"/>
+  <!-- Tick marks (12, 3, 6, 9) -->
+  <line x1="256" y1="108" x2="256" y2="132" stroke="#60a5fa" stroke-width="14" stroke-linecap="round"/>
+  <line x1="404" y1="256" x2="380" y2="256" stroke="#60a5fa" stroke-width="14" stroke-linecap="round"/>
+  <line x1="256" y1="404" x2="256" y2="380" stroke="#60a5fa" stroke-width="14" stroke-linecap="round"/>
+  <line x1="108" y1="256" x2="132" y2="256" stroke="#60a5fa" stroke-width="14" stroke-linecap="round"/>
+  <!-- Hour hand (pointing ~10 o'clock) -->
+  <line x1="256" y1="256" x2="195" y2="162" stroke="#f1f5f9" stroke-width="20" stroke-linecap="round"/>
+  <!-- Minute hand (pointing ~2 o'clock) -->
+  <line x1="256" y1="256" x2="340" y2="188" stroke="#38bdf8" stroke-width="16" stroke-linecap="round"/>
+  <!-- Center dot -->
+  <circle cx="256" cy="256" r="18" fill="#2563eb"/>
+  <circle cx="256" cy="256" r="8" fill="#f1f5f9"/>
+</svg>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClockIn — Controle de Jornada Simplificado</title>
+<meta name="description" content="ClockIn registra sua jornada, calcula horas extras, INSS, IRRF e gera uma estimativa líquida do seu salário — tudo no celular.">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="theme-color" content="#2563eb">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:            #0f172a;
+  --surface:       #1e293b;
+  --surface2:      #263349;
+  --border:        #334155;
+  --primary:       #2563eb;
+  --primary-light: #60a5fa;
+  --info:          #38bdf8;
+  --success:       #22c55e;
+  --warning:       #f59e0b;
+  --text:          #f1f5f9;
+  --text-muted:    #94a3b8;
+  --text-dim:      #64748b;
+  --radius:        12px;
+  --radius-lg:     20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Utility ── */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--primary-light);
+  background: rgba(37,99,235,.12);
+  border: 1px solid rgba(37,99,235,.25);
+  border-radius: 100px;
+  padding: 6px 14px;
+  margin-bottom: 20px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--primary-light) 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(37,99,235,.35);
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 6px 28px rgba(37,99,235,.5);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover {
+  background: var(--surface);
+  border-color: var(--primary-light);
+  color: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.btn-sm {
+  padding: 9px 18px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  background: rgba(15,23,42,.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(51,65,85,.5);
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.nav-logo .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(37,99,235,.4);
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(ellipse at center, rgba(37,99,235,.22) 0%, rgba(56,189,248,.08) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
+}
+
+/* ── App Mockup Card ── */
+.mockup-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.mockup-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow:
+    0 0 0 1px rgba(37,99,235,.15),
+    0 30px 80px rgba(0,0,0,.5),
+    0 0 80px rgba(37,99,235,.08);
+  text-align: left;
+}
+
+.mockup-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.mockup-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.mockup-dot:nth-child(1) { background: #ef4444; }
+.mockup-dot:nth-child(2) { background: var(--warning); }
+.mockup-dot:nth-child(3) { background: var(--success); }
+
+.mockup-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-left: 6px;
+}
+
+.mockup-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.mockup-stat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.mockup-stat-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--primary-light);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.mockup-stat-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.mockup-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+
+.mockup-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mockup-btn {
+  padding: 10px 8px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid;
+}
+
+.mockup-btn-entrada {
+  background: rgba(34,197,94,.12);
+  border-color: rgba(34,197,94,.3);
+  color: var(--success);
+}
+.mockup-btn-saida-almoco {
+  background: rgba(245,158,11,.1);
+  border-color: rgba(245,158,11,.3);
+  color: var(--warning);
+}
+.mockup-btn-retorno {
+  background: rgba(56,189,248,.1);
+  border-color: rgba(56,189,248,.3);
+  color: var(--info);
+}
+.mockup-btn-saida {
+  background: rgba(239,68,68,.1);
+  border-color: rgba(239,68,68,.3);
+  color: #ef4444;
+}
+
+/* ══════════════════════════════
+   FEATURES
+══════════════════════════════ */
+.features {
+  padding: 100px 24px;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.features-header h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--info));
+  opacity: 0;
+  transition: opacity .25s;
+}
+
+.feature-card:hover {
+  border-color: rgba(37,99,235,.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(37,99,235,.15);
+  border: 1px solid rgba(37,99,235,.25);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--primary-light);
+  margin-bottom: 18px;
+}
+
+.feature-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.feature-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 5px;
+  margin-top: 12px;
+  background: rgba(56,189,248,.1);
+  color: var(--info);
+  border: 1px solid rgba(56,189,248,.2);
+}
+
+/* ══════════════════════════════
+   HOW IT WORKS
+══════════════════════════════ */
+.how-it-works {
+  padding: 100px 24px;
+}
+
+.how-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 56px 48px;
+}
+
+.how-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.how-header h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+}
+
+/* Timeline */
+.steps {
+  position: relative;
+  padding-left: 52px;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--info), transparent);
+}
+
+.step {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.step:last-of-type {
+  margin-bottom: 0;
+}
+
+.step-number {
+  position: absolute;
+  left: -52px;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), #1d4ed8);
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.2);
+  z-index: 1;
+}
+
+.step h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  padding-top: 8px;
+}
+
+.step p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.step-tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--warning);
+  background: rgba(245,158,11,.08);
+  border: 1px solid rgba(245,158,11,.2);
+  border-radius: 7px;
+  padding: 5px 10px;
+}
+
+/* Calendar legend */
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 24px;
+  text-align: center;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-copy {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-light);
+  transition: color .2s;
+}
+
+.footer-link:hover {
+  color: var(--info);
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 640px) {
+  .hero {
+    padding: 90px 20px 60px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+  }
+
+  .mockup-card {
+    max-width: 100%;
+  }
+
+  .features {
+    padding: 72px 20px;
+  }
+
+  .how-inner {
+    padding: 36px 24px;
+  }
+
+  .steps {
+    padding-left: 44px;
+  }
+
+  .steps::before {
+    left: 15px;
+  }
+
+  .step-number {
+    left: -44px;
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .calendar-legend {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="landing.html" class="nav-logo">
+      <div class="logo-icon">
+        <i class="fa-solid fa-clock"></i>
+      </div>
+      ClockIn
+    </a>
+    <a href="index.html" class="btn btn-primary btn-sm">
+      <i class="fa-solid fa-arrow-right-to-bracket"></i>
+      Abrir app
+    </a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="section-label">
+      <i class="fa-solid fa-bolt"></i>
+      Controle de jornada simplificado
+    </div>
+
+    <h1>
+      Bata ponto,<br>
+      <span class="gradient-text">calcule seu salário</span><br>
+      em segundos.
+    </h1>
+
+    <p class="hero-subtitle">
+      ClockIn registra sua jornada, calcula horas extras, INSS, IRRF e gera uma
+      estimativa líquida do seu salário — tudo no celular.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="index.html" class="btn btn-primary">
+        <i class="fa-solid fa-play"></i>
+        Começar agora
+      </a>
+      <a href="#como-funciona" class="btn btn-outline">
+        <i class="fa-solid fa-circle-info"></i>
+        Ver como funciona
+      </a>
+    </div>
+
+    <!-- App mockup -->
+    <div class="mockup-wrap">
+      <div class="mockup-card">
+        <div class="mockup-titlebar">
+          <span class="mockup-dot"></span>
+          <span class="mockup-dot"></span>
+          <span class="mockup-dot"></span>
+          <span class="mockup-title">ClockIn — Hoje, quarta-feira</span>
+        </div>
+
+        <div class="mockup-stats">
+          <div class="mockup-stat">
+            <div class="mockup-stat-value">08:42</div>
+            <div class="mockup-stat-label">Trabalhado</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-value" style="color: var(--success);">+00:42</div>
+            <div class="mockup-stat-label">H. Extra</div>
+          </div>
+          <div class="mockup-stat">
+            <div class="mockup-stat-value" style="color: var(--info);">R$&nbsp;3.840</div>
+            <div class="mockup-stat-label">Estimado</div>
+          </div>
+        </div>
+
+        <div class="mockup-label">Registrar ponto</div>
+        <div class="mockup-btns">
+          <div class="mockup-btn mockup-btn-entrada">
+            <i class="fa-solid fa-right-to-bracket"></i> Entrada
+          </div>
+          <div class="mockup-btn mockup-btn-saida-almoco">
+            <i class="fa-solid fa-utensils"></i> Saída Almoço
+          </div>
+          <div class="mockup-btn mockup-btn-retorno">
+            <i class="fa-solid fa-rotate-left"></i> Retorno
+          </div>
+          <div class="mockup-btn mockup-btn-saida">
+            <i class="fa-solid fa-right-from-bracket"></i> Saída
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FEATURES
+══════════════════════════════ -->
+<section class="features">
+  <div class="container">
+    <div class="features-header">
+      <div class="section-label">
+        <i class="fa-solid fa-star"></i>
+        Funcionalidades
+      </div>
+      <h2>Tudo que você precisa para controlar sua jornada</h2>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <h3>Registro de ponto</h3>
+        <p>Registre entrada, saída para almoço, retorno e saída com um toque. Histórico completo de todos os seus pontos.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-calculator"></i>
+        </div>
+        <h3>Cálculo salarial automático</h3>
+        <p>Configure seu salário e o ClockIn calcula INSS, IRRF, desconto de vale-transporte e gera a estimativa líquida em tempo real.</p>
+        <span class="feature-tag">Atualizado mensalmente</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h3>Horas extras detalhadas</h3>
+        <p>Diferencia automaticamente HE 75% (dias úteis e sábados) de HE 100% (domingos e feriados), com totais separados no holerite.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-file-medical"></i>
+        </div>
+        <h3>Atestados médicos</h3>
+        <p>Lance atestados médicos e o sistema conta o dia como jornada normal — sem prejuízo no seu salário estimado.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-star"></i>
+        </div>
+        <h3>Feriados e dias especiais</h3>
+        <p>Marque feriados, DSR e folgas compensatórias. O ClockIn ajusta os cálculos de horas extras e descanso semanal remunerado automaticamente.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+        </div>
+        <h3>Holerites digitais</h3>
+        <p>Gere holerites detalhados com todos os proventos, descontos e horas extras. Salve como PDF ou compartilhe diretamente do app.</p>
+        <span class="feature-tag">PDF na nuvem</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     HOW IT WORKS
+══════════════════════════════ -->
+<section class="how-it-works" id="como-funciona">
+  <div class="container">
+    <div class="how-inner">
+      <div class="how-header">
+        <div class="section-label">
+          <i class="fa-solid fa-map"></i>
+          Passo a passo
+        </div>
+        <h2>Como usar o ClockIn</h2>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Configure seu perfil</h3>
+          <p>
+            Acesse <strong>Configurações</strong> e informe seu salário bruto, carga horária diária, dias de trabalho na semana e os descontos aplicáveis (VT, VR, plano de saúde).
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Bata ponto todos os dias</h3>
+          <p>
+            Na tela principal, registre <strong>Entrada → Saída Almoço → Retorno → Saída</strong> a cada transição. Esqueceu de registrar no horário? Use <em>Lançar dia</em> para inserir os horários manualmente.
+          </p>
+          <div class="step-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            Dica: "Lançar dia" está disponível no botão ⊕ do histórico.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Marque feriados e dias especiais</h3>
+          <p>
+            No <strong>Histórico</strong>, toque em qualquer dia e selecione <em>Marcar especial</em>. Escolha entre feriado, DSR ou folga compensatória para que o cálculo de HE fique correto.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Lance atestados médicos</h3>
+          <p>
+            Acesse a aba <strong>Atestados</strong>, informe a data e a duração. O dia será contabilizado como jornada completa, sem desconto no salário estimado.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">5</div>
+          <h3>Acompanhe seu salário estimado</h3>
+          <p>
+            O <strong>Dashboard</strong> mostra em tempo real: horas trabalhadas, saldo de horas extras e a estimativa líquida do mês. Use <em>Simulação</em> para projetar o fechamento do mês antes do fim do período.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Calendar legend -->
+      <div class="calendar-legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background: var(--success);"></span>
+          Verde — jornada completa
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: var(--warning);"></span>
+          Laranja — jornada parcial
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: var(--info);"></span>
+          Azul — atestado / dia especial
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: var(--text-dim);"></span>
+          Cinza — fim de semana
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-copy">Feito com ❤️ para trabalhadores CLT</span>
+    <a href="index.html" class="footer-link">
+      Abrir ClockIn
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>
