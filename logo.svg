@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48">
-  <!-- Icon mark -->
-  <rect width="40" height="40" x="0" y="4" rx="9" fill="#6D28D9"/>
-  <path d="M5 9h30v8l-22 5v4l22 5v8H5Z" fill="white"/>
-  <!-- Wordmark -->
-  <text x="58" y="37" font-family="Inter,system-ui,sans-serif" font-size="28" font-weight="800">
+  <rect width="40" height="40" rx="9" fill="#6D28D9"/>
+  <path d="M5 5h30v8l-22 5v4l22 5v8H5Z" fill="white"/>
+  <text x="58" y="33" font-family="Inter,system-ui,sans-serif" font-size="28" font-weight="800">
     <tspan fill="#0D0E1A">K</tspan><tspan fill="#6D28D9">.</tspan><tspan fill="#0D0E1A">CO</tspan>
   </text>
 </svg>
