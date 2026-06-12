@@ -1093,6 +1093,11 @@
               <div style="font-size:11px;color:var(--text-muted);margin-top:2px">(saída − entrada − almoço)</div>
               <input type="hidden" id="cfg-ch-diaria">
             </div>
+            <div class="input-group">
+              <label>Meta de Horas Extras por mês (h)</label>
+              <input type="number" id="cfg-meta-he" class="form-control" value="40" min="0" step="1" placeholder="Ex: 40">
+              <small style="color:var(--text-muted);font-size:11px;margin-top:4px;display:block">Meta exibida no progresso do Dashboard</small>
+            </div>
             <button class="btn btn-primary" onclick="salvarPerfil()">
               <i class="fas fa-save"></i> Salvar perfil
             </button>
@@ -1111,8 +1116,11 @@
                 <label class="toggle"><input type="checkbox" id="cfg-irrf" checked><span class="toggle-slider"></span></label>
               </div>
               <div class="toggle-row">
-                <div class="info"><span>Vale Transporte</span></div>
-                <input type="number" class="form-control" id="cfg-vt-val" style="width:90px;margin:0 10px" placeholder="R$">
+                <div class="info"><span>Vale Transporte</span><small>% do salário bruto (CLT: até 6%)</small></div>
+                <div style="display:flex;align-items:center;gap:4px;margin:0 10px">
+                  <input type="number" class="form-control" id="cfg-vt-val" style="width:70px;margin:0" placeholder="0" min="0" max="100" step="0.1">
+                  <span style="color:var(--text-muted);font-size:14px;font-weight:600">%</span>
+                </div>
                 <label class="toggle"><input type="checkbox" id="cfg-vt" checked><span class="toggle-slider"></span></label>
               </div>
               <div class="toggle-row">
@@ -1903,8 +1911,9 @@ async function renderDashboard() {
   document.getElementById('prog-horas-bar').style.width = Math.min(100, (totalHoras / chMensal) * 100) + '%';
   document.getElementById('prog-dias').textContent = `${diasTrabalhados} / ${diasUteisNoMes}`;
   document.getElementById('prog-dias-bar').style.width = Math.min(100, (diasTrabalhados / diasUteisNoMes) * 100) + '%';
-  document.getElementById('prog-he').textContent = `${formatHoras(totalHE50 + totalHE100)} / 40h`;
-  document.getElementById('prog-he-bar').style.width = Math.min(100, ((totalHE50 + totalHE100) / 40) * 100) + '%';
+  const metaHE = perfil.meta_he_mensal || 40;
+  document.getElementById('prog-he').textContent = `${formatHoras(totalHE50 + totalHE100)} / ${metaHE}h`;
+  document.getElementById('prog-he-bar').style.width = Math.min(100, ((totalHE50 + totalHE100) / metaHE) * 100) + '%';
   document.getElementById('dash-dias-sub').textContent = `de ${diasUteisNoMes} dias úteis`;
 
   // Salário estimado
@@ -2122,7 +2131,8 @@ function calcSalario(salarioOverride = null, he50h = 0, he100h = 0) {
   const bruto = salBase + valorHE50 + valorHE100;
   const inss = calcINSS(bruto);
   const irrf = calcIRRF(bruto - inss);
-  const vt = configDescontos.vt_ativo ? (configDescontos.vt_valor || 0) : 0;
+  const vtPct = configDescontos.vt_ativo ? (configDescontos.vt_valor || 0) : 0;
+  const vt = bruto * (vtPct / 100);
   const vr = configDescontos.vr_ativo ? (configDescontos.vr_valor || 0) : 0;
   const planoSaude = configDescontos.plano_saude_ativo ? (configDescontos.plano_saude_valor || 0) : 0;
   let extras = 0;
@@ -2303,6 +2313,7 @@ function renderConfiguracoes() {
   document.getElementById('cfg-entrada').value = perfil.horario_entrada || '08:00';
   document.getElementById('cfg-saida').value = perfil.horario_saida || '17:00';
   document.getElementById('cfg-intervalo').value = perfil.intervalo_minutos || 60;
+  document.getElementById('cfg-meta-he').value = perfil.meta_he_mensal ?? 40;
   recalcCargaDiaria();
   document.getElementById('cfg-inss').checked = configDescontos.inss_ativo !== false;
   document.getElementById('cfg-irrf').checked = configDescontos.irrf_ativo !== false;
@@ -2326,6 +2337,7 @@ async function salvarPerfil() {
     horario_entrada: document.getElementById('cfg-entrada').value,
     horario_saida: document.getElementById('cfg-saida').value,
     intervalo_minutos: +document.getElementById('cfg-intervalo').value || 60,
+    meta_he_mensal: +document.getElementById('cfg-meta-he').value || 40,
     updated_at: new Date().toISOString()
   };
   const { error } = await db.from('perfis').upsert({ id: activeId(), ...dados });
@@ -2566,7 +2578,7 @@ function abrirHoleriteDemonstrativo() {
     he100h > 0 ? [`HE 100% (${he100h}h × ${fmtBRL(r.valorHora)} × 2,00)`, fmtBRL(r.valorHE100), 'provento'] : null,
     r.inss > 0 ? ['INSS (tabela progressiva 2024)', fmtBRL(r.inss), 'desconto'] : null,
     r.irrf > 0 ? ['IRRF (tabela progressiva 2024)', fmtBRL(r.irrf), 'desconto'] : null,
-    r.vt > 0 ? ['Vale Transporte', fmtBRL(r.vt), 'desconto'] : null,
+    r.vt > 0 ? [`Vale Transporte (${configDescontos.vt_valor || 0}% do bruto)`, fmtBRL(r.vt), 'desconto'] : null,
     r.vr > 0 ? ['Vale Refeição', fmtBRL(r.vr), 'desconto'] : null,
     r.planoSaude > 0 ? ['Plano de Saúde', fmtBRL(r.planoSaude), 'desconto'] : null,
     ...r.extrasDetalhe.map(e => [e.nome, fmtBRL(e.valor), 'desconto']),
