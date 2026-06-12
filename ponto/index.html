@@ -611,6 +611,9 @@
         <button class="nav-item" onclick="navigate('ajuda')">
           <i class="fas fa-question-circle"></i> Ajuda
         </button>
+        <button class="nav-item" id="nav-admin" style="display:none;color:#f59e0b" onclick="navigate('admin')">
+          <i class="fas fa-shield-alt"></i> Admin
+        </button>
       </nav>
       <div class="sidebar-footer">
         <div class="user-card">
@@ -1125,6 +1128,23 @@
         </div>
       </div>
 
+      <!-- ═══ ADMIN ═══ -->
+      <div class="page" id="page-admin">
+        <div class="card mb-4" style="background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(245,158,11,.04));border-color:rgba(245,158,11,.3)">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
+            <div style="width:42px;height:42px;border-radius:12px;background:rgba(245,158,11,.15);display:flex;align-items:center;justify-content:center;font-size:18px;color:#f59e0b;flex-shrink:0"><i class="fas fa-shield-alt"></i></div>
+            <div>
+              <div style="font-weight:700;font-size:16px">Painel Administrativo</div>
+              <div style="font-size:12px;color:var(--text-muted)">Gerencie usuários e configurações</div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <input type="text" id="admin-search" class="form-control" placeholder="Buscar por nome ou e-mail..." oninput="filtrarUsuariosAdmin()" style="margin-bottom:0">
+        </div>
+        <div id="admin-users-list"><div class="loader"><div class="spinner"></div></div></div>
+      </div>
+
       <!-- ═══ AJUDA ═══ -->
       <div class="page" id="page-ajuda">
         <div class="card mb-4" style="text-align:center;padding:24px 16px 16px">
@@ -1365,6 +1385,35 @@
   </div>
 </div>
 
+<!-- Modal admin — detalhes do usuário -->
+<div class="modal-overlay" id="modal-admin-user">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fas fa-user-shield" style="color:#f59e0b"></i> <span id="adm-nome-titulo">Usuário</span></span>
+      <button class="modal-close" onclick="closeModal('modal-admin-user')">×</button>
+    </div>
+    <p id="adm-email-titulo" style="font-size:13px;color:var(--text-muted);margin-bottom:16px"></p>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:10px">Perfil</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="input-group" style="margin:0"><label>Nome</label><input type="text" id="adm-nome" class="form-control"></div>
+      <div class="input-group" style="margin:0"><label>Salário Base (R$)</label><input type="number" id="adm-salario" class="form-control" step="0.01"></div>
+      <div class="input-group" style="margin:0"><label>CH Diária (h)</label><input type="number" id="adm-ch-diaria" class="form-control" step="0.01"></div>
+      <div class="input-group" style="margin:0"><label>CH Mensal (h)</label><input type="number" id="adm-ch-mensal" class="form-control"></div>
+      <div class="input-group" style="margin:0"><label>Entrada padrão</label><input type="time" id="adm-entrada" class="form-control"></div>
+      <div class="input-group" style="margin:0"><label>Saída padrão</label><input type="time" id="adm-saida" class="form-control"></div>
+      <div class="input-group" style="margin:0"><label>Intervalo (min)</label><input type="number" id="adm-intervalo" class="form-control"></div>
+      <div class="input-group" style="margin:0"><label>Dia pagamento</label><input type="number" id="adm-dia-pag" class="form-control" min="1" max="31"></div>
+    </div>
+    <div style="margin-bottom:20px">
+      <button class="btn btn-primary" style="width:auto;padding:9px 20px" onclick="salvarPerfilAdmin()"><i class="fas fa-save"></i> Salvar perfil</button>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:10px">Últimos registros de ponto</div>
+    <div id="adm-registros" style="font-size:13px;color:var(--text-muted)">Carregando…</div>
+  </div>
+</div>
+
 <!-- Modal editar dia -->
 <div class="modal-overlay" id="modal-edit-day">
   <div class="modal" style="max-width:520px">
@@ -1420,6 +1469,7 @@ const db = createClient(
 let currentUser = null;
 let perfil = {};
 let configDescontos = {};
+let isAdmin = false;
 let descontosExtras = [];
 let registrosHoje = [];
 let histMonth = new Date().getMonth() + 1;
@@ -1488,6 +1538,11 @@ async function loadUserData() {
   // Atestados e dias justificados
   await loadAtestados();
   await loadDiasJustificados();
+
+  // Verifica admin
+  const { data: adminRow } = await db.from('admins').select('user_id').eq('user_id', currentUser.id).single();
+  isAdmin = !!adminRow;
+  document.getElementById('nav-admin').style.display = isAdmin ? 'flex' : 'none';
 }
 
 function updateUserUI() {
@@ -1556,7 +1611,8 @@ async function doAppleLogin() {
 
 async function doLogout() {
   await db.auth.signOut();
-  currentUser = null; perfil = {}; configDescontos = {}; descontosExtras = []; registrosHoje = [];
+  currentUser = null; perfil = {}; configDescontos = {}; descontosExtras = []; registrosHoje = []; isAdmin = false;
+  document.getElementById('nav-admin').style.display = 'none';
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1565,7 +1621,7 @@ async function doLogout() {
 const pageTitles = {
   dashboard: 'Dashboard', ponto: 'Bater Ponto', historico: 'Histórico',
   simulacao: 'Simulação Salarial', holerites: 'Holerites',
-  atestados: 'Atestados Médicos', configuracoes: 'Configurações', ajuda: 'Ajuda'
+  atestados: 'Atestados Médicos', configuracoes: 'Configurações', ajuda: 'Ajuda', admin: 'Painel Admin'
 };
 
 async function navigate(page) {
@@ -1586,6 +1642,7 @@ async function navigate(page) {
   if (page === 'holerites') await renderHolerites();
   if (page === 'atestados') await renderAtestados();
   if (page === 'configuracoes') renderConfiguracoes();
+  if (page === 'admin') await renderAdmin();
 }
 
 function toggleSidebar() {
@@ -2703,6 +2760,121 @@ if ('serviceWorker' in navigator) {
       if (!reloading) { reloading = true; location.reload(); }
     });
   });
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════════════════════
+let adminUsers = [];
+let adminTargetId = null;
+
+async function renderAdmin() {
+  if (!isAdmin) return;
+  const list = document.getElementById('admin-users-list');
+  list.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
+  const { data, error } = await db.from('perfis').select('id,nome,email,salario_base,carga_horaria_diaria,created_at').order('created_at', { ascending: false });
+  if (error) { list.innerHTML = '<p style="color:var(--danger)">Erro: ' + error.message + '</p>'; return; }
+  adminUsers = data || [];
+  renderAdminList(adminUsers);
+}
+
+function renderAdminList(users) {
+  const list = document.getElementById('admin-users-list');
+  if (!users.length) { list.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><p>Nenhum usuário encontrado</p></div>'; return; }
+  list.innerHTML = users.map(u => {
+    const nome = u.nome || '(sem nome)';
+    const email = u.email || '—';
+    const desde = u.created_at ? new Date(u.created_at).toLocaleDateString('pt-BR') : '—';
+    const sal = u.salario_base ? fmtBRL(u.salario_base) : 'Não configurado';
+    const isMe = u.id === currentUser.id;
+    return `<div class="card mb-3" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px${isMe ? ';border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.05)' : ''}">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text-muted);flex-shrink:0"><i class="fas fa-user"></i></div>
+        <div style="min-width:0">
+          <div style="font-weight:600;font-size:14px">${nome}${isMe ? ' <span style="font-size:11px;background:rgba(245,158,11,.2);color:#f59e0b;padding:1px 6px;border-radius:4px">você</span>' : ''}</div>
+          <div style="font-size:12px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${email}</div>
+          <div style="font-size:11px;color:var(--text-dim)">Desde ${desde} · ${sal}</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:auto;padding:7px 14px;font-size:13px;flex-shrink:0" onclick="abrirUsuarioAdmin('${u.id}')">
+        <i class="fas fa-edit"></i> Editar
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function filtrarUsuariosAdmin() {
+  const q = document.getElementById('admin-search').value.toLowerCase();
+  if (!q) { renderAdminList(adminUsers); return; }
+  renderAdminList(adminUsers.filter(u => (u.nome||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q)));
+}
+
+async function abrirUsuarioAdmin(userId) {
+  adminTargetId = userId;
+  const u = adminUsers.find(x => x.id === userId) || {};
+  document.getElementById('adm-nome-titulo').textContent = u.nome || '(sem nome)';
+  document.getElementById('adm-email-titulo').textContent = u.email || '';
+  document.getElementById('adm-nome').value = u.nome || '';
+  document.getElementById('adm-email-titulo').textContent = u.email || '';
+
+  // Carrega perfil completo
+  const { data: p } = await db.from('perfis').select('*').eq('id', userId).single();
+  if (p) {
+    document.getElementById('adm-nome').value = p.nome || '';
+    document.getElementById('adm-salario').value = p.salario_base || '';
+    document.getElementById('adm-ch-diaria').value = p.carga_horaria_diaria || '';
+    document.getElementById('adm-ch-mensal').value = p.carga_horaria_mensal || '';
+    document.getElementById('adm-entrada').value = p.horario_entrada || '08:00';
+    document.getElementById('adm-saida').value = p.horario_saida || '17:00';
+    document.getElementById('adm-intervalo').value = p.intervalo_minutos || 60;
+    document.getElementById('adm-dia-pag').value = p.dia_pagamento || 5;
+  }
+
+  // Carrega últimos registros
+  const adivEl = document.getElementById('adm-registros');
+  adivEl.textContent = 'Carregando…';
+  const { data: regs } = await db.from('registros_ponto').select('data,tipo,timestamp')
+    .eq('user_id', userId).order('timestamp', { ascending: false }).limit(20);
+
+  if (!regs || !regs.length) { adivEl.textContent = 'Nenhum registro encontrado.'; }
+  else {
+    const porDia = {};
+    regs.forEach(r => { if (!porDia[r.data]) porDia[r.data] = []; porDia[r.data].push(r); });
+    const tipoLabel = { entrada: 'Entrada', saida_almoco: 'Saída almoço', retorno_almoco: 'Retorno', saida: 'Saída' };
+    adivEl.innerHTML = Object.entries(porDia).slice(0, 7).map(([data, rs]) => {
+      const [a, m, d] = data.split('-');
+      const horarios = rs.map(r => {
+        const t = new Date(r.timestamp);
+        return `<span style="color:var(--text-muted)">${tipoLabel[r.tipo]||r.tipo}:</span> ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+      }).join(' &nbsp;·&nbsp; ');
+      return `<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="font-weight:600;color:var(--text)">${d}/${m}/${a}</span> &nbsp; ${horarios}</div>`;
+    }).join('');
+  }
+
+  openModal('modal-admin-user');
+}
+
+async function salvarPerfilAdmin() {
+  if (!adminTargetId) return;
+  const dados = {
+    id: adminTargetId,
+    nome: document.getElementById('adm-nome').value.trim(),
+    salario_base: +document.getElementById('adm-salario').value || 0,
+    carga_horaria_diaria: +document.getElementById('adm-ch-diaria').value || 8,
+    carga_horaria_mensal: +document.getElementById('adm-ch-mensal').value || 220,
+    horario_entrada: document.getElementById('adm-entrada').value || '08:00',
+    horario_saida: document.getElementById('adm-saida').value || '17:00',
+    intervalo_minutos: +document.getElementById('adm-intervalo').value || 60,
+    dia_pagamento: +document.getElementById('adm-dia-pag').value || 5,
+    updated_at: new Date().toISOString()
+  };
+  const { error } = await db.from('perfis').upsert(dados);
+  if (error) { alert('Erro ao salvar: ' + error.message); return; }
+  const idx = adminUsers.findIndex(u => u.id === adminTargetId);
+  if (idx >= 0) { adminUsers[idx].nome = dados.nome; adminUsers[idx].salario_base = dados.salario_base; }
+  toast('Perfil atualizado com sucesso!', 'success');
+  closeModal('modal-admin-user');
+  renderAdminList(adminUsers);
 }
 
 async function showUpdateBanner(sw) {

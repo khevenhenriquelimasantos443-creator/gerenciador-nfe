@@ -1,4 +1,4 @@
 {
-  "version": "1.3",
-  "notes": "Corrige botão salvar: erros visíveis com alert, permite substituir dia existente"
+  "version": "1.4",
+  "notes": "Adiciona painel admin com gestão de usuários"
 }
