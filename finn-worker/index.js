@@ -100,6 +100,14 @@ async function processMessage(msg, env) {
     }
   }
 
+  if (msg.type === "audio") {
+    return handleAudioMessage(phone, msg, env);
+  }
+
+  if (msg.type === "image") {
+    return handleImageMessage(phone, msg, env);
+  }
+
   if (msg.type === "text") {
     const text = (msg.text?.body || "").trim();
     if (!text) return;
@@ -114,7 +122,7 @@ async function processMessage(msg, env) {
       return handleSincronizarFinn(phone, env);
     }
 
-    await sendText(phone, "👋 Olá! Digite *menu* para ver as opções do Finn. 🦊", env);
+    await sendText(phone, "👋 Olá! Digite *menu* ou envie um 🎙️ áudio/_foto de comprovante_ para lançar. 🦊", env);
   }
 }
 
@@ -159,6 +167,13 @@ async function handleButtonReply(phone, selectedId, stateData, env) {
     btn_vestuario:"Vestuario", btn_investimento:"Investimento", btn_outros:"Outros",
   };
   if (catMap[selectedId]) return handleCategorySelected(phone, catMap[selectedId], stateData, env);
+
+  switch (selectedId) {
+    case "confirm_tx":    return handleConfirmTx(phone, stateData, env);
+    case "cancel_tx":     return handleCancelTx(phone, env);
+    case "edit_tx_desc":  return handleEditTxDesc(phone, stateData, env);
+  }
+
   await sendText(phone, "❓ Não entendi. Digite *menu* para voltar.", env);
 }
 
@@ -209,6 +224,23 @@ async function continueFlow(phone, text, stateData, env) {
     await addTransaction(phone, tx, env);
     await clearState(phone, env);
     await sendText(phone, `✅ *Receita registrada!*\n\n💰 R$ ${formatBRL(Math.abs(tx.val))} — ${catToEmoji(tx.cat)} ${tx.cat}\n📝 ${tx.desc}\n📅 ${formatDateBR(tx.date)}\n\n_Abra o Finn_ 👉 ${env.FINN_URL || ""}`, env);
+    return;
+  }
+
+  if (state === "awaiting_confirm_tx") {
+    const lower = text.toLowerCase();
+    if (["sim","s","ok","yes","confirmar"].includes(lower)) return handleConfirmTx(phone, stateData, env);
+    if (["não","nao","n","no","cancelar"].includes(lower)) return handleCancelTx(phone, env);
+    const updated = { ...(pending || {}), desc: text };
+    await setState(phone, { state: "awaiting_confirm_tx", pending: updated }, env);
+    await sendConfirmTransaction(phone, updated, "✏️ Atualizado:", env);
+    return;
+  }
+
+  if (state === "awaiting_edit_tx_desc") {
+    const updated = { ...(pending || {}), desc: text };
+    await setState(phone, { state: "awaiting_confirm_tx", pending: updated }, env);
+    await sendConfirmTransaction(phone, updated, "✏️ Corrigido:", env);
     return;
   }
 
@@ -354,6 +386,155 @@ async function handleSincronizarFinn(phone, env) {
     `*Últimos lançamentos:*\n${lines}\n\n` +
     `━━━━━━━━━━━━━━━\n` +
     `✅ *Dados prontos para o Finn!*\nAbra o app e tudo será sincronizado automaticamente:\n\n👉 ${env.FINN_URL||""}`, env);
+}
+
+// =============================================================================
+// ÁUDIO E IMAGEM — LANÇAMENTO COM IA
+// =============================================================================
+async function handleAudioMessage(phone, msg, env) {
+  if (!env.AI) {
+    await sendText(phone, "⚠️ IA não configurada. Use o menu para lançar manualmente.", env);
+    return;
+  }
+  await sendText(phone, "🎙️ _Transcrevendo áudio..._", env);
+  try {
+    const audioId = msg.audio?.id;
+    if (!audioId) throw new Error("no audio id");
+    const buffer = await downloadMetaMedia(audioId, env);
+    if (!buffer) throw new Error("download failed");
+    const whisperResult = await env.AI.run("@cf/openai/whisper", { audio: [...new Uint8Array(buffer)] });
+    const transcribed = (whisperResult?.text || "").trim();
+    if (!transcribed) {
+      await sendText(phone, "⚠️ Não consegui entender o áudio. Fale mais claramente ou use o menu.", env);
+      return;
+    }
+    await sendText(phone, `🎙️ _Ouvi: "${transcribed}"_\n⏳ _Analisando..._`, env);
+    const tx = await extractTransactionAI(transcribed, env);
+    if (!tx) {
+      await sendText(phone, `🎙️ Ouvi: _"${transcribed}"_\n\n⚠️ Não identifiquei valor/descrição. Use o menu para lançar manualmente.`, env);
+      return;
+    }
+    await setState(phone, { state: "awaiting_confirm_tx", pending: tx }, env);
+    await sendConfirmTransaction(phone, tx, "🎙️ Do áudio:", env);
+  } catch(err) {
+    console.error("handleAudioMessage:", err);
+    await sendText(phone, "⚠️ Erro ao processar áudio. Use o menu para lançar manualmente.", env);
+  }
+}
+
+async function handleImageMessage(phone, msg, env) {
+  if (!env.AI) {
+    await sendText(phone, "⚠️ IA não configurada. Use o menu para lançar manualmente.", env);
+    return;
+  }
+  await sendText(phone, "🖼️ _Analisando imagem..._", env);
+  try {
+    const imageId = msg.image?.id;
+    if (!imageId) throw new Error("no image id");
+    const buffer = await downloadMetaMedia(imageId, env);
+    if (!buffer) throw new Error("download failed");
+    const uint8 = [...new Uint8Array(buffer)];
+    const visionResult = await env.AI.run("@cf/llava-hf/llava-1.5-7b-hf", {
+      image: uint8,
+      prompt: "Analise esta imagem. É um comprovante, recibo ou nota fiscal? Extraia o valor em reais, descrição do estabelecimento e se é despesa ou receita. Responda APENAS em JSON sem explicações: {\"val\":0,\"desc\":\"\",\"tipo\":\"despesa\"}",
+      max_tokens: 200
+    });
+    const visionText = visionResult?.response || "";
+    const tx = parseAIResponse(visionText) || await extractTransactionAI(visionText, env);
+    if (!tx) {
+      await sendText(phone, "🖼️ Não identifiquei uma transação nesta imagem.\n\nEnvie um comprovante legível ou use o menu para lançar manualmente.", env);
+      return;
+    }
+    await setState(phone, { state: "awaiting_confirm_tx", pending: tx }, env);
+    await sendConfirmTransaction(phone, tx, "🖼️ Da imagem:", env);
+  } catch(err) {
+    console.error("handleImageMessage:", err);
+    await sendText(phone, "⚠️ Erro ao processar imagem. Use o menu para lançar manualmente.", env);
+  }
+}
+
+async function downloadMetaMedia(mediaId, env) {
+  const urlResp = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${mediaId}`, {
+    headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
+  });
+  if (!urlResp.ok) { console.error("Media URL fetch error:", urlResp.status); return null; }
+  const { url } = await urlResp.json();
+  if (!url) return null;
+  const fileResp = await fetch(url, { headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` } });
+  if (!fileResp.ok) { console.error("Media download error:", fileResp.status); return null; }
+  return fileResp.arrayBuffer();
+}
+
+async function extractTransactionAI(text, env) {
+  if (!env.AI) return null;
+  try {
+    const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      messages: [
+        { role: "system", content: 'Você extrai transações financeiras de texto em português. Responda APENAS com JSON válido, sem texto extra: {"val":0,"desc":"","tipo":"despesa","cat":"Outros"}. val é o valor positivo em reais. tipo é "despesa" ou "receita". cat: Alimentacao, Transporte, Lazer, Saude, Educacao, Moradia, Vestuario, Investimento, Salario, Freelance, Outros.' },
+        { role: "user", content: text }
+      ],
+      max_tokens: 150
+    });
+    return parseAIResponse(result?.response || "");
+  } catch(e) { console.error("extractTransactionAI:", e); return null; }
+}
+
+function parseAIResponse(text) {
+  if (!text) return null;
+  try {
+    const match = text.match(/\{[^}]+\}/);
+    if (!match) return null;
+    const obj = JSON.parse(match[0]);
+    const val = parseFloat(obj.val);
+    if (isNaN(val) || val <= 0 || !obj.desc) return null;
+    const isReceita = (obj.tipo || "").toLowerCase() === "receita";
+    return {
+      val: isReceita ? Math.abs(val) : -Math.abs(val),
+      desc: String(obj.desc).trim(),
+      cat: obj.cat || "Outros",
+    };
+  } catch(e) { return null; }
+}
+
+async function sendConfirmTransaction(phone, tx, label, env) {
+  const tipo = tx.val > 0 ? "💰 Receita" : "💸 Despesa";
+  return metaPost({
+    messaging_product:"whatsapp", to:phone, type:"interactive",
+    interactive:{
+      type:"button",
+      body:{text:`${label}\n\n${tipo}: *R$ ${formatBRL(Math.abs(tx.val))}*\n📝 ${tx.desc}\n📂 ${tx.cat}\n\nConfirmar lançamento?`},
+      action:{buttons:[
+        {type:"reply",reply:{id:"confirm_tx",title:"✅ Confirmar"}},
+        {type:"reply",reply:{id:"edit_tx_desc",title:"✏️ Corrigir"}},
+        {type:"reply",reply:{id:"cancel_tx",title:"❌ Cancelar"}}
+      ]}
+    }
+  },env);
+}
+
+async function handleConfirmTx(phone, stateData, env) {
+  const tx = stateData.pending;
+  if (!tx || tx.val === undefined) {
+    await clearState(phone, env);
+    await sendText(phone, "❓ Algo deu errado. Digite *menu* para recomeçar.", env);
+    return;
+  }
+  const saved = buildTransaction(tx);
+  await addTransaction(phone, saved, env);
+  await clearState(phone, env);
+  const tipo = saved.val > 0 ? "Receita" : "Despesa";
+  await sendText(phone,
+    `✅ *${tipo} registrada!*\n\n${saved.val>0?"💰":"💸"} R$ ${formatBRL(Math.abs(saved.val))} — ${catToEmoji(saved.cat)} ${saved.cat}\n📝 ${saved.desc}\n📅 ${formatDateBR(saved.date)}\n\n_Abra o Finn_ 👉 ${env.FINN_URL||""}`, env);
+}
+
+async function handleCancelTx(phone, env) {
+  await clearState(phone, env);
+  await sendText(phone, "❌ Lançamento cancelado. Digite *menu* para começar de novo.", env);
+}
+
+async function handleEditTxDesc(phone, stateData, env) {
+  await setState(phone, { state: "awaiting_edit_tx_desc", pending: stateData.pending }, env);
+  await sendText(phone, "✏️ Qual a descrição correta? _(ex: Almoço, salário, farmácia...)_", env);
 }
 
 // =============================================================================
