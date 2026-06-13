@@ -679,6 +679,21 @@ tbody tr:last-child td { border-bottom: none; }
                     </div>
 
                     <div class="card">
+                        <h2 class="card-title">💬 WhatsApp</h2>
+                        <p class="muted">Configure seu número para enviar mensagens sobre devoluções direto pelo WhatsApp.</p>
+                        <div class="field" style="margin-top:16px">
+                            <label for="cfg-whatsapp">Seu número do WhatsApp</label>
+                            <input type="tel" id="cfg-whatsapp" placeholder="5511999999999" maxlength="15">
+                        </div>
+                        <p class="muted small">Digite apenas números com código do país. Exemplo: <strong>5511999999999</strong> → 55 (Brasil) + 11 (DDD) + número</p>
+                        <div class="actions">
+                            <button class="btn btn-primary" id="btn-save-whatsapp">💾 Salvar número</button>
+                            <button class="btn btn-ghost" id="btn-test-whatsapp">🔗 Testar</button>
+                        </div>
+                        <div id="msg-whatsapp"></div>
+                    </div>
+
+                    <div class="card">
                         <h2 class="card-title">Conexão &amp; conta</h2>
                         <p class="muted">Conectado como <strong id="cfg-email"></strong>.</p>
                         <div class="actions">
@@ -718,6 +733,9 @@ let fotoDevFile = null;     // File selecionado na devolução
 let fotoDispFile = null;    // File selecionado na disputa
 let authMode = 'login';     // 'login' | 'signup'
 let disputaLink = null;     // {devolucao_id, pedido, valor} ao abrir disputa a partir de uma devolução
+let whatsappNumber = '';    // número do WhatsApp configurado
+
+const WA_KEY = 'rf_whatsapp_number';
 
 const CFG_KEY = 'rf_supabase_cfg';
 
@@ -824,6 +842,7 @@ function show(screen) {
 
 async function boot() {
     wireEvents();
+    loadWhatsappNumber();
     el('d-data').value = today();
     el('disp-abertura').value = today();
 
@@ -1200,7 +1219,7 @@ function renderHistorico() {
 
     box.innerHTML = `<table><thead><tr>
         <th>Data</th><th>Marketplace</th><th>Pedido</th><th>SKU</th><th>Produto</th>
-        <th class="t-right">Valor dev.</th><th>Condição</th><th>Disputa</th><th>Foto</th><th></th>
+        <th class="t-right">Valor dev.</th><th>Condição</th><th>Disputa</th><th>Foto</th><th>WhatsApp</th><th></th>
         </tr></thead><tbody>` +
         rows.map(d => `<tr>
             <td>${fmtDate(d.data)}</td>
@@ -1212,6 +1231,7 @@ function renderHistorico() {
             <td>${esc(d.condicao || '—')}</td>
             <td>${d.requer_disputa ? '<span class="badge pend">Sim</span>' : '<span class="badge neutral">Não</span>'}</td>
             <td>${d.foto_path ? `<button class="link-btn primary" data-act="foto" data-path="${esc(d.foto_path)}">📷 Ver</button>` : '—'}</td>
+            <td><button class="link-btn primary" data-act="whatsapp" data-id="${d.id}" title="Enviar via WhatsApp">💬</button></td>
             <td><button class="link-btn" data-act="del-dev" data-id="${d.id}" data-path="${esc(d.foto_path || '')}">Excluir</button></td>
         </tr>`).join('') + `</tbody></table>`;
 }
@@ -1451,7 +1471,7 @@ function goPage(page) {
     if (page === 'dashboard') loadDashboard();
     if (page === 'historico') loadHistorico();
     if (page === 'disputas') { loadDisputas(); prepararDisputaVinculada(); }
-    if (page === 'config') { renderMktTable(); renderSkuTable(); }
+    if (page === 'config') { renderMktTable(); renderSkuTable(); loadWhatsappNumber(); }
 }
 
 function openSidebar() { el('sidebar').classList.add('open'); el('sidebar-backdrop').classList.add('show'); }
@@ -1459,6 +1479,67 @@ function closeSidebar() { el('sidebar').classList.remove('open'); el('sidebar-ba
 
 function emptyState(text) {
     return `<div class="empty"><span class="emoji">📭</span>${esc(text)}</div>`;
+}
+
+/* --------------------------- WhatsApp ----------------------------- */
+function loadWhatsappNumber() {
+    whatsappNumber = localStorage.getItem(WA_KEY) || '';
+    if (el('cfg-whatsapp') && whatsappNumber) {
+        el('cfg-whatsapp').value = whatsappNumber;
+    }
+}
+
+function saveWhatsappNumber() {
+    const raw = el('cfg-whatsapp').value.trim().replace(/\D/g, '');
+    if (!raw) {
+        inlineMsg('msg-whatsapp', 'Digite um número válido.', 'error');
+        return;
+    }
+    whatsappNumber = raw;
+    localStorage.setItem(WA_KEY, raw);
+    el('cfg-whatsapp').value = raw;
+    inlineMsg('msg-whatsapp', `Número salvo: ${formatWaNumber(raw)}`, 'success');
+}
+
+function formatWaNumber(num) {
+    if (num.startsWith('55') && num.length >= 12) {
+        const ddd = num.slice(2, 4);
+        const rest = num.slice(4);
+        return `+55 (${ddd}) ${rest.slice(0, 5)}-${rest.slice(5)}`;
+    }
+    return '+' + num;
+}
+
+function testWhatsapp() {
+    if (!whatsappNumber) {
+        inlineMsg('msg-whatsapp', 'Salve um número primeiro.', 'error');
+        return;
+    }
+    const msg = `Olá! Teste de integração do ReturnFlow. Número configurado com sucesso! ✅`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function sendWhatsApp(d) {
+    if (!whatsappNumber) {
+        toast('Configure seu número do WhatsApp nas ⚙️ Configurações.', 'error');
+        goPage('config');
+        return;
+    }
+    const lines = [
+        `📦 *Devolução ReturnFlow*`,
+        ``,
+        `🛒 Marketplace: ${d.marketplace || '—'}`,
+        `📋 Pedido: ${d.pedido || '—'}`,
+        `📦 SKU: ${d.sku || '—'}`,
+        `🛍️ Produto: ${d.produto_nome || '—'}`,
+        `📅 Data: ${fmtDate(d.data)}`,
+        `💰 Valor devolvido: ${fmtBRL(d.valor_devolucao)}`,
+        `🔍 Condição: ${d.condicao || '—'}`,
+        d.rastreio ? `🚚 Rastreio: ${d.rastreio}` : null,
+        d.requer_disputa ? `⚖️ *Requer disputa!*` : null,
+    ].filter(Boolean).join('\n');
+
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines)}`, '_blank');
 }
 
 /* --------------------------- Eventos ------------------------------ */
@@ -1512,6 +1593,14 @@ function wireEvents() {
     el('novo-mkt').addEventListener('keydown', e => { if (e.key === 'Enter') addMarketplace(); });
     el('btn-import-sku').addEventListener('click', importSkus);
 
+    // WhatsApp
+    el('btn-save-whatsapp').addEventListener('click', saveWhatsappNumber);
+    el('btn-test-whatsapp').addEventListener('click', testWhatsapp);
+    el('cfg-whatsapp').addEventListener('keydown', e => { if (e.key === 'Enter') saveWhatsappNumber(); });
+    el('cfg-whatsapp').addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+
     // Exportar
     el('btn-exportar').addEventListener('click', exportar);
 
@@ -1531,6 +1620,10 @@ function wireEvents() {
         else if (act === 'save-mkt') saveMarketplace(b.dataset.id);
         else if (act === 'del-mkt') removeMarketplace(b.dataset.id);
         else if (act === 'unlink-disp') { disputaLink = null; el('disputa-link-banner').classList.add('hidden'); }
+        else if (act === 'whatsapp') {
+            const d = (window._devCache || []).find(x => String(x.id) === String(b.dataset.id));
+            if (d) sendWhatsApp(d);
+        }
     });
 }
 
