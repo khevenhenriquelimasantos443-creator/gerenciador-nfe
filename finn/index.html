@@ -24,11 +24,13 @@
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+:root{--fp:#F97316;--fpl:#FFEDD5;--fd:#1E293B;--fdk:#0F172A;--fbg:#F8F7F4;--fb:#E2E8F0;--fm:#64748B;--fs:#059669;--fe:#DC2626}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:#F8F7F4;color:#1E293B;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#E2E8F0;border-radius:4px}
-input,select,button{font-family:inherit}
-input:focus,select:focus{outline:none;border-color:#F97316!important;box-shadow:0 0 0 3px #FFEDD5}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#F8F7F4;color:#1E293B;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:4px}::-webkit-scrollbar-track{background:transparent}
+input,select,button,textarea{font-family:inherit}
+input[type=date]{-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#F97316!important;box-shadow:0 0 0 3px rgba(249,115,22,.15)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{text-align:left;padding:10px 14px;color:#64748B;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-bottom:2px solid #E8ECF2}
 td{padding:11px 14px;border-bottom:1px solid #E8ECF2}
@@ -37,8 +39,73 @@ tr:hover td{background:#F8FAFF}
 .fade{animation:fd .25s ease}
 @keyframes fd{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.tabs{overflow-x:auto;scrollbar-width:none;display:flex}
+.tabs{overflow-x:auto;scrollbar-width:none;display:flex;position:-webkit-sticky;position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #E2E8F0}
 .tabs::-webkit-scrollbar{display:none}
+/* ── Calendar ── */
+.fp-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:4px}
+.fp-cal-hdr{text-align:center;font-size:9px;font-weight:700;color:#94A3B8;text-transform:uppercase;padding:4px 0}
+.fp-cal-day{border-radius:7px;padding:4px 2px;min-height:42px;background:#F8FAFC;cursor:pointer;transition:all .12s;border:1px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px}
+.fp-cal-day:hover{background:#FFF7ED;border-color:#F97316}
+.fp-cal-day.today{background:#FFF7ED;border-color:#F97316}
+.fp-cal-day.has-tx{background:#F0FDF4}
+.fp-cal-day.has-tx:hover{background:#DCFCE7;border-color:#16a34a}
+.fp-cal-day.selected{background:#DBEAFE;border-color:#3B82F6}
+.fp-cal-day.empty{background:transparent;cursor:default;pointer-events:none}
+.fp-cal-num{font-size:10px;font-weight:700;color:#475569;line-height:1}
+.fp-cal-day.today .fp-cal-num{color:#F97316}
+.fp-cal-day.selected .fp-cal-num{color:#2563EB}
+.fp-cal-dot{width:4px;height:4px;border-radius:50%}
+.fp-cal-dot.r{background:#059669}
+.fp-cal-dot.d{background:#DC2626}
+.fp-cal-val{font-size:7.5px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;max-width:36px;padding:0 1px}
+.fp-cal-val.p{color:#059669}.fp-cal-val.n{color:#DC2626}
+.fp-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.fp-cal-nav-btn{background:#F1F5F9;border:none;border-radius:8px;padding:5px 14px;cursor:pointer;font-size:16px;color:#475569;transition:background .12s;font-family:inherit;font-weight:600}
+.fp-cal-nav-btn:hover{background:#E2E8F0}
+.fp-cal-month{font-size:13px;font-weight:800;color:#1E293B;letter-spacing:-.02em}
+.fp-cal-detail{background:#F8FAFC;border-radius:10px;padding:10px;margin-top:8px;max-height:160px;overflow-y:auto;border:1px solid #E2E8F0}
+.fp-cal-tx-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #E2E8F0;font-size:12px;gap:8px}
+.fp-cal-tx-row:last-child{border:none}
+.fp-cal-tx-desc{color:#475569;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.fp-cal-empty{font-size:12px;color:#94A3B8;text-align:center;padding:12px 0}
+/* ── Help Accordion ── */
+.fp-help-item{border:1px solid #E2E8F0;border-radius:10px;margin-bottom:6px;overflow:hidden;background:#fff;transition:border-color .15s}
+.fp-help-item.open{border-color:#F97316}
+.fp-help-q{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;font-size:13px;font-weight:600;color:#1E293B;cursor:pointer;user-select:none;background:#fff}
+.fp-help-q:hover{background:#FAFAFA}
+.fp-help-chv{color:#94A3B8;transition:transform .2s;font-size:12px;flex-shrink:0;margin-left:8px}
+.fp-help-item.open .fp-help-chv{transform:rotate(180deg);color:#F97316}
+.fp-help-a{display:none;padding:10px 13px 13px;font-size:12.5px;color:#475569;line-height:1.7;border-top:1px solid #FEF3C7;background:#FFFBEB}
+.fp-help-item.open .fp-help-a{display:block}
+/* ── Admin Panel ── */
+.fp-admin-user{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:#F8FAFC;margin-bottom:6px;cursor:pointer;transition:all .12s;border:1.5px solid transparent}
+.fp-admin-user:hover{background:#FFF7ED;border-color:#FFEDD5}
+.fp-admin-user.active-imp{border-color:#F97316;background:#FFF7ED}
+.fp-admin-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F97316,#fb923c);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.fp-admin-email{font-size:12px;font-weight:600;color:#1E293B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fp-admin-stat{font-size:11px;color:#94A3B8;margin-top:1px}
+.fp-admin-badge{font-size:10px;background:#FFF7ED;color:#F97316;border:1px solid #FFEDD5;border-radius:99px;padding:2px 8px;font-weight:700;flex-shrink:0;white-space:nowrap}
+.fp-imp-bar{background:linear-gradient(90deg,#F97316,#fb923c);color:#fff;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fp-imp-bar button{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit;transition:background .12s}
+.fp-imp-bar button:hover{background:rgba(255,255,255,.4)}
+.fp-sql-block{display:block;background:#1E293B;color:#E2E8F0;border-radius:8px;padding:10px;margin-top:6px;font-size:10px;line-height:1.6;word-break:break-all;font-family:monospace}
+/* ── SW Update Banner ── */
+#finn-sw-banner{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#1E293B;color:#fff;border-radius:14px;padding:12px 18px;font-size:13px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,.4);align-items:center;gap:12px;white-space:nowrap;border:1px solid rgba(255,255,255,.1)}
+#finn-sw-banner.show{display:flex;animation:swBan .3s ease}
+@keyframes swBan{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+#finn-sw-banner .sw-update-btn{background:#F97316;border:none;color:#fff;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit}
+#finn-sw-banner .sw-dismiss-btn{background:transparent;border:none;color:#94A3B8;cursor:pointer;font-size:18px;padding:0 2px;line-height:1}
+/* ── iOS / Responsive ── */
+@media(max-width:640px){
+  #finn-plus-panel{border-radius:20px 20px 0 0}
+  #fw-panel{border-radius:18px 18px 0 0}
+  #fw-ovl,#finn-plus-ovl{padding:0!important;align-items:flex-end!important}
+  #finn-plus-panel{max-height:90vh}
+}
+@supports(-webkit-backdrop-filter:blur(1px)){
+  #finn-plus-ovl{-webkit-backdrop-filter:blur(3px)}
+  #finn-priv-btn{-webkit-backdrop-filter:blur(8px)}
+}
 </style>
 
 
@@ -58,6 +125,46 @@ tr:hover td{background:#F8FAFF}
 </div>
 <script>
 window.addEventListener('load',()=>{setTimeout(()=>{const el=document.getElementById('loading');if(el)el.style.display='none';},300);});
+</script>
+<script>
+// ── Finn Version & Service Worker ──────────────────────────────────────
+window.FINN_VERSION = '2.1.0';
+(function(){
+  function injectSWBanner() {
+    var b = document.createElement('div');
+    b.id = 'finn-sw-banner';
+    b.innerHTML = '🚀 Nova versão disponível! <button class="sw-update-btn" onclick="location.reload(true)">Atualizar</button>'
+      + '<button class="sw-dismiss-btn" onclick="this.parentNode.classList.remove(\'show\')" title="Fechar">×</button>';
+    document.body.appendChild(b);
+  }
+  function showSWBanner() {
+    var b = document.getElementById('finn-sw-banner');
+    if (b) b.classList.add('show');
+  }
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').then(function(reg) {
+        reg.addEventListener('updatefound', function() {
+          var newSW = reg.installing;
+          if (!newSW) return;
+          newSW.addEventListener('statechange', function() {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              showSWBanner();
+            }
+          });
+        });
+      }).catch(function(){});
+      navigator.serviceWorker.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'SW_UPDATED') showSWBanner();
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectSWBanner);
+  } else {
+    injectSWBanner();
+  }
+})();
 </script>
 <script>
 (()=>{var m1=Object.create;var ks=Object.defineProperty;var g1=Object.getOwnPropertyDescriptor;var p1=Object.getOwnPropertyNames;var y1=Object.getPrototypeOf,v1=Object.prototype.hasOwnProperty;var pa=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports);var E1=(e,t,a,l)=>{if(t&&typeof t=="object"||typeof t=="function")for(let n of p1(t))!v1.call(e,n)&&n!==a&&ks(e,n,{get:()=>t[n],enumerable:!(l=g1(t,n))||l.enumerable});return e};var Qs=(e,t,a)=>(a=e!=null?m1(y1(e)):{},E1(t||!e||!e.__esModule?ks(a,"default",{value:e,enumerable:!0}):a,e));var af=pa(H=>{"use strict";var Hc=Symbol.for("react.transitional.element"),h1=Symbol.for("react.portal"),b1=Symbol.for("react.fragment"),S1=Symbol.for("react.strict_mode"),x1=Symbol.for("react.profiler"),A1=Symbol.for("react.consumer"),z1=Symbol.for("react.context"),T1=Symbol.for("react.forward_ref"),C1=Symbol.for("react.suspense"),B1=Symbol.for("react.memo"),Ws=Symbol.for("react.lazy"),D1=Symbol.for("react.activity"),Vs=Symbol.iterator;function O1(e){return e===null||typeof e!="object"?null:(e=Vs&&e[Vs]||e["@@iterator"],typeof e=="function"?e:null)}var Is={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},$s=Object.assign,Ps={};function Ml(e,t,a){this.props=e,this.context=t,this.refs=Ps,this.updater=a||Is}Ml.prototype.isReactComponent={};Ml.prototype.setState=function(e,t){if(typeof e!="object"&&typeof e!="function"&&e!=null)throw Error("takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,e,t,"setState")};Ml.prototype.forceUpdate=function(e){this.updater.enqueueForceUpdate(this,e,"forceUpdate")};function ef(){}ef.prototype=Ml.prototype;function jc(e,t,a){this.props=e,this.context=t,this.refs=Ps,this.updater=a||Is}var qc=jc.prototype=new ef;qc.constructor=jc;$s(qc,Ml.prototype);qc.isPureReactComponent=!0;var Zs=Array.isArray;function Fc(){}var ne={H:null,A:null,T:null,S:null},tf=Object.prototype.hasOwnProperty;function Gc(e,t,a){var l=a.ref;return{$$typeof:Hc,type:e,key:t,ref:l!==void 0?l:null,props:a}}function M1(e,t){return Gc(e.type,t,e.props)}function wc(e){return typeof e=="object"&&e!==null&&e.$$typeof===Hc}function N1(e){var t={"=":"=0",":":"=2"};return"$"+e.replace(/[=:]/g,function(a){return t[a]})}var Ks=/\/+/g;function Uc(e,t){return typeof e=="object"&&e!==null&&e.key!=null?N1(""+e.key):t.toString(36)}function R1(e){switch(e.status){case"fulfilled":return e.value;case"rejected":throw e.reason;default:switch(typeof e.status=="string"?e.then(Fc,Fc):(e.status="pending",e.then(function(t){e.status==="pending"&&(e.status="fulfilled",e.value=t)},function(t){e.status==="pending"&&(e.status="rejected",e.reason=t)})),e.status){case"fulfilled":return e.value;case"rejected":throw e.reason}}throw e}function Ol(e,t,a,l,n){var i=typeof e;(i==="undefined"||i==="boolean")&&(e=null);var c=!1;if(e===null)c=!0;else switch(i){case"bigint":case"string":case"number":c=!0;break;case"object":switch(e.$$typeof){case Hc:case h1:c=!0;break;case Ws:return c=e._init,Ol(c(e._payload),t,a,l,n)}}if(c)return n=n(e),c=l===""?"."+Uc(e,0):l,Zs(n)?(a="",c!=null&&(a=c.replace(Ks,"$&/")+"/"),Ol(n,t,a,"",function(g){return g})):n!=null&&(wc(n)&&(n=M1(n,a+(n.key==null||e&&e.key===n.key?"":(""+n.key).replace(Ks,"$&/")+"/")+c)),t.push(n)),1;c=0;var s=l===""?".":l+":";if(Zs(e))for(var f=0;f<e.length;f++)l=e[f],i=s+Uc(l,f),c+=Ol(l,t,a,i,n);else if(f=O1(e),typeof f=="function")for(e=f.call(e),f=0;!(l=e.next()).done;)l=l.value,i=s+Uc(l,f++),c+=Ol(l,t,a,i,n);else if(i==="object"){if(typeof e.then=="function")return Ol(R1(e),t,a,l,n);throw t=String(e),Error("Objects are not valid as a React child (found: "+(t==="[object Object]"?"object with keys {"+Object.keys(e).join(", ")+"}":t)+"). If you meant to render a collection of children, use an array instead.")}return c}function Gi(e,t,a){if(e==null)return e;var l=[],n=0;return Ol(e,l,"","",function(i){return t.call(a,i,n++)}),l}function _1(e){if(e._status===-1){var t=e._result;t=t(),t.then(function(a){(e._status===0||e._status===-1)&&(e._status=1,e._result=a)},function(a){(e._status===0||e._status===-1)&&(e._status=2,e._result=a)}),e._status===-1&&(e._status=0,e._result=t)}if(e._status===1)return e._result.default;throw e._result}var Js=typeof reportError=="function"?reportError:function(e){if(typeof window=="object"&&typeof window.ErrorEvent=="function"){var t=new window.ErrorEvent("error",{bubbles:!0,cancelable:!0,message:typeof e=="object"&&e!==null&&typeof e.message=="string"?String(e.message):String(e),error:e});if(!window.dispatchEvent(t))return}else if(typeof process=="object"&&typeof process.emit=="function"){process.emit("uncaughtException",e);return}console.error(e)},U1={map:Gi,forEach:function(e,t,a){Gi(e,function(){t.apply(this,arguments)},a)},count:function(e){var t=0;return Gi(e,function(){t++}),t},toArray:function(e){return Gi(e,function(t){return t})||[]},only:function(e){if(!wc(e))throw Error("React.Children.only expected to receive a single React element child.");return e}};H.Activity=D1;H.Children=U1;H.Component=Ml;H.Fragment=b1;H.Profiler=x1;H.PureComponent=jc;H.StrictMode=S1;H.Suspense=C1;H.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE=ne;H.__COMPILER_RUNTIME={__proto__:null,c:function(e){return ne.H.useMemoCache(e)}};H.cache=function(e){return function(){return e.apply(null,arguments)}};H.cacheSignal=function(){return null};H.cloneElement=function(e,t,a){if(e==null)throw Error("The argument must be a React element, but you passed "+e+".");var l=$s({},e.props),n=e.key;if(t!=null)for(i in t.key!==void 0&&(n=""+t.key),t)!tf.call(t,i)||i==="key"||i==="__self"||i==="__source"||i==="ref"&&t.ref===void 0||(l[i]=t[i]);var i=arguments.length-2;if(i===1)l.children=a;else if(1<i){for(var c=Array(i),s=0;s<i;s++)c[s]=arguments[s+2];l.children=c}return Gc(e.type,n,l)};H.createContext=function(e){return e={$$typeof:z1,_currentValue:e,_currentValue2:e,_threadCount:0,Provider:null,Consumer:null},e.Provider=e,e.Consumer={$$typeof:A1,_context:e},e};H.createElement=function(e,t,a){var l,n={},i=null;if(t!=null)for(l in t.key!==void 0&&(i=""+t.key),t)tf.call(t,l)&&l!=="key"&&l!=="__self"&&l!=="__source"&&(n[l]=t[l]);var c=arguments.length-2;if(c===1)n.children=a;else if(1<c){for(var s=Array(c),f=0;f<c;f++)s[f]=arguments[f+2];n.children=s}if(e&&e.defaultProps)for(l in c=e.defaultProps,c)n[l]===void 0&&(n[l]=c[l]);return Gc(e,i,n)};H.createRef=function(){return{current:null}};H.forwardRef=function(e){return{$$typeof:T1,render:e}};H.isValidElement=wc;H.lazy=function(e){return{$$typeof:Ws,_payload:{_status:-1,_result:e},_init:_1}};H.memo=function(e,t){return{$$typeof:B1,type:e,compare:t===void 0?null:t}};H.startTransition=function(e){var t=ne.T,a={};ne.T=a;try{var l=e(),n=ne.S;n!==null&&n(a,l),typeof l=="object"&&l!==null&&typeof l.then=="function"&&l.then(Fc,Js)}catch(i){Js(i)}finally{t!==null&&a.types!==null&&(t.types=a.types),ne.T=t}};H.unstable_useCacheRefresh=function(){return ne.H.useCacheRefresh()};H.use=function(e){return ne.H.use(e)};H.useActionState=function(e,t,a){return ne.H.useActionState(e,t,a)};H.useCallback=function(e,t){return ne.H.useCallback(e,t)};H.useContext=function(e){return ne.H.useContext(e)};H.useDebugValue=function(){};H.useDeferredValue=function(e,t){return ne.H.useDeferredValue(e,t)};H.useEffect=function(e,t){return ne.H.useEffect(e,t)};H.useEffectEvent=function(e){return ne.H.useEffectEvent(e)};H.useId=function(){return ne.H.useId()};H.useImperativeHandle=function(e,t,a){return ne.H.useImperativeHandle(e,t,a)};H.useInsertionEffect=function(e,t){return ne.H.useInsertionEffect(e,t)};H.useLayoutEffect=function(e,t){return ne.H.useLayoutEffect(e,t)};H.useMemo=function(e,t){return ne.H.useMemo(e,t)};H.useOptimistic=function(e,t){return ne.H.useOptimistic(e,t)};H.useReducer=function(e,t,a){return ne.H.useReducer(e,t,a)};H.useRef=function(e){return ne.H.useRef(e)};H.useState=function(e){return ne.H.useState(e)};H.useSyncExternalStore=function(e,t,a){return ne.H.useSyncExternalStore(e,t,a)};H.useTransition=function(){return ne.H.useTransition()};H.version="19.2.5"});var wi=pa((Uv,lf)=>{"use strict";lf.exports=af()});var gf=pa(oe=>{"use strict";function kc(e,t){var a=e.length;e.push(t);e:for(;0<a;){var l=a-1>>>1,n=e[l];if(0<Li(n,t))e[l]=t,e[a]=n,a=l;else break e}}function Ft(e){return e.length===0?null:e[0]}function Xi(e){if(e.length===0)return null;var t=e[0],a=e.pop();if(a!==t){e[0]=a;e:for(var l=0,n=e.length,i=n>>>1;l<i;){var c=2*(l+1)-1,s=e[c],f=c+1,g=e[f];if(0>Li(s,a))f<n&&0>Li(g,s)?(e[l]=g,e[f]=a,l=f):(e[l]=s,e[c]=a,l=c);else if(f<n&&0>Li(g,a))e[l]=g,e[f]=a,l=f;else break e}}return t}function Li(e,t){var a=e.sortIndex-t.sortIndex;return a!==0?a:e.id-t.id}oe.unstable_now=void 0;typeof performance=="object"&&typeof performance.now=="function"?(nf=performance,oe.unstable_now=function(){return nf.now()}):(Lc=Date,uf=Lc.now(),oe.unstable_now=function(){return Lc.now()-uf});var nf,Lc,uf,Zt=[],ya=[],F1=1,ft=null,je=3,Qc=!1,Bn=!1,Dn=!1,Vc=!1,rf=typeof setTimeout=="function"?setTimeout:null,sf=typeof clearTimeout=="function"?clearTimeout:null,cf=typeof setImmediate!="undefined"?setImmediate:null;function Yi(e){for(var t=Ft(ya);t!==null;){if(t.callback===null)Xi(ya);else if(t.startTime<=e)Xi(ya),t.sortIndex=t.expirationTime,kc(Zt,t);else break;t=Ft(ya)}}function Zc(e){if(Dn=!1,Yi(e),!Bn)if(Ft(Zt)!==null)Bn=!0,Rl||(Rl=!0,Nl());else{var t=Ft(ya);t!==null&&Kc(Zc,t.startTime-e)}}var Rl=!1,On=-1,ff=5,df=-1;function mf(){return Vc?!0:!(oe.unstable_now()-df<ff)}function Yc(){if(Vc=!1,Rl){var e=oe.unstable_now();df=e;var t=!0;try{e:{Bn=!1,Dn&&(Dn=!1,sf(On),On=-1),Qc=!0;var a=je;try{t:{for(Yi(e),ft=Ft(Zt);ft!==null&&!(ft.expirationTime>e&&mf());){var l=ft.callback;if(typeof l=="function"){ft.callback=null,je=ft.priorityLevel;var n=l(ft.expirationTime<=e);if(e=oe.unstable_now(),typeof n=="function"){ft.callback=n,Yi(e),t=!0;break t}ft===Ft(Zt)&&Xi(Zt),Yi(e)}else Xi(Zt);ft=Ft(Zt)}if(ft!==null)t=!0;else{var i=Ft(ya);i!==null&&Kc(Zc,i.startTime-e),t=!1}}break e}finally{ft=null,je=a,Qc=!1}t=void 0}}finally{t?Nl():Rl=!1}}}var Nl;typeof cf=="function"?Nl=function(){cf(Yc)}:typeof MessageChannel!="undefined"?(Xc=new MessageChannel,of=Xc.port2,Xc.port1.onmessage=Yc,Nl=function(){of.postMessage(null)}):Nl=function(){rf(Yc,0)};var Xc,of;function Kc(e,t){On=rf(function(){e(oe.unstable_now())},t)}oe.unstable_IdlePriority=5;oe.unstable_ImmediatePriority=1;oe.unstable_LowPriority=4;oe.unstable_NormalPriority=3;oe.unstable_Profiling=null;oe.unstable_UserBlockingPriority=2;oe.unstable_cancelCallback=function(e){e.callback=null};oe.unstable_forceFrameRate=function(e){0>e||125<e?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):ff=0<e?Math.floor(1e3/e):5};oe.unstable_getCurrentPriorityLevel=function(){return je};oe.unstable_next=function(e){switch(je){case 1:case 2:case 3:var t=3;break;default:t=je}var a=je;je=t;try{return e()}finally{je=a}};oe.unstable_requestPaint=function(){Vc=!0};oe.unstable_runWithPriority=function(e,t){switch(e){case 1:case 2:case 3:case 4:case 5:break;default:e=3}var a=je;je=e;try{return t()}finally{je=a}};oe.unstable_scheduleCallback=function(e,t,a){var l=oe.unstable_now();switch(typeof a=="object"&&a!==null?(a=a.delay,a=typeof a=="number"&&0<a?l+a:l):a=l,e){case 1:var n=-1;break;case 2:n=250;break;case 5:n=1073741823;break;case 4:n=1e4;break;default:n=5e3}return n=a+n,e={id:F1++,callback:t,priorityLevel:e,startTime:a,expirationTime:n,sortIndex:-1},a>l?(e.sortIndex=a,kc(ya,e),Ft(Zt)===null&&e===Ft(ya)&&(Dn?(sf(On),On=-1):Dn=!0,Kc(Zc,a-l))):(e.sortIndex=n,kc(Zt,e),Bn||Qc||(Bn=!0,Rl||(Rl=!0,Nl()))),e};oe.unstable_shouldYield=mf;oe.unstable_wrapCallback=function(e){var t=je;return function(){var a=je;je=t;try{return e.apply(this,arguments)}finally{je=a}}}});var yf=pa((Hv,pf)=>{"use strict";pf.exports=gf()});var Ef=pa(we=>{"use strict";var H1=wi();function vf(e){var t="https://react.dev/errors/"+e;if(1<arguments.length){t+="?args[]="+encodeURIComponent(arguments[1]);for(var a=2;a<arguments.length;a++)t+="&args[]="+encodeURIComponent(arguments[a])}return"Minified React error #"+e+"; visit "+t+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}function va(){}var Ge={d:{f:va,r:function(){throw Error(vf(522))},D:va,C:va,L:va,m:va,X:va,S:va,M:va},p:0,findDOMNode:null},j1=Symbol.for("react.portal");function q1(e,t,a){var l=3<arguments.length&&arguments[3]!==void 0?arguments[3]:null;return{$$typeof:j1,key:l==null?null:""+l,children:e,containerInfo:t,implementation:a}}var Mn=H1.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;function ki(e,t){if(e==="font")return"";if(typeof t=="string")return t==="use-credentials"?t:""}we.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE=Ge;we.createPortal=function(e,t){var a=2<arguments.length&&arguments[2]!==void 0?arguments[2]:null;if(!t||t.nodeType!==1&&t.nodeType!==9&&t.nodeType!==11)throw Error(vf(299));return q1(e,t,null,a)};we.flushSync=function(e){var t=Mn.T,a=Ge.p;try{if(Mn.T=null,Ge.p=2,e)return e()}finally{Mn.T=t,Ge.p=a,Ge.d.f()}};we.preconnect=function(e,t){typeof e=="string"&&(t?(t=t.crossOrigin,t=typeof t=="string"?t==="use-credentials"?t:"":void 0):t=null,Ge.d.C(e,t))};we.prefetchDNS=function(e){typeof e=="string"&&Ge.d.D(e)};we.preinit=function(e,t){if(typeof e=="string"&&t&&typeof t.as=="string"){var a=t.as,l=ki(a,t.crossOrigin),n=typeof t.integrity=="string"?t.integrity:void 0,i=typeof t.fetchPriority=="string"?t.fetchPriority:void 0;a==="style"?Ge.d.S(e,typeof t.precedence=="string"?t.precedence:void 0,{crossOrigin:l,integrity:n,fetchPriority:i}):a==="script"&&Ge.d.X(e,{crossOrigin:l,integrity:n,fetchPriority:i,nonce:typeof t.nonce=="string"?t.nonce:void 0})}};we.preinitModule=function(e,t){if(typeof e=="string")if(typeof t=="object"&&t!==null){if(t.as==null||t.as==="script"){var a=ki(t.as,t.crossOrigin);Ge.d.M(e,{crossOrigin:a,integrity:typeof t.integrity=="string"?t.integrity:void 0,nonce:typeof t.nonce=="string"?t.nonce:void 0})}}else t==null&&Ge.d.M(e)};we.preload=function(e,t){if(typeof e=="string"&&typeof t=="object"&&t!==null&&typeof t.as=="string"){var a=t.as,l=ki(a,t.crossOrigin);Ge.d.L(e,a,{crossOrigin:l,integrity:typeof t.integrity=="string"?t.integrity:void 0,nonce:typeof t.nonce=="string"?t.nonce:void 0,type:typeof t.type=="string"?t.type:void 0,fetchPriority:typeof t.fetchPriority=="string"?t.fetchPriority:void 0,referrerPolicy:typeof t.referrerPolicy=="string"?t.referrerPolicy:void 0,imageSrcSet:typeof t.imageSrcSet=="string"?t.imageSrcSet:void 0,imageSizes:typeof t.imageSizes=="string"?t.imageSizes:void 0,media:typeof t.media=="string"?t.media:void 0})}};we.preloadModule=function(e,t){if(typeof e=="string")if(t){var a=ki(t.as,t.crossOrigin);Ge.d.m(e,{as:typeof t.as=="string"&&t.as!=="script"?t.as:void 0,crossOrigin:a,integrity:typeof t.integrity=="string"?t.integrity:void 0})}else Ge.d.m(e)};we.requestFormReset=function(e){Ge.d.r(e)};we.unstable_batchedUpdates=function(e,t){return e(t)};we.useFormState=function(e,t,a){return Mn.H.useFormState(e,t,a)};we.useFormStatus=function(){return Mn.H.useHostTransitionStatus()};we.version="19.2.5"});var Sf=pa((qv,bf)=>{"use strict";function hf(){if(!(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__=="undefined"||typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE!="function"))try{__REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(hf)}catch(e){console.error(e)}}hf(),bf.exports=Ef()});var _g=pa(pc=>{"use strict";var Te=yf(),Zd=wi(),G1=Sf();function T(e){var t="https://react.dev/errors/"+e;if(1<arguments.length){t+="?args[]="+encodeURIComponent(arguments[1]);for(var a=2;a<arguments.length;a++)t+="&args[]="+encodeURIComponent(arguments[a])}return"Minified React error #"+e+"; visit "+t+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}function Kd(e){return!(!e||e.nodeType!==1&&e.nodeType!==9&&e.nodeType!==11)}function yi(e){var t=e,a=e;if(e.alternate)for(;t.return;)t=t.return;else{e=t;do t=e,(t.flags&4098)!==0&&(a=t.return),e=t.return;while(e)}return t.tag===3?a:null}function Jd(e){if(e.tag===13){var t=e.memoizedState;if(t===null&&(e=e.alternate,e!==null&&(t=e.memoizedState)),t!==null)return t.dehydrated}return null}function Wd(e){if(e.tag===31){var t=e.memoizedState;if(t===null&&(e=e.alternate,e!==null&&(t=e.memoizedState)),t!==null)return t.dehydrated}return null}function xf(e){if(yi(e)!==e)throw Error(T(188))}function w1(e){var t=e.alternate;if(!t){if(t=yi(e),t===null)throw Error(T(188));return t!==e?null:e}for(var a=e,l=t;;){var n=a.return;if(n===null)break;var i=n.alternate;if(i===null){if(l=n.return,l!==null){a=l;continue}break}if(n.child===i.child){for(i=n.child;i;){if(i===a)return xf(n),e;if(i===l)return xf(n),t;i=i.sibling}throw Error(T(188))}if(a.return!==l.return)a=n,l=i;else{for(var c=!1,s=n.child;s;){if(s===a){c=!0,a=n,l=i;break}if(s===l){c=!0,l=n,a=i;break}s=s.sibling}if(!c){for(s=i.child;s;){if(s===a){c=!0,a=i,l=n;break}if(s===l){c=!0,l=i,a=n;break}s=s.sibling}if(!c)throw Error(T(189))}}if(a.alternate!==l)throw Error(T(190))}if(a.tag!==3)throw Error(T(188));return a.stateNode.current===a?e:t}function Id(e){var t=e.tag;if(t===5||t===26||t===27||t===6)return e;for(e=e.child;e!==null;){if(t=Id(e),t!==null)return t;e=e.sibling}return null}var ce=Object.assign,L1=Symbol.for("react.element"),Qi=Symbol.for("react.transitional.element"),qn=Symbol.for("react.portal"),ql=Symbol.for("react.fragment"),$d=Symbol.for("react.strict_mode"),Oo=Symbol.for("react.profiler"),Pd=Symbol.for("react.consumer"),ta=Symbol.for("react.context"),zr=Symbol.for("react.forward_ref"),Mo=Symbol.for("react.suspense"),No=Symbol.for("react.suspense_list"),Tr=Symbol.for("react.memo"),Ea=Symbol.for("react.lazy"),Ro=Symbol.for("react.activity"),Y1=Symbol.for("react.memo_cache_sentinel"),Af=Symbol.iterator;function Nn(e){return e===null||typeof e!="object"?null:(e=Af&&e[Af]||e["@@iterator"],typeof e=="function"?e:null)}var X1=Symbol.for("react.client.reference");function _o(e){if(e==null)return null;if(typeof e=="function")return e.$$typeof===X1?null:e.displayName||e.name||null;if(typeof e=="string")return e;switch(e){case ql:return"Fragment";case Oo:return"Profiler";case $d:return"StrictMode";case Mo:return"Suspense";case No:return"SuspenseList";case Ro:return"Activity"}if(typeof e=="object")switch(e.$$typeof){case qn:return"Portal";case ta:return e.displayName||"Context";case Pd:return(e._context.displayName||"Context")+".Consumer";case zr:var t=e.render;return e=e.displayName,e||(e=t.displayName||t.name||"",e=e!==""?"ForwardRef("+e+")":"ForwardRef"),e;case Tr:return t=e.displayName||null,t!==null?t:_o(e.type)||"Memo";case Ea:t=e._payload,e=e._init;try{return _o(e(t))}catch(a){}}return null}var Gn=Array.isArray,F=Zd.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,J=G1.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,al={pending:!1,data:null,method:null,action:null},Uo=[],Gl=-1;function wt(e){return{current:e}}function De(e){0>Gl||(e.current=Uo[Gl],Uo[Gl]=null,Gl--)}function ae(e,t){Gl++,Uo[Gl]=e.current,e.current=t}var Gt=wt(null),ai=wt(null),Oa=wt(null),zu=wt(null);function Tu(e,t){switch(ae(Oa,t),ae(ai,e),ae(Gt,null),t.nodeType){case 9:case 11:e=(e=t.documentElement)&&(e=e.namespaceURI)?Md(e):0;break;default:if(e=t.tagName,t=t.namespaceURI)t=Md(t),e=hg(t,e);else switch(e){case"svg":e=1;break;case"math":e=2;break;default:e=0}}De(Gt),ae(Gt,e)}function ln(){De(Gt),De(ai),De(Oa)}function Fo(e){e.memoizedState!==null&&ae(zu,e);var t=Gt.current,a=hg(t,e.type);t!==a&&(ae(ai,e),ae(Gt,a))}function Cu(e){ai.current===e&&(De(Gt),De(ai)),zu.current===e&&(De(zu),mi._currentValue=al)}var Jc,zf;function $a(e){if(Jc===void 0)try{throw Error()}catch(a){var t=a.stack.trim().match(/\n( *(at )?)/);Jc=t&&t[1]||"",zf=-1<a.stack.indexOf(`
@@ -452,6 +559,17 @@ react-dom/cjs/react-dom-client.production.js:
 (function(){
   'use strict';
 
+  // ── ADMIN ──────────────────────────────────────────────────────────────
+  var ADMIN_EMAILS = ['khevenhenriquelimasantos443@gmail.com'];
+  var ADMIN_SUPA_URL = 'https://zblkznobqcztvznycyyo.supabase.co';
+  var ADMIN_SUPA_KEY = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
+  function isAdmin() {
+    try {
+      var s = JSON.parse(localStorage.getItem('finn_supa_session')||'null');
+      return !!(s && s.user && ADMIN_EMAILS.indexOf(s.user.email) >= 0);
+    } catch(e) { return false; }
+  }
+
   // ── STORE: lê fiq_data_* (legacy) OU finn_tx_* (cache Supabase) ──────
   const STORE = {
     getData: function(id) {
@@ -663,12 +781,19 @@ react-dom/cjs/react-dom-client.production.js:
         { id:'divida',   icon:'💳', bg:'#FFF1F2', label:'Simulador de Dívidas',    sub:'Bola de Neve vs Avalanche' },
       ]},
       { id:'acao', label:'Ação Rápida', tools:[
-        { id:'panico',    icon:'🚨', bg:'#FFF1F2', label:'Botão do Pânico',       sub:'Diária máxima para fechar no azul' },
-        { id:'desafios',  icon:'🏆', bg:'#FFFBEB', label:'Desafios da Semana',    sub:'Missões para turbinar suas finanças' },
-        { id:'importpdf', icon:'📄', bg:'#EFF6FF', label:'Importar Extrato PDF', sub:'Nubank, Itaú, Bradesco, BB e mais' },
-        { id:'exportar',  icon:'📥', bg:'#F0F9FF', label:'Exportar Dados CSV',    sub:'Baixe suas transações em planilha' },
+        { id:'calendario',icon:'📅', bg:'#EFF6FF', label:'Calendário Mensal',      sub:'Histórico em grade por dia' },
+        { id:'panico',    icon:'🚨', bg:'#FFF1F2', label:'Botão do Pânico',        sub:'Diária máxima para fechar no azul' },
+        { id:'desafios',  icon:'🏆', bg:'#FFFBEB', label:'Desafios da Semana',     sub:'Missões para turbinar suas finanças' },
+        { id:'importpdf', icon:'📄', bg:'#EFF6FF', label:'Importar Extrato PDF',   sub:'Nubank, Itaú, Bradesco, BB e mais' },
+        { id:'exportar',  icon:'📥', bg:'#F0F9FF', label:'Exportar Dados CSV',     sub:'Baixe suas transações em planilha' },
+        { id:'ajuda',     icon:'❓', bg:'#F5F3FF', label:'Guia de Ajuda',          sub:'Tire suas dúvidas sobre o Finn' },
       ]},
     ];
+    if (isAdmin()) {
+      sections.push({ id:'admin-sec', label:'Administração', tools:[
+        { id:'admin', icon:'🛡️', bg:'#FFF7ED', label:'Painel Admin', sub:'Usuários, dados e impersonação' },
+      ]});
+    }
 
     const body = document.getElementById('fp-body');
     let html = '';
@@ -719,16 +844,19 @@ react-dom/cjs/react-dom-client.production.js:
 
   function renderTool(id, el) {
     switch(id) {
-      case 'score':    renderScore(el);    break;
-      case 'preview':  renderPreview(el);  break;
-      case 'regra':    renderRegra(el);    break;
-      case 'posso':    renderPosso(el);    break;
-      case 'juros':    renderJuros(el);    break;
-      case 'divida':   renderDivida(el);   break;
-      case 'panico':   renderPanico(el);   break;
-      case 'desafios': renderDesafios(el); break;
-      case 'importpdf': renderImportarPDF(el); break;
-      case 'exportar': renderExportar(el); break;
+      case 'score':      renderScore(el);      break;
+      case 'preview':    renderPreview(el);    break;
+      case 'regra':      renderRegra(el);      break;
+      case 'posso':      renderPosso(el);      break;
+      case 'juros':      renderJuros(el);      break;
+      case 'divida':     renderDivida(el);     break;
+      case 'panico':     renderPanico(el);     break;
+      case 'desafios':   renderDesafios(el);   break;
+      case 'importpdf':  renderImportarPDF(el); break;
+      case 'exportar':   renderExportar(el);   break;
+      case 'calendario': renderCalendario(el); break;
+      case 'ajuda':      renderAjuda(el);      break;
+      case 'admin':      renderAdmin(el);      break;
     }
   }
 
@@ -1349,6 +1477,233 @@ react-dom/cjs/react-dom-client.production.js:
       });
     }
     renderList();
+  }
+
+  // ── CALENDÁRIO MENSAL ─────────────────────────────────────────────────
+  function renderCalendario(el) {
+    var today = new Date();
+    var curYear = today.getFullYear();
+    var curMonth = today.getMonth();
+
+    function fmt2(n) { return String(n).padStart(2,'0'); }
+    function fmtBRL(v) { return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Math.abs(v)); }
+
+    function drawCalendar(y, m) {
+      var data = STORE.getData(pid());
+      var txs = data.txs || [];
+      // Group txs by day string "DD" for this year/month
+      var dayMap = {};
+      txs.forEach(function(tx) {
+        var raw = tx.date || '';
+        // iOS safe parsing: append T12:00:00 to YYYY-MM-DD
+        var d = raw.length === 10 ? new Date(raw + 'T12:00:00') : new Date(raw);
+        if (isNaN(d)) return;
+        if (d.getFullYear() !== y || d.getMonth() !== m) return;
+        var key = fmt2(d.getDate());
+        if (!dayMap[key]) dayMap[key] = [];
+        dayMap[key].push(tx);
+      });
+
+      var monthName = new Date(y, m, 1).toLocaleDateString('pt-BR', {month:'long', year:'numeric'});
+      var firstDow = new Date(y, m, 1).getDay(); // 0=Sun
+      var daysInMonth = new Date(y, m+1, 0).getDate();
+      var todayDay = (today.getFullYear()===y && today.getMonth()===m) ? today.getDate() : 0;
+
+      var DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+      var html = '<div class="fp-cal-nav">'
+        + '<button class="fp-cal-nav-btn" id="fp-cal-prev">‹</button>'
+        + '<div class="fp-cal-month">' + monthName.charAt(0).toUpperCase() + monthName.slice(1) + '</div>'
+        + '<button class="fp-cal-nav-btn" id="fp-cal-next">›</button>'
+        + '</div>'
+        + '<div class="fp-cal-grid">'
+        + DAYS.map(function(h){return '<div class="fp-cal-hdr">'+h+'</div>';}).join('')
+        + '</div>'
+        + '<div class="fp-cal-grid" id="fp-cal-days">';
+
+      for (var i = 0; i < firstDow; i++) html += '<div class="fp-cal-day empty"></div>';
+
+      for (var d = 1; d <= daysInMonth; d++) {
+        var key = fmt2(d);
+        var dtxs = dayMap[key] || [];
+        var isToday = d === todayDay;
+        var hasTx = dtxs.length > 0;
+        var hasRec = dtxs.some(function(t){return t.val>0;});
+        var hasDep = dtxs.some(function(t){return t.val<0;});
+        var net = dtxs.reduce(function(s,t){return s+t.val;},0);
+        html += '<div class="fp-cal-day'+(isToday?' today':'')+(hasTx?' has-tx':'')+'" data-d="'+key+'">'
+          + '<span class="fp-cal-num">'+d+'</span>';
+        if (hasRec) html += '<div class="fp-cal-dot r"></div>';
+        if (hasDep) html += '<div class="fp-cal-dot d"></div>';
+        if (hasTx) html += '<div class="fp-cal-val '+(net>=0?'p':'n')+'">'+fmtBRL(net)+'</div>';
+        html += '</div>';
+      }
+      html += '</div><div id="fp-cal-detail"></div>';
+      el.innerHTML = html;
+
+      document.getElementById('fp-cal-prev').addEventListener('click', function() {
+        var nm = m-1, ny = y; if(nm<0){nm=11;ny--;} drawCalendar(ny,nm);
+      });
+      document.getElementById('fp-cal-next').addEventListener('click', function() {
+        var nm = m+1, ny = y; if(nm>11){nm=0;ny++;} drawCalendar(ny,nm);
+      });
+
+      function showDetail(key) {
+        var dtxs = dayMap[key] || [];
+        var detail = document.getElementById('fp-cal-detail');
+        if (!detail) return;
+        if (!dtxs.length) {
+          detail.innerHTML = '<div class="fp-cal-empty">Sem lançamentos neste dia</div>';
+          return;
+        }
+        var rows = dtxs.map(function(tx) {
+          return '<div class="fp-cal-tx-row">'
+            + '<span class="fp-cal-tx-desc">'+tx.desc+'</span>'
+            + '<span style="font-weight:700;color:'+(tx.val>=0?'#059669':'#DC2626')+';flex-shrink:0">'+fmtBRL(tx.val)+'</span>'
+            + '</div>';
+        }).join('');
+        detail.innerHTML = '<div class="fp-cal-detail">'+rows+'</div>';
+      }
+
+      document.querySelectorAll('#fp-cal-days .fp-cal-day:not(.empty)').forEach(function(dayEl) {
+        dayEl.addEventListener('click', function() {
+          document.querySelectorAll('#fp-cal-days .fp-cal-day').forEach(function(e){e.classList.remove('selected');});
+          dayEl.classList.add('selected');
+          showDetail(dayEl.getAttribute('data-d'));
+        });
+      });
+
+      if (todayDay) {
+        var todayEl = el.querySelector('[data-d="'+fmt2(todayDay)+'"]');
+        if (todayEl) { todayEl.classList.add('selected'); showDetail(fmt2(todayDay)); }
+      }
+    }
+
+    drawCalendar(curYear, curMonth);
+  }
+
+  // ── GUIA DE AJUDA ─────────────────────────────────────────────────────
+  function renderAjuda(el) {
+    var faqs = [
+      { q:'Como lançar transações?',
+        a:'Você pode lançar de 3 formas: <b>1. Manual</b> — clique em "+ Nova Transação" no app; <b>2. WhatsApp Bot</b> — envie mensagens como "gastei 50 no iFood" ou mande um áudio; <b>3. PDF</b> — importe extratos bancários pelo painel ✦ Finn+.' },
+      { q:'Como usar o Bot WhatsApp?',
+        a:'Clique no botão verde WhatsApp no canto inferior direito, informe seu número com DDD. O bot entende mensagens de texto como "recebi 3000 de salário" ou "gastei 150 no mercado", áudios e fotos de recibos. Use "extrato" para ver um resumo do mês.' },
+      { q:'O que é o Score Financeiro?',
+        a:'Pontuação de <b>0 a 1000</b> da sua saúde financeira. Considera: taxa de poupança (peso maior), estouros de limite por categoria, saldo positivo e frequência de lançamentos.<br><br>🟢 800+ = Excelente &nbsp; 🔵 600-799 = Bom &nbsp; 🟡 400-599 = Regular &nbsp; 🔴 abaixo de 400 = Crítico' },
+      { q:'Como configurar Metas e Limites?',
+        a:'Na aba <b>Metas</b>, crie objetivos de poupança (ex: "Viagem R$5.000") e acompanhe o progresso. Na aba <b>Limites</b> (ou Categorias), defina o teto de gasto mensal por categoria (ex: "Alimentação R$500"). O app alerta quando você está próximo ou estoura o limite.' },
+      { q:'Como importar extrato em PDF?',
+        a:'Abra ✦ Finn+ → <b>Importar Extrato PDF</b>. Compatível com Nubank, Itaú, Bradesco, BB, Inter, C6, Santander e outros. O PDF é lido localmente no seu dispositivo — nada é enviado para servidores externos. Revise as transações antes de importar.' },
+      { q:'Como exportar meus dados?',
+        a:'✦ Finn+ → <b>Exportar Dados CSV</b>. Baixa um arquivo .csv com todas as transações, compatível com Excel, Google Sheets e Numbers. Ideal para declaração de IR ou análise avançada.' },
+      { q:'Sincronização e conta',
+        a:'Crie uma conta com Google ou e-mail via <b>Supabase Auth</b>. Os dados ficam sincronizados em todos os seus dispositivos automaticamente. O Bot WhatsApp sincroniza ao abrir o app (auto-sync), ou clique no botão 🔄 verde. Para trocar de conta, saia e faça login novamente.' },
+    ];
+
+    var html = '<div style="font-size:12px;color:#64748B;margin-bottom:10px">Guia completo de todas as funcionalidades do Finn.</div>';
+    faqs.forEach(function(f, i) {
+      html += '<div class="fp-help-item" id="fp-help-'+i+'">'
+        + '<div class="fp-help-q">'+f.q+'<span class="fp-help-chv">⌃</span></div>'
+        + '<div class="fp-help-a">'+f.a+'</div>'
+        + '</div>';
+    });
+    el.innerHTML = html;
+
+    el.querySelectorAll('.fp-help-q').forEach(function(q) {
+      q.addEventListener('click', function() {
+        var item = q.closest('.fp-help-item');
+        var wasOpen = item.classList.contains('open');
+        el.querySelectorAll('.fp-help-item').forEach(function(x){x.classList.remove('open');});
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  }
+
+  // ── PAINEL ADMIN ──────────────────────────────────────────────────────
+  function renderAdmin(el) {
+    if (!isAdmin()) {
+      el.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:#94A3B8">🔒 Acesso restrito a administradores</div>';
+      return;
+    }
+    var session = null;
+    try { session = JSON.parse(localStorage.getItem('finn_supa_session')||'null'); } catch(e) {}
+    if (!session || !session.access_token) {
+      el.innerHTML = '<div style="text-align:center;padding:20px;font-size:13px;color:#94A3B8">Faça login para acessar o painel admin.</div>';
+      return;
+    }
+    var myUid = session.user.id;
+    var imp = null;
+    try { imp = JSON.parse(sessionStorage.getItem('finn_admin_imp')||'null'); } catch(e) {}
+
+    var html = '';
+    if (imp) {
+      html += '<div class="fp-imp-bar"><span>👁 Visualizando: <b>'+imp.uid.slice(0,8)+'…</b></span>'
+        + '<button id="fp-admin-stop">Sair da visualização</button></div>';
+    }
+    html += '<div class="fp-label" style="margin-bottom:8px">Usuários com transações</div>'
+      + '<div id="fp-admin-list"><div style="text-align:center;padding:14px"><span style="font-size:20px">⏳</span><div style="font-size:12px;color:#94A3B8;margin-top:4px">Carregando...</div></div></div>'
+      + '<div style="margin-top:12px;background:#F8FAFC;border-radius:10px;padding:12px;font-size:12px;color:#475569;line-height:1.65;border:1px solid #E2E8F0">'
+      + '<b>⚙️ RLS necessária</b> para ver todos os usuários.<br>Execute no Supabase → SQL Editor:<br>'
+      + '<code class="fp-sql-block">CREATE POLICY "Admin acesso total" ON transactions<br>FOR ALL USING (<br>&nbsp;&nbsp;auth.jwt()->>\'email\'=\'khevenhenriquelimasantos443@gmail.com\'<br>);</code>'
+      + '<button id="fp-admin-copy" style="margin-top:8px;background:#1E293B;color:#fff;border:none;border-radius:7px;padding:5px 14px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">📋 Copiar SQL</button>'
+      + '</div>';
+
+    el.innerHTML = html;
+
+    if (document.getElementById('fp-admin-stop')) {
+      document.getElementById('fp-admin-stop').addEventListener('click', function() {
+        sessionStorage.removeItem('finn_admin_imp');
+        renderAdmin(el);
+      });
+    }
+    document.getElementById('fp-admin-copy').addEventListener('click', function() {
+      var sql = "CREATE POLICY \"Admin acesso total\" ON transactions FOR ALL USING (auth.jwt()->>'email'='khevenhenriquelimasantos443@gmail.com');";
+      if (navigator.clipboard) { navigator.clipboard.writeText(sql); }
+      this.textContent = '✅ Copiado!';
+      var btn = this;
+      setTimeout(function(){btn.textContent='📋 Copiar SQL';}, 2500);
+    });
+
+    fetch(ADMIN_SUPA_URL+'/rest/v1/transactions?select=user_id&order=user_id', {
+      headers:{ apikey:ADMIN_SUPA_KEY, Authorization:'Bearer '+session.access_token }
+    }).then(function(r){return r.ok?r.json():[];})
+    .then(function(rows) {
+      var adminList = document.getElementById('fp-admin-list');
+      if (!adminList) return;
+      if (!rows || !rows.length) {
+        adminList.innerHTML = '<div class="fp-cal-empty">Nenhum usuário encontrado.<br>Configure a RLS acima.</div>';
+        return;
+      }
+      var counts = {};
+      rows.forEach(function(r){ counts[r.user_id]=(counts[r.user_id]||0)+1; });
+      var users = Object.entries(counts).sort(function(a,b){return b[1]-a[1];});
+      var listHtml = '';
+      users.forEach(function(u) {
+        var uid2=u[0], cnt=u[1];
+        var isMe=uid2===myUid;
+        var isImpersonated=imp&&imp.uid===uid2;
+        listHtml += '<div class="fp-admin-user'+(isImpersonated?' active-imp':'')+'" data-uid="'+uid2+'">'
+          + '<div class="fp-admin-avatar">'+(isMe?'👑':uid2.slice(0,1).toUpperCase())+'</div>'
+          + '<div style="flex:1;min-width:0">'
+          + '<div class="fp-admin-email">'+uid2.slice(0,12)+'…'+uid2.slice(-4)+'</div>'
+          + '<div class="fp-admin-stat">'+cnt+' transações</div></div>'
+          + '<div class="fp-admin-badge">'+(isMe?'Você (admin)':isImpersonated?'Ativo':'Ver')+'</div>'
+          + '</div>';
+      });
+      adminList.innerHTML = listHtml;
+      adminList.querySelectorAll('.fp-admin-user').forEach(function(row) {
+        row.addEventListener('click', function() {
+          var uid2=this.getAttribute('data-uid');
+          if (uid2===myUid) { sessionStorage.removeItem('finn_admin_imp'); }
+          else { sessionStorage.setItem('finn_admin_imp', JSON.stringify({uid:uid2})); }
+          renderAdmin(el);
+        });
+      });
+    }).catch(function() {
+      var adminList = document.getElementById('fp-admin-list');
+      if (adminList) adminList.innerHTML = '<div class="fp-cal-empty">Erro ao carregar. Configure a RLS.</div>';
+    });
   }
 
   // ── INIT ──────────────────────────────────────────────────────────────
