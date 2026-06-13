@@ -29,6 +29,12 @@ export default {
       if (request.method === "POST") return handleSync(request, env);
     }
 
+    if (url.pathname === "/keys" && request.method === "GET") {
+      const list = await env.FINN_KV.list({ prefix: "data_" });
+      const keys = list.keys.map(k => k.name.replace("data_", ""));
+      return corsResponse(new Response(JSON.stringify({ ok: true, numeros: keys }, null, 2), { status: 200, headers: { "Content-Type": "application/json" } }));
+    }
+
     return new Response("Finn WhatsApp Worker", { status: 200 });
   },
 
