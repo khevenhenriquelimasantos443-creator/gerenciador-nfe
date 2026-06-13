@@ -130,6 +130,21 @@ async function processMessage(msg, env) {
 // LIST / BUTTON REPLY HANDLERS
 // =============================================================================
 async function handleListReply(phone, rowId, stateData, env) {
+  // Categoria com valor embutido no ID (à prova de lag do KV): "c|d|35.1|Transporte"
+  if (rowId.startsWith("c|")) {
+    const parts = rowId.split("|");
+    const tipo = parts[1];            // "d" despesa | "r" receita
+    const absVal = parseFloat(parts[2]);
+    const cat = parts[3] || "Outros";
+    if (!isNaN(absVal) && absVal > 0) {
+      const val = tipo === "r" ? Math.abs(absVal) : -Math.abs(absVal);
+      const nextState = tipo === "r" ? "awaiting_desc_receita" : "awaiting_desc_despesa";
+      await setState(phone, { state: nextState, pending: { val, cat } }, env);
+      await sendText(phone, "📝 Descrição? _(ex: Almoço, iFood, mercado, salário...)_", env);
+      return;
+    }
+  }
+
   const catMap = {
     cat_alimentacao:"Alimentacao", cat_transporte:"Transporte", cat_lazer:"Lazer",
     cat_saude:"Saude", cat_educacao:"Educacao", cat_moradia:"Moradia",
@@ -210,15 +225,19 @@ async function continueFlow(phone, text, stateData, env) {
       return;
     }
     await setState(phone, { state: "awaiting_cat_despesa", pending: { ...pending, val: -Math.abs(val) } }, env);
-    await sendCategoryList(phone, env);
+    await sendCategoryList(phone, Math.abs(val), env);
     return;
   }
 
   if (state === "awaiting_valor_receita") {
     const val = parseMonetaryValue(text);
-    if (val === null) { await sendText(phone, "⚠️ Não entendi o valor. Tente assim: *3200,00*", env); return; }
+    if (val === null) {
+      await clearState(phone, env);
+      await sendText(phone, "⚠️ Não entendi o valor — o fluxo foi reiniciado.\n\nDigite *menu* para começar de novo.", env);
+      return;
+    }
     await setState(phone, { state: "awaiting_cat_receita", pending: { ...pending, val: Math.abs(val) } }, env);
-    await sendCategoryListReceita(phone, env);
+    await sendCategoryListReceita(phone, Math.abs(val), env);
     return;
   }
 
@@ -676,46 +695,48 @@ async function sendMainMenu(phone, env) {
   },env);
 }
 
-async function sendCategoryList(phone, env) {
+async function sendCategoryList(phone, val, env) {
+  const v = Math.abs(val);
   return metaPost({
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
       type:"list",
-      body:{text:"Qual a categoria da despesa?"},
+      body:{text:`Despesa de R$ ${formatBRL(v)}.\nQual a categoria?`},
       action:{
         button:"Escolher categoria",
         sections:[{title:"Categorias de Despesa",rows:[
-          {id:"cat_alimentacao",title:"🍔 Alimentação"},
-          {id:"cat_transporte",title:"🚗 Transporte"},
-          {id:"cat_lazer",title:"🎮 Lazer"},
-          {id:"cat_saude",title:"🏥 Saúde"},
-          {id:"cat_educacao",title:"📚 Educação"},
-          {id:"cat_moradia",title:"🏠 Moradia"},
-          {id:"cat_vestuario",title:"👕 Vestuário"},
-          {id:"cat_investimento",title:"📈 Investimento"},
-          {id:"cat_outros",title:"📦 Outros"}
+          {id:`c|d|${v}|Alimentacao`,title:"🍔 Alimentação"},
+          {id:`c|d|${v}|Transporte`,title:"🚗 Transporte"},
+          {id:`c|d|${v}|Lazer`,title:"🎮 Lazer"},
+          {id:`c|d|${v}|Saude`,title:"🏥 Saúde"},
+          {id:`c|d|${v}|Educacao`,title:"📚 Educação"},
+          {id:`c|d|${v}|Moradia`,title:"🏠 Moradia"},
+          {id:`c|d|${v}|Vestuario`,title:"👕 Vestuário"},
+          {id:`c|d|${v}|Investimento`,title:"📈 Investimento"},
+          {id:`c|d|${v}|Outros`,title:"📦 Outros"}
         ]}]
       }
     }
   },env);
 }
 
-async function sendCategoryListReceita(phone, env) {
+async function sendCategoryListReceita(phone, val, env) {
+  const v = Math.abs(val);
   return metaPost({
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
       type:"list",
-      body:{text:"Qual a categoria da receita?"},
+      body:{text:`Receita de R$ ${formatBRL(v)}.\nQual a categoria?`},
       action:{
         button:"Escolher categoria",
         sections:[{title:"Categorias de Receita",rows:[
-          {id:"cat_salario",title:"💼 Salário"},
-          {id:"cat_freelance",title:"💻 Freelance/Serviços"},
-          {id:"cat_investimento",title:"📈 Investimentos"},
-          {id:"cat_aluguel",title:"🏠 Aluguel"},
-          {id:"cat_venda",title:"🛍️ Venda"},
-          {id:"cat_bonus",title:"🎁 Bônus/Presente"},
-          {id:"cat_outros",title:"📦 Outros"}
+          {id:`c|r|${v}|Salario`,title:"💼 Salário"},
+          {id:`c|r|${v}|Freelance`,title:"💻 Freelance/Serviços"},
+          {id:`c|r|${v}|Investimento`,title:"📈 Investimentos"},
+          {id:`c|r|${v}|Aluguel`,title:"🏠 Aluguel"},
+          {id:`c|r|${v}|Venda`,title:"🛍️ Venda"},
+          {id:`c|r|${v}|Bonus`,title:"🎁 Bônus/Presente"},
+          {id:`c|r|${v}|Outros`,title:"📦 Outros"}
         ]}]
       }
     }
