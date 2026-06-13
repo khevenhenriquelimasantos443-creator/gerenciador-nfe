@@ -1349,5 +1349,103 @@ react-dom/cjs/react-dom-client.production.js:
 })();
 </script>
 
+<!-- ===== FINN BOT SYNC ===== -->
+<script>
+(function(){
+  'use strict';
+
+  var WORKER_URL = 'https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev';
+
+  function getPhone() {
+    try { var c = JSON.parse(localStorage.getItem('fiq_wa_config')); return c && c.numero ? c.numero : null; } catch(e) { return null; }
+  }
+
+  function getProfileId() {
+    try {
+      var p = JSON.parse(localStorage.getItem('fiq_profiles') || '[]');
+      if (p.length) return p[0].id;
+      var s = JSON.parse(localStorage.getItem('finn_supa_session') || 'null');
+      return s && s.user && s.user.id ? s.user.id : null;
+    } catch(e) { return null; }
+  }
+
+  function mergeAndSave(pid, botData, botFixed) {
+    try {
+      var localRaw = localStorage.getItem('fiq_data_' + pid);
+      var local = localRaw ? JSON.parse(localRaw) : {txs:[], limits:{}, goals:[]};
+      var existIds = {};
+      (local.txs || []).forEach(function(t){ existIds[t.id] = 1; });
+      var newTxs = (botData.txs || []).filter(function(t){ return t.id && !existIds[t.id]; });
+      if (newTxs.length) {
+        local.txs = (local.txs || []).concat(newTxs);
+        localStorage.setItem('fiq_data_' + pid, JSON.stringify(local));
+      }
+      if (botFixed && botFixed.length) {
+        var existFixed = JSON.parse(localStorage.getItem('fiq_fixed_' + pid) || '[]');
+        if (!existFixed.length) localStorage.setItem('fiq_fixed_' + pid, JSON.stringify(botFixed));
+      }
+      return newTxs.length;
+    } catch(e) { return 0; }
+  }
+
+  window.finnBotSync = function(silent) {
+    var phone = getPhone();
+    var pid = getProfileId();
+    if (!phone || !pid) return Promise.resolve(0);
+    return fetch(WORKER_URL + '/sync?phone=' + encodeURIComponent(phone))
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (!res.ok) return 0;
+        var n = mergeAndSave(pid, res.data || {}, res.fixed || []);
+        if (!silent && n > 0) {
+          var el = document.getElementById('finn-bot-sync-status');
+          if (el) { el.textContent = '✅ ' + n + ' transação(ões) do bot importada(s)!'; el.style.display='block'; setTimeout(function(){ el.style.display='none'; }, 4000); }
+        }
+        return n;
+      })
+      .catch(function(){ return 0; });
+  };
+
+  function addSyncButton() {
+    var interval = setInterval(function(){
+      var fw = document.getElementById('fw-btn');
+      if (!fw) return;
+      clearInterval(interval);
+      var btn = document.createElement('button');
+      btn.id = 'finn-bot-sync-btn';
+      btn.title = 'Sincronizar transações do bot WhatsApp';
+      btn.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:9990;background:#128C7E;color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;';
+      btn.textContent = '🔄';
+      btn.addEventListener('click', function(){
+        btn.textContent = '⏳';
+        window.finnBotSync(false).then(function(n){
+          btn.textContent = '🔄';
+          if (n > 0) setTimeout(function(){ location.reload(); }, 1500);
+        });
+      });
+      var status = document.createElement('div');
+      status.id = 'finn-bot-sync-status';
+      status.style.cssText = 'display:none;position:fixed;bottom:130px;right:16px;z-index:9991;background:#128C7E;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:220px;box-shadow:0 2px 8px rgba(0,0,0,0.2);';
+      document.body.appendChild(btn);
+      document.body.appendChild(status);
+    }, 500);
+  }
+
+  function autoSync() {
+    var phone = getPhone();
+    var pid = getProfileId();
+    if (!phone || !pid) return;
+    window.finnBotSync(true).then(function(n){ if (n > 0) location.reload(); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ addSyncButton(); autoSync(); });
+  } else {
+    addSyncButton();
+    autoSync();
+  }
+})();
+</script>
+
 </body>
 </html>

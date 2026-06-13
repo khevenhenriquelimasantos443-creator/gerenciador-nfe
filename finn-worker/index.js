@@ -24,8 +24,9 @@ export default {
       if (request.method === "POST") return handleWebhook(request, env);
     }
 
-    if (url.pathname === "/sync" && request.method === "POST") {
-      return handleSync(request, env);
+    if (url.pathname === "/sync") {
+      if (request.method === "GET")  return handleSyncGet(request, env);
+      if (request.method === "POST") return handleSync(request, env);
     }
 
     return new Response("Finn WhatsApp Worker", { status: 200 });
@@ -319,8 +320,17 @@ async function handleAbrirFinn(phone, env) {
 }
 
 // =============================================================================
-// SYNC ENDPOINT
+// SYNC ENDPOINTS
 // =============================================================================
+async function handleSyncGet(request, env) {
+  const url = new URL(request.url);
+  const phone = url.searchParams.get("phone");
+  if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
+  const data = await getUserData(phone, env);
+  const fixed = await getFixedBills(phone, env);
+  return corsResponse(new Response(JSON.stringify({ok:true, data, fixed}),{status:200,headers:{"Content-Type":"application/json"}}));
+}
+
 async function handleSync(request, env) {
   let body;
   try { body=await request.json(); } catch { return corsResponse(new Response(JSON.stringify({error:"Invalid JSON"}),{status:400})); }
