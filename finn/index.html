@@ -1435,14 +1435,21 @@ react-dom/cjs/react-dom-client.production.js:
     var phone = getPhone();
     var pid = getProfileId();
     if (!phone || !pid) return;
+    // Guarda anti-loop: sincroniza no máximo uma vez por sessão da aba
+    try { if (sessionStorage.getItem('finn_bot_synced')) return; sessionStorage.setItem('finn_bot_synced', '1'); } catch(e) {}
     window.finnBotSync(true).then(function(n){ if (n > 0) location.reload(); });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ addSyncButton(); autoSync(); });
-  } else {
+  function start() {
     addSyncButton();
-    autoSync();
+    // Espera o app principal carregar antes de sincronizar
+    setTimeout(autoSync, 3000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 })();
 </script>
