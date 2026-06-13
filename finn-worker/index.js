@@ -122,6 +122,8 @@ async function handleListReply(phone, rowId, stateData, env) {
     cat_alimentacao:"Alimentacao", cat_transporte:"Transporte", cat_lazer:"Lazer",
     cat_saude:"Saude", cat_educacao:"Educacao", cat_moradia:"Moradia",
     cat_vestuario:"Vestuario", cat_investimento:"Investimento", cat_outros:"Outros",
+    cat_salario:"Salario", cat_freelance:"Freelance", cat_aluguel:"Aluguel",
+    cat_venda:"Venda", cat_bonus:"Bonus",
   };
   if (catMap[rowId]) return handleCategorySelected(phone, catMap[rowId], stateData, env);
 
@@ -185,7 +187,7 @@ async function continueFlow(phone, text, stateData, env) {
     const val = parseMonetaryValue(text);
     if (val === null) { await sendText(phone, "⚠️ Não entendi o valor. Tente assim: *3200,00*", env); return; }
     await setState(phone, { state: "awaiting_cat_receita", pending: { ...pending, val: Math.abs(val) } }, env);
-    await sendCategoryList(phone, env);
+    await sendCategoryListReceita(phone, env);
     return;
   }
 
@@ -439,10 +441,10 @@ async function sendCategoryList(phone, env) {
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
       type:"list",
-      body:{text:"Qual a categoria?"},
+      body:{text:"Qual a categoria da despesa?"},
       action:{
         button:"Escolher categoria",
-        sections:[{title:"Categorias",rows:[
+        sections:[{title:"Categorias de Despesa",rows:[
           {id:"cat_alimentacao",title:"🍔 Alimentação"},
           {id:"cat_transporte",title:"🚗 Transporte"},
           {id:"cat_lazer",title:"🎮 Lazer"},
@@ -451,6 +453,28 @@ async function sendCategoryList(phone, env) {
           {id:"cat_moradia",title:"🏠 Moradia"},
           {id:"cat_vestuario",title:"👕 Vestuário"},
           {id:"cat_investimento",title:"📈 Investimento"},
+          {id:"cat_outros",title:"📦 Outros"}
+        ]}]
+      }
+    }
+  },env);
+}
+
+async function sendCategoryListReceita(phone, env) {
+  return metaPost({
+    messaging_product:"whatsapp", to:phone, type:"interactive",
+    interactive:{
+      type:"list",
+      body:{text:"Qual a categoria da receita?"},
+      action:{
+        button:"Escolher categoria",
+        sections:[{title:"Categorias de Receita",rows:[
+          {id:"cat_salario",title:"💼 Salário"},
+          {id:"cat_freelance",title:"💻 Freelance/Serviços"},
+          {id:"cat_investimento",title:"📈 Investimentos"},
+          {id:"cat_aluguel",title:"🏠 Aluguel"},
+          {id:"cat_venda",title:"🛍️ Venda"},
+          {id:"cat_bonus",title:"🎁 Bônus/Presente"},
           {id:"cat_outros",title:"📦 Outros"}
         ]}]
       }
