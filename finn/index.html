@@ -106,6 +106,40 @@ tr:hover td{background:#F8FAFF}
   #finn-plus-ovl{-webkit-backdrop-filter:blur(3px)}
   #finn-priv-btn{-webkit-backdrop-filter:blur(8px)}
 }
+
+/* ── NAV PRO ─────────────────────────────────────────────
+   Redesign das abas: underline limpo, tipografia refinada  */
+.tabs{
+  background:#fff!important;
+  border-bottom:1.5px solid #EEF2F7!important;
+  padding:0 20px!important;
+  gap:0!important;
+  box-shadow:0 2px 8px rgba(15,23,42,.05)!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:10!important;
+}
+.tabs button{
+  height:46px!important;
+  padding:0 14px!important;
+  font-size:12.5px!important;
+  letter-spacing:-.015em!important;
+  border-radius:0!important;
+  border:none!important;
+  border-bottom:2px solid transparent!important;
+  color:#94A3B8!important;
+  font-weight:500!important;
+  transition:color .18s,border-color .18s!important;
+  flex-shrink:0!important;
+  white-space:nowrap!important;
+}
+.tabs button:hover{color:#64748B!important}
+/* Aba ativa — detecta pelo font-weight:700 que o React injeta inline */
+.tabs button[style*="font-weight: 700"]{
+  color:#0F172A!important;
+  font-weight:700!important;
+  border-bottom-color:#F97316!important;
+}
 </style>
 
 
