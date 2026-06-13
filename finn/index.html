@@ -133,7 +133,7 @@ window.FINN_VERSION = '2.1.0';
   function injectSWBanner() {
     var b = document.createElement('div');
     b.id = 'finn-sw-banner';
-    b.innerHTML = '🚀 Nova versão disponível! <button class="sw-update-btn" onclick="location.reload(true)">Atualizar</button>'
+    b.innerHTML = 'Nova versão disponível <button class="sw-update-btn" onclick="location.reload(true)">Atualizar</button>'
       + '<button class="sw-dismiss-btn" onclick="this.parentNode.classList.remove(\'show\')" title="Fechar">×</button>';
     document.body.appendChild(b);
   }
@@ -311,9 +311,9 @@ react-dom/cjs/react-dom-client.production.js:
       else { desp += Math.abs(tx.val); const c = tx.cat || 'Outros'; cats[c] = (cats[c] || 0) + Math.abs(tx.val); }
     });
     const saldo = rec - desp;
-    let msg = '📊 *RESUMO FINANCEIRO — ' + nomeMes.toUpperCase() + '*\n\n';
+    let msg = '*RESUMO FINANCEIRO — ' + nomeMes.toUpperCase() + '*\n\n';
     msg += '💰 Receitas: *' + fmt(rec) + '*\n💸 Despesas: *' + fmt(desp) + '*\n';
-    msg += (saldo >= 0 ? '✅' : '⚠️') + ' Saldo: *' + fmt(saldo) + '*\n\n';
+    msg += (saldo >= 0 ? '' : '') + ' Saldo: *' + fmt(saldo) + '*\n\n';
     const top = Object.entries(cats).sort(function(a,b){return b[1]-a[1];}).slice(0,6);
     if (top.length) {
       msg += '*📂 Gastos por Categoria:*\n';
@@ -345,15 +345,15 @@ react-dom/cjs/react-dom-client.production.js:
       else if (pct >= 0.8) proximos.push({c:c,g:g,l:l,pct:pct});
     });
     if (!estourados.length && !proximos.length)
-      return '✅ *LIMITES EM DIA!*\n\nTodos os limites estão controlados este mês.\n\n— Finn.';
+      return ' *LIMITES EM DIA!*\n\nTodos os limites estão controlados este mês.\n\n— Finn.';
     let msg = '🔔 *ALERTAS DE LIMITE*\n📅 ' + new Date().toLocaleDateString('pt-BR') + '\n\n';
     if (estourados.length) {
-      msg += '*❌ Limites Estourados (' + estourados.length + '):*\n';
+      msg += '* Limites Estourados (' + estourados.length + '):*\n';
       estourados.forEach(function(x) { msg += '• ' + x.c + ': ' + fmt(x.g) + ' de ' + fmt(x.l) + ' (' + Math.round(x.pct*100) + '%)\n'; });
       msg += '\n';
     }
     if (proximos.length) {
-      msg += '*⚠️ Próximos do Limite (' + proximos.length + '):*\n';
+      msg += '* Próximos do Limite (' + proximos.length + '):*\n';
       proximos.forEach(function(x) { msg += '• ' + x.c + ': ' + fmt(x.g) + ' de ' + fmt(x.l) + ' (' + Math.round(x.pct*100) + '%)\n'; });
     }
     return msg + '\n— Finn.';
@@ -373,7 +373,7 @@ react-dom/cjs/react-dom-client.production.js:
       msg += (g.emoji || '🎯') + ' *' + g.name + '*\n   ' + bar + ' ' + pct + '%\n   ' + fmt(saved) + ' de ' + fmt(target) + '\n';
       if (g.deadline) {
         const days = Math.ceil((new Date(g.deadline) - new Date()) / 86400000);
-        msg += days > 0 ? '   📅 ' + days + ' dias restantes\n' : '   ⚠️ Prazo vencido!\n';
+        msg += days > 0 ? '   📅 ' + days + ' dias restantes\n' : '    Prazo vencido!\n';
       }
       msg += '\n';
     });
@@ -866,7 +866,7 @@ react-dom/cjs/react-dom-client.production.js:
     el.innerHTML = '<p style="font-size:12.5px;color:#475569;margin-bottom:10px">Importe extratos bancários em PDF. Funciona com Nubank, Itaú, Bradesco, BB, Inter, C6 e outros.</p>'
       + '<label class="fp-label">Arquivo PDF</label>'
       + '<input type="file" accept=".pdf" id="fp-pdf-file" style="display:none">'
-      + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-select" style="width:100%;margin-bottom:10px">📄 Escolher PDF</button>'
+      + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-select" style="width:100%;margin-bottom:10px">Escolher PDF</button>'
       + '<div id="fp-pdf-status" style="font-size:12px;color:#64748B;text-align:center;margin-bottom:6px"></div>'
       + '<div id="fp-pdf-preview"></div>';
     document.getElementById('fp-pdf-select').addEventListener('click', function(){
@@ -889,26 +889,26 @@ react-dom/cjs/react-dom-client.production.js:
         window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
         readPDF(file);
       };
-      s.onerror = function(){ status.textContent = '❌ Erro ao carregar leitor. Verifique sua conexão.'; };
+      s.onerror = function(){ status.textContent = 'Erro ao carregar leitor. Verifique sua conexão.'; };
       document.head.appendChild(s);
     } else { readPDF(file); }
   }
 
   function readPDF(file) {
     var status = document.getElementById('fp-pdf-status');
-    status.textContent = '📖 Lendo PDF...';
+    status.textContent = 'Lendo PDF...';
     var reader = new FileReader();
     reader.onload = function(e) {
       window.pdfjsLib.getDocument(new Uint8Array(e.target.result)).promise
         .then(function(pdf){
-          status.textContent = '🔍 Extraindo texto de '+pdf.numPages+' página(s)...';
+          status.textContent = 'Extraindo texto de '+pdf.numPages+' página(s)...';
           return extractPages(pdf, 1, []);
         })
         .then(function(lines){
           var txs = parseBankLines(lines);
           showPDFPreview(txs, lines);
         })
-        .catch(function(err){ status.textContent = '❌ Erro ao ler PDF: '+err.message; });
+        .catch(function(err){ status.textContent = 'Erro ao ler PDF: '+err.message; });
     };
     reader.readAsArrayBuffer(file);
   }
@@ -980,7 +980,7 @@ react-dom/cjs/react-dom-client.production.js:
     if (!txs.length) {
       status.innerHTML = '';
       preview.innerHTML = '<div class="fp-result fp-warn" style="text-align:center">'
-        + '⚠️ Nenhuma transação detectada automaticamente.<br><small style="color:#64748B">Bancos com layouts muito diferentes podem não ser detectados.</small><br><br>'
+        + 'Nenhuma transação detectada automaticamente.<br><small style="color:#64748B">Bancos com layouts muito diferentes podem não ser detectados.</small><br><br>'
         + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-raw" style="font-size:11px;padding:6px 12px">Ver texto extraído</button></div>';
       document.getElementById('fp-pdf-raw').addEventListener('click', function(){
         preview.innerHTML = '<textarea style="width:100%;height:180px;font-size:10px;border:1px solid #E2E8F0;border-radius:8px;padding:8px;font-family:monospace;resize:vertical" readonly>'+rawLines.slice(0,80).join('\n')+'</textarea>';
@@ -989,7 +989,7 @@ react-dom/cjs/react-dom-client.production.js:
     }
     var rec=0, desp=0;
     txs.forEach(function(t){if(t.val>=0)rec+=t.val;else desp+=Math.abs(t.val);});
-    status.innerHTML = '✅ <strong>'+txs.length+' transações detectadas</strong>';
+    status.innerHTML = '<strong>'+txs.length+' transações detectadas</strong>';
 
     var rows = txs.slice(0,60).map(function(tx){
       var d = tx.date?tx.date.split('-').reverse().join('/'):'';
@@ -1015,8 +1015,8 @@ react-dom/cjs/react-dom-client.production.js:
       + '<th style="padding:7px 8px;text-align:left;font-size:10px;color:#64748B;border-bottom:1px solid #E2E8F0">CAT.</th>'
       + '</tr></thead><tbody>'+rows+'</tbody></table></div>'
       + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">'
-      + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-csv" style="font-size:12px">📥 Baixar CSV</button>'
-      + '<button class="fp-btn fp-btn-green" id="fp-pdf-import" style="font-size:12px">✅ Importar</button>'
+      + '<button class="fp-btn fp-btn-secondary" id="fp-pdf-csv" style="font-size:12px">Baixar CSV</button>'
+      + '<button class="fp-btn fp-btn-green" id="fp-pdf-import" style="font-size:12px">Importar</button>'
       + '</div>';
 
     document.getElementById('fp-pdf-csv').addEventListener('click', function(){
@@ -1034,7 +1034,7 @@ react-dom/cjs/react-dom-client.production.js:
     document.getElementById('fp-pdf-import').addEventListener('click', function(){
       var id = pid();
       if (!id) {
-        document.getElementById('fp-pdf-status').innerHTML = '⚠️ Faça login no Finn primeiro. Use "Baixar CSV" e importe pelo menu do app.';
+        document.getElementById('fp-pdf-status').innerHTML = 'Faça login no Finn primeiro. Use "Baixar CSV" e importe pelo menu do app.';
         return;
       }
       // Modo login (Supabase): grava direto no banco do app
@@ -1042,14 +1042,14 @@ react-dom/cjs/react-dom-client.production.js:
         document.getElementById('fp-pdf-status').innerHTML = '⏳ Importando para o Finn...';
         window.finnPushToSupabase(txs).then(function(n){
           if (n > 0) {
-            document.getElementById('fp-pdf-status').innerHTML = '✅ <strong>'+n+' transações importadas!</strong>';
-            document.getElementById('fp-pdf-preview').innerHTML = '<div class="fp-result fp-good" style="text-align:center">✅ '+n+' transações adicionadas!<br><br>'
-              + '<button class="fp-btn fp-btn-primary" onclick="location.reload()" style="font-size:12px">🔄 Recarregar app</button></div>';
+            document.getElementById('fp-pdf-status').innerHTML = '<strong>'+n+' transações importadas!</strong>';
+            document.getElementById('fp-pdf-preview').innerHTML = '<div class="fp-result fp-good" style="text-align:center">'+n+' transações adicionadas!<br><br>'
+              + '<button class="fp-btn fp-btn-primary" onclick="location.reload()" style="font-size:12px">Recarregar app</button></div>';
           } else {
-            document.getElementById('fp-pdf-status').innerHTML = '⚠️ Nenhuma transação nova (todas já existem).';
+            document.getElementById('fp-pdf-status').innerHTML = 'Nenhuma transação nova (todas já existem).';
           }
         }).catch(function(){
-          document.getElementById('fp-pdf-status').innerHTML = '⚠️ Erro ao importar. Tente novamente.';
+          document.getElementById('fp-pdf-status').innerHTML = 'Erro ao importar. Tente novamente.';
         });
         return;
       }
@@ -1059,12 +1059,12 @@ react-dom/cjs/react-dom-client.production.js:
       var existIds = {};
       existing.forEach(function(t){existIds[t.id]=1;});
       var newTxs = txs.filter(function(t){return !existIds[t.id];});
-      if (!newTxs.length) { document.getElementById('fp-pdf-status').innerHTML = '⚠️ Todas as transações já existem.'; return; }
+      if (!newTxs.length) { document.getElementById('fp-pdf-status').innerHTML = 'Todas as transações já existem.'; return; }
       data.txs = existing.concat(newTxs);
       localStorage.setItem('fiq_data_'+id, JSON.stringify(data));
-      document.getElementById('fp-pdf-status').innerHTML = '✅ <strong>'+newTxs.length+' transações importadas!</strong>';
-      document.getElementById('fp-pdf-preview').innerHTML = '<div class="fp-result fp-good" style="text-align:center">✅ '+newTxs.length+' transações adicionadas!<br><br>'
-        + '<button class="fp-btn fp-btn-primary" onclick="location.reload()" style="font-size:12px">🔄 Recarregar app</button></div>';
+      document.getElementById('fp-pdf-status').innerHTML = '<strong>'+newTxs.length+' transações importadas!</strong>';
+      document.getElementById('fp-pdf-preview').innerHTML = '<div class="fp-result fp-good" style="text-align:center">'+newTxs.length+' transações adicionadas!<br><br>'
+        + '<button class="fp-btn fp-btn-primary" onclick="location.reload()" style="font-size:12px">Recarregar app</button></div>';
     });
   }
 
@@ -1085,9 +1085,9 @@ react-dom/cjs/react-dom-client.production.js:
       + '<div class="fp-score-detail">Score Finn · escala 100–1000</div>'
       + '</div>'
       + '<div class="fp-result" style="margin-top:8px">'
-      + '<div style="margin-bottom:6px">'+(rec>0?'💰 Taxa de poupança: <strong>'+sav+'%</strong> (meta: 20%+)':'⚠️ Nenhuma receita registrada')+'</div>'
-      + '<div style="margin-bottom:6px">'+(mes.length>0?'📊 '+mes.length+' transações no mês':'⚠️ Nenhuma transação registrada')+'</div>'
-      + '<div style="margin-bottom:6px">'+(nLimits>0?'🎯 '+nLimits+' categorias com limite configurado':'💡 Configure limites para melhorar seu score')+'</div>'
+      + '<div style="margin-bottom:6px">'+(rec>0?'Taxa de poupança: <strong>'+sav+'%</strong> (meta: 20%+)':'Sem receita registrada')+'</div>'
+      + '<div style="margin-bottom:6px">'+(mes.length>0?''+mes.length+' transações no mês':'Sem transações registradas')+'</div>'
+      + '<div style="margin-bottom:6px">'+(nLimits>0?''+nLimits+' categorias com limite':'Configure limites para melhorar seu score')+'</div>'
       + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
       + '<div style="font-size:11.5px;color:#64748B;font-style:italic">Calculado por: taxa de poupança, limites por categoria, saldo positivo e frequência de registros.</div>'
       + '</div>';
@@ -1104,7 +1104,7 @@ react-dom/cjs/react-dom-client.production.js:
       else { const c=tx.cat||'Outros'; cats[c]=(cats[c]||0)+Math.abs(tx.val); }
     });
     if (rec <= 0) {
-      el.innerHTML = '<div class="fp-result" style="text-align:center;padding:18px"><span class="fp-warn">⚠️ Sem receitas no mês.<br>Registre sua renda para usar esta ferramenta.</span></div>';
+      el.innerHTML = '<div class="fp-result" style="text-align:center;padding:18px"><span class="fp-warn">Sem receitas no mês.<br>Registre sua renda para usar esta ferramenta.</span></div>';
       return;
     }
     function sum(cs){return cs.reduce(function(s,c){return s+(cats[c]||0);},0);}
@@ -1116,7 +1116,7 @@ react-dom/cjs/react-dom-client.production.js:
       const p=pct(val), w=Math.min(100,Math.round(p/ideal*100));
       return '<div style="margin-bottom:14px">'
         + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">'
-        + '<span style="font-size:12.5px;font-weight:600">'+(p<=ideal?'✅':'⚠️')+' '+label+'</span>'
+        + '<span style="font-size:12.5px;font-weight:600">'++label+'</span>'
         + '<span style="font-size:12px;font-weight:700;color:'+(p<=ideal?'#16a34a':'#d97706')+'">'+p+'% <span style="color:#94A3B8;font-weight:400">/ ideal '+ideal+'%</span></span>'
         + '</div>'
         + '<div class="fp-bar-wrap"><div class="fp-bar" style="width:'+w+'%;background:'+color+'"></div></div>'
@@ -1125,9 +1125,9 @@ react-dom/cjs/react-dom-client.production.js:
     }
     el.innerHTML = '<div class="fp-result">'
       + '<div style="margin-bottom:14px;font-size:12.5px;color:#475569">Renda do mês: <strong>'+BRL(rec)+'</strong></div>'
-      + row('🏠 Necessidades (moradia, alimentação, saúde, transporte)', needs, 50, '#3B82F6')
-      + row('🎮 Desejos (lazer, roupa, educação, outros)', wants, 30, '#A855F7')
-      + row('💰 Poupança / Investimentos', saves, 20, '#10B981')
+      + row('Necessidades (moradia, alimentação, saúde, transporte)', needs, 50, '#3B82F6')
+      + row('Desejos (lazer, roupa, educação, outros)', wants, 30, '#A855F7')
+      + row('Poupança / Investimentos', saves, 20, '#10B981')
       + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
       + '<div style="font-size:11.5px;color:#64748B">Não categorizado: <strong>'+BRL(Math.max(0,rec-needs-wants-saves))+'</strong></div>'
       + '</div>';
@@ -1143,7 +1143,7 @@ react-dom/cjs/react-dom-client.production.js:
       + '<input type="number" class="fp-input" id="fp-j-taxa" placeholder="Ex: 0.8" min="0" step="0.01">'
       + '<label class="fp-label">Período (meses)</label>'
       + '<input type="number" class="fp-input" id="fp-j-meses" placeholder="Ex: 24" min="1" max="600">'
-      + '<button class="fp-btn fp-btn-primary" id="fp-j-btn" style="width:100%">💹 Calcular</button>'
+      + '<button class="fp-btn fp-btn-primary" id="fp-j-btn" style="width:100%">Calcular</button>'
       + '<div id="fp-j-result"></div>';
     document.getElementById('fp-j-btn').addEventListener('click', calcJuros);
   }
@@ -1163,9 +1163,9 @@ react-dom/cjs/react-dom-client.production.js:
     r.innerHTML = '<div class="fp-result">'
       + '<div class="fp-highlight">'+BRL(montante)+'</div>'
       + '<div style="font-size:12px;color:#64748B;margin-bottom:12px">Montante em '+meses+' meses ('+((meses/12).toFixed(1))+' anos)</div>'
-      + '<div style="margin-bottom:5px">💵 Total investido: <strong>'+BRL(aportado)+'</strong></div>'
-      + '<div style="margin-bottom:5px">📈 Juros ganhos: <strong class="fp-good">'+BRL(ganhos)+'</strong></div>'
-      + '<div style="margin-bottom:5px">🚀 Rendimento: <strong class="fp-good">+'+((ganhos/Math.max(1,aportado)*100).toFixed(1))+'%</strong></div>'
+      + '<div style="margin-bottom:5px">Total investido: <strong>'+BRL(aportado)+'</strong></div>'
+      + '<div style="margin-bottom:5px">Juros ganhos: <strong class="fp-good">'+BRL(ganhos)+'</strong></div>'
+      + '<div style="margin-bottom:5px">Rendimento: <strong class="fp-good">+'+((ganhos/Math.max(1,aportado)*100).toFixed(1))+'%</strong></div>'
       + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
       + '<div style="font-size:11.5px;color:#64748B">'+BRL(ganhos)+' vieram dos juros compostos — o dinheiro trabalhando por você.</div>'
       + '</div>';
@@ -1175,7 +1175,7 @@ react-dom/cjs/react-dom-client.production.js:
   function renderExportar(el) {
     el.innerHTML = '<div style="text-align:center;padding:6px 0 4px">'
       + '<p style="font-size:12.5px;color:#475569;margin-bottom:14px">Baixe todas as suas transações como planilha CSV, compatível com Excel e Google Sheets.</p>'
-      + '<button class="fp-btn fp-btn-green" id="fp-export-btn" style="width:100%">📥 Baixar CSV</button>'
+      + '<button class="fp-btn fp-btn-green" id="fp-export-btn" style="width:100%">Baixar CSV</button>'
       + '<div id="fp-export-result" style="margin-top:10px"></div></div>';
     document.getElementById('fp-export-btn').addEventListener('click', exportCSV);
   }
@@ -1200,7 +1200,7 @@ react-dom/cjs/react-dom-client.production.js:
     const a = document.createElement('a');
     a.href=url; a.download='finn_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
     URL.revokeObjectURL(url);
-    r.innerHTML = '<div class="fp-result fp-good">✅ '+txs.length+' transações exportadas!</div>';
+    r.innerHTML = '<div class="fp-result fp-good">'+txs.length+' transações exportadas!</div>';
   }
 
   // ── PREVISÃO DE SALDO ─────────────────────────────────────────────────
@@ -1221,18 +1221,18 @@ react-dom/cjs/react-dom-client.production.js:
     const saldoPrev = saldoAtual - despPrev;
 
     const cor = saldoPrev >= 0 ? 'fp-good' : 'fp-bad';
-    const emoji = saldoPrev >= 0 ? '✅' : '⚠️';
+    const emoji = '';
 
     el.innerHTML = '<div class="fp-result">'
-      + '<div style="margin-bottom:10px"><strong>📅 Hoje:</strong> dia '+diaAtual+' de '+diasNoMes+' ('+diasRestantes+' dias restantes)</div>'
-      + '<div style="margin-bottom:6px">💰 Receitas até agora: <strong>'+BRL(rec)+'</strong></div>'
-      + '<div style="margin-bottom:6px">💸 Despesas até agora: <strong>'+BRL(desp)+'</strong></div>'
-      + '<div style="margin-bottom:6px">📊 Saldo atual: <strong>'+BRL(saldoAtual)+'</strong></div>'
-      + '<div style="margin-bottom:6px">📉 Média diária de gastos: <strong>'+BRL(mediaDesp)+'</strong></div>'
+      + '<div style="margin-bottom:10px"><strong>Hoje:</strong> dia '+diaAtual+' de '+diasNoMes+' ('+diasRestantes+' dias restantes)</div>'
+      + '<div style="margin-bottom:6px">Receitas até agora: <strong>'+BRL(rec)+'</strong></div>'
+      + '<div style="margin-bottom:6px">Despesas até agora: <strong>'+BRL(desp)+'</strong></div>'
+      + '<div style="margin-bottom:6px">Saldo atual: <strong>'+BRL(saldoAtual)+'</strong></div>'
+      + '<div style="margin-bottom:6px">Média diária de gastos: <strong>'+BRL(mediaDesp)+'</strong></div>'
       + '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">'
       + '<div style="margin-bottom:4px">'+emoji+' Projeção de despesas nos próximos '+diasRestantes+' dias: <strong>'+BRL(despPrev)+'</strong></div>'
       + '<div class="fp-highlight '+cor+'" style="margin-top:8px">Saldo estimado em 30/'+String(hoje.getMonth()+1).padStart(2,'0')+': '+BRL(saldoPrev)+'</div>'
-      + (saldoPrev < 0 ? '<div style="font-size:12px;color:#dc2626;margin-top:6px">⚠️ Você ultrapassará seu orçamento se mantiver o ritmo atual.</div>' : '')
+      + (saldoPrev < 0 ? '<div style="font-size:12px;color:#dc2626;margin-top:6px">Atenção: você ultrapassará seu orçamento se mantiver o ritmo atual.</div>' : '')
       + '</div>';
   }
 
@@ -1240,7 +1240,7 @@ react-dom/cjs/react-dom-client.production.js:
   function renderPanico(el) {
     el.innerHTML = '<div style="text-align:center;padding:6px 0 10px">'
       + '<p style="font-size:12.5px;color:#475569;margin-bottom:10px">Ativa o modo de sobrevivência: calcula quanto você pode gastar por dia para fechar o mês no azul.</p>'
-      + '<button class="fp-btn fp-btn-primary" id="fp-panico-btn" style="width:100%;background:#dc2626">🚨 Ativar Modo Pânico</button>'
+      + '<button class="fp-btn fp-btn-primary" id="fp-panico-btn" style="width:100%;background:#dc2626">Ativar Modo Controle</button>'
       + '</div><div id="fp-panico-result"></div>';
     document.getElementById('fp-panico-btn').addEventListener('click', calcPanico);
   }
@@ -1263,12 +1263,12 @@ react-dom/cjs/react-dom-client.production.js:
       return;
     }
     if (saldoAtual <= 0) {
-      r.innerHTML = '<div class="fp-panic-active"><div>🚨 MODO PÂNICO</div><div class="daily">R$ 0,00</div><p>Seu saldo já está negativo. Foque em recuperação!</p></div>';
+      r.innerHTML = '<div class="fp-panic-active"><div>MODO CONTROLE</div><div class="daily">R$ 0,00</div><p>Seu saldo já está negativo. Foque em recuperação!</p></div>';
       return;
     }
     const diaria = saldoAtual / diasRestantes;
     r.innerHTML = '<div class="fp-panic-active">'
-      + '<div>🚨 MODO PÂNICO ATIVADO</div>'
+      + '<div>MODO CONTROLE ATIVO</div>'
       + '<div class="daily">'+BRL(diaria)+'/dia</div>'
       + '<p>Esse é o seu limite diário pelos próximos <strong>'+diasRestantes+' dias</strong> para fechar o mês no zero.</p>'
       + '<p style="margin-top:6px;font-size:11px">Saldo atual: '+BRL(saldoAtual)+' ÷ '+diasRestantes+' dias</p>'
@@ -1281,7 +1281,7 @@ react-dom/cjs/react-dom-client.production.js:
       + '<input type="number" class="fp-input" id="fp-posso-valor" placeholder="Ex: 2500" min="0" step="0.01">'
       + '<label class="fp-label">Parcelas (1 = à vista)</label>'
       + '<input type="number" class="fp-input" id="fp-posso-parcelas" placeholder="Ex: 12" min="1" max="60" value="1">'
-      + '<button class="fp-btn fp-btn-primary" id="fp-posso-btn" style="width:100%">🔍 Analisar</button>'
+      + '<button class="fp-btn fp-btn-primary" id="fp-posso-btn" style="width:100%">Analisar</button>'
       + '<div id="fp-posso-result"></div>';
     document.getElementById('fp-posso-btn').addEventListener('click', calcPosso);
   }
@@ -1306,7 +1306,7 @@ react-dom/cjs/react-dom-client.production.js:
     const impactoMensal = parcelas > 1 ? ((parcela / limiteOutros) * 100).toFixed(0) : null;
 
     let html = '<div class="fp-result">';
-    html += '<div style="margin-bottom:8px">💳 <strong>'+BRL(valor)+'</strong>';
+    html += '<div style="margin-bottom:8px"><strong>'+BRL(valor)+'</strong>';
     if (parcelas > 1) html += ' em <strong>'+parcelas+'x</strong> de <strong>'+BRL(parcela)+'</strong>';
     else html += ' à vista';
     html += '</div>';
@@ -1315,12 +1315,12 @@ react-dom/cjs/react-dom-client.production.js:
       const saldoApos = saldoAtual - valor;
       const mesesReserva = rec > 0 ? (saldoApos / rec).toFixed(1) : '0';
       const cor = saldoApos >= 0 ? 'fp-good' : 'fp-bad';
-      html += '<div class="'+cor+'" style="margin-bottom:6px">'+(saldoApos>=0?'✅':'❌')+' Saldo após compra: <strong>'+BRL(saldoApos)+'</strong></div>';
-      if (parseFloat(mesesReserva) < 1) html += '<div class="fp-bad">⚠️ Sua reserva cairia para menos de 1 mês de renda.</div>';
-      else if (parseFloat(mesesReserva) < 3) html += '<div class="fp-warn">⚠️ Reserva de '+mesesReserva+' meses — abaixo do recomendado (3 meses).</div>';
-      else html += '<div class="fp-good">✅ Reserva de '+mesesReserva+' meses — saudável.</div>';
+      html += '<div class="'+cor+'" style="margin-bottom:6px">'+''+' Saldo após compra: <strong>'+BRL(saldoApos)+'</strong></div>';
+      if (parseFloat(mesesReserva) < 1) html += '<div class="fp-bad">Reserva cairia para menos de 1 mês de renda.</div>';
+      else if (parseFloat(mesesReserva) < 3) html += '<div class="fp-warn">Reserva de '+mesesReserva+' meses — abaixo do recomendado (3 meses).</div>';
+      else html += '<div class="fp-good">Reserva de '+mesesReserva+' meses — saudável.</div>';
     } else {
-      html += '<div style="margin-bottom:6px">📊 Impacto mensal: <strong>'+BRL(parcela)+'</strong> nos seus gastos</div>';
+      html += '<div style="margin-bottom:6px">Impacto mensal: <strong>'+BRL(parcela)+'</strong> nos seus gastos</div>';
       if (impactoMensal) html += '<div class="'+(parseFloat(impactoMensal)>30?'fp-bad':parseFloat(impactoMensal)>15?'fp-warn':'fp-good')+'" style="margin-bottom:6px">';
       html += 'Representa <strong>'+impactoMensal+'%</strong> do seu limite de lazer/outros.</div>';
     }
@@ -1329,9 +1329,9 @@ react-dom/cjs/react-dom-client.production.js:
     const pode = parcelas===1 ? saldoAtual >= valor : parcela <= limiteOutros * 0.3;
     html += '<hr style="border:none;border-top:1px solid #E2E8F0;margin:10px 0">';
     html += '<div style="font-weight:700;font-size:13px">';
-    if (pode) html += '✅ <span class="fp-good">Parece viável!</span> Mas avalie se é prioridade.';
-    else if (parcelas===1) html += '⚠️ <span class="fp-warn">Considere parcelar ou esperar acumular mais saldo.</span>';
-    else html += '⚠️ <span class="fp-warn">Parcela alta em relação ao seu orçamento. Considere um prazo menor.</span>';
+    if (pode) html += '<span class="fp-good">Parece viável.</span> Mas avalie se é prioridade.';
+    else if (parcelas===1) html += '<span class="fp-warn">Considere parcelar ou esperar acumular mais saldo.</span>';
+    else html += '<span class="fp-warn">Parcela alta em relação ao seu orçamento. Considere um prazo menor.</span>';
     html += '</div></div>';
 
     document.getElementById('fp-posso-result').innerHTML = html;
@@ -1346,7 +1346,7 @@ react-dom/cjs/react-dom-client.production.js:
       + '<button class="fp-btn fp-btn-secondary" id="fp-add-debt" style="width:100%;margin-bottom:10px">+ Adicionar Dívida</button>'
       + '<label class="fp-label">Pagamento extra mensal (R$)</label>'
       + '<input type="number" class="fp-input" id="fp-debt-extra" placeholder="Ex: 200" min="0" step="0.01">'
-      + '<button class="fp-btn fp-btn-primary" id="fp-calc-debt" style="width:100%">📊 Calcular</button>'
+      + '<button class="fp-btn fp-btn-primary" id="fp-calc-debt" style="width:100%">Calcular</button>'
       + '<div id="fp-debt-result"></div>';
     renderDebtList();
     document.getElementById('fp-add-debt').addEventListener('click', function() {
@@ -1409,16 +1409,16 @@ react-dom/cjs/react-dom-client.production.js:
       + '<div style="font-weight:700;margin-bottom:10px">Comparativo de Métodos</div>'
       + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">'
       + '<div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:8px;padding:10px;text-align:center">'
-      + '<div style="font-size:11px;font-weight:700;color:#92400E">❄️ BOLA DE NEVE</div>'
+      + '<div style="font-size:11px;font-weight:700;color:#92400E">BOLA DE NEVE</div>'
       + '<div style="font-size:16px;font-weight:800;color:#1E293B;margin:4px 0">'+snowball.meses+' meses</div>'
       + '<div style="font-size:11px;color:#64748B">Juros: '+BRL(snowball.juros)+'</div>'
       + '</div>'
       + '<div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:8px;padding:10px;text-align:center">'
-      + '<div style="font-size:11px;font-weight:700;color:#92400E">🌊 AVALANCHE</div>'
+      + '<div style="font-size:11px;font-weight:700;color:#92400E">AVALANCHE</div>'
       + '<div style="font-size:16px;font-weight:800;color:#1E293B;margin:4px 0">'+avalanche.meses+' meses</div>'
       + '<div style="font-size:11px;color:#64748B">Juros: '+BRL(avalanche.juros)+'</div>'
       + '</div></div>'
-      + '<div class="fp-good" style="font-size:12px">💡 Recomendação: método <strong>'+(melhor==='avalanche'?'Avalanche (maiores juros primeiro)':'Bola de Neve (menores saldos primeiro)')+'</strong> — você economiza <strong>'+BRL(Math.abs(snowball.juros-avalanche.juros))+'</strong> em juros.</div>'
+      + '<div class="fp-good" style="font-size:12px">Recomendação: método <strong>'+(melhor==='avalanche'?'Avalanche (maiores juros primeiro)':'Bola de Neve (menores saldos primeiro)')+'</strong> — você economiza <strong>'+BRL(Math.abs(snowball.juros-avalanche.juros))+'</strong> em juros.</div>'
       + '</div>';
   }
 
@@ -1466,7 +1466,7 @@ react-dom/cjs/react-dom-client.production.js:
           + '</div>';
       }).join('');
       const total = Object.keys(done).length;
-      if (score) score.textContent = total + '/' + challenges.length + ' desafios completos esta semana' + (total===challenges.length?' 🎉':'');
+      if (score) score.textContent = total + '/' + challenges.length + ' desafios completos esta semana' + '';
 
       list.querySelectorAll('.fp-challenge-check').forEach(function(el) {
         el.addEventListener('click', function() {
@@ -1599,7 +1599,7 @@ react-dom/cjs/react-dom-client.production.js:
       { q:'Como exportar meus dados?',
         a:'No painel Finn+ → <b>Exportar Dados CSV</b>. Baixa um arquivo .csv com todas as transações, compatível com Excel, Google Sheets e Numbers. Ideal para declaração de IR ou análise avançada.' },
       { q:'Sincronização e conta',
-        a:'Crie uma conta com Google ou e-mail via <b>Supabase Auth</b>. Os dados ficam sincronizados em todos os seus dispositivos automaticamente. O Bot WhatsApp sincroniza ao abrir o app (auto-sync), ou clique no botão 🔄 verde. Para trocar de conta, saia e faça login novamente.' },
+        a:'Crie uma conta com Google ou e-mail via <b>Supabase Auth</b>. Os dados ficam sincronizados em todos os seus dispositivos automaticamente. O Bot WhatsApp sincroniza ao abrir o app (auto-sync), ou clique no botão de sincronizar. Para trocar de conta, saia e faça login novamente.' },
     ];
 
     var html = '<div style="font-size:12px;color:#64748B;margin-bottom:10px">Guia completo de todas as funcionalidades do Finn.</div>';
@@ -1647,7 +1647,7 @@ react-dom/cjs/react-dom-client.production.js:
       + '<div style="margin-top:12px;background:#F8FAFC;border-radius:10px;padding:12px;font-size:12px;color:#475569;line-height:1.65;border:1px solid #E2E8F0">'
       + '<b>RLS necessária</b> para ver todos os usuários.<br>Execute no Supabase → SQL Editor:<br>'
       + '<code class="fp-sql-block">CREATE POLICY "Admin acesso total" ON transactions<br>FOR ALL USING (<br>&nbsp;&nbsp;auth.jwt()->>\'email\'=\'khevenhenriquelimasantos443@gmail.com\'<br>);</code>'
-      + '<button id="fp-admin-copy" style="margin-top:8px;background:#1E293B;color:#fff;border:none;border-radius:7px;padding:5px 14px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">📋 Copiar SQL</button>'
+      + '<button id="fp-admin-copy" style="margin-top:8px;background:#1E293B;color:#fff;border:none;border-radius:7px;padding:5px 14px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">Copiar SQL</button>'
       + '</div>';
 
     el.innerHTML = html;
@@ -1663,7 +1663,7 @@ react-dom/cjs/react-dom-client.production.js:
       if (navigator.clipboard) { navigator.clipboard.writeText(sql); }
       this.textContent = 'Copiado!';
       var btn = this;
-      setTimeout(function(){btn.textContent='📋 Copiar SQL';}, 2500);
+      setTimeout(function(){btn.textContent='Copiar SQL';}, 2500);
     });
 
     fetch(ADMIN_SUPA_URL+'/rest/v1/transactions?select=user_id&order=user_id', {
@@ -1811,7 +1811,7 @@ react-dom/cjs/react-dom-client.production.js:
         return window.finnPushToSupabase(res.data.txs);
       })
       .then(function(n){
-        if (!silent && n > 0) showStatus('✅ ' + n + ' lançamento(s) do bot importado(s)!');
+        if (!silent && n > 0) showStatus(n + ' lançamento(s) do bot sincronizado(s)');
         return n;
       })
       .catch(function(){ return 0; });
@@ -1823,14 +1823,15 @@ react-dom/cjs/react-dom-client.production.js:
       if (!fw) return;
       clearInterval(interval);
       var btn = document.createElement('button');
-      btn.id = 'finn-bot-sync-btn';
+    var syncSVG = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 8A7 7 0 103 10"/><path d="M3 14v-4H7"/></svg>';
+          btn.id = 'finn-bot-sync-btn';
       btn.title = 'Sincronizar transações do bot WhatsApp';
       btn.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:9990;background:#128C7E;color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;';
-      btn.textContent = '🔄';
+      btn.innerHTML = syncSVG;
       btn.addEventListener('click', function(){
         btn.textContent = '⏳';
         window.finnBotSync(false).then(function(n){
-          btn.textContent = '🔄';
+          btn.innerHTML = syncSVG;
           if (n > 0) setTimeout(function(){ location.reload(); }, 1500);
           else showStatus('Nenhum lançamento novo do bot.');
         });
