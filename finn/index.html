@@ -880,7 +880,7 @@ react-dom/cjs/react-dom-client.production.js:
   function processPDF(file) {
     var status = document.getElementById('fp-pdf-status');
     var preview = document.getElementById('fp-pdf-preview');
-    status.textContent = '⏳ Carregando leitor de PDF...';
+    status.textContent = 'Carregando PDF...';
     preview.innerHTML = '';
     if (!window.pdfjsLib) {
       var s = document.createElement('script');
@@ -1039,7 +1039,7 @@ react-dom/cjs/react-dom-client.production.js:
       }
       // Modo login (Supabase): grava direto no banco do app
       if (typeof window.finnPushToSupabase === 'function') {
-        document.getElementById('fp-pdf-status').innerHTML = '⏳ Importando para o Finn...';
+        document.getElementById('fp-pdf-status').innerHTML = 'Importando...';
         window.finnPushToSupabase(txs).then(function(n){
           if (n > 0) {
             document.getElementById('fp-pdf-status').innerHTML = '<strong>'+n+' transações importadas!</strong>';
@@ -1643,7 +1643,7 @@ react-dom/cjs/react-dom-client.production.js:
         + '<button id="fp-admin-stop">Sair da visualização</button></div>';
     }
     html += '<div class="fp-label" style="margin-bottom:8px">Usuários com transações</div>'
-      + '<div id="fp-admin-list"><div style="text-align:center;padding:14px"><span style="font-size:20px">⏳</span><div style="font-size:12px;color:#94A3B8;margin-top:4px">Carregando...</div></div></div>'
+      + '<div id="fp-admin-list"><div style="text-align:center;padding:14px"><div style="font-size:12px;color:#94A3B8;margin-top:4px">Carregando...</div></div></div>'
       + '<div style="margin-top:12px;background:#F8FAFC;border-radius:10px;padding:12px;font-size:12px;color:#475569;line-height:1.65;border:1px solid #E2E8F0">'
       + '<b>RLS necessária</b> para ver todos os usuários.<br>Execute no Supabase → SQL Editor:<br>'
       + '<code class="fp-sql-block">CREATE POLICY "Admin acesso total" ON transactions<br>FOR ALL USING (<br>&nbsp;&nbsp;auth.jwt()->>\'email\'=\'khevenhenriquelimasantos443@gmail.com\'<br>);</code>'
@@ -1829,7 +1829,7 @@ react-dom/cjs/react-dom-client.production.js:
       btn.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:9990;background:#128C7E;color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;';
       btn.innerHTML = syncSVG;
       btn.addEventListener('click', function(){
-        btn.textContent = '⏳';
+        btn.textContent = '...';
         window.finnBotSync(false).then(function(n){
           btn.innerHTML = syncSVG;
           if (n > 0) setTimeout(function(){ location.reload(); }, 1500);
