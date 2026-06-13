@@ -195,9 +195,20 @@ async function handleCategorySelected(phone, cat, stateData, env) {
 async function continueFlow(phone, text, stateData, env) {
   const { state, pending } = stateData;
 
+  const lower = text.toLowerCase().trim();
+  if (["menu","cancelar","cancel","sair","voltar"].includes(lower)) {
+    await clearState(phone, env);
+    await sendMainMenu(phone, env);
+    return;
+  }
+
   if (state === "awaiting_valor_despesa") {
     const val = parseMonetaryValue(text);
-    if (val === null) { await sendText(phone, "⚠️ Não entendi o valor. Tente assim: *45,90* ou *45.90*", env); return; }
+    if (val === null) {
+      await clearState(phone, env);
+      await sendText(phone, "⚠️ Não entendi o valor — o fluxo foi reiniciado.\n\nDigite *menu* para começar de novo.", env);
+      return;
+    }
     await setState(phone, { state: "awaiting_cat_despesa", pending: { ...pending, val: -Math.abs(val) } }, env);
     await sendCategoryList(phone, env);
     return;
