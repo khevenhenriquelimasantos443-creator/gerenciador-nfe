@@ -570,13 +570,38 @@ async function handleEditTxDesc(phone, stateData, env) {
 // =============================================================================
 // SYNC ENDPOINTS
 // =============================================================================
+// Gera variações de número BR (com e sem o 9º dígito) para casar a chave do KV
+function phoneVariants(phone) {
+  const digits = String(phone).replace(/\D/g, "");
+  const set = new Set([digits]);
+  // Formato BR: 55 + DDD(2) + numero
+  if (digits.startsWith("55")) {
+    const ddd = digits.slice(2, 4);
+    const rest = digits.slice(4);
+    if (rest.length === 9 && rest.startsWith("9")) {
+      set.add("55" + ddd + rest.slice(1));        // remove o 9
+    } else if (rest.length === 8) {
+      set.add("55" + ddd + "9" + rest);           // adiciona o 9
+    }
+  }
+  return [...set];
+}
+
 async function handleSyncGet(request, env) {
   const url = new URL(request.url);
   const phone = url.searchParams.get("phone");
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
-  const data = await getUserData(phone, env);
-  const fixed = await getFixedBills(phone, env);
-  return corsResponse(new Response(JSON.stringify({ok:true, data, fixed}),{status:200,headers:{"Content-Type":"application/json"}}));
+
+  let data = { phone, txs: [], limits: {}, goals: [] };
+  let fixed = [];
+  let matched = null;
+  for (const cand of phoneVariants(phone)) {
+    const d = await getUserData(cand, env);
+    if (d && (d.txs?.length || Object.keys(d.limits || {}).length || d.goals?.length)) {
+      data = d; fixed = await getFixedBills(cand, env); matched = cand; break;
+    }
+  }
+  return corsResponse(new Response(JSON.stringify({ok:true, data, fixed, matched, tried: phoneVariants(phone)}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
 
 async function handleSync(request, env) {
