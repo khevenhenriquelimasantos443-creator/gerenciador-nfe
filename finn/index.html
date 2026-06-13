@@ -908,6 +908,23 @@ react-dom/cjs/react-dom-client.production.js:
         document.getElementById('fp-pdf-status').innerHTML = '⚠️ Faça login no Finn primeiro. Use "Baixar CSV" e importe pelo menu do app.';
         return;
       }
+      // Modo login (Supabase): grava direto no banco do app
+      if (typeof window.finnPushToSupabase === 'function') {
+        document.getElementById('fp-pdf-status').innerHTML = '⏳ Importando para o Finn...';
+        window.finnPushToSupabase(txs).then(function(n){
+          if (n > 0) {
+            document.getElementById('fp-pdf-status').innerHTML = '✅ <strong>'+n+' transações importadas!</strong>';
+            document.getElementById('fp-pdf-preview').innerHTML = '<div class="fp-result fp-good" style="text-align:center">✅ '+n+' transações adicionadas!<br><br>'
+              + '<button class="fp-btn fp-btn-primary" onclick="location.reload()" style="font-size:12px">🔄 Recarregar app</button></div>';
+          } else {
+            document.getElementById('fp-pdf-status').innerHTML = '⚠️ Nenhuma transação nova (todas já existem).';
+          }
+        }).catch(function(){
+          document.getElementById('fp-pdf-status').innerHTML = '⚠️ Erro ao importar. Tente novamente.';
+        });
+        return;
+      }
+      // Modo legado (sem login): grava no localStorage
       var data = STORE.getData(id);
       var existing = data.txs || [];
       var existIds = {};
@@ -1349,58 +1366,96 @@ react-dom/cjs/react-dom-client.production.js:
 })();
 </script>
 
-<!-- ===== FINN BOT SYNC ===== -->
+<!-- ===== FINN BOT SYNC + IMPORT (Supabase) ===== -->
 <script>
 (function(){
   'use strict';
 
   var WORKER_URL = 'https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev';
+  var SUPA_URL   = 'https://zblkznobqcztvznycyyo.supabase.co';
+  var SUPA_KEY   = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
 
   function getPhone() {
     try { var c = JSON.parse(localStorage.getItem('fiq_wa_config')); return c && c.numero ? c.numero : null; } catch(e) { return null; }
   }
 
-  function getProfileId() {
+  function getSession() {
     try {
-      var p = JSON.parse(localStorage.getItem('fiq_profiles') || '[]');
-      if (p.length) return p[0].id;
       var s = JSON.parse(localStorage.getItem('finn_supa_session') || 'null');
-      return s && s.user && s.user.id ? s.user.id : null;
-    } catch(e) { return null; }
+      if (s && s.access_token && s.user && s.user.id) return s;
+    } catch(e) {}
+    return null;
   }
 
-  function mergeAndSave(pid, botData, botFixed) {
-    try {
-      var localRaw = localStorage.getItem('fiq_data_' + pid);
-      var local = localRaw ? JSON.parse(localRaw) : {txs:[], limits:{}, goals:[]};
-      var existIds = {};
-      (local.txs || []).forEach(function(t){ existIds[t.id] = 1; });
-      var newTxs = (botData.txs || []).filter(function(t){ return t.id && !existIds[t.id]; });
-      if (newTxs.length) {
-        local.txs = (local.txs || []).concat(newTxs);
-        localStorage.setItem('fiq_data_' + pid, JSON.stringify(local));
-      }
-      if (botFixed && botFixed.length) {
-        var existFixed = JSON.parse(localStorage.getItem('fiq_fixed_' + pid) || '[]');
-        if (!existFixed.length) localStorage.setItem('fiq_fixed_' + pid, JSON.stringify(botFixed));
-      }
-      return newTxs.length;
-    } catch(e) { return 0; }
+  // Mapeia uma transação (formato app/bot) para o esquema do Supabase
+  function mapTx(n, uid) {
+    var value, type;
+    if (n.val !== undefined && n.val !== null) {
+      value = Math.abs(Number(n.val) || 0);
+      type  = Number(n.val) > 0 ? 'receita' : 'despesa';
+    } else {
+      value = Math.abs(Number(n.value) || 0);
+      type  = n.type || 'despesa';
+    }
+    return {
+      id: String(n.id || (Date.now() + '_' + Math.random().toString(36).slice(2,7))),
+      user_id: uid,
+      date: n.date,
+      descricao: String(n.desc || n.descricao || 'Transação'),
+      value: value,
+      type: type,
+      cat: n.cat || 'Outros',
+      recorrente: !!n.recorrente,
+      banco: n.banco || null
+    };
   }
 
+  function supaHeaders(session, extra) {
+    var h = { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + session.access_token, 'Content-Type': 'application/json' };
+    if (extra) for (var k in extra) h[k] = extra[k];
+    return h;
+  }
+
+  // Insere transações novas no Supabase (ignora as que já existem por id). Retorna nº inseridas.
+  window.finnPushToSupabase = function(txs) {
+    var session = getSession();
+    if (!session || !txs || !txs.length) return Promise.resolve(0);
+    var uid = session.user.id;
+    // 1) Busca ids já existentes para não duplicar
+    return fetch(SUPA_URL + '/rest/v1/transactions?user_id=eq.' + encodeURIComponent(uid) + '&select=id', { headers: supaHeaders(session) })
+      .then(function(r){ return r.ok ? r.json() : []; })
+      .then(function(existing){
+        var have = {};
+        (existing || []).forEach(function(e){ have[String(e.id)] = 1; });
+        var novos = txs.map(function(t){ return mapTx(t, uid); }).filter(function(t){ return !have[t.id]; });
+        if (!novos.length) return 0;
+        return fetch(SUPA_URL + '/rest/v1/transactions', {
+          method: 'POST',
+          headers: supaHeaders(session, { 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+          body: JSON.stringify(novos)
+        }).then(function(r){ return r.ok ? novos.length : 0; });
+      })
+      .catch(function(){ return 0; });
+  };
+
+  function showStatus(msg) {
+    var el = document.getElementById('finn-bot-sync-status');
+    if (el) { el.textContent = msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; }, 4000); }
+  }
+
+  // Sincroniza transações do bot WhatsApp → Supabase
   window.finnBotSync = function(silent) {
     var phone = getPhone();
-    var pid = getProfileId();
-    if (!phone || !pid) return Promise.resolve(0);
+    var session = getSession();
+    if (!phone || !session) return Promise.resolve(0);
     return fetch(WORKER_URL + '/sync?phone=' + encodeURIComponent(phone))
       .then(function(r){ return r.json(); })
       .then(function(res){
-        if (!res.ok) return 0;
-        var n = mergeAndSave(pid, res.data || {}, res.fixed || []);
-        if (!silent && n > 0) {
-          var el = document.getElementById('finn-bot-sync-status');
-          if (el) { el.textContent = '✅ ' + n + ' transação(ões) do bot importada(s)!'; el.style.display='block'; setTimeout(function(){ el.style.display='none'; }, 4000); }
-        }
+        if (!res.ok || !res.data || !res.data.txs || !res.data.txs.length) return 0;
+        return window.finnPushToSupabase(res.data.txs);
+      })
+      .then(function(n){
+        if (!silent && n > 0) showStatus('✅ ' + n + ' lançamento(s) do bot importado(s)!');
         return n;
       })
       .catch(function(){ return 0; });
@@ -1421,6 +1476,7 @@ react-dom/cjs/react-dom-client.production.js:
         window.finnBotSync(false).then(function(n){
           btn.textContent = '🔄';
           if (n > 0) setTimeout(function(){ location.reload(); }, 1500);
+          else showStatus('Nenhum lançamento novo do bot.');
         });
       });
       var status = document.createElement('div');
@@ -1433,8 +1489,8 @@ react-dom/cjs/react-dom-client.production.js:
 
   function autoSync() {
     var phone = getPhone();
-    var pid = getProfileId();
-    if (!phone || !pid) return;
+    var session = getSession();
+    if (!phone || !session) return;
     // Guarda anti-loop: sincroniza no máximo uma vez por sessão da aba
     try { if (sessionStorage.getItem('finn_bot_synced')) return; sessionStorage.setItem('finn_bot_synced', '1'); } catch(e) {}
     window.finnBotSync(true).then(function(n){ if (n > 0) location.reload(); });
@@ -1442,7 +1498,6 @@ react-dom/cjs/react-dom-client.production.js:
 
   function start() {
     addSyncButton();
-    // Espera o app principal carregar antes de sincronizar
     setTimeout(autoSync, 3000);
   }
 
