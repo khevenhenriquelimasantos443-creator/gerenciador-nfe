@@ -110,6 +110,9 @@ async function processMessage(msg, env) {
     if (["menu","oi","olá","ola","finn","ajuda","help","inicio","início","oii"].includes(lower) || lower.startsWith("oi")) {
       return sendMainMenu(phone, env);
     }
+    if (["sync","sinc","sincronizar","extrato"].includes(lower)) {
+      return handleSincronizarFinn(phone, env);
+    }
 
     await sendText(phone, "👋 Olá! Digite *menu* para ver as opções do Finn. 🦊", env);
   }
@@ -141,9 +144,10 @@ async function handleListReply(phone, rowId, stateData, env) {
     case "alertas_limite": await handleAlertasLimite(phone, env); break;
     case "status_metas":  await handleStatusMetas(phone, env); break;
     case "contas_fixas":  await handleContasFixas(phone, env); break;
-    case "previsao_saldo": await handlePrevisaoSaldo(phone, env); break;
-    case "modo_panico":   await handleModoPanico(phone, env); break;
-    case "abrir_finn":    await handleAbrirFinn(phone, env); break;
+    case "previsao_saldo":   await handlePrevisaoSaldo(phone, env); break;
+    case "modo_panico":      await handleModoPanico(phone, env); break;
+    case "sinc_finn":        await handleSincronizarFinn(phone, env); break;
+    case "abrir_finn":       await handleAbrirFinn(phone, env); break;
     default: await sendText(phone, "❓ Opção não reconhecida. Digite *menu* para tentar novamente.", env);
   }
 }
@@ -319,6 +323,39 @@ async function handleAbrirFinn(phone, env) {
   await sendText(phone,`📱 *Abrir Finn*\n\n👉 ${env.FINN_URL||""}\n\n_Adicione à tela inicial para acesso rápido!_`,env);
 }
 
+async function handleSincronizarFinn(phone, env) {
+  const data = await getUserData(phone, env);
+  const txs = data.txs || [];
+  const botTxs = txs.filter(t => t.source === "whatsapp");
+
+  if (!botTxs.length) {
+    await sendText(phone,
+      `📭 *Sem lançamentos do bot ainda.*\n\nUse o menu para registrar uma despesa ou receita e eles aparecerão no Finn automaticamente.\n\n👉 ${env.FINN_URL||""}`, env);
+    return;
+  }
+
+  const now = new Date();
+  const monthBotTxs = botTxs.filter(t => {
+    const d = new Date(t.date);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  });
+  const receitas = monthBotTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
+  const despesas = monthBotTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+
+  const last5 = [...botTxs].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5);
+  const lines = last5.map(t=>`  ${t.val>0?"💰":"💸"} ${t.desc} — R$ ${formatBRL(Math.abs(t.val))} _(${formatDateBR(t.date)})_`).join("\n");
+
+  await sendText(phone,
+    `🔄 *Extrato do Bot — Finn*\n━━━━━━━━━━━━━━━\n` +
+    `📦 Total salvo: *${botTxs.length} lançamento(s)*\n` +
+    `📅 Neste mês:\n` +
+    `  💰 Receitas: R$ ${formatBRL(receitas)}\n` +
+    `  💸 Despesas: R$ ${formatBRL(despesas)}\n\n` +
+    `*Últimos lançamentos:*\n${lines}\n\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `✅ *Dados prontos para o Finn!*\nAbra o app e tudo será sincronizado automaticamente:\n\n👉 ${env.FINN_URL||""}`, env);
+}
+
 // =============================================================================
 // SYNC ENDPOINTS
 // =============================================================================
@@ -438,6 +475,7 @@ async function sendMainMenu(phone, env) {
           {title:"🛠️ Ferramentas",rows:[
             {id:"previsao_saldo",title:"Previsão de Saldo",description:"Projeção até fim do mês"},
             {id:"modo_panico",title:"Modo Pânico 🚨",description:"Análise de emergência"},
+            {id:"sinc_finn",title:"Sincronizar com Finn 🔄",description:"Enviar extrato pro app"},
             {id:"abrir_finn",title:"Abrir Finn",description:"Link direto para o app"}
           ]}
         ]
