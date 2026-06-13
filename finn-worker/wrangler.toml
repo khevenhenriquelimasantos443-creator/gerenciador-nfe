@@ -1,0 +1,48 @@
+name = "finn-whatsapp-worker"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# ─────────────────────────────────────────────
+#  PASSO 3 — Habilite o Worker de IA (áudio/foto)
+#  Descomente a linha abaixo após criar a conta Cloudflare AI
+# ─────────────────────────────────────────────
+# [ai]
+# binding = "AI"
+
+# ─────────────────────────────────────────────
+#  CRON: envia resumo diário às 22h (horário BRT)
+# ─────────────────────────────────────────────
+[triggers]
+crons = ["0 1 * * *"]
+
+# ─────────────────────────────────────────────
+#  PASSO 2 — KV Namespace (banco de dados do bot)
+#  Como criar:
+#    1. Acesse dash.cloudflare.com → Workers & Pages → KV
+#    2. Clique em "Create namespace", nome: finn-kv
+#    3. Copie o "Namespace ID" e cole abaixo
+# ─────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "FINN_KV"
+id = "COLE_AQUI_O_ID_DO_KV_NAMESPACE"
+
+# ─────────────────────────────────────────────
+#  VARIÁVEIS DE AMBIENTE (não-secretas)
+#  Troque pelo URL real do seu app Finn
+# ─────────────────────────────────────────────
+[vars]
+FINN_URL = "https://khevenhenriquelimasantos443-creator.github.io/gerenciador-nfe/finn/"
+
+# ─────────────────────────────────────────────
+#  SEGREDOS — adicione via terminal após deploy:
+#
+#  wrangler secret put WHATSAPP_PHONE_NUMBER_ID
+#    → Cole o "Phone Number ID" do Meta Developer
+#
+#  wrangler secret put WHATSAPP_ACCESS_TOKEN
+#    → Cole o token de acesso do Meta Developer
+#
+#  wrangler secret put WHATSAPP_VERIFY_TOKEN
+#    → Crie uma senha qualquer, ex: finn_bot_2024
+#      (você vai precisar dela na hora de configurar o webhook)
+# ─────────────────────────────────────────────
