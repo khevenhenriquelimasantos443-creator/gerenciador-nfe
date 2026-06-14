@@ -1891,8 +1891,29 @@ react-dom/cjs/react-dom-client.production.js:
     window.finnBotSync(true).then(function(n){ if (n > 0) location.reload(); });
   }
 
+
+
+  function addIAButton() {
+    var btn = document.createElement('button');
+    btn.id = 'finn-ia-fab';
+    btn.title = 'Análise com IA';
+    btn.style.cssText = 'position:fixed;bottom:140px;right:16px;z-index:9990;background:#1E293B;color:#F97316;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.4);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;';
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1L19 10L10 19L1 10Z" fill="#F97316"/><path d="M10 5L15 10L10 15L5 10Z" fill="#1E293B"/><circle cx="10" cy="10" r="2" fill="#F97316"/></svg>';
+    btn.addEventListener('mouseover', function(){ this.style.transform='scale(1.08)'; this.style.boxShadow='0 6px 24px rgba(30,41,59,0.55)'; });
+    btn.addEventListener('mouseout', function(){ this.style.transform='scale(1)'; this.style.boxShadow='0 4px 18px rgba(30,41,59,0.4)'; });
+    btn.addEventListener('click', function() {
+      var tabs = document.querySelectorAll('.tabs button');
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].textContent.trim() === 'IA') { tabs[i].click(); break; }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.body.appendChild(btn);
+  }
+
   function start() {
     addSyncButton();
+    addIAButton();
     setTimeout(autoSync, 3000);
   }
 
