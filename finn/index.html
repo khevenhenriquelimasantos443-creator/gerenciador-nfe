@@ -2805,7 +2805,17 @@ react-dom/cjs/react-dom-client.production.js:
       '#FEF2F2':'rgba(220,38,38,.12)',
       '#FCE7F3':'rgba(219,39,119,.12)', // rosa
     };
-    var TX = {'#1E293B':'#F1F5F9','#1e293b':'#F1F5F9','#0F172A':'#F8FAFC','#0f172a':'#F8FAFC','#334155':'#E2E8F0','#475569':'#CBD5E1','#64748B':'#94A3B8'};
+    var TX = {
+      '#1E293B':'#F1F5F9','#1e293b':'#F1F5F9',
+      '#0F172A':'#F8FAFC','#0f172a':'#F8FAFC',
+      '#334155':'#E2E8F0','#475569':'#CBD5E1','#64748B':'#94A3B8',
+      // Cores de acento escuras (textos/ícones sobre fundo colorido) → versão clara
+      '#7C3AED':'#C4B5FD','#6D28D9':'#A78BFA','#5B21B6':'#8B5CF6',
+      '#1D4ED8':'#93C5FD','#1E40AF':'#60A5FA','#2563EB':'#93C5FD',
+      '#0F766E':'#5EEAD4','#0D9488':'#2DD4BF','#065F46':'#34D399',
+      '#991B1B':'#FCA5A5','#B91C1C':'#F87171','#DC2626':'#FCA5A5',
+      '#92400E':'#FCD34D','#78350F':'#FDE68A',
+    };
     var BD = {'#E2E8F0':'rgba(255,255,255,.1)','#E8ECF2':'rgba(255,255,255,.1)','#EEF2F7':'rgba(255,255,255,.08)','#e2e8f0':'rgba(255,255,255,.1)','#CBD5E1':'rgba(255,255,255,.1)'};
 
     function normHex(v) {
@@ -2833,6 +2843,12 @@ react-dom/cjs/react-dom-client.production.js:
           var db = BG[nb] || BG[rawBg.trim()];
           if (db) { el._ob=[s.background,s.backgroundColor]; if(s.background)s.background=db; else s.backgroundColor=db; }
         } else if (el._ob) { s.background=el._ob[0]; s.backgroundColor=el._ob[1]; delete el._ob; }
+      } else if (dark && s.overflow === 'hidden' && s.borderRadius) {
+        // Progress bar track: sem background mas com overflow:hidden + borderRadius → track visível
+        el._progTrack = true;
+        s.backgroundColor = 'rgba(255,255,255,.13)';
+      } else if (!dark && el._progTrack) {
+        s.backgroundColor = ''; delete el._progTrack;
       }
       // color
       var rawTx = s.color;
@@ -2855,10 +2871,12 @@ react-dom/cjs/react-dom-client.production.js:
     }
 
     function patchAll(dark) {
-      var root = document.getElementById('root');
-      if (!root) return;
-      var els = root.querySelectorAll('[style]');
-      for (var i=0; i<els.length; i++) patchEl(els[i], dark);
+      // Patch #root E body direto (para React Portals — modais, drawers)
+      document.querySelectorAll('#root [style], body>[style], body>div>[style]').forEach(function(el){ patchEl(el, dark); });
+      // deep pass em portals que ficam fora do root
+      document.querySelectorAll('body>div').forEach(function(portal){
+        portal.querySelectorAll('[style]').forEach(function(el){ patchEl(el, dark); });
+      });
     }
 
     var obs = null;
@@ -2870,14 +2888,13 @@ react-dom/cjs/react-dom-client.production.js:
           m.addedNodes.forEach(function(n) {
             if (n.nodeType !== 1) return;
             patchEl(n, true);
-            var kids = n.querySelectorAll('[style]');
-            for (var i=0; i<kids.length; i++) patchEl(kids[i], true);
+            n.querySelectorAll('[style]').forEach(function(c){ patchEl(c, true); });
           });
           if (m.type === 'attributes') patchEl(m.target, true);
         });
       });
-      var root = document.getElementById('root');
-      if (root) obs.observe(root, {childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+      // Observa body inteiro para pegar portals
+      obs.observe(document.body, {childList:true,subtree:true,attributes:true,attributeFilter:['style']});
     }
     function stopObs() { if(obs){obs.disconnect();obs=null;} }
 
