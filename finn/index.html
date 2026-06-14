@@ -2772,12 +2772,100 @@ react-dom/cjs/react-dom-client.production.js:
     overlay.addEventListener('click', closeSidebar);
   }
 
+  function addDarkMode() {
+    var css = document.createElement('style');
+    css.id = 'finn-dark-css';
+    css.textContent = [
+      'html.dark{color-scheme:dark}',
+      'html.dark body{background:#0B1120!important;color:#CBD5E1!important}',
+      /* tabs */
+      'html.dark .tabs{background:#161f2e!important;border-color:rgba(255,255,255,.07)!important;box-shadow:0 2px 8px rgba(0,0,0,.3)!important}',
+      'html.dark .tabs button{color:#475569!important}',
+      'html.dark .tabs button:hover{color:#94A3B8!important}',
+      'html.dark .tabs button[style*="font-weight: 700"]{color:#F1F5F9!important}',
+      /* tables */
+      'html.dark th{color:#64748B!important;border-color:rgba(255,255,255,.07)!important;background:#0f1829!important}',
+      'html.dark td{border-color:rgba(255,255,255,.05)!important;color:#94A3B8!important}',
+      'html.dark tr:hover td{background:rgba(255,255,255,.03)!important}',
+      /* inputs */
+      'html.dark input,html.dark select,html.dark textarea{background:#161f2e!important;color:#F1F5F9!important;border-color:rgba(255,255,255,.12)!important}',
+      'html.dark input::placeholder,html.dark textarea::placeholder{color:#475569!important}',
+      /* calendar */
+      'html.dark .fp-cal-day{background:#161f2e!important}',
+      'html.dark .fp-cal-day:hover{background:rgba(249,115,22,.1)!important}',
+      'html.dark .fp-cal-day.today{background:rgba(249,115,22,.12)!important}',
+      'html.dark .fp-cal-num{color:#64748B!important}',
+      'html.dark .fp-cal-month{color:#F1F5F9!important}',
+      'html.dark .fp-cal-detail{background:#0B1120!important;border-color:rgba(255,255,255,.07)!important}',
+      'html.dark .fp-cal-tx-row{border-color:rgba(255,255,255,.06)!important}',
+      'html.dark .fp-cal-tx-desc{color:#64748B!important}',
+      'html.dark .fp-cal-nav-btn{background:#161f2e!important;color:#64748B!important}',
+      'html.dark .fp-cal-nav-btn:hover{background:#1e2a3e!important}',
+      /* help */
+      'html.dark .fp-help-item{background:#161f2e!important;border-color:rgba(255,255,255,.07)!important}',
+      'html.dark .fp-help-q{background:#161f2e!important;color:#F1F5F9!important}',
+      'html.dark .fp-help-q:hover{background:#1e2a3e!important}',
+      'html.dark .fp-help-a{background:rgba(249,115,22,.05)!important;color:#94A3B8!important;border-color:rgba(249,115,22,.15)!important}',
+      /* admin */
+      'html.dark .fp-admin-user{background:#161f2e!important}',
+      'html.dark .fp-admin-user:hover{background:rgba(249,115,22,.08)!important}',
+      'html.dark .fp-admin-email{color:#F1F5F9!important}',
+      'html.dark .fp-admin-stat{color:#475569!important}',
+      /* sec-card */
+      'html.dark .sec-card{border-color:rgba(255,255,255,.07)!important}',
+      /* scrollbar */
+      'html.dark ::-webkit-scrollbar-thumb{background:#334155!important}',
+      /* React-rendered white/light backgrounds */
+      'html.dark #root div[style*="background:#fff"],html.dark #root div[style*="background: #fff"],html.dark #root div[style*="background-color:#fff"],html.dark #root div[style*="background-color: #fff"]{background:#1E293B!important}',
+      'html.dark #root div[style*="background:#F8F7F4"],html.dark #root div[style*="background: #F8F7F4"],html.dark #root div[style*="background:#F8FAFC"],html.dark #root div[style*="background: #F8FAFC"],html.dark #root div[style*="background:#F8FAFF"],html.dark #root div[style*="background: #F8FAFF"],html.dark #root div[style*="background:#F1F5F9"],html.dark #root div[style*="background: #F1F5F9"]{background:#0B1120!important}',
+      /* Dark text in React */
+      'html.dark #root [style*="color:#1E293B"],html.dark #root [style*="color: #1E293B"]{color:#F1F5F9!important}',
+      'html.dark #root [style*="color:#475569"],html.dark #root [style*="color: #475569"]{color:#94A3B8!important}',
+      'html.dark #root [style*="color:#334155"],html.dark #root [style*="color: #334155"]{color:#CBD5E1!important}',
+      'html.dark #root [style*="color:#0F172A"],html.dark #root [style*="color: #0F172A"]{color:#F8FAFC!important}',
+      /* Borders */
+      'html.dark #root [style*="border:1px solid #E2E8F0"],html.dark #root [style*="border: 1px solid #E2E8F0"],html.dark #root [style*="border-color:#E2E8F0"],html.dark #root [style*="border:1px solid #EEF2F7"],html.dark #root [style*="border: 1px solid #EEF2F7"]{border-color:rgba(255,255,255,.07)!important}',
+      /* Loading */
+      'html.dark #loading{background:#0B1120!important}',
+      /* Bot panels */
+      'html.dark #finn-analise-panel{background:#0B1120!important}',
+      'html.dark #finn-dash-panel{background:#0B1120!important}'
+    ].join('');
+    document.head.appendChild(css);
+
+    var moonSVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    var sunSVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+
+    var btn = document.createElement('button');
+    btn.id   = 'finn-dm-btn';
+    btn.title = 'Alternar modo escuro';
+    btn.style.cssText = 'position:fixed;bottom:130px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,.35);display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;';
+
+    function applyTheme(dark) {
+      document.documentElement.classList.toggle('dark', dark);
+      btn.innerHTML   = dark ? sunSVG : moonSVG;
+      btn.style.color = dark ? '#F59E0B' : '#94A3B8';
+      try { localStorage.setItem('finn-theme', dark ? 'dark' : 'light'); } catch(e) {}
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem('finn-theme'); } catch(e) {}
+    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches;
+    applyTheme(saved === 'dark' || (saved === null && sysDark));
+
+    btn.addEventListener('click', function() {
+      applyTheme(!document.documentElement.classList.contains('dark'));
+    });
+    document.body.appendChild(btn);
+  }
+
   function start() {
     addSyncButton();
     addIAChat();
     addMobileHamburger();
     addDashboardPhrase();
     addExtratoPanels();
+    addDarkMode();
     setTimeout(autoSync, 3000);
   }
 
