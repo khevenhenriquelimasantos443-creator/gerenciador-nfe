@@ -2023,9 +2023,183 @@ react-dom/cjs/react-dom-client.production.js:
     });
   }
 
+  function addMobileHamburger() {
+    if (document.getElementById('finn-topbar')) return;
+
+    var navItems = [
+      { key:'dashboard',   label:'Início',  section:'NAVEGAÇÃO',    svg:'<path d="M3 12L12 4L21 12V20H15V15H9V20H3V12Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>' },
+      { key:'lancamentos', label:'Lançar',  section:'NAVEGAÇÃO',    svg:'<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' },
+      { key:'extrato',     label:'Extrato', section:'NAVEGAÇÃO',    svg:'<rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="8" y1="8" x2="16" y2="8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' },
+      { key:'metas',       label:'Metas',   section:'FINANCEIRO',   svg:'<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>' },
+      { key:'limites',     label:'Limites', section:'FINANCEIRO',   svg:'<path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' },
+      { key:'racha',       label:'Racha',   section:'FINANCEIRO',   svg:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M23 21v-2a4 4 0 00-3-3.87" stroke="currentColor" stroke-width="1.8"/><path d="M16 3.13a4 4 0 010 7.74" stroke="currentColor" stroke-width="1.8"/>' },
+      { key:'bancos',      label:'Bancos',  section:'FINANCEIRO',   svg:'<path d="M3 9L12 2L21 9V22H3V9Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><rect x="9" y="14" width="6" height="8" stroke="currentColor" stroke-width="1.8" fill="none"/>' },
+      { key:'dicas',       label:'IA',      section:'INTELIGÊNCIA', svg:'<path d="M12 2L14.8 9.2L22 10L16 15.4L17.6 22L12 18.8L6.4 22L8 15.4L2 10L9.2 9.2L12 2Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>' }
+    ];
+
+    var labelToKey = {};
+    navItems.forEach(function(n){ labelToKey[n.label] = n.key; });
+    var currentKey = 'dashboard';
+
+    var css = document.createElement('style');
+    css.textContent =
+      '#finn-topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:#1E293B;z-index:500;align-items:center;padding:0 14px;gap:12px;box-shadow:0 1px 0 rgba(255,255,255,.07);}' +
+      '@supports(padding-top:env(safe-area-inset-top)){#finn-topbar{height:calc(56px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);}}' +
+      '#finn-menu-btn{background:#0F172A;border:none;border-radius:9px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}' +
+      '#finn-topbar-title{flex:1;color:#F8FAFC;font-weight:700;font-size:17px;letter-spacing:-.02em;}' +
+      '#finn-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;}' +
+      '#finn-overlay.open{display:block;}' +
+      '#finn-sidebar{position:fixed;top:0;bottom:0;left:-300px;width:290px;background:#0F172A;z-index:700;transition:left .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto;}' +
+      '#finn-sidebar.open{left:0;box-shadow:6px 0 32px rgba(0,0,0,.55);}' +
+      '.fns-hd{display:flex;align-items:center;gap:13px;padding:20px 20px 18px;border-bottom:1px solid #1E293B;}' +
+      '@supports(padding-top:env(safe-area-inset-top)){.fns-hd{padding-top:calc(20px + env(safe-area-inset-top));}}' +
+      '.fns-logo-sq{width:44px;height:44px;background:#F97316;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}' +
+      '.fns-sec{font-size:10px;font-weight:700;letter-spacing:.1em;color:#475569;padding:16px 20px 4px;text-transform:uppercase;}' +
+      '.fns-it{display:flex;align-items:center;gap:12px;padding:11px 14px;color:#94A3B8;cursor:pointer;border-radius:10px;margin:1px 10px;font-size:15px;font-weight:500;-webkit-tap-highlight-color:transparent;}' +
+      '.fns-it:active{background:#1E293B;color:#F8FAFC;}' +
+      '.fns-it.active{background:rgba(249,115,22,.13);color:#F97316;}' +
+      '.fns-it svg{flex-shrink:0;opacity:.85;}' +
+      '.fns-it.active svg{opacity:1;}' +
+      '.fns-ft{margin-top:auto;padding:12px;border-top:1px solid #1E293B;}' +
+      '.fns-ft-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;color:#64748B;cursor:pointer;font-size:14px;font-weight:500;-webkit-tap-highlight-color:transparent;}' +
+      '.fns-ft-btn:active{background:#1E293B;color:#94A3B8;}' +
+      '@media(max-width:640px){' +
+        '#finn-topbar{display:flex;}' +
+        '.app-header-inner{height:0!important;overflow:hidden!important;border:none!important;padding:0!important;min-height:0!important;}' +
+        '.mobile-nav{display:none!important;}' +
+        '.finn-ia-panel,.finn-bot-sync-btn{bottom:calc(var(--btn-base,80px) + env(safe-area-inset-bottom,0px));}' +
+        '#fw-btn{bottom:calc(22px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-bot-sync-btn{bottom:calc(80px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-ia-fab{bottom:calc(140px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-ia-panel{bottom:calc(196px + env(safe-area-inset-bottom,0px))!important;}' +
+        '.app-content{padding-top:calc(66px + env(safe-area-inset-top,0px))!important;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)!important;}' +
+      '}';
+    document.head.appendChild(css);
+
+    var topbar = document.createElement('div');
+    topbar.id = 'finn-topbar';
+    topbar.innerHTML =
+      '<button id="finn-menu-btn" title="Menu">' +
+        '<svg width="20" height="14" viewBox="0 0 20 14" fill="none">' +
+          '<rect width="20" height="2" rx="1" fill="#F97316"/>' +
+          '<rect y="6" width="20" height="2" rx="1" fill="#F97316"/>' +
+          '<rect y="12" width="20" height="2" rx="1" fill="#F97316"/>' +
+        '</svg>' +
+      '</button>' +
+      '<span id="finn-topbar-title">Início</span>' +
+      '<div style="width:38px;flex-shrink:0;"></div>';
+
+    var overlay = document.createElement('div');
+    overlay.id = 'finn-overlay';
+
+    var sidebar = document.createElement('div');
+    sidebar.id = 'finn-sidebar';
+
+    var sHead = document.createElement('div');
+    sHead.className = 'fns-hd';
+    sHead.innerHTML =
+      '<div class="fns-logo-sq">' +
+        '<svg width="24" height="24" viewBox="0 0 20 20" fill="none">' +
+          '<path d="M10 1L19 10L10 19L1 10Z" fill="white"/>' +
+          '<path d="M10 5L15 10L10 15L5 10Z" fill="#F97316"/>' +
+          '<circle cx="10" cy="10" r="2" fill="white"/>' +
+        '</svg>' +
+      '</div>' +
+      '<div>' +
+        '<div style="color:#F8FAFC;font-weight:800;font-size:18px;letter-spacing:-.02em;">Finn<span style="color:#F97316;">.</span></div>' +
+        '<div style="color:#475569;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;">Controle Financeiro</div>' +
+      '</div>';
+    sidebar.appendChild(sHead);
+
+    var sections = {}, sectionOrder = [];
+    navItems.forEach(function(n) {
+      if (!sections[n.section]) { sections[n.section] = []; sectionOrder.push(n.section); }
+      sections[n.section].push(n);
+    });
+
+    sectionOrder.forEach(function(sec) {
+      var secEl = document.createElement('div');
+      secEl.className = 'fns-sec';
+      secEl.textContent = sec;
+      sidebar.appendChild(secEl);
+      sections[sec].forEach(function(item) {
+        var el = document.createElement('div');
+        el.className = 'fns-it' + (item.key === currentKey ? ' active' : '');
+        el.dataset.key = item.key;
+        el.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24">' + item.svg + '</svg><span>' + item.label + '</span>';
+        el.addEventListener('click', function() {
+          navigateTo(item.key, item.label);
+          closeSidebar();
+        });
+        sidebar.appendChild(el);
+      });
+    });
+
+    var gearSVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>';
+    var foot = document.createElement('div');
+    foot.className = 'fns-ft';
+    foot.innerHTML = '<div class="fns-ft-btn" id="fns-cfg-btn">' + gearSVG + '<span>Configurações</span></div>';
+    sidebar.appendChild(foot);
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(sidebar);
+    document.body.appendChild(topbar);
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      overlay.classList.add('open');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+    function navigateTo(key, label) {
+      var btns = document.querySelectorAll('.tabs button');
+      for (var i = 0; i < btns.length; i++) {
+        var t = btns[i].textContent.trim();
+        if (labelToKey[t] === key || t === label) { btns[i].click(); break; }
+      }
+      setActive(key, label);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function setActive(key, label) {
+      currentKey = key;
+      var el = document.getElementById('finn-topbar-title');
+      if (el) el.textContent = label;
+      document.querySelectorAll('.fns-it').forEach(function(e) {
+        e.classList.toggle('active', e.dataset.key === key);
+      });
+    }
+    function syncTab() {
+      var btns = document.querySelectorAll('.tabs button');
+      for (var i = 0; i < btns.length; i++) {
+        var s = btns[i].getAttribute('style') || '';
+        if (s.indexOf('700') > -1) {
+          var t = btns[i].textContent.trim();
+          var k = labelToKey[t] || t.toLowerCase();
+          if (k !== currentKey) setActive(k, t);
+          return;
+        }
+      }
+    }
+    setInterval(syncTab, 500);
+    setTimeout(syncTab, 900);
+
+    document.getElementById('fns-cfg-btn').addEventListener('click', function() {
+      closeSidebar();
+      setTimeout(function() {
+        var hcBtns = document.querySelectorAll('.header-controls button');
+        if (hcBtns.length) hcBtns[hcBtns.length - 1].click();
+      }, 60);
+    });
+    document.getElementById('finn-menu-btn').addEventListener('click', openSidebar);
+    overlay.addEventListener('click', closeSidebar);
+  }
+
   function start() {
     addSyncButton();
     addIAChat();
+    addMobileHamburger();
     setTimeout(autoSync, 3000);
   }
 
