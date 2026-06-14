@@ -1893,27 +1893,139 @@ react-dom/cjs/react-dom-client.production.js:
 
 
 
-  function addIAButton() {
+  function addIAChat() {
+    var API_URL = 'https://api.anthropic.com/v1/messages';
+    var chatHistory = [];
+    var panelOpen = false;
+
+    // Chat panel
+    var panel = document.createElement('div');
+    panel.id = 'finn-ia-panel';
+    panel.style.cssText = 'position:fixed;right:16px;z-index:10000;background:#0F172A;border-radius:16px;width:300px;box-shadow:0 8px 40px rgba(0,0,0,0.55);flex-direction:column;overflow:hidden;border:1px solid #1E293B;';
+    panel.style.display = 'none';
+    panel.style.bottom = '196px';
+    panel.style.height = 'min(420px, calc(100vh - 220px))';
+
+    // Header
+    var hdr = document.createElement('div');
+    hdr.style.cssText = 'background:#1E293B;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #334155;flex-shrink:0;';
+    hdr.innerHTML = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 1L19 10L10 19L1 10Z" fill="#F97316"/><path d="M10 5L15 10L10 15L5 10Z" fill="#0F172A"/><circle cx="10" cy="10" r="2" fill="#F97316"/></svg><span style="color:#F8FAFC;font-weight:700;font-size:14px;flex:1;">Finn IA</span><span style="color:#64748B;font-size:11px;margin-right:6px;">assistente financeiro</span><button id="finn-ia-close" style="background:none;border:none;cursor:pointer;color:#94A3B8;font-size:20px;line-height:1;padding:0 2px;">&times;</button>';
+
+    // Messages
+    var msgs = document.createElement('div');
+    msgs.id = 'finn-ia-msgs';
+    msgs.style.cssText = 'flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:7px;';
+
+    // Input area
+    var footer = document.createElement('div');
+    footer.style.cssText = 'padding:8px 10px;background:#1E293B;border-top:1px solid #334155;display:flex;gap:6px;align-items:flex-end;flex-shrink:0;';
+    footer.innerHTML = '<textarea id="finn-ia-input" placeholder="Pergunte sobre suas finanças..." rows="1" style="flex:1;background:#0F172A;color:#F8FAFC;border:1px solid #334155;border-radius:8px;padding:7px 9px;font-size:13px;resize:none;font-family:inherit;outline:none;max-height:72px;overflow-y:auto;line-height:1.4;"></textarea><button id="finn-ia-send" title="Enviar" style="background:#F97316;border:none;border-radius:8px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 2L8 14L7 9Z" fill="white"/></svg></button>';
+
+    panel.appendChild(hdr);
+    panel.appendChild(msgs);
+    panel.appendChild(footer);
+
+    // FAB button
     var btn = document.createElement('button');
     btn.id = 'finn-ia-fab';
-    btn.title = 'Análise com IA';
-    btn.style.cssText = 'position:fixed;bottom:140px;right:16px;z-index:9990;background:#1E293B;color:#F97316;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.4);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;';
+    btn.title = 'Finn IA — Assistente Financeiro';
+    btn.style.cssText = 'position:fixed;bottom:140px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.4);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;';
     btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1L19 10L10 19L1 10Z" fill="#F97316"/><path d="M10 5L15 10L10 15L5 10Z" fill="#1E293B"/><circle cx="10" cy="10" r="2" fill="#F97316"/></svg>';
+
+    document.body.appendChild(panel);
+    document.body.appendChild(btn);
+
+    function addMsg(text, isUser, isError) {
+      var div = document.createElement('div');
+      div.style.cssText = 'max-width:88%;padding:7px 10px;border-radius:12px;font-size:13px;line-height:1.5;word-wrap:break-word;white-space:pre-wrap;color:#F8FAFC;' + (isUser ? 'background:#F97316;align-self:flex-end;border-bottom-right-radius:3px;' : (isError ? 'background:#7F1D1D;align-self:flex-start;border-bottom-left-radius:3px;' : 'background:#1E293B;align-self:flex-start;border-bottom-left-radius:3px;'));
+      div.textContent = text;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    }
+
+    function getContext() {
+      try {
+        var profiles = JSON.parse(localStorage.getItem('fiq_profiles') || '{}');
+        var keys = Object.keys(profiles);
+        if (!keys.length) return '';
+        var p = profiles[keys[0]];
+        var txs = (p.transactions || []).slice(-30);
+        if (!txs.length) return '';
+        return '\n\nÚltimas transações do usuário:\n' + txs.map(function(t){
+          return (t.date || '') + ' | ' + (t.descricao || t.desc || 'Transação') + ' | R$' + (t.value || t.val || '0') + ' | ' + (t.type || '') + ' | ' + (t.cat || '');
+        }).join('\n');
+      } catch(e) { return ''; }
+    }
+
+    function sendMsg(text) {
+      var key = localStorage.getItem('fiq_apikey') || '';
+      if (!key) {
+        addMsg('Configure sua chave API Anthropic em Configurações → Dados para usar o Finn IA.', false, true);
+        return;
+      }
+      chatHistory.push({ role: 'user', content: text });
+      var typing = addMsg('...', false, false);
+      var sysPrompt = 'Você é o Finn IA, assistente financeiro pessoal brasileiro. Responda sempre em português do Brasil, de forma clara e objetiva, com no máximo 3 parágrafos curtos. Ajude com orçamento, dívidas, investimentos, planejamento e análise de gastos.' + getContext();
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 512, system: sysPrompt, messages: chatHistory })
+      }).then(function(r){ return r.json(); }).then(function(data){
+        if (data.error) throw new Error(data.error.message);
+        var reply = (data.content || []).map(function(c){ return c.text || ''; }).join('');
+        typing.textContent = reply;
+        chatHistory.push({ role: 'assistant', content: reply });
+        msgs.scrollTop = msgs.scrollHeight;
+      }).catch(function(e){
+        typing.textContent = 'Erro: ' + (e.message || 'Falha na conexão');
+        typing.style.background = '#7F1D1D';
+        chatHistory.pop();
+      });
+    }
+
+    function openPanel() {
+      panel.style.display = 'flex';
+      panelOpen = true;
+      if (!msgs.children.length) {
+        addMsg('Olá! Sou o Finn IA, seu assistente financeiro. Posso ajudar com dúvidas sobre gastos, economia, investimentos e planejamento. Como posso ajudar?', false, false);
+      }
+      document.getElementById('finn-ia-input').focus();
+    }
+
+    function closePanel() {
+      panel.style.display = 'none';
+      panelOpen = false;
+    }
+
     btn.addEventListener('mouseover', function(){ this.style.transform='scale(1.08)'; this.style.boxShadow='0 6px 24px rgba(30,41,59,0.55)'; });
     btn.addEventListener('mouseout', function(){ this.style.transform='scale(1)'; this.style.boxShadow='0 4px 18px rgba(30,41,59,0.4)'; });
-    btn.addEventListener('click', function() {
-      var tabs = document.querySelectorAll('.tabs button');
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].textContent.trim() === 'IA') { tabs[i].click(); break; }
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    btn.addEventListener('click', function() { panelOpen ? closePanel() : openPanel(); });
+
+    document.getElementById('finn-ia-close').addEventListener('click', closePanel);
+
+    document.getElementById('finn-ia-send').addEventListener('click', function() {
+      var input = document.getElementById('finn-ia-input');
+      var text = input.value.trim();
+      if (!text) return;
+      addMsg(text, true, false);
+      input.value = '';
+      input.style.height = 'auto';
+      sendMsg(text);
     });
-    document.body.appendChild(btn);
+
+    document.getElementById('finn-ia-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        document.getElementById('finn-ia-send').click();
+      }
+      setTimeout(function(){ document.getElementById('finn-ia-input').style.height = 'auto'; document.getElementById('finn-ia-input').style.height = Math.min(document.getElementById('finn-ia-input').scrollHeight, 72) + 'px'; }, 0);
+    });
   }
 
   function start() {
     addSyncButton();
-    addIAButton();
+    addIAChat();
     setTimeout(autoSync, 3000);
   }
 
