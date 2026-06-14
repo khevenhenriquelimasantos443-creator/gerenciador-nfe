@@ -114,6 +114,10 @@ async function processMessage(msg, env) {
     return handleImageMessage(phone, msg, env);
   }
 
+  if (msg.type === "document") {
+    return handleDocumentMessage(phone, msg, env);
+  }
+
   if (msg.type === "text") {
     const text = (msg.text?.body || "").trim();
     if (!text) return;
@@ -127,8 +131,20 @@ async function processMessage(msg, env) {
     if (["sync","sinc","sincronizar","extrato"].includes(lower)) {
       return handleSincronizarFinn(phone, env);
     }
+    if (["analise","análise"].includes(lower)) {
+      return handleAnaliseExtratoPrompt(phone, env);
+    }
+    if (["score","pontuação","saúde"].includes(lower)) {
+      return handleScoreFinanceiro(phone, env);
+    }
+    if (["dashboard","graficos","gráficos"].includes(lower)) {
+      return handleDashboardCompleto(phone, env);
+    }
+    if (["panico","pânico","modo panico","modo pânico"].includes(lower)) {
+      return handleModoPanico(phone, env);
+    }
 
-    await sendText(phone, "👋 Olá! Digite *menu* ou envie um 🎙️ áudio/_foto de comprovante_ para lançar. 🦊", env);
+    await sendText(phone, "👋 Olá! Digite *menu* ou envie um 🎙️ áudio/_foto de comprovante_ para lançar.\n\nOutros comandos: *analise* · *score* · *dashboard* 🦊", env);
   }
 }
 
@@ -175,6 +191,8 @@ async function handleListReply(phone, rowId, stateData, env) {
     case "contas_fixas":  await handleContasFixas(phone, env); break;
     case "previsao_saldo":   await handlePrevisaoSaldo(phone, env); break;
     case "modo_panico":      await handleModoPanico(phone, env); break;
+    case "analise_extrato":   await handleAnaliseExtratoPrompt(phone, env); break;
+    case "score_financeiro":  await handleScoreFinanceiro(phone, env); break;
     case "sinc_finn":        await handleSincronizarFinn(phone, env); break;
     case "abrir_finn":       await handleAbrirFinn(phone, env); break;
     default: await sendText(phone, "❓ Opção não reconhecida. Digite *menu* para tentar novamente.", env);
@@ -422,6 +440,175 @@ async function handleSincronizarFinn(phone, env) {
     `*Últimos lançamentos:*\n${lines}\n\n` +
     `━━━━━━━━━━━━━━━\n` +
     `✅ *Dados prontos para o Finn!*\nAbra o app e tudo será sincronizado automaticamente:\n\n👉 ${env.FINN_URL||""}`, env);
+}
+
+// =============================================================================
+// ANÁLISE DE EXTRATO — VIA ARQUIVO
+// =============================================================================
+async function handleAnaliseExtratoPrompt(phone, env) {
+  await sendText(phone,
+    `📂 *Análise de Extrato Bancário*\n━━━━━━━━━━━━━━━\n\n` +
+    `Envie o arquivo do seu extrato aqui no WhatsApp:\n\n` +
+    `✅ *Formatos aceitos:* CSV ou TXT\n` +
+    `❌ *Não suportado:* XLSX e PDF — use o Finn:\n👉 ${env.FINN_URL||""}\n\n` +
+    `_Exporte o extrato do app do seu banco como CSV e envie aqui._`, env);
+}
+
+async function handleDocumentMessage(phone, msg, env) {
+  const doc = msg.document;
+  if (!doc) return;
+  const filename = (doc.filename || '').toLowerCase();
+  const mime = (doc.mime_type || '').toLowerCase();
+  const isTextFile = mime.includes('csv') || mime.includes('plain') || mime.includes('text') ||
+                     filename.endsWith('.csv') || filename.endsWith('.txt');
+  if (!isTextFile) {
+    await sendText(phone,
+      `📂 Formato não suportado pelo bot.\n\n✅ Envie um arquivo *CSV* ou *TXT*.\n\nPara XLSX e PDF, use o Finn:\n👉 ${env.FINN_URL||""}`, env);
+    return;
+  }
+  await sendText(phone, "📂 _Analisando extrato..._", env);
+  try {
+    const buffer = await downloadMetaMedia(doc.id, env);
+    if (!buffer) throw new Error("download failed");
+    const text = new TextDecoder('latin1').decode(buffer);
+    const txs = parseBankCSVBot(text);
+    if (!txs.length) {
+      await sendText(phone,
+        `⚠️ Não encontrei transações no arquivo.\n\nVerifique se é um extrato bancário em CSV com colunas de data, descrição e valor.`, env);
+      return;
+    }
+    const analysis = analyzeBotCSV(txs);
+    await sendText(phone, formatBotAnalysis(analysis, env), env);
+  } catch(err) {
+    console.error("handleDocumentMessage:", err);
+    await sendText(phone, `⚠️ Erro ao processar arquivo. Tente novamente ou use o Finn:\n👉 ${env.FINN_URL||""}`, env);
+  }
+}
+
+// =============================================================================
+// SCORE FINANCEIRO
+// =============================================================================
+async function handleScoreFinanceiro(phone, env) {
+  const data = await getUserData(phone, env);
+  const now = new Date();
+  const monthTxs = (data.txs||[]).filter(tx => {
+    const d = new Date(tx.date);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  });
+  const receitas = monthTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
+  const despesas = monthTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+  const saldo = receitas - despesas;
+  const goals = data.goals || [];
+  const limits = data.limits || {};
+  const byCat = {};
+  monthTxs.filter(t=>t.val<0).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
+
+  // Scoring (0–100)
+  let score = 50;
+  let details = [];
+
+  // Saldo positivo (+20 / -20)
+  if (saldo > 0) { score += 20; details.push("✅ Saldo positivo no mês"); }
+  else if (saldo < 0) { score -= 20; details.push("❌ Saldo negativo no mês"); }
+
+  // Taxa de economia (+15 se >20% de poupança)
+  if (receitas > 0) {
+    const savingRate = saldo / receitas;
+    if (savingRate >= 0.2) { score += 15; details.push("✅ Poupando +20% da receita"); }
+    else if (savingRate >= 0.05) { score += 5; details.push("⚠️ Poupança abaixo de 20%"); }
+    else if (savingRate < 0) { score -= 10; details.push("❌ Gastando mais do que recebe"); }
+  }
+
+  // Metas (+10 se tem metas)
+  if (goals.length > 0) {
+    score += 10;
+    const done = goals.filter(g => (g.saved||0) >= (g.target||1)).length;
+    details.push(`✅ ${goals.length} meta(s) ativa(s)${done ? ` • ${done} concluída(s)` : ""}`);
+  } else {
+    details.push("⚠️ Nenhuma meta cadastrada");
+  }
+
+  // Limites (+10 se tem limites configurados)
+  if (Object.keys(limits).length > 0) {
+    const busted = Object.entries(limits).filter(([cat,lim]) => (byCat[cat]||0) > lim).length;
+    if (busted === 0) { score += 10; details.push("✅ Todos os limites respeitados"); }
+    else { score -= 5; details.push(`❌ ${busted} limite(s) estourado(s)`); }
+  } else {
+    details.push("⚠️ Sem limites de gastos configurados");
+  }
+
+  // Lançamentos regulares (+5)
+  if (monthTxs.length >= 10) { score += 5; details.push("✅ Controle regular de lançamentos"); }
+
+  score = Math.max(0, Math.min(100, score));
+  const emoji = score >= 80 ? "🏆" : score >= 60 ? "🚀" : score >= 40 ? "💪" : score >= 20 ? "⚠️" : "🚨";
+  const label = score >= 80 ? "Excelente" : score >= 60 ? "Bom" : score >= 40 ? "Regular" : score >= 20 ? "Atenção" : "Crítico";
+
+  await sendText(phone,
+    `🏆 *SCORE FINANCEIRO*\n━━━━━━━━━━━━━━━\n\n` +
+    `${emoji} *${score}/100 — ${label}*\n` +
+    `${progressBar(score, 10)}\n\n` +
+    `*Detalhes:*\n${details.map(d => `  ${d}`).join("\n")}\n\n` +
+    `━━━━━━━━━━━━━━━\n` +
+    `_Melhore seu score: configure metas e limites no Finn_\n👉 ${env.FINN_URL||""}`, env);
+}
+
+// =============================================================================
+// DASHBOARD COMPLETO
+// =============================================================================
+async function handleDashboardCompleto(phone, env) {
+  const data = await getUserData(phone, env);
+  const now = new Date();
+  const year = now.getFullYear(), cm = now.getMonth();
+
+  // 6 months data
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(year, cm - i, 1);
+    const mm = d.getMonth(), my = d.getFullYear();
+    const mt = (data.txs||[]).filter(tx => {
+      const td = new Date(tx.date); return td.getMonth()===mm && td.getFullYear()===my;
+    });
+    const r = mt.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
+    const e = mt.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+    months.push({ lbl: d.toLocaleDateString('pt-BR',{month:'short'}), r, e, n: r-e });
+  }
+
+  const cur = months[months.length-1];
+  const catMap = {};
+  (data.txs||[]).filter(tx => {
+    const d = new Date(tx.date); return d.getMonth()===cm && d.getFullYear()===year && tx.val<0;
+  }).forEach(t => { catMap[t.cat]=(catMap[t.cat]||0)+Math.abs(t.val); });
+  const topCats = Object.entries(catMap).sort((a,b)=>b[1]-a[1]).slice(0,4);
+
+  let msg = `📊 *DASHBOARD COMPLETO*\n━━━━━━━━━━━━━━━\n\n`;
+  msg += `*Mês atual:*\n💰 Receita: R$ ${formatBRL(cur.r)}\n💸 Despesa: R$ ${formatBRL(cur.e)}\n${cur.n>=0?"📈":"📉"} Saldo:   R$ ${formatBRL(Math.abs(cur.n))} ${cur.n<0?"(neg)":""}\n\n`;
+
+  if (topCats.length) {
+    msg += `*Top categorias:*\n`;
+    topCats.forEach(([cat,val]) => {
+      msg += `  ${catToEmoji(cat)} ${cat}: R$ ${formatBRL(val)}\n`;
+    });
+    msg += "\n";
+  }
+
+  msg += `*Tendência 6 meses:*\n`;
+  months.forEach(m => {
+    const bar = progressBar(m.r > 0 ? Math.min(100, Math.round(m.n/Math.max(m.r,1)*100)+50) : 0, 6);
+    msg += `${m.lbl.padEnd(4)} ${bar} ${m.n>=0?"+":"-"}R$${formatBRL(Math.abs(m.n))}\n`;
+  });
+
+  const goals = data.goals || [];
+  if (goals.length) {
+    msg += `\n*Metas:*\n`;
+    goals.slice(0,3).forEach(g => {
+      const pct = Math.min(100, Math.round(((g.saved||0)/(g.target||1))*100));
+      msg += `  ${pct>=100?"🏆":"📈"} ${g.name}: ${progressBar(pct,5)} ${pct}%\n`;
+    });
+  }
+
+  msg += `\n━━━━━━━━━━━━━━━\n👉 ${env.FINN_URL||""}`;
+  await sendText(phone, msg, env);
 }
 
 // =============================================================================
@@ -716,9 +903,9 @@ async function sendMainMenu(phone, env) {
           ]},
           {title:"🛠️ Ferramentas",rows:[
             {id:"previsao_saldo",title:"Previsão de Saldo",description:"Projeção até fim do mês"},
-            {id:"modo_panico",title:"Modo Pânico 🚨",description:"Análise de emergência"},
-            {id:"sinc_finn",title:"Sincronizar com Finn 🔄",description:"Enviar extrato pro app"},
-            {id:"abrir_finn",title:"Abrir Finn",description:"Link direto para o app"}
+            {id:"analise_extrato",title:"Análise de Extrato 📂",description:"Envie CSV/TXT do seu banco"},
+            {id:"sinc_finn",title:"Sincronizar com Finn 🔄",description:"Enviar lançamentos pro app"},
+            {id:"score_financeiro",title:"Score Financeiro 🏆",description:"Pontuação de saúde financeira"}
           ]}
         ]
       }
@@ -854,4 +1041,137 @@ function catToEmoji(cat) {
 function progressBar(pct, length=8) {
   const filled=Math.round((pct/100)*length);
   return "█".repeat(filled)+"░".repeat(length-filled);
+}
+
+// =============================================================================
+// CSV/TXT BANK STATEMENT PARSER (for WhatsApp document uploads)
+// =============================================================================
+function parseBankCSVBot(text) {
+  text = text.replace(/^﻿/, '').replace(/^﻿/, '');
+  const lines = text.split(/\r?\n/);
+  const txs = [];
+  let headerSkipped = false;
+  const sample = lines[0] || '';
+  const tabs = (sample.match(/\t/g)||[]).length;
+  const semis = (sample.match(/;/g)||[]).length;
+  const commas = (sample.match(/,/g)||[]).length;
+  let delim = ',';
+  if (tabs >= commas && tabs >= semis && tabs > 0) delim = '\t';
+  else if (semis > commas) delim = ';';
+
+  for (const line of lines) {
+    if (!headerSkipped) { headerSkipped = true; continue; }
+    if (!line.trim()) continue;
+    const fields = splitBotFields(line, delim);
+    if (fields.length < 3) continue;
+
+    let date = '', desc = '', val = 0, tipo = '';
+
+    for (const f of fields) {
+      const clean = f.replace(/"/g,'').trim();
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(clean) && !clean.startsWith('00')) { date = clean; break; }
+      if (/^\d{4}-\d{2}-\d{2}$/.test(clean)) {
+        const [y,m,d] = clean.split('-'); date = `${d}/${m}/${y}`; break;
+      }
+    }
+    if (!date) continue;
+
+    const upper = fields.join(' ').toUpperCase();
+    if (/SALDO ANTERIOR|SALDO DO DIA|SALDO FINAL/.test(upper)) continue;
+
+    for (const f of fields) {
+      const fl = f.toLowerCase().trim().replace(/"/g,'');
+      if (['entrada','crédito','credito','credit'].includes(fl)) { tipo = 'Entrada'; break; }
+      if (['saída','saida','débito','debito','debit'].includes(fl)) { tipo = 'Saída'; break; }
+    }
+
+    for (let j = fields.length - 1; j >= 0; j--) {
+      const n = parseBRNum(fields[j]);
+      if (n && Math.abs(n) > 0) { val = n; break; }
+    }
+    if (!val) continue;
+    if (!tipo) tipo = val > 0 ? 'Entrada' : 'Saída';
+
+    let maxLen = 0;
+    for (const f of fields) {
+      const clean = f.replace(/"/g,'').trim();
+      const tl = clean.replace(/[R$\s.,0-9()-]/g,'').length;
+      if (tl > maxLen) { maxLen = tl; desc = clean; }
+    }
+
+    let cat = 'Outros';
+    const dl = desc.toLowerCase();
+    if (/cart[aã]o|compra/i.test(dl)) cat = 'Cartão';
+    else if (/pix/i.test(dl)) cat = 'PIX';
+    else if (/dep[^a]|dinheiro|atm/i.test(dl)) cat = 'Depósito';
+    else if (/juros/i.test(dl)) cat = 'Juros';
+    else if (/iof/i.test(dl)) cat = 'IOF';
+
+    txs.push({ date, desc: desc.slice(0,28), val: Math.abs(val), tipo, cat });
+  }
+  return txs;
+}
+
+function splitBotFields(line, delim) {
+  const fields = []; let cur = '', inQ = false;
+  for (let j = 0; j < line.length; j++) {
+    if (line[j] === '"') inQ = !inQ;
+    else if (line[j] === delim && !inQ) { fields.push(cur.trim()); cur = ''; }
+    else cur += line[j];
+  }
+  fields.push(cur.trim());
+  return fields;
+}
+
+function parseBRNum(s) {
+  if (!s) return 0;
+  const c = s.replace(/"/g,'').replace(/[R$\s]/g,'').trim();
+  if (!c) return 0;
+  const n = parseFloat(c.replace(/\./g,'').replace(',','.'));
+  return isNaN(n) ? (parseFloat(c.replace(/,/g,'')) || 0) : n;
+}
+
+function analyzeBotCSV(txs) {
+  const entries = txs.filter(t => t.tipo === 'Entrada');
+  const exits   = txs.filter(t => t.tipo === 'Saída');
+  const tIn  = entries.reduce((s,t) => s + t.val, 0);
+  const tOut = exits.reduce((s,t)   => s + t.val, 0);
+  const catMap = {};
+  exits.forEach(t => { catMap[t.cat] = (catMap[t.cat]||0) + t.val; });
+  const topCats = Object.entries(catMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const topExp  = [...exits].sort((a,b) => b.val-a.val).slice(0,3);
+  const dates   = txs.map(t => t.date).sort();
+  return { count: txs.length, tIn, tOut, net: tIn-tOut, topCats, topExp, dates };
+}
+
+function formatBotAnalysis(d, env) {
+  const period = d.dates.length ? `${d.dates[0]} a ${d.dates[d.dates.length-1]}` : '';
+  let msg = `📂 *ANÁLISE DE EXTRATO*\n━━━━━━━━━━━━━━━\n`;
+  if (period) msg += `📅 ${period} · ${d.count} transações\n\n`;
+  msg += `💰 *Entradas:* R$ ${formatBRL(d.tIn)}\n`;
+  msg += `💸 *Saídas:*   R$ ${formatBRL(d.tOut)}\n`;
+  msg += `${d.net>=0?"📈":"📉"} *Saldo:*    R$ ${formatBRL(Math.abs(d.net))}${d.net<0?" ⚠️ NEGATIVO":""}\n\n`;
+
+  if (d.topCats.length) {
+    msg += `*Gastos por tipo:*\n`;
+    d.topCats.forEach(([cat,val]) => {
+      const pct = d.tOut > 0 ? Math.round(val/d.tOut*100) : 0;
+      msg += `  ${catToEmoji(cat)} ${cat}: R$ ${formatBRL(val)} (${pct}%)\n`;
+    });
+    msg += '\n';
+  }
+
+  if (d.topExp.length) {
+    msg += `*3 maiores saídas:*\n`;
+    d.topExp.forEach((t,i) => { msg += `  ${i+1}. ${t.desc} — R$ ${formatBRL(t.val)}\n`; });
+    msg += '\n';
+  }
+
+  if (d.net < 0) {
+    msg += `🚨 Gastos superam entradas em *R$ ${formatBRL(Math.abs(d.net))}*\n`;
+    msg += `   Reduza despesas ou aumente receita!\n\n`;
+  }
+
+  msg += `━━━━━━━━━━━━━━━\n_Importe no Finn para gráficos e metas:_\n👉 ${env?.FINN_URL||""}`;
+  return msg;
 }
