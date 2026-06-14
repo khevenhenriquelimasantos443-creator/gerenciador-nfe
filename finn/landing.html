@@ -154,10 +154,37 @@ h1 .underline::after{content:'';position:absolute;left:0;bottom:-4px;width:100%;
 .compare-table td{padding:14px 20px;border-bottom:1px solid #F1F5F9;font-size:14px;color:#334155}
 .compare-table tr:last-child td{border-bottom:none}
 .compare-table td:not(:first-child){text-align:center}
-.compare-table .col-finn{background:rgba(249,115,22,.04)}
+.compare-table .col-finn{background:rgba(249,115,22,.06)}
+.compare-table thead .col-finn{background:var(--orange);color:#fff!important}
 .check{color:var(--green);font-weight:800;font-size:16px}
 .cross{color:#CBD5E1;font-size:16px}
-.finn-col{color:var(--orange);font-weight:800}
+.finn-col{font-weight:800}
+
+/* ── DARK MODE ── */
+html.dark{color-scheme:dark}
+html.dark body{background:#0B1120;color:#CBD5E1}
+html.dark .trust-section{background:#060910;border-color:rgba(255,255,255,.05)}
+html.dark .trust-label{color:#64748B}
+html.dark .trust-logo{color:#475569;border-color:rgba(255,255,255,.07);background:#111827}
+html.dark .features-section{background:#0B1120}
+html.dark .section-title{color:#F1F5F9}
+html.dark .section-sub{color:#64748B}
+html.dark .feat-card{background:#111827;border-color:rgba(255,255,255,.07)}
+html.dark .feat-title{color:#F1F5F9}
+html.dark .feat-desc{color:#64748B}
+html.dark .compare-section{background:#060910}
+html.dark .compare-table{background:#111827;box-shadow:0 4px 24px rgba(0,0,0,.4)}
+html.dark .compare-table td{color:#94A3B8;border-color:rgba(255,255,255,.06)}
+html.dark .compare-table .col-finn{background:rgba(249,115,22,.1)}
+html.dark .testimonials-section{background:#0B1120}
+html.dark .testi-card{background:#111827;border-color:rgba(255,255,255,.07)}
+html.dark .testi-quote{color:#94A3B8}
+html.dark .testi-name{color:#F1F5F9}
+html.dark .testi-role{color:#475569}
+
+/* toggle button */
+#dm-btn{background:none;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 10px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+#dm-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
 
 /* ── TESTIMONIALS ── */
 .testimonials-section{padding:100px 24px;background:#fff}
@@ -207,7 +234,13 @@ footer{background:#05080F;padding:40px 24px;border-top:1px solid rgba(255,255,25
       <a href="#como-funciona">Como funciona</a>
       <a href="#comparativo">Comparativo</a>
     </div>
-    <a href="./index.html" class="nav-cta">Entrar no app</a>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button id="dm-btn" aria-label="Alternar modo escuro">
+        <svg id="dm-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="dm-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="./index.html" class="nav-cta">Entrar no app</a>
+    </div>
   </div>
 </nav>
 
@@ -491,6 +524,24 @@ footer{background:#05080F;padding:40px 24px;border-top:1px solid rgba(255,255,25
 window.addEventListener('scroll',function(){
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
 },{passive:true});
+
+// Dark mode
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('dm-btn');
+  var sun=document.getElementById('dm-sun');
+  var moon=document.getElementById('dm-moon');
+  function setDark(on){
+    root.classList.toggle('dark',on);
+    sun.style.display=on?'block':'none';
+    moon.style.display=on?'none':'block';
+    try{localStorage.setItem('finn-lp-theme',on?'dark':'light')}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('finn-lp-theme')}catch(e){}
+  var sysDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
+  setDark(saved==='dark'||(saved===null&&sysDark));
+  btn.addEventListener('click',function(){setDark(!root.classList.contains('dark'))});
+})();
 </script>
 </body>
 </html>
