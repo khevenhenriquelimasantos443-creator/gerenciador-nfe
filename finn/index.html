@@ -2786,8 +2786,10 @@ react-dom/cjs/react-dom-client.production.js:
       '#FFF':'#1a2540','#FFFFFF':'#1a2540','#fff':'#1a2540','#ffffff':'#1a2540',
       '#F8F7F4':'#0B1120','#F8FAFC':'#111827','#F8FAFF':'#111827',
       '#F1F5F9':'#1a2540','#EEF2F7':'#1a2540','#FAFAFA':'#1a2540',
-      '#E2E8F0':'#1a2540','#E8ECF2':'#1a2540','#E5E7EB':'#1a2540',
-      '#D1D5DB':'#1a2540','#CBD5E1':'#1a2540','#C8D0DA':'#1a2540',
+      // Cinzas de borda/track → levemente visíveis (progress bar tracks, divisores)
+      '#E2E8F0':'rgba(255,255,255,.1)','#E8ECF2':'rgba(255,255,255,.1)',
+      '#E5E7EB':'rgba(255,255,255,.1)','#D1D5DB':'rgba(255,255,255,.1)',
+      '#CBD5E1':'rgba(255,255,255,.09)','#C8D0DA':'rgba(255,255,255,.09)',
       // Tints coloridos → versão escura da mesma cor (mantém personalidade)
       '#F0FDF4':'rgba(34,197,94,.12)',   // verde claro → tint verde escuro
       '#DCFCE7':'rgba(34,197,94,.18)',
@@ -2804,7 +2806,7 @@ react-dom/cjs/react-dom-client.production.js:
       '#FCE7F3':'rgba(219,39,119,.12)', // rosa
     };
     var TX = {'#1E293B':'#F1F5F9','#1e293b':'#F1F5F9','#0F172A':'#F8FAFC','#0f172a':'#F8FAFC','#334155':'#E2E8F0','#475569':'#CBD5E1','#64748B':'#94A3B8'};
-    var BD = {'#E2E8F0':'rgba(255,255,255,.08)','#E8ECF2':'rgba(255,255,255,.07)','#EEF2F7':'rgba(255,255,255,.07)','#e2e8f0':'rgba(255,255,255,.08)'};
+    var BD = {'#E2E8F0':'rgba(255,255,255,.1)','#E8ECF2':'rgba(255,255,255,.1)','#EEF2F7':'rgba(255,255,255,.08)','#e2e8f0':'rgba(255,255,255,.1)','#CBD5E1':'rgba(255,255,255,.1)'};
 
     function normHex(v) {
       if (!v) return '';
