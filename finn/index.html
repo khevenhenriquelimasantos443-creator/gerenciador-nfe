@@ -2197,6 +2197,151 @@ react-dom/cjs/react-dom-client.production.js:
       return txs;
     }
 
+    // ── MULTI-FORMAT HELPERS ────────────────────────────────────────────────
+    function loadScript(url, cb) {
+      var s = document.createElement('script');
+      s.src = url;
+      s.onload = function(){ cb(null); };
+      s.onerror = function(){ cb(new Error('Falha: '+url.split('/').pop())); };
+      document.head.appendChild(s);
+    }
+
+    function splitFields(line, delim) {
+      var fields=[], cur='', inQ=false;
+      for (var j=0;j<line.length;j++) {
+        if (line[j]==='"') inQ=!inQ;
+        else if (line[j]===delim&&!inQ) { fields.push(cur.trim()); cur=''; }
+        else cur+=line[j];
+      }
+      fields.push(cur.trim());
+      return fields;
+    }
+
+    function parseText(text) {
+      text = text.replace(/^﻿/,'');
+      var lines = text.split(/\r?\n/).filter(function(l){return l.trim();});
+      if (lines.length<2) return [];
+      var s=lines[0];
+      var tabs=(s.match(/\t/g)||[]).length, commas=(s.match(/,/g)||[]).length, semis=(s.match(/;/g)||[]).length;
+      var delim=',';
+      if (tabs>=commas&&tabs>=semis&&tabs>0) delim='\t';
+      else if (semis>commas) delim=';';
+      if (delim===',') return parseCSV(text);
+      var txs=[], first=true;
+      lines.forEach(function(line) {
+        if (first){first=false;return;}
+        var fields=splitFields(line,delim);
+        if (fields.length<3) return;
+        var date='',desc='',val=0;
+        for (var i=0;i<fields.length;i++) {
+          if (/^\d{2}\/\d{2}\/\d{4}$/.test(fields[i])){date=fields[i];break;}
+          if (/^\d{4}-\d{2}-\d{2}$/.test(fields[i])){var p=fields[i].split('-');date=p[2]+'/'+p[1]+'/'+p[0];break;}
+        }
+        if (!date||date.startsWith('00')) return;
+        var maxLen=0;
+        for (var k=0;k<fields.length;k++){var f=fields[k].replace(/[R$\s.,0-9-]/g,'');if(f.length>maxLen){maxLen=f.length;desc=fields[k];}}
+        for (var j=fields.length-1;j>=0;j--){var n=parseNum(fields[j].replace(/[R$\s]/g,''));if(n&&fields[j]!==date){val=n;break;}}
+        if (!val) return;
+        var tipo=val>0?'Entrada':'Saída', cat='Outros', dl=desc.toLowerCase();
+        if (/cart[aã]o|compra/.test(dl)) cat='Cartão';
+        else if (/pix/.test(dl)) cat='PIX';
+        else if (/dep[^a]|dinheiro|atm/.test(dl)) cat='Depósito';
+        else if (/juros/.test(dl)) cat='Juros';
+        else if (/iof/.test(dl)) cat='IOF';
+        else if (/estorno/.test(dl)) cat='Estorno';
+        txs.push({date:date,lanc:desc,det:desc,val:Math.abs(val),tipo:tipo,cat:cat});
+      });
+      return txs;
+    }
+
+    function parsePDFText(text) {
+      var txs=[], dateRE=/(\d{2}\/\d{2}\/\d{4})/, valREStr='[-]?\\d{1,3}(?:[.,]\\d{3})*[.,]\\d{2}';
+      text.split(/\n/).forEach(function(line) {
+        var dm=dateRE.exec(line); if (!dm) return;
+        var date=dm[1]; if (date.startsWith('00')) return;
+        var vals=[], m, vr=new RegExp(valREStr,'g');
+        while ((m=vr.exec(line))!==null) vals.push(m[0]);
+        if (!vals.length) return;
+        var val=parseNum(vals[vals.length-1]); if (!val) return;
+        var desc=line.replace(dateRE,'').replace(new RegExp(valREStr,'g'),'').replace(/\s+/g,' ').trim();
+        var tipo=val>0?'Entrada':'Saída', cat='Outros', dl=desc.toLowerCase();
+        if (/pix/.test(dl)) cat='PIX';
+        else if (/cart[aã]o|compra/.test(dl)) cat='Cartão';
+        else if (/dep[^a]|atm/.test(dl)) cat='Depósito';
+        else if (/juros/.test(dl)) cat='Juros';
+        txs.push({date:date,lanc:desc,det:desc,val:Math.abs(val),tipo:tipo,cat:cat});
+      });
+      return txs;
+    }
+
+    function importFile(file, onDone) {
+      var ext=(file.name.split('.').pop()||'').toLowerCase();
+      var showLoading=function(msg){
+        document.getElementById('finn-ab-content').innerHTML=
+          '<div style="text-align:center;padding:40px;color:#94A3B8;font-size:13px;">'+
+          '<div style="font-size:28px;margin-bottom:12px;">⏳</div>'+(msg||'Processando...')+'</div>';
+      };
+      if (ext==='csv') {
+        var r=new FileReader();
+        r.onload=function(ev){
+          try{var txs=parseCSV(ev.target.result);if(!txs.length)txs=parseText(ev.target.result);
+          if(!txs.length)throw new Error('Nenhuma transação encontrada.');onDone(null,txs);}catch(e){onDone(e);}};
+        r.readAsText(file,'latin1');
+      } else if (ext==='txt') {
+        showLoading('Lendo arquivo TXT...');
+        var r2=new FileReader();
+        r2.onload=function(ev){
+          try{var t=ev.target.result;var txs=parseText(t);if(!txs.length)txs=parseCSV(t);
+          if(!txs.length)throw new Error('Nenhuma transação encontrada. Verifique o formato.');onDone(null,txs);}catch(e){onDone(e);}};
+        r2.readAsText(file,'latin1');
+      } else if (ext==='xlsx'||ext==='xls') {
+        showLoading('Lendo planilha Excel...');
+        var r3=new FileReader();
+        r3.onload=function(ev){
+          var buf=ev.target.result;
+          function doXlsx(){try{var wb=XLSX.read(new Uint8Array(buf),{type:'array'});
+            var ws=wb.Sheets[wb.SheetNames[0]];var csv=XLSX.utils.sheet_to_csv(ws);
+            var txs=parseCSV(csv);if(!txs.length)txs=parseText(csv);
+            if(!txs.length)throw new Error('Nenhuma transação encontrada na planilha.');onDone(null,txs);}catch(e){onDone(e);}}
+          if (window.XLSX){doXlsx();}
+          else loadScript('https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',function(err){
+            if(err){onDone(new Error('Falha ao carregar leitor XLSX. Verifique a conexão.'));return;}doXlsx();});
+        };
+        r3.readAsArrayBuffer(file);
+      } else if (ext==='pdf') {
+        showLoading('Extraindo texto do PDF...');
+        function doPdf(){
+          var fr=new FileReader();
+          fr.onload=function(ev){
+            var data=new Uint8Array(ev.target.result);
+            pdfjsLib.getDocument({data:data}).promise.then(function(pdf){
+              var pages=pdf.numPages,done=0,parts=[];
+              function next(n){pdf.getPage(n).then(function(pg){
+                pg.getTextContent().then(function(tc){
+                  parts[n-1]=tc.items.map(function(it){return it.str;}).join(' ');
+                  done++;
+                  if(done<pages)next(n+1);
+                  else{try{var txs=parsePDFText(parts.join('\n'));
+                    if(!txs.length)throw new Error('Nenhuma transação encontrada. O PDF pode ser escaneado (imagem).');
+                    onDone(null,txs);}catch(e){onDone(e);}}
+                });}).catch(function(e){onDone(new Error('Erro página '+n+': '+e.message));});}
+              next(1);
+            }).catch(function(e){onDone(new Error('Erro ao abrir PDF: '+e.message));});
+          };
+          fr.readAsArrayBuffer(file);
+        }
+        if(window.pdfjsLib){doPdf();return;}
+        loadScript('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js',function(err){
+          if(err){onDone(new Error('Falha ao carregar leitor PDF. Verifique a conexão.'));return;}
+          if(!pdfjsLib.GlobalWorkerOptions.workerSrc)
+            pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+          doPdf();
+        });
+      } else {
+        onDone(new Error('Formato .'+ext+' não suportado. Use: CSV, TXT, XLSX ou PDF.'));
+      }
+    }
+
     function analyze(txs) {
       var inc=txs.filter(function(t){return t.tipo==='Entrada';}),
           exp=txs.filter(function(t){return t.tipo==='Saída';});
@@ -2222,26 +2367,27 @@ react-dom/cjs/react-dom-client.production.js:
         '<button id="finn-ab-back" style="background:#0F172A;border:none;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>' +
         '<div style="flex:1;"><div style="color:#F8FAFC;font-weight:700;font-size:16px;">Análise de Extrato</div>' +
-        '<div id="finn-ab-sub" style="color:#64748B;font-size:11px;">Importe um CSV bancário</div></div></div>' +
+        '<div id="finn-ab-sub" style="color:#64748B;font-size:11px;">Importe um extrato bancário</div></div></div>' +
       '<label for="finn-ab-file" id="finn-ab-uplbl" style="display:flex;flex-shrink:0;align-items:center;gap:10px;padding:12px 16px;background:#1E293B;cursor:pointer;border-bottom:1px solid #0F172A;">' +
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
-        '<span id="finn-ab-filelbl" style="color:#94A3B8;font-size:13px;">Selecionar extrato CSV...</span>' +
-        '<input type="file" id="finn-ab-file" accept=".csv,.txt" style="display:none;"></label>' +
+        '<span id="finn-ab-filelbl" style="color:#94A3B8;font-size:13px;">Selecionar extrato (CSV, TXT, XLSX, PDF)...</span>' +
+        '<input type="file" id="finn-ab-file" accept=".csv,.txt,.xlsx,.xls,.pdf" style="display:none;"></label>' +
       '<div id="finn-ab-content" style="flex:1;overflow-y:auto;padding:12px 16px;">' +
         '<div style="text-align:center;padding:50px 20px;color:#475569;">' +
           '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="1.3" style="margin:0 auto 12px;display:block;"><rect x="4" y="3" width="16" height="18" rx="2"/><polyline points="9 3 9 8 15 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>' +
           '<div style="font-size:14px;margin-bottom:6px;">Nenhum extrato importado</div>' +
-          '<div style="font-size:11px;">Selecione um arquivo CSV do seu banco</div></div></div>';
+          '<div style="font-size:11px;">CSV · TXT · XLSX · PDF — qualquer banco</div></div></div>';
     document.body.appendChild(aPanel);
 
     document.getElementById('finn-ab-file').addEventListener('change', function(e) {
       var file = e.target.files[0]; if (!file) return;
       document.getElementById('finn-ab-filelbl').textContent = file.name;
-      var reader = new FileReader();
-      reader.onload = function(ev) {
+      importFile(file, function(err, txs) {
+        if (err) {
+          document.getElementById('finn-ab-content').innerHTML = '<div style="text-align:center;padding:30px;color:#EF4444;font-size:13px;">Erro: '+err.message+'</div>';
+          return;
+        }
         try {
-          var txs = parseCSV(ev.target.result);
-          if (!txs.length) throw new Error('Nenhuma transação encontrada.');
           var data = analyze(txs);
           document.getElementById('finn-ab-sub').textContent = txs.length + ' transações · ' + data.dates[0] + ' a ' + data.dates[data.dates.length-1];
           document.getElementById('finn-ab-uplbl').style.display = 'none';
@@ -2302,11 +2448,10 @@ react-dom/cjs/react-dom-client.production.js:
           recs.forEach(function(r,i){ html += '<div style="font-size:12px;color:#FED7AA;padding:3px 0;line-height:1.5;">'+(i+1)+'. '+r+'</div>'; });
           html += '</div>';
           cont.innerHTML = html;
-        } catch(err) {
-          document.getElementById('finn-ab-content').innerHTML = '<div style="text-align:center;padding:30px;color:#EF4444;font-size:13px;">Erro: '+err.message+'</div>';
+        } catch(err2) {
+          document.getElementById('finn-ab-content').innerHTML = '<div style="text-align:center;padding:30px;color:#EF4444;font-size:13px;">Erro: '+err2.message+'</div>';
         }
-      };
-      reader.readAsText(file, 'latin1');
+      });
     });
     document.getElementById('finn-ab-back').addEventListener('click', function(){ aPanel.style.display='none'; });
     window.finnOpenAnalise = function(){ aPanel.style.display='flex'; };
