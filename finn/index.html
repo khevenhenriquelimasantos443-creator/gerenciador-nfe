@@ -1927,7 +1927,7 @@ react-dom/cjs/react-dom-client.production.js:
     var syncSVG = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 8A7 7 0 103 10"/><path d="M3 14v-4H7"/></svg>';
           btn.id = 'finn-bot-sync-btn';
       btn.title = 'Sincronizar transações do bot WhatsApp';
-      btn.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:9990;background:#1E293B;color:#F97316;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.35);display:flex;align-items:center;justify-content:center;';
+      btn.style.cssText = 'position:fixed;bottom:86px;right:16px;z-index:9990;background:#1E293B;color:#F97316;border:none;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.35);display:flex;align-items:center;justify-content:center;';
       btn.innerHTML = syncSVG;
       btn.addEventListener('click', function(){
         btn.textContent = '...';
@@ -1939,7 +1939,7 @@ react-dom/cjs/react-dom-client.production.js:
       });
       var status = document.createElement('div');
       status.id = 'finn-bot-sync-status';
-      status.style.cssText = 'display:none;position:fixed;bottom:130px;right:16px;z-index:9991;background:#128C7E;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:220px;box-shadow:0 2px 8px rgba(0,0,0,0.2);';
+      status.style.cssText = 'display:none;position:fixed;bottom:244px;right:16px;z-index:9991;background:#128C7E;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;max-width:220px;box-shadow:0 2px 8px rgba(0,0,0,0.2);';
       document.body.appendChild(btn);
       document.body.appendChild(status);
     }, 500);
@@ -1966,7 +1966,7 @@ react-dom/cjs/react-dom-client.production.js:
     panel.id = 'finn-ia-panel';
     panel.style.cssText = 'position:fixed;right:16px;z-index:10000;background:#0F172A;border-radius:16px;width:300px;box-shadow:0 8px 40px rgba(0,0,0,0.55);flex-direction:column;overflow:hidden;border:1px solid #1E293B;';
     panel.style.display = 'none';
-    panel.style.bottom = '196px';
+    panel.style.bottom = '198px';
     panel.style.height = 'min(420px, calc(100vh - 220px))';
 
     // Header
@@ -1992,7 +1992,7 @@ react-dom/cjs/react-dom-client.production.js:
     var btn = document.createElement('button');
     btn.id = 'finn-ia-fab';
     btn.title = 'Finn IA — Assistente Financeiro';
-    btn.style.cssText = 'position:fixed;bottom:140px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.4);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;';
+    btn.style.cssText = 'position:fixed;bottom:142px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,0.4);display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;';
     btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1L19 10L10 19L1 10Z" fill="#F97316"/><path d="M10 5L15 10L10 15L5 10Z" fill="#1E293B"/><circle cx="10" cy="10" r="2" fill="#F97316"/></svg>';
 
     document.body.appendChild(panel);
@@ -2367,11 +2367,13 @@ react-dom/cjs/react-dom-client.production.js:
         '<button id="finn-ab-back" style="background:#0F172A;border:none;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>' +
         '<div style="flex:1;"><div style="color:#F8FAFC;font-weight:700;font-size:16px;">Análise de Extrato</div>' +
-        '<div id="finn-ab-sub" style="color:#64748B;font-size:11px;">Importe um extrato bancário</div></div></div>' +
+        '<div id="finn-ab-sub" style="color:#64748B;font-size:11px;">Importe um extrato bancário</div></div>' +
+        '<button id="finn-ab-history-btn" title="Histórico de análises" style="background:#1E1040;border:1px solid #7C3AED44;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></button></div>' +
       '<label for="finn-ab-file" id="finn-ab-uplbl" style="display:flex;flex-shrink:0;align-items:center;gap:10px;padding:12px 16px;background:#1E293B;cursor:pointer;border-bottom:1px solid #0F172A;">' +
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
         '<span id="finn-ab-filelbl" style="color:#94A3B8;font-size:13px;">Selecionar extrato (CSV, TXT, XLSX, PDF)...</span>' +
-        '<input type="file" id="finn-ab-file" accept="*/*" style="display:none;"></label>' +
+        '<input type="file" id="finn-ab-file" accept=".csv,.txt,.xlsx,.xls,.pdf,.ofx" style="display:none;"></label>' +
       '<div id="finn-ab-content" style="flex:1;overflow-y:auto;padding:12px 16px;">' +
         '<div style="text-align:center;padding:50px 20px;color:#475569;">' +
           '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="1.3" style="margin:0 auto 12px;display:block;"><rect x="4" y="3" width="16" height="18" rx="2"/><polyline points="9 3 9 8 15 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>' +
@@ -2443,17 +2445,102 @@ react-dom/cjs/react-dom-client.production.js:
           if (data.catOut['Juros']) recs.push('Pagando juros — quitar saldo devedor é urgente');
           recs.push('Cadastre os lançamentos no Finn para metas e limites automáticos');
           recs.push('Revise mensalmente para acompanhar evolução');
-          html += '<div style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);border-radius:12px;padding:14px;margin-bottom:20px;">';
+          html += '<div style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);border-radius:12px;padding:14px;margin-bottom:10px;">';
           html += '<div style="font-size:10px;font-weight:700;color:#F97316;letter-spacing:.08em;margin-bottom:8px;">RECOMENDAÇÕES</div>';
           recs.forEach(function(r,i){ html += '<div style="font-size:12px;color:#FED7AA;padding:3px 0;line-height:1.5;">'+(i+1)+'. '+r+'</div>'; });
           html += '</div>';
+          // AI analysis button
+          html += '<div id="finn-ab-ai-wrap" style="margin-bottom:20px;">' +
+            '<button id="finn-ab-ai-btn" style="background:#7C3AED;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;color:#fff;font-size:13px;font-weight:700;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;">' +
+            '<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 1L19 10L10 19L1 10Z" fill="#fff" opacity=".8"/><path d="M10 5L15 10L10 15L5 10Z" fill="#7C3AED"/><circle cx="10" cy="10" r="2" fill="#fff"/></svg>' +
+            'Analisar com IA (Anthropic)</button>' +
+            '<div id="finn-ab-ai-result" style="display:none;margin-top:10px;background:#1E1040;border:1px solid #7C3AED33;border-radius:12px;padding:14px;font-size:12px;color:#DDD6FE;line-height:1.7;white-space:pre-wrap;"></div>' +
+          '</div>';
           cont.innerHTML = html;
+
+          // Wire up AI analysis
+          (function(txs, data) {
+            var aiBtn = document.getElementById('finn-ab-ai-btn');
+            if (!aiBtn) return;
+            aiBtn.addEventListener('click', function() {
+              var key = localStorage.getItem('fiq_apikey') || '';
+              if (!key) {
+                alert('Configure sua chave API Anthropic em Configurações para usar análise com IA.');
+                return;
+              }
+              aiBtn.disabled = true;
+              aiBtn.textContent = 'Analisando...';
+              var summary = 'Extrato bancário com '+txs.length+' transações.\n' +
+                'Período: '+data.dates[0]+' a '+data.dates[data.dates.length-1]+'.\n' +
+                'Entradas: R$ '+data.tIn.toFixed(2)+'\nSaídas: R$ '+data.tOut.toFixed(2)+'\nSaldo líquido: R$ '+data.net.toFixed(2)+'\n' +
+                'Categorias de saída: '+data.outByCat.map(function(c){return c.cat+' R$'+c.val.toFixed(2);}).join(', ')+'.\n' +
+                'Maiores saídas: '+data.topExp.slice(0,3).map(function(t){return t.lanc+' R$'+t.val.toFixed(2);}).join(', ')+'.';
+              fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+                body: JSON.stringify({ model: 'claude-haiku-4-20250514', max_tokens: 600, system: 'Você é um consultor financeiro pessoal brasileiro. Analise o extrato bancário fornecido e dê insights práticos e objetivos em português do Brasil. Máximo 5 parágrafos curtos.', messages: [{ role: 'user', content: summary }] })
+              }).then(function(r){ return r.json(); }).then(function(res) {
+                if (res.error) throw new Error(res.error.message);
+                var text = (res.content || []).map(function(c){ return c.text || ''; }).join('');
+                var resultEl = document.getElementById('finn-ab-ai-result');
+                if (resultEl) { resultEl.textContent = text; resultEl.style.display = 'block'; }
+                // Save to history
+                try {
+                  var analyses = JSON.parse(localStorage.getItem('fiq_analyses') || '[]');
+                  analyses.unshift({ date: new Date().toLocaleDateString('pt-BR'), text: text, txCount: txs.length });
+                  if (analyses.length > 20) analyses = analyses.slice(0, 20);
+                  localStorage.setItem('fiq_analyses', JSON.stringify(analyses));
+                } catch(e) {}
+                aiBtn.textContent = 'Reanalisar com IA';
+                aiBtn.disabled = false;
+              }).catch(function(e) {
+                var resultEl = document.getElementById('finn-ab-ai-result');
+                if (resultEl) { resultEl.textContent = 'Erro: ' + e.message; resultEl.style.display = 'block'; resultEl.style.color = '#FCA5A5'; }
+                aiBtn.textContent = 'Analisar com IA (Anthropic)';
+                aiBtn.disabled = false;
+              });
+            });
+          })(txs, data);
+
         } catch(err2) {
           document.getElementById('finn-ab-content').innerHTML = '<div style="text-align:center;padding:30px;color:#EF4444;font-size:13px;">Erro: '+err2.message+'</div>';
         }
       });
     });
     document.getElementById('finn-ab-back').addEventListener('click', function(){ aPanel.style.display='none'; });
+    document.getElementById('finn-ab-history-btn').addEventListener('click', function(){ window.finnOpenAnalysesHistory && window.finnOpenAnalysesHistory(); });
+
+    // History panel for previous AI analyses
+    var hPanel = document.createElement('div');
+    hPanel.id = 'finn-analyses-history';
+    hPanel.style.cssText = 'display:none;position:fixed;inset:0;background:#0F172A;z-index:810;flex-direction:column;overflow:hidden;';
+    hPanel.innerHTML =
+      '<div style="background:#1E293B;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #0F172A;flex-shrink:0;">' +
+        '<button id="finn-ah-back" style="background:#0F172A;border:none;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>' +
+        '<div style="flex:1;"><div style="color:#F8FAFC;font-weight:700;font-size:16px;">Histórico de Análises IA</div>' +
+        '<div style="color:#64748B;font-size:11px;">Análises anteriores do extrato</div></div></div>' +
+      '<div id="finn-ah-content" style="flex:1;overflow-y:auto;padding:12px 16px;"></div>';
+    document.body.appendChild(hPanel);
+    document.getElementById('finn-ah-back').addEventListener('click', function(){ hPanel.style.display='none'; });
+    window.finnOpenAnalysesHistory = function() {
+      var analyses = [];
+      try { analyses = JSON.parse(localStorage.getItem('fiq_analyses') || '[]'); } catch(e) {}
+      var cont = document.getElementById('finn-ah-content');
+      if (!analyses.length) {
+        cont.innerHTML = '<div style="text-align:center;padding:50px 20px;color:#475569;font-size:13px;">Nenhuma análise salva ainda.<br>Importe um extrato e use "Analisar com IA".</div>';
+      } else {
+        cont.innerHTML = analyses.map(function(a, i) {
+          return '<div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:10px;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+            '<div style="font-size:11px;font-weight:700;color:#F97316;">' + a.date + '</div>' +
+            '<div style="font-size:10px;color:#64748B;">' + a.txCount + ' transações</div></div>' +
+            '<div style="font-size:12px;color:#CBD5E1;line-height:1.7;white-space:pre-wrap;">' + a.text + '</div></div>';
+        }).join('');
+      }
+      hPanel.style.display = 'flex';
+    };
+
     window.finnOpenAnalise = function(){ aPanel.style.display='flex'; };
 
     // ── DASHBOARDS PANEL ────────────────────────────────────────────────────
@@ -2632,9 +2719,10 @@ react-dom/cjs/react-dom-client.production.js:
         '.mobile-nav{display:none!important;}' +
         '.finn-ia-panel,.finn-bot-sync-btn{bottom:calc(var(--btn-base,80px) + env(safe-area-inset-bottom,0px));}' +
         '#fw-btn{bottom:calc(22px + env(safe-area-inset-bottom,0px))!important;}' +
-        '#finn-bot-sync-btn{bottom:calc(80px + env(safe-area-inset-bottom,0px))!important;}' +
-        '#finn-ia-fab{bottom:calc(140px + env(safe-area-inset-bottom,0px))!important;}' +
-        '#finn-ia-panel{bottom:calc(196px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-bot-sync-btn{bottom:calc(86px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-ia-fab{bottom:calc(142px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-dm-btn{bottom:calc(198px + env(safe-area-inset-bottom,0px))!important;}' +
+        '#finn-ia-panel{bottom:calc(254px + env(safe-area-inset-bottom,0px))!important;}' +
         '.app-content{padding-top:calc(66px + env(safe-area-inset-top,0px))!important;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)!important;}' +
       '}';
     document.head.appendChild(css);
@@ -2763,11 +2851,33 @@ react-dom/cjs/react-dom-client.production.js:
     setInterval(syncTab, 500);
     setTimeout(syncTab, 900);
 
+    // Hide topbar and sidebar toggle when user is not logged in (login screen showing)
+    function checkLoginState() {
+      var hasSession = false;
+      try {
+        var s = JSON.parse(localStorage.getItem('finn_supa_session') || 'null');
+        if (s && s.access_token) hasSession = true;
+      } catch(e) {}
+      if (!hasSession) {
+        try {
+          var p = JSON.parse(localStorage.getItem('fiq_profiles') || '{}');
+          if (Object.keys(p).length > 0) hasSession = true;
+        } catch(e) {}
+      }
+      var tb = document.getElementById('finn-topbar');
+      if (tb) tb.style.visibility = hasSession ? '' : 'hidden';
+    }
+    setInterval(checkLoginState, 800);
+    setTimeout(checkLoginState, 300);
+
     document.getElementById('fns-cfg-btn').addEventListener('click', function() {
       closeSidebar();
       setTimeout(function() {
+        // Try opening the app's native settings modal first
         var hcBtns = document.querySelectorAll('.header-controls button');
         if (hcBtns.length) hcBtns[hcBtns.length - 1].click();
+        // Also open our custom settings panel for API key config
+        window.finnOpenSettings && window.finnOpenSettings();
       }, 60);
     });
     document.getElementById('finn-menu-btn').addEventListener('click', openSidebar);
@@ -2906,7 +3016,7 @@ react-dom/cjs/react-dom-client.production.js:
     var btn = document.createElement('button');
     btn.id = 'finn-dm-btn';
     btn.title = 'Modo escuro';
-    btn.style.cssText = 'position:fixed;bottom:130px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,.35);display:flex;align-items:center;justify-content:center;transition:color .2s;';
+    btn.style.cssText = 'position:fixed;bottom:198px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,.35);display:flex;align-items:center;justify-content:center;transition:color .2s;';
 
     function applyTheme(dark) {
       document.documentElement.classList.toggle('dark', dark);
@@ -3136,6 +3246,81 @@ react-dom/cjs/react-dom-client.production.js:
     if (dCss) dCss.textContent += 'html.dark #finn-pluggy-panel{background:#0B1120!important;}';
   }
 
+  function addSettingsPanel() {
+    if (document.getElementById('finn-settings-panel')) return;
+
+    var panel = document.createElement('div');
+    panel.id = 'finn-settings-panel';
+    panel.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:8000;align-items:flex-end;justify-content:center;';
+
+    var box = document.createElement('div');
+    box.style.cssText = 'background:#0F172A;border-radius:20px 20px 0 0;width:100%;max-width:520px;padding:20px 20px 32px;max-height:85vh;overflow-y:auto;';
+    box.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">' +
+        '<div style="color:#F8FAFC;font-weight:800;font-size:17px;">Configurações Finn</div>' +
+        '<button id="finn-settings-close" style="background:#1E293B;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;color:#94A3B8;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>' +
+      '</div>' +
+      '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#475569;text-transform:uppercase;margin-bottom:8px;">INTELIGÊNCIA ARTIFICIAL</div>' +
+      '<div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:16px;">' +
+        '<div style="color:#94A3B8;font-size:12px;margin-bottom:10px;line-height:1.5;">Chave API Anthropic para usar o Finn IA e análise de extratos com inteligência artificial.<br>' +
+          '<a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:#F97316;text-decoration:none;">Obter chave em console.anthropic.com →</a></div>' +
+        '<label style="display:block;font-size:11px;color:#64748B;margin-bottom:6px;">Chave API Anthropic</label>' +
+        '<input id="finn-cfg-apikey" type="password" placeholder="sk-ant-..." style="width:100%;box-sizing:border-box;background:#0F172A;border:1px solid #334155;border-radius:8px;padding:9px 11px;color:#F8FAFC;font-size:13px;outline:none;font-family:inherit;">' +
+        '<div style="margin-top:8px;display:flex;gap:8px;">' +
+          '<button id="finn-cfg-apikey-save" style="background:#F97316;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;color:#fff;font-size:12px;font-weight:700;flex:1;">Salvar</button>' +
+          '<button id="finn-cfg-apikey-clear" style="background:#1E293B;border:1px solid #334155;border-radius:8px;padding:8px 12px;cursor:pointer;color:#64748B;font-size:12px;font-weight:600;">Limpar</button>' +
+        '</div>' +
+        '<div id="finn-cfg-apikey-status" style="display:none;margin-top:8px;font-size:11px;color:#22C55E;"></div>' +
+      '</div>' +
+      '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#475569;text-transform:uppercase;margin-bottom:8px;">HISTÓRICO</div>' +
+      '<div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:16px;">' +
+        '<button id="finn-cfg-view-analyses" style="background:#7C3AED22;border:1px solid #7C3AED44;border-radius:8px;padding:9px 14px;cursor:pointer;color:#A78BFA;font-size:12px;font-weight:600;width:100%;text-align:left;display:flex;align-items:center;gap:8px;">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>' +
+          'Ver Histórico de Análises IA</button>' +
+      '</div>';
+
+    panel.appendChild(box);
+    document.body.appendChild(panel);
+
+    function openSettings() {
+      var key = localStorage.getItem('fiq_apikey') || '';
+      var inp = document.getElementById('finn-cfg-apikey');
+      if (inp) inp.value = key;
+      var st = document.getElementById('finn-cfg-apikey-status');
+      if (st) { st.style.display = key ? 'block' : 'none'; st.textContent = key ? 'Chave salva (' + key.slice(0,8) + '...)' : ''; }
+      panel.style.display = 'flex';
+    }
+    function closeSettings() { panel.style.display = 'none'; }
+
+    document.getElementById('finn-settings-close').addEventListener('click', closeSettings);
+    panel.addEventListener('click', function(e) { if (e.target === panel) closeSettings(); });
+
+    document.getElementById('finn-cfg-apikey-save').addEventListener('click', function() {
+      var key = (document.getElementById('finn-cfg-apikey').value || '').trim();
+      if (key) {
+        localStorage.setItem('fiq_apikey', key);
+        var st = document.getElementById('finn-cfg-apikey-status');
+        st.textContent = 'Chave salva! (' + key.slice(0,8) + '...)'; st.style.display = 'block'; st.style.color = '#22C55E';
+      } else {
+        alert('Digite uma chave API válida.');
+      }
+    });
+
+    document.getElementById('finn-cfg-apikey-clear').addEventListener('click', function() {
+      localStorage.removeItem('fiq_apikey');
+      document.getElementById('finn-cfg-apikey').value = '';
+      var st = document.getElementById('finn-cfg-apikey-status');
+      st.textContent = 'Chave removida.'; st.style.display = 'block'; st.style.color = '#EF4444';
+    });
+
+    document.getElementById('finn-cfg-view-analyses').addEventListener('click', function() {
+      closeSettings();
+      setTimeout(function() { window.finnOpenAnalysesHistory && window.finnOpenAnalysesHistory(); }, 100);
+    });
+
+    window.finnOpenSettings = openSettings;
+  }
+
   function start() {
     addSyncButton();
     addIAChat();
@@ -3144,6 +3329,7 @@ react-dom/cjs/react-dom-client.production.js:
     addExtratoPanels();
     addDarkMode();
     addPluggyConnect();
+    addSettingsPanel();
     setTimeout(autoSync, 3000);
   }
 
