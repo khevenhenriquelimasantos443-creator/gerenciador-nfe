@@ -33,12 +33,19 @@ async function _pluggyApiKey(env) {
 async function _pluggyToken(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
+    if (!env.PLUGGY_CLIENT_ID || !env.PLUGGY_CLIENT_SECRET) {
+      return new Response(JSON.stringify({ error: 'Secrets não configurados: PLUGGY_CLIENT_ID=' + (env.PLUGGY_CLIENT_ID ? 'ok' : 'MISSING') + ' PLUGGY_CLIENT_SECRET=' + (env.PLUGGY_CLIENT_SECRET ? 'ok' : 'MISSING') }), { status: 500, headers: cors });
+    }
     var apiKey = await _pluggyApiKey(env);
     var r = await fetch('https://api.pluggy.ai/connect_token', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-API-KEY': apiKey }
+      headers: { 'Content-Type': 'application/json', 'X-API-KEY': apiKey },
+      body: JSON.stringify({ clientUserId: 'finn-user' })
     });
-    if (!r.ok) throw new Error('connect_token failed: ' + r.status);
+    if (!r.ok) {
+      var errBody = ''; try { errBody = await r.text(); } catch(e2) {}
+      throw new Error('connect_token failed: ' + r.status + ' — ' + errBody.slice(0,200));
+    }
     var j = await r.json();
     return new Response(JSON.stringify({ accessToken: j.accessToken }), { headers: cors });
   } catch (e) {
