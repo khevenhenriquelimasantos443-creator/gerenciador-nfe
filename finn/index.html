@@ -2971,29 +2971,28 @@ react-dom/cjs/react-dom-client.production.js:
 
     document.getElementById('fns-sync-btn').addEventListener('click', function() {
       closeSidebar();
-      var btn = document.getElementById('fns-sync-btn');
-      // Click the React ↻ button to pull from Supabase
-      var reactSyncBtn = document.querySelector('button[title="Sincronizar dados"]');
-      if (reactSyncBtn) reactSyncBtn.click();
-      // Also push any local data that never reached Supabase
-      setTimeout(function() {
-        try {
-          var sess = JSON.parse(localStorage.getItem('finn_supa_session') || 'null');
-          if (!sess || !sess.user) return;
+      // Push any local transactions to Supabase, then reload so startup pulls fresh data
+      try {
+        var sess = JSON.parse(localStorage.getItem('finn_supa_session') || 'null');
+        if (sess && sess.user) {
           var uid = sess.user.id;
-          for (var i = 0; i < localStorage.length; i++) {
-            var k = localStorage.key(i);
-            if (k && (k === 'fiq_data_' + uid || k === 'fiq_data_' + (sess.profileId||uid))) {
-              try {
-                var d = JSON.parse(localStorage.getItem(k));
-                var txs = d && d.txs ? d.txs : [];
-                if (txs.length) window.finnPushToSupabase && window.finnPushToSupabase(txs.map(function(t){ return {id:String(t.id||Date.now()),date:t.date,desc:t.desc||t.descricao||'',value:Math.abs(Number(t.value||t.val||0)),type:t.type||'despesa',cat:t.cat||'Outros',recorrente:!!t.recorrente,banco:t.banco||null}; }));
-              } catch(e2){}
-              break;
-            }
+          var profileId = sess.profileId || uid;
+          var stored = localStorage.getItem('fiq_data_' + profileId) || localStorage.getItem('fiq_data_' + uid);
+          if (stored) {
+            try {
+              var d = JSON.parse(stored);
+              var txs = d && d.txs ? d.txs : [];
+              if (txs.length && window.finnPushToSupabase) {
+                window.finnPushToSupabase(txs.map(function(t) {
+                  return {id:String(t.id||Date.now()),date:t.date,desc:t.desc||t.descricao||'',value:Math.abs(Number(t.value||t.val||0)),type:t.type||'despesa',cat:t.cat||'Outros',recorrente:!!t.recorrente,banco:t.banco||null};
+                }));
+              }
+            } catch(e2) {}
           }
-        } catch(e){}
-      }, 800);
+        }
+      } catch(e) {}
+      // Reload after 1.5s so any push completes, then startup effect pulls from Supabase
+      setTimeout(function() { window.location.reload(); }, 1500);
     });
 
     document.getElementById('fns-cfg-btn').addEventListener('click', function() {
