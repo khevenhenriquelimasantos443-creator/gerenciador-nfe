@@ -20,7 +20,11 @@ async function _pluggyApiKey(env) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ clientId: env.PLUGGY_CLIENT_ID, clientSecret: env.PLUGGY_CLIENT_SECRET })
   });
-  if (!r.ok) throw new Error('Pluggy auth failed: ' + r.status);
+  if (!r.ok) {
+    var errBody = '';
+    try { errBody = await r.text(); } catch(e2) {}
+    throw new Error('Pluggy auth failed: ' + r.status + ' — ' + errBody.slice(0, 200));
+  }
   var j = await r.json();
   return j.apiKey;
 }
