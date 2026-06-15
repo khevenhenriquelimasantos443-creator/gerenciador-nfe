@@ -2873,10 +2873,6 @@ react-dom/cjs/react-dom-client.production.js:
     document.getElementById('fns-cfg-btn').addEventListener('click', function() {
       closeSidebar();
       setTimeout(function() {
-        // Try opening the app's native settings modal first
-        var hcBtns = document.querySelectorAll('.header-controls button');
-        if (hcBtns.length) hcBtns[hcBtns.length - 1].click();
-        // Also open our custom settings panel for API key config
         window.finnOpenSettings && window.finnOpenSettings();
       }, 60);
     });
