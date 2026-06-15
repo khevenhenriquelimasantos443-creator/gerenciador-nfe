@@ -35,6 +35,10 @@ export default {
       return corsResponse(new Response(JSON.stringify({ ok: true, numeros: keys }, null, 2), { status: 200, headers: { "Content-Type": "application/json" } }));
     }
 
+    if (url.pathname === "/status" && request.method === "GET") {
+      return handleStatus(env);
+    }
+
     return new Response("Finn WhatsApp Worker", { status: 200 });
   },
 
@@ -863,6 +867,32 @@ function getMotivationalLine(despesas, receitas, saldo) {
 }
 
 // =============================================================================
+// STATUS ENDPOINT — verifica se o token Meta ainda é válido
+// =============================================================================
+async function handleStatus(env) {
+  const checks = { token: false, kv: false, phoneNumberId: !!env.WHATSAPP_PHONE_NUMBER_ID, errors: [] };
+  try {
+    const r = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_PHONE_NUMBER_ID}`, {
+      headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
+    });
+    checks.token = r.ok;
+    if (!r.ok) {
+      const body = await r.text();
+      checks.errors.push(`Meta API ${r.status}: ${body.slice(0, 200)}`);
+    }
+  } catch(e) { checks.errors.push(`Meta fetch error: ${e.message}`); }
+  try {
+    await env.FINN_KV.get("__healthcheck__");
+    checks.kv = true;
+  } catch(e) { checks.errors.push(`KV error: ${e.message}`); }
+  const ok = checks.token && checks.kv && checks.phoneNumberId;
+  return corsResponse(new Response(JSON.stringify({ ok, checks }, null, 2), {
+    status: ok ? 200 : 503,
+    headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// =============================================================================
 // META API HELPERS
 // =============================================================================
 async function metaPost(payload, env) {
@@ -872,7 +902,14 @@ async function metaPost(payload, env) {
     headers:{"Content-Type":"application/json","Authorization":`Bearer ${env.WHATSAPP_ACCESS_TOKEN}`},
     body:JSON.stringify(payload)
   });
-  if(!resp.ok) console.error(`Meta API error ${resp.status}:`,await resp.text());
+  if(!resp.ok) {
+    const body = await resp.text();
+    console.error(`Meta API error ${resp.status}:`, body);
+    // Token expirado (401) ou sem permissão (403)
+    if (resp.status === 401 || resp.status === 403) {
+      console.error("⚠️  TOKEN EXPIRADO ou INVÁLIDO — acesse o Meta Developer Portal e gere um novo token, depois atualize com: wrangler secret put WHATSAPP_ACCESS_TOKEN");
+    }
+  }
   return resp;
 }
 

@@ -31,7 +31,7 @@ id = "COLE_AQUI_O_ID_DO_KV_NAMESPACE"
 #  Troque pelo URL real do seu app Finn
 # ─────────────────────────────────────────────
 [vars]
-FINN_URL = "https://khevenhenriquelimasantos443-creator.github.io/gerenciador-nfe/finn/"
+FINN_URL = "https://finn-app.khevenhenriquelimasantos443.workers.dev"
 
 # ─────────────────────────────────────────────
 #  SEGREDOS — adicione via terminal após deploy:
