@@ -2596,7 +2596,8 @@ react-dom/cjs/react-dom-client.production.js:
       { key:'bancos',      label:'Bancos',  section:'FINANCEIRO',   svg:'<path d="M3 9L12 2L21 9V22H3V9Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><rect x="9" y="14" width="6" height="8" stroke="currentColor" stroke-width="1.8" fill="none"/>' },
       { key:'dicas',       label:'IA',      section:'INTELIGÊNCIA', svg:'<path d="M12 2L14.8 9.2L22 10L16 15.4L17.6 22L12 18.8L6.4 22L8 15.4L2 10L9.2 9.2L12 2Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>' },
       { key:'analise',  label:'Análise',  section:'FERRAMENTAS', svg:'<rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><polyline points="9 3 9 8 15 8" stroke="currentColor" stroke-width="1.8"/><line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" stroke-width="1.8"/><line x1="9" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="1.8"/>' },
-      { key:'graficos', label:'Gráficos', section:'FERRAMENTAS', svg:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' }
+      { key:'graficos', label:'Gráficos', section:'FERRAMENTAS', svg:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' },
+      { key:'pluggy',   label:'Pluggy',   section:'FERRAMENTAS', svg:'<rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" stroke-width="1.8" fill="none"/><line x1="12" y1="12" x2="12" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' }
     ];
 
     var labelToKey = {};
@@ -2695,6 +2696,7 @@ react-dom/cjs/react-dom-client.production.js:
         el.addEventListener('click', function() {
           if (item.key === 'analise') { closeSidebar(); window.finnOpenAnalise && window.finnOpenAnalise(); return; }
           if (item.key === 'graficos') { closeSidebar(); window.finnOpenDashboards && window.finnOpenDashboards(); return; }
+          if (item.key === 'pluggy') { closeSidebar(); window.finnOpenPluggy && window.finnOpenPluggy(); return; }
           navigateTo(item.key, item.label);
           closeSidebar();
         });
@@ -2772,12 +2774,376 @@ react-dom/cjs/react-dom-client.production.js:
     overlay.addEventListener('click', closeSidebar);
   }
 
+  function addDarkMode() {
+    // CSS for class-based styles
+    var css = document.createElement('style');
+    css.id = 'finn-dark-css';
+    css.textContent = 'html.dark{color-scheme:dark}html.dark body{background:#0B1120!important;color:#E2E8F0!important}html.dark .tabs{background:#111827!important;border-color:rgba(255,255,255,.08)!important}html.dark .tabs button{color:#64748B!important}html.dark .tabs button:hover{color:#CBD5E1!important}html.dark .tabs button[style*="font-weight: 700"]{color:#F1F5F9!important}html.dark th{color:#94A3B8!important;border-color:rgba(255,255,255,.08)!important;background:#111827!important}html.dark td{border-color:rgba(255,255,255,.06)!important;color:#E2E8F0!important}html.dark tr:hover td{background:rgba(255,255,255,.04)!important}html.dark input,html.dark select,html.dark textarea{background:#1a2540!important;color:#F1F5F9!important;border-color:rgba(255,255,255,.15)!important}html.dark .fp-cal-day{background:#1a2540!important}html.dark .fp-cal-day:hover{background:rgba(249,115,22,.1)!important}html.dark .fp-cal-day.today{background:rgba(249,115,22,.12)!important}html.dark .fp-cal-num{color:#94A3B8!important}html.dark .fp-cal-month{color:#F1F5F9!important}html.dark .fp-cal-detail{background:#0B1120!important;border-color:rgba(255,255,255,.07)!important}html.dark .fp-cal-tx-desc{color:#94A3B8!important}html.dark .fp-cal-nav-btn{background:#1a2540!important;color:#94A3B8!important}html.dark .fp-help-item{background:#1a2540!important;border-color:rgba(255,255,255,.08)!important}html.dark .fp-help-q{background:#1a2540!important;color:#F1F5F9!important}html.dark .fp-help-a{background:rgba(249,115,22,.05)!important;color:#CBD5E1!important}html.dark .fp-admin-user{background:#1a2540!important}html.dark .fp-admin-email{color:#F1F5F9!important}html.dark #loading{background:#0B1120!important}html.dark #finn-analise-panel,html.dark #finn-dash-panel{background:#0B1120!important}';
+    document.head.appendChild(css);
+
+    // Mapeamento de cores claro → escuro para inline styles do React
+    // Brancos/cinzas → navy escuro | Cores de acento → tint escuro da mesma cor
+    var BG = {
+      // Brancos e cinzas neutros → card escuro
+      '#FFF':'#1a2540','#FFFFFF':'#1a2540','#fff':'#1a2540','#ffffff':'#1a2540',
+      '#F8F7F4':'#0B1120','#F8FAFC':'#111827','#F8FAFF':'#111827',
+      '#F1F5F9':'#1a2540','#EEF2F7':'#1a2540','#FAFAFA':'#1a2540',
+      // Cinzas de borda/track → levemente visíveis (progress bar tracks, divisores)
+      '#E2E8F0':'rgba(255,255,255,.1)','#E8ECF2':'rgba(255,255,255,.1)',
+      '#E5E7EB':'rgba(255,255,255,.1)','#D1D5DB':'rgba(255,255,255,.1)',
+      '#CBD5E1':'rgba(255,255,255,.09)','#C8D0DA':'rgba(255,255,255,.09)',
+      // Tints coloridos → versão escura da mesma cor (mantém personalidade)
+      '#F0FDF4':'rgba(34,197,94,.12)',   // verde claro → tint verde escuro
+      '#DCFCE7':'rgba(34,197,94,.18)',
+      '#FFF7ED':'rgba(249,115,22,.12)',  // laranja claro → tint laranja escuro
+      '#FFEDD5':'rgba(249,115,22,.15)',
+      '#EFF6FF':'rgba(59,130,246,.12)',  // azul claro → tint azul escuro
+      '#DBEAFE':'rgba(59,130,246,.18)',
+      '#F5F3FF':'rgba(139,92,246,.12)', // roxo claro → tint roxo escuro
+      '#EDE9FE':'rgba(139,92,246,.18)',
+      '#FEFCE8':'rgba(234,179,8,.1)',   // amarelo claro → tint amarelo escuro
+      '#FEF3C7':'rgba(234,179,8,.14)',
+      '#FEE2E2':'rgba(220,38,38,.15)',  // vermelho claro → tint vermelho escuro
+      '#FEF2F2':'rgba(220,38,38,.12)',
+      '#FCE7F3':'rgba(219,39,119,.12)', // rosa
+    };
+    var TX = {
+      '#1E293B':'#F1F5F9','#1e293b':'#F1F5F9',
+      '#0F172A':'#F8FAFC','#0f172a':'#F8FAFC',
+      '#334155':'#E2E8F0','#475569':'#CBD5E1','#64748B':'#94A3B8',
+      // Cores de acento escuras (textos/ícones sobre fundo colorido) → versão clara
+      '#7C3AED':'#C4B5FD','#6D28D9':'#A78BFA','#5B21B6':'#8B5CF6',
+      '#1D4ED8':'#93C5FD','#1E40AF':'#60A5FA','#2563EB':'#93C5FD',
+      '#0F766E':'#5EEAD4','#0D9488':'#2DD4BF','#065F46':'#34D399',
+      '#991B1B':'#FCA5A5','#B91C1C':'#F87171','#DC2626':'#FCA5A5',
+      '#92400E':'#FCD34D','#78350F':'#FDE68A',
+    };
+    var BD = {'#E2E8F0':'rgba(255,255,255,.1)','#E8ECF2':'rgba(255,255,255,.1)','#EEF2F7':'rgba(255,255,255,.08)','#e2e8f0':'rgba(255,255,255,.1)','#CBD5E1':'rgba(255,255,255,.1)'};
+
+    function normHex(v) {
+      if (!v) return '';
+      v = v.trim();
+      if (v.charAt(0) !== '#') {
+        var m = v.match(/\d+/g);
+        if (!m || m.length < 3) return '';
+        var h = m.slice(0,3).map(function(x){var n=parseInt(x).toString(16);return n.length<2?'0'+n:n;}).join('').toUpperCase();
+        return '#' + h;
+      }
+      var h2 = v.slice(1).toUpperCase();
+      if (h2.length === 3) h2 = h2[0]+h2[0]+h2[1]+h2[1]+h2[2]+h2[2];
+      return '#' + h2;
+    }
+
+    function patchEl(el, dark) {
+      var s = el.style;
+      if (!s) return;
+      // background
+      var rawBg = s.background || s.backgroundColor;
+      if (rawBg) {
+        var nb = normHex(rawBg);
+        if (dark) {
+          var db = BG[nb] || BG[rawBg.trim()];
+          if (db) { el._ob=[s.background,s.backgroundColor]; if(s.background)s.background=db; else s.backgroundColor=db; }
+        } else if (el._ob) { s.background=el._ob[0]; s.backgroundColor=el._ob[1]; delete el._ob; }
+      } else if (dark && s.overflow === 'hidden' && s.borderRadius) {
+        // Progress bar track: sem background mas com overflow:hidden + borderRadius → track visível
+        el._progTrack = true;
+        s.backgroundColor = 'rgba(255,255,255,.13)';
+      } else if (!dark && el._progTrack) {
+        s.backgroundColor = ''; delete el._progTrack;
+      }
+      // color
+      var rawTx = s.color;
+      if (rawTx) {
+        var nt = normHex(rawTx);
+        if (dark) {
+          var dt = TX[nt] || TX[rawTx.trim()];
+          if (dt) { el._ot=rawTx; s.color=dt; }
+        } else if (el._ot !== undefined) { s.color=el._ot; delete el._ot; }
+      }
+      // border-color
+      var rawBd = s.borderColor || s.borderBottomColor;
+      if (rawBd) {
+        var nbd = normHex(rawBd);
+        if (dark) {
+          var dbd = BD[nbd] || BD[rawBd.trim()];
+          if (dbd) { el._obd=[s.borderColor,s.borderBottomColor]; if(s.borderColor)s.borderColor=dbd; else s.borderBottomColor=dbd; }
+        } else if (el._obd) { s.borderColor=el._obd[0]; s.borderBottomColor=el._obd[1]; delete el._obd; }
+      }
+    }
+
+    function patchAll(dark) {
+      // Patch #root E body direto (para React Portals — modais, drawers)
+      document.querySelectorAll('#root [style], body>[style], body>div>[style]').forEach(function(el){ patchEl(el, dark); });
+      // deep pass em portals que ficam fora do root
+      document.querySelectorAll('body>div').forEach(function(portal){
+        portal.querySelectorAll('[style]').forEach(function(el){ patchEl(el, dark); });
+      });
+    }
+
+    var obs = null;
+    function startObs() {
+      if (obs) return;
+      obs = new MutationObserver(function(muts) {
+        if (!document.documentElement.classList.contains('dark')) return;
+        muts.forEach(function(m) {
+          m.addedNodes.forEach(function(n) {
+            if (n.nodeType !== 1) return;
+            patchEl(n, true);
+            n.querySelectorAll('[style]').forEach(function(c){ patchEl(c, true); });
+          });
+          if (m.type === 'attributes') patchEl(m.target, true);
+        });
+      });
+      // Observa body inteiro para pegar portals
+      obs.observe(document.body, {childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+    }
+    function stopObs() { if(obs){obs.disconnect();obs=null;} }
+
+    var moonSVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    var sunSVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+
+    var btn = document.createElement('button');
+    btn.id = 'finn-dm-btn';
+    btn.title = 'Modo escuro';
+    btn.style.cssText = 'position:fixed;bottom:130px;right:16px;z-index:9990;background:#1E293B;border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;box-shadow:0 4px 18px rgba(30,41,59,.35);display:flex;align-items:center;justify-content:center;transition:color .2s;';
+
+    function applyTheme(dark) {
+      document.documentElement.classList.toggle('dark', dark);
+      patchAll(dark);
+      if (dark) startObs(); else stopObs();
+      btn.innerHTML   = dark ? sunSVG : moonSVG;
+      btn.style.color = dark ? '#F59E0B' : '#94A3B8';
+      try { localStorage.setItem('finn-theme', dark ? 'dark' : 'light'); } catch(e) {}
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem('finn-theme'); } catch(e) {}
+    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches;
+    // Aguarda React renderizar antes de aplicar o tema
+    setTimeout(function() {
+      applyTheme(saved === 'dark' || (saved === null && sysDark));
+    }, 800);
+
+    btn.addEventListener('click', function() {
+      applyTheme(!document.documentElement.classList.contains('dark'));
+    });
+    document.body.appendChild(btn);
+  }
+
+  function addPluggyConnect() {
+    if (document.getElementById('finn-pluggy-panel')) return;
+
+    var PLUGGY_ITEMS_KEY = 'fiq_pluggy_items';
+    var panelOpen = false;
+
+    // ── Painel overlay ──────────────────────────────────────────────────────
+    var panel = document.createElement('div');
+    panel.id = 'finn-pluggy-panel';
+    panel.style.cssText = 'display:none;position:fixed;inset:0;background:#0F172A;z-index:800;flex-direction:column;overflow:hidden;';
+
+    var hdr = document.createElement('div');
+    hdr.style.cssText = 'background:#1E293B;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #0F172A;flex-shrink:0;';
+    hdr.innerHTML =
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>' +
+      '<div style="flex:1;">' +
+        '<div style="color:#F8FAFC;font-weight:700;font-size:16px;">Conectar Banco via Open Banking</div>' +
+        '<div style="color:#64748B;font-size:11px;">Pluggy — dados em tempo real</div>' +
+      '</div>' +
+      '<button id="finn-pluggy-close" style="background:#0F172A;border:none;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#94A3B8;font-size:20px;line-height:1;">&times;</button>';
+
+    var content = document.createElement('div');
+    content.id = 'finn-pluggy-content';
+    content.style.cssText = 'flex:1;overflow-y:auto;padding:14px 16px;';
+
+    var statusEl = document.createElement('div');
+    statusEl.id = 'finn-pluggy-status';
+    statusEl.style.cssText = 'display:none;margin:10px 16px 0;padding:10px 14px;background:#1E293B;border-radius:10px;font-size:13px;color:#94A3B8;border-left:3px solid #F97316;';
+
+    panel.appendChild(hdr);
+    panel.appendChild(statusEl);
+    panel.appendChild(content);
+    document.body.appendChild(panel);
+
+    function setStatus(msg, color) {
+      statusEl.textContent = msg;
+      statusEl.style.borderLeftColor = color || '#F97316';
+      statusEl.style.display = msg ? 'block' : 'none';
+    }
+
+    function getItems() {
+      try { return JSON.parse(localStorage.getItem(PLUGGY_ITEMS_KEY) || '[]'); } catch(e) { return []; }
+    }
+    function saveItems(items) {
+      try { localStorage.setItem(PLUGGY_ITEMS_KEY, JSON.stringify(items)); } catch(e) {}
+    }
+
+    function renderContent() {
+      var items = getItems();
+      var html = '';
+
+      if (items.length) {
+        html += '<div style="margin-bottom:14px;">';
+        html += '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#64748B;text-transform:uppercase;margin-bottom:8px;">Bancos Conectados</div>';
+        items.forEach(function(item) {
+          html += '<div style="background:#1E293B;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">' +
+            '<div style="flex:1;">' +
+              '<div style="color:#F8FAFC;font-size:13px;font-weight:600;">' + (item.name || item.connector && item.connector.name || 'Banco') + '</div>' +
+              '<div style="color:#64748B;font-size:11px;">ID: ' + (item.id || '').slice(0,8) + '…</div>' +
+            '</div>' +
+            '<button onclick="window.finnPluggySync && window.finnPluggySync(\'' + item.id + '\')" style="background:#1D4ED8;border:none;border-radius:8px;padding:6px 10px;cursor:pointer;color:#fff;font-size:11px;font-weight:600;margin-right:6px;">Sincronizar</button>' +
+            '<button onclick="window.finnPluggyRemove && window.finnPluggyRemove(\'' + item.id + '\')" style="background:#7F1D1D;border:none;border-radius:8px;padding:6px 10px;cursor:pointer;color:#fff;font-size:11px;font-weight:600;">Remover</button>' +
+          '</div>';
+        });
+        html += '</div>';
+      }
+
+      html += '<div style="background:#1E293B;border-radius:14px;padding:18px;text-align:center;">' +
+        '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin:0 auto 10px;display:block;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>' +
+        '<div style="color:#94A3B8;font-size:13px;margin-bottom:14px;">' + (items.length ? 'Adicionar mais um banco' : 'Conecte sua conta bancária de forma segura') + '</div>' +
+        '<button id="finn-pluggy-add-btn" style="background:#F97316;border:none;border-radius:10px;padding:11px 22px;cursor:pointer;color:#fff;font-size:14px;font-weight:700;width:100%;">Conectar banco</button>' +
+      '</div>';
+
+      content.innerHTML = html;
+
+      document.getElementById('finn-pluggy-add-btn').addEventListener('click', function() {
+        setStatus('Obtendo token de conexão...', '#F97316');
+        fetch('/pluggy/token', { method: 'POST' })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (!data.accessToken) throw new Error(data.error || 'Token indisponível');
+            var token = data.accessToken;
+            setStatus('Carregando widget Pluggy...', '#F97316');
+            if (window.PluggyConnect) {
+              openPluggyWidget(token);
+            } else {
+              var s = document.createElement('script');
+              s.src = 'https://cdn.pluggy.ai/pluggy-connect/v2/pluggy-connect.js';
+              s.onload = function() { openPluggyWidget(token); };
+              s.onerror = function() { setStatus('Erro ao carregar widget Pluggy.', '#EF4444'); };
+              document.head.appendChild(s);
+            }
+          })
+          .catch(function(e) { setStatus('Erro: ' + e.message, '#EF4444'); });
+      });
+    }
+
+    function openPluggyWidget(connectToken) {
+      setStatus('', null);
+      try {
+        new window.PluggyConnect({
+          connectToken: connectToken,
+          onSuccess: function(data) {
+            var item = data.item || data;
+            var items = getItems();
+            var idx = items.findIndex ? items.findIndex(function(i) { return i.id === item.id; }) : -1;
+            if (idx === -1) items.push(item);
+            else items[idx] = item;
+            saveItems(items);
+            setStatus('Banco conectado! Sincronizando...', '#22C55E');
+            renderContent();
+            if (item.id) window.finnPluggySync && window.finnPluggySync(item.id);
+          },
+          onError: function(err) {
+            setStatus('Erro na conexao: ' + (err && err.message ? err.message : 'Falha'), '#EF4444');
+          }
+        }).init();
+      } catch(e) {
+        setStatus('Erro ao iniciar widget: ' + e.message, '#EF4444');
+      }
+    }
+
+    // ── window.finnPluggySync ───────────────────────────────────────────────
+    window.finnPluggySync = function(itemId) {
+      setStatus('Sincronizando transações...', '#F97316');
+      var now = new Date();
+      var from = new Date(now); from.setMonth(from.getMonth() - 3);
+      var fromStr = from.toISOString().slice(0, 10);
+      fetch('/pluggy/transactions?itemId=' + encodeURIComponent(itemId) + '&from=' + fromStr)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.error) throw new Error(data.error);
+          var txs = data.transactions || [];
+          if (!txs.length) { setStatus('Nenhuma transacao nova encontrada.', '#64748B'); return; }
+
+          var profiles;
+          try { profiles = JSON.parse(localStorage.getItem('fiq_profiles') || '{}'); } catch(e) { profiles = {}; }
+          var keys = Object.keys(profiles);
+          if (!keys.length) { setStatus('Nenhum perfil Finn encontrado.', '#EF4444'); return; }
+          var uid = keys[0];
+          var prof = profiles[uid];
+          if (!prof.transactions) prof.transactions = [];
+
+          var existIds = {};
+          prof.transactions.forEach(function(t) { existIds[String(t.id)] = 1; });
+          var novos = txs.filter(function(t) { return !existIds[String(t.id)]; }).map(function(t) {
+            return {
+              id: t.id,
+              date: t.date,
+              descricao: t.description,
+              value: t.amount,
+              type: t.type,
+              cat: t.category,
+              banco: t.bank,
+              source: 'pluggy'
+            };
+          });
+
+          if (novos.length) {
+            prof.transactions = prof.transactions.concat(novos);
+            profiles[uid] = prof;
+            try { localStorage.setItem('fiq_profiles', JSON.stringify(profiles)); } catch(e) {}
+          }
+
+          setStatus((novos.length ? novos.length + ' transacoes importadas!' : 'Ja sincronizado.'), '#22C55E');
+          if (novos.length) setTimeout(function() { location.reload(); }, 1500);
+        })
+        .catch(function(e) { setStatus('Erro na sincronizacao: ' + e.message, '#EF4444'); });
+    };
+
+    // ── window.finnPluggyRemove ─────────────────────────────────────────────
+    window.finnPluggyRemove = function(itemId) {
+      var items = getItems().filter(function(i) { return i.id !== itemId; });
+      saveItems(items);
+      setStatus('Banco removido.', '#64748B');
+      renderContent();
+    };
+
+    // ── Abrir/fechar painel ─────────────────────────────────────────────────
+    window.finnOpenPluggy = function() {
+      panel.style.display = 'flex';
+      panelOpen = true;
+      renderContent();
+    };
+
+    document.getElementById('finn-pluggy-close').addEventListener('click', function() {
+      panel.style.display = 'none';
+      panelOpen = false;
+    });
+
+    // ── Botão desktop ───────────────────────────────────────────────────────
+    var dtBox = document.getElementById('finn-dt-tools');
+    if (dtBox) {
+      var pluggyBtn = document.createElement('button');
+      pluggyBtn.id = 'finn-dt-pluggy';
+      pluggyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>Open Banking';
+      pluggyBtn.addEventListener('click', function() { window.finnOpenPluggy && window.finnOpenPluggy(); });
+      dtBox.appendChild(pluggyBtn);
+    }
+
+    // ── Dark mode CSS ───────────────────────────────────────────────────────
+    var dCss = document.getElementById('finn-dark-css');
+    if (dCss) dCss.textContent += 'html.dark #finn-pluggy-panel{background:#0B1120!important;}';
+  }
+
   function start() {
     addSyncButton();
     addIAChat();
     addMobileHamburger();
     addDashboardPhrase();
     addExtratoPanels();
+    addDarkMode();
+    addPluggyConnect();
     setTimeout(autoSync, 3000);
   }
 
