@@ -1,5 +1,5 @@
-// Finn Service Worker v2.1
-const CACHE = 'finn-v2-1';
+// Finn Service Worker v2.2
+const CACHE = 'finn-v2-2';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();
@@ -19,10 +19,9 @@ self.addEventListener('activate', function(e) {
     }).then(function() {
       return self.clients.claim();
     }).then(function() {
-      // Notify all open clients that SW updated
       return self.clients.matchAll({type:'window'}).then(function(clients) {
         clients.forEach(function(c) {
-          c.postMessage({type:'SW_UPDATED', version:'2.1.0'});
+          c.postMessage({type:'SW_UPDATED', version:'2.2.0'});
         });
       });
     })
@@ -30,22 +29,36 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  // Network-first for navigation (always serve latest HTML)
+  // Stale-while-revalidate para navegação: mostra cache imediatamente, atualiza em segundo plano
   if (e.request.mode === 'navigate') {
     e.respondWith(
-      fetch(e.request).then(function(res) {
-        var clone = res.clone();
-        caches.open(CACHE).then(function(c){ c.put(e.request, clone); });
-        return res;
-      }).catch(function() {
-        return caches.match(e.request).then(function(r) {
-          return r || caches.match('/');
+      caches.open(CACHE).then(function(cache) {
+        return cache.match(e.request).then(function(cached) {
+          var fetchPromise = fetch(e.request).then(function(res) {
+            if (res.ok) cache.put(e.request, res.clone());
+            return res;
+          }).catch(function() { return null; });
+
+          // Se tem cache: retorna imediatamente e atualiza em background
+          if (cached) {
+            fetchPromise.then(function(fresh) {
+              if (fresh) {
+                // Notifica clientes que há nova versão disponível
+                self.clients.matchAll({type:'window'}).then(function(clients) {
+                  clients.forEach(function(c) { c.postMessage({type:'SW_UPDATED', version:'2.2.0'}); });
+                });
+              }
+            });
+            return cached;
+          }
+          // Sem cache: espera a rede
+          return fetchPromise.then(function(res) { return res || new Response('Offline', {status:503}); });
         });
       })
     );
     return;
   }
-  // Cache-first for other assets
+  // Cache-first para outros assets
   e.respondWith(
     caches.match(e.request).then(function(r) {
       return r || fetch(e.request).then(function(res) {
