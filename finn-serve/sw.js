@@ -1,5 +1,5 @@
-// Finn Service Worker v2.2
-const CACHE = 'finn-v2-2';
+// Finn Service Worker v2.3
+const CACHE = 'finn-v2-3';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();
@@ -21,7 +21,7 @@ self.addEventListener('activate', function(e) {
     }).then(function() {
       return self.clients.matchAll({type:'window'}).then(function(clients) {
         clients.forEach(function(c) {
-          c.postMessage({type:'SW_UPDATED', version:'2.2.0'});
+          c.postMessage({type:'SW_UPDATED', version:'2.3.0'});
         });
       });
     })
@@ -45,7 +45,7 @@ self.addEventListener('fetch', function(e) {
               if (fresh) {
                 // Notifica clientes que há nova versão disponível
                 self.clients.matchAll({type:'window'}).then(function(clients) {
-                  clients.forEach(function(c) { c.postMessage({type:'SW_UPDATED', version:'2.2.0'}); });
+                  clients.forEach(function(c) { c.postMessage({type:'SW_UPDATED', version:'2.3.0'}); });
                 });
               }
             });
