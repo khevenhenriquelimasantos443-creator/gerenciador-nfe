@@ -124,6 +124,59 @@ export default {
       });
     }
 
+    // ── Legal pages ──
+    if (url.pathname === '/privacidade') {
+      return new Response(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Política de Privacidade — Finn.</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1E293B;line-height:1.7}h1{color:#F97316}h2{margin-top:32px}a{color:#F97316}</style></head><body>
+<h1>Política de Privacidade — Finn.</h1>
+<p><strong>Última atualização:</strong> Junho de 2026</p>
+<h2>1. Dados coletados</h2>
+<p>O Finn coleta apenas os dados que você fornece diretamente: e-mail para autenticação, transações financeiras que você registra (valores, datas, descrições e categorias), metas financeiras e limites de gastos configurados por você.</p>
+<h2>2. Como usamos seus dados</h2>
+<p>Seus dados são usados exclusivamente para oferecer as funcionalidades do app: exibição de extratos, análises financeiras com IA, metas e alertas de limite. Não vendemos, compartilhamos ou comercializamos seus dados com terceiros.</p>
+<h2>3. Armazenamento</h2>
+<p>Seus dados financeiros são armazenados de forma segura no Supabase (infraestrutura em nuvem com criptografia em repouso e em trânsito). O acesso é protegido por autenticação via e-mail ou Google.</p>
+<h2>4. IA e análises</h2>
+<p>Ao usar a função "Finn IA", um resumo anônimo das suas transações (sem dados de identificação pessoal) é enviado à API da Anthropic para gerar análises financeiras. Nenhum dado é armazenado pela Anthropic após o processamento.</p>
+<h2>5. WhatsApp Bot</h2>
+<p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenados no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
+<h2>6. Seus direitos</h2>
+<p>Você pode solicitar a exclusão de todos os seus dados a qualquer momento em: <a href="/deletar-dados">finn-app.khevenhenriquelimasantos443.workers.dev/deletar-dados</a></p>
+<h2>7. Contato</h2>
+<p>Dúvidas sobre privacidade: <a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a></p>
+</body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+    }
+
+    if (url.pathname === '/termos') {
+      return new Response(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Termos de Serviço — Finn.</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1E293B;line-height:1.7}h1{color:#F97316}h2{margin-top:32px}a{color:#F97316}</style></head><body>
+<h1>Termos de Serviço — Finn.</h1>
+<p><strong>Última atualização:</strong> Junho de 2026</p>
+<h2>1. Aceitação</h2>
+<p>Ao usar o Finn, você concorda com estes Termos. Se não concordar, não utilize o serviço.</p>
+<h2>2. O serviço</h2>
+<p>O Finn é um aplicativo de controle financeiro pessoal oferecido gratuitamente. Reservamo-nos o direito de modificar ou encerrar o serviço a qualquer momento, com aviso prévio razoável.</p>
+<h2>3. Responsabilidade dos dados</h2>
+<p>Você é responsável pela precisão dos dados que insere no app. O Finn não se responsabiliza por decisões financeiras tomadas com base nas análises do aplicativo. As análises com IA são informativas e não constituem aconselhamento financeiro profissional.</p>
+<h2>4. Uso adequado</h2>
+<p>É proibido usar o Finn para fins ilegais, tentativas de acesso não autorizado à plataforma ou uso que prejudique outros usuários.</p>
+<h2>5. Disponibilidade</h2>
+<p>O Finn é fornecido "como está", sem garantias de disponibilidade ininterrupta. Fazemos o melhor para manter o serviço estável, mas não garantimos 100% de uptime.</p>
+<h2>6. Contato</h2>
+<p><a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a></p>
+</body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+    }
+
+    if (url.pathname === '/deletar-dados') {
+      return new Response(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Exclusão de Dados — Finn.</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1E293B;line-height:1.7}h1{color:#F97316}.box{background:#FFF7ED;border:1px solid #FED7AA;border-radius:12px;padding:24px;margin:24px 0}a{color:#F97316}</style></head><body>
+<h1>Exclusão de Dados — Finn.</h1>
+<div class="box">
+<h2 style="margin-top:0">Como excluir seus dados</h2>
+<p><strong>Opção 1 — Pelo app (recomendado):</strong><br>Abra o Finn → Menu → Configurações → Dados → Excluir todos os dados</p>
+<p><strong>Opção 2 — Por e-mail:</strong><br>Envie um e-mail para <a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a> com o assunto "Exclusão de dados" e seu e-mail cadastrado. Excluiremos todos os seus dados em até 7 dias úteis.</p>
+</div>
+<p>Ao excluir seus dados, todas as suas transações, metas, limites e configurações serão permanentemente removidos dos nossos servidores. Esta ação é irreversível.</p>
+</body></html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+    }
+
     // ── AI proxy (Anthropic Claude) ──
     if (url.pathname === '/ai' && request.method === 'POST') {
       if (!env.ANTHROPIC_API_KEY) {
