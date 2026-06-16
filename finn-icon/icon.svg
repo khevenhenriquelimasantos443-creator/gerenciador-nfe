@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#1E293B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FB923C"/>
+      <stop offset="100%" style="stop-color:#F97316"/>
+    </linearGradient>
+    <linearGradient id="chartLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F97316;stop-opacity:0.3"/>
+      <stop offset="60%" style="stop-color:#F97316"/>
+      <stop offset="100%" style="stop-color:#FB923C"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="200" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <g stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1">
+    <line x1="0" y1="256" x2="1024" y2="256"/>
+    <line x1="0" y1="512" x2="1024" y2="512"/>
+    <line x1="0" y1="768" x2="1024" y2="768"/>
+    <line x1="256" y1="0" x2="256" y2="1024"/>
+    <line x1="512" y1="0" x2="512" y2="1024"/>
+    <line x1="768" y1="0" x2="768" y2="1024"/>
+  </g>
+
+  <!-- Chart area (background bars) -->
+  <g opacity="0.12">
+    <rect x="148" y="620" width="72" height="140" rx="8" fill="#F97316"/>
+    <rect x="248" y="560" width="72" height="200" rx="8" fill="#F97316"/>
+    <rect x="348" y="490" width="72" height="270" rx="8" fill="#F97316"/>
+    <rect x="448" y="540" width="72" height="220" rx="8" fill="#F97316"/>
+    <rect x="548" y="460" width="72" height="300" rx="8" fill="#F97316"/>
+    <rect x="648" y="390" width="72" height="370" rx="8" fill="#F97316"/>
+    <rect x="748" y="330" width="72" height="430" rx="8" fill="#F97316"/>
+    <rect x="848" y="280" width="72" height="480" rx="8" fill="#F97316"/>
+  </g>
+
+  <!-- Trend line -->
+  <polyline
+    points="184,660 284,600 384,520 484,570 584,490 684,415 784,350 884,295"
+    fill="none"
+    stroke="url(#chartLine)"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#glow)"
+  />
+
+  <!-- Dot at end of trend line -->
+  <circle cx="884" cy="295" r="14" fill="#F97316" filter="url(#glow)"/>
+  <circle cx="884" cy="295" r="7" fill="#FFFFFF"/>
+
+  <!-- "F" letter — large, centered, slightly above center -->
+  <text
+    x="512"
+    y="560"
+    font-family="'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+    font-size="380"
+    font-weight="800"
+    fill="url(#accent)"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    letter-spacing="-10"
+    filter="url(#glow)"
+  >F</text>
+
+  <!-- "finn." wordmark below -->
+  <text
+    x="512"
+    y="800"
+    font-family="'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+    font-size="72"
+    font-weight="300"
+    fill="#94A3B8"
+    text-anchor="middle"
+    letter-spacing="18"
+  >finn.</text>
+</svg>
