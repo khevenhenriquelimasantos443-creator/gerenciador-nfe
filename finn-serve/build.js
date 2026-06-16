@@ -139,6 +139,23 @@ export default {
       });
     }
 
+    // ── AI proxy (Anthropic Claude) ──
+    if (url.pathname === '/ai' && request.method === 'POST') {
+      if (!env.ANTHROPIC_API_KEY) {
+        return new Response(JSON.stringify({ error: { type: 'not_configured', message: 'IA não configurada no servidor' } }), {
+          status: 503, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+      var aiBody = await request.text();
+      var aiResp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+        body: aiBody,
+      });
+      var aiText = await aiResp.text();
+      return new Response(aiText, { status: aiResp.status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
     // ── Pluggy: token ──
     if (url.pathname === '/pluggy/token' && request.method === 'POST') {
       return _pluggyToken(request, env);

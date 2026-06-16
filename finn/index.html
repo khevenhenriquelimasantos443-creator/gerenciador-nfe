@@ -1984,7 +1984,7 @@ react-dom/cjs/react-dom-client.production.js:
 
 
   function addIAChat() {
-    var API_URL = 'https://api.anthropic.com/v1/messages';
+    var API_URL = window.location.origin + '/ai';
     var chatHistory = [];
     var panelOpen = false;
 
@@ -2049,18 +2049,13 @@ react-dom/cjs/react-dom-client.production.js:
     }
 
     function sendMsg(text) {
-      var key = localStorage.getItem('fiq_apikey') || '';
-      if (!key) {
-        addMsg('Configure sua chave API Anthropic em Configurações → Dados para usar o Finn IA.', false, true);
-        return;
-      }
       chatHistory.push({ role: 'user', content: text });
       var typing = addMsg('...', false, false);
       var sysPrompt = 'Você é o Finn IA, assistente financeiro pessoal brasileiro. Responda sempre em português do Brasil, de forma clara e objetiva, com no máximo 3 parágrafos curtos. Ajude com orçamento, dívidas, investimentos, planejamento e análise de gastos.' + getContext();
       fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 512, system: sysPrompt, messages: chatHistory })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 512, system: sysPrompt, messages: chatHistory })
       }).then(function(r){ return r.json(); }).then(function(data){
         if (data.error) throw new Error(data.error.message);
         var reply = (data.content || []).map(function(c){ return c.text || ''; }).join('');
@@ -2544,11 +2539,6 @@ react-dom/cjs/react-dom-client.production.js:
             var aiBtn = document.getElementById('finn-ab-ai-btn');
             if (!aiBtn) return;
             aiBtn.addEventListener('click', function() {
-              var key = localStorage.getItem('fiq_apikey') || '';
-              if (!key) {
-                alert('Configure sua chave API Anthropic em Configurações para usar análise com IA.');
-                return;
-              }
               aiBtn.disabled = true;
               aiBtn.textContent = 'Analisando...';
               var summary = 'Extrato bancário com '+txs.length+' transações reais analisadas'+(discarded.length?' ('+discarded.length+' desconsideradas: estornos, saldos, investimentos internos)':'')+'. \n' +
@@ -2556,10 +2546,10 @@ react-dom/cjs/react-dom-client.production.js:
                 'Entradas: R$ '+data.tIn.toFixed(2)+'\nSaídas: R$ '+data.tOut.toFixed(2)+'\nSaldo líquido: R$ '+data.net.toFixed(2)+'\n' +
                 'Categorias de saída: '+data.outByCat.map(function(c){return c.cat+' R$'+c.val.toFixed(2);}).join(', ')+'.\n' +
                 'Maiores saídas: '+data.topExp.slice(0,3).map(function(t){return t.lanc+' R$'+t.val.toFixed(2);}).join(', ')+'.';
-              fetch('https://api.anthropic.com/v1/messages', {
+              fetch(window.location.origin + '/ai', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-                body: JSON.stringify({ model: 'claude-haiku-4-20250514', max_tokens: 600, system: 'Você é um consultor financeiro pessoal brasileiro. Analise o extrato bancário fornecido e dê insights práticos e objetivos em português do Brasil. Máximo 5 parágrafos curtos.', messages: [{ role: 'user', content: summary }] })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 600, system: 'Você é um consultor financeiro pessoal brasileiro. Analise o extrato bancário fornecido e dê insights práticos e objetivos em português do Brasil. Máximo 5 parágrafos curtos.', messages: [{ role: 'user', content: summary }] })
               }).then(function(r){ return r.json(); }).then(function(res) {
                 if (res.error) throw new Error(res.error.message);
                 var text = (res.content || []).map(function(c){ return c.text || ''; }).join('');
@@ -3408,16 +3398,10 @@ react-dom/cjs/react-dom-client.production.js:
         '<button id="finn-settings-close" style="background:#1E293B;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;color:#94A3B8;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>' +
       '</div>' +
       '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#475569;text-transform:uppercase;margin-bottom:8px;">INTELIGÊNCIA ARTIFICIAL</div>' +
-      '<div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:16px;">' +
-        '<div style="color:#94A3B8;font-size:12px;margin-bottom:10px;line-height:1.5;">Chave API Anthropic para usar o Finn IA e análise de extratos com inteligência artificial.<br>' +
-          '<a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:#F97316;text-decoration:none;">Obter chave em console.anthropic.com →</a></div>' +
-        '<label style="display:block;font-size:11px;color:#64748B;margin-bottom:6px;">Chave API Anthropic</label>' +
-        '<input id="finn-cfg-apikey" type="password" placeholder="sk-ant-..." style="width:100%;box-sizing:border-box;background:#0F172A;border:1px solid #334155;border-radius:8px;padding:9px 11px;color:#F8FAFC;font-size:13px;outline:none;font-family:inherit;">' +
-        '<div style="margin-top:8px;display:flex;gap:8px;">' +
-          '<button id="finn-cfg-apikey-save" style="background:#F97316;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;color:#fff;font-size:12px;font-weight:700;flex:1;">Salvar</button>' +
-          '<button id="finn-cfg-apikey-clear" style="background:#1E293B;border:1px solid #334155;border-radius:8px;padding:8px 12px;cursor:pointer;color:#64748B;font-size:12px;font-weight:600;">Limpar</button>' +
-        '</div>' +
-        '<div id="finn-cfg-apikey-status" style="display:none;margin-top:8px;font-size:11px;color:#22C55E;"></div>' +
+      '<div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">' +
+        '<div style="width:36px;height:36px;background:rgba(249,115,22,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">&#x1F916;</div>' +
+        '<div><div style="color:#F8FAFC;font-size:13px;font-weight:700;margin-bottom:3px;">IA inclusa e pronta</div>' +
+        '<div style="color:#64748B;font-size:11px;line-height:1.5;">Finn IA e análise de extratos já estão ativos para todos os usuários. Nenhuma configuração necessária.</div></div>' +
       '</div>' +
       '<div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#475569;text-transform:uppercase;margin-bottom:8px;">HISTÓRICO</div>' +
       '<div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:16px;">' +
@@ -3429,36 +3413,11 @@ react-dom/cjs/react-dom-client.production.js:
     panel.appendChild(box);
     document.body.appendChild(panel);
 
-    function openSettings() {
-      var key = localStorage.getItem('fiq_apikey') || '';
-      var inp = document.getElementById('finn-cfg-apikey');
-      if (inp) inp.value = key;
-      var st = document.getElementById('finn-cfg-apikey-status');
-      if (st) { st.style.display = key ? 'block' : 'none'; st.textContent = key ? 'Chave salva (' + key.slice(0,8) + '...)' : ''; }
-      panel.style.display = 'flex';
-    }
+    function openSettings() { panel.style.display = 'flex'; }
     function closeSettings() { panel.style.display = 'none'; }
 
     document.getElementById('finn-settings-close').addEventListener('click', closeSettings);
     panel.addEventListener('click', function(e) { if (e.target === panel) closeSettings(); });
-
-    document.getElementById('finn-cfg-apikey-save').addEventListener('click', function() {
-      var key = (document.getElementById('finn-cfg-apikey').value || '').trim();
-      if (key) {
-        localStorage.setItem('fiq_apikey', key);
-        var st = document.getElementById('finn-cfg-apikey-status');
-        st.textContent = 'Chave salva! (' + key.slice(0,8) + '...)'; st.style.display = 'block'; st.style.color = '#22C55E';
-      } else {
-        alert('Digite uma chave API válida.');
-      }
-    });
-
-    document.getElementById('finn-cfg-apikey-clear').addEventListener('click', function() {
-      localStorage.removeItem('fiq_apikey');
-      document.getElementById('finn-cfg-apikey').value = '';
-      var st = document.getElementById('finn-cfg-apikey-status');
-      st.textContent = 'Chave removida.'; st.style.display = 'block'; st.style.color = '#EF4444';
-    });
 
     document.getElementById('finn-cfg-view-analyses').addEventListener('click', function() {
       closeSettings();
