@@ -2073,19 +2073,31 @@ react-dom/cjs/react-dom-client.production.js:
           }
         }
         if (!data || !data.txs || !data.txs.length) return '';
+        // Handles both storage formats:
+        //   React format: { val: -35.1, desc }
+        //   Supabase format: { value: 35.1, type: "despesa", descricao }
+        function txSigned(t) {
+          if (t.val !== undefined && t.val !== null) return Number(t.val) || 0;
+          var v = Math.abs(Number(t.value || 0));
+          var tp = (t.type || '').toLowerCase();
+          return (tp === 'receita' || tp === 'entrada') ? v : -v;
+        }
+        function txDesc(t) { return t.desc || t.descricao || 'Tx'; }
         var now = new Date(), yr = now.getFullYear(), mo = now.getMonth();
         var mTxs = data.txs.filter(function(t){ var d=new Date(t.date); return d.getFullYear()===yr&&d.getMonth()===mo; });
-        var rec  = mTxs.filter(function(t){return(t.val||0)>0;}).reduce(function(s,t){return s+Math.abs(t.val||0);},0);
-        var desp = mTxs.filter(function(t){return(t.val||0)<0;}).reduce(function(s,t){return s+Math.abs(t.val||0);},0);
+        // Fall back to all txs if current month is empty
+        if (!mTxs.length) mTxs = data.txs;
+        var rec  = mTxs.filter(function(t){return txSigned(t)>0;}).reduce(function(s,t){return s+Math.abs(txSigned(t));},0);
+        var desp = mTxs.filter(function(t){return txSigned(t)<0;}).reduce(function(s,t){return s+Math.abs(txSigned(t));},0);
         var byCat = {};
-        mTxs.filter(function(t){return(t.val||0)<0;}).forEach(function(t){var c=t.cat||'Outros';byCat[c]=(byCat[c]||0)+Math.abs(t.val||0);});
+        mTxs.filter(function(t){return txSigned(t)<0;}).forEach(function(t){var c=t.cat||'Outros';byCat[c]=(byCat[c]||0)+Math.abs(txSigned(t));});
         var cats = Object.entries(byCat).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
         var ctx = '\n\n[Dados financeiros do usuário — use para personalizar sua resposta]\n';
-        ctx += 'Mês atual: Receitas R$'+rec.toFixed(2)+' | Despesas R$'+desp.toFixed(2)+' | Saldo R$'+(rec-desp).toFixed(2)+'\n';
+        ctx += 'Período analisado: Receitas R$'+rec.toFixed(2)+' | Despesas R$'+desp.toFixed(2)+' | Saldo R$'+(rec-desp).toFixed(2)+'\n';
         if (cats.length) ctx += 'Top gastos por categoria: '+cats.map(function(c){return c[0]+' R$'+c[1].toFixed(2);}).join(', ')+'\n';
         if (data.goals&&data.goals.length) ctx += 'Metas: '+data.goals.map(function(g){return g.name+' '+Math.round(((g.saved||0)/(g.target||1))*100)+'%';}).join(', ')+'\n';
-        if (data.limits&&Object.keys(data.limits).length) ctx += 'Limites configurados: '+Object.entries(data.limits).map(function(e){return e[0]+' R$'+e[1];}).join(', ')+'\n';
-        ctx += 'Últimas 15 transações: '+data.txs.slice(-15).map(function(t){return(t.date||'')+' '+(t.desc||'Tx')+' R$'+(t.val||0);}).join(' | ');
+        if (data.limits&&Object.keys(data.limits).length) ctx += 'Limites: '+Object.entries(data.limits).map(function(e){return e[0]+' R$'+e[1];}).join(', ')+'\n';
+        ctx += 'Últimas 15 transações: '+data.txs.slice(-15).map(function(t){return(t.date||'')+' '+txDesc(t)+' R$'+txSigned(t).toFixed(2);}).join(' | ');
         return ctx;
       } catch(e){ return ''; }
     }
