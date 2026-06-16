@@ -2025,10 +2025,20 @@ react-dom/cjs/react-dom-client.production.js:
     document.body.appendChild(panel);
     document.body.appendChild(btn);
 
+    function renderMd(text) {
+      return text
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/^#{1,3}\s+(.+)$/gm,'<b>$1</b>')
+        .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+        .replace(/\*(.+?)\*/g,'<i>$1</i>')
+        .replace(/^[-•–]\s+(.+)$/gm,'<br>• $1')
+        .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+    }
+
     function addMsg(text, isUser, isError) {
       var div = document.createElement('div');
-      div.style.cssText = 'max-width:88%;padding:7px 10px;border-radius:12px;font-size:13px;line-height:1.5;word-wrap:break-word;white-space:pre-wrap;color:#F8FAFC;' + (isUser ? 'background:#F97316;align-self:flex-end;border-bottom-right-radius:3px;' : (isError ? 'background:#7F1D1D;align-self:flex-start;border-bottom-left-radius:3px;' : 'background:#1E293B;align-self:flex-start;border-bottom-left-radius:3px;'));
-      div.textContent = text;
+      div.style.cssText = 'max-width:88%;padding:7px 10px;border-radius:12px;font-size:13px;line-height:1.5;word-wrap:break-word;color:#F8FAFC;' + (isUser ? 'background:#F97316;align-self:flex-end;border-bottom-right-radius:3px;' : (isError ? 'background:#7F1D1D;align-self:flex-start;border-bottom-left-radius:3px;' : 'background:#1E293B;align-self:flex-start;border-bottom-left-radius:3px;'));
+      if (isUser || isError) { div.textContent = text; } else { div.innerHTML = text; }
       msgs.appendChild(div);
       msgs.scrollTop = msgs.scrollHeight;
       return div;
@@ -2036,22 +2046,35 @@ react-dom/cjs/react-dom-client.production.js:
 
     function getContext() {
       try {
-        var profiles = JSON.parse(localStorage.getItem('fiq_profiles') || '{}');
-        var keys = Object.keys(profiles);
-        if (!keys.length) return '';
-        var p = profiles[keys[0]];
-        var txs = (p.transactions || []).slice(-30);
-        if (!txs.length) return '';
-        return '\n\nÚltimas transações do usuário:\n' + txs.map(function(t){
-          return (t.date || '') + ' | ' + (t.descricao || t.desc || 'Transação') + ' | R$' + (t.value || t.val || '0') + ' | ' + (t.type || '') + ' | ' + (t.cat || '');
-        }).join('\n');
-      } catch(e) { return ''; }
+        var data = null;
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k && k.startsWith('fiq_data_')) {
+            try { var d = JSON.parse(localStorage.getItem(k)||'null'); if (d && d.txs && d.txs.length) { data = d; break; } } catch(e2) {}
+          }
+        }
+        if (!data || !data.txs || !data.txs.length) return '';
+        var now = new Date(), yr = now.getFullYear(), mo = now.getMonth();
+        var mTxs = data.txs.filter(function(t){ var d=new Date(t.date); return d.getFullYear()===yr&&d.getMonth()===mo; });
+        var rec  = mTxs.filter(function(t){return(t.val||0)>0;}).reduce(function(s,t){return s+Math.abs(t.val||0);},0);
+        var desp = mTxs.filter(function(t){return(t.val||0)<0;}).reduce(function(s,t){return s+Math.abs(t.val||0);},0);
+        var byCat = {};
+        mTxs.filter(function(t){return(t.val||0)<0;}).forEach(function(t){var c=t.cat||'Outros';byCat[c]=(byCat[c]||0)+Math.abs(t.val||0);});
+        var cats = Object.entries(byCat).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+        var ctx = '\n\n[Dados financeiros do usuário — use para personalizar sua resposta]\n';
+        ctx += 'Mês atual: Receitas R$'+rec.toFixed(2)+' | Despesas R$'+desp.toFixed(2)+' | Saldo R$'+(rec-desp).toFixed(2)+'\n';
+        if (cats.length) ctx += 'Top gastos por categoria: '+cats.map(function(c){return c[0]+' R$'+c[1].toFixed(2);}).join(', ')+'\n';
+        if (data.goals&&data.goals.length) ctx += 'Metas: '+data.goals.map(function(g){return g.name+' '+Math.round(((g.saved||0)/(g.target||1))*100)+'%';}).join(', ')+'\n';
+        if (data.limits&&Object.keys(data.limits).length) ctx += 'Limites configurados: '+Object.entries(data.limits).map(function(e){return e[0]+' R$'+e[1];}).join(', ')+'\n';
+        ctx += 'Últimas 15 transações: '+data.txs.slice(-15).map(function(t){return(t.date||'')+' '+(t.desc||'Tx')+' R$'+(t.val||0);}).join(' | ');
+        return ctx;
+      } catch(e){ return ''; }
     }
 
     function sendMsg(text) {
       chatHistory.push({ role: 'user', content: text });
       var typing = addMsg('...', false, false);
-      var sysPrompt = 'Você é o Finn IA, assistente financeiro pessoal brasileiro. Responda sempre em português do Brasil, de forma clara e objetiva, com no máximo 3 parágrafos curtos. Ajude com orçamento, dívidas, investimentos, planejamento e análise de gastos.' + getContext();
+      var sysPrompt = 'Você é o Finn IA, assistente financeiro pessoal do usuário. Responda em português do Brasil, de forma direta e prática. Use os dados financeiros reais do usuário para dar respostas personalizadas — nunca peça informações que já estão nos dados. Máximo 3 parágrafos curtos. Não use markdown com # ou **.' + getContext();
       fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2059,7 +2082,7 @@ react-dom/cjs/react-dom-client.production.js:
       }).then(function(r){ return r.json(); }).then(function(data){
         if (data.error) throw new Error(data.error.message);
         var reply = (data.content || []).map(function(c){ return c.text || ''; }).join('');
-        typing.textContent = reply;
+        typing.innerHTML = renderMd(reply);
         chatHistory.push({ role: 'assistant', content: reply });
         msgs.scrollTop = msgs.scrollHeight;
       }).catch(function(e){
