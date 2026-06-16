@@ -3634,8 +3634,8 @@ react-dom/cjs/react-dom-client.production.js:
       var mTxs = txs.filter(function(t){ var d=new Date(t.date); return d.getFullYear()===yr&&d.getMonth()===mo; });
       var spent = {};
       mTxs.forEach(function(t) {
-        var cat = t.category || t.categoria || 'Outros';
-        var val = t.val !== undefined ? Math.abs(Number(t.val)||0) : (t.type==='receita'||t.type==='entrada' ? 0 : Math.abs(Number(t.value)||0));
+        var cat = t.cat || 'Outros';
+        var val = (t.type==='receita'||t.type==='entrada') ? 0 : Math.abs(Number(t.value)||0);
         spent[cat] = (spent[cat]||0) + val;
       });
       var alerted = JSON.parse(localStorage.getItem('finn_limit_alerted')||'{}');
