@@ -2026,8 +2026,27 @@ react-dom/cjs/react-dom-client.production.js:
     document.body.appendChild(btn);
 
     function renderMd(text) {
-      return text
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      var s = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      // Tables: detect blocks where multiple lines start and end with |
+      s = s.replace(/((?:\|[^\n]+\|\n?){2,})/g, function(block) {
+        var lines = block.trim().split('\n').filter(Boolean);
+        if (lines.length < 2) return block;
+        var html = '<table style="border-collapse:collapse;width:100%;font-size:11px;margin:6px 0;border-radius:6px;overflow:hidden;">';
+        var hdrDone = false;
+        for (var i = 0; i < lines.length; i++) {
+          var ln = lines[i].trim();
+          if (/^\|[\s\-:|]+\|$/.test(ln.replace(/[^|\-:]/g,''))) { hdrDone = true; continue; }
+          var cells = ln.replace(/^\||\|$/g,'').split('|').map(function(c){return c.trim();});
+          var isH = !hdrDone && i === 0;
+          html += '<tr>' + cells.map(function(c){
+            return (isH
+              ? '<th style="padding:5px 8px;border:1px solid #475569;background:#334155;color:#F8FAFC;font-size:11px;font-weight:700;text-align:left;">'
+              : '<td style="padding:4px 8px;border:1px solid #334155;background:#0F172A;color:#CBD5E1;font-size:11px;">') + (c||'') + (isH?'</th>':'</td>');
+          }).join('') + '</tr>';
+        }
+        return html + '</table>';
+      });
+      return s
         .replace(/^#{1,3}\s+(.+)$/gm,'<b>$1</b>')
         .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
         .replace(/\*(.+?)\*/g,'<i>$1</i>')
@@ -2074,7 +2093,7 @@ react-dom/cjs/react-dom-client.production.js:
     function sendMsg(text) {
       chatHistory.push({ role: 'user', content: text });
       var typing = addMsg('...', false, false);
-      var sysPrompt = 'Você é o Finn IA, assistente financeiro pessoal do usuário. Responda em português do Brasil, de forma direta e prática. Use os dados financeiros reais do usuário para dar respostas personalizadas — nunca peça informações que já estão nos dados. Máximo 3 parágrafos curtos. Não use markdown com # ou **.' + getContext();
+      var sysPrompt = 'Você é o Finn IA, assistente financeiro pessoal do usuário. Responda em português do Brasil, de forma direta e prática. Use os dados financeiros reais do usuário para dar respostas personalizadas — nunca peça informações que já estão nos dados. Para comparações ou listas numéricas use tabelas markdown (| col | col |). Use **negrito** para destacar valores importantes. Não use # para títulos. Máximo 4 parágrafos.' + getContext();
       fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
