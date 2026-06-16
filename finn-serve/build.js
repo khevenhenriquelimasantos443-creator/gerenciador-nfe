@@ -219,6 +219,50 @@ export default {
       return _pluggyTx(request, env);
     }
 
+    // ── PWA Manifest ──
+    if (url.pathname === '/manifest.json') {
+      var manifest = {
+        name: 'Finn — Controle Financeiro',
+        short_name: 'Finn.',
+        description: 'Controle financeiro inteligente para o brasileiro',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#1E293B',
+        theme_color: '#F97316',
+        orientation: 'portrait-primary',
+        icons: [
+          { src: '/icon-192.svg', sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
+          { src: '/icon-512.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+        ]
+      };
+      return new Response(JSON.stringify(manifest), {
+        headers: { 'Content-Type': 'application/manifest+json', 'Cache-Control': 'public, max-age=86400' }
+      });
+    }
+
+    // ── Icons ──
+    var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#1E293B"/><circle cx="96" cy="96" r="80" fill="none" stroke="#F97316" stroke-width="3" opacity=".15"/><text x="96" y="130" font-family="Arial Black,Arial,sans-serif" font-size="110" font-weight="900" fill="#F97316" text-anchor="middle">F</text></svg>';
+    if (url.pathname === '/icon-192.svg' || url.pathname === '/icon-512.svg') {
+      return new Response(iconSvg, {
+        headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=604800' }
+      });
+    }
+
+    // ── Push: subscribe ──
+    if (url.pathname === '/push/subscribe' && request.method === 'POST') {
+      var cors2 = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+      try {
+        var body = await request.text();
+        var sub = JSON.parse(body);
+        if (!sub.endpoint) return new Response(JSON.stringify({error:'invalid'}),{status:400,headers:cors2});
+        var key = 'push_sub_' + btoa(sub.endpoint).slice(0,32).replace(/[^a-zA-Z0-9]/g,'');
+        if (env.FINN_KV) await env.FINN_KV.put(key, body, {expirationTtl: 60*60*24*365});
+        return new Response(JSON.stringify({ok:true}), {headers:cors2});
+      } catch(e) {
+        return new Response(JSON.stringify({error:e.message}),{status:500,headers:cors2});
+      }
+    }
+
     // ── Service Worker ──
     if (url.pathname === '/sw.js') {
       return new Response(${JSON.stringify(sw)}, {
