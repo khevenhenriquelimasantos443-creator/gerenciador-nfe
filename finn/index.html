@@ -3568,8 +3568,20 @@ react-dom/cjs/react-dom-client.production.js:
       });
     });
 
-    function openSettings() { panel.style.display = 'flex'; }
-    function closeSettings() { panel.style.display = 'none'; }
+    function openSettings() {
+      panel.style.display = 'flex';
+      var fab = document.getElementById('finn-fab-stack');
+      if (fab) fab.style.display = 'none';
+      var pluggy = document.getElementById('finn-pluggy-btn');
+      if (pluggy) pluggy.style.display = 'none';
+    }
+    function closeSettings() {
+      panel.style.display = 'none';
+      var fab = document.getElementById('finn-fab-stack');
+      if (fab) fab.style.display = '';
+      var pluggy = document.getElementById('finn-pluggy-btn');
+      if (pluggy) pluggy.style.display = '';
+    }
 
     document.getElementById('finn-settings-close').addEventListener('click', closeSettings);
     panel.addEventListener('click', function(e) { if (e.target === panel) closeSettings(); });
@@ -3606,18 +3618,18 @@ react-dom/cjs/react-dom-client.production.js:
         spent[cat] = (spent[cat]||0) + val;
       });
       var alerted = JSON.parse(localStorage.getItem('finn_limit_alerted')||'{}');
-      var today = now.toISOString().slice(0,7);
-      if (alerted._month !== today) alerted = { _month: today };
+      var today = now.toISOString().slice(0,10);
+      if (alerted._day !== today) alerted = { _day: today };
       Object.keys(limits).forEach(function(cat) {
         var lim = Number(limits[cat]||0);
         if (!lim) return;
         var s = spent[cat]||0;
         var pct = s/lim;
-        if (pct >= 0.9 && !alerted[cat+'_90']) {
-          alerted[cat+'_90'] = true;
+        if (pct >= 0.9 && !alerted[cat]) {
+          alerted[cat] = true;
           navigator.serviceWorker.ready.then(function(reg) {
-            reg.showNotification('Finn. — Alerta de limite', {
-              body: cat + ': ' + Math.round(pct*100) + '% do limite usado (R$ ' + s.toFixed(0) + ' / R$ ' + lim.toFixed(0) + ')',
+            reg.showNotification('🔔 Finn. — Limite de ' + cat, {
+              body: 'Você gastou R$ ' + s.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}) + ' de R$ ' + lim.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}) + ' (' + Math.round(pct*100) + '%). Cuidado!',
               icon: '/icon-192.svg',
               tag: 'limit-' + cat,
               data: { url: '/' }
