@@ -159,7 +159,7 @@ export default {
 <h2>6. Seus direitos</h2>
 <p>Você pode solicitar a exclusão de todos os seus dados a qualquer momento em: <a href="/deletar-dados">finn.dev.br/deletar-dados</a></p>
 <h2>7. Contato</h2>
-<p>Dúvidas sobre privacidade: <a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a></p>
+<p>Dúvidas sobre privacidade: <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
 </body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
@@ -178,7 +178,7 @@ export default {
 <h2>5. Disponibilidade</h2>
 <p>O Finn é fornecido "como está", sem garantias de disponibilidade ininterrupta. Fazemos o melhor para manter o serviço estável, mas não garantimos 100% de uptime.</p>
 <h2>6. Contato</h2>
-<p><a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a></p>
+<p><a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
 </body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
@@ -188,7 +188,7 @@ export default {
 <div class="box">
 <h2 style="margin-top:0">Como excluir seus dados</h2>
 <p><strong>Opção 1 — Pelo app (recomendado):</strong><br>Abra o Finn → Menu → Configurações → Dados → Excluir todos os dados</p>
-<p><strong>Opção 2 — Por e-mail:</strong><br>Envie um e-mail para <a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a> com o assunto "Exclusão de dados" e seu e-mail cadastrado. Excluiremos todos os seus dados em até 7 dias úteis.</p>
+<p><strong>Opção 2 — Por e-mail:</strong><br>Envie um e-mail para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> com o assunto "Exclusão de dados" e seu e-mail cadastrado. Excluiremos todos os seus dados em até 7 dias úteis.</p>
 </div>
 <p>Ao excluir seus dados, todas as suas transações, metas, limites e configurações serão permanentemente removidos dos nossos servidores. Esta ação é irreversível.</p>
 </body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
