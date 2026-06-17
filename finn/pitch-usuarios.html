@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finn. — Conheça e Teste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#0A0E1A}
+body{font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
+.deck{position:relative;width:100vw;height:100vh}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:64px 96px;opacity:0;visibility:hidden;transition:opacity .35s ease;background:#0F172A;color:#fff}
+.slide.active{opacity:1;visibility:visible;z-index:2}
+.slide.light{background:#fff;color:#0F172A}
+.eyebrow{font-size:13px;font-weight:800;color:#F97316;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+h1{font-size:clamp(34px,5vw,58px);font-weight:900;letter-spacing:-.03em;line-height:1.08;margin-bottom:18px}
+h1 em,h2 em{font-style:normal;color:#F97316}
+h2{font-size:clamp(26px,3.4vw,40px);font-weight:900;letter-spacing:-.03em;line-height:1.12;margin-bottom:22px}
+p.lead{font-size:18px;line-height:1.6;color:#94A3B8;max-width:760px}
+.light p.lead{color:#475569}
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#FB923C;border-radius:99px;padding:6px 16px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:26px;width:fit-content}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:22px}
+.light .card{background:#F8F7F4;border-color:#E2E8F0}
+.card .ic{font-size:26px;margin-bottom:10px}
+.card .t{font-size:16px;font-weight:800;margin-bottom:6px}
+.card .d{font-size:13.5px;line-height:1.55;color:#94A3B8}
+.light .card .d{color:#64748B}
+ul.list{list-style:none;margin-top:6px}
+ul.list li{font-size:16.5px;line-height:1.7;padding-left:30px;position:relative;margin-bottom:10px;color:#CBD5E1}
+.light ul.list li{color:#334155}
+ul.list li::before{content:'→';position:absolute;left:0;color:#F97316;font-weight:900}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:24px}
+.stat{text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 12px}
+.stat .n{font-size:38px;font-weight:900;color:#F97316;letter-spacing:-.03em}
+.stat .l{font-size:12.5px;color:#94A3B8;margin-top:6px;font-weight:600}
+.steps{display:flex;flex-direction:column;gap:18px;margin-top:10px}
+.step{display:flex;gap:16px;align-items:flex-start}
+.step .num{width:34px;height:34px;border-radius:10px;background:#F97316;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;font-size:14px}
+.step .st{font-weight:800;font-size:15.5px;margin-bottom:2px}
+.step .sd{font-size:13.5px;color:#94A3B8;line-height:1.5}
+.phone{width:280px;background:#ECE5DD;border-radius:32px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.phone-top{background:#075E54;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.phone-av{width:32px;height:32px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.phone-nm{font-size:13px;font-weight:700}
+.phone-body{padding:12px;display:flex;flex-direction:column;gap:8px;min-height:280px}
+.msg{max-width:82%;padding:8px 11px;border-radius:8px;font-size:12.5px;line-height:1.4}
+.msg-out{background:#D9FDD3;align-self:flex-end;color:#1E293B}
+.msg-in{background:#fff;align-self:flex-start;color:#1E293B}
+table.cmp{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+table.cmp th,table.cmp td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+table.cmp th{color:#94A3B8;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+table.cmp td.yes{color:#34D399;font-weight:800}
+table.cmp td.no{color:#64748B}
+.center{text-align:center}
+.big{font-size:clamp(38px,6vw,72px);font-weight:900;letter-spacing:-.04em;color:#F97316}
+.note{font-size:13px;color:#475569;margin-top:30px;font-style:italic}
+.faqq{font-weight:800;font-size:16px;margin-bottom:4px}
+.faqa{font-size:14px;color:#94A3B8;line-height:1.55;margin-bottom:18px}
+.footerbar{position:fixed;bottom:0;left:0;right:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(0,0,0,.55);z-index:10;font-size:12px;color:#94A3B8}
+.footerbar .brand{font-weight:900;color:#fff}
+.footerbar .brand em{color:#F97316;font-style:normal}
+.nav-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+.nav-btn:hover{background:rgba(255,255,255,.16)}
+.progress{position:fixed;top:0;left:0;height:3px;background:#F97316;z-index:20;transition:width .35s ease}
+@media(max-width:900px){.slide{padding:80px 28px 60px}.grid2,.grid3,.cards,.stats{grid-template-columns:1fr}}
+@media print{
+  body{overflow:visible}
+  .footerbar,.progress{display:none}
+  .slide{position:relative;opacity:1!important;visibility:visible!important;page-break-after:always;height:100vh}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" style="width:0%"></div>
+<div class="deck" id="deck">
+<section class="slide center">
+  <div class="tag">Convite para o beta</div>
+  <h1>Finn<em>.</em></h1>
+  <p class="lead" style="margin:0 auto">Seu dinheiro, sob controle — direto do WhatsApp.<br>100% grátis.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Você já passou por isso?</div>
+  <h2>Já perdeu a conta de quanto gastou esse mês?</h2>
+  <p class="lead">Planilha que ninguém atualiza, app complicado que você abre uma vez e esquece, ou nenhum controle mesmo. A gente sabe — por isso o Finn existe.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">A ideia</div>
+  <h2>Conheça o Finn<em>.</em></h2>
+  <p class="lead">Um app de controle financeiro que funciona do jeito que você já vive: manda mensagem no WhatsApp, importa o extrato do banco e recebe análises feitas por IA. Sem planilha, sem complicação, sem custo.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Funcionalidade</div>
+  <h2>📱 Lance gastos pelo WhatsApp</h2>
+  <div class="grid2">
+    <p class="lead">Escreve "gastei 45 no ifood" e pronto — já está registrado e categorizado. Sem abrir app, sem formulário.</p>
+    <div style="display:flex;justify-content:center">
+      <div class="phone">
+        <div class="phone-top"><div class="phone-av">F</div><div class="phone-nm">Finn. Bot</div></div>
+        <div class="phone-body">
+          <div class="msg msg-out">Gastei 45 reais no ifood agora</div>
+          <div class="msg msg-in">✅ Despesa registrada!<br>🍔 R$ 45,00 — Alimentação<br>Saldo do mês: R$ 1.240,50</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Funcionalidade</div>
+  <h2>🤖 IA que entende suas finanças</h2>
+  <p class="lead">Peça um diagnóstico e receba sugestões de economia, previsão de saldo e análise dos seus maiores gastos — gerado por IA, sem custo extra.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Funcionalidade</div>
+  <h2>📄 Importe o extrato do seu banco</h2>
+  <p class="lead">Nubank, Itaú, Bradesco, BB, Inter, C6 e mais. Selecione o PDF e as transações aparecem automaticamente categorizadas — o arquivo é lido no seu celular, nunca sai dele.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Funcionalidade</div>
+  <h2>🎯 Metas e Score Financeiro</h2>
+  <p class="lead">Crie metas de poupança e acompanhe um score de 0 a 1000 — saiba exatamente como está sua saúde financeira, de forma visual e simples.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Funcionalidade</div>
+  <h2>📅 Calendário de gastos</h2>
+  <p class="lead">Veja receitas e despesas dia a dia em um calendário mensal. Identifique padrões — tipo aquele "gasto fantasma" do fim de semana.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Funcionalidade</div>
+  <h2>☁️ Tudo sincronizado</h2>
+  <p class="lead">Faça login com Google ou e-mail e seus dados ficam salvos e sincronizados em qualquer dispositivo, em tempo real.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Como funciona</div>
+  <h2>Do zero ao controle em 3 minutos</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><div><div class="st">Crie sua conta</div><div class="sd">Login com Google ou e-mail, gratuito.</div></div></div>
+    <div class="step"><div class="num">2</div><div><div class="st">Importe seu extrato</div><div class="sd">PDF do banco, categorizado automaticamente.</div></div></div>
+    <div class="step"><div class="num">3</div><div><div class="st">Conecte o WhatsApp</div><div class="sd">Cada gasto por mensagem.</div></div></div>
+    <div class="step"><div class="num">4</div><div><div class="st">Peça uma análise para a IA</div><div class="sd">Diagnóstico completo na hora.</div></div></div>
+  </div>
+</section>
+<section class="slide center">
+  <div class="eyebrow">Preço</div>
+  <div class="big">100% Grátis</div>
+  <p class="lead" style="margin:18px auto 0">Sem cartão de crédito, sem plano pago, sem pegadinha. A IA também está incluída.</p>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Segurança</div>
+  <h2>Seus dados, só seus</h2>
+  <ul class="list">
+    <li>Dados armazenados com criptografia em repouso e em trânsito.</li>
+    <li>Row Level Security: cada usuário só acessa os próprios dados — garantido no banco, não só no app.</li>
+    <li>Importação de PDF é local — o arquivo do banco nunca é enviado a servidores.</li>
+    <li>A IA não tem acesso à sua conta bancária, só às transações que você registrou no Finn.</li>
+  </ul>
+</section>
+<section class="slide ">
+  <div class="eyebrow">Perguntas frequentes</div>
+  <h2>Tira-dúvidas rápido</h2>
+  <div class="faqq">O Finn é realmente gratuito?</div>
+  <div class="faqa">Sim, 100% — sem limite de transações e sem cartão.</div>
+  <div class="faqq">Funciona no meu WhatsApp normal?</div>
+  <div class="faqa">Sim! Basta salvar o número do Finn nas configurações do app.</div>
+  <div class="faqq">Preciso instalar algo?</div>
+  <div class="faqa">Não — é um PWA, abre direto no navegador. Mas pode "Adicionar à tela inicial" se quiser.</div>
+</section>
+<section class="slide center">
+  <h2>Pronto para testar?</h2>
+  <p class="lead" style="margin:0 auto 24px">Acesse agora, é grátis e leva menos de 3 minutos:</p>
+  <p class="lead" style="margin:0 auto"><a href="https://finn-app.khevenhenriquelimasantos443.workers.dev/" style="color:#F97316;font-weight:800;font-size:20px">finn-app.khevenhenriquelimasantos443.workers.dev</a></p>
+</section>
+<section class="slide center">
+  <h2>Valeu por testar! 🙌</h2>
+  <p class="lead" style="margin:0 auto">Qualquer feedback, bug ou ideia — me manda mensagem direto. Bora organizar essas finanças.</p>
+</section>
+</div>
+<div class="footerbar">
+  <div class="brand">Finn<em>.</em></div>
+  <div><span id="cur">1</span> / <span id="tot">0</span></div>
+  <div><button class="nav-btn" onclick="go(-1)">← Anterior</button> <button class="nav-btn" onclick="go(1)">Próximo →</button></div>
+</div>
+<script>
+var slides = document.querySelectorAll('.slide');
+var idx = 0;
+document.getElementById('tot').textContent = slides.length;
+function render(){
+  slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+  document.getElementById('cur').textContent = idx+1;
+  document.getElementById('progress').style.width = ((idx+1)/slides.length*100) + '%';
+}
+function go(d){
+  idx = Math.max(0, Math.min(slides.length-1, idx+d));
+  render();
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+  if (e.key === 'ArrowLeft') go(-1);
+});
+render();
+</script>
+</body>
+</html>
