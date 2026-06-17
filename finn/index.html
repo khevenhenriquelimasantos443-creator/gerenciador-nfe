@@ -149,6 +149,88 @@ tr:hover td{background:#F8FAFF}
 @keyframes finn-glow{0%,100%{box-shadow:0 0 0 1px rgba(249,115,22,0.3),0 20px 60px rgba(249,115,22,0.2)}50%{box-shadow:0 0 0 2px rgba(249,115,22,0.65),0 24px 72px rgba(249,115,22,0.5),0 0 50px rgba(249,115,22,0.22)}}
 @keyframes finn-login-in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes finn-login-in-delay{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ──────────────────────────────────────────────────────────
+   DESKTOP REFINEMENT — só ativa em telas ≥ 1024px
+   Mobile/tablet permanecem intocados.
+   ────────────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  body { background:#F1F0EC; padding-bottom:96px; }
+
+  /* Container principal centralizado e com largura máxima */
+  #root > div:first-child,
+  #root > div > div:first-child {
+    max-width: 1180px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Tabs centralizadas com padding consistente */
+  .tabs {
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 32px !important;
+    border-radius: 0 0 14px 14px;
+  }
+
+  /* Cards com sombra mais leve em desktop */
+  .sec-card {
+    box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 4px 16px -8px rgba(15,23,42,.06) !important;
+  }
+
+  /* Floating tools — reposicionar e refinar visual */
+  #finn-dt-tools {
+    bottom: 24px !important;
+    left: auto !important;
+    right: 80px !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    background: rgba(15,23,42,.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 8px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 12px 32px -10px rgba(0,0,0,.4);
+  }
+  #finn-dt-tools button {
+    background: transparent !important;
+    border: none !important;
+    color: #CBD5E1 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    padding: 8px 12px !important;
+    border-radius: 9px !important;
+    transition: background .15s, color .15s !important;
+  }
+  #finn-dt-tools button:hover {
+    background: rgba(249,115,22,.15) !important;
+    color: #FED7AA !important;
+  }
+  html.dark #finn-dt-tools { background: rgba(11,17,32,.95); }
+
+  /* Scrollbar mais visível em desktop */
+  ::-webkit-scrollbar { width: 10px !important; }
+  ::-webkit-scrollbar-thumb {
+    background: #CBD5E1 !important;
+    border-radius: 99px !important;
+    border: 2px solid #F1F0EC !important;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #94A3B8 !important; }
+  html.dark ::-webkit-scrollbar-thumb {
+    background: #334155 !important;
+    border-color: #0F172A !important;
+  }
+}
+
+/* Telas extra-largas — não esticar demais */
+@media (min-width: 1440px) {
+  #root > div:first-child,
+  #root > div > div:first-child {
+    max-width: 1280px;
+  }
+  .tabs { max-width: 1280px !important; }
+}
 </style>
 
 
@@ -620,13 +702,15 @@ react-dom/cjs/react-dom-client.production.js:
   'use strict';
 
   // ── ADMIN ──────────────────────────────────────────────────────────────
-  var ADMIN_EMAILS = ['khevenhenriquelimasantos443@gmail.com'];
+  var ADMIN_EMAILS = ['khevenhenriquelimasantos443@gmail.com','finn.controle01@gmail.com'];
   var ADMIN_SUPA_URL = 'https://zblkznobqcztvznycyyo.supabase.co';
   var ADMIN_SUPA_KEY = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
   function isAdmin() {
     try {
       var s = JSON.parse(localStorage.getItem('finn_supa_session')||'null');
-      return !!(s && s.user && ADMIN_EMAILS.indexOf(s.user.email) >= 0);
+      if (!s || !s.user || !s.user.email) return false;
+      var em = String(s.user.email).toLowerCase();
+      return ADMIN_EMAILS.some(function(e){ return e.toLowerCase() === em; });
     } catch(e) { return false; }
   }
 
