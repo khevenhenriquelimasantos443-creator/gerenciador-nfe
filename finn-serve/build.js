@@ -142,56 +142,150 @@ export default {
     }
 
     // ── Legal pages ──
+    const legalShell = (slug, title, eyebrow, bodyHtml) => \`<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>\${title} — Finn.</title>
+<meta name="theme-color" content="#F97316">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F8F7F4;color:#1E293B;line-height:1.7;-webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;background:rgba(248,247,244,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #E2E8F0;z-index:10}
+.top-inner{max-width:880px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#0F172A}
+.brand-mark{width:36px;height:36px;background:#1E293B;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#F97316;font-size:17px;letter-spacing:-.02em}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:-.02em}
+.brand-name em{font-style:normal;color:#F97316}
+.top-nav{display:flex;gap:22px;font-size:13px;font-weight:700}
+.top-nav a{color:#475569;text-decoration:none;transition:color .15s}
+.top-nav a:hover{color:#F97316}
+.hero{max-width:880px;margin:56px auto 8px;padding:0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#FFF7ED;border:1px solid #FED7AA;color:#C2410C;border-radius:99px;padding:6px 14px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(32px,5vw,46px);font-weight:900;letter-spacing:-.03em;line-height:1.08;margin-bottom:12px;color:#0F172A}
+h1 em{font-style:normal;color:#F97316}
+.meta{color:#64748B;font-size:14px;font-weight:600}
+.card{max-width:880px;margin:32px auto;padding:40px 44px;background:#fff;border:1px solid #E2E8F0;border-radius:20px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px -8px rgba(15,23,42,.06)}
+.card h2{font-size:19px;font-weight:900;letter-spacing:-.01em;color:#0F172A;margin:34px 0 10px;display:flex;align-items:baseline;gap:10px}
+.card h2:first-child{margin-top:0}
+.card h2 .num{color:#F97316;font-size:14px;font-weight:900;letter-spacing:.04em}
+.card p{color:#334155;margin-bottom:0;font-size:15.5px}
+.card p + p{margin-top:14px}
+.card a{color:#F97316;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(249,115,22,.35);transition:border-color .15s}
+.card a:hover{border-bottom-color:#F97316}
+.notice{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border:1px solid #FED7AA;border-radius:16px;padding:26px 28px;margin:18px 0}
+.notice strong{color:#9A3412;font-weight:900}
+.opt{display:flex;gap:16px;padding:18px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;margin-bottom:14px}
+.opt-ic{width:44px;height:44px;background:#F97316;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.opt-t{font-weight:900;color:#0F172A;font-size:15.5px;margin-bottom:4px}
+.opt-d{color:#475569;font-size:14px;line-height:1.55}
+.warn{color:#991B1B;font-size:13.5px;font-weight:700;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:14px 16px;margin-top:18px}
+.footer{max-width:880px;margin:24px auto 64px;padding:24px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center;color:#94A3B8;font-size:13px;border-top:1px solid #E2E8F0}
+.footer-brand{display:flex;align-items:center;gap:10px;color:#64748B;font-weight:700}
+.footer-brand .brand-mark{width:28px;height:28px;font-size:13px;border-radius:8px}
+.footer-links{display:flex;gap:20px;font-weight:700;flex-wrap:wrap}
+.footer-links a{color:#475569;text-decoration:none}
+.footer-links a:hover{color:#F97316}
+.active-link{color:#F97316!important}
+@media(max-width:600px){.top-nav{gap:14px}.top-nav a:not(.cta){display:none}.card{padding:28px 22px;border-radius:16px}.hero{margin-top:36px}.footer{flex-direction:column;text-align:center}}
+</style></head><body>
+<header class="top"><div class="top-inner">
+  <a href="/landing" class="brand"><div class="brand-mark">F</div><span class="brand-name">Finn<em>.</em></span></a>
+  <nav class="top-nav">
+    <a href="/landing">Sobre</a>
+    <a href="/privacidade"\${slug==='privacidade'?' class="active-link"':''}>Privacidade</a>
+    <a href="/termos"\${slug==='termos'?' class="active-link"':''}>Termos</a>
+    <a href="/" class="cta" style="color:#F97316">Entrar →</a>
+  </nav>
+</div></header>
+<section class="hero">
+  <div class="eyebrow">\${eyebrow}</div>
+  <h1>\${title}</h1>
+  <div class="meta">Última atualização: Junho de 2026</div>
+</section>
+\${bodyHtml}
+<footer class="footer">
+  <div class="footer-brand"><div class="brand-mark">F</div>© 2026 Finn. — Controle financeiro inteligente.</div>
+  <div class="footer-links">
+    <a href="/privacidade">Privacidade</a>
+    <a href="/termos">Termos</a>
+    <a href="/deletar-dados">Excluir dados</a>
+    <a href="mailto:Finn.controle01@gmail.com">Contato</a>
+  </div>
+</footer>
+</body></html>\`;
+
     if (url.pathname === '/privacidade') {
-      return new Response(\`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Política de Privacidade — Finn.</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1E293B;line-height:1.7}h1{color:#F97316}h2{margin-top:32px}a{color:#F97316}</style></head><body>
-<h1>Política de Privacidade — Finn.</h1>
-<p><strong>Última atualização:</strong> Junho de 2026</p>
-<h2>1. Dados coletados</h2>
+      const body = \`<article class="card">
+<h2><span class="num">01</span> Dados coletados</h2>
 <p>O Finn coleta apenas os dados que você fornece diretamente: e-mail para autenticação, transações financeiras que você registra (valores, datas, descrições e categorias), metas financeiras e limites de gastos configurados por você.</p>
-<h2>2. Como usamos seus dados</h2>
-<p>Seus dados são usados exclusivamente para oferecer as funcionalidades do app: exibição de extratos, análises financeiras com IA, metas e alertas de limite. Não vendemos, compartilhamos ou comercializamos seus dados com terceiros.</p>
-<h2>3. Armazenamento</h2>
-<p>Seus dados financeiros são armazenados de forma segura no Supabase (infraestrutura em nuvem com criptografia em repouso e em trânsito). O acesso é protegido por autenticação via e-mail ou Google.</p>
-<h2>4. IA e análises</h2>
-<p>Ao usar a função "Finn IA", um resumo anônimo das suas transações (sem dados de identificação pessoal) é enviado à API da Anthropic para gerar análises financeiras. Nenhum dado é armazenado pela Anthropic após o processamento.</p>
-<h2>5. WhatsApp Bot</h2>
+
+<h2><span class="num">02</span> Como usamos seus dados</h2>
+<p>Seus dados são usados <strong>exclusivamente</strong> para oferecer as funcionalidades do app: exibição de extratos, análises financeiras com IA, metas e alertas de limite. <strong>Não vendemos, compartilhamos ou comercializamos seus dados</strong> com terceiros.</p>
+
+<h2><span class="num">03</span> Armazenamento</h2>
+<p>Seus dados financeiros são armazenados de forma segura no <strong>Supabase</strong> (infraestrutura em nuvem com criptografia em repouso e em trânsito). O acesso é protegido por autenticação via e-mail ou Google.</p>
+
+<h2><span class="num">04</span> IA e análises</h2>
+<p>Ao usar a função <strong>"Finn IA"</strong>, um resumo anônimo das suas transações (sem dados de identificação pessoal) é enviado à API da Anthropic para gerar análises financeiras. Nenhum dado é armazenado pela Anthropic após o processamento.</p>
+
+<h2><span class="num">05</span> WhatsApp Bot</h2>
 <p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenados no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
-<h2>6. Seus direitos</h2>
-<p>Você pode solicitar a exclusão de todos os seus dados a qualquer momento em: <a href="/deletar-dados">finn.dev.br/deletar-dados</a></p>
-<h2>7. Contato</h2>
-<p>Dúvidas sobre privacidade: <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
-</body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+
+<h2><span class="num">06</span> Seus direitos</h2>
+<div class="notice"><strong>Você está no controle.</strong><br>Pode solicitar a exclusão de todos os seus dados a qualquer momento em <a href="/deletar-dados">finn.dev.br/deletar-dados</a> — sem perguntas, sem retenção.</div>
+
+<h2><span class="num">07</span> Contato</h2>
+<p>Dúvidas sobre privacidade? Escreva para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> e respondemos em até 48h.</p>
+</article>\`;
+      return new Response(legalShell('privacidade', 'Política de Privacidade', '🔒 Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     if (url.pathname === '/termos') {
-      return new Response(\`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Termos de Serviço — Finn.</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1E293B;line-height:1.7}h1{color:#F97316}h2{margin-top:32px}a{color:#F97316}</style></head><body>
-<h1>Termos de Serviço — Finn.</h1>
-<p><strong>Última atualização:</strong> Junho de 2026</p>
-<h2>1. Aceitação</h2>
+      const body = \`<article class="card">
+<h2><span class="num">01</span> Aceitação</h2>
 <p>Ao usar o Finn, você concorda com estes Termos. Se não concordar, não utilize o serviço.</p>
-<h2>2. O serviço</h2>
-<p>O Finn é um aplicativo de controle financeiro pessoal oferecido gratuitamente. Reservamo-nos o direito de modificar ou encerrar o serviço a qualquer momento, com aviso prévio razoável.</p>
-<h2>3. Responsabilidade dos dados</h2>
-<p>Você é responsável pela precisão dos dados que insere no app. O Finn não se responsabiliza por decisões financeiras tomadas com base nas análises do aplicativo. As análises com IA são informativas e não constituem aconselhamento financeiro profissional.</p>
-<h2>4. Uso adequado</h2>
+
+<h2><span class="num">02</span> O serviço</h2>
+<p>O Finn é um aplicativo de <strong>controle financeiro pessoal oferecido gratuitamente</strong>. Reservamo-nos o direito de modificar ou encerrar o serviço a qualquer momento, com aviso prévio razoável.</p>
+
+<h2><span class="num">03</span> Responsabilidade dos dados</h2>
+<p>Você é responsável pela precisão dos dados que insere no app. O Finn não se responsabiliza por decisões financeiras tomadas com base nas análises do aplicativo.</p>
+<p>As análises com IA são <strong>informativas</strong> e não constituem aconselhamento financeiro profissional.</p>
+
+<h2><span class="num">04</span> Uso adequado</h2>
 <p>É proibido usar o Finn para fins ilegais, tentativas de acesso não autorizado à plataforma ou uso que prejudique outros usuários.</p>
-<h2>5. Disponibilidade</h2>
-<p>O Finn é fornecido "como está", sem garantias de disponibilidade ininterrupta. Fazemos o melhor para manter o serviço estável, mas não garantimos 100% de uptime.</p>
-<h2>6. Contato</h2>
-<p><a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
-</body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+
+<h2><span class="num">05</span> Disponibilidade</h2>
+<p>O Finn é fornecido <strong>"como está"</strong>, sem garantias de disponibilidade ininterrupta. Fazemos o melhor para manter o serviço estável, mas não garantimos 100% de uptime.</p>
+
+<h2><span class="num">06</span> Contato</h2>
+<p>Dúvidas, sugestões ou reclamações: <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
+</article>\`;
+      return new Response(legalShell('termos', 'Termos de Serviço', '📜 Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     if (url.pathname === '/deletar-dados') {
-      return new Response(\`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Exclusão de Dados — Finn.</title><style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1E293B;line-height:1.7}h1{color:#F97316}.box{background:#FFF7ED;border:1px solid #FED7AA;border-radius:12px;padding:24px;margin:24px 0}a{color:#F97316}</style></head><body>
-<h1>Exclusão de Dados — Finn.</h1>
-<div class="box">
+      const body = \`<article class="card">
 <h2 style="margin-top:0">Como excluir seus dados</h2>
-<p><strong>Opção 1 — Pelo app (recomendado):</strong><br>Abra o Finn → Menu → Configurações → Dados → Excluir todos os dados</p>
-<p><strong>Opção 2 — Por e-mail:</strong><br>Envie um e-mail para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> com o assunto "Exclusão de dados" e seu e-mail cadastrado. Excluiremos todos os seus dados em até 7 dias úteis.</p>
+<p style="margin-bottom:22px">Você pode excluir <strong>todos os seus dados</strong> do Finn a qualquer momento, sem precisar de aprovação ou justificativa.</p>
+
+<div class="opt">
+  <div class="opt-ic">⚡</div>
+  <div><div class="opt-t">Opção 1 — Pelo app (recomendado)</div>
+  <div class="opt-d">Abra o Finn → Menu → Configurações → Dados → <strong>"Excluir todos os dados"</strong>. A exclusão é imediata.</div></div>
 </div>
-<p>Ao excluir seus dados, todas as suas transações, metas, limites e configurações serão permanentemente removidos dos nossos servidores. Esta ação é irreversível.</p>
-</body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+
+<div class="opt">
+  <div class="opt-ic">✉️</div>
+  <div><div class="opt-t">Opção 2 — Por e-mail</div>
+  <div class="opt-d">Envie um e-mail para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> com o assunto <strong>"Exclusão de dados"</strong> e seu e-mail cadastrado. Excluiremos tudo em até 7 dias úteis.</div></div>
+</div>
+
+<div class="warn">⚠️ Ao excluir, <strong>todas as suas transações, metas, limites e configurações</strong> serão permanentemente removidos. Esta ação é irreversível.</div>
+</article>\`;
+      return new Response(legalShell('deletar-dados', 'Excluir meus dados', '🗑️ Direito do titular', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     // ── AI proxy (Anthropic Claude) ──

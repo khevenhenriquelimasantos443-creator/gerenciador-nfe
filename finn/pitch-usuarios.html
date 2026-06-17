@@ -63,8 +63,10 @@ table.cmp td.no{color:#64748B}
 .faqq{font-weight:800;font-size:16px;margin-bottom:4px}
 .faqa{font-size:14px;color:#94A3B8;line-height:1.55;margin-bottom:18px}
 .footerbar{position:fixed;bottom:0;left:0;right:0;height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(0,0,0,.55);z-index:10;font-size:12px;color:#94A3B8}
-.footerbar .brand{font-weight:900;color:#fff}
+.footerbar .brand{font-weight:900;color:#fff;display:flex;align-items:center;gap:8px}
 .footerbar .brand em{color:#F97316;font-style:normal}
+.footerbar .brand-mark{width:24px;height:24px;background:#1E293B;border:1px solid rgba(249,115,22,.4);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#F97316;font-size:12px}
+.cover-mark{width:84px;height:84px;background:linear-gradient(135deg,#1E293B 0%,#0F172A 100%);border-radius:22px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#F97316;font-size:42px;letter-spacing:-.04em;box-shadow:0 20px 50px -10px rgba(249,115,22,.4);margin:0 auto 28px}
 .nav-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
 .nav-btn:hover{background:rgba(255,255,255,.16)}
 .progress{position:fixed;top:0;left:0;height:3px;background:#F97316;z-index:20;transition:width .35s ease}
@@ -80,6 +82,7 @@ table.cmp td.no{color:#64748B}
 <div class="progress" id="progress" style="width:0%"></div>
 <div class="deck" id="deck">
 <section class="slide center">
+  <div class="cover-mark">F</div>
   <div class="tag">Convite para o beta</div>
   <h1>Finn<em>.</em></h1>
   <p class="lead" style="margin:0 auto">Seu dinheiro, sob controle — direto do WhatsApp.<br>100% grátis.</p>
@@ -181,7 +184,7 @@ table.cmp td.no{color:#64748B}
 </section>
 </div>
 <div class="footerbar">
-  <div class="brand">Finn<em>.</em></div>
+  <div class="brand"><div class="brand-mark">F</div>Finn<em>.</em></div>
   <div><span id="cur">1</span> / <span id="tot">0</span></div>
   <div><button class="nav-btn" onclick="go(-1)">← Anterior</button> <button class="nav-btn" onclick="go(1)">Próximo →</button></div>
 </div>
