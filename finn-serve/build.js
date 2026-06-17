@@ -3,9 +3,11 @@ const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
 
-const html    = fs.readFileSync(path.join(__dirname,'../finn/index.html'), 'utf8');
-const landing = fs.readFileSync(path.join(__dirname,'../finn/landing.html'), 'utf8');
-const sw      = fs.readFileSync(path.join(__dirname,'sw.js'), 'utf8');
+const html      = fs.readFileSync(path.join(__dirname,'../finn/index.html'), 'utf8');
+const landing   = fs.readFileSync(path.join(__dirname,'../finn/landing.html'), 'utf8');
+const sw        = fs.readFileSync(path.join(__dirname,'sw.js'), 'utf8');
+const pitchInv  = fs.readFileSync(path.join(__dirname,'../finn/pitch-investidores.html'), 'utf8');
+const pitchUsr  = fs.readFileSync(path.join(__dirname,'../finn/pitch-usuarios.html'), 'utf8');
 
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
@@ -299,6 +301,26 @@ export default {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'public, max-age=3600, must-revalidate',
+        },
+      });
+    }
+
+    // ── Pitch decks ──
+    if (url.pathname === '/investidores') {
+      return new Response(${JSON.stringify(pitchInv)}, {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          'X-Robots-Tag': 'noindex, nofollow',
+        },
+      });
+    }
+    if (url.pathname === '/usuarios') {
+      return new Response(${JSON.stringify(pitchUsr)}, {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          'X-Robots-Tag': 'noindex, nofollow',
         },
       });
     }
