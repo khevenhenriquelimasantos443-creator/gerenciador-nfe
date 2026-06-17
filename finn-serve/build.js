@@ -157,7 +157,7 @@ export default {
 <h2>5. WhatsApp Bot</h2>
 <p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenados no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
 <h2>6. Seus direitos</h2>
-<p>Você pode solicitar a exclusão de todos os seus dados a qualquer momento em: <a href="/deletar-dados">finn-app.khevenhenriquelimasantos443.workers.dev/deletar-dados</a></p>
+<p>Você pode solicitar a exclusão de todos os seus dados a qualquer momento em: <a href="/deletar-dados">finn.dev.br/deletar-dados</a></p>
 <h2>7. Contato</h2>
 <p>Dúvidas sobre privacidade: <a href="mailto:khevenhenriquelimasantos443@gmail.com">khevenhenriquelimasantos443@gmail.com</a></p>
 </body></html>\`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
