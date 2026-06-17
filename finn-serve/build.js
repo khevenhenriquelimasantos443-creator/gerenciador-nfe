@@ -199,14 +199,33 @@ export default {
           status: 503, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
         });
       }
-      var aiBody = await request.text();
-      var aiResp = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-        body: aiBody,
-      });
-      var aiText = await aiResp.text();
-      return new Response(aiText, { status: aiResp.status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      // Only allow calls coming from our own origin (blocks browser-based abuse from other sites).
+      var aiOrigin = request.headers.get('Origin');
+      if (aiOrigin && aiOrigin !== url.origin) {
+        return new Response(JSON.stringify({ error: { type: 'forbidden', message: 'origin não permitido' } }), {
+          status: 403, headers: { 'Content-Type': 'application/json' }
+        });
+      }
+      try {
+        var aiPayload = {};
+        try { aiPayload = JSON.parse(await request.text()); } catch (pe) { aiPayload = {}; }
+        // Clamp cost: cap output tokens and force a known, inexpensive model so the proxy can't be
+        // abused to run the most expensive model with huge max_tokens on our server key.
+        var ALLOWED_MODELS = ['claude-haiku-4-5-20251001', 'claude-3-5-haiku-20241022'];
+        if (ALLOWED_MODELS.indexOf(aiPayload.model) === -1) aiPayload.model = ALLOWED_MODELS[0];
+        if (!aiPayload.max_tokens || aiPayload.max_tokens > 2048) aiPayload.max_tokens = 2048;
+        var aiResp = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+          body: JSON.stringify(aiPayload),
+        });
+        var aiText = await aiResp.text();
+        return new Response(aiText, { status: aiResp.status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': url.origin } });
+      } catch (aiErr) {
+        return new Response(JSON.stringify({ error: { type: 'proxy_error', message: 'falha ao contatar a IA' } }), {
+          status: 502, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': url.origin }
+        });
+      }
     }
 
     // ── Pluggy: token ──
@@ -294,7 +313,7 @@ export default {
         status: 304,
         headers: {
           'ETag': ETAG,
-          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          'Cache-Control': 'no-cache',
         },
       });
     }
@@ -302,7 +321,7 @@ export default {
     return new Response(${JSON.stringify(html)}, {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=3600, must-revalidate',
+        'Cache-Control': 'no-cache',
         'ETag': ETAG,
         'X-Finn-Version': '2.1.0',
       },

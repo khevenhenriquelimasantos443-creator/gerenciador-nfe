@@ -1,5 +1,5 @@
-// Finn Service Worker v2.5
-const CACHE = 'finn-v2-5';
+// Finn Service Worker v2.6
+const CACHE = 'finn-v2-6';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();
@@ -21,7 +21,7 @@ self.addEventListener('activate', function(e) {
     }).then(function() {
       return self.clients.matchAll({type:'window'}).then(function(clients) {
         clients.forEach(function(c) {
-          c.postMessage({type:'SW_UPDATED', version:'2.5.0'});
+          c.postMessage({type:'SW_UPDATED', version:'2.6.0'});
         });
       });
     })
@@ -29,39 +29,53 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  if (e.request.mode === 'navigate') {
+  var req = e.request;
+
+  // Never intervene on non-GET (POST/PUT/DELETE to Supabase, /ai, etc.) — straight to network.
+  if (req.method !== 'GET') return;
+
+  var url;
+  try { url = new URL(req.url); } catch(err) { return; }
+
+  // Never cache cross-origin requests (Supabase REST, Anthropic, bank logos...).
+  // Caching these froze cloud data in the cache and resurrected deleted rows on reload.
+  if (url.origin !== self.location.origin) return;
+
+  // Never cache same-origin API endpoints.
+  if (url.pathname.indexOf('/ai') === 0 || url.pathname.indexOf('/pluggy') === 0) return;
+
+  // App shell + navigations: NETWORK-FIRST so new deploys appear immediately.
+  // Cache is only an offline fallback.
+  if (req.mode === 'navigate' || url.pathname === '/' || url.pathname === '') {
     e.respondWith(
-      caches.open(CACHE).then(function(cache) {
-        return cache.match(e.request).then(function(cached) {
-          var fetchPromise = fetch(e.request).then(function(res) {
-            if (res.ok) cache.put(e.request, res.clone());
-            return res;
-          }).catch(function() { return null; });
-          if (cached) {
-            fetchPromise.then(function(fresh) {
-              if (fresh) {
-                self.clients.matchAll({type:'window'}).then(function(clients) {
-                  clients.forEach(function(c) { c.postMessage({type:'SW_UPDATED', version:'2.5.0'}); });
-                });
-              }
-            });
-            return cached;
-          }
-          return fetchPromise.then(function(res) { return res || new Response('Offline', {status:503}); });
+      fetch(req).then(function(res) {
+        if (res && res.ok) {
+          var clone = res.clone();
+          caches.open(CACHE).then(function(c){ c.put('/', clone); });
+        }
+        return res;
+      }).catch(function() {
+        return caches.open(CACHE).then(function(c) {
+          return c.match('/').then(function(m) {
+            return m || new Response('Offline', {status:503});
+          });
         });
       })
     );
     return;
   }
+
+  // Other same-origin static assets (icons, manifest): cache-first, refresh in background.
   e.respondWith(
-    caches.match(e.request).then(function(r) {
-      return r || fetch(e.request).then(function(res) {
-        if (res.ok && e.request.method === 'GET') {
+    caches.match(req).then(function(cached) {
+      var net = fetch(req).then(function(res) {
+        if (res && res.ok) {
           var clone = res.clone();
-          caches.open(CACHE).then(function(c){ c.put(e.request, clone); });
+          caches.open(CACHE).then(function(c){ c.put(req, clone); });
         }
         return res;
-      });
+      }).catch(function() { return cached; });
+      return cached || net;
     })
   );
 });
