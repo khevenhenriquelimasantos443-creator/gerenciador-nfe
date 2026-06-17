@@ -241,7 +241,7 @@ export default {
     }
 
     // ── Icons ──
-    var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#0F172A"/><path d="M96 10L182 96L96 182L10 96Z" fill="#F97316"/><path d="M96 48L144 96L96 144L48 96Z" fill="#0F172A"/><circle cx="96" cy="96" r="19" fill="#F97316"/></svg>';
+    var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#0F172A"/><path d="M96 36L156 96L96 156L36 96Z" fill="#F97316"/><path d="M96 62L130 96L96 130L62 96Z" fill="#0F172A"/><circle cx="96" cy="96" r="13" fill="#F97316"/></svg>';
     if (url.pathname === '/icon-192.svg' || url.pathname === '/icon-512.svg') {
       return new Response(iconSvg, {
         headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=604800' }
