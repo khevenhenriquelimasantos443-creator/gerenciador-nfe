@@ -1801,6 +1801,26 @@ react-dom/cjs/react-dom-client.production.js:
     return null;
   }
 
+  // Like getSession(), but refreshes the access token first if it's expired (or about to expire).
+  // Cloud writes that rely on a stale token fail silently (401) without this, since callers below
+  // don't surface fetch errors to the user.
+  function getValidSession() {
+    var s = getSession();
+    if (!s) return Promise.resolve(null);
+    if (!s.refresh_token || (s.expires_at && s.expires_at > Math.floor(Date.now() / 1000) + 60)) return Promise.resolve(s);
+    return fetch(SUPA_URL + '/auth/v1/token?grant_type=refresh_token', {
+      method: 'POST',
+      headers: { apikey: SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: s.refresh_token })
+    }).then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(d) {
+        if (!d || !d.access_token) return s;
+        var fresh = { access_token: d.access_token, refresh_token: d.refresh_token, expires_at: Math.floor(Date.now() / 1000) + (d.expires_in || 3600), user: d.user || s.user };
+        try { localStorage.setItem('finn_supa_session', JSON.stringify(fresh)); } catch(e) {}
+        return fresh;
+      }).catch(function() { return s; });
+  }
+
   // Mapeia uma transação (formato app/bot) para o esquema do Supabase
   function mapTx(n, uid) {
     var value, type;
@@ -1832,24 +1852,25 @@ react-dom/cjs/react-dom-client.production.js:
 
   // Insere transações novas no Supabase (ignora as que já existem por id). Retorna nº inseridas.
   window.finnPushToSupabase = function(txs) {
-    var session = getSession();
-    if (!session || !txs || !txs.length) return Promise.resolve(0);
-    var uid = session.user.id;
-    // 1) Busca ids já existentes para não duplicar
-    return fetch(SUPA_URL + '/rest/v1/transactions?user_id=eq.' + encodeURIComponent(uid) + '&select=id', { headers: supaHeaders(session) })
-      .then(function(r){ return r.ok ? r.json() : []; })
-      .then(function(existing){
-        var have = {};
-        (existing || []).forEach(function(e){ have[String(e.id)] = 1; });
-        var novos = txs.map(function(t){ return mapTx(t, uid); }).filter(function(t){ return !have[t.id]; });
-        if (!novos.length) return 0;
-        return fetch(SUPA_URL + '/rest/v1/transactions', {
-          method: 'POST',
-          headers: supaHeaders(session, { 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
-          body: JSON.stringify(novos)
-        }).then(function(r){ return r.ok ? novos.length : 0; });
-      })
-      .catch(function(){ return 0; });
+    if (!txs || !txs.length) return Promise.resolve(0);
+    return getValidSession().then(function(session) {
+      if (!session) return 0;
+      var uid = session.user.id;
+      // 1) Busca ids já existentes para não duplicar
+      return fetch(SUPA_URL + '/rest/v1/transactions?user_id=eq.' + encodeURIComponent(uid) + '&select=id', { headers: supaHeaders(session) })
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(existing){
+          var have = {};
+          (existing || []).forEach(function(e){ have[String(e.id)] = 1; });
+          var novos = txs.map(function(t){ return mapTx(t, uid); }).filter(function(t){ return !have[t.id]; });
+          if (!novos.length) return 0;
+          return fetch(SUPA_URL + '/rest/v1/transactions', {
+            method: 'POST',
+            headers: supaHeaders(session, { 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+            body: JSON.stringify(novos)
+          }).then(function(r){ return r.ok ? novos.length : 0; });
+        });
+    }).catch(function(){ return 0; });
   };
 
   function showStatus(msg) {
@@ -2665,29 +2686,33 @@ react-dom/cjs/react-dom-client.production.js:
 
     window.finnOpenAnalise = function(){ aPanel.style.display='flex'; };
 
-    // Sync helper: called after delete-all or delete-month to update Supabase
+    // Sync helper: called after delete-all or delete-month to update Supabase.
+    // Always deletes every cloud row for the user first, then re-inserts whatever is still
+    // left locally — a plain upsert can't remove rows, so it could never reflect a deletion.
     window.finnSyncAfterDelete = function() {
-      var session = getSession();
-      if (!session) return;
-      var uid = session.user.id;
-      // Wait for React state to settle, then read localStorage and delete from Supabase
+      // Tiny delay just to let the synchronous localStorage write land before we read it back
       setTimeout(function() {
-        try {
-          var stored = localStorage.getItem('fiq_data_' + (session.user.id||''));
+        getValidSession().then(function(session) {
+          if (!session) return;
+          var uid = session.user.id;
           var txs = [];
-          if (stored) { var d = JSON.parse(stored); txs = d.txs || []; }
-          if (txs.length === 0) {
-            // Delete all from Supabase for this user
-            fetch(SUPA_URL + '/rest/v1/transactions?user_id=eq.' + encodeURIComponent(uid), {
-              method: 'DELETE',
-              headers: supaHeaders(session)
+          try {
+            var stored = localStorage.getItem('fiq_data_' + uid);
+            if (stored) { var d = JSON.parse(stored); txs = d.txs || []; }
+          } catch(e) {}
+          fetch(SUPA_URL + '/rest/v1/transactions?user_id=eq.' + encodeURIComponent(uid), {
+            method: 'DELETE',
+            headers: supaHeaders(session)
+          }).catch(function(){}).then(function() {
+            if (!txs.length) return;
+            fetch(SUPA_URL + '/rest/v1/transactions', {
+              method: 'POST',
+              headers: supaHeaders(session, { 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+              body: JSON.stringify(txs.map(function(t){ return mapTx(t, uid); }))
             }).catch(function(){});
-          } else {
-            // Re-upsert current transactions to ensure Supabase matches
-            window.finnPushToSupabase && window.finnPushToSupabase(txs.map(function(t){ return {id:String(t.id),date:t.date,desc:t.desc||t.descricao||'',value:Math.abs(t.value||t.val||0),type:t.type,cat:t.cat||'Outros',recorrente:!!t.recorrente,banco:t.banco||null}; }));
-          }
-        } catch(e) {}
-      }, 2000);
+          });
+        });
+      }, 300);
     };
 
     // ── DASHBOARDS PANEL ────────────────────────────────────────────────────
@@ -3023,28 +3048,31 @@ react-dom/cjs/react-dom-client.production.js:
 
     document.getElementById('fns-sync-btn').addEventListener('click', function() {
       closeSidebar();
-      // Push any local transactions to Supabase, then reload so startup pulls fresh data
+      // Push any local transactions to Supabase, then reload so startup pulls fresh data.
+      // Reload is gated on the push promise (with a hard fallback) instead of a blind timeout,
+      // since getValidSession() may need an extra round-trip to refresh an expired token.
+      var reloaded = false;
+      function doReload() { if (reloaded) return; reloaded = true; window.location.reload(); }
       try {
         var sess = JSON.parse(localStorage.getItem('finn_supa_session') || 'null');
         if (sess && sess.user) {
           var uid = sess.user.id;
           var profileId = sess.profileId || uid;
           var stored = localStorage.getItem('fiq_data_' + profileId) || localStorage.getItem('fiq_data_' + uid);
-          if (stored) {
-            try {
-              var d = JSON.parse(stored);
-              var txs = d && d.txs ? d.txs : [];
-              if (txs.length && window.finnPushToSupabase) {
-                window.finnPushToSupabase(txs.map(function(t) {
-                  return {id:String(t.id||Date.now()),date:t.date,desc:t.desc||t.descricao||'',value:Math.abs(Number(t.value||t.val||0)),type:t.type||'despesa',cat:t.cat||'Outros',recorrente:!!t.recorrente,banco:t.banco||null};
-                }));
-              }
-            } catch(e2) {}
+          var txs = [];
+          if (stored) { try { var d = JSON.parse(stored); txs = d && d.txs ? d.txs : []; } catch(e2) {} }
+          if (txs.length && window.finnPushToSupabase) {
+            window.finnPushToSupabase(txs.map(function(t) {
+              return {id:String(t.id||Date.now()),date:t.date,desc:t.desc||t.descricao||'',value:Math.abs(Number(t.value||t.val||0)),type:t.type||'despesa',cat:t.cat||'Outros',recorrente:!!t.recorrente,banco:t.banco||null};
+            })).then(doReload).catch(doReload);
+          } else {
+            doReload();
           }
+        } else {
+          doReload();
         }
-      } catch(e) {}
-      // Reload after 1.5s so any push completes, then startup effect pulls from Supabase
-      setTimeout(function() { window.location.reload(); }, 1500);
+      } catch(e) { doReload(); }
+      setTimeout(doReload, 4000);
     });
 
     document.getElementById('fns-cfg-btn').addEventListener('click', function() {
