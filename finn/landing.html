@@ -143,13 +143,23 @@ section{padding:88px 24px}
 .cta-sub{font-size:17px;color:#64748B;margin-bottom:40px;position:relative}
 
 /* FOOTER */
-footer{background:#060912;padding:36px 24px;border-top:1px solid rgba(255,255,255,.04)}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.footer-logo{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.03em}
+footer{background:#060912;padding:56px 24px 24px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.footer-brand{display:flex;flex-direction:column;gap:14px}
+.footer-brand-row{display:flex;align-items:center;gap:12px}
+.footer-mark{width:40px;height:40px;background:#0F172A;border:1px solid rgba(249,115,22,.3);border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#F97316;font-size:19px;letter-spacing:-.02em}
+.footer-logo{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.03em}
 .footer-logo em{font-style:normal;color:#F97316}
-.footer-links{display:flex;gap:20px;font-size:13px;color:#475569}
-.footer-links a:hover{color:#94A3B8}
-.footer-copy{font-size:12px;color:#334155;width:100%;text-align:center;padding-top:12px;border-top:1px solid rgba(255,255,255,.04);margin-top:12px}
+.footer-tag{font-size:13.5px;color:#94A3B8;line-height:1.6;max-width:280px}
+.footer-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#86EFAC;border-radius:99px;padding:4px 12px;font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;width:fit-content}
+.footer-col h4{font-size:12px;font-weight:900;color:#fff;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.footer-col ul li a{font-size:13.5px;color:#94A3B8;text-decoration:none;transition:color .15s}
+.footer-col ul li a:hover{color:#F97316}
+.footer-bottom{max-width:1100px;margin:24px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:12px;color:#475569}
+.footer-bottom strong{color:#94A3B8}
+.footer-disclaimer{max-width:1100px;margin:14px auto 0;font-size:11.5px;color:#334155;line-height:1.6;text-align:left;padding-top:14px;border-top:1px solid rgba(255,255,255,.04)}
+@media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}.footer-brand{grid-column:1/-1}.footer-bottom{flex-direction:column;text-align:center}}
 
 /* WA FLOAT */
 .wa-btn{position:fixed;bottom:24px;right:24px;z-index:99;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:all .2s;cursor:pointer}
@@ -403,16 +413,49 @@ ou <b>meta</b> para ver suas metas 🎯</pre>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Finn<em>.</em></div>
-    <div class="footer-links">
-      <a href="/privacidade">Privacidade</a>
-      <a href="/termos">Termos</a>
-      <a href="/deletar-dados">Excluir dados</a>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-row">
+        <div class="footer-mark">F</div>
+        <div class="footer-logo">Finn<em>.</em></div>
+      </div>
+      <div class="footer-tag">Controle financeiro inteligente para o brasileiro. Lance gastos pelo WhatsApp, importe extratos e receba análises com IA.</div>
+      <div class="footer-pill">● Beta aberto · 100% grátis</div>
+    </div>
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <ul>
+        <li><a href="/landing">Sobre o Finn</a></li>
+        <li><a href="/">Entrar / Criar conta</a></li>
+        <li><a href="https://wa.me/5513992102413" target="_blank" rel="noopener">Bot WhatsApp</a></li>
+        <li><a href="/landing#funcionalidades">Funcionalidades</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacidade">Política de Privacidade</a></li>
+        <li><a href="/termos">Termos de Serviço</a></li>
+        <li><a href="/deletar-dados">Excluir meus dados</a></li>
+        <li><a href="/privacidade#03">Segurança</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></li>
+        <li><a href="https://wa.me/5513992102413" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="mailto:Finn.controle01@gmail.com?subject=Suporte">Suporte</a></li>
+        <li><a href="mailto:Finn.controle01@gmail.com?subject=Parceria">Parcerias</a></li>
+      </ul>
     </div>
   </div>
-  <div class="footer-inner">
-    <div class="footer-copy">© 2026 Finn. — Controle financeiro inteligente para o brasileiro</div>
+  <div class="footer-bottom">
+    <div>© 2026 <strong>Finn.</strong> — Todos os direitos reservados.</div>
+    <div>Feito no Brasil 🇧🇷 com café e código.</div>
+  </div>
+  <div class="footer-disclaimer">
+    <strong style="color:#64748B">Aviso legal:</strong> O Finn. é uma ferramenta de organização financeira pessoal e <strong>não é uma instituição financeira</strong>, corretora, banco ou prestador de serviços de pagamento. Não realizamos operações de crédito, investimento ou intermediação financeira. As análises geradas por IA são meramente informativas e não constituem aconselhamento financeiro, contábil, jurídico ou tributário. Consulte profissionais qualificados antes de tomar decisões financeiras importantes.
   </div>
 </footer>
 
