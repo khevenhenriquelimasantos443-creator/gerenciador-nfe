@@ -157,21 +157,15 @@ tr:hover td{background:#F8FAFF}
 @media (min-width: 1024px) {
   body { background:#F1F0EC; padding-bottom:96px; }
 
-  /* Container principal centralizado e com largura máxima */
-  #root > div:first-child,
-  #root > div > div:first-child {
-    max-width: 1180px;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
-  /* Tabs centralizadas com padding consistente */
-  .tabs {
+  /* O app real usa maxWidth:940 inline em dois lugares:
+     a linha do header (logo+controles+abas) e o .app-content.
+     Larguamos os dois pra aproveitar telas maiores, mantendo alinhados. */
+  .app-header-inner > div,
+  .app-content {
     max-width: 1180px !important;
-    margin: 0 auto !important;
-    padding: 0 32px !important;
-    border-radius: 0 0 14px 14px;
   }
+  .app-content { padding: 20px 28px !important; }
+  .app-header-inner { padding: 0 28px !important; }
 
   /* Cards com sombra mais leve em desktop */
   .sec-card {
@@ -225,11 +219,10 @@ tr:hover td{background:#F8FAFF}
 
 /* Telas extra-largas — não esticar demais */
 @media (min-width: 1440px) {
-  #root > div:first-child,
-  #root > div > div:first-child {
-    max-width: 1280px;
+  .app-header-inner > div,
+  .app-content {
+    max-width: 1320px !important;
   }
-  .tabs { max-width: 1280px !important; }
 }
 </style>
 
