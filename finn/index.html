@@ -3811,6 +3811,88 @@ react-dom/cjs/react-dom-client.production.js:
     });
   }
 
+  function addPageFooter() {
+    if (document.getElementById('finn-page-footer')) return;
+
+    var css = document.createElement('style');
+    css.id = 'finn-footer-css';
+    css.textContent =
+      '#finn-page-footer{padding:28px 18px 110px;text-align:center;font-family:"Plus Jakarta Sans",sans-serif;}' +
+      '#finn-page-footer .ft-inner{max-width:940px;margin:0 auto;border-top:1px solid #E2E8F0;padding-top:18px;}' +
+      '#finn-page-footer .ft-brand{font-weight:800;font-size:14px;color:#1E293B;}' +
+      '#finn-page-footer .ft-brand span{color:#F97316;}' +
+      '#finn-page-footer .ft-tag{font-size:11px;color:#64748B;margin-top:3px;}' +
+      '#finn-page-footer .ft-links{display:flex;justify-content:center;gap:18px;margin:12px 0;flex-wrap:wrap;}' +
+      '#finn-page-footer .ft-links button{background:none;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:600;color:#64748B;padding:0;}' +
+      '#finn-page-footer .ft-links button:hover{color:#F97316;}' +
+      '#finn-page-footer .ft-copy{font-size:10.5px;color:#94A3B8;margin-top:6px;}' +
+      'html.dark #finn-page-footer .ft-inner{border-color:rgba(255,255,255,.08)!important;}' +
+      'html.dark #finn-page-footer .ft-brand{color:#F1F5F9!important;}' +
+      'html.dark #finn-page-footer .ft-tag,html.dark #finn-page-footer .ft-copy{color:#64748B!important;}' +
+      'html.dark #finn-page-footer .ft-links button{color:#94A3B8!important;}' +
+      '#finn-ft-ovl{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(3px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}' +
+      '#finn-ft-ovl.open{display:flex;}' +
+      '#finn-ft-panel{background:#fff;border-radius:18px;width:min(440px,100%);max-height:80vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25);font-family:"Plus Jakarta Sans",sans-serif;padding:22px;}' +
+      '#finn-ft-panel h3{font-size:15px;font-weight:800;margin-bottom:10px;color:#1E293B;}' +
+      '#finn-ft-panel p{font-size:12.5px;line-height:1.6;color:#475569;margin-bottom:10px;}' +
+      '#finn-ft-close{margin-top:6px;width:100%;padding:10px;border-radius:9px;border:1.5px solid #E2E8F0;background:#F8F7F4;cursor:pointer;font-family:inherit;font-weight:700;font-size:12.5px;color:#1E293B;}' +
+      'html.dark #finn-ft-panel{background:#0F172A!important;}' +
+      'html.dark #finn-ft-panel h3{color:#F1F5F9!important;}' +
+      'html.dark #finn-ft-panel p{color:#CBD5E1!important;}' +
+      'html.dark #finn-ft-close{background:#1a2540!important;border-color:rgba(255,255,255,.12)!important;color:#F1F5F9!important;}';
+    document.head.appendChild(css);
+
+    var year = new Date().getFullYear();
+    var foot = document.createElement('div');
+    foot.id = 'finn-page-footer';
+    foot.innerHTML =
+      '<div class="ft-inner">' +
+        '<div class="ft-brand">Finn<span>.</span></div>' +
+        '<div class="ft-tag">Seu dinheiro, no controle.</div>' +
+        '<div class="ft-links">' +
+          '<button id="finn-ft-priv">Política de Privacidade</button>' +
+          '<button id="finn-ft-terms">Termos de Uso</button>' +
+          '<button id="finn-ft-contact">Contato</button>' +
+        '</div>' +
+        '<div class="ft-copy">© ' + year + ' Finn. Todos os direitos reservados.</div>' +
+      '</div>';
+    document.body.appendChild(foot);
+
+    var ovl = document.createElement('div');
+    ovl.id = 'finn-ft-ovl';
+    ovl.innerHTML = '<div id="finn-ft-panel"></div>';
+    document.body.appendChild(ovl);
+    var panel = document.getElementById('finn-ft-panel');
+
+    function closeModal() { ovl.classList.remove('open'); }
+    function openModal(title, html) {
+      panel.innerHTML = '<h3>' + title + '</h3>' + html + '<button id="finn-ft-close">Fechar</button>';
+      document.getElementById('finn-ft-close').addEventListener('click', closeModal);
+      ovl.classList.add('open');
+    }
+    ovl.addEventListener('click', function(e) { if (e.target === ovl) closeModal(); });
+
+    document.getElementById('finn-ft-priv').addEventListener('click', function() {
+      openModal('Política de Privacidade',
+        '<p>O Finn foi criado para te ajudar a organizar suas finanças com o máximo de cuidado com os seus dados.</p>' +
+        '<p>Seus lançamentos, metas, limites e conexões bancárias são armazenados de forma segura e usados apenas para exibir suas informações dentro do app. Não vendemos nem compartilhamos seus dados com terceiros para fins de publicidade.</p>' +
+        '<p>Integrações com IA e Open Banking (Pluggy) processam seus dados somente para gerar análises e sincronizar extratos, sempre sob sua autorização.</p>' +
+        '<p>O Finn está em fase beta — esta política pode ser atualizada conforme o produto evolui.</p>');
+    });
+    document.getElementById('finn-ft-terms').addEventListener('click', function() {
+      openModal('Termos de Uso',
+        '<p>Ao usar o Finn, você concorda em utilizá-lo para fins pessoais de organização financeira.</p>' +
+        '<p>O Finn é uma ferramenta de apoio e não substitui aconselhamento financeiro, contábil ou de investimentos profissional.</p>' +
+        '<p>Você é responsável pela exatidão dos dados inseridos ou importados, como extratos, lançamentos e metas.</p>' +
+        '<p>O app está em fase beta: funcionalidades podem mudar e eventuais instabilidades podem ocorrer enquanto evoluímos o produto.</p>');
+    });
+    document.getElementById('finn-ft-contact').addEventListener('click', function() {
+      openModal('Contato',
+        '<p>Tem alguma dúvida, sugestão ou encontrou um problema no app?</p>' +
+        '<p>Use o ícone de chat com a IA para tirar dúvidas sobre suas finanças, ou explore as <b>Configurações</b> para ajustar seu perfil e preferências.</p>');
+    });
+  }
+
   function start() {
     addSyncButton();
     addIAChat();
@@ -3820,6 +3902,7 @@ react-dom/cjs/react-dom-client.production.js:
     addDarkMode();
     addPluggyConnect();
     addSettingsPanel();
+    addPageFooter();
     setTimeout(autoSync, 3000);
   }
 
