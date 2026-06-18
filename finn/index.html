@@ -3817,44 +3817,61 @@ react-dom/cjs/react-dom-client.production.js:
     var css = document.createElement('style');
     css.id = 'finn-footer-css';
     css.textContent =
-      '#finn-page-footer{padding:28px 18px 110px;text-align:center;font-family:"Plus Jakarta Sans",sans-serif;}' +
-      '#finn-page-footer .ft-inner{max-width:940px;margin:0 auto;border-top:1px solid #E2E8F0;padding-top:18px;}' +
-      '#finn-page-footer .ft-brand{font-weight:800;font-size:14px;color:#1E293B;}' +
-      '#finn-page-footer .ft-brand span{color:#F97316;}' +
-      '#finn-page-footer .ft-tag{font-size:11px;color:#64748B;margin-top:3px;}' +
-      '#finn-page-footer .ft-links{display:flex;justify-content:center;gap:18px;margin:12px 0;flex-wrap:wrap;}' +
-      '#finn-page-footer .ft-links button{background:none;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:600;color:#64748B;padding:0;}' +
-      '#finn-page-footer .ft-links button:hover{color:#F97316;}' +
-      '#finn-page-footer .ft-copy{font-size:10.5px;color:#94A3B8;margin-top:6px;}' +
-      'html.dark #finn-page-footer .ft-inner{border-color:rgba(255,255,255,.08)!important;}' +
-      'html.dark #finn-page-footer .ft-brand{color:#F1F5F9!important;}' +
-      'html.dark #finn-page-footer .ft-tag,html.dark #finn-page-footer .ft-copy{color:#64748B!important;}' +
-      'html.dark #finn-page-footer .ft-links button{color:#94A3B8!important;}' +
-      '#finn-ft-ovl{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(3px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}' +
+      '#finn-page-footer{background:radial-gradient(circle at 18% 0%,rgba(249,115,22,.10),transparent 45%),#0B1120;margin-top:36px;font-family:"Plus Jakarta Sans",sans-serif;}' +
+      '#finn-page-footer .ft-wrap{max-width:1080px;margin:0 auto;padding:48px 22px 110px;}' +
+      '#finn-page-footer .ft-grid{display:flex;flex-wrap:wrap;gap:36px;justify-content:space-between;margin-bottom:34px;}' +
+      '#finn-page-footer .ft-brand-col{flex:1 1 260px;max-width:320px;}' +
+      '#finn-page-footer .ft-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;}' +
+      '#finn-page-footer .ft-logo-box{width:38px;height:38px;border-radius:10px;background:#1E293B;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}' +
+      '#finn-page-footer .ft-logo-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 65% 28%,rgba(249,115,22,.55),transparent 68%);}' +
+      '#finn-page-footer .ft-logo-box span{position:relative;z-index:1;color:#F97316;font-size:19px;font-weight:900;font-family:"Arial Black",sans-serif;}' +
+      '#finn-page-footer .ft-logo-name{font-size:19px;font-weight:800;color:#F8FAFC;}' +
+      '#finn-page-footer .ft-logo-name b{color:#F97316;}' +
+      '#finn-page-footer .ft-desc{font-size:12.5px;line-height:1.75;color:#64748B;}' +
+      '#finn-page-footer .ft-col{flex:0 1 170px;}' +
+      '#finn-page-footer .ft-col h4{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#F97316;margin-bottom:15px;}' +
+      '#finn-page-footer .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin:0;padding:0;}' +
+      '#finn-page-footer .ft-col li span{font-size:12.5px;color:#94A3B8;}' +
+      '#finn-page-footer .ft-col li button{background:none;border:none;cursor:pointer;font-family:inherit;font-size:12.5px;color:#94A3B8;padding:0;text-align:left;transition:color .15s;}' +
+      '#finn-page-footer .ft-col li button:hover{color:#F97316;}' +
+      '#finn-page-footer .ft-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding-top:24px;border-top:1px solid rgba(249,115,22,.15);font-size:11px;color:#475569;}' +
+      '#finn-page-footer .ft-bottom b{color:#F97316;}' +
+      '#finn-ft-ovl{position:fixed;inset:0;background:rgba(11,17,32,.7);backdrop-filter:blur(3px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}' +
       '#finn-ft-ovl.open{display:flex;}' +
-      '#finn-ft-panel{background:#fff;border-radius:18px;width:min(440px,100%);max-height:80vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25);font-family:"Plus Jakarta Sans",sans-serif;padding:22px;}' +
-      '#finn-ft-panel h3{font-size:15px;font-weight:800;margin-bottom:10px;color:#1E293B;}' +
-      '#finn-ft-panel p{font-size:12.5px;line-height:1.6;color:#475569;margin-bottom:10px;}' +
-      '#finn-ft-close{margin-top:6px;width:100%;padding:10px;border-radius:9px;border:1.5px solid #E2E8F0;background:#F8F7F4;cursor:pointer;font-family:inherit;font-weight:700;font-size:12.5px;color:#1E293B;}' +
-      'html.dark #finn-ft-panel{background:#0F172A!important;}' +
-      'html.dark #finn-ft-panel h3{color:#F1F5F9!important;}' +
-      'html.dark #finn-ft-panel p{color:#CBD5E1!important;}' +
-      'html.dark #finn-ft-close{background:#1a2540!important;border-color:rgba(255,255,255,.12)!important;color:#F1F5F9!important;}';
+      '#finn-ft-panel{background:#0F172A;border:1px solid rgba(249,115,22,.18);border-radius:18px;width:min(440px,100%);max-height:80vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.45);font-family:"Plus Jakarta Sans",sans-serif;padding:22px;}' +
+      '#finn-ft-panel h3{font-size:15px;font-weight:800;margin-bottom:10px;color:#F8FAFC;}' +
+      '#finn-ft-panel p{font-size:12.5px;line-height:1.6;color:#94A3B8;margin-bottom:10px;}' +
+      '#finn-ft-panel p b{color:#F97316;}' +
+      '#finn-ft-close{margin-top:6px;width:100%;padding:10px;border-radius:9px;border:1.5px solid rgba(249,115,22,.3);background:rgba(249,115,22,.1);cursor:pointer;font-family:inherit;font-weight:700;font-size:12.5px;color:#F97316;}';
     document.head.appendChild(css);
 
     var year = new Date().getFullYear();
     var foot = document.createElement('div');
     foot.id = 'finn-page-footer';
     foot.innerHTML =
-      '<div class="ft-inner">' +
-        '<div class="ft-brand">Finn<span>.</span></div>' +
-        '<div class="ft-tag">Seu dinheiro, no controle.</div>' +
-        '<div class="ft-links">' +
-          '<button id="finn-ft-priv">Política de Privacidade</button>' +
-          '<button id="finn-ft-terms">Termos de Uso</button>' +
-          '<button id="finn-ft-contact">Contato</button>' +
+      '<div class="ft-wrap">' +
+        '<div class="ft-grid">' +
+          '<div class="ft-brand-col">' +
+            '<div class="ft-logo"><div class="ft-logo-box"><span>F</span></div><div class="ft-logo-name">Finn<b>.</b></div></div>' +
+            '<div class="ft-desc">Controle financeiro inteligente para o brasileiro. Importe extratos, categorize gastos com IA e acompanhe suas metas — tudo em um só lugar.</div>' +
+          '</div>' +
+          '<div class="ft-col">' +
+            '<h4>Recursos</h4>' +
+            '<ul><li><span>Lançamentos</span></li><li><span>Metas e Limites</span></li><li><span>Extrato Inteligente</span></li><li><span>Open Banking</span></li><li><span>Análise com IA</span></li></ul>' +
+          '</div>' +
+          '<div class="ft-col">' +
+            '<h4>Empresa</h4>' +
+            '<ul>' +
+              '<li><button id="finn-ft-priv">Política de Privacidade</button></li>' +
+              '<li><button id="finn-ft-terms">Termos de Uso</button></li>' +
+              '<li><button id="finn-ft-contact">Contato</button></li>' +
+            '</ul>' +
+          '</div>' +
         '</div>' +
-        '<div class="ft-copy">© ' + year + ' Finn. Todos os direitos reservados.</div>' +
+        '<div class="ft-bottom">' +
+          '<span>© ' + year + ' <b>Finn.</b> Todos os direitos reservados.</span>' +
+          '<span>Feito com cuidado no Brasil 🇧🇷</span>' +
+        '</div>' +
       '</div>';
     document.body.appendChild(foot);
 
