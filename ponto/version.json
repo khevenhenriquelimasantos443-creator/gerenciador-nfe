@@ -1,4 +1,4 @@
 {
-  "version": "1.6",
-  "notes": "Meta HE configurável e VT em percentual do salário bruto"
+  "version": "1.7",
+  "notes": "Reflexo de horas extras no DSR e variáveis manuais (+/-) na Simulação"
 }

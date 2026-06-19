@@ -835,11 +835,25 @@
                 <input type="number" id="sim-salario-override" class="form-control" placeholder="Deixe vazio p/ usar o salário salvo" oninput="calcSimulacao()">
               </div>
             </div>
-            <div class="card">
+            <div class="card mb-4">
               <div class="card-header">
                 <span class="card-title"><i class="fas fa-tags" style="color:var(--danger)"></i> Descontos ativos</span>
               </div>
               <div id="sim-descontos-lista"></div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"><i class="fas fa-sliders-h" style="color:var(--info)"></i> Variáveis manuais (+/-)</span>
+              </div>
+              <div style="padding:0 0 4px">
+                <small style="color:var(--text-dim);display:block;padding:0 16px 10px">Adicione valores extras para simular (ex: bônus, adiantamento, desconto pontual). Use valor negativo para descontar.</small>
+                <div style="display:flex;gap:8px;padding:0 16px 12px;flex-wrap:wrap">
+                  <input type="text" id="adj-nome" class="form-control" placeholder="Descrição (ex: Bônus)" style="flex:1;min-width:140px">
+                  <input type="number" id="adj-valor" class="form-control" placeholder="Valor (+/-)" style="width:120px" step="0.01">
+                  <button class="btn btn-primary" onclick="adicionarAjusteSimulacao()" style="white-space:nowrap"><i class="fas fa-plus"></i> Adicionar</button>
+                </div>
+                <div id="sim-ajustes-lista"></div>
+              </div>
             </div>
           </div>
           <!-- Resultado -->
@@ -852,6 +866,7 @@
               <div class="sim-row"><div class="label">Salário base</div><div class="value positive" id="res-salario">R$ 0,00</div></div>
               <div class="sim-row"><div class="label">HE 75% (<span id="res-he50-h">0h</span>)</div><div class="value positive" id="res-he50">R$ 0,00</div></div>
               <div class="sim-row"><div class="label">HE 100% (<span id="res-he100-h">0h</span>)</div><div class="value positive" id="res-he100">R$ 0,00</div></div>
+              <div class="sim-row"><div class="label">Reflexo DSR sobre HE</div><div class="value positive" id="res-dsr">R$ 0,00</div></div>
               <div class="sim-row" style="font-weight:700"><div class="label">Salário Bruto</div><div class="value" id="res-bruto">R$ 0,00</div></div>
             </div>
             <div class="sim-section">
@@ -863,6 +878,11 @@
               <div class="sim-row"><div class="label">Plano de Saúde</div><div class="value negative" id="res-ps">R$ 0,00</div></div>
               <div id="res-extras-list"></div>
               <div class="sim-row" style="font-weight:700"><div class="label">Total Descontos</div><div class="value negative" id="res-total-desc">R$ 0,00</div></div>
+            </div>
+            <div class="sim-section" id="res-ajustes-section" style="display:none">
+              <div class="sim-section-title"><i class="fas fa-sliders-h" style="color:var(--info)"></i> Variáveis manuais</div>
+              <div id="res-ajustes-list"></div>
+              <div class="sim-row" style="font-weight:700"><div class="label">Total Ajustes</div><div class="value" id="res-ajustes-total">R$ 0,00</div></div>
             </div>
             <div class="sim-total">
               <div class="label"><i class="fas fa-hand-holding-usd"></i> Salário Líquido</div>
@@ -1509,6 +1529,7 @@ let configDescontos = {};
 let isAdmin = false;
 let viewingAsUser = null; // { id, nome } quando admin visualiza outro usuário
 let _savedPerfil = null, _savedConfig = null, _savedExtras = null;
+let simAjustes = []; // variáveis manuais (+/-) da Simulação, não persistidas no banco
 
 function activeId() { return viewingAsUser ? viewingAsUser.id : currentUser.id; }
 let descontosExtras = [];
@@ -1917,7 +1938,7 @@ async function renderDashboard() {
   document.getElementById('dash-dias-sub').textContent = `de ${diasUteisNoMes} dias úteis`;
 
   // Salário estimado
-  const sim = calcSalario(null, totalHE50, totalHE100);
+  const sim = calcSalario(null, totalHE50, totalHE100, ano, mes);
   document.getElementById('dash-liquido').textContent = fmtBRL(sim.liquido);
 
   // Resumo financeiro
@@ -1933,6 +1954,7 @@ async function renderDashboard() {
         ['Extras', -sim.extras, 'negative'],
         ['HE 75% ('+formatHoras(totalHE50)+')', sim.valorHE50, 'positive'],
         ['HE 100% ('+formatHoras(totalHE100)+')', sim.valorHE100, 'positive'],
+        ['Reflexo DSR sobre HE', sim.dsrReflexo, 'positive'],
       ].map(([l, v, cls]) => v !== 0 && v !== -0 ? `
         <div class="sim-row"><div class="label">${l}</div><div class="value ${cls}">${v < 0 ? '- ' + fmtBRL(-v) : fmtBRL(v)}</div></div>
       ` : '').join('')}
@@ -1952,6 +1974,26 @@ function getDiasUteisNoMes(ano, mes) {
     d.setDate(d.getDate() + 1);
   }
   return count;
+}
+
+// Domingos + feriados marcados no mês — usados na base do Reflexo de HE no DSR (Lei 605/49)
+function getDomingosEFeriadosNoMes(ano, mes) {
+  let domingos = 0;
+  const d = new Date(ano, mes - 1, 1);
+  while (d.getMonth() === mes - 1) {
+    if (d.getDay() === 0) domingos++;
+    d.setDate(d.getDate() + 1);
+  }
+  const firstDay = `${ano}-${String(mes).padStart(2,'0')}-01`;
+  const lastDay  = `${ano}-${String(mes).padStart(2,'0')}-${String(new Date(ano, mes, 0).getDate()).padStart(2,'0')}`;
+  let feriados = 0;
+  (diasJustificados || []).forEach(dj => {
+    if (dj.tipo === 'feriado' && dj.data >= firstDay && dj.data <= lastDay) {
+      const [ya, ma, da] = dj.data.split('-').map(Number);
+      if (new Date(ya, ma - 1, da).getDay() !== 0) feriados++; // evita contar feriado que cai num domingo 2x
+    }
+  });
+  return domingos + feriados;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2120,7 +2162,10 @@ function calcIRRF(brutoLiquidoINSS) {
   return 0;
 }
 
-function calcSalario(salarioOverride = null, he50h = 0, he100h = 0) {
+function calcSalario(salarioOverride = null, he50h = 0, he100h = 0, ano = null, mes = null, ajustesManuais = []) {
+  const now = new Date();
+  const anoCalc = ano || now.getFullYear();
+  const mesCalc = mes || (now.getMonth() + 1);
   const salBase = salarioOverride !== null ? salarioOverride : (perfil.salario_base || 0);
   const chMensal = perfil.carga_horaria_mensal || 220;
   const pHE50 = (perfil.percentual_he_50 || 75) / 100;
@@ -2128,7 +2173,11 @@ function calcSalario(salarioOverride = null, he50h = 0, he100h = 0) {
   const valorHora = chMensal > 0 ? salBase / chMensal : 0;
   const valorHE50 = he50h * valorHora * (1 + pHE50);
   const valorHE100 = he100h * valorHora * (1 + pHE100);
-  const bruto = salBase + valorHE50 + valorHE100;
+  // Reflexo de Horas Extras no DSR (Lei 605/49): HE em R$ no mês ÷ dias úteis × (domingos + feriados)
+  const diasUteisMes = getDiasUteisNoMes(anoCalc, mesCalc);
+  const domingosFeriadosMes = getDomingosEFeriadosNoMes(anoCalc, mesCalc);
+  const dsrReflexo = diasUteisMes > 0 ? ((valorHE50 + valorHE100) / diasUteisMes) * domingosFeriadosMes : 0;
+  const bruto = salBase + valorHE50 + valorHE100 + dsrReflexo;
   const inss = calcINSS(bruto);
   const irrf = calcIRRF(bruto - inss);
   const vtPct = configDescontos.vt_ativo ? (configDescontos.vt_valor || 0) : 0;
@@ -2142,8 +2191,9 @@ function calcSalario(salarioOverride = null, he50h = 0, he100h = 0) {
     return { nome: d.nome, valor: v };
   });
   const totalDesc = inss + irrf + vt + vr + planoSaude + extras;
-  const liquido = Math.max(0, bruto - totalDesc);
-  return { bruto, inss, irrf, vt, vr, planoSaude, extras, extrasDetalhe, totalDesc, liquido, valorHE50, valorHE100, valorHora };
+  const ajustesTotal = (ajustesManuais || []).reduce((s, a) => s + a.valor, 0);
+  const liquido = Math.max(0, bruto - totalDesc + ajustesTotal);
+  return { bruto, inss, irrf, vt, vr, planoSaude, extras, extrasDetalhe, totalDesc, liquido, valorHE50, valorHE100, valorHora, dsrReflexo, ajustesManuais, ajustesTotal };
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2162,10 +2212,43 @@ function renderSimulacao() {
       <div class="value negative">${d.tipo === 'percentual' ? d.valor + '%' : fmtBRL(d.valor)}</div></div>`).join('')}
     ${!configDescontos.inss_ativo && !configDescontos.irrf_ativo && !descontosExtras.filter(d=>d.ativo).length ? '<div class="empty-state" style="padding:20px"><i class="fas fa-check-circle" style="color:var(--success)"></i><p>Nenhum desconto ativo</p></div>' : ''}
   `;
+  renderAjustesSimulacao();
   calcSimulacao();
 }
 
+function adicionarAjusteSimulacao() {
+  const nomeEl = document.getElementById('adj-nome');
+  const valorEl = document.getElementById('adj-valor');
+  const nome = nomeEl.value.trim();
+  const valor = +valorEl.value;
+  if (!nome) { alert('Informe uma descrição para o ajuste.'); return; }
+  if (!valor) { alert('Informe um valor diferente de zero.'); return; }
+  simAjustes.push({ nome, valor });
+  nomeEl.value = '';
+  valorEl.value = '';
+  renderAjustesSimulacao();
+  calcSimulacao();
+}
+
+function removerAjusteSimulacao(idx) {
+  simAjustes.splice(idx, 1);
+  renderAjustesSimulacao();
+  calcSimulacao();
+}
+
+function renderAjustesSimulacao() {
+  document.getElementById('sim-ajustes-lista').innerHTML = simAjustes.map((a, i) => `
+    <div class="sim-row" style="padding:6px 16px">
+      <div class="label">${a.nome}</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="value ${a.valor < 0 ? 'negative' : 'positive'}">${a.valor < 0 ? '- ' + fmtBRL(-a.valor) : '+ ' + fmtBRL(a.valor)}</div>
+        <button class="icon-btn danger" onclick="removerAjusteSimulacao(${i})" title="Remover"><i class="fas fa-times"></i></button>
+      </div>
+    </div>`).join('');
+}
+
 function calcSimulacao() {
+  const now = new Date();
   const he50h = +document.getElementById('sim-he50').value;
   const he100h = +document.getElementById('sim-he100').value;
   const diasVal = +document.getElementById('sim-dias').value;
@@ -2173,12 +2256,13 @@ function calcSimulacao() {
   document.getElementById('sim-he50-val').textContent = he50h + 'h';
   document.getElementById('sim-he100-val').textContent = he100h + 'h';
   document.getElementById('sim-dias-val').textContent = diasVal;
-  const r = calcSalario(salOverride ? +salOverride : null, he50h, he100h);
-  document.getElementById('res-salario').textContent = fmtBRL(r.bruto - r.valorHE50 - r.valorHE100);
+  const r = calcSalario(salOverride ? +salOverride : null, he50h, he100h, now.getFullYear(), now.getMonth() + 1, simAjustes);
+  document.getElementById('res-salario').textContent = fmtBRL(r.bruto - r.valorHE50 - r.valorHE100 - r.dsrReflexo);
   document.getElementById('res-he50-h').textContent = he50h + 'h';
   document.getElementById('res-he50').textContent = fmtBRL(r.valorHE50);
   document.getElementById('res-he100-h').textContent = he100h + 'h';
   document.getElementById('res-he100').textContent = fmtBRL(r.valorHE100);
+  document.getElementById('res-dsr').textContent = fmtBRL(r.dsrReflexo);
   document.getElementById('res-bruto').textContent = fmtBRL(r.bruto);
   document.getElementById('res-inss').textContent = '- ' + fmtBRL(r.inss);
   document.getElementById('res-irrf').textContent = '- ' + fmtBRL(r.irrf);
@@ -2189,6 +2273,11 @@ function calcSimulacao() {
     `<div class="sim-row"><div class="label">${e.nome}</div><div class="value negative">- ${fmtBRL(e.valor)}</div></div>`
   ).join('');
   document.getElementById('res-total-desc').textContent = '- ' + fmtBRL(r.totalDesc);
+  document.getElementById('res-ajustes-section').style.display = r.ajustesManuais.length ? '' : 'none';
+  document.getElementById('res-ajustes-list').innerHTML = r.ajustesManuais.map(a =>
+    `<div class="sim-row"><div class="label">${a.nome}</div><div class="value ${a.valor < 0 ? 'negative' : 'positive'}">${a.valor < 0 ? '- ' + fmtBRL(-a.valor) : '+ ' + fmtBRL(a.valor)}</div></div>`
+  ).join('');
+  document.getElementById('res-ajustes-total').textContent = (r.ajustesTotal < 0 ? '- ' : '+ ') + fmtBRL(Math.abs(r.ajustesTotal));
   document.getElementById('res-liquido').textContent = fmtBRL(r.liquido);
 }
 
@@ -2564,10 +2653,10 @@ function abrirHoleriteDemonstrativo() {
   const he50h = +document.getElementById('sim-he50').value;
   const he100h = +document.getElementById('sim-he100').value;
   const salOverride = document.getElementById('sim-salario-override').value;
-  const r = calcSalario(salOverride ? +salOverride : null, he50h, he100h);
+  const now = new Date();
+  const r = calcSalario(salOverride ? +salOverride : null, he50h, he100h, now.getFullYear(), now.getMonth() + 1, simAjustes);
   const salBase = salOverride ? +salOverride : (perfil.salario_base || 0);
   const nome = perfil.nome || 'Funcionário';
-  const now = new Date();
   const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   const periodo = `${meses[now.getMonth()]}/${now.getFullYear()}`;
   const chMensal = perfil.carga_horaria_mensal || 220;
@@ -2576,16 +2665,22 @@ function abrirHoleriteDemonstrativo() {
     ['Salário Base', fmtBRL(salBase), 'provento'],
     he50h > 0 ? [`HE 75% (${he50h}h × ${fmtBRL(r.valorHora)} × 1,75)`, fmtBRL(r.valorHE50), 'provento'] : null,
     he100h > 0 ? [`HE 100% (${he100h}h × ${fmtBRL(r.valorHora)} × 2,00)`, fmtBRL(r.valorHE100), 'provento'] : null,
+    r.dsrReflexo > 0 ? ['Reflexo Extras DSR', fmtBRL(r.dsrReflexo), 'provento'] : null,
     r.inss > 0 ? ['INSS (tabela progressiva 2024)', fmtBRL(r.inss), 'desconto'] : null,
     r.irrf > 0 ? ['IRRF (tabela progressiva 2024)', fmtBRL(r.irrf), 'desconto'] : null,
     r.vt > 0 ? [`Vale Transporte (${configDescontos.vt_valor || 0}% do bruto)`, fmtBRL(r.vt), 'desconto'] : null,
     r.vr > 0 ? ['Vale Refeição', fmtBRL(r.vr), 'desconto'] : null,
     r.planoSaude > 0 ? ['Plano de Saúde', fmtBRL(r.planoSaude), 'desconto'] : null,
     ...r.extrasDetalhe.map(e => [e.nome, fmtBRL(e.valor), 'desconto']),
+    ...r.ajustesManuais.map(a => [a.nome, fmtBRL(Math.abs(a.valor)), a.valor < 0 ? 'desconto' : 'provento']),
   ].filter(Boolean);
 
   const proventos = linhas.filter(l => l[2] === 'provento');
   const descontos = linhas.filter(l => l[2] === 'desconto');
+  const ajustesPositivos = r.ajustesManuais.filter(a => a.valor > 0).reduce((s, a) => s + a.valor, 0);
+  const ajustesNegativos = r.ajustesManuais.filter(a => a.valor < 0).reduce((s, a) => s - a.valor, 0);
+  const proventosTotal = salBase + r.valorHE50 + r.valorHE100 + r.dsrReflexo + ajustesPositivos;
+  const descontosTotal = r.totalDesc + ajustesNegativos;
 
   document.getElementById('holerite-demo-content').innerHTML = `
     <div class="holerite-demo">
@@ -2622,8 +2717,8 @@ function abrirHoleriteDemonstrativo() {
             </tr>`).join('')}
           <tr style="font-weight:700;background:#f8fafc">
             <td>TOTAIS</td>
-            <td class="positivo" style="text-align:right">${fmtBRL(r.bruto)}</td>
-            <td class="negativo" style="text-align:right">- ${fmtBRL(r.totalDesc)}</td>
+            <td class="positivo" style="text-align:right">${fmtBRL(proventosTotal)}</td>
+            <td class="negativo" style="text-align:right">- ${fmtBRL(descontosTotal)}</td>
           </tr>
         </tbody>
       </table>
