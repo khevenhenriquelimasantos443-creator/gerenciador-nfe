@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finn. — Controle Financeiro</title>
-<meta name="description" content="Finn — controle financeiro inteligente. ReturnFlow — gestão de devoluções.">
+<meta name="description" content="Finn — controle financeiro. Voluna — devoluções. SKUHub — SKU marketplaces. ClockIn — controle de ponto.">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -112,10 +112,12 @@
 
   /* Finn */
   .finn { --accent: #F97316; --glow: #F97316; --icon-bg: rgba(249,115,22,.12); }
-  /* ReturnFlow */
-  .rf { --accent: #6366F1; --glow: #6366F1; --icon-bg: rgba(99,102,241,.12); }
+  /* Voluna (antigo ReturnFlow) */
+  .voluna { --accent: #4F46E5; --glow: #4F46E5; --icon-bg: rgba(79,70,229,.14); }
   /* SKUHub */
   .sku { --accent: #14B8A6; --glow: #14B8A6; --icon-bg: rgba(20,184,166,.12); }
+  /* ClockIn */
+  .clockin { --accent: #0EA5E9; --glow: #0EA5E9; --icon-bg: rgba(14,165,233,.14); }
 
   .badge-new {
     position: absolute;
@@ -205,11 +207,11 @@
     </div>
   </a>
 
-  <!-- RETURNFLOW -->
-  <a href="./returnflow/" class="app-card rf">
+  <!-- VOLUNA (antigo ReturnFlow) -->
+  <a href="./returnflow/" class="app-card voluna">
     <div class="app-icon">↩️</div>
     <div>
-      <div class="app-name">ReturnFlow</div>
+      <div class="app-name">Voluna</div>
       <div class="app-desc">Gestão de devoluções e disputas em marketplaces. Shopee, Amazon, Mercado Livre e mais.</div>
     </div>
     <div class="features-row">
@@ -218,7 +220,27 @@
       <span class="feat-chip">📈 Dashboard</span>
     </div>
     <div class="app-cta">
-      Abrir ReturnFlow
+      Abrir Voluna
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- CLOCKIN -->
+  <a href="./clockin/" class="app-card clockin">
+    <div class="app-icon">⏱️</div>
+    <div>
+      <div class="app-name">ClockIn</div>
+      <div class="app-desc">Controle de ponto e jornada com calendário compacto, PWA e suporte ao iOS Safari.</div>
+    </div>
+    <div class="features-row">
+      <span class="feat-chip">📅 Calendário</span>
+      <span class="feat-chip">📱 PWA</span>
+      <span class="feat-chip">🕒 Fuso horário</span>
+    </div>
+    <div class="app-cta">
+      Abrir ClockIn
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
