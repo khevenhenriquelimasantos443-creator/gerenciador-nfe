@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKUHub. — Gestão de SKU para Marketplaces</title>
+<meta name="description" content="Controle de SKUs Pai, Variação e KIT para Shopee, Shein, Mercado Livre e Plugg.to.">
+<meta name="theme-color" content="#14B8A6">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0E1A;--bg2:#0F172A;--bg3:#1E293B;--bg4:#293548;
+  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);
+  --text:#F8FAFC;--muted:#94A3B8;--muted2:#64748B;
+  --accent:#14B8A6;--accent-d:#0D9488;--accent-l:rgba(20,184,166,.14);
+  --success:#22C55E;--warning:#F59E0B;--danger:#EF4444;--info:#3B82F6;
+  --paris:#F472B6;--max:#8B5CF6;--shein:#EAB308;--plugg:#6366F1;--mercado:#FBBF24;--shopee:#EE4D2D;
+  --r-sm:8px;--r:12px;--r-lg:16px;--r-xl:20px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;font-size:14px;line-height:1.5}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:14px}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:#3a4660}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.brand-mark{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#000;box-shadow:0 4px 14px rgba(20,184,166,.35)}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:-.03em}
+.brand-name span{color:var(--accent)}
+.brand-sub{font-size:10px;color:var(--muted2);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-section{font-size:10px;color:var(--muted2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 6px}
+.nav-btn{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--muted);width:100%;text-align:left;transition:all .12s;margin-bottom:2px}
+.nav-btn:hover{background:var(--bg3);color:var(--text)}
+.nav-btn.active{background:var(--accent-l);color:var(--accent)}
+.nav-btn .ic{font-size:16px;width:18px;text-align:center}
+.nav-btn .count{margin-left:auto;background:var(--bg3);color:var(--muted);font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px}
+.nav-btn.active .count{background:var(--accent);color:#000}
+.sidebar-foot{margin-top:auto;padding:14px 10px 4px;border-top:1px solid var(--border);font-size:11px;color:var(--muted2)}
+.sidebar-foot a{color:var(--accent);font-weight:600}
+
+main{padding:28px 36px 60px;max-width:1400px;width:100%;margin:0 auto}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.page-title{font-size:26px;font-weight:900;letter-spacing:-.03em}
+.page-sub{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;transition:all .12s;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-d);color:#fff;transform:translateY(-1px);box-shadow:0 6px 18px rgba(20,184,166,.3)}
+.btn-ghost{background:var(--bg3);color:var(--text);border-color:var(--border)}
+.btn-ghost:hover{background:var(--bg4)}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--danger);border-color:rgba(239,68,68,.25)}
+.btn-danger:hover{background:rgba(239,68,68,.22)}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:8px}
+.btn-icon{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;padding:0;border-radius:8px}
+
+/* ── CARDS / PANELS ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.card-sub{font-size:12px;color:var(--muted)}
+
+/* ── STAT CARDS ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,var(--accent))}
+.stat-label{font-size:11px;color:var(--muted2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.stat-val{font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.stat-foot{font-size:11px;color:var(--muted);margin-top:6px}
+.stat-foot strong{color:var(--c,var(--accent))}
+
+/* ── MARKETPLACE CARDS ── */
+.mkts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.mkt-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;display:flex;align-items:center;gap:12px}
+.mkt-ico{width:38px;height:38px;border-radius:10px;background:var(--c);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0}
+.mkt-name{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.mkt-cnt{font-size:18px;font-weight:900}
+
+/* ── BARS ── */
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-top:8px}
+.bar-fill{height:100%;background:var(--c,var(--accent));border-radius:99px;transition:width .3s}
+
+/* ── TABLE ── */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.search{flex:1;min-width:200px;position:relative}
+.search input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 14px 10px 38px;color:var(--text);outline:none;transition:all .15s}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l)}
+.search::before{content:'🔎';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.6}
+.select-pill{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);outline:none;font-weight:600;font-size:13px;cursor:pointer}
+.select-pill:focus{border-color:var(--accent)}
+
+.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:12px 14px;font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em;background:#0c1322;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#11192c}
+.tbl .sku-cell{font-family:'JetBrains Mono','Courier New',monospace;font-weight:700;color:var(--accent);font-size:12.5px}
+.tbl .ean-cell{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted)}
+.tbl .desc-cell{max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbl .mkt-cell{display:flex;gap:3px;flex-wrap:wrap}
+.tbl .actions{display:flex;gap:4px;justify-content:flex-end}
+.tbl .empty{padding:60px;text-align:center;color:var(--muted)}
+
+/* ── BADGES ── */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.tag-on{background:rgba(34,197,94,.15);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.tag-off{background:rgba(100,116,139,.13);color:var(--muted2);border:1px solid rgba(100,116,139,.22)}
+.tag-pend{background:rgba(245,158,11,.15);color:var(--warning);border:1px solid rgba(245,158,11,.3)}
+.tag-kit{background:rgba(99,102,241,.18);color:#A5B4FC;border:1px solid rgba(99,102,241,.35)}
+.tag-var{background:rgba(20,184,166,.13);color:var(--accent);border:1px solid rgba(20,184,166,.25)}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.span-2{grid-column:span 2}
+.field.span-full{grid-column:1/-1}
+.field label{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.field label .req{color:var(--accent)}
+.field input,.field select,.field textarea{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);outline:none;transition:all .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l)}
+.field textarea{resize:vertical;min-height:80px;line-height:1.5}
+.field .hint{font-size:11.5px;color:var(--muted2);font-style:italic;line-height:1.45}
+.field .hint b{color:var(--accent);font-style:normal}
+
+.section{margin-bottom:20px}
+.section-title{font-size:11.5px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.check{display:flex;align-items:center;gap:9px;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .12s;font-size:12.5px;font-weight:600}
+.check:hover{border-color:var(--border2)}
+.check input{accent-color:var(--accent);width:15px;height:15px}
+.check.on{background:var(--accent-l);border-color:var(--accent);color:var(--accent)}
+
+/* Variations editor */
+.var-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.var-row{display:grid;grid-template-columns:120px 1fr 160px 36px;gap:8px;align-items:center;padding:8px;background:var(--bg);border:1px solid var(--border);border-radius:10px}
+.var-row input{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:7px 10px;color:var(--text);outline:none;font-size:13px;width:100%}
+.var-row input:focus{border-color:var(--accent)}
+.var-row .var-sku{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700}
+
+/* ── MODAL ── */
+.modal{position:fixed;inset:0;background:rgba(5,8,16,.78);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;z-index:100;overflow-y:auto;backdrop-filter:blur(6px)}
+.modal.open{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-xl);max-width:880px;width:100%;padding:28px;animation:slideIn .25s}
+@keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.modal-title{font-size:18px;font-weight:900;letter-spacing:-.02em}
+.modal-close{font-size:22px;line-height:1;color:var(--muted);padding:6px;border-radius:8px;transition:all .12s}
+.modal-close:hover{background:var(--bg3);color:var(--text)}
+.modal-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+/* ── TOAST ── */
+.toast-wrap{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:11px 16px;font-size:13px;font-weight:600;color:var(--text);box-shadow:0 14px 40px rgba(0,0,0,.4);min-width:240px;animation:toastIn .25s;border-left:3px solid var(--accent)}
+.toast.success{border-left-color:var(--success)}
+.toast.error{border-left-color:var(--danger)}
+.toast.warn{border-left-color:var(--warning)}
+@keyframes toastIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── GUIDES ── */
+.guide-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:4px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+.guide-tab{padding:9px 16px;border-radius:9px;font-size:13px;font-weight:700;color:var(--muted);transition:all .12s;white-space:nowrap}
+.guide-tab.active{background:var(--accent);color:#000}
+.guide-tab:hover:not(.active){background:var(--bg3);color:var(--text)}
+.guide{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:30px 32px;line-height:1.7;font-size:14.5px;color:#CBD5E1}
+.guide h2{font-size:22px;font-weight:900;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+.guide h3{font-size:16px;font-weight:800;color:var(--accent);margin:24px 0 10px;padding-top:14px;border-top:1px solid var(--border)}
+.guide h3:first-of-type{margin-top:14px}
+.guide h4{font-size:14px;font-weight:800;color:var(--text);margin:18px 0 6px}
+.guide p{margin-bottom:12px}
+.guide ul,.guide ol{padding-left:22px;margin-bottom:14px}
+.guide li{margin-bottom:6px}
+.guide code,.guide kbd{background:var(--bg);padding:2px 7px;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--accent);border:1px solid var(--border)}
+.guide .callout{background:var(--bg);border-left:3px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13.5px}
+.guide .callout.warn{border-left-color:var(--warning)}
+.guide .callout.warn strong{color:var(--warning)}
+.guide .callout.danger{border-left-color:var(--danger)}
+.guide .callout strong{color:var(--accent)}
+.guide table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.guide table th,.guide table td{padding:9px 12px;border:1px solid var(--border);text-align:left}
+.guide table th{background:var(--bg3);font-weight:700;color:var(--text)}
+.guide-meta{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.guide-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:99px;font-size:11px;font-weight:700;background:var(--c);color:#fff;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── IMPORT ── */
+.drop{border:2px dashed var(--border2);border-radius:var(--r-lg);padding:48px 24px;text-align:center;background:var(--bg2);transition:all .15s;cursor:pointer}
+.drop.over{border-color:var(--accent);background:var(--accent-l)}
+.drop-ic{font-size:42px;margin-bottom:8px}
+.drop-title{font-size:15px;font-weight:800;margin-bottom:4px}
+.drop-sub{font-size:12.5px;color:var(--muted)}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:880px){.split{grid-template-columns:1fr}}
+
+/* responsive */
+@media(max-width:980px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-280px;top:0;width:240px;z-index:50;transition:left .2s;box-shadow:0 0 60px rgba(0,0,0,.5)}
+  .sidebar.open{left:0}
+  main{padding:18px 16px 60px}
+  .mobile-bar{display:flex !important}
+}
+.mobile-bar{display:none;align-items:center;justify-content:space-between;background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 16px;position:sticky;top:0;z-index:30;margin:-18px -16px 18px}
+.menu-btn{font-size:20px;padding:6px 10px;border-radius:8px;background:var(--bg3);color:var(--text)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none}
+.overlay.open{display:block}
+
+.empty-state{padding:60px 20px;text-align:center;color:var(--muted)}
+.empty-state .ic{font-size:48px;margin-bottom:14px}
+.empty-state h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:6px}
+.empty-state p{font-size:13.5px;max-width:380px;margin:0 auto}
+
+/* details/summary */
+details{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+details summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--text);outline:none;display:flex;align-items:center;gap:8px}
+details[open]{background:var(--bg2);border-color:var(--border2)}
+details[open] summary{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+
+.print-only{display:none}
+@media print{
+  body{background:#fff;color:#000}
+  .sidebar,.page-head,.toolbar,.mobile-bar{display:none}
+  main{padding:0;max-width:none}
+  .guide{border:none;padding:0;color:#000}
+  .guide h2,.guide h3,.guide h4{color:#000}
+  .print-only{display:block}
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="app">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">S</div>
+      <div>
+        <div class="brand-name">SKUHub<span>.</span></div>
+        <div class="brand-sub">MKT • Catálogo</div>
+      </div>
+    </div>
+
+    <div class="nav-section">Operação</div>
+    <button class="nav-btn active" data-view="dashboard"><span class="ic">📊</span>Dashboard</button>
+    <button class="nav-btn" data-view="produtos"><span class="ic">📦</span>Produtos<span class="count" id="count-produtos">0</span></button>
+    <button class="nav-btn" data-view="cadastrar"><span class="ic">➕</span>Cadastrar</button>
+    <button class="nav-btn" data-view="marcas"><span class="ic">🏷️</span>Marcas<span class="count" id="count-marcas">0</span></button>
+    <button class="nav-btn" data-view="kits"><span class="ic">🎁</span>EANs Kit<span class="count" id="count-kits">0</span></button>
+
+    <div class="nav-section">Apoio</div>
+    <button class="nav-btn" data-view="guias"><span class="ic">📚</span>Guias Marketplaces</button>
+    <button class="nav-btn" data-view="importar"><span class="ic">📥</span>Importar / Exportar</button>
+    <button class="nav-btn" data-view="ajuda"><span class="ic">💡</span>Como usar o app</button>
+
+    <div class="sidebar-foot">
+      <div>SKUHub. v1.0</div>
+      <a href="../">← Voltar ao Hub</a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main>
+    <div class="mobile-bar">
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <div style="font-weight:900;letter-spacing:-.02em">SKUHub<span style="color:var(--accent)">.</span></div>
+      <div style="width:36px"></div>
+    </div>
+
+    <!-- ============== DASHBOARD ============== -->
+    <section id="view-dashboard" class="view">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Dashboard</div>
+          <div class="page-sub">Visão geral do catálogo e cadastros por marketplace</div>
+        </div>
+        <button class="btn btn-primary" onclick="goto('cadastrar')">➕ Novo Produto</button>
+      </div>
+
+      <div class="stats" id="dash-stats"></div>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Status por Marketplace</div>
+              <div class="card-sub">% de produtos cadastrados em cada canal</div>
+            </div>
+          </div>
+          <div id="dash-mkts"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Marcas com mais produtos</div>
+              <div class="card-sub">Top 8 marcas do catálogo</div>
+            </div>
+          </div>
+          <div id="dash-brands"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Últimos cadastros</div>
+            <div class="card-sub">10 produtos mais recentes</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="goto('produtos')">Ver todos →</button>
+        </div>
+        <div id="dash-recent"></div>
+      </div>
+    </section>
+
+    <!-- ============== PRODUTOS ============== -->
+    <section id="view-produtos" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title">Produtos</div>
+          <div class="page-sub" id="produtos-count-sub">0 produtos no catálogo</div>
+        </div>
+        <button class="btn btn-primary" onclick="goto('cadastrar')">➕ Novo Produto</button>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <input type="text" id="search-input" placeholder="Buscar por SKU, EAN ou descrição..." oninput="renderProdutos()">
+        </div>
+        <select class="select-pill" id="filter-brand" onchange="renderProdutos()">
+          <option value="">Todas as marcas</option>
+        </select>
+        <select class="select-pill" id="filter-mkt" onchange="renderProdutos()">
+          <option value="">Todos os marketplaces</option>
+          <option value="paris">PARIS</option>
+          <option value="max">MAX</option>
+          <option value="shein">SHEIN</option>
+          <option value="plugg">PLUGG TO</option>
+          <option value="mercado">MERCADO LIVRE</option>
+        </select>
+        <select class="select-pill" id="filter-status" onchange="renderProdutos()">
+          <option value="">Qualquer status</option>
+          <option value="sim">Cadastrado</option>
+          <option value="nao">Não cadastrado</option>
+          <option value="pendente">Pendente</option>
+        </select>
+        <select class="select-pill" id="filter-type" onchange="renderProdutos()">
+          <option value="">Todos os tipos</option>
+          <option value="normal">Produto único</option>
+          <option value="var">Com variação</option>
+          <option value="kit">KIT</option>
+        </select>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>EAN</th>
+              <th>Descrição</th>
+              <th>Marca</th>
+              <th>Var.</th>
+              <th>Custo</th>
+              <th>Marketplaces</th>
+              <th style="text-align:right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="produtos-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== CADASTRAR ============== -->
+    <section id="view-cadastrar" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title" id="cad-title">Cadastrar Produto</div>
+          <div class="page-sub">Crie um novo SKU Pai e suas variações</div>
+        </div>
+        <button class="btn btn-ghost" onclick="resetForm()">🗑️ Limpar</button>
+      </div>
+
+      <form id="prod-form" onsubmit="event.preventDefault();saveProduct()">
+        <input type="hidden" id="f-id">
+
+        <div class="card section">
+          <div class="section-title">🏷️ Marca e Tipo</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Marca <span class="req">*</span></label>
+              <select id="f-brand" required onchange="onBrandChange()">
+                <option value="">— Selecione —</option>
+              </select>
+              <span class="hint">Não está na lista? Cadastre em <b>Marcas</b> antes.</span>
+            </div>
+
+            <div class="field">
+              <label>Tipo de Anúncio <span class="req">*</span></label>
+              <select id="f-type" onchange="onTypeChange()">
+                <option value="normal">Produto único (sem variação)</option>
+                <option value="var">Produto com variação</option>
+                <option value="kit">KIT (criado por nós)</option>
+                <option value="kit-var">KIT com variação</option>
+              </select>
+              <span class="hint">KITs recebem o prefixo <b>KT-</b> no SKU.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section">
+          <div class="section-title">🔢 Identificação</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>SKU Pai / Principal <span class="req">*</span></label>
+              <input type="text" id="f-sku" required placeholder="Ex: FRAN-0001">
+              <span class="hint">Sugestão automática ao escolher marca/tipo. Ex: <b>FRAN-0001</b>, <b>KT-FRAN-0002</b>.</span>
+            </div>
+
+            <div class="field">
+              <label>EAN (Código de Barras)</label>
+              <input type="text" id="f-ean" placeholder="7898969501248">
+              <span class="hint" id="ean-hint">Em KITs use um EAN livre do banco. <button type="button" class="btn btn-sm btn-ghost" style="margin-left:6px" onclick="goto('kits')">Ver EANs livres →</button></span>
+            </div>
+
+            <div class="field span-full">
+              <label>Descrição do Produto <span class="req">*</span></label>
+              <input type="text" id="f-desc" required placeholder="Marca Linha Produto Gramagem (Ex: Franciny Ehlke Base Matte Real Filter 30g)">
+              <span class="hint">Padrão: <b>MARCA + LINHA + PRODUTO + GRAMAGEM</b> (g / ml / L).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section">
+          <div class="section-title">💰 Custo e Preço Sugerido</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Custo do Produto (R$) <span class="req">*</span></label>
+              <input type="number" id="f-cost" step="0.01" min="0" placeholder="10.00" oninput="calcPrice()">
+            </div>
+            <div class="field">
+              <label>Preço Sugerido Shopee</label>
+              <input type="text" id="f-price" readonly style="background:var(--bg3);color:var(--accent);font-weight:800">
+              <span class="hint"><b>Regra:</b> custo × 3, mínimo R$ 59,90.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section">
+          <div class="section-title">📐 Peso e Dimensões</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Peso Real (g) <span class="req">*</span></label>
+              <input type="number" id="f-weight" min="0" placeholder="300" oninput="calcWeight()">
+              <span class="hint">Peso medido na balança, em gramas.</span>
+            </div>
+            <div class="field">
+              <label>Peso Final c/ Margem</label>
+              <input type="text" id="f-weight-final" readonly style="background:var(--bg3);color:var(--accent);font-weight:800">
+              <span class="hint"><b>Regra:</b> peso real + 150g.</span>
+            </div>
+            <div class="field">
+              <label>Largura (cm)</label>
+              <input type="number" id="f-w" min="0" placeholder="16" oninput="checkDims()">
+            </div>
+            <div class="field">
+              <label>Comprimento (cm)</label>
+              <input type="number" id="f-l" min="0" placeholder="16" oninput="checkDims()">
+            </div>
+            <div class="field">
+              <label>Altura (cm)</label>
+              <input type="number" id="f-h" min="0" placeholder="10" oninput="checkDims()">
+            </div>
+            <div class="field">
+              <label>Dimensão Final</label>
+              <input type="text" id="f-dim-final" readonly style="background:var(--bg3);color:var(--accent);font-weight:800">
+              <span class="hint"><b>Mínimo:</b> 16×16×10. Valores menores são corrigidos.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section" id="sec-var">
+          <div class="section-title">🎨 Variações <button type="button" class="btn btn-sm btn-ghost" style="margin-left:auto" onclick="addVariation()">➕ Adicionar</button></div>
+          <div id="var-list" class="var-list"></div>
+          <div class="hint" style="margin-top:8px;font-size:12px;color:var(--muted2)">Variações herdam o SKU do pai com <b>-VAR-XXXX</b>. Ex: <b>FRAN-VAR-0001</b>. Para KITs: <b>KT-FRAN-VAR-0001</b>.</div>
+        </div>
+
+        <div class="card section">
+          <div class="section-title">🛒 Marketplaces a Cadastrar</div>
+          <div class="checks" id="mkt-checks">
+            <label class="check"><input type="checkbox" data-mkt="paris" onchange="toggleCheck(this)"> PARIS (Shopee)</label>
+            <label class="check"><input type="checkbox" data-mkt="max" onchange="toggleCheck(this)"> MAX (Shopee)</label>
+            <label class="check"><input type="checkbox" data-mkt="shein" onchange="toggleCheck(this)"> SHEIN</label>
+            <label class="check"><input type="checkbox" data-mkt="plugg" onchange="toggleCheck(this)"> PLUGG TO</label>
+            <label class="check"><input type="checkbox" data-mkt="mercado" onchange="toggleCheck(this)"> MERCADO LIVRE</label>
+          </div>
+          <div class="hint" style="margin-top:8px;font-size:12px;color:var(--muted2)">Marque os marketplaces onde o produto <b>já está cadastrado</b>. Os não marcados ficam como pendentes.</div>
+        </div>
+
+        <div class="card section">
+          <div class="section-title">📝 Observações</div>
+          <div class="field">
+            <textarea id="f-notes" placeholder="Anotações internas, ingredientes proibidos identificados, lembretes..."></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-ghost" onclick="goto('produtos')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">💾 Salvar Produto</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============== MARCAS ============== -->
+    <section id="view-marcas" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title">Marcas</div>
+          <div class="page-sub">Cada marca tem seu prefixo (3+ letras) usado na geração de SKUs</div>
+        </div>
+        <button class="btn btn-primary" onclick="openBrandModal()">➕ Nova Marca</button>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Marca</th>
+              <th>Prefixo SKU</th>
+              <th>Próximo SKU Pai</th>
+              <th>Próxima Variação</th>
+              <th>Qtde Produtos</th>
+              <th style="text-align:right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="marcas-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== KITS / EANs ============== -->
+    <section id="view-kits" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title">Banco de EANs para KITs</div>
+          <div class="page-sub">Códigos de barras livres para usar em KITs montados internamente</div>
+        </div>
+        <button class="btn btn-primary" onclick="openEanModal()">➕ Adicionar EANs</button>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <input type="text" id="ean-search" placeholder="Buscar EAN..." oninput="renderEans()">
+        </div>
+        <select class="select-pill" id="ean-filter" onchange="renderEans()">
+          <option value="">Todos</option>
+          <option value="free">Livres</option>
+          <option value="used">Em uso</option>
+        </select>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>EAN</th>
+              <th>Status</th>
+              <th>Usado em (SKU)</th>
+              <th>Produto</th>
+              <th style="text-align:right">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="kits-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card-head"><div class="card-title">💡 Lembrete</div></div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">
+          Para KITs <strong style="color:var(--accent)">criados por nós</strong>, pegue um EAN livre desta lista e cadastre-o no <strong style="color:var(--text)">Varejo Fácil</strong> junto com a descrição do produto.
+          KITs de fábrica usam o EAN próprio do produto e <strong style="color:var(--text)">não entram</strong> nesta lista.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== GUIAS ============== -->
+    <section id="view-guias" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title">Guias de Cadastro</div>
+          <div class="page-sub">Passo a passo padronizado para cada marketplace</div>
+        </div>
+        <button class="btn btn-ghost" onclick="window.print()">🖨️ Imprimir</button>
+      </div>
+
+      <div class="guide-tabs">
+        <button class="guide-tab active" data-guide="antes">⚠️ Antes de tudo</button>
+        <button class="guide-tab" data-guide="sku">🔢 Criação de SKU</button>
+        <button class="guide-tab" data-guide="shopee">🛒 Shopee (PARIS/MAX)</button>
+        <button class="guide-tab" data-guide="shein">👗 Shein</button>
+        <button class="guide-tab" data-guide="mercado">🟡 Mercado Livre</button>
+        <button class="guide-tab" data-guide="plugg">🔌 Plugg.to</button>
+        <button class="guide-tab" data-guide="kit">🎁 KITs e EANs</button>
+      </div>
+
+      <!-- ANTES -->
+      <article class="guide" data-guide-content="antes">
+        <div class="guide-meta"><span class="guide-badge" style="--c:var(--warning)">Pré-requisito</span></div>
+        <h2>Antes de cadastrar qualquer produto</h2>
+        <p>Antes de iniciar o cadastro de um produto em qualquer marketplace você deve seguir esta checklist:</p>
+        <ol>
+          <li>Estar com o <strong>produto físico em mãos</strong>.</li>
+          <li>Estar com a <strong>nota fiscal</strong> em mãos.</li>
+          <li><strong>Verificar em todos os marketplaces</strong> se o produto já não está cadastrado. Se já existir, basta replicar para os demais canais.</li>
+          <li>Conferir se já existem <strong>imagens disponíveis</strong> para todos os marketplaces (Shopee, Shein, Mercado Livre).</li>
+          <li>O cadastro deve <strong>sempre começar pela Shopee</strong>.</li>
+        </ol>
+
+        <div class="callout warn">
+          <strong>Atenção:</strong> nunca crie SKU duplicado. Use a busca da aba <strong>Produtos</strong> para conferir antes de cadastrar.
+        </div>
+
+        <h3>Onde ficam as imagens</h3>
+        <p>As imagens dos produtos ficam organizadas em pastas por tipo (<code>CUIDADOS</code>, <code>CABELOS</code>, <code>MAQUIAGEM</code>) e dentro de cada pasta separadas por marca.</p>
+      </article>
+
+      <!-- SKU -->
+      <article class="guide" data-guide-content="sku" hidden>
+        <div class="guide-meta"><span class="guide-badge" style="--c:var(--accent)">Padrão Interno</span></div>
+        <h2>Como criar SKU Pai, Variação e KIT</h2>
+        <p>Todo SKU usa <strong>a marca como base</strong>: no mínimo as 3 primeiras letras da marca + 4 dígitos sequenciais.</p>
+
+        <h3>1. SKU Pai / Principal</h3>
+        <p>Marca (≥3 letras) + <code>-</code> + 4 dígitos.</p>
+        <ul>
+          <li><code>FRAN-0001</code> — Franciny Ehlke</li>
+          <li><code>PARIS-8003</code> — usando 5 letras quando a marca tem nome longo/internacional</li>
+          <li><code>WATA-0010</code> — Al Wataniah</li>
+        </ul>
+
+        <h3>2. SKU Variação</h3>
+        <p>Mesma marca + <code>-VAR-</code> + 4 dígitos. Cada variação (cor, tom, tamanho) recebe seu próprio SKU.</p>
+        <ul>
+          <li><code>FRAN-VAR-0001</code></li>
+          <li><code>PARIS-VARIACAO-1994</code> (também aceito)</li>
+        </ul>
+
+        <h3>3. KIT (criado por nós)</h3>
+        <p>Recebe o prefixo <code>KT-</code> antes do SKU normal. A numeração continua a sequência da marca (não cria sequência separada).</p>
+        <table>
+          <tr><th>Próximo SKU</th><th>É KIT?</th><th>Resultado</th></tr>
+          <tr><td>FRAN-0001</td><td>Não</td><td><code>FRAN-0001</code></td></tr>
+          <tr><td>FRAN-0002</td><td>Sim</td><td><code>KT-FRAN-0002</code></td></tr>
+          <tr><td>FRAN-0003</td><td>Não</td><td><code>FRAN-0003</code> (volta ao normal)</td></tr>
+        </table>
+        <p>O mesmo vale para variações de KIT: <code>KT-FRAN-VAR-0001</code>.</p>
+
+        <div class="callout">
+          <strong>Por quê o KT-?</strong> Sinaliza no ERP que o anúncio é um kit e precisa ser <strong>desmembrado</strong> na hora do faturamento.
+        </div>
+      </article>
+
+      <!-- SHOPEE -->
+      <article class="guide" data-guide-content="shopee" hidden>
+        <div class="guide-meta"><span class="guide-badge" style="--c:var(--shopee)">Shopee · PARIS / MAX</span></div>
+        <h2>Cadastrando na Shopee (PARIS / MAX)</h2>
+        <p>O cadastro <strong>sempre começa pela Shopee</strong>. Depois replicamos a estrutura nos outros marketplaces.</p>
+
+        <h3>Imagens</h3>
+        <p>Procure nas pastas <code>CUIDADOS</code>, <code>CABELOS</code> ou <code>MAQUIAGEM</code> e depois pela marca. Não existindo, abrir solicitação de foto.</p>
+
+        <h3>EAN</h3>
+        <p>Digite o código de barras do produto ou use o <strong>bip</strong>. Em KITs, pegar um EAN livre do <strong>Banco de EANs</strong> deste app e cadastrar no Varejo Fácil.</p>
+
+        <h3>Nome do Produto</h3>
+        <p>Seguir o padrão da planilha: <strong>MARCA + LINHA + PRODUTO + GRAMAGEM</strong> (g / ml / L).</p>
+
+        <h3>Especificação</h3>
+        <p>A <strong>única obrigatória é a MARCA</strong>. Escreva direto do rótulo do produto, sem erros de digitação.</p>
+
+        <h3>Descrição do produto</h3>
+        <ol>
+          <li>Comece a descrição repetindo o <strong>nome do produto</strong> (deixa mais charmoso).</li>
+          <li>Entre no <strong>site oficial da marca</strong> e procure o produto.</li>
+          <li>Copie a descrição do site para a Shopee.</li>
+        </ol>
+        <div class="callout danger">
+          <strong>NÃO inclua a lista de ingredientes.</strong> Alguns são marcados pela Shopee como "PROIBIDOS" e o anúncio pode ser <strong>excluído sem possibilidade de retorno</strong>.
+        </div>
+
+        <h3>Informações de Vendas</h3>
+        <h4>Sem variação</h4>
+        <p>Não habilite "+ Habilitar Variações". O preço segue a regra <strong>custo × 3, mínimo R$ 59,90</strong>:</p>
+        <ul>
+          <li>Custo R$ 10 × 3 = R$ 30 → considerar <strong>R$ 59,90</strong> (mínimo).</li>
+          <li>Custo R$ 50 × 3 = R$ 150 → considerar <strong>R$ 150,00</strong>.</li>
+        </ul>
+        <p class="hint" style="color:var(--muted)">O app calcula automaticamente esse preço no campo <strong>Preço Sugerido Shopee</strong>.</p>
+
+        <h4>Com variação</h4>
+        <p>Clique em "+ Habilitar Variações". É possível combinar mais de uma variação no mesmo anúncio:</p>
+        <table>
+          <tr><th>Variação 1 (Tamanho)</th><th>Variação 2 (Cor)</th></tr>
+          <tr><td>P</td><td>Azul, Rosa, Branco, Preto, Verde</td></tr>
+          <tr><td>M</td><td>Azul, Rosa, Branco, Preto, Verde</td></tr>
+        </table>
+        <p>Para <strong>maquiagem/cosméticos</strong>, use <strong>"COR"</strong> como variação e preencha conforme os tons.</p>
+
+        <h4>Preenchendo cada variação</h4>
+        <ol>
+          <li>Inserir a imagem da variação.</li>
+          <li>Preço cheio (regra × 3).</li>
+          <li>Estoque atual.</li>
+          <li>SKU da variação (do app, ex: <code>FRAN-VAR-0001</code>).</li>
+          <li>Peso + 150g de margem.</li>
+          <li>Dimensão (mínimo 16×16×10).</li>
+        </ol>
+      </article>
+
+      <!-- SHEIN -->
+      <article class="guide" data-guide-content="shein" hidden>
+        <div class="guide-meta"><span class="guide-badge" style="--c:var(--shein);color:#000">Shein</span></div>
+        <h2>Cadastrando na Shein</h2>
+        <p>Depois do cadastro na Shopee, replique o produto na Shein. A Shein exige <strong>volume mínimo de cadastros</strong> e <strong>estoque mínimo</strong>.</p>
+
+        <h3>Acesso ao painel</h3>
+        <ol>
+          <li>Acesse o site oficial <strong>Shein Seller</strong> (Venda na Shein).</li>
+          <li>Login na conta do vendedor.</li>
+          <li>Vá em <strong>"Adicionar produto"</strong> no painel.</li>
+          <li>Selecione a <strong>categoria</strong> correta (Beleza, Cuidados, Maquiagem etc.).</li>
+        </ol>
+
+        <h3>Dados do produto</h3>
+        <ul>
+          <li><strong>Nome:</strong> mesmo padrão da planilha (MARCA + LINHA + PRODUTO + GRAMAGEM).</li>
+          <li><strong>Categoria:</strong> selecione a mais específica possível.</li>
+          <li><strong>Marca:</strong> direto do rótulo, sem erros de digitação.</li>
+          <li><strong>EAN:</strong> mesmo da Shopee.</li>
+          <li><strong>SKU:</strong> use o mesmo SKU já gerado pelo app.</li>
+          <li><strong>Preço:</strong> mesma regra de × 3 (mínimo R$ 59,90).</li>
+          <li><strong>Estoque:</strong> mínimo de <strong>10 peças</strong> por produto.</li>
+        </ul>
+
+        <h3>Imagens e vídeo</h3>
+        <ul>
+          <li>Imagens nítidas, fundo branco/limpo.</li>
+          <li>Se possível, <strong>vídeo curto</strong> do produto em uso.</li>
+        </ul>
+
+        <h3>Variações</h3>
+        <p>Cadastre cada variação com SKU próprio (mesmo formato do app: <code>FRAN-VAR-0001</code>) e seu próprio estoque.</p>
+
+        <h3>Taxas atuais (referência)</h3>
+        <table>
+          <tr><th>Categoria</th><th>Comissão</th></tr>
+          <tr><td>Vestuário Feminino</td><td>20%</td></tr>
+          <tr><td>Outras categorias (cosméticos, beleza...)</td><td>18%</td></tr>
+        </table>
+
+        <div class="callout warn">
+          <strong>Importante:</strong> a Shein exige <strong>50 novos produtos no primeiro mês</strong> e estoque mínimo de 10 peças por item. Planeje o volume de cadastros mensais.
+        </div>
+      </article>
+
+      <!-- MERCADO LIVRE -->
+      <article class="guide" data-guide-content="mercado" hidden>
+        <div class="guide-meta"><span class="guide-badge" style="--c:var(--mercado);color:#000">Mercado Livre</span></div>
+        <h2>Cadastrando no Mercado Livre</h2>
+
+        <h3>Início</h3>
+        <ol>
+          <li>Login no Mercado Livre com a conta vendedora.</li>
+          <li>Clique em <strong>"Vender"</strong> no menu superior.</li>
+          <li>Escolha <strong>"Produto"</strong> (não Veículos / Imóveis / Serviços).</li>
+        </ol>
+
+        <h3>Campos do anúncio</h3>
+        <ul>
+          <li><strong>Título:</strong> <code>PRODUTO + MARCA + MODELO + ATRIBUTOS</code> (ex: <em>Base Matte Real Filter Franciny Ehlke 30g Cor C-01</em>).</li>
+          <li><strong>Categoria:</strong> a mais específica possível.</li>
+          <li><strong>Fotos:</strong> mesmo banco da Shopee, mínimo 4 fotos.</li>
+          <li><strong>Preço:</strong> seguindo a regra × 3.</li>
+          <li><strong>Estoque:</strong> quantidade real.</li>
+          <li><strong>SKU:</strong> o mesmo do app.</li>
+          <li><strong>EAN:</strong> obrigatório no ML em quase todas as categorias.</li>
+          <li><strong>Peso e dimensões:</strong> com a margem (peso + 150g; mínimo 16×16×10).</li>
+        </ul>
+
+        <h3>Variações</h3>
+        <p>O Mercado Livre permite <strong>anúncio unificado</strong> com mais de uma variação (cor + tamanho, por exemplo). Vincule todas as variações no <strong>mesmo anúncio</strong> em vez de criar vários.</p>
+
+        <h3>Preço por Variação (PxV)</h3>
+        <p>O Mercado Livre libera progressivamente o recurso <strong>Preço por Variação</strong>, que permite preço diferente por cor/tamanho. Cheque no painel se sua conta já tem o recurso liberado.</p>
+
+        <h3>Descrição</h3>
+        <ul>
+          <li>Comece pelo nome do produto.</li>
+          <li>Copie a descrição do <strong>site oficial da marca</strong>.</li>
+          <li>Inclua características-chave (tipo de pele, indicação, modo de uso).</li>
+          <li>No ML pode incluir ingredientes (não tem o mesmo bloqueio da Shopee), mas confira a categoria.</li>
+        </ul>
+      </article>
+
+      <!-- PLUGG.TO -->
+      <article class="guide" data-guide-content="plugg" hidden>
+        <div class="guide-meta"><span class="guide-badge" style="--c:var(--plugg)">Plugg.to</span></div>
+        <h2>Cadastrando na Plugg.to (Hub de Marketplaces)</h2>
+        <p>A Plugg.to é um <strong>hub de integração</strong>. Você cadastra o produto uma vez e ele é distribuído nos canais conectados (estoque e preço sincronizados).</p>
+
+        <h3>Métodos de cadastro</h3>
+        <table>
+          <tr><th>Método</th><th>Quando usar</th></tr>
+          <tr><td><strong>Manual no admin</strong></td><td>Cadastros pontuais, poucos itens.</td></tr>
+          <tr><td><strong>Planilha (Excel)</strong></td><td>Volume médio/grande. Use o exportar deste app.</td></tr>
+          <tr><td><strong>XML</strong></td><td>Catálogo já em XML pronto.</td></tr>
+          <tr><td><strong>API pública</strong></td><td>Integração contínua com ERP.</td></tr>
+        </table>
+
+        <h3>Passo a passo (manual)</h3>
+        <ol>
+          <li>Login no admin Plugg.to.</li>
+          <li>Acesse <strong>Produtos &rarr; Novo Produto</strong>.</li>
+          <li>Preencha:
+            <ul>
+              <li><strong>SKU:</strong> do app.</li>
+              <li><strong>EAN</strong>, <strong>Nome</strong>, <strong>Marca</strong>.</li>
+              <li><strong>Categoria</strong>, <strong>Descrição completa</strong>.</li>
+              <li><strong>Preço</strong>, <strong>Estoque</strong>.</li>
+              <li><strong>Peso/Dimensões</strong> (com margem).</li>
+              <li><strong>Imagens</strong> em URL (sobem para o hub).</li>
+            </ul>
+          </li>
+          <li>Selecione os <strong>canais</strong> de distribuição (Mercado Livre, Shopee, Magalu etc.).</li>
+          <li>Salve. A Plugg.to publica em cada canal selecionado.</li>
+        </ol>
+
+        <h3>Cadastro em massa por Planilha</h3>
+        <ol>
+          <li>Vá em <strong>Catálogo &rarr; Importação</strong>.</li>
+          <li>Baixe o modelo da Plugg.to.</li>
+          <li>Use o <strong>Exportar Excel</strong> deste app para puxar os dados → adapte às colunas do modelo Plugg.to.</li>
+          <li>Faça o upload da planilha. O sistema valida e publica.</li>
+        </ol>
+
+        <div class="callout">
+          <strong>Boa prática:</strong> cadastre tudo com critério e uniformidade — foto, descrição, tamanho, cor. O cadastro feito no hub é a fonte da verdade para todos os canais.
+        </div>
+      </article>
+
+      <!-- KIT EANs -->
+      <article class="guide" data-guide-content="kit" hidden>
+        <div class="guide-meta"><span class="guide-badge" style="--c:#A5B4FC;color:#000">Kits e EANs</span></div>
+        <h2>KITs criados por nós e o banco de EANs</h2>
+        <p>Quando criamos um KIT internamente (combo de 2+ produtos), ele <strong>não tem EAN próprio</strong>. Precisamos gerar/usar um do banco de EANs livres.</p>
+
+        <h3>Passo a passo</h3>
+        <ol>
+          <li>Vá em <strong>EANs Kit</strong> e filtre por <strong>Livres</strong>.</li>
+          <li>Escolha um EAN livre. Anote.</li>
+          <li>Cadastre esse EAN no <strong>Varejo Fácil</strong> com a descrição do KIT.</li>
+          <li>Crie o produto no SKUHub com tipo = <strong>KIT</strong> (prefixo <code>KT-</code> automático).</li>
+          <li>Cole o EAN escolhido. Ao salvar, o app marca o EAN como "Em uso" e vincula ao SKU.</li>
+        </ol>
+
+        <div class="callout">
+          KITs de <strong>fábrica</strong> (que já vêm prontos com EAN próprio) <strong>não</strong> usam o banco. Use o EAN que veio na embalagem.
+        </div>
+
+        <h3>Adicionando EANs ao banco</h3>
+        <p>Em <strong>EANs Kit &rarr; Adicionar EANs</strong>, cole uma lista de códigos (um por linha). O app importa em lote, marcando todos como livres.</p>
+      </article>
+    </section>
+
+    <!-- ============== IMPORTAR ============== -->
+    <section id="view-importar" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title">Importar / Exportar</div>
+          <div class="page-sub">Sincronize com a planilha SKU MKTPLACE.xlsx</div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-head"><div class="card-title">📥 Importar planilha</div></div>
+          <div class="drop" id="drop-zone" onclick="document.getElementById('xlsx-input').click()">
+            <div class="drop-ic">📊</div>
+            <div class="drop-title">Clique ou arraste o .xlsx aqui</div>
+            <div class="drop-sub">SKU MKTPLACE.xlsx (formato da planilha atual)</div>
+            <input type="file" id="xlsx-input" hidden accept=".xlsx,.xls" onchange="handleFile(this.files[0])">
+          </div>
+          <div class="hint" style="margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.6">
+            • Cada <strong>aba</strong> é importada como uma <strong>marca</strong>.<br>
+            • Aba <code>Sheet1</code> = todos os produtos consolidados.<br>
+            • Aba <code>MENU</code> é ignorada.<br>
+            • Produtos com mesmo SKU Pai são <strong>agrupados</strong> com suas variações.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title">📤 Exportar Excel</div></div>
+          <p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px">Gera um <code>.xlsx</code> no mesmo formato da planilha atual (uma aba por marca + Sheet1 consolidada).</p>
+          <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="exportXlsx()">⬇️ Baixar Excel</button>
+
+          <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+            <div class="card-title" style="margin-bottom:8px">📋 Exportar CSV (filtrado)</div>
+            <p style="color:var(--muted);font-size:12.5px;line-height:1.6;margin-bottom:10px">Exporta apenas o que está visível na tela <strong>Produtos</strong>.</p>
+            <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="exportCSV()">📋 Baixar CSV</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card-head">
+          <div>
+            <div class="card-title" style="color:var(--danger)">⚠️ Zona de Risco</div>
+            <div class="card-sub">Operações irreversíveis</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-danger" onclick="confirmReset()">🗑️ Apagar todos os dados</button>
+          <button class="btn btn-ghost" onclick="exportBackup()">💾 Backup JSON</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('json-input').click()">📂 Restaurar Backup</button>
+          <input type="file" id="json-input" hidden accept=".json" onchange="restoreBackup(this.files[0])">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== AJUDA ============== -->
+    <section id="view-ajuda" class="view" hidden>
+      <div class="page-head">
+        <div>
+          <div class="page-title">Como usar o SKUHub</div>
+          <div class="page-sub">Roteiro recomendado para começar</div>
+        </div>
+      </div>
+
+      <div class="guide">
+        <h2>🚀 Primeira vez aqui?</h2>
+        <p>O SKUHub substitui (ou complementa) a planilha <strong>SKU MKTPLACE.xlsx</strong>. Tudo é salvo no seu navegador (<strong>localStorage</strong>) — nada vai para servidor externo.</p>
+
+        <h3>Passo 1 — Importe a planilha atual</h3>
+        <ol>
+          <li>Vá em <strong>Importar / Exportar</strong>.</li>
+          <li>Arraste o arquivo <code>SKU MKTPLACE.xlsx</code> na zona de upload.</li>
+          <li>Aguarde. O app cria as marcas e os produtos automaticamente.</li>
+        </ol>
+        <div class="callout">Quando importa uma planilha nova, os dados existentes são <strong>substituídos</strong>. Faça <strong>backup JSON</strong> antes se quiser preservar.</div>
+
+        <h3>Passo 2 — Confira as Marcas</h3>
+        <p>Em <strong>Marcas</strong> você vê todas as marcas importadas, com prefixo SKU e contagem de produtos. Pode editar o prefixo se precisar mudar o padrão (ex: <code>WAT</code> &rarr; <code>WATA</code>).</p>
+
+        <h3>Passo 3 — Cadastre um novo produto</h3>
+        <ol>
+          <li>Clique em <strong>Cadastrar</strong> (ou <strong>+ Novo Produto</strong>).</li>
+          <li>Escolha a <strong>Marca</strong> e o <strong>Tipo</strong> (único / variação / KIT / KIT com variação).</li>
+          <li>O <strong>SKU Pai</strong> é sugerido automaticamente (próximo número livre da marca). Pode editar.</li>
+          <li>Preencha o EAN. <strong>Em KIT</strong>: clique em "Ver EANs livres" e pegue um do banco.</li>
+          <li>Descrição: <strong>MARCA + LINHA + PRODUTO + GRAMAGEM</strong>.</li>
+          <li>Custo: o app calcula o <strong>preço sugerido</strong> da Shopee (× 3, mínimo R$ 59,90).</li>
+          <li>Peso: o app adiciona <strong>+150g de margem</strong>.</li>
+          <li>Dimensões: largura × comprimento × altura. Se algum valor for &lt; 16/10, o app eleva para o mínimo.</li>
+          <li><strong>Variações</strong>: clique em "Adicionar" para cada cor/tom/tamanho. O SKU da variação é gerado automaticamente (<code>FRAN-VAR-0001</code>).</li>
+          <li>Marque em quais <strong>marketplaces</strong> o produto <strong>já está</strong> cadastrado. Os não marcados ficam como <strong>pendentes</strong>.</li>
+          <li>Salvar.</li>
+        </ol>
+
+        <h3>Passo 4 — Gerencie status de cadastro</h3>
+        <p>Em <strong>Produtos</strong>, clique nos pequenos botões coloridos da coluna <strong>Marketplaces</strong> para alternar entre:</p>
+        <ul>
+          <li><span class="tag tag-on">SIM</span> — produto cadastrado no canal</li>
+          <li><span class="tag tag-pend">PEND</span> — pendente</li>
+          <li><span class="tag tag-off">NÃO</span> — não vai cadastrar</li>
+        </ul>
+
+        <h3>Passo 5 — Exporte de volta</h3>
+        <p>Em <strong>Importar / Exportar &rarr; Baixar Excel</strong>, gere o <code>.xlsx</code> no mesmo formato da planilha original. Use para enviar para a equipe ou Plugg.to.</p>
+
+        <h3>📚 Dúvidas sobre cadastro nos marketplaces?</h3>
+        <p>A aba <strong>Guias Marketplaces</strong> tem o passo a passo completo de Shopee, Shein, Mercado Livre e Plugg.to. Imprimível também (botão "Imprimir").</p>
+
+        <h3>🎁 EANs para KIT</h3>
+        <p>A aba <strong>EANs Kit</strong> é seu <strong>banco de códigos de barras livres</strong> para usar quando você cria um kit (combo) que não tem EAN próprio. Adicione códigos em lote e marque-os como "em uso" quando usar.</p>
+
+        <h3>💾 Onde meus dados ficam?</h3>
+        <p>Tudo no <strong>localStorage</strong> do seu navegador. <strong>Não sai do seu computador</strong>. Para fazer backup, vá em <strong>Importar / Exportar &rarr; Backup JSON</strong>.</p>
+
+        <div class="callout warn">
+          <strong>Atenção:</strong> se você limpar os dados do navegador, <strong>perde tudo</strong>. Faça backup periodicamente — pode importar o JSON depois para restaurar.
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── MODALS ── -->
+<div class="modal" id="modal-brand">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-head">
+      <div class="modal-title" id="brand-modal-title">Nova Marca</div>
+      <button class="modal-close" onclick="closeModal('modal-brand')">×</button>
+    </div>
+    <input type="hidden" id="bm-id">
+    <div class="form-grid">
+      <div class="field span-full">
+        <label>Nome da Marca <span class="req">*</span></label>
+        <input type="text" id="bm-name" placeholder="Franciny Ehlke" oninput="suggestPrefix()">
+      </div>
+      <div class="field span-full">
+        <label>Prefixo SKU <span class="req">*</span></label>
+        <input type="text" id="bm-prefix" placeholder="FRAN" maxlength="10" style="text-transform:uppercase">
+        <span class="hint">Mínimo 3 letras. Será usado em todos os SKUs da marca (ex: <b>FRAN-0001</b>).</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modal-brand')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveBrand()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-ean">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-head">
+      <div class="modal-title">Adicionar EANs ao Banco</div>
+      <button class="modal-close" onclick="closeModal('modal-ean')">×</button>
+    </div>
+    <div class="field">
+      <label>Cole os códigos (um por linha)</label>
+      <textarea id="ean-bulk" placeholder="7898123456789&#10;7898123456790&#10;7898123456791" style="min-height:180px;font-family:'JetBrains Mono',monospace"></textarea>
+      <span class="hint">Cada linha = 1 EAN. Duplicados são ignorados.</span>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modal-ean')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEans()">💾 Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-confirm">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-head">
+      <div class="modal-title" id="confirm-title">Confirmar</div>
+      <button class="modal-close" onclick="closeModal('modal-confirm')">×</button>
+    </div>
+    <div style="color:var(--muted);font-size:14px;line-height:1.6" id="confirm-text"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modal-confirm')">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-ok">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+/* ──────────────────────────────────────────────
+   SKUHub - app logic
+   ────────────────────────────────────────────── */
+
+const STORE_KEY = 'skuhub.data.v1';
+const MKTS = [
+  {key:'paris',  label:'PARIS',   short:'PA', color:'var(--paris)'},
+  {key:'max',    label:'MAX',     short:'MX', color:'var(--max)'},
+  {key:'shein',  label:'SHEIN',   short:'SH', color:'var(--shein)'},
+  {key:'plugg',  label:'PLUGG TO',short:'PL', color:'var(--plugg)'},
+  {key:'mercado',label:'MERCADO', short:'ML', color:'var(--mercado)'}
+];
+
+/* state */
+let state = loadState();
+
+function emptyState(){
+  return {
+    brands: [],   // {id, name, prefix, nextNumber, nextVar}
+    products: [], // see schema
+    eans:    [],  // {ean, productId?, sku?}
+    currentView: 'dashboard',
+    createdAt: Date.now()
+  };
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return emptyState();
+    return Object.assign(emptyState(), JSON.parse(raw));
+  }catch(e){ console.error(e); return emptyState(); }
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch(e){ toast('Erro ao salvar','error'); }
+}
+
+/* utils */
+const uid = ()=> Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const slugBrand = (n)=> (n||'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,5);
+const pad = (n,d=4)=> String(n).padStart(d,'0');
+const money = (v)=> 'R$ '+(Number(v)||0).toFixed(2).replace('.',',');
+
+function toast(msg, type='info'){
+  const w = document.getElementById('toast-wrap');
+  const t = document.createElement('div');
+  t.className = 'toast '+type;
+  t.textContent = msg;
+  w.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(20px)'; t.style.transition='all .25s'; setTimeout(()=>t.remove(),250); }, 3000);
+}
+
+/* nav */
+document.querySelectorAll('.nav-btn').forEach(b=>{
+  b.addEventListener('click', ()=> goto(b.dataset.view));
+});
+function goto(view){
+  state.currentView = view;
+  document.querySelectorAll('.view').forEach(v=> v.hidden = (v.id !== 'view-'+view));
+  document.querySelectorAll('.nav-btn').forEach(b=> b.classList.toggle('active', b.dataset.view===view));
+  if(view==='dashboard') renderDashboard();
+  if(view==='produtos')  renderProdutos();
+  if(view==='cadastrar') prepareForm();
+  if(view==='marcas')    renderMarcas();
+  if(view==='kits')      renderEans();
+  // close mobile menu
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+function toggleMenu(){
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('open');
+}
+
+document.querySelectorAll('.guide-tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.guide-tab').forEach(x=> x.classList.toggle('active', x===t));
+    document.querySelectorAll('[data-guide-content]').forEach(c=> c.hidden = c.dataset.guideContent !== t.dataset.guide);
+  });
+});
+
+/* ────────── DASHBOARD ────────── */
+function renderDashboard(){
+  const p = state.products;
+  const allLines = p.reduce((a,x)=> a + 1 + (x.variations?.length||0), 0);
+  const totalVars = p.reduce((a,x)=> a + (x.variations?.length||0), 0);
+  const kits = p.filter(x=> x.isKit).length;
+  const eansFree = state.eans.filter(e=> !e.productId).length;
+
+  const stats = [
+    {label:'Produtos (SKU pai)', val:p.length, color:'var(--accent)', foot: `${state.brands.length} marcas`},
+    {label:'Variações',          val:totalVars,color:'var(--info)',   foot: `Total c/ pais: <strong>${allLines}</strong>`},
+    {label:'KITs criados',       val:kits,     color:'#A5B4FC',       foot: 'Anúncios c/ <strong>KT-</strong>'},
+    {label:'EANs livres',        val:eansFree, color:'var(--warning)',foot: `${state.eans.length-eansFree} em uso`}
+  ];
+  document.getElementById('dash-stats').innerHTML = stats.map(s=>`
+    <div class="stat" style="--c:${s.color}">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-val">${s.val.toLocaleString('pt-BR')}</div>
+      <div class="stat-foot">${s.foot}</div>
+    </div>`).join('');
+
+  // marketplace status
+  document.getElementById('dash-mkts').innerHTML = MKTS.map(m=>{
+    const all = allLines || 1;
+    let sim=0, pend=0;
+    p.forEach(prod=>{
+      const lines = [prod, ...(prod.variations||[])];
+      lines.forEach(l=>{
+        const v = (l.marketplaces||prod.marketplaces||{})[m.key];
+        if(v==='sim') sim++;
+        else if(v==='pendente') pend++;
+      });
+    });
+    const pct = Math.round((sim/all)*100);
+    return `
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:4px">
+          <div style="display:flex;align-items:center;gap:8px"><span class="mkt-ico" style="--c:${m.color};width:22px;height:22px;font-size:10px;border-radius:6px">${m.short}</span>${m.label}</div>
+          <div>${sim} / ${all} <span style="color:var(--muted);font-weight:600">(${pct}%)</span></div>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:${pct}%;background:${m.color}"></div></div>
+        ${pend? `<div style="font-size:11px;color:var(--warning);margin-top:4px">${pend} pendente(s)</div>`:''}
+      </div>`;
+  }).join('');
+
+  // top brands
+  const counts = {};
+  p.forEach(x=>{ counts[x.brandId] = (counts[x.brandId]||0)+1 });
+  const top = state.brands.map(b=>({...b, count: counts[b.id]||0})).sort((a,b)=>b.count-a.count).slice(0,8);
+  const maxC = top[0]?.count || 1;
+  document.getElementById('dash-brands').innerHTML = top.length? top.map(b=>`
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:3px">
+        <span>${escapeHtml(b.name)}</span><span style="color:var(--muted)">${b.count}</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${(b.count/maxC)*100}%"></div></div>
+    </div>`).join('') : '<div class="empty-state" style="padding:30px"><p>Nenhuma marca cadastrada ainda.</p></div>';
+
+  // recent
+  const recent = [...p].sort((a,b)=> (b.updatedAt||0)-(a.updatedAt||0)).slice(0,10);
+  document.getElementById('dash-recent').innerHTML = recent.length? `
+    <table class="tbl">
+      <thead><tr><th>SKU</th><th>Descrição</th><th>Marca</th><th>Var.</th><th>Atualizado</th></tr></thead>
+      <tbody>
+      ${recent.map(p=>{
+        const b = state.brands.find(x=>x.id===p.brandId);
+        const when = p.updatedAt? new Date(p.updatedAt).toLocaleDateString('pt-BR') : '—';
+        return `<tr onclick="editProduct('${p.id}')" style="cursor:pointer">
+          <td><span class="sku-cell">${escapeHtml(p.sku)}</span></td>
+          <td class="desc-cell">${escapeHtml(p.description||'')}</td>
+          <td>${escapeHtml(b?.name||'—')}</td>
+          <td>${p.variations?.length||0}</td>
+          <td style="color:var(--muted);font-size:12px">${when}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table>` : '<div class="empty-state"><div class="ic">📦</div><h3>Nenhum produto ainda</h3><p>Comece importando a planilha ou cadastrando um produto.</p></div>';
+
+  // counts in sidebar
+  document.getElementById('count-produtos').textContent = p.length;
+  document.getElementById('count-marcas').textContent = state.brands.length;
+  document.getElementById('count-kits').textContent = state.eans.filter(e=> !e.productId).length;
+}
+
+/* ────────── PRODUTOS ────────── */
+function renderProdutos(){
+  // populate brand filter
+  const fb = document.getElementById('filter-brand');
+  const cur = fb.value;
+  fb.innerHTML = '<option value="">Todas as marcas</option>' + state.brands.map(b=>`<option value="${b.id}" ${cur===b.id?'selected':''}>${escapeHtml(b.name)}</option>`).join('');
+
+  const q     = document.getElementById('search-input').value.toLowerCase().trim();
+  const fbid  = document.getElementById('filter-brand').value;
+  const fmkt  = document.getElementById('filter-mkt').value;
+  const fst   = document.getElementById('filter-status').value;
+  const ftype = document.getElementById('filter-type').value;
+
+  let list = state.products;
+  if(fbid) list = list.filter(p=> p.brandId===fbid);
+  if(ftype==='kit')    list = list.filter(p=> p.isKit && !(p.variations?.length));
+  if(ftype==='var')    list = list.filter(p=> p.variations?.length>0);
+  if(ftype==='normal') list = list.filter(p=> !p.isKit && !(p.variations?.length));
+
+  if(fmkt && fst){
+    list = list.filter(p=>{
+      const lines = [p, ...(p.variations||[])];
+      return lines.some(l=>{
+        const v = (l.marketplaces||p.marketplaces||{})[fmkt] || 'nao';
+        return v===fst;
+      });
+    });
+  } else if(fmkt){
+    list = list.filter(p=>{
+      const lines = [p, ...(p.variations||[])];
+      return lines.some(l=> (l.marketplaces||p.marketplaces||{})[fmkt]);
+    });
+  } else if(fst){
+    list = list.filter(p=>{
+      const all = MKTS.map(m=> p.marketplaces?.[m.key] || 'nao');
+      return all.includes(fst);
+    });
+  }
+
+  if(q){
+    list = list.filter(p=>{
+      if((p.sku||'').toLowerCase().includes(q)) return true;
+      if((p.ean||'').toLowerCase().includes(q)) return true;
+      if((p.description||'').toLowerCase().includes(q)) return true;
+      if((p.variations||[]).some(v=> (v.sku||'').toLowerCase().includes(q) || (v.ean||'').toLowerCase().includes(q))) return true;
+      return false;
+    });
+  }
+
+  document.getElementById('produtos-count-sub').textContent = `${list.length} de ${state.products.length} produto${state.products.length!==1?'s':''}`;
+
+  const tbody = document.getElementById('produtos-tbody');
+  if(!list.length){
+    tbody.innerHTML = `<tr><td colspan="8" class="empty">${state.products.length? 'Nenhum resultado para os filtros aplicados.' : 'Catálogo vazio. Importe a planilha ou cadastre um produto.'}</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(p=>{
+    const b = state.brands.find(x=>x.id===p.brandId);
+    const hasVar = (p.variations?.length||0)>0;
+    const typeTag = p.isKit
+      ? `<span class="tag tag-kit">KIT</span>`
+      : hasVar ? `<span class="tag tag-var">${p.variations.length} VAR</span>`
+      : '';
+    const mktCell = MKTS.map(m=>{
+      const v = p.marketplaces?.[m.key] || 'nao';
+      const cls = v==='sim'?'tag-on':v==='pendente'?'tag-pend':'tag-off';
+      return `<button class="tag ${cls}" title="${m.label}: ${v}" onclick="event.stopPropagation();cycleMkt('${p.id}','${m.key}')" style="cursor:pointer">${m.short}</button>`;
+    }).join('');
+    return `<tr onclick="editProduct('${p.id}')" style="cursor:pointer">
+      <td><span class="sku-cell">${escapeHtml(p.sku)}</span></td>
+      <td class="ean-cell">${escapeHtml(p.ean||'—')}</td>
+      <td class="desc-cell" title="${escapeHtml(p.description||'')}">${escapeHtml(p.description||'')}</td>
+      <td>${escapeHtml(b?.name||'—')}</td>
+      <td>${typeTag||'<span style="color:var(--muted2)">—</span>'}</td>
+      <td>${p.cost? money(p.cost):'<span style="color:var(--muted2)">—</span>'}</td>
+      <td><div class="mkt-cell">${mktCell}</div></td>
+      <td><div class="actions">
+        <button class="btn btn-sm btn-ghost btn-icon" title="Duplicar" onclick="event.stopPropagation();dupProduct('${p.id}')">📋</button>
+        <button class="btn btn-sm btn-danger btn-icon" title="Excluir" onclick="event.stopPropagation();delProduct('${p.id}')">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function cycleMkt(pid, mkt){
+  const p = state.products.find(x=>x.id===pid);
+  if(!p) return;
+  p.marketplaces = p.marketplaces || {};
+  const cur = p.marketplaces[mkt] || 'nao';
+  const next = cur==='nao' ? 'sim' : cur==='sim' ? 'pendente' : 'nao';
+  p.marketplaces[mkt] = next;
+  p.updatedAt = Date.now();
+  save();
+  renderProdutos();
+  toast(`${MKTS.find(m=>m.key===mkt).label}: ${next.toUpperCase()}`, 'success');
+}
+
+function delProduct(pid){
+  openConfirm('Excluir produto', 'Esta ação não pode ser desfeita. Continuar?', ()=>{
+    // free EANs
+    const p = state.products.find(x=>x.id===pid);
+    if(p?.ean){
+      const e = state.eans.find(x=>x.ean===p.ean);
+      if(e){ delete e.productId; delete e.sku; }
+    }
+    state.products = state.products.filter(x=>x.id!==pid);
+    save(); renderProdutos(); renderDashboard();
+    toast('Produto excluído','success');
+  });
+}
+
+function dupProduct(pid){
+  const p = state.products.find(x=>x.id===pid);
+  if(!p) return;
+  const b = state.brands.find(x=>x.id===p.brandId);
+  if(!b) return;
+  const newP = JSON.parse(JSON.stringify(p));
+  newP.id = uid();
+  newP.sku = nextSku(b, p.isKit, false);
+  newP.ean = '';
+  newP.description = (p.description||'')+' (cópia)';
+  newP.variations = (p.variations||[]).map((v,i)=>({...v, id:uid(), sku: nextSku(b, p.isKit, true, i), ean:''}));
+  newP.createdAt = Date.now(); newP.updatedAt = Date.now();
+  state.products.push(newP);
+  bumpBrandCounter(b, newP);
+  save(); renderProdutos();
+  toast('Produto duplicado','success');
+}
+
+/* ────────── CADASTRAR ────────── */
+let editingId = null;
+
+function prepareForm(){
+  // brands dropdown
+  const sel = document.getElementById('f-brand');
+  sel.innerHTML = '<option value="">— Selecione —</option>' + state.brands.map(b=>`<option value="${b.id}">${escapeHtml(b.name)} (${b.prefix})</option>`).join('');
+  if(!editingId){
+    resetForm();
+  }
+}
+function resetForm(){
+  editingId = null;
+  document.getElementById('cad-title').textContent = 'Cadastrar Produto';
+  document.getElementById('f-id').value = '';
+  document.getElementById('prod-form').reset();
+  document.getElementById('var-list').innerHTML = '';
+  document.querySelectorAll('#mkt-checks input').forEach(i=>{ i.checked=false; i.parentElement.classList.remove('on') });
+  document.getElementById('f-price').value = '';
+  document.getElementById('f-weight-final').value = '';
+  document.getElementById('f-dim-final').value = '';
+  onTypeChange();
+}
+
+function editProduct(pid){
+  const p = state.products.find(x=>x.id===pid);
+  if(!p) return;
+  goto('cadastrar');
+  editingId = pid;
+  document.getElementById('cad-title').textContent = 'Editar Produto';
+  document.getElementById('f-id').value = pid;
+  document.getElementById('f-brand').value = p.brandId;
+  document.getElementById('f-type').value = p.isKit
+    ? (p.variations?.length? 'kit-var':'kit')
+    : (p.variations?.length? 'var':'normal');
+  document.getElementById('f-sku').value = p.sku||'';
+  document.getElementById('f-ean').value = p.ean||'';
+  document.getElementById('f-desc').value = p.description||'';
+  document.getElementById('f-cost').value = p.cost||'';
+  document.getElementById('f-weight').value = p.weight||'';
+  document.getElementById('f-w').value = p.w||'';
+  document.getElementById('f-l').value = p.l||'';
+  document.getElementById('f-h').value = p.h||'';
+  document.getElementById('f-notes').value = p.notes||'';
+  // variations
+  document.getElementById('var-list').innerHTML = '';
+  (p.variations||[]).forEach(v=> addVariation(v));
+  // mkts
+  document.querySelectorAll('#mkt-checks input').forEach(i=>{
+    const checked = (p.marketplaces?.[i.dataset.mkt]) === 'sim';
+    i.checked = checked;
+    i.parentElement.classList.toggle('on', checked);
+  });
+  calcPrice(); calcWeight(); checkDims();
+  onTypeChange();
+}
+
+function onBrandChange(){
+  const t = document.getElementById('f-type').value;
+  const isKit = t.startsWith('kit');
+  suggestSku(isKit);
+}
+function onTypeChange(){
+  const t = document.getElementById('f-type').value;
+  const showVar = t==='var' || t==='kit-var';
+  document.getElementById('sec-var').style.display = showVar? 'block':'none';
+  if(!showVar) document.getElementById('var-list').innerHTML = '';
+  const isKit = t.startsWith('kit');
+  suggestSku(isKit);
+}
+function suggestSku(isKit){
+  const bid = document.getElementById('f-brand').value;
+  const b = state.brands.find(x=>x.id===bid);
+  if(!b) return;
+  if(editingId) return; // don't override when editing
+  document.getElementById('f-sku').value = nextSku(b, isKit, false);
+  // regen variations SKUs
+  document.querySelectorAll('#var-list .var-row').forEach((row,i)=>{
+    const input = row.querySelector('.var-sku-input');
+    input.value = nextSku(b, isKit, true, i);
+  });
+}
+function nextSku(brand, isKit, isVar, offset=0){
+  const list = state.products.filter(p=> p.brandId===brand.id);
+  let maxN = 0;
+  list.forEach(p=>{
+    const m = (p.sku||'').match(/-(\d{3,5})$/);
+    if(m) maxN = Math.max(maxN, parseInt(m[1]));
+    (p.variations||[]).forEach(v=>{
+      const mv = (v.sku||'').match(/-(\d{3,5})$/);
+      if(mv) maxN = Math.max(maxN, parseInt(mv[1]));
+    });
+  });
+  let n = maxN+1+offset;
+  if(isVar){
+    let parentN = maxN+1;
+    return `${isKit?'KT-':''}${brand.prefix}-VAR-${pad(parentN+offset)}`;
+  }
+  return `${isKit?'KT-':''}${brand.prefix}-${pad(n)}`;
+}
+function bumpBrandCounter(b, p){
+  // no-op: numbers are derived from existing SKUs, not stored
+}
+
+function calcPrice(){
+  const c = parseFloat(document.getElementById('f-cost').value)||0;
+  const v = Math.max(c*3, 59.90);
+  document.getElementById('f-price').value = c? money(v) : '';
+}
+function calcWeight(){
+  const w = parseFloat(document.getElementById('f-weight').value)||0;
+  document.getElementById('f-weight-final').value = w? (w+150)+' g' : '';
+}
+function checkDims(){
+  const w = parseFloat(document.getElementById('f-w').value)||0;
+  const l = parseFloat(document.getElementById('f-l').value)||0;
+  const h = parseFloat(document.getElementById('f-h').value)||0;
+  if(!w && !l && !h){ document.getElementById('f-dim-final').value=''; return; }
+  const fw = Math.max(w,16), fl=Math.max(l,16), fh=Math.max(h,10);
+  document.getElementById('f-dim-final').value = `${fw}×${fl}×${fh} cm`;
+}
+
+function toggleCheck(el){
+  el.parentElement.classList.toggle('on', el.checked);
+}
+
+function addVariation(data){
+  const b = state.brands.find(x=>x.id===document.getElementById('f-brand').value);
+  const isKit = document.getElementById('f-type').value.startsWith('kit');
+  const idx = document.querySelectorAll('#var-list .var-row').length;
+  const sku = data?.sku || (b? nextSku(b,isKit,true,idx) : '');
+  const wrap = document.getElementById('var-list');
+  const row = document.createElement('div');
+  row.className = 'var-row';
+  row.dataset.id = data?.id || uid();
+  row.innerHTML = `
+    <input type="text" class="var-name" placeholder="C-01" value="${escapeHtml(data?.name||'')}">
+    <input type="text" class="var-sku-input" placeholder="SKU" value="${escapeHtml(sku)}">
+    <input type="text" class="var-ean" placeholder="EAN (opcional)" value="${escapeHtml(data?.ean||'')}">
+    <button type="button" class="btn btn-sm btn-danger btn-icon" onclick="this.parentElement.remove()">×</button>
+  `;
+  wrap.appendChild(row);
+}
+
+function saveProduct(){
+  const bid = document.getElementById('f-brand').value;
+  const b = state.brands.find(x=>x.id===bid);
+  if(!b){ toast('Selecione uma marca','error'); return; }
+
+  const t = document.getElementById('f-type').value;
+  const isKit = t.startsWith('kit');
+  const hasVar = t==='var'||t==='kit-var';
+
+  const sku = document.getElementById('f-sku').value.trim();
+  if(!sku){ toast('Informe o SKU','error'); return; }
+
+  // duplicate check
+  const dup = state.products.find(p=> p.sku===sku && p.id!==editingId);
+  if(dup){ toast('Já existe produto com este SKU: '+sku,'error'); return; }
+
+  const desc = document.getElementById('f-desc').value.trim();
+  if(!desc){ toast('Informe a descrição','error'); return; }
+
+  const mkts = {};
+  MKTS.forEach(m=>{
+    const cb = document.querySelector(`#mkt-checks input[data-mkt="${m.key}"]`);
+    mkts[m.key] = cb.checked ? 'sim' : 'pendente';
+  });
+
+  const variations = hasVar ? [...document.querySelectorAll('#var-list .var-row')].map(row=>({
+    id: row.dataset.id,
+    name: row.querySelector('.var-name').value.trim(),
+    sku:  row.querySelector('.var-sku-input').value.trim(),
+    ean:  row.querySelector('.var-ean').value.trim()
+  })).filter(v=> v.sku) : [];
+
+  const w = parseFloat(document.getElementById('f-w').value)||0;
+  const l = parseFloat(document.getElementById('f-l').value)||0;
+  const h = parseFloat(document.getElementById('f-h').value)||0;
+
+  const obj = {
+    id: editingId || uid(),
+    brandId: bid,
+    sku,
+    isKit,
+    ean: document.getElementById('f-ean').value.trim(),
+    description: desc,
+    cost: parseFloat(document.getElementById('f-cost').value)||0,
+    weight: parseFloat(document.getElementById('f-weight').value)||0,
+    w, l, h,
+    variations,
+    marketplaces: mkts,
+    notes: document.getElementById('f-notes').value.trim(),
+    createdAt: editingId ? (state.products.find(x=>x.id===editingId)?.createdAt||Date.now()) : Date.now(),
+    updatedAt: Date.now()
+  };
+
+  // mark EAN as used
+  if(obj.ean){
+    const e = state.eans.find(x=> x.ean===obj.ean);
+    if(e){ e.productId = obj.id; e.sku = obj.sku; }
+  }
+
+  if(editingId){
+    const i = state.products.findIndex(x=>x.id===editingId);
+    state.products[i] = obj;
+    toast('Produto atualizado','success');
+  } else {
+    state.products.push(obj);
+    toast('Produto salvo','success');
+  }
+  save();
+  editingId = null;
+  goto('produtos');
+}
+
+/* ────────── MARCAS ────────── */
+function renderMarcas(){
+  const counts = {};
+  state.products.forEach(p=>{ counts[p.brandId]=(counts[p.brandId]||0)+1 });
+  const tbody = document.getElementById('marcas-tbody');
+  if(!state.brands.length){
+    tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhuma marca cadastrada. <button class="btn btn-sm btn-primary" onclick="openBrandModal()" style="margin-left:10px">Criar primeira marca</button></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = state.brands.slice().sort((a,b)=> a.name.localeCompare(b.name)).map(b=>{
+    const next = nextSku(b,false,false);
+    const nextVar = nextSku(b,false,true,0);
+    return `<tr>
+      <td style="font-weight:700">${escapeHtml(b.name)}</td>
+      <td><span class="sku-cell">${escapeHtml(b.prefix)}-</span></td>
+      <td><span class="sku-cell">${escapeHtml(next)}</span></td>
+      <td><span class="sku-cell">${escapeHtml(nextVar)}</span></td>
+      <td>${counts[b.id]||0}</td>
+      <td><div class="actions">
+        <button class="btn btn-sm btn-ghost btn-icon" title="Editar" onclick="openBrandModal('${b.id}')">✏️</button>
+        <button class="btn btn-sm btn-danger btn-icon" title="Excluir" onclick="delBrand('${b.id}')">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function openBrandModal(id){
+  document.getElementById('bm-id').value = id||'';
+  document.getElementById('brand-modal-title').textContent = id? 'Editar Marca' : 'Nova Marca';
+  if(id){
+    const b = state.brands.find(x=>x.id===id);
+    document.getElementById('bm-name').value = b.name;
+    document.getElementById('bm-prefix').value = b.prefix;
+  } else {
+    document.getElementById('bm-name').value = '';
+    document.getElementById('bm-prefix').value = '';
+  }
+  document.getElementById('modal-brand').classList.add('open');
+}
+function suggestPrefix(){
+  const id = document.getElementById('bm-id').value;
+  if(id) return;
+  document.getElementById('bm-prefix').value = slugBrand(document.getElementById('bm-name').value);
+}
+function saveBrand(){
+  const id = document.getElementById('bm-id').value;
+  const name = document.getElementById('bm-name').value.trim();
+  const prefix = document.getElementById('bm-prefix').value.trim().toUpperCase();
+  if(!name || !prefix){ toast('Preencha todos os campos','error'); return; }
+  if(prefix.length<3){ toast('Prefixo precisa de ao menos 3 letras','error'); return; }
+  const dup = state.brands.find(b=> b.prefix===prefix && b.id!==id);
+  if(dup){ toast('Já existe marca com este prefixo','error'); return; }
+  if(id){
+    const b = state.brands.find(x=>x.id===id);
+    b.name = name; b.prefix = prefix;
+    toast('Marca atualizada','success');
+  } else {
+    state.brands.push({id:uid(), name, prefix});
+    toast('Marca criada','success');
+  }
+  save(); closeModal('modal-brand'); renderMarcas();
+}
+function delBrand(id){
+  const used = state.products.find(p=> p.brandId===id);
+  if(used){ toast('Marca tem produtos. Exclua/migre os produtos primeiro.','error'); return; }
+  openConfirm('Excluir marca','Confirma exclusão da marca?',()=>{
+    state.brands = state.brands.filter(b=>b.id!==id);
+    save(); renderMarcas();
+    toast('Marca excluída','success');
+  });
+}
+
+/* ────────── EAN BANK ────────── */
+function renderEans(){
+  const q = document.getElementById('ean-search').value.trim();
+  const f = document.getElementById('ean-filter').value;
+  let list = state.eans;
+  if(f==='free') list = list.filter(e=> !e.productId);
+  if(f==='used') list = list.filter(e=> e.productId);
+  if(q) list = list.filter(e=> e.ean.includes(q));
+  const tbody = document.getElementById('kits-tbody');
+  if(!list.length){
+    tbody.innerHTML = `<tr><td colspan="5" class="empty">${state.eans.length? 'Nenhum resultado.' : 'Banco vazio. Adicione EANs para usar em KITs.'}</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(e=>{
+    const p = e.productId? state.products.find(x=>x.id===e.productId) : null;
+    return `<tr>
+      <td><span class="ean-cell" style="font-size:13px;font-weight:700;color:var(--text)">${escapeHtml(e.ean)}</span></td>
+      <td>${e.productId? '<span class="tag tag-on">EM USO</span>':'<span class="tag tag-off">LIVRE</span>'}</td>
+      <td>${p? `<span class="sku-cell">${escapeHtml(p.sku)}</span>`:'—'}</td>
+      <td class="desc-cell">${p? escapeHtml(p.description||''):'—'}</td>
+      <td><div class="actions">
+        ${e.productId? `<button class="btn btn-sm btn-ghost" onclick="freeEan('${e.ean}')">Liberar</button>`:''}
+        <button class="btn btn-sm btn-danger btn-icon" title="Excluir" onclick="delEan('${e.ean}')">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function openEanModal(){
+  document.getElementById('ean-bulk').value = '';
+  document.getElementById('modal-ean').classList.add('open');
+}
+function saveEans(){
+  const text = document.getElementById('ean-bulk').value.trim();
+  if(!text){ toast('Cole pelo menos 1 EAN','error'); return; }
+  const lines = text.split(/[\n,;\s]+/).map(s=>s.trim()).filter(Boolean);
+  let added=0, dup=0;
+  lines.forEach(ean=>{
+    if(state.eans.find(e=>e.ean===ean)){ dup++; return; }
+    state.eans.push({ean});
+    added++;
+  });
+  save(); closeModal('modal-ean'); renderEans();
+  toast(`${added} EAN(s) adicionado(s)${dup? ' • '+dup+' duplicado(s) ignorado(s)':''}`,'success');
+}
+function freeEan(ean){
+  const e = state.eans.find(x=>x.ean===ean);
+  if(!e) return;
+  delete e.productId; delete e.sku;
+  save(); renderEans();
+  toast('EAN liberado','success');
+}
+function delEan(ean){
+  openConfirm('Excluir EAN', 'Remover este EAN do banco?', ()=>{
+    state.eans = state.eans.filter(e=>e.ean!==ean);
+    save(); renderEans();
+    toast('EAN removido','success');
+  });
+}
+
+/* ────────── IMPORT XLSX ────────── */
+const dz = document.getElementById('drop-zone');
+['dragover','dragleave','drop'].forEach(ev=> dz.addEventListener(ev, e=>{e.preventDefault();e.stopPropagation()}));
+dz.addEventListener('dragover', ()=> dz.classList.add('over'));
+dz.addEventListener('dragleave', ()=> dz.classList.remove('over'));
+dz.addEventListener('drop', e=>{ dz.classList.remove('over'); handleFile(e.dataTransfer.files[0]) });
+
+function handleFile(file){
+  if(!file){ return; }
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      importWorkbook(wb);
+    }catch(err){
+      console.error(err);
+      toast('Falha ao ler arquivo: '+err.message,'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function importWorkbook(wb){
+  openConfirm('Importar planilha',
+    `Isso substitui marcas e produtos atuais (EANs e backups são preservados).\nEncontrei ${wb.SheetNames.length} abas. Continuar?`,
+    ()=>{
+      const newBrands = [];
+      const newProds = [];
+      const skipped = new Set(['MENU','Sheet1','Plan1','Sheet','Plan','Dashboard']);
+      const productMap = {}; // sku -> product
+
+      // Try to use Sheet1 if exists (consolidated)
+      const masterSheet = wb.Sheets['Sheet1'];
+      const rowsToProcess = [];
+      if(masterSheet){
+        const arr = XLSX.utils.sheet_to_json(masterSheet, {defval:'', raw:false});
+        arr.forEach(r=> rowsToProcess.push({...r, _brandSheet:null}));
+      }
+      // Brand sheets
+      wb.SheetNames.forEach(sn=>{
+        if(skipped.has(sn)) return;
+        const ws = wb.Sheets[sn];
+        const arr = XLSX.utils.sheet_to_json(ws, {defval:'', raw:false});
+        if(!arr.length) return;
+        // create brand
+        const prefix = arr.find(r=> r['SKU PRINCIPAL'])?.['SKU PRINCIPAL']?.toString().split('-')[0] || slugBrand(sn);
+        if(!newBrands.find(b=>b.name===sn)){
+          newBrands.push({id:uid(), name:sn, prefix: prefix.replace(/^KT/,'').toUpperCase()});
+        }
+        arr.forEach(r=> rowsToProcess.push({...r, _brandSheet: sn}));
+      });
+
+      // Helper: find/derive brand for row
+      function findBrand(row){
+        if(row._brandSheet){
+          return newBrands.find(b=>b.name===row._brandSheet);
+        }
+        const sku = (row['SKU PRINCIPAL']||row['SKU DA VARIAÇÃO']||'').toString();
+        const pref = sku.replace(/^KT-/,'').split('-')[0];
+        return newBrands.find(b=> b.prefix===pref);
+      }
+
+      let curParent = null;
+      rowsToProcess.forEach(r=>{
+        const sku = (r['SKU PRINCIPAL']||'').toString().trim();
+        const varSku = (r['SKU DA VARIAÇÃO']||'').toString().trim();
+        const ean = (r['EAN']||'').toString().trim();
+        const desc = (r['Descrição do Produto']||'').toString().trim();
+        if(!desc && !sku && !varSku) return;
+
+        const brand = findBrand(r) || (function(){
+          // create unknown brand as fallback
+          const pref = (sku||varSku).replace(/^KT-/,'').split('-')[0] || 'XXX';
+          let b = newBrands.find(x=>x.prefix===pref);
+          if(!b){ b = {id:uid(), name:pref, prefix:pref}; newBrands.push(b); }
+          return b;
+        })();
+
+        const mkt = {
+          paris:    (r['PARIS']  ||'').toString().toLowerCase().startsWith('s')?'sim':'pendente',
+          max:      (r['MAX']    ||'').toString().toLowerCase().startsWith('s')?'sim':'pendente',
+          shein:    (r['SHEIN']  ||'').toString().toLowerCase().startsWith('s')?'sim':'pendente',
+          plugg:    (r['PLUGG TO']||'').toString().toLowerCase().startsWith('s')?'sim':'pendente',
+          mercado:  (r['MERCADO']||'').toString().toLowerCase().startsWith('s')?'sim':'pendente'
+        };
+
+        if(sku){
+          // new parent
+          const isKit = sku.startsWith('KT-');
+          const obj = {
+            id: uid(), brandId: brand.id, sku, isKit,
+            ean, description: desc,
+            cost: parseFloat(r['CUSTO']||r['Custo']||0)||0,
+            weight:0, w:0, l:0, h:0,
+            variations:[], marketplaces: mkt,
+            notes:'', createdAt: Date.now(), updatedAt: Date.now()
+          };
+          if(!productMap[sku]){
+            productMap[sku] = obj;
+            newProds.push(obj);
+          }
+          curParent = productMap[sku];
+          if(varSku && curParent){
+            curParent.variations.push({
+              id: uid(), name: (r['Variação']||'').toString().trim(),
+              sku: varSku, ean
+            });
+          }
+        } else if(varSku && curParent){
+          curParent.variations.push({
+            id: uid(), name: (r['Variação']||'').toString().trim(),
+            sku: varSku, ean
+          });
+        }
+      });
+
+      state.brands = newBrands;
+      state.products = newProds;
+      // mark EANs used
+      state.eans.forEach(e=>{ delete e.productId; delete e.sku });
+      newProds.forEach(p=>{
+        if(p.ean){
+          const e = state.eans.find(x=>x.ean===p.ean);
+          if(e){ e.productId=p.id; e.sku=p.sku; }
+        }
+      });
+      save();
+      toast(`Importação OK: ${newBrands.length} marcas, ${newProds.length} produtos`,'success');
+      goto('dashboard');
+    });
+}
+
+/* ────────── EXPORT XLSX ────────── */
+function exportXlsx(){
+  if(!state.products.length){ toast('Catálogo vazio','warn'); return; }
+  const wb = XLSX.utils.book_new();
+
+  // Sheet1 consolidado
+  const cons = [];
+  state.products.forEach(p=>{
+    const head = {
+      'SKU PRINCIPAL': p.sku,
+      'EAN': p.ean,
+      'Descrição do Produto': p.description,
+      'Variação':'', 'SKU DA VARIAÇÃO':'',
+      'CUSTO': p.cost||'',
+      'PARIS': p.marketplaces?.paris==='sim'?'Sim':'Não',
+      'MAX':   p.marketplaces?.max==='sim'?'Sim':'Não',
+      'SHEIN': p.marketplaces?.shein==='sim'?'Sim':'Não',
+      'PLUGG TO': p.marketplaces?.plugg==='sim'?'Sim':'Não',
+      'MERCADO': p.marketplaces?.mercado==='sim'?'Sim':'Não'
+    };
+    if(!p.variations?.length){ cons.push(head); return; }
+    cons.push({...head, 'Variação': p.variations[0].name, 'SKU DA VARIAÇÃO': p.variations[0].sku, 'EAN': p.variations[0].ean||p.ean});
+    p.variations.slice(1).forEach(v=> cons.push({
+      'SKU PRINCIPAL':'', 'EAN': v.ean||'', 'Descrição do Produto': p.description,
+      'Variação': v.name, 'SKU DA VARIAÇÃO': v.sku, 'CUSTO':'',
+      'PARIS': head.PARIS, 'MAX': head.MAX, 'SHEIN': head.SHEIN, 'PLUGG TO': head['PLUGG TO'], 'MERCADO': head.MERCADO
+    }));
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cons), 'Sheet1');
+
+  // Per-brand sheets
+  state.brands.forEach(b=>{
+    const rows = [];
+    state.products.filter(p=>p.brandId===b.id).forEach(p=>{
+      const head = {
+        'SKU PRINCIPAL': p.sku,
+        'EAN': p.ean,
+        'Descrição do Produto': p.description,
+        'Variação':'', 'SKU DA VARIAÇÃO':'',
+        'CUSTO': p.cost||'',
+        'PARIS': p.marketplaces?.paris==='sim'?'Sim':'Não',
+        'MAX':   p.marketplaces?.max==='sim'?'Sim':'Não',
+        'SHEIN': p.marketplaces?.shein==='sim'?'Sim':'Não',
+        'PLUGG TO': p.marketplaces?.plugg==='sim'?'Sim':'Não',
+        'MERCADO': p.marketplaces?.mercado==='sim'?'Sim':'Não'
+      };
+      if(!p.variations?.length){ rows.push(head); return; }
+      rows.push({...head, 'Variação': p.variations[0].name, 'SKU DA VARIAÇÃO': p.variations[0].sku, 'EAN': p.variations[0].ean||p.ean});
+      p.variations.slice(1).forEach(v=> rows.push({
+        'SKU PRINCIPAL':'', 'EAN': v.ean||'', 'Descrição do Produto': p.description,
+        'Variação': v.name, 'SKU DA VARIAÇÃO': v.sku, 'CUSTO':'',
+        'PARIS': head.PARIS, 'MAX': head.MAX, 'SHEIN': head.SHEIN, 'PLUGG TO': head['PLUGG TO'], 'MERCADO': head.MERCADO
+      }));
+    });
+    if(rows.length){
+      const safe = b.name.slice(0,31).replace(/[\\/?*\[\]:]/g,'_');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), safe);
+    }
+  });
+
+  const stamp = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, `SKU_MKTPLACE_${stamp}.xlsx`);
+  toast('Excel exportado','success');
+}
+
+function exportCSV(){
+  goto('produtos'); // ensure filters applied
+  setTimeout(()=>{
+    const rows = [...document.querySelectorAll('#produtos-tbody tr')].map(tr=>{
+      const cells = tr.querySelectorAll('td');
+      if(cells.length<5) return null;
+      return [
+        tr.querySelector('.sku-cell')?.textContent||'',
+        tr.querySelector('.ean-cell')?.textContent||'',
+        tr.querySelector('.desc-cell')?.textContent||'',
+        cells[3]?.textContent||'',
+        cells[5]?.textContent||'',
+      ];
+    }).filter(Boolean);
+    if(!rows.length){ toast('Nada para exportar','warn'); return; }
+    const csv = 'SKU;EAN;Descrição;Marca;Custo\n' + rows.map(r=> r.map(c=> `"${(c||'').replace(/"/g,'""')}"`).join(';')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `produtos_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    toast('CSV exportado','success');
+  },50);
+}
+
+function exportBackup(){
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `skuhub_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  toast('Backup JSON exportado','success');
+}
+function restoreBackup(file){
+  if(!file) return;
+  const r = new FileReader();
+  r.onload = e=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.brands || !data.products){ throw new Error('Arquivo inválido'); }
+      openConfirm('Restaurar backup','Isso substitui todos os dados atuais. Continuar?',()=>{
+        state = Object.assign(emptyState(), data);
+        save();
+        toast('Backup restaurado','success');
+        goto('dashboard');
+      });
+    }catch(err){ toast('Erro: '+err.message,'error') }
+  };
+  r.readAsText(file);
+}
+function confirmReset(){
+  openConfirm('Apagar tudo',`Vai apagar ${state.products.length} produtos, ${state.brands.length} marcas e ${state.eans.length} EANs. Sem volta!`,()=>{
+    state = emptyState(); save();
+    toast('Dados apagados','warn');
+    goto('dashboard');
+  });
+}
+
+/* ────────── MODAL HELPERS ────────── */
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function openConfirm(title, text, ok){
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-text').textContent  = text;
+  const btn = document.getElementById('confirm-ok');
+  const fresh = btn.cloneNode(true);
+  btn.parentNode.replaceChild(fresh, btn);
+  fresh.addEventListener('click', ()=>{ closeModal('modal-confirm'); ok(); });
+  document.getElementById('modal-confirm').classList.add('open');
+}
+
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ────────── INIT ────────── */
+goto('dashboard');
+renderProdutos();
+renderMarcas();
+renderEans();
+</script>
+</body>
+</html>
