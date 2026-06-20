@@ -108,6 +108,32 @@ body.finn-authed #app{display:block}
 .lim-del{background:transparent;border:none;color:var(--fm);font-size:14px;padding:2px 4px;margin-left:8px}
 .lim-del:hover{color:var(--fe)}
 .lim-over{color:var(--fe)!important}
+
+/* ── goals ── */
+.goal-item{padding:14px;border:1px solid var(--fb);border-radius:12px;margin-top:10px}
+.goal-item:first-child{margin-top:0}
+.goal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.goal-name{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700}
+.goal-name .em{font-size:18px}
+.goal-del{background:transparent;border:none;color:var(--fm);font-size:14px;padding:2px 4px}
+.goal-del:hover{color:var(--fe)}
+.goal-vals{font-size:11.5px;color:var(--fm);margin-bottom:6px}
+.goal-vals b{color:var(--fd)}
+.goal-addrow{display:flex;gap:6px;margin-top:10px}
+.goal-addrow input{flex:1;border:1px solid var(--fb);border-radius:9px;padding:8px 10px;font-size:13px}
+.goal-addrow button{background:var(--fdk);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:700;white-space:nowrap}
+
+/* ── fixed accounts ── */
+.fixed-item{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid var(--fb);border-radius:12px;margin-top:10px}
+.fixed-item:first-child{margin-top:0}
+.fixed-info{flex:1;min-width:0}
+.fixed-desc{font-size:13.5px;font-weight:700}
+.fixed-meta{font-size:11.5px;color:var(--fm)}
+.fixed-val{font-size:13.5px;font-weight:800;flex-shrink:0}
+.btn-launch{background:var(--fp);color:#fff;border:none;border-radius:9px;padding:8px 12px;font-size:11.5px;font-weight:700;flex-shrink:0}
+.btn-launch.done{background:var(--fbg);color:var(--fs);border:1px solid var(--fs)}
+.fixed-del{background:transparent;border:none;color:var(--fm);font-size:14px;padding:2px 4px;flex-shrink:0}
+.fixed-del:hover{color:var(--fe)}
 </style>
 </head>
 <body>
@@ -133,6 +159,8 @@ body.finn-authed #app{display:block}
     <button class="tab-btn" data-tab="dashboard">Dashboard</button>
     <button class="tab-btn" data-tab="lancamentos">Lançamentos</button>
     <button class="tab-btn" data-tab="limites">Limites</button>
+    <button class="tab-btn" data-tab="metas">Metas</button>
+    <button class="tab-btn" data-tab="fixas">Fixas</button>
   </div>
   <div class="content" id="content"></div>
 </div>
@@ -228,7 +256,7 @@ function db(table, method, body, query){
     .then(function(t){ return t ? JSON.parse(t) : null; });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], loading: true, filterMonth: thisMonth(), filterCategory: "all" };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], loading: true, filterMonth: thisMonth(), filterCategory: "all" };
 
 function thisMonth(){
   var n = new Date();
@@ -452,6 +480,106 @@ function renderLimitList(){
   }).join("");
 }
 
+/* ── Metas ── */
+var goalForm = { name: "", emoji: "🎯", target: "", deadline: "" };
+
+function renderMetas(){
+  return '' +
+    '<div class="card">' +
+      '<div class="eyebrow">Nova meta</div>' +
+      '<div class="form-row">' +
+        '<label>Nome</label>' +
+        '<input type="text" id="goalName" placeholder="Ex: Viagem" value="' + escapeHtml(goalForm.name) + '">' +
+      '</div>' +
+      '<div class="filter-row">' +
+        '<div><label>Emoji</label><input type="text" id="goalEmoji" maxlength="2" value="' + escapeHtml(goalForm.emoji) + '"></div>' +
+        '<div><label>Prazo (opcional)</label><input type="date" id="goalDeadline" value="' + goalForm.deadline + '"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Valor da meta</label>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="goalTarget" placeholder="0,00" value="' + goalForm.target + '"></div>' +
+      '</div>' +
+      '<button class="btn-submit" id="btnSaveGoal">Criar meta</button>' +
+    '</div>' +
+    '<div class="card">' +
+      '<div class="eyebrow">Suas metas</div>' +
+      renderGoalList() +
+    '</div>';
+}
+
+function renderGoalList(){
+  if(!state.goals.length) return '<div class="empty-state">Nenhuma meta ainda.</div>';
+  return state.goals.map(function(g){
+    var pct = g.target > 0 ? Math.min(100, Math.round(Number(g.saved)/Number(g.target)*100)) : 0;
+    return '<div class="goal-item">' +
+      '<div class="goal-top">' +
+        '<span class="goal-name"><span class="em">' + escapeHtml(g.emoji||"🎯") + '</span>' + escapeHtml(g.name) + '</span>' +
+        '<button class="goal-del" data-delgoal="' + g.id + '">✕</button>' +
+      '</div>' +
+      '<div class="goal-vals"><b>' + fmtMoney(Number(g.saved)) + '</b> de ' + fmtMoney(Number(g.target)) + ' · ' + pct + '%' +
+        (g.deadline ? ' · até ' + formatDate(g.deadline) : '') + '</div>' +
+      '<div class="bar"><i style="width:' + Math.max(3,pct) + '%"></i></div>' +
+      '<div class="goal-addrow">' +
+        '<input type="number" min="0" step="0.01" placeholder="Guardar R$" id="addGoal_' + g.id + '">' +
+        '<button data-addgoal="' + g.id + '">Guardar</button>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+/* ── Contas fixas ── */
+var fixedForm = { type: "despesa", description: "", category: "Outros", value: "", dayOfMonth: "1" };
+
+function renderFixas(){
+  return '' +
+    '<div class="card">' +
+      '<div class="eyebrow">Nova conta fixa</div>' +
+      '<div class="form-row type-toggle">' +
+        '<button class="type-btn despesa ' + (fixedForm.type==="despesa"?"active":"") + '" data-fixedtype="despesa">Despesa</button>' +
+        '<button class="type-btn receita ' + (fixedForm.type==="receita"?"active":"") + '" data-fixedtype="receita">Receita</button>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Descrição</label>' +
+        '<input type="text" id="fixedDescription" placeholder="Ex: Aluguel" value="' + escapeHtml(fixedForm.description) + '">' +
+      '</div>' +
+      '<div class="filter-row">' +
+        '<div><label>Categoria</label><select id="fixedCategory">' + CATEGORIES.map(function(c){
+          return '<option value="' + c + '"' + (c===fixedForm.category?" selected":"") + '>' + c + '</option>';
+        }).join("") + '</select></div>' +
+        '<div><label>Dia do mês</label><input type="number" min="1" max="31" id="fixedDay" value="' + fixedForm.dayOfMonth + '"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Valor</label>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="fixedValue" placeholder="0,00" value="' + fixedForm.value + '"></div>' +
+      '</div>' +
+      '<button class="btn-submit" id="btnSaveFixed">Adicionar conta fixa</button>' +
+    '</div>' +
+    '<div class="card">' +
+      '<div class="eyebrow">Suas contas fixas</div>' +
+      renderFixedList() +
+    '</div>';
+}
+
+function renderFixedList(){
+  if(!state.fixed.length) return '<div class="empty-state">Nenhuma conta fixa ainda.</div>';
+  var ym = thisMonth();
+  return state.fixed.map(function(f){
+    var launched = (f.launched_months || []).indexOf(ym) !== -1;
+    var color = f.type === "receita" ? "var(--fs)" : "var(--fe)";
+    var sign = f.type === "receita" ? "+" : "-";
+    return '<div class="fixed-item">' +
+      '<div class="tx-cat">' + (CAT_ICON[f.category]||"📦") + '</div>' +
+      '<div class="fixed-info">' +
+        '<div class="fixed-desc">' + escapeHtml(f.description) + '</div>' +
+        '<div class="fixed-meta">' + f.category + ' · todo dia ' + f.day_of_month + '</div>' +
+      '</div>' +
+      '<div class="fixed-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(Number(f.value)) + '</div>' +
+      '<button class="btn-launch' + (launched?" done":"") + '" data-launch="' + f.id + '"' + (launched?" disabled":"") + '>' + (launched?"✓ Lançado":"Lançar mês") + '</button>' +
+      '<button class="fixed-del" data-delfixed="' + f.id + '">✕</button>' +
+    '</div>';
+  }).join("");
+}
+
 /* ── render dispatch ── */
 function render(){
   document.querySelectorAll(".tab-btn").forEach(function(btn){
@@ -464,7 +592,9 @@ function render(){
   }
   if(state.tab === "dashboard") content.innerHTML = renderDashboard();
   else if(state.tab === "lancamentos") content.innerHTML = renderLancamentos();
-  else content.innerHTML = renderLimites();
+  else if(state.tab === "limites") content.innerHTML = renderLimites();
+  else if(state.tab === "metas") content.innerHTML = renderMetas();
+  else content.innerHTML = renderFixas();
   bindContentEvents();
 }
 
@@ -493,6 +623,43 @@ function bindContentEvents(){
     });
     document.querySelectorAll("[data-dellim]").forEach(function(btn){
       btn.addEventListener("click", function(){ deleteLimit(btn.dataset.dellim); });
+    });
+  }
+  if(state.tab === "metas"){
+    document.getElementById("btnSaveGoal").addEventListener("click", function(){
+      goalForm.name = document.getElementById("goalName").value;
+      goalForm.emoji = document.getElementById("goalEmoji").value || "🎯";
+      goalForm.deadline = document.getElementById("goalDeadline").value;
+      goalForm.target = document.getElementById("goalTarget").value;
+      saveGoal();
+    });
+    document.querySelectorAll("[data-delgoal]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteGoal(btn.dataset.delgoal); });
+    });
+    document.querySelectorAll("[data-addgoal]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.dataset.addgoal;
+        var input = document.getElementById("addGoal_" + id);
+        addToGoal(id, input.value);
+      });
+    });
+  }
+  if(state.tab === "fixas"){
+    document.querySelectorAll("[data-fixedtype]").forEach(function(btn){
+      btn.addEventListener("click", function(){ fixedForm.type = btn.dataset.fixedtype; render(); });
+    });
+    document.getElementById("btnSaveFixed").addEventListener("click", function(){
+      fixedForm.description = document.getElementById("fixedDescription").value;
+      fixedForm.category = document.getElementById("fixedCategory").value;
+      fixedForm.dayOfMonth = document.getElementById("fixedDay").value;
+      fixedForm.value = document.getElementById("fixedValue").value;
+      saveFixed();
+    });
+    document.querySelectorAll("[data-launch]").forEach(function(btn){
+      btn.addEventListener("click", function(){ launchFixed(btn.dataset.launch); });
+    });
+    document.querySelectorAll("[data-delfixed]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteFixed(btn.dataset.delfixed); });
     });
   }
   document.querySelectorAll("[data-edit]").forEach(function(btn){
@@ -578,14 +745,94 @@ function deleteLimit(id){
   db("spending_limits", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
 }
 
+/* ── goals CRUD ── */
+function saveGoal(){
+  var target = parseFloat(goalForm.target);
+  if(!goalForm.name || !target || target <= 0) return;
+  var payload = {
+    user_id: uid(), name: goalForm.name, emoji: goalForm.emoji,
+    target: target, deadline: goalForm.deadline || null
+  };
+  db("goals", "POST", payload).then(function(rows){
+    if(rows && rows[0]) state.goals.push(rows[0]);
+    goalForm = { name: "", emoji: "🎯", target: "", deadline: "" };
+    render();
+  });
+}
+
+function addToGoal(id, amountStr){
+  var amount = parseFloat(amountStr);
+  if(!amount || amount <= 0) return;
+  var goal = state.goals.filter(function(g){ return g.id === id; })[0];
+  if(!goal) return;
+  var newSaved = Number(goal.saved) + amount;
+  db("goals", "PATCH", { saved: newSaved }, { id: "eq." + id, user_id: "eq." + uid() }).then(function(){
+    goal.saved = newSaved;
+    render();
+  });
+}
+
+function deleteGoal(id){
+  state.goals = state.goals.filter(function(g){ return g.id !== id; });
+  render();
+  db("goals", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+}
+
+/* ── fixed accounts CRUD ── */
+function saveFixed(){
+  var value = parseFloat(fixedForm.value);
+  var day = parseInt(fixedForm.dayOfMonth, 10);
+  if(!fixedForm.description || !value || value <= 0 || !day || day < 1 || day > 31) return;
+  var payload = {
+    user_id: uid(), type: fixedForm.type, description: fixedForm.description,
+    category: fixedForm.category, value: value, day_of_month: day
+  };
+  db("fixed_accounts", "POST", payload).then(function(rows){
+    if(rows && rows[0]) state.fixed.push(rows[0]);
+    fixedForm = { type: "despesa", description: "", category: "Outros", value: "", dayOfMonth: "1" };
+    render();
+  });
+}
+
+function launchFixed(id){
+  var f = state.fixed.filter(function(x){ return x.id === id; })[0];
+  if(!f) return;
+  var ym = thisMonth();
+  var months = (f.launched_months || []).concat([ym]);
+  var txPayload = {
+    user_id: uid(), type: f.type, category: f.category,
+    description: f.description, value: Number(f.value), date: new Date().toISOString().slice(0,10)
+  };
+  Promise.all([
+    db("transactions", "POST", txPayload),
+    db("fixed_accounts", "PATCH", { launched_months: months }, { id: "eq." + id, user_id: "eq." + uid() })
+  ]).then(function(res){
+    var newTx = res[0] && res[0][0];
+    if(newTx) state.txs.unshift(newTx);
+    f.launched_months = months;
+    sortTxs();
+    render();
+  });
+}
+
+function deleteFixed(id){
+  state.fixed = state.fixed.filter(function(f){ return f.id !== id; });
+  render();
+  db("fixed_accounts", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+}
+
 /* ── data load ── */
 function loadData(){
   return Promise.all([
     db("transactions", "GET", null, { user_id: "eq." + uid(), order: "date.desc,created_at.desc", limit: "1000" }),
-    db("spending_limits", "GET", null, { user_id: "eq." + uid() })
+    db("spending_limits", "GET", null, { user_id: "eq." + uid() }),
+    db("goals", "GET", null, { user_id: "eq." + uid() }),
+    db("fixed_accounts", "GET", null, { user_id: "eq." + uid() })
   ]).then(function(res){
     state.txs = res[0] || [];
     state.limits = res[1] || [];
+    state.goals = res[2] || [];
+    state.fixed = res[3] || [];
     sortTxs();
     state.loading = false;
     render();
