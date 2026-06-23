@@ -1,4 +1,4 @@
 {
-  "version": "1.8",
-  "notes": "Corrige erro 'Load failed' ao salvar: SW não deve interceptar chamadas ao Supabase"
+  "version": "1.9",
+  "notes": "Corrige cálculo INSS acima do teto, default HE 75% e destaque do menu"
 }

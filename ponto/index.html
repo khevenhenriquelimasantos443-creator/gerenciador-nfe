@@ -1694,9 +1694,8 @@ async function navigate(page) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.textContent.toLowerCase().includes(pageTitles[page].toLowerCase().split(' ')[0].toLowerCase())) {
-      n.classList.add('active');
-    }
+    const oc = n.getAttribute('onclick') || '';
+    if (oc.includes(`navigate('${page}')`)) n.classList.add('active');
   });
   document.getElementById('page-title').textContent = pageTitles[page];
   closeSidebar();
@@ -2133,17 +2132,18 @@ function changeMonth(delta) {
 // ═══════════════════════════════════════════════════════════
 function calcINSS(bruto) {
   if (!configDescontos.inss_ativo) return 0;
+  const teto = 7786.02; // teto do INSS 2024 — acima disso não há contribuição adicional
+  const base = Math.min(bruto, teto);
   const tabela = [
     [1412.00, 0.075], [2666.68, 0.09], [4000.03, 0.12], [7786.02, 0.14]
   ];
   let inss = 0, anterior = 0;
   for (const [limite, aliq] of tabela) {
-    if (bruto <= limite) { inss += (bruto - anterior) * aliq; break; }
+    if (base <= limite) { inss += (base - anterior) * aliq; break; }
     inss += (limite - anterior) * aliq;
     anterior = limite;
-    if (bruto > 7786.02) { inss += (bruto - 7786.02) * 0.14; break; }
   }
-  return Math.min(inss, bruto * 0.14);
+  return inss;
 }
 
 function calcIRRF(brutoLiquidoINSS) {
@@ -2421,7 +2421,7 @@ async function salvarPerfil() {
     salario_base: +document.getElementById('cfg-salario').value || 0,
     carga_horaria_diaria: +document.getElementById('cfg-ch-diaria').value || 7.33,
     carga_horaria_mensal: +document.getElementById('cfg-ch-mensal').value || 220,
-    percentual_he_50: +document.getElementById('cfg-he50').value || 50,
+    percentual_he_50: +document.getElementById('cfg-he50').value || 75,
     percentual_he_100: +document.getElementById('cfg-he100').value || 100,
     horario_entrada: document.getElementById('cfg-entrada').value,
     horario_saida: document.getElementById('cfg-saida').value,
