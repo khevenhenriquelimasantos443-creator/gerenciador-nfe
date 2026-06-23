@@ -1,4 +1,4 @@
-const VERSION = '1.7';
+const VERSION = '1.8';
 const CACHE = 'clockin-v' + VERSION;
 const ASSETS = ['./index.html', './icon.svg', './manifest.json', './'];
 
@@ -18,6 +18,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
+  if (url.origin !== self.location.origin) return; // não interceptar chamadas ao Supabase e outras APIs externas
   const isHTML = e.request.destination === 'document'
     || url.pathname.endsWith('.html')
     || url.pathname.endsWith('/');

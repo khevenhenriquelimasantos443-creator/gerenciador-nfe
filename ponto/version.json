@@ -1,4 +1,4 @@
 {
-  "version": "1.7",
-  "notes": "Reflexo de horas extras no DSR e variáveis manuais (+/-) na Simulação"
+  "version": "1.8",
+  "notes": "Corrige erro 'Load failed' ao salvar: SW não deve interceptar chamadas ao Supabase"
 }
