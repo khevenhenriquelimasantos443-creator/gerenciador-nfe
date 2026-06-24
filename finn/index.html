@@ -161,6 +161,28 @@ body.finn-authed #app{display:block}
 .goal-hist-row .h-date{color:var(--fm)}
 .goal-hist-empty{font-size:11.5px;color:var(--fm);padding:4px 0}
 
+/* ── racha (split de contas) ── */
+.split-item{padding:14px;border:1px solid var(--fb);border-radius:12px;margin-top:10px}
+.split-item:first-child{margin-top:0}
+.split-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.split-name{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700}
+.split-del{background:transparent;border:none;color:var(--fm);font-size:14px;padding:2px 4px}
+.split-del:hover{color:var(--fe)}
+.split-meta{font-size:11.5px;color:var(--fm)}
+.split-parts{margin-top:10px;border-top:1px dashed var(--fb);padding-top:8px;display:flex;flex-direction:column;gap:6px}
+.split-prow-view{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:600}
+.split-pright{display:flex;align-items:center;gap:8px;font-weight:700}
+.split-ptoggle{border:1px solid var(--fb);background:#fff;color:var(--fm);border-radius:8px;padding:4px 9px;font-size:11px;font-weight:700}
+.split-ptoggle.paid{background:#ECFDF5;border-color:var(--fs);color:var(--fs)}
+.split-padd{display:flex;gap:6px;margin-bottom:6px}
+.split-padd input{border:1px solid var(--fb);border-radius:9px;padding:8px 10px;font-size:13px}
+.split-padd input.splitPName{flex:1}
+.split-padd input.splitPValue{flex:0 0 90px}
+.split-prm{background:transparent;border:none;color:var(--fm);font-size:14px;padding:0 4px}
+.split-prm:hover{color:var(--fe)}
+.split-formbtns{display:flex;gap:8px;margin-top:6px}
+.split-formbtns .btn-ghost{margin-top:0}
+
 /* ── IA ── */
 .ai-intro{font-size:13px;color:var(--fm);margin-bottom:14px;line-height:1.5}
 .btn-ai{width:100%;background:linear-gradient(135deg,#F97316,#fb923c);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800}
@@ -194,6 +216,7 @@ body.finn-authed #app{display:block}
     <button class="tab-btn" data-tab="limites">Limites</button>
     <button class="tab-btn" data-tab="metas">Metas</button>
     <button class="tab-btn" data-tab="fixas">Fixas</button>
+    <button class="tab-btn" data-tab="racha">Racha</button>
     <button class="tab-btn" data-tab="ia">IA</button>
   </div>
   <div class="content" id="content"></div>
@@ -290,7 +313,7 @@ function db(table, method, body, query){
     .then(function(t){ return t ? JSON.parse(t) : null; });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], expandedGoal: null, loading: true, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null };
 
 function thisMonth(){
   var n = new Date();
@@ -681,6 +704,156 @@ function renderFixedList(){
   }).join("");
 }
 
+/* ── Racha ── */
+var splitForm = { description: "", category: "Outros", date: new Date().toISOString().slice(0,10), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
+
+function resetSplitForm(){
+  splitForm = { description: "", category: "Outros", date: new Date().toISOString().slice(0,10), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
+}
+
+function renderSplitParticipantRows(){
+  return splitForm.participants.map(function(p, i){
+    return '<div class="split-padd">' +
+      '<input type="text" placeholder="Nome" class="splitPName" data-idx="' + i + '" value="' + escapeHtml(p.name) + '">' +
+      '<input type="number" min="0" step="0.01" placeholder="Valor" class="splitPValue" data-idx="' + i + '" value="' + p.value + '">' +
+      (splitForm.participants.length > 1 ? '<button type="button" class="split-prm" data-rmpart="' + i + '">✕</button>' : '') +
+    '</div>';
+  }).join("");
+}
+
+function renderRacha(){
+  return '' +
+    '<div class="card">' +
+      '<div class="eyebrow">Nova racha</div>' +
+      '<div class="form-row">' +
+        '<label>Descrição</label>' +
+        '<input type="text" id="splitDescription" placeholder="Ex: Aluguel de maio" value="' + escapeHtml(splitForm.description) + '">' +
+      '</div>' +
+      '<div class="filter-row">' +
+        '<div><label>Categoria</label><select id="splitCategory">' + CATEGORIES.map(function(c){
+          return '<option value="' + c + '"' + (c===splitForm.category?" selected":"") + '>' + c + '</option>';
+        }).join("") + '</select></div>' +
+        '<div><label>Data</label><input type="date" id="splitDate" value="' + splitForm.date + '"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Valor total</label>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="splitTotal" placeholder="0,00" value="' + splitForm.total + '"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Participantes</label>' +
+        '<div id="splitParticipantRows">' + renderSplitParticipantRows() + '</div>' +
+        '<div class="split-formbtns">' +
+          '<button type="button" class="btn-ghost" id="btnAddParticipant">+ Participante</button>' +
+          '<button type="button" class="btn-ghost" id="btnSplitEqually">Dividir igualmente</button>' +
+        '</div>' +
+      '</div>' +
+      '<button class="btn-submit" id="btnSaveSplit">Criar racha</button>' +
+    '</div>' +
+    '<div class="card">' +
+      '<div class="eyebrow">Suas rachas</div>' +
+      renderSplitList() +
+    '</div>';
+}
+
+function renderSplitList(){
+  if(!state.splits.length) return '<div class="empty-state">Nenhuma racha ainda.</div>';
+  return state.splits.map(function(s){
+    var parts = state.splitParticipants.filter(function(p){ return p.split_id === s.id; });
+    var pending = parts.filter(function(p){ return !p.paid; }).reduce(function(sum,p){ return sum + Number(p.value); }, 0);
+    return '<div class="split-item">' +
+      '<div class="split-top">' +
+        '<span class="split-name">' + (CAT_ICON[s.category]||"📦") + ' ' + escapeHtml(s.description) + '</span>' +
+        '<button class="split-del" data-delsplit="' + s.id + '">✕</button>' +
+      '</div>' +
+      '<div class="split-meta">' + s.category + ' · ' + formatDate(s.date) + ' · total ' + fmtMoney(Number(s.total_value)) + '</div>' +
+      (pending > 0
+        ? '<div class="split-meta" style="color:var(--fe);font-weight:700;margin-top:2px">Pendente: ' + fmtMoney(pending) + '</div>'
+        : '<div class="split-meta" style="color:var(--fs);font-weight:700;margin-top:2px">Tudo pago ✓</div>') +
+      '<div class="split-parts">' + parts.map(function(p){
+        return '<div class="split-prow-view">' +
+          '<span>' + escapeHtml(p.name) + '</span>' +
+          '<span class="split-pright">' + fmtMoney(Number(p.value)) +
+            '<button class="split-ptoggle' + (p.paid?" paid":"") + '" data-togglepaid="' + p.id + '">' + (p.paid?"Pago ✓":"Pendente") + '</button>' +
+          '</span>' +
+        '</div>';
+      }).join("") + '</div>' +
+    '</div>';
+  }).join("");
+}
+
+function syncSplitForm(){
+  var desc = document.getElementById("splitDescription");
+  var cat = document.getElementById("splitCategory");
+  var date = document.getElementById("splitDate");
+  var total = document.getElementById("splitTotal");
+  if(desc) splitForm.description = desc.value;
+  if(cat) splitForm.category = cat.value;
+  if(date) splitForm.date = date.value;
+  if(total) splitForm.total = total.value;
+  document.querySelectorAll(".splitPName").forEach(function(inp){
+    var i = parseInt(inp.dataset.idx, 10);
+    if(splitForm.participants[i]) splitForm.participants[i].name = inp.value;
+  });
+  document.querySelectorAll(".splitPValue").forEach(function(inp){
+    var i = parseInt(inp.dataset.idx, 10);
+    if(splitForm.participants[i]) splitForm.participants[i].value = inp.value;
+  });
+}
+
+function splitEqually(){
+  var total = parseFloat(splitForm.total) || 0;
+  var n = splitForm.participants.length;
+  if(!total || !n) return;
+  var base = Math.floor(total / n * 100) / 100;
+  var sum = 0;
+  splitForm.participants.forEach(function(p, i){
+    if(i === n - 1){
+      p.value = (total - sum).toFixed(2);
+    } else {
+      p.value = base.toFixed(2);
+      sum += base;
+    }
+  });
+}
+
+function saveSplit(){
+  var total = parseFloat(splitForm.total);
+  var valid = splitForm.participants.filter(function(p){ return p.name && parseFloat(p.value) > 0; });
+  if(!splitForm.description || !total || total <= 0 || !valid.length) return;
+  var payload = {
+    user_id: uid(), description: splitForm.description, category: splitForm.category,
+    total_value: total, date: splitForm.date
+  };
+  db("splits", "POST", payload).then(function(rows){
+    var split = rows && rows[0];
+    if(!split) return;
+    var participantsPayload = valid.map(function(p){
+      return { user_id: uid(), split_id: split.id, name: p.name, value: parseFloat(p.value) };
+    });
+    db("split_participants", "POST", participantsPayload).then(function(prows){
+      state.splits.unshift(split);
+      state.splitParticipants = state.splitParticipants.concat(prows || []);
+      resetSplitForm();
+      render();
+    });
+  });
+}
+
+function toggleParticipantPaid(id){
+  var p = state.splitParticipants.filter(function(x){ return x.id === id; })[0];
+  if(!p) return;
+  p.paid = !p.paid;
+  render();
+  db("split_participants", "PATCH", { paid: p.paid }, { id: "eq." + id, user_id: "eq." + uid() });
+}
+
+function deleteSplit(id){
+  state.splits = state.splits.filter(function(s){ return s.id !== id; });
+  state.splitParticipants = state.splitParticipants.filter(function(p){ return p.split_id !== id; });
+  render();
+  db("splits", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+}
+
 /* ── IA / insights ── */
 function renderIA(){
   var html = '<div class="card">' +
@@ -761,6 +934,7 @@ function render(){
   else if(state.tab === "limites") content.innerHTML = renderLimites();
   else if(state.tab === "metas") content.innerHTML = renderMetas();
   else if(state.tab === "fixas") content.innerHTML = renderFixas();
+  else if(state.tab === "racha") content.innerHTML = renderRacha();
   else content.innerHTML = renderIA();
   bindContentEvents();
 }
@@ -827,6 +1001,35 @@ function bindContentEvents(){
   }
   if(state.tab === "ia"){
     document.getElementById("btnAI").addEventListener("click", callAI);
+  }
+  if(state.tab === "racha"){
+    document.getElementById("btnAddParticipant").addEventListener("click", function(){
+      syncSplitForm();
+      splitForm.participants.push({ name: "", value: "" });
+      render();
+    });
+    document.querySelectorAll("[data-rmpart]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        syncSplitForm();
+        splitForm.participants.splice(parseInt(btn.dataset.rmpart, 10), 1);
+        render();
+      });
+    });
+    document.getElementById("btnSplitEqually").addEventListener("click", function(){
+      syncSplitForm();
+      splitEqually();
+      render();
+    });
+    document.getElementById("btnSaveSplit").addEventListener("click", function(){
+      syncSplitForm();
+      saveSplit();
+    });
+    document.querySelectorAll("[data-delsplit]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteSplit(btn.dataset.delsplit); });
+    });
+    document.querySelectorAll("[data-togglepaid]").forEach(function(btn){
+      btn.addEventListener("click", function(){ toggleParticipantPaid(btn.dataset.togglepaid); });
+    });
   }
   if(state.tab === "fixas"){
     document.querySelectorAll("[data-fixedtype]").forEach(function(btn){
@@ -1034,13 +1237,17 @@ function loadData(){
     db("spending_limits", "GET", null, { user_id: "eq." + uid() }),
     db("goals", "GET", null, { user_id: "eq." + uid() }),
     db("fixed_accounts", "GET", null, { user_id: "eq." + uid() }),
-    db("goal_movements", "GET", null, { user_id: "eq." + uid(), order: "created_at.desc" })
+    db("goal_movements", "GET", null, { user_id: "eq." + uid(), order: "created_at.desc" }),
+    db("splits", "GET", null, { user_id: "eq." + uid(), order: "date.desc" }),
+    db("split_participants", "GET", null, { user_id: "eq." + uid() })
   ]).then(function(res){
     state.txs = res[0] || [];
     state.limits = res[1] || [];
     state.goals = res[2] || [];
     state.fixed = res[3] || [];
     state.goalMovements = res[4] || [];
+    state.splits = res[5] || [];
+    state.splitParticipants = res[6] || [];
     sortTxs();
     state.loading = false;
     render();
