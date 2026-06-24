@@ -331,8 +331,16 @@ function db(table, method, body, query){
   };
   if(method !== "GET") headers.Prefer = "return=representation";
   return fetch(url, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined })
-    .then(function(r){ return r.text(); })
-    .then(function(t){ return t ? JSON.parse(t) : null; });
+    .then(function(r){
+      return r.text().then(function(t){
+        var data = t ? JSON.parse(t) : null;
+        if(!r.ok){
+          var msg = (data && (data.message || data.hint || data.error)) || ("Erro " + r.status);
+          throw new Error(msg);
+        }
+        return data;
+      });
+    });
 }
 
 var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null };
@@ -684,13 +692,13 @@ function parseDelimited(text){
     var rawDesc = hasHeader && idx.description !== -1 ? cols[idx.description] : (cols[1] || "");
     var rawVal = hasHeader && idx.value !== -1 ? cols[idx.value] : cols[cols.length - 1];
     var rawType = hasHeader && idx.type !== -1 ? cols[idx.type] : "";
-    var rawCat = hasHeader && idx.category !== -1 ? cols[idx.category] : "";
+    var rawCat = (hasHeader && idx.category !== -1 ? cols[idx.category] : "") || "";
     var value = parseMoneyStr(rawVal);
     if(value === null || value === 0) return;
     var date = parseDateStr(rawDate) || new Date().toISOString().slice(0,10);
     var type = /receita|income|credito|cr[eé]dito|entrada/i.test(rawType) ? "receita" :
       (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" : (value < 0 ? "despesa" : "receita"));
-    var category = CATEGORIES.indexOf(rawCat.trim ? rawCat.trim() : rawCat) !== -1 ? rawCat.trim() : "Outros";
+    var category = CATEGORIES.indexOf(rawCat.trim()) !== -1 ? rawCat.trim() : "Outros";
     rows.push({ date: date, type: type, category: category, description: (rawDesc||"").trim() || category, value: Math.abs(value), include: true });
   });
   return rows;
@@ -810,11 +818,14 @@ function confirmImport(){
     }
     var batch = chunks.shift();
     return db("transactions", "POST", batch).then(function(rows){
-      if(rows) inserted = inserted.concat(rows);
+      if(Array.isArray(rows)) inserted = inserted.concat(rows);
       return next();
     });
   }
-  next();
+  next().catch(function(err){
+    state.importError = "Não consegui importar (" + (err && err.message ? err.message : "erro desconhecido") + ").";
+    render();
+  });
 }
 
 /* ── Limites ── */
