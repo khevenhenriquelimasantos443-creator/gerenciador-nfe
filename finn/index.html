@@ -546,6 +546,7 @@ function renderLancamentos(){
           CATEGORIES.map(function(c){ return '<option value="' + c + '"' + (c===state.filterCategory?" selected":"") + '>' + c + '</option>'; }).join("") +
         '</select></div>' +
       '</div>' +
+      (state.filterMonth ? '<button type="button" class="btn-ghost" id="btnClearMonthFilter">Ver todos os meses</button>' : '') +
       '<button type="button" class="btn-ghost" id="btnExportCSV">Exportar CSV</button>' +
       renderTxList(filteredTxs()) +
     '</div>';
@@ -801,7 +802,9 @@ function confirmImport(){
       inserted.forEach(function(t){ state.txs.unshift(t); });
       sortTxs();
       state.importPreview = [];
-      state.importDone = inserted.length + " lançamento(s) importado(s) com sucesso.";
+      state.filterMonth = "";
+      state.filterCategory = "all";
+      state.importDone = inserted.length + " lançamento(s) importado(s) com sucesso. Mostrando todos os meses.";
       render();
       return null;
     }
@@ -835,7 +838,7 @@ function renderLimites(){
       '<button class="btn-submit" id="btnSaveLimit">Salvar limite</button>' +
     '</div>' +
     '<div class="card">' +
-      '<div class="eyebrow">Seus limites · ' + state.filterMonth.split("-").reverse().join("/").slice(0,7) + '</div>' +
+      '<div class="eyebrow">Seus limites · ' + thisMonth().split("-").reverse().join("/") + '</div>' +
       renderLimitList() +
     '</div>';
 }
@@ -1242,6 +1245,8 @@ function bindContentEvents(){
     if(cancel) cancel.addEventListener("click", function(){ resetForm(); render(); });
     document.getElementById("filterMonth").addEventListener("change", function(e){ state.filterMonth = e.target.value; render(); });
     document.getElementById("filterCategory").addEventListener("change", function(e){ state.filterCategory = e.target.value; render(); });
+    var btnClearMonthFilter = document.getElementById("btnClearMonthFilter");
+    if(btnClearMonthFilter) btnClearMonthFilter.addEventListener("click", function(){ state.filterMonth = ""; render(); });
     document.getElementById("btnExportCSV").addEventListener("click", exportCSV);
     var importFile = document.getElementById("importFile");
     if(importFile) importFile.addEventListener("change", function(e){
