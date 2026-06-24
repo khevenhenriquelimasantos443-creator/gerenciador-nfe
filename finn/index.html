@@ -343,7 +343,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null };
 
 function thisMonth(){
   var n = new Date();
@@ -1230,6 +1230,13 @@ function render(){
     content.innerHTML = '<div class="empty-state">Carregando…</div>';
     return;
   }
+  if(state.loadError){
+    content.innerHTML = '<div class="card"><div class="ai-error">Não consegui carregar seus dados (' + escapeHtml(state.loadError) + ').</div>' +
+      '<button type="button" class="btn-submit" id="btnRetryLoad" style="margin-top:10px">Tentar de novo</button></div>';
+    var retry = document.getElementById("btnRetryLoad");
+    if(retry) retry.addEventListener("click", function(){ loadData(); });
+    return;
+  }
   if(state.tab === "dashboard") content.innerHTML = renderDashboard();
   else if(state.tab === "lancamentos") content.innerHTML = renderLancamentos();
   else if(state.tab === "limites") content.innerHTML = renderLimites();
@@ -1568,6 +1575,8 @@ function deleteFixed(id){
 
 /* ── data load ── */
 function loadData(){
+  state.loading = true;
+  state.loadError = null;
   return Promise.all([
     db("transactions", "GET", null, { user_id: "eq." + uid(), order: "date.desc,created_at.desc", limit: "1000" }),
     db("spending_limits", "GET", null, { user_id: "eq." + uid() }),
@@ -1586,6 +1595,10 @@ function loadData(){
     state.splitParticipants = res[6] || [];
     sortTxs();
     state.loading = false;
+    render();
+  }).catch(function(err){
+    state.loading = false;
+    state.loadError = (err && err.message) || "Erro desconhecido";
     render();
   });
 }
