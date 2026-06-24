@@ -2125,6 +2125,20 @@ function toggleDarkMode(){
 
 applyTheme();
 
+/* ── remove any leftover service worker from old deploys ──
+   The app no longer registers one; a stale SW from a previous version
+   can keep intercepting fetches (incl. the update-check below) forever. */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    regs.forEach(function(reg){ reg.unregister(); });
+  });
+}
+if (window.caches) {
+  caches.keys().then(function(keys){
+    keys.forEach(function(k){ caches.delete(k); });
+  });
+}
+
 /* ── update banner ── */
 var knownETag = null;
 function checkForUpdate(){
