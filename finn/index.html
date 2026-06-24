@@ -33,6 +33,11 @@ button{cursor:pointer}
 .btn-google{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--fcard);border:1px solid var(--fb);border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;color:var(--fd);transition:background .15s}
 .btn-google:hover{background:#F8FAFC}
 
+/* ── update banner ── */
+.update-banner{display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,#F97316,#fb923c);color:#fff;padding:10px 16px;font-size:13px;font-weight:700;text-align:center}
+.update-banner.show{display:flex}
+.update-banner button{background:#fff;color:#C2410C;border:none;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:800;cursor:pointer}
+
 /* ── app shell ── */
 #app{display:none}
 body.finn-authed #app{display:block}
@@ -213,6 +218,11 @@ body.finn-dark .btn-google:hover{background:#1E293B}
 </style>
 </head>
 <body>
+
+<div class="update-banner" id="updateBanner">
+  <span>🚀 Nova versão do Finn disponível.</span>
+  <button type="button" id="btnUpdateNow">Atualizar agora</button>
+</div>
 
 <div class="login-wrap" id="loginScreen">
   <div class="login-card">
@@ -1821,6 +1831,27 @@ function toggleDarkMode(){
 }
 
 applyTheme();
+
+/* ── update banner ── */
+var knownETag = null;
+function checkForUpdate(){
+  fetch(window.location.pathname, { method: "HEAD", cache: "no-store" }).then(function(r){
+    var et = r.headers.get("ETag");
+    if(!et) return;
+    if(knownETag === null){ knownETag = et; return; }
+    if(et !== knownETag){
+      document.getElementById("updateBanner").classList.add("show");
+    }
+  }).catch(function(){});
+}
+checkForUpdate();
+setInterval(checkForUpdate, 5 * 60 * 1000);
+document.addEventListener("visibilitychange", function(){
+  if(!document.hidden) checkForUpdate();
+});
+document.getElementById("btnUpdateNow").addEventListener("click", function(){
+  window.location.reload();
+});
 
 document.getElementById("btnGoogle").addEventListener("click", Auth.loginGoogle);
 document.getElementById("btnConfigTop").addEventListener("click", function(){
