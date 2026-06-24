@@ -652,6 +652,7 @@ function parseDateStr(s){
   if(m){
     var d = m[1].padStart(2,"0"), mo = m[2].padStart(2,"0"), y = m[3];
     if(y.length === 2) y = "20" + y;
+    if(d === "00" || mo === "00") return null;
     return y + "-" + mo + "-" + d;
   }
   return null;
@@ -693,9 +694,15 @@ function parseDelimited(text){
     var rawVal = hasHeader && idx.value !== -1 ? cols[idx.value] : cols[cols.length - 1];
     var rawType = hasHeader && idx.type !== -1 ? cols[idx.type] : "";
     var rawCat = (hasHeader && idx.category !== -1 ? cols[idx.category] : "") || "";
+    var descTrim = (rawDesc || "").trim();
+    if(/^saldo\b/i.test(descTrim) || /^s\s*a\s*l\s*d\s*o\s*$/i.test(descTrim)) return;
     var value = parseMoneyStr(rawVal);
     if(value === null || value === 0) return;
-    var date = parseDateStr(rawDate) || new Date().toISOString().slice(0,10);
+    var date = parseDateStr(rawDate);
+    if(!date){
+      if(hasHeader && idx.date !== -1) return;
+      date = new Date().toISOString().slice(0,10);
+    }
     var type = /receita|income|credito|cr[eé]dito|entrada/i.test(rawType) ? "receita" :
       (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" : (value < 0 ? "despesa" : "receita"));
     var category = CATEGORIES.indexOf(rawCat.trim()) !== -1 ? rawCat.trim() : "Outros";
@@ -746,6 +753,14 @@ function parsePDF(arrayBuffer){
   });
 }
 
+function decodeText(buffer){
+  var utf8 = new TextDecoder("utf-8").decode(buffer);
+  if((utf8.match(/�/g) || []).length > 0){
+    try { return new TextDecoder("windows-1252").decode(buffer); } catch(e){ return utf8; }
+  }
+  return utf8;
+}
+
 function handleImportFile(file){
   state.importPreview = []; state.importError = null; state.importDone = null; state.importParsing = true;
   render();
@@ -754,7 +769,7 @@ function handleImportFile(file){
   var reader = new FileReader();
   reader.onload = function(e){
     var result;
-    if(ext === "csv" || ext === "txt") result = Promise.resolve(parseDelimited(e.target.result));
+    if(ext === "csv" || ext === "txt") result = Promise.resolve(parseDelimited(decodeText(e.target.result)));
     else if(ext === "xlsx") result = parseXLSX(e.target.result);
     else if(ext === "pdf") result = parsePDF(e.target.result);
     else result = Promise.reject(new Error("Formato não suportado"));
@@ -778,8 +793,7 @@ function handleImportFile(file){
     state.importError = "Falha ao ler o arquivo.";
     render();
   };
-  if(ext === "xlsx" || ext === "pdf") reader.readAsArrayBuffer(file);
-  else reader.readAsText(file, "utf-8");
+  reader.readAsArrayBuffer(file);
 }
 
 function updateImportSummary(){
