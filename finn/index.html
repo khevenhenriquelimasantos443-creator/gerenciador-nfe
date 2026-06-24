@@ -230,6 +230,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
   <div class="topbar">
     <div class="brand">Finn<span>.</span></div>
     <div style="display:flex;gap:8px">
+      <button class="btn-logout" id="btnConfigTop" title="Configurações">⚙️</button>
       <button class="btn-logout" id="btnLogout">Sair</button>
     </div>
   </div>
@@ -241,7 +242,6 @@ body.finn-dark .btn-google:hover{background:#1E293B}
     <button class="tab-btn" data-tab="fixas">Fixas</button>
     <button class="tab-btn" data-tab="racha">Racha</button>
     <button class="tab-btn" data-tab="ia">IA</button>
-    <button class="tab-btn" data-tab="config">Config</button>
   </div>
   <div class="content" id="content"></div>
 </div>
@@ -1823,6 +1823,10 @@ function toggleDarkMode(){
 applyTheme();
 
 document.getElementById("btnGoogle").addEventListener("click", Auth.loginGoogle);
+document.getElementById("btnConfigTop").addEventListener("click", function(){
+  state.tab = "config";
+  render();
+});
 document.getElementById("btnLogout").addEventListener("click", function(){
   Auth.logout(currentSession.access_token).then(function(){
     currentSession = null;
