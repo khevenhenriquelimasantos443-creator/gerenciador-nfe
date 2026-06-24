@@ -168,6 +168,9 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .goal-del:hover{color:var(--fe)}
 .goal-vals{font-size:11.5px;color:var(--fm);margin-bottom:6px}
 .goal-vals b{color:var(--fd)}
+.goal-invest-tip{font-size:11.5px;line-height:1.5;color:var(--fm);background:rgba(99,102,241,.08);border:1px solid var(--fb);border-radius:9px;padding:8px 10px;margin-bottom:8px}
+.goal-invest-tip .git-lbl{font-weight:800;color:var(--fd)}
+.goal-invest-tip .git-where{display:block;margin-top:2px}
 .goal-addrow{display:flex;gap:6px;margin-top:10px}
 .goal-addrow input{flex:1;border:1px solid var(--fb);border-radius:9px;padding:8px 10px;font-size:13px}
 .goal-addrow button{border:none;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700;white-space:nowrap}
@@ -1265,7 +1268,47 @@ function renderMetas(){
     '<div class="card">' +
       '<div class="eyebrow">Suas metas</div>' +
       renderGoalList() +
+    '</div>' +
+    '<div class="card">' +
+      '<div class="eyebrow">Como investir o que você guarda</div>' +
+      '<div class="reco-list">' +
+        '<div class="reco-item"><span class="reco-ic">🏦</span><span>Abra uma conta gratuita em um banco digital ou corretora (Nubank, Banco Inter, C6 Bank, XP) — não cobram taxa de manutenção.</span></div>' +
+        '<div class="reco-item"><span class="reco-ic">💧</span><span>Para reserva de emergência e metas de curto prazo, use Tesouro Selic ou CDB com liquidez diária — rende mais que poupança e pode ser resgatado quando quiser.</span></div>' +
+        '<div class="reco-item"><span class="reco-ic">📈</span><span>Para metas de médio e longo prazo, prefira CDB/LCI/LCA acima de 100% do CDI ou Tesouro IPCA+ para proteger o dinheiro da inflação.</span></div>' +
+        '<div class="reco-item"><span class="reco-ic">🔍</span><span>Compare sempre a rentabilidade líquida (já descontado o Imposto de Renda) antes de escolher onde aplicar — LCI/LCA são isentas de IR.</span></div>' +
+        '<div class="reco-item"><span class="reco-ic">⚠️</span><span>Taxas e rendimentos mudam com o tempo — confira as condições atuais no app do banco ou corretora antes de investir.</span></div>' +
+      '</div>' +
     '</div>';
+}
+
+function investSuggestion(g){
+  var months = null;
+  if(g.deadline){
+    var days = daysBetween(new Date().toISOString().slice(0,10), g.deadline);
+    months = days / 30;
+  }
+  if(months !== null && months <= 6){
+    return { label: "Curto prazo", tipo: "renda fixa com liquidez diária",
+      onde: "Tesouro Selic ou CDB com liquidez diária", bancos: "Nubank, Banco Inter, C6 Bank, PicPay" };
+  }
+  if(months !== null && months <= 24){
+    return { label: "Médio prazo", tipo: "CDB, LCI ou LCA pós-fixado (% do CDI)",
+      onde: "LCI/LCA rendem isentas de Imposto de Renda", bancos: "Banco Inter, C6 Bank, XP, BTG Pactual digital" };
+  }
+  if(months !== null && months > 24){
+    return { label: "Longo prazo", tipo: "Tesouro IPCA+ ou CDB de longo prazo",
+      onde: "protege o dinheiro da inflação ao longo dos anos", bancos: "Tesouro Direto, XP, Rico, Clear, NuInvest" };
+  }
+  return { label: "Sem prazo definido", tipo: "renda fixa com liquidez diária, até você decidir um prazo",
+    onde: "Tesouro Selic ou CDB com liquidez diária", bancos: "Nubank, Banco Inter, C6 Bank" };
+}
+
+function renderGoalInvestTip(g){
+  var s = investSuggestion(g);
+  return '<div class="goal-invest-tip">' +
+    '<span class="git-lbl">💡 ' + s.label + '</span> · ' + escapeHtml(s.tipo) +
+    '<span class="git-where">' + escapeHtml(s.onde) + ' · ' + escapeHtml(s.bancos) + '</span>' +
+  '</div>';
 }
 
 function renderGoalList(){
@@ -1280,6 +1323,7 @@ function renderGoalList(){
       '<div class="goal-vals"><b>' + fmtMoney(Number(g.saved)) + '</b> de ' + fmtMoney(Number(g.target)) + ' · ' + pct + '%' +
         (g.deadline ? ' · até ' + formatDate(g.deadline) : '') + '</div>' +
       '<div class="bar"><i style="width:' + Math.max(3,pct) + '%"></i></div>' +
+      renderGoalInvestTip(g) +
       '<div class="goal-addrow">' +
         '<input type="number" min="0" step="0.01" placeholder="Valor R$" id="addGoal_' + g.id + '">' +
         '<button class="g-add" data-addgoal="' + g.id + '">+ Guardar</button>' +
