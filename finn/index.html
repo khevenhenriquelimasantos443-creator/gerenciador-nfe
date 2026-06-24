@@ -2187,10 +2187,17 @@ applyTheme();
 
 /* ── remove any leftover service worker from old deploys ──
    The app no longer registers one; a stale SW from a previous version
-   can keep intercepting fetches (incl. the update-check below) forever. */
+   can keep intercepting fetches (incl. the update-check below) forever.
+   If one is actively controlling THIS load, a single guarded reload is
+   needed for the unregister to actually take effect on a clean page. */
 if ("serviceWorker" in navigator) {
+  var wasSwControlled = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.getRegistrations().then(function(regs){
     regs.forEach(function(reg){ reg.unregister(); });
+    if (wasSwControlled && !sessionStorage.getItem("finn_sw_cleanup_done")) {
+      sessionStorage.setItem("finn_sw_cleanup_done", "1");
+      window.location.reload();
+    }
   });
 }
 if (window.caches) {
@@ -2216,6 +2223,11 @@ setInterval(checkForUpdate, 5 * 60 * 1000);
 document.addEventListener("visibilitychange", function(){
   if(!document.hidden) checkForUpdate();
 });
+
+// teste manual: abra a URL do app com ?testbanner=1 no final para forçar o banner
+if (new URLSearchParams(window.location.search).get("testbanner") === "1") {
+  document.getElementById("updateBanner").classList.add("show");
+}
 document.getElementById("btnUpdateNow").addEventListener("click", function(){
   window.location.reload();
 });
