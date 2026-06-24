@@ -163,6 +163,8 @@ body.finn-authed #app{display:block}
 .goal-hist-empty{font-size:11.5px;color:var(--fm);padding:4px 0}
 
 /* ── importar arquivo ── */
+.cat-pill{display:inline-flex;align-items:center;gap:4px;background:var(--fpl);color:var(--fd);font-size:12px;font-weight:600;padding:5px 9px;border-radius:999px}
+.cat-pill .cat-del{background:none;border:none;color:var(--fm);font-size:14px;line-height:1;cursor:pointer;padding:0 0 0 2px}
 .import-summary{font-size:12px;font-weight:700;color:var(--fm);margin:10px 0 6px}
 .import-list{max-height:340px;overflow-y:auto;border:1px solid var(--fb);border-radius:10px;padding:6px}
 .import-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:6px 2px;border-bottom:1px dashed var(--fb)}
@@ -228,7 +230,6 @@ body.finn-dark .btn-google:hover{background:#1E293B}
   <div class="topbar">
     <div class="brand">Finn<span>.</span></div>
     <div style="display:flex;gap:8px">
-      <button class="btn-logout" id="btnDarkToggle">🌙</button>
       <button class="btn-logout" id="btnLogout">Sair</button>
     </div>
   </div>
@@ -240,6 +241,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
     <button class="tab-btn" data-tab="fixas">Fixas</button>
     <button class="tab-btn" data-tab="racha">Racha</button>
     <button class="tab-btn" data-tab="ia">IA</button>
+    <button class="tab-btn" data-tab="config">Config</button>
   </div>
   <div class="content" id="content"></div>
 </div>
@@ -256,10 +258,32 @@ var CATEGORIES = ["Alimentação","Transporte","Moradia","Saúde","Educação","
 var CAT_ICON = {"Alimentação":"🍔","Transporte":"🚗","Moradia":"🏠","Saúde":"💊","Educação":"📚","Lazer":"🎬","Salário":"💰","Investimento":"📈","Outros":"📦"};
 var EXPENSE_CATS = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Outros"];
 
+function allCategories(){
+  var names = state.customCategories.map(function(c){ return c.name; });
+  return CATEGORIES.slice(0, -1).concat(names, ["Outros"]);
+}
+
+function allExpenseCats(){
+  var names = state.customCategories.map(function(c){ return c.name; });
+  return EXPENSE_CATS.slice(0, -1).concat(names, ["Outros"]);
+}
+
 var Auth = {
   loginGoogle: function(){
     var redirect = encodeURIComponent(window.location.origin + window.location.pathname);
     window.location.href = SUPA_URL + "/auth/v1/authorize?provider=google&redirect_to=" + redirect;
+  },
+  updateName: function(token, name){
+    return fetch(SUPA_URL + "/auth/v1/user", {
+      method: "PUT",
+      headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": "application/json" },
+      body: JSON.stringify({ data: { full_name: name } })
+    }).then(function(r){
+      return r.json().then(function(j){
+        if(!r.ok) throw new Error((j && j.msg) || "Erro " + r.status);
+        return j;
+      });
+    });
   },
   logout: function(token){
     return fetch(SUPA_URL + "/auth/v1/logout", {
@@ -343,7 +367,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null };
 
 function thisMonth(){
   var n = new Date();
@@ -529,7 +553,7 @@ function renderLancamentos(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Categoria</label>' +
-        '<select id="fCategory">' + CATEGORIES.map(function(c){
+        '<select id="fCategory">' + allCategories().map(function(c){
           return '<option value="' + c + '"' + (c===formState.category?" selected":"") + '>' + c + '</option>';
         }).join("") + '</select>' +
       '</div>' +
@@ -551,7 +575,7 @@ function renderLancamentos(){
         '<div><label>Mês</label><input type="month" id="filterMonth" value="' + state.filterMonth + '"></div>' +
         '<div><label>Categoria</label><select id="filterCategory">' +
           '<option value="all"' + (state.filterCategory==="all"?" selected":"") + '>Todas</option>' +
-          CATEGORIES.map(function(c){ return '<option value="' + c + '"' + (c===state.filterCategory?" selected":"") + '>' + c + '</option>'; }).join("") +
+          allCategories().map(function(c){ return '<option value="' + c + '"' + (c===state.filterCategory?" selected":"") + '>' + c + '</option>'; }).join("") +
         '</select></div>' +
       '</div>' +
       (state.filterMonth ? '<button type="button" class="btn-ghost" id="btnClearMonthFilter">Ver todos os meses</button>' : '') +
@@ -560,8 +584,7 @@ function renderLancamentos(){
     '</div>';
 }
 
-function exportCSV(){
-  var rows = filteredTxs();
+function downloadCSV(rows, filename){
   var header = "Data,Tipo,Categoria,Descrição,Valor";
   var lines = rows.map(function(t){
     var desc = '"' + String(t.description || "").replace(/"/g, '""') + '"';
@@ -572,11 +595,19 @@ function exportCSV(){
   var url = URL.createObjectURL(blob);
   var a = document.createElement("a");
   a.href = url;
-  a.download = "finn-lancamentos-" + (state.filterMonth || "todos") + ".csv";
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+function exportCSV(){
+  downloadCSV(filteredTxs(), "finn-lancamentos-" + (state.filterMonth || "todos") + ".csv");
+}
+
+function exportAllCSV(){
+  downloadCSV(state.txs, "finn-todos-lancamentos.csv");
 }
 
 /* ── Importar arquivo (CSV/TXT/XLSX/PDF) ── */
@@ -600,7 +631,7 @@ function renderImportCard(){
           '<option value="despesa"' + (r.type==="despesa"?" selected":"") + '>Despesa</option>' +
           '<option value="receita"' + (r.type==="receita"?" selected":"") + '>Receita</option>' +
         '</select>' +
-        '<select class="impCat" data-impidx="' + i + '">' + CATEGORIES.map(function(c){
+        '<select class="impCat" data-impidx="' + i + '">' + allCategories().map(function(c){
           return '<option value="' + c + '"' + (c===r.category?" selected":"") + '>' + c + '</option>';
         }).join("") + '</select>' +
         '<input type="text" class="impDesc" data-impidx="' + i + '" value="' + escapeHtml(r.description) + '">' +
@@ -730,7 +761,7 @@ function parseDelimited(text){
       .replace(/^\d{6,}\s*/, "")
       .trim();
     var finalDesc = detailClean || descTrim;
-    var category = CATEGORIES.indexOf(rawCat.trim()) !== -1 ? rawCat.trim() : (guessCategory(descTrim + " " + detailClean) || "Outros");
+    var category = allCategories().indexOf(rawCat.trim()) !== -1 ? rawCat.trim() : (guessCategory(descTrim + " " + detailClean) || "Outros");
     rows.push({ date: date, type: type, category: category, description: finalDesc || category, value: Math.abs(value), include: true });
   });
   return rows;
@@ -836,7 +867,7 @@ function confirmImport(){
     var value = parseFloat(r.value);
     return {
       user_id: uid(), type: r.type === "receita" ? "receita" : "despesa",
-      category: CATEGORIES.indexOf(r.category) !== -1 ? r.category : "Outros",
+      category: allCategories().indexOf(r.category) !== -1 ? r.category : "Outros",
       description: r.description || "Importado", value: isNaN(value) ? 0 : Math.abs(value),
       date: r.date || new Date().toISOString().slice(0,10)
     };
@@ -872,7 +903,7 @@ function confirmImport(){
 var limitForm = { category: "Alimentação", value: "" };
 
 function renderLimites(){
-  var avail = EXPENSE_CATS;
+  var avail = allExpenseCats();
   return '' +
     '<div class="card">' +
       '<div class="eyebrow">Definir limite mensal</div>' +
@@ -1005,7 +1036,7 @@ function renderFixas(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Categoria</label>' +
-        '<select id="fixedCategory">' + CATEGORIES.map(function(c){
+        '<select id="fixedCategory">' + allCategories().map(function(c){
           return '<option value="' + c + '"' + (c===fixedForm.category?" selected":"") + '>' + c + '</option>';
         }).join("") + '</select>' +
       '</div>' +
@@ -1071,7 +1102,7 @@ function renderRacha(){
         '<input type="text" id="splitDescription" placeholder="Ex: Aluguel de maio" value="' + escapeHtml(splitForm.description) + '">' +
       '</div>' +
       '<div class="filter-row">' +
-        '<div><label>Categoria</label><select id="splitCategory">' + CATEGORIES.map(function(c){
+        '<div><label>Categoria</label><select id="splitCategory">' + allCategories().map(function(c){
           return '<option value="' + c + '"' + (c===splitForm.category?" selected":"") + '>' + c + '</option>';
         }).join("") + '</select></div>' +
         '<div><label>Data</label><input type="date" id="splitDate" value="' + splitForm.date + '"></div>' +
@@ -1260,6 +1291,112 @@ function callAI(){
     });
 }
 
+/* ── Configurações ── */
+function renderConfig(){
+  var user = currentSession && currentSession.user;
+  var email = user ? user.email : "";
+  var meta = (user && user.user_metadata) || {};
+  var currentName = meta.full_name || meta.name || "";
+  var dark = localStorage.getItem("finn_dark_mode") === "1";
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Conta</div>' +
+    '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
+    '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
+    '<button type="button" class="btn-submit" id="btnSaveName">Salvar nome</button>' +
+    (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
+    '<button type="button" class="btn-ghost" id="btnDarkToggle" style="margin-top:14px;width:100%">' + (dark ? "☀️ Modo claro" : "🌙 Modo escuro") + '</button>' +
+    '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
+  '</div>';
+
+  html += '<div class="card">' +
+    '<div class="eyebrow">Categorias</div>' +
+    '<div class="import-summary" style="margin-top:0">Padrão</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+      CATEGORIES.map(function(c){ return '<span class="cat-pill">' + (CAT_ICON[c]||"📦") + ' ' + c + '</span>'; }).join("") +
+    '</div>' +
+    (state.customCategories.length ?
+      '<div class="import-summary">Suas categorias</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+      state.customCategories.map(function(c){
+        return '<span class="cat-pill">🏷️ ' + escapeHtml(c.name) + '<button type="button" class="cat-del" data-catid="' + c.id + '">×</button></span>';
+      }).join("") + '</div>' : '') +
+    '<div class="form-row"><label>Nova categoria</label><input type="text" id="cfgNewCat" placeholder="Ex.: Pets"></div>' +
+    '<button type="button" class="btn-submit" id="btnAddCategory">Adicionar categoria</button>' +
+  '</div>';
+
+  html += '<div class="card">' +
+    '<div class="eyebrow">Dados</div>' +
+    '<button type="button" class="btn-ghost" id="btnExportAll" style="width:100%">Exportar todos os lançamentos (CSV)</button>' +
+    '<div class="card alert-card" style="margin-top:16px">' +
+      '<div style="font-weight:700;font-size:13px;margin-bottom:6px">Zona de risco</div>' +
+      '<div style="font-size:12px;color:var(--fm);margin-bottom:10px">Apaga lançamentos, limites, metas, contas fixas, rachas e categorias personalizadas. Não é possível desfazer.</div>' +
+      '<button type="button" class="btn-logout" id="btnDeleteAll" style="width:100%;border-color:var(--fe);color:var(--fe)">Apagar todos os meus dados</button>' +
+    '</div>' +
+  '</div>';
+
+  return html;
+}
+
+function saveProfileName(){
+  var input = document.getElementById("cfgName");
+  var name = (input ? input.value : "").trim();
+  if(!name) return;
+  Auth.updateName(currentSession.access_token, name).then(function(user){
+    if(user && user.id){
+      currentSession.user = user;
+      var stored = JSON.parse(localStorage.getItem(SESSION_KEY) || "{}");
+      stored.user = user;
+      localStorage.setItem(SESSION_KEY, JSON.stringify(stored));
+    }
+    state.configMsg = "Nome atualizado.";
+    render();
+  }).catch(function(){
+    state.configMsg = "Não consegui atualizar o nome agora.";
+    render();
+  });
+}
+
+function addCustomCategory(){
+  var input = document.getElementById("cfgNewCat");
+  var name = (input ? input.value : "").trim();
+  if(!name) return;
+  if(allCategories().some(function(c){ return c.toLowerCase() === name.toLowerCase(); })){
+    state.configMsg = "Essa categoria já existe.";
+    render();
+    return;
+  }
+  db("categories", "POST", { user_id: uid(), name: name }).then(function(rows){
+    if(rows && rows[0]) state.customCategories.push(rows[0]);
+    state.configMsg = null;
+    render();
+  }).catch(function(err){
+    state.configMsg = "Não consegui adicionar (" + (err && err.message ? err.message : "erro") + ").";
+    render();
+  });
+}
+
+function deleteCustomCategory(id){
+  state.customCategories = state.customCategories.filter(function(c){ return c.id !== id; });
+  render();
+  db("categories", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(){});
+}
+
+function deleteAllData(){
+  if(!window.confirm("Isso vai apagar TODOS os seus lançamentos, limites, metas, contas fixas, rachas e categorias. Essa ação não pode ser desfeita. Continuar?")) return;
+  if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
+  var tables = ["transactions", "spending_limits", "goals", "fixed_accounts", "splits", "categories"];
+  Promise.all(tables.map(function(t){
+    return db(t, "DELETE", null, { user_id: "eq." + uid() });
+  })).then(function(){
+    return Auth.logout(currentSession.access_token);
+  }).then(function(){
+    currentSession = null;
+    showLogin();
+  }).catch(function(err){
+    state.configMsg = "Não consegui apagar tudo (" + (err && err.message ? err.message : "erro") + "). Tenta de novo.";
+    render();
+  });
+}
+
 /* ── render dispatch ── */
 function render(){
   document.querySelectorAll(".tab-btn").forEach(function(btn){
@@ -1283,7 +1420,8 @@ function render(){
   else if(state.tab === "metas") content.innerHTML = renderMetas();
   else if(state.tab === "fixas") content.innerHTML = renderFixas();
   else if(state.tab === "racha") content.innerHTML = renderRacha();
-  else content.innerHTML = renderIA();
+  else if(state.tab === "ia") content.innerHTML = renderIA();
+  else content.innerHTML = renderConfig();
   bindContentEvents();
 }
 
@@ -1435,6 +1573,19 @@ function bindContentEvents(){
     document.querySelectorAll("[data-delfixed]").forEach(function(btn){
       btn.addEventListener("click", function(){ deleteFixed(btn.dataset.delfixed); });
     });
+  }
+  if(state.tab === "config"){
+    document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
+    document.getElementById("btnDarkToggle").addEventListener("click", toggleDarkMode);
+    document.getElementById("btnLogoutConfig").addEventListener("click", function(){
+      document.getElementById("btnLogout").click();
+    });
+    document.getElementById("btnAddCategory").addEventListener("click", addCustomCategory);
+    document.querySelectorAll(".cat-del").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteCustomCategory(btn.dataset.catid); });
+    });
+    document.getElementById("btnExportAll").addEventListener("click", exportAllCSV);
+    document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
   }
   document.querySelectorAll("[data-edit]").forEach(function(btn){
     btn.addEventListener("click", function(){ startEdit(btn.dataset.edit); });
@@ -1624,7 +1775,8 @@ function loadData(){
     db("fixed_accounts", "GET", null, { user_id: "eq." + uid() }),
     db("goal_movements", "GET", null, { user_id: "eq." + uid(), order: "created_at.desc" }),
     db("splits", "GET", null, { user_id: "eq." + uid(), order: "date.desc" }),
-    db("split_participants", "GET", null, { user_id: "eq." + uid() })
+    db("split_participants", "GET", null, { user_id: "eq." + uid() }),
+    db("categories", "GET", null, { user_id: "eq." + uid(), order: "name.asc" })
   ]).then(function(res){
     state.txs = res[0] || [];
     state.limits = res[1] || [];
@@ -1633,6 +1785,7 @@ function loadData(){
     state.goalMovements = res[4] || [];
     state.splits = res[5] || [];
     state.splitParticipants = res[6] || [];
+    state.customCategories = res[7] || [];
     sortTxs();
     state.loading = false;
     render();
@@ -1658,15 +1811,16 @@ function applyTheme(){
   var dark = localStorage.getItem("finn_dark_mode") === "1";
   document.body.classList.toggle("finn-dark", dark);
   var btn = document.getElementById("btnDarkToggle");
-  if(btn) btn.textContent = dark ? "☀️" : "🌙";
+  if(btn) btn.textContent = dark ? "☀️ Modo claro" : "🌙 Modo escuro";
 }
 
-applyTheme();
-document.getElementById("btnDarkToggle").addEventListener("click", function(){
+function toggleDarkMode(){
   var dark = localStorage.getItem("finn_dark_mode") === "1";
   localStorage.setItem("finn_dark_mode", dark ? "0" : "1");
   applyTheme();
-});
+}
+
+applyTheme();
 
 document.getElementById("btnGoogle").addEventListener("click", Auth.loginGoogle);
 document.getElementById("btnLogout").addEventListener("click", function(){
