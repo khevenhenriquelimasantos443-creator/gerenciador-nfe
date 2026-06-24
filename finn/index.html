@@ -670,6 +670,24 @@ function splitDelimLine(l, delim){
   return out;
 }
 
+var CATEGORY_KEYWORDS = [
+  ["Alimentação", /supermerc|mercado|mercadinho|padaria|panifica|ifood|ifd\*|restaurante|lanchonete|lanches|a[cç]a[ií]|pizza|hambur|burguer|cantina|emp[oó]rio|caf[eé]|\bp[aã]o\b/i],
+  ["Transporte", /\buber\b|99app|99\*|t[aá]xi|\bposto\b|combust[ií]vel|gasolina|estacionamento|metr[oô]|[oô]nibus|trip help/i],
+  ["Moradia", /aluguel|condom[ií]nio|\benergia\b|\bluz\b|\b[aá]gua\b|sabesp|\benel\b|cemig|\blight\b|copel|\binternet\b|\bclaro\b|\btim\b|\bvivo\b|\boi\b/i],
+  ["Saúde", /farm[aá]cia|drogaria|\braia\b|hospital|cl[ií]nica|laborat[oó]rio|unimed|dentista|seguro de vida/i],
+  ["Educação", /\bescola\b|faculdade|\bcurso\b|livraria|mensalidade/i],
+  ["Lazer", /cinema|ingresso|shopping|spotify|netflix|steam|drinks|balada|boate|viagem|\bhotel\b/i],
+  ["Investimento", /rende f[aá]cil|tesouro direto|\bcdb\b|fundo de investim|aplica[cç][aã]o/i],
+  ["Salário", /sal[aá]rio|folha de pagamento|holerite/i]
+];
+
+function guessCategory(desc){
+  for(var i = 0; i < CATEGORY_KEYWORDS.length; i++){
+    if(CATEGORY_KEYWORDS[i][1].test(desc)) return CATEGORY_KEYWORDS[i][0];
+  }
+  return null;
+}
+
 function parseDelimited(text){
   var lines = text.split(/\r?\n/).filter(function(l){ return l.trim().length; });
   if(!lines.length) return [];
@@ -681,6 +699,7 @@ function parseDelimited(text){
     type: header.findIndex(function(h){ return /tipo|type/.test(h); }),
     category: header.findIndex(function(h){ return /categ/.test(h); }),
     description: header.findIndex(function(h){ return /descri|desc|hist/.test(h); }),
+    detail: header.findIndex(function(h){ return /detal|observ/.test(h); }),
     value: header.findIndex(function(h){ return /valor|value|montante|amount/.test(h); })
   };
   var hasHeader = idx.date !== -1 || idx.value !== -1;
@@ -694,6 +713,7 @@ function parseDelimited(text){
     var rawVal = hasHeader && idx.value !== -1 ? cols[idx.value] : cols[cols.length - 1];
     var rawType = hasHeader && idx.type !== -1 ? cols[idx.type] : "";
     var rawCat = (hasHeader && idx.category !== -1 ? cols[idx.category] : "") || "";
+    var rawDetail = hasHeader && idx.detail !== -1 ? cols[idx.detail] : "";
     var descTrim = (rawDesc || "").trim();
     if(/^saldo\b/i.test(descTrim) || /^s\s*a\s*l\s*d\s*o\s*$/i.test(descTrim)) return;
     var value = parseMoneyStr(rawVal);
@@ -705,8 +725,13 @@ function parseDelimited(text){
     }
     var type = /receita|income|credito|cr[eé]dito|entrada/i.test(rawType) ? "receita" :
       (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" : (value < 0 ? "despesa" : "receita"));
-    var category = CATEGORIES.indexOf(rawCat.trim()) !== -1 ? rawCat.trim() : "Outros";
-    rows.push({ date: date, type: type, category: category, description: (rawDesc||"").trim() || category, value: Math.abs(value), include: true });
+    var detailClean = (rawDetail || "").trim()
+      .replace(/^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}\s*/, "")
+      .replace(/^\d{6,}\s*/, "")
+      .trim();
+    var finalDesc = detailClean || descTrim;
+    var category = CATEGORIES.indexOf(rawCat.trim()) !== -1 ? rawCat.trim() : (guessCategory(descTrim + " " + detailClean) || "Outros");
+    rows.push({ date: date, type: type, category: category, description: finalDesc || category, value: Math.abs(value), include: true });
   });
   return rows;
 }
@@ -728,7 +753,8 @@ function parseStatementText(text){
     var date = parseDateStr(m[1]);
     var value = parseMoneyStr(m[3]);
     if(date && value !== null && value !== 0){
-      rows.push({ date: date, type: value < 0 ? "despesa" : "receita", category: "Outros", description: m[2].trim().slice(0,80) || "Importado", value: Math.abs(value), include: true });
+      var desc = m[2].trim().slice(0,80) || "Importado";
+      rows.push({ date: date, type: value < 0 ? "despesa" : "receita", category: guessCategory(desc) || "Outros", description: desc, value: Math.abs(value), include: true });
     }
   }
   return rows;
