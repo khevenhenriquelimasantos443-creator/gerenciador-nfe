@@ -37,7 +37,7 @@ button{cursor:pointer}
 #app{display:none}
 body.finn-authed #app{display:block}
 .topbar{position:sticky;top:0;z-index:50;background:var(--ftopbar);backdrop-filter:blur(10px);border-bottom:1px solid var(--fb);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
-.brand{font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--fdk)}
+.brand{font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--fd)}
 .brand span{color:var(--fp)}
 .btn-logout{background:transparent;border:1px solid var(--fb);border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--fm)}
 .btn-logout:hover{border-color:#CBD5E1;color:var(--fd)}
@@ -161,6 +161,18 @@ body.finn-authed #app{display:block}
 .goal-hist-row{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;padding:3px 0}
 .goal-hist-row .h-date{color:var(--fm)}
 .goal-hist-empty{font-size:11.5px;color:var(--fm);padding:4px 0}
+
+/* ── importar arquivo ── */
+.import-summary{font-size:12px;font-weight:700;color:var(--fm);margin:10px 0 6px}
+.import-list{max-height:340px;overflow-y:auto;border:1px solid var(--fb);border-radius:10px;padding:6px}
+.import-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:6px 2px;border-bottom:1px dashed var(--fb)}
+.import-row:last-child{border-bottom:none}
+.import-row select,.import-row input[type=text],.import-row input[type=date],.import-row input[type=number]{border:1px solid var(--fb);border-radius:7px;padding:4px 6px;font-size:11px;background:var(--fcard);color:var(--fd)}
+.import-row input[type=text]{flex:1 1 110px;min-width:90px}
+.import-row input[type=date]{flex:0 0 100px}
+.import-row input[type=number]{flex:0 0 80px}
+.import-row select{flex:0 0 84px}
+.import-row input[type=checkbox]{flex:0 0 auto}
 
 /* ── racha (split de contas) ── */
 .split-item{padding:14px;border:1px solid var(--fb);border-radius:12px;margin-top:10px}
@@ -323,7 +335,7 @@ function db(table, method, body, query){
     .then(function(t){ return t ? JSON.parse(t) : null; });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], expandedGoal: null, loading: true, filterMonth: thisMonth(), filterCategory: "all", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null };
 
 function thisMonth(){
   var n = new Date();
@@ -524,6 +536,7 @@ function renderLancamentos(){
       '<button class="btn-submit" id="btnAddTx">' + (editing ? "Salvar alterações" : "Adicionar") + '</button>' +
       (editing ? '<button class="btn-ghost" id="btnCancelEdit">Cancelar</button>' : '') +
     '</div>' +
+    renderImportCard() +
     '<div class="card">' +
       '<div class="eyebrow">Lançamentos</div>' +
       '<div class="filter-row">' +
@@ -555,6 +568,250 @@ function exportCSV(){
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+/* ── Importar arquivo (CSV/TXT/XLSX/PDF) ── */
+function renderImportCard(){
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Importar arquivo</div>' +
+    '<div class="form-row">' +
+      '<label>CSV, TXT, XLSX ou PDF</label>' +
+      '<input type="file" id="importFile" accept=".csv,.txt,.xlsx,.pdf">' +
+    '</div>';
+  if(state.importParsing) html += '<div class="empty-state">Lendo arquivo…</div>';
+  if(state.importError) html += '<div class="ai-error">' + escapeHtml(state.importError) + '</div>';
+  if(state.importDone) html += '<div class="ai-result" style="margin:0">' + escapeHtml(state.importDone) + '</div>';
+  if(state.importPreview.length){
+    var n = state.importPreview.filter(function(r){ return r.include; }).length;
+    html += '<div class="import-summary">' + n + ' de ' + state.importPreview.length + ' selecionados</div>';
+    html += '<div class="import-list">' + state.importPreview.map(function(r, i){
+      return '<div class="import-row">' +
+        '<input type="checkbox" class="impCheck" data-impidx="' + i + '"' + (r.include?" checked":"") + '>' +
+        '<select class="impType" data-impidx="' + i + '">' +
+          '<option value="despesa"' + (r.type==="despesa"?" selected":"") + '>Despesa</option>' +
+          '<option value="receita"' + (r.type==="receita"?" selected":"") + '>Receita</option>' +
+        '</select>' +
+        '<select class="impCat" data-impidx="' + i + '">' + CATEGORIES.map(function(c){
+          return '<option value="' + c + '"' + (c===r.category?" selected":"") + '>' + c + '</option>';
+        }).join("") + '</select>' +
+        '<input type="text" class="impDesc" data-impidx="' + i + '" value="' + escapeHtml(r.description) + '">' +
+        '<input type="date" class="impDate" data-impidx="' + i + '" value="' + r.date + '">' +
+        '<input type="number" step="0.01" class="impVal" data-impidx="' + i + '" value="' + r.value + '">' +
+      '</div>';
+    }).join("") + '</div>' +
+    '<button class="btn-submit" id="btnConfirmImport" style="margin-top:10px">Importar selecionados</button>' +
+    '<button class="btn-ghost" id="btnCancelImport">Cancelar</button>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function loadScript(src){
+  return new Promise(function(resolve, reject){
+    if(document.querySelector('script[src="' + src + '"]')) return resolve();
+    var s = document.createElement("script");
+    s.src = src;
+    s.onload = function(){ resolve(); };
+    s.onerror = function(){ reject(new Error("Falha ao carregar biblioteca")); };
+    document.head.appendChild(s);
+  });
+}
+
+function parseMoneyStr(s){
+  if(s == null) return null;
+  s = String(s).trim();
+  if(!s) return null;
+  var neg = /^-|\(.*\)$/.test(s);
+  s = s.replace(/[^\d,.\-]/g, "");
+  if(!s) return null;
+  if(s.indexOf(",") !== -1 && s.indexOf(".") !== -1){
+    s = s.lastIndexOf(",") > s.lastIndexOf(".") ? s.replace(/\./g, "").replace(",", ".") : s.replace(/,/g, "");
+  } else if(s.indexOf(",") !== -1){
+    s = s.replace(/\./g, "").replace(",", ".");
+  }
+  var n = parseFloat(s);
+  if(isNaN(n)) return null;
+  return neg && n > 0 ? -n : n;
+}
+
+function parseDateStr(s){
+  if(!s) return null;
+  s = String(s).trim();
+  var m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(m) return m[1] + "-" + m[2] + "-" + m[3];
+  m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+  if(m){
+    var d = m[1].padStart(2,"0"), mo = m[2].padStart(2,"0"), y = m[3];
+    if(y.length === 2) y = "20" + y;
+    return y + "-" + mo + "-" + d;
+  }
+  return null;
+}
+
+function splitDelimLine(l, delim){
+  var out = [], cur = "", inQ = false;
+  for(var i = 0; i < l.length; i++){
+    var c = l[i];
+    if(c === '"'){ inQ = !inQ; continue; }
+    if(c === delim && !inQ){ out.push(cur); cur = ""; continue; }
+    cur += c;
+  }
+  out.push(cur);
+  return out;
+}
+
+function parseDelimited(text){
+  var lines = text.split(/\r?\n/).filter(function(l){ return l.trim().length; });
+  if(!lines.length) return [];
+  var delim = lines[0].split(";").length >= lines[0].split(",").length ?
+    (lines[0].indexOf(";") !== -1 ? ";" : (lines[0].indexOf("\t") !== -1 ? "\t" : ",")) : ",";
+  var header = splitDelimLine(lines[0], delim).map(function(h){ return h.trim().toLowerCase(); });
+  var idx = {
+    date: header.findIndex(function(h){ return /data|date/.test(h); }),
+    type: header.findIndex(function(h){ return /tipo|type/.test(h); }),
+    category: header.findIndex(function(h){ return /categ/.test(h); }),
+    description: header.findIndex(function(h){ return /descri|desc|hist/.test(h); }),
+    value: header.findIndex(function(h){ return /valor|value|montante|amount/.test(h); })
+  };
+  var hasHeader = idx.date !== -1 || idx.value !== -1;
+  var dataLines = hasHeader ? lines.slice(1) : lines;
+  var rows = [];
+  dataLines.forEach(function(l){
+    var cols = splitDelimLine(l, delim);
+    if(!cols.length || cols.every(function(c){ return !c.trim(); })) return;
+    var rawDate = hasHeader && idx.date !== -1 ? cols[idx.date] : cols[0];
+    var rawDesc = hasHeader && idx.description !== -1 ? cols[idx.description] : (cols[1] || "");
+    var rawVal = hasHeader && idx.value !== -1 ? cols[idx.value] : cols[cols.length - 1];
+    var rawType = hasHeader && idx.type !== -1 ? cols[idx.type] : "";
+    var rawCat = hasHeader && idx.category !== -1 ? cols[idx.category] : "";
+    var value = parseMoneyStr(rawVal);
+    if(value === null || value === 0) return;
+    var date = parseDateStr(rawDate) || new Date().toISOString().slice(0,10);
+    var type = /receita|income|credito|cr[eé]dito|entrada/i.test(rawType) ? "receita" :
+      (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" : (value < 0 ? "despesa" : "receita"));
+    var category = CATEGORIES.indexOf(rawCat.trim ? rawCat.trim() : rawCat) !== -1 ? rawCat.trim() : "Outros";
+    rows.push({ date: date, type: type, category: category, description: (rawDesc||"").trim() || category, value: Math.abs(value), include: true });
+  });
+  return rows;
+}
+
+function parseXLSX(arrayBuffer){
+  return loadScript("https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js").then(function(){
+    var wb = XLSX.read(arrayBuffer, { type: "array" });
+    var sheet = wb.Sheets[wb.SheetNames[0]];
+    var csv = XLSX.utils.sheet_to_csv(sheet);
+    return parseDelimited(csv);
+  });
+}
+
+function parseStatementText(text){
+  var rows = [];
+  var re = /(\d{2}\/\d{2}\/\d{4}|\d{4}-\d{2}-\d{2})\s+([^\n]{3,80}?)\s+(-?R?\$?\s?-?\d{1,3}(?:\.\d{3})*,\d{2}|-?\d+\.\d{2})(?=\s|$)/g;
+  var m;
+  while((m = re.exec(text))){
+    var date = parseDateStr(m[1]);
+    var value = parseMoneyStr(m[3]);
+    if(date && value !== null && value !== 0){
+      rows.push({ date: date, type: value < 0 ? "despesa" : "receita", category: "Outros", description: m[2].trim().slice(0,80) || "Importado", value: Math.abs(value), include: true });
+    }
+  }
+  return rows;
+}
+
+function parsePDF(arrayBuffer){
+  return loadScript("https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js").then(function(){
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+    return window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  }).then(function(pdf){
+    var pagePromises = [];
+    for(var i = 1; i <= pdf.numPages; i++){
+      pagePromises.push(pdf.getPage(i).then(function(page){
+        return page.getTextContent().then(function(tc){
+          return tc.items.map(function(it){ return it.str; }).join(" ");
+        });
+      }));
+    }
+    return Promise.all(pagePromises);
+  }).then(function(pageTexts){
+    return parseStatementText(pageTexts.join("\n"));
+  });
+}
+
+function handleImportFile(file){
+  state.importPreview = []; state.importError = null; state.importDone = null; state.importParsing = true;
+  render();
+  var name = file.name.toLowerCase();
+  var ext = name.slice(name.lastIndexOf(".") + 1);
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var result;
+    if(ext === "csv" || ext === "txt") result = Promise.resolve(parseDelimited(e.target.result));
+    else if(ext === "xlsx") result = parseXLSX(e.target.result);
+    else if(ext === "pdf") result = parsePDF(e.target.result);
+    else result = Promise.reject(new Error("Formato não suportado"));
+    result.then(function(rows){
+      state.importParsing = false;
+      if(!rows.length){
+        state.importError = "Não encontrei lançamentos nesse arquivo. Confere o conteúdo ou tenta outro formato.";
+        render();
+        return;
+      }
+      state.importPreview = rows;
+      render();
+    }).catch(function(err){
+      state.importParsing = false;
+      state.importError = "Não consegui ler esse arquivo (" + (err && err.message ? err.message : "erro desconhecido") + ").";
+      render();
+    });
+  };
+  reader.onerror = function(){
+    state.importParsing = false;
+    state.importError = "Falha ao ler o arquivo.";
+    render();
+  };
+  if(ext === "xlsx" || ext === "pdf") reader.readAsArrayBuffer(file);
+  else reader.readAsText(file, "utf-8");
+}
+
+function updateImportSummary(){
+  var el = document.querySelector(".import-summary");
+  if(!el) return;
+  var n = state.importPreview.filter(function(r){ return r.include; }).length;
+  el.textContent = n + " de " + state.importPreview.length + " selecionados";
+}
+
+function confirmImport(){
+  var selected = state.importPreview.filter(function(r){ return r.include; });
+  if(!selected.length) return;
+  var payloads = selected.map(function(r){
+    var value = parseFloat(r.value);
+    return {
+      user_id: uid(), type: r.type === "receita" ? "receita" : "despesa",
+      category: CATEGORIES.indexOf(r.category) !== -1 ? r.category : "Outros",
+      description: r.description || "Importado", value: isNaN(value) ? 0 : Math.abs(value),
+      date: r.date || new Date().toISOString().slice(0,10)
+    };
+  }).filter(function(p){ return p.value > 0; });
+  if(!payloads.length) return;
+  var chunks = [];
+  for(var i = 0; i < payloads.length; i += 200) chunks.push(payloads.slice(i, i + 200));
+  var inserted = [];
+  function next(){
+    if(!chunks.length){
+      inserted.forEach(function(t){ state.txs.unshift(t); });
+      sortTxs();
+      state.importPreview = [];
+      state.importDone = inserted.length + " lançamento(s) importado(s) com sucesso.";
+      render();
+      return null;
+    }
+    var batch = chunks.shift();
+    return db("transactions", "POST", batch).then(function(rows){
+      if(rows) inserted = inserted.concat(rows);
+      return next();
+    });
+  }
+  next();
 }
 
 /* ── Limites ── */
@@ -986,6 +1243,38 @@ function bindContentEvents(){
     document.getElementById("filterMonth").addEventListener("change", function(e){ state.filterMonth = e.target.value; render(); });
     document.getElementById("filterCategory").addEventListener("change", function(e){ state.filterCategory = e.target.value; render(); });
     document.getElementById("btnExportCSV").addEventListener("click", exportCSV);
+    var importFile = document.getElementById("importFile");
+    if(importFile) importFile.addEventListener("change", function(e){
+      var file = e.target.files[0];
+      if(file) handleImportFile(file);
+    });
+    document.querySelectorAll(".impCheck").forEach(function(cb){
+      cb.addEventListener("change", function(){
+        state.importPreview[parseInt(cb.dataset.impidx, 10)].include = cb.checked;
+        updateImportSummary();
+      });
+    });
+    document.querySelectorAll(".impType").forEach(function(sel){
+      sel.addEventListener("change", function(){ state.importPreview[parseInt(sel.dataset.impidx, 10)].type = sel.value; });
+    });
+    document.querySelectorAll(".impCat").forEach(function(sel){
+      sel.addEventListener("change", function(){ state.importPreview[parseInt(sel.dataset.impidx, 10)].category = sel.value; });
+    });
+    document.querySelectorAll(".impDesc").forEach(function(inp){
+      inp.addEventListener("change", function(){ state.importPreview[parseInt(inp.dataset.impidx, 10)].description = inp.value; });
+    });
+    document.querySelectorAll(".impDate").forEach(function(inp){
+      inp.addEventListener("change", function(){ state.importPreview[parseInt(inp.dataset.impidx, 10)].date = inp.value; });
+    });
+    document.querySelectorAll(".impVal").forEach(function(inp){
+      inp.addEventListener("change", function(){ state.importPreview[parseInt(inp.dataset.impidx, 10)].value = inp.value; });
+    });
+    var btnConfirmImport = document.getElementById("btnConfirmImport");
+    if(btnConfirmImport) btnConfirmImport.addEventListener("click", confirmImport);
+    var btnCancelImport = document.getElementById("btnCancelImport");
+    if(btnCancelImport) btnCancelImport.addEventListener("click", function(){
+      state.importPreview = []; state.importError = null; state.importDone = null; render();
+    });
   }
   if(state.tab === "limites"){
     document.getElementById("btnSaveLimit").addEventListener("click", function(){
