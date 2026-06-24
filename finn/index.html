@@ -47,10 +47,13 @@ body.finn-authed #app{display:block}
 .btn-logout{background:transparent;border:1px solid var(--fb);border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--fm)}
 .btn-logout:hover{border-color:#CBD5E1;color:var(--fd)}
 
-.tabs{display:flex;gap:4px;padding:12px 14px 0;max-width:560px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tabs::-webkit-scrollbar{display:none}
-.tab-btn{flex:1 0 auto;white-space:nowrap;background:transparent;border:none;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:700;color:var(--fm)}
-.tab-btn.active{background:var(--fdk);color:#fff}
+.hamburger-btn{background:transparent;border:1px solid var(--fb);border-radius:10px;width:34px;height:34px;font-size:15px;line-height:1;color:var(--fm);display:flex;align-items:center;justify-content:center}
+.hamburger-btn:hover{border-color:#CBD5E1;color:var(--fd)}
+
+.nav-menu{display:none;position:absolute;top:54px;left:20px;z-index:60;flex-direction:column;gap:2px;background:var(--fcard);border:1px solid var(--fb);border-radius:12px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.nav-menu.open{display:flex}
+.nav-menu .tab-btn{flex:none;width:100%;text-align:left;white-space:nowrap;background:transparent;border:none;border-radius:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--fm)}
+.nav-menu .tab-btn.active{background:var(--fdk);color:#fff}
 
 .content{max-width:560px;margin:0 auto;padding:18px 20px 60px}
 
@@ -277,13 +280,16 @@ body.finn-dark .btn-google:hover{background:#1E293B}
 
 <div id="app">
   <div class="topbar">
-    <div class="brand">Finn<span>.</span></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="hamburger-btn" id="btnMenu" aria-label="Menu">☰</button>
+      <div class="brand">Finn<span>.</span></div>
+    </div>
     <div style="display:flex;gap:8px">
       <button class="btn-logout" id="btnConfigTop" title="Configurações">⚙️</button>
       <button class="btn-logout" id="btnLogout">Sair</button>
     </div>
   </div>
-  <div class="tabs">
+  <div class="nav-menu" id="navMenu">
     <button class="tab-btn" data-tab="dashboard">Dashboard</button>
     <button class="tab-btn" data-tab="analises">Análises</button>
     <button class="tab-btn" data-tab="lancamentos">Lançamentos</button>
@@ -2155,7 +2161,18 @@ document.querySelectorAll(".tab-btn").forEach(function(btn){
   btn.addEventListener("click", function(){
     state.tab = btn.dataset.tab;
     render();
+    document.getElementById("navMenu").classList.remove("open");
   });
+});
+document.getElementById("btnMenu").addEventListener("click", function(e){
+  e.stopPropagation();
+  document.getElementById("navMenu").classList.toggle("open");
+});
+document.addEventListener("click", function(e){
+  var navMenu = document.getElementById("navMenu");
+  if(!navMenu.classList.contains("open")) return;
+  if(navMenu.contains(e.target) || e.target === document.getElementById("btnMenu")) return;
+  navMenu.classList.remove("open");
 });
 
 Auth.initSession().then(function(session){
