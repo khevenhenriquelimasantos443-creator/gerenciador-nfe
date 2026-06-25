@@ -370,6 +370,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
 var SUPA_URL = "https://zblkznobqcztvznycyyo.supabase.co";
 var SUPA_KEY = "sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb";
 var SESSION_KEY = "finn_supa_session";
+var VAPID_PUBLIC_KEY = "BPPw0CSqGjNQCdILq-CvNkBkMR6cDs0TqDCh9vThrMYQZ1OGLaUYIsZI-SQmG_KUrzxDOtlZHwTnKaS-ZUojB7E";
 
 var CATEGORIES = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Salário","Investimento","Outros"];
 var CAT_ICON = {"Alimentação":"🍔","Transporte":"🚗","Moradia":"🏠","Saúde":"💊","Educação":"📚","Lazer":"🎬","Salário":"💰","Investimento":"📈","Outros":"📦"};
@@ -486,7 +487,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, expandedAnalysisCat: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null };
 
 function thisMonth(){
   var n = new Date();
@@ -782,6 +783,8 @@ function renderBalanceEvolution(txs){
       '<path d="' + linePath + '" fill="none" stroke="' + color + '" stroke-width="2.5"></path>' +
     '</svg>' +
     '<div style="text-align:center;font-size:12px;color:var(--fm);margin-top:6px">Saldo acumulado final: <strong style="color:' + color + '">' + fmtMoney(last) + '</strong></div>' +
+    anaCardToggle("evolution") +
+    anaCardBody("evolution", function(){ return renderBalanceDetailRows(txs); }) +
   '</div>';
 }
 
@@ -806,6 +809,8 @@ function renderTxBuckets(txs){
         '<div class="daybar-lbl">' + lbl + '</div>' +
       '</div>';
     }).join("") + '</div>' +
+    anaCardToggle("buckets") +
+    anaCardBody("buckets", function(){ return renderBucketsDetailRows(txs); }) +
   '</div>';
 }
 
@@ -850,6 +855,82 @@ function buildRecommendations(stats){
   return recos;
 }
 
+function anaCardToggle(key){
+  var open = state.expandedAnalysisCard === key;
+  return '<button type="button" class="goal-hist-toggle" data-anacard="' + key + '">' + (open ? "ocultar detalhes" : "ver detalhes") + '</button>';
+}
+
+function anaCardToggleLabel(key, label){
+  return '<button type="button" class="goal-hist-toggle" data-anacard="' + key + '">' + label + '</button>';
+}
+
+function anaCardBody(key, builder){
+  if(state.expandedAnalysisCard !== key) return "";
+  return '<div class="goal-hist">' + builder() + '</div>';
+}
+
+function renderDailyBreakdownRows(txs){
+  var byDate = {};
+  txs.forEach(function(t){
+    var d = t.date || "—";
+    if(!byDate[d]) byDate[d] = { r: 0, d: 0 };
+    if(t.type === "receita") byDate[d].r += Number(t.value); else byDate[d].d += Number(t.value);
+  });
+  var dates = Object.keys(byDate).sort().reverse();
+  return dates.map(function(d){
+    var v = byDate[d];
+    var saldoDia = v.r - v.d;
+    return '<div class="goal-hist-row"><span class="h-date">' + formatDate(d) + ' · entrada ' + fmtMoney(v.r) + ' · saída ' + fmtMoney(v.d) + '</span>' +
+      '<span style="font-weight:800;color:' + (saldoDia>=0?"var(--fs)":"var(--fe)") + '">' + (saldoDia>=0?"+":"−") + " " + fmtMoney(Math.abs(saldoDia)) + '</span></div>';
+  }).join("");
+}
+
+function renderHealthDetailRows(stats){
+  return '' +
+    '<div class="goal-hist-row"><span class="h-date">Gasto médio por dia</span><span style="font-weight:800">' + fmtMoney(stats.avgDespesaDia) + '</span></div>' +
+    '<div class="goal-hist-row"><span class="h-date">Entrada média por dia</span><span style="font-weight:800">' + fmtMoney(stats.avgReceitaDia) + '</span></div>' +
+    '<div class="goal-hist-row"><span class="h-date">Relação saída/entrada</span><span style="font-weight:800">' + (stats.razao === null ? "—" : stats.razao.toFixed(2) + "x") + '</span></div>' +
+    stats.despesaCats.slice(0, 3).map(function(c){
+      return '<div class="goal-hist-row"><span class="h-date">' + (CAT_ICON[c.cat]||"📦") + ' ' + c.cat + '</span><span style="font-weight:800;color:var(--fe)">' + fmtMoney(c.val) + ' · ' + c.pct.toFixed(0) + '%</span></div>';
+    }).join("");
+}
+
+function renderBalanceDetailRows(txs){
+  var byDate = {};
+  txs.forEach(function(t){
+    var delta = t.type === "receita" ? Number(t.value) : -Number(t.value);
+    byDate[t.date] = (byDate[t.date] || 0) + delta;
+  });
+  var dates = Object.keys(byDate).sort();
+  var running = 0;
+  var rows = dates.map(function(d){
+    running += byDate[d];
+    return { d: d, delta: byDate[d], running: running };
+  });
+  return rows.slice().reverse().map(function(r){
+    return '<div class="goal-hist-row"><span class="h-date">' + formatDate(r.d) + ' · ' + (r.delta>=0?"+":"−") + " " + fmtMoney(Math.abs(r.delta)) + '</span>' +
+      '<span style="font-weight:800;color:' + (r.running>=0?"var(--fs)":"var(--fe)") + '">saldo ' + fmtMoney(r.running) + '</span></div>';
+  }).join("");
+}
+
+function renderBucketsDetailRows(txs){
+  var dates = txs.map(function(t){ return t.date; }).filter(Boolean).sort();
+  var span = daysBetween(dates[0], dates[dates.length-1]) + 1;
+  var unit = span > 45 ? "month" : "day";
+  var counts = {}, totals = {};
+  txs.forEach(function(t){
+    var key = unit === "day" ? t.date : (t.date || "").slice(0,7);
+    counts[key] = (counts[key] || 0) + 1;
+    totals[key] = (totals[key] || 0) + Number(t.value);
+  });
+  var keys = Object.keys(counts).sort().reverse();
+  return keys.map(function(k){
+    var lbl = unit === "day" ? formatDate(k) : k.split("-").reverse().join("/");
+    return '<div class="goal-hist-row"><span class="h-date">' + lbl + ' · ' + counts[k] + ' lançamento(s)</span>' +
+      '<span style="font-weight:800">' + fmtMoney(totals[k]) + '</span></div>';
+  }).join("");
+}
+
 function renderAnalises(){
   var txs = analysisTxs();
   var periodHtml = '<div class="an-period">' + ANALYSIS_PERIODS.map(function(p){
@@ -878,10 +959,12 @@ function renderAnalises(){
 
   var despesaCats = breakdownByCat(despesas);
   var receitaCats = breakdownByCat(receitas);
-  var topDespesas = despesas.slice().sort(function(a,b){ return Number(b.value) - Number(a.value); }).slice(0, 5);
-  var topReceitas = receitas.slice().sort(function(a,b){ return Number(b.value) - Number(a.value); }).slice(0, 5);
+  var despesasSorted = despesas.slice().sort(function(a,b){ return Number(b.value) - Number(a.value); });
+  var receitasSorted = receitas.slice().sort(function(a,b){ return Number(b.value) - Number(a.value); });
+  var topDespesas = despesasSorted.slice(0, 5);
+  var topReceitas = receitasSorted.slice(0, 5);
 
-  var stats = { saldo: saldo, totalReceita: totalReceita, totalDespesa: totalDespesa, jurosTotal: jurosTotal, topDespesaCat: despesaCats[0] };
+  var stats = { saldo: saldo, totalReceita: totalReceita, totalDespesa: totalDespesa, jurosTotal: jurosTotal, topDespesaCat: despesaCats[0], avgDespesaDia: avgDespesaDia, avgReceitaDia: avgReceitaDia, razao: razao, despesaCats: despesaCats };
   var recos = buildRecommendations(stats);
 
   var healthClass = saldo < 0 ? "bad" : (totalDespesa > totalReceita * 0.85 ? "warn" : "good");
@@ -898,6 +981,8 @@ function renderAnalises(){
       '<div class="total-box"><div class="lbl">Entrada média/dia</div><div class="val">' + fmtMoney(avgReceitaDia) + '</div></div>' +
       '<div class="total-box"><div class="lbl">Saída/Entrada</div><div class="val">' + (razao === null ? "—" : razao.toFixed(2) + "x") + '</div></div>' +
     '</div>' +
+    anaCardToggle("totals") +
+    anaCardBody("totals", function(){ return renderDailyBreakdownRows(txs); }) +
   '</div>';
 
   html += '<div class="health-card ' + healthClass + '">' +
@@ -906,6 +991,8 @@ function renderAnalises(){
     '<div class="health-row"><span>' + (totalDespesa>totalReceita?"🔴":"🟢") + '</span><span>Despesas ' + (totalDespesa>totalReceita?"superam":"abaixo de") + ' as receitas</span></div>' +
     (jurosTotal > 0 ? '<div class="health-row"><span>💸</span><span>Pagou ' + fmtMoney(jurosTotal) + ' em juros/IOF</span></div>' : '') +
     (despesaCats[0] ? '<div class="health-row"><span>📊</span><span>Maior gasto: ' + despesaCats[0].cat + ' (' + despesaCats[0].pct.toFixed(0) + '%)</span></div>' : '') +
+    anaCardToggle("health") +
+    anaCardBody("health", function(){ return renderHealthDetailRows(stats); }) +
   '</div>';
 
   html += '<div class="card"><div class="eyebrow">Distribuição de despesas</div>' + renderDonut(despesaCats, despesas, "despesa") + '</div>';
@@ -915,8 +1002,18 @@ function renderAnalises(){
   html += renderBalanceEvolution(txs);
   html += renderTxBuckets(txs);
 
-  if(topDespesas.length) html += '<div class="card"><div class="eyebrow">Maiores saídas</div>' + renderTopTxList(topDespesas, "var(--fe)") + '</div>';
-  if(topReceitas.length) html += '<div class="card"><div class="eyebrow">Maiores entradas</div>' + renderTopTxList(topReceitas, "var(--fs)") + '</div>';
+  if(topDespesas.length){
+    var topDespesasOpen = state.expandedAnalysisCard === "topdespesas";
+    html += '<div class="card"><div class="eyebrow">Maiores saídas</div>' + renderTopTxList(topDespesasOpen ? despesasSorted : topDespesas, "var(--fe)") +
+      (despesasSorted.length > 5 ? anaCardToggleLabel("topdespesas", topDespesasOpen ? "ver top 5" : "ver todas (" + despesasSorted.length + ")") : "") +
+    '</div>';
+  }
+  if(topReceitas.length){
+    var topReceitasOpen = state.expandedAnalysisCard === "topreceitas";
+    html += '<div class="card"><div class="eyebrow">Maiores entradas</div>' + renderTopTxList(topReceitasOpen ? receitasSorted : topReceitas, "var(--fs)") +
+      (receitasSorted.length > 5 ? anaCardToggleLabel("topreceitas", topReceitasOpen ? "ver top 5" : "ver todas (" + receitasSorted.length + ")") : "") +
+    '</div>';
+  }
 
   html += '<div class="card"><div class="eyebrow">Recomendações</div><div class="reco-list">' +
     recos.map(function(r){ return '<div class="reco-item"><span class="reco-ic">' + r.ic + '</span><span>' + r.text + '</span></div>'; }).join("") +
@@ -1794,6 +1891,13 @@ function renderConfig(){
   '</div>';
 
   html += '<div class="card">' +
+    '<div class="eyebrow">Notificações</div>' +
+    '<div style="font-size:12px;color:var(--fm);margin-bottom:10px">Receba um aviso quando uma conta fixa estiver perto de vencer.</div>' +
+    '<button type="button" class="btn-submit" id="btnEnablePush">🔔 Ativar notificações de contas fixas</button>' +
+    (state.pushStatus ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.pushStatus) + '</div>' : '') +
+  '</div>';
+
+  html += '<div class="card">' +
     '<div class="eyebrow">Dados</div>' +
     '<button type="button" class="btn-ghost" id="btnExportAll" style="width:100%">Exportar todos os lançamentos (CSV)</button>' +
     '<div class="card alert-card" style="margin-top:16px">' +
@@ -1920,6 +2024,13 @@ function bindContentEvents(){
       el.addEventListener("click", function(){
         var key = el.dataset.anacat;
         state.expandedAnalysisCat = state.expandedAnalysisCat === key ? null : key;
+        render();
+      });
+    });
+    document.querySelectorAll("[data-anacard]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var key = btn.dataset.anacard;
+        state.expandedAnalysisCard = state.expandedAnalysisCard === key ? null : key;
         render();
       });
     });
@@ -2089,6 +2200,7 @@ function bindContentEvents(){
       btn.addEventListener("click", function(){ deleteCustomCategory(btn.dataset.catid); });
     });
     document.getElementById("btnExportAll").addEventListener("click", exportAllCSV);
+    document.getElementById("btnEnablePush").addEventListener("click", enablePushNotifications);
     document.getElementById("btnDeleteAllTx").addEventListener("click", deleteAllTransactions);
     document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
   }
@@ -2331,15 +2443,16 @@ function toggleDarkMode(){
 
 applyTheme();
 
-/* ── remove any leftover service worker from old deploys ──
-   The app no longer registers one; a stale SW from a previous version
-   can keep intercepting fetches (incl. the update-check below) forever.
-   If one is actively controlling THIS load, a single guarded reload is
-   needed for the unregister to actually take effect on a clean page. */
-if ("serviceWorker" in navigator) {
+/* ── one-time purge of leftover service workers from old deploys ──
+   A stale SW from a previous version could keep intercepting fetches
+   (incl. the update-check below) forever. This now runs only once per
+   browser (gated by localStorage) so a SW registered afterwards for
+   push notifications isn't immediately killed on the next page load. */
+if ("serviceWorker" in navigator && !localStorage.getItem("finn_sw_purge_v1")) {
   var wasSwControlled = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.getRegistrations().then(function(regs){
     regs.forEach(function(reg){ reg.unregister(); });
+    localStorage.setItem("finn_sw_purge_v1", "1");
     if (wasSwControlled && !sessionStorage.getItem("finn_sw_cleanup_done")) {
       sessionStorage.setItem("finn_sw_cleanup_done", "1");
       window.location.reload();
@@ -2349,6 +2462,63 @@ if ("serviceWorker" in navigator) {
 if (window.caches) {
   caches.keys().then(function(keys){
     keys.forEach(function(k){ caches.delete(k); });
+  });
+}
+
+/* ── push notifications ── */
+function urlBase64ToUint8Array(base64String){
+  var padding = "=".repeat((4 - base64String.length % 4) % 4);
+  var base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  var rawData = atob(base64);
+  var out = new Uint8Array(rawData.length);
+  for(var i = 0; i < rawData.length; i++) out[i] = rawData.charCodeAt(i);
+  return out;
+}
+
+function arrayBufferToBase64Url(buffer){
+  var bytes = new Uint8Array(buffer);
+  var bin = "";
+  for(var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function enablePushNotifications(){
+  if(!("serviceWorker" in navigator) || !("PushManager" in window)){
+    state.pushStatus = "Seu navegador não suporta notificações push.";
+    render();
+    return;
+  }
+  state.pushStatus = "Ativando…";
+  render();
+  navigator.serviceWorker.register("/sw.js").then(function(reg){
+    return Notification.requestPermission().then(function(perm){
+      if(perm !== "granted") throw new Error("Permissão de notificações negada.");
+      return reg.pushManager.getSubscription().then(function(existing){
+        return existing || reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+      });
+    });
+  }).then(function(sub){
+    return fetch("/push/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        endpoint: sub.endpoint,
+        keys: {
+          p256dh: arrayBufferToBase64Url(sub.getKey("p256dh")),
+          auth: arrayBufferToBase64Url(sub.getKey("auth"))
+        },
+        access_token: currentSession && currentSession.access_token
+      })
+    });
+  }).then(function(r){ return r.json(); }).then(function(j){
+    state.pushStatus = (j && j.ok) ? "Notificações ativadas! Você vai receber avisos de contas fixas vencendo." : "Não foi possível ativar agora. Tente de novo.";
+    render();
+  }).catch(function(err){
+    state.pushStatus = "Erro: " + err.message;
+    render();
   });
 }
 

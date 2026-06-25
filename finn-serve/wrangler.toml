@@ -5,3 +5,22 @@ compatibility_date = "2024-01-01"
 [vars]
 # Secrets are set via Cloudflare dashboard (encrypted):
 # PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET
+# VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, SUPABASE_SERVICE_KEY
+
+# ─────────────────────────────────────────────
+#  Notificações push de contas fixas — roda 1x/dia às 12:00 UTC (09:00 BRT)
+# ─────────────────────────────────────────────
+[triggers]
+crons = ["0 12 * * *"]
+
+# ─────────────────────────────────────────────
+#  KV Namespace (armazena as inscrições de push)
+#  Como criar:
+#    1. dash.cloudflare.com → Workers & Pages → KV
+#    2. "Create namespace", nome: finn-push-kv
+#    3. Copie o "Namespace ID" e cole abaixo
+#  (se você já tem um namespace FINN_KV de outro worker, pode reusar o mesmo ID)
+# ─────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "FINN_KV"
+id = "COLE_AQUI_O_ID_DO_KV_NAMESPACE"

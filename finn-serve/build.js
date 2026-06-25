@@ -124,7 +124,142 @@ async function _pluggyTx(request, env) {
 }
 `;
 
+// ── Web Push (RFC 8030/8291) — VAPID + aes128gcm, sem libs externas ─────────
+const SUPA_URL_SERVER = 'https://zblkznobqcztvznycyyo.supabase.co';
+const SUPA_ANON_KEY_SERVER = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
+
+const pushFns = `
+function _b64urlEncode(buf) {
+  var bin = '';
+  for (var i = 0; i < buf.length; i++) bin += String.fromCharCode(buf[i]);
+  return btoa(bin).replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, '');
+}
+
+function _b64urlDecode(str) {
+  var s = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  var bin = atob(s);
+  var buf = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+  return buf;
+}
+
+function _concatBytes(arrs) {
+  var len = 0;
+  for (var i = 0; i < arrs.length; i++) len += arrs[i].length;
+  var out = new Uint8Array(len);
+  var off = 0;
+  for (var i = 0; i < arrs.length; i++) { out.set(arrs[i], off); off += arrs[i].length; }
+  return out;
+}
+
+async function _hkdf(salt, ikm, info, len) {
+  var key = await crypto.subtle.importKey('raw', ikm, 'HKDF', false, ['deriveBits']);
+  var bits = await crypto.subtle.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt: salt, info: info }, key, len * 8);
+  return new Uint8Array(bits);
+}
+
+async function _vapidJWT(audience, env) {
+  var header = { typ: 'JWT', alg: 'ES256' };
+  var payload = { aud: audience, exp: Math.floor(Date.now() / 1000) + 12 * 3600, sub: 'mailto:Finn.controle01@gmail.com' };
+  var enc = new TextEncoder();
+  var headerB64 = _b64urlEncode(enc.encode(JSON.stringify(header)));
+  var payloadB64 = _b64urlEncode(enc.encode(JSON.stringify(payload)));
+  var unsigned = headerB64 + '.' + payloadB64;
+  var pubRaw = _b64urlDecode(env.VAPID_PUBLIC_KEY);
+  var x = pubRaw.slice(1, 33), y = pubRaw.slice(33, 65);
+  var d = _b64urlDecode(env.VAPID_PRIVATE_KEY);
+  var jwk = { kty: 'EC', crv: 'P-256', x: _b64urlEncode(x), y: _b64urlEncode(y), d: _b64urlEncode(d), ext: true };
+  var key = await crypto.subtle.importKey('jwk', jwk, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
+  var sig = await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, key, enc.encode(unsigned));
+  return unsigned + '.' + _b64urlEncode(new Uint8Array(sig));
+}
+
+async function _encryptPush(payloadStr, p256dhB64, authB64, env) {
+  var enc = new TextEncoder();
+  var plaintext = enc.encode(payloadStr);
+  var userPublicRaw = _b64urlDecode(p256dhB64);
+  var authSecret = _b64urlDecode(authB64);
+
+  var serverKeyPair = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+  var serverPublicRaw = new Uint8Array(await crypto.subtle.exportKey('raw', serverKeyPair.publicKey));
+  var userPublicKey = await crypto.subtle.importKey('raw', userPublicRaw, { name: 'ECDH', namedCurve: 'P-256' }, [], []);
+  var sharedSecret = new Uint8Array(await crypto.subtle.deriveBits({ name: 'ECDH', public: userPublicKey }, serverKeyPair.privateKey, 256));
+
+  var prkInfo = _concatBytes([enc.encode('WebPush: info\\0'), userPublicRaw, serverPublicRaw]);
+  var prk = await _hkdf(authSecret, sharedSecret, prkInfo, 32);
+
+  var salt = crypto.getRandomValues(new Uint8Array(16));
+  var cek = await _hkdf(salt, prk, enc.encode('Content-Encoding: aes128gcm\\0'), 16);
+  var nonce = await _hkdf(salt, prk, enc.encode('Content-Encoding: nonce\\0'), 12);
+
+  var padded = _concatBytes([plaintext, new Uint8Array([2])]);
+  var cekKey = await crypto.subtle.importKey('raw', cek, { name: 'AES-GCM' }, false, ['encrypt']);
+  var ciphertext = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv: nonce }, cekKey, padded));
+
+  var rsVal = 4096;
+  var rs = new Uint8Array([(rsVal >>> 24) & 0xff, (rsVal >>> 16) & 0xff, (rsVal >>> 8) & 0xff, rsVal & 0xff]);
+  var header = _concatBytes([salt, rs, new Uint8Array([serverPublicRaw.length]), serverPublicRaw]);
+  return _concatBytes([header, ciphertext]);
+}
+
+async function _sendPush(sub, payloadObj, env) {
+  var audience = new URL(sub.endpoint).origin;
+  var jwt = await _vapidJWT(audience, env);
+  var body = await _encryptPush(JSON.stringify(payloadObj), sub.keys.p256dh, sub.keys.auth, env);
+  return fetch(sub.endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/octet-stream',
+      'Content-Encoding': 'aes128gcm',
+      'TTL': '86400',
+      'Authorization': 'vapid t=' + jwt + ', k=' + env.VAPID_PUBLIC_KEY
+    },
+    body: body
+  });
+}
+
+function _fixedDueSoon(fixed) {
+  var now = new Date();
+  var ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  var todayDay = now.getDate();
+  return fixed.filter(function(f) {
+    var launched = (f.launched_months || []).indexOf(ym) !== -1;
+    if (launched) return false;
+    var diff = Number(f.day_of_month) - todayDay;
+    return diff <= 5 && diff >= -5;
+  });
+}
+
+async function checkFixedDueAndNotify(env) {
+  if (!env.FINN_KV || !env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.SUPABASE_SERVICE_KEY) return;
+  var list = await env.FINN_KV.list({ prefix: 'push_sub_' });
+  for (var i = 0; i < list.keys.length; i++) {
+    try {
+      var raw = await env.FINN_KV.get(list.keys[i].name);
+      if (!raw) continue;
+      var sub = JSON.parse(raw);
+      if (!sub.user_id || !sub.endpoint || !sub.keys) continue;
+
+      var r = await fetch('${SUPA_URL_SERVER}/rest/v1/fixed_accounts?user_id=eq.' + sub.user_id, {
+        headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+      });
+      if (!r.ok) continue;
+      var fixed = await r.json();
+      var due = _fixedDueSoon(fixed);
+      if (!due.length) continue;
+
+      var body = due.length === 1
+        ? due[0].description + ' — R$ ' + Number(due[0].value).toFixed(2)
+        : due.length + ' contas fixas perto do vencimento';
+      await _sendPush(sub, { title: 'Finn · Contas fixas', body: body, url: '/' }, env);
+    } catch (e) { /* uma falha numa inscrição não deve interromper as outras */ }
+  }
+}
+`;
+
 const worker = `${pluggyFns}
+${pushFns}
 export default {
   async fetch(request, env) {
     var url = new URL(request.url);
@@ -367,11 +502,17 @@ h1 em{font-style:normal;color:#F97316}
     if (url.pathname === '/push/subscribe' && request.method === 'POST') {
       var cors2 = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
       try {
-        var body = await request.text();
-        var sub = JSON.parse(body);
-        if (!sub.endpoint) return new Response(JSON.stringify({error:'invalid'}),{status:400,headers:cors2});
+        var sub = JSON.parse(await request.text());
+        if (!sub.endpoint || !sub.keys || !sub.access_token) return new Response(JSON.stringify({error:'invalid'}),{status:400,headers:cors2});
+        var authResp = await fetch('${SUPA_URL_SERVER}/auth/v1/user', {
+          headers: { apikey: '${SUPA_ANON_KEY_SERVER}', Authorization: 'Bearer ' + sub.access_token }
+        });
+        if (!authResp.ok) return new Response(JSON.stringify({error:'unauthorized'}),{status:401,headers:cors2});
+        var authUser = await authResp.json();
+        if (!authUser.id) return new Response(JSON.stringify({error:'unauthorized'}),{status:401,headers:cors2});
         var key = 'push_sub_' + btoa(sub.endpoint).slice(0,32).replace(/[^a-zA-Z0-9]/g,'');
-        if (env.FINN_KV) await env.FINN_KV.put(key, body, {expirationTtl: 60*60*24*365});
+        var record = { endpoint: sub.endpoint, keys: sub.keys, user_id: authUser.id };
+        if (env.FINN_KV) await env.FINN_KV.put(key, JSON.stringify(record), {expirationTtl: 60*60*24*365});
         return new Response(JSON.stringify({ok:true}), {headers:cors2});
       } catch(e) {
         return new Response(JSON.stringify({error:e.message}),{status:500,headers:cors2});
@@ -442,6 +583,10 @@ h1 em{font-style:normal;color:#F97316}
         'X-Finn-Version': '2.1.0',
       },
     });
+  },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(checkFixedDueAndNotify(env));
   },
 };
 `;
