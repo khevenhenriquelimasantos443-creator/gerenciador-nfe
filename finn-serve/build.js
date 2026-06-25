@@ -645,7 +645,7 @@ h1 em{font-style:normal;color:#F97316}
   },
 
   async scheduled(event, env, ctx) {
-    if (event.cron === '0 23 * * 0') {
+    if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
     } else {
       ctx.waitUntil(checkFixedDueAndNotify(env));
