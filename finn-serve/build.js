@@ -267,6 +267,54 @@ async function checkFixedDueAndNotify(env) {
     } catch (e) { /* uma falha numa inscrição não deve interromper as outras */ }
   }
 }
+
+function _weeklyBounds() {
+  var now = new Date();
+  var today = now.toISOString().slice(0, 10);
+  var d7 = new Date(now); d7.setDate(d7.getDate() - 7);
+  var d14 = new Date(now); d14.setDate(d14.getDate() - 14);
+  return { today: today, d7: d7.toISOString().slice(0, 10), d14: d14.toISOString().slice(0, 10) };
+}
+
+async function sendWeeklySummary(env) {
+  if (!env.FINN_KV || !env.VAPID_PUBLIC_KEY || !env.VAPID_PRIVATE_KEY || !env.SUPABASE_SERVICE_KEY) return;
+  var b = _weeklyBounds();
+  var list = await env.FINN_KV.list({ prefix: 'push_sub_' });
+  for (var i = 0; i < list.keys.length; i++) {
+    try {
+      var raw = await env.FINN_KV.get(list.keys[i].name);
+      if (!raw) continue;
+      var sub = JSON.parse(raw);
+      if (!sub.user_id || !sub.endpoint || !sub.keys) continue;
+
+      var r = await fetch('${SUPA_URL_SERVER}/rest/v1/transactions?user_id=eq.' + sub.user_id + '&date=gte.' + b.d14 + '&select=date,value,type', {
+        headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+      });
+      if (!r.ok) continue;
+      var txs = await r.json();
+      if (!txs.length) continue;
+
+      var curTotal = 0, prevTotal = 0;
+      txs.forEach(function (t) {
+        if (t.type === 'receita') return;
+        var v = Number(t.value);
+        if (t.date > b.d7 && t.date <= b.today) curTotal += v;
+        else if (t.date > b.d14 && t.date <= b.d7) prevTotal += v;
+      });
+      if (curTotal <= 0) continue;
+
+      var body;
+      if (prevTotal > 0) {
+        var pct = Math.round(((curTotal - prevTotal) / prevTotal) * 100);
+        var cmp = pct > 0 ? (pct + '% acima da semana anterior') : (pct < 0 ? (Math.abs(pct) + '% abaixo da semana anterior') : 'igual à semana anterior');
+        body = 'Você gastou R$ ' + curTotal.toFixed(2) + ' essa semana — ' + cmp + '.';
+      } else {
+        body = 'Você gastou R$ ' + curTotal.toFixed(2) + ' essa semana.';
+      }
+      await _sendPush(sub, { title: 'Finn · Resumo da semana', body: body, url: '/' }, env);
+    } catch (e) { /* uma falha numa inscrição não deve interromper as outras */ }
+  }
+}
 `;
 
 const worker = `${pluggyFns}
@@ -597,7 +645,11 @@ h1 em{font-style:normal;color:#F97316}
   },
 
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(checkFixedDueAndNotify(env));
+    if (event.cron === '0 23 * * 0') {
+      ctx.waitUntil(sendWeeklySummary(env));
+    } else {
+      ctx.waitUntil(checkFixedDueAndNotify(env));
+    }
   },
 };
 `;
