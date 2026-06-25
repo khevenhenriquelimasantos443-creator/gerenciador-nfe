@@ -594,7 +594,7 @@ h1 em{font-style:normal;color:#F97316}
       return new Response(${JSON.stringify(landing)}, {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          'Cache-Control': 'no-cache',
         },
       });
     }
@@ -604,7 +604,7 @@ h1 em{font-style:normal;color:#F97316}
       return new Response(${JSON.stringify(pitchInv)}, {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          'Cache-Control': 'no-cache',
           'X-Robots-Tag': 'noindex, nofollow',
         },
       });
@@ -613,7 +613,7 @@ h1 em{font-style:normal;color:#F97316}
       return new Response(${JSON.stringify(pitchUsr)}, {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          'Cache-Control': 'no-cache',
           'X-Robots-Tag': 'noindex, nofollow',
         },
       });
