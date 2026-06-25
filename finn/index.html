@@ -134,6 +134,8 @@ body.finn-authed #app{display:block}
 .tx-btn{background:transparent;border:none;color:var(--fm);font-size:15px;padding:4px 5px}
 .tx-btn.edit:hover{color:var(--fp)}
 .tx-btn.del:hover{color:var(--fe)}
+.tx-btn.receipt.has{color:var(--fp)}
+.tx-btn.receipt:hover{color:var(--fp)}
 .empty-state{text-align:center;color:var(--fm);font-size:13px;padding:30px 0}
 
 /* ── category breakdown ── */
@@ -500,7 +502,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null };
 
 function thisMonth(){
   var n = new Date();
@@ -1065,6 +1067,8 @@ function renderTxList(list){
         '</div>' +
         '<div class="tx-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(Number(t.value)) + '</div>' +
         '<div class="tx-actions">' +
+          '<button class="tx-btn receipt' + (t.receipt_path ? ' has' : '') + '" data-receipt-trigger="' + t.id + '" title="' + (t.receipt_path ? "Ver comprovante" : "Anexar comprovante") + '">' + (state.receiptUploadingId === t.id ? "…" : "📎") + '</button>' +
+          '<input type="file" accept="image/*" class="receipt-input" data-receipt-input="' + t.id + '" style="display:none">' +
           '<button class="tx-btn edit" data-edit="' + t.id + '">✎</button>' +
           '<button class="tx-btn del" data-del="' + t.id + '">✕</button>' +
         '</div>' +
@@ -1147,6 +1151,7 @@ function renderLancamentos(){
       '<button type="button" class="btn-ghost" id="btnExportCSV">Exportar CSV</button>' +
       renderBulkCatPrompt() +
       renderPriceAlert() +
+      renderReceiptMsg() +
       '<div id="txListWrap">' + renderTxList(filteredTxs()) + '</div>' +
     '</div>';
 }
@@ -1167,6 +1172,15 @@ function renderPriceAlert(){
   return '<div class="price-alert">' +
     '<span>⚠️ <strong>' + escapeHtml(a.description) + '</strong> veio ' + a.pct + '% mais cara que o normal (' + fmtMoney(a.value) + ' vs. média de ' + fmtMoney(a.avg) + ').</span>' +
     '<button type="button" class="price-alert-ok" id="btnDismissPriceAlert">Entendi</button>' +
+  '</div>';
+}
+
+function renderReceiptMsg(){
+  var m = state.receiptMsg;
+  if(!m) return '';
+  return '<div class="price-alert">' +
+    '<span>⚠️ ' + escapeHtml(m) + '</span>' +
+    '<button type="button" class="price-alert-ok" id="btnDismissReceiptMsg">Entendi</button>' +
   '</div>';
 }
 
@@ -2323,6 +2337,8 @@ function bindContentEvents(){
     if(btnDismissBulkCat) btnDismissBulkCat.addEventListener("click", dismissBulkCatPrompt);
     var btnDismissPriceAlert = document.getElementById("btnDismissPriceAlert");
     if(btnDismissPriceAlert) btnDismissPriceAlert.addEventListener("click", dismissPriceAlert);
+    var btnDismissReceiptMsg = document.getElementById("btnDismissReceiptMsg");
+    if(btnDismissReceiptMsg) btnDismissReceiptMsg.addEventListener("click", dismissReceiptMsg);
     var importFile = document.getElementById("importFile");
     if(importFile) importFile.addEventListener("change", function(e){
       var file = e.target.files[0];
@@ -2511,6 +2527,24 @@ function bindTxRowEvents(scope){
   scope.querySelectorAll("[data-del]").forEach(function(btn){
     btn.addEventListener("click", function(){ deleteTransaction(btn.dataset.del); });
   });
+  scope.querySelectorAll("[data-receipt-trigger]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.dataset.receiptTrigger;
+      var t = state.txs.filter(function(x){ return x.id === id; })[0];
+      if(t && t.receipt_path){
+        viewReceipt(t.receipt_path);
+      } else {
+        var input = scope.querySelector('[data-receipt-input="' + id + '"]');
+        if(input) input.click();
+      }
+    });
+  });
+  scope.querySelectorAll("[data-receipt-input]").forEach(function(input){
+    input.addEventListener("change", function(){
+      var file = input.files[0];
+      if(file) uploadReceipt(file, input.dataset.receiptInput);
+    });
+  });
 }
 
 /* ── transaction CRUD ── */
@@ -2580,6 +2614,11 @@ function dismissPriceAlert(){
   render();
 }
 
+function dismissReceiptMsg(){
+  state.receiptMsg = null;
+  render();
+}
+
 function startEdit(id){
   var t = state.txs.filter(function(x){ return x.id === id; })[0];
   if(!t) return;
@@ -2593,10 +2632,62 @@ function startEdit(id){
 }
 
 function deleteTransaction(id){
+  var existing = state.txs.filter(function(t){ return t.id === id; })[0];
+  var receiptPath = existing && existing.receipt_path;
   state.txs = state.txs.filter(function(t){ return t.id !== id; });
   if(formState.editingId === id) resetForm();
   render();
   db("transactions", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+  if(receiptPath) deleteReceiptObject(receiptPath);
+}
+
+/* ── comprovante (foto/recibo) ── */
+function deleteReceiptObject(path){
+  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+  fetch(SUPA_URL + "/storage/v1/object/receipts/" + path, {
+    method: "DELETE",
+    headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token }
+  }).catch(function(){});
+}
+
+function uploadReceipt(file, txId){
+  state.receiptUploadingId = txId;
+  state.receiptMsg = null;
+  render();
+  var path = uid() + "/" + txId + "-" + Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_");
+  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+  fetch(SUPA_URL + "/storage/v1/object/receipts/" + path, {
+    method: "POST",
+    headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": file.type || "application/octet-stream" },
+    body: file
+  }).then(function(r){
+    if(!r.ok) return r.text().then(function(t){ throw new Error(t || ("Erro " + r.status)); });
+    return db("transactions", "PATCH", { receipt_path: path }, { id: "eq." + txId, user_id: "eq." + uid() });
+  }).then(function(rows){
+    var updated = rows && rows[0];
+    state.txs = state.txs.map(function(t){ return t.id === txId ? (updated || Object.assign({}, t, { receipt_path: path })) : t; });
+    state.receiptUploadingId = null;
+    render();
+  }).catch(function(err){
+    state.receiptUploadingId = null;
+    state.receiptMsg = "Não consegui anexar o comprovante (" + (err && err.message ? err.message : "erro") + "). Verifique se rodou supabase/08_receipts.sql.";
+    render();
+  });
+}
+
+function viewReceipt(path){
+  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+  fetch(SUPA_URL + "/storage/v1/object/sign/receipts/" + path, {
+    method: "POST",
+    headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": "application/json" },
+    body: JSON.stringify({ expiresIn: 60 })
+  }).then(function(r){ return r.json(); }).then(function(data){
+    if(data && data.signedURL) window.open(SUPA_URL + "/storage/v1" + data.signedURL, "_blank");
+    else { state.receiptMsg = "Não consegui abrir o comprovante."; render(); }
+  }).catch(function(){
+    state.receiptMsg = "Não consegui abrir o comprovante.";
+    render();
+  });
 }
 
 /* ── limits CRUD ── */
