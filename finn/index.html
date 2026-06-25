@@ -211,6 +211,7 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .goal-invest-tip{font-size:11.5px;line-height:1.5;color:var(--fm);background:rgba(99,102,241,.08);border:1px solid var(--fb);border-radius:9px;padding:8px 10px;margin-bottom:8px}
 .goal-invest-tip .git-lbl{font-weight:800;color:var(--fd)}
 .goal-invest-tip .git-where{display:block;margin-top:2px}
+.goal-proj{font-size:11.5px;line-height:1.5;color:var(--fd);font-weight:700;background:rgba(5,150,105,.08);border:1px solid var(--fb);border-radius:9px;padding:8px 10px;margin-bottom:8px}
 .goal-addrow{display:flex;gap:6px;margin-top:10px}
 .goal-addrow input{flex:1;border:1px solid var(--fb);border-radius:9px;padding:8px 10px;font-size:13px}
 .goal-addrow button{border:none;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700;white-space:nowrap}
@@ -228,6 +229,9 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .btn-launch.done{background:var(--fbg);color:var(--fs);border:1px solid var(--fs)}
 .fixed-del{background:transparent;border:none;color:var(--fm);font-size:14px;padding:2px 4px;flex-shrink:0}
 .fixed-del:hover{color:var(--fe)}
+.recurring-item{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid var(--fb);border-radius:12px;margin-top:10px;flex-wrap:wrap}
+.recurring-item:first-child{margin-top:0}
+.recurring-add{flex-shrink:0;background:var(--fp);color:#fff;border:none;border-radius:9px;padding:8px 12px;font-size:11.5px;font-weight:700;white-space:nowrap}
 .day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .day-cell{border:1px solid var(--fb);background:var(--fcard);border-radius:8px;padding:7px 0;font-size:12.5px;font-weight:700;color:var(--fm)}
 .day-cell:hover{border-color:#CBD5E1}
@@ -1553,6 +1557,31 @@ function renderGoalInvestTip(g){
   '</div>';
 }
 
+function goalProjection(g){
+  var remaining = Number(g.target) - Number(g.saved);
+  if(remaining <= 0) return null;
+  var movs = state.goalMovements.filter(function(m){ return m.goal_id === g.id; });
+  if(!movs.length) return { hasRate: false };
+  var sorted = movs.slice().sort(function(a,b){ return (a.date||"") < (b.date||"") ? -1 : 1; });
+  var monthsElapsed = Math.max(1, daysBetween(sorted[0].date, new Date().toISOString().slice(0,10)) / 30);
+  var net = movs.reduce(function(s,m){ return s + (m.type === "deposito" ? Number(m.amount) : -Number(m.amount)); }, 0);
+  var avgMonthly = net / monthsElapsed;
+  if(avgMonthly <= 0) return { hasRate: false };
+  var monthsToGo = Math.ceil(remaining / avgMonthly);
+  var projDate = new Date();
+  projDate.setMonth(projDate.getMonth() + monthsToGo);
+  return { hasRate: true, avgMonthly: avgMonthly, monthsToGo: monthsToGo, projDate: projDate };
+}
+
+function renderGoalProjection(g){
+  var p = goalProjection(g);
+  if(!p) return '';
+  if(!p.hasRate) return '<div class="goal-proj">📈 Guarde um valor regularmente pra ver uma previsão de quando você bate essa meta.</div>';
+  var when = p.projDate.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+  return '<div class="goal-proj">📈 No ritmo atual (~' + fmtMoney(p.avgMonthly) + '/mês), você bate essa meta em ' +
+    p.monthsToGo + (p.monthsToGo === 1 ? " mês" : " meses") + ' · por volta de ' + when + '</div>';
+}
+
 function renderGoalList(){
   if(!state.goals.length) return '<div class="empty-state">Nenhuma meta ainda.</div>';
   return state.goals.map(function(g){
@@ -1565,6 +1594,7 @@ function renderGoalList(){
       '<div class="goal-vals"><b>' + fmtMoney(Number(g.saved)) + '</b> de ' + fmtMoney(Number(g.target)) + ' · ' + pct + '%' +
         (g.deadline ? ' · até ' + formatDate(g.deadline) : '') + '</div>' +
       '<div class="bar"><i style="width:' + Math.max(3,pct) + '%"></i></div>' +
+      renderGoalProjection(g) +
       renderGoalInvestTip(g) +
       '<div class="goal-addrow">' +
         '<input type="number" min="0" step="0.01" placeholder="Valor R$" id="addGoal_' + g.id + '">' +
@@ -1596,6 +1626,83 @@ function renderGoalHistory(goalId){
 /* ── Contas fixas ── */
 var fixedForm = { type: "despesa", description: "", category: "Outros", value: "", dayOfMonth: "1" };
 
+function normDesc(s){
+  return (s || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function getDismissedRecurring(){
+  try { return JSON.parse(localStorage.getItem("finn_dismissed_recurring") || "[]"); }
+  catch(e){ return []; }
+}
+
+function dismissRecurring(key){
+  var list = getDismissedRecurring();
+  if(list.indexOf(key) === -1) list.push(key);
+  localStorage.setItem("finn_dismissed_recurring", JSON.stringify(list));
+  render();
+}
+
+function detectRecurringCandidates(){
+  var groups = {};
+  state.txs.forEach(function(t){
+    if(!t.date) return;
+    var key = t.type + "|" + normDesc(t.description);
+    (groups[key] = groups[key] || []).push(t);
+  });
+  var alreadyFixed = {};
+  state.fixed.forEach(function(f){ alreadyFixed[f.type + "|" + normDesc(f.description)] = true; });
+  var candidates = [];
+  Object.keys(groups).forEach(function(key){
+    if(alreadyFixed[key]) return;
+    var byMonth = {};
+    groups[key].forEach(function(t){
+      var mk = t.date.slice(0,7);
+      (byMonth[mk] = byMonth[mk] || []).push(t);
+    });
+    var monthKeys = Object.keys(byMonth);
+    if(monthKeys.length < 3) return;
+    var occ = monthKeys.map(function(mk){
+      var arr = byMonth[mk];
+      var tx = arr[arr.length - 1];
+      return { day: new Date(tx.date + "T00:00:00").getDate(), value: Number(tx.value), tx: tx };
+    });
+    var days = occ.map(function(o){ return o.day; });
+    var values = occ.map(function(o){ return o.value; });
+    var dayMin = Math.min.apply(null, days), dayMax = Math.max.apply(null, days);
+    var valMin = Math.min.apply(null, values), valMax = Math.max.apply(null, values);
+    if(dayMax - dayMin > 5) return;
+    if(valMin <= 0 || (valMax - valMin) / valMin > 0.25) return;
+    var avgDay = Math.round(days.reduce(function(s,d){ return s + d; }, 0) / days.length);
+    var avgValue = values.reduce(function(s,v){ return s + v; }, 0) / values.length;
+    var last = occ[occ.length - 1].tx;
+    candidates.push({ key: key, type: last.type, description: last.description, category: last.category, day: avgDay, value: avgValue, months: monthKeys.length });
+  });
+  return candidates.sort(function(a,b){ return b.months - a.months; });
+}
+
+function renderRecurringSuggestions(){
+  var dismissed = getDismissedRecurring();
+  var candidates = detectRecurringCandidates().filter(function(c){ return dismissed.indexOf(c.key) === -1; });
+  if(!candidates.length) return '';
+  return '<div class="card">' +
+    '<div class="eyebrow" style="color:var(--fp)">🔁 Gastos recorrentes detectados</div>' +
+    '<div style="font-size:12px;color:var(--fm);margin-bottom:10px">Esses lançamentos se repetem todo mês. Quer transformar em conta fixa, com aviso de vencimento?</div>' +
+    candidates.map(function(c){
+      var color = c.type === "receita" ? "var(--fs)" : "var(--fe)";
+      var sign = c.type === "receita" ? "+" : "-";
+      return '<div class="recurring-item">' +
+        '<div class="fixed-info">' +
+          '<div class="fixed-desc">' + (CAT_ICON[c.category]||"📦") + ' ' + escapeHtml(c.description) + '</div>' +
+          '<div class="fixed-meta">' + c.category + ' · todo dia ~' + c.day + ' · ' + c.months + ' meses seguidos</div>' +
+        '</div>' +
+        '<div class="fixed-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(c.value) + '</div>' +
+        '<button type="button" class="recurring-add" data-addrecurring="' + escapeHtml(c.key) + '">Adicionar</button>' +
+        '<button type="button" class="fixed-del" data-dismissrecurring="' + escapeHtml(c.key) + '">✕</button>' +
+      '</div>';
+    }).join("") +
+  '</div>';
+}
+
 function buildDayGrid(selected){
   var sel = parseInt(selected, 10) || 1;
   var out = "";
@@ -1607,6 +1714,7 @@ function buildDayGrid(selected){
 
 function renderFixas(){
   return '' +
+    renderRecurringSuggestions() +
     '<div class="card">' +
       '<div class="eyebrow">Nova conta fixa</div>' +
       '<div class="form-row type-toggle">' +
@@ -2204,6 +2312,12 @@ function bindContentEvents(){
     document.querySelectorAll("[data-delfixed]").forEach(function(btn){
       btn.addEventListener("click", function(){ deleteFixed(btn.dataset.delfixed); });
     });
+    document.querySelectorAll("[data-addrecurring]").forEach(function(btn){
+      btn.addEventListener("click", function(){ addRecurringAsFixed(btn.dataset.addrecurring); });
+    });
+    document.querySelectorAll("[data-dismissrecurring]").forEach(function(btn){
+      btn.addEventListener("click", function(){ dismissRecurring(btn.dataset.dismissrecurring); });
+    });
   }
   if(state.tab === "config"){
     document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
@@ -2371,6 +2485,19 @@ function saveFixed(){
     if(rows && rows[0]) state.fixed.push(rows[0]);
     fixedForm = { type: "despesa", description: "", category: "Outros", value: "", dayOfMonth: "1" };
     render();
+  });
+}
+
+function addRecurringAsFixed(key){
+  var candidate = detectRecurringCandidates().filter(function(c){ return c.key === key; })[0];
+  if(!candidate) return;
+  var payload = {
+    user_id: uid(), type: candidate.type, description: candidate.description,
+    category: candidate.category, value: candidate.value, day_of_month: candidate.day
+  };
+  db("fixed_accounts", "POST", payload).then(function(rows){
+    if(rows && rows[0]) state.fixed.push(rows[0]);
+    dismissRecurring(key);
   });
 }
 
