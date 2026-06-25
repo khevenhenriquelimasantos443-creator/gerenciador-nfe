@@ -152,9 +152,6 @@ footer{background:#060912;padding:40px 24px 24px;border-top:1px solid rgba(255,2
 .footer-logo{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.03em}
 .footer-logo em{font-style:normal;color:#F97316}
 .footer-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#86EFAC;border-radius:99px;padding:4px 12px;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin-left:4px}
-.footer-links{display:flex;flex-wrap:wrap;gap:18px}
-.footer-links a{font-size:13px;color:#94A3B8;text-decoration:none;transition:color .15s}
-.footer-links a:hover{color:#F97316}
 .footer-bottom{max-width:1100px;margin:20px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:#94A3B8}
 .footer-bottom strong{color:#E2E8F0}
 .footer-disclaimer{max-width:1100px;margin:14px auto 0;font-size:11.5px;color:#94A3B8;line-height:1.6;text-align:left;padding-top:14px;border-top:1px solid rgba(255,255,255,.04)}
@@ -166,9 +163,18 @@ footer{background:#060912;padding:40px 24px 24px;border-top:1px solid rgba(255,2
 .wa-btn:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(37,211,102,.55)}
 .wa-btn svg{width:28px;height:28px;fill:#fff}
 
+/* BETA RIBBON */
+.beta-ribbon{position:fixed;top:0;left:0;right:0;z-index:101;background:linear-gradient(120deg,#EA6C0F,#F97316);color:#fff;text-align:center;font-size:13px;font-weight:700;padding:8px 16px;letter-spacing:-.01em}
+.beta-ribbon strong{font-weight:900}
+nav{top:36px}
+.hero{padding-top:136px}
+@media(max-width:520px){.beta-ribbon{font-size:11.5px;padding:7px 10px}}
 </style>
 </head>
 <body>
+
+<!-- BETA RIBBON -->
+<div class="beta-ribbon">🎉 Beta aberto agora — <strong>100% grátis</strong>, sem cartão. Convide seus amigos!</div>
 
 <!-- NAV -->
 <nav>
@@ -412,16 +418,6 @@ ou <b>meta</b> para ver suas metas 🎯</pre>
       <div class="footer-logo">Finn<em>.</em></div>
       <div class="footer-pill">● Beta aberto · 100% grátis</div>
     </div>
-    <nav class="footer-links">
-      <a href="/landing">Sobre</a>
-      <a href="/">Entrar</a>
-      <a href="/landing#funcionalidades">Funcionalidades</a>
-      <a href="/privacidade">Privacidade</a>
-      <a href="/termos">Termos</a>
-      <a href="/deletar-dados">Excluir dados</a>
-      <a href="mailto:Finn.controle01@gmail.com">Contato</a>
-      <a href="https://wa.me/5513992102413" target="_blank" rel="noopener">WhatsApp</a>
-    </nav>
   </div>
   <div class="footer-bottom">
     <div>© 2026 <strong>Finn.</strong> — Todos os direitos reservados.</div>
