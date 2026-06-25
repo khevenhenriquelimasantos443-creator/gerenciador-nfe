@@ -139,11 +139,13 @@ body.finn-authed #app{display:block}
 /* ── category breakdown ── */
 .cat-row{margin-top:12px}
 .cat-row:first-child{margin-top:0}
-.cat-head{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:5px}
+.cat-head{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:5px;cursor:pointer}
 .cat-head .nm{display:flex;align-items:center;gap:7px}
 .cat-head .vl{color:var(--fm);font-weight:800}
 .bar{height:7px;background:var(--fb);border-radius:6px;overflow:hidden}
 .bar > i{display:block;height:100%;border-radius:6px;background:var(--fp)}
+.cat-row.expanded .cat-head{color:var(--fp)}
+.ana-cat-detail{margin-top:10px;border-top:1px dashed var(--fb);padding-top:8px}
 
 /* ── análises ── */
 .metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -168,8 +170,9 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .donut-hole .tot{font-size:13px;font-weight:800;color:var(--fd)}
 .donut-hole .lbl{font-size:8.5px;font-weight:700;color:var(--fm);text-transform:uppercase}
 .donut-legend{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center}
-.donut-legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--fd)}
+.donut-legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--fd);cursor:pointer}
 .donut-dot{width:9px;height:9px;border-radius:3px;display:inline-block;flex-shrink:0}
+.donut-legend .ana-cat-detail{flex-basis:100%;width:100%}
 .balance-chart{width:100%;height:130px;display:block}
 .daybar-wrap{display:flex;align-items:flex-end;gap:5px;height:90px;overflow-x:auto;padding-bottom:4px}
 .daybar-wrap::-webkit-scrollbar{display:none}
@@ -483,7 +486,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, expandedAnalysisCat: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null };
 
 function thisMonth(){
   var n = new Date();
@@ -569,6 +572,7 @@ function renderDashboard(){
       '</div>' +
     '</div>';
 
+  html += renderFixedDueAlert();
   html += renderOverLimitAlert();
   html += renderEvolutionChart();
   html += renderCategoryBreakdown(txs);
@@ -633,6 +637,32 @@ function renderCategoryBreakdown(monthTxs){
     }).join("") + '</div>';
 }
 
+function fixedDueSoon(){
+  var ym = thisMonth();
+  var todayDay = new Date().getDate();
+  return state.fixed.filter(function(f){
+    var launched = (f.launched_months || []).indexOf(ym) !== -1;
+    if(launched) return false;
+    var diff = Number(f.day_of_month) - todayDay;
+    return diff <= 5 && diff >= -5;
+  }).sort(function(a,b){ return Number(a.day_of_month) - Number(b.day_of_month); });
+}
+
+function renderFixedDueAlert(){
+  var due = fixedDueSoon();
+  if(!due.length) return '';
+  var todayDay = new Date().getDate();
+  return '<div class="card alert-card">' +
+    '<div class="eyebrow" style="color:var(--fp)">🔔 Contas fixas perto do vencimento</div>' +
+    due.map(function(f){
+      var diff = Number(f.day_of_month) - todayDay;
+      var when = diff === 0 ? "vence hoje" : (diff > 0 ? "vence em " + diff + (diff===1?" dia":" dias") : "venceu há " + Math.abs(diff) + (Math.abs(diff)===1?" dia":" dias"));
+      var color = diff < 0 ? "var(--fe)" : (f.type === "receita" ? "var(--fs)" : "var(--fe)");
+      return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[f.category]||"📦") + ' ' + escapeHtml(f.description) +
+        ' — <span style="color:' + color + '">' + fmtMoney(Number(f.value)) + '</span> · ' + when + '</div>';
+    }).join("") + '</div>';
+}
+
 function renderOverLimitAlert(){
   var over = state.limits.filter(function(l){ return monthSpentByCat(l.category) > Number(l.monthly_limit); });
   if(!over.length) return '';
@@ -676,18 +706,28 @@ function breakdownByCat(list){
     .sort(function(a,b){ return b.val - a.val; });
 }
 
-function renderCatBars(rows){
+function renderAnaCatDetail(key, list, cat){
+  if(state.expandedAnalysisCat !== key) return "";
+  var items = list.filter(function(t){ return t.category === cat; })
+    .slice().sort(function(a,b){ return (a.date||"") < (b.date||"") ? 1 : -1; });
+  return '<div class="ana-cat-detail">' + renderTxList(items) + '</div>';
+}
+
+function renderCatBars(rows, list, keyPrefix){
   if(!rows.length) return '<div class="empty-state">Sem dados nesse período.</div>';
   var max = rows[0].val || 1;
   return rows.map(function(r){
-    return '<div class="cat-row">' +
-      '<div class="cat-head"><span class="nm">' + (CAT_ICON[r.cat]||"📦") + ' ' + r.cat + '</span><span class="vl">' + fmtMoney(r.val) + ' · ' + r.pct.toFixed(0) + '%</span></div>' +
+    var key = keyPrefix + "_" + r.cat;
+    var open = state.expandedAnalysisCat === key;
+    return '<div class="cat-row' + (open ? " expanded" : "") + '">' +
+      '<div class="cat-head" data-anacat="' + key + '"><span class="nm">' + (CAT_ICON[r.cat]||"📦") + ' ' + r.cat + '</span><span class="vl">' + fmtMoney(r.val) + ' · ' + r.pct.toFixed(0) + '%</span></div>' +
       '<div class="bar"><i style="width:' + Math.max(4, Math.round(r.val/max*100)) + '%;background:' + catColor(r.cat) + '"></i></div>' +
+      (list ? renderAnaCatDetail(key, list, r.cat) : "") +
     '</div>';
   }).join("");
 }
 
-function renderDonut(rows){
+function renderDonut(rows, list, keyPrefix){
   if(!rows.length) return '';
   var total = rows.reduce(function(s,r){ return s + r.val; }, 0) || 1;
   var acc = 0;
@@ -701,7 +741,9 @@ function renderDonut(rows){
       '<div class="donut-hole"><div class="tot">' + fmtMoney(total) + '</div><div class="lbl">total</div></div>' +
     '</div>' +
     '<div class="donut-legend">' + rows.map(function(r){
-      return '<span class="donut-legend-item"><i class="donut-dot" style="background:' + catColor(r.cat) + '"></i>' + r.cat + ' · ' + r.pct.toFixed(0) + '%</span>';
+      var key = keyPrefix + "_" + r.cat;
+      return '<span class="donut-legend-item" data-anacat="' + key + '"><i class="donut-dot" style="background:' + catColor(r.cat) + '"></i>' + r.cat + ' · ' + r.pct.toFixed(0) + '%</span>' +
+        (list ? renderAnaCatDetail(key, list, r.cat) : "");
     }).join("") + '</div>' +
   '</div>';
 }
@@ -866,9 +908,9 @@ function renderAnalises(){
     (despesaCats[0] ? '<div class="health-row"><span>📊</span><span>Maior gasto: ' + despesaCats[0].cat + ' (' + despesaCats[0].pct.toFixed(0) + '%)</span></div>' : '') +
   '</div>';
 
-  html += '<div class="card"><div class="eyebrow">Distribuição de despesas</div>' + renderDonut(despesaCats) + '</div>';
-  html += '<div class="card"><div class="eyebrow">Despesas por categoria</div>' + renderCatBars(despesaCats) + '</div>';
-  if(receitaCats.length) html += '<div class="card"><div class="eyebrow">Entradas por categoria</div>' + renderCatBars(receitaCats) + '</div>';
+  html += '<div class="card"><div class="eyebrow">Distribuição de despesas</div>' + renderDonut(despesaCats, despesas, "despesa") + '</div>';
+  html += '<div class="card"><div class="eyebrow">Despesas por categoria</div>' + renderCatBars(despesaCats, despesas, "despesa") + '</div>';
+  if(receitaCats.length) html += '<div class="card"><div class="eyebrow">Entradas por categoria</div>' + renderCatBars(receitaCats, receitas, "receita") + '</div>';
 
   html += renderBalanceEvolution(txs);
   html += renderTxBuckets(txs);
@@ -913,9 +955,11 @@ function resetForm(){
 }
 
 function filteredTxs(){
+  var q = (state.filterText || "").trim().toLowerCase();
   return state.txs.filter(function(t){
     if(state.filterMonth && (t.date||"").slice(0,7) !== state.filterMonth) return false;
     if(state.filterCategory !== "all" && t.category !== state.filterCategory) return false;
+    if(q && (t.description || "").toLowerCase().indexOf(q) === -1 && (t.category || "").toLowerCase().indexOf(q) === -1) return false;
     return true;
   });
 }
@@ -960,9 +1004,12 @@ function renderLancamentos(){
           allCategories().map(function(c){ return '<option value="' + c + '"' + (c===state.filterCategory?" selected":"") + '>' + c + '</option>'; }).join("") +
         '</select></div>' +
       '</div>' +
+      '<div class="form-row">' +
+        '<input type="text" id="filterText" placeholder="🔎 Buscar por descrição ou categoria" value="' + escapeHtml(state.filterText) + '">' +
+      '</div>' +
       (state.filterMonth ? '<button type="button" class="btn-ghost" id="btnClearMonthFilter">Ver todos os meses</button>' : '') +
       '<button type="button" class="btn-ghost" id="btnExportCSV">Exportar CSV</button>' +
-      renderTxList(filteredTxs()) +
+      '<div id="txListWrap">' + renderTxList(filteredTxs()) + '</div>' +
     '</div>';
 }
 
@@ -1869,6 +1916,13 @@ function bindContentEvents(){
     document.querySelectorAll(".an-period-btn").forEach(function(btn){
       btn.addEventListener("click", function(){ state.analysisPeriod = btn.dataset.period; render(); });
     });
+    document.querySelectorAll("[data-anacat]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var key = el.dataset.anacat;
+        state.expandedAnalysisCat = state.expandedAnalysisCat === key ? null : key;
+        render();
+      });
+    });
   }
   if(state.tab === "lancamentos"){
     document.querySelectorAll(".type-btn").forEach(function(btn){
@@ -1885,6 +1939,12 @@ function bindContentEvents(){
     if(cancel) cancel.addEventListener("click", function(){ resetForm(); render(); });
     document.getElementById("filterMonth").addEventListener("change", function(e){ state.filterMonth = e.target.value; render(); });
     document.getElementById("filterCategory").addEventListener("change", function(e){ state.filterCategory = e.target.value; render(); });
+    document.getElementById("filterText").addEventListener("input", function(e){
+      state.filterText = e.target.value;
+      var wrap = document.getElementById("txListWrap");
+      wrap.innerHTML = renderTxList(filteredTxs());
+      bindTxRowEvents(wrap);
+    });
     var btnClearMonthFilter = document.getElementById("btnClearMonthFilter");
     if(btnClearMonthFilter) btnClearMonthFilter.addEventListener("click", function(){ state.filterMonth = ""; render(); });
     document.getElementById("btnExportCSV").addEventListener("click", exportCSV);
@@ -2032,10 +2092,14 @@ function bindContentEvents(){
     document.getElementById("btnDeleteAllTx").addEventListener("click", deleteAllTransactions);
     document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
   }
-  document.querySelectorAll("[data-edit]").forEach(function(btn){
+  bindTxRowEvents(document);
+}
+
+function bindTxRowEvents(scope){
+  scope.querySelectorAll("[data-edit]").forEach(function(btn){
     btn.addEventListener("click", function(){ startEdit(btn.dataset.edit); });
   });
-  document.querySelectorAll("[data-del]").forEach(function(btn){
+  scope.querySelectorAll("[data-del]").forEach(function(btn){
     btn.addEventListener("click", function(){ deleteTransaction(btn.dataset.del); });
   });
 }
