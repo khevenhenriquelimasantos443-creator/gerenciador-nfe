@@ -295,10 +295,11 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .ai-result{margin-top:16px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;color:var(--fd)}
 .ai-error{margin-top:16px;font-size:13px;color:var(--fe);background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px}
 .alert-card{border-color:#FECACA!important;background:#FEF2F2!important}
+.alert-card-income{border-color:#A7F3D0!important;background:#ECFDF5!important}
 
 /* ── dark mode tints ── */
 body.finn-dark .type-btn.active.despesa,body.finn-dark .alert-card,body.finn-dark .ai-error{background:#3F1212!important;border-color:#7F1D1D!important}
-body.finn-dark .type-btn.active.receita,body.finn-dark .split-ptoggle.paid{background:#0F2E22!important;border-color:#065F46!important}
+body.finn-dark .type-btn.active.receita,body.finn-dark .split-ptoggle.paid,body.finn-dark .alert-card-income{background:#0F2E22!important;border-color:#065F46!important}
 body.finn-dark .btn-google:hover{background:#1E293B}
 </style>
 </head>
@@ -653,15 +654,30 @@ function renderFixedDueAlert(){
   var due = fixedDueSoon();
   if(!due.length) return '';
   var todayDay = new Date().getDate();
-  return '<div class="card alert-card">' +
-    '<div class="eyebrow" style="color:var(--fp)">🔔 Contas fixas perto do vencimento</div>' +
-    due.map(function(f){
-      var diff = Number(f.day_of_month) - todayDay;
-      var when = diff === 0 ? "vence hoje" : (diff > 0 ? "vence em " + diff + (diff===1?" dia":" dias") : "venceu há " + Math.abs(diff) + (Math.abs(diff)===1?" dia":" dias"));
-      var color = diff < 0 ? "var(--fe)" : (f.type === "receita" ? "var(--fs)" : "var(--fe)");
-      return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[f.category]||"📦") + ' ' + escapeHtml(f.description) +
-        ' — <span style="color:' + color + '">' + fmtMoney(Number(f.value)) + '</span> · ' + when + '</div>';
-    }).join("") + '</div>';
+  var despesas = due.filter(function(f){ return f.type !== "receita"; });
+  var receitas = due.filter(function(f){ return f.type === "receita"; });
+  var html = '';
+  if(despesas.length){
+    html += '<div class="card alert-card">' +
+      '<div class="eyebrow" style="color:var(--fe)">🔔 Contas fixas perto do vencimento</div>' +
+      despesas.map(function(f){
+        var diff = Number(f.day_of_month) - todayDay;
+        var when = diff === 0 ? "vence hoje" : (diff > 0 ? "vence em " + diff + (diff===1?" dia":" dias") : "venceu há " + Math.abs(diff) + (Math.abs(diff)===1?" dia":" dias"));
+        return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[f.category]||"📦") + ' ' + escapeHtml(f.description) +
+          ' — <span style="color:var(--fe)">' + fmtMoney(Number(f.value)) + '</span> · ' + when + '</div>';
+      }).join("") + '</div>';
+  }
+  if(receitas.length){
+    html += '<div class="card alert-card-income">' +
+      '<div class="eyebrow" style="color:var(--fs)">💰 Receitas fixas a caminho</div>' +
+      receitas.map(function(f){
+        var diff = Number(f.day_of_month) - todayDay;
+        var when = diff === 0 ? "cai hoje" : (diff > 0 ? "cai em " + diff + (diff===1?" dia":" dias") : "deveria ter caído há " + Math.abs(diff) + (Math.abs(diff)===1?" dia":" dias"));
+        return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[f.category]||"📦") + ' ' + escapeHtml(f.description) +
+          ' — <span style="color:var(--fs)">' + fmtMoney(Number(f.value)) + '</span> · ' + when + '</div>';
+      }).join("") + '</div>';
+  }
+  return html;
 }
 
 function renderOverLimitAlert(){

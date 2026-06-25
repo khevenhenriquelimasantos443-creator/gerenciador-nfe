@@ -249,10 +249,21 @@ async function checkFixedDueAndNotify(env) {
       var due = _fixedDueSoon(fixed);
       if (!due.length) continue;
 
-      var body = due.length === 1
-        ? due[0].description + ' — R$ ' + Number(due[0].value).toFixed(2)
-        : due.length + ' contas fixas perto do vencimento';
-      await _sendPush(sub, { title: 'Finn · Contas fixas', body: body, url: '/' }, env);
+      var despesas = due.filter(function(f) { return f.type !== 'receita'; });
+      var receitas = due.filter(function(f) { return f.type === 'receita'; });
+
+      if (despesas.length) {
+        var body = despesas.length === 1
+          ? despesas[0].description + ' — R$ ' + Number(despesas[0].value).toFixed(2)
+          : despesas.length + ' contas fixas perto do vencimento';
+        await _sendPush(sub, { title: 'Finn · Contas fixas', body: body, url: '/' }, env);
+      }
+      if (receitas.length) {
+        var rbody = receitas.length === 1
+          ? receitas[0].description + ' — R$ ' + Number(receitas[0].value).toFixed(2)
+          : receitas.length + ' receitas fixas a caminho';
+        await _sendPush(sub, { title: 'Finn · Receita a caminho', body: rbody, url: '/' }, env);
+      }
     } catch (e) { /* uma falha numa inscrição não deve interromper as outras */ }
   }
 }
