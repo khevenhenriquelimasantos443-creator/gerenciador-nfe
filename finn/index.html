@@ -99,9 +99,9 @@ body.finn-authed #app{display:block}
 .eyebrow{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--fm);margin-bottom:10px}
 
 .totals-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.total-box{background:var(--fbg);border:1px solid var(--fb);border-radius:12px;padding:12px 8px;text-align:center}
+.total-box{background:var(--fbg);border:1px solid var(--fb);border-radius:12px;padding:12px 6px;text-align:center;min-width:0}
 .total-box .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--fm);margin-bottom:6px}
-.total-box .val{font-size:14px;font-weight:800}
+.total-box .val{font-size:clamp(11px,3.2vw,14px);font-weight:800;white-space:nowrap;letter-spacing:-.02em}
 
 .form-row{margin-bottom:12px}
 .form-row label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--fm);margin-bottom:6px}
