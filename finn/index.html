@@ -342,6 +342,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
       <button class="tab-btn" data-tab="limites">Limites</button>
       <button class="tab-btn" data-tab="metas">Metas</button>
       <button class="tab-btn" data-tab="fixas">Fixas</button>
+      <button class="tab-btn" data-tab="cartoes">Cartões</button>
       <button class="tab-btn" data-tab="racha">Racha</button>
       <button class="tab-btn" data-tab="ia">IA</button>
       <div class="nav-menu-bottom">
@@ -499,7 +500,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null };
 
 function thisMonth(){
   var n = new Date();
@@ -1072,10 +1073,10 @@ function renderTxList(list){
 }
 
 /* ── Lançamentos ── */
-var formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: new Date().toISOString().slice(0,10) };
+var formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: new Date().toISOString().slice(0,10), cardId: "" };
 
 function resetForm(){
-  formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: new Date().toISOString().slice(0,10) };
+  formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: new Date().toISOString().slice(0,10), cardId: "" };
 }
 
 function filteredTxs(){
@@ -1115,6 +1116,17 @@ function renderLancamentos(){
         '<label>Data</label>' +
         '<input type="date" id="fDate" value="' + formState.date + '">' +
       '</div>' +
+      (formState.type === "despesa" && state.cards.length ? (
+        '<div class="form-row">' +
+          '<label>Cartão</label>' +
+          '<select id="fCardId">' +
+            '<option value=""' + (!formState.cardId ? " selected" : "") + '>Nenhum (dinheiro/débito/pix)</option>' +
+            state.cards.map(function(c){
+              return '<option value="' + c.id + '"' + (c.id === formState.cardId ? " selected" : "") + '>' + escapeHtml(c.name) + '</option>';
+            }).join("") +
+          '</select>' +
+        '</div>'
+      ) : '') +
       '<button class="btn-submit" id="btnAddTx">' + (editing ? "Salvar alterações" : "Adicionar") + '</button>' +
       (editing ? '<button class="btn-ghost" id="btnCancelEdit">Cancelar</button>' : '') +
     '</div>' +
@@ -1810,6 +1822,80 @@ function renderFixedList(){
   }).join("");
 }
 
+/* ── Cartões de crédito ── */
+var cardForm = { name: "", limitValue: "", closingDay: "5", dueDay: "10" };
+
+function currentInvoicePeriod(closingDay){
+  var now = new Date();
+  var y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+  var start, end;
+  if(d <= closingDay){
+    end = new Date(y, m, closingDay);
+    start = new Date(y, m - 1, closingDay + 1);
+  } else {
+    start = new Date(y, m, closingDay + 1);
+    end = new Date(y, m + 1, closingDay);
+  }
+  return { start: start.toISOString().slice(0,10), end: end.toISOString().slice(0,10) };
+}
+
+function cardInvoiceTotal(cardId, closingDay){
+  var period = currentInvoicePeriod(closingDay);
+  return state.txs.filter(function(t){
+    return t.card_id === cardId && t.type === "despesa" && t.date >= period.start && t.date <= period.end;
+  }).reduce(function(s,t){ return s + Number(t.value); }, 0);
+}
+
+function renderCartoes(){
+  return '' +
+    renderPriceAlert() +
+    '<div class="card">' +
+      '<div class="eyebrow">Novo cartão</div>' +
+      '<div class="form-row">' +
+        '<label>Nome</label>' +
+        '<input type="text" id="cardName" placeholder="Ex: Nubank" value="' + escapeHtml(cardForm.name) + '">' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Limite</label>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="cardLimit" placeholder="0,00" value="' + cardForm.limitValue + '"></div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Dia de fechamento</label>' +
+        '<div class="day-grid" id="cardClosingDayGrid">' + buildDayGrid(cardForm.closingDay) + '</div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label>Dia de vencimento</label>' +
+        '<div class="day-grid" id="cardDueDayGrid">' + buildDayGrid(cardForm.dueDay) + '</div>' +
+      '</div>' +
+      '<button class="btn-submit" id="btnSaveCard">Adicionar cartão</button>' +
+      (state.cardsError ? '<div class="ai-error" style="margin-top:10px">Não consegui carregar seus cartões (' + escapeHtml(state.cardsError) + '). Verifique se a tabela credit_cards foi criada no Supabase (supabase/07_credit_cards.sql).</div>' : '') +
+    '</div>' +
+    '<div class="card">' +
+      '<div class="eyebrow">Seus cartões</div>' +
+      renderCardList() +
+    '</div>';
+}
+
+function renderCardList(){
+  if(!state.cards.length) return '<div class="empty-state">Nenhum cartão cadastrado ainda.</div>';
+  return state.cards.map(function(c){
+    var total = cardInvoiceTotal(c.id, c.closing_day);
+    var limit = Number(c.limit_value) || 0;
+    var pct = limit > 0 ? Math.min(100, Math.round((total / limit) * 100)) : 0;
+    var over = limit > 0 && total > limit;
+    return '<div class="fixed-item" style="flex-wrap:wrap">' +
+      '<div class="tx-cat">💳</div>' +
+      '<div class="fixed-info">' +
+        '<div class="fixed-desc">' + escapeHtml(c.name) + '</div>' +
+        '<div class="fixed-meta">fecha dia ' + c.closing_day + ' · vence dia ' + c.due_day + '</div>' +
+      '</div>' +
+      '<div class="fixed-val" style="color:' + (over ? "var(--fe)" : "var(--fd)") + '">' + fmtMoney(total) + (limit > 0 ? ' / ' + fmtMoney(limit) : '') + '</div>' +
+      '<button class="fixed-del" data-delcard="' + c.id + '">✕</button>' +
+      (limit > 0 ? '<div style="width:100%;height:6px;border-radius:4px;background:var(--fb);overflow:hidden;margin-top:4px"><div style="height:100%;width:' + pct + '%;background:' + (over ? "var(--fe)" : "var(--fp)") + '"></div></div>' : '') +
+    '</div>';
+  }).join("");
+}
+
 /* ── Racha ── */
 var splitForm = { description: "", category: "Outros", date: new Date().toISOString().slice(0,10), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
 
@@ -2137,12 +2223,14 @@ function deleteAllTransactions(){
 }
 
 function deleteAllData(){
-  if(!window.confirm("Isso vai apagar TODOS os seus lançamentos, limites, metas, contas fixas, rachas e categorias. Essa ação não pode ser desfeita. Continuar?")) return;
+  if(!window.confirm("Isso vai apagar TODOS os seus lançamentos, limites, metas, contas fixas, cartões, rachas e categorias. Essa ação não pode ser desfeita. Continuar?")) return;
   if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
   var tables = ["transactions", "spending_limits", "goals", "fixed_accounts", "splits", "categories"];
   Promise.all(tables.map(function(t){
     return db(t, "DELETE", null, { user_id: "eq." + uid() });
   })).then(function(){
+    return db("credit_cards", "DELETE", null, { user_id: "eq." + uid() }).catch(function(){});
+  }).then(function(){
     return Auth.logout(currentSession.access_token);
   }).then(function(){
     currentSession = null;
@@ -2176,6 +2264,7 @@ function render(){
   else if(state.tab === "limites") content.innerHTML = renderLimites();
   else if(state.tab === "metas") content.innerHTML = renderMetas();
   else if(state.tab === "fixas") content.innerHTML = renderFixas();
+  else if(state.tab === "cartoes") content.innerHTML = renderCartoes();
   else if(state.tab === "racha") content.innerHTML = renderRacha();
   else if(state.tab === "ia") content.innerHTML = renderIA();
   else content.innerHTML = renderConfig();
@@ -2211,6 +2300,8 @@ function bindContentEvents(){
       formState.category = document.getElementById("fCategory").value;
       formState.description = document.getElementById("fDescription").value;
       formState.date = document.getElementById("fDate").value;
+      var cardSel = document.getElementById("fCardId");
+      formState.cardId = cardSel ? cardSel.value : "";
       saveTransaction();
     });
     var cancel = document.getElementById("btnCancelEdit");
@@ -2370,6 +2461,31 @@ function bindContentEvents(){
     var btnDismissPriceAlertFixas = document.getElementById("btnDismissPriceAlert");
     if(btnDismissPriceAlertFixas) btnDismissPriceAlertFixas.addEventListener("click", dismissPriceAlert);
   }
+  if(state.tab === "cartoes"){
+    document.querySelectorAll("#cardClosingDayGrid .day-cell").forEach(function(cell){
+      cell.addEventListener("click", function(){
+        cardForm.closingDay = cell.dataset.day;
+        document.querySelectorAll("#cardClosingDayGrid .day-cell").forEach(function(c){ c.classList.remove("sel"); });
+        cell.classList.add("sel");
+      });
+    });
+    document.querySelectorAll("#cardDueDayGrid .day-cell").forEach(function(cell){
+      cell.addEventListener("click", function(){
+        cardForm.dueDay = cell.dataset.day;
+        document.querySelectorAll("#cardDueDayGrid .day-cell").forEach(function(c){ c.classList.remove("sel"); });
+        cell.classList.add("sel");
+      });
+    });
+    document.getElementById("btnSaveCard").addEventListener("click", function(){
+      syncCardForm();
+      saveCard();
+    });
+    document.querySelectorAll("[data-delcard]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteCard(btn.dataset.delcard); });
+    });
+    var btnDismissPriceAlertCartoes = document.getElementById("btnDismissPriceAlert");
+    if(btnDismissPriceAlertCartoes) btnDismissPriceAlertCartoes.addEventListener("click", dismissPriceAlert);
+  }
   if(state.tab === "config"){
     document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
     document.getElementById("btnDarkToggle").addEventListener("click", toggleDarkMode);
@@ -2408,6 +2524,7 @@ function saveTransaction(){
     value: value,
     date: formState.date
   };
+  if(state.cards.length) fields.card_id = formState.type === "despesa" ? (formState.cardId || null) : null;
   if(formState.editingId){
     var id = formState.editingId;
     var original = state.txs.filter(function(t){ return t.id === id; })[0];
@@ -2468,7 +2585,7 @@ function startEdit(id){
   if(!t) return;
   formState = {
     editingId: id, type: t.type, category: t.category,
-    description: t.description || "", value: String(t.value), date: t.date
+    description: t.description || "", value: String(t.value), date: t.date, cardId: t.card_id || ""
   };
   state.tab = "lancamentos";
   render();
@@ -2615,6 +2732,49 @@ function deleteFixed(id){
   db("fixed_accounts", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
 }
 
+function syncCardForm(){
+  var name = document.getElementById("cardName");
+  var limit = document.getElementById("cardLimit");
+  if(name) cardForm.name = name.value;
+  if(limit) cardForm.limitValue = limit.value;
+}
+
+function saveCard(){
+  var name = (cardForm.name || "").trim();
+  var limitValue = parseFloat(cardForm.limitValue) || 0;
+  var closingDay = parseInt(cardForm.closingDay, 10);
+  var dueDay = parseInt(cardForm.dueDay, 10);
+  if(!name || !closingDay || closingDay < 1 || closingDay > 31 || !dueDay || dueDay < 1 || dueDay > 31) return;
+  var payload = { user_id: uid(), name: name, limit_value: limitValue, closing_day: closingDay, due_day: dueDay };
+  db("credit_cards", "POST", payload).then(function(rows){
+    if(rows && rows[0]) state.cards.push(rows[0]);
+    cardForm = { name: "", limitValue: "", closingDay: "5", dueDay: "10" };
+    state.cardsError = null;
+    render();
+  }).catch(function(err){
+    state.cardsError = (err && err.message) || "Erro desconhecido";
+    render();
+  });
+}
+
+function deleteCard(id){
+  state.cards = state.cards.filter(function(c){ return c.id !== id; });
+  render();
+  db("credit_cards", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(){});
+}
+
+function loadCards(){
+  db("credit_cards", "GET", null, { user_id: "eq." + uid(), order: "created_at.asc" }).then(function(rows){
+    state.cards = rows || [];
+    state.cardsError = null;
+    render();
+  }).catch(function(err){
+    state.cards = [];
+    state.cardsError = (err && err.message) || "Erro desconhecido";
+    render();
+  });
+}
+
 /* ── data load ── */
 function loadData(){
   state.loading = true;
@@ -2651,6 +2811,7 @@ function showApp(){
   document.body.classList.add("finn-authed");
   document.getElementById("loginScreen").style.display = "none";
   loadData();
+  loadCards();
 }
 
 function showLogin(){
