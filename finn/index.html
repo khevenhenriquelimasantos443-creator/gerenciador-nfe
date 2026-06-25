@@ -484,29 +484,51 @@ var Auth = {
 var currentSession = null;
 function uid(){ return currentSession.user.id; }
 
-function db(table, method, body, query){
-  var url = new URL(SUPA_URL + "/rest/v1/" + table);
-  if(query){
-    Object.keys(query).forEach(function(k){ url.searchParams.set(k, query[k]); });
+// Garante um token válido antes de cada requisição: se estiver a menos de
+// 120s de vencer (ou já vencido), renova com o refresh_token antes de seguir.
+function ensureSession(){
+  if(!currentSession || !currentSession.refresh_token) return Promise.resolve(currentSession);
+  if(currentSession.expires_at && currentSession.expires_at > Date.now()/1000 + 120){
+    return Promise.resolve(currentSession);
   }
-  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
-  var headers = {
-    apikey: SUPA_KEY,
-    Authorization: "Bearer " + token,
-    "Content-Type": "application/json"
-  };
-  if(method !== "GET") headers.Prefer = "return=representation";
-  return fetch(url, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined })
-    .then(function(r){
-      return r.text().then(function(t){
-        var data = t ? JSON.parse(t) : null;
-        if(!r.ok){
-          var msg = (data && (data.message || data.hint || data.error)) || ("Erro " + r.status);
-          throw new Error(msg);
-        }
-        return data;
+  return Auth.refreshSession(currentSession.refresh_token).then(function(s){
+    if(s) currentSession = s;
+    return currentSession;
+  });
+}
+
+function db(table, method, body, query, _retried){
+  return ensureSession().then(function(){
+    var url = new URL(SUPA_URL + "/rest/v1/" + table);
+    if(query){
+      Object.keys(query).forEach(function(k){ url.searchParams.set(k, query[k]); });
+    }
+    var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+    var headers = {
+      apikey: SUPA_KEY,
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json"
+    };
+    if(method !== "GET") headers.Prefer = "return=representation";
+    return fetch(url, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined })
+      .then(function(r){
+        return r.text().then(function(t){
+          var data = t ? JSON.parse(t) : null;
+          if(!r.ok){
+            var msg = (data && (data.message || data.hint || data.error)) || ("Erro " + r.status);
+            // Token venceu no meio do caminho: renova uma vez e tenta de novo.
+            if(!_retried && (r.status === 401 || /jwt|token/i.test(msg)) && currentSession && currentSession.refresh_token){
+              return Auth.refreshSession(currentSession.refresh_token).then(function(s){
+                if(s){ currentSession = s; return db(table, method, body, query, true); }
+                throw new Error(msg);
+              });
+            }
+            throw new Error(msg);
+          }
+          return data;
+        });
       });
-    });
+  });
 }
 
 var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null };
@@ -1501,7 +1523,14 @@ function confirmImport(){
     });
   }
   next().catch(function(err){
-    state.importError = "Não consegui importar (" + (err && err.message ? err.message : "erro desconhecido") + ").";
+    // Falha no meio: registra o que JÁ entrou para não sumir silenciosamente
+    // e avisa exatamente quantos faltaram, para reimportar só o restante.
+    inserted.forEach(function(t){ state.txs.unshift(t); });
+    if(inserted.length) sortTxs();
+    var faltam = payloads.length - inserted.length;
+    state.importError = "Não consegui importar tudo (" + (err && err.message ? err.message : "erro desconhecido") + "). " +
+      inserted.length + " de " + payloads.length + " foram salvos; faltaram " + faltam + ". " +
+      "Recarregue a página e reimporte para concluir.";
     render();
   });
 }
