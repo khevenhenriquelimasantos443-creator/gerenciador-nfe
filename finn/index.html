@@ -305,7 +305,17 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .ai-intro{font-size:13px;color:var(--fm);margin-bottom:14px;line-height:1.5}
 .btn-ai{width:100%;background:linear-gradient(135deg,#F97316,#fb923c);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800}
 .btn-ai:disabled{opacity:.6}
-.ai-result{margin-top:16px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;color:var(--fd)}
+.ai-result{margin-top:16px;font-size:13.5px;line-height:1.6;color:var(--fd)}
+.ai-result h3,.ai-result h4,.ai-result h5{margin:14px 0 6px;font-weight:800;color:var(--fd)}
+.ai-result h3:first-child,.ai-result h4:first-child,.ai-result h5:first-child{margin-top:0}
+.ai-result h3{font-size:15px}
+.ai-result h4{font-size:14px}
+.ai-result h5{font-size:13.5px}
+.ai-result p{margin:0 0 10px}
+.ai-result ul,.ai-result ol{margin:0 0 10px;padding-left:20px}
+.ai-result li{margin-bottom:6px}
+.ai-result hr{border:none;border-top:1px solid var(--fb);margin:14px 0}
+.ai-result strong{font-weight:800}
 .ai-error{margin-top:16px;font-size:13px;color:var(--fe);background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px}
 .alert-card{border-color:#FECACA!important;background:#FEF2F2!important}
 .alert-card-income{border-color:#A7F3D0!important;background:#ECFDF5!important}
@@ -2067,8 +2077,47 @@ function renderIA(){
     '<div class="ai-intro">A IA olha suas receitas, despesas, categorias e limites do mês e te dá um resumo com dicas práticas pra economizar.</div>' +
     '<button class="btn-ai" id="btnAI"' + (state.aiLoading ? " disabled" : "") + '>' + (state.aiLoading ? "Analisando…" : "Gerar análise") + '</button>';
   if(state.aiError) html += '<div class="ai-error">' + escapeHtml(state.aiError) + '</div>';
-  if(state.aiResult) html += '<div class="ai-result">' + escapeHtml(state.aiResult) + '</div>';
+  if(state.aiResult) html += '<div class="ai-result">' + renderMarkdownLite(state.aiResult) + '</div>';
   html += '</div>';
+  return html;
+}
+
+function inlineMd(s){
+  return s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+function renderMarkdownLite(text){
+  var lines = escapeHtml(text || "").split("\n");
+  var html = "";
+  var listType = null;
+  function closeList(){ if(listType){ html += "</" + listType + ">"; listType = null; } }
+  lines.forEach(function(line){
+    var trimmed = line.trim();
+    if(trimmed === ""){ closeList(); return; }
+    if(/^-{3,}$/.test(trimmed)){ closeList(); html += "<hr>"; return; }
+    var h = trimmed.match(/^(#{1,6})\s+(.*)/);
+    if(h){
+      closeList();
+      var level = Math.min(h[1].length + 2, 6);
+      html += "<h" + level + ">" + inlineMd(h[2]) + "</h" + level + ">";
+      return;
+    }
+    var ol = trimmed.match(/^\d+\.\s+(.*)/);
+    var ul = trimmed.match(/^[-*]\s+(.*)/);
+    if(ol){
+      if(listType !== "ol"){ closeList(); html += "<ol>"; listType = "ol"; }
+      html += "<li>" + inlineMd(ol[1]) + "</li>";
+      return;
+    }
+    if(ul){
+      if(listType !== "ul"){ closeList(); html += "<ul>"; listType = "ul"; }
+      html += "<li>" + inlineMd(ul[1]) + "</li>";
+      return;
+    }
+    closeList();
+    html += "<p>" + inlineMd(trimmed) + "</p>";
+  });
+  closeList();
   return html;
 }
 
