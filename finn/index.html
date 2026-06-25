@@ -236,6 +236,9 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .bulk-cat-prompt strong{color:var(--fp)}
 .bulk-cat-yes{background:var(--fp);color:#fff;border:none;border-radius:9px;padding:7px 12px;font-size:11.5px;font-weight:700}
 .bulk-cat-no{background:transparent;border:1px solid var(--fb);color:var(--fm);border-radius:9px;padding:7px 12px;font-size:11.5px;font-weight:700}
+.price-alert{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(220,38,38,.08);border:1px solid var(--fe);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12.5px;color:var(--fd)}
+.price-alert strong{color:var(--fe)}
+.price-alert-ok{background:var(--fe);color:#fff;border:none;border-radius:9px;padding:7px 12px;font-size:11.5px;font-weight:700}
 .day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .day-cell{border:1px solid var(--fb);background:var(--fcard);border-radius:8px;padding:7px 0;font-size:12.5px;font-weight:700;color:var(--fm)}
 .day-cell:hover{border-color:#CBD5E1}
@@ -496,7 +499,7 @@ function db(table, method, body, query){
     });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null };
 
 function thisMonth(){
   var n = new Date();
@@ -1131,6 +1134,7 @@ function renderLancamentos(){
       (state.filterMonth ? '<button type="button" class="btn-ghost" id="btnClearMonthFilter">Ver todos os meses</button>' : '') +
       '<button type="button" class="btn-ghost" id="btnExportCSV">Exportar CSV</button>' +
       renderBulkCatPrompt() +
+      renderPriceAlert() +
       '<div id="txListWrap">' + renderTxList(filteredTxs()) + '</div>' +
     '</div>';
 }
@@ -1142,6 +1146,15 @@ function renderBulkCatPrompt(){
     '<span>Aplicar <strong>' + escapeHtml(p.category) + '</strong> a outr' + (p.ids.length === 1 ? "a transação" : "as " + p.ids.length + " transações") + ' com a descrição "' + escapeHtml(p.description) + '"?</span>' +
     '<button type="button" class="bulk-cat-yes" id="btnApplyBulkCat">Sim, aplicar</button>' +
     '<button type="button" class="bulk-cat-no" id="btnDismissBulkCat">Não</button>' +
+  '</div>';
+}
+
+function renderPriceAlert(){
+  var a = state.priceAlert;
+  if(!a) return '';
+  return '<div class="price-alert">' +
+    '<span>⚠️ <strong>' + escapeHtml(a.description) + '</strong> veio ' + a.pct + '% mais cara que o normal (' + fmtMoney(a.value) + ' vs. média de ' + fmtMoney(a.avg) + ').</span>' +
+    '<button type="button" class="price-alert-ok" id="btnDismissPriceAlert">Entendi</button>' +
   '</div>';
 }
 
@@ -1645,6 +1658,20 @@ function normDesc(s){
   return (s || "").trim().toLowerCase().replace(/\s+/g, " ");
 }
 
+function checkPriceAnomaly(type, description, value, excludeId){
+  if(type !== "despesa") return;
+  var prior = state.txs.filter(function(t){
+    return t.id !== excludeId && t.type === type && normDesc(t.description) === normDesc(description);
+  });
+  if(prior.length < 2) return;
+  var avg = prior.reduce(function(s,t){ return s + Number(t.value); }, 0) / prior.length;
+  if(avg <= 0) return;
+  var diff = value - avg;
+  if(diff / avg < 0.25 || diff < 5) return;
+  var pct = Math.round((diff / avg) * 100);
+  state.priceAlert = { description: description, value: value, avg: avg, pct: pct };
+}
+
 function getDismissedRecurring(){
   try { return JSON.parse(localStorage.getItem("finn_dismissed_recurring") || "[]"); }
   catch(e){ return []; }
@@ -1730,6 +1757,7 @@ function buildDayGrid(selected){
 function renderFixas(){
   return '' +
     renderRecurringSuggestions() +
+    renderPriceAlert() +
     '<div class="card">' +
       '<div class="eyebrow">Nova conta fixa</div>' +
       '<div class="form-row type-toggle">' +
@@ -2202,6 +2230,8 @@ function bindContentEvents(){
     if(btnApplyBulkCat) btnApplyBulkCat.addEventListener("click", applyBulkCategory);
     var btnDismissBulkCat = document.getElementById("btnDismissBulkCat");
     if(btnDismissBulkCat) btnDismissBulkCat.addEventListener("click", dismissBulkCatPrompt);
+    var btnDismissPriceAlert = document.getElementById("btnDismissPriceAlert");
+    if(btnDismissPriceAlert) btnDismissPriceAlert.addEventListener("click", dismissPriceAlert);
     var importFile = document.getElementById("importFile");
     if(importFile) importFile.addEventListener("change", function(e){
       var file = e.target.files[0];
@@ -2337,6 +2367,8 @@ function bindContentEvents(){
     document.querySelectorAll("[data-dismissrecurring]").forEach(function(btn){
       btn.addEventListener("click", function(){ dismissRecurring(btn.dataset.dismissrecurring); });
     });
+    var btnDismissPriceAlertFixas = document.getElementById("btnDismissPriceAlert");
+    if(btnDismissPriceAlertFixas) btnDismissPriceAlertFixas.addEventListener("click", dismissPriceAlert);
   }
   if(state.tab === "config"){
     document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
@@ -2394,6 +2426,7 @@ function saveTransaction(){
           state.bulkCatPrompt = { ids: siblings.map(function(t){ return t.id; }), description: fields.description, category: fields.category };
         }
       }
+      checkPriceAnomaly(fields.type, fields.description, fields.value, id);
       render();
     });
   } else {
@@ -2402,6 +2435,7 @@ function saveTransaction(){
       if(rows && rows[0]) state.txs.unshift(rows[0]);
       sortTxs();
       formState.value = ""; formState.description = "";
+      checkPriceAnomaly(fields.type, fields.description, fields.value, rows && rows[0] && rows[0].id);
       render();
     });
   }
@@ -2421,6 +2455,11 @@ function applyBulkCategory(){
 
 function dismissBulkCatPrompt(){
   state.bulkCatPrompt = null;
+  render();
+}
+
+function dismissPriceAlert(){
+  state.priceAlert = null;
   render();
 }
 
@@ -2565,6 +2604,7 @@ function launchFixed(id){
     if(newTx) state.txs.unshift(newTx);
     f.launched_months = months;
     sortTxs();
+    checkPriceAnomaly(f.type, f.description, Number(f.value), newTx && newTx.id);
     render();
   });
 }
