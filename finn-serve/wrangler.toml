@@ -23,4 +23,4 @@ crons = ["0 12 * * *"]
 # ─────────────────────────────────────────────
 [[kv_namespaces]]
 binding = "FINN_KV"
-id = "COLE_AQUI_O_ID_DO_KV_NAMESPACE"
+id = "47c375c30cb94e7686218d7bdd3e3e1a"
