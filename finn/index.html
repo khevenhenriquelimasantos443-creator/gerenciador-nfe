@@ -368,10 +368,6 @@ body.finn-dark .btn-google:hover{background:#1E293B}
           <button class="hamburger-btn" id="btnMenu" aria-label="Menu">☰</button>
           <div class="brand">Finn<span>.</span></div>
         </div>
-        <div class="topbar-actions" style="display:flex;gap:8px">
-          <button class="btn-logout" id="btnConfigTop" title="Configurações">⚙️</button>
-          <button class="btn-logout" id="btnLogout">Sair</button>
-        </div>
       </div>
       <div class="content" id="content"></div>
       <footer class="app-footer">
@@ -381,6 +377,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
           <a href="/termos" target="_blank" rel="noopener">Termos</a>
           <a href="/deletar-dados" target="_blank" rel="noopener">Excluir dados</a>
           <a href="mailto:Finn.controle01@gmail.com">Contato</a>
+          <a href="https://wa.me/5513992102413" target="_blank" rel="noopener">WhatsApp</a>
         </div>
         <div class="app-footer-copy">© 2026 Finn. — Controle financeiro inteligente.</div>
       </footer>
@@ -2551,7 +2548,7 @@ function bindContentEvents(){
     document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
     document.getElementById("btnDarkToggle").addEventListener("click", toggleDarkMode);
     document.getElementById("btnLogoutConfig").addEventListener("click", function(){
-      document.getElementById("btnLogout").click();
+      document.getElementById("btnLogoutNav").click();
     });
     document.getElementById("btnAddCategory").addEventListener("click", addCustomCategory);
     document.querySelectorAll(".cat-del").forEach(function(btn){
@@ -3080,22 +3077,16 @@ document.getElementById("btnUpdateNow").addEventListener("click", function(){
 });
 
 document.getElementById("btnGoogle").addEventListener("click", Auth.loginGoogle);
-document.getElementById("btnConfigTop").addEventListener("click", function(){
+document.getElementById("btnConfigNav").addEventListener("click", function(){
   state.tab = "config";
   render();
+  document.getElementById("navMenu").classList.remove("open");
 });
-document.getElementById("btnLogout").addEventListener("click", function(){
+document.getElementById("btnLogoutNav").addEventListener("click", function(){
   Auth.logout(currentSession.access_token).then(function(){
     currentSession = null;
     showLogin();
   });
-});
-document.getElementById("btnConfigNav").addEventListener("click", function(){
-  document.getElementById("btnConfigTop").click();
-  document.getElementById("navMenu").classList.remove("open");
-});
-document.getElementById("btnLogoutNav").addEventListener("click", function(){
-  document.getElementById("btnLogout").click();
   document.getElementById("navMenu").classList.remove("open");
 });
 document.querySelectorAll(".tab-btn").forEach(function(btn){
