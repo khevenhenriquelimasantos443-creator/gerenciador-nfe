@@ -1790,6 +1790,16 @@ function buildDayGrid(selected){
   return out;
 }
 
+function buildDaySelect(id, selected){
+  var sel = parseInt(selected, 10) || 1;
+  var out = '<select id="' + id + '">';
+  for(var d = 1; d <= 31; d++){
+    out += '<option value="' + d + '"' + (d === sel ? " selected" : "") + '>Dia ' + d + '</option>';
+  }
+  out += '</select>';
+  return out;
+}
+
 function renderFixas(){
   return '' +
     renderRecurringSuggestions() +
@@ -1885,11 +1895,11 @@ function renderCartoes(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Dia de fechamento</label>' +
-        '<div class="day-grid" id="cardClosingDayGrid">' + buildDayGrid(cardForm.closingDay) + '</div>' +
+        buildDaySelect("cardClosingDay", cardForm.closingDay) +
       '</div>' +
       '<div class="form-row">' +
         '<label>Dia de vencimento</label>' +
-        '<div class="day-grid" id="cardDueDayGrid">' + buildDayGrid(cardForm.dueDay) + '</div>' +
+        buildDaySelect("cardDueDay", cardForm.dueDay) +
       '</div>' +
       '<button class="btn-submit" id="btnSaveCard">Adicionar cartão</button>' +
       (state.cardsError ? '<div class="ai-error" style="margin-top:10px">Não consegui carregar seus cartões (' + escapeHtml(state.cardsError) + '). Verifique se a tabela credit_cards foi criada no Supabase (supabase/07_credit_cards.sql).</div>' : '') +
@@ -2527,20 +2537,6 @@ function bindContentEvents(){
     if(btnDismissPriceAlertFixas) btnDismissPriceAlertFixas.addEventListener("click", dismissPriceAlert);
   }
   if(state.tab === "cartoes"){
-    document.querySelectorAll("#cardClosingDayGrid .day-cell").forEach(function(cell){
-      cell.addEventListener("click", function(){
-        cardForm.closingDay = cell.dataset.day;
-        document.querySelectorAll("#cardClosingDayGrid .day-cell").forEach(function(c){ c.classList.remove("sel"); });
-        cell.classList.add("sel");
-      });
-    });
-    document.querySelectorAll("#cardDueDayGrid .day-cell").forEach(function(cell){
-      cell.addEventListener("click", function(){
-        cardForm.dueDay = cell.dataset.day;
-        document.querySelectorAll("#cardDueDayGrid .day-cell").forEach(function(c){ c.classList.remove("sel"); });
-        cell.classList.add("sel");
-      });
-    });
     document.getElementById("btnSaveCard").addEventListener("click", function(){
       syncCardForm();
       saveCard();
@@ -2875,8 +2871,12 @@ function deleteFixed(id){
 function syncCardForm(){
   var name = document.getElementById("cardName");
   var limit = document.getElementById("cardLimit");
+  var closingDay = document.getElementById("cardClosingDay");
+  var dueDay = document.getElementById("cardDueDay");
   if(name) cardForm.name = name.value;
   if(limit) cardForm.limitValue = limit.value;
+  if(closingDay) cardForm.closingDay = closingDay.value;
+  if(dueDay) cardForm.dueDay = dueDay.value;
 }
 
 function saveCard(){
