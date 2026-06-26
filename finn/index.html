@@ -567,6 +567,13 @@ function txsOfMonth(ym){
   return state.txs.filter(function(t){ return (t.date || "").slice(0,7) === ym; });
 }
 
+// Aplicação automática / resgate (Rende Fácil, CDB, fundos, etc.) é dinheiro
+// indo e voltando dentro do próprio banco, não receita/despesa real — os
+// apps de banco também excluem isso do resumo de Entradas e Saídas.
+function isFlowTx(t){
+  return t.category !== "Investimento";
+}
+
 function monthSpentByCat(cat){
   return txsOfMonth(thisMonth())
     .filter(function(t){ return t.type === "despesa" && t.category === cat; })
@@ -601,8 +608,8 @@ function renderGreeting(){
 /* ── Dashboard ── */
 function renderDashboard(){
   var txs = txsOfMonth(thisMonth());
-  var receita = txs.filter(function(t){return t.type==="receita";}).reduce(function(s,t){return s+Number(t.value);},0);
-  var despesa = txs.filter(function(t){return t.type==="despesa";}).reduce(function(s,t){return s+Number(t.value);},0);
+  var receita = txs.filter(function(t){return t.type==="receita" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
+  var despesa = txs.filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
   var saldo = receita - despesa;
 
   var html = '' + renderGreeting();
@@ -644,8 +651,8 @@ function renderEvolutionChart(){
     var t = txsOfMonth(m.ym);
     return {
       label: m.label,
-      r: t.filter(function(x){return x.type==="receita";}).reduce(function(s,x){return s+Number(x.value);},0),
-      d: t.filter(function(x){return x.type==="despesa";}).reduce(function(s,x){return s+Number(x.value);},0)
+      r: t.filter(function(x){return x.type==="receita" && isFlowTx(x);}).reduce(function(s,x){return s+Number(x.value);},0),
+      d: t.filter(function(x){return x.type==="despesa" && isFlowTx(x);}).reduce(function(s,x){return s+Number(x.value);},0)
     };
   });
   var max = Math.max(1, Math.max.apply(null, data.map(function(m){ return Math.max(m.r, m.d); })));
@@ -666,7 +673,7 @@ function renderEvolutionChart(){
 
 function renderCategoryBreakdown(monthTxs){
   var byCat = {};
-  monthTxs.filter(function(t){return t.type==="despesa";}).forEach(function(t){
+  monthTxs.filter(function(t){return t.type==="despesa" && isFlowTx(t);}).forEach(function(t){
     byCat[t.category] = (byCat[t.category] || 0) + Number(t.value);
   });
   var rows = Object.keys(byCat).map(function(c){ return { cat: c, val: byCat[c] }; })
@@ -1001,8 +1008,8 @@ function renderAnalises(){
       '<div class="empty-state">Nenhum lançamento nesse período.</div></div>';
   }
 
-  var receitas = txs.filter(function(t){ return t.type === "receita"; });
-  var despesas = txs.filter(function(t){ return t.type === "despesa"; });
+  var receitas = txs.filter(function(t){ return t.type === "receita" && isFlowTx(t); });
+  var despesas = txs.filter(function(t){ return t.type === "despesa" && isFlowTx(t); });
   var totalReceita = receitas.reduce(function(s,t){ return s + Number(t.value); }, 0);
   var totalDespesa = despesas.reduce(function(s,t){ return s + Number(t.value); }, 0);
   var saldo = totalReceita - totalDespesa;
@@ -1337,7 +1344,7 @@ var CATEGORY_KEYWORDS = [
   ["Saúde", /farm[aá]cia|drogaria|\braia\b|hospital|cl[ií]nica|laborat[oó]rio|unimed|dentista|seguro de vida/i],
   ["Educação", /\bescola\b|faculdade|\bcurso\b|livraria|mensalidade/i],
   ["Lazer", /cinema|ingresso|shopping|spotify|netflix|steam|drinks|balada|boate|viagem|\bhotel\b/i],
-  ["Investimento", /rende f[aá]cil|tesouro direto|\bcdb\b|fundo de investim|aplica[cç][aã]o/i],
+  ["Investimento", /rende f[aá]cil|tesouro direto|\bcdb\b|\blci\b|\blca\b|fundo (de )?investim|fundo imobili|\bfii\b|aplica[cç][aã]o|resgate|poupan[cç]a autom|cofrinho|caixinha|previd[eê]ncia privada|renda fixa|renda vari[aá]vel|\bbb (mm|rf|a[cç][oõ]es)\b/i],
   ["Salário", /sal[aá]rio|folha de pagamento|holerite/i]
 ];
 
@@ -2160,10 +2167,10 @@ function renderMarkdownLite(text){
 function buildFinanceSummary(){
   var ym = thisMonth();
   var txs = txsOfMonth(ym);
-  var receita = txs.filter(function(t){return t.type==="receita";}).reduce(function(s,t){return s+Number(t.value);},0);
-  var despesa = txs.filter(function(t){return t.type==="despesa";}).reduce(function(s,t){return s+Number(t.value);},0);
+  var receita = txs.filter(function(t){return t.type==="receita" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
+  var despesa = txs.filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
   var byCat = {};
-  txs.filter(function(t){return t.type==="despesa";}).forEach(function(t){ byCat[t.category] = (byCat[t.category]||0) + Number(t.value); });
+  txs.filter(function(t){return t.type==="despesa" && isFlowTx(t);}).forEach(function(t){ byCat[t.category] = (byCat[t.category]||0) + Number(t.value); });
   var catLines = Object.keys(byCat).sort(function(a,b){return byCat[b]-byCat[a];})
     .map(function(c){ return "- " + c + ": R$ " + byCat[c].toFixed(2); }).join("\n") || "- (sem despesas)";
   var limLines = state.limits.map(function(l){
@@ -2252,6 +2259,8 @@ function renderConfig(){
   html += '<div class="card">' +
     '<div class="eyebrow">Dados</div>' +
     '<button type="button" class="btn-ghost" id="btnExportAll" style="width:100%">Exportar todos os lançamentos (CSV)</button>' +
+    '<button type="button" class="btn-ghost" id="btnFixInvestCat" style="width:100%;margin-top:10px">Corrigir categorias de investimento</button>' +
+    '<div style="font-size:12px;color:var(--fm);margin-top:6px">Reclassifica lançamentos antigos de aplicação/resgate automático (Rende Fácil, fundos, etc.) como "Investimento", para Receita/Despesa baterem com o extrato do banco.</div>' +
     '<div class="card alert-card" style="margin-top:16px">' +
       '<div style="font-weight:700;font-size:13px;margin-bottom:6px">Zona de risco</div>' +
       '<div style="font-size:12px;color:var(--fm);margin-bottom:10px">Apaga só os seus lançamentos (receitas e despesas). Limites, metas, contas fixas e categorias continuam intactos. Não é possível desfazer.</div>' +
@@ -2584,6 +2593,7 @@ function bindContentEvents(){
       btn.addEventListener("click", function(){ deleteCustomCategory(btn.dataset.catid); });
     });
     document.getElementById("btnExportAll").addEventListener("click", exportAllCSV);
+    document.getElementById("btnFixInvestCat").addEventListener("click", fixInvestmentCategories);
     document.getElementById("btnEnablePush").addEventListener("click", enablePushNotifications);
     document.getElementById("btnDeleteAllTx").addEventListener("click", deleteAllTransactions);
     document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
@@ -2661,6 +2671,32 @@ function saveTransaction(){
       render();
     });
   }
+}
+
+function fixInvestmentCategories(){
+  var ids = [];
+  state.txs.forEach(function(t){
+    if(t.category === "Investimento") return;
+    var guessed = guessCategory(t.description || "");
+    if(guessed === "Investimento") ids.push(t.id);
+  });
+  if(!ids.length){
+    state.configMsg = "Nenhum lançamento precisava de correção. Já está tudo certo.";
+    render();
+    return;
+  }
+  state.txs = state.txs.map(function(t){
+    return ids.indexOf(t.id) !== -1 ? Object.assign({}, t, { category: "Investimento" }) : t;
+  });
+  state.configMsg = "Corrigindo " + ids.length + " lançamento(s)...";
+  render();
+  db("transactions", "PATCH", { category: "Investimento" }, { id: "in.(" + ids.join(",") + ")", user_id: "eq." + uid() }).then(function(){
+    state.configMsg = ids.length + " lançamento(s) reclassificado(s) como Investimento.";
+    render();
+  }).catch(function(err){
+    state.configMsg = "Reclassifiquei localmente, mas não consegui salvar tudo no banco (" + (err && err.message ? err.message : "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 function applyBulkCategory(){
