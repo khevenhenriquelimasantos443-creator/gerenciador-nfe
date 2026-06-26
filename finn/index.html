@@ -2977,12 +2977,30 @@ function loadCards(){
   });
 }
 
+// Busca todas as páginas: o limite de 1000 por requisição (padrão do
+// PostgREST) cortava lançamentos antigos quando a conta passava de
+// 1000 transações, sumindo com meses inteiros sem aviso nenhum.
+function dbAll(table, query){
+  var pageSize = 1000;
+  var all = [];
+  function fetchPage(offset){
+    var q = Object.assign({}, query, { limit: String(pageSize), offset: String(offset) });
+    return db(table, "GET", null, q).then(function(rows){
+      rows = rows || [];
+      all = all.concat(rows);
+      if(rows.length === pageSize) return fetchPage(offset + pageSize);
+      return all;
+    });
+  }
+  return fetchPage(0);
+}
+
 /* ── data load ── */
 function loadData(){
   state.loading = true;
   state.loadError = null;
   return Promise.all([
-    db("transactions", "GET", null, { user_id: "eq." + uid(), order: "date.desc,created_at.desc", limit: "1000" }),
+    dbAll("transactions", { user_id: "eq." + uid(), order: "date.desc,created_at.desc" }),
     db("spending_limits", "GET", null, { user_id: "eq." + uid() }),
     db("goals", "GET", null, { user_id: "eq." + uid() }),
     db("fixed_accounts", "GET", null, { user_id: "eq." + uid() }),
