@@ -106,6 +106,15 @@ tbody tr:last-child td{border-bottom:none}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .modal-overlay.show{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:480px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.modal.modal-lg{max-width:560px}
+.bulk-list{display:flex;flex-direction:column;gap:2px;max-height:320px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;padding:4px}
+.bulk-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13px;cursor:pointer}
+.bulk-row:hover{background:var(--bg3)}
+.bulk-row input[type=checkbox]{width:16px;height:16px;padding:0;flex-shrink:0}
+.bulk-name{flex:1;font-weight:600}
+.bulk-valor{font-size:12px;font-weight:700;color:var(--accent);min-width:70px;text-align:right}
+.bulk-row-disabled{opacity:.45;cursor:not-allowed}
+.bulk-row-disabled .bulk-valor{color:var(--muted2);font-weight:600}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
 .modal-title{font-size:16px;font-weight:800}
 .modal-body{padding:20px}
@@ -240,6 +249,7 @@ tbody tr:last-child td{border-bottom:none}
           <div class="page-sub">Registre cada domingo/feriado trabalhado por colaborador</div>
         </div>
         <div class="head-actions">
+          <button class="btn btn-ghost" id="btnLancMassa">⚡ Lançamento em massa</button>
           <button class="btn btn-primary" id="btnNovoLanc">+ Novo lançamento</button>
         </div>
       </div>
@@ -475,8 +485,10 @@ function toast(msg, type){
 }
 
 // ---------- modal ----------
-function openModal(html){
-  document.getElementById('modalBox').innerHTML = html;
+function openModal(html, wide){
+  const box = document.getElementById('modalBox');
+  box.innerHTML = html;
+  box.classList.toggle('modal-lg', !!wide);
   document.getElementById('modalOverlay').classList.add('show');
 }
 function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
@@ -635,6 +647,7 @@ function renderFeriados(){
         <td class="mini">${weekdayName(f.data)}</td>
         <td>${esc(f.nome)}</td>
         <td class="row-actions">
+          <button class="btn btn-ghost btn-sm" title="Lançar este dia para os colaboradores" onclick="App.bulkModal('${f.data}')">⚡ Lançar</button>
           <button class="btn btn-ghost btn-icon btn-sm" title="Editar" onclick="App.editFeriado('${f.data}')">✏️</button>
           <button class="btn btn-danger btn-icon btn-sm" title="Excluir" onclick="App.delFeriado('${f.data}')">🗑️</button>
         </td>
@@ -695,17 +708,16 @@ function setValor(tipo, sit, val){
 }
 
 // ================= LANÇAMENTOS =================
+function ativosOrdenados(){
+  return DB.colaboradores.filter(c => c.ativo !== false).sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
+}
 function fillColabSelects(){
-  const ativos = DB.colaboradores.filter(c => c.ativo !== false).sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
-  const optsByTipo = TIPOS.map(t => {
-    const items = ativos.filter(c => c.tipo === t);
-    if(!items.length) return '';
-    return `<optgroup label="${TIPO_LABEL[t]}">${items.map(c => `<option value="${c.id}">${esc(c.nome)}</option>`).join('')}</optgroup>`;
-  }).join('');
+  const ativos = ativosOrdenados();
+  const opts = ativos.map(c => `<option value="${c.id}">${esc(c.nome)}</option>`).join('');
 
   const filtro = document.getElementById('lancFiltroColab');
   const cur = filtro.value;
-  filtro.innerHTML = '<option value="">Todos os colaboradores</option>' + optsByTipo;
+  filtro.innerHTML = '<option value="">Todos os colaboradores</option>' + opts;
   filtro.value = cur;
 
   const filtroSit = document.getElementById('lancFiltroSit');
@@ -753,12 +765,8 @@ function renderLancamentos(){
 function lancModal(lanc){
   const editing = !!lanc;
   lanc = lanc || {colaboradorId:'', data: toIso(new Date()), situacao:'', valor:0, obs:''};
-  const ativos = DB.colaboradores.filter(c => c.ativo !== false).sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
-  const optsByTipo = TIPOS.map(t => {
-    const items = ativos.filter(c => c.tipo === t);
-    if(!items.length) return '';
-    return `<optgroup label="${TIPO_LABEL[t]}">${items.map(c => `<option value="${c.id}" ${c.id===lanc.colaboradorId?'selected':''}>${esc(c.nome)}</option>`).join('')}</optgroup>`;
-  }).join('');
+  const ativos = ativosOrdenados();
+  const opts = ativos.map(c => `<option value="${c.id}" ${c.id===lanc.colaboradorId?'selected':''}>${esc(c.nome)}</option>`).join('');
 
   const isDomingo = lanc.situacao ? lanc.situacao.includes('Domingo') : isSunday(lanc.data);
   const isFeriado = lanc.situacao ? lanc.situacao.includes('Feriado') : isHoliday(lanc.data);
@@ -770,7 +778,7 @@ function lancModal(lanc){
       <div class="field"><label>Colaborador</label>
         <select id="lColab" onchange="App.calcValor()">
           <option value="">Selecione...</option>
-          ${optsByTipo}
+          ${opts}
         </select>
       </div>
       <div class="field"><label>Data</label><input id="lData" type="date" value="${lanc.data}" onchange="App.onDataChange()"></div>
@@ -848,6 +856,105 @@ function delLanc(id){
   if(!confirm('Excluir este lançamento?')) return;
   DB.lancamentos = DB.lancamentos.filter(l => l.id !== id);
   save(); toast('Lançamento excluído','ok'); renderAll();
+}
+
+// ---------- lançamento em massa (por dia/feriado) ----------
+function bulkModal(prefillDate){
+  const data = prefillDate || toIso(new Date());
+  const ativos = ativosOrdenados();
+  if(!ativos.length){ toast('Cadastre colaboradores primeiro','err'); return; }
+  const isDomingo = isSunday(data);
+  const isFeriado = isHoliday(data);
+  const existentes = new Set(DB.lancamentos.filter(l => l.data === data).map(l => l.colaboradorId));
+
+  const rows = ativos.map(c => {
+    const already = existentes.has(c.id);
+    return `
+      <label class="bulk-row ${already?'bulk-row-disabled':''}">
+        <input type="checkbox" class="bulk-check" value="${c.id}" ${already?'disabled':'checked'}>
+        <span class="bulk-name">${esc(c.nome)}</span>
+        <span class="badge ${TIPO_BADGE[c.tipo]||''}">${esc(TIPO_LABEL[c.tipo]||c.tipo)}</span>
+        <span class="bulk-valor">${already ? 'já lançado' : '—'}</span>
+      </label>`;
+  }).join('');
+
+  openModal(`
+    <div class="modal-head"><div class="modal-title">Lançamento em massa</div><button class="btn btn-icon btn-ghost" onclick="App.closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Data</label><input id="bData" type="date" value="${data}" onchange="App.bulkOnDateChange()"></div>
+      <div class="check-row">
+        <label class="check-item"><input type="checkbox" id="bDomingo" ${isDomingo?'checked':''} onchange="App.bulkRecalc()"> Domingo</label>
+        <label class="check-item"><input type="checkbox" id="bFeriado" ${isFeriado?'checked':''} onchange="App.bulkRecalc()"> Feriado</label>
+        <label class="check-item"><input type="checkbox" id="b6h" onchange="App.bulkRecalc()"> Turno 6h</label>
+      </div>
+      <div class="hint" id="bHint" style="margin-bottom:12px"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <label style="font-size:12px;font-weight:700;color:var(--muted)">Colaboradores (${ativos.length}, ordem alfabética)</label>
+        <span>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="App.bulkToggleAll(true)">Marcar todos</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="App.bulkToggleAll(false)">Desmarcar todos</button>
+        </span>
+      </div>
+      <div class="bulk-list" id="bulkList">${rows}</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="App.closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="App.bulkSave()">Criar lançamentos</button>
+    </div>
+  `, true);
+  bulkRecalc();
+}
+function bulkOnDateChange(){
+  const data = document.getElementById('bData').value;
+  if(!data) return;
+  document.getElementById('bDomingo').checked = isSunday(data);
+  document.getElementById('bFeriado').checked = isHoliday(data);
+  bulkRecalc();
+}
+function bulkRecalc(){
+  const data = document.getElementById('bData').value;
+  const domingo = document.getElementById('bDomingo').checked;
+  const feriado = document.getElementById('bFeriado').checked;
+  const seis = document.getElementById('b6h').checked;
+  const sit = situacaoFromFlags(domingo, feriado, seis);
+  const hint = document.getElementById('bHint');
+  hint.textContent = sit ? `Situação: ${sit} — ${weekdayName(data)}, ${fmtDate(data)}` : 'Marque ao menos "Domingo" ou "Feriado".';
+
+  const existentes = new Set(DB.lancamentos.filter(l => l.data === data).map(l => l.colaboradorId));
+  document.querySelectorAll('#bulkList .bulk-row').forEach(row => {
+    const cb = row.querySelector('.bulk-check');
+    const c = colabById(cb.value);
+    const valorEl = row.querySelector('.bulk-valor');
+    const already = existentes.has(cb.value);
+    cb.disabled = already;
+    row.classList.toggle('bulk-row-disabled', already);
+    if(already){ valorEl.textContent = 'já lançado'; cb.checked = false; }
+    else if(sit && c && DB.valores[c.tipo]){ valorEl.textContent = fmtBRL(DB.valores[c.tipo][sit]); }
+    else { valorEl.textContent = '—'; }
+  });
+}
+function bulkToggleAll(state){
+  document.querySelectorAll('#bulkList .bulk-check:not(:disabled)').forEach(cb => cb.checked = state);
+}
+function bulkSave(){
+  const data = document.getElementById('bData').value;
+  const domingo = document.getElementById('bDomingo').checked;
+  const feriado = document.getElementById('bFeriado').checked;
+  const seis = document.getElementById('b6h').checked;
+  const situacao = situacaoFromFlags(domingo, feriado, seis);
+  if(!data){ toast('Selecione a data','err'); return; }
+  if(!situacao){ toast('Marque Domingo e/ou Feriado','err'); return; }
+  const checked = Array.from(document.querySelectorAll('#bulkList .bulk-check:checked:not(:disabled)'));
+  if(!checked.length){ toast('Selecione ao menos um colaborador','err'); return; }
+  let criados = 0;
+  checked.forEach(cb => {
+    const c = colabById(cb.value);
+    if(!c) return;
+    const valor = (DB.valores[c.tipo] && DB.valores[c.tipo][situacao]) || 0;
+    DB.lancamentos.push({id: uid('l'), colaboradorId: c.id, data, situacao, valor, obs:''});
+    criados++;
+  });
+  save(); closeModal(); toast(`${criados} lançamento(s) criado(s)`, 'ok'); renderAll();
 }
 
 // ================= RELATÓRIO =================
@@ -1036,6 +1143,7 @@ function renderAll(){
 // ---------- events ----------
 document.getElementById('btnNovoColab').addEventListener('click', () => colabModal());
 document.getElementById('btnNovoLanc').addEventListener('click', () => lancModal());
+document.getElementById('btnLancMassa').addEventListener('click', () => bulkModal());
 document.getElementById('dashNovoLanc').addEventListener('click', () => { goView('lancamentos'); lancModal(); });
 document.getElementById('btnNovoFeriado').addEventListener('click', () => feriadoModal());
 document.getElementById('btnSeedFeriados').addEventListener('click', seedFeriados);
@@ -1065,7 +1173,8 @@ window.App = {
   setValor,
   editLanc: id => lancModal(DB.lancamentos.find(l => l.id === id)),
   saveLanc, delLanc,
-  calcValor, onDataChange
+  calcValor, onDataChange,
+  bulkModal, bulkOnDateChange, bulkRecalc, bulkToggleAll, bulkSave
 };
 
 renderAll();
