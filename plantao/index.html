@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plantão. — Controle de Domingos e Feriados</title>
+<meta name="description" content="Controle de colaboradores, lançamentos e folha de pagamento de domingos e feriados trabalhados.">
+<meta name="theme-color" content="#F59E0B">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0E1A;--bg2:#0F172A;--bg3:#1E293B;--bg4:#293548;
+  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);
+  --text:#F8FAFC;--muted:#94A3B8;--muted2:#64748B;
+  --accent:#F59E0B;--accent-d:#D97706;--accent-l:rgba(245,158,11,.14);
+  --success:#22C55E;--warning:#F59E0B;--danger:#EF4444;--info:#3B82F6;
+  --clt:#14B8A6;--sup:#8B5CF6;--jov:#3B82F6;
+  --r-sm:8px;--r:12px;--r-lg:16px;--r-xl:20px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;font-size:14px;line-height:1.5}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--text);background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:8px 10px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:5px}
+
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.brand-mark{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;color:#000;box-shadow:0 4px 14px rgba(245,158,11,.35)}
+.brand-name{font-size:18px;font-weight:900;letter-spacing:-.03em}
+.brand-name span{color:var(--accent)}
+.brand-sub{font-size:10px;color:var(--muted2);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-section{font-size:10px;color:var(--muted2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 6px}
+.nav-btn{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--muted);width:100%;text-align:left;transition:all .12s;margin-bottom:2px}
+.nav-btn:hover{background:var(--bg3);color:var(--text)}
+.nav-btn.active{background:var(--accent-l);color:var(--accent)}
+.nav-btn .ic{font-size:16px;width:18px;text-align:center}
+.nav-btn .count{margin-left:auto;background:var(--bg3);color:var(--muted);font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px}
+.nav-btn.active .count{background:var(--accent);color:#000}
+.sidebar-foot{margin-top:auto;padding:14px 10px 4px;border-top:1px solid var(--border);font-size:11px;color:var(--muted2)}
+.sidebar-foot a{color:var(--accent);font-weight:600}
+.back-home{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted2);margin-bottom:10px}
+.back-home:hover{color:var(--text)}
+
+main{padding:26px 32px 60px;max-width:1400px;width:100%;margin:0 auto}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.page-title{font-size:25px;font-weight:900;letter-spacing:-.03em}
+.page-sub{font-size:13px;color:var(--muted);margin-top:3px}
+.head-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;transition:all .12s;border:1px solid transparent;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-d);color:#fff;transform:translateY(-1px)}
+.btn-ghost{background:var(--bg3);color:var(--text);border-color:var(--border)}
+.btn-ghost:hover{background:var(--bg4)}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--danger);border-color:rgba(239,68,68,.25)}
+.btn-danger:hover{background:rgba(239,68,68,.22)}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:8px}
+.btn-icon{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0;border-radius:8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.card-title{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.card-sub{font-size:12px;color:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,var(--accent))}
+.stat-label{font-size:11px;color:var(--muted2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.stat-val{font-size:24px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.stat-foot{font-size:11px;color:var(--muted);margin-top:6px}
+.stat-foot strong{color:var(--c,var(--accent))}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.toolbar input,.toolbar select{min-width:150px}
+.search-box{position:relative;flex:1;min-width:200px}
+.search-box input{width:100%;padding-left:32px}
+.search-box .ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:13px}
+
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;font-size:11px;color:var(--muted2);font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:10px 12px;border-bottom:1px solid var(--border)}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:13.5px}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr:last-child td{border-bottom:none}
+.table-wrap{overflow-x:auto}
+.empty-row td{text-align:center;color:var(--muted2);padding:36px 12px;font-size:13px}
+
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700}
+.badge-clt{background:rgba(20,184,166,.14);color:var(--clt)}
+.badge-sup{background:rgba(139,92,246,.14);color:var(--sup)}
+.badge-jov{background:rgba(59,130,246,.14);color:var(--jov)}
+.badge-on{background:rgba(34,197,94,.14);color:var(--success)}
+.badge-off{background:rgba(148,163,184,.14);color:var(--muted)}
+.sit-tag{display:inline-block;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;background:var(--bg4);color:var(--text)}
+
+.row-actions{display:flex;gap:6px;justify-content:flex-end}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-lg);width:100%;max-width:480px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
+.modal-title{font-size:16px;font-weight:800}
+.modal-body{padding:20px}
+.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check-row{display:flex;gap:18px;align-items:center;margin-bottom:14px}
+.check-item{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600}
+.check-item input{width:16px;height:16px;padding:0}
+.hint{font-size:11.5px;color:var(--muted2);margin-top:5px}
+
+.toast-wrap{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:200}
+.toast{background:var(--bg4);border:1px solid var(--border2);border-radius:10px;padding:11px 16px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:slideIn .18s ease}
+.toast.ok{border-color:rgba(34,197,94,.4);color:var(--success)}
+.toast.err{border-color:rgba(239,68,68,.4);color:var(--danger)}
+@keyframes slideIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.view{display:none}
+.view.active{display:block}
+
+.val-table td,.val-table th{text-align:center}
+.val-table td:first-child,.val-table th:first-child{text-align:left}
+.val-table input{width:90px;text-align:right}
+
+.mini{font-size:12px;color:var(--muted)}
+.total-row td{font-weight:800;border-top:2px solid var(--border2);background:rgba(245,158,11,.04)}
+
+@media print{
+  .sidebar,.head-actions,.toolbar,.no-print{display:none!important}
+  main{padding:0;max-width:none}
+  .app{display:block}
+  body{background:#fff;color:#000}
+  .card{border:1px solid #ccc;background:#fff}
+  thead th,tbody td{color:#000;border-color:#ccc}
+}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:relative;height:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar no-print">
+    <a href="../index.html" class="back-home">← Voltar</a>
+    <div class="brand">
+      <div class="brand-mark">🗓️</div>
+      <div>
+        <div class="brand-name">Plantão<span>.</span></div>
+        <div class="brand-sub">Domingos &amp; Feriados</div>
+      </div>
+    </div>
+
+    <div class="nav-section">Visão geral</div>
+    <button class="nav-btn active" data-view="dashboard"><span class="ic">📊</span> Dashboard</button>
+
+    <div class="nav-section">Gestão</div>
+    <button class="nav-btn" data-view="lancamentos"><span class="ic">📝</span> Lançamentos <span class="count" id="cntLanc">0</span></button>
+    <button class="nav-btn" data-view="colaboradores"><span class="ic">👥</span> Colaboradores <span class="count" id="cntColab">0</span></button>
+    <button class="nav-btn" data-view="feriados"><span class="ic">📅</span> Feriados <span class="count" id="cntFer">0</span></button>
+    <button class="nav-btn" data-view="valores"><span class="ic">💰</span> Tabela de valores</button>
+
+    <div class="nav-section">Pagamento</div>
+    <button class="nav-btn" data-view="relatorio"><span class="ic">🧾</span> Folha / Relatório</button>
+
+    <div class="sidebar-foot">
+      Dados salvos neste navegador.<br>
+      <a href="#" id="btnBackupExport">Exportar backup</a> ·
+      <a href="#" id="btnBackupImport">Importar</a>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- DASHBOARD -->
+    <section class="view active" id="view-dashboard">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Dashboard</div>
+          <div class="page-sub" id="dashSub">Resumo do mês atual</div>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-primary" id="dashNovoLanc">+ Novo lançamento</button>
+        </div>
+      </div>
+      <div class="stats" id="dashStats"></div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Últimos lançamentos</div>
+            <div class="card-sub">Os 8 mais recentes</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" data-view="lancamentos">Ver todos</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Colaborador</th><th>Situação</th><th>Valor</th></tr></thead>
+            <tbody id="dashRecent"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANÇAMENTOS -->
+    <section class="view" id="view-lancamentos">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Lançamentos</div>
+          <div class="page-sub">Registre cada domingo/feriado trabalhado por colaborador</div>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-primary" id="btnNovoLanc">+ Novo lançamento</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <input type="month" id="lancMes">
+        <select id="lancFiltroColab"><option value="">Todos os colaboradores</option></select>
+        <select id="lancFiltroSit"><option value="">Todas as situações</option></select>
+        <button class="btn btn-ghost btn-sm" id="lancLimparFiltro">Limpar filtros</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Colaborador</th><th>Tipo</th><th>Situação</th><th>Valor</th><th>Obs.</th><th></th></tr></thead>
+            <tbody id="lancTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLABORADORES -->
+    <section class="view" id="view-colaboradores">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Colaboradores</div>
+          <div class="page-sub">Cadastro de nome, setor e tipo de contrato</div>
+        </div>
+        <div class="head-actions">
+          <input type="file" id="fileImportColab" accept=".xlsx,.xls,.csv" style="display:none">
+          <button class="btn btn-ghost" id="btnImportColab">📥 Importar planilha</button>
+          <button class="btn btn-ghost" id="btnExportColab">📤 Exportar</button>
+          <button class="btn btn-primary" id="btnNovoColab">+ Novo colaborador</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="search-box"><span class="ic">🔎</span><input type="text" id="colabBusca" placeholder="Buscar por nome..."></div>
+        <select id="colabFiltroTipo">
+          <option value="">Todos os tipos</option>
+          <option value="CLT">CLT</option>
+          <option value="CLT - SUPERVISOR">CLT - Supervisor</option>
+          <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+        </select>
+        <select id="colabFiltroStatus">
+          <option value="">Ativos e inativos</option>
+          <option value="ativo">Somente ativos</option>
+          <option value="inativo">Somente inativos</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>Setor</th><th>Tipo</th><th>Status</th><th></th></tr></thead>
+            <tbody id="colabTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FERIADOS -->
+    <section class="view" id="view-feriados">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Feriados</div>
+          <div class="page-sub">Datas usadas para sugerir a situação do dia automaticamente</div>
+        </div>
+        <div class="head-actions">
+          <select id="ferAno" style="min-width:110px"></select>
+          <button class="btn btn-ghost" id="btnSeedFeriados">📅 Carregar feriados nacionais</button>
+          <button class="btn btn-primary" id="btnNovoFeriado">+ Novo feriado</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Dia da semana</th><th>Nome</th><th></th></tr></thead>
+            <tbody id="ferTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALORES -->
+    <section class="view" id="view-valores">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Tabela de valores</div>
+          <div class="page-sub">Valor pago por tipo de contrato e situação do dia. Alterações salvam automaticamente.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="val-table">
+            <thead><tr><th>Situação do dia</th><th>CLT</th><th>CLT - Supervisor</th><th>Jovem Aprendiz</th></tr></thead>
+            <tbody id="valTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATORIO -->
+    <section class="view" id="view-relatorio">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Folha / Relatório</div>
+          <div class="page-sub">Total a pagar por colaborador no período</div>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-ghost" id="btnPrintRel">🖨️ Imprimir</button>
+          <button class="btn btn-primary" id="btnExportRel">📤 Exportar Excel</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <input type="month" id="relMes">
+        <select id="relTipo">
+          <option value="">Todos os tipos</option>
+          <option value="CLT">CLT</option>
+          <option value="CLT - SUPERVISOR">CLT - Supervisor</option>
+          <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+        </select>
+      </div>
+      <div class="card">
+        <div id="relTituloImp" class="mini" style="margin-bottom:10px"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Setor</th><th>Domingos</th><th>Feriados</th><th>Duplos</th><th>Lanç.</th><th>Total</th></tr></thead>
+            <tbody id="relTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+<input type="file" id="fileImportBackup" accept=".json" style="display:none">
+
+<script>
+(function(){
+'use strict';
+
+const STORAGE_KEY = 'plantaoDB_v1';
+const SITUACOES = ['Domingo','Feriado','Domingo 6h','Feriado 6h','Domingo/Feriado','Domingo/Feriado 6h'];
+const TIPOS = ['CLT','CLT - SUPERVISOR','Jovem Aprendiz'];
+const TIPO_BADGE = {'CLT':'badge-clt','CLT - SUPERVISOR':'badge-sup','Jovem Aprendiz':'badge-jov'};
+const TIPO_LABEL = {'CLT':'CLT','CLT - SUPERVISOR':'CLT - Supervisor','Jovem Aprendiz':'Jovem Aprendiz'};
+
+const SEED_COLABORADORES = [{"nome": "Adrielly Moreira de Sousa", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Amanda Mendes Muniz", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Ana Carolina Meza da Hora", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Brayan Nascimento Andrade", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Bruna Felipe Araujo Santos Jorge", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Carlos Henrique Cardoso Pereira", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Christyan Willians Ferreira Lima Santos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Danielle Gomes de Macedo", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "David Junior Saavedra Bomfim", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Deborah Karine da Silva Santos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Deivison de Oliveria Marques Tavares", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Evellyn Thainá Conceição Lisboa", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Gabriel da Rocha Silva Cardoso", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Gabriel de Andrade dos Santos", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Gabriel Feitosa Noe", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Gabriel Wendell Araujo Benetido", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Giovanna dos Santos Lopes da Silva", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Gregory Franco da Silveira Silva", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Guilherme Batista Terto", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Guilherme Silva Correia", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Gustavo Gonçalves Marcondes", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Gustavo Silva Correia", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Hygor Oliveira dos Santos", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Jade Antunes da Silva", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Jean Anunciação de Oliveira Alves", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "João Pedro Gomes Santos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Johnny Guerra Santiago", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Juliana Ribeiro Martins", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Kaique Gabriel Miranda da Silva Santos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Keven Henrique Ferreira Lima Santos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Leonardo Pereira de Lima Junior", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Luis Felipe Ibelli", "setor": "Shopee - MKTplace", "tipo": "CLT - SUPERVISOR"}, {"nome": "Luiza da Cruz Vasconcelos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Maria Eduarda Souza Azevedo", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Maria Fernanda Santana Valascvijus", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Matheus Mota Martins Fraga", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Moises Almeida Lima dos Reis", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Nathan Penha da Silva", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Nicolas Puker de Freitas Moraes", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Nycolas Kaleb da Silva Oliveira", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Pedro Henrique Pontes dos Santos", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Renata Mendes Jesus Oliveira", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Ryan domingues", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Valentina Etinger Aoki", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}, {"nome": "Victor Moraes Moraes", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Vinicius Mario da Cruz", "setor": "Shopee - MKTplace", "tipo": "CLT"}, {"nome": "Yago Vinicius Calixto de Souza", "setor": "Shopee - MKTplace", "tipo": "Jovem Aprendiz"}];
+
+const SEED_VALORES = {
+  'CLT': {'Feriado':170,'Domingo':170,'Feriado 6h':150,'Domingo 6h':150,'Domingo/Feriado':320,'Domingo/Feriado 6h':300},
+  'CLT - SUPERVISOR': {'Feriado':250,'Domingo':250,'Feriado 6h':250,'Domingo 6h':250,'Domingo/Feriado':300,'Domingo/Feriado 6h':300},
+  'Jovem Aprendiz': {'Feriado':120,'Domingo':120,'Feriado 6h':100,'Domingo 6h':100,'Domingo/Feriado':120,'Domingo/Feriado 6h':100}
+};
+
+// ---------- state ----------
+let DB = load();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const db = JSON.parse(raw);
+      db.colaboradores = db.colaboradores || [];
+      db.valores = db.valores || JSON.parse(JSON.stringify(SEED_VALORES));
+      db.feriados = db.feriados || [];
+      db.lancamentos = db.lancamentos || [];
+      return db;
+    }
+  }catch(e){}
+  const db = {
+    colaboradores: SEED_COLABORADORES.map(c => ({id: uid('c'), nome:c.nome, setor:c.setor, tipo:c.tipo, ativo:true})),
+    valores: JSON.parse(JSON.stringify(SEED_VALORES)),
+    feriados: [],
+    lancamentos: []
+  };
+  const y = new Date().getFullYear();
+  db.feriados = [...nationalHolidays(y), ...nationalHolidays(y+1)];
+  return db;
+}
+function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
+function uid(p){ return p+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
+
+// ---------- helpers ----------
+function fmtBRL(n){ return (Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function toIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function parseIso(iso){ const [y,m,d] = iso.split('-').map(Number); return new Date(y,m-1,d); }
+function fmtDate(iso){ if(!iso) return ''; const d = parseIso(iso); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); }
+const WEEKDAYS = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+function weekdayName(iso){ return WEEKDAYS[parseIso(iso).getDay()]; }
+function isSunday(iso){ return parseIso(iso).getDay() === 0; }
+function isHoliday(iso){ return DB.feriados.some(f => f.data === iso); }
+function colabById(id){ return DB.colaboradores.find(c => c.id === id); }
+function currentMonth(){ const d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+
+function easter(year){
+  const a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),
+  g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,
+  m=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
+  return new Date(year,month-1,day);
+}
+function nationalHolidays(year){
+  const ea = easter(year);
+  const goodFriday = new Date(ea); goodFriday.setDate(ea.getDate()-2);
+  const carnavalMon = new Date(ea); carnavalMon.setDate(ea.getDate()-48);
+  const carnavalTue = new Date(ea); carnavalTue.setDate(ea.getDate()-47);
+  return [
+    {data:`${year}-01-01`, nome:'Confraternização Universal'},
+    {data:toIso(carnavalMon), nome:'Carnaval (segunda)'},
+    {data:toIso(carnavalTue), nome:'Carnaval (terça)'},
+    {data:toIso(goodFriday), nome:'Sexta-feira Santa'},
+    {data:`${year}-04-21`, nome:'Tiradentes'},
+    {data:`${year}-05-01`, nome:'Dia do Trabalho'},
+    {data:`${year}-09-07`, nome:'Independência do Brasil'},
+    {data:`${year}-10-12`, nome:'Nossa Senhora Aparecida'},
+    {data:`${year}-11-02`, nome:'Finados'},
+    {data:`${year}-11-15`, nome:'Proclamação da República'},
+    {data:`${year}-11-20`, nome:'Consciência Negra'},
+    {data:`${year}-12-25`, nome:'Natal'}
+  ];
+}
+
+function toast(msg, type){
+  const el = document.createElement('div');
+  el.className = 'toast' + (type ? ' '+type : '');
+  el.textContent = msg;
+  document.getElementById('toastWrap').appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
+// ---------- modal ----------
+function openModal(html){
+  document.getElementById('modalBox').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
+document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target.id === 'modalOverlay') closeModal(); });
+
+// ---------- navigation ----------
+document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => goView(btn.dataset.view));
+});
+function goView(name){
+  document.querySelectorAll('.nav-btn[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === name));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-'+name));
+  renderAll();
+}
+
+// ================= COLABORADORES =================
+function renderColaboradores(){
+  const busca = (document.getElementById('colabBusca').value || '').toLowerCase().trim();
+  const fTipo = document.getElementById('colabFiltroTipo').value;
+  const fStatus = document.getElementById('colabFiltroStatus').value;
+  let list = DB.colaboradores.slice().sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
+  if(busca) list = list.filter(c => c.nome.toLowerCase().includes(busca));
+  if(fTipo) list = list.filter(c => c.tipo === fTipo);
+  if(fStatus === 'ativo') list = list.filter(c => c.ativo !== false);
+  if(fStatus === 'inativo') list = list.filter(c => c.ativo === false);
+
+  const tbody = document.getElementById('colabTbody');
+  if(!list.length){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="5">Nenhum colaborador encontrado.</td></tr>';
+  } else {
+    tbody.innerHTML = list.map(c => `
+      <tr>
+        <td><strong>${esc(c.nome)}</strong></td>
+        <td class="mini">${esc(c.setor||'—')}</td>
+        <td><span class="badge ${TIPO_BADGE[c.tipo]||''}">${esc(TIPO_LABEL[c.tipo]||c.tipo)}</span></td>
+        <td><span class="badge ${c.ativo===false?'badge-off':'badge-on'}">${c.ativo===false?'Inativo':'Ativo'}</span></td>
+        <td class="row-actions">
+          <button class="btn btn-ghost btn-icon btn-sm" title="Editar" onclick="App.editColab('${c.id}')">✏️</button>
+          <button class="btn btn-ghost btn-icon btn-sm" title="${c.ativo===false?'Reativar':'Desativar'}" onclick="App.toggleColab('${c.id}')">${c.ativo===false?'▶️':'⏸️'}</button>
+          <button class="btn btn-danger btn-icon btn-sm" title="Excluir" onclick="App.delColab('${c.id}')">🗑️</button>
+        </td>
+      </tr>`).join('');
+  }
+  document.getElementById('cntColab').textContent = DB.colaboradores.filter(c => c.ativo !== false).length;
+}
+
+function colabModal(colab){
+  const editing = !!colab;
+  colab = colab || {nome:'', setor:'', tipo:'CLT', ativo:true};
+  openModal(`
+    <div class="modal-head"><div class="modal-title">${editing?'Editar':'Novo'} colaborador</div><button class="btn btn-icon btn-ghost" onclick="App.closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Nome</label><input id="fNome" type="text" value="${esc(colab.nome)}" placeholder="Nome completo"></div>
+      <div class="field"><label>Setor</label><input id="fSetor" type="text" value="${esc(colab.setor)}" placeholder="Ex: Shopee - MKTplace"></div>
+      <div class="field"><label>Tipo de contrato</label>
+        <select id="fTipo">
+          ${TIPOS.map(t => `<option value="${t}" ${colab.tipo===t?'selected':''}>${TIPO_LABEL[t]}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="App.closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="App.saveColab(${editing?`'${colab.id}'`:'null'})">Salvar</button>
+    </div>
+  `);
+}
+function saveColab(id){
+  const nome = document.getElementById('fNome').value.trim();
+  const setor = document.getElementById('fSetor').value.trim();
+  const tipo = document.getElementById('fTipo').value;
+  if(!nome){ toast('Informe o nome do colaborador','err'); return; }
+  if(id){
+    const c = colabById(id);
+    Object.assign(c, {nome, setor, tipo});
+  } else {
+    DB.colaboradores.push({id: uid('c'), nome, setor, tipo, ativo:true});
+  }
+  save(); closeModal(); toast('Colaborador salvo','ok'); renderAll();
+}
+function delColab(id){
+  const c = colabById(id);
+  if(!c) return;
+  if(!confirm(`Excluir "${c.nome}"? Lançamentos já registrados serão mantidos.`)) return;
+  DB.colaboradores = DB.colaboradores.filter(x => x.id !== id);
+  save(); toast('Colaborador excluído','ok'); renderAll();
+}
+function toggleColab(id){
+  const c = colabById(id);
+  c.ativo = c.ativo === false ? true : false;
+  save(); renderAll();
+}
+function exportColaboradores(){
+  const rows = DB.colaboradores.map(c => ({Nome:c.nome, Setor:c.setor, Tipo:TIPO_LABEL[c.tipo]||c.tipo, Status:c.ativo===false?'Inativo':'Ativo'}));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Colaboradores');
+  XLSX.writeFile(wb, `colaboradores_${toIso(new Date())}.xlsx`);
+}
+function importColaboradores(file){
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+      let added = 0, updated = 0;
+      rows.forEach(r => {
+        const keys = Object.keys(r);
+        const nomeKey = keys.find(k => /nome/i.test(k));
+        const setorKey = keys.find(k => /setor/i.test(k));
+        const tipoKey = keys.find(k => /tipo/i.test(k));
+        const nome = nomeKey ? String(r[nomeKey]||'').trim() : '';
+        if(!nome) return;
+        const setor = setorKey ? String(r[setorKey]||'').trim() : '';
+        let tipo = tipoKey ? String(r[tipoKey]||'').trim() : 'CLT';
+        if(/supervisor/i.test(tipo)) tipo = 'CLT - SUPERVISOR';
+        else if(/aprendiz/i.test(tipo)) tipo = 'Jovem Aprendiz';
+        else if(/clt/i.test(tipo)) tipo = 'CLT';
+        else if(!TIPOS.includes(tipo)) tipo = 'CLT';
+        const existing = DB.colaboradores.find(c => c.nome.toLowerCase() === nome.toLowerCase());
+        if(existing){ existing.setor = setor || existing.setor; existing.tipo = tipo || existing.tipo; updated++; }
+        else { DB.colaboradores.push({id: uid('c'), nome, setor, tipo, ativo:true}); added++; }
+      });
+      save(); renderAll();
+      toast(`Importação concluída: ${added} novo(s), ${updated} atualizado(s)`, 'ok');
+    }catch(err){ toast('Erro ao importar planilha', 'err'); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ================= FERIADOS =================
+function renderFeriados(){
+  const yearSel = document.getElementById('ferAno');
+  const years = Array.from(new Set(DB.feriados.map(f => f.data.slice(0,4))));
+  const nowY = new Date().getFullYear();
+  [nowY-1, nowY, nowY+1, nowY+2].forEach(y => { if(!years.includes(String(y))) years.push(String(y)); });
+  years.sort();
+  const curSel = yearSel.value || String(nowY);
+  yearSel.innerHTML = years.map(y => `<option value="${y}" ${y===curSel?'selected':''}>${y}</option>`).join('');
+
+  const list = DB.feriados.slice().sort((a,b) => a.data.localeCompare(b.data));
+  const tbody = document.getElementById('ferTbody');
+  if(!list.length){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Nenhum feriado cadastrado. Use "Carregar feriados nacionais".</td></tr>';
+  } else {
+    tbody.innerHTML = list.map(f => `
+      <tr>
+        <td><strong>${fmtDate(f.data)}</strong></td>
+        <td class="mini">${weekdayName(f.data)}</td>
+        <td>${esc(f.nome)}</td>
+        <td class="row-actions">
+          <button class="btn btn-ghost btn-icon btn-sm" title="Editar" onclick="App.editFeriado('${f.data}')">✏️</button>
+          <button class="btn btn-danger btn-icon btn-sm" title="Excluir" onclick="App.delFeriado('${f.data}')">🗑️</button>
+        </td>
+      </tr>`).join('');
+  }
+  document.getElementById('cntFer').textContent = DB.feriados.length;
+}
+function feriadoModal(data){
+  const f = data ? DB.feriados.find(x => x.data === data) : {data:'', nome:''};
+  openModal(`
+    <div class="modal-head"><div class="modal-title">${data?'Editar':'Novo'} feriado</div><button class="btn btn-icon btn-ghost" onclick="App.closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Data</label><input id="fData" type="date" value="${f.data}"></div>
+      <div class="field"><label>Nome do feriado</label><input id="fNomeFer" type="text" value="${esc(f.nome)}" placeholder="Ex: Natal"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="App.closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="App.saveFeriado(${data?`'${data}'`:'null'})">Salvar</button>
+    </div>
+  `);
+}
+function saveFeriado(oldData){
+  const data = document.getElementById('fData').value;
+  const nome = document.getElementById('fNomeFer').value.trim();
+  if(!data || !nome){ toast('Preencha data e nome','err'); return; }
+  if(oldData) DB.feriados = DB.feriados.filter(f => f.data !== oldData);
+  DB.feriados = DB.feriados.filter(f => f.data !== data);
+  DB.feriados.push({data, nome});
+  save(); closeModal(); toast('Feriado salvo','ok'); renderAll();
+}
+function delFeriado(data){
+  if(!confirm('Excluir este feriado?')) return;
+  DB.feriados = DB.feriados.filter(f => f.data !== data);
+  save(); toast('Feriado excluído','ok'); renderAll();
+}
+function seedFeriados(){
+  const y = Number(document.getElementById('ferAno').value) || new Date().getFullYear();
+  const novos = nationalHolidays(y);
+  let added = 0;
+  novos.forEach(f => { if(!DB.feriados.some(x => x.data === f.data)){ DB.feriados.push(f); added++; } });
+  save(); renderAll();
+  toast(`${added} feriado(s) de ${y} adicionados`, 'ok');
+}
+
+// ================= VALORES =================
+function renderValores(){
+  const tbody = document.getElementById('valTbody');
+  tbody.innerHTML = SITUACOES.map(sit => `
+    <tr>
+      <td><span class="sit-tag">${sit}</span></td>
+      ${TIPOS.map(t => `<td>R$ <input type="number" step="0.01" min="0" value="${DB.valores[t][sit]}" onchange="App.setValor('${t}','${sit}',this.value)"></td>`).join('')}
+    </tr>
+  `).join('');
+}
+function setValor(tipo, sit, val){
+  DB.valores[tipo][sit] = Number(val) || 0;
+  save(); toast('Valor atualizado','ok');
+}
+
+// ================= LANÇAMENTOS =================
+function fillColabSelects(){
+  const ativos = DB.colaboradores.filter(c => c.ativo !== false).sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
+  const optsByTipo = TIPOS.map(t => {
+    const items = ativos.filter(c => c.tipo === t);
+    if(!items.length) return '';
+    return `<optgroup label="${TIPO_LABEL[t]}">${items.map(c => `<option value="${c.id}">${esc(c.nome)}</option>`).join('')}</optgroup>`;
+  }).join('');
+
+  const filtro = document.getElementById('lancFiltroColab');
+  const cur = filtro.value;
+  filtro.innerHTML = '<option value="">Todos os colaboradores</option>' + optsByTipo;
+  filtro.value = cur;
+
+  const filtroSit = document.getElementById('lancFiltroSit');
+  if(!filtroSit.dataset.filled){
+    filtroSit.innerHTML = '<option value="">Todas as situações</option>' + SITUACOES.map(s => `<option value="${s}">${s}</option>`).join('');
+    filtroSit.dataset.filled = '1';
+  }
+}
+function renderLancamentos(){
+  fillColabSelects();
+  const mes = document.getElementById('lancMes').value;
+  const fColab = document.getElementById('lancFiltroColab').value;
+  const fSit = document.getElementById('lancFiltroSit').value;
+
+  let list = DB.lancamentos.slice();
+  if(mes) list = list.filter(l => l.data.slice(0,7) === mes);
+  if(fColab) list = list.filter(l => l.colaboradorId === fColab);
+  if(fSit) list = list.filter(l => l.situacao === fSit);
+  list.sort((a,b) => b.data.localeCompare(a.data));
+
+  const tbody = document.getElementById('lancTbody');
+  if(!list.length){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Nenhum lançamento encontrado.</td></tr>';
+  } else {
+    tbody.innerHTML = list.map(l => {
+      const c = colabById(l.colaboradorId);
+      return `
+      <tr>
+        <td><strong>${fmtDate(l.data)}</strong><div class="mini">${weekdayName(l.data)}</div></td>
+        <td>${c ? esc(c.nome) : '<span class="mini">(excluído)</span>'}</td>
+        <td>${c ? `<span class="badge ${TIPO_BADGE[c.tipo]||''}">${esc(TIPO_LABEL[c.tipo]||c.tipo)}</span>` : '—'}</td>
+        <td><span class="sit-tag">${l.situacao}</span></td>
+        <td><strong>${fmtBRL(l.valor)}</strong></td>
+        <td class="mini">${esc(l.obs||'')}</td>
+        <td class="row-actions">
+          <button class="btn btn-ghost btn-icon btn-sm" title="Editar" onclick="App.editLanc('${l.id}')">✏️</button>
+          <button class="btn btn-danger btn-icon btn-sm" title="Excluir" onclick="App.delLanc('${l.id}')">🗑️</button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+  document.getElementById('cntLanc').textContent = DB.lancamentos.length;
+}
+
+function lancModal(lanc){
+  const editing = !!lanc;
+  lanc = lanc || {colaboradorId:'', data: toIso(new Date()), situacao:'', valor:0, obs:''};
+  const ativos = DB.colaboradores.filter(c => c.ativo !== false).sort((a,b) => a.nome.localeCompare(b.nome,'pt-BR'));
+  const optsByTipo = TIPOS.map(t => {
+    const items = ativos.filter(c => c.tipo === t);
+    if(!items.length) return '';
+    return `<optgroup label="${TIPO_LABEL[t]}">${items.map(c => `<option value="${c.id}" ${c.id===lanc.colaboradorId?'selected':''}>${esc(c.nome)}</option>`).join('')}</optgroup>`;
+  }).join('');
+
+  const isDomingo = lanc.situacao ? lanc.situacao.includes('Domingo') : isSunday(lanc.data);
+  const isFeriado = lanc.situacao ? lanc.situacao.includes('Feriado') : isHoliday(lanc.data);
+  const is6h = lanc.situacao ? lanc.situacao.includes('6h') : false;
+
+  openModal(`
+    <div class="modal-head"><div class="modal-title">${editing?'Editar':'Novo'} lançamento</div><button class="btn btn-icon btn-ghost" onclick="App.closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Colaborador</label>
+        <select id="lColab" onchange="App.calcValor()">
+          <option value="">Selecione...</option>
+          ${optsByTipo}
+        </select>
+      </div>
+      <div class="field"><label>Data</label><input id="lData" type="date" value="${lanc.data}" onchange="App.onDataChange()"></div>
+      <div class="check-row">
+        <label class="check-item"><input type="checkbox" id="lDomingo" ${isDomingo?'checked':''} onchange="App.calcValor()"> Domingo</label>
+        <label class="check-item"><input type="checkbox" id="lFeriado" ${isFeriado?'checked':''} onchange="App.calcValor()"> Feriado</label>
+        <label class="check-item"><input type="checkbox" id="l6h" ${is6h?'checked':''} onchange="App.calcValor()"> Turno 6h</label>
+      </div>
+      <div class="field"><label>Situação calculada</label><input id="lSitDisplay" type="text" value="${lanc.situacao||''}" disabled></div>
+      <div class="field"><label>Valor (R$)</label><input id="lValor" type="number" step="0.01" min="0" value="${lanc.valor}"></div>
+      <div class="field"><label>Observação (opcional)</label><input id="lObs" type="text" value="${esc(lanc.obs||'')}" placeholder="Ex: cobertura de folga"></div>
+      <div class="hint" id="lHint"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="App.closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="App.saveLanc(${editing?`'${lanc.id}'`:'null'})">Salvar</button>
+    </div>
+  `);
+  calcValor();
+}
+function onDataChange(){
+  const data = document.getElementById('lData').value;
+  if(!data) return;
+  document.getElementById('lDomingo').checked = isSunday(data);
+  document.getElementById('lFeriado').checked = isHoliday(data);
+  calcValor();
+}
+function situacaoFromFlags(domingo, feriado, seis){
+  let base;
+  if(domingo && feriado) base = 'Domingo/Feriado';
+  else if(domingo) base = 'Domingo';
+  else if(feriado) base = 'Feriado';
+  else return null;
+  return seis ? base+' 6h' : base;
+}
+function calcValor(){
+  const colabId = document.getElementById('lColab').value;
+  const domingo = document.getElementById('lDomingo').checked;
+  const feriado = document.getElementById('lFeriado').checked;
+  const seis = document.getElementById('l6h').checked;
+  const sit = situacaoFromFlags(domingo, feriado, seis);
+  document.getElementById('lSitDisplay').value = sit || '';
+  const hint = document.getElementById('lHint');
+  const c = colabById(colabId);
+  if(sit && c && DB.valores[c.tipo]){
+    document.getElementById('lValor').value = DB.valores[c.tipo][sit];
+    hint.textContent = `Valor sugerido para ${TIPO_LABEL[c.tipo]} em "${sit}". Você pode ajustar manualmente.`;
+  } else if(!sit){
+    hint.textContent = 'Marque ao menos "Domingo" ou "Feriado".';
+  } else if(!c){
+    hint.textContent = 'Selecione um colaborador para sugerir o valor.';
+  }
+}
+function saveLanc(id){
+  const colaboradorId = document.getElementById('lColab').value;
+  const data = document.getElementById('lData').value;
+  const domingo = document.getElementById('lDomingo').checked;
+  const feriado = document.getElementById('lFeriado').checked;
+  const seis = document.getElementById('l6h').checked;
+  const situacao = situacaoFromFlags(domingo, feriado, seis);
+  const valor = Number(document.getElementById('lValor').value) || 0;
+  const obs = document.getElementById('lObs').value.trim();
+  if(!colaboradorId){ toast('Selecione o colaborador','err'); return; }
+  if(!data){ toast('Selecione a data','err'); return; }
+  if(!situacao){ toast('Marque Domingo e/ou Feriado','err'); return; }
+  if(id){
+    const l = DB.lancamentos.find(x => x.id === id);
+    Object.assign(l, {colaboradorId, data, situacao, valor, obs});
+  } else {
+    DB.lancamentos.push({id: uid('l'), colaboradorId, data, situacao, valor, obs});
+  }
+  save(); closeModal(); toast('Lançamento salvo','ok'); renderAll();
+}
+function delLanc(id){
+  if(!confirm('Excluir este lançamento?')) return;
+  DB.lancamentos = DB.lancamentos.filter(l => l.id !== id);
+  save(); toast('Lançamento excluído','ok'); renderAll();
+}
+
+// ================= RELATÓRIO =================
+function renderRelatorio(){
+  const mesInput = document.getElementById('relMes');
+  if(!mesInput.value) mesInput.value = currentMonth();
+  const mes = mesInput.value;
+  const fTipo = document.getElementById('relTipo').value;
+
+  const lancsMes = DB.lancamentos.filter(l => l.data.slice(0,7) === mes);
+  const porColab = {};
+  lancsMes.forEach(l => {
+    const c = colabById(l.colaboradorId);
+    if(!c) return;
+    if(fTipo && c.tipo !== fTipo) return;
+    if(!porColab[c.id]) porColab[c.id] = {colab:c, domingos:0, feriados:0, duplos:0, qtd:0, total:0};
+    const g = porColab[c.id];
+    g.qtd++; g.total += l.valor;
+    if(l.situacao.includes('Domingo/Feriado')) g.duplos++;
+    else if(l.situacao.includes('Domingo')) g.domingos++;
+    else if(l.situacao.includes('Feriado')) g.feriados++;
+  });
+  const rows = Object.values(porColab).sort((a,b) => a.colab.nome.localeCompare(b.colab.nome,'pt-BR'));
+
+  const [y,m] = mes.split('-');
+  const mesNome = new Date(Number(y), Number(m)-1, 1).toLocaleDateString('pt-BR',{month:'long', year:'numeric'});
+  document.getElementById('relTituloImp').textContent = `Folha de domingos e feriados — ${mesNome}`;
+
+  const tbody = document.getElementById('relTbody');
+  if(!rows.length){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">Nenhum lançamento neste período.</td></tr>';
+  } else {
+    let totalGeral = 0;
+    let html = rows.map(g => {
+      totalGeral += g.total;
+      return `<tr>
+        <td><strong>${esc(g.colab.nome)}</strong></td>
+        <td><span class="badge ${TIPO_BADGE[g.colab.tipo]||''}">${esc(TIPO_LABEL[g.colab.tipo]||g.colab.tipo)}</span></td>
+        <td class="mini">${esc(g.colab.setor||'—')}</td>
+        <td>${g.domingos}</td>
+        <td>${g.feriados}</td>
+        <td>${g.duplos}</td>
+        <td>${g.qtd}</td>
+        <td><strong>${fmtBRL(g.total)}</strong></td>
+      </tr>`;
+    }).join('');
+    html += `<tr class="total-row"><td colspan="7">Total geral</td><td>${fmtBRL(totalGeral)}</td></tr>`;
+    tbody.innerHTML = html;
+  }
+}
+function exportRelatorio(){
+  const mes = document.getElementById('relMes').value || currentMonth();
+  const fTipo = document.getElementById('relTipo').value;
+  const lancsMes = DB.lancamentos.filter(l => l.data.slice(0,7) === mes);
+  const porColab = {};
+  lancsMes.forEach(l => {
+    const c = colabById(l.colaboradorId);
+    if(!c) return;
+    if(fTipo && c.tipo !== fTipo) return;
+    if(!porColab[c.id]) porColab[c.id] = {colab:c, domingos:0, feriados:0, duplos:0, qtd:0, total:0};
+    const g = porColab[c.id];
+    g.qtd++; g.total += l.valor;
+    if(l.situacao.includes('Domingo/Feriado')) g.duplos++;
+    else if(l.situacao.includes('Domingo')) g.domingos++;
+    else if(l.situacao.includes('Feriado')) g.feriados++;
+  });
+  const rows = Object.values(porColab).sort((a,b) => a.colab.nome.localeCompare(b.colab.nome,'pt-BR'))
+    .map(g => ({
+      Colaborador: g.colab.nome, Tipo: TIPO_LABEL[g.colab.tipo]||g.colab.tipo, Setor: g.colab.setor,
+      Domingos: g.domingos, Feriados: g.feriados, Duplos: g.duplos, Lancamentos: g.qtd,
+      Total: Number(g.total.toFixed(2))
+    }));
+  if(!rows.length){ toast('Nada para exportar neste período','err'); return; }
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Folha');
+  const detalhe = lancsMes.filter(l => { const c = colabById(l.colaboradorId); return c && (!fTipo || c.tipo===fTipo); })
+    .sort((a,b) => a.data.localeCompare(b.data))
+    .map(l => { const c = colabById(l.colaboradorId); return {Data: fmtDate(l.data), Colaborador: c.nome, Tipo: TIPO_LABEL[c.tipo]||c.tipo, Situacao: l.situacao, Valor: l.valor, Obs: l.obs||''}; });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(detalhe), 'Lançamentos');
+  XLSX.writeFile(wb, `folha_domingos_feriados_${mes}.xlsx`);
+}
+
+// ================= DASHBOARD =================
+function renderDashboard(){
+  const mes = currentMonth();
+  const lancsMes = DB.lancamentos.filter(l => l.data.slice(0,7) === mes);
+  const totalMes = lancsMes.reduce((s,l) => s+l.valor, 0);
+  const ativos = DB.colaboradores.filter(c => c.ativo !== false).length;
+  const hoje = toIso(new Date());
+  const proximo = DB.feriados.filter(f => f.data >= hoje).sort((a,b) => a.data.localeCompare(b.data))[0];
+
+  const mesNome = new Date().toLocaleDateString('pt-BR',{month:'long', year:'numeric'});
+  document.getElementById('dashSub').textContent = `Resumo de ${mesNome}`;
+
+  document.getElementById('dashStats').innerHTML = `
+    <div class="stat" style="--c:var(--accent)"><div class="stat-label">A pagar no mês</div><div class="stat-val">${fmtBRL(totalMes)}</div><div class="stat-foot">${lancsMes.length} lançamento(s)</div></div>
+    <div class="stat" style="--c:var(--clt)"><div class="stat-label">Colaboradores ativos</div><div class="stat-val">${ativos}</div><div class="stat-foot">${DB.colaboradores.length} cadastrados no total</div></div>
+    <div class="stat" style="--c:var(--info)"><div class="stat-label">Lançamentos no mês</div><div class="stat-val">${lancsMes.length}</div><div class="stat-foot">de ${DB.lancamentos.length} no total</div></div>
+    <div class="stat" style="--c:var(--sup)"><div class="stat-label">Próximo feriado</div><div class="stat-val" style="font-size:17px">${proximo ? fmtDate(proximo.data) : '—'}</div><div class="stat-foot">${proximo ? esc(proximo.nome) : 'Nenhum cadastrado'}</div></div>
+  `;
+
+  const recent = DB.lancamentos.slice().sort((a,b) => b.data.localeCompare(a.data)).slice(0,8);
+  const tbody = document.getElementById('dashRecent');
+  if(!recent.length){
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Nenhum lançamento ainda.</td></tr>';
+  } else {
+    tbody.innerHTML = recent.map(l => {
+      const c = colabById(l.colaboradorId);
+      return `<tr><td>${fmtDate(l.data)}</td><td>${c?esc(c.nome):'—'}</td><td><span class="sit-tag">${l.situacao}</span></td><td><strong>${fmtBRL(l.valor)}</strong></td></tr>`;
+    }).join('');
+  }
+}
+
+// ================= BACKUP =================
+function exportBackup(){
+  const blob = new Blob([JSON.stringify(DB, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `plantao_backup_${toIso(new Date())}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importBackup(file){
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.colaboradores || !data.valores) throw new Error('formato inválido');
+      DB = data;
+      save(); renderAll();
+      toast('Backup importado com sucesso','ok');
+    }catch(err){ toast('Arquivo de backup inválido','err'); }
+  };
+  reader.readAsText(file);
+}
+
+// ---------- escape ----------
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// ---------- render all ----------
+function renderAll(){
+  renderDashboard();
+  renderLancamentos();
+  renderColaboradores();
+  renderFeriados();
+  renderValores();
+  renderRelatorio();
+}
+
+// ---------- events ----------
+document.getElementById('btnNovoColab').addEventListener('click', () => colabModal());
+document.getElementById('btnNovoLanc').addEventListener('click', () => lancModal());
+document.getElementById('dashNovoLanc').addEventListener('click', () => { goView('lancamentos'); lancModal(); });
+document.getElementById('btnNovoFeriado').addEventListener('click', () => feriadoModal());
+document.getElementById('btnSeedFeriados').addEventListener('click', seedFeriados);
+document.getElementById('btnExportColab').addEventListener('click', exportColaboradores);
+document.getElementById('btnImportColab').addEventListener('click', () => document.getElementById('fileImportColab').click());
+document.getElementById('fileImportColab').addEventListener('change', e => { if(e.target.files[0]) importColaboradores(e.target.files[0]); e.target.value=''; });
+document.getElementById('btnExportRel').addEventListener('click', exportRelatorio);
+document.getElementById('btnPrintRel').addEventListener('click', () => { goView('relatorio'); setTimeout(() => window.print(), 100); });
+document.getElementById('btnBackupExport').addEventListener('click', e => { e.preventDefault(); exportBackup(); });
+document.getElementById('btnBackupImport').addEventListener('click', e => { e.preventDefault(); document.getElementById('fileImportBackup').click(); });
+document.getElementById('fileImportBackup').addEventListener('change', e => { if(e.target.files[0]) importBackup(e.target.files[0]); e.target.value=''; });
+
+['colabBusca','colabFiltroTipo','colabFiltroStatus'].forEach(id => document.getElementById(id).addEventListener('input', renderColaboradores));
+['lancMes','lancFiltroColab','lancFiltroSit'].forEach(id => document.getElementById(id).addEventListener('input', renderLancamentos));
+document.getElementById('lancLimparFiltro').addEventListener('click', () => { document.getElementById('lancMes').value=''; document.getElementById('lancFiltroColab').value=''; document.getElementById('lancFiltroSit').value=''; renderLancamentos(); });
+['relMes','relTipo'].forEach(id => document.getElementById(id).addEventListener('input', renderRelatorio));
+document.getElementById('ferAno').addEventListener('change', renderFeriados);
+
+// ---------- public API for inline handlers ----------
+window.App = {
+  closeModal,
+  editColab: id => colabModal(colabById(id)),
+  saveColab, delColab, toggleColab,
+  editFeriado: data => feriadoModal(data),
+  saveFeriado, delFeriado,
+  setValor,
+  editLanc: id => lancModal(DB.lancamentos.find(l => l.id === id)),
+  saveLanc, delLanc,
+  calcValor, onDataChange
+};
+
+renderAll();
+})();
+</script>
+</body>
+</html>
