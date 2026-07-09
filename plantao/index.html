@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -1031,19 +1032,55 @@ function fileMoneyToken(total){
 function folhaSimplesFileName(ext, total){
   return `Domingos_e_Feriados__${fileDateToken(new Date())}__${fileMoneyToken(total)}.${ext}`;
 }
-function exportRelatorio(){
+const FOLHA_THIN_BORDER = {top:{style:'thin',color:{argb:'FF000000'}}, left:{style:'thin',color:{argb:'FF000000'}}, bottom:{style:'thin',color:{argb:'FF000000'}}, right:{style:'thin',color:{argb:'FF000000'}}};
+async function exportRelatorio(){
   const mes = document.getElementById('relMes').value || currentMonth();
   const fTipo = document.getElementById('relTipo').value;
   const {rows, total} = getFolhaSimples(mes, fTipo);
   if(!rows.length){ toast('Nada para exportar neste período','err'); return; }
-  if(typeof XLSX === 'undefined'){ toast('Não foi possível carregar o gerador de Excel. Verifique sua conexão.', 'err'); return; }
-  const data = rows.map(r => ({Nomes: r.nome, Valor: Number(r.valor.toFixed(2))}));
-  data.push({Nomes: 'Total', Valor: Number(total.toFixed(2))});
-  const ws = XLSX.utils.json_to_sheet(data);
-  ws['!cols'] = [{wch:38},{wch:14}];
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'LISTAVALORES - IMP');
-  XLSX.writeFile(wb, folhaSimplesFileName('xlsx', total));
+  if(typeof ExcelJS === 'undefined'){ toast('Não foi possível carregar o gerador de Excel. Verifique sua conexão.', 'err'); return; }
+
+  const wb = new ExcelJS.Workbook();
+  const ws = wb.addWorksheet('LISTAVALORES - IMP');
+  ws.columns = [{width:38},{width:16}];
+
+  const head = ws.addRow(['Nomes','Valor']);
+  head.eachCell(cell => {
+    cell.font = {name:'Calibri', size:16, bold:true, color:{argb:'FFFFFFFF'}};
+    cell.fill = {type:'pattern', pattern:'solid', fgColor:{argb:'FF000000'}};
+    cell.alignment = {horizontal:'center', vertical:'middle'};
+    cell.border = FOLHA_THIN_BORDER;
+  });
+
+  rows.forEach(r => {
+    const row = ws.addRow([r.nome, r.valor]);
+    row.getCell(1).font = {name:'Arial', size:15};
+    row.getCell(1).alignment = {horizontal:'left', vertical:'middle'};
+    row.getCell(2).font = {name:'Arial', size:15};
+    row.getCell(2).alignment = {horizontal:'right', vertical:'middle'};
+    row.getCell(2).numFmt = '"R$" #,##0.00';
+    row.getCell(1).border = FOLHA_THIN_BORDER;
+    row.getCell(2).border = FOLHA_THIN_BORDER;
+  });
+
+  const totalRow = ws.addRow(['Total', total]);
+  totalRow.getCell(1).font = {name:'Calibri', size:16, bold:true, color:{argb:'FFFFFFFF'}};
+  totalRow.getCell(1).alignment = {horizontal:'left', vertical:'middle'};
+  totalRow.getCell(2).font = {name:'Arial', size:15, bold:true, color:{argb:'FFFFFFFF'}};
+  totalRow.getCell(2).alignment = {horizontal:'right', vertical:'middle'};
+  totalRow.getCell(2).numFmt = '"R$" #,##0.00';
+  totalRow.eachCell(cell => {
+    cell.fill = {type:'pattern', pattern:'solid', fgColor:{argb:'FF000000'}};
+    cell.border = FOLHA_THIN_BORDER;
+  });
+
+  const buf = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buf], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = folhaSimplesFileName('xlsx', total);
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 function exportRelatorioPDF(){
   const mes = document.getElementById('relMes').value || currentMonth();
@@ -1058,15 +1095,17 @@ function exportRelatorioPDF(){
     body: rows.map(r => [r.nome, fmtBRL(r.valor)]),
     foot: [['Total', fmtBRL(total)]],
     theme: 'grid',
-    styles: {font:'helvetica', fontSize:11, cellPadding:4, lineColor:[0,0,0], lineWidth:.2, textColor:20},
+    styles: {font:'helvetica', cellPadding:4, lineColor:[0,0,0], lineWidth:.2, textColor:20},
     didParseCell: function(d){
       if(d.section === 'head' || d.section === 'foot'){
         d.cell.styles.fillColor = [0,0,0];
         d.cell.styles.textColor = 255;
         d.cell.styles.fontStyle = 'bold';
-        d.cell.styles.halign = 'center';
+        d.cell.styles.fontSize = 13;
+        d.cell.styles.halign = d.column.index === 1 ? 'right' : 'left';
       } else {
-        d.cell.styles.halign = d.column.index === 1 ? 'center' : 'left';
+        d.cell.styles.fontSize = 12;
+        d.cell.styles.halign = d.column.index === 1 ? 'right' : 'left';
       }
     }
   });
