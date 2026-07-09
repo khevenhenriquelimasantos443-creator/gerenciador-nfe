@@ -8,6 +8,8 @@
 <meta name="theme-color" content="#F59E0B">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -141,16 +143,36 @@ tbody tr:last-child td{border-bottom:none}
   .card{border:1px solid #ccc;background:#fff}
   thead th,tbody td{color:#000;border-color:#ccc}
 }
+.mobile-bar{display:none}
+.sidebar-scrim{display:none}
+
 @media (max-width:900px){
   .app{grid-template-columns:1fr}
-  .sidebar{position:relative;height:auto}
+  .mobile-bar{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:60;background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px}
+  .mobile-bar .brand-mark{width:30px;height:30px;font-size:16px;flex-shrink:0}
+  .mobile-bar .brand-name{font-size:15px}
+  .hamburger{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:9px;background:var(--bg3);border:1px solid var(--border2);font-size:18px;flex-shrink:0}
+  .sidebar{position:fixed;top:0;left:0;height:100vh;width:270px;max-width:82vw;z-index:80;transform:translateX(-100%);transition:transform .2s ease;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-scrim.show{display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70}
+  main{padding:18px 16px 50px}
+  .page-head{gap:10px}
+  .page-title{font-size:21px}
 }
+@media print{ .mobile-bar{display:none!important} }
 </style>
 </head>
 <body>
 
+<div class="mobile-bar no-print">
+  <button class="hamburger" id="btnHamburger" aria-label="Abrir menu">☰</button>
+  <div class="brand-mark">🗓️</div>
+  <div class="brand-name" style="font-weight:900">Plantão<span style="color:var(--accent)">.</span></div>
+</div>
+<div class="sidebar-scrim no-print" id="sidebarScrim"></div>
+
 <div class="app">
-  <aside class="sidebar no-print">
+  <aside class="sidebar no-print" id="sidebar">
     <a href="../index.html" class="back-home">← Voltar</a>
     <div class="brand">
       <div class="brand-mark">🗓️</div>
@@ -325,7 +347,8 @@ tbody tr:last-child td{border-bottom:none}
         </div>
         <div class="head-actions">
           <button class="btn btn-ghost" id="btnPrintRel">🖨️ Imprimir</button>
-          <button class="btn btn-primary" id="btnExportRel">📤 Exportar Excel</button>
+          <button class="btn btn-ghost" id="btnExportPDF">📄 Baixar PDF</button>
+          <button class="btn btn-primary" id="btnExportRel">📥 Baixar Excel</button>
         </div>
       </div>
       <div class="toolbar">
@@ -459,9 +482,17 @@ function openModal(html){
 function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
 document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target.id === 'modalOverlay') closeModal(); });
 
+// ---------- mobile menu ----------
+const sidebarEl = document.getElementById('sidebar');
+const scrimEl = document.getElementById('sidebarScrim');
+function openSidebar(){ sidebarEl.classList.add('open'); scrimEl.classList.add('show'); }
+function closeSidebar(){ sidebarEl.classList.remove('open'); scrimEl.classList.remove('show'); }
+document.getElementById('btnHamburger').addEventListener('click', openSidebar);
+scrimEl.addEventListener('click', closeSidebar);
+
 // ---------- navigation ----------
-document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
-  btn.addEventListener('click', () => goView(btn.dataset.view));
+document.querySelectorAll('[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => { goView(btn.dataset.view); closeSidebar(); });
 });
 function goView(name){
   document.querySelectorAll('.nav-btn[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === name));
@@ -867,36 +898,72 @@ function renderRelatorio(){
     tbody.innerHTML = html;
   }
 }
-function exportRelatorio(){
-  const mes = document.getElementById('relMes').value || currentMonth();
-  const fTipo = document.getElementById('relTipo').value;
+function getFolhaSimples(mes, fTipo){
   const lancsMes = DB.lancamentos.filter(l => l.data.slice(0,7) === mes);
   const porColab = {};
   lancsMes.forEach(l => {
     const c = colabById(l.colaboradorId);
     if(!c) return;
     if(fTipo && c.tipo !== fTipo) return;
-    if(!porColab[c.id]) porColab[c.id] = {colab:c, domingos:0, feriados:0, duplos:0, qtd:0, total:0};
-    const g = porColab[c.id];
-    g.qtd++; g.total += l.valor;
-    if(l.situacao.includes('Domingo/Feriado')) g.duplos++;
-    else if(l.situacao.includes('Domingo')) g.domingos++;
-    else if(l.situacao.includes('Feriado')) g.feriados++;
+    porColab[c.id] = (porColab[c.id] || 0) + l.valor;
   });
-  const rows = Object.values(porColab).sort((a,b) => a.colab.nome.localeCompare(b.colab.nome,'pt-BR'))
-    .map(g => ({
-      Colaborador: g.colab.nome, Tipo: TIPO_LABEL[g.colab.tipo]||g.colab.tipo, Setor: g.colab.setor,
-      Domingos: g.domingos, Feriados: g.feriados, Duplos: g.duplos, Lancamentos: g.qtd,
-      Total: Number(g.total.toFixed(2))
-    }));
+  const rows = Object.keys(porColab)
+    .map(id => ({nome: colabById(id).nome, valor: porColab[id]}))
+    .sort((a,b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  const total = rows.reduce((s,r) => s+r.valor, 0);
+  return {rows, total};
+}
+function pad2(n){ return String(n).padStart(2,'0'); }
+function fileDateToken(d){ return pad2(d.getDate())+pad2(d.getMonth()+1)+String(d.getFullYear()).slice(-2); }
+function fileMoneyToken(total){
+  const cents = Math.round((Number(total)||0) * 100);
+  const intPart = Math.floor(cents/100);
+  const centStr = pad2(Math.abs(cents % 100));
+  return 'R_' + intPart.toLocaleString('pt-BR') + centStr;
+}
+function folhaSimplesFileName(ext, total){
+  return `Domingos_e_Feriados__${fileDateToken(new Date())}__${fileMoneyToken(total)}.${ext}`;
+}
+function exportRelatorio(){
+  const mes = document.getElementById('relMes').value || currentMonth();
+  const fTipo = document.getElementById('relTipo').value;
+  const {rows, total} = getFolhaSimples(mes, fTipo);
   if(!rows.length){ toast('Nada para exportar neste período','err'); return; }
+  if(typeof XLSX === 'undefined'){ toast('Não foi possível carregar o gerador de Excel. Verifique sua conexão.', 'err'); return; }
+  const data = rows.map(r => ({Nomes: r.nome, Valor: Number(r.valor.toFixed(2))}));
+  data.push({Nomes: 'Total', Valor: Number(total.toFixed(2))});
+  const ws = XLSX.utils.json_to_sheet(data);
+  ws['!cols'] = [{wch:38},{wch:14}];
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Folha');
-  const detalhe = lancsMes.filter(l => { const c = colabById(l.colaboradorId); return c && (!fTipo || c.tipo===fTipo); })
-    .sort((a,b) => a.data.localeCompare(b.data))
-    .map(l => { const c = colabById(l.colaboradorId); return {Data: fmtDate(l.data), Colaborador: c.nome, Tipo: TIPO_LABEL[c.tipo]||c.tipo, Situacao: l.situacao, Valor: l.valor, Obs: l.obs||''}; });
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(detalhe), 'Lançamentos');
-  XLSX.writeFile(wb, `folha_domingos_feriados_${mes}.xlsx`);
+  XLSX.utils.book_append_sheet(wb, ws, 'LISTAVALORES - IMP');
+  XLSX.writeFile(wb, folhaSimplesFileName('xlsx', total));
+}
+function exportRelatorioPDF(){
+  const mes = document.getElementById('relMes').value || currentMonth();
+  const fTipo = document.getElementById('relTipo').value;
+  const {rows, total} = getFolhaSimples(mes, fTipo);
+  if(!rows.length){ toast('Nada para exportar neste período','err'); return; }
+  if(!window.jspdf){ toast('Não foi possível carregar o gerador de PDF. Verifique sua conexão.', 'err'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.autoTable({
+    head: [['Nomes','Valor']],
+    body: rows.map(r => [r.nome, fmtBRL(r.valor)]),
+    foot: [['Total', fmtBRL(total)]],
+    theme: 'grid',
+    styles: {font:'helvetica', fontSize:11, cellPadding:4, lineColor:[0,0,0], lineWidth:.2, textColor:20},
+    didParseCell: function(d){
+      if(d.section === 'head' || d.section === 'foot'){
+        d.cell.styles.fillColor = [0,0,0];
+        d.cell.styles.textColor = 255;
+        d.cell.styles.fontStyle = 'bold';
+        d.cell.styles.halign = 'center';
+      } else {
+        d.cell.styles.halign = d.column.index === 1 ? 'center' : 'left';
+      }
+    }
+  });
+  doc.save(folhaSimplesFileName('pdf', total));
 }
 
 // ================= DASHBOARD =================
@@ -976,6 +1043,7 @@ document.getElementById('btnExportColab').addEventListener('click', exportColabo
 document.getElementById('btnImportColab').addEventListener('click', () => document.getElementById('fileImportColab').click());
 document.getElementById('fileImportColab').addEventListener('change', e => { if(e.target.files[0]) importColaboradores(e.target.files[0]); e.target.value=''; });
 document.getElementById('btnExportRel').addEventListener('click', exportRelatorio);
+document.getElementById('btnExportPDF').addEventListener('click', exportRelatorioPDF);
 document.getElementById('btnPrintRel').addEventListener('click', () => { goView('relatorio'); setTimeout(() => window.print(), 100); });
 document.getElementById('btnBackupExport').addEventListener('click', e => { e.preventDefault(); exportBackup(); });
 document.getElementById('btnBackupImport').addEventListener('click', e => { e.preventDefault(); document.getElementById('fileImportBackup').click(); });
