@@ -8,6 +8,8 @@
 <meta name="theme-color" content="#F59E0B">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -345,7 +347,8 @@ tbody tr:last-child td{border-bottom:none}
         </div>
         <div class="head-actions">
           <button class="btn btn-ghost" id="btnPrintRel">🖨️ Imprimir</button>
-          <button class="btn btn-primary" id="btnExportRel">📤 Exportar Excel</button>
+          <button class="btn btn-ghost" id="btnExportPDF">📄 Baixar PDF</button>
+          <button class="btn btn-primary" id="btnExportRel">📥 Baixar Excel</button>
         </div>
       </div>
       <div class="toolbar">
@@ -895,36 +898,72 @@ function renderRelatorio(){
     tbody.innerHTML = html;
   }
 }
-function exportRelatorio(){
-  const mes = document.getElementById('relMes').value || currentMonth();
-  const fTipo = document.getElementById('relTipo').value;
+function getFolhaSimples(mes, fTipo){
   const lancsMes = DB.lancamentos.filter(l => l.data.slice(0,7) === mes);
   const porColab = {};
   lancsMes.forEach(l => {
     const c = colabById(l.colaboradorId);
     if(!c) return;
     if(fTipo && c.tipo !== fTipo) return;
-    if(!porColab[c.id]) porColab[c.id] = {colab:c, domingos:0, feriados:0, duplos:0, qtd:0, total:0};
-    const g = porColab[c.id];
-    g.qtd++; g.total += l.valor;
-    if(l.situacao.includes('Domingo/Feriado')) g.duplos++;
-    else if(l.situacao.includes('Domingo')) g.domingos++;
-    else if(l.situacao.includes('Feriado')) g.feriados++;
+    porColab[c.id] = (porColab[c.id] || 0) + l.valor;
   });
-  const rows = Object.values(porColab).sort((a,b) => a.colab.nome.localeCompare(b.colab.nome,'pt-BR'))
-    .map(g => ({
-      Colaborador: g.colab.nome, Tipo: TIPO_LABEL[g.colab.tipo]||g.colab.tipo, Setor: g.colab.setor,
-      Domingos: g.domingos, Feriados: g.feriados, Duplos: g.duplos, Lancamentos: g.qtd,
-      Total: Number(g.total.toFixed(2))
-    }));
+  const rows = Object.keys(porColab)
+    .map(id => ({nome: colabById(id).nome, valor: porColab[id]}))
+    .sort((a,b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  const total = rows.reduce((s,r) => s+r.valor, 0);
+  return {rows, total};
+}
+function pad2(n){ return String(n).padStart(2,'0'); }
+function fileDateToken(d){ return pad2(d.getDate())+pad2(d.getMonth()+1)+String(d.getFullYear()).slice(-2); }
+function fileMoneyToken(total){
+  const cents = Math.round((Number(total)||0) * 100);
+  const intPart = Math.floor(cents/100);
+  const centStr = pad2(Math.abs(cents % 100));
+  return 'R_' + intPart.toLocaleString('pt-BR') + centStr;
+}
+function folhaSimplesFileName(ext, total){
+  return `Domingos_e_Feriados__${fileDateToken(new Date())}__${fileMoneyToken(total)}.${ext}`;
+}
+function exportRelatorio(){
+  const mes = document.getElementById('relMes').value || currentMonth();
+  const fTipo = document.getElementById('relTipo').value;
+  const {rows, total} = getFolhaSimples(mes, fTipo);
   if(!rows.length){ toast('Nada para exportar neste período','err'); return; }
+  if(typeof XLSX === 'undefined'){ toast('Não foi possível carregar o gerador de Excel. Verifique sua conexão.', 'err'); return; }
+  const data = rows.map(r => ({Nomes: r.nome, Valor: Number(r.valor.toFixed(2))}));
+  data.push({Nomes: 'Total', Valor: Number(total.toFixed(2))});
+  const ws = XLSX.utils.json_to_sheet(data);
+  ws['!cols'] = [{wch:38},{wch:14}];
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Folha');
-  const detalhe = lancsMes.filter(l => { const c = colabById(l.colaboradorId); return c && (!fTipo || c.tipo===fTipo); })
-    .sort((a,b) => a.data.localeCompare(b.data))
-    .map(l => { const c = colabById(l.colaboradorId); return {Data: fmtDate(l.data), Colaborador: c.nome, Tipo: TIPO_LABEL[c.tipo]||c.tipo, Situacao: l.situacao, Valor: l.valor, Obs: l.obs||''}; });
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(detalhe), 'Lançamentos');
-  XLSX.writeFile(wb, `folha_domingos_feriados_${mes}.xlsx`);
+  XLSX.utils.book_append_sheet(wb, ws, 'LISTAVALORES - IMP');
+  XLSX.writeFile(wb, folhaSimplesFileName('xlsx', total));
+}
+function exportRelatorioPDF(){
+  const mes = document.getElementById('relMes').value || currentMonth();
+  const fTipo = document.getElementById('relTipo').value;
+  const {rows, total} = getFolhaSimples(mes, fTipo);
+  if(!rows.length){ toast('Nada para exportar neste período','err'); return; }
+  if(!window.jspdf){ toast('Não foi possível carregar o gerador de PDF. Verifique sua conexão.', 'err'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.autoTable({
+    head: [['Nomes','Valor']],
+    body: rows.map(r => [r.nome, fmtBRL(r.valor)]),
+    foot: [['Total', fmtBRL(total)]],
+    theme: 'grid',
+    styles: {font:'helvetica', fontSize:11, cellPadding:4, lineColor:[0,0,0], lineWidth:.2, textColor:20},
+    didParseCell: function(d){
+      if(d.section === 'head' || d.section === 'foot'){
+        d.cell.styles.fillColor = [0,0,0];
+        d.cell.styles.textColor = 255;
+        d.cell.styles.fontStyle = 'bold';
+        d.cell.styles.halign = 'center';
+      } else {
+        d.cell.styles.halign = d.column.index === 1 ? 'center' : 'left';
+      }
+    }
+  });
+  doc.save(folhaSimplesFileName('pdf', total));
 }
 
 // ================= DASHBOARD =================
@@ -1004,6 +1043,7 @@ document.getElementById('btnExportColab').addEventListener('click', exportColabo
 document.getElementById('btnImportColab').addEventListener('click', () => document.getElementById('fileImportColab').click());
 document.getElementById('fileImportColab').addEventListener('change', e => { if(e.target.files[0]) importColaboradores(e.target.files[0]); e.target.value=''; });
 document.getElementById('btnExportRel').addEventListener('click', exportRelatorio);
+document.getElementById('btnExportPDF').addEventListener('click', exportRelatorioPDF);
 document.getElementById('btnPrintRel').addEventListener('click', () => { goView('relatorio'); setTimeout(() => window.print(), 100); });
 document.getElementById('btnBackupExport').addEventListener('click', e => { e.preventDefault(); exportBackup(); });
 document.getElementById('btnBackupImport').addEventListener('click', e => { e.preventDefault(); document.getElementById('fileImportBackup').click(); });
