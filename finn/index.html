@@ -567,19 +567,20 @@ function txsOfMonth(ym){
   return state.txs.filter(function(t){ return (t.date || "").slice(0,7) === ym; });
 }
 
-// Varredura automática do banco (BB Rende Fácil, aplicação/resgate automático,
-// "cofrinho"/rendimento que aplica sozinho, fundos DC/FIDC do sweep) é dinheiro
-// indo e voltando dentro do próprio banco sem você mexer. Os apps de banco
-// excluem SÓ isso do resumo de Entradas e Saídas. Já um investimento que você
-// compra de propósito (um fundo, uma ação) o banco conta como saída normal —
-// então isso continua no fluxo. Por isso a exclusão olha o padrão da varredura,
-// não a categoria "Investimento" (que ainda marca as compras deliberadas).
-var AUTO_SWEEP_RE = /rende f[aá]cil|aplica[cç][aã]o autom|resgate autom|poupan[cç]a autom|rendimento autom|fundo (de )?investim|\bfidc\b|dire[ií]tos credit[oó]rios/i;
-function isAutoSweep(t){
-  return AUTO_SWEEP_RE.test(t.description || "");
+// O banco tira do resumo de Entradas e Saídas as movimentações de investimento
+// de verdade: a varredura automática de saldo (BB Rende Fácil) E a compra/resgate
+// de fundos e ações que você faz de propósito (BB Ações, BB MM, BB RF, Tesouro,
+// previdência). Confirmado contra o extrato: o banco exclui os dois lados.
+// IMPORTANTE: NÃO casar "fundo (de) investimento" solto — um Pix pra uma FIDC/
+// factoring (ex.: "FACIO 4 FUNDO DE INVESTIMENTO...") tem esse nome mas é
+// despesa real, e o banco conta. Por isso a regra casa o NOME do produto de
+// investimento do banco, não a palavra "fundo".
+var INVEST_RE = /rende f[aá]cil|\bbb\s+a[cç][õo]es\b|\bbb\s+mm\b|\bbb\s+rf\b|tesouro direto|previd[eê]ncia privada|aplica[cç][aã]o autom|resgate autom|poupan[cç]a autom|rendimento autom/i;
+function isInvestmentFlow(t){
+  return INVEST_RE.test(t.description || "");
 }
 function isFlowTx(t){
-  return !isAutoSweep(t);
+  return !isInvestmentFlow(t);
 }
 
 function monthSpentByCat(cat){
@@ -1352,7 +1353,7 @@ var CATEGORY_KEYWORDS = [
   ["Saúde", /farm[aá]cia|drogaria|\braia\b|hospital|cl[ií]nica|laborat[oó]rio|unimed|dentista|seguro de vida/i],
   ["Educação", /\bescola\b|faculdade|\bcurso\b|livraria|mensalidade/i],
   ["Lazer", /cinema|ingresso|shopping|spotify|netflix|steam|drinks|balada|boate|viagem|\bhotel\b/i],
-  ["Investimento", /rende f[aá]cil|tesouro direto|\bcdb\b|\blci\b|\blca\b|fundo (de )?investim|fundo imobili|\bfii\b|aplica[cç][aã]o|resgate|poupan[cç]a autom|cofrinho|caixinha|previd[eê]ncia privada|renda fixa|renda vari[aá]vel|\bbb (mm|rf|a[cç][oõ]es)\b/i],
+  ["Investimento", INVEST_RE],
   ["Salário", /sal[aá]rio|folha de pagamento|holerite/i]
 ];
 
