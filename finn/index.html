@@ -567,11 +567,19 @@ function txsOfMonth(ym){
   return state.txs.filter(function(t){ return (t.date || "").slice(0,7) === ym; });
 }
 
-// Aplicação automática / resgate (Rende Fácil, CDB, fundos, etc.) é dinheiro
-// indo e voltando dentro do próprio banco, não receita/despesa real — os
-// apps de banco também excluem isso do resumo de Entradas e Saídas.
+// Varredura automática do banco (BB Rende Fácil, aplicação/resgate automático,
+// "cofrinho"/rendimento que aplica sozinho, fundos DC/FIDC do sweep) é dinheiro
+// indo e voltando dentro do próprio banco sem você mexer. Os apps de banco
+// excluem SÓ isso do resumo de Entradas e Saídas. Já um investimento que você
+// compra de propósito (um fundo, uma ação) o banco conta como saída normal —
+// então isso continua no fluxo. Por isso a exclusão olha o padrão da varredura,
+// não a categoria "Investimento" (que ainda marca as compras deliberadas).
+var AUTO_SWEEP_RE = /rende f[aá]cil|aplica[cç][aã]o autom|resgate autom|poupan[cç]a autom|rendimento autom|fundo (de )?investim|\bfidc\b|dire[ií]tos credit[oó]rios/i;
+function isAutoSweep(t){
+  return AUTO_SWEEP_RE.test(t.description || "");
+}
 function isFlowTx(t){
-  return t.category !== "Investimento";
+  return !isAutoSweep(t);
 }
 
 function monthSpentByCat(cat){
@@ -2260,7 +2268,7 @@ function renderConfig(){
     '<div class="eyebrow">Dados</div>' +
     '<button type="button" class="btn-ghost" id="btnExportAll" style="width:100%">Exportar todos os lançamentos (CSV)</button>' +
     '<button type="button" class="btn-ghost" id="btnFixInvestCat" style="width:100%;margin-top:10px">Corrigir categorias de investimento</button>' +
-    '<div style="font-size:12px;color:var(--fm);margin-top:6px">Reclassifica lançamentos antigos de aplicação/resgate automático (Rende Fácil, fundos, etc.) como "Investimento", para Receita/Despesa baterem com o extrato do banco.</div>' +
+    '<div style="font-size:12px;color:var(--fm);margin-top:6px">Reclassifica lançamentos antigos de investimento (Rende Fácil, fundos, ações, etc.) para a categoria "Investimento". A varredura automática do banco já é excluída das Entradas/Saídas automaticamente.</div>' +
     '<div class="card alert-card" style="margin-top:16px">' +
       '<div style="font-weight:700;font-size:13px;margin-bottom:6px">Zona de risco</div>' +
       '<div style="font-size:12px;color:var(--fm);margin-bottom:10px">Apaga só os seus lançamentos (receitas e despesas). Limites, metas, contas fixas e categorias continuam intactos. Não é possível desfazer.</div>' +
