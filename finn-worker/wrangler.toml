@@ -1,13 +1,12 @@
-name = "finn-whatsapp-worker"
+name = "wild-sun-742ffinn-whatsapp-worker"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
 # ─────────────────────────────────────────────
-#  PASSO 3 — Habilite o Worker de IA (áudio/foto)
-#  Descomente a linha abaixo após criar a conta Cloudflare AI
+#  Worker de IA (áudio/foto) — já habilitado na conta
 # ─────────────────────────────────────────────
-# [ai]
-# binding = "AI"
+[ai]
+binding = "AI"
 
 # ─────────────────────────────────────────────
 #  CRON: envia resumo diário às 22h (horário BRT)
@@ -24,7 +23,7 @@ crons = ["0 1 * * *"]
 # ─────────────────────────────────────────────
 [[kv_namespaces]]
 binding = "FINN_KV"
-id = "COLE_AQUI_O_ID_DO_KV_NAMESPACE"
+id = "47c375c30cb94e7686218d7bdd3e3e1a"
 
 # ─────────────────────────────────────────────
 #  VARIÁVEIS DE AMBIENTE (não-secretas)
