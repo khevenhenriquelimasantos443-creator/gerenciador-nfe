@@ -186,6 +186,9 @@ async function processMessage(msg, env) {
     if (["menu","oi","olá","ola","finn","ajuda","help","inicio","início","oii"].includes(lower) || lower.startsWith("oi")) {
       return sendMainMenu(phone, env);
     }
+    if (["sair","tchau","até logo","ate logo","falou","flw"].includes(lower)) {
+      return sendText(phone, "👋 Até mais! Quando precisar é só digitar *menu* de novo. 🦊", env);
+    }
     if (["sync","sinc","sincronizar","extrato"].includes(lower)) {
       return handleSincronizarFinn(phone, env);
     }
@@ -202,7 +205,7 @@ async function processMessage(msg, env) {
       return handleModoPanico(phone, env);
     }
 
-    await sendText(phone, "👋 Olá! Digite *menu* ou envie um 🎙️ áudio/_foto de comprovante_ para lançar.\n\nOutros comandos: *analise* · *score* · *dashboard* 🦊", env);
+    await sendText(phone, "🤔 Não entendi esse comando.\n\nDigite *menu* para ver as opções, ou envie um 🎙️ áudio/_foto de comprovante_ para lançar direto.\n\nOutros comandos: *analise* · *score* · *dashboard* 🦊", env);
   }
 }
 
