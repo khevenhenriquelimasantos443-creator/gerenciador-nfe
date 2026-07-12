@@ -380,7 +380,6 @@ body.finn-dark .btn-google:hover{background:#1E293B}
           <a href="/termos" target="_blank" rel="noopener">Termos</a>
           <a href="/deletar-dados" target="_blank" rel="noopener">Excluir dados</a>
           <a href="mailto:Finn.controle01@gmail.com">Contato</a>
-          <a href="https://wa.me/5513992102413?text=Oi%2C%20Finn!%20%F0%9F%91%8B%20Vim%20pelo%20app%2C%20bora%20organizar%20minhas%20finan%C3%A7as%3F" target="_blank" rel="noopener">WhatsApp</a>
         </div>
         <div class="app-footer-copy">© 2026 Finn. — Controle financeiro inteligente.</div>
       </footer>
@@ -400,6 +399,11 @@ var SESSION_KEY = "finn_supa_session";
 var WHATSAPP_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev";
 var WHATSAPP_BOT_NUMBER = "5513992102413";
 var WHATSAPP_GREETING = "Oi, Finn! 👋 Vim pelo app, bora organizar minhas finanças?";
+// Número temporariamente banido pela Meta (violação por engano ao vincular
+// a conta no Business Suite — revisão pedida). Desliga tudo que aponta pro
+// bot até a conta ser reativada, pra não confundir quem for testar o app.
+// Volta pra true assim que a Meta reativar a conta.
+var WHATSAPP_BOT_ENABLED = false;
 function whatsappBotLink(){
   return "https://wa.me/" + WHATSAPP_BOT_NUMBER + "?text=" + encodeURIComponent(WHATSAPP_GREETING);
 }
@@ -708,16 +712,26 @@ function renderDashboard(){
       '</div>' +
     '</div>';
 
-  html += '<a href="' + whatsappBotLink() + '" target="_blank" rel="noopener" class="card" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">' +
-    '<span style="width:44px;height:44px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
-      '<svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
-    '</span>' +
-    '<span style="flex:1">' +
-      '<span style="display:block;font-weight:800;font-size:13.5px;color:var(--fd)">Falar com o bot no WhatsApp</span>' +
-      '<span style="display:block;font-size:12px;color:var(--fm)">Lance um gasto, peça um resumo, tire uma dúvida</span>' +
-    '</span>' +
-    '<span style="color:var(--fp);font-weight:800;font-size:18px">→</span>' +
-  '</a>';
+  html += WHATSAPP_BOT_ENABLED ? (
+    '<a href="' + whatsappBotLink() + '" target="_blank" rel="noopener" class="card" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">' +
+      '<span style="width:44px;height:44px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+        '<svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+      '</span>' +
+      '<span style="flex:1">' +
+        '<span style="display:block;font-weight:800;font-size:13.5px;color:var(--fd)">Falar com o bot no WhatsApp</span>' +
+        '<span style="display:block;font-size:12px;color:var(--fm)">Lance um gasto, peça um resumo, tire uma dúvida</span>' +
+      '</span>' +
+      '<span style="color:var(--fp);font-weight:800;font-size:18px">→</span>' +
+    '</a>'
+  ) : (
+    '<div class="card" style="display:flex;align-items:center;gap:12px;opacity:.6">' +
+      '<span style="width:44px;height:44px;border-radius:50%;background:var(--fb);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">📱</span>' +
+      '<span style="flex:1">' +
+        '<span style="display:block;font-weight:800;font-size:13.5px;color:var(--fd)">Bot do WhatsApp</span>' +
+        '<span style="display:block;font-size:12px;color:var(--fm)">Em breve — lance gastos e peça resumos direto por lá</span>' +
+      '</span>' +
+    '</div>'
+  );
 
   html += renderDebtSummaryDashboard();
   html += renderWhatsAppPromo();
@@ -812,6 +826,7 @@ function renderDebtSummaryDashboard(){
 }
 
 function renderWhatsAppPromo(){
+  if(!WHATSAPP_BOT_ENABLED) return "";
   if(localStorage.getItem("finn_wa_promo_dismissed") === "1") return "";
   var user = currentSession && currentSession.user;
   var meta = (user && user.user_metadata) || {};
@@ -2584,10 +2599,13 @@ function renderConfig(){
     '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
     '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(currentWhatsapp) + '" placeholder="(13) 99210-2413"></div>' +
-    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Conecta o bot do WhatsApp aos seus dados do site — o resumo por lá passa a bater com o que está aqui.</div>' +
+    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e assim que ele voltar, já fica conectado automaticamente.</div>' +
     '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
     (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
-    '<a href="' + whatsappBotLink() + '" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:14px;width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">💬 Abrir conversa com o bot no WhatsApp</a>' +
+    (WHATSAPP_BOT_ENABLED ?
+      '<a href="' + whatsappBotLink() + '" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:14px;width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">💬 Abrir conversa com o bot no WhatsApp</a>'
+      : '<div class="btn-ghost" style="margin-top:14px;width:100%;text-align:center;box-sizing:border-box;opacity:.6;cursor:default">📱 Bot do WhatsApp — em breve</div>'
+    ) +
     '<button type="button" class="btn-ghost" id="btnDarkToggle" style="margin-top:10px;width:100%">' + (dark ? "☀️ Modo claro" : "🌙 Modo escuro") + '</button>' +
     '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
   '</div>';
