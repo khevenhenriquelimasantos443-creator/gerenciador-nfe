@@ -204,6 +204,9 @@ tbody tr:last-child td{border-bottom:none}
     <div class="nav-section">Pagamento</div>
     <button class="nav-btn" data-view="relatorio"><span class="ic">🧾</span> Folha / Relatório</button>
 
+    <div class="nav-section">Arquivos</div>
+    <button class="nav-btn" data-view="historico"><span class="ic">📁</span> Histórico <span class="count" id="cntHist">0</span></button>
+
     <div class="sidebar-foot">
       Dados salvos neste navegador.<br>
       <a href="#" id="btnBackupExport">Exportar backup</a> ·
@@ -382,6 +385,27 @@ tbody tr:last-child td{border-bottom:none}
       </div>
     </section>
 
+    <!-- HISTÓRICO -->
+    <section class="view" id="view-historico">
+      <div class="page-head">
+        <div>
+          <div class="page-title">Histórico de arquivos</div>
+          <div class="page-sub">Cópia de cada Excel/PDF gerado, guardada neste navegador para baixar de novo quando precisar</div>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-danger" id="btnLimparHist">🗑️ Limpar histórico</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Gerado em</th><th>Arquivo</th><th>Tipo</th><th>Período</th><th>Total</th><th></th></tr></thead>
+            <tbody id="histTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
 </div>
 
@@ -422,6 +446,7 @@ function load(){
       db.valores = db.valores || JSON.parse(JSON.stringify(SEED_VALORES));
       db.feriados = db.feriados || [];
       db.lancamentos = db.lancamentos || [];
+      db.historico = db.historico || [];
       return db;
     }
   }catch(e){}
@@ -429,7 +454,8 @@ function load(){
     colaboradores: SEED_COLABORADORES.map(c => ({id: uid('c'), nome:c.nome, setor:c.setor, tipo:c.tipo, ativo:true})),
     valores: JSON.parse(JSON.stringify(SEED_VALORES)),
     feriados: [],
-    lancamentos: []
+    lancamentos: [],
+    historico: []
   };
   const y = new Date().getFullYear();
   db.feriados = [...nationalHolidays(y), ...nationalHolidays(y+1)];
@@ -1076,11 +1102,15 @@ async function exportRelatorio(){
 
   const buf = await wb.xlsx.writeBuffer();
   const blob = new Blob([buf], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const nome = folhaSimplesFileName('xlsx', total);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = folhaSimplesFileName('xlsx', total);
+  a.download = nome;
   a.click();
   URL.revokeObjectURL(a.href);
+
+  const dataUri = await blobToDataUri(blob);
+  addToHistorico({tipo:'Excel', nome, periodo: mes, total, dataUri});
 }
 function exportRelatorioPDF(){
   const mes = document.getElementById('relMes').value || currentMonth();
@@ -1095,16 +1125,15 @@ function exportRelatorioPDF(){
     body: rows.map(r => [r.nome, fmtBRL(r.valor)]),
     foot: [['Total', fmtBRL(total)]],
     theme: 'plain',
-    styles: {font:'helvetica', cellPadding:{top:5,bottom:5,left:6,right:6}, textColor:20},
+    styles: {font:'helvetica', cellPadding:{top:2,bottom:2,left:6,right:6}, textColor:20, fontSize:10},
     didParseCell: function(d){
       if(d.section === 'head' || d.section === 'foot'){
         d.cell.styles.fillColor = [0,0,0];
         d.cell.styles.textColor = 255;
         d.cell.styles.fontStyle = 'bold';
-        d.cell.styles.fontSize = 13;
+        d.cell.styles.fontSize = 11;
         d.cell.styles.halign = d.column.index === 1 ? 'right' : 'left';
       } else {
-        d.cell.styles.fontSize = 12;
         d.cell.styles.halign = d.column.index === 1 ? 'right' : 'left';
       }
     },
@@ -1117,7 +1146,72 @@ function exportRelatorioPDF(){
       }
     }
   });
-  doc.save(folhaSimplesFileName('pdf', total));
+  const nome = folhaSimplesFileName('pdf', total);
+  doc.save(nome);
+  addToHistorico({tipo:'PDF', nome, periodo: mes, total, dataUri: doc.output('datauristring')});
+}
+
+// ================= HISTÓRICO DE ARQUIVOS =================
+function blobToDataUri(blob){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+function addToHistorico(entry){
+  DB.historico.unshift({id: uid('h'), criadoEm: new Date().toISOString(), ...entry});
+  if(DB.historico.length > 200) DB.historico = DB.historico.slice(0, 200);
+  save();
+  renderHistorico();
+  toast('Arquivo salvo no histórico', 'ok');
+}
+function renderHistorico(){
+  const tbodyEl = document.getElementById('histTbody');
+  if(!tbodyEl) return;
+  const list = DB.historico.slice().sort((a,b) => b.criadoEm.localeCompare(a.criadoEm));
+  if(!list.length){
+    tbodyEl.innerHTML = '<tr class="empty-row"><td colspan="6">Nenhum arquivo gerado ainda. Todo Excel/PDF baixado na Folha fica guardado aqui.</td></tr>';
+  } else {
+    tbodyEl.innerHTML = list.map(h => {
+      const d = new Date(h.criadoEm);
+      const dataHora = `${fmtDate(toIso(d))} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+      const [y,m] = (h.periodo||'').split('-');
+      const periodoLabel = (y && m) ? new Date(Number(y), Number(m)-1, 1).toLocaleDateString('pt-BR',{month:'short', year:'numeric'}) : '—';
+      return `<tr>
+        <td class="mini">${dataHora}</td>
+        <td>${esc(h.nome)}</td>
+        <td><span class="sit-tag">${esc(h.tipo)}</span></td>
+        <td class="mini">${esc(periodoLabel)}</td>
+        <td><strong>${fmtBRL(h.total)}</strong></td>
+        <td class="row-actions">
+          <button class="btn btn-ghost btn-sm" onclick="App.baixarHistorico('${h.id}')">⬇️ Baixar</button>
+          <button class="btn btn-danger btn-icon btn-sm" title="Excluir" onclick="App.delHistorico('${h.id}')">🗑️</button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+  document.getElementById('cntHist').textContent = DB.historico.length;
+}
+function baixarHistorico(id){
+  const h = DB.historico.find(x => x.id === id);
+  if(!h) return;
+  const a = document.createElement('a');
+  a.href = h.dataUri;
+  a.download = h.nome;
+  a.click();
+}
+function delHistorico(id){
+  if(!confirm('Excluir este arquivo do histórico?')) return;
+  DB.historico = DB.historico.filter(x => x.id !== id);
+  save(); renderHistorico(); toast('Removido do histórico', 'ok');
+}
+function clearHistorico(){
+  if(!DB.historico.length) return;
+  if(!confirm('Excluir todo o histórico de arquivos gerados? Essa ação não pode ser desfeita.')) return;
+  DB.historico = [];
+  save(); renderHistorico(); toast('Histórico limpo', 'ok');
 }
 
 // ================= DASHBOARD =================
@@ -1185,6 +1279,7 @@ function renderAll(){
   renderFeriados();
   renderValores();
   renderRelatorio();
+  renderHistorico();
 }
 
 // ---------- events ----------
@@ -1203,6 +1298,7 @@ document.getElementById('btnPrintRel').addEventListener('click', () => { goView(
 document.getElementById('btnBackupExport').addEventListener('click', e => { e.preventDefault(); exportBackup(); });
 document.getElementById('btnBackupImport').addEventListener('click', e => { e.preventDefault(); document.getElementById('fileImportBackup').click(); });
 document.getElementById('fileImportBackup').addEventListener('change', e => { if(e.target.files[0]) importBackup(e.target.files[0]); e.target.value=''; });
+document.getElementById('btnLimparHist').addEventListener('click', clearHistorico);
 
 ['colabBusca','colabFiltroTipo','colabFiltroStatus'].forEach(id => document.getElementById(id).addEventListener('input', renderColaboradores));
 ['lancMes','lancFiltroColab','lancFiltroSit'].forEach(id => document.getElementById(id).addEventListener('input', renderLancamentos));
@@ -1221,7 +1317,8 @@ window.App = {
   editLanc: id => lancModal(DB.lancamentos.find(l => l.id === id)),
   saveLanc, delLanc,
   calcValor, onDataChange,
-  bulkModal, bulkOnDateChange, bulkRecalc, bulkToggleAll, bulkSave
+  bulkModal, bulkOnDateChange, bulkRecalc, bulkToggleAll, bulkSave,
+  baixarHistorico, delHistorico
 };
 
 renderAll();
