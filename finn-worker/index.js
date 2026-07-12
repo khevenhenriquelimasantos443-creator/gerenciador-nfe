@@ -39,6 +39,10 @@ export default {
       return handleStatus(env);
     }
 
+    if (url.pathname === "/debug" && request.method === "GET") {
+      return handleDebug(env);
+    }
+
     return new Response("Finn WhatsApp Worker", { status: 200 });
   },
 
@@ -56,17 +60,46 @@ function corsResponse(response) {
 }
 
 // =============================================================================
+// DEBUG LOG — registro dos últimos eventos, pra diagnosticar sem precisar
+// de acesso ao painel da Cloudflare. Guarda no KV, mostra em GET /debug.
+// =============================================================================
+const DEBUG_KEY = "__debug_log__";
+const DEBUG_MAX = 25;
+
+async function debugLog(env, entry) {
+  try {
+    const raw = await env.FINN_KV.get(DEBUG_KEY);
+    const list = raw ? JSON.parse(raw) : [];
+    list.unshift({ at: new Date().toISOString(), ...entry });
+    await env.FINN_KV.put(DEBUG_KEY, JSON.stringify(list.slice(0, DEBUG_MAX)));
+  } catch (err) {
+    console.error("debugLog error:", err);
+  }
+}
+
+async function handleDebug(env) {
+  const raw = await env.FINN_KV.get(DEBUG_KEY);
+  const list = raw ? JSON.parse(raw) : [];
+  return corsResponse(new Response(JSON.stringify({ ok: true, count: list.length, events: list }, null, 2), {
+    status: 200,
+    headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// =============================================================================
 // WEBHOOK VERIFICATION (GET) — required by Meta
 // =============================================================================
-function handleWebhookVerification(request, env) {
+async function handleWebhookVerification(request, env) {
   const url = new URL(request.url);
   const mode = url.searchParams.get("hub.mode");
   const token = url.searchParams.get("hub.verify_token");
   const challenge = url.searchParams.get("hub.challenge");
 
   if (mode === "subscribe" && token === env.WHATSAPP_VERIFY_TOKEN) {
+    await debugLog(env, { kind: "webhook_verified" });
     return new Response(challenge, { status: 200 });
   }
+  await debugLog(env, { kind: "webhook_verify_failed", mode, tokenMatch: token === env.WHATSAPP_VERIFY_TOKEN });
   return new Response("Forbidden", { status: 403 });
 }
 
@@ -78,16 +111,33 @@ async function handleWebhook(request, env) {
   try { body = await request.json(); } catch { return new Response("Bad Request", { status: 400 }); }
 
   if (body.object !== "whatsapp_business_account") {
+    await debugLog(env, { kind: "webhook_ignored", reason: "object != whatsapp_business_account", object: body.object });
     return new Response("OK", { status: 200 });
   }
 
+  let sawMessage = false;
   for (const entry of (body.entry || [])) {
     for (const change of (entry.changes || [])) {
       if (change.field !== "messages") continue;
       for (const msg of (change.value?.messages || [])) {
-        try { await processMessage(msg, env); } catch (err) { console.error("processMessage error:", err); }
+        sawMessage = true;
+        await debugLog(env, { kind: "message_received", from: msg.from, type: msg.type, text: msg.text?.body });
+        try {
+          await processMessage(msg, env);
+        } catch (err) {
+          console.error("processMessage error:", err);
+          await debugLog(env, { kind: "process_error", from: msg.from, error: String(err && err.stack || err) });
+        }
+      }
+      // Statuses (delivered/read/failed) também chegam nesse campo — úteis pra
+      // ver se a Meta está reportando falha de entrega de algo que enviamos.
+      for (const st of (change.value?.statuses || [])) {
+        await debugLog(env, { kind: "status", status: st.status, recipient: st.recipient_id, errors: st.errors });
       }
     }
+  }
+  if (!sawMessage) {
+    await debugLog(env, { kind: "webhook_no_messages", raw: JSON.stringify(body).slice(0, 500) });
   }
 
   return new Response("OK", { status: 200 });
@@ -905,6 +955,7 @@ async function metaPost(payload, env) {
   if(!resp.ok) {
     const body = await resp.text();
     console.error(`Meta API error ${resp.status}:`, body);
+    await debugLog(env, { kind: "meta_send_error", to: payload.to, status: resp.status, body: body.slice(0, 500) });
     // Token expirado (401) ou sem permissão (403)
     if (resp.status === 401 || resp.status === 403) {
       console.error("⚠️  TOKEN EXPIRADO ou INVÁLIDO — acesse o Meta Developer Portal e gere um novo token, depois atualize com: wrangler secret put WHATSAPP_ACCESS_TOKEN");
