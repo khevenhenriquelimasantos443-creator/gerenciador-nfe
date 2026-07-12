@@ -9,6 +9,13 @@ const sw        = fs.readFileSync(path.join(__dirname,'sw.js'), 'utf8');
 const pitchInv  = fs.readFileSync(path.join(__dirname,'../finn/pitch-investidores.html'), 'utf8');
 const pitchUsr  = fs.readFileSync(path.join(__dirname,'../finn/pitch-usuarios.html'), 'utf8');
 
+// Ícones do PWA — mesmo desenho do "F" usado no favicon do app, embutidos
+// como base64 direto dos PNGs (evita depender de SVG em manifest, que
+// vários navegadores/iOS não renderizam direito como ícone instalado).
+const icon192      = fs.readFileSync(path.join(__dirname,'icons/icon-192.png')).toString('base64');
+const icon512       = fs.readFileSync(path.join(__dirname,'icons/icon-512.png')).toString('base64');
+const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-icon.png')).toString('base64');
+
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
 
@@ -540,8 +547,8 @@ h1 em{font-style:normal;color:#F97316}
         theme_color: '#F97316',
         orientation: 'portrait-primary',
         icons: [
-          { src: '/icon-192.svg', sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
-          { src: '/icon-512.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+          { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
         ]
       };
       return new Response(JSON.stringify(manifest), {
@@ -549,11 +556,14 @@ h1 em{font-style:normal;color:#F97316}
       });
     }
 
-    // ── Icons ──
-    var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#0F172A"/><path d="M96 36L156 96L96 156L36 96Z" fill="#F97316"/><path d="M96 62L130 96L96 130L62 96Z" fill="#0F172A"/><circle cx="96" cy="96" r="13" fill="#F97316"/></svg>';
-    if (url.pathname === '/icon-192.svg' || url.pathname === '/icon-512.svg') {
-      return new Response(iconSvg, {
-        headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=604800' }
+    // ── Icons (PNG — SVG em manifest não é bem suportado em vários navegadores/iOS) ──
+    if (url.pathname === '/icon-192.png' || url.pathname === '/icon-512.png' || url.pathname === '/apple-touch-icon.png') {
+      var iconB64 = url.pathname === '/icon-192.png' ? ${JSON.stringify(icon192)}
+        : url.pathname === '/icon-512.png' ? ${JSON.stringify(icon512)}
+        : ${JSON.stringify(appleTouchIcon)};
+      var iconBytes = Uint8Array.from(atob(iconB64), function(c){ return c.charCodeAt(0); });
+      return new Response(iconBytes, {
+        headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800' }
       });
     }
 
