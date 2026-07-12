@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificador de Anúncios Shopee</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🛍️</div>
+    <div>
+      <h1>Verificador de Anúncios Shopee</h1>
+      <p class="sub">Promoções, estoque e vendas de todos os anúncios de uma vez</p>
+    </div>
+  </header>
+
+  <!-- Fora do Seller Center -->
+  <section id="view-wrongsite" class="view hidden">
+    <p class="msg">Para usar, abra o <b>Shopee Seller Center</b> e faça login na sua conta de vendedor.</p>
+    <button id="btn-open-seller" class="btn btn-primary">Abrir Seller Center</button>
+    <ol class="steps">
+      <li>Faça login em <b>seller.shopee.com.br</b></li>
+      <li>Abra a página <b>Meus Produtos</b></li>
+      <li>Clique no ícone da extensão de novo</li>
+    </ol>
+  </section>
+
+  <!-- Página precisa ser recarregada -->
+  <section id="view-reload" class="view hidden">
+    <p class="msg">Quase lá! Preciso que a página do Seller Center seja recarregada uma vez para a extensão se conectar.</p>
+    <button id="btn-reload" class="btn btn-primary">Recarregar página</button>
+  </section>
+
+  <!-- Pronto para escanear -->
+  <section id="view-ready" class="view hidden">
+    <div id="conn-status" class="conn">✅ Conectado ao Seller Center</div>
+    <button id="btn-scan" class="btn btn-primary btn-big">🔍 Verificar todos os anúncios</button>
+    <p class="hint">Dica: se der erro, abra antes a página <b>Meus Produtos</b> e espere a lista carregar — a extensão aprende o caminho certo sozinha.</p>
+  </section>
+
+  <!-- Progresso -->
+  <section id="view-progress" class="view hidden">
+    <div class="spinner"></div>
+    <p id="progress-text" class="msg">Iniciando...</p>
+    <div class="bar"><div id="bar-fill"></div></div>
+  </section>
+
+  <!-- Erro -->
+  <section id="view-error" class="view hidden">
+    <p class="msg error" id="error-text"></p>
+    <button id="btn-retry" class="btn btn-primary">Tentar de novo</button>
+    <details>
+      <summary>Detalhes técnicos</summary>
+      <pre id="error-debug"></pre>
+    </details>
+  </section>
+
+  <!-- Resultado -->
+  <section id="view-result" class="view hidden">
+    <div class="cards" id="cards"></div>
+    <div class="actions">
+      <button id="btn-csv" class="btn btn-primary">⬇️ Baixar planilha (Excel/CSV)</button>
+      <button id="btn-copy" class="btn">📋 Copiar p/ colar no Excel</button>
+      <button id="btn-rescan" class="btn">🔄 Verificar de novo</button>
+    </div>
+    <p class="ts" id="result-ts"></p>
+    <div class="filterbar">
+      <input id="filter" type="search" placeholder="Filtrar por nome ou ID...">
+      <label><input type="checkbox" id="only-promo"> Só com promoção</label>
+      <label><input type="checkbox" id="only-nostock"> Só estoque zerado</label>
+    </div>
+    <div class="tablewrap">
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Estoque</th>
+            <th>Preço</th>
+            <th>Promoção</th>
+            <th>Vendas</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <p class="hint" id="table-note"></p>
+  </section>
+
+  <footer>Os dados ficam só no seu navegador. Nada é enviado para servidores externos.</footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+/**
+ * Content script — roda em https://seller.shopee.com.br
+ *
+ * Faz a varredura em massa de TODOS os anúncios usando a sessão já logada
+ * do vendedor (as chamadas são feitas pelo próprio navegador, como se fosse
+ * a página do Seller Center; nada sai do seu computador).
+ *
+ * Estratégia em camadas, porque os endpoints internos da Shopee mudam:
+ *   1. Usa a URL que o próprio Seller Center chamou (capturada pelo injected.js);
+ *   2. Se não tiver, tenta uma lista de endpoints conhecidos;
+ *   3. Extrai os campos de forma defensiva (procura as chaves em vários formatos).
+ */
+
+(function () {
+  'use strict';
+
+  // ---------------------------------------------------------------- captura
+  const captured = { productList: null, promoList: null, promoItems: null, stats: null };
+
+  window.addEventListener('message', (ev) => {
+    if (ev.source !== window) return;
+    const d = ev.data;
+    if (!d || d.source !== 'SPX_CAPTURED_URL' || !d.kind || !d.url) return;
+    if (typeof d.url !== 'string' || !d.url.startsWith(location.origin)) return;
+    captured[d.kind] = d.url;
+  });
+
+  // ---------------------------------------------------------------- helpers
+  const debugLog = [];
+  function dbg(msg) {
+    debugLog.push(new Date().toISOString().slice(11, 19) + ' ' + msg);
+    if (debugLog.length > 400) debugLog.shift();
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function getCds() {
+    const m = document.cookie.match(/(?:^|;\s*)SPC_CDS=([^;]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  async function apiGet(url) {
+    const res = await fetch(url, {
+      credentials: 'include',
+      headers: { 'accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    // Padrão Shopee: code/errcode 0 = ok
+    const code = json.code !== undefined ? json.code : json.errcode;
+    if (code !== undefined && code !== 0) {
+      throw new Error('API code ' + code + (json.message ? ' (' + json.message + ')' : ''));
+    }
+    return json;
+  }
+
+  function setPageParam(url, page, size) {
+    const u = new URL(url, location.origin);
+    let found = false;
+    for (const k of ['page_number', 'page_no', 'pageNumber', 'pageNo', 'page']) {
+      if (u.searchParams.has(k)) { u.searchParams.set(k, String(page)); found = true; }
+    }
+    if (!found) u.searchParams.set('page_number', String(page));
+    for (const k of ['page_size', 'pageSize', 'limit']) {
+      if (u.searchParams.has(k)) u.searchParams.set(k, String(size));
+    }
+    return u.toString();
+  }
+
+  // Busca em profundidade por um array de objetos que "parecem produtos"
+  function findObjectArray(root, looksLike, maxDepth = 7) {
+    let best = null;
+    (function walk(node, depth) {
+      if (!node || depth > maxDepth) return;
+      if (Array.isArray(node)) {
+        if (node.length && typeof node[0] === 'object' && node[0] && looksLike(node[0])) {
+          if (!best || node.length > best.length) best = node;
+        }
+        for (const item of node.slice(0, 3)) walk(item, depth + 1);
+        return;
+      }
+      if (typeof node === 'object') {
+        for (const k of Object.keys(node)) walk(node[k], depth + 1);
+      }
+    })(root, 0);
+    return best;
+  }
+
+  function looksLikeProduct(o) {
+    const hasId = o.id !== undefined || o.product_id !== undefined || o.item_id !== undefined || o.itemid !== undefined;
+    const hasName = o.name !== undefined || o.product_name !== undefined || o.title !== undefined || o.item_name !== undefined;
+    return hasId && hasName;
+  }
+
+  // Procura o primeiro valor definido em uma lista de "caminhos" (a.b.c)
+  function pick(obj, paths) {
+    for (const path of paths) {
+      let cur = obj;
+      let ok = true;
+      for (const part of path.split('.')) {
+        if (cur && typeof cur === 'object' && part in cur) cur = cur[part];
+        else { ok = false; break; }
+      }
+      if (ok && cur !== undefined && cur !== null && cur !== '') return cur;
+    }
+    return undefined;
+  }
+
+  // Busca profunda por chave que case com regex e valor numérico
+  function deepFindNumber(obj, keyRe, maxDepth = 5) {
+    let found;
+    (function walk(node, depth) {
+      if (found !== undefined || !node || depth > maxDepth || typeof node !== 'object') return;
+      for (const k of Object.keys(node)) {
+        const v = node[k];
+        if (keyRe.test(k) && (typeof v === 'number' || (typeof v === 'string' && v !== '' && !isNaN(v)))) {
+          found = Number(v);
+          return;
+        }
+      }
+      for (const k of Object.keys(node)) walk(node[k], depth + 1);
+    })(obj, 0);
+    return found;
+  }
+
+  // A API pública da Shopee usa preço x100000; as do Seller Center normalmente não.
+  function normPrice(v) {
+    if (v === undefined || v === null || v === '') return null;
+    let n = Number(v);
+    if (!isFinite(n) || n < 0) return null;
+    if (n >= 100000 && n % 100000 === 0) n = n / 100000;
+    return n;
+  }
+
+  function minMax(list) {
+    const nums = list.filter(n => n !== null && n !== undefined && isFinite(n));
+    if (!nums.length) return null;
+    const mn = Math.min(...nums), mx = Math.max(...nums);
+    return { min: mn, max: mx };
+  }
+
+  const STATUS_MAP = {
+    1: 'Ativo', 2: 'Esgotado', 3: 'Desativado', 4: 'Excluído',
+    5: 'Banido', 6: 'Em análise', 'live': 'Ativo', 'sold_out': 'Esgotado',
+    'normal': 'Ativo', 'delisted': 'Desativado', 'banned': 'Banido', 'reviewing': 'Em análise'
+  };
+
+  // ------------------------------------------------------- lista de produtos
+  function productListCandidates(cds, page, size, listType) {
+    const c = [];
+    if (captured.productList) c.push(setPageParam(captured.productList, page, size));
+    c.push(
+      `${location.origin}/api/v3/mpsku/list/v2/get_product_list?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&page_number=${page}&page_size=${size}&list_type=${listType}&need_brief_sku_info=true`,
+      `${location.origin}/api/v3/product/page_product_list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&page_number=${page}&page_size=${size}&list_type=${listType}&need_ads=true`,
+      `${location.origin}/api/v3/product/page_product_list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&page_number=${page}&page_size=${size}&list_type=all`
+    );
+    return c;
+  }
+
+  async function fetchAllProducts(cds, listType, progress) {
+    const SIZE = 48;
+    let workingUrl = null;
+    let firstJson = null;
+
+    for (const cand of productListCandidates(cds, 1, SIZE, listType)) {
+      try {
+        dbg('Tentando lista de produtos: ' + cand.split('?')[0]);
+        const json = await apiGet(cand);
+        const arr = findObjectArray(json, looksLikeProduct);
+        if (arr) { workingUrl = cand; firstJson = json; break; }
+        dbg('Endpoint respondeu mas sem array de produtos.');
+      } catch (e) {
+        dbg('Falhou: ' + e.message);
+      }
+    }
+    if (!workingUrl) return null;
+
+    const total = deepFindNumber(firstJson, /^(total|total_count|item_total)$/i) || null;
+    const all = [];
+    let page = 1;
+    let json = firstJson;
+
+    while (true) {
+      const arr = findObjectArray(json, looksLikeProduct) || [];
+      all.push(...arr);
+      progress(all.length, total, listType);
+      const acabou = arr.length === 0 || (total ? all.length >= total : arr.length < SIZE);
+      if (acabou || page >= 200) break;
+      page++;
+      await sleep(350); // gentil com o servidor
+      try {
+        json = await apiGet(setPageParam(workingUrl, page, SIZE));
+      } catch (e) {
+        dbg('Página ' + page + ' falhou: ' + e.message);
+        break;
+      }
+    }
+    return all;
+  }
+
+  // ----------------------------------------------------------- extração
+  function extractProduct(p, listType) {
+    const id = pick(p, ['id', 'product_id', 'item_id', 'itemid']);
+    const name = pick(p, ['name', 'product_name', 'title', 'item_name']);
+    const rawStatus = pick(p, ['status', 'product_status', 'item_status']);
+    let status = STATUS_MAP[rawStatus] !== undefined ? STATUS_MAP[rawStatus]
+      : (rawStatus !== undefined ? String(rawStatus) : (listType === 'sold_out' ? 'Esgotado' : 'Ativo'));
+
+    // ---- estoque
+    let stock = pick(p, [
+      'stock_detail.total_available_stock',
+      'stock_detail.sellable_stock',
+      'stock_detail.total_seller_stock',
+      'stock_detail.normal_stock',
+      'stock', 'total_stock', 'normal_stock'
+    ]);
+    const models = pick(p, ['model_list', 'models', 'sku_list']) || [];
+    if ((stock === undefined || stock === null) && Array.isArray(models) && models.length) {
+      let sum = 0, got = false;
+      for (const m of models) {
+        const s = pick(m, [
+          'stock_detail.total_available_stock', 'stock_detail.sellable_stock',
+          'stock_detail.normal_stock', 'stock', 'normal_stock'
+        ]);
+        if (s !== undefined && s !== null && isFinite(Number(s))) { sum += Number(s); got = true; }
+      }
+      if (got) stock = sum;
+    }
+    if (stock !== undefined && stock !== null) stock = Number(stock);
+
+    // ---- preços (atual x original)
+    const curPrices = [];
+    const origPrices = [];
+    curPrices.push(
+      normPrice(pick(p, ['price_detail.price_min'])),
+      normPrice(pick(p, ['price_detail.price_max'])),
+      normPrice(pick(p, ['price', 'price_min', 'promotion_price', 'current_price']))
+    );
+    origPrices.push(
+      normPrice(pick(p, ['price_detail.origin_price_min'])),
+      normPrice(pick(p, ['price_detail.origin_price_max'])),
+      normPrice(pick(p, ['origin_price', 'original_price', 'input_normal_price', 'normal_price']))
+    );
+    if (Array.isArray(models)) {
+      for (const m of models) {
+        curPrices.push(
+          normPrice(pick(m, ['price_detail.price_min', 'price_detail.price', 'price', 'promotion_price', 'current_price']))
+        );
+        origPrices.push(
+          normPrice(pick(m, ['price_detail.origin_price_min', 'origin_price', 'original_price', 'input_normal_price', 'normal_price']))
+        );
+      }
+    }
+    const cur = minMax(curPrices);
+    const orig = minMax(origPrices);
+
+    // ---- promoção
+    const promoIdRaw = pick(p, ['promotion_id', 'promotionid', 'promotion_detail.promotion_id']);
+    const hasDiscountFlag = pick(p, ['price_detail.has_discount', 'has_discount', 'has_promotion']);
+    let modelPromo = false;
+    if (Array.isArray(models)) {
+      for (const m of models) {
+        const pid = pick(m, ['promotion_id', 'promotionid']);
+        if (pid !== undefined && Number(pid) > 0) { modelPromo = true; break; }
+      }
+    }
+    const priceSaysPromo = !!(cur && orig && orig.min > 0 && cur.min < orig.min - 0.009);
+    const emPromocao = !!(hasDiscountFlag === true || (promoIdRaw !== undefined && Number(promoIdRaw) > 0) || modelPromo || priceSaysPromo);
+
+    let descontoPct = null;
+    if (cur && orig && orig.min > 0 && cur.min < orig.min) {
+      descontoPct = Math.round((1 - cur.min / orig.min) * 1000) / 10;
+    }
+
+    // ---- vendas
+    let vendas30 = deepFindNumber(p, /(30|thirty)[a-z_]*(sold|sale)|(sold|sale)[a-z_]*(30|thirty)/i);
+    let vendasTotal = pick(p, ['statistics.sold_count', 'sold_count', 'historical_sold', 'sold', 'sales']);
+    if (vendasTotal === undefined) vendasTotal = deepFindNumber(p, /^(sold_count|historical_sold|sold|sale_count|order_count)$/i);
+    if (vendasTotal !== undefined && vendasTotal !== null) vendasTotal = Number(vendasTotal);
+    if (vendas30 !== undefined && vendas30 !== null) vendas30 = Number(vendas30);
+
+    return {
+      id: id !== undefined ? String(id) : '',
+      nome: name !== undefined ? String(name) : '',
+      status,
+      estoque: (stock !== undefined && stock !== null && isFinite(stock)) ? stock : null,
+      precoOriginal: orig ? orig.min : null,
+      precoAtual: cur ? cur.min : null,
+      precoAtualMax: cur ? cur.max : null,
+      emPromocao,
+      precoPromocional: emPromocao && cur ? cur.min : null,
+      descontoPct,
+      promoNome: null,   // preenchido depois via APIs de marketing
+      promoTipo: null,
+      vendas30: (vendas30 !== undefined && isFinite(vendas30)) ? vendas30 : null,
+      vendasTotal: (vendasTotal !== undefined && isFinite(vendasTotal)) ? vendasTotal : null,
+      link: `${location.origin}/portal/product/${id}`
+    };
+  }
+
+  // ------------------------------------------------- promoções (marketing)
+  async function fetchPromotionMap(cds, progress) {
+    const map = {}; // itemId -> { nome, tipo, preco }
+
+    // 1) Descontos da loja ("Minhas promoções > Desconto")
+    const listCandidates = [];
+    if (captured.promoList) listCandidates.push(captured.promoList);
+    listCandidates.push(
+      `${location.origin}/api/marketing/v3/discount/list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&page_no=1&page_size=100&discount_status=ongoing`,
+      `${location.origin}/api/marketing/v3/discount/list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&page_no=1&page_size=100&status=ongoing`,
+      `${location.origin}/api/marketing/v3/discount/list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&page_no=1&page_size=100`
+    );
+
+    let discounts = null;
+    for (const cand of listCandidates) {
+      try {
+        dbg('Tentando lista de promoções: ' + cand.split('?')[0]);
+        const json = await apiGet(cand);
+        const arr = findObjectArray(json, o =>
+          (o.discount_id !== undefined || o.id !== undefined || o.promotion_id !== undefined) &&
+          (o.title !== undefined || o.name !== undefined || o.discount_name !== undefined));
+        if (arr) { discounts = arr; break; }
+      } catch (e) { dbg('Falhou: ' + e.message); }
+    }
+
+    if (discounts) {
+      progress('Encontradas ' + discounts.length + ' promoções. Lendo itens de cada uma...');
+      let n = 0;
+      for (const d of discounts.slice(0, 30)) {
+        n++;
+        const did = pick(d, ['discount_id', 'id', 'promotion_id']);
+        const dname = pick(d, ['title', 'name', 'discount_name']) || ('Desconto #' + did);
+        const statusRaw = pick(d, ['status', 'discount_status']);
+        // pula promoções claramente encerradas quando o status vier como texto
+        if (typeof statusRaw === 'string' && /expired|ended|finish/i.test(statusRaw)) continue;
+
+        const itemCandidates = [
+          `${location.origin}/api/marketing/v3/discount/get_discount_item_list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&discount_id=${did}&page_no=1&page_size=100`,
+          `${location.origin}/api/marketing/v3/discount/item_list/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&discount_id=${did}&page_no=1&page_size=100`
+        ];
+        for (const cand of itemCandidates) {
+          try {
+            const json = await apiGet(cand);
+            const items = findObjectArray(json, o =>
+              o.item_id !== undefined || o.product_id !== undefined || o.itemid !== undefined);
+            if (!items) continue;
+            for (const it of items) {
+              const iid = String(pick(it, ['item_id', 'product_id', 'itemid']));
+              const pPrice = normPrice(pick(it, ['promotion_price', 'discount_price', 'price', 'promo_price']) ||
+                deepFindNumber(it, /promo.*price|discount.*price/i));
+              if (!map[iid]) map[iid] = { nome: String(dname), tipo: 'Desconto da loja', preco: pPrice };
+            }
+            break;
+          } catch (e) { dbg('Itens da promoção ' + did + ' falharam: ' + e.message); }
+        }
+        progress('Promoções lidas: ' + n + '/' + Math.min(discounts.length, 30));
+        await sleep(300);
+      }
+    } else {
+      dbg('Nenhum endpoint de promoções respondeu — usaremos só a detecção por preço.');
+    }
+
+    return map;
+  }
+
+  // ------------------------------------------------------------- varredura
+  async function runScan(post) {
+    debugLog.length = 0;
+    const cds = getCds();
+    if (!cds) {
+      throw new Error('Não encontrei sua sessão do Seller Center. Confira se você está LOGADO em ' + location.origin + ' e recarregue a página (F5).');
+    }
+
+    post({ type: 'status', text: 'Sessão encontrada. Buscando seus anúncios...' });
+
+    const rows = [];
+    const seen = new Set();
+    let anyList = false;
+
+    for (const listType of ['live_all', 'sold_out']) {
+      const products = await fetchAllProducts(cds, listType, (done, total) => {
+        post({
+          type: 'progress',
+          text: (listType === 'live_all' ? 'Anúncios ativos: ' : 'Anúncios esgotados: ') + done + (total ? ' de ' + total : ''),
+          pct: total ? Math.min(95, Math.round((done / total) * 60)) : null
+        });
+      });
+      if (products === null) {
+        if (listType === 'live_all') {
+          throw new Error('Não consegui acessar a lista de produtos. Abra a página "Meus Produtos" no Seller Center, espere carregar, e clique em Verificar de novo (a extensão aprende a URL certa automaticamente).');
+        }
+        continue;
+      }
+      anyList = true;
+      for (const p of products) {
+        const row = extractProduct(p, listType);
+        if (row.id && !seen.has(row.id)) { seen.add(row.id); rows.push(row); }
+      }
+    }
+
+    if (!anyList || !rows.length) {
+      throw new Error('Nenhum anúncio encontrado. Confira se esta é a conta certa e se há produtos publicados.');
+    }
+
+    post({ type: 'status', text: rows.length + ' anúncios coletados. Verificando promoções...', pct: 65 });
+
+    let promoMap = {};
+    try {
+      promoMap = await fetchPromotionMap(cds, (text) => post({ type: 'status', text, pct: 80 }));
+    } catch (e) {
+      dbg('fetchPromotionMap: ' + e.message);
+    }
+
+    for (const r of rows) {
+      const pm = promoMap[r.id];
+      if (pm) {
+        r.emPromocao = true;
+        r.promoNome = pm.nome;
+        r.promoTipo = pm.tipo;
+        if (pm.preco !== null && pm.preco !== undefined) r.precoPromocional = pm.preco;
+        if (r.precoOriginal && r.precoPromocional && r.precoOriginal > 0) {
+          r.descontoPct = Math.round((1 - r.precoPromocional / r.precoOriginal) * 1000) / 10;
+        }
+      } else if (r.emPromocao && !r.promoNome) {
+        r.promoNome = 'Promoção ativa (nome não identificado)';
+        r.promoTipo = 'Detectada pelo preço';
+      }
+    }
+
+    const summary = {
+      total: rows.length,
+      comPromo: rows.filter(r => r.emPromocao).length,
+      semPromo: rows.filter(r => !r.emPromocao).length,
+      estoqueZero: rows.filter(r => r.estoque === 0).length,
+      estoqueBaixo: rows.filter(r => r.estoque !== null && r.estoque > 0 && r.estoque <= 5).length,
+      vendas30: rows.reduce((acc, r) => acc + (r.vendas30 || 0), 0) || null,
+      temVendas30: rows.some(r => r.vendas30 !== null),
+      geradoEm: new Date().toLocaleString('pt-BR')
+    };
+
+    post({ type: 'done', rows, summary, debug: debugLog.slice() });
+  }
+
+  // --------------------------------------------------------- comunicação
+  chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    if (msg && msg.type === 'ping') {
+      sendResponse({ ok: true, loggedIn: !!getCds(), origin: location.origin, captured: { productList: !!captured.productList } });
+    }
+    return false;
+  });
+
+  chrome.runtime.onConnect.addListener((port) => {
+    if (port.name !== 'spx-scan') return;
+    port.onMessage.addListener(async (msg) => {
+      if (!msg || msg.type !== 'scan') return;
+      const post = (m) => { try { port.postMessage(m); } catch (e) { /* popup fechado */ } };
+      try {
+        await runScan(post);
+      } catch (e) {
+        post({ type: 'error', message: e.message || String(e), debug: debugLog.slice() });
+      }
+    });
+  });
+})();

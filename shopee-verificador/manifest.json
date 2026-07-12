@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Shopee — Verificador de Anúncios em Massa",
+  "version": "1.0.0",
+  "description": "Verifica todos os seus anúncios da Shopee de uma vez: promoção ativa, valor promocional, nome da promoção, estoque atual e vendas. Exporta para planilha (Excel/CSV).",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://seller.shopee.com.br/*",
+    "https://seller.shopee.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Verificador de Anúncios Shopee"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://seller.shopee.com.br/*", "https://seller.shopee.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://seller.shopee.com.br/*", "https://seller.shopee.com/*"],
+      "js": ["injected.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}
