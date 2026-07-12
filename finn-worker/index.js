@@ -368,11 +368,11 @@ async function handleResumoMes(phone, env) {
   const now = new Date();
   const year = now.getFullYear(), month = now.getMonth();
   const monthTxs = (data.txs||[]).filter(tx => { const d=new Date(tx.date); return d.getFullYear()===year&&d.getMonth()===month; });
-  const receitas = monthTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
-  const despesas = monthTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+  const receitas = monthTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const despesas = monthTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
   const saldo = receitas - despesas;
   const byCat = {};
-  monthTxs.filter(t=>t.val<0).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
+  monthTxs.filter(t=>t.val<0&&isFlowTx(t)).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
   const catLines = Object.entries(byCat).sort((a,b)=>b[1]-a[1]).slice(0,5)
     .map(([cat,val])=>`  ${catToEmoji(cat)} ${cat}: R$ ${formatBRL(val)}`).join("\n");
   const monthName = now.toLocaleString("pt-BR",{month:"long"});
@@ -387,7 +387,7 @@ async function handleAlertasLimite(phone, env) {
   const data = await getUserData(phone, env);
   const limits = data.limits||{};
   const now = new Date();
-  const monthTxs = (data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&tx.val<0;});
+  const monthTxs = (data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&tx.val<0&&isFlowTx(tx);});
   const byCat = {};
   monthTxs.forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
   if (!Object.keys(limits).length) { await sendText(phone,"⚠️ Sem limites configurados.\n\nAbra o Finn! 👉 "+(env.FINN_URL||""),env); return; }
@@ -435,8 +435,8 @@ async function handlePrevisaoSaldo(phone, env) {
   const year=now.getFullYear(), month=now.getMonth();
   const ym=`${year}-${String(month+1).padStart(2,"0")}`;
   const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===year&&d.getMonth()===month;});
-  const receitas=monthTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
-  const despesas=monthTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+  const receitas=monthTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const despesas=monthTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
   const pendFixed=(fixed||[]).filter(b=>!(b.paid||[]).includes(ym)).reduce((s,b)=>s+Math.abs(b.val),0);
   const saldoAtual=receitas-despesas;
   const daysLeft=new Date(year,month+1,0).getDate()-now.getDate();
@@ -452,7 +452,7 @@ async function handlePrevisaoSaldo(phone, env) {
 async function handleModoPanico(phone, env) {
   const data = await getUserData(phone, env);
   const now = new Date();
-  const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&tx.val<0;});
+  const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&tx.val<0&&isFlowTx(tx);});
   const top3=[...monthTxs].sort((a,b)=>Math.abs(b.val)-Math.abs(a.val)).slice(0,3);
   const despesas=monthTxs.reduce((s,t)=>s+Math.abs(t.val),0);
   await sendText(phone,
@@ -553,13 +553,13 @@ async function handleScoreFinanceiro(phone, env) {
     const d = new Date(tx.date);
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
   });
-  const receitas = monthTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
-  const despesas = monthTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+  const receitas = monthTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const despesas = monthTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
   const saldo = receitas - despesas;
   const goals = data.goals || [];
   const limits = data.limits || {};
   const byCat = {};
-  monthTxs.filter(t=>t.val<0).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
+  monthTxs.filter(t=>t.val<0&&isFlowTx(t)).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
 
   // Scoring (0–100)
   let score = 50;
@@ -627,15 +627,15 @@ async function handleDashboardCompleto(phone, env) {
     const mt = (data.txs||[]).filter(tx => {
       const td = new Date(tx.date); return td.getMonth()===mm && td.getFullYear()===my;
     });
-    const r = mt.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
-    const e = mt.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+    const r = mt.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+    const e = mt.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
     months.push({ lbl: d.toLocaleDateString('pt-BR',{month:'short'}), r, e, n: r-e });
   }
 
   const cur = months[months.length-1];
   const catMap = {};
   (data.txs||[]).filter(tx => {
-    const d = new Date(tx.date); return d.getMonth()===cm && d.getFullYear()===year && tx.val<0;
+    const d = new Date(tx.date); return d.getMonth()===cm && d.getFullYear()===year && tx.val<0 && isFlowTx(tx);
   }).forEach(t => { catMap[t.cat]=(catMap[t.cat]||0)+Math.abs(t.val); });
   const topCats = Object.entries(catMap).sort((a,b)=>b[1]-a[1]).slice(0,4);
 
@@ -904,14 +904,14 @@ function buildDashboardMessage(data, env) {
   const todayStr=now.toISOString().slice(0,10);
   const todayTxs=(data.txs||[]).filter(tx=>tx.date?.slice(0,10)===todayStr);
   const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===year&&d.getMonth()===month;});
-  const tR=todayTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
-  const tD=todayTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
-  const mR=monthTxs.filter(t=>t.val>0).reduce((s,t)=>s+t.val,0);
-  const mD=monthTxs.filter(t=>t.val<0).reduce((s,t)=>s+Math.abs(t.val),0);
+  const tR=todayTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const tD=todayTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
+  const mR=monthTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const mD=monthTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
   const mS=mR-mD;
   const limits=data.limits||{};
   const byCat={};
-  monthTxs.filter(t=>t.val<0).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
+  monthTxs.filter(t=>t.val<0&&isFlowTx(t)).forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
   const catAlerts=Object.entries(byCat).filter(([cat])=>limits[cat]).map(([cat,spent])=>{
     const pct=(spent/limits[cat])*100;
     if(pct>=100) return `  🔴 ${catToEmoji(cat)} ${cat}: ${Math.round(pct)}%`;
@@ -1158,6 +1158,15 @@ function buildTransaction({val,cat,desc}) {
     date:new Date().toISOString().slice(0,10),
     desc:desc||"Sem descrição", val:val||0, cat:cat||"Outros", source:"whatsapp",
   };
+}
+
+// Mesma regra do site (finn/index.html): a varredura automática do banco
+// (Rende Fácil, aplicação/resgate/poupança automática) não conta como
+// receita/despesa real. Investimento comprado de propósito continua no
+// fluxo. Sem isso os totais do bot batiam a mais que o site.
+const INVEST_RE = /rende f[aá]cil|\bbb\s+a[cç][õo]es\b|\bbb\s+mm\b|\bbb\s+rf\b|tesouro direto|previd[eê]ncia privada|aplica[cç][aã]o autom|resgate autom|poupan[cç]a autom|rendimento autom/i;
+function isFlowTx(t) {
+  return !INVEST_RE.test(t.desc || "");
 }
 
 function formatBRL(value) {
