@@ -380,7 +380,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
           <a href="/termos" target="_blank" rel="noopener">Termos</a>
           <a href="/deletar-dados" target="_blank" rel="noopener">Excluir dados</a>
           <a href="mailto:Finn.controle01@gmail.com">Contato</a>
-          <a href="https://wa.me/5513992102413" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://wa.me/5513992102413?text=Oi%2C%20Finn!%20%F0%9F%91%8B%20Vim%20pelo%20app%2C%20bora%20organizar%20minhas%20finan%C3%A7as%3F" target="_blank" rel="noopener">WhatsApp</a>
         </div>
         <div class="app-footer-copy">© 2026 Finn. — Controle financeiro inteligente.</div>
       </footer>
@@ -398,6 +398,11 @@ var SESSION_KEY = "finn_supa_session";
 // Worker do bot do WhatsApp — usado pra manter os dados do bot em dia
 // com os do site quando o usuário cadastra o número (ver syncWhatsAppBot).
 var WHATSAPP_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev";
+var WHATSAPP_BOT_NUMBER = "5513992102413";
+var WHATSAPP_GREETING = "Oi, Finn! 👋 Vim pelo app, bora organizar minhas finanças?";
+function whatsappBotLink(){
+  return "https://wa.me/" + WHATSAPP_BOT_NUMBER + "?text=" + encodeURIComponent(WHATSAPP_GREETING);
+}
 var VAPID_PUBLIC_KEY = "BPPw0CSqGjNQCdILq-CvNkBkMR6cDs0TqDCh9vThrMYQZ1OGLaUYIsZI-SQmG_KUrzxDOtlZHwTnKaS-ZUojB7E";
 
 // Vestuário/Freelance/Aluguel/Venda/Bônus existem no bot do WhatsApp desde
@@ -681,6 +686,15 @@ function renderDashboard(){
         '<div class="total-box"><div class="lbl">Saldo</div><div class="val" style="color:' + (saldo>=0?"var(--fp)":"var(--fe)") + '">' + fmtMoney(saldo) + '</div></div>' +
       '</div>' +
     '</div>';
+
+  html += '<a href="' + whatsappBotLink() + '" target="_blank" rel="noopener" class="card" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">' +
+    '<span style="font-size:26px">💬</span>' +
+    '<span style="flex:1">' +
+      '<span style="display:block;font-weight:800;font-size:13.5px;color:var(--fd)">Falar com o bot no WhatsApp</span>' +
+      '<span style="display:block;font-size:12px;color:var(--fm)">Lance um gasto, peça um resumo, tire uma dúvida</span>' +
+    '</span>' +
+    '<span style="color:var(--fp);font-weight:800;font-size:18px">→</span>' +
+  '</a>';
 
   html += renderWhatsAppPromo();
   html += renderFixedDueAlert();
@@ -2535,7 +2549,7 @@ function renderConfig(){
     '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Conecta o bot do WhatsApp aos seus dados do site — o resumo por lá passa a bater com o que está aqui.</div>' +
     '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
     (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
-    '<a href="https://wa.me/5513992102413?text=oi" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:14px;width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">💬 Abrir conversa com o bot no WhatsApp</a>' +
+    '<a href="' + whatsappBotLink() + '" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:14px;width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">💬 Abrir conversa com o bot no WhatsApp</a>' +
     '<button type="button" class="btn-ghost" id="btnDarkToggle" style="margin-top:10px;width:100%">' + (dark ? "☀️ Modo claro" : "🌙 Modo escuro") + '</button>' +
     '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
   '</div>';
