@@ -397,10 +397,14 @@ var SESSION_KEY = "finn_supa_session";
 var WHATSAPP_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev";
 var VAPID_PUBLIC_KEY = "BPPw0CSqGjNQCdILq-CvNkBkMR6cDs0TqDCh9vThrMYQZ1OGLaUYIsZI-SQmG_KUrzxDOtlZHwTnKaS-ZUojB7E";
 
-var CATEGORIES = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Salário","Investimento","Outros"];
-var CAT_ICON = {"Alimentação":"🍔","Transporte":"🚗","Moradia":"🏠","Saúde":"💊","Educação":"📚","Lazer":"🎬","Salário":"💰","Investimento":"📈","Outros":"📦"};
-var EXPENSE_CATS = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Outros"];
-var CAT_COLOR = {"Alimentação":"#F97316","Transporte":"#0EA5E9","Moradia":"#8B5CF6","Saúde":"#EC4899","Educação":"#14B8A6","Lazer":"#F59E0B","Salário":"#059669","Investimento":"#6366F1","Outros":"#94A3B8"};
+// Vestuário/Freelance/Aluguel/Venda/Bônus existem no bot do WhatsApp desde
+// sempre (categorias de despesa/receita da lista de lançamento por lá) mas
+// não existiam aqui — alinhado pra bater categoria por categoria nos dois
+// lugares.
+var CATEGORIES = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Vestuário","Salário","Freelance","Aluguel","Venda","Bônus","Investimento","Outros"];
+var CAT_ICON = {"Alimentação":"🍔","Transporte":"🚗","Moradia":"🏠","Saúde":"💊","Educação":"📚","Lazer":"🎬","Vestuário":"👕","Salário":"💰","Freelance":"💻","Aluguel":"🏠","Venda":"🛍️","Bônus":"🎁","Investimento":"📈","Outros":"📦"};
+var EXPENSE_CATS = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Vestuário","Outros"];
+var CAT_COLOR = {"Alimentação":"#F97316","Transporte":"#0EA5E9","Moradia":"#8B5CF6","Saúde":"#EC4899","Educação":"#14B8A6","Lazer":"#F59E0B","Vestuário":"#D946EF","Salário":"#059669","Freelance":"#0891B2","Aluguel":"#CA8A04","Venda":"#65A30D","Bônus":"#DC2626","Investimento":"#6366F1","Outros":"#94A3B8"};
 function catColor(c){ return CAT_COLOR[c] || "#A78BFA"; }
 
 function allCategories(){
