@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel de Anúncios — Shopee</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <h1><span class="mark">Shopee</span> · Painel de Anúncios</h1>
+      <span class="meta" id="meta"></span>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="chip" data-chip="todos" aria-pressed="true">Todos</button>
+      <button class="chip" data-chip="promo" aria-pressed="false">Em promoção</button>
+      <button class="chip" data-chip="semPromo" aria-pressed="false">Sem promoção</button>
+      <button class="chip" data-chip="esgotado" aria-pressed="false">Esgotados</button>
+      <button class="chip" data-chip="baixo" aria-pressed="false">Estoque baixo (1–5)</button>
+      <button class="chip" data-chip="comEstoque" aria-pressed="false">Com estoque</button>
+      <input class="search" id="search" type="search" placeholder="Buscar por nome ou ID…">
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="card" id="card-top">
+      <h2>Campeões de venda</h2>
+      <p class="desc" id="top-desc"></p>
+      <div class="chartbox"><div class="hbars" id="topbars"></div></div>
+      <div class="legend" id="top-legend"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>Estoque por faixa</h2>
+        <p class="desc">Quantos anúncios em cada faixa de estoque</p>
+        <div class="chartbox cols" id="chart-stock"></div>
+      </div>
+      <div class="card">
+        <h2>Faixas de preço</h2>
+        <p class="desc">Distribuição dos preços atuais (R$)</p>
+        <div class="chartbox cols" id="chart-price"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Promoções</h2>
+      <p class="desc" id="promo-desc"></p>
+      <div class="stackbar" id="promo-stack"></div>
+      <div class="stacklabels" id="promo-labels"></div>
+      <div class="minilist" id="promo-mini"></div>
+    </div>
+
+    <div class="card tablecard">
+      <div class="thead-bar">
+        <h2 id="table-title">Todos os anúncios</h2>
+        <button class="btn-sm" id="btn-export">⬇ Exportar esta lista (CSV)</button>
+      </div>
+      <div class="tscroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="nome" tabindex="0">Produto <span class="arrow"></span></th>
+              <th data-sort="status" tabindex="0">Status <span class="arrow"></span></th>
+              <th class="num" data-sort="estoque" tabindex="0">Estoque <span class="arrow"></span></th>
+              <th class="num" data-sort="preco" tabindex="0">Preço <span class="arrow"></span></th>
+              <th data-sort="promo" tabindex="0">Promoção <span class="arrow"></span></th>
+              <th class="num" data-sort="vendas" tabindex="0">Vendas <span class="arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <button class="btn-sm showmore" id="btn-more">Mostrar mais</button>
+    </div>
+
+    <footer class="note">Gerado pela extensão Verificador de Anúncios Shopee — os dados ficam só no seu navegador.</footer>
+  </div>
+
+  <div class="tooltip" id="tooltip" role="status"></div>
+  <script src="dashboard.js"></script>
+</body>
+</html>

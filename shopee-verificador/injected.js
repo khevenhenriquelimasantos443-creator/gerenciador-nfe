@@ -2,10 +2,12 @@
  * Roda no "mundo" da própria página do Seller Center (world: MAIN).
  *
  * Função: observar as chamadas de API que o PRÓPRIO Seller Center faz
- * (lista de produtos, promoções, estatísticas) e avisar o content script
- * qual é a URL exata que funciona. Assim, mesmo que a Shopee mude os
- * endpoints internos, a extensão "aprende" a URL correta só de você
- * navegar até a página "Meus Produtos".
+ * (lista de produtos, promoções, estatísticas) e repassar ao content script:
+ *   1. a URL exata que funciona (para a varredura em massa reaproveitar);
+ *   2. o CONTEÚDO das respostas relevantes — assim, dados que a API de
+ *      listagem não entrega (preço original, nome da promoção, vendas por
+ *      período) são "aprendidos" enquanto você navega normalmente pelo
+ *      Seller Center e enriquecem a próxima varredura.
  *
  * Nenhum dado é enviado para fora do seu navegador.
  */
@@ -13,11 +15,14 @@
   if (window.__spxCaptureInstalled) return;
   window.__spxCaptureInstalled = true;
 
+  var MAX_BODY = 3000000; // 3 MB — não processa respostas gigantes
+
   var PATTERNS = [
     { kind: 'productList', re: /\/api\/.*(mpsku\/list|page_product_list|product_list)/i },
     { kind: 'promoList',   re: /\/api\/marketing\/.*(discount|promotion|flash_sale).*(list|query)/i },
     { kind: 'promoItems',  re: /\/api\/marketing\/.*(discount|promotion|flash_sale).*(item|detail)/i },
-    { kind: 'stats',       re: /\/api\/.*(statistic|biz_data|sold|performance)/i }
+    { kind: 'marketing',   re: /\/api\/marketing\//i },
+    { kind: 'stats',       re: /\/api\/.*(statistic|biz_data|sold|performance|overview)/i }
   ];
 
   function classify(url) {
@@ -29,29 +34,62 @@
     return null;
   }
 
-  function report(url) {
+  function reportUrl(kind, url) {
     try {
-      var kind = classify(url);
-      if (!kind) return;
       var abs = new URL(url, location.origin).toString();
       window.postMessage({ source: 'SPX_CAPTURED_URL', kind: kind, url: abs }, location.origin);
+    } catch (e) { /* ignora */ }
+  }
+
+  function reportBody(kind, url, text) {
+    try {
+      if (!text || text.length > MAX_BODY) return;
+      if (text.charAt(0) !== '{' && text.charAt(0) !== '[') return;
+      window.postMessage({ source: 'SPX_CAPTURED_BODY', kind: kind, url: String(url), body: text }, location.origin);
     } catch (e) { /* ignora */ }
   }
 
   // Intercepta fetch()
   var origFetch = window.fetch;
   window.fetch = function (input, init) {
+    var url = null, kind = null;
     try {
-      var url = typeof input === 'string' ? input : (input && input.url);
-      report(url);
+      url = typeof input === 'string' ? input : (input && input.url);
+      kind = classify(url);
+      if (kind) reportUrl(kind, url);
     } catch (e) { /* ignora */ }
-    return origFetch.apply(this, arguments);
+    var p = origFetch.apply(this, arguments);
+    if (kind) {
+      p = p.then(function (res) {
+        try {
+          res.clone().text().then(function (t) { reportBody(kind, url, t); }).catch(function () {});
+        } catch (e) { /* ignora */ }
+        return res;
+      });
+    }
+    return p;
   };
 
   // Intercepta XMLHttpRequest
   var origOpen = XMLHttpRequest.prototype.open;
+  var origSend = XMLHttpRequest.prototype.send;
   XMLHttpRequest.prototype.open = function (method, url) {
-    try { report(url); } catch (e) { /* ignora */ }
+    this.__spxUrl = url;
+    this.__spxKind = classify(typeof url === 'string' ? url : String(url));
+    if (this.__spxKind) reportUrl(this.__spxKind, url);
     return origOpen.apply(this, arguments);
+  };
+  XMLHttpRequest.prototype.send = function () {
+    var xhr = this;
+    if (xhr.__spxKind) {
+      xhr.addEventListener('load', function () {
+        try {
+          if (xhr.responseType === '' || xhr.responseType === 'text') {
+            reportBody(xhr.__spxKind, xhr.__spxUrl, xhr.responseText);
+          }
+        } catch (e) { /* ignora */ }
+      });
+    }
+    return origSend.apply(this, arguments);
   };
 })();

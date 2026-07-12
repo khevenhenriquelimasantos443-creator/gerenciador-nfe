@@ -20,10 +20,115 @@
   window.addEventListener('message', (ev) => {
     if (ev.source !== window) return;
     const d = ev.data;
-    if (!d || d.source !== 'SPX_CAPTURED_URL' || !d.kind || !d.url) return;
-    if (typeof d.url !== 'string' || !d.url.startsWith(location.origin)) return;
-    captured[d.kind] = d.url;
+    if (!d || !d.source) return;
+    if (d.source === 'SPX_CAPTURED_URL' && d.kind && typeof d.url === 'string' && d.url.startsWith(location.origin)) {
+      if (captured[d.kind] !== undefined || d.kind === 'marketing') captured[d.kind] = d.url;
+      return;
+    }
+    if (d.source === 'SPX_CAPTURED_BODY' && typeof d.body === 'string') {
+      try {
+        const json = JSON.parse(d.body);
+        mineProducts(json);
+        mineCampaigns(json, d.url || '');
+        scheduleEnrichSave();
+      } catch (e) { /* corpo não é JSON válido — ignora */ }
+    }
   });
+
+  // ------------------------------------------------- enriquecimento passivo
+  // Dados que a API de listagem não entrega (preço original, vendas 30 dias,
+  // nome da promoção) são minerados das respostas que o próprio Seller Center
+  // recebe enquanto você navega. Ficam salvos localmente e completam a
+  // próxima varredura.
+  const enrich = Object.create(null);       // itemId -> {po, pp, v30, pn, pt}
+  const campaignNames = Object.create(null); // campanhaId -> nome
+  let enrichDirty = false;
+  let enrichSaveTimer = null;
+
+  chrome.storage.local.get('spx_enrich', (st) => {
+    const saved = st && st.spx_enrich;
+    if (saved && saved.map) {
+      for (const k of Object.keys(saved.map)) {
+        if (!enrich[k]) enrich[k] = saved.map[k];
+      }
+    }
+  });
+
+  function scheduleEnrichSave() {
+    if (!enrichDirty || enrichSaveTimer) return;
+    enrichSaveTimer = setTimeout(() => {
+      enrichSaveTimer = null;
+      enrichDirty = false;
+      if (Object.keys(enrich).length > 30000) return; // trava de segurança
+      try { chrome.storage.local.set({ spx_enrich: { ts: Date.now(), map: enrich } }); } catch (e) { /* contexto invalidado */ }
+    }, 1500);
+  }
+
+  function firstString(obj, keyRe, maxDepth) {
+    let found;
+    (function walk(node, depth) {
+      if (found !== undefined || !node || depth > maxDepth || typeof node !== 'object') return;
+      if (Array.isArray(node)) return; // nomes de campanha ficam fora das listas de itens
+      for (const k of Object.keys(node)) {
+        const v = node[k];
+        if (keyRe.test(k) && typeof v === 'string' && v.trim()) { found = v.trim(); return; }
+      }
+      for (const k of Object.keys(node)) walk(node[k], depth + 1);
+    })(obj, 0);
+    return found;
+  }
+
+  function mineProducts(json) {
+    const arr = findObjectArray(json, o =>
+      o.id !== undefined || o.product_id !== undefined || o.item_id !== undefined || o.itemid !== undefined);
+    if (!arr) return;
+    for (const p of arr.slice(0, 500)) {
+      if (!p || typeof p !== 'object') continue;
+      const id = pick(p, ['id', 'product_id', 'item_id', 'itemid']);
+      if (id === undefined) continue;
+      const key = String(id);
+      const e = enrich[key] || (enrich[key] = {});
+      const orig = normPrice(pick(p, [
+        'price_detail.origin_price_min', 'origin_price', 'original_price',
+        'price_before_discount', 'input_normal_price', 'normal_price'
+      ]));
+      if (orig !== null && orig !== undefined) { e.po = orig; enrichDirty = true; }
+      const v30 = deepFindNumber(p, /(30|thirty)[a-z_]*(sold|sale|order)|(sold|sale|order)[a-z_]*(30|thirty)/i, 4);
+      if (v30 !== undefined && isFinite(v30)) { e.v30 = v30; enrichDirty = true; }
+    }
+  }
+
+  function mineCampaigns(json, url) {
+    const camps = findObjectArray(json, o =>
+      (o.discount_id !== undefined || o.promotion_id !== undefined || o.activity_id !== undefined || o.id !== undefined) &&
+      (o.title !== undefined || o.name !== undefined || o.discount_name !== undefined || o.activity_name !== undefined));
+    if (camps) {
+      for (const c of camps.slice(0, 200)) {
+        const cid = pick(c, ['discount_id', 'promotion_id', 'activity_id', 'id']);
+        const cname = pick(c, ['title', 'name', 'discount_name', 'activity_name']);
+        if (cid !== undefined && cname) campaignNames[String(cid)] = String(cname).slice(0, 80);
+      }
+    }
+    const items = findObjectArray(json, o =>
+      (o.item_id !== undefined || o.product_id !== undefined || o.itemid !== undefined) &&
+      (o.promotion_price !== undefined || o.discount_price !== undefined ||
+       o.promo_price !== undefined || o.promotion_price_min !== undefined));
+    if (!items) return;
+    let cname = null;
+    const m = String(url).match(/(?:discount_id|promotion_id|activity_id)=(\d+)/);
+    if (m && campaignNames[m[1]]) cname = campaignNames[m[1]];
+    if (!cname) cname = firstString(json, /^(title|name|discount_name|activity_name)$/, 3) || null;
+    for (const it of items.slice(0, 500)) {
+      const iid = pick(it, ['item_id', 'product_id', 'itemid']);
+      if (iid === undefined) continue;
+      const key = String(iid);
+      const e = enrich[key] || (enrich[key] = {});
+      const pp = normPrice(pick(it, ['promotion_price', 'discount_price', 'promo_price', 'promotion_price_min']));
+      if (pp !== null && pp !== undefined) e.pp = pp;
+      if (cname) { e.pn = cname; e.pt = 'Campanha/Desconto'; }
+      enrichDirty = true;
+    }
+  }
 
   // ---------------------------------------------------------------- helpers
   const debugLog = [];
@@ -227,6 +332,9 @@
       if (got) stock = sum;
     }
     if (stock !== undefined && stock !== null) stock = Number(stock);
+    // A API costuma devolver status "Ativo" mesmo com estoque zerado —
+    // para o vendedor o que importa é que o anúncio não está vendendo.
+    if (stock === 0 && status === 'Ativo') status = 'Esgotado';
 
     // ---- preços (atual x original)
     const curPrices = [];
@@ -409,6 +517,29 @@
       promoMap = await fetchPromotionMap(cds, (text) => post({ type: 'status', text, pct: 80 }));
     } catch (e) {
       dbg('fetchPromotionMap: ' + e.message);
+    }
+
+    // completa cada linha com o que foi aprendido navegando (enriquecimento)
+    for (const r of rows) {
+      const e = enrich[r.id];
+      if (!e) continue;
+      if (r.precoOriginal === null && e.po !== undefined) r.precoOriginal = e.po;
+      if (r.vendas30 === null && e.v30 !== undefined) r.vendas30 = e.v30;
+      if (e.pn && (!r.promoNome || /não identificado/.test(r.promoNome))) {
+        r.promoNome = e.pn;
+        r.promoTipo = e.pt || r.promoTipo;
+      }
+      if (r.emPromocao && r.precoPromocional === null && e.pp !== undefined) r.precoPromocional = e.pp;
+      if (r.precoOriginal !== null && r.precoAtual !== null && r.precoOriginal > r.precoAtual + 0.009) {
+        r.emPromocao = true;
+        if (r.precoPromocional === null) r.precoPromocional = r.precoAtual;
+      }
+      if (r.descontoPct === null && r.precoOriginal > 0) {
+        const pAtual = r.precoPromocional !== null ? r.precoPromocional : r.precoAtual;
+        if (pAtual !== null && pAtual < r.precoOriginal) {
+          r.descontoPct = Math.round((1 - pAtual / r.precoOriginal) * 1000) / 10;
+        }
+      }
     }
 
     for (const r of rows) {

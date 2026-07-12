@@ -41,6 +41,26 @@ Tudo pode ser **exportado para planilha** (abre direto no Excel/Google Sheets) o
 
 > 💡 Os filtros do popup (busca, "só com promoção", "só estoque zerado") também valem para a exportação: se filtrar antes de baixar, a planilha sai filtrada.
 
+## 📊 Dashboard
+
+Depois de uma varredura, clique em **📊 Abrir dashboard** no popup. Ele abre uma página com:
+
+- Cards de resumo (anúncios, em promoção, esgotados, unidades, vendas);
+- **Campeões de venda** — os 12 mais vendidos, com alerta vermelho ⛔ nos que estão esgotados (venda parada!);
+- Distribuição de **estoque por faixa** e de **faixas de preço**;
+- **Promoções** — participação e os mais vendidos SEM promoção (candidatos a campanha);
+- Tabela completa com busca, filtros, ordenação e exportação da lista filtrada.
+
+O dashboard sempre mostra a **última varredura** salva no navegador.
+
+## 🔎 Enriquecimento automático (v1.1)
+
+A API de listagem da Shopee nem sempre entrega preço original, nome da promoção e vendas
+por período. A partir da v1.1, a extensão **aprende esses dados enquanto você navega**
+pelo Seller Center (Meus Produtos, Central de Promoções): as respostas que a própria
+página recebe são mineradas localmente e completam a próxima varredura. Quanto mais
+você navega antes de verificar, mais completa fica a planilha.
+
 ## ❓ Problemas comuns
 
 | Problema | Solução |

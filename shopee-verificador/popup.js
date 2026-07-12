@@ -29,6 +29,7 @@
     $('btn-scan').addEventListener('click', startScan);
     $('btn-retry').addEventListener('click', startScan);
     $('btn-rescan').addEventListener('click', startScan);
+    $('btn-dash').addEventListener('click', () => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') }));
     $('btn-csv').addEventListener('click', downloadCsv);
     $('btn-copy').addEventListener('click', copyTsv);
     $('filter').addEventListener('input', renderTable);
