@@ -355,6 +355,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
       <button class="tab-btn" data-tab="metas">Metas</button>
       <button class="tab-btn" data-tab="fixas">Fixas</button>
       <button class="tab-btn" data-tab="cartoes">Cartões</button>
+      <button class="tab-btn" data-tab="dividas">Dívidas</button>
       <button class="tab-btn" data-tab="racha">Racha</button>
       <button class="tab-btn" data-tab="ia">IA</button>
       <div class="nav-menu-bottom">
@@ -541,7 +542,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null };
 
 // Só dígitos, com DDI 55 na frente — mesmo formato que o WhatsApp usa
 // internamente (o "from" que chega no bot), pra bater com data_<phone> no KV.
@@ -2018,6 +2019,235 @@ function renderCardList(){
   }).join("");
 }
 
+/* ── Dívidas ── */
+var DEBT_CATEGORIES = ["Cartão de Crédito","Empréstimo Pessoal","Financiamento","Cheque Especial","Outros"];
+var debtForm = { name: "", category: "Cartão de Crédito", totalValue: "", remainingValue: "", interestRate: "", monthlyPayment: "", dueDay: "10" };
+
+function resetDebtForm(){
+  debtForm = { name: "", category: "Cartão de Crédito", totalValue: "", remainingValue: "", interestRate: "", monthlyPayment: "", dueDay: "10" };
+}
+
+function renderDividas(){
+  var totalRemaining = state.debts.reduce(function(s,d){ return s + Number(d.remaining_value); }, 0);
+  var totalMonthly = state.debts.reduce(function(s,d){ return s + Number(d.monthly_payment); }, 0);
+  var html = '';
+
+  if(state.debtsError){
+    html += '<div class="card"><div class="ai-error">Não consegui carregar suas dívidas (' + escapeHtml(state.debtsError) + '). Verifique se a tabela debts foi criada no Supabase (supabase/09_debts.sql).</div></div>';
+  }
+
+  if(state.debts.length){
+    html += '<div class="card">' +
+      '<div class="eyebrow">Resumo</div>' +
+      '<div class="import-summary" style="margin-top:0">Total devido: <b>' + fmtMoney(totalRemaining) + '</b></div>' +
+      '<div class="import-summary">Parcelas/mês: <b>' + fmtMoney(totalMonthly) + '</b></div>' +
+      '<div class="import-summary">' + state.debts.length + ' dívida(s) cadastrada(s)</div>' +
+    '</div>';
+  }
+
+  html += '<div class="card">' +
+    '<div class="eyebrow">Nova dívida</div>' +
+    '<div class="form-row">' +
+      '<label>Nome</label>' +
+      '<input type="text" id="debtName" placeholder="Ex: Cartão Nubank" value="' + escapeHtml(debtForm.name) + '">' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Categoria</label>' +
+      '<select id="debtCategory">' + DEBT_CATEGORIES.map(function(c){
+        return '<option value="' + c + '"' + (c===debtForm.category?" selected":"") + '>' + c + '</option>';
+      }).join("") + '</select>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Valor total da dívida</label>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtTotalValue" placeholder="0,00" value="' + debtForm.totalValue + '"></div>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Saldo devedor atual</label>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtRemainingValue" placeholder="0,00" value="' + debtForm.remainingValue + '"></div>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Taxa de juros (% ao mês)</label>' +
+      '<input type="number" min="0" step="0.01" id="debtInterestRate" placeholder="Ex: 8.5" value="' + debtForm.interestRate + '">' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Parcela mensal mínima</label>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtMonthlyPayment" placeholder="0,00" value="' + debtForm.monthlyPayment + '"></div>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Dia de vencimento</label>' +
+      buildDaySelect("debtDueDay", debtForm.dueDay) +
+    '</div>' +
+    '<button class="btn-submit" id="btnSaveDebt">Adicionar dívida</button>' +
+  '</div>' +
+  '<div class="card">' +
+    '<div class="eyebrow">Suas dívidas</div>' +
+    renderDebtList() +
+  '</div>' +
+  renderDebtAnalysis();
+
+  return html;
+}
+
+function renderDebtList(){
+  if(!state.debts.length) return '<div class="empty-state">Nenhuma dívida cadastrada ainda. 🎉</div>';
+  return state.debts.map(function(d){
+    var total = Number(d.total_value) || 0;
+    var remaining = Number(d.remaining_value) || 0;
+    var paidPct = total > 0 ? Math.min(100, Math.round(((total - remaining) / total) * 100)) : 0;
+    return '<div class="fixed-item" style="flex-wrap:wrap">' +
+      '<div class="tx-cat">💳</div>' +
+      '<div class="fixed-info">' +
+        '<div class="fixed-desc">' + escapeHtml(d.name) + '</div>' +
+        '<div class="fixed-meta">' + escapeHtml(d.category) + ' · ' + Number(d.interest_rate) + '% a.m. · vence dia ' + (d.due_day||"—") + '</div>' +
+      '</div>' +
+      '<div class="fixed-val" style="color:var(--fe)">' + fmtMoney(remaining) + '</div>' +
+      '<button class="fixed-del" data-deldebt="' + d.id + '">✕</button>' +
+      '<div style="width:100%;height:6px;border-radius:4px;background:var(--fb);overflow:hidden;margin-top:4px"><div style="height:100%;width:' + Math.max(3,paidPct) + '%;background:var(--fp)"></div></div>' +
+      '<div style="width:100%;font-size:11px;color:var(--fm);margin-top:2px">' + paidPct + '% já quitado · parcela R$ ' + fmtMoney(Number(d.monthly_payment)).replace("R$ ","") + '/mês</div>' +
+    '</div>';
+  }).join("");
+}
+
+function renderDebtAnalysis(){
+  var activeDebts = state.debts.filter(function(d){ return Number(d.remaining_value) > 0; });
+  if(!activeDebts.length) return '';
+
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Análise de quitação</div>' +
+    '<div class="form-row">' +
+      '<label>Quanto você consegue pagar A MAIS por mês (além das parcelas mínimas)?</label>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtExtraPayment" placeholder="0,00" value="' + state.debtExtraPayment + '"></div>' +
+    '</div>' +
+    '<button class="btn-submit" id="btnSimulateDebt">Simular quitação</button>';
+
+  if(state.debtSim){
+    var sim = state.debtSim;
+    ["avalanche","snowball"].forEach(function(key){
+      var r = sim[key];
+      var label = key === "avalanche" ? "🎯 Avalanche (maior juros primeiro)" : "☃️ Bola de Neve (menor saldo primeiro)";
+      var recommended = sim.best === key;
+      html += '<div class="goal-item" style="margin-top:14px' + (recommended ? ';border-color:var(--fp)' : '') + '">' +
+        '<div class="goal-top"><span class="goal-name">' + label + (recommended ? ' <span style="color:var(--fp);font-size:11px">★ recomendado</span>' : '') + '</span></div>' +
+        (r.maxedOut ?
+          '<div class="ai-error" style="margin-top:6px">Com esse valor extra, essas dívidas não são quitadas nem em 50 anos — os juros comem o pagamento. Aumente o valor extra.</div>' :
+          '<div class="goal-vals">Quita em <b>' + r.months + ' mês(es)</b> · juros pagos: <b>' + fmtMoney(r.totalInterest) + '</b></div>' +
+          (r.order.length ? '<div class="goal-hist-row"><span class="h-date">Ordem de quitação: ' + r.order.map(escapeHtml).join(" → ") + '</span></div>' : '')
+        ) +
+      '</div>';
+    });
+  }
+
+  html += '</div>';
+  return html;
+}
+
+// Simula o pagamento das dívidas mês a mês: aplica juros, paga a parcela
+// mínima de cada uma, e joga toda sobra (extra + parcelas já quitadas) na
+// dívida prioritária da estratégia. Isso é o método real de "bola de neve"/
+// "avalanche" — o orçamento mensal total fica fixo, só a ordem de ataque muda.
+function simulateDebtPayoff(debtsInput, extraMonthly, strategy){
+  var debts = debtsInput.map(function(d){
+    return { name: d.name, remaining: Number(d.remaining_value), rate: Number(d.interest_rate)/100, minPayment: Number(d.monthly_payment) };
+  }).filter(function(d){ return d.remaining > 0; });
+  if(!debts.length) return { months: 0, totalInterest: 0, order: [], maxedOut: false };
+
+  var totalBudget = debts.reduce(function(s,d){ return s + d.minPayment; }, 0) + Number(extraMonthly || 0);
+  var order = debts.slice().sort(function(a,b){
+    return strategy === "avalanche" ? (b.rate - a.rate) : (a.remaining - b.remaining);
+  });
+
+  var totalInterest = 0, months = 0, payoffOrder = [];
+  var maxMonths = 600;
+
+  while(order.some(function(d){ return d.remaining > 0.01; }) && months < maxMonths){
+    months++;
+    order.forEach(function(d){
+      if(d.remaining > 0){
+        var interest = d.remaining * d.rate;
+        totalInterest += interest;
+        d.remaining += interest;
+      }
+    });
+    var budgetLeft = totalBudget;
+    order.forEach(function(d){
+      if(d.remaining > 0){
+        var pay = Math.min(d.minPayment, d.remaining, budgetLeft);
+        d.remaining -= pay;
+        budgetLeft -= pay;
+      }
+    });
+    for(var i=0;i<order.length && budgetLeft>0.01;i++){
+      var d = order[i];
+      if(d.remaining > 0){
+        var pay = Math.min(d.remaining, budgetLeft);
+        d.remaining -= pay;
+        budgetLeft -= pay;
+      }
+      if(d.remaining <= 0.01 && payoffOrder.indexOf(d.name) === -1) payoffOrder.push(d.name);
+    }
+  }
+  return { months: months, totalInterest: totalInterest, order: payoffOrder, maxedOut: months>=maxMonths };
+}
+
+function runDebtSimulation(){
+  var extra = parseFloat(state.debtExtraPayment) || 0;
+  var activeDebts = state.debts.filter(function(d){ return Number(d.remaining_value) > 0; });
+  var avalanche = simulateDebtPayoff(activeDebts, extra, "avalanche");
+  var snowball = simulateDebtPayoff(activeDebts, extra, "snowball");
+  var best = avalanche.maxedOut && snowball.maxedOut ? null :
+    (avalanche.maxedOut ? "snowball" : snowball.maxedOut ? "avalanche" : (avalanche.totalInterest <= snowball.totalInterest ? "avalanche" : "snowball"));
+  state.debtSim = { avalanche: avalanche, snowball: snowball, best: best };
+  render();
+}
+
+function syncDebtForm(){
+  var name = document.getElementById("debtName");
+  var cat = document.getElementById("debtCategory");
+  var total = document.getElementById("debtTotalValue");
+  var remaining = document.getElementById("debtRemainingValue");
+  var rate = document.getElementById("debtInterestRate");
+  var payment = document.getElementById("debtMonthlyPayment");
+  var dueDay = document.getElementById("debtDueDay");
+  if(name) debtForm.name = name.value;
+  if(cat) debtForm.category = cat.value;
+  if(total) debtForm.totalValue = total.value;
+  if(remaining) debtForm.remainingValue = remaining.value;
+  if(rate) debtForm.interestRate = rate.value;
+  if(payment) debtForm.monthlyPayment = payment.value;
+  if(dueDay) debtForm.dueDay = dueDay.value;
+}
+
+function saveDebt(){
+  var name = (debtForm.name || "").trim();
+  var total = parseFloat(debtForm.totalValue) || 0;
+  var remaining = debtForm.remainingValue === "" ? total : (parseFloat(debtForm.remainingValue) || 0);
+  var rate = parseFloat(debtForm.interestRate) || 0;
+  var payment = parseFloat(debtForm.monthlyPayment) || 0;
+  var dueDay = parseInt(debtForm.dueDay, 10);
+  if(!name || total <= 0) return;
+  var payload = {
+    user_id: uid(), name: name, category: debtForm.category, total_value: total,
+    remaining_value: remaining, interest_rate: rate, monthly_payment: payment,
+    due_day: (dueDay >= 1 && dueDay <= 31) ? dueDay : null
+  };
+  db("debts", "POST", payload).then(function(rows){
+    if(rows && rows[0]) state.debts.push(rows[0]);
+    resetDebtForm();
+    state.debtSim = null;
+    render();
+  }).catch(function(err){
+    state.debtsError = (err && err.message) || "Erro desconhecido";
+    render();
+  });
+}
+
+function deleteDebt(id){
+  state.debts = state.debts.filter(function(d){ return d.id !== id; });
+  state.debtSim = null;
+  render();
+  db("debts", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(){});
+}
+
 /* ── Racha ── */
 var splitForm = { description: "", category: "Outros", date: new Date().toISOString().slice(0,10), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
 
@@ -2436,6 +2666,7 @@ function render(){
   else if(state.tab === "metas") content.innerHTML = renderMetas();
   else if(state.tab === "fixas") content.innerHTML = renderFixas();
   else if(state.tab === "cartoes") content.innerHTML = renderCartoes();
+  else if(state.tab === "dividas") content.innerHTML = renderDividas();
   else if(state.tab === "racha") content.innerHTML = renderRacha();
   else if(state.tab === "ia") content.innerHTML = renderIA();
   else content.innerHTML = renderConfig();
@@ -2644,6 +2875,24 @@ function bindContentEvents(){
     });
     var btnDismissPriceAlertCartoes = document.getElementById("btnDismissPriceAlert");
     if(btnDismissPriceAlertCartoes) btnDismissPriceAlertCartoes.addEventListener("click", dismissPriceAlert);
+  }
+  if(state.tab === "dividas"){
+    var btnSaveDebt = document.getElementById("btnSaveDebt");
+    if(btnSaveDebt) btnSaveDebt.addEventListener("click", function(){
+      syncDebtForm();
+      saveDebt();
+    });
+    document.querySelectorAll("[data-deldebt]").forEach(function(btn){
+      btn.addEventListener("click", function(){ deleteDebt(btn.dataset.deldebt); });
+    });
+    var debtExtraInput = document.getElementById("debtExtraPayment");
+    if(debtExtraInput) debtExtraInput.addEventListener("input", function(){ state.debtExtraPayment = debtExtraInput.value; });
+    var btnSimulateDebt = document.getElementById("btnSimulateDebt");
+    if(btnSimulateDebt) btnSimulateDebt.addEventListener("click", function(){
+      var input = document.getElementById("debtExtraPayment");
+      if(input) state.debtExtraPayment = input.value;
+      runDebtSimulation();
+    });
   }
   if(state.tab === "config"){
     document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
@@ -3040,6 +3289,18 @@ function loadCards(){
   });
 }
 
+function loadDebts(){
+  db("debts", "GET", null, { user_id: "eq." + uid(), order: "created_at.asc" }).then(function(rows){
+    state.debts = rows || [];
+    state.debtsError = null;
+    render();
+  }).catch(function(err){
+    state.debts = [];
+    state.debtsError = (err && err.message) || "Erro desconhecido";
+    render();
+  });
+}
+
 // Busca todas as páginas: o limite de 1000 por requisição (padrão do
 // PostgREST) cortava lançamentos antigos quando a conta passava de
 // 1000 transações, sumindo com meses inteiros sem aviso nenhum.
@@ -3096,6 +3357,7 @@ function showApp(){
   document.getElementById("loginScreen").style.display = "none";
   loadData();
   loadCards();
+  loadDebts();
 }
 
 function showLogin(){
