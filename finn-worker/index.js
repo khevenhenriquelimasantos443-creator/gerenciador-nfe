@@ -43,6 +43,10 @@ export default {
       return handleDebug(env);
     }
 
+    if (url.pathname === "/subscribe" && request.method === "GET") {
+      return handleSubscribeWaba(env);
+    }
+
     return new Response("Finn WhatsApp Worker", { status: 200 });
   },
 
@@ -938,6 +942,45 @@ async function handleStatus(env) {
   const ok = checks.token && checks.kv && checks.phoneNumberId;
   return corsResponse(new Response(JSON.stringify({ ok, checks }, null, 2), {
     status: ok ? 200 : 503,
+    headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// =============================================================================
+// SUBSCRIBE — inscreve este app nos eventos da conta do WhatsApp Business.
+// Marcar o campo "messages" no painel do Meta NÃO basta: o app também
+// precisa estar "subscribed_apps" na WABA, senão a Meta nunca chama o
+// webhook, mesmo com tudo mais configurado certo. Passo fácil de pular
+// no assistente guiado do Meta Developer — por isso o bot resolve sozinho.
+// =============================================================================
+async function handleSubscribeWaba(env) {
+  const result = { ok: false, steps: [] };
+  try {
+    const infoResp = await fetch(
+      `https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_PHONE_NUMBER_ID}?fields=whatsapp_business_account_id`,
+      { headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` } }
+    );
+    const infoBody = await infoResp.json();
+    result.steps.push({ step: "get_waba_id", ok: infoResp.ok, body: infoBody });
+    const wabaId = infoBody.whatsapp_business_account_id;
+    if (!infoResp.ok || !wabaId) {
+      result.error = "Não consegui achar o WhatsApp Business Account ID a partir do Phone Number ID.";
+      return corsResponse(new Response(JSON.stringify(result, null, 2), { status: 502, headers: { "Content-Type": "application/json" } }));
+    }
+
+    const subResp = await fetch(
+      `https://graph.facebook.com/${META_API_VERSION}/${wabaId}/subscribed_apps`,
+      { method: "POST", headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` } }
+    );
+    const subBody = await subResp.json();
+    result.steps.push({ step: "subscribe_app", ok: subResp.ok, body: subBody });
+    result.ok = subResp.ok;
+    await debugLog(env, { kind: "subscribe_waba", ok: result.ok, wabaId, subBody });
+  } catch (err) {
+    result.error = String(err && err.stack || err);
+  }
+  return corsResponse(new Response(JSON.stringify(result, null, 2), {
+    status: result.ok ? 200 : 502,
     headers: { "Content-Type": "application/json" }
   }));
 }
