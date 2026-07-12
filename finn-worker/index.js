@@ -187,7 +187,7 @@ async function processMessage(msg, env) {
       return sendMainMenu(phone, env);
     }
     if (["sair","tchau","até logo","ate logo","falou","flw"].includes(lower)) {
-      return sendText(phone, "👋 Até mais! Quando precisar é só digitar *menu* de novo. 🦊", env);
+      return sendText(phone, "Até mais! Digite *menu* quando quiser voltar.", env);
     }
     if (["sync","sinc","sincronizar","extrato"].includes(lower)) {
       return handleSincronizarFinn(phone, env);
