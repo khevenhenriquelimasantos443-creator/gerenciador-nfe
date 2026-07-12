@@ -956,16 +956,10 @@ async function handleStatus(env) {
 async function handleSubscribeWaba(env) {
   const result = { ok: false, steps: [] };
   try {
-    const infoResp = await fetch(
-      `https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_PHONE_NUMBER_ID}?fields=whatsapp_business_account_id`,
-      { headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` } }
-    );
-    const infoBody = await infoResp.json();
-    result.steps.push({ step: "get_waba_id", ok: infoResp.ok, body: infoBody });
-    const wabaId = infoBody.whatsapp_business_account_id;
-    if (!infoResp.ok || !wabaId) {
-      result.error = "Não consegui achar o WhatsApp Business Account ID a partir do Phone Number ID.";
-      return corsResponse(new Response(JSON.stringify(result, null, 2), { status: 502, headers: { "Content-Type": "application/json" } }));
+    const wabaId = env.WHATSAPP_WABA_ID;
+    if (!wabaId) {
+      result.error = "WHATSAPP_WABA_ID não configurado (veja wrangler.toml).";
+      return corsResponse(new Response(JSON.stringify(result, null, 2), { status: 500, headers: { "Content-Type": "application/json" } }));
     }
 
     const subResp = await fetch(
