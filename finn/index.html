@@ -392,6 +392,9 @@ body.finn-dark .btn-google:hover{background:#1E293B}
 var SUPA_URL = "https://zblkznobqcztvznycyyo.supabase.co";
 var SUPA_KEY = "sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb";
 var SESSION_KEY = "finn_supa_session";
+// Worker do bot do WhatsApp — usado pra manter os dados do bot em dia
+// com os do site quando o usuário cadastra o número (ver syncWhatsAppBot).
+var WHATSAPP_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev";
 var VAPID_PUBLIC_KEY = "BPPw0CSqGjNQCdILq-CvNkBkMR6cDs0TqDCh9vThrMYQZ1OGLaUYIsZI-SQmG_KUrzxDOtlZHwTnKaS-ZUojB7E";
 
 var CATEGORIES = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Salário","Investimento","Outros"];
@@ -416,10 +419,13 @@ var Auth = {
     window.location.href = SUPA_URL + "/auth/v1/authorize?provider=google&redirect_to=" + redirect;
   },
   updateName: function(token, name){
+    return Auth.updateMetadata(token, { full_name: name });
+  },
+  updateMetadata: function(token, fields){
     return fetch(SUPA_URL + "/auth/v1/user", {
       method: "PUT",
       headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": "application/json" },
-      body: JSON.stringify({ data: { full_name: name } })
+      body: JSON.stringify({ data: fields })
     }).then(function(r){
       return r.json().then(function(j){
         if(!r.ok) throw new Error((j && j.msg) || "Erro " + r.status);
@@ -532,6 +538,42 @@ function db(table, method, body, query, _retried){
 }
 
 var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null };
+
+// Só dígitos, com DDI 55 na frente — mesmo formato que o WhatsApp usa
+// internamente (o "from" que chega no bot), pra bater com data_<phone> no KV.
+function normalizePhone(raw){
+  var digits = (raw || "").replace(/\D/g, "");
+  if(!digits) return "";
+  if(digits.length <= 11) digits = "55" + digits;
+  return digits;
+}
+
+// Manda uma cópia dos dados atuais pro bot do WhatsApp, pra "resumo" e
+// dashboard diário do bot baterem com o que está no site. Silencioso:
+// se falhar (bot fora do ar, sem número cadastrado etc.) não trava o app.
+function syncWhatsAppBot(){
+  var user = currentSession && currentSession.user;
+  var phone = normalizePhone(user && user.user_metadata && user.user_metadata.whatsapp);
+  if(!phone) return Promise.resolve();
+  var limitsMap = {};
+  state.limits.forEach(function(l){ limitsMap[l.category] = Number(l.monthly_limit); });
+  var payload = {
+    phone: phone,
+    data: {
+      txs: state.txs.map(function(t){
+        return { val: t.type === "receita" ? Number(t.value) : -Number(t.value), desc: t.description, cat: t.category, date: t.date };
+      }),
+      limits: limitsMap,
+      goals: state.goals
+    },
+    fixed: state.fixed
+  };
+  return fetch(WHATSAPP_WORKER_URL + "/sync", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).catch(function(){});
+}
 
 function thisMonth(){
   var n = new Date();
@@ -2232,12 +2274,15 @@ function renderConfig(){
   var email = user ? user.email : "";
   var meta = (user && user.user_metadata) || {};
   var currentName = meta.full_name || meta.name || "";
+  var currentWhatsapp = meta.whatsapp || "";
   var dark = localStorage.getItem("finn_dark_mode") === "1";
   var html = '<div class="card">' +
     '<div class="eyebrow">Conta</div>' +
     '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
-    '<button type="button" class="btn-submit" id="btnSaveName">Salvar nome</button>' +
+    '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(currentWhatsapp) + '" placeholder="(13) 99210-2413"></div>' +
+    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Conecta o bot do WhatsApp aos seus dados do site — o resumo por lá passa a bater com o que está aqui.</div>' +
+    '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
     (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
     '<button type="button" class="btn-ghost" id="btnDarkToggle" style="margin-top:14px;width:100%">' + (dark ? "☀️ Modo claro" : "🌙 Modo escuro") + '</button>' +
     '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
@@ -2283,20 +2328,25 @@ function renderConfig(){
 }
 
 function saveProfileName(){
-  var input = document.getElementById("cfgName");
-  var name = (input ? input.value : "").trim();
+  var nameInput = document.getElementById("cfgName");
+  var waInput = document.getElementById("cfgWhatsapp");
+  var name = (nameInput ? nameInput.value : "").trim();
+  var whatsapp = normalizePhone(waInput ? waInput.value : "");
   if(!name) return;
-  Auth.updateName(currentSession.access_token, name).then(function(user){
+  Auth.updateMetadata(currentSession.access_token, { full_name: name, whatsapp: whatsapp }).then(function(user){
     if(user && user.id){
       currentSession.user = user;
       var stored = JSON.parse(localStorage.getItem(SESSION_KEY) || "{}");
       stored.user = user;
       localStorage.setItem(SESSION_KEY, JSON.stringify(stored));
     }
-    state.configMsg = "Nome atualizado.";
+    state.configMsg = whatsapp ? "Salvo. Conectando o bot do WhatsApp aos seus dados..." : "Salvo.";
     render();
+    return syncWhatsAppBot();
+  }).then(function(){
+    if(whatsapp){ state.configMsg = "Salvo. Bot do WhatsApp conectado."; render(); }
   }).catch(function(){
-    state.configMsg = "Não consegui atualizar o nome agora.";
+    state.configMsg = "Não consegui salvar agora.";
     render();
   });
 }
@@ -3029,6 +3079,7 @@ function loadData(){
     sortTxs();
     state.loading = false;
     render();
+    syncWhatsAppBot();
   }).catch(function(err){
     state.loading = false;
     state.loadError = (err && err.message) || "Erro desconhecido";

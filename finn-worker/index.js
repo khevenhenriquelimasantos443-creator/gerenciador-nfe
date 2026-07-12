@@ -748,31 +748,47 @@ async function downloadMetaMedia(mediaId, env) {
 
 async function extractTransactionAI(text, env) {
   if (!env.AI) return null;
+  let raw = "";
   try {
     const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
       messages: [
-        { role: "system", content: 'Você extrai transações financeiras de texto em português. Responda APENAS com JSON válido, sem texto extra: {"val":0,"desc":"","tipo":"despesa","cat":"Outros"}. val é o valor positivo em reais. tipo é "despesa" ou "receita". cat: Alimentacao, Transporte, Lazer, Saude, Educacao, Moradia, Vestuario, Investimento, Salario, Freelance, Outros.' },
+        { role: "system", content: 'Você extrai transações financeiras de texto em português. Responda APENAS com JSON válido, sem texto extra: {"val":0,"desc":"","tipo":"despesa","cat":"Outros"}. val é o valor positivo em reais, só número (sem "R$", sem separador de milhar). tipo é "despesa" ou "receita". cat: Alimentacao, Transporte, Lazer, Saude, Educacao, Moradia, Vestuario, Investimento, Salario, Freelance, Outros.' },
         { role: "user", content: text }
       ],
       max_tokens: 150
     });
-    return parseAIResponse(result?.response || "");
-  } catch(e) { console.error("extractTransactionAI:", e); return null; }
+    raw = result?.response || "";
+    const parsed = parseAIResponse(raw);
+    if (!parsed) await debugLog(env, { kind: "extract_ai_failed", input: text, raw: raw.slice(0, 300) });
+    return parsed;
+  } catch(e) {
+    console.error("extractTransactionAI:", e);
+    await debugLog(env, { kind: "extract_ai_error", input: text, raw: raw.slice(0, 300), error: String(e && e.message || e) });
+    return null;
+  }
 }
 
+// O modelo (8B, pequeno) às vezes foge um pouco do schema pedido — usa chave
+// em português ("valor"/"descricao"), embute "R$" dentro do número, ou envolve
+// o JSON em ```. Normaliza tudo isso em vez de exigir o formato perfeito.
 function parseAIResponse(text) {
   if (!text) return null;
   try {
-    const match = text.match(/\{[^}]+\}/);
+    const cleaned = text.replace(/```json|```/gi, "");
+    const match = cleaned.match(/\{[\s\S]*?\}/);
     if (!match) return null;
     const obj = JSON.parse(match[0]);
-    const val = parseFloat(obj.val);
-    if (isNaN(val) || val <= 0 || !obj.desc) return null;
-    const isReceita = (obj.tipo || "").toLowerCase() === "receita";
+    const rawVal = obj.val ?? obj.valor ?? obj.value;
+    const valStr = String(rawVal ?? "").replace(/[^\d,.-]/g, "").replace(",", ".");
+    const val = parseFloat(valStr);
+    const desc = obj.desc ?? obj.descricao ?? obj.description;
+    if (isNaN(val) || val <= 0 || !desc) return null;
+    const tipoRaw = String(obj.tipo ?? obj.type ?? "").toLowerCase();
+    const isReceita = tipoRaw === "receita";
     return {
       val: isReceita ? Math.abs(val) : -Math.abs(val),
-      desc: String(obj.desc).trim(),
-      cat: obj.cat || "Outros",
+      desc: String(desc).trim(),
+      cat: obj.cat ?? obj.categoria ?? obj.category ?? "Outros",
     };
   } catch(e) { return null; }
 }
