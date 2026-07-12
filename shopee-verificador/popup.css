@@ -62,6 +62,21 @@ h1 { font-size: 16px; font-weight: 700; }
 .optline { display: block; margin-top: 12px; font-size: 12.5px; color: #444; cursor: pointer; line-height: 1.5; }
 .optline input { vertical-align: -2px; margin-right: 4px; }
 .optnote { color: #999; font-size: 11px; }
+
+.syncbox { margin-top: 12px; border: 1px solid var(--borda); border-radius: 8px; padding: 10px 12px; }
+.syncbox summary { cursor: pointer; font-size: 12.5px; font-weight: 600; color: #444; }
+.syncbox input[type="url"], .syncbox input[type="password"] {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  font-size: 12.5px;
+}
+.syncrow { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.syncmsg { font-size: 11.5px; color: #777; }
+.syncmsg.ok { color: var(--verde); font-weight: 600; }
+.syncmsg.err { color: var(--laranja-escuro); font-weight: 600; }
 .hint { margin-top: 10px; font-size: 11.5px; color: #777; line-height: 1.4; }
 .conn { margin-bottom: 12px; color: var(--verde); font-weight: 600; }
 

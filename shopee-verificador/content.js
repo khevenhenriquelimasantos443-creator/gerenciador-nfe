@@ -99,14 +99,16 @@
     return out;
   }
 
-  // extrai SKU e EAN de qualquer resposta de detalhe de produto
+  // extrai SKU principal, SKUs das variações e EAN de uma resposta de detalhe
   function mineDetailJson(json) {
     const eans = cleanCodes(collectByKey(json, GTIN_KEY));
     const parents = cleanCodes(collectByKey(json, SKU_PARENT_KEY));
     const modelSkus = cleanCodes(collectByKey(json, SKU_MODEL_KEY));
-    const sku = parents.length ? parents[0]
-      : (modelSkus.length ? modelSkus.slice(0, 8).join(' | ') : null);
-    return { sku, ean: eans.length ? eans.slice(0, 8).join(' / ') : null };
+    return {
+      sku: parents.length ? parents[0] : null,
+      skuVar: modelSkus.length ? modelSkus.slice(0, 20).join(' | ') : null,
+      ean: eans.length ? eans.slice(0, 20).join(' / ') : null
+    };
   }
 
   function firstString(obj, keyRe, maxDepth) {
@@ -142,6 +144,7 @@
       if (v30 !== undefined && isFinite(v30)) { e.v30 = v30; enrichDirty = true; }
       const mined = mineDetailJson(p);
       if (mined.sku) { e.sku = mined.sku; enrichDirty = true; }
+      if (mined.skuVar) { e.skuVar = mined.skuVar; enrichDirty = true; }
       if (mined.ean) { e.ean = mined.ean; enrichDirty = true; }
     }
   }
@@ -428,15 +431,16 @@
       descontoPct = Math.round((1 - cur.min / orig.min) * 1000) / 10;
     }
 
-    // ---- SKU e EAN (o que a listagem já entrega; o resto vem do detalhe)
+    // ---- SKU principal + SKUs das variações (o resto vem do detalhe)
     const parentSku = pick(p, ['parent_sku', 'item_sku', 'product_sku']);
-    let sku = parentSku ? String(parentSku).trim() : null;
-    if (!sku && Array.isArray(models) && models.length) {
+    const sku = parentSku && String(parentSku).trim() ? String(parentSku).trim() : null;
+    let skuVar = null;
+    if (Array.isArray(models) && models.length) {
       const modelSkus = cleanCodes(models.map(m => pick(m, ['sku', 'seller_sku', 'model_sku'])).filter(Boolean));
-      if (modelSkus.length) sku = modelSkus.slice(0, 8).join(' | ');
+      if (modelSkus.length) skuVar = modelSkus.slice(0, 20).join(' | ');
     }
     const listEans = cleanCodes(collectByKey(p, GTIN_KEY, 4));
-    const ean = listEans.length ? listEans.slice(0, 8).join(' / ') : null;
+    const ean = listEans.length ? listEans.slice(0, 20).join(' / ') : null;
 
     // ---- vendas
     let vendas30 = deepFindNumber(p, /(30|thirty)[a-z_]*(sold|sale)|(sold|sale)[a-z_]*(30|thirty)/i);
@@ -449,6 +453,7 @@
       id: id !== undefined ? String(id) : '',
       nome: name !== undefined ? String(name) : '',
       sku: sku || null,
+      skuVar: skuVar || null,
       ean: ean || null,
       status,
       estoque: (stock !== undefined && stock !== null && isFinite(stock)) ? stock : null,
@@ -558,7 +563,8 @@
   async function fetchDetailsPhase(cds, rows, post, fetchEan) {
     // 1) cache de varreduras anteriores (EAN quase nunca muda) + enriquecimento
     const CACHE_TTL = 30 * 24 * 3600 * 1000;
-    const rawCache = (await storageGet('spx_ean_cache')) || {};
+    // _v2: passou a guardar também os SKUs das variações
+    const rawCache = (await storageGet('spx_ean_cache_v2')) || {};
     const cache = {};
     const now = Date.now();
     for (const k of Object.keys(rawCache)) {
@@ -568,11 +574,13 @@
       const c = cache[r.id];
       if (c) {
         if (!r.sku && c.sku) r.sku = c.sku;
+        if (!r.skuVar && c.skuVar) r.skuVar = c.skuVar;
         if (!r.ean && c.ean) r.ean = c.ean;
       }
       const e = enrich[r.id];
       if (e) {
         if (!r.sku && e.sku) r.sku = e.sku;
+        if (!r.skuVar && e.skuVar) r.skuVar = e.skuVar;
         if (!r.ean && e.ean) r.ean = e.ean;
       }
     }
@@ -585,7 +593,7 @@
     if (!pending.length) return;
 
     const saveCache = () => {
-      try { chrome.storage.local.set({ spx_ean_cache: cache }); } catch (e) { /* contexto invalidado */ }
+      try { chrome.storage.local.set({ spx_ean_cache_v2: cache }); } catch (e) { /* contexto invalidado */ }
     };
 
     // 2) descobre qual endpoint de detalhe funciona nesta conta
@@ -597,11 +605,12 @@
           const json = await apiGet(cands[i]);
           const nome = firstString(json, /^(name|product_name|item_name)$/i, 6);
           const mined = mineDetailJson(json);
-          if (nome || mined.sku || mined.ean) {
+          if (nome || mined.sku || mined.skuVar || mined.ean) {
             workingIdx = i;
             if (mined.sku && !probe.sku) probe.sku = mined.sku;
+            if (mined.skuVar && !probe.skuVar) probe.skuVar = mined.skuVar;
             if (mined.ean) probe.ean = mined.ean;
-            cache[probe.id] = { sku: probe.sku || null, ean: probe.ean || null, ts: Date.now() };
+            cache[probe.id] = { sku: probe.sku || null, skuVar: probe.skuVar || null, ean: probe.ean || null, ts: Date.now() };
             break;
           }
         } catch (e) { dbg('detalhe candidato falhou: ' + e.message); }
@@ -629,8 +638,9 @@
           const json = await apiGet(url);
           const m = mineDetailJson(json);
           if (m.sku && !r.sku) r.sku = m.sku;
+          if (m.skuVar && !r.skuVar) r.skuVar = m.skuVar;
           if (m.ean) r.ean = m.ean;
-          cache[r.id] = { sku: r.sku || null, ean: r.ean || null, ts: Date.now() };
+          cache[r.id] = { sku: r.sku || null, skuVar: r.skuVar || null, ean: r.ean || null, ts: Date.now() };
         } catch (e) {
           if (/429/.test(e.message) && (r.__retry || 0) < 2) {
             r.__retry = (r.__retry || 0) + 1;
@@ -752,6 +762,28 @@
       }
     }
 
+    // envia para o site do vendedor (Cloudflare Worker), se configurado
+    async function syncToSite(rows, summary) {
+      const cfg = await storageGet('spx_sync');
+      if (!cfg || !cfg.enabled || !cfg.url || !cfg.token) return null;
+      try {
+        const res = await fetch(cfg.url.replace(/\/+$/, '') + '/dados', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + cfg.token
+          },
+          body: JSON.stringify({ rows, summary })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        dbg('Site atualizado.');
+        return 'ok';
+      } catch (e) {
+        dbg('Falha ao atualizar o site: ' + e.message);
+        return 'erro: ' + e.message;
+      }
+    }
+
     const summary = {
       total: rows.length,
       comPromo: rows.filter(r => r.emPromocao).length,
@@ -761,9 +793,17 @@
       vendas30: rows.reduce((acc, r) => acc + (r.vendas30 || 0), 0) || null,
       temVendas30: rows.some(r => r.vendas30 !== null),
       comEan: rows.filter(r => r.ean).length,
-      comSku: rows.filter(r => r.sku).length,
+      comSku: rows.filter(r => r.sku || r.skuVar).length,
       geradoEm: new Date().toLocaleString('pt-BR')
     };
+
+    post({ type: 'status', text: 'Atualizando seu site...', pct: 98 });
+    summary.sync = await syncToSite(rows, summary);
+
+    // salva aqui também: se o popup fechar no meio, o resultado não se perde
+    try {
+      chrome.storage.local.set({ spx_last_result: { rows, summary, debug: debugLog.slice() } });
+    } catch (e) { /* contexto invalidado */ }
 
     post({ type: 'done', rows, summary, debug: debugLog.slice() });
   }

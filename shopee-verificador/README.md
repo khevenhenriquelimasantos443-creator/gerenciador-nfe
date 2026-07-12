@@ -4,7 +4,8 @@ Extensão do Chrome que verifica **todos os seus anúncios da Shopee de uma vez 
 
 | Coluna | O que mostra |
 |---|---|
-| SKU | SKU do anúncio (o "pai" ou, se não houver, os SKUs das variações) |
+| SKU principal | SKU "pai" do anúncio |
+| SKUs variações | SKU de cada variação, separados por " \| " |
 | EAN/GTIN | Código de barras cadastrado dentro do anúncio (todas as variações) |
 | Em promoção? | Sim/Não |
 | Preço promocional | Valor com desconto |
@@ -74,6 +75,17 @@ extensão entra anúncio por anúncio para buscá-lo (opção marcada por padrã
   (enriquecimento passivo), ou aguarde o cache expirar;
 - Na planilha, o EAN sai protegido como texto (não vira "7,89E+12" no Excel);
 - Anúncio com várias variações: os EANs saem separados por " / " e os SKUs por " | ".
+
+## 🌐 Site com atualização automática (v1.3)
+
+Quer ver o painel **de qualquer lugar** (celular, outro PC), sempre atualizado?
+A pasta **`worker/`** tem um Cloudflare Worker que é o site e o banco ao mesmo tempo:
+
+1. Siga o **`worker/CONFIGURAR.md`** (10 min, grátis, mesmo esquema do finn-worker);
+2. No popup da extensão, abra **"🌐 Enviar para meu site"**, cole a URL e o token, salve;
+3. Cada varredura atualiza o site sozinha; a página aberta se renova a cada 5 min.
+
+Só entra quem tem o token. No celular, use "Adicionar à tela inicial" para virar um app.
 
 ## ❓ Problemas comuns
 

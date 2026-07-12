@@ -28,6 +28,7 @@
       id: String(r.id ?? ''),
       nome: String(r.nome ?? ''),
       sku: r.sku ? String(r.sku) : null,
+      skuVar: r.skuVar ? String(r.skuVar) : null,
       ean: r.ean ? String(r.ean) : null,
       status: String(r.status ?? ''),
       estoque: num(r.estoque),
@@ -42,6 +43,8 @@
     };
   }
 
+  let booted = false;
+
   function ingest(rows, meta) {
     ALL = rows.map(normalizeRow).filter(r => r.id);
     META = meta || {};
@@ -51,11 +54,84 @@
     for (const r of ALL) {
       if (r.estoque === 0 && r.status === 'Ativo') r.status = 'Esgotado';
     }
-    boot();
+    if (!booted) { booted = true; boot(); }
+    else renderAll(); // atualização silenciosa: mantém filtros e ordenação
+    $('meta').textContent = (META.geradoEm ? 'Varredura de ' + META.geradoEm + ' · ' : '') +
+      fmtInt(ALL.length) + ' anúncios · vendas exibidas: ' + vendasLabel();
   }
 
   const vendasDe = (r) => salesMode === 'v30' ? (r.v30 ?? 0) : (r.vTotal ?? 0);
   const vendasLabel = () => salesMode === 'v30' ? 'vendas (30 dias)' : 'vendas (total)';
+
+  // ---------------------------------------------------- modo site (Worker)
+  function siteLoad() {
+    let token = null;
+    const m = location.hash.match(/[#&]t=([^&]+)/);
+    if (m) {
+      token = decodeURIComponent(m[1]);
+      try { localStorage.setItem('spx_site_token', token); } catch (e) { /* privado */ }
+      try { history.replaceState(null, '', location.pathname); } catch (e) { /* ok */ }
+    } else {
+      try { token = localStorage.getItem('spx_site_token'); } catch (e) { /* privado */ }
+    }
+    if (!token) { showTokenForm(''); return; }
+    fetchSite(token, true);
+    if (!window.__spxPoll) {
+      window.__spxPoll = setInterval(() => fetchSite(token, false), 5 * 60 * 1000);
+    }
+  }
+
+  function fetchSite(token, firstLoad) {
+    fetch('dados?token=' + encodeURIComponent(token))
+      .then(async (res) => {
+        if (res.status === 401) { showTokenForm('Token inválido — confira o SYNC_TOKEN do Worker e cole de novo.'); return; }
+        if (res.status === 404) { if (firstLoad) showEmptyState(); return; }
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const d = await res.json();
+        if (d && d.rows) {
+          ingest(d.rows, { geradoEm: (d.summary && d.summary.geradoEm) || d.recebidoEm || '' });
+        }
+      })
+      .catch((e) => { if (firstLoad) siteMessage('Não consegui carregar os dados (' + e.message + '). Recarregue a página.'); });
+  }
+
+  function siteMessage(text) {
+    document.querySelector('.wrap').innerHTML =
+      '<div class="card"><p class="empty"></p></div>';
+    document.querySelector('.empty').textContent = text;
+  }
+
+  function showTokenForm(msg) {
+    const wrap = document.querySelector('.wrap');
+    wrap.textContent = '';
+    const card = document.createElement('div');
+    card.className = 'card tokencard';
+    const h = document.createElement('h2');
+    h.textContent = 'Conectar ao seu painel';
+    const p = document.createElement('p');
+    p.className = 'desc';
+    p.textContent = msg || 'Cole o token do seu Worker (o mesmo SYNC_TOKEN configurado no Cloudflare). Você só faz isso uma vez neste aparelho.';
+    const input = document.createElement('input');
+    input.type = 'password';
+    input.className = 'search';
+    input.placeholder = 'Token de acesso';
+    input.style.margin = '10px 0';
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.setAttribute('aria-pressed', 'true');
+    btn.textContent = 'Entrar';
+    const go = () => {
+      const t = input.value.trim();
+      if (!t) return;
+      try { localStorage.setItem('spx_site_token', t); } catch (e) { /* privado */ }
+      location.reload();
+    };
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+    card.appendChild(h); card.appendChild(p); card.appendChild(input); card.appendChild(btn);
+    wrap.appendChild(card);
+    input.focus();
+  }
 
   function loadData() {
     if (window.SPX_DATA) {
@@ -74,6 +150,7 @@
       }
       return;
     }
+    if (window.SPX_SITE) { siteLoad(); return; }
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
       chrome.storage.local.get('spx_last_result', (st) => {
         const res = st && st.spx_last_result;
@@ -89,9 +166,11 @@
   }
 
   function showEmptyState() {
+    const texto = window.SPX_SITE
+      ? 'A extensão ainda não enviou nenhuma varredura para este site.<br>No Seller Center, abra a extensão, configure o site em "🌐 Enviar para meu site" e clique em Verificar.'
+      : 'Nenhuma varredura encontrada.<br>Abra o Seller Center, clique na extensão e em "Verificar todos os anúncios" — depois volte aqui.';
     document.querySelector('.wrap').innerHTML =
-      '<div class="card"><p class="empty">Nenhuma varredura encontrada.<br>' +
-      'Abra o Seller Center, clique na extensão e em "Verificar todos os anúncios" — depois volte aqui.</p></div>';
+      '<div class="card"><p class="empty">' + texto + '</p></div>';
   }
 
   // ------------------------------------------------------------ filtros
@@ -110,7 +189,8 @@
       if (chip === 'baixo' && !(r.estoque !== null && r.estoque >= 1 && r.estoque <= 5)) return false;
       if (chip === 'comEstoque' && !(r.estoque !== null && r.estoque > 0)) return false;
       if (q && !(r.nome.toLowerCase().includes(q) || r.id.includes(q) ||
-        (r.sku && r.sku.toLowerCase().includes(q)) || (r.ean && r.ean.includes(q)))) return false;
+        (r.sku && r.sku.toLowerCase().includes(q)) || (r.skuVar && r.skuVar.toLowerCase().includes(q)) ||
+        (r.ean && r.ean.includes(q)))) return false;
       return true;
     });
   }
@@ -465,7 +545,7 @@
   // ------------------------------------------------------------ tabela
   const sorters = {
     nome: (a, b) => a.nome.localeCompare(b.nome, 'pt-BR'),
-    sku: (a, b) => (a.sku || '').localeCompare(b.sku || '', 'pt-BR'),
+    sku: (a, b) => (a.sku || a.skuVar || '').localeCompare(b.sku || b.skuVar || '', 'pt-BR'),
     status: (a, b) => a.status.localeCompare(b.status, 'pt-BR'),
     estoque: (a, b) => (a.estoque ?? -1) - (b.estoque ?? -1),
     preco: (a, b) => (a.preco ?? -1) - (b.preco ?? -1),
@@ -507,12 +587,19 @@
 
       const tdSku = document.createElement('td');
       tdSku.className = 'skucell';
-      if (r.sku || r.ean) {
+      if (r.sku || r.skuVar || r.ean) {
         if (r.sku) {
           const s1 = document.createElement('div');
           s1.textContent = r.sku;
-          s1.title = 'SKU: ' + r.sku;
+          s1.title = 'SKU principal: ' + r.sku;
           tdSku.appendChild(s1);
+        }
+        if (r.skuVar) {
+          const sv = document.createElement('div');
+          sv.className = 'varline';
+          sv.textContent = r.skuVar;
+          sv.title = 'SKUs das variações: ' + r.skuVar;
+          tdSku.appendChild(sv);
         }
         if (r.ean) {
           const s2 = document.createElement('div');
@@ -581,7 +668,8 @@
     const cols = [
       ['ID do anúncio', r => r.id],
       ['Nome do produto', r => r.nome],
-      ['SKU', r => r.sku],
+      ['SKU principal', r => r.sku],
+      ['SKUs variações', r => r.skuVar],
       ['EAN/GTIN', r => r.ean],
       ['Status', r => r.status],
       ['Estoque atual', r => r.estoque],
@@ -624,10 +712,22 @@
   }
 
   function boot() {
-    $('meta').textContent = (META.geradoEm ? 'Varredura de ' + META.geradoEm + ' · ' : '') +
-      fmtInt(ALL.length) + ' anúncios · vendas exibidas: ' + vendasLabel();
+    if (window.SPX_SITE) {
+      // botão de atualização manual no topo (o site também atualiza sozinho a cada 5 min)
+      const bar = document.querySelector('.topbar');
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.textContent = '↻ Atualizar';
+      btn.addEventListener('click', () => {
+        btn.textContent = '… atualizando';
+        try { fetchSite(localStorage.getItem('spx_site_token'), false); } catch (e) { /* ok */ }
+        setTimeout(() => { btn.textContent = '↻ Atualizar'; }, 1500);
+      });
+      bar.appendChild(btn);
+    }
 
     document.querySelectorAll('.chip').forEach(btn => {
+      if (!btn.dataset.chip) return; // só os chips de filtro
       btn.addEventListener('click', () => {
         chip = btn.dataset.chip;
         visible = 250;

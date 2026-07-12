@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Shopee — Verificador de Anúncios em Massa",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Verifica todos os seus anúncios da Shopee de uma vez: promoção ativa, valor promocional, nome da promoção, estoque atual e vendas. Exporta para planilha (Excel/CSV).",
   "permissions": ["storage", "activeTab"],
   "host_permissions": [

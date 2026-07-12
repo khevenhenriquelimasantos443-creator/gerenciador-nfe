@@ -42,6 +42,51 @@
       chrome.storage.local.set({ spx_opt_ean: e.target.checked });
     });
 
+    // configuração do site (Cloudflare Worker)
+    chrome.storage.local.get('spx_sync', (st) => {
+      const cfg = (st && st.spx_sync) || {};
+      $('sync-url').value = cfg.url || '';
+      $('sync-token').value = cfg.token || '';
+      $('sync-on').checked = cfg.enabled !== false && !!cfg.url;
+      if (cfg.url && cfg.token) $('btn-site').classList.remove('hidden');
+    });
+    const readSyncCfg = () => ({
+      url: $('sync-url').value.trim().replace(/\/+$/, ''),
+      token: $('sync-token').value.trim(),
+      enabled: $('sync-on').checked
+    });
+    $('sync-save').addEventListener('click', async () => {
+      const cfg = readSyncCfg();
+      await chrome.storage.local.set({ spx_sync: cfg });
+      const m = $('sync-msg');
+      m.textContent = 'Salvo ✓';
+      m.className = 'syncmsg ok';
+      if (cfg.url && cfg.token) $('btn-site').classList.remove('hidden');
+      setTimeout(() => { m.textContent = ''; }, 2500);
+    });
+    $('sync-test').addEventListener('click', async () => {
+      const cfg = readSyncCfg();
+      const m = $('sync-msg');
+      if (!cfg.url || !cfg.token) { m.textContent = 'Preencha URL e token'; m.className = 'syncmsg err'; return; }
+      m.textContent = 'Testando...';
+      m.className = 'syncmsg';
+      try {
+        const res = await fetch(cfg.url + '/dados?token=' + encodeURIComponent(cfg.token));
+        if (res.status === 401) { m.textContent = 'Token errado'; m.className = 'syncmsg err'; return; }
+        if (res.status === 404 || res.ok) { m.textContent = 'Conectado ✓'; m.className = 'syncmsg ok'; return; }
+        throw new Error('HTTP ' + res.status);
+      } catch (e) {
+        m.textContent = 'Sem conexão (' + e.message + ')';
+        m.className = 'syncmsg err';
+      }
+    });
+    $('btn-site').addEventListener('click', () => {
+      chrome.storage.local.get('spx_sync', (st) => {
+        const cfg = (st && st.spx_sync) || {};
+        if (cfg.url) chrome.tabs.create({ url: cfg.url + '/#t=' + encodeURIComponent(cfg.token || '') });
+      });
+    });
+
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     currentTabId = tab && tab.id;
     const onSeller = tab && tab.url && /^https:\/\/seller\.shopee\.(com\.br|com)\//.test(tab.url);
@@ -128,7 +173,10 @@
     $('cards').innerHTML = cards.map(c =>
       `<div class="card ${c.cls}"><b>${c.n}</b><span>${c.t}</span></div>`).join('');
 
-    $('result-ts').textContent = 'Verificado em: ' + (summary.geradoEm || '—');
+    let ts = 'Verificado em: ' + (summary.geradoEm || '—');
+    if (summary.sync === 'ok') ts += ' · 🌐 Site atualizado ✓';
+    else if (summary.sync && summary.sync.startsWith('erro')) ts += ' · 🌐 Site não atualizado (' + summary.sync + ')';
+    $('result-ts').textContent = ts;
     renderTable();
     show('result');
   }
@@ -141,7 +189,8 @@
       if (onlyPromo && !r.emPromocao) return false;
       if (onlyNoStock && r.estoque !== 0) return false;
       if (q && !(r.nome.toLowerCase().includes(q) || r.id.includes(q) ||
-        (r.sku && r.sku.toLowerCase().includes(q)) || (r.ean && r.ean.includes(q)))) return false;
+        (r.sku && r.sku.toLowerCase().includes(q)) || (r.skuVar && r.skuVar.toLowerCase().includes(q)) ||
+        (r.ean && r.ean.includes(q)))) return false;
       return true;
     });
   }
@@ -167,7 +216,7 @@
       const vendas = r.vendas30 !== null ? fmtNum(r.vendas30) + ' <small>(30d)</small>'
         : (r.vendasTotal !== null ? fmtNum(r.vendasTotal) + ' <small>(total)</small>' : '—');
       return `<tr>
-        <td class="nome"><a href="${esc(r.link)}" target="_blank" title="${esc(r.nome)}">${esc(r.nome.length > 60 ? r.nome.slice(0, 60) + '…' : r.nome)}</a><span class="pid">ID ${esc(r.id)}${r.sku ? ' · SKU ' + esc(r.sku) : ''}${r.ean ? ' · EAN ' + esc(r.ean) : ''} · ${esc(r.status)}</span></td>
+        <td class="nome"><a href="${esc(r.link)}" target="_blank" title="${esc(r.nome)}">${esc(r.nome.length > 60 ? r.nome.slice(0, 60) + '…' : r.nome)}</a><span class="pid">ID ${esc(r.id)}${r.sku ? ' · SKU ' + esc(r.sku) : ''}${r.skuVar ? ' · Var: ' + esc(r.skuVar) : ''}${r.ean ? ' · EAN ' + esc(r.ean) : ''} · ${esc(r.status)}</span></td>
         <td>${estoque}</td>
         <td>${preco}</td>
         <td>${promo}</td>
@@ -184,7 +233,8 @@
   const COLS = [
     ['ID do anúncio', r => r.id],
     ['Nome do produto', r => r.nome],
-    ['SKU', r => r.sku],
+    ['SKU principal', r => r.sku],
+    ['SKUs variações', r => r.skuVar],
     ['EAN/GTIN', r => r.ean],
     ['Status', r => r.status],
     ['Estoque atual', r => r.estoque],

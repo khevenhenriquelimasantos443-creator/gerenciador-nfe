@@ -1,0 +1,22 @@
+name = "shopee-painel"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# ─────────────────────────────────────────────
+#  KV Namespace (onde as varreduras ficam salvas)
+#  Como criar:
+#    1. dash.cloudflare.com → Workers & Pages → KV
+#    2. "Create namespace", nome: shopee-kv
+#    3. Copie o "Namespace ID" e cole abaixo
+# ─────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "SHOPEE_KV"
+id = "COLE_AQUI_O_ID_DO_KV_NAMESPACE"
+
+# ─────────────────────────────────────────────
+#  SEGREDO — adicione via terminal após o deploy:
+#
+#  wrangler secret put SYNC_TOKEN
+#    → Crie uma senha forte qualquer, ex: shopee_kheven_2026_x9k2
+#      (é a mesma que você cola na extensão e usa para entrar no site)
+# ─────────────────────────────────────────────

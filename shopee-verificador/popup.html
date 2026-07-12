@@ -36,6 +36,18 @@
     <div id="conn-status" class="conn">✅ Conectado ao Seller Center</div>
     <button id="btn-scan" class="btn btn-primary btn-big">🔍 Verificar todos os anúncios</button>
     <label class="optline"><input type="checkbox" id="opt-ean" checked> Buscar <b>SKU e EAN</b> dentro de cada anúncio <span class="optnote">(1ª vez demora alguns minutos; depois usa cache e fica rápido)</span></label>
+    <details class="syncbox" id="syncbox">
+      <summary>🌐 Enviar para meu site (acessar de qualquer lugar)</summary>
+      <p class="hint">Publique o Worker da pasta <b>worker/</b> (instruções no CONFIGURAR.md) e cole aqui. Cada varredura atualiza o site sozinha.</p>
+      <input id="sync-url" type="url" placeholder="https://seu-worker.workers.dev">
+      <input id="sync-token" type="password" placeholder="Token (o mesmo SYNC_TOKEN do Worker)">
+      <label class="optline"><input type="checkbox" id="sync-on"> Enviar automaticamente após cada varredura</label>
+      <div class="syncrow">
+        <button id="sync-save" class="btn">Salvar</button>
+        <button id="sync-test" class="btn">Testar conexão</button>
+        <span id="sync-msg" class="syncmsg"></span>
+      </div>
+    </details>
     <p class="hint">Dica: se der erro, abra antes a página <b>Meus Produtos</b> e espere a lista carregar — a extensão aprende o caminho certo sozinha.</p>
   </section>
 
@@ -61,6 +73,7 @@
     <div class="cards" id="cards"></div>
     <div class="actions">
       <button id="btn-dash" class="btn btn-primary">📊 Abrir dashboard</button>
+      <button id="btn-site" class="btn hidden">🌐 Meu site</button>
       <button id="btn-csv" class="btn">⬇️ Baixar planilha (Excel/CSV)</button>
       <button id="btn-copy" class="btn">📋 Copiar p/ colar no Excel</button>
       <button id="btn-rescan" class="btn">🔄 Verificar de novo</button>
