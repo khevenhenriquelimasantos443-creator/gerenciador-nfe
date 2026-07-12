@@ -1094,8 +1094,8 @@ function exportRelatorioPDF(){
     head: [['Nomes','Valor']],
     body: rows.map(r => [r.nome, fmtBRL(r.valor)]),
     foot: [['Total', fmtBRL(total)]],
-    theme: 'grid',
-    styles: {font:'helvetica', cellPadding:4, lineColor:[0,0,0], lineWidth:.2, textColor:20},
+    theme: 'plain',
+    styles: {font:'helvetica', cellPadding:{top:5,bottom:5,left:6,right:6}, textColor:20},
     didParseCell: function(d){
       if(d.section === 'head' || d.section === 'foot'){
         d.cell.styles.fillColor = [0,0,0];
@@ -1106,6 +1106,14 @@ function exportRelatorioPDF(){
       } else {
         d.cell.styles.fontSize = 12;
         d.cell.styles.halign = d.column.index === 1 ? 'right' : 'left';
+      }
+    },
+    didDrawCell: function(d){
+      if(d.section === 'body'){
+        const pdf = d.doc;
+        pdf.setDrawColor(0,0,0);
+        pdf.setLineWidth(.2);
+        pdf.line(d.cell.x, d.cell.y + d.cell.height, d.cell.x + d.cell.width, d.cell.y + d.cell.height);
       }
     }
   });
