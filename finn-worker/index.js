@@ -226,11 +226,11 @@ async function handleListReply(phone, rowId, stateData, env) {
   }
 
   const catMap = {
-    cat_alimentacao:"Alimentacao", cat_transporte:"Transporte", cat_lazer:"Lazer",
-    cat_saude:"Saude", cat_educacao:"Educacao", cat_moradia:"Moradia",
-    cat_vestuario:"Vestuario", cat_investimento:"Investimento", cat_outros:"Outros",
-    cat_salario:"Salario", cat_freelance:"Freelance", cat_aluguel:"Aluguel",
-    cat_venda:"Venda", cat_bonus:"Bonus",
+    cat_alimentacao:"Alimentação", cat_transporte:"Transporte", cat_lazer:"Lazer",
+    cat_saude:"Saúde", cat_educacao:"Educação", cat_moradia:"Moradia",
+    cat_vestuario:"Vestuário", cat_investimento:"Investimento", cat_outros:"Outros",
+    cat_salario:"Salário", cat_freelance:"Freelance", cat_aluguel:"Aluguel",
+    cat_venda:"Venda", cat_bonus:"Bônus",
   };
   if (catMap[rowId]) return handleCategorySelected(phone, catMap[rowId], stateData, env);
 
@@ -259,9 +259,9 @@ async function handleListReply(phone, rowId, stateData, env) {
 
 async function handleButtonReply(phone, selectedId, stateData, env) {
   const catMap = {
-    btn_alimentacao:"Alimentacao", btn_transporte:"Transporte", btn_lazer:"Lazer",
-    btn_saude:"Saude", btn_educacao:"Educacao", btn_moradia:"Moradia",
-    btn_vestuario:"Vestuario", btn_investimento:"Investimento", btn_outros:"Outros",
+    btn_alimentacao:"Alimentação", btn_transporte:"Transporte", btn_lazer:"Lazer",
+    btn_saude:"Saúde", btn_educacao:"Educação", btn_moradia:"Moradia",
+    btn_vestuario:"Vestuário", btn_investimento:"Investimento", btn_outros:"Outros",
   };
   if (catMap[selectedId]) return handleCategorySelected(phone, catMap[selectedId], stateData, env);
 
@@ -876,9 +876,21 @@ async function handleSync(request, env) {
   try { body=await request.json(); } catch { return corsResponse(new Response(JSON.stringify({error:"Invalid JSON"}),{status:400})); }
   const {phone,data,fixed}=body;
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400}));
-  if (data) await saveUserData(phone,data,env);
-  if (fixed) await env.FINN_KV.put(`fixed_${phone}`,JSON.stringify(fixed));
-  return corsResponse(new Response(JSON.stringify({ok:true,phone}),{status:200,headers:{"Content-Type":"application/json"}}));
+  // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
+  // ex.: quem conversou pelo bot antes de cadastrar o número no site), grava
+  // nessa mesma chave. Senão a sincronização do site e a conversa ao vivo
+  // ficam em duas chaves diferentes e nunca se encontram.
+  let targetPhone = phone;
+  for (const cand of phoneVariants(phone)) {
+    const existing = await getUserData(cand, env);
+    if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
+      targetPhone = cand;
+      break;
+    }
+  }
+  if (data) await saveUserData(targetPhone,data,env);
+  if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
+  return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
 
 // =============================================================================
@@ -1064,13 +1076,13 @@ async function sendCategoryList(phone, val, env) {
       action:{
         button:"Escolher categoria",
         sections:[{title:"Categorias de Despesa",rows:[
-          {id:`c|d|${v}|Alimentacao`,title:"🍔 Alimentação"},
+          {id:`c|d|${v}|Alimentação`,title:"🍔 Alimentação"},
           {id:`c|d|${v}|Transporte`,title:"🚗 Transporte"},
           {id:`c|d|${v}|Lazer`,title:"🎮 Lazer"},
-          {id:`c|d|${v}|Saude`,title:"🏥 Saúde"},
-          {id:`c|d|${v}|Educacao`,title:"📚 Educação"},
+          {id:`c|d|${v}|Saúde`,title:"🏥 Saúde"},
+          {id:`c|d|${v}|Educação`,title:"📚 Educação"},
           {id:`c|d|${v}|Moradia`,title:"🏠 Moradia"},
-          {id:`c|d|${v}|Vestuario`,title:"👕 Vestuário"},
+          {id:`c|d|${v}|Vestuário`,title:"👕 Vestuário"},
           {id:`c|d|${v}|Investimento`,title:"📈 Investimento"},
           {id:`c|d|${v}|Outros`,title:"📦 Outros"}
         ]}]
@@ -1089,12 +1101,12 @@ async function sendCategoryListReceita(phone, val, env) {
       action:{
         button:"Escolher categoria",
         sections:[{title:"Categorias de Receita",rows:[
-          {id:`c|r|${v}|Salario`,title:"💼 Salário"},
+          {id:`c|r|${v}|Salário`,title:"💼 Salário"},
           {id:`c|r|${v}|Freelance`,title:"💻 Freelance/Serviços"},
           {id:`c|r|${v}|Investimento`,title:"📈 Investimentos"},
           {id:`c|r|${v}|Aluguel`,title:"🏠 Aluguel"},
           {id:`c|r|${v}|Venda`,title:"🛍️ Venda"},
-          {id:`c|r|${v}|Bonus`,title:"🎁 Bônus/Presente"},
+          {id:`c|r|${v}|Bônus`,title:"🎁 Bônus/Presente"},
           {id:`c|r|${v}|Outros`,title:"📦 Outros"}
         ]}]
       }
@@ -1184,7 +1196,7 @@ function capitalizeFirst(str) {
 }
 
 function catToEmoji(cat) {
-  const map={Alimentacao:"🍔",Alimentação:"🍔",Transporte:"🚗",Saude:"🏥",Saúde:"🏥",Lazer:"🎮",Educacao:"📚",Educação:"📚",Moradia:"🏠",Vestuario:"👕",Vestuário:"👕",Investimento:"📈",Outros:"📦"};
+  const map={Alimentacao:"🍔",Alimentação:"🍔",Transporte:"🚗",Saude:"🏥",Saúde:"🏥",Lazer:"🎮",Educacao:"📚",Educação:"📚",Moradia:"🏠",Vestuario:"👕",Vestuário:"👕",Investimento:"📈",Outros:"📦",Salario:"💼",Salário:"💼",Freelance:"💻",Aluguel:"🏠",Venda:"🛍️",Bonus:"🎁",Bônus:"🎁"};
   return map[cat]||"💰";
 }
 
