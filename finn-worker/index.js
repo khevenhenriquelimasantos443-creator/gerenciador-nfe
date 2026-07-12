@@ -205,7 +205,7 @@ async function processMessage(msg, env) {
       return handleModoPanico(phone, env);
     }
 
-    await sendText(phone, "🤔 Não entendi esse comando.\n\nDigite *menu* para ver as opções, ou envie um 🎙️ áudio/_foto de comprovante_ para lançar direto.\n\nOutros comandos: *analise* · *score* · *dashboard* 🦊", env);
+    await sendText(phone, "Não entendi esse comando. Digite *menu* para ver as opções, ou mande um áudio/foto pra lançar direto.\n\nTambém aceito: *analise*, *score*, *dashboard*.", env);
   }
 }
 
@@ -1042,7 +1042,7 @@ async function sendMainMenu(phone, env) {
     interactive:{
       type:"list",
       header:{type:"text",text:"Finn. 🦊"},
-      body:{text:"👋 Olá! Sou o Finn., seu assistente financeiro.\n\nEscolha uma opção:"},
+      body:{text:"👋 Olá! Escolha uma opção:"},
       footer:{text:"Finn. • Seu dinheiro, no controle."},
       action:{
         button:"Ver opções",
