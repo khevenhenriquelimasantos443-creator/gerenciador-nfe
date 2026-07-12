@@ -682,6 +682,7 @@ function renderDashboard(){
       '</div>' +
     '</div>';
 
+  html += renderWhatsAppPromo();
   html += renderFixedDueAlert();
   html += renderOverLimitAlert();
   html += renderEvolutionChart();
@@ -756,6 +757,20 @@ function fixedDueSoon(){
     var diff = Number(f.day_of_month) - todayDay;
     return diff <= 5 && diff >= -5;
   }).sort(function(a,b){ return Number(a.day_of_month) - Number(b.day_of_month); });
+}
+
+function renderWhatsAppPromo(){
+  if(localStorage.getItem("finn_wa_promo_dismissed") === "1") return "";
+  var user = currentSession && currentSession.user;
+  var meta = (user && user.user_metadata) || {};
+  if(meta.whatsapp) return "";
+  return '<div class="card" style="border-color:var(--fp);position:relative">' +
+    '<button type="button" id="btnDismissWaPromo" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--fm);font-size:16px;cursor:pointer;line-height:1">×</button>' +
+    '<div class="eyebrow" style="color:var(--fp)">📱 Novo</div>' +
+    '<div style="font-weight:800;font-size:14px;margin-bottom:4px">Lance gastos direto pelo WhatsApp</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Manda mensagem, áudio ou foto do comprovante pro bot — sem abrir o app. Conecte seu número em Configurações.</div>' +
+    '<button type="button" class="btn-submit" id="btnGoConfigWa">Conectar WhatsApp</button>' +
+  '</div>';
 }
 
 function renderFixedDueAlert(){
@@ -2520,7 +2535,8 @@ function renderConfig(){
     '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Conecta o bot do WhatsApp aos seus dados do site — o resumo por lá passa a bater com o que está aqui.</div>' +
     '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
     (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
-    '<button type="button" class="btn-ghost" id="btnDarkToggle" style="margin-top:14px;width:100%">' + (dark ? "☀️ Modo claro" : "🌙 Modo escuro") + '</button>' +
+    '<a href="https://wa.me/5513992102413?text=oi" target="_blank" rel="noopener" class="btn-ghost" style="margin-top:14px;width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">💬 Abrir conversa com o bot no WhatsApp</a>' +
+    '<button type="button" class="btn-ghost" id="btnDarkToggle" style="margin-top:10px;width:100%">' + (dark ? "☀️ Modo claro" : "🌙 Modo escuro") + '</button>' +
     '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
   '</div>';
 
@@ -2676,6 +2692,18 @@ function render(){
 }
 
 function bindContentEvents(){
+  if(state.tab === "dashboard"){
+    var btnDismissWaPromo = document.getElementById("btnDismissWaPromo");
+    if(btnDismissWaPromo) btnDismissWaPromo.addEventListener("click", function(){
+      localStorage.setItem("finn_wa_promo_dismissed", "1");
+      render();
+    });
+    var btnGoConfigWa = document.getElementById("btnGoConfigWa");
+    if(btnGoConfigWa) btnGoConfigWa.addEventListener("click", function(){
+      state.tab = "config";
+      render();
+    });
+  }
   if(state.tab === "analises"){
     document.querySelectorAll(".an-period-btn").forEach(function(btn){
       btn.addEventListener("click", function(){ state.analysisPeriod = btn.dataset.period; render(); });
