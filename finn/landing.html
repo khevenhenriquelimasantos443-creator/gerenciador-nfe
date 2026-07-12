@@ -4,180 +4,104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Finn. — Controle Financeiro com IA</title>
-<meta name="description" content="Importe extratos de banco, lance gastos manualmente, acompanhe metas e receba análises com IA. Bot do WhatsApp em breve. Finn. é o app financeiro feito para o brasileiro.">
+<meta name="description" content="Importe extratos de banco, lance gastos manualmente ou pelo WhatsApp, e receba análises com IA. Finn. é o app financeiro feito para o brasileiro. 100% grátis.">
 <meta name="theme-color" content="#F97316">
 <meta property="og:title" content="Finn. — Controle Financeiro Inteligente">
-<meta property="og:description" content="Importe extratos de banco em PDF e receba análises com IA. Bot do WhatsApp em breve. Grátis.">
+<meta property="og:description" content="Importe extratos de banco, lance gastos pelo WhatsApp e receba análises com IA. Grátis.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--primary:#F97316;--dark:#0F172A;--dark2:#1E293B;--muted:#64748B;--border:#E2E8F0}
+:root{--primary:#F97316;--dark:#0F172A;--dark2:#1E293B;--muted:#64748B;--border:#E2E8F0;--bg:#F8F7F4}
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1E293B;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.06);padding:0 24px}
-.nav-inner{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;letter-spacing:-.03em}
-.nav-logo-mark{width:36px;height:36px;background:#1E293B;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:#F97316}
-.nav-logo em{font-style:normal;color:#F97316}
-.nav-links{display:flex;gap:28px;font-size:14px;font-weight:600;color:#64748B}
-.nav-links a:hover{color:#1E293B}
-.nav-cta{background:#F97316;color:#fff;border-radius:10px;padding:9px 20px;font-size:13px;font-weight:700;transition:all .15s;white-space:nowrap;border:none;cursor:pointer}
-.nav-cta:hover{background:#EA6C0F;transform:translateY(-1px);box-shadow:0 4px 14px rgba(249,115,22,.35)}
+nav{position:sticky;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1000px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-.02em}
+.nav-logo-mark{width:32px;height:32px;background:var(--dark2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:var(--primary)}
+.nav-logo em{font-style:normal;color:var(--primary)}
+.nav-links{display:flex;gap:28px;font-size:14px;font-weight:600;color:var(--muted)}
+.nav-links a:hover{color:var(--dark2)}
+.nav-cta{background:var(--dark2);color:#fff;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;white-space:nowrap}
+.nav-cta:hover{background:var(--dark)}
 @media(max-width:640px){.nav-links{display:none}}
 
 /* HERO */
-.hero{min-height:100vh;background:linear-gradient(150deg,#0A0E1A 0%,#0F172A 40%,#1a1f2e 100%);display:flex;align-items:center;padding:100px 24px 80px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 30% 50%,rgba(249,115,22,.12),transparent 70%);pointer-events:none}
-.hero-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.25);border-radius:99px;padding:5px 14px;font-size:11px;font-weight:700;color:#FB923C;letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px}
-.hero h1{font-size:clamp(36px,4.5vw,62px);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-.04em;margin-bottom:20px}
-.hero h1 em{font-style:normal;color:#F97316}
-.hero-sub{font-size:17px;color:#94A3B8;line-height:1.65;margin-bottom:32px;max-width:480px}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
-.btn-primary{background:#F97316;color:#fff;border-radius:12px;padding:13px 26px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:all .18s;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{background:#EA6C0F;transform:translateY(-2px);box-shadow:0 8px 28px rgba(249,115,22,.45)}
-.btn-ghost{background:transparent;color:#94A3B8;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:13px 26px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .18s}
-.btn-ghost:hover{border-color:rgba(255,255,255,.3);color:#fff}
-.hero-chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:5px 11px;font-size:12px;font-weight:600;color:#94A3B8}
+.hero{padding:88px 24px 72px;background:var(--bg);border-bottom:1px solid var(--border)}
+.hero-inner{max-width:680px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:26px}
+.hero-badge b{color:var(--primary)}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;color:var(--dark);line-height:1.1;letter-spacing:-.03em;margin-bottom:18px;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero-sub{font-size:17px;color:var(--muted);line-height:1.6;margin:0 auto 32px;max-width:480px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.btn-primary{background:var(--primary);color:#fff;border-radius:10px;padding:13px 26px;font-size:15px;font-weight:700;font-family:inherit;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:#EA6C0F}
+.btn-text{color:var(--dark2);font-size:15px;font-weight:700;padding:13px 6px;border-bottom:2px solid var(--border)}
+.btn-text:hover{border-color:var(--primary)}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{background:#fff;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--muted)}
 
-/* PHONE MOCKUP */
-.phone-wrap{display:flex;justify-content:center;position:relative}
-.phone{width:280px;background:#ECE5DD;border-radius:36px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);position:relative}
-.phone-top{background:#075E54;padding:16px 18px 12px;display:flex;align-items:center;gap:10px}
-.phone-avatar{width:38px;height:38px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;flex-shrink:0}
-.phone-name{font-size:14px;font-weight:700;color:#fff}
-.phone-status{font-size:11px;color:rgba(255,255,255,.65)}
-.phone-body{padding:12px;display:flex;flex-direction:column;gap:8px;min-height:380px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23d1c4b0' width='400' height='400' opacity='.15'/%3E%3C/svg%3E")}
-.msg{max-width:80%;padding:8px 12px;border-radius:8px;font-size:13px;line-height:1.45;position:relative;animation:fadeUp .4s ease both}
-.msg-in{background:#fff;align-self:flex-start;border-radius:0 8px 8px 8px;color:#1E293B}
-.msg-out{background:#D9FDD3;align-self:flex-end;border-radius:8px 0 8px 8px;color:#1E293B;text-align:right}
-.msg-time{font-size:10px;color:#94A3B8;margin-top:2px;display:block}
-.typing{background:#fff;align-self:flex-start;border-radius:0 8px 8px 8px;padding:10px 14px;display:flex;gap:4px;align-items:center}
-.typing span{width:6px;height:6px;background:#94A3B8;border-radius:50%;animation:bounce .8s infinite}
-.typing span:nth-child(2){animation-delay:.15s}
-.typing span:nth-child(3){animation-delay:.3s}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.msg:nth-child(1){animation-delay:.3s}
-.msg:nth-child(2){animation-delay:.9s}
-.msg:nth-child(3){animation-delay:1.6s}
-.msg:nth-child(4){animation-delay:2.4s}
-.msg:nth-child(5){animation-delay:3.0s}
-.phone-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:220px;height:120px;background:radial-gradient(ellipse,rgba(249,115,22,.3),transparent 70%);pointer-events:none}
-.phone-soon{position:absolute;top:18px;right:-6px;background:#F97316;color:#fff;font-size:11px;font-weight:800;padding:5px 12px;border-radius:7px;box-shadow:0 4px 14px rgba(0,0,0,.3);letter-spacing:.02em;z-index:2;transform:rotate(4deg)}
+section{padding:72px 24px}
+.container{max-width:1000px;margin:0 auto}
+.eyebrow{font-size:12px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.s-title{font-size:clamp(26px,3.4vw,36px);font-weight:900;color:var(--dark);letter-spacing:-.02em;line-height:1.15;margin-bottom:12px;text-wrap:balance}
+.s-sub{font-size:15.5px;color:var(--muted);line-height:1.6;max-width:520px}
 
-@media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr;text-align:center}
-  .hero-sub,.hero-btns,.hero-chips{margin-inline:auto}
-  .hero-btns{justify-content:center}
-  .hero-chips{justify-content:center}
-  .phone-wrap{margin-top:8px}
-  .phone{width:240px}
-}
+/* FEATURES — flat list, no cards-with-shadow theatrics */
+.feat-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:40px}
+.feat-item{background:#fff;padding:26px}
+.feat-icon{font-size:22px;margin-bottom:14px}
+.feat-title{font-size:15.5px;font-weight:800;color:var(--dark2);letter-spacing:-.01em;margin-bottom:6px}
+.feat-desc{font-size:13.5px;color:var(--muted);line-height:1.6}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:none}
-
-/* SECTIONS */
-section{padding:88px 24px}
-.container{max-width:1100px;margin:0 auto}
-.eyebrow{font-size:12px;font-weight:700;color:#F97316;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.s-title{font-size:clamp(28px,4vw,44px);font-weight:900;color:#0F172A;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
-.s-sub{font-size:16px;color:#64748B;line-height:1.65;max-width:560px}
-
-/* FEATURES */
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;margin-top:48px}
-.feat-card{background:#F8F7F4;border:1px solid #E2E8F0;border-radius:20px;padding:28px;transition:all .22s;position:relative;overflow:hidden}
-.feat-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 100% 0%,var(--g,rgba(249,115,22,.06)),transparent 60%);pointer-events:none}
-.feat-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.1);border-color:#CBD5E1}
-.feat-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px}
-.feat-title{font-size:17px;font-weight:800;color:#1E293B;letter-spacing:-.02em;margin-bottom:8px}
-.feat-desc{font-size:14px;color:#64748B;line-height:1.6}
-.feat-soon{position:absolute;top:16px;right:16px;background:#FB923C;color:#fff;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.02em;z-index:1}
-
-/* DEMO SECTION */
-.demo-bg{background:#0F172A}
-.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:56px}
-.demo-steps{display:flex;flex-direction:column;gap:28px}
-.demo-step{display:flex;gap:18px;align-items:flex-start}
-.demo-num{width:38px;height:38px;border-radius:11px;background:#F97316;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;flex-shrink:0}
-.demo-step-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
-.demo-step-desc{font-size:14px;color:#64748B;line-height:1.55}
-.demo-visual{background:#1E293B;border-radius:20px;padding:24px;border:1px solid rgba(255,255,255,.06)}
-.demo-visual pre{font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;color:#94A3B8;line-height:1.7;white-space:pre-wrap}
-.demo-visual pre b{color:#F97316}
-.demo-visual pre i{font-style:normal;color:#34D399}
-@media(max-width:760px){.demo-grid{grid-template-columns:1fr}}
-
-/* STATS */
-.stats-bg{background:linear-gradient(120deg,#EA6C0F,#F97316,#FB923C)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-.stat{text-align:center;padding:36px 16px;border-right:1px solid rgba(255,255,255,.2)}
-.stat:last-child{border:none}
-.stat-num{font-size:44px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1}
-.stat-label{font-size:13px;color:rgba(255,255,255,.75);margin-top:6px;font-weight:600}
-@media(max-width:640px){.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid rgba(255,255,255,.15)}.stat:nth-child(even){border-right:none}}
+/* HOW IT WORKS — numbered steps only, no terminal mockup */
+.steps{display:flex;flex-direction:column;gap:0;max-width:600px;margin:40px auto 0;border-top:1px solid var(--border)}
+.step{display:flex;gap:20px;align-items:flex-start;padding:22px 0;border-bottom:1px solid var(--border)}
+.step-num{width:30px;height:30px;border-radius:9px;background:var(--dark2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--primary);flex-shrink:0}
+.step-title{font-size:15.5px;font-weight:800;color:var(--dark2);margin-bottom:3px}
+.step-desc{font-size:13.5px;color:var(--muted);line-height:1.55}
 
 /* FAQ */
-.faq{display:flex;flex-direction:column;gap:0;margin-top:48px;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden}
-.faq-item{border-bottom:1px solid #E2E8F0}
+.faq{max-width:640px;margin:40px auto 0;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--border)}
 .faq-item:last-child{border:none}
-.faq-q{width:100%;padding:20px 24px;text-align:left;font-size:15px;font-weight:700;color:#1E293B;background:#fff;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit;transition:background .15s}
-.faq-q:hover{background:#FAFAFA}
-.faq-arrow{font-size:18px;color:#F97316;transition:transform .25s;flex-shrink:0}
+.faq-q{width:100%;padding:18px 22px;text-align:left;font-size:14.5px;font-weight:700;color:var(--dark2);background:#fff;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit}
+.faq-q:hover{background:#FAFAF9}
+.faq-arrow{font-size:16px;color:var(--primary);transition:transform .2s;flex-shrink:0}
 .faq-item.open .faq-arrow{transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
 .faq-item.open .faq-a{max-height:200px}
-.faq-a-inner{padding:0 24px 20px;font-size:14px;color:#64748B;line-height:1.65}
+.faq-a-inner{padding:0 22px 18px;font-size:13.5px;color:var(--muted);line-height:1.6}
 
 /* CTA */
-.cta-section{background:#0A0E1A;text-align:center;padding:100px 24px;position:relative;overflow:hidden}
-.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 50% 50%,rgba(249,115,22,.12),transparent 70%);pointer-events:none}
-.cta-title{font-size:clamp(32px,5vw,56px);font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:16px;position:relative}
-.cta-title em{font-style:normal;color:#F97316}
-.cta-sub{font-size:17px;color:#64748B;margin-bottom:40px;position:relative}
+.cta-section{background:var(--dark);text-align:center;padding:80px 24px}
+.cta-title{font-size:clamp(26px,4vw,38px);font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:14px;text-wrap:balance}
+.cta-title em{font-style:normal;color:var(--primary)}
+.cta-sub{font-size:15px;color:#94A3B8;margin-bottom:32px}
 
 /* FOOTER */
-footer{background:#060912;padding:40px 24px 24px;border-top:1px solid rgba(255,255,255,.06)}
-.footer-top{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.06)}
-.footer-brand-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.footer-mark{width:34px;height:34px;background:#0F172A;border:1px solid rgba(249,115,22,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#F97316;font-size:16px;letter-spacing:-.02em}
-.footer-logo{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.03em}
-.footer-logo em{font-style:normal;color:#F97316}
-.footer-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#86EFAC;border-radius:99px;padding:4px 12px;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin-left:4px}
-.footer-bottom{max-width:1100px;margin:20px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:#94A3B8}
-.footer-bottom strong{color:#E2E8F0}
-.footer-disclaimer{max-width:1100px;margin:14px auto 0;font-size:11.5px;color:#94A3B8;line-height:1.6;text-align:left;padding-top:14px;border-top:1px solid rgba(255,255,255,.04)}
-.footer-disclaimer strong{color:#CBD5E1}
-.footer-legal-links{max-width:1100px;margin:18px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;font-size:12.5px}
-.footer-legal-links a{color:#94A3B8;text-decoration:none;transition:color .15s}
-.footer-legal-links a:hover{color:#F97316}
-@media(max-width:760px){.footer-top{flex-direction:column;align-items:flex-start}.footer-bottom{flex-direction:column;text-align:center}}
+footer{padding:40px 24px 28px;border-top:1px solid var(--border)}
+.footer-inner{max-width:1000px;margin:0 auto}
+.footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:24px}
+.footer-brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--dark2)}
+.footer-brand em{color:var(--primary);font-style:normal}
+.footer-links{display:flex;gap:18px;font-size:12.5px;flex-wrap:wrap;color:var(--muted)}
+.footer-links a:hover{color:var(--primary)}
+.footer-fine{font-size:11.5px;color:#94A3B8;line-height:1.6;padding-top:18px;border-top:1px solid var(--border)}
 
 /* WA FLOAT */
-.wa-btn{position:fixed;bottom:24px;right:24px;z-index:99;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:all .2s;cursor:pointer}
-.wa-btn:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(37,211,102,.55)}
-.wa-btn svg{width:28px;height:28px;fill:#fff}
+.wa-btn{position:fixed;bottom:20px;right:20px;z-index:99;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.wa-btn svg{width:24px;height:24px;fill:#fff}
 
-/* BETA RIBBON */
-.beta-ribbon{position:fixed;top:0;left:0;right:0;z-index:101;background:linear-gradient(120deg,#EA6C0F,#F97316);color:#fff;text-align:center;font-size:13px;font-weight:700;padding:8px 16px;letter-spacing:-.01em}
-.beta-ribbon strong{font-weight:900}
-nav{top:36px}
-.hero{padding-top:136px}
-@media(max-width:520px){.beta-ribbon{font-size:11.5px;padding:7px 10px}}
+@media(max-width:760px){.footer-row{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
-
-<!-- BETA RIBBON -->
-<div class="beta-ribbon">🎉 Beta aberto agora — <strong>100% grátis</strong>, sem cartão. Convide seus amigos!</div>
 
 <!-- NAV -->
 <nav>
@@ -197,62 +121,19 @@ nav{top:36px}
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-badge">✦ Acesso antecipado &nbsp;·&nbsp; 100% grátis</div>
-      <h1>Controle financeiro<br>com <em>IA</em></h1>
-      <p class="hero-sub">Importe extratos de banco em PDF, lance gastos manualmente e receba análises inteligentes — tudo grátis, sem planilhas. Bot do WhatsApp chegando em breve.</p>
-      <div class="hero-btns">
-        <a href="/" class="btn-primary">🚀 Começar agora — grátis</a>
-        <a href="#como-funciona" class="btn-ghost">Como funciona ↓</a>
-      </div>
-      <div class="hero-chips">
-        <span class="chip">📱 Bot WhatsApp <b style="color:#FB923C;font-weight:800">· em breve</b></span>
-        <span class="chip">🤖 IA inclusa</span>
-        <span class="chip">📄 PDF de banco</span>
-        <span class="chip">🔒 Dados privados</span>
-        <span class="chip">☁️ Sync em nuvem</span>
-      </div>
+  <div class="hero-inner">
+    <div class="hero-badge">✦ Acesso antecipado <b>· 100% grátis</b></div>
+    <h1>Controle financeiro<br>com <em>IA</em></h1>
+    <p class="hero-sub">Importe extratos de banco, lance gastos manualmente ou pelo WhatsApp, e receba análises inteligentes — sem planilhas.</p>
+    <div class="hero-btns">
+      <a href="/" class="btn-primary">🚀 Começar agora — grátis</a>
+      <a href="#como-funciona" class="btn-text">Como funciona</a>
     </div>
-    <div class="phone-wrap">
-      <div class="phone-soon">🔜 Bot em breve</div>
-      <div class="phone">
-        <div class="phone-top">
-          <div class="phone-avatar">F</div>
-          <div>
-            <div class="phone-name">Finn. Bot</div>
-            <div class="phone-status">online agora</div>
-          </div>
-        </div>
-        <div class="phone-body">
-          <div class="msg msg-out">
-            Gastei 45 reais no ifood agora
-            <span class="msg-time">18:32 ✓✓</span>
-          </div>
-          <div class="msg msg-in">
-            ✅ Despesa registrada!<br>
-            🍔 <b>R$ 45,00</b> — Alimentação<br>
-            Saldo do mês: <b>R$ 1.240,50</b>
-            <span class="msg-time">18:32</span>
-          </div>
-          <div class="msg msg-out">
-            quanto gastei esse mês?
-            <span class="msg-time">18:33 ✓✓</span>
-          </div>
-          <div class="msg msg-in">
-            📊 <b>Junho até agora:</b><br>
-            Receitas: R$ 4.200,00<br>
-            Despesas: R$ 2.959,50<br>
-            Maior gasto: Moradia (R$ 1.200)<br>
-            Score financeiro: <b>720 🟡</b>
-            <span class="msg-time">18:33</span>
-          </div>
-          <div class="typing">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-      </div>
-      <div class="phone-glow"></div>
+    <div class="hero-chips">
+      <span class="chip">📱 Bot no WhatsApp</span>
+      <span class="chip">🤖 IA inclusa</span>
+      <span class="chip">📄 PDF de banco</span>
+      <span class="chip">🔒 Dados privados</span>
     </div>
   </div>
 </section>
@@ -260,110 +141,78 @@ nav{top:36px}
 <!-- FEATURES -->
 <section id="funcionalidades">
   <div class="container">
-    <div class="reveal">
-      <div class="eyebrow">Funcionalidades</div>
-      <h2 class="s-title">Tudo que você precisa<br>para organizar sua vida</h2>
-      <p class="s-sub">Sem planilhas complicadas. Finn. foi feito para ser simples e funcionar do jeito que os brasileiros realmente vivem.</p>
-    </div>
-    <div class="feat-grid">
-      <div class="feat-card reveal" style="--g:rgba(37,211,102,.08)">
-        <div class="feat-soon">Em breve</div>
-        <div class="feat-icon" style="background:#F0FDF4">📱</div>
-        <div class="feat-title">WhatsApp Bot</div>
-        <div class="feat-desc">Lance receitas e despesas por mensagem de texto. Linguagem natural em português — sem comandos, sem formulários.</div>
+    <div class="eyebrow">Funcionalidades</div>
+    <h2 class="s-title">Tudo que você precisa para organizar sua vida</h2>
+    <p class="s-sub">Sem planilhas complicadas. Feito pra funcionar do jeito que os brasileiros realmente vivem.</p>
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">Bot no WhatsApp</div>
+        <div class="feat-desc">Lance receitas e despesas mandando mensagem, áudio ou foto do comprovante — sem abrir o app.</div>
       </div>
-      <div class="feat-card reveal" style="--g:rgba(249,115,22,.08)">
-        <div class="feat-icon" style="background:#FFF7ED">🤖</div>
+      <div class="feat-item">
+        <div class="feat-icon">🤖</div>
         <div class="feat-title">IA Financeira</div>
-        <div class="feat-desc">Análise dos seus gastos, sugestões de economia e insights personalizados gerados por IA — incluso, sem custo extra.</div>
+        <div class="feat-desc">Análise dos seus gastos, sugestões de economia e previsão de saldo — incluso, sem custo extra.</div>
       </div>
-      <div class="feat-card reveal" style="--g:rgba(59,130,246,.08)">
-        <div class="feat-icon" style="background:#EFF6FF">📄</div>
-        <div class="feat-title">Importar PDF de Banco</div>
-        <div class="feat-desc">Nubank, Itaú, Bradesco, BB, Inter, C6 e mais. O PDF é lido direto no dispositivo — nenhum dado vai para o servidor.</div>
+      <div class="feat-item">
+        <div class="feat-icon">📄</div>
+        <div class="feat-title">Importar extrato de banco</div>
+        <div class="feat-desc">Nubank, Itaú, Bradesco, BB, Inter, C6 e mais. Lido no seu dispositivo — nada vai pro servidor.</div>
       </div>
-      <div class="feat-card reveal" style="--g:rgba(5,150,105,.08)">
-        <div class="feat-icon" style="background:#F0FDF4">🎯</div>
-        <div class="feat-title">Metas e Score</div>
-        <div class="feat-desc">Crie metas de poupança e acompanhe com score de 0 a 1000. Saiba exatamente como está sua saúde financeira.</div>
+      <div class="feat-item">
+        <div class="feat-icon">🎯</div>
+        <div class="feat-title">Metas, limites e dívidas</div>
+        <div class="feat-desc">Metas de poupança, limites por categoria e um plano de quitação de dívidas com simulação de juros.</div>
       </div>
-      <div class="feat-card reveal" style="--g:rgba(220,38,38,.08)">
-        <div class="feat-icon" style="background:#FFF1F2">📅</div>
-        <div class="feat-title">Calendário de Gastos</div>
-        <div class="feat-desc">Visualize receitas e despesas dia a dia em um calendário mensal. Identifique padrões de consumo com facilidade.</div>
+      <div class="feat-item">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Calendário de gastos</div>
+        <div class="feat-desc">Receitas e despesas dia a dia. Identifique padrões de consumo com facilidade.</div>
       </div>
-      <div class="feat-card reveal" style="--g:rgba(124,58,237,.08)">
-        <div class="feat-icon" style="background:#F5F3FF">☁️</div>
-        <div class="feat-title">Sync em Nuvem</div>
-        <div class="feat-desc">Login com Google ou e-mail. Seus dados ficam seguros e sincronizados em todos os dispositivos em tempo real.</div>
+      <div class="feat-item">
+        <div class="feat-icon">☁️</div>
+        <div class="feat-title">Sync em nuvem</div>
+        <div class="feat-desc">Login com Google ou e-mail. Dados sincronizados em tempo real em qualquer dispositivo.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="como-funciona" class="demo-bg">
+<section id="como-funciona" style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="container">
-    <div class="reveal">
-      <div class="eyebrow" style="color:#FB923C">Como funciona</div>
-      <h2 class="s-title" style="color:#fff">Do zero ao controle<br>em menos de 3 minutos</h2>
-    </div>
-    <div class="demo-grid">
-      <div class="demo-steps reveal">
-        <div class="demo-step">
-          <div class="demo-num">1</div>
-          <div>
-            <div class="demo-step-title">Crie sua conta</div>
-            <div class="demo-step-desc">Login com Google ou e-mail em 30 segundos. Gratuito, sem cartão, sem burocracia.</div>
-          </div>
-        </div>
-        <div class="demo-step">
-          <div class="demo-num">2</div>
-          <div>
-            <div class="demo-step-title">Importe seu extrato</div>
-            <div class="demo-step-desc">Selecione o PDF do seu banco e todas as transações aparecem automaticamente, já categorizadas.</div>
-          </div>
-        </div>
-        <div class="demo-step">
-          <div class="demo-num">3</div>
-          <div>
-            <div class="demo-step-title">Conecte o WhatsApp Bot <span style="color:#FB923C;font-size:12px;font-weight:800">(em breve)</span></div>
-            <div class="demo-step-desc">Em breve: salve o número nas configurações e pronto — cada gasto por mensagem, sem abrir o app toda hora.</div>
-          </div>
-        </div>
-        <div class="demo-step">
-          <div class="demo-num">4</div>
-          <div>
-            <div class="demo-step-title">Peça análise para a IA</div>
-            <div class="demo-step-desc">Clique em "Finn IA" e receba um diagnóstico completo com sugestões e previsão de saldo.</div>
-          </div>
+    <div class="eyebrow">Como funciona</div>
+    <h2 class="s-title">Do zero ao controle em menos de 3 minutos</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Crie sua conta</div>
+          <div class="step-desc">Login com Google ou e-mail em 30 segundos. Gratuito, sem cartão.</div>
         </div>
       </div>
-      <div class="demo-visual reveal">
-        <pre><b>Você:</b> gastei 89 reais no mercado
-
-<i>✅ Despesa registrada!</i>
-🛒 <b>R$ 89,00</b> — Alimentação
-📅 17/06/2026
-
-<b>Saldo do mês:</b> R$ 1.151,50
-<b>Limite Alimentação:</b> 68% usado
-
-Digite <b>resumo</b> para ver o extrato
-ou <b>meta</b> para ver suas metas 🎯</pre>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Importe seu extrato</div>
+          <div class="step-desc">Selecione o arquivo do seu banco e as transações aparecem categorizadas.</div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="stats-bg" style="padding:0">
-  <div class="container" style="padding:0;max-width:100%">
-    <div class="stats-grid">
-      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Gratuito</div></div>
-      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Bancos no PDF</div></div>
-      <div class="stat"><div class="stat-num">PWA</div><div class="stat-label">Instala no celular</div></div>
-      <div class="stat"><div class="stat-num">🔒</div><div class="stat-label">Dados privados</div></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Conecte o WhatsApp</div>
+          <div class="step-desc">Salve seu número em Configurações — cada gasto por mensagem, sem abrir o app.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Peça uma análise pra IA</div>
+          <div class="step-desc">Diagnóstico completo, com sugestões e previsão de saldo, na hora.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -371,34 +220,28 @@ ou <b>meta</b> para ver suas metas 🎯</pre>
 <!-- FAQ -->
 <section id="faq">
   <div class="container">
-    <div class="reveal">
-      <div class="eyebrow">Dúvidas frequentes</div>
-      <h2 class="s-title">Perguntas e respostas</h2>
-    </div>
-    <div class="faq reveal">
+    <div class="eyebrow">Dúvidas frequentes</div>
+    <h2 class="s-title">Perguntas e respostas</h2>
+    <div class="faq">
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">O Finn é realmente gratuito? <span class="faq-arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Sim, 100% gratuito. Não pedimos cartão de crédito, não tem plano pago, sem limite de transações. A IA financeira também está inclusa sem custo adicional.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Sim, 100% gratuito. Sem cartão de crédito, sem plano pago, sem limite de transações. A IA também está inclusa.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Meus dados financeiros são seguros? <span class="faq-arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Sim. Os dados ficam armazenados no Supabase com criptografia em repouso e em trânsito. A importação de PDF acontece no próprio dispositivo — nenhum arquivo bancário vai para nossos servidores.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Sim. Armazenados no Supabase com criptografia em repouso e em trânsito. A importação de extrato acontece no seu dispositivo — o arquivo do banco nunca vai pros nossos servidores.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Quais bancos são suportados na importação de PDF? <span class="faq-arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Nubank, Itaú, Bradesco, Banco do Brasil, Inter, C6 Bank, Santander, Caixa e mais. A compatibilidade depende do formato do extrato — se seu banco não funcionar, avise-nos.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">O Bot do WhatsApp já está disponível? <span class="faq-arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Ainda não — está em desenvolvimento e chega em breve. Por enquanto você pode lançar gastos manualmente no app ou importar o extrato em PDF do seu banco. Avisaremos por aqui quando o bot estiver liberado.</div></div>
+        <button class="faq-q" onclick="toggleFaq(this)">O bot do WhatsApp já está disponível? <span class="faq-arrow">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim! Depois de criar sua conta, salve seu número em Configurações → Número de WhatsApp e comece a mandar mensagens, áudios ou fotos de comprovante direto pro bot.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Posso usar no celular sem instalar nada? <span class="faq-arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Sim. O Finn é um PWA (Progressive Web App) — funciona diretamente no browser. Mas você também pode instalar como app no celular: toque em "Adicionar à tela inicial" no Chrome ou Safari.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Sim. O Finn é um PWA — funciona direto no navegador. Também dá pra instalar: toque em "Adicionar à tela inicial" no Chrome ou Safari.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">A IA tem acesso à minha conta bancária? <span class="faq-arrow">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Não. A IA analisa apenas as transações que você registrou manualmente ou importou via PDF dentro do Finn. Não conectamos com bancos nem solicitamos senha bancária.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Não. A IA analisa só as transações que você registrou ou importou dentro do Finn. Não conectamos com bancos nem pedimos senha bancária.</div></div>
       </div>
     </div>
   </div>
@@ -407,33 +250,30 @@ ou <b>meta</b> para ver suas metas 🎯</pre>
 <!-- CTA -->
 <section class="cta-section">
   <div class="container">
-    <h2 class="cta-title reveal">Pronto para organizar<br>suas <em>finanças de vez?</em></h2>
-    <p class="cta-sub reveal">Comece agora. É grátis e leva menos de 3 minutos.</p>
-    <a href="/" class="btn-primary reveal" style="font-size:16px;padding:16px 36px;display:inline-flex">🚀 Usar o Finn agora</a>
+    <h2 class="cta-title">Pronto para organizar<br>suas <em>finanças de vez?</em></h2>
+    <p class="cta-sub">Comece agora. É grátis e leva menos de 3 minutos.</p>
+    <a href="/" class="btn-primary" style="font-size:15px;padding:14px 30px">🚀 Usar o Finn agora</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div class="footer-brand-row">
-      <div class="footer-mark">F</div>
-      <div class="footer-logo">Finn<em>.</em></div>
-      <div class="footer-pill">● Beta aberto · 100% grátis</div>
+  <div class="footer-inner">
+    <div class="footer-row">
+      <div class="footer-brand">
+        <div class="nav-logo-mark">F</div>
+        Finn<em>.</em>
+      </div>
+      <div class="footer-links">
+        <a href="/privacidade">Privacidade</a>
+        <a href="/termos">Termos</a>
+        <a href="/deletar-dados">Excluir dados</a>
+        <a href="mailto:Finn.controle01@gmail.com">Contato</a>
+      </div>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© 2026 <strong>Finn.</strong> — Todos os direitos reservados.</div>
-    <div>Feito no Brasil 🇧🇷 com café e código.</div>
-  </div>
-  <div class="footer-disclaimer">
-    <strong>Aviso legal:</strong> O Finn. é uma ferramenta de organização financeira pessoal e <strong>não é uma instituição financeira</strong>, corretora, banco ou prestador de serviços de pagamento. Não realizamos operações de crédito, investimento ou intermediação financeira. As análises geradas por IA são meramente informativas e não constituem aconselhamento financeiro, contábil, jurídico ou tributário. Consulte profissionais qualificados antes de tomar decisões financeiras importantes.
-  </div>
-  <div class="footer-legal-links">
-    <a href="/privacidade">Privacidade</a>
-    <a href="/termos">Termos</a>
-    <a href="/deletar-dados">Excluir dados</a>
-    <a href="mailto:Finn.controle01@gmail.com">Contato</a>
+    <div class="footer-fine">
+      <strong>Aviso legal:</strong> O Finn. é uma ferramenta de organização financeira pessoal e não é uma instituição financeira, corretora, banco ou prestador de serviços de pagamento. As análises geradas por IA são meramente informativas e não constituem aconselhamento financeiro, contábil, jurídico ou tributário. © 2026 Finn.
+    </div>
   </div>
 </footer>
 
@@ -443,24 +283,12 @@ ou <b>meta</b> para ver suas metas 🎯</pre>
 </a>
 
 <script>
-// Scroll reveal
-var observer = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, {threshold:.12});
-document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
-
-// FAQ
 function toggleFaq(btn) {
   var item = btn.parentElement;
   var isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
   if (!isOpen) item.classList.add('open');
 }
-
-// Nav scroll shadow
-window.addEventListener('scroll', function(){
-  document.querySelector('nav').style.boxShadow = scrollY > 10 ? '0 2px 20px rgba(0,0,0,.08)' : '';
-});
 </script>
 </body>
 </html>
