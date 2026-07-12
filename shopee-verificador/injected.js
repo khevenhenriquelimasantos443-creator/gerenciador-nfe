@@ -19,6 +19,7 @@
 
   var PATTERNS = [
     { kind: 'productList', re: /\/api\/.*(mpsku\/list|page_product_list|product_list)/i },
+    { kind: 'productDetail', re: /\/api\/.*(get_product_detail|product_detail|get_product_info|product_info|get_item_detail)/i },
     { kind: 'promoList',   re: /\/api\/marketing\/.*(discount|promotion|flash_sale).*(list|query)/i },
     { kind: 'promoItems',  re: /\/api\/marketing\/.*(discount|promotion|flash_sale).*(item|detail)/i },
     { kind: 'marketing',   re: /\/api\/marketing\//i },

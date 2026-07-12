@@ -27,6 +27,8 @@
     return {
       id: String(r.id ?? ''),
       nome: String(r.nome ?? ''),
+      sku: r.sku ? String(r.sku) : null,
+      ean: r.ean ? String(r.ean) : null,
       status: String(r.status ?? ''),
       estoque: num(r.estoque),
       preco: num(r.precoAtual ?? r.preco),
@@ -107,7 +109,8 @@
       if (chip === 'esgotado' && r.estoque !== 0) return false;
       if (chip === 'baixo' && !(r.estoque !== null && r.estoque >= 1 && r.estoque <= 5)) return false;
       if (chip === 'comEstoque' && !(r.estoque !== null && r.estoque > 0)) return false;
-      if (q && !(r.nome.toLowerCase().includes(q) || r.id.includes(q))) return false;
+      if (q && !(r.nome.toLowerCase().includes(q) || r.id.includes(q) ||
+        (r.sku && r.sku.toLowerCase().includes(q)) || (r.ean && r.ean.includes(q)))) return false;
       return true;
     });
   }
@@ -462,6 +465,7 @@
   // ------------------------------------------------------------ tabela
   const sorters = {
     nome: (a, b) => a.nome.localeCompare(b.nome, 'pt-BR'),
+    sku: (a, b) => (a.sku || '').localeCompare(b.sku || '', 'pt-BR'),
     status: (a, b) => a.status.localeCompare(b.status, 'pt-BR'),
     estoque: (a, b) => (a.estoque ?? -1) - (b.estoque ?? -1),
     preco: (a, b) => (a.preco ?? -1) - (b.preco ?? -1),
@@ -501,6 +505,27 @@
       }
       tdNome.appendChild(dv);
 
+      const tdSku = document.createElement('td');
+      tdSku.className = 'skucell';
+      if (r.sku || r.ean) {
+        if (r.sku) {
+          const s1 = document.createElement('div');
+          s1.textContent = r.sku;
+          s1.title = 'SKU: ' + r.sku;
+          tdSku.appendChild(s1);
+        }
+        if (r.ean) {
+          const s2 = document.createElement('div');
+          s2.className = 'eanline';
+          s2.textContent = r.ean;
+          s2.title = 'EAN: ' + r.ean;
+          tdSku.appendChild(s2);
+        }
+      } else {
+        tdSku.textContent = '—';
+        tdSku.style.color = 'var(--muted)';
+      }
+
       const tdStatus = document.createElement('td');
       const pill = document.createElement('span');
       pill.className = 'pill ' + (r.status === 'Esgotado' ? 'bad' : (r.status === 'Ativo' ? 'ok' : 'mid'));
@@ -538,14 +563,14 @@
       tdVendas.className = 'num';
       tdVendas.textContent = fmtInt(vendasDe(r));
 
-      tr.appendChild(tdNome); tr.appendChild(tdStatus); tr.appendChild(tdEst);
+      tr.appendChild(tdNome); tr.appendChild(tdSku); tr.appendChild(tdStatus); tr.appendChild(tdEst);
       tr.appendChild(tdPreco); tr.appendChild(tdPromo); tr.appendChild(tdVendas);
       frag.appendChild(tr);
     }
     tbody.appendChild(frag);
 
     if (!slice.length) {
-      tbody.innerHTML = '<tr><td colspan="6" class="empty">Nenhum anúncio com esses filtros</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhum anúncio com esses filtros</td></tr>';
     }
     $('btn-more').style.display = sorted.length > visible ? '' : 'none';
     $('btn-more').textContent = 'Mostrar mais (' + fmtInt(Math.min(250, sorted.length - visible)) + ' de ' + fmtInt(sorted.length - visible) + ' restantes)';
@@ -556,6 +581,8 @@
     const cols = [
       ['ID do anúncio', r => r.id],
       ['Nome do produto', r => r.nome],
+      ['SKU', r => r.sku],
+      ['EAN/GTIN', r => r.ean],
       ['Status', r => r.status],
       ['Estoque atual', r => r.estoque],
       ['Preço original (R$)', r => r.precoOriginal],
@@ -571,6 +598,7 @@
       if (v === null || v === undefined) return '';
       if (typeof v === 'number') return String(v).replace('.', ',');
       const s = String(v);
+      if (/^\d{8,16}$/.test(s)) return '"=""' + s + '"""'; // EAN como texto no Excel
       return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
     };
     const lines = [cols.map(c => c[0]).join(';')];

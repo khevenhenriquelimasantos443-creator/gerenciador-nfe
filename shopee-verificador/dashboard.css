@@ -249,6 +249,9 @@ th.num { text-align: right; }
 .pill.bad { color: var(--critical); background: color-mix(in srgb, var(--critical) 12%, transparent); }
 .pill.mid { color: var(--ink-2); background: var(--chip-bg); }
 .promocell .pname { display: block; font-size: 11px; color: var(--muted); max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.skucell { font-variant-numeric: tabular-nums; font-size: 11.5px; max-width: 150px; }
+.skucell div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.skucell .eanline { color: var(--muted); }
 .showmore { display: block; margin: 12px auto 16px; }
 
 /* tooltip compartilhado */

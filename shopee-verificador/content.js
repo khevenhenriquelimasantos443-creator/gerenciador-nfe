@@ -15,7 +15,7 @@
   'use strict';
 
   // ---------------------------------------------------------------- captura
-  const captured = { productList: null, promoList: null, promoItems: null, stats: null };
+  const captured = { productList: null, productDetail: null, promoList: null, promoItems: null, stats: null };
 
   window.addEventListener('message', (ev) => {
     if (ev.source !== window) return;
@@ -64,6 +64,51 @@
     }, 1500);
   }
 
+  // ------------------------------------------------------------- SKU / EAN
+  const GTIN_KEY = /^(gtin|gtin_code|ean|ean_code|barcode|bar_code|global_barcode|upc)$/i;
+  const SKU_MODEL_KEY = /^(sku|seller_sku|model_sku)$/i;
+  const SKU_PARENT_KEY = /^(parent_sku|item_sku|product_sku)$/i;
+
+  // coleta todos os valores de chaves que casem com o regex (varre fundo)
+  function collectByKey(obj, keyRe, maxDepth = 6) {
+    const out = [];
+    (function walk(node, depth) {
+      if (!node || depth > maxDepth) return;
+      if (Array.isArray(node)) {
+        for (const it of node.slice(0, 80)) walk(it, depth + 1);
+        return;
+      }
+      if (typeof node !== 'object') return;
+      for (const k of Object.keys(node)) {
+        const v = node[k];
+        if (keyRe.test(k) && (typeof v === 'string' || typeof v === 'number')) out.push(String(v));
+        else walk(v, depth + 1);
+      }
+    })(obj, 0);
+    return out;
+  }
+
+  function cleanCodes(vals) {
+    const seen = new Set();
+    const out = [];
+    for (let v of vals) {
+      v = String(v).trim();
+      if (!v || v === '0' || v === 'null' || v === 'undefined' || /^0+$/.test(v)) continue;
+      if (!seen.has(v)) { seen.add(v); out.push(v); }
+    }
+    return out;
+  }
+
+  // extrai SKU e EAN de qualquer resposta de detalhe de produto
+  function mineDetailJson(json) {
+    const eans = cleanCodes(collectByKey(json, GTIN_KEY));
+    const parents = cleanCodes(collectByKey(json, SKU_PARENT_KEY));
+    const modelSkus = cleanCodes(collectByKey(json, SKU_MODEL_KEY));
+    const sku = parents.length ? parents[0]
+      : (modelSkus.length ? modelSkus.slice(0, 8).join(' | ') : null);
+    return { sku, ean: eans.length ? eans.slice(0, 8).join(' / ') : null };
+  }
+
   function firstString(obj, keyRe, maxDepth) {
     let found;
     (function walk(node, depth) {
@@ -95,6 +140,9 @@
       if (orig !== null && orig !== undefined) { e.po = orig; enrichDirty = true; }
       const v30 = deepFindNumber(p, /(30|thirty)[a-z_]*(sold|sale|order)|(sold|sale|order)[a-z_]*(30|thirty)/i, 4);
       if (v30 !== undefined && isFinite(v30)) { e.v30 = v30; enrichDirty = true; }
+      const mined = mineDetailJson(p);
+      if (mined.sku) { e.sku = mined.sku; enrichDirty = true; }
+      if (mined.ean) { e.ean = mined.ean; enrichDirty = true; }
     }
   }
 
@@ -380,6 +428,16 @@
       descontoPct = Math.round((1 - cur.min / orig.min) * 1000) / 10;
     }
 
+    // ---- SKU e EAN (o que a listagem já entrega; o resto vem do detalhe)
+    const parentSku = pick(p, ['parent_sku', 'item_sku', 'product_sku']);
+    let sku = parentSku ? String(parentSku).trim() : null;
+    if (!sku && Array.isArray(models) && models.length) {
+      const modelSkus = cleanCodes(models.map(m => pick(m, ['sku', 'seller_sku', 'model_sku'])).filter(Boolean));
+      if (modelSkus.length) sku = modelSkus.slice(0, 8).join(' | ');
+    }
+    const listEans = cleanCodes(collectByKey(p, GTIN_KEY, 4));
+    const ean = listEans.length ? listEans.slice(0, 8).join(' / ') : null;
+
     // ---- vendas
     let vendas30 = deepFindNumber(p, /(30|thirty)[a-z_]*(sold|sale)|(sold|sale)[a-z_]*(30|thirty)/i);
     let vendasTotal = pick(p, ['statistics.sold_count', 'sold_count', 'historical_sold', 'sold', 'sales']);
@@ -390,6 +448,8 @@
     return {
       id: id !== undefined ? String(id) : '',
       nome: name !== undefined ? String(name) : '',
+      sku: sku || null,
+      ean: ean || null,
       status,
       estoque: (stock !== undefined && stock !== null && isFinite(stock)) ? stock : null,
       precoOriginal: orig ? orig.min : null,
@@ -471,8 +531,134 @@
     return map;
   }
 
+  // ------------------------------------------- SKU/EAN dentro de cada anúncio
+  function setIdParam(url, id) {
+    const u = new URL(url, location.origin);
+    let done = false;
+    for (const k of ['product_id', 'item_id', 'id']) {
+      if (u.searchParams.has(k)) { u.searchParams.set(k, String(id)); done = true; }
+    }
+    if (!done) u.searchParams.set('product_id', String(id));
+    return u.toString();
+  }
+
+  function detailCandidates(cds, id) {
+    const c = [];
+    if (captured.productDetail) c.push(setIdParam(captured.productDetail, id));
+    c.push(
+      `${location.origin}/api/v3/product/get_product_detail/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&product_id=${id}`,
+      `${location.origin}/api/v3/mpsku/product/get_product_detail?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&product_id=${id}`,
+      `${location.origin}/api/v3/product/get_product_info/?SPC_CDS=${encodeURIComponent(cds)}&SPC_CDS_VER=2&product_id=${id}`
+    );
+    return c;
+  }
+
+  const storageGet = (key) => new Promise(res => chrome.storage.local.get(key, st => res(st && st[key])));
+
+  async function fetchDetailsPhase(cds, rows, post, fetchEan) {
+    // 1) cache de varreduras anteriores (EAN quase nunca muda) + enriquecimento
+    const CACHE_TTL = 30 * 24 * 3600 * 1000;
+    const rawCache = (await storageGet('spx_ean_cache')) || {};
+    const cache = {};
+    const now = Date.now();
+    for (const k of Object.keys(rawCache)) {
+      if (rawCache[k] && now - (rawCache[k].ts || 0) < CACHE_TTL) cache[k] = rawCache[k];
+    }
+    for (const r of rows) {
+      const c = cache[r.id];
+      if (c) {
+        if (!r.sku && c.sku) r.sku = c.sku;
+        if (!r.ean && c.ean) r.ean = c.ean;
+      }
+      const e = enrich[r.id];
+      if (e) {
+        if (!r.sku && e.sku) r.sku = e.sku;
+        if (!r.ean && e.ean) r.ean = e.ean;
+      }
+    }
+    if (!fetchEan) return;
+
+    // não revisita anúncio já checado há menos de 30 dias (mesmo sem EAN cadastrado);
+    // se você cadastrar um EAN novo, basta abrir o anúncio no Seller Center que o
+    // enriquecimento passivo captura na hora
+    const pending = rows.filter(r => !r.ean && !(cache[r.id] && cache[r.id].ean === null));
+    if (!pending.length) return;
+
+    const saveCache = () => {
+      try { chrome.storage.local.set({ spx_ean_cache: cache }); } catch (e) { /* contexto invalidado */ }
+    };
+
+    // 2) descobre qual endpoint de detalhe funciona nesta conta
+    let workingIdx = -1;
+    for (const probe of pending.slice(0, 3)) {
+      const cands = detailCandidates(cds, probe.id);
+      for (let i = 0; i < cands.length; i++) {
+        try {
+          const json = await apiGet(cands[i]);
+          const nome = firstString(json, /^(name|product_name|item_name)$/i, 6);
+          const mined = mineDetailJson(json);
+          if (nome || mined.sku || mined.ean) {
+            workingIdx = i;
+            if (mined.sku && !probe.sku) probe.sku = mined.sku;
+            if (mined.ean) probe.ean = mined.ean;
+            cache[probe.id] = { sku: probe.sku || null, ean: probe.ean || null, ts: Date.now() };
+            break;
+          }
+        } catch (e) { dbg('detalhe candidato falhou: ' + e.message); }
+      }
+      if (workingIdx >= 0) break;
+    }
+    if (workingIdx < 0) {
+      dbg('Nenhum endpoint de detalhe respondeu — SKU/EAN ficam com o que a listagem/navegação trouxe.');
+      post({ type: 'status', text: 'Não consegui abrir os anúncios para buscar EAN (abra um anúncio no Seller Center e verifique de novo).', pct: 88 });
+      return;
+    }
+
+    // 3) varre os anúncios pendentes com concorrência baixa
+    const queue = pending.filter(r => !r.ean);
+    const total = queue.length;
+    let done = 0;
+    post({ type: 'progress', text: 'Buscando SKU/EAN dentro dos anúncios: 0 de ' + total, pct: 52 });
+
+    async function worker() {
+      while (queue.length) {
+        const r = queue.shift();
+        if (!r) break;
+        const url = detailCandidates(cds, r.id)[workingIdx];
+        try {
+          const json = await apiGet(url);
+          const m = mineDetailJson(json);
+          if (m.sku && !r.sku) r.sku = m.sku;
+          if (m.ean) r.ean = m.ean;
+          cache[r.id] = { sku: r.sku || null, ean: r.ean || null, ts: Date.now() };
+        } catch (e) {
+          if (/429/.test(e.message) && (r.__retry || 0) < 2) {
+            r.__retry = (r.__retry || 0) + 1;
+            queue.push(r);
+            await sleep(3000); // limite de requisições — espera antes de seguir
+          } else {
+            dbg('detalhe ' + r.id + ': ' + e.message);
+          }
+        }
+        done++;
+        if (done % 10 === 0 || done >= total) {
+          post({
+            type: 'progress',
+            text: 'Buscando SKU/EAN dentro dos anúncios: ' + Math.min(done, total) + ' de ' + total,
+            pct: 52 + Math.round(Math.min(done, total) / total * 36)
+          });
+        }
+        if (done % 100 === 0) saveCache();
+        await sleep(280);
+      }
+    }
+    await Promise.all([worker(), worker(), worker()]);
+    for (const r of rows) delete r.__retry;
+    saveCache();
+  }
+
   // ------------------------------------------------------------- varredura
-  async function runScan(post) {
+  async function runScan(post, fetchEan) {
     debugLog.length = 0;
     const cds = getCds();
     if (!cds) {
@@ -490,7 +676,7 @@
         post({
           type: 'progress',
           text: (listType === 'live_all' ? 'Anúncios ativos: ' : 'Anúncios esgotados: ') + done + (total ? ' de ' + total : ''),
-          pct: total ? Math.min(95, Math.round((done / total) * 60)) : null
+          pct: total ? Math.min(50, 5 + Math.round((done / total) * 45)) : null
         });
       });
       if (products === null) {
@@ -510,11 +696,19 @@
       throw new Error('Nenhum anúncio encontrado. Confira se esta é a conta certa e se há produtos publicados.');
     }
 
-    post({ type: 'status', text: rows.length + ' anúncios coletados. Verificando promoções...', pct: 65 });
+    post({ type: 'status', text: rows.length + ' anúncios coletados. Buscando SKU e EAN...', pct: 50 });
+
+    try {
+      await fetchDetailsPhase(cds, rows, post, fetchEan);
+    } catch (e) {
+      dbg('fetchDetailsPhase: ' + e.message);
+    }
+
+    post({ type: 'status', text: 'Verificando promoções...', pct: 90 });
 
     let promoMap = {};
     try {
-      promoMap = await fetchPromotionMap(cds, (text) => post({ type: 'status', text, pct: 80 }));
+      promoMap = await fetchPromotionMap(cds, (text) => post({ type: 'status', text, pct: 94 }));
     } catch (e) {
       dbg('fetchPromotionMap: ' + e.message);
     }
@@ -566,6 +760,8 @@
       estoqueBaixo: rows.filter(r => r.estoque !== null && r.estoque > 0 && r.estoque <= 5).length,
       vendas30: rows.reduce((acc, r) => acc + (r.vendas30 || 0), 0) || null,
       temVendas30: rows.some(r => r.vendas30 !== null),
+      comEan: rows.filter(r => r.ean).length,
+      comSku: rows.filter(r => r.sku).length,
       geradoEm: new Date().toLocaleString('pt-BR')
     };
 
@@ -586,7 +782,7 @@
       if (!msg || msg.type !== 'scan') return;
       const post = (m) => { try { port.postMessage(m); } catch (e) { /* popup fechado */ } };
       try {
-        await runScan(post);
+        await runScan(post, msg.fetchEan !== false);
       } catch (e) {
         post({ type: 'error', message: e.message || String(e), debug: debugLog.slice() });
       }

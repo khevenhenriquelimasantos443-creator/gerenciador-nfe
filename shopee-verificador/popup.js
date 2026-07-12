@@ -35,6 +35,12 @@
     $('filter').addEventListener('input', renderTable);
     $('only-promo').addEventListener('change', renderTable);
     $('only-nostock').addEventListener('change', renderTable);
+    chrome.storage.local.get('spx_opt_ean', (st) => {
+      if (st && st.spx_opt_ean === false) $('opt-ean').checked = false;
+    });
+    $('opt-ean').addEventListener('change', (e) => {
+      chrome.storage.local.set({ spx_opt_ean: e.target.checked });
+    });
 
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     currentTabId = tab && tab.id;
@@ -97,7 +103,7 @@
       }
     });
 
-    port.postMessage({ type: 'scan' });
+    port.postMessage({ type: 'scan', fetchEan: $('opt-ean') ? $('opt-ean').checked : true });
   }
 
   function showError(message, debug) {
@@ -134,7 +140,8 @@
     return lastResult.rows.filter(r => {
       if (onlyPromo && !r.emPromocao) return false;
       if (onlyNoStock && r.estoque !== 0) return false;
-      if (q && !(r.nome.toLowerCase().includes(q) || r.id.includes(q))) return false;
+      if (q && !(r.nome.toLowerCase().includes(q) || r.id.includes(q) ||
+        (r.sku && r.sku.toLowerCase().includes(q)) || (r.ean && r.ean.includes(q)))) return false;
       return true;
     });
   }
@@ -160,7 +167,7 @@
       const vendas = r.vendas30 !== null ? fmtNum(r.vendas30) + ' <small>(30d)</small>'
         : (r.vendasTotal !== null ? fmtNum(r.vendasTotal) + ' <small>(total)</small>' : '—');
       return `<tr>
-        <td class="nome"><a href="${esc(r.link)}" target="_blank" title="${esc(r.nome)}">${esc(r.nome.length > 60 ? r.nome.slice(0, 60) + '…' : r.nome)}</a><span class="pid">ID ${esc(r.id)} · ${esc(r.status)}</span></td>
+        <td class="nome"><a href="${esc(r.link)}" target="_blank" title="${esc(r.nome)}">${esc(r.nome.length > 60 ? r.nome.slice(0, 60) + '…' : r.nome)}</a><span class="pid">ID ${esc(r.id)}${r.sku ? ' · SKU ' + esc(r.sku) : ''}${r.ean ? ' · EAN ' + esc(r.ean) : ''} · ${esc(r.status)}</span></td>
         <td>${estoque}</td>
         <td>${preco}</td>
         <td>${promo}</td>
@@ -177,6 +184,8 @@
   const COLS = [
     ['ID do anúncio', r => r.id],
     ['Nome do produto', r => r.nome],
+    ['SKU', r => r.sku],
+    ['EAN/GTIN', r => r.ean],
     ['Status', r => r.status],
     ['Estoque atual', r => r.estoque],
     ['Preço original (R$)', r => r.precoOriginal],
@@ -195,6 +204,8 @@
     if (v === null || v === undefined) return '';
     if (typeof v === 'number') return String(v).replace('.', ','); // Excel BR
     const s = String(v);
+    // EAN/códigos longos: força texto no Excel (senão vira 7,89E+12)
+    if (/^\d{8,16}$/.test(s)) return '"=""' + s + '"""';
     return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   }
 
@@ -222,7 +233,9 @@
     const cellTsv = (v) => {
       if (v === null || v === undefined) return '';
       if (typeof v === 'number') return String(v).replace('.', ',');
-      return String(v).replace(/[\t\n]/g, ' ');
+      const s = String(v).replace(/[\t\n]/g, ' ');
+      if (/^\d{8,16}$/.test(s)) return '="' + s + '"'; // EAN vira texto no Excel
+      return s;
     };
     const lines = [COLS.map(c => c[0]).join('\t')];
     for (const r of rows) lines.push(COLS.map(c => cellTsv(c[1](r))).join('\t'));

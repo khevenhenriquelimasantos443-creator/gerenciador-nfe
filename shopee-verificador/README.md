@@ -4,6 +4,8 @@ Extensão do Chrome que verifica **todos os seus anúncios da Shopee de uma vez 
 
 | Coluna | O que mostra |
 |---|---|
+| SKU | SKU do anúncio (o "pai" ou, se não houver, os SKUs das variações) |
+| EAN/GTIN | Código de barras cadastrado dentro do anúncio (todas as variações) |
 | Em promoção? | Sim/Não |
 | Preço promocional | Valor com desconto |
 | Nome da promoção | Em qual promoção o produto está (ex.: desconto da loja) |
@@ -60,6 +62,18 @@ por período. A partir da v1.1, a extensão **aprende esses dados enquanto você
 pelo Seller Center (Meus Produtos, Central de Promoções): as respostas que a própria
 página recebe são mineradas localmente e completam a próxima varredura. Quanto mais
 você navega antes de verificar, mais completa fica a planilha.
+
+## 🏷️ SKU e EAN (v1.2)
+
+O **SKU** vem direto da listagem. O **EAN/GTIN** só existe dentro de cada anúncio, então a
+extensão entra anúncio por anúncio para buscá-lo (opção marcada por padrão no popup):
+
+- **1ª varredura**: demora alguns minutos (respeita um intervalo entre requisições);
+- **Varreduras seguintes**: quase instantâneas — os códigos ficam em **cache por 30 dias**;
+- Cadastrou um EAN novo? Abra o anúncio no Seller Center que a extensão captura na hora
+  (enriquecimento passivo), ou aguarde o cache expirar;
+- Na planilha, o EAN sai protegido como texto (não vira "7,89E+12" no Excel);
+- Anúncio com várias variações: os EANs saem separados por " / " e os SKUs por " | ".
 
 ## ❓ Problemas comuns
 
