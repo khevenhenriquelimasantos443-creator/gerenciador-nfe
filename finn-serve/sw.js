@@ -1,5 +1,5 @@
-// Finn Service Worker v2.7
-const CACHE = 'finn-v2-7';
+// Finn Service Worker v2.8
+const CACHE = 'finn-v2-8';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();
@@ -21,7 +21,7 @@ self.addEventListener('activate', function(e) {
     }).then(function() {
       return self.clients.matchAll({type:'window'}).then(function(clients) {
         clients.forEach(function(c) {
-          c.postMessage({type:'SW_UPDATED', version:'2.7.0'});
+          c.postMessage({type:'SW_UPDATED', version:'2.8.0'});
         });
       });
     })
@@ -51,13 +51,19 @@ self.addEventListener('fetch', function(e) {
       fetch(req).then(function(res) {
         if (res && res.ok) {
           var clone = res.clone();
-          caches.open(CACHE).then(function(c){ c.put('/', clone); });
+          // Chave pelo request real — usar sempre '/' aqui fazia visitas a
+          // /landing, /usuarios, /investidores etc. sobrescreverem o cache
+          // do app shell, corrompendo o fallback offline do app principal.
+          caches.open(CACHE).then(function(c){ c.put(req, clone); });
         }
         return res;
       }).catch(function() {
         return caches.open(CACHE).then(function(c) {
-          return c.match('/').then(function(m) {
-            return m || new Response('Offline', {status:503});
+          return c.match(req).then(function(m) {
+            if (m) return m;
+            return c.match('/').then(function(shell) {
+              return shell || new Response('Offline', {status:503});
+            });
           });
         });
       })

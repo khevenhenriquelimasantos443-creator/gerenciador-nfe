@@ -19,6 +19,12 @@ const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-ic
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
 
+// URL/chave pública do Supabase — usadas para validar o access_token de quem
+// chama endpoints server-side que precisam saber "quem está autenticado"
+// (push/subscribe, pluggy).
+const SUPA_URL_SERVER = 'https://zblkznobqcztvznycyyo.supabase.co';
+const SUPA_ANON_KEY_SERVER = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
+
 // ── Funções auxiliares Pluggy (embutidas no Worker como módulo) ──────────────
 const pluggyFns = `
 // Categoria Pluggy → categoria Finn
@@ -51,10 +57,29 @@ async function _pluggyApiKey(env) {
   return j.apiKey;
 }
 
+// Valida um access_token Supabase e retorna o usuário autenticado (ou null)
+async function _pluggyAuth(token) {
+  if (!token) return null;
+  try {
+    var r = await fetch('${SUPA_URL_SERVER}/auth/v1/user', {
+      headers: { apikey: '${SUPA_ANON_KEY_SERVER}', Authorization: 'Bearer ' + token }
+    });
+    if (!r.ok) return null;
+    var user = await r.json();
+    return user && user.id ? user : null;
+  } catch (e) {
+    return null;
+  }
+}
+
 // POST /pluggy/token — retorna { accessToken }
 async function _pluggyToken(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _pluggyAuth(body.access_token);
+    if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     if (!env.PLUGGY_CLIENT_ID || !env.PLUGGY_CLIENT_SECRET) {
       return new Response(JSON.stringify({ error: 'Secrets não configurados: PLUGGY_CLIENT_ID=' + (env.PLUGGY_CLIENT_ID ? 'ok' : 'MISSING') + ' PLUGGY_CLIENT_SECRET=' + (env.PLUGGY_CLIENT_SECRET ? 'ok' : 'MISSING') }), { status: 500, headers: cors });
     }
@@ -62,7 +87,7 @@ async function _pluggyToken(request, env) {
     var r = await fetch('https://api.pluggy.ai/connect_token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-API-KEY': apiKey },
-      body: JSON.stringify({ clientUserId: 'finn-user' })
+      body: JSON.stringify({ clientUserId: authUser.id })
     });
     if (!r.ok) {
       var errBody = ''; try { errBody = await r.text(); } catch(e2) {}
@@ -75,11 +100,13 @@ async function _pluggyToken(request, env) {
   }
 }
 
-// GET /pluggy/transactions?itemId=xxx&from=YYYY-MM-DD&to=YYYY-MM-DD
+// GET /pluggy/transactions?itemId=xxx&from=YYYY-MM-DD&to=YYYY-MM-DD&access_token=xxx
 async function _pluggyTx(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
+    var authUser = await _pluggyAuth(url.searchParams.get('access_token'));
+    if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     var itemId = url.searchParams.get('itemId');
     var from   = url.searchParams.get('from') || new Date(Date.now() - 90*24*3600*1000).toISOString().slice(0,10);
     var to     = url.searchParams.get('to')   || new Date().toISOString().slice(0,10);
@@ -132,10 +159,18 @@ async function _pluggyTx(request, env) {
 `;
 
 // ── Web Push (RFC 8030/8291) — VAPID + aes128gcm, sem libs externas ─────────
-const SUPA_URL_SERVER = 'https://zblkznobqcztvznycyyo.supabase.co';
-const SUPA_ANON_KEY_SERVER = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
-
 const pushFns = `
+// Hash do endpoint inteiro (não só um prefixo) — endpoints de push do mesmo
+// navegador/serviço (ex.: todo usuário Chrome começa com
+// "https://fcm.googleapis.com/fcm/send/...") compartilhavam os mesmos 24
+// bytes iniciais, colidindo na mesma chave do KV e fazendo cada nova
+// inscrição sobrescrever a anterior — só o último usuário recebia push.
+async function _pushKey(endpoint) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(endpoint));
+  var hex = Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  return 'push_sub_' + hex;
+}
+
 function _b64urlEncode(buf) {
   var bin = '';
   for (var i = 0; i < buf.length; i++) bin += String.fromCharCode(buf[i]);
@@ -432,7 +467,7 @@ h1 em{font-style:normal;color:#F97316}
 <p>Ao usar a função <strong>"Finn IA"</strong>, um resumo anônimo das suas transações (sem dados de identificação pessoal) é enviado à API da Anthropic para gerar análises financeiras. Nenhum dado é armazenado pela Anthropic após o processamento.</p>
 
 <h2><span class="num">05</span> WhatsApp Bot</h2>
-<p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenados no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
+<p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenadas no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
 
 <h2><span class="num">06</span> Seus direitos</h2>
 <div class="notice"><strong>Você está no controle.</strong><br>Pode solicitar a exclusão de todos os seus dados a qualquer momento em <a href="/deletar-dados">finn.dev.br/deletar-dados</a> — sem perguntas, sem retenção.</div>
@@ -497,11 +532,27 @@ h1 em{font-style:normal;color:#F97316}
         });
       }
       // Only allow calls coming from our own origin (blocks browser-based abuse from other sites).
+      // Origin ausente (curl/script direto, sem navegador) também é bloqueado —
+      // antes só rejeitava Origin PRESENTE e diferente, deixando passar quem
+      // simplesmente omitia o header.
       var aiOrigin = request.headers.get('Origin');
-      if (aiOrigin && aiOrigin !== url.origin) {
+      if (!aiOrigin || aiOrigin !== url.origin) {
         return new Response(JSON.stringify({ error: { type: 'forbidden', message: 'origin não permitido' } }), {
           status: 403, headers: { 'Content-Type': 'application/json' }
         });
+      }
+      // Limite simples por IP — sem isso, sem exigir sessão nem limitar volume,
+      // alguém podia esgotar a cota da chave da Anthropic num loop.
+      if (env.FINN_KV) {
+        var aiIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+        var aiRlKey = 'ai_rl_' + aiIp + '_' + Math.floor(Date.now() / 60000);
+        var aiCount = parseInt((await env.FINN_KV.get(aiRlKey)) || '0', 10);
+        if (aiCount >= 20) {
+          return new Response(JSON.stringify({ error: { type: 'rate_limited', message: 'muitas requisições — tente de novo em instantes' } }), {
+            status: 429, headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        await env.FINN_KV.put(aiRlKey, String(aiCount + 1), { expirationTtl: 120 });
       }
       try {
         var aiPayload = {};
@@ -579,7 +630,7 @@ h1 em{font-style:normal;color:#F97316}
         if (!authResp.ok) return new Response(JSON.stringify({error:'unauthorized'}),{status:401,headers:cors2});
         var authUser = await authResp.json();
         if (!authUser.id) return new Response(JSON.stringify({error:'unauthorized'}),{status:401,headers:cors2});
-        var key = 'push_sub_' + btoa(sub.endpoint).slice(0,32).replace(/[^a-zA-Z0-9]/g,'');
+        var key = await _pushKey(sub.endpoint);
         var record = { endpoint: sub.endpoint, keys: sub.keys, user_id: authUser.id };
         if (env.FINN_KV) await env.FINN_KV.put(key, JSON.stringify(record), {expirationTtl: 60*60*24*365});
         return new Response(JSON.stringify({ok:true}), {headers:cors2});
