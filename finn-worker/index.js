@@ -70,8 +70,8 @@ export default {
 function corsResponse(response) {
   const headers = new Headers(response.headers);
   headers.set("Access-Control-Allow-Origin", "*");
-  headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  headers.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token");
   return new Response(response.body, { status: response.status, headers });
 }
 
@@ -186,15 +186,19 @@ async function debugLog(env, entry) {
 }
 
 async function handleDebug(env) {
-  const keys = await listAllKeys(env, DEBUG_PREFIX);
-  keys.sort((a, b) => b.name.localeCompare(a.name));
-  const recent = keys.slice(0, DEBUG_MAX);
-  const events = (await Promise.all(recent.map(k => env.FINN_KV.get(k.name))))
-    .filter(Boolean).map(raw => JSON.parse(raw));
-  return corsResponse(new Response(JSON.stringify({ ok: true, count: events.length, events }, null, 2), {
-    status: 200,
-    headers: { "Content-Type": "application/json" }
-  }));
+  try {
+    const keys = await listAllKeys(env, DEBUG_PREFIX);
+    keys.sort((a, b) => b.name.localeCompare(a.name));
+    const recent = keys.slice(0, DEBUG_MAX);
+    const events = (await Promise.all(recent.map(k => env.FINN_KV.get(k.name))))
+      .filter(Boolean).map(raw => JSON.parse(raw));
+    return corsResponse(new Response(JSON.stringify({ ok: true, count: events.length, events }, null, 2), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    }));
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } }));
+  }
 }
 
 // =============================================================================
@@ -245,6 +249,19 @@ async function handleWebhook(request, env) {
       if (change.field !== "messages") continue;
       for (const msg of (change.value?.messages || [])) {
         sawMessage = true;
+        // A Meta reenvia o mesmo webhook se demorar pra confirmar (ou por
+        // instabilidade do lado dela) — sem isso, cada reenvio criava uma
+        // transação duplicada, já que addTransaction sempre gera um id novo.
+        // Marca ANTES de processar (não depois): preferível perder uma
+        // mensagem rara por erro transitório a duplicar um lançamento real.
+        if (msg.id) {
+          const dup = await env.FINN_KV.get(`msgid_${msg.id}`);
+          if (dup) {
+            await debugLog(env, { kind: "message_duplicate_skipped", from: msg.from, id: msg.id });
+            continue;
+          }
+          await env.FINN_KV.put(`msgid_${msg.id}`, "1", { expirationTtl: 172800 });
+        }
         await debugLog(env, { kind: "message_received", from: msg.from, type: msg.type, text: msg.text?.body });
         try {
           await processMessage(msg, env);
@@ -986,16 +1003,20 @@ async function handleSyncGet(request, env) {
   const phone = url.searchParams.get("phone");
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
 
-  let data = { phone, txs: [], limits: {}, goals: [] };
-  let fixed = [];
-  let matched = null;
-  for (const cand of phoneVariants(phone)) {
-    const d = await getUserData(cand, env);
-    if (d && (d.txs?.length || Object.keys(d.limits || {}).length || d.goals?.length)) {
-      data = d; fixed = await getFixedBills(cand, env); matched = cand; break;
+  try {
+    let data = { phone, txs: [], limits: {}, goals: [] };
+    let fixed = [];
+    let matched = null;
+    for (const cand of phoneVariants(phone)) {
+      const d = await getUserData(cand, env);
+      if (d && (d.txs?.length || Object.keys(d.limits || {}).length || d.goals?.length)) {
+        data = d; fixed = await getFixedBills(cand, env); matched = cand; break;
+      }
     }
+    return corsResponse(new Response(JSON.stringify({ok:true, data, fixed, matched, tried: phoneVariants(phone)}),{status:200,headers:{"Content-Type":"application/json"}}));
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
   }
-  return corsResponse(new Response(JSON.stringify({ok:true, data, fixed, matched, tried: phoneVariants(phone)}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
 
 async function handleSyncDelete(request, env) {
@@ -1007,12 +1028,16 @@ async function handleSyncDelete(request, env) {
   const phone = url.searchParams.get("phone");
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
 
-  const variants = phoneVariants(phone);
-  for (const cand of variants) {
-    await env.FINN_KV.delete(`data_${cand}`);
-    await env.FINN_KV.delete(`fixed_${cand}`);
+  try {
+    const variants = phoneVariants(phone);
+    for (const cand of variants) {
+      await env.FINN_KV.delete(`data_${cand}`);
+      await env.FINN_KV.delete(`fixed_${cand}`);
+    }
+    return corsResponse(new Response(JSON.stringify({ok:true, deleted: variants}),{status:200,headers:{"Content-Type":"application/json"}}));
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
   }
-  return corsResponse(new Response(JSON.stringify({ok:true, deleted: variants}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
 
 async function handleSync(request, env) {
@@ -1033,34 +1058,38 @@ async function handleSync(request, env) {
     }));
   }
 
-  // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
-  // ex.: quem conversou pelo bot antes de cadastrar o número no site), grava
-  // nessa mesma chave. Senão a sincronização do site e a conversa ao vivo
-  // ficam em duas chaves diferentes e nunca se encontram.
-  let targetPhone = phone;
-  let existingData = null;
-  for (const cand of phoneVariants(phone)) {
-    const existing = await getUserData(cand, env);
-    if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
-      targetPhone = cand;
-      existingData = existing;
-      break;
+  try {
+    // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
+    // ex.: quem conversou pelo bot antes de cadastrar o número no site), grava
+    // nessa mesma chave. Senão a sincronização do site e a conversa ao vivo
+    // ficam em duas chaves diferentes e nunca se encontram.
+    let targetPhone = phone;
+    let existingData = null;
+    for (const cand of phoneVariants(phone)) {
+      const existing = await getUserData(cand, env);
+      if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
+        targetPhone = cand;
+        existingData = existing;
+        break;
+      }
     }
-  }
 
-  if (data) {
-    // Funde por id em vez de substituir a lista inteira: um lançamento feito
-    // pelo bot entre o último carregamento do site e este sync não pode
-    // sumir só porque o site mandou uma foto antiga dos próprios dados.
-    if (data.txs && existingData && existingData.txs) {
-      const byId = new Map(data.txs.map(t => [t.id, t]));
-      existingData.txs.forEach(t => { if (!byId.has(t.id)) byId.set(t.id, t); });
-      data.txs = [...byId.values()];
+    if (data) {
+      // Funde por id em vez de substituir a lista inteira: um lançamento feito
+      // pelo bot entre o último carregamento do site e este sync não pode
+      // sumir só porque o site mandou uma foto antiga dos próprios dados.
+      if (data.txs && existingData && existingData.txs) {
+        const byId = new Map(data.txs.map(t => [t.id, t]));
+        existingData.txs.forEach(t => { if (!byId.has(t.id)) byId.set(t.id, t); });
+        data.txs = [...byId.values()];
+      }
+      await saveUserData(targetPhone, data, env);
     }
-    await saveUserData(targetPhone, data, env);
+    if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
+    return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
   }
-  if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
-  return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
 
 // =============================================================================
@@ -1312,9 +1341,19 @@ async function saveUserData(phone, data, env) {
   await env.FINN_KV.put(`data_${phone}`,JSON.stringify({...existing,...data,phone}));
 }
 
+// KV não tem read-modify-write atômico — duas chamadas concorrentes (ex.:
+// duplo toque num botão de confirmar, ou dois webhooks quase simultâneos
+// pro mesmo telefone) ainda podem se sobrescrever. Isso aqui só evita fazer
+// DOIS reads em vez de um só (addTransaction lia, e saveUserData lia de
+// novo por baixo), o que alargava a janela da corrida sem necessidade. Uma
+// solução completa (uma chave por transação, como o log de debug) exige
+// migrar todo código que lê data.txs como array pronto — deixado pra quando
+// o bot voltar a ter tráfego real.
 async function addTransaction(phone, tx, env) {
-  const data=await getUserData(phone,env);
-  await saveUserData(phone,{...data,txs:[...(data.txs||[]),tx]},env);
+  const data = await getUserData(phone, env);
+  data.txs = [...(data.txs || []), tx];
+  data.phone = phone;
+  await env.FINN_KV.put(`data_${phone}`, JSON.stringify(data));
   await env.FINN_KV.delete(`pending_${phone}`);
 }
 

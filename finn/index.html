@@ -3723,6 +3723,20 @@ if (window.caches) {
   });
 }
 
+// Registro do service worker era feito só dentro do fluxo de ativar push —
+// então quem nunca clicou em "Ativar notificações" nunca tinha um SW
+// instalado, e o "🚀 Nova versão disponível" (avisado via postMessage do SW
+// quando uma nova versão assume) nunca tinha chance de disparar. Registra
+// incondicionalmente, além de deixar o app instalável/offline de verdade.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch(function(){});
+  navigator.serviceWorker.addEventListener("message", function(e){
+    if (e.data && e.data.type === "SW_UPDATED") {
+      document.getElementById("updateBanner").classList.add("show");
+    }
+  });
+}
+
 /* ── push notifications ── */
 function urlBase64ToUint8Array(base64String){
   var padding = "=".repeat((4 - base64String.length % 4) % 4);
@@ -3783,7 +3797,12 @@ function enablePushNotifications(){
 /* ── update banner ── */
 var knownETag = null;
 function checkForUpdate(){
-  fetch(window.location.pathname, { method: "HEAD", cache: "no-store" }).then(function(r){
+  // cache:"no-store" só controla o cache HTTP do próprio navegador — um CDN/
+  // proxy no meio do caminho (ex: domínio próprio atrás do Cloudflare) podia
+  // servir uma resposta antiga e o ETag nunca parecia mudar. O parâmetro
+  // aleatório força cada checagem a ser uma URL nova, sem chance de cache.
+  var bustedUrl = window.location.pathname + "?_swcheck=" + Date.now();
+  fetch(bustedUrl, { method: "HEAD", cache: "no-store" }).then(function(r){
     var et = r.headers.get("ETag");
     if(!et) return;
     if(knownETag === null){ knownETag = et; return; }
