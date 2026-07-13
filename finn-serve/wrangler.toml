@@ -6,15 +6,18 @@ compatibility_date = "2024-01-01"
 # Secrets are set via Cloudflare dashboard (encrypted):
 # PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET
 # VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, SUPABASE_SERVICE_KEY
+# MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET
 
 # ─────────────────────────────────────────────
-#  Notificações push:
+#  Notificações push / assinaturas:
 #  - "0 12 * * *"  → contas fixas perto do vencimento, 1x/dia às 09:00 BRT
+#  - "0 13 * * *"  → confere assinaturas vencidas (rede de segurança pro
+#                    caso de webhook perdido), 1x/dia às 10:00 BRT
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 23 * * 1"]
+crons = ["0 12 * * *", "0 13 * * *", "0 23 * * 1"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)

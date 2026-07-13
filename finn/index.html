@@ -553,7 +553,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null };
 
 // Só dígitos, com DDI 55 na frente — mesmo formato que o WhatsApp usa
 // internamente (o "from" que chega no bot), pra bater com data_<phone> no KV.
@@ -632,6 +632,19 @@ function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, function(c){
     return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];
   });
+}
+
+function isPremium(){
+  return state.plan === "plus" || state.plan === "pro";
+}
+
+function renderUpgradePrompt(featureName){
+  return '<div class="card" style="text-align:center;padding:28px 20px">' +
+    '<div style="font-size:32px;margin-bottom:8px">🔒</div>' +
+    '<div style="font-weight:800;font-size:15px;margin-bottom:6px">' + escapeHtml(featureName) + ' é um recurso Plus/Pro</div>' +
+    '<div style="font-size:13px;color:var(--fm);margin-bottom:16px">Assine um plano pago pra desbloquear ' + escapeHtml(featureName.toLowerCase()) + ' e muito mais.</div>' +
+    '<button type="button" class="btn-submit" id="btnGoUpgradeFromPrompt">Ver planos</button>' +
+  '</div>';
 }
 
 function sortTxs(){
@@ -849,6 +862,7 @@ function fixedDueSoon(){
 }
 
 function renderDebtSummaryDashboard(){
+  if(!isPremium()) return "";
   var active = (state.debts || []).filter(function(d){ return Number(d.remaining_value) > 0; });
   if(!active.length) return "";
   var total = active.reduce(function(s,d){ return s + Number(d.remaining_value); }, 0);
@@ -1775,6 +1789,7 @@ function renderLimitList(){
 var goalForm = { name: "", emoji: "🎯", target: "", deadline: "" };
 
 function renderMetas(){
+  if(!isPremium()) return renderUpgradePrompt("Metas");
   return '' +
     (state.goalSaveError ? '<div class="card"><div class="ai-error">Não consegui salvar a meta (' + escapeHtml(state.goalSaveError) + '). Tenta de novo.</div></div>' : '') +
     '<div class="card">' +
@@ -2104,6 +2119,7 @@ function cardInvoiceTotal(cardId, closingDay){
 }
 
 function renderCartoes(){
+  if(!isPremium()) return renderUpgradePrompt("Cartões");
   return '' +
     renderPriceAlert() +
     '<div class="card">' +
@@ -2162,6 +2178,7 @@ function resetDebtForm(){
 }
 
 function renderDividas(){
+  if(!isPremium()) return renderUpgradePrompt("Dívidas");
   var activeDebts = state.debts.filter(function(d){ return Number(d.remaining_value) > 0; });
   var totalRemaining = activeDebts.reduce(function(s,d){ return s + Number(d.remaining_value); }, 0);
   var totalMonthly = activeDebts.reduce(function(s,d){ return s + Number(d.monthly_payment); }, 0);
@@ -2412,6 +2429,7 @@ function renderSplitParticipantRows(){
 }
 
 function renderRacha(){
+  if(!isPremium()) return renderUpgradePrompt("Racha");
   return '' +
     (state.splitError ? '<div class="card"><div class="ai-error">Não consegui salvar a racha (' + escapeHtml(state.splitError) + '). Tenta de novo.</div></div>' : '') +
     '<div class="card">' +
@@ -2645,6 +2663,7 @@ function callAI(){
   render();
   var summary = buildFinanceSummary();
   var payload = {
+    access_token: currentSession && currentSession.access_token,
     model: "claude-haiku-4-5-20251001",
     max_tokens: 900,
     system: "Você é o Finn, um assistente financeiro brasileiro amigável e direto. Analise os dados financeiros do mês do usuário e responda em português do Brasil, de forma curta e prática. Estruture em: 1) um resumo de 1-2 frases sobre a saúde financeira do mês, 2) 3 a 5 dicas objetivas e personalizadas pra economizar com base nas categorias onde ele mais gasta, 3) um alerta se algum limite foi estourado ou se as despesas passaram das receitas. Não invente dados que não estão no resumo. Use uma linguagem leve, sem jargão.",
@@ -2658,6 +2677,8 @@ function callAI(){
     .then(function(res){
       state.aiLoading = false;
       if(res.status === 503){ state.aiError = "A IA ainda não está configurada no servidor (falta a chave da API no Cloudflare)."; render(); return; }
+      if(res.status === 402){ state.aiError = (res.body && res.body.error && res.body.error.message) || "Finn IA é um recurso premium."; render(); return; }
+      if(res.status === 401){ state.aiError = "Sua sessão expirou — recarregue a página e faça login de novo."; render(); return; }
       if(res.body && res.body.content && res.body.content[0] && res.body.content[0].text){
         state.aiResult = res.body.content[0].text;
       } else if(res.body && res.body.error){
@@ -2674,6 +2695,59 @@ function callAI(){
 }
 
 /* ── Configurações ── */
+function renderPlansCard(){
+  var planNames = { free: "Grátis", plus: "Plus", pro: "Pro" };
+  var planLabel = planNames[state.plan] || "Grátis";
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Seu plano atual: ' + planLabel + '</div>';
+  if(state.checkoutError) html += '<div class="ai-error" style="margin-bottom:10px">' + escapeHtml(state.checkoutError) + '</div>';
+
+  if(state.plan === "free"){
+    html +=
+      '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-bottom:10px">' +
+        '<div style="font-weight:800;font-size:14px">Plus — R$ 19,90/mês</div>' +
+        '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 10px">Dívidas, cartões, metas, racha + até 10 análises de IA por mês.</div>' +
+        '<button type="button" class="btn-submit" data-upgrade="plus"' + (state.checkoutLoading==="plus"?" disabled":"") + '>' + (state.checkoutLoading==="plus"?"Abrindo…":"Assinar Plus") + '</button>' +
+      '</div>';
+  }
+  if(state.plan !== "pro"){
+    html +=
+      '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px">' +
+        '<div style="font-weight:800;font-size:14px">Pro — R$ 29,90/mês</div>' +
+        '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 10px">Tudo do Plus, mais Finn IA ilimitada e o bot do WhatsApp completo (quando voltar).</div>' +
+        '<button type="button" class="btn-submit" data-upgrade="pro"' + (state.checkoutLoading==="pro"?" disabled":"") + '>' + (state.checkoutLoading==="pro"?"Abrindo…":"Assinar Pro") + '</button>' +
+      '</div>';
+  } else {
+    html += '<div style="font-size:13px;color:var(--fm)">Você já está no plano mais completo. 🎉</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function startCheckout(plan){
+  state.checkoutLoading = plan;
+  state.checkoutError = null;
+  render();
+  fetch("/billing/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, plan: plan })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      if(res.status === 200 && res.body && res.body.url){
+        window.location.href = res.body.url;
+        return;
+      }
+      state.checkoutLoading = null;
+      state.checkoutError = (res.body && res.body.error) || "Não consegui iniciar o pagamento. Tenta de novo.";
+      render();
+    }).catch(function(){
+      state.checkoutLoading = null;
+      state.checkoutError = "Falha de conexão. Tenta de novo.";
+      render();
+    });
+}
+
 function renderConfig(){
   var user = currentSession && currentSession.user;
   var email = user ? user.email : "";
@@ -2681,7 +2755,8 @@ function renderConfig(){
   var currentName = meta.full_name || meta.name || "";
   var currentWhatsapp = meta.whatsapp || "";
   var dark = localStorage.getItem("finn_dark_mode") === "1";
-  var html = '<div class="card">' +
+  var html = renderPlansCard();
+  html += '<div class="card">' +
     '<div class="eyebrow">Conta</div>' +
     '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
@@ -3149,6 +3224,14 @@ function bindContentEvents(){
       runDebtSimulation();
     });
   }
+  var btnGoUpgrade = document.getElementById("btnGoUpgradeFromPrompt");
+  if(btnGoUpgrade) btnGoUpgrade.addEventListener("click", function(){ state.tab = "config"; render(); });
+  document.querySelectorAll("[data-upgrade]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      if(btn.disabled) return;
+      startCheckout(btn.dataset.upgrade);
+    });
+  });
   if(state.tab === "config"){
     document.getElementById("btnSaveName").addEventListener("click", saveProfileName);
     document.getElementById("btnDarkToggle").addEventListener("click", toggleDarkMode);
@@ -3673,12 +3756,29 @@ function loadData(){
   });
 }
 
+function loadPlan(){
+  // Separado do loadData() de propósito: se a tabela subscriptions ainda
+  // não existir (migration não rodada) ou a consulta falhar por qualquer
+  // motivo, isso não pode derrubar o resto do app — assume free e segue.
+  db("subscriptions", "GET", null, { user_id: "eq." + uid() }).then(function(rows){
+    var row = rows && rows[0];
+    state.plan = (row && row.plan) || "free";
+    state.planLoaded = true;
+    if(!isTypingInForm()) render();
+  }).catch(function(){
+    state.plan = "free";
+    state.planLoaded = true;
+    if(!isTypingInForm()) render();
+  });
+}
+
 function showApp(){
   document.body.classList.add("finn-authed");
   document.getElementById("loginScreen").style.display = "none";
   loadData();
   loadCards();
   loadDebts();
+  loadPlan();
 }
 
 function showLogin(){

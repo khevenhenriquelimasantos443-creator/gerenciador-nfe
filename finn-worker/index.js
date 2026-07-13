@@ -284,17 +284,41 @@ async function handleWebhook(request, env) {
   return new Response("OK", { status: 200 });
 }
 
+// Free lança gasto por mensagem (menu de texto, sem custo de IA); Plus tem
+// resumos/consultas básicas; Pro tem tudo, incluindo o que gasta IA de
+// verdade (áudio, foto de recibo) ou é diferencial de marketing (score).
+const BOT_PLAN_RANK = { free: 0, plus: 1, pro: 2 };
+const BOT_FEATURE_MIN_PLAN = {
+  resumo_mes: "plus", alertas_limite: "plus", status_metas: "plus",
+  contas_fixas: "plus", previsao_saldo: "plus", sinc_finn: "plus",
+  modo_panico: "pro", analise_extrato: "pro", score_financeiro: "pro",
+  dashboard_completo: "pro", audio_transcricao: "pro", imagem_recibo: "pro"
+};
+
+function botPlanAllows(plan, feature) {
+  const required = BOT_FEATURE_MIN_PLAN[feature];
+  if (!required) return true; // não listado = sempre liberado (ex: lançar gasto)
+  return (BOT_PLAN_RANK[plan] || 0) >= BOT_PLAN_RANK[required];
+}
+
+async function sendUpgradeNudge(phone, feature, env) {
+  const required = BOT_FEATURE_MIN_PLAN[feature] === "pro" ? "Pro" : "Plus";
+  await sendText(phone, `🔒 Esse recurso é do plano *${required}*. Assine no app pra desbloquear: ${env.FINN_URL || ""}`, env);
+}
+
 async function processMessage(msg, env) {
   const phone = msg.from;
   if (!phone) return;
 
   const stateData = await getState(phone, env);
   const state = stateData.state || "idle";
+  const userData = await getUserData(phone, env);
+  const plan = userData.plan || "free";
 
   if (msg.type === "interactive") {
     const interactive = msg.interactive;
     if (interactive.type === "list_reply") {
-      return handleListReply(phone, interactive.list_reply.id, stateData, env);
+      return handleListReply(phone, interactive.list_reply.id, stateData, env, plan);
     }
     if (interactive.type === "button_reply") {
       return handleButtonReply(phone, interactive.button_reply.id, stateData, env);
@@ -302,10 +326,12 @@ async function processMessage(msg, env) {
   }
 
   if (msg.type === "audio") {
+    if (!botPlanAllows(plan, "audio_transcricao")) return sendUpgradeNudge(phone, "audio_transcricao", env);
     return handleAudioMessage(phone, msg, env);
   }
 
   if (msg.type === "image") {
+    if (!botPlanAllows(plan, "imagem_recibo")) return sendUpgradeNudge(phone, "imagem_recibo", env);
     return handleImageMessage(phone, msg, env);
   }
 
@@ -327,18 +353,23 @@ async function processMessage(msg, env) {
       return sendText(phone, "Até mais! Digite *menu* quando quiser voltar.", env);
     }
     if (["sync","sinc","sincronizar","extrato"].includes(lower)) {
+      if (!botPlanAllows(plan, "sinc_finn")) return sendUpgradeNudge(phone, "sinc_finn", env);
       return handleSincronizarFinn(phone, env);
     }
     if (["analise","análise"].includes(lower)) {
+      if (!botPlanAllows(plan, "analise_extrato")) return sendUpgradeNudge(phone, "analise_extrato", env);
       return handleAnaliseExtratoPrompt(phone, env);
     }
     if (["score","pontuação","saúde"].includes(lower)) {
+      if (!botPlanAllows(plan, "score_financeiro")) return sendUpgradeNudge(phone, "score_financeiro", env);
       return handleScoreFinanceiro(phone, env);
     }
     if (["dashboard","graficos","gráficos"].includes(lower)) {
+      if (!botPlanAllows(plan, "dashboard_completo")) return sendUpgradeNudge(phone, "dashboard_completo", env);
       return handleDashboardCompleto(phone, env);
     }
     if (["panico","pânico","modo panico","modo pânico"].includes(lower)) {
+      if (!botPlanAllows(plan, "modo_panico")) return sendUpgradeNudge(phone, "modo_panico", env);
       return handleModoPanico(phone, env);
     }
 
@@ -349,7 +380,7 @@ async function processMessage(msg, env) {
 // =============================================================================
 // LIST / BUTTON REPLY HANDLERS
 // =============================================================================
-async function handleListReply(phone, rowId, stateData, env) {
+async function handleListReply(phone, rowId, stateData, env, plan) {
   // Categoria com valor embutido no ID (à prova de lag do KV): "c|d|35.1|Transporte"
   if (rowId.startsWith("c|")) {
     const parts = rowId.split("|");
@@ -383,15 +414,33 @@ async function handleListReply(phone, rowId, stateData, env) {
       await setState(phone, { state: "awaiting_valor_receita", pending: {} }, env);
       await sendText(phone, "💰 *Lançar receita!*\n\nQual o valor recebido? (Ex: 3200,00)", env);
       break;
-    case "resumo_mes":    await handleResumoMes(phone, env); break;
-    case "alertas_limite": await handleAlertasLimite(phone, env); break;
-    case "status_metas":  await handleStatusMetas(phone, env); break;
-    case "contas_fixas":  await handleContasFixas(phone, env); break;
-    case "previsao_saldo":   await handlePrevisaoSaldo(phone, env); break;
-    case "modo_panico":      await handleModoPanico(phone, env); break;
-    case "analise_extrato":   await handleAnaliseExtratoPrompt(phone, env); break;
-    case "score_financeiro":  await handleScoreFinanceiro(phone, env); break;
-    case "sinc_finn":        await handleSincronizarFinn(phone, env); break;
+    case "resumo_mes":
+      if (!botPlanAllows(plan, "resumo_mes")) { await sendUpgradeNudge(phone, "resumo_mes", env); break; }
+      await handleResumoMes(phone, env); break;
+    case "alertas_limite":
+      if (!botPlanAllows(plan, "alertas_limite")) { await sendUpgradeNudge(phone, "alertas_limite", env); break; }
+      await handleAlertasLimite(phone, env); break;
+    case "status_metas":
+      if (!botPlanAllows(plan, "status_metas")) { await sendUpgradeNudge(phone, "status_metas", env); break; }
+      await handleStatusMetas(phone, env); break;
+    case "contas_fixas":
+      if (!botPlanAllows(plan, "contas_fixas")) { await sendUpgradeNudge(phone, "contas_fixas", env); break; }
+      await handleContasFixas(phone, env); break;
+    case "previsao_saldo":
+      if (!botPlanAllows(plan, "previsao_saldo")) { await sendUpgradeNudge(phone, "previsao_saldo", env); break; }
+      await handlePrevisaoSaldo(phone, env); break;
+    case "modo_panico":
+      if (!botPlanAllows(plan, "modo_panico")) { await sendUpgradeNudge(phone, "modo_panico", env); break; }
+      await handleModoPanico(phone, env); break;
+    case "analise_extrato":
+      if (!botPlanAllows(plan, "analise_extrato")) { await sendUpgradeNudge(phone, "analise_extrato", env); break; }
+      await handleAnaliseExtratoPrompt(phone, env); break;
+    case "score_financeiro":
+      if (!botPlanAllows(plan, "score_financeiro")) { await sendUpgradeNudge(phone, "score_financeiro", env); break; }
+      await handleScoreFinanceiro(phone, env); break;
+    case "sinc_finn":
+      if (!botPlanAllows(plan, "sinc_finn")) { await sendUpgradeNudge(phone, "sinc_finn", env); break; }
+      await handleSincronizarFinn(phone, env); break;
     case "abrir_finn":       await handleAbrirFinn(phone, env); break;
     default: await sendText(phone, "❓ Opção não reconhecida. Digite *menu* para tentar novamente.", env);
   }
@@ -1040,6 +1089,23 @@ async function handleSyncDelete(request, env) {
   }
 }
 
+// Plano de quem chamou, direto da tabela subscriptions — usando o próprio
+// access_token do usuário (a RLS "select own" já restringe à linha dele
+// mesmo sem filtrar por user_id), nunca confiando num plano vindo do cliente.
+async function fetchUserPlan(accessToken, env) {
+  if (!accessToken) return "free";
+  try {
+    const r = await fetch(SUPA_URL_CHECK + "/rest/v1/subscriptions?select=plan", {
+      headers: { apikey: SUPA_ANON_KEY_CHECK, Authorization: "Bearer " + accessToken }
+    });
+    if (!r.ok) return "free";
+    const rows = await r.json();
+    return (rows[0] && rows[0].plan) || "free";
+  } catch (e) {
+    return "free";
+  }
+}
+
 async function handleSync(request, env) {
   let body;
   try { body=await request.json(); } catch { return corsResponse(new Response(JSON.stringify({error:"Invalid JSON"}),{status:400})); }
@@ -1057,6 +1123,7 @@ async function handleSync(request, env) {
       status: 403, headers: { "Content-Type": "application/json" }
     }));
   }
+  const plan = await fetchUserPlan(access_token, env);
 
   try {
     // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
@@ -1083,7 +1150,10 @@ async function handleSync(request, env) {
         existingData.txs.forEach(t => { if (!byId.has(t.id)) byId.set(t.id, t); });
         data.txs = [...byId.values()];
       }
+      data.plan = plan; // sempre o plano atual, direto da fonte, nunca do cliente
       await saveUserData(targetPhone, data, env);
+    } else {
+      await saveUserData(targetPhone, { plan }, env);
     }
     if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
     return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
@@ -1096,6 +1166,8 @@ async function handleSync(request, env) {
 // DAILY DASHBOARD (cron 01:00 UTC = 22:00 BRT)
 // =============================================================================
 async function sendDailyDashboards(env) {
+  // Mensagem proativa (a conta iniciada pelo bot, não pelo usuário) é
+  // diferencial do Pro — free/plus só recebem quando eles mesmos chamam.
   const list = await listAllKeys(env, "data_");
   for (const key of list) {
     const phone=key.name.replace("data_","");
@@ -1103,6 +1175,7 @@ async function sendDailyDashboards(env) {
     try {
       const data=await getUserData(phone,env);
       if (!data?.txs?.length) continue;
+      if ((data.plan || "free") !== "pro") continue;
       await sendText(phone,buildDashboardMessage(data,env),env);
     } catch(err) { console.error(`Dashboard error for ${phone}:`,err); }
   }

@@ -58,7 +58,7 @@ async function _pluggyApiKey(env) {
 }
 
 // Valida um access_token Supabase e retorna o usuário autenticado (ou null)
-async function _pluggyAuth(token) {
+async function _supaAuth(token) {
   if (!token) return null;
   try {
     var r = await fetch('${SUPA_URL_SERVER}/auth/v1/user', {
@@ -78,7 +78,7 @@ async function _pluggyToken(request, env) {
   try {
     var body = {};
     try { body = JSON.parse(await request.text()); } catch (e0) {}
-    var authUser = await _pluggyAuth(body.access_token);
+    var authUser = await _supaAuth(body.access_token);
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     if (!env.PLUGGY_CLIENT_ID || !env.PLUGGY_CLIENT_SECRET) {
       return new Response(JSON.stringify({ error: 'Secrets não configurados: PLUGGY_CLIENT_ID=' + (env.PLUGGY_CLIENT_ID ? 'ok' : 'MISSING') + ' PLUGGY_CLIENT_SECRET=' + (env.PLUGGY_CLIENT_SECRET ? 'ok' : 'MISSING') }), { status: 500, headers: cors });
@@ -110,7 +110,7 @@ async function _pluggyLink(request, env) {
   try {
     var body = {};
     try { body = JSON.parse(await request.text()); } catch (e0) {}
-    var authUser = await _pluggyAuth(body.access_token);
+    var authUser = await _supaAuth(body.access_token);
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     if (!body.itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
     if (env.FINN_KV) await env.FINN_KV.put('pluggy_owner_' + body.itemId, authUser.id);
@@ -125,7 +125,7 @@ async function _pluggyTx(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
-    var authUser = await _pluggyAuth(url.searchParams.get('access_token'));
+    var authUser = await _supaAuth(url.searchParams.get('access_token'));
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     var itemId = url.searchParams.get('itemId');
     if (!itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
@@ -385,8 +385,209 @@ async function sendWeeklySummary(env) {
 }
 `;
 
+// ── Assinaturas (Mercado Pago) — planos Free/Plus/Pro ───────────────────────
+const billingFns = `
+function _planPrice(plan) {
+  if (plan === 'plus') return 19.90;
+  if (plan === 'pro') return 29.90;
+  return null;
+}
+
+// x-signature: "ts=<ms>,v1=<hmac hex>" — valida que a notificação veio
+// mesmo do Mercado Pago antes de confiar no data.id pra buscar o recurso.
+async function _mpVerifySignature(request, dataId, secret) {
+  var sigHeader = request.headers.get('x-signature') || '';
+  var reqId = request.headers.get('x-request-id') || '';
+  if (!sigHeader || !dataId) return false;
+  var ts = '', v1 = '';
+  sigHeader.split(',').forEach(function(part) {
+    var idx = part.indexOf('=');
+    if (idx === -1) return;
+    var k = part.slice(0, idx).trim(), v = part.slice(idx + 1).trim();
+    if (k === 'ts') ts = v;
+    if (k === 'v1') v1 = v;
+  });
+  if (!ts || !v1) return false;
+  var manifest = 'id:' + String(dataId).toLowerCase() + ';request-id:' + reqId + ';ts:' + ts + ';';
+  var key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  var sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(manifest));
+  var hex = Array.from(new Uint8Array(sig)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+  if (hex.length !== v1.length) return false;
+  var diff = 0; // comparação em tempo constante
+  for (var i = 0; i < hex.length; i++) diff |= hex.charCodeAt(i) ^ v1.charCodeAt(i);
+  return diff === 0;
+}
+
+// Upsert por user_id (on_conflict) — cria a linha na primeira cobrança de
+// alguém, atualiza nas seguintes. Só o Worker (service key) escreve aqui.
+async function _subaUpsertSubscription(userId, fields, env) {
+  if (!env.SUPABASE_SERVICE_KEY) return;
+  var payload = Object.assign({ user_id: userId, updated_at: new Date().toISOString() }, fields);
+  await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?on_conflict=user_id', {
+    method: 'POST',
+    headers: {
+      apikey: env.SUPABASE_SERVICE_KEY,
+      Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates'
+    },
+    body: JSON.stringify(payload)
+  });
+}
+
+// Lê o plano/uso de IA do usuário. Sem linha na tabela = free (nunca
+// assinou nada ainda) — não é erro, é o estado inicial de todo mundo.
+async function _subaGetSubscription(userId, env) {
+  if (!env.SUPABASE_SERVICE_KEY) return { plan: 'free', status: 'active', ai_usage_count: 0, ai_usage_month: null };
+  try {
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?user_id=eq.' + userId + '&select=*', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) return { plan: 'free', status: 'active', ai_usage_count: 0, ai_usage_month: null };
+    var rows = await r.json();
+    return rows[0] || { plan: 'free', status: 'active', ai_usage_count: 0, ai_usage_month: null };
+  } catch (e) {
+    return { plan: 'free', status: 'active', ai_usage_count: 0, ai_usage_month: null };
+  }
+}
+
+async function _subaIncrementAiUsage(userId, currentSub, env) {
+  var thisMonth = new Date().toISOString().slice(0, 7);
+  var sameMonth = currentSub && currentSub.ai_usage_month === thisMonth;
+  var newCount = (sameMonth ? (currentSub.ai_usage_count || 0) : 0) + 1;
+  await _subaUpsertSubscription(userId, { ai_usage_count: newCount, ai_usage_month: thisMonth }, env);
+}
+
+// POST /billing/checkout — cria uma assinatura recorrente (preapproval) no
+// Mercado Pago pro plano escolhido e devolve a URL de pagamento.
+async function _billingCheckout(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (!env.MP_ACCESS_TOKEN) return new Response(JSON.stringify({ error: 'Pagamentos ainda não configurados' }), { status: 500, headers: cors });
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
+    var price = _planPrice(body.plan);
+    if (!price) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
+
+    var origin = new URL(request.url).origin;
+    var r = await fetch('https://api.mercadopago.com/preapproval', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN },
+      body: JSON.stringify({
+        reason: 'Finn ' + (body.plan === 'pro' ? 'Pro' : 'Plus') + ' — assinatura mensal',
+        // user_id + plano juntos no external_reference: assim o webhook
+        // sabe pra quem e qual plano liberar sem precisar de outra tabela.
+        external_reference: authUser.id + '|' + body.plan,
+        payer_email: authUser.email,
+        back_url: origin + '/?billing=return',
+        auto_recurring: { frequency: 1, frequency_type: 'months', transaction_amount: price, currency_id: 'BRL' }
+      })
+    });
+    var j = await r.json();
+    if (!r.ok) return new Response(JSON.stringify({ error: (j && j.message) || 'Falha ao criar assinatura' }), { status: 502, headers: cors });
+    return new Response(JSON.stringify({ url: j.init_point }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
+// POST /billing/webhook — notificações do Mercado Pago (pagamento aprovado,
+// assinatura autorizada/pausada/cancelada).
+async function _billingWebhook(request, env) {
+  var rawBody = await request.text();
+  var url = new URL(request.url);
+  var body = {};
+  try { body = JSON.parse(rawBody); } catch (e0) {}
+  var topic = body.type || body.topic || url.searchParams.get('type') || url.searchParams.get('topic') || '';
+  var dataId = (body.data && body.data.id) || url.searchParams.get('data.id') || url.searchParams.get('id') || '';
+
+  if (env.MP_WEBHOOK_SECRET) {
+    var valid = await _mpVerifySignature(request, dataId, env.MP_WEBHOOK_SECRET);
+    if (!valid) return new Response('Forbidden', { status: 403 });
+  }
+
+  try {
+    if (topic === 'payment' && dataId && env.MP_ACCESS_TOKEN) {
+      var pr = await fetch('https://api.mercadopago.com/v1/payments/' + dataId, {
+        headers: { 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN }
+      });
+      if (pr.ok) {
+        var payment = await pr.json();
+        var parts = (payment.external_reference || '').split('|');
+        var userId = parts[0], plan = parts[1];
+        if (userId && plan && payment.status === 'approved') {
+          var periodEnd = new Date(); periodEnd.setMonth(periodEnd.getMonth() + 1);
+          await _subaUpsertSubscription(userId, {
+            plan: plan, status: 'active',
+            mp_payment_id: String(payment.id),
+            current_period_end: periodEnd.toISOString()
+          }, env);
+        }
+      }
+    } else if ((topic === 'preapproval' || topic === 'subscription_preapproval') && dataId && env.MP_ACCESS_TOKEN) {
+      var sr = await fetch('https://api.mercadopago.com/preapproval/' + dataId, {
+        headers: { 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN }
+      });
+      if (sr.ok) {
+        var sub = await sr.json();
+        var sparts = (sub.external_reference || '').split('|');
+        var suserId = sparts[0], splan = sparts[1];
+        if (suserId && splan) {
+          if (sub.status === 'authorized') {
+            var pe = new Date(); pe.setMonth(pe.getMonth() + 1);
+            await _subaUpsertSubscription(suserId, {
+              plan: splan, status: 'active', mp_subscription_id: String(dataId),
+              current_period_end: pe.toISOString()
+            }, env);
+          } else {
+            // Pausada/cancelada: não revoga na hora — o período já pago
+            // continua valendo até current_period_end vencer. Quem faz a
+            // baixa de verdade é o cron de assinaturas vencidas.
+            await _subaUpsertSubscription(suserId, {
+              status: sub.status === 'cancelled' ? 'cancelled' : 'past_due',
+              mp_subscription_id: String(dataId)
+            }, env);
+          }
+        }
+      }
+    }
+  } catch (e) {
+    // Nunca devolve 500 aqui — a Mercado Pago reenviaria pra sempre. Pior
+    // caso é a assinatura só atualizar no próximo evento.
+  }
+  return new Response('OK', { status: 200 });
+}
+
+// Cron diário: rede de segurança pro caso de algum webhook ter falhado —
+// qualquer plano pago com current_period_end vencido perde o acesso.
+async function checkExpiredSubscriptions(env) {
+  if (!env.SUPABASE_SERVICE_KEY) return;
+  var nowIso = new Date().toISOString();
+  var r = await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?plan=neq.free&current_period_end=lt.' + encodeURIComponent(nowIso), {
+    headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+  });
+  if (!r.ok) return;
+  var expired = await r.json();
+  for (var i = 0; i < expired.length; i++) {
+    try {
+      await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?user_id=eq.' + expired[i].user_id, {
+        method: 'PATCH',
+        headers: {
+          apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ plan: 'free', status: 'past_due', updated_at: new Date().toISOString() })
+      });
+    } catch (e) { /* uma falha não deve travar as outras */ }
+  }
+}
+`;
+
 const worker = `${pluggyFns}
 ${pushFns}
+${billingFns}
 export default {
   async fetch(request, env) {
     var url = new URL(request.url);
@@ -583,17 +784,45 @@ h1 em{font-style:normal;color:#F97316}
       try {
         var aiPayload = {};
         try { aiPayload = JSON.parse(await request.text()); } catch (pe) { aiPayload = {}; }
+
+        // Finn IA é premium — free não usa, Plus tem cota mensal, Pro ilimitado.
+        var aiUser = await _supaAuth(aiPayload.access_token);
+        if (!aiUser) {
+          return new Response(JSON.stringify({ error: { type: 'unauthorized', message: 'faça login pra usar a Finn IA' } }), {
+            status: 401, headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        var aiSub = await _subaGetSubscription(aiUser.id, env);
+        var aiPlan = (aiSub && aiSub.plan) || 'free';
+        if (aiPlan === 'free') {
+          return new Response(JSON.stringify({ error: { type: 'premium_required', message: 'Finn IA é um recurso Plus/Pro — assine pra usar.' } }), {
+            status: 402, headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        var AI_PLUS_MONTHLY_LIMIT = 10;
+        if (aiPlan === 'plus') {
+          var aiThisMonth = new Date().toISOString().slice(0, 7);
+          var aiUsedThisMonth = (aiSub.ai_usage_month === aiThisMonth) ? (aiSub.ai_usage_count || 0) : 0;
+          if (aiUsedThisMonth >= AI_PLUS_MONTHLY_LIMIT) {
+            return new Response(JSON.stringify({ error: { type: 'quota_exceeded', message: 'Você já usou as ' + AI_PLUS_MONTHLY_LIMIT + ' análises do mês no Plus. Assine o Pro pra IA ilimitada.' } }), {
+              status: 402, headers: { 'Content-Type': 'application/json' }
+            });
+          }
+        }
+
         // Clamp cost: cap output tokens and force a known, inexpensive model so the proxy can't be
         // abused to run the most expensive model with huge max_tokens on our server key.
         var ALLOWED_MODELS = ['claude-haiku-4-5-20251001', 'claude-3-5-haiku-20241022'];
         if (ALLOWED_MODELS.indexOf(aiPayload.model) === -1) aiPayload.model = ALLOWED_MODELS[0];
         if (!aiPayload.max_tokens || aiPayload.max_tokens > 2048) aiPayload.max_tokens = 2048;
+        var aiApiBody = { model: aiPayload.model, max_tokens: aiPayload.max_tokens, system: aiPayload.system, messages: aiPayload.messages };
         var aiResp = await fetch('https://api.anthropic.com/v1/messages', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-          body: JSON.stringify(aiPayload),
+          body: JSON.stringify(aiApiBody),
         });
         var aiText = await aiResp.text();
+        if (aiResp.ok && aiPlan === 'plus') await _subaIncrementAiUsage(aiUser.id, aiSub, env);
         return new Response(aiText, { status: aiResp.status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': url.origin } });
       } catch (aiErr) {
         return new Response(JSON.stringify({ error: { type: 'proxy_error', message: 'falha ao contatar a IA' } }), {
@@ -615,6 +844,14 @@ h1 em{font-style:normal;color:#F97316}
     // ── Pluggy: transactions ──
     if (url.pathname === '/pluggy/transactions' && request.method === 'GET') {
       return _pluggyTx(request, env);
+    }
+
+    // ── Assinaturas: checkout e webhook ──
+    if (url.pathname === '/billing/checkout' && request.method === 'POST') {
+      return _billingCheckout(request, env);
+    }
+    if (url.pathname === '/billing/webhook' && request.method === 'POST') {
+      return _billingWebhook(request, env);
     }
 
     // ── PWA Manifest ──
@@ -752,6 +989,8 @@ h1 em{font-style:normal;color:#F97316}
   async scheduled(event, env, ctx) {
     if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
+    } else if (event.cron === '0 13 * * *') {
+      ctx.waitUntil(checkExpiredSubscriptions(env));
     } else {
       ctx.waitUntil(checkFixedDueAndNotify(env));
     }
