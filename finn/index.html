@@ -553,7 +553,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null };
 
 // Só dígitos, com DDI 55 na frente — mesmo formato que o WhatsApp usa
 // internamente (o "from" que chega no bot), pra bater com data_<phone> no KV.
@@ -575,9 +575,10 @@ function syncWhatsAppBot(){
   state.limits.forEach(function(l){ limitsMap[l.category] = Number(l.monthly_limit); });
   var payload = {
     phone: phone,
+    access_token: currentSession && currentSession.access_token,
     data: {
       txs: state.txs.map(function(t){
-        return { val: t.type === "receita" ? Number(t.value) : -Number(t.value), desc: t.description, cat: t.category, date: t.date };
+        return { id: t.id, val: t.type === "receita" ? Number(t.value) : -Number(t.value), desc: t.description, cat: t.category, date: t.date };
       }),
       limits: limitsMap,
       goals: state.goals
@@ -594,6 +595,21 @@ function syncWhatsAppBot(){
 function thisMonth(){
   var n = new Date();
   return n.getFullYear() + "-" + String(n.getMonth()+1).padStart(2,"0");
+}
+
+// "YYYY-MM-DD" a partir do calendário local do dispositivo. Diferente de
+// d.toISOString().slice(0,10) — que converte pra UTC e mostra o dia seguinte
+// entre ~21h e meia-noite no horário de Brasília — isso aqui nunca pula de dia.
+function localDateStr(d){
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+
+function todayStr(){
+  return localDateStr(new Date());
+}
+
+function daysInMonth(y, m){
+  return new Date(y, m + 1, 0).getDate();
 }
 
 function fmtMoney(v){
@@ -664,11 +680,17 @@ function timeGreeting(){
   if(h < 18) return "Boa tarde";
   return "Boa noite";
 }
+var _greetingPhrase = null;
 function renderGreeting(){
-  var phrase = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
+  // Sorteada uma vez por sessão, não a cada render — senão a frase trocava
+  // sozinha na tela toda vez que algo sem relação nenhuma (ex: trocar
+  // Despesa/Receita) disparava um re-render do dashboard.
+  if(_greetingPhrase === null){
+    _greetingPhrase = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
+  }
   return '<div class="greet-card">' +
     '<div class="greet-hello">' + timeGreeting() + '! 👋</div>' +
-    '<div class="greet-phrase">' + phrase + '</div>' +
+    '<div class="greet-phrase">' + _greetingPhrase + '</div>' +
   '</div>';
 }
 
@@ -684,6 +706,7 @@ function renderDashboard(){
   html += '' +
     '<div class="card">' +
       '<div class="eyebrow">Lançamento rápido</div>' +
+      (state.txSaveError ? '<div class="ai-error">Não consegui salvar (' + escapeHtml(state.txSaveError) + '). Tenta de novo.</div>' : '') +
       '<div class="form-row type-toggle">' +
         '<button class="type-btn despesa ' + (formState.type==="despesa"?"active":"") + '" data-quicktype="despesa">Despesa</button>' +
         '<button class="type-btn receita ' + (formState.type==="receita"?"active":"") + '" data-quicktype="receita">Receita</button>' +
@@ -701,6 +724,8 @@ function renderDashboard(){
       '</div>' +
       '<button class="btn-submit" id="btnDashQuickAdd">Adicionar</button>' +
     '</div>';
+
+  html += renderPriceAlert();
 
   html += '' +
     '<div class="card">' +
@@ -794,7 +819,7 @@ function renderCategoryBreakdown(monthTxs){
   return '<div class="card"><div class="eyebrow">Gastos por categoria</div>' +
     rows.map(function(r){
       return '<div class="cat-row">' +
-        '<div class="cat-head"><span class="nm">' + (CAT_ICON[r.cat]||"📦") + ' ' + r.cat + '</span><span class="vl">' + fmtMoney(r.val) + '</span></div>' +
+        '<div class="cat-head"><span class="nm">' + (CAT_ICON[r.cat]||"📦") + ' ' + escapeHtml(r.cat) + '</span><span class="vl">' + fmtMoney(r.val) + '</span></div>' +
         '<div class="bar"><i style="width:' + Math.max(4, Math.round(r.val/max*100)) + '%"></i></div>' +
       '</div>';
     }).join("") + '</div>';
@@ -876,7 +901,7 @@ function renderOverLimitAlert(){
   return '<div class="card alert-card">' +
     '<div class="eyebrow" style="color:var(--fe)">⚠️ Limite estourado</div>' +
     over.map(function(l){
-      return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[l.category]||"📦") + ' ' + l.category +
+      return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[l.category]||"📦") + ' ' + escapeHtml(l.category) +
         ' — <span style="color:var(--fe)">' + fmtMoney(monthSpentByCat(l.category)) + '</span> de ' + fmtMoney(Number(l.monthly_limit)) + '</div>';
     }).join("") + '</div>';
 }
@@ -899,7 +924,7 @@ function analysisTxs(){
   if(period === "last30"){
     var cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - 29);
-    var cutoffStr = cutoff.toISOString().slice(0,10);
+    var cutoffStr = localDateStr(cutoff);
     return state.txs.filter(function(t){ return (t.date || "") >= cutoffStr; });
   }
   return txsOfMonth(thisMonth());
@@ -1027,7 +1052,7 @@ function renderTopTxList(list, color){
       '<div class="top-tx-rank">' + (i+1) + '</div>' +
       '<div class="top-tx-info">' +
         '<div class="top-tx-desc">' + (CAT_ICON[t.category]||"📦") + ' ' + escapeHtml(t.description || t.category) + '</div>' +
-        '<div class="top-tx-meta">' + (t.category || "Outros") + ' · ' + formatDate(t.date) + '</div>' +
+        '<div class="top-tx-meta">' + escapeHtml(t.category || "Outros") + ' · ' + formatDate(t.date) + '</div>' +
       '</div>' +
       '<div class="top-tx-val" style="color:' + color + '">' + fmtMoney(Number(t.value)) + '</div>' +
     '</div>';
@@ -1239,7 +1264,7 @@ function renderTxList(list){
         '<div class="tx-cat">' + (CAT_ICON[t.category] || "📦") + '</div>' +
         '<div class="tx-info">' +
           '<div class="tx-desc">' + escapeHtml(t.description || t.category) + '</div>' +
-          '<div class="tx-meta">' + (t.category || "Outros") + ' · ' + formatDate(t.date) + '</div>' +
+          '<div class="tx-meta">' + escapeHtml(t.category || "Outros") + ' · ' + formatDate(t.date) + '</div>' +
         '</div>' +
         '<div class="tx-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(Number(t.value)) + '</div>' +
         '<div class="tx-actions">' +
@@ -1253,10 +1278,10 @@ function renderTxList(list){
 }
 
 /* ── Lançamentos ── */
-var formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: new Date().toISOString().slice(0,10), cardId: "" };
+var formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: todayStr(), cardId: "" };
 
 function resetForm(){
-  formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: new Date().toISOString().slice(0,10), cardId: "" };
+  formState = { editingId: null, type: "despesa", category: "Outros", description: "", value: "", date: todayStr(), cardId: "" };
 }
 
 function filteredTxs(){
@@ -1274,6 +1299,7 @@ function renderLancamentos(){
   return '' +
     '<div class="card">' +
       '<div class="eyebrow">' + (editing ? 'Editar lançamento <span class="edit-badge">editando</span>' : 'Novo lançamento') + '</div>' +
+      (state.txSaveError ? '<div class="ai-error">Não consegui salvar (' + escapeHtml(state.txSaveError) + '). Tenta de novo.</div>' : '') +
       '<div class="form-row type-toggle">' +
         '<button class="type-btn despesa ' + (formState.type==="despesa"?"active":"") + '" data-type="despesa">Despesa</button>' +
         '<button class="type-btn receita ' + (formState.type==="receita"?"active":"") + '" data-type="receita">Receita</button>' +
@@ -1528,7 +1554,7 @@ function parseDelimited(text){
     var date = parseDateStr(rawDate);
     if(!date){
       if(hasHeader && idx.date !== -1) return;
-      date = new Date().toISOString().slice(0,10);
+      date = todayStr();
     }
     var type = /receita|income|credito|cr[eé]dito|entrada/i.test(rawType) ? "receita" :
       (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" : (value < 0 ? "despesa" : "receita"));
@@ -1645,7 +1671,7 @@ function confirmImport(){
       user_id: uid(), type: r.type === "receita" ? "receita" : "despesa",
       category: allCategories().indexOf(r.category) !== -1 ? r.category : "Outros",
       description: r.description || "Importado", value: isNaN(value) ? 0 : Math.abs(value),
-      date: r.date || new Date().toISOString().slice(0,10)
+      date: r.date || todayStr()
     };
   }).filter(function(p){ return p.value > 0; });
   if(!payloads.length) return;
@@ -1688,6 +1714,7 @@ var limitForm = { category: "Alimentação", value: "" };
 function renderLimites(){
   var avail = allExpenseCats();
   return '' +
+    (state.limitSaveError ? '<div class="card"><div class="ai-error">Não consegui salvar o limite (' + escapeHtml(state.limitSaveError) + '). Tenta de novo.</div></div>' : '') +
     '<div class="card">' +
       '<div class="eyebrow">Definir limite mensal</div>' +
       '<div class="form-row">' +
@@ -1718,7 +1745,7 @@ function renderLimitList(){
     var barColor = over ? "var(--fe)" : (pct >= 80 ? "var(--fa)" : "var(--fs)");
     return '<div class="lim-item">' +
       '<div class="lim-top">' +
-        '<span class="lim-name">' + (CAT_ICON[l.category]||"📦") + ' ' + l.category + '</span>' +
+        '<span class="lim-name">' + (CAT_ICON[l.category]||"📦") + ' ' + escapeHtml(l.category) + '</span>' +
         '<span class="lim-vals' + (over?" lim-over":"") + '"><b>' + fmtMoney(spent) + '</b> / ' + fmtMoney(limit) +
           '<button class="lim-del" data-dellim="' + l.id + '">✕</button></span>' +
       '</div>' +
@@ -1732,6 +1759,7 @@ var goalForm = { name: "", emoji: "🎯", target: "", deadline: "" };
 
 function renderMetas(){
   return '' +
+    (state.goalSaveError ? '<div class="card"><div class="ai-error">Não consegui salvar a meta (' + escapeHtml(state.goalSaveError) + '). Tenta de novo.</div></div>' : '') +
     '<div class="card">' +
       '<div class="eyebrow">Nova meta</div>' +
       '<div class="form-row">' +
@@ -1767,7 +1795,7 @@ function renderMetas(){
 function investSuggestion(g){
   var months = null;
   if(g.deadline){
-    var days = daysBetween(new Date().toISOString().slice(0,10), g.deadline);
+    var days = daysBetween(todayStr(), g.deadline);
     months = days / 30;
   }
   if(months !== null && months <= 6){
@@ -1800,7 +1828,7 @@ function goalProjection(g){
   var movs = state.goalMovements.filter(function(m){ return m.goal_id === g.id; });
   if(!movs.length) return { hasRate: false };
   var sorted = movs.slice().sort(function(a,b){ return (a.date||"") < (b.date||"") ? -1 : 1; });
-  var monthsElapsed = Math.max(1, daysBetween(sorted[0].date, new Date().toISOString().slice(0,10)) / 30);
+  var monthsElapsed = Math.max(1, daysBetween(sorted[0].date, todayStr()) / 30);
   var net = movs.reduce(function(s,m){ return s + (m.type === "deposito" ? Number(m.amount) : -Number(m.amount)); }, 0);
   var avgMonthly = net / monthsElapsed;
   if(avgMonthly <= 0) return { hasRate: false };
@@ -1944,7 +1972,7 @@ function renderRecurringSuggestions(){
       return '<div class="recurring-item">' +
         '<div class="fixed-info">' +
           '<div class="fixed-desc">' + (CAT_ICON[c.category]||"📦") + ' ' + escapeHtml(c.description) + '</div>' +
-          '<div class="fixed-meta">' + c.category + ' · todo dia ~' + c.day + ' · ' + c.months + ' meses seguidos</div>' +
+          '<div class="fixed-meta">' + escapeHtml(c.category) + ' · todo dia ~' + c.day + ' · ' + c.months + ' meses seguidos</div>' +
         '</div>' +
         '<div class="fixed-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(c.value) + '</div>' +
         '<button type="button" class="recurring-add" data-addrecurring="' + escapeHtml(c.key) + '">Adicionar</button>' +
@@ -1977,6 +2005,7 @@ function renderFixas(){
   return '' +
     renderRecurringSuggestions() +
     renderPriceAlert() +
+    (state.fixedSaveError ? '<div class="card"><div class="ai-error">Não consegui salvar a conta fixa (' + escapeHtml(state.fixedSaveError) + '). Tenta de novo.</div></div>' : '') +
     '<div class="card">' +
       '<div class="eyebrow">Nova conta fixa</div>' +
       '<div class="form-row type-toggle">' +
@@ -2020,7 +2049,7 @@ function renderFixedList(){
       '<div class="tx-cat">' + (CAT_ICON[f.category]||"📦") + '</div>' +
       '<div class="fixed-info">' +
         '<div class="fixed-desc">' + escapeHtml(f.description) + '</div>' +
-        '<div class="fixed-meta">' + f.category + ' · todo dia ' + f.day_of_month + '</div>' +
+        '<div class="fixed-meta">' + escapeHtml(f.category) + ' · todo dia ' + f.day_of_month + '</div>' +
       '</div>' +
       '<div class="fixed-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(Number(f.value)) + '</div>' +
       '<button class="btn-launch' + (launched?" done":"") + '" data-launch="' + f.id + '"' + (launched?" disabled":"") + '>' + (launched?"✓ Lançado":"Lançar mês") + '</button>' +
@@ -2035,15 +2064,19 @@ var cardForm = { name: "", limitValue: "", closingDay: "5", dueDay: "10" };
 function currentInvoicePeriod(closingDay){
   var now = new Date();
   var y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+  // Fecha em dias 29-31 não existem em todo mês (fev, e abr/jun/set/nov com
+  // 30 dias) — sem o clamp, new Date(y, m, 31) num mês de 30 dias transborda
+  // pro dia 1 do mês seguinte e desloca o período da fatura inteiro.
+  var closeThis = Math.min(closingDay, daysInMonth(y, m));
   var start, end;
-  if(d <= closingDay){
-    end = new Date(y, m, closingDay);
-    start = new Date(y, m - 1, closingDay + 1);
+  if(d <= closeThis){
+    end = new Date(y, m, closeThis);
+    start = new Date(y, m - 1, Math.min(closingDay, daysInMonth(y, m - 1)) + 1);
   } else {
-    start = new Date(y, m, closingDay + 1);
-    end = new Date(y, m + 1, closingDay);
+    start = new Date(y, m, closeThis + 1);
+    end = new Date(y, m + 1, Math.min(closingDay, daysInMonth(y, m + 1)));
   }
-  return { start: start.toISOString().slice(0,10), end: end.toISOString().slice(0,10) };
+  return { start: localDateStr(start), end: localDateStr(end) };
 }
 
 function cardInvoiceTotal(cardId, closingDay){
@@ -2075,7 +2108,7 @@ function renderCartoes(){
         buildDaySelect("cardDueDay", cardForm.dueDay) +
       '</div>' +
       '<button class="btn-submit" id="btnSaveCard">Adicionar cartão</button>' +
-      (state.cardsError ? '<div class="ai-error" style="margin-top:10px">Não consegui carregar seus cartões (' + escapeHtml(state.cardsError) + '). Verifique se a tabela credit_cards foi criada no Supabase (supabase/07_credit_cards.sql).</div>' : '') +
+      (state.cardsError ? '<div class="ai-error" style="margin-top:10px">Não consegui carregar seus cartões (' + escapeHtml(state.cardsError) + '). Tenta recarregar a página.</div>' : '') +
     '</div>' +
     '<div class="card">' +
       '<div class="eyebrow">Seus cartões</div>' +
@@ -2112,12 +2145,13 @@ function resetDebtForm(){
 }
 
 function renderDividas(){
-  var totalRemaining = state.debts.reduce(function(s,d){ return s + Number(d.remaining_value); }, 0);
-  var totalMonthly = state.debts.reduce(function(s,d){ return s + Number(d.monthly_payment); }, 0);
+  var activeDebts = state.debts.filter(function(d){ return Number(d.remaining_value) > 0; });
+  var totalRemaining = activeDebts.reduce(function(s,d){ return s + Number(d.remaining_value); }, 0);
+  var totalMonthly = activeDebts.reduce(function(s,d){ return s + Number(d.monthly_payment); }, 0);
   var html = '';
 
   if(state.debtsError){
-    html += '<div class="card"><div class="ai-error">Não consegui carregar suas dívidas (' + escapeHtml(state.debtsError) + '). Verifique se a tabela debts foi criada no Supabase (supabase/09_debts.sql).</div></div>';
+    html += '<div class="card"><div class="ai-error">Não consegui carregar suas dívidas (' + escapeHtml(state.debtsError) + '). Tenta recarregar a página.</div></div>';
   }
 
   if(state.debts.length){
@@ -2125,8 +2159,12 @@ function renderDividas(){
       '<div class="eyebrow">Resumo</div>' +
       '<div class="import-summary" style="margin-top:0">Total devido: <b>' + fmtMoney(totalRemaining) + '</b></div>' +
       '<div class="import-summary">Parcelas/mês: <b>' + fmtMoney(totalMonthly) + '</b></div>' +
-      '<div class="import-summary">' + state.debts.length + ' dívida(s) cadastrada(s)</div>' +
+      '<div class="import-summary">' + activeDebts.length + ' dívida(s) ativa(s) · ' + state.debts.length + ' cadastrada(s) no total</div>' +
     '</div>';
+  }
+
+  if(state.debtSaveError){
+    html += '<div class="card"><div class="ai-error">Não consegui salvar a dívida (' + escapeHtml(state.debtSaveError) + '). Tenta de novo.</div></div>';
   }
 
   html += '<div class="card">' +
@@ -2267,8 +2305,14 @@ function simulateDebtPayoff(debtsInput, extraMonthly, strategy){
         d.remaining -= pay;
         budgetLeft -= pay;
       }
-      if(d.remaining <= 0.01 && payoffOrder.indexOf(d.name) === -1) payoffOrder.push(d.name);
     }
+    // Passo separado, fora do for acima: uma dívida pode ter zerado só com o
+    // pagamento mínimo (antes do extra) e o for de orçamento extra pode nem
+    // chegar a visitá-la (se acabar o budget antes ou se extraMonthly for 0) —
+    // sem isso, ela quitava mas nunca entrava no payoffOrder.
+    order.forEach(function(d){
+      if(d.remaining <= 0.01 && payoffOrder.indexOf(d.name) === -1) payoffOrder.push(d.name);
+    });
   }
   return { months: months, totalInterest: totalInterest, order: payoffOrder, maxedOut: months>=maxMonths };
 }
@@ -2308,19 +2352,20 @@ function saveDebt(){
   var rate = parseFloat(debtForm.interestRate) || 0;
   var payment = parseFloat(debtForm.monthlyPayment) || 0;
   var dueDay = parseInt(debtForm.dueDay, 10);
-  if(!name || total <= 0) return;
+  if(!name || total <= 0 || remaining > total) return;
   var payload = {
     user_id: uid(), name: name, category: debtForm.category, total_value: total,
     remaining_value: remaining, interest_rate: rate, monthly_payment: payment,
     due_day: (dueDay >= 1 && dueDay <= 31) ? dueDay : null
   };
+  state.debtSaveError = null;
   db("debts", "POST", payload).then(function(rows){
     if(rows && rows[0]) state.debts.push(rows[0]);
     resetDebtForm();
     state.debtSim = null;
     render();
   }).catch(function(err){
-    state.debtsError = (err && err.message) || "Erro desconhecido";
+    state.debtSaveError = (err && err.message) || "Erro desconhecido";
     render();
   });
 }
@@ -2333,10 +2378,10 @@ function deleteDebt(id){
 }
 
 /* ── Racha ── */
-var splitForm = { description: "", category: "Outros", date: new Date().toISOString().slice(0,10), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
+var splitForm = { description: "", category: "Outros", date: todayStr(), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
 
 function resetSplitForm(){
-  splitForm = { description: "", category: "Outros", date: new Date().toISOString().slice(0,10), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
+  splitForm = { description: "", category: "Outros", date: todayStr(), total: "", participants: [{ name: "", value: "" }, { name: "", value: "" }] };
 }
 
 function renderSplitParticipantRows(){
@@ -2351,6 +2396,7 @@ function renderSplitParticipantRows(){
 
 function renderRacha(){
   return '' +
+    (state.splitError ? '<div class="card"><div class="ai-error">Não consegui salvar a racha (' + escapeHtml(state.splitError) + '). Tenta de novo.</div></div>' : '') +
     '<div class="card">' +
       '<div class="eyebrow">Nova racha</div>' +
       '<div class="form-row">' +
@@ -2393,7 +2439,7 @@ function renderSplitList(){
         '<span class="split-name">' + (CAT_ICON[s.category]||"📦") + ' ' + escapeHtml(s.description) + '</span>' +
         '<button class="split-del" data-delsplit="' + s.id + '">✕</button>' +
       '</div>' +
-      '<div class="split-meta">' + s.category + ' · ' + formatDate(s.date) + ' · total ' + fmtMoney(Number(s.total_value)) + '</div>' +
+      '<div class="split-meta">' + escapeHtml(s.category) + ' · ' + formatDate(s.date) + ' · total ' + fmtMoney(Number(s.total_value)) + '</div>' +
       (pending > 0
         ? '<div class="split-meta" style="color:var(--fe);font-weight:700;margin-top:2px">Pendente: ' + fmtMoney(pending) + '</div>'
         : '<div class="split-meta" style="color:var(--fs);font-weight:700;margin-top:2px">Tudo pago ✓</div>') +
@@ -2452,18 +2498,29 @@ function saveSplit(){
     user_id: uid(), description: splitForm.description, category: splitForm.category,
     total_value: total, date: splitForm.date
   };
+  state.splitError = null;
   db("splits", "POST", payload).then(function(rows){
     var split = rows && rows[0];
-    if(!split) return;
+    if(!split) return Promise.reject(new Error("Falha ao criar a racha"));
     var participantsPayload = valid.map(function(p){
       return { user_id: uid(), split_id: split.id, name: p.name, value: parseFloat(p.value) };
     });
-    db("split_participants", "POST", participantsPayload).then(function(prows){
+    return db("split_participants", "POST", participantsPayload).then(function(prows){
       state.splits.unshift(split);
       state.splitParticipants = state.splitParticipants.concat(prows || []);
       resetSplitForm();
       render();
+    }).catch(function(err){
+      // A racha foi criada mas os participantes falharam — desfaz pra não
+      // sobrar uma racha órfã sem ninguém, e pra permitir tentar de novo
+      // sem risco de duplicar a racha em si.
+      return db("splits", "DELETE", null, { id: "eq." + split.id, user_id: "eq." + uid() }).catch(function(){}).then(function(){
+        throw err;
+      });
     });
+  }).catch(function(err){
+    state.splitError = (err && err.message) || "Erro desconhecido";
+    render();
   });
 }
 
@@ -2701,10 +2758,12 @@ function deleteCustomCategory(id){
 function deleteAllTransactions(){
   if(!window.confirm("Isso vai apagar TODOS os seus lançamentos (receitas e despesas). Limites, metas, contas fixas e categorias não são afetados. Essa ação não pode ser desfeita. Continuar?")) return;
   if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
+  var receiptPaths = state.txs.map(function(t){ return t.receipt_path; }).filter(Boolean);
   db("transactions", "DELETE", null, { user_id: "eq." + uid() }).then(function(){
     state.txs = [];
     state.configMsg = "Todos os lançamentos foram excluídos.";
     render();
+    receiptPaths.forEach(deleteReceiptObject);
   }).catch(function(err){
     state.configMsg = "Não consegui apagar os lançamentos (" + (err && err.message ? err.message : "erro") + "). Tenta de novo.";
     render();
@@ -2712,12 +2771,14 @@ function deleteAllTransactions(){
 }
 
 function deleteAllData(){
-  if(!window.confirm("Isso vai apagar TODOS os seus lançamentos, limites, metas, contas fixas, cartões, rachas e categorias. Essa ação não pode ser desfeita. Continuar?")) return;
+  if(!window.confirm("Isso vai apagar TODOS os seus lançamentos, limites, metas, contas fixas, cartões, dívidas, rachas e categorias. Essa ação não pode ser desfeita. Continuar?")) return;
   if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
-  var tables = ["transactions", "spending_limits", "goals", "fixed_accounts", "splits", "categories"];
+  var receiptPaths = state.txs.map(function(t){ return t.receipt_path; }).filter(Boolean);
+  var tables = ["transactions", "spending_limits", "goals", "fixed_accounts", "splits", "categories", "debts"];
   Promise.all(tables.map(function(t){
     return db(t, "DELETE", null, { user_id: "eq." + uid() });
   })).then(function(){
+    receiptPaths.forEach(deleteReceiptObject);
     return db("credit_cards", "DELETE", null, { user_id: "eq." + uid() }).catch(function(){});
   }).then(function(){
     return Auth.logout(currentSession.access_token);
@@ -2778,14 +2839,31 @@ function bindContentEvents(){
       state.tab = "dividas";
       render();
     });
+    var btnDismissPriceAlertDash = document.getElementById("btnDismissPriceAlert");
+    if(btnDismissPriceAlertDash) btnDismissPriceAlertDash.addEventListener("click", dismissPriceAlert);
     document.querySelectorAll("[data-quicktype]").forEach(function(btn){
-      btn.addEventListener("click", function(){ formState.type = btn.dataset.quicktype; render(); });
+      btn.addEventListener("click", function(){
+        formState.value = document.getElementById("dashQuickValue").value;
+        formState.description = document.getElementById("dashQuickDesc").value;
+        formState.category = document.getElementById("dashQuickCategory").value;
+        formState.type = btn.dataset.quicktype;
+        render();
+      });
     });
     var btnDashQuickAdd = document.getElementById("btnDashQuickAdd");
     if(btnDashQuickAdd) btnDashQuickAdd.addEventListener("click", function(){
+      // Lançamento rápido do dashboard sempre cria uma transação nova — nunca
+      // deve herdar um editingId deixado por uma edição iniciada em Lançamentos
+      // e abandonada sem salvar/cancelar (o que faria um PATCH silencioso
+      // sobrescrever a transação antiga em vez de criar uma nova).
+      formState.editingId = null;
       formState.value = document.getElementById("dashQuickValue").value;
       formState.description = document.getElementById("dashQuickDesc").value;
       formState.category = document.getElementById("dashQuickCategory").value;
+      // O quick-add não mostra um campo de data — sem isso, uma sessão de
+      // PWA que atravessa a meia-noite continuava lançando tudo com a data
+      // de quando a página abriu, e não a de agora.
+      formState.date = todayStr();
       saveTransaction();
     });
   }
@@ -2810,7 +2888,16 @@ function bindContentEvents(){
   }
   if(state.tab === "lancamentos"){
     document.querySelectorAll(".type-btn").forEach(function(btn){
-      btn.addEventListener("click", function(){ formState.type = btn.dataset.type; render(); });
+      btn.addEventListener("click", function(){
+        formState.value = document.getElementById("fValue").value;
+        formState.category = document.getElementById("fCategory").value;
+        formState.description = document.getElementById("fDescription").value;
+        formState.date = document.getElementById("fDate").value;
+        var cardSel = document.getElementById("fCardId");
+        formState.cardId = cardSel ? cardSel.value : "";
+        formState.type = btn.dataset.type;
+        render();
+      });
     });
     document.getElementById("btnAddTx").addEventListener("click", function(){
       formState.value = document.getElementById("fValue").value;
@@ -3067,6 +3154,7 @@ function saveTransaction(){
     date: formState.date
   };
   if(state.cards.length) fields.card_id = formState.type === "despesa" ? (formState.cardId || null) : null;
+  state.txSaveError = null;
   if(formState.editingId){
     var id = formState.editingId;
     var original = state.txs.filter(function(t){ return t.id === id; })[0];
@@ -3087,6 +3175,9 @@ function saveTransaction(){
       }
       checkPriceAnomaly(fields.type, fields.description, fields.value, id);
       render();
+    }).catch(function(err){
+      state.txSaveError = (err && err.message) || "Erro desconhecido";
+      render();
     });
   } else {
     var payload = Object.assign({ user_id: uid() }, fields);
@@ -3095,6 +3186,9 @@ function saveTransaction(){
       sortTxs();
       formState.value = ""; formState.description = "";
       checkPriceAnomaly(fields.type, fields.description, fields.value, rows && rows[0] && rows[0].id);
+      render();
+    }).catch(function(err){
+      state.txSaveError = (err && err.message) || "Erro desconhecido";
       render();
     });
   }
@@ -3204,7 +3298,7 @@ function uploadReceipt(file, txId){
     render();
   }).catch(function(err){
     state.receiptUploadingId = null;
-    state.receiptMsg = "Não consegui anexar o comprovante (" + (err && err.message ? err.message : "erro") + "). Verifique se rodou supabase/08_receipts.sql.";
+    state.receiptMsg = "Não consegui anexar o comprovante (" + (err && err.message ? err.message : "erro") + "). Tenta de novo.";
     render();
   });
 }
@@ -3230,15 +3324,22 @@ function saveLimit(){
   if(isNaN(value) || value < 0) return;
   var cat = limitForm.category;
   var existing = state.limits.filter(function(l){ return l.category === cat; })[0];
+  state.limitSaveError = null;
   if(existing){
     db("spending_limits", "PATCH", { monthly_limit: value }, { id: "eq." + existing.id, user_id: "eq." + uid() }).then(function(rows){
       existing.monthly_limit = value;
       limitForm.value = ""; render();
+    }).catch(function(err){
+      state.limitSaveError = (err && err.message) || "Erro desconhecido";
+      render();
     });
   } else {
     db("spending_limits", "POST", { user_id: uid(), category: cat, monthly_limit: value }).then(function(rows){
       if(rows && rows[0]) state.limits.push(rows[0]);
       limitForm.value = ""; render();
+    }).catch(function(err){
+      state.limitSaveError = (err && err.message) || "Erro desconhecido";
+      render();
     });
   }
 }
@@ -3257,9 +3358,13 @@ function saveGoal(){
     user_id: uid(), name: goalForm.name, emoji: goalForm.emoji,
     target: target, deadline: goalForm.deadline || null
   };
+  state.goalSaveError = null;
   db("goals", "POST", payload).then(function(rows){
     if(rows && rows[0]) state.goals.push(rows[0]);
     goalForm = { name: "", emoji: "🎯", target: "", deadline: "" };
+    render();
+  }).catch(function(err){
+    state.goalSaveError = (err && err.message) || "Erro desconhecido";
     render();
   });
 }
@@ -3277,7 +3382,7 @@ function addToGoal(id, amountStr, direction){
   render();
   db("goals", "PATCH", { saved: newSaved }, { id: "eq." + id, user_id: "eq." + uid() });
   if(movedAmount > 0){
-    var mov = { user_id: uid(), goal_id: id, amount: movedAmount, type: sub ? "retirada" : "deposito", date: new Date().toISOString().slice(0,10) };
+    var mov = { user_id: uid(), goal_id: id, amount: movedAmount, type: sub ? "retirada" : "deposito", date: todayStr() };
     db("goal_movements", "POST", mov).then(function(rows){
       if(rows && rows[0]) state.goalMovements.unshift(rows[0]);
       render();
@@ -3309,9 +3414,13 @@ function saveFixed(){
     user_id: uid(), type: fixedForm.type, description: fixedForm.description,
     category: fixedForm.category, value: value, day_of_month: day
   };
+  state.fixedSaveError = null;
   db("fixed_accounts", "POST", payload).then(function(rows){
     if(rows && rows[0]) state.fixed.push(rows[0]);
     fixedForm = { type: "despesa", description: "", category: "Outros", value: "", dayOfMonth: "1" };
+    render();
+  }).catch(function(err){
+    state.fixedSaveError = (err && err.message) || "Erro desconhecido";
     render();
   });
 }
@@ -3336,7 +3445,7 @@ function launchFixed(id){
   var months = (f.launched_months || []).concat([ym]);
   var txPayload = {
     user_id: uid(), type: f.type, category: f.category,
-    description: f.description, value: Number(f.value), date: new Date().toISOString().slice(0,10)
+    description: f.description, value: Number(f.value), date: todayStr()
   };
   Promise.all([
     db("transactions", "POST", txPayload),
@@ -3392,15 +3501,28 @@ function deleteCard(id){
   db("credit_cards", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(){});
 }
 
+// loadCards/loadDebts rodam em paralelo com loadData no login e podem
+// terminar bem depois dela — se o usuário já começou a digitar em algum
+// formulário quando a resposta chega, um render() aqui recriava o DOM
+// inteiro da aba atual e derrubava o que a pessoa tinha acabado de digitar.
+// Se o foco estiver num campo de formulário, adia o render: o estado já foi
+// atualizado e aparece na próxima renderização natural (submit, troca de aba etc).
+function isTypingInForm(){
+  var el = document.activeElement;
+  var content = document.getElementById("content");
+  return !!el && !!content && content.contains(el) &&
+    (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA");
+}
+
 function loadCards(){
   db("credit_cards", "GET", null, { user_id: "eq." + uid(), order: "created_at.asc" }).then(function(rows){
     state.cards = rows || [];
     state.cardsError = null;
-    render();
+    if(!isTypingInForm()) render();
   }).catch(function(err){
     state.cards = [];
     state.cardsError = (err && err.message) || "Erro desconhecido";
-    render();
+    if(!isTypingInForm()) render();
   });
 }
 
@@ -3408,11 +3530,11 @@ function loadDebts(){
   db("debts", "GET", null, { user_id: "eq." + uid(), order: "created_at.asc" }).then(function(rows){
     state.debts = rows || [];
     state.debtsError = null;
-    render();
+    if(!isTypingInForm()) render();
   }).catch(function(err){
     state.debts = [];
     state.debtsError = (err && err.message) || "Erro desconhecido";
-    render();
+    if(!isTypingInForm()) render();
   });
 }
 
@@ -3615,6 +3737,11 @@ document.getElementById("btnLogoutNav").addEventListener("click", function(){
 });
 document.querySelectorAll(".tab-btn").forEach(function(btn){
   btn.addEventListener("click", function(){
+    // Sair de Lançamentos com uma edição em andamento (sem salvar/cancelar)
+    // cancela a edição — senão o formState.editingId ficava "vazando" pra
+    // outras abas e um lançamento rápido em outro lugar acabava dando PATCH
+    // na transação antiga em vez de criar uma nova.
+    if(formState.editingId && btn.dataset.tab !== "lancamentos") resetForm();
     state.tab = btn.dataset.tab;
     render();
     document.getElementById("navMenu").classList.remove("open");
