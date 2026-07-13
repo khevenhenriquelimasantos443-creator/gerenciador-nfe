@@ -404,6 +404,10 @@ var WHATSAPP_GREETING = "Oi, Finn! 👋 Vim pelo app, bora organizar minhas fina
 // bot até a conta ser reativada, pra não confundir quem for testar o app.
 // Volta pra true assim que a Meta reativar a conta.
 var WHATSAPP_BOT_ENABLED = false;
+// Estrutura de planos (checkout, gates) já está pronta, mas a cobrança só
+// começa mês que vem — enquanto isso, todo mundo usa como se fosse Pro.
+// Vira true quando for a hora de cobrar de verdade.
+var PREMIUM_ENFORCEMENT_ENABLED = false;
 function whatsappBotLink(){
   return "https://wa.me/" + WHATSAPP_BOT_NUMBER + "?text=" + encodeURIComponent(WHATSAPP_GREETING);
 }
@@ -635,6 +639,7 @@ function escapeHtml(s){
 }
 
 function isPremium(){
+  if(!PREMIUM_ENFORCEMENT_ENABLED) return true;
   return state.plan === "plus" || state.plan === "pro";
 }
 

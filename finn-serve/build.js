@@ -588,6 +588,10 @@ async function checkExpiredSubscriptions(env) {
 const worker = `${pluggyFns}
 ${pushFns}
 ${billingFns}
+// Estrutura de planos já está pronta, mas a cobrança só começa mês que
+// vem — enquanto isso, ninguém é bloqueado. Vira true quando for a hora.
+var PREMIUM_ENFORCEMENT_ENABLED = false;
+
 export default {
   async fetch(request, env) {
     var url = new URL(request.url);
@@ -793,7 +797,7 @@ h1 em{font-style:normal;color:#F97316}
           });
         }
         var aiSub = await _subaGetSubscription(aiUser.id, env);
-        var aiPlan = (aiSub && aiSub.plan) || 'free';
+        var aiPlan = PREMIUM_ENFORCEMENT_ENABLED ? ((aiSub && aiSub.plan) || 'free') : 'pro';
         if (aiPlan === 'free') {
           return new Response(JSON.stringify({ error: { type: 'premium_required', message: 'Finn IA é um recurso Plus/Pro — assine pra usar.' } }), {
             status: 402, headers: { 'Content-Type': 'application/json' }

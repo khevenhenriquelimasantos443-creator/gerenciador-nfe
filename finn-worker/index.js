@@ -16,6 +16,10 @@
 
 const META_API_VERSION = "v19.0";
 
+// Estrutura de planos já está pronta, mas a cobrança só começa mês que
+// vem — enquanto isso, ninguém é bloqueado no bot. Vira true quando for a hora.
+const PREMIUM_ENFORCEMENT_ENABLED = false;
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -296,6 +300,7 @@ const BOT_FEATURE_MIN_PLAN = {
 };
 
 function botPlanAllows(plan, feature) {
+  if (!PREMIUM_ENFORCEMENT_ENABLED) return true;
   const required = BOT_FEATURE_MIN_PLAN[feature];
   if (!required) return true; // não listado = sempre liberado (ex: lançar gasto)
   return (BOT_PLAN_RANK[plan] || 0) >= BOT_PLAN_RANK[required];
@@ -1175,7 +1180,7 @@ async function sendDailyDashboards(env) {
     try {
       const data=await getUserData(phone,env);
       if (!data?.txs?.length) continue;
-      if ((data.plan || "free") !== "pro") continue;
+      if (PREMIUM_ENFORCEMENT_ENABLED && (data.plan || "free") !== "pro") continue;
       await sendText(phone,buildDashboardMessage(data,env),env);
     } catch(err) { console.error(`Dashboard error for ${phone}:`,err); }
   }
