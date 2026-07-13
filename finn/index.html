@@ -2369,7 +2369,7 @@ function saveDebt(){
   var rate = parseFloat(debtForm.interestRate) || 0;
   var payment = parseFloat(debtForm.monthlyPayment) || 0;
   var dueDay = parseInt(debtForm.dueDay, 10);
-  if(!name || total <= 0 || remaining > total){ render(); return; }
+  if(!name || total <= 0 || remaining < 0 || remaining > total || rate < 0 || payment < 0){ render(); return; }
   var payload = {
     user_id: uid(), name: name, category: debtForm.category, total_value: total,
     remaining_value: remaining, interest_rate: rate, monthly_payment: payment,
@@ -3566,7 +3566,7 @@ function saveCard(){
   var limitValue = parseFloat(cardForm.limitValue) || 0;
   var closingDay = parseInt(cardForm.closingDay, 10);
   var dueDay = parseInt(cardForm.dueDay, 10);
-  if(!name || !closingDay || closingDay < 1 || closingDay > 31 || !dueDay || dueDay < 1 || dueDay > 31){ render(); return; }
+  if(!name || limitValue < 0 || !closingDay || closingDay < 1 || closingDay > 31 || !dueDay || dueDay < 1 || dueDay > 31){ render(); return; }
   var payload = { user_id: uid(), name: name, limit_value: limitValue, closing_day: closingDay, due_day: dueDay };
   db("credit_cards", "POST", payload).then(function(rows){
     if(rows && rows[0]) state.cards.push(rows[0]);
