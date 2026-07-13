@@ -723,7 +723,7 @@ function renderDashboard(){
       '</div>' +
       '<div class="form-row">' +
         '<select id="dashQuickCategory">' + allCategories().map(function(c){
-          return '<option value="' + c + '"' + (c===formState.category?" selected":"") + '>' + c + '</option>';
+          return '<option value="' + escapeHtml(c) + '"' + (c===formState.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
         }).join("") + '</select>' +
       '</div>' +
       '<button class="btn-submit" id="btnDashQuickAdd">Adicionar</button>' +
@@ -829,13 +829,21 @@ function renderCategoryBreakdown(monthTxs){
     }).join("") + '</div>';
 }
 
+// Conta fixa com dia 29-31 não existe em todo mês (fev, meses de 30 dias) —
+// sem clampar pro último dia real do mês atual, o alerta de vencimento nunca
+// batia "vence hoje"/"vence em X dias" corretamente nesses meses.
+function effectiveDueDay(dayOfMonth){
+  var now = new Date();
+  return Math.min(Number(dayOfMonth), daysInMonth(now.getFullYear(), now.getMonth()));
+}
+
 function fixedDueSoon(){
   var ym = thisMonth();
   var todayDay = new Date().getDate();
   return state.fixed.filter(function(f){
     var launched = (f.launched_months || []).indexOf(ym) !== -1;
     if(launched) return false;
-    var diff = Number(f.day_of_month) - todayDay;
+    var diff = effectiveDueDay(f.day_of_month) - todayDay;
     return diff <= 5 && diff >= -5;
   }).sort(function(a,b){ return Number(a.day_of_month) - Number(b.day_of_month); });
 }
@@ -880,7 +888,7 @@ function renderFixedDueAlert(){
     html += '<div class="card alert-card">' +
       '<div class="eyebrow" style="color:var(--fe)">🔔 Contas fixas perto do vencimento</div>' +
       despesas.map(function(f){
-        var diff = Number(f.day_of_month) - todayDay;
+        var diff = effectiveDueDay(f.day_of_month) - todayDay;
         var when = diff === 0 ? "vence hoje" : (diff > 0 ? "vence em " + diff + (diff===1?" dia":" dias") : "venceu há " + Math.abs(diff) + (Math.abs(diff)===1?" dia":" dias"));
         return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[f.category]||"📦") + ' ' + escapeHtml(f.description) +
           ' — <span style="color:var(--fe)">' + fmtMoney(Number(f.value)) + '</span> · ' + when + '</div>';
@@ -890,7 +898,7 @@ function renderFixedDueAlert(){
     html += '<div class="card alert-card-income">' +
       '<div class="eyebrow" style="color:var(--fs)">💰 Receitas fixas a caminho</div>' +
       receitas.map(function(f){
-        var diff = Number(f.day_of_month) - todayDay;
+        var diff = effectiveDueDay(f.day_of_month) - todayDay;
         var when = diff === 0 ? "cai hoje" : (diff > 0 ? "cai em " + diff + (diff===1?" dia":" dias") : "deveria ter caído há " + Math.abs(diff) + (Math.abs(diff)===1?" dia":" dias"));
         return '<div style="font-size:13px;font-weight:700;margin-top:4px">' + (CAT_ICON[f.category]||"📦") + ' ' + escapeHtml(f.description) +
           ' — <span style="color:var(--fs)">' + fmtMoney(Number(f.value)) + '</span> · ' + when + '</div>';
@@ -956,7 +964,7 @@ function renderCatBars(rows, list, keyPrefix){
     var key = keyPrefix + "_" + r.cat;
     var open = state.expandedAnalysisCat === key;
     return '<div class="cat-row' + (open ? " expanded" : "") + '">' +
-      '<div class="cat-head" data-anacat="' + key + '"><span class="nm">' + (CAT_ICON[r.cat]||"📦") + ' ' + r.cat + '</span><span class="vl">' + fmtMoney(r.val) + ' · ' + r.pct.toFixed(0) + '%</span></div>' +
+      '<div class="cat-head" data-anacat="' + escapeHtml(key) + '"><span class="nm">' + (CAT_ICON[r.cat]||"📦") + ' ' + escapeHtml(r.cat) + '</span><span class="vl">' + fmtMoney(r.val) + ' · ' + r.pct.toFixed(0) + '%</span></div>' +
       '<div class="bar"><i style="width:' + Math.max(4, Math.round(r.val/max*100)) + '%;background:' + catColor(r.cat) + '"></i></div>' +
       (list ? renderAnaCatDetail(key, list, r.cat) : "") +
     '</div>';
@@ -978,7 +986,7 @@ function renderDonut(rows, list, keyPrefix){
     '</div>' +
     '<div class="donut-legend">' + rows.map(function(r){
       var key = keyPrefix + "_" + r.cat;
-      return '<span class="donut-legend-item" data-anacat="' + key + '"><i class="donut-dot" style="background:' + catColor(r.cat) + '"></i>' + r.cat + ' · ' + r.pct.toFixed(0) + '%</span>' +
+      return '<span class="donut-legend-item" data-anacat="' + escapeHtml(key) + '"><i class="donut-dot" style="background:' + catColor(r.cat) + '"></i>' + escapeHtml(r.cat) + ' · ' + r.pct.toFixed(0) + '%</span>' +
         (list ? renderAnaCatDetail(key, list, r.cat) : "");
     }).join("") + '</div>' +
   '</div>';
@@ -1076,12 +1084,12 @@ function buildRecommendations(stats){
     recos.push({ ic: "💸", text: "Você pagou " + fmtMoney(stats.jurosTotal) + " em juros/IOF — sinal de saldo devedor custando dinheiro extra." });
   }
   if(stats.topDespesaCat && stats.topDespesaCat.pct > 30 && stats.topDespesaCat.cat === "Outros"){
-    recos.push({ ic: "🏷️", text: stats.topDespesaCat.cat + " representa " + stats.topDespesaCat.pct.toFixed(0) + "% dos seus gastos — categorize esses lançamentos para ter uma análise mais precisa." });
+    recos.push({ ic: "🏷️", text: escapeHtml(stats.topDespesaCat.cat) + " representa " + stats.topDespesaCat.pct.toFixed(0) + "% dos seus gastos — categorize esses lançamentos para ter uma análise mais precisa." });
   } else if(stats.topDespesaCat && stats.topDespesaCat.pct > 30){
-    recos.push({ ic: "📊", text: stats.topDespesaCat.cat + " representa " + stats.topDespesaCat.pct.toFixed(0) + "% dos seus gastos — considere revisar esses lançamentos." });
+    recos.push({ ic: "📊", text: escapeHtml(stats.topDespesaCat.cat) + " representa " + stats.topDespesaCat.pct.toFixed(0) + "% dos seus gastos — considere revisar esses lançamentos." });
     var hasLimit = state.limits.some(function(l){ return l.category === stats.topDespesaCat.cat; });
     if(!hasLimit){
-      recos.push({ ic: "🎯", text: "Crie um limite mensal para " + stats.topDespesaCat.cat + " na aba Limites para controlar melhor esse gasto." });
+      recos.push({ ic: "🎯", text: "Crie um limite mensal para " + escapeHtml(stats.topDespesaCat.cat) + " na aba Limites para controlar melhor esse gasto." });
     }
   }
   if(!recos.length){
@@ -1126,7 +1134,7 @@ function renderHealthDetailRows(stats){
     '<div class="goal-hist-row"><span class="h-date">Entrada média por dia</span><span style="font-weight:800">' + fmtMoney(stats.avgReceitaDia) + '</span></div>' +
     '<div class="goal-hist-row"><span class="h-date">Relação saída/entrada</span><span style="font-weight:800">' + (stats.razao === null ? "—" : stats.razao.toFixed(2) + "x") + '</span></div>' +
     stats.despesaCats.slice(0, 3).map(function(c){
-      return '<div class="goal-hist-row"><span class="h-date">' + (CAT_ICON[c.cat]||"📦") + ' ' + c.cat + '</span><span style="font-weight:800;color:var(--fe)">' + fmtMoney(c.val) + ' · ' + c.pct.toFixed(0) + '%</span></div>';
+      return '<div class="goal-hist-row"><span class="h-date">' + (CAT_ICON[c.cat]||"📦") + ' ' + escapeHtml(c.cat) + '</span><span style="font-weight:800;color:var(--fe)">' + fmtMoney(c.val) + ' · ' + c.pct.toFixed(0) + '%</span></div>';
     }).join("");
 }
 
@@ -1225,7 +1233,7 @@ function renderAnalises(){
     '<div class="health-row"><span>' + (saldo>=0?"🟢":"🔴") + '</span><span>Saldo ' + (saldo>=0?"positivo":"negativo") + ' de ' + fmtMoney(Math.abs(saldo)) + '</span></div>' +
     '<div class="health-row"><span>' + (totalDespesa>totalReceita?"🔴":"🟢") + '</span><span>Despesas ' + (totalDespesa>totalReceita?"superam":"abaixo de") + ' as receitas</span></div>' +
     (jurosTotal > 0 ? '<div class="health-row"><span>💸</span><span>Pagou ' + fmtMoney(jurosTotal) + ' em juros/IOF</span></div>' : '') +
-    (despesaCats[0] ? '<div class="health-row"><span>📊</span><span>Maior gasto: ' + despesaCats[0].cat + ' (' + despesaCats[0].pct.toFixed(0) + '%)</span></div>' : '') +
+    (despesaCats[0] ? '<div class="health-row"><span>📊</span><span>Maior gasto: ' + escapeHtml(despesaCats[0].cat) + ' (' + despesaCats[0].pct.toFixed(0) + '%)</span></div>' : '') +
     anaCardToggle("health") +
     anaCardBody("health", function(){ return renderHealthDetailRows(stats); }) +
   '</div>';
@@ -1315,7 +1323,7 @@ function renderLancamentos(){
       '<div class="form-row">' +
         '<label>Categoria</label>' +
         '<select id="fCategory">' + allCategories().map(function(c){
-          return '<option value="' + c + '"' + (c===formState.category?" selected":"") + '>' + c + '</option>';
+          return '<option value="' + escapeHtml(c) + '"' + (c===formState.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
         }).join("") + '</select>' +
       '</div>' +
       '<div class="form-row">' +
@@ -1347,7 +1355,7 @@ function renderLancamentos(){
         '<div><label>Mês</label><input type="month" id="filterMonth" value="' + state.filterMonth + '"></div>' +
         '<div><label>Categoria</label><select id="filterCategory">' +
           '<option value="all"' + (state.filterCategory==="all"?" selected":"") + '>Todas</option>' +
-          allCategories().map(function(c){ return '<option value="' + c + '"' + (c===state.filterCategory?" selected":"") + '>' + c + '</option>'; }).join("") +
+          allCategories().map(function(c){ return '<option value="' + escapeHtml(c) + '"' + (c===state.filterCategory?" selected":"") + '>' + escapeHtml(c) + '</option>'; }).join("") +
         '</select></div>' +
       '</div>' +
       '<div class="form-row">' +
@@ -1438,7 +1446,7 @@ function renderImportCard(){
           '<option value="receita"' + (r.type==="receita"?" selected":"") + '>Receita</option>' +
         '</select>' +
         '<select class="impCat" data-impidx="' + i + '">' + allCategories().map(function(c){
-          return '<option value="' + c + '"' + (c===r.category?" selected":"") + '>' + c + '</option>';
+          return '<option value="' + escapeHtml(c) + '"' + (c===r.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
         }).join("") + '</select>' +
         '<input type="text" class="impDesc" data-impidx="' + i + '" value="' + escapeHtml(r.description) + '">' +
         '<input type="date" class="impDate" data-impidx="' + i + '" value="' + r.date + '">' +
@@ -1474,6 +1482,11 @@ function parseMoneyStr(s){
     s = s.lastIndexOf(",") > s.lastIndexOf(".") ? s.replace(/\./g, "").replace(",", ".") : s.replace(/,/g, "");
   } else if(s.indexOf(",") !== -1){
     s = s.replace(/\./g, "").replace(",", ".");
+  } else if(s.indexOf(".") !== -1){
+    // Só ponto, sem vírgula: ambíguo entre decimal ("45.90") e milhar ("1.234").
+    // 1-2 dígitos depois do último ponto = decimal; senão é separador de milhar.
+    var afterDot = s.length - s.lastIndexOf(".") - 1;
+    if(afterDot > 2) s = s.replace(/\./g, "");
   }
   var n = parseFloat(s);
   if(isNaN(n)) return null;
@@ -1724,7 +1737,7 @@ function renderLimites(){
       '<div class="form-row">' +
         '<label>Categoria</label>' +
         '<select id="limCategory">' + avail.map(function(c){
-          return '<option value="' + c + '"' + (c===limitForm.category?" selected":"") + '>' + (CAT_ICON[c]||"") + ' ' + c + '</option>';
+          return '<option value="' + escapeHtml(c) + '"' + (c===limitForm.category?" selected":"") + '>' + (CAT_ICON[c]||"") + ' ' + escapeHtml(c) + '</option>';
         }).join("") + '</select>' +
       '</div>' +
       '<div class="form-row">' +
@@ -2023,7 +2036,7 @@ function renderFixas(){
       '<div class="form-row">' +
         '<label>Categoria</label>' +
         '<select id="fixedCategory">' + allCategories().map(function(c){
-          return '<option value="' + c + '"' + (c===fixedForm.category?" selected":"") + '>' + c + '</option>';
+          return '<option value="' + escapeHtml(c) + '"' + (c===fixedForm.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
         }).join("") + '</select>' +
       '</div>' +
       '<div class="form-row">' +
@@ -2180,7 +2193,7 @@ function renderDividas(){
     '<div class="form-row">' +
       '<label>Categoria</label>' +
       '<select id="debtCategory">' + DEBT_CATEGORIES.map(function(c){
-        return '<option value="' + c + '"' + (c===debtForm.category?" selected":"") + '>' + c + '</option>';
+        return '<option value="' + escapeHtml(c) + '"' + (c===debtForm.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
       }).join("") + '</select>' +
     '</div>' +
     '<div class="form-row">' +
@@ -2356,7 +2369,7 @@ function saveDebt(){
   var rate = parseFloat(debtForm.interestRate) || 0;
   var payment = parseFloat(debtForm.monthlyPayment) || 0;
   var dueDay = parseInt(debtForm.dueDay, 10);
-  if(!name || total <= 0 || remaining > total) return;
+  if(!name || total <= 0 || remaining > total){ render(); return; }
   var payload = {
     user_id: uid(), name: name, category: debtForm.category, total_value: total,
     remaining_value: remaining, interest_rate: rate, monthly_payment: payment,
@@ -2409,7 +2422,7 @@ function renderRacha(){
       '</div>' +
       '<div class="filter-row">' +
         '<div><label>Categoria</label><select id="splitCategory">' + allCategories().map(function(c){
-          return '<option value="' + c + '"' + (c===splitForm.category?" selected":"") + '>' + c + '</option>';
+          return '<option value="' + escapeHtml(c) + '"' + (c===splitForm.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
         }).join("") + '</select></div>' +
         '<div><label>Data</label><input type="date" id="splitDate" value="' + splitForm.date + '"></div>' +
       '</div>' +
@@ -2497,7 +2510,7 @@ function splitEqually(){
 function saveSplit(){
   var total = parseFloat(splitForm.total);
   var valid = splitForm.participants.filter(function(p){ return p.name && parseFloat(p.value) > 0; });
-  if(!splitForm.description || !total || total <= 0 || !valid.length) return;
+  if(!splitForm.description || !total || total <= 0 || !valid.length){ render(); return; }
   var payload = {
     user_id: uid(), description: splitForm.description, category: splitForm.category,
     total_value: total, date: splitForm.date
@@ -2531,16 +2544,29 @@ function saveSplit(){
 function toggleParticipantPaid(id){
   var p = state.splitParticipants.filter(function(x){ return x.id === id; })[0];
   if(!p) return;
+  var prevPaid = p.paid;
   p.paid = !p.paid;
   render();
-  db("split_participants", "PATCH", { paid: p.paid }, { id: "eq." + id, user_id: "eq." + uid() });
+  db("split_participants", "PATCH", { paid: p.paid }, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(err){
+    p.paid = prevPaid;
+    state.splitError = "Não consegui atualizar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 function deleteSplit(id){
+  var existing = state.splits.filter(function(s){ return s.id === id; })[0];
+  if(!existing) return;
+  var existingParticipants = state.splitParticipants.filter(function(p){ return p.split_id === id; });
   state.splits = state.splits.filter(function(s){ return s.id !== id; });
   state.splitParticipants = state.splitParticipants.filter(function(p){ return p.split_id !== id; });
   render();
-  db("splits", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+  db("splits", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(err){
+    state.splits.push(existing);
+    state.splitParticipants = state.splitParticipants.concat(existingParticipants);
+    state.splitError = "Não consegui apagar a racha (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 /* ── IA / insights ── */
@@ -2856,6 +2882,11 @@ function bindContentEvents(){
     });
     var btnDashQuickAdd = document.getElementById("btnDashQuickAdd");
     if(btnDashQuickAdd) btnDashQuickAdd.addEventListener("click", function(){
+      // Evita duplicar o lançamento se a pessoa der duplo-toque enquanto o
+      // salvamento ainda está em andamento (o botão só volta a ficar
+      // clicável no próximo render(), que já acontece no fim do save).
+      if(btnDashQuickAdd.disabled) return;
+      btnDashQuickAdd.disabled = true;
       // Lançamento rápido do dashboard sempre cria uma transação nova — nunca
       // deve herdar um editingId deixado por uma edição iniciada em Lançamentos
       // e abandonada sem salvar/cancelar (o que faria um PATCH silencioso
@@ -2903,7 +2934,9 @@ function bindContentEvents(){
         render();
       });
     });
-    document.getElementById("btnAddTx").addEventListener("click", function(){
+    document.getElementById("btnAddTx").addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       formState.value = document.getElementById("fValue").value;
       formState.category = document.getElementById("fCategory").value;
       formState.description = document.getElementById("fDescription").value;
@@ -2967,7 +3000,9 @@ function bindContentEvents(){
     });
   }
   if(state.tab === "limites"){
-    document.getElementById("btnSaveLimit").addEventListener("click", function(){
+    document.getElementById("btnSaveLimit").addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       limitForm.category = document.getElementById("limCategory").value;
       limitForm.value = document.getElementById("limValue").value;
       saveLimit();
@@ -2977,7 +3012,9 @@ function bindContentEvents(){
     });
   }
   if(state.tab === "metas"){
-    document.getElementById("btnSaveGoal").addEventListener("click", function(){
+    document.getElementById("btnSaveGoal").addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       goalForm.name = document.getElementById("goalName").value;
       goalForm.emoji = document.getElementById("goalEmoji").value || "🎯";
       goalForm.deadline = document.getElementById("goalDeadline").value;
@@ -3030,7 +3067,9 @@ function bindContentEvents(){
       splitEqually();
       render();
     });
-    document.getElementById("btnSaveSplit").addEventListener("click", function(){
+    document.getElementById("btnSaveSplit").addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       syncSplitForm();
       saveSplit();
     });
@@ -3052,12 +3091,18 @@ function bindContentEvents(){
         cell.classList.add("sel");
       });
     });
-    document.getElementById("btnSaveFixed").addEventListener("click", function(){
+    document.getElementById("btnSaveFixed").addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       syncFixedForm();
       saveFixed();
     });
     document.querySelectorAll("[data-launch]").forEach(function(btn){
-      btn.addEventListener("click", function(){ launchFixed(btn.dataset.launch); });
+      btn.addEventListener("click", function(){
+        if(btn.disabled) return;
+        btn.disabled = true;
+        launchFixed(btn.dataset.launch);
+      });
     });
     document.querySelectorAll("[data-delfixed]").forEach(function(btn){
       btn.addEventListener("click", function(){ deleteFixed(btn.dataset.delfixed); });
@@ -3072,7 +3117,9 @@ function bindContentEvents(){
     if(btnDismissPriceAlertFixas) btnDismissPriceAlertFixas.addEventListener("click", dismissPriceAlert);
   }
   if(state.tab === "cartoes"){
-    document.getElementById("btnSaveCard").addEventListener("click", function(){
+    document.getElementById("btnSaveCard").addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       syncCardForm();
       saveCard();
     });
@@ -3084,7 +3131,9 @@ function bindContentEvents(){
   }
   if(state.tab === "dividas"){
     var btnSaveDebt = document.getElementById("btnSaveDebt");
-    if(btnSaveDebt) btnSaveDebt.addEventListener("click", function(){
+    if(btnSaveDebt) btnSaveDebt.addEventListener("click", function(e){
+      if(e.currentTarget.disabled) return;
+      e.currentTarget.disabled = true;
       syncDebtForm();
       saveDebt();
     });
@@ -3149,7 +3198,10 @@ function bindTxRowEvents(scope){
 /* ── transaction CRUD ── */
 function saveTransaction(){
   var value = parseFloat(formState.value);
-  if(!value || value <= 0) return;
+  // Chama render() mesmo saindo cedo — sem isso, o botão desabilitado no
+  // clique (pra evitar duplo-envio) ficava travado pra sempre num valor
+  // inválido, já que nenhum outro render() aconteceria depois.
+  if(!value || value <= 0){ render(); return; }
   var fields = {
     type: formState.type,
     category: formState.category,
@@ -3265,12 +3317,19 @@ function startEdit(id){
 
 function deleteTransaction(id){
   var existing = state.txs.filter(function(t){ return t.id === id; })[0];
-  var receiptPath = existing && existing.receipt_path;
+  if(!existing) return;
+  var receiptPath = existing.receipt_path;
   state.txs = state.txs.filter(function(t){ return t.id !== id; });
   if(formState.editingId === id) resetForm();
   render();
-  db("transactions", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
-  if(receiptPath) deleteReceiptObject(receiptPath);
+  db("transactions", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).then(function(){
+    if(receiptPath) deleteReceiptObject(receiptPath);
+  }).catch(function(err){
+    state.txs.push(existing);
+    sortTxs();
+    state.txSaveError = "Não consegui apagar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 /* ── comprovante (foto/recibo) ── */
@@ -3325,7 +3384,7 @@ function viewReceipt(path){
 /* ── limits CRUD ── */
 function saveLimit(){
   var value = parseFloat(limitForm.value);
-  if(isNaN(value) || value < 0) return;
+  if(isNaN(value) || value < 0){ render(); return; }
   var cat = limitForm.category;
   var existing = state.limits.filter(function(l){ return l.category === cat; })[0];
   state.limitSaveError = null;
@@ -3349,15 +3408,21 @@ function saveLimit(){
 }
 
 function deleteLimit(id){
+  var existing = state.limits.filter(function(l){ return l.id === id; })[0];
+  if(!existing) return;
   state.limits = state.limits.filter(function(l){ return l.id !== id; });
   render();
-  db("spending_limits", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+  db("spending_limits", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(err){
+    state.limits.push(existing);
+    state.limitSaveError = "Não consegui apagar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 /* ── goals CRUD ── */
 function saveGoal(){
   var target = parseFloat(goalForm.target);
-  if(!goalForm.name || !target || target <= 0) return;
+  if(!goalForm.name || !target || target <= 0){ render(); return; }
   var payload = {
     user_id: uid(), name: goalForm.name, emoji: goalForm.emoji,
     target: target, deadline: goalForm.deadline || null
@@ -3395,9 +3460,15 @@ function addToGoal(id, amountStr, direction){
 }
 
 function deleteGoal(id){
+  var existing = state.goals.filter(function(g){ return g.id === id; })[0];
+  if(!existing) return;
   state.goals = state.goals.filter(function(g){ return g.id !== id; });
   render();
-  db("goals", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+  db("goals", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(err){
+    state.goals.push(existing);
+    state.goalSaveError = "Não consegui apagar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 /* ── fixed accounts CRUD ── */
@@ -3413,7 +3484,7 @@ function syncFixedForm(){
 function saveFixed(){
   var value = parseFloat(fixedForm.value);
   var day = parseInt(fixedForm.dayOfMonth, 10);
-  if(!fixedForm.description || !value || value <= 0 || !day || day < 1 || day > 31) return;
+  if(!fixedForm.description || !value || value <= 0 || !day || day < 1 || day > 31){ render(); return; }
   var payload = {
     user_id: uid(), type: fixedForm.type, description: fixedForm.description,
     category: fixedForm.category, value: value, day_of_month: day
@@ -3444,7 +3515,7 @@ function addRecurringAsFixed(key){
 
 function launchFixed(id){
   var f = state.fixed.filter(function(x){ return x.id === id; })[0];
-  if(!f) return;
+  if(!f){ render(); return; }
   var ym = thisMonth();
   var months = (f.launched_months || []).concat([ym]);
   var txPayload = {
@@ -3461,13 +3532,22 @@ function launchFixed(id){
     sortTxs();
     checkPriceAnomaly(f.type, f.description, Number(f.value), newTx && newTx.id);
     render();
+  }).catch(function(err){
+    state.fixedSaveError = "Não consegui lançar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
   });
 }
 
 function deleteFixed(id){
+  var existing = state.fixed.filter(function(f){ return f.id === id; })[0];
+  if(!existing) return;
   state.fixed = state.fixed.filter(function(f){ return f.id !== id; });
   render();
-  db("fixed_accounts", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() });
+  db("fixed_accounts", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(err){
+    state.fixed.push(existing);
+    state.fixedSaveError = "Não consegui apagar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
+    render();
+  });
 }
 
 function syncCardForm(){
@@ -3486,7 +3566,7 @@ function saveCard(){
   var limitValue = parseFloat(cardForm.limitValue) || 0;
   var closingDay = parseInt(cardForm.closingDay, 10);
   var dueDay = parseInt(cardForm.dueDay, 10);
-  if(!name || !closingDay || closingDay < 1 || closingDay > 31 || !dueDay || dueDay < 1 || dueDay > 31) return;
+  if(!name || !closingDay || closingDay < 1 || closingDay > 31 || !dueDay || dueDay < 1 || dueDay > 31){ render(); return; }
   var payload = { user_id: uid(), name: name, limit_value: limitValue, closing_day: closingDay, due_day: dueDay };
   db("credit_cards", "POST", payload).then(function(rows){
     if(rows && rows[0]) state.cards.push(rows[0]);

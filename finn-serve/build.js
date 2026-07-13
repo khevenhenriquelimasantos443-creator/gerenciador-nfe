@@ -100,6 +100,26 @@ async function _pluggyToken(request, env) {
   }
 }
 
+// POST /pluggy/link — registra no KV que este itemId (conexão bancária)
+// pertence ao usuário autenticado. O front precisa chamar isso logo depois
+// que o widget de Connect do Pluggy retorna um itemId, ANTES de tentar ler
+// as transações — sem esse registro, /pluggy/transactions não sabe de quem
+// é o item e recusa (fail-closed).
+async function _pluggyLink(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _pluggyAuth(body.access_token);
+    if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
+    if (!body.itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
+    if (env.FINN_KV) await env.FINN_KV.put('pluggy_owner_' + body.itemId, authUser.id);
+    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
 // GET /pluggy/transactions?itemId=xxx&from=YYYY-MM-DD&to=YYYY-MM-DD&access_token=xxx
 async function _pluggyTx(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -108,6 +128,12 @@ async function _pluggyTx(request, env) {
     var authUser = await _pluggyAuth(url.searchParams.get('access_token'));
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     var itemId = url.searchParams.get('itemId');
+    if (!itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
+    // O itemId é um identificador da Pluggy, não do Finn — sem checar dono,
+    // qualquer usuário autenticado podia ler o extrato bancário de qualquer
+    // outra pessoa só adivinhando/observando o itemId dela.
+    var owner = env.FINN_KV ? await env.FINN_KV.get('pluggy_owner_' + itemId) : null;
+    if (owner !== authUser.id) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
     var from   = url.searchParams.get('from') || new Date(Date.now() - 90*24*3600*1000).toISOString().slice(0,10);
     var to     = url.searchParams.get('to')   || new Date().toISOString().slice(0,10);
     if (!itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
@@ -581,6 +607,11 @@ h1 em{font-style:normal;color:#F97316}
       return _pluggyToken(request, env);
     }
 
+    // ── Pluggy: registra dono do item (chamar logo após o Connect widget) ──
+    if (url.pathname === '/pluggy/link' && request.method === 'POST') {
+      return _pluggyLink(request, env);
+    }
+
     // ── Pluggy: transactions ──
     if (url.pathname === '/pluggy/transactions' && request.method === 'GET') {
       return _pluggyTx(request, env);
@@ -624,6 +655,19 @@ h1 em{font-style:normal;color:#F97316}
       try {
         var sub = JSON.parse(await request.text());
         if (!sub.endpoint || !sub.keys || !sub.access_token) return new Response(JSON.stringify({error:'invalid'}),{status:400,headers:cors2});
+        // Sem isso, qualquer um autenticado podia cadastrar um endpoint
+        // arbitrário e o cron de notificações ficava fazendo fetch() nele
+        // periodicamente — restringe aos serviços de push reais conhecidos.
+        var pushUrl = null;
+        try { pushUrl = new URL(sub.endpoint); } catch(eUrl) {}
+        var allowedPushOrigins = [
+          'https://fcm.googleapis.com',
+          'https://updates.push.services.mozilla.com',
+          'https://web.push.apple.com'
+        ];
+        var pushOriginOk = !!pushUrl && pushUrl.protocol === 'https:' &&
+          (allowedPushOrigins.indexOf(pushUrl.origin) !== -1 || /(^|\.)notify\.windows\.com$/.test(pushUrl.hostname));
+        if (!pushOriginOk) return new Response(JSON.stringify({error:'endpoint de push nao reconhecido'}),{status:400,headers:cors2});
         var authResp = await fetch('${SUPA_URL_SERVER}/auth/v1/user', {
           headers: { apikey: '${SUPA_ANON_KEY_SERVER}', Authorization: 'Bearer ' + sub.access_token }
         });
