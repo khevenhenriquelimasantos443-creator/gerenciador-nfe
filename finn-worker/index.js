@@ -6,6 +6,11 @@
 //   WHATSAPP_ACCESS_TOKEN     — Access token from Meta
 //   WHATSAPP_VERIFY_TOKEN     — Any string you choose (ex: finn_verify_2024)
 //   FINN_URL                  — Public URL of the Finn app
+//   ADMIN_TOKEN               — Any random string; protects /keys, /debug,
+//                               /subscribe (wrangler secret put ADMIN_TOKEN)
+//   META_APP_SECRET           — App Secret from Meta Developer Portal → App
+//                               Settings → Basic. Validates incoming
+//                               webhooks (optional but strongly recommended)
 // KV namespace binding: FINN_KV
 // =============================================================================
 
@@ -29,9 +34,13 @@ export default {
       if (request.method === "POST") return handleSync(request, env);
     }
 
+    // Endpoints de administração/diagnóstico — nunca chamados pelo app público,
+    // só por quem sabe o token. Sem isso, /keys expunha todos os telefones
+    // cadastrados e /debug expunha telefone+texto das últimas mensagens.
     if (url.pathname === "/keys" && request.method === "GET") {
-      const list = await env.FINN_KV.list({ prefix: "data_" });
-      const keys = list.keys.map(k => k.name.replace("data_", ""));
+      if (!requireAdminToken(request, env)) return unauthorizedResponse();
+      const list = await listAllKeys(env, "data_");
+      const keys = list.map(k => k.name.replace("data_", ""));
       return corsResponse(new Response(JSON.stringify({ ok: true, numeros: keys }, null, 2), { status: 200, headers: { "Content-Type": "application/json" } }));
     }
 
@@ -40,10 +49,12 @@ export default {
     }
 
     if (url.pathname === "/debug" && request.method === "GET") {
+      if (!requireAdminToken(request, env)) return unauthorizedResponse();
       return handleDebug(env);
     }
 
     if (url.pathname === "/subscribe" && request.method === "GET") {
+      if (!requireAdminToken(request, env)) return unauthorizedResponse();
       return handleSubscribeWaba(env);
     }
 
@@ -63,28 +74,123 @@ function corsResponse(response) {
   return new Response(response.body, { status: response.status, headers });
 }
 
+// Data/hora de "agora" no fuso do Brasil, não em UTC — o Worker roda em UTC
+// e, entre 21h e 00h no horário de Brasília, os getters (getFullYear/
+// getMonth/getDate) já apontavam pro dia seguinte. Usa o deslocamento fixo
+// de -3h (Brasil não tem mais horário de verão desde 2019). Sempre que uma
+// função precisar de "que dia é hoje pro usuário", usa nowBR() no lugar de
+// `new Date()` — os getters passam a refletir o calendário certo.
+function nowBR() {
+  return new Date(Date.now() - 3 * 3600 * 1000);
+}
+
+function todayBR() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+}
+
+// KV.list() só devolve até 1000 chaves por chamada — sem paginar pelo
+// cursor, usuários além do primeiro milhar somem do /keys e nunca recebem
+// o dashboard diário, sem nenhum erro visível.
+async function listAllKeys(env, prefix) {
+  let keys = [];
+  let cursor;
+  do {
+    const page = await env.FINN_KV.list({ prefix, cursor });
+    keys = keys.concat(page.keys);
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+  return keys;
+}
+
+// Endpoints de diagnóstico (/keys, /debug, /subscribe) — nunca usados pelo
+// app público, só por quem tem o token (definido via wrangler secret
+// ADMIN_TOKEN). Aceita o token no header X-Admin-Token ou em ?token=.
+function requireAdminToken(request, env) {
+  if (!env.ADMIN_TOKEN) return false;
+  const url = new URL(request.url);
+  const token = request.headers.get("X-Admin-Token") || url.searchParams.get("token");
+  return !!token && token === env.ADMIN_TOKEN;
+}
+
+function unauthorizedResponse() {
+  return corsResponse(new Response(JSON.stringify({ error: "unauthorized" }), {
+    status: 401, headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// Confirma que quem está chamando /sync é dono de verdade do número — via
+// sessão do Supabase (o app já autentica assim). Sem isso, /sync?phone=X
+// devolvia o extrato financeiro de qualquer pessoa pra quem soubesse o
+// telefone dela.
+const SUPA_URL_CHECK = "https://zblkznobqcztvznycyyo.supabase.co";
+const SUPA_ANON_KEY_CHECK = "sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb";
+
+async function verifySupabaseUser(accessToken) {
+  if (!accessToken) return null;
+  try {
+    const r = await fetch(SUPA_URL_CHECK + "/auth/v1/user", {
+      headers: { apikey: SUPA_ANON_KEY_CHECK, Authorization: "Bearer " + accessToken }
+    });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
+}
+
+function phonesMatch(a, b) {
+  if (!a || !b) return false;
+  const variantsA = new Set(phoneVariants(a));
+  return phoneVariants(b).some(v => variantsA.has(v));
+}
+
+// Confere a assinatura X-Hub-Signature-256 que a Meta manda em todo webhook,
+// calculada com o App Secret. Sem isso, qualquer um podia forjar um POST
+// /webhook fingindo ser uma mensagem de qualquer telefone, fazendo o bot
+// gravar transações falsas ou responder (gastando a cota de mensagens do
+// número, que já foi banido uma vez). Se META_APP_SECRET ainda não foi
+// configurado, deixa passar (mas registra em /debug) pra não travar quem
+// ainda está no meio da configuração.
+async function verifyMetaSignature(rawBody, signatureHeader, secret) {
+  if (!signatureHeader || !signatureHeader.startsWith("sha256=")) return false;
+  const expectedHex = signatureHeader.slice(7).toLowerCase();
+  const key = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(rawBody));
+  const hex = [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, "0")).join("");
+  if (hex.length !== expectedHex.length) return false;
+  let diff = 0; // comparação em tempo constante, evita timing attack
+  for (let i = 0; i < hex.length; i++) diff |= hex.charCodeAt(i) ^ expectedHex.charCodeAt(i);
+  return diff === 0;
+}
+
 // =============================================================================
 // DEBUG LOG — registro dos últimos eventos, pra diagnosticar sem precisar
 // de acesso ao painel da Cloudflare. Guarda no KV, mostra em GET /debug.
 // =============================================================================
-const DEBUG_KEY = "__debug_log__";
+const DEBUG_PREFIX = "debug_evt_";
 const DEBUG_MAX = 25;
 
+// Uma chave por evento (com TTL de 24h) em vez de read-modify-write numa
+// chave única: o KV aceita só ~1 escrita/segundo por chave, então uma
+// rajada de mensagens perdia eventos silenciosamente quando todos
+// disputavam a mesma chave "__debug_log__".
 async function debugLog(env, entry) {
   try {
-    const raw = await env.FINN_KV.get(DEBUG_KEY);
-    const list = raw ? JSON.parse(raw) : [];
-    list.unshift({ at: new Date().toISOString(), ...entry });
-    await env.FINN_KV.put(DEBUG_KEY, JSON.stringify(list.slice(0, DEBUG_MAX)));
+    const key = DEBUG_PREFIX + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+    await env.FINN_KV.put(key, JSON.stringify({ at: new Date().toISOString(), ...entry }), { expirationTtl: 86400 });
   } catch (err) {
     console.error("debugLog error:", err);
   }
 }
 
 async function handleDebug(env) {
-  const raw = await env.FINN_KV.get(DEBUG_KEY);
-  const list = raw ? JSON.parse(raw) : [];
-  return corsResponse(new Response(JSON.stringify({ ok: true, count: list.length, events: list }, null, 2), {
+  const keys = await listAllKeys(env, DEBUG_PREFIX);
+  keys.sort((a, b) => b.name.localeCompare(a.name));
+  const recent = keys.slice(0, DEBUG_MAX);
+  const events = (await Promise.all(recent.map(k => env.FINN_KV.get(k.name))))
+    .filter(Boolean).map(raw => JSON.parse(raw));
+  return corsResponse(new Response(JSON.stringify({ ok: true, count: events.length, events }, null, 2), {
     status: 200,
     headers: { "Content-Type": "application/json" }
   }));
@@ -111,8 +217,21 @@ async function handleWebhookVerification(request, env) {
 // WEBHOOK HANDLER (POST)
 // =============================================================================
 async function handleWebhook(request, env) {
+  const rawBody = await request.text();
+
+  if (env.META_APP_SECRET) {
+    const sigHeader = request.headers.get("X-Hub-Signature-256");
+    const valid = await verifyMetaSignature(rawBody, sigHeader, env.META_APP_SECRET);
+    if (!valid) {
+      await debugLog(env, { kind: "webhook_signature_invalid" });
+      return new Response("Forbidden", { status: 403 });
+    }
+  } else {
+    await debugLog(env, { kind: "webhook_signature_not_configured" });
+  }
+
   let body;
-  try { body = await request.json(); } catch { return new Response("Bad Request", { status: 400 }); }
+  try { body = JSON.parse(rawBody); } catch { return new Response("Bad Request", { status: 400 }); }
 
   if (body.object !== "whatsapp_business_account") {
     await debugLog(env, { kind: "webhook_ignored", reason: "object != whatsapp_business_account", object: body.object });
@@ -368,7 +487,7 @@ async function continueFlow(phone, text, stateData, env) {
 // =============================================================================
 async function handleResumoMes(phone, env) {
   const data = await getUserData(phone, env);
-  const now = new Date();
+  const now = nowBR();
   const year = now.getFullYear(), month = now.getMonth();
   const monthTxs = (data.txs||[]).filter(tx => { const d=new Date(tx.date); return d.getFullYear()===year&&d.getMonth()===month; });
   const receitas = monthTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
@@ -389,7 +508,7 @@ async function handleResumoMes(phone, env) {
 async function handleAlertasLimite(phone, env) {
   const data = await getUserData(phone, env);
   const limits = data.limits||{};
-  const now = new Date();
+  const now = nowBR();
   const monthTxs = (data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&tx.val<0&&isFlowTx(tx);});
   const byCat = {};
   monthTxs.forEach(t=>{byCat[t.cat]=(byCat[t.cat]||0)+Math.abs(t.val);});
@@ -420,7 +539,7 @@ async function handleStatusMetas(phone, env) {
 async function handleContasFixas(phone, env) {
   const fixed = await getFixedBills(phone, env);
   if (!fixed||!fixed.length) { await sendText(phone,"📋 Sem contas fixas.\n\nAbra o Finn! 👉 "+(env.FINN_URL||""),env); return; }
-  const now = new Date();
+  const now = nowBR();
   const ym = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
   const pend = fixed.filter(b=>!(b.paid||[]).includes(ym));
   const paid = fixed.filter(b=>(b.paid||[]).includes(ym));
@@ -434,7 +553,7 @@ async function handleContasFixas(phone, env) {
 async function handlePrevisaoSaldo(phone, env) {
   const data = await getUserData(phone, env);
   const fixed = await getFixedBills(phone, env);
-  const now = new Date();
+  const now = nowBR();
   const year=now.getFullYear(), month=now.getMonth();
   const ym=`${year}-${String(month+1).padStart(2,"0")}`;
   const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===year&&d.getMonth()===month;});
@@ -454,7 +573,7 @@ async function handlePrevisaoSaldo(phone, env) {
 
 async function handleModoPanico(phone, env) {
   const data = await getUserData(phone, env);
-  const now = new Date();
+  const now = nowBR();
   const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&tx.val<0&&isFlowTx(tx);});
   const top3=[...monthTxs].sort((a,b)=>Math.abs(b.val)-Math.abs(a.val)).slice(0,3);
   const despesas=monthTxs.reduce((s,t)=>s+Math.abs(t.val),0);
@@ -481,7 +600,7 @@ async function handleSincronizarFinn(phone, env) {
     return;
   }
 
-  const now = new Date();
+  const now = nowBR();
   const monthBotTxs = botTxs.filter(t => {
     const d = new Date(t.date);
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
@@ -551,7 +670,7 @@ async function handleDocumentMessage(phone, msg, env) {
 // =============================================================================
 async function handleScoreFinanceiro(phone, env) {
   const data = await getUserData(phone, env);
-  const now = new Date();
+  const now = nowBR();
   const monthTxs = (data.txs||[]).filter(tx => {
     const d = new Date(tx.date);
     return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
@@ -619,7 +738,7 @@ async function handleScoreFinanceiro(phone, env) {
 // =============================================================================
 async function handleDashboardCompleto(phone, env) {
   const data = await getUserData(phone, env);
-  const now = new Date();
+  const now = nowBR();
   const year = now.getFullYear(), cm = now.getMonth();
 
   // 6 months data
@@ -858,6 +977,10 @@ function phoneVariants(phone) {
 }
 
 async function handleSyncGet(request, env) {
+  // Nunca usado pelo app público (só POST /sync é) — tranca atrás do token
+  // de admin. Sem isso, qualquer um que soubesse um telefone lia o extrato
+  // financeiro completo da pessoa.
+  if (!requireAdminToken(request, env)) return unauthorizedResponse();
   const url = new URL(request.url);
   const phone = url.searchParams.get("phone");
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
@@ -877,21 +1000,47 @@ async function handleSyncGet(request, env) {
 async function handleSync(request, env) {
   let body;
   try { body=await request.json(); } catch { return corsResponse(new Response(JSON.stringify({error:"Invalid JSON"}),{status:400})); }
-  const {phone,data,fixed}=body;
+  const {phone,data,fixed,access_token}=body;
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400}));
+
+  // Só deixa sincronizar o telefone que a PRÓPRIA conta logada salvou no
+  // perfil — sem isso, POST /sync com qualquer número de telefone lia ou
+  // sobrescrevia os dados financeiros de qualquer pessoa, sem autenticação.
+  const user = await verifySupabaseUser(access_token);
+  if (!user) return unauthorizedResponse();
+  const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
+  if (!phonesMatch(phone, ownWhatsapp)) {
+    return corsResponse(new Response(JSON.stringify({ error: "phone does not match authenticated account" }), {
+      status: 403, headers: { "Content-Type": "application/json" }
+    }));
+  }
+
   // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
   // ex.: quem conversou pelo bot antes de cadastrar o número no site), grava
   // nessa mesma chave. Senão a sincronização do site e a conversa ao vivo
   // ficam em duas chaves diferentes e nunca se encontram.
   let targetPhone = phone;
+  let existingData = null;
   for (const cand of phoneVariants(phone)) {
     const existing = await getUserData(cand, env);
     if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
       targetPhone = cand;
+      existingData = existing;
       break;
     }
   }
-  if (data) await saveUserData(targetPhone,data,env);
+
+  if (data) {
+    // Funde por id em vez de substituir a lista inteira: um lançamento feito
+    // pelo bot entre o último carregamento do site e este sync não pode
+    // sumir só porque o site mandou uma foto antiga dos próprios dados.
+    if (data.txs && existingData && existingData.txs) {
+      const byId = new Map(data.txs.map(t => [t.id, t]));
+      existingData.txs.forEach(t => { if (!byId.has(t.id)) byId.set(t.id, t); });
+      data.txs = [...byId.values()];
+    }
+    await saveUserData(targetPhone, data, env);
+  }
   if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
   return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
@@ -900,8 +1049,8 @@ async function handleSync(request, env) {
 // DAILY DASHBOARD (cron 01:00 UTC = 22:00 BRT)
 // =============================================================================
 async function sendDailyDashboards(env) {
-  const list = await env.FINN_KV.list({prefix:"data_"});
-  for (const key of list.keys) {
+  const list = await listAllKeys(env, "data_");
+  for (const key of list) {
     const phone=key.name.replace("data_","");
     if (!phone) continue;
     try {
@@ -913,7 +1062,7 @@ async function sendDailyDashboards(env) {
 }
 
 function buildDashboardMessage(data, env) {
-  const now=new Date();
+  const now=nowBR();
   const year=now.getFullYear(),month=now.getMonth();
   const finnUrl=env.FINN_URL||"";
   const todayStr=now.toISOString().slice(0,10);
@@ -1160,17 +1309,29 @@ async function getFixedBills(phone, env) {
 // =============================================================================
 // UTILITY FUNCTIONS
 // =============================================================================
+// Interpreta valor digitado em formato brasileiro. Se tem vírgula, ela é o
+// separador decimal e qualquer ponto antes é separador de milhar (remove).
+// Sem vírgula, um ponto seguido de 1-2 dígitos no final é decimal (ex.:
+// "45.90"); qualquer outro ponto é separador de milhar — sem essa distinção,
+// "1.000" (mil reais) virava R$1,00 e "2.500" virava R$2,50.
 function parseMonetaryValue(text) {
-  const clean=text.replace(/R\$\s*/g,"").trim().replace(/\.(\d{3}),/g,"$1.").replace(",",".");
-  const val=parseFloat(clean);
-  if(isNaN(val)||val<=0) return null;
+  let clean = text.replace(/R\$\s*/gi, "").trim();
+  if (!clean) return null;
+  if (clean.indexOf(",") !== -1) {
+    clean = clean.replace(/\./g, "").replace(",", ".");
+  } else {
+    const isDecimalDot = clean.split(".").length === 2 && /\.\d{1,2}$/.test(clean);
+    if (!isDecimalDot) clean = clean.replace(/\./g, "");
+  }
+  const val = parseFloat(clean);
+  if (isNaN(val) || val <= 0) return null;
   return val;
 }
 
 function buildTransaction({val,cat,desc}) {
   return {
     id:`wa_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
-    date:new Date().toISOString().slice(0,10),
+    date:todayBR(),
     desc:desc||"Sem descrição", val:val||0, cat:cat||"Outros", source:"whatsapp",
   };
 }
@@ -1288,12 +1449,31 @@ function splitBotFields(line, delim) {
   return fields;
 }
 
+// Extratos de banco variam o separador decimal: a maioria usa vírgula
+// ("27,90"), mas o CSV do Nubank usa ponto ("-27.90"). Tratar "." sempre
+// como milhar (como antes) fazia "-27.90" virar -2790 — 100x maior.
 function parseBRNum(s) {
   if (!s) return 0;
-  const c = s.replace(/"/g,'').replace(/[R$\s]/g,'').trim();
+  let c = String(s).replace(/"/g,'').replace(/[R$\s]/g,'').trim();
   if (!c) return 0;
-  const n = parseFloat(c.replace(/\./g,'').replace(',','.'));
-  return isNaN(n) ? (parseFloat(c.replace(/,/g,'')) || 0) : n;
+  const neg = /^-/.test(c) || /^\(.*\)$/.test(c);
+  c = c.replace(/^[-(]|[)]$/g, '');
+  let n;
+  if (c.indexOf(',') !== -1 && c.indexOf('.') !== -1) {
+    // tem os dois separadores: o que aparece por último é o decimal
+    n = c.lastIndexOf(',') > c.lastIndexOf('.')
+      ? parseFloat(c.replace(/\./g, '').replace(',', '.'))   // BR: "1.234,56"
+      : parseFloat(c.replace(/,/g, ''));                      // EN: "1,234.56"
+  } else if (c.indexOf(',') !== -1) {
+    n = parseFloat(c.replace(/\./g, '').replace(',', '.'));   // "27,90"
+  } else if (c.indexOf('.') !== -1) {
+    const isDecimalDot = c.split('.').length === 2 && /\.\d{1,2}$/.test(c);
+    n = parseFloat(isDecimalDot ? c : c.replace(/\./g, ''));  // "-27.90" vs "1.000"
+  } else {
+    n = parseFloat(c);
+  }
+  if (isNaN(n)) return 0;
+  return neg ? -Math.abs(n) : n;
 }
 
 function analyzeBotCSV(txs) {
@@ -1305,7 +1485,11 @@ function analyzeBotCSV(txs) {
   exits.forEach(t => { catMap[t.cat] = (catMap[t.cat]||0) + t.val; });
   const topCats = Object.entries(catMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const topExp  = [...exits].sort((a,b) => b.val-a.val).slice(0,3);
-  const dates   = txs.map(t => t.date).sort();
+  // t.date é "DD/MM/YYYY" — .sort() puro compara como texto e embaralha a
+  // ordem sempre que o extrato cruza mês/ano (ex.: "05/01" vinha antes de
+  // "28/12" só porque "0" < "2"). Ordena convertendo pra YYYY-MM-DD antes.
+  const dateKey = (d) => { const [dd,mm,yyyy]=d.split('/'); return `${yyyy}${mm}${dd}`; };
+  const dates   = txs.map(t => t.date).sort((a,b) => dateKey(a).localeCompare(dateKey(b)));
   return { count: txs.length, tIn, tOut, net: tIn-tOut, topCats, topExp, dates };
 }
 
