@@ -32,6 +32,7 @@ export default {
     if (url.pathname === "/sync") {
       if (request.method === "GET")  return handleSyncGet(request, env);
       if (request.method === "POST") return handleSync(request, env);
+      if (request.method === "DELETE") return handleSyncDelete(request, env);
     }
 
     // Endpoints de administração/diagnóstico — nunca chamados pelo app público,
@@ -995,6 +996,23 @@ async function handleSyncGet(request, env) {
     }
   }
   return corsResponse(new Response(JSON.stringify({ok:true, data, fixed, matched, tried: phoneVariants(phone)}),{status:200,headers:{"Content-Type":"application/json"}}));
+}
+
+async function handleSyncDelete(request, env) {
+  // Apaga os dados sincronizados de um telefone (data_<phone> e fixed_<phone>,
+  // nas duas variantes com/sem o 9) — usado quando alguém quer remover os
+  // próprios dados do KV do bot sem esperar o bot voltar do banimento.
+  if (!requireAdminToken(request, env)) return unauthorizedResponse();
+  const url = new URL(request.url);
+  const phone = url.searchParams.get("phone");
+  if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
+
+  const variants = phoneVariants(phone);
+  for (const cand of variants) {
+    await env.FINN_KV.delete(`data_${cand}`);
+    await env.FINN_KV.delete(`fixed_${cand}`);
+  }
+  return corsResponse(new Response(JSON.stringify({ok:true, deleted: variants}),{status:200,headers:{"Content-Type":"application/json"}}));
 }
 
 async function handleSync(request, env) {

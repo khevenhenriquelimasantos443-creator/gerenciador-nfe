@@ -568,6 +568,10 @@ function normalizePhone(raw){
 // dashboard diário do bot baterem com o que está no site. Silencioso:
 // se falhar (bot fora do ar, sem número cadastrado etc.) não trava o app.
 function syncWhatsAppBot(){
+  // Enquanto o bot estiver desligado (número banido pela Meta), não faz
+  // sentido continuar replicando os dados financeiros completos pro KV dele
+  // a cada carregamento do app — menos um lugar guardando os mesmos dados.
+  if(!WHATSAPP_BOT_ENABLED) return Promise.resolve();
   var user = currentSession && currentSession.user;
   var phone = normalizePhone(user && user.user_metadata && user.user_metadata.whatsapp);
   if(!phone) return Promise.resolve();
