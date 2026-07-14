@@ -177,6 +177,13 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .donut-legend-item{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--fd);cursor:pointer}
 .donut-dot{width:9px;height:9px;border-radius:3px;display:inline-block;flex-shrink:0}
 .donut-legend .ana-cat-detail{flex-basis:100%;width:100%}
+
+/* ── gráfico animado (só conta master — feature em preview) ── */
+.admin-preview-tag{display:inline-block;margin-left:8px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--fp);background:var(--fpl);border-radius:5px;padding:2px 6px;vertical-align:middle}
+.donut-svg{width:160px;height:160px;flex-shrink:0;transform:rotate(0deg)}
+.donut-arc{transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.donut-hole-anim{position:absolute;top:18%;left:18%;width:64%;height:64%;border-radius:50%;background:var(--fcard);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 4px}
+.bar-anim > i{width:0;transition:width 1s cubic-bezier(.16,1,.3,1)}
 .balance-chart{width:100%;height:130px;display:block}
 .daybar-wrap{display:flex;align-items:flex-end;gap:5px;height:90px;overflow-x:auto;padding-bottom:4px}
 .daybar-wrap::-webkit-scrollbar{display:none}
@@ -1030,6 +1037,80 @@ function renderDonut(rows, list, keyPrefix){
   '</div>';
 }
 
+// ── Versão animada do donut (feature em preview, só a conta master vê) ──
+// Cada categoria é um <circle> próprio, girado pro ponto onde a fatia
+// anterior terminou; a entrada anima via stroke-dashoffset indo do
+// comprimento do arco (escondido) até 0 (revelado), disparada depois do
+// primeiro render pelo bindContentEvents (ver kickOffChartAnimations()).
+function renderAnimatedDonut(rows, list, keyPrefix){
+  if(!rows.length) return '';
+  var total = rows.reduce(function(s,r){ return s + r.val; }, 0) || 1;
+  var r = 60, c = 2 * Math.PI * r;
+  var acc = 0;
+  var arcs = rows.map(function(row, i){
+    var startPct = acc;
+    acc += row.pct;
+    var arcLen = (row.pct / 100) * c;
+    var rotateDeg = (startPct / 100) * 360 - 90;
+    return '<circle class="donut-arc" cx="80" cy="80" r="' + r + '" fill="none" stroke="' + catColor(row.cat) + '" stroke-width="18" ' +
+      'stroke-dasharray="' + arcLen.toFixed(2) + ' ' + c.toFixed(2) + '" stroke-dashoffset="' + arcLen.toFixed(2) + '" ' +
+      'transform="rotate(' + rotateDeg.toFixed(2) + ' 80 80)" style="transition-delay:' + (i * 90) + 'ms"></circle>';
+  }).join("");
+  return '<div class="donut-wrap">' +
+    '<div style="position:relative;width:160px;height:160px;flex-shrink:0">' +
+      '<svg class="donut-svg" viewBox="0 0 160 160">' + arcs + '</svg>' +
+      '<div class="donut-hole-anim"><div class="tot count-up" data-target="' + total + '">R$ 0,00</div><div class="lbl">total</div></div>' +
+    '</div>' +
+    '<div class="donut-legend">' + rows.map(function(row){
+      var key = keyPrefix + "_" + row.cat;
+      return '<span class="donut-legend-item" data-anacat="' + escapeHtml(key) + '"><i class="donut-dot" style="background:' + catColor(row.cat) + '"></i>' + escapeHtml(row.cat) + ' · ' + row.pct.toFixed(0) + '%</span>' +
+        (list ? renderAnaCatDetail(key, list, row.cat) : "");
+    }).join("") + '</div>' +
+  '</div>';
+}
+
+// ── Versão animada das barras por categoria (mesma trava de preview) ──
+function renderAnimatedCatBars(rows, list, keyPrefix){
+  if(!rows.length) return '<div class="empty-state">Sem dados nesse período.</div>';
+  var max = rows[0].val || 1;
+  return rows.map(function(row){
+    var key = keyPrefix + "_" + row.cat;
+    var open = state.expandedAnalysisCat === key;
+    var w = Math.max(4, Math.round(row.val / max * 100));
+    return '<div class="cat-row' + (open ? " expanded" : "") + '">' +
+      '<div class="cat-head" data-anacat="' + escapeHtml(key) + '"><span class="nm">' + (CAT_ICON[row.cat]||"📦") + ' ' + escapeHtml(row.cat) + '</span><span class="vl">' + fmtMoney(row.val) + ' · ' + row.pct.toFixed(0) + '%</span></div>' +
+      '<div class="bar bar-anim"><i data-w="' + w + '%" style="background:' + catColor(row.cat) + '"></i></div>' +
+      (list ? renderAnaCatDetail(key, list, row.cat) : "") +
+    '</div>';
+  }).join("");
+}
+
+// Dispara as animações de entrada depois que o HTML já foi pintado (double
+// rAF: o 1º garante que o layout do estado inicial — escondido — já foi
+// aplicado antes de disparar a transição pro estado final).
+function kickOffChartAnimations(){
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      document.querySelectorAll(".donut-arc").forEach(function(el){ el.style.strokeDashoffset = "0"; });
+      document.querySelectorAll(".bar-anim > i").forEach(function(el){ el.style.width = el.dataset.w; });
+      document.querySelectorAll(".count-up").forEach(animateCountUp);
+    });
+  });
+}
+
+function animateCountUp(el){
+  var target = Number(el.dataset.target) || 0;
+  var start = performance.now();
+  var duration = 900;
+  function step(now){
+    var t = Math.min(1, (now - start) / duration);
+    var eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmtMoney(target * eased);
+    if(t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 function renderBalanceEvolution(txs){
   var byDate = {};
   txs.forEach(function(t){
@@ -1276,9 +1357,14 @@ function renderAnalises(){
     anaCardBody("health", function(){ return renderHealthDetailRows(stats); }) +
   '</div>';
 
-  html += '<div class="card"><div class="eyebrow">Distribuição de despesas</div>' + renderDonut(despesaCats, despesas, "despesa") + '</div>';
-  html += '<div class="card"><div class="eyebrow">Despesas por categoria</div>' + renderCatBars(despesaCats, despesas, "despesa") + '</div>';
-  if(receitaCats.length) html += '<div class="card"><div class="eyebrow">Entradas por categoria</div>' + renderCatBars(receitaCats, receitas, "receita") + '</div>';
+  var chartsPreview = isMasterUser() && state.adminUnlocked;
+  var previewTag = chartsPreview ? '<span class="admin-preview-tag">preview</span>' : '';
+  html += '<div class="card"><div class="eyebrow">Distribuição de despesas' + previewTag + '</div>' +
+    (chartsPreview ? renderAnimatedDonut(despesaCats, despesas, "despesa") : renderDonut(despesaCats, despesas, "despesa")) + '</div>';
+  html += '<div class="card"><div class="eyebrow">Despesas por categoria' + previewTag + '</div>' +
+    (chartsPreview ? renderAnimatedCatBars(despesaCats, despesas, "despesa") : renderCatBars(despesaCats, despesas, "despesa")) + '</div>';
+  if(receitaCats.length) html += '<div class="card"><div class="eyebrow">Entradas por categoria' + previewTag + '</div>' +
+    (chartsPreview ? renderAnimatedCatBars(receitaCats, receitas, "receita") : renderCatBars(receitaCats, receitas, "receita")) + '</div>';
 
   html += renderBalanceEvolution(txs);
   html += renderTxBuckets(txs);
@@ -3140,6 +3226,7 @@ function bindContentEvents(){
         render();
       });
     });
+    if(isMasterUser() && state.adminUnlocked) kickOffChartAnimations();
   }
   if(state.tab === "lancamentos"){
     document.querySelectorAll(".type-btn").forEach(function(btn){
