@@ -552,6 +552,26 @@ async function _billingWebhook(request, env) {
           }
         }
       }
+    } else if (topic === 'subscription_authorized_payment' && dataId && env.MP_ACCESS_TOKEN) {
+      // Cobrança recorrente de um mês já em andamento (não a primeira) — sem
+      // isso, current_period_end só era estendido na assinatura inicial e o
+      // cron derrubava o acesso do assinante ativo no mês seguinte.
+      var apr = await fetch('https://api.mercadopago.com/authorized_payments/' + dataId, {
+        headers: { 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN }
+      });
+      if (apr.ok) {
+        var apPayment = await apr.json();
+        var apParts = (apPayment.external_reference || '').split('|');
+        var apUserId = apParts[0], apPlan = apParts[1];
+        if (apUserId && apPlan && apPayment.status === 'approved') {
+          var apPeriodEnd = new Date(); apPeriodEnd.setMonth(apPeriodEnd.getMonth() + 1);
+          await _subaUpsertSubscription(apUserId, {
+            plan: apPlan, status: 'active',
+            mp_subscription_id: apPayment.preapproval_id ? String(apPayment.preapproval_id) : undefined,
+            current_period_end: apPeriodEnd.toISOString()
+          }, env);
+        }
+      }
     }
   } catch (e) {
     // Nunca devolve 500 aqui — a Mercado Pago reenviaria pra sempre. Pior
