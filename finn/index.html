@@ -358,6 +358,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
     <div class="nav-menu" id="navMenu">
       <div class="nav-brand">Finn<span>.</span></div>
       <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="adicionar">Adicionar</button>
       <button class="tab-btn" data-tab="analises">Análises</button>
       <button class="tab-btn" data-tab="lancamentos">Lançamentos</button>
       <button class="tab-btn" data-tab="limites">Limites</button>
@@ -752,26 +753,10 @@ function renderDashboard(){
   var html = '' + renderGreeting();
 
   html += '' +
-    '<div class="card">' +
-      '<div class="eyebrow">Lançamento rápido</div>' +
-      (state.txSaveError ? '<div class="ai-error">Não consegui salvar (' + escapeHtml(state.txSaveError) + '). Tenta de novo.</div>' : '') +
-      '<div class="form-row type-toggle">' +
-        '<button class="type-btn despesa ' + (formState.type==="despesa"?"active":"") + '" data-quicktype="despesa">Despesa</button>' +
-        '<button class="type-btn receita ' + (formState.type==="receita"?"active":"") + '" data-quicktype="receita">Receita</button>' +
-      '</div>' +
-      '<div class="form-row">' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="dashQuickValue" placeholder="0,00" value="' + formState.value + '"></div>' +
-      '</div>' +
-      '<div class="form-row">' +
-        '<input type="text" id="dashQuickDesc" placeholder="Descrição (ex: Mercado)" value="' + escapeHtml(formState.description) + '">' +
-      '</div>' +
-      '<div class="form-row">' +
-        '<select id="dashQuickCategory">' + allCategories().map(function(c){
-          return '<option value="' + escapeHtml(c) + '"' + (c===formState.category?" selected":"") + '>' + escapeHtml(c) + '</option>';
-        }).join("") + '</select>' +
-      '</div>' +
-      '<button class="btn-submit" id="btnDashQuickAdd">Adicionar</button>' +
-    '</div>';
+    '<button type="button" class="card" id="btnGoAdicionar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;cursor:pointer;font-family:inherit;-webkit-appearance:none;appearance:none">' +
+      '<span style="font-weight:800;font-size:14px;color:var(--fd)">+ Novo lançamento</span>' +
+      '<span style="color:var(--fp);font-weight:800;font-size:18px">→</span>' +
+    '</button>';
 
   html += renderPriceAlert();
 
@@ -1440,7 +1425,7 @@ function filteredTxs(){
   });
 }
 
-function renderLancamentos(){
+function renderAdicionar(){
   var editing = !!formState.editingId;
   return '' +
     '<div class="card">' +
@@ -1482,7 +1467,11 @@ function renderLancamentos(){
       '<button class="btn-submit" id="btnAddTx">' + (editing ? "Salvar alterações" : "Adicionar") + '</button>' +
       (editing ? '<button class="btn-ghost" id="btnCancelEdit">Cancelar</button>' : '') +
     '</div>' +
-    renderImportCard() +
+    renderImportCard();
+}
+
+function renderLancamentos(){
+  return '' +
     '<div class="card">' +
       '<div class="eyebrow">Lançamentos</div>' +
       '<div class="filter-row">' +
@@ -3273,6 +3262,7 @@ function render(){
     return;
   }
   if(state.tab === "dashboard") content.innerHTML = renderDashboard();
+  else if(state.tab === "adicionar") content.innerHTML = renderAdicionar();
   else if(state.tab === "analises") content.innerHTML = renderAnalises();
   else if(state.tab === "lancamentos") content.innerHTML = renderLancamentos();
   else if(state.tab === "limites") content.innerHTML = renderLimites();
@@ -3305,35 +3295,10 @@ function bindContentEvents(){
     });
     var btnDismissPriceAlertDash = document.getElementById("btnDismissPriceAlert");
     if(btnDismissPriceAlertDash) btnDismissPriceAlertDash.addEventListener("click", dismissPriceAlert);
-    document.querySelectorAll("[data-quicktype]").forEach(function(btn){
-      btn.addEventListener("click", function(){
-        formState.value = document.getElementById("dashQuickValue").value;
-        formState.description = document.getElementById("dashQuickDesc").value;
-        formState.category = document.getElementById("dashQuickCategory").value;
-        formState.type = btn.dataset.quicktype;
-        render();
-      });
-    });
-    var btnDashQuickAdd = document.getElementById("btnDashQuickAdd");
-    if(btnDashQuickAdd) btnDashQuickAdd.addEventListener("click", function(){
-      // Evita duplicar o lançamento se a pessoa der duplo-toque enquanto o
-      // salvamento ainda está em andamento (o botão só volta a ficar
-      // clicável no próximo render(), que já acontece no fim do save).
-      if(btnDashQuickAdd.disabled) return;
-      btnDashQuickAdd.disabled = true;
-      // Lançamento rápido do dashboard sempre cria uma transação nova — nunca
-      // deve herdar um editingId deixado por uma edição iniciada em Lançamentos
-      // e abandonada sem salvar/cancelar (o que faria um PATCH silencioso
-      // sobrescrever a transação antiga em vez de criar uma nova).
-      formState.editingId = null;
-      formState.value = document.getElementById("dashQuickValue").value;
-      formState.description = document.getElementById("dashQuickDesc").value;
-      formState.category = document.getElementById("dashQuickCategory").value;
-      // O quick-add não mostra um campo de data — sem isso, uma sessão de
-      // PWA que atravessa a meia-noite continuava lançando tudo com a data
-      // de quando a página abriu, e não a de agora.
-      formState.date = todayStr();
-      saveTransaction();
+    var btnGoAdicionar = document.getElementById("btnGoAdicionar");
+    if(btnGoAdicionar) btnGoAdicionar.addEventListener("click", function(){
+      state.tab = "adicionar";
+      render();
     });
   }
   if(state.tab === "analises"){
@@ -3356,7 +3321,7 @@ function bindContentEvents(){
     });
     if(isMasterUser() && state.adminUnlocked) kickOffChartAnimations();
   }
-  if(state.tab === "lancamentos"){
+  if(state.tab === "adicionar"){
     document.querySelectorAll(".type-btn").forEach(function(btn){
       btn.addEventListener("click", function(){
         formState.value = document.getElementById("fValue").value;
@@ -3382,25 +3347,6 @@ function bindContentEvents(){
     });
     var cancel = document.getElementById("btnCancelEdit");
     if(cancel) cancel.addEventListener("click", function(){ resetForm(); render(); });
-    document.getElementById("filterMonth").addEventListener("change", function(e){ state.filterMonth = e.target.value; render(); });
-    document.getElementById("filterCategory").addEventListener("change", function(e){ state.filterCategory = e.target.value; render(); });
-    document.getElementById("filterText").addEventListener("input", function(e){
-      state.filterText = e.target.value;
-      var wrap = document.getElementById("txListWrap");
-      wrap.innerHTML = renderTxList(filteredTxs());
-      bindTxRowEvents(wrap);
-    });
-    var btnClearMonthFilter = document.getElementById("btnClearMonthFilter");
-    if(btnClearMonthFilter) btnClearMonthFilter.addEventListener("click", function(){ state.filterMonth = ""; render(); });
-    document.getElementById("btnExportCSV").addEventListener("click", exportCSV);
-    var btnApplyBulkCat = document.getElementById("btnApplyBulkCat");
-    if(btnApplyBulkCat) btnApplyBulkCat.addEventListener("click", applyBulkCategory);
-    var btnDismissBulkCat = document.getElementById("btnDismissBulkCat");
-    if(btnDismissBulkCat) btnDismissBulkCat.addEventListener("click", dismissBulkCatPrompt);
-    var btnDismissPriceAlert = document.getElementById("btnDismissPriceAlert");
-    if(btnDismissPriceAlert) btnDismissPriceAlert.addEventListener("click", dismissPriceAlert);
-    var btnDismissReceiptMsg = document.getElementById("btnDismissReceiptMsg");
-    if(btnDismissReceiptMsg) btnDismissReceiptMsg.addEventListener("click", dismissReceiptMsg);
     var importFile = document.getElementById("importFile");
     if(importFile) importFile.addEventListener("change", function(e){
       var file = e.target.files[0];
@@ -3433,6 +3379,27 @@ function bindContentEvents(){
     if(btnCancelImport) btnCancelImport.addEventListener("click", function(){
       state.importPreview = []; state.importError = null; state.importDone = null; render();
     });
+  }
+  if(state.tab === "lancamentos"){
+    document.getElementById("filterMonth").addEventListener("change", function(e){ state.filterMonth = e.target.value; render(); });
+    document.getElementById("filterCategory").addEventListener("change", function(e){ state.filterCategory = e.target.value; render(); });
+    document.getElementById("filterText").addEventListener("input", function(e){
+      state.filterText = e.target.value;
+      var wrap = document.getElementById("txListWrap");
+      wrap.innerHTML = renderTxList(filteredTxs());
+      bindTxRowEvents(wrap);
+    });
+    var btnClearMonthFilter = document.getElementById("btnClearMonthFilter");
+    if(btnClearMonthFilter) btnClearMonthFilter.addEventListener("click", function(){ state.filterMonth = ""; render(); });
+    document.getElementById("btnExportCSV").addEventListener("click", exportCSV);
+    var btnApplyBulkCat = document.getElementById("btnApplyBulkCat");
+    if(btnApplyBulkCat) btnApplyBulkCat.addEventListener("click", applyBulkCategory);
+    var btnDismissBulkCat = document.getElementById("btnDismissBulkCat");
+    if(btnDismissBulkCat) btnDismissBulkCat.addEventListener("click", dismissBulkCatPrompt);
+    var btnDismissPriceAlert = document.getElementById("btnDismissPriceAlert");
+    if(btnDismissPriceAlert) btnDismissPriceAlert.addEventListener("click", dismissPriceAlert);
+    var btnDismissReceiptMsg = document.getElementById("btnDismissReceiptMsg");
+    if(btnDismissReceiptMsg) btnDismissReceiptMsg.addEventListener("click", dismissReceiptMsg);
   }
   if(state.tab === "limites"){
     document.getElementById("btnSaveLimit").addEventListener("click", function(e){
@@ -3773,7 +3740,7 @@ function startEdit(id){
     editingId: id, type: t.type, category: t.category,
     description: t.description || "", value: String(t.value), date: t.date, cardId: t.card_id || ""
   };
-  state.tab = "lancamentos";
+  state.tab = "adicionar";
   render();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -4324,7 +4291,7 @@ document.querySelectorAll(".tab-btn").forEach(function(btn){
     // cancela a edição — senão o formState.editingId ficava "vazando" pra
     // outras abas e um lançamento rápido em outro lugar acabava dando PATCH
     // na transação antiga em vez de criar uma nova.
-    if(formState.editingId && btn.dataset.tab !== "lancamentos") resetForm();
+    if(formState.editingId && btn.dataset.tab !== "adicionar") resetForm();
     state.tab = btn.dataset.tab;
     render();
     document.getElementById("navMenu").classList.remove("open");
