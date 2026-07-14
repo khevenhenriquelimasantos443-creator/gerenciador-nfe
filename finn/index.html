@@ -1326,7 +1326,17 @@ function renderAnalises(){
   var topDespesas = despesasSorted.slice(0, 5);
   var topReceitas = receitasSorted.slice(0, 5);
 
-  var stats = { saldo: saldo, totalReceita: totalReceita, totalDespesa: totalDespesa, jurosTotal: jurosTotal, topDespesaCat: despesaCats[0], avgDespesaDia: avgDespesaDia, avgReceitaDia: avgReceitaDia, razao: razao, despesaCats: despesaCats };
+  // Recomendações de "revise esse gasto" / "crie um limite" só fazem sentido
+  // pra despesa variável — sugerir isso pra categoria de uma conta fixa
+  // (ex.: Moradia por causa do aluguel) não ajuda em nada, já que é um
+  // valor comprometido todo mês. Usa as categorias já marcadas em "Fixas"
+  // pra achar a maior categoria só entre os gastos que dá pra cortar.
+  var fixedDespesaCats = {};
+  state.fixed.forEach(function(f){ if(f.type === "despesa") fixedDespesaCats[f.category] = true; });
+  var discretionaryDespesas = despesas.filter(function(t){ return !fixedDespesaCats[t.category]; });
+  var topDiscretionaryCat = breakdownByCat(discretionaryDespesas)[0];
+
+  var stats = { saldo: saldo, totalReceita: totalReceita, totalDespesa: totalDespesa, jurosTotal: jurosTotal, topDespesaCat: topDiscretionaryCat, avgDespesaDia: avgDespesaDia, avgReceitaDia: avgReceitaDia, razao: razao, despesaCats: despesaCats };
   var recos = buildRecommendations(stats);
 
   var healthClass = saldo < 0 ? "bad" : (totalDespesa > totalReceita * 0.85 ? "warn" : "good");
