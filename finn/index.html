@@ -1599,6 +1599,10 @@ function parseMoneyStr(s){
   if(s == null) return null;
   s = String(s).trim();
   if(!s) return null;
+  // Alguns extratos (ex.: PicPay) tipografam o sinal de negativo com o
+  // caractere matemático "−" (U+2212) ou um travessão, não o hífen comum —
+  // sem essa normalização o valor nunca era reconhecido como negativo.
+  s = s.replace(/[−–—]/g, "-");
   var neg = /^-|\(.*\)$/.test(s);
   s = s.replace(/[^\d,.\-]/g, "");
   if(!s) return null;
@@ -1734,6 +1738,79 @@ function parseStatementText(text){
   return rows;
 }
 
+var MONTHS_PT = {"janeiro":"01","fevereiro":"02","março":"03","marco":"03","abril":"04","maio":"05","junho":"06","julho":"07","agosto":"08","setembro":"09","outubro":"10","novembro":"11","dezembro":"12"};
+
+// Formato "PicPay" (e outras carteiras digitais): a data aparece uma vez por
+// dia como cabeçalho por extenso ("13 de julho 2026 Saldo ao final do dia:
+// ..."), e cada lançamento abaixo só tem hora ("11:31 Pix enviado −R$ 65,34
+// ..."), sem nenhuma data dd/mm/aaaa na própria linha — por isso o regex
+// genérico de parseStatementText (que exige a data colada no lançamento)
+// nunca encontrava nada nesse tipo de extrato.
+function parseDayGroupedStatement(text){
+  var dateHeaderRe = /(\d{1,2})\s+de\s+([a-zçãáéíóú]+)\s+(\d{4})(?!\s+de\b)/gi;
+  var headers = [];
+  var hm;
+  while((hm = dateHeaderRe.exec(text))){
+    var mo = MONTHS_PT[hm[2].toLowerCase()];
+    if(!mo) continue;
+    headers.push({ index: hm.index, date: hm[3] + "-" + mo + "-" + hm[1].padStart(2, "0") });
+  }
+  if(!headers.length) return [];
+
+  var TYPE_PREFIX_RE = /^(Pix enviado|Pix recebido|Pix devolvido|Compra realizada|Compra estornada|Pagamento realizado|Valor recebido|Tarifa de cadastro cobrada|Seguro Carteira Digital)\s*/i;
+  var MONEY_TOKEN_RE = /[+\-−–—]?R?\$?\s?\d{1,3}(?:\.\d{3})*,\d{2}/g;
+  var rows = [];
+  for(var h = 0; h < headers.length; h++){
+    var sectionStart = headers[h].index;
+    var sectionEnd = h + 1 < headers.length ? headers[h + 1].index : text.length;
+    var section = text.slice(sectionStart, sectionEnd);
+
+    var timeRe = /\d{2}:\d{2}/g;
+    var times = [];
+    var tm;
+    while((tm = timeRe.exec(section))) times.push(tm.index);
+
+    for(var i = 0; i < times.length; i++){
+      var chunkStart = times[i];
+      var chunkEnd = i + 1 < times.length ? times[i + 1] : section.length;
+      var chunk = section.slice(chunkStart, chunkEnd);
+
+      var moneyTokens = chunk.match(MONEY_TOKEN_RE);
+      if(!moneyTokens || !moneyTokens.length) continue;
+      var rawVal = moneyTokens[moneyTokens.length - 1];
+      var value = parseMoneyStr(rawVal);
+      if(value === null || value === 0) continue;
+
+      var valIdx = chunk.lastIndexOf(rawVal);
+      var desc = chunk.slice(5, valIdx) + " " + chunk.slice(valIdx + rawVal.length);
+      // Quando o último lançamento do dia não tem contraparte, o trecho vai
+      // até o próximo cabeçalho de data — se isso cruzar uma quebra de
+      // página, o cabeçalho repetido (nome/CPF/agência) ou o rodapé do PDF
+      // acabam grudados na descrição. Corta tudo a partir desse ruído.
+      var noiseMatch = desc.match(/([A-ZÀ-Ÿ][\wÀ-ÿ]*(?:\s+[A-ZÀ-Ÿ][\wÀ-ÿ]*){1,6}\s+)?(?:CPF:|Ag[eê]ncia:|Documento emitido em:|D[uú]vidas\?)/i);
+      if(noiseMatch) desc = desc.slice(0, noiseMatch.index);
+      desc = desc
+        .replace(TYPE_PREFIX_RE, "")
+        .replace(/\bCom\s+(saldo\s*\+\s*cart[aã]o|saldo|cart[aã]o)\b/gi, "")
+        .replace(/\s+/g, " ").trim();
+      if(!desc){
+        var typeMatch = chunk.slice(5).trim().match(TYPE_PREFIX_RE);
+        desc = typeMatch ? typeMatch[1] : "Importado";
+      }
+
+      rows.push({
+        date: headers[h].date,
+        type: value < 0 ? "despesa" : "receita",
+        category: guessCategory(desc) || "Outros",
+        description: desc.slice(0, 80),
+        value: Math.abs(value),
+        include: true
+      });
+    }
+  }
+  return rows;
+}
+
 function parsePDF(arrayBuffer){
   return loadScript("https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js").then(function(){
     window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
@@ -1749,7 +1826,9 @@ function parsePDF(arrayBuffer){
     }
     return Promise.all(pagePromises);
   }).then(function(pageTexts){
-    return parseStatementText(pageTexts.join("\n"));
+    var text = pageTexts.join("\n");
+    var dayGroupedRows = parseDayGroupedStatement(text);
+    return dayGroupedRows.length ? dayGroupedRows : parseStatementText(text);
   });
 }
 
