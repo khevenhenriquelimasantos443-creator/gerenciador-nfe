@@ -20,6 +20,12 @@ const META_API_VERSION = "v19.0";
 // vem — enquanto isso, ninguém é bloqueado no bot. Vira true quando for a hora.
 const PREMIUM_ENFORCEMENT_ENABLED = false;
 
+// Conta master do Finn — além do ADMIN_TOKEN secreto, quem estiver logado
+// no Supabase com esse email TAMBÉM precisa da senha extra (wrangler secret
+// MASTER_ADMIN_PASSWORD) pra passar em requireAdminToken() — o login do
+// Google/Supabase sozinho não é suficiente.
+const MASTER_EMAIL = "finn.controle01@gmail.com";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -43,7 +49,7 @@ export default {
     // só por quem sabe o token. Sem isso, /keys expunha todos os telefones
     // cadastrados e /debug expunha telefone+texto das últimas mensagens.
     if (url.pathname === "/keys" && request.method === "GET") {
-      if (!requireAdminToken(request, env)) return unauthorizedResponse();
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       const list = await listAllKeys(env, "data_");
       const keys = list.map(k => k.name.replace("data_", ""));
       return corsResponse(new Response(JSON.stringify({ ok: true, numeros: keys }, null, 2), { status: 200, headers: { "Content-Type": "application/json" } }));
@@ -54,12 +60,12 @@ export default {
     }
 
     if (url.pathname === "/debug" && request.method === "GET") {
-      if (!requireAdminToken(request, env)) return unauthorizedResponse();
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       return handleDebug(env);
     }
 
     if (url.pathname === "/subscribe" && request.method === "GET") {
-      if (!requireAdminToken(request, env)) return unauthorizedResponse();
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       return handleSubscribeWaba(env);
     }
 
@@ -108,13 +114,22 @@ async function listAllKeys(env, prefix) {
 }
 
 // Endpoints de diagnóstico (/keys, /debug, /subscribe) — nunca usados pelo
-// app público, só por quem tem o token (definido via wrangler secret
-// ADMIN_TOKEN). Aceita o token no header X-Admin-Token ou em ?token=.
-function requireAdminToken(request, env) {
-  if (!env.ADMIN_TOKEN) return false;
+// app público. Aceita o token secreto (X-Admin-Token ou ?token=, definido via
+// wrangler secret ADMIN_TOKEN) OU a conta master logada de verdade no
+// Supabase (Authorization: Bearer <access_token> ou ?access_token=).
+async function requireAdminToken(request, env) {
   const url = new URL(request.url);
   const token = request.headers.get("X-Admin-Token") || url.searchParams.get("token");
-  return !!token && token === env.ADMIN_TOKEN;
+  if (env.ADMIN_TOKEN && token && token === env.ADMIN_TOKEN) return true;
+
+  const authHeader = request.headers.get("Authorization") || "";
+  const accessToken = authHeader.replace(/^Bearer\s+/i, "") || url.searchParams.get("access_token");
+  const adminPassword = request.headers.get("X-Admin-Password") || url.searchParams.get("admin_password");
+  if (accessToken && env.MASTER_ADMIN_PASSWORD && adminPassword === env.MASTER_ADMIN_PASSWORD) {
+    const user = await verifySupabaseUser(accessToken);
+    if (user && user.email && user.email.toLowerCase() === MASTER_EMAIL.toLowerCase()) return true;
+  }
+  return false;
 }
 
 function unauthorizedResponse() {
@@ -1052,7 +1067,7 @@ async function handleSyncGet(request, env) {
   // Nunca usado pelo app público (só POST /sync é) — tranca atrás do token
   // de admin. Sem isso, qualquer um que soubesse um telefone lia o extrato
   // financeiro completo da pessoa.
-  if (!requireAdminToken(request, env)) return unauthorizedResponse();
+  if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
   const url = new URL(request.url);
   const phone = url.searchParams.get("phone");
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
@@ -1077,7 +1092,7 @@ async function handleSyncDelete(request, env) {
   // Apaga os dados sincronizados de um telefone (data_<phone> e fixed_<phone>,
   // nas duas variantes com/sem o 9) — usado quando alguém quer remover os
   // próprios dados do KV do bot sem esperar o bot voltar do banimento.
-  if (!requireAdminToken(request, env)) return unauthorizedResponse();
+  if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
   const url = new URL(request.url);
   const phone = url.searchParams.get("phone");
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400,headers:{"Content-Type":"application/json"}}));
@@ -1114,7 +1129,7 @@ async function fetchUserPlan(accessToken, env) {
 async function handleSync(request, env) {
   let body;
   try { body=await request.json(); } catch { return corsResponse(new Response(JSON.stringify({error:"Invalid JSON"}),{status:400})); }
-  const {phone,data,fixed,access_token}=body;
+  const {phone,data,fixed,access_token,admin_password}=body;
   if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400}));
 
   // Só deixa sincronizar o telefone que a PRÓPRIA conta logada salvou no
@@ -1128,7 +1143,9 @@ async function handleSync(request, env) {
       status: 403, headers: { "Content-Type": "application/json" }
     }));
   }
-  const plan = await fetchUserPlan(access_token, env);
+  const isMaster = user.email && user.email.toLowerCase() === MASTER_EMAIL.toLowerCase()
+    && env.MASTER_ADMIN_PASSWORD && admin_password === env.MASTER_ADMIN_PASSWORD;
+  const plan = isMaster ? "pro" : await fetchUserPlan(access_token, env);
 
   try {
     // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —

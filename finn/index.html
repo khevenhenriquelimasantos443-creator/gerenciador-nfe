@@ -408,6 +408,13 @@ var WHATSAPP_BOT_ENABLED = false;
 // começa mês que vem — enquanto isso, todo mundo usa como se fosse Pro.
 // Vira true quando for a hora de cobrar de verdade.
 var PREMIUM_ENFORCEMENT_ENABLED = false;
+// Conta master do Finn — sempre Pro no app, não importa o que a tabela
+// subscriptions diga (nem precisa ter assinatura nenhuma registrada).
+var MASTER_EMAIL = "finn.controle01@gmail.com";
+function isMasterUser(){
+  var email = currentSession && currentSession.user && currentSession.user.email;
+  return !!(email && email.toLowerCase() === MASTER_EMAIL.toLowerCase());
+}
 function whatsappBotLink(){
   return "https://wa.me/" + WHATSAPP_BOT_NUMBER + "?text=" + encodeURIComponent(WHATSAPP_GREETING);
 }
@@ -557,7 +564,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null };
 
 // Só dígitos, com DDI 55 na frente — mesmo formato que o WhatsApp usa
 // internamente (o "from" que chega no bot), pra bater com data_<phone> no KV.
@@ -603,6 +610,7 @@ function syncWhatsAppBot(){
     },
     fixed: state.fixed
   };
+  if(isMasterUser() && state.adminUnlocked) payload.admin_password = state.adminPassword;
   return fetch(WHATSAPP_WORKER_URL + "/sync", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -650,6 +658,7 @@ function escapeHtml(s){
 
 function isPremium(){
   if(!PREMIUM_ENFORCEMENT_ENABLED) return true;
+  if(isMasterUser() && state.adminUnlocked) return true;
   return state.plan === "plus" || state.plan === "pro";
 }
 
@@ -2684,6 +2693,7 @@ function callAI(){
     system: "Você é o Finn, um assistente financeiro brasileiro amigável e direto. Analise os dados financeiros do mês do usuário e responda em português do Brasil, de forma curta e prática. Estruture em: 1) um resumo de 1-2 frases sobre a saúde financeira do mês, 2) 3 a 5 dicas objetivas e personalizadas pra economizar com base nas categorias onde ele mais gasta, 3) um alerta se algum limite foi estourado ou se as despesas passaram das receitas. Não invente dados que não estão no resumo. Use uma linguagem leve, sem jargão.",
     messages: [{ role: "user", content: "Aqui está o resumo das minhas finanças deste mês:\n\n" + summary + "\n\nMe dá uma análise com dicas." }]
   };
+  if(isMasterUser() && state.adminUnlocked) payload.admin_password = state.adminPassword;
   fetch("/ai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -2823,7 +2833,127 @@ function renderConfig(){
     '</div>' +
   '</div>';
 
+  html += renderAdminCard();
+
   return html;
+}
+
+/* ── Admin (só a conta master vê isso) ── */
+function renderAdminCard(){
+  if(!isMasterUser()) return "";
+
+  if(!state.adminUnlocked){
+    return '<div class="card">' +
+      '<div class="eyebrow">Admin — conta master</div>' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Essa conta tem acesso total (Pro ilimitado + painel de assinaturas), mas exige uma senha extra além do login do Google — só saber o email não é suficiente.</div>' +
+      '<div class="form-row"><label>Senha de admin</label><input type="password" id="adminPasswordInput" placeholder="••••••••"></div>' +
+      (state.adminLoginError ? '<div class="ai-error" style="margin-bottom:10px">' + escapeHtml(state.adminLoginError) + '</div>' : '') +
+      '<button type="button" class="btn-submit" id="btnAdminUnlock"' + (state.adminLoginLoading ? " disabled" : "") + '>' + (state.adminLoginLoading ? "Verificando…" : "Desbloquear") + '</button>' +
+    '</div>';
+  }
+
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Admin — conta master</div>' +
+    '<button type="button" class="btn-ghost" id="btnAdminLoad" style="width:100%">' +
+      (state.adminLoading ? "Carregando…" : "🔄 Carregar assinaturas") +
+    '</button>';
+  if(state.adminError) html += '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.adminError) + '</div>';
+  if(state.adminSubs && state.adminSubs.length){
+    html += '<div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">';
+    state.adminSubs.forEach(function(s){
+      var until = s.current_period_end ? new Date(s.current_period_end).toLocaleDateString("pt-BR") : "—";
+      html += '<div class="tx-item" style="flex-wrap:wrap">' +
+        '<div class="tx-info" style="min-width:140px">' +
+          '<div class="tx-desc">' + escapeHtml(s.email) + '</div>' +
+          '<div class="tx-meta">' + escapeHtml(s.status || "") + ' · até ' + until + '</div>' +
+        '</div>' +
+        '<select class="admin-plan-select" data-admin-email="' + escapeHtml(s.email) + '">' +
+          ["free","plus","pro"].map(function(p){
+            return '<option value="' + p + '"' + (p === s.plan ? " selected" : "") + '>' + p + '</option>';
+          }).join("") +
+        '</select>' +
+        '<button type="button" class="btn-ghost admin-plan-save" data-admin-email="' + escapeHtml(s.email) + '">Salvar</button>' +
+      '</div>';
+    });
+    html += '</div>';
+  } else if(state.adminSubs){
+    html += '<div style="font-size:13px;color:var(--fm);margin-top:10px">Ninguém tem assinatura registrada ainda.</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function unlockAdmin(){
+  var input = document.getElementById("adminPasswordInput");
+  var password = input ? input.value : "";
+  if(!password) return;
+  state.adminLoginLoading = true;
+  state.adminLoginError = null;
+  render();
+  fetch("/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, password: password })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.adminLoginLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.adminUnlocked = true;
+        state.adminPassword = password;
+        loadPlan(); // já aplica o bypass pra Pro imediatamente, sem precisar recarregar
+        loadAdminSubscriptions();
+      } else {
+        state.adminLoginError = (res.body && res.body.error) || "Senha incorreta.";
+        render();
+      }
+    }).catch(function(){
+      state.adminLoginLoading = false;
+      state.adminLoginError = "Falha de conexão.";
+      render();
+    });
+}
+
+function loadAdminSubscriptions(){
+  state.adminLoading = true;
+  state.adminError = null;
+  render();
+  var token = encodeURIComponent((currentSession && currentSession.access_token) || "");
+  var pwd = encodeURIComponent(state.adminPassword || "");
+  fetch("/admin/subscriptions?access_token=" + token + "&admin_password=" + pwd)
+    .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.adminLoading = false;
+      if(res.status === 200 && res.body && res.body.subscriptions){
+        state.adminSubs = res.body.subscriptions;
+      } else {
+        state.adminError = (res.body && res.body.error) || "Não consegui carregar.";
+      }
+      render();
+    }).catch(function(){
+      state.adminLoading = false;
+      state.adminError = "Falha de conexão.";
+      render();
+    });
+}
+
+function setAdminPlan(email, plan){
+  state.adminError = null;
+  fetch("/admin/subscriptions/set", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, target_email: email, plan: plan, admin_password: state.adminPassword })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      if(res.status === 200){
+        loadAdminSubscriptions();
+      } else {
+        state.adminError = (res.body && res.body.error) || "Não consegui salvar.";
+        render();
+      }
+    }).catch(function(){
+      state.adminError = "Falha de conexão.";
+      render();
+    });
 }
 
 function saveProfileName(){
@@ -3262,6 +3392,26 @@ function bindContentEvents(){
     document.getElementById("btnEnablePush").addEventListener("click", enablePushNotifications);
     document.getElementById("btnDeleteAllTx").addEventListener("click", deleteAllTransactions);
     document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
+    if(isMasterUser()){
+      if(!state.adminUnlocked){
+        var btnAdminUnlock = document.getElementById("btnAdminUnlock");
+        if(btnAdminUnlock) btnAdminUnlock.addEventListener("click", unlockAdmin);
+        var adminPasswordInput = document.getElementById("adminPasswordInput");
+        if(adminPasswordInput) adminPasswordInput.addEventListener("keydown", function(e){
+          if(e.key === "Enter") unlockAdmin();
+        });
+      } else {
+        var btnAdminLoad = document.getElementById("btnAdminLoad");
+        if(btnAdminLoad) btnAdminLoad.addEventListener("click", loadAdminSubscriptions);
+        document.querySelectorAll(".admin-plan-save").forEach(function(btn){
+          btn.addEventListener("click", function(){
+            var email = btn.dataset.adminEmail;
+            var select = document.querySelector('.admin-plan-select[data-admin-email="' + CSS.escape(email) + '"]');
+            if(select) setAdminPlan(email, select.value);
+          });
+        });
+      }
+    }
   }
   bindTxRowEvents(document);
 }
@@ -3777,11 +3927,11 @@ function loadPlan(){
   // motivo, isso não pode derrubar o resto do app — assume free e segue.
   db("subscriptions", "GET", null, { user_id: "eq." + uid() }).then(function(rows){
     var row = rows && rows[0];
-    state.plan = (row && row.plan) || "free";
+    state.plan = (isMasterUser() && state.adminUnlocked) ? "pro" : ((row && row.plan) || "free");
     state.planLoaded = true;
     if(!isTypingInForm()) render();
   }).catch(function(){
-    state.plan = "free";
+    state.plan = (isMasterUser() && state.adminUnlocked) ? "pro" : "free";
     state.planLoaded = true;
     if(!isTypingInForm()) render();
   });

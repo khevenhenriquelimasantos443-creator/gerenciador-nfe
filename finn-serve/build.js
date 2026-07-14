@@ -25,6 +25,9 @@ const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,1
 const SUPA_URL_SERVER = 'https://zblkznobqcztvznycyyo.supabase.co';
 const SUPA_ANON_KEY_SERVER = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
 
+// Conta master do Finn — só esse email pode chamar as rotas /admin/*.
+const MASTER_EMAIL = 'finn.controle01@gmail.com';
+
 // ── Funções auxiliares Pluggy (embutidas no Worker como módulo) ──────────────
 const pluggyFns = `
 // Categoria Pluggy → categoria Finn
@@ -603,6 +606,122 @@ async function checkExpiredSubscriptions(env) {
     } catch (e) { /* uma falha não deve travar as outras */ }
   }
 }
+
+var MASTER_EMAIL = '${MASTER_EMAIL}';
+function _isMasterUser(authUser) {
+  return !!(authUser && authUser.email && authUser.email.toLowerCase() === MASTER_EMAIL.toLowerCase());
+}
+
+// Segunda trava além do login do Google/Supabase: mesmo sendo o email
+// master, só libera Pro/admin com essa senha (wrangler secret
+// MASTER_ADMIN_PASSWORD) — sem ela configurada, ninguém passa.
+function _masterPasswordOk(env, password) {
+  return !!(env.MASTER_ADMIN_PASSWORD && password && password === env.MASTER_ADMIN_PASSWORD);
+}
+
+// POST /admin/login — { access_token, password } — o app chama isso uma vez
+// pra "destravar" a sessão de admin; as rotas /admin/* e o bypass do /ai
+// conferem a senha de novo a cada chamada, isso aqui só valida antes de
+// mostrar o painel.
+async function _adminLogin(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, body.password)) return new Response(JSON.stringify({ error: 'senha incorreta' }), { status: 403, headers: cors });
+    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
+// Busca um usuário do Supabase Auth pelo email via Admin API (exige service
+// role) — usado só pelas rotas /admin/* pra achar o user_id de quem a conta
+// master quer consultar/alterar.
+async function _adminFindUserByEmail(email, env) {
+  if (!env.SUPABASE_SERVICE_KEY || !email) return null;
+  var r = await fetch('${SUPA_URL_SERVER}/auth/v1/admin/users?email=' + encodeURIComponent(email), {
+    headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+  });
+  if (!r.ok) return null;
+  var j = await r.json();
+  var users = j.users || j || [];
+  return users[0] || null;
+}
+
+// GET /admin/subscriptions?access_token=... — lista todo mundo que já tem
+// linha na tabela subscriptions, com o email de cada um (só a conta master).
+async function _adminListSubscriptions(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var url = new URL(request.url);
+    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
+
+    var subsR = await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?select=*&order=updated_at.desc', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    var subs = subsR.ok ? await subsR.json() : [];
+
+    // Mapeia user_id -> email via Admin API (paginado, até 5 páginas = 1000 usuários)
+    var emailById = {};
+    for (var page = 1; page <= 5; page++) {
+      var ur = await fetch('${SUPA_URL_SERVER}/auth/v1/admin/users?page=' + page + '&per_page=200', {
+        headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+      });
+      if (!ur.ok) break;
+      var uj = await ur.json();
+      var list = uj.users || [];
+      if (!list.length) break;
+      for (var i = 0; i < list.length; i++) emailById[list[i].id] = list[i].email;
+      if (list.length < 200) break;
+    }
+
+    var out = subs.map(function(s) {
+      return {
+        user_id: s.user_id, email: emailById[s.user_id] || '(desconhecido)',
+        plan: s.plan, status: s.status, current_period_end: s.current_period_end,
+        ai_usage_count: s.ai_usage_count, ai_usage_month: s.ai_usage_month
+      };
+    });
+    return new Response(JSON.stringify({ subscriptions: out }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
+// POST /admin/subscriptions/set — { access_token, target_email, plan } — só a
+// conta master pode chamar. Troca o plano de qualquer usuário na mão (ex:
+// liberar Pro pra um amigo testando, sem precisar passar pelo Mercado Pago).
+async function _adminSetSubscription(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, body.admin_password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (['free', 'plus', 'pro'].indexOf(body.plan) === -1) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
+
+    var target = await _adminFindUserByEmail(body.target_email, env);
+    if (!target) return new Response(JSON.stringify({ error: 'usuário não encontrado' }), { status: 404, headers: cors });
+
+    var fields = { plan: body.plan, status: 'active' };
+    if (body.plan !== 'free') {
+      var far = new Date(); far.setFullYear(far.getFullYear() + 50);
+      fields.current_period_end = far.toISOString();
+    }
+    await _subaUpsertSubscription(target.id, fields, env);
+    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
 `;
 
 const worker = `${pluggyFns}
@@ -818,6 +937,7 @@ h1 em{font-style:normal;color:#F97316}
         }
         var aiSub = await _subaGetSubscription(aiUser.id, env);
         var aiPlan = PREMIUM_ENFORCEMENT_ENABLED ? ((aiSub && aiSub.plan) || 'free') : 'pro';
+        if (_isMasterUser(aiUser) && _masterPasswordOk(env, aiPayload.admin_password)) aiPlan = 'pro';
         if (aiPlan === 'free') {
           return new Response(JSON.stringify({ error: { type: 'premium_required', message: 'Finn IA é um recurso Plus/Pro — assine pra usar.' } }), {
             status: 402, headers: { 'Content-Type': 'application/json' }
@@ -876,6 +996,17 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/billing/webhook' && request.method === 'POST') {
       return _billingWebhook(request, env);
+    }
+
+    // ── Admin: só a conta master (ver/gerenciar assinatura de qualquer usuário) ──
+    if (url.pathname === '/admin/login' && request.method === 'POST') {
+      return _adminLogin(request, env);
+    }
+    if (url.pathname === '/admin/subscriptions' && request.method === 'GET') {
+      return _adminListSubscriptions(request, env);
+    }
+    if (url.pathname === '/admin/subscriptions/set' && request.method === 'POST') {
+      return _adminSetSubscription(request, env);
     }
 
     // ── PWA Manifest ──
