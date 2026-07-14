@@ -1553,8 +1553,8 @@ function renderImportCard(){
   var html = '<div class="card">' +
     '<div class="eyebrow">Importar arquivo</div>' +
     '<div class="form-row">' +
-      '<label>CSV, TXT, XLSX ou PDF</label>' +
-      '<input type="file" id="importFile" accept=".csv,.txt,.xlsx,.pdf">' +
+      '<label>CSV, TXT, XLSX, PDF ou OFX</label>' +
+      '<input type="file" id="importFile" accept=".csv,.txt,.xlsx,.pdf,.ofx,.qfx">' +
     '</div>';
   if(state.importParsing) html += '<div class="empty-state">Lendo arquivo…</div>';
   if(state.importError) html += '<div class="ai-error">' + escapeHtml(state.importError) + '</div>';
@@ -1681,6 +1681,11 @@ function parseDelimited(text){
     value: header.findIndex(function(h){ return /valor|value|montante|amount/.test(h); })
   };
   var hasHeader = idx.date !== -1 || idx.value !== -1;
+  // Fatura de cartão (ex.: export "date,title,amount" do Nubank) usa o
+  // sinal ao contrário de um extrato de conta: o valor vem POSITIVO pra
+  // uma compra (é despesa) e NEGATIVO só num pagamento/estorno (é receita).
+  // Sem esse caso especial, toda compra do cartão virava "receita".
+  var isCardInvoiceCsv = hasHeader && header.length === 3 && header[0] === "date" && header[1] === "title" && header[2] === "amount";
   var dataLines = hasHeader ? lines.slice(1) : lines;
   var rows = [];
   dataLines.forEach(function(l){
@@ -1702,7 +1707,8 @@ function parseDelimited(text){
       date = todayStr();
     }
     var type = /receita|income|credito|cr[eé]dito|entrada/i.test(rawType) ? "receita" :
-      (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" : (value < 0 ? "despesa" : "receita"));
+      (/despesa|expense|d[eé]bito|saida|saída/i.test(rawType) ? "despesa" :
+        (isCardInvoiceCsv ? (value < 0 ? "receita" : "despesa") : (value < 0 ? "despesa" : "receita")));
     var detailClean = (rawDetail || "").trim()
       .replace(/^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}\s*/, "")
       .replace(/^\d{6,}\s*/, "")
@@ -1725,16 +1731,48 @@ function parseXLSX(arrayBuffer){
 
 function parseStatementText(text){
   var rows = [];
-  var re = /(\d{2}\/\d{2}\/\d{4}|\d{4}-\d{2}-\d{2})\s+([^\n]{3,80}?)\s+(-?R?\$?\s?-?\d{1,3}(?:\.\d{3})*,\d{2}|-?\d+\.\d{2})(?=\s|$)/g;
+  // Muitos extratos de banco tradicional (Itaú, Bradesco, Santander, BB,
+  // Caixa) não usam sinal de menos — mostram o valor sempre positivo e
+  // marcam a direção com um "D" (débito) ou "C" (crédito) logo depois,
+  // às vezes entre parênteses. Sem reconhecer isso, todo lançamento virava
+  // "receita" (nunca havia um "-" pra detectar despesa).
+  var re = /(\d{2}\/\d{2}\/\d{4}|\d{4}-\d{2}-\d{2})\s+([^\n]{3,80}?)\s+([-−–—]?R?\$?\s?[-−–—]?\d{1,3}(?:\.\d{3})*,\d{2}|[-−–—]?\d+\.\d{2})\s*\(?([DC])?\)?(?=\s|$)/gi;
   var m;
   while((m = re.exec(text))){
     var date = parseDateStr(m[1]);
     var value = parseMoneyStr(m[3]);
     if(date && value !== null && value !== 0){
       var desc = m[2].trim().slice(0,80) || "Importado";
-      rows.push({ date: date, type: value < 0 ? "despesa" : "receita", category: guessCategory(desc) || "Outros", description: desc, value: Math.abs(value), include: true });
+      var hasExplicitSign = /^[-−–—]/.test(String(m[3]).trim());
+      var dcFlag = m[4] ? m[4].toUpperCase() : null;
+      var type = hasExplicitSign ? (value < 0 ? "despesa" : "receita") :
+        (dcFlag === "D" ? "despesa" : (dcFlag === "C" ? "receita" : (value < 0 ? "despesa" : "receita")));
+      rows.push({ date: date, type: type, category: guessCategory(desc) || "Outros", description: desc, value: Math.abs(value), include: true });
     }
   }
+  return rows;
+}
+
+// OFX (Open Financial Exchange) — formato estruturado que Itaú, Bradesco,
+// Santander, Caixa, BB e outros oferecem como export "oficial" do extrato.
+// Muito mais confiável que ler texto de PDF: cada lançamento já vem com
+// data, valor (com sinal, sempre em ponto decimal por especificação) e
+// descrição em tags previsíveis, sem depender do layout visual do banco.
+function parseOFX(text){
+  var rows = [];
+  var blocks = text.split(/<STMTTRN>/i).slice(1);
+  blocks.forEach(function(block){
+    var dtMatch = block.match(/<DTPOSTED>\s*(\d{8})/i);
+    var amtMatch = block.match(/<TRNAMT>\s*(-?[\d.,]+)/i);
+    if(!dtMatch || !amtMatch) return;
+    var date = dtMatch[1].slice(0,4) + "-" + dtMatch[1].slice(4,6) + "-" + dtMatch[1].slice(6,8);
+    var value = parseFloat(amtMatch[1].replace(",", "."));
+    if(isNaN(value) || value === 0) return;
+    var memoMatch = block.match(/<MEMO>([^\r\n<]+)/i);
+    var nameMatch = block.match(/<NAME>([^\r\n<]+)/i);
+    var desc = ((memoMatch && memoMatch[1]) || (nameMatch && nameMatch[1]) || "Importado").trim().slice(0, 80);
+    rows.push({ date: date, type: value < 0 ? "despesa" : "receita", category: guessCategory(desc) || "Outros", description: desc, value: Math.abs(value), include: true });
+  });
   return rows;
 }
 
@@ -1848,7 +1886,8 @@ function handleImportFile(file){
   var reader = new FileReader();
   reader.onload = function(e){
     var result;
-    if(ext === "csv" || ext === "txt") result = Promise.resolve(parseDelimited(decodeText(e.target.result)));
+    if(ext === "ofx" || ext === "qfx") result = Promise.resolve(parseOFX(decodeText(e.target.result)));
+    else if(ext === "csv" || ext === "txt") result = Promise.resolve(parseDelimited(decodeText(e.target.result)));
     else if(ext === "xlsx") result = parseXLSX(e.target.result);
     else if(ext === "pdf") result = parsePDF(e.target.result);
     else result = Promise.reject(new Error("Formato não suportado"));
