@@ -568,6 +568,16 @@ function normalizePhone(raw){
   return digits;
 }
 
+// "5513982020928" -> "(13) 98202-0928" — só pra exibição; normalizePhone()
+// já limpa pontuação de qualquer jeito, então formatar aqui não quebra nada.
+function formatBRPhone(raw){
+  var digits = (raw || "").replace(/\D/g, "");
+  if(digits.indexOf("55") === 0 && digits.length >= 12) digits = digits.slice(2);
+  if(digits.length === 11) return "(" + digits.slice(0,2) + ") " + digits.slice(2,7) + "-" + digits.slice(7);
+  if(digits.length === 10) return "(" + digits.slice(0,2) + ") " + digits.slice(2,6) + "-" + digits.slice(6);
+  return raw || "";
+}
+
 // Manda uma cópia dos dados atuais pro bot do WhatsApp, pra "resumo" e
 // dashboard diário do bot baterem com o que está no site. Silencioso:
 // se falhar (bot fora do ar, sem número cadastrado etc.) não trava o app.
@@ -2765,8 +2775,8 @@ function renderConfig(){
     '<div class="eyebrow">Conta</div>' +
     '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
-    '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(currentWhatsapp) + '" placeholder="(13) 99210-2413"></div>' +
-    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e assim que ele voltar, já fica conectado automaticamente.</div>' +
+    '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(formatBRPhone(currentWhatsapp)) + '" placeholder="(13) 99210-2413"></div>' +
+    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e, assim que o bot voltar, ele já fica conectado automaticamente.</div>' +
     '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
     (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
     (WHATSAPP_BOT_ENABLED ?
