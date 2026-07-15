@@ -392,6 +392,16 @@ async function processMessage(msg, env) {
       if (!botPlanAllows(plan, "modo_panico")) return sendUpgradeNudge(phone, "modo_panico", env);
       return handleModoPanico(phone, env);
     }
+    // Opt-in/opt-out do resumo diário automático (Message Template) — "parar"
+    // é a palavra prometida no próprio template, tem que funcionar de verdade.
+    if (lower === "parar") {
+      await saveUserData(phone, { dailyDashboardOptIn: false }, env);
+      return sendText(phone, "Combinado — você não recebe mais o resumo diário automático. Pra ativar de novo, é só mandar *ativar resumo*.", env);
+    }
+    if (["ativar resumo", "ativar resumo diário", "resumo diário", "quero o resumo diário"].includes(lower)) {
+      await saveUserData(phone, { dailyDashboardOptIn: true }, env);
+      return sendText(phone, "Pronto! A partir de hoje você recebe um resumo automático todo dia às 22h. Pra parar, é só responder *parar*.", env);
+    }
 
     await sendText(phone, "Não entendi esse comando. Digite *menu* para ver as opções, ou mande um áudio/foto pra lançar direto.\n\nTambém aceito: *analise*, *score*, *dashboard*.", env);
   }
@@ -1146,6 +1156,11 @@ async function handleSync(request, env) {
   const isMaster = user.email && user.email.toLowerCase() === MASTER_EMAIL.toLowerCase()
     && env.MASTER_ADMIN_PASSWORD && admin_password === env.MASTER_ADMIN_PASSWORD;
   const plan = isMaster ? "pro" : await fetchUserPlan(access_token, env);
+  // Consentimento pro resumo diário automático vem sempre do metadata
+  // verificado no Supabase (nunca do body do cliente) — mesmo tratamento
+  // de confiança que já existe pro plano. Sem opt-in explícito, o cron de
+  // resumo diário (sendDailyDashboards) nunca manda nada pra esse telefone.
+  const dailyDashboardOptIn = !!(user.user_metadata && user.user_metadata.daily_dashboard_optin);
 
   try {
     // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
@@ -1173,9 +1188,10 @@ async function handleSync(request, env) {
         data.txs = [...byId.values()];
       }
       data.plan = plan; // sempre o plano atual, direto da fonte, nunca do cliente
+      data.dailyDashboardOptIn = dailyDashboardOptIn;
       await saveUserData(targetPhone, data, env);
     } else {
-      await saveUserData(targetPhone, { plan }, env);
+      await saveUserData(targetPhone, { plan, dailyDashboardOptIn }, env);
     }
     if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
     return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
@@ -1190,6 +1206,13 @@ async function handleSync(request, env) {
 async function sendDailyDashboards(env) {
   // Mensagem proativa (a conta iniciada pelo bot, não pelo usuário) é
   // diferencial do Pro — free/plus só recebem quando eles mesmos chamam.
+  //
+  // Isso só pode sair como Message Template aprovado pela Meta: texto
+  // livre (type "text") fora da janela de 24h de atendimento é proibido
+  // pela política do WhatsApp Business e foi o que derrubou a conta antes
+  // (mensagem automática todo dia, sem o usuário ter chamado primeiro).
+  // Também exige opt-in explícito — sem os dois (template + consentimento
+  // registrado), não manda nada.
   const list = await listAllKeys(env, "data_");
   for (const key of list) {
     const phone=key.name.replace("data_","");
@@ -1197,8 +1220,9 @@ async function sendDailyDashboards(env) {
     try {
       const data=await getUserData(phone,env);
       if (!data?.txs?.length) continue;
+      if (!data.dailyDashboardOptIn) continue;
       if (PREMIUM_ENFORCEMENT_ENABLED && (data.plan || "free") !== "pro") continue;
-      await sendText(phone,buildDashboardMessage(data,env),env);
+      await sendDailyDashboardTemplate(phone,data,env);
     } catch(err) { console.error(`Dashboard error for ${phone}:`,err); }
   }
 }
@@ -1233,6 +1257,47 @@ function buildDashboardMessage(data, env) {
   if(catAlerts.length) msg+=`\n*Limites:*\n${catAlerts.join("\n")}\n`;
   msg+=`\n━━━━━━━━━━━━━━━\n_${closing}_\n\n👉 ${finnUrl}`;
   return msg;
+}
+
+// Envia o resumo diário como Message Template aprovado pela Meta — única
+// forma permitida de mensagem iniciada pelo bot fora da janela de 24h de
+// atendimento. O template (nome em env.DAILY_DASHBOARD_TEMPLATE_NAME) tem
+// que estar cadastrado e aprovado no WhatsApp Manager antes de configurar
+// essa variável; sem ela, a função não manda nada (fail-safe, nunca cai
+// pra texto livre por engano).
+async function sendDailyDashboardTemplate(phone, data, env) {
+  const templateName = env.DAILY_DASHBOARD_TEMPLATE_NAME;
+  if (!templateName) return;
+  const now=nowBR();
+  const year=now.getFullYear(),month=now.getMonth();
+  const todayStr=now.toISOString().slice(0,10);
+  const todayTxs=(data.txs||[]).filter(tx=>tx.date?.slice(0,10)===todayStr);
+  const monthTxs=(data.txs||[]).filter(tx=>{const d=new Date(tx.date);return d.getFullYear()===year&&d.getMonth()===month;});
+  const tR=todayTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const tD=todayTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
+  const mR=monthTxs.filter(t=>t.val>0&&isFlowTx(t)).reduce((s,t)=>s+t.val,0);
+  const mD=monthTxs.filter(t=>t.val<0&&isFlowTx(t)).reduce((s,t)=>s+Math.abs(t.val),0);
+  const mS=mR-mD;
+  const hojeResumo = todayTxs.length
+    ? `recebeu R$ ${formatBRL(tR)} e gastou R$ ${formatBRL(tD)}`
+    : "não teve nenhum lançamento";
+  const saldoMes = `R$ ${formatBRL(mS)}`;
+  return metaPost({
+    messaging_product: "whatsapp",
+    to: phone,
+    type: "template",
+    template: {
+      name: templateName,
+      language: { code: "pt_BR" },
+      components: [{
+        type: "body",
+        parameters: [
+          { type: "text", text: hojeResumo },
+          { type: "text", text: saldoMes }
+        ]
+      }]
+    }
+  }, env);
 }
 
 function getMotivationalLine(despesas, receitas, saldo) {

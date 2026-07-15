@@ -2979,6 +2979,7 @@ function renderConfig(){
   var meta = (user && user.user_metadata) || {};
   var currentName = meta.full_name || meta.name || "";
   var currentWhatsapp = meta.whatsapp || "";
+  var dailyDashboardOptIn = !!meta.daily_dashboard_optin;
   var dark = localStorage.getItem("finn_dark_mode") === "1";
   var html = renderPlansCard();
   html += '<div class="card">' +
@@ -2987,6 +2988,12 @@ function renderConfig(){
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
     '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(formatBRPhone(currentWhatsapp)) + '" placeholder="(13) 99210-2413"></div>' +
     '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">' + (whatsAppBotVisible() ? 'O bot do WhatsApp já está ativo — salve seu número aqui pra conectar.' : 'O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e, assim que o bot voltar, ele já fica conectado automaticamente.') + '</div>' +
+    (whatsAppBotVisible() ?
+      '<label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--fd);margin:-4px 0 12px;cursor:pointer">' +
+        '<input type="checkbox" id="cfgDailyDashboard"' + (dailyDashboardOptIn ? ' checked' : '') + '>' +
+        'Quero receber um resumo diário pelo WhatsApp às 22h' +
+      '</label>'
+      : '') +
     '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
     (state.configMsg ? '<div class="ai-result" style="margin:10px 0 0">' + escapeHtml(state.configMsg) + '</div>' : '') +
     (whatsAppBotVisible() ?
@@ -3159,10 +3166,13 @@ function setAdminPlan(email, plan){
 function saveProfileName(){
   var nameInput = document.getElementById("cfgName");
   var waInput = document.getElementById("cfgWhatsapp");
+  var dailyDashboardInput = document.getElementById("cfgDailyDashboard");
   var name = (nameInput ? nameInput.value : "").trim();
   var whatsapp = normalizePhone(waInput ? waInput.value : "");
   if(!name) return;
-  Auth.updateMetadata(currentSession.access_token, { full_name: name, whatsapp: whatsapp }).then(function(user){
+  var metaFields = { full_name: name, whatsapp: whatsapp };
+  if(dailyDashboardInput) metaFields.daily_dashboard_optin = dailyDashboardInput.checked;
+  Auth.updateMetadata(currentSession.access_token, metaFields).then(function(user){
     if(user && user.id){
       currentSession.user = user;
       var stored = JSON.parse(localStorage.getItem(SESSION_KEY) || "{}");
