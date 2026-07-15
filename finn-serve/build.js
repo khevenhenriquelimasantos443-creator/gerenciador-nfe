@@ -19,6 +19,17 @@ const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-ic
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
 
+// O nome do cache dentro do sw.js era fixo (hardcoded, tipo "finn-v2-8"),
+// então um deploy que só mudava finn/index.html nunca mudava os bytes do
+// próprio sw.js — e o navegador só percebe "tem Service Worker novo" quando
+// o ARQUIVO do SW muda byte a byte, não quando o conteúdo que ele serve
+// muda. Resultado: quem fechava e abria o app de novo nunca via o aviso de
+// "SW_UPDATED"/banner de atualização, porque o SW nunca era considerado
+// "novo" pelo navegador em nenhum desses deploys. Gera o nome do cache a
+// partir do mesmo hash do HTML, pra todo deploy virar um sw.js diferente.
+const swCacheVersion = crypto.createHash('md5').update(html).digest('hex').slice(0,10);
+const swVersioned = sw.replace(/const CACHE = '[^']*';/, "const CACHE = 'finn-" + swCacheVersion + "';");
+
 // URL/chave pública do Supabase — usadas para validar o access_token de quem
 // chama endpoints server-side que precisam saber "quem está autenticado"
 // (push/subscribe, pluggy).
@@ -1077,7 +1088,7 @@ h1 em{font-style:normal;color:#F97316}
 
     // ── Service Worker ──
     if (url.pathname === '/sw.js') {
-      return new Response(${JSON.stringify(sw)}, {
+      return new Response(${JSON.stringify(swVersioned)}, {
         headers: {
           'Content-Type': 'application/javascript; charset=utf-8',
           'Service-Worker-Allowed': '/',
