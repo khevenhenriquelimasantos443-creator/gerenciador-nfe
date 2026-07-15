@@ -8,6 +8,7 @@ const landing   = fs.readFileSync(path.join(__dirname,'../finn/landing.html'), '
 const sw        = fs.readFileSync(path.join(__dirname,'sw.js'), 'utf8');
 const pitchInv  = fs.readFileSync(path.join(__dirname,'../finn/pitch-investidores.html'), 'utf8');
 const pitchUsr  = fs.readFileSync(path.join(__dirname,'../finn/pitch-usuarios.html'), 'utf8');
+const guia      = fs.readFileSync(path.join(__dirname,'../finn/guia.html'), 'utf8');
 
 // Ícones do PWA — mesmo desenho do "F" usado no favicon do app, embutidos
 // como base64 direto dos PNGs (evita depender de SVG em manifest, que
@@ -1100,6 +1101,16 @@ h1 em{font-style:normal;color:#F97316}
     // ── Landing page ──
     if (url.pathname === '/landing' || url.pathname === '/landing.html') {
       return new Response(${JSON.stringify(landing)}, {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+
+    // ── Guia de uso ──
+    if (url.pathname === '/guia' || url.pathname === '/guia.html') {
+      return new Response(${JSON.stringify(guia)}, {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
