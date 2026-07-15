@@ -40,6 +40,12 @@ button{cursor:pointer}
 .update-banner.show{display:flex}
 .update-banner button{background:#fff;color:#C2410C;border:none;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:800;cursor:pointer}
 
+.install-banner{display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;background:var(--fcard,#1E293B);color:var(--fd,#fff);border-bottom:1px solid var(--fb);padding:10px 16px;font-size:13px;font-weight:600;text-align:center}
+.install-banner.show{display:flex}
+.install-banner button{border:none;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:800;cursor:pointer}
+.install-banner .btn-install-yes{background:#F97316;color:#fff}
+.install-banner .btn-install-no{background:transparent;color:var(--fm);border:1px solid var(--fb)}
+
 /* ── app shell ── */
 #app{display:none}
 body.finn-authed #app{display:block}
@@ -353,6 +359,11 @@ body.finn-dark .btn-google:hover{background:#1E293B}
     <span>Nova versão do Finn disponível.</span>
     <button type="button" id="btnUpdateNow">Atualizar agora</button>
   </div>
+  <div class="install-banner" id="installBanner">
+    <span id="installBannerText">Instale o Finn na tela inicial para lançar transações em 2 toques.</span>
+    <button type="button" class="btn-install-yes" id="btnInstallYes">Instalar</button>
+    <button type="button" class="btn-install-no" id="btnInstallNo">Agora não</button>
+  </div>
   <div class="app-shell">
     <div class="nav-menu" id="navMenu">
       <div class="nav-brand">Finn<span>.</span></div>
@@ -574,6 +585,13 @@ function db(table, method, body, query, _retried){
 }
 
 var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null };
+
+// Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
+// ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
+if (new URLSearchParams(window.location.search).get("atalho") === "adicionar") {
+  state.tab = "adicionar";
+  window.history.replaceState(null, "", window.location.pathname);
+}
 
 // Só dígitos, com DDI 55 na frente — mesmo formato que o WhatsApp usa
 // internamente (o "from" que chega no bot), pra bater com data_<phone> no KV.
@@ -4274,6 +4292,42 @@ document.addEventListener("visibilitychange", function(){
 if (new URLSearchParams(window.location.search).get("testbanner") === "1") {
   document.getElementById("updateBanner").classList.add("show");
 }
+
+/* ── banner de instalação: divulga o atalho "Novo lançamento" da tela
+   inicial (ver manifest.json), já que hoje é a forma mais rápida de lançar
+   sem depender do bot do WhatsApp. */
+var deferredInstallPrompt = null;
+var isStandaloneApp = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+var isIOSDevice = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+
+function showInstallBanner(){
+  if(isStandaloneApp || localStorage.getItem("finn_install_dismissed")) return;
+  if(isIOSDevice){
+    document.getElementById("installBannerText").textContent = 'Instale o Finn: toque em Compartilhar e depois em "Adicionar à Tela de Início".';
+    document.getElementById("btnInstallYes").style.display = "none";
+  }
+  document.getElementById("installBanner").classList.add("show");
+}
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  showInstallBanner();
+});
+window.addEventListener("appinstalled", function(){
+  localStorage.setItem("finn_install_dismissed", "1");
+});
+if(isIOSDevice && !isStandaloneApp) showInstallBanner();
+document.getElementById("btnInstallYes").addEventListener("click", function(){
+  document.getElementById("installBanner").classList.remove("show");
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.finally(function(){ deferredInstallPrompt = null; });
+  }
+});
+document.getElementById("btnInstallNo").addEventListener("click", function(){
+  document.getElementById("installBanner").classList.remove("show");
+  localStorage.setItem("finn_install_dismissed", "1");
+});
 document.getElementById("btnUpdateNow").addEventListener("click", function(){
   window.location.reload();
 });

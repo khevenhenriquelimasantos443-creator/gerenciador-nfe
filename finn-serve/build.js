@@ -1035,6 +1035,18 @@ h1 em{font-style:normal;color:#F97316}
         icons: [
           { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
           { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+        ],
+        // Segurar o ícone instalado abre direto na aba "Adicionar" — dá pra
+        // lançar uma transação quase tão rápido quanto mandar mensagem pro
+        // bot do WhatsApp, sem depender da liberação da API da Meta.
+        shortcuts: [
+          {
+            name: 'Novo lançamento',
+            short_name: 'Lançar',
+            description: 'Adicionar uma transação rapidamente',
+            url: '/?atalho=adicionar',
+            icons: [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }]
+          }
         ]
       };
       return new Response(JSON.stringify(manifest), {
