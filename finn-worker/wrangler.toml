@@ -35,6 +35,10 @@ FINN_URL = "https://finn.dev.br"
 # pra inscrever o app nos eventos dessa conta. Não é um segredo (é só um
 # identificador), por isso fica junto das outras vars não-secretas.
 WHATSAPP_WABA_ID = "1012331314486966"
+# URL pública deste worker — usado por GET /telegram/set-webhook pra montar
+# o endereço do webhook (<FINN_WORKER_URL>/telegram/webhook) que é registrado
+# na Telegram. Precisa bater com o "name" acima (ver Cloudflare dashboard).
+FINN_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev"
 
 # ─────────────────────────────────────────────
 #  SEGREDOS — adicione via terminal após deploy:
@@ -48,4 +52,16 @@ WHATSAPP_WABA_ID = "1012331314486966"
 #  wrangler secret put WHATSAPP_VERIFY_TOKEN
 #    → Crie uma senha qualquer, ex: finn_bot_2024
 #      (você vai precisar dela na hora de configurar o webhook)
+#
+#  wrangler secret put TELEGRAM_BOT_TOKEN
+#    → Token do bot, dado pelo @BotFather no Telegram
+#
+#  wrangler secret put TELEGRAM_WEBHOOK_SECRET
+#    → Crie uma senha qualquer (protege o endpoint /telegram/webhook)
+#
+#  wrangler secret put TELEGRAM_BOT_USERNAME
+#    → O @username do bot escolhido no BotFather, sem o @
+#
+#  Depois de configurar os 3 acima, registre o webhook uma vez:
+#    GET https://<seu-worker>.workers.dev/telegram/set-webhook?token=<ADMIN_TOKEN>
 # ─────────────────────────────────────────────
