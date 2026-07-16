@@ -765,6 +765,48 @@ function pollTelegramLink(code){
   }, 2000);
 }
 
+// Puxa de volta pro Supabase os lançamentos criados na conversa com o bot
+// (WhatsApp ou Telegram) — sem isso, eles ficavam só no KV do bot pra sempre,
+// mesmo o bot prometendo "sincroniza automático" ao abrir o app.
+function pullBotTransactions(){
+  var jobs = [];
+  var meta = (currentSession && currentSession.user && currentSession.user.user_metadata) || {};
+  if(whatsAppBotVisible()){
+    var phone = normalizePhone(meta.whatsapp);
+    if(phone) jobs.push({ phone: phone });
+  }
+  if(telegramBotVisible() && meta.telegram_chat_id){
+    jobs.push({ telegram_chat_id: String(meta.telegram_chat_id) });
+  }
+  return Promise.all(jobs.map(pullBotTransactionsForChannel)).catch(function(){});
+}
+
+function pullBotTransactionsForChannel(identity){
+  var qs = Object.keys(identity).map(function(k){ return k + "=" + encodeURIComponent(identity[k]); }).join("&");
+  qs += "&access_token=" + encodeURIComponent(currentSession.access_token);
+  return fetch(WHATSAPP_WORKER_URL + "/bot-txs?" + qs)
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(!j || !j.ok || !j.txs || !j.txs.length) return;
+      var toInsert = j.txs.map(function(t){
+        return {
+          user_id: uid(), type: t.val > 0 ? "receita" : "despesa",
+          category: allCategories().indexOf(t.cat) !== -1 ? t.cat : "Outros",
+          description: t.desc || "Lançado pelo bot", value: Math.abs(t.val), date: t.date || todayStr()
+        };
+      });
+      return db("transactions", "POST", toInsert).then(function(rows){
+        (rows || []).forEach(function(row){ state.txs.unshift(row); });
+        sortTxs();
+        render();
+        var ackBody = Object.assign({ access_token: currentSession.access_token, ids: j.txs.map(function(t){ return t.id; }) }, identity);
+        return fetch(WHATSAPP_WORKER_URL + "/bot-txs/ack", {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ackBody)
+        });
+      });
+    }).catch(function(){});
+}
+
 function thisMonth(){
   var n = new Date();
   return n.getFullYear() + "-" + String(n.getMonth()+1).padStart(2,"0");
@@ -3278,6 +3320,15 @@ function unlockAdmin(){
         state.adminPassword = password;
         loadPlan(); // já aplica o bypass pra Pro imediatamente, sem precisar recarregar
         loadAdminSubscriptions();
+        // syncWhatsAppBot/syncTelegramBot/pullBotTransactions já rodaram uma
+        // vez logo após loadData() — mas nesse momento adminUnlocked ainda
+        // era false (a master só desbloqueia DEPOIS que o app já carregou),
+        // então whatsAppBotVisible()/telegramBotVisible() bloqueavam tudo e
+        // o bot nunca chegava a sincronizar de verdade. Roda de novo agora
+        // que a master está desbloqueada.
+        syncWhatsAppBot();
+        syncTelegramBot();
+        pullBotTransactions();
       } else {
         state.adminLoginError = (res.body && res.body.error) || "Senha incorreta.";
         render();
@@ -4274,6 +4325,7 @@ function loadData(){
     render();
     syncWhatsAppBot();
     syncTelegramBot();
+    pullBotTransactions();
   }).catch(function(err){
     state.loading = false;
     state.loadError = (err && err.message) || "Erro desconhecido";

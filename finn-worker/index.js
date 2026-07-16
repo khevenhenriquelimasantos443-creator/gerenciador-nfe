@@ -92,6 +92,15 @@ export default {
       return handleTelegramSetWebhook(env);
     }
 
+    // ── Lançamentos criados pelo bot (WhatsApp ou Telegram) que ainda não
+    // foram puxados pro Supabase — ver handleBotTxsGet/handleBotTxsAck. ──
+    if (url.pathname === "/bot-txs" && request.method === "GET") {
+      return handleBotTxsGet(request, env);
+    }
+    if (url.pathname === "/bot-txs/ack" && request.method === "POST") {
+      return handleBotTxsAck(request, env);
+    }
+
     return new Response("Finn WhatsApp Worker", { status: 200 });
   },
 
@@ -1249,6 +1258,78 @@ async function handleSync(request, env) {
   } catch (e) {
     return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
   }
+}
+
+// =============================================================================
+// LANÇAMENTOS DO BOT — pull-back pro Supabase (GET /bot-txs + POST /bot-txs/ack)
+// =============================================================================
+// O /sync acima só manda dados do app PRO bot (uma via). Um lançamento
+// criado na conversa (WhatsApp ou Telegram) ficava só no KV do bot pra
+// sempre — a mensagem de "sincronizar" prometia "abra o app e sincroniza
+// automático", mas isso nunca foi implementado de verdade. Esses dois
+// endpoints fecham o ciclo: o app busca os lançamentos do bot ainda não
+// puxados, insere no Supabase, e confirma (ack) quais IDs já foram — sem
+// isso, cada carregamento reimportaria os mesmos lançamentos de novo.
+//
+// Mesma regra de autenticação do /sync (dono verificado via Supabase),
+// fatorada aqui pra não duplicar em três lugares.
+async function resolveBotIdentity(phone, telegramChatId, accessToken, env) {
+  const isTelegram = !!telegramChatId;
+  const user = await verifySupabaseUser(accessToken);
+  if (!user) return { error: "unauthorized" };
+  if (isTelegram) {
+    const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
+    if (!ownChatId || ownChatId !== String(telegramChatId)) return { error: "forbidden" };
+    return { uid: "tg:" + telegramChatId };
+  }
+  const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
+  if (!phonesMatch(phone, ownWhatsapp)) return { error: "forbidden" };
+  let uid = phone;
+  for (const cand of phoneVariants(phone)) {
+    const existing = await getUserData(cand, env);
+    if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
+      uid = cand;
+      break;
+    }
+  }
+  return { uid };
+}
+
+async function handleBotTxsGet(request, env) {
+  const url = new URL(request.url);
+  const phone = url.searchParams.get("phone");
+  const telegramChatId = url.searchParams.get("telegram_chat_id");
+  const accessToken = url.searchParams.get("access_token");
+  if (!phone && !telegramChatId) {
+    return corsResponse(new Response(JSON.stringify({ error: "phone or telegram_chat_id required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
+  }
+  const identity = await resolveBotIdentity(phone, telegramChatId, accessToken, env);
+  if (identity.error === "unauthorized") return unauthorizedResponse();
+  if (identity.error === "forbidden") {
+    return corsResponse(new Response(JSON.stringify({ error: "not authorized for this identity" }), { status: 403, headers: { "Content-Type": "application/json" } }));
+  }
+  const data = await getUserData(identity.uid, env);
+  const txs = (data.txs || []).filter(t => (t.source === "whatsapp" || t.source === "telegram") && !t.claimed);
+  return corsResponse(new Response(JSON.stringify({ ok: true, txs }), { status: 200, headers: { "Content-Type": "application/json" } }));
+}
+
+async function handleBotTxsAck(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return corsResponse(new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 })); }
+  const { phone, telegram_chat_id, access_token, ids } = body;
+  if ((!phone && !telegram_chat_id) || !Array.isArray(ids)) {
+    return corsResponse(new Response(JSON.stringify({ error: "invalid request" }), { status: 400, headers: { "Content-Type": "application/json" } }));
+  }
+  const identity = await resolveBotIdentity(phone, telegram_chat_id, access_token, env);
+  if (identity.error === "unauthorized") return unauthorizedResponse();
+  if (identity.error === "forbidden") {
+    return corsResponse(new Response(JSON.stringify({ error: "not authorized for this identity" }), { status: 403, headers: { "Content-Type": "application/json" } }));
+  }
+  const data = await getUserData(identity.uid, env);
+  const idSet = new Set(ids);
+  data.txs = (data.txs || []).map(t => idSet.has(t.id) ? { ...t, claimed: true } : t);
+  await env.FINN_KV.put(`data_${identity.uid}`, JSON.stringify(data));
+  return corsResponse(new Response(JSON.stringify({ ok: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
 }
 
 // =============================================================================
