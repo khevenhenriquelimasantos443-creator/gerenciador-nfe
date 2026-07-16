@@ -425,6 +425,19 @@ var WHATSAPP_BOT_ENABLED = true;
 function whatsAppBotVisible(){
   return WHATSAPP_BOT_ENABLED && isMasterUser() && state.adminUnlocked;
 }
+// Bot do Telegram — canal alternativo enquanto o WhatsApp Business depende
+// da verificação de empresa no Meta Business Manager. Roda no mesmo worker
+// do bot do WhatsApp (rotas /telegram/*), mas fica restrito a essas duas
+// contas até o fluxo de vínculo ser validado de verdade.
+var TELEGRAM_BOT_USERNAME = "FinnControleBot";
+var TELEGRAM_ALLOWED_EMAILS = ["finn.controle01@gmail.com", "khevenhenriquelimasantos443@gmail.com"];
+function telegramBotVisible(){
+  var email = currentSession && currentSession.user && currentSession.user.email;
+  if(!email) return false;
+  email = email.toLowerCase();
+  if(email === "finn.controle01@gmail.com") return state.adminUnlocked;
+  return TELEGRAM_ALLOWED_EMAILS.indexOf(email) !== -1;
+}
 // Estrutura de planos (checkout, gates) já está pronta, mas a cobrança só
 // começa mês que vem — enquanto isso, todo mundo usa como se fosse Pro.
 // Vira true quando for a hora de cobrar de verdade.
@@ -584,7 +597,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -643,6 +656,113 @@ function syncWhatsAppBot(){
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   }).catch(function(){});
+}
+
+// Mesma ideia do syncWhatsAppBot, mas pro chat do Telegram já vinculado
+// (ver telegram_chat_id no metadata). Roda no mesmo worker, rota /sync
+// generalizada pra aceitar telegram_chat_id no lugar de phone.
+function syncTelegramBot(){
+  if(!telegramBotVisible()) return Promise.resolve();
+  var user = currentSession && currentSession.user;
+  var chatId = user && user.user_metadata && user.user_metadata.telegram_chat_id;
+  if(!chatId) return Promise.resolve();
+  var limitsMap = {};
+  state.limits.forEach(function(l){ limitsMap[l.category] = Number(l.monthly_limit); });
+  var payload = {
+    telegram_chat_id: String(chatId),
+    access_token: currentSession && currentSession.access_token,
+    data: {
+      txs: state.txs.map(function(t){
+        return { id: t.id, val: t.type === "receita" ? Number(t.value) : -Number(t.value), desc: t.description, cat: t.category, date: t.date };
+      }),
+      limits: limitsMap,
+      goals: state.goals
+    },
+    fixed: state.fixed
+  };
+  if(isMasterUser() && state.adminUnlocked) payload.admin_password = state.adminPassword;
+  return fetch(WHATSAPP_WORKER_URL + "/sync", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).catch(function(){});
+}
+
+var telegramPollTimer = null;
+function stopTelegramPoll(){
+  if(telegramPollTimer){ clearInterval(telegramPollTimer); telegramPollTimer = null; }
+}
+
+function connectTelegram(){
+  if(!telegramBotVisible() || state.telegramLinking) return;
+  state.telegramLinking = true;
+  state.telegramLinkMsg = null;
+  render();
+  var payload = { access_token: currentSession && currentSession.access_token };
+  if(isMasterUser() && state.adminUnlocked) payload.admin_password = state.adminPassword;
+  fetch(WHATSAPP_WORKER_URL + "/telegram/link", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
+    .then(function(res){
+      state.telegramLinking = false;
+      if(!res.ok || !res.body || !res.body.code){
+        state.telegramLinkMsg = "Não consegui gerar o código agora. Tenta de novo.";
+        render();
+        return;
+      }
+      state.telegramLinkCode = res.body.code;
+      render();
+      window.open("https://t.me/" + TELEGRAM_BOT_USERNAME + "?start=" + res.body.code, "_blank", "noopener");
+      pollTelegramLink(res.body.code);
+    }).catch(function(){
+      state.telegramLinking = false;
+      state.telegramLinkMsg = "Falha de conexão. Tenta de novo.";
+      render();
+    });
+}
+
+// Espera até 2 minutos (a cada 2s) o usuário apertar "Iniciar" no Telegram —
+// tempo de sobra pro app trocar de tela e a pessoa voltar do Telegram.
+function pollTelegramLink(code){
+  stopTelegramPoll();
+  var attempts = 0;
+  telegramPollTimer = setInterval(function(){
+    attempts++;
+    fetch(WHATSAPP_WORKER_URL + "/telegram/link-status?code=" + encodeURIComponent(code))
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j && j.linked && j.chatId){
+          stopTelegramPoll();
+          state.telegramLinkCode = null;
+          return Auth.updateMetadata(currentSession.access_token, { telegram_chat_id: String(j.chatId) }).then(function(user){
+            if(user && user.id){
+              currentSession.user = user;
+              var stored = JSON.parse(localStorage.getItem(SESSION_KEY) || "{}");
+              stored.user = user;
+              localStorage.setItem(SESSION_KEY, JSON.stringify(stored));
+            }
+            state.configMsg = "Bot do Telegram conectado.";
+            render();
+            return syncTelegramBot();
+          });
+        }
+        if(j && j.expired){
+          stopTelegramPoll();
+          state.telegramLinkCode = null;
+          state.telegramLinkMsg = "O código expirou. Toque em \"Conectar Telegram\" de novo.";
+          render();
+          return;
+        }
+        if(attempts >= 60){
+          stopTelegramPoll();
+          state.telegramLinkCode = null;
+          state.telegramLinkMsg = "Não detectei a conexão. Toque em \"Conectar Telegram\" de novo.";
+          render();
+        }
+      }).catch(function(){});
+  }, 2000);
 }
 
 function thisMonth(){
@@ -3022,6 +3142,8 @@ function renderConfig(){
     '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
   '</div>';
 
+  html += renderTelegramCard(meta);
+
   html += '<div class="card">' +
     '<div class="eyebrow">Categorias</div>' +
     '<div class="import-summary" style="margin-top:0">Padrão</div>' +
@@ -3061,6 +3183,35 @@ function renderConfig(){
   html += renderAdminCard();
 
   return html;
+}
+
+/* ── Bot do Telegram (beta fechado — ver telegramBotVisible) ── */
+function renderTelegramCard(meta){
+  if(!telegramBotVisible()) return "";
+  var chatId = meta.telegram_chat_id || "";
+
+  if(chatId){
+    return '<div class="card">' +
+      '<div class="eyebrow">Bot do Telegram (beta fechado)</div>' +
+      '<div style="font-size:12.5px;color:var(--fd);margin-bottom:12px">✅ Conectado.</div>' +
+      '<a href="https://t.me/' + TELEGRAM_BOT_USERNAME + '" target="_blank" rel="noopener" class="btn-ghost" style="width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">Abrir conversa com o bot no Telegram</a>' +
+    '</div>';
+  }
+
+  if(state.telegramLinkCode){
+    return '<div class="card">' +
+      '<div class="eyebrow">Bot do Telegram (beta fechado)</div>' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Abra o Telegram e toque em "Iniciar" — a conexão finaliza sozinha, sem precisar voltar aqui.</div>' +
+      '<a href="https://t.me/' + TELEGRAM_BOT_USERNAME + '?start=' + state.telegramLinkCode + '" target="_blank" rel="noopener" class="btn-submit" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box">Abrir Telegram</a>' +
+    '</div>';
+  }
+
+  return '<div class="card">' +
+    '<div class="eyebrow">Bot do Telegram (beta fechado)</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Canal alternativo enquanto o WhatsApp depende da verificação de empresa no Meta Business Manager.</div>' +
+    '<button type="button" class="btn-submit" id="btnConnectTelegram"' + (state.telegramLinking ? " disabled" : "") + '>' + (state.telegramLinking ? "Gerando código…" : "Conectar Telegram") + '</button>' +
+    (state.telegramLinkMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.telegramLinkMsg) + '</div>' : '') +
+  '</div>';
 }
 
 /* ── Admin (só a conta master vê isso) ── */
@@ -3598,6 +3749,8 @@ function bindContentEvents(){
     document.getElementById("btnEnablePush").addEventListener("click", enablePushNotifications);
     document.getElementById("btnDeleteAllTx").addEventListener("click", deleteAllTransactions);
     document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
+    var btnConnectTelegram = document.getElementById("btnConnectTelegram");
+    if(btnConnectTelegram) btnConnectTelegram.addEventListener("click", connectTelegram);
     if(isMasterUser()){
       if(!state.adminUnlocked){
         var btnAdminUnlock = document.getElementById("btnAdminUnlock");
@@ -4120,6 +4273,7 @@ function loadData(){
     state.loading = false;
     render();
     syncWhatsAppBot();
+    syncTelegramBot();
   }).catch(function(err){
     state.loading = false;
     state.loadError = (err && err.message) || "Erro desconhecido";

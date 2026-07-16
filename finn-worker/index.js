@@ -26,6 +26,14 @@ const PREMIUM_ENFORCEMENT_ENABLED = false;
 // Google/Supabase sozinho não é suficiente.
 const MASTER_EMAIL = "finn.controle01@gmail.com";
 
+// Bot do Telegram é novo — fica restrito a essas duas contas por enquanto
+// (mesma lógica de "novo recurso só pra admin primeiro" usada pro WhatsApp),
+// até validar que o fluxo de vínculo e as respostas funcionam de verdade.
+const TELEGRAM_ALLOWED_EMAILS = ["finn.controle01@gmail.com", "khevenhenriquelimasantos443@gmail.com"];
+function telegramAllowedEmail(email) {
+  return !!email && TELEGRAM_ALLOWED_EMAILS.includes(String(email).toLowerCase());
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -67,6 +75,21 @@ export default {
     if (url.pathname === "/subscribe" && request.method === "GET") {
       if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       return handleSubscribeWaba(env);
+    }
+
+    // ── Telegram (novo canal — restrito às contas em TELEGRAM_ALLOWED_EMAILS) ──
+    if (url.pathname === "/telegram/webhook" && request.method === "POST") {
+      return handleTelegramWebhook(request, env);
+    }
+    if (url.pathname === "/telegram/link" && request.method === "POST") {
+      return handleTelegramLinkStart(request, env);
+    }
+    if (url.pathname === "/telegram/link-status" && request.method === "GET") {
+      return handleTelegramLinkStatus(request, env);
+    }
+    if (url.pathname === "/telegram/set-webhook" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleTelegramSetWebhook(env);
     }
 
     return new Response("Finn WhatsApp Worker", { status: 200 });
@@ -543,7 +566,7 @@ async function continueFlow(phone, text, stateData, env) {
   }
 
   if (state === "awaiting_desc_despesa") {
-    const tx = buildTransaction({ ...pending, desc: text });
+    const tx = buildTransaction({ ...pending, desc: text }, phone);
     await addTransaction(phone, tx, env);
     await clearState(phone, env);
     await sendText(phone, `✅ *Despesa registrada!*\n\n💸 R$ ${formatBRL(Math.abs(tx.val))} — ${catToEmoji(tx.cat)} ${tx.cat}\n📝 ${tx.desc}\n📅 ${formatDateBR(tx.date)}\n\n_Abra o Finn_ 👉 ${env.FINN_URL || ""}`, env);
@@ -551,7 +574,7 @@ async function continueFlow(phone, text, stateData, env) {
   }
 
   if (state === "awaiting_desc_receita") {
-    const tx = buildTransaction({ ...pending, desc: text });
+    const tx = buildTransaction({ ...pending, desc: text }, phone);
     await addTransaction(phone, tx, env);
     await clearState(phone, env);
     await sendText(phone, `✅ *Receita registrada!*\n\n💰 R$ ${formatBRL(Math.abs(tx.val))} — ${catToEmoji(tx.cat)} ${tx.cat}\n📝 ${tx.desc}\n📅 ${formatDateBR(tx.date)}\n\n_Abra o Finn_ 👉 ${env.FINN_URL || ""}`, env);
@@ -689,7 +712,7 @@ async function handleAbrirFinn(phone, env) {
 async function handleSincronizarFinn(phone, env) {
   const data = await getUserData(phone, env);
   const txs = data.txs || [];
-  const botTxs = txs.filter(t => t.source === "whatsapp");
+  const botTxs = txs.filter(t => t.source === "whatsapp" || t.source === "telegram");
 
   if (!botTxs.length) {
     await sendText(phone,
@@ -725,7 +748,7 @@ async function handleSincronizarFinn(phone, env) {
 async function handleAnaliseExtratoPrompt(phone, env) {
   await sendText(phone,
     `📂 *Análise de Extrato Bancário*\n━━━━━━━━━━━━━━━\n\n` +
-    `Envie o arquivo do seu extrato aqui no WhatsApp:\n\n` +
+    `Envie o arquivo do seu extrato aqui no chat:\n\n` +
     `✅ *Formatos aceitos:* CSV ou TXT\n` +
     `❌ *Não suportado:* XLSX e PDF — use o Finn:\n👉 ${env.FINN_URL||""}\n\n` +
     `_Exporte o extrato do app do seu banco como CSV e envie aqui._`, env);
@@ -745,7 +768,7 @@ async function handleDocumentMessage(phone, msg, env) {
   }
   await sendText(phone, "📂 _Analisando extrato..._", env);
   try {
-    const buffer = await downloadMetaMedia(doc.id, env);
+    const buffer = await downloadMedia(phone, doc.id, env);
     if (!buffer) throw new Error("download failed");
     const text = new TextDecoder('latin1').decode(buffer);
     const txs = parseBankCSVBot(text);
@@ -900,7 +923,7 @@ async function handleAudioMessage(phone, msg, env) {
   try {
     const audioId = msg.audio?.id;
     if (!audioId) throw new Error("no audio id");
-    const buffer = await downloadMetaMedia(audioId, env);
+    const buffer = await downloadMedia(phone, audioId, env);
     if (!buffer) throw new Error("download failed");
     const whisperResult = await env.AI.run("@cf/openai/whisper", { audio: [...new Uint8Array(buffer)] });
     const transcribed = (whisperResult?.text || "").trim();
@@ -931,7 +954,7 @@ async function handleImageMessage(phone, msg, env) {
   try {
     const imageId = msg.image?.id;
     if (!imageId) throw new Error("no image id");
-    const buffer = await downloadMetaMedia(imageId, env);
+    const buffer = await downloadMedia(phone, imageId, env);
     if (!buffer) throw new Error("download failed");
     const uint8 = [...new Uint8Array(buffer)];
     const visionResult = await env.AI.run("@cf/llava-hf/llava-1.5-7b-hf", {
@@ -1014,11 +1037,21 @@ function parseAIResponse(text) {
 
 async function sendConfirmTransaction(phone, tx, label, env) {
   const tipo = tx.val > 0 ? "💰 Receita" : "💸 Despesa";
+  const text = `${label}\n\n${tipo}: *R$ ${formatBRL(Math.abs(tx.val))}*\n📝 ${tx.desc}\n📂 ${tx.cat}\n\nConfirmar lançamento?`;
+  if (isTelegramId(phone)) {
+    return telegramSendMessage(phone, text, env, {
+      reply_markup: { inline_keyboard: [[
+        {text:"✅ Confirmar", callback_data:"confirm_tx"},
+        {text:"✏️ Corrigir", callback_data:"edit_tx_desc"},
+        {text:"❌ Cancelar", callback_data:"cancel_tx"}
+      ]]}
+    });
+  }
   return metaPost({
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
       type:"button",
-      body:{text:`${label}\n\n${tipo}: *R$ ${formatBRL(Math.abs(tx.val))}*\n📝 ${tx.desc}\n📂 ${tx.cat}\n\nConfirmar lançamento?`},
+      body:{text},
       action:{buttons:[
         {type:"reply",reply:{id:"confirm_tx",title:"✅ Confirmar"}},
         {type:"reply",reply:{id:"edit_tx_desc",title:"✏️ Corrigir"}},
@@ -1035,7 +1068,7 @@ async function handleConfirmTx(phone, stateData, env) {
     await sendText(phone, "❓ Algo deu errado. Digite *menu* para recomeçar.", env);
     return;
   }
-  const saved = buildTransaction(tx);
+  const saved = buildTransaction(tx, phone);
   await addTransaction(phone, saved, env);
   await clearState(phone, env);
   const tipo = saved.val > 0 ? "Receita" : "Despesa";
@@ -1139,19 +1172,32 @@ async function fetchUserPlan(accessToken, env) {
 async function handleSync(request, env) {
   let body;
   try { body=await request.json(); } catch { return corsResponse(new Response(JSON.stringify({error:"Invalid JSON"}),{status:400})); }
-  const {phone,data,fixed,access_token,admin_password}=body;
-  if (!phone) return corsResponse(new Response(JSON.stringify({error:"phone required"}),{status:400}));
+  const {phone,telegram_chat_id,data,fixed,access_token,admin_password}=body;
+  // Canal Telegram usa "tg:<chatId>" como identificador — mesma chave de KV
+  // que o resto do bot já trata como um "phone" genérico.
+  const isTelegram = !!telegram_chat_id;
+  const uid = isTelegram ? ("tg:" + telegram_chat_id) : phone;
+  if (!uid) return corsResponse(new Response(JSON.stringify({error:"phone or telegram_chat_id required"}),{status:400}));
 
-  // Só deixa sincronizar o telefone que a PRÓPRIA conta logada salvou no
-  // perfil — sem isso, POST /sync com qualquer número de telefone lia ou
+  // Só deixa sincronizar o telefone/chat que a PRÓPRIA conta logada vinculou
+  // ao perfil — sem isso, POST /sync com qualquer identificador lia ou
   // sobrescrevia os dados financeiros de qualquer pessoa, sem autenticação.
   const user = await verifySupabaseUser(access_token);
   if (!user) return unauthorizedResponse();
-  const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
-  if (!phonesMatch(phone, ownWhatsapp)) {
-    return corsResponse(new Response(JSON.stringify({ error: "phone does not match authenticated account" }), {
-      status: 403, headers: { "Content-Type": "application/json" }
-    }));
+  if (isTelegram) {
+    const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
+    if (!ownChatId || ownChatId !== String(telegram_chat_id)) {
+      return corsResponse(new Response(JSON.stringify({ error: "telegram_chat_id does not match authenticated account" }), {
+        status: 403, headers: { "Content-Type": "application/json" }
+      }));
+    }
+  } else {
+    const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
+    if (!phonesMatch(phone, ownWhatsapp)) {
+      return corsResponse(new Response(JSON.stringify({ error: "phone does not match authenticated account" }), {
+        status: 403, headers: { "Content-Type": "application/json" }
+      }));
+    }
   }
   const isMaster = user.email && user.email.toLowerCase() === MASTER_EMAIL.toLowerCase()
     && env.MASTER_ADMIN_PASSWORD && admin_password === env.MASTER_ADMIN_PASSWORD;
@@ -1166,15 +1212,20 @@ async function handleSync(request, env) {
     // Se o número já tem dados salvos numa variação (com/sem o 9º dígito —
     // ex.: quem conversou pelo bot antes de cadastrar o número no site), grava
     // nessa mesma chave. Senão a sincronização do site e a conversa ao vivo
-    // ficam em duas chaves diferentes e nunca se encontram.
-    let targetPhone = phone;
+    // ficam em duas chaves diferentes e nunca se encontram. Telegram não tem
+    // esse problema de variação — o chatId é sempre um valor único.
+    let targetPhone = uid;
     let existingData = null;
-    for (const cand of phoneVariants(phone)) {
-      const existing = await getUserData(cand, env);
-      if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
-        targetPhone = cand;
-        existingData = existing;
-        break;
+    if (isTelegram) {
+      existingData = await getUserData(uid, env);
+    } else {
+      for (const cand of phoneVariants(phone)) {
+        const existing = await getUserData(cand, env);
+        if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
+          targetPhone = cand;
+          existingData = existing;
+          break;
+        }
       }
     }
 
@@ -1222,7 +1273,11 @@ async function sendDailyDashboards(env) {
       if (!data?.txs?.length) continue;
       if (!data.dailyDashboardOptIn) continue;
       if (PREMIUM_ENFORCEMENT_ENABLED && (data.plan || "free") !== "pro") continue;
-      await sendDailyDashboardTemplate(phone,data,env);
+      // O Telegram não tem a janela de 24h de atendimento da política do
+      // WhatsApp Business — texto livre iniciado pelo bot é permitido lá,
+      // sem precisar de Message Template aprovado pela Meta.
+      if (isTelegramId(phone)) await sendText(phone, buildDashboardMessage(data, env), env);
+      else await sendDailyDashboardTemplate(phone,data,env);
     } catch(err) { console.error(`Dashboard error for ${phone}:`,err); }
   }
 }
@@ -1367,6 +1422,230 @@ async function handleSubscribeWaba(env) {
 }
 
 // =============================================================================
+// TELEGRAM BOT — canal novo, sem a política de janela de 24h nem verificação
+// de empresa que travou o WhatsApp. Reaproveita toda a lógica de conversa
+// (processMessage, categorização, resumo, score, etc.) já escrita pro
+// WhatsApp: os identificadores de chat do Telegram são tratados como um
+// "phone" genérico (prefixo "tg:"), já que getState/getUserData/etc. só
+// usam esse valor como chave de KV, nunca validam formato de telefone.
+//
+// Required env vars:
+//   TELEGRAM_BOT_TOKEN     — token do @BotFather
+//   TELEGRAM_WEBHOOK_SECRET — string aleatória; confirmada no header
+//                             X-Telegram-Bot-Api-Secret-Token de cada webhook
+//   TELEGRAM_BOT_USERNAME  — @username do bot (sem @), só pra montar o link
+// =============================================================================
+
+function isTelegramId(id) {
+  return typeof id === "string" && id.startsWith("tg:");
+}
+
+function telegramChatIdOf(phone) {
+  return phone.slice(3);
+}
+
+async function telegramPost(method, payload, env) {
+  if (!env.TELEGRAM_BOT_TOKEN) {
+    await debugLog(env, { kind: "telegram_not_configured", method });
+    return null;
+  }
+  const resp = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!resp.ok) {
+    const bodyText = await resp.clone().text().catch(() => "");
+    console.error(`Telegram API error ${resp.status} (${method}):`, bodyText);
+    await debugLog(env, { kind: "telegram_send_error", method, status: resp.status, body: bodyText.slice(0, 500) });
+  }
+  return resp;
+}
+
+// Markdown legado do Telegram (*negrito*, _itálico_) é compatível com a
+// formatação que o resto do bot já usa pro WhatsApp — mas o parser dele é
+// rígido (quebra se sobrar um "*" ou "_" desemparelhado). Se der erro de
+// parse, reenvia sem formatação em vez de simplesmente falhar a mensagem.
+async function telegramSendMessage(phone, text, env, extra) {
+  const chatId = telegramChatIdOf(phone);
+  const base = { chat_id: chatId, text, parse_mode: "Markdown", ...(extra || {}) };
+  let resp = await telegramPost("sendMessage", base, env);
+  if (resp && resp.status === 400) {
+    resp = await telegramPost("sendMessage", { chat_id: chatId, text, ...(extra || {}) }, env);
+  }
+  return resp;
+}
+
+async function downloadTelegramFile(fileId, env) {
+  if (!env.TELEGRAM_BOT_TOKEN) return null;
+  const infoResp = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/getFile?file_id=${encodeURIComponent(fileId)}`);
+  if (!infoResp.ok) { console.error("Telegram getFile error:", infoResp.status); return null; }
+  const infoJson = await infoResp.json();
+  const filePath = infoJson.result && infoJson.result.file_path;
+  if (!filePath) return null;
+  const fileResp = await fetch(`https://api.telegram.org/file/bot${env.TELEGRAM_BOT_TOKEN}/${filePath}`);
+  if (!fileResp.ok) { console.error("Telegram file download error:", fileResp.status); return null; }
+  return fileResp.arrayBuffer();
+}
+
+// Ponto único de download de mídia (áudio/imagem/documento) — despacha pro
+// jeito certo de baixar conforme o canal do remetente.
+async function downloadMedia(phone, mediaId, env) {
+  if (isTelegramId(phone)) return downloadTelegramFile(mediaId, env);
+  return downloadMetaMedia(mediaId, env);
+}
+
+// Registra o webhook do bot na Telegram — chamado uma vez (admin), depois
+// que TELEGRAM_BOT_TOKEN e TELEGRAM_WEBHOOK_SECRET já estiverem configurados
+// como secret no wrangler. Espelha o /subscribe do WhatsApp (WABA).
+async function handleTelegramSetWebhook(env) {
+  if (!env.TELEGRAM_BOT_TOKEN) {
+    return corsResponse(new Response(JSON.stringify({ error: "TELEGRAM_BOT_TOKEN não configurado" }), { status: 500, headers: { "Content-Type": "application/json" } }));
+  }
+  const webhookUrl = (env.FINN_WORKER_URL || "").replace(/\/$/, "") + "/telegram/webhook";
+  const resp = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/setWebhook`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url: webhookUrl, secret_token: env.TELEGRAM_WEBHOOK_SECRET || undefined })
+  });
+  const body = await resp.json().catch(() => ({}));
+  await debugLog(env, { kind: "telegram_set_webhook", ok: resp.ok, webhookUrl, body });
+  return corsResponse(new Response(JSON.stringify({ ok: resp.ok, webhookUrl, body }, null, 2), {
+    status: resp.ok ? 200 : 502, headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// Gera um código de vínculo de 6 caracteres pra conta logada — só pra quem
+// está em TELEGRAM_ALLOWED_EMAILS, enquanto o canal estiver em teste fechado.
+async function handleTelegramLinkStart(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return corsResponse(new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 })); }
+  const user = await verifySupabaseUser(body.access_token);
+  if (!user) return unauthorizedResponse();
+  if (!telegramAllowedEmail(user.email)) {
+    return corsResponse(new Response(JSON.stringify({ error: "not_allowed" }), { status: 403, headers: { "Content-Type": "application/json" } }));
+  }
+  const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+  await env.FINN_KV.put(`tglink_${code}`, JSON.stringify({ uid: user.id, email: user.email, linked: false }), { expirationTtl: 600 });
+  return corsResponse(new Response(JSON.stringify({ ok: true, code, botUsername: env.TELEGRAM_BOT_USERNAME || "" }), {
+    status: 200, headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// O app faz polling nisso depois de abrir o link do bot, até receber
+// linked:true — é quando o webhook (handleTelegramLinkConfirm) já recebeu
+// o /start <code> do lado do Telegram e gravou o chatId.
+async function handleTelegramLinkStatus(request, env) {
+  const url = new URL(request.url);
+  const code = url.searchParams.get("code");
+  if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
+  const raw = await env.FINN_KV.get(`tglink_${code}`);
+  if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
+  const info = JSON.parse(raw);
+  return corsResponse(new Response(JSON.stringify({ linked: !!info.linked, chatId: info.chatId || null }), { status: 200, headers: { "Content-Type": "application/json" } }));
+}
+
+async function handleTelegramWebhook(request, env) {
+  if (env.TELEGRAM_WEBHOOK_SECRET) {
+    const secretHeader = request.headers.get("X-Telegram-Bot-Api-Secret-Token");
+    if (secretHeader !== env.TELEGRAM_WEBHOOK_SECRET) {
+      await debugLog(env, { kind: "telegram_webhook_secret_invalid" });
+      return new Response("Forbidden", { status: 403 });
+    }
+  } else {
+    await debugLog(env, { kind: "telegram_webhook_secret_not_configured" });
+  }
+
+  let update;
+  try { update = await request.json(); } catch { return new Response("Bad Request", { status: 400 }); }
+
+  try {
+    if (update.callback_query) await processTelegramCallback(update.callback_query, env);
+    else if (update.message) await processTelegramMessage(update.message, env);
+  } catch (err) {
+    console.error("telegram webhook error:", err);
+    await debugLog(env, { kind: "telegram_process_error", error: String(err && err.stack || err) });
+  }
+  return new Response("OK", { status: 200 });
+}
+
+// Concretiza o vínculo: o código só existe se alguém de TELEGRAM_ALLOWED_EMAILS
+// gerou ele em handleTelegramLinkStart — não precisa checar o email de novo aqui.
+async function handleTelegramLinkConfirm(phone, code, env) {
+  if (!code) {
+    await telegramSendMessage(phone, "👋 Olá! Pra conectar sua conta, gere um código em Configurações no app Finn e mande /start <código> aqui.", env);
+    return;
+  }
+  const raw = await env.FINN_KV.get(`tglink_${code}`);
+  if (!raw) {
+    await telegramSendMessage(phone, "⚠️ Código inválido ou expirado. Gere um novo em Configurações no Finn.", env);
+    return;
+  }
+  const info = JSON.parse(raw);
+  const chatId = telegramChatIdOf(phone);
+  info.linked = true;
+  info.chatId = chatId;
+  await env.FINN_KV.put(`tglink_${code}`, JSON.stringify(info), { expirationTtl: 600 });
+  await env.FINN_KV.put(`tgchat_${chatId}`, JSON.stringify({ email: info.email, uid: info.uid, linkedAt: Date.now() }), { expirationTtl: 60 * 60 * 24 * 365 });
+  await telegramSendMessage(phone, "✅ *Conta conectada!* Volte pro app Finn — seus lançamentos já vão aparecer por aqui.\n\nDigite *menu* pra começar.", env);
+}
+
+async function processTelegramMessage(msg, env) {
+  const chatId = msg.chat && msg.chat.id;
+  if (chatId === undefined || chatId === null) return;
+  const phone = "tg:" + chatId;
+
+  const text = (msg.text || "").trim();
+  if (text.startsWith("/start")) {
+    const code = text.replace("/start", "").trim();
+    return handleTelegramLinkConfirm(phone, code, env);
+  }
+
+  // Bot em teste fechado: só responde de verdade pra chat já vinculado a
+  // uma das contas em TELEGRAM_ALLOWED_EMAILS (ver handleTelegramLinkConfirm).
+  const linkInfo = await env.FINN_KV.get(`tgchat_${chatId}`);
+  if (!linkInfo) {
+    await telegramSendMessage(phone, "🚧 O Finn no Telegram ainda está em testes fechados. Em breve libero pra todo mundo!", env);
+    return;
+  }
+
+  let normalized;
+  if (msg.voice) normalized = { from: phone, type: "audio", audio: { id: msg.voice.file_id } };
+  else if (msg.photo && msg.photo.length) normalized = { from: phone, type: "image", image: { id: msg.photo[msg.photo.length - 1].file_id } };
+  else if (msg.document) normalized = { from: phone, type: "document", document: { id: msg.document.file_id, filename: msg.document.file_name, mime_type: msg.document.mime_type } };
+  else if (text) normalized = { from: phone, type: "text", text: { body: text } };
+  else return;
+
+  await processMessage(normalized, env);
+}
+
+async function processTelegramCallback(cq, env) {
+  const chatId = cq.message && cq.message.chat && cq.message.chat.id;
+  if (chatId === undefined || chatId === null) return;
+  const phone = "tg:" + chatId;
+
+  // Responde o callback rápido pra tirar o "carregando" do botão no
+  // Telegram, mesmo que o processamento abaixo demore ou falhe.
+  await telegramPost("answerCallbackQuery", { callback_query_id: cq.id }, env).catch(() => {});
+
+  const linkInfo = await env.FINN_KV.get(`tgchat_${chatId}`);
+  if (!linkInfo) {
+    await telegramSendMessage(phone, "🚧 O Finn no Telegram ainda está em testes fechados.", env);
+    return;
+  }
+
+  const data = cq.data || "";
+  const isButtonReply = ["confirm_tx", "cancel_tx", "edit_tx_desc"].includes(data);
+  const normalized = {
+    from: phone, type: "interactive",
+    interactive: isButtonReply
+      ? { type: "button_reply", button_reply: { id: data } }
+      : { type: "list_reply", list_reply: { id: data } }
+  };
+  await processMessage(normalized, env);
+}
+
+// =============================================================================
 // META API HELPERS
 // =============================================================================
 async function metaPost(payload, env) {
@@ -1389,10 +1668,22 @@ async function metaPost(payload, env) {
 }
 
 async function sendText(phone, message, env) {
+  if (isTelegramId(phone)) return telegramSendMessage(phone, message, env);
   return metaPost({messaging_product:"whatsapp",to:phone,type:"text",text:{body:message,preview_url:false}},env);
 }
 
 async function sendMainMenu(phone, env) {
+  if (isTelegramId(phone)) {
+    return telegramSendMessage(phone, "👋 *Finn.*\nEscolha uma opção:", env, {
+      reply_markup: { inline_keyboard: [
+        [{text:"💸 Lançar Despesa", callback_data:"lancar_despesa"}, {text:"💰 Lançar Receita", callback_data:"lancar_receita"}],
+        [{text:"📊 Resumo do Mês", callback_data:"resumo_mes"}, {text:"🚨 Alertas de Limite", callback_data:"alertas_limite"}],
+        [{text:"🎯 Status das Metas", callback_data:"status_metas"}, {text:"📋 Contas Fixas", callback_data:"contas_fixas"}],
+        [{text:"🔮 Previsão de Saldo", callback_data:"previsao_saldo"}, {text:"📂 Análise de Extrato", callback_data:"analise_extrato"}],
+        [{text:"🔄 Sincronizar com Finn", callback_data:"sinc_finn"}, {text:"🏆 Score Financeiro", callback_data:"score_financeiro"}],
+      ]}
+    });
+  }
   return metaPost({
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
@@ -1425,8 +1716,17 @@ async function sendMainMenu(phone, env) {
   },env);
 }
 
+// [cat (vai no id, é o valor gravado na transação), emoji, label de exibição (opcional, default = cat)]
+const CATEGORIAS_DESPESA = [["Alimentação","🍔"],["Transporte","🚗"],["Lazer","🎮"],["Saúde","🏥"],["Educação","📚"],["Moradia","🏠"],["Vestuário","👕"],["Investimento","📈"],["Outros","📦"]];
+const CATEGORIAS_RECEITA = [["Salário","💼"],["Freelance","💻","Freelance/Serviços"],["Investimento","📈","Investimentos"],["Aluguel","🏠"],["Venda","🛍️"],["Bônus","🎁","Bônus/Presente"],["Outros","📦"]];
+
 async function sendCategoryList(phone, val, env) {
   const v = Math.abs(val);
+  if (isTelegramId(phone)) {
+    return telegramSendMessage(phone, `Despesa de R$ ${formatBRL(v)}.\nQual a categoria?`, env, {
+      reply_markup: { inline_keyboard: CATEGORIAS_DESPESA.map(([cat,emoji,label]) => [{text:`${emoji} ${label||cat}`, callback_data:`c|d|${v}|${cat}`}]) }
+    });
+  }
   return metaPost({
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
@@ -1434,17 +1734,7 @@ async function sendCategoryList(phone, val, env) {
       body:{text:`Despesa de R$ ${formatBRL(v)}.\nQual a categoria?`},
       action:{
         button:"Escolher categoria",
-        sections:[{title:"Categorias de Despesa",rows:[
-          {id:`c|d|${v}|Alimentação`,title:"🍔 Alimentação"},
-          {id:`c|d|${v}|Transporte`,title:"🚗 Transporte"},
-          {id:`c|d|${v}|Lazer`,title:"🎮 Lazer"},
-          {id:`c|d|${v}|Saúde`,title:"🏥 Saúde"},
-          {id:`c|d|${v}|Educação`,title:"📚 Educação"},
-          {id:`c|d|${v}|Moradia`,title:"🏠 Moradia"},
-          {id:`c|d|${v}|Vestuário`,title:"👕 Vestuário"},
-          {id:`c|d|${v}|Investimento`,title:"📈 Investimento"},
-          {id:`c|d|${v}|Outros`,title:"📦 Outros"}
-        ]}]
+        sections:[{title:"Categorias de Despesa",rows: CATEGORIAS_DESPESA.map(([cat,emoji,label]) => ({id:`c|d|${v}|${cat}`,title:`${emoji} ${label||cat}`}))}]
       }
     }
   },env);
@@ -1452,6 +1742,11 @@ async function sendCategoryList(phone, val, env) {
 
 async function sendCategoryListReceita(phone, val, env) {
   const v = Math.abs(val);
+  if (isTelegramId(phone)) {
+    return telegramSendMessage(phone, `Receita de R$ ${formatBRL(v)}.\nQual a categoria?`, env, {
+      reply_markup: { inline_keyboard: CATEGORIAS_RECEITA.map(([cat,emoji,label]) => [{text:`${emoji} ${label||cat}`, callback_data:`c|r|${v}|${cat}`}]) }
+    });
+  }
   return metaPost({
     messaging_product:"whatsapp", to:phone, type:"interactive",
     interactive:{
@@ -1459,15 +1754,7 @@ async function sendCategoryListReceita(phone, val, env) {
       body:{text:`Receita de R$ ${formatBRL(v)}.\nQual a categoria?`},
       action:{
         button:"Escolher categoria",
-        sections:[{title:"Categorias de Receita",rows:[
-          {id:`c|r|${v}|Salário`,title:"💼 Salário"},
-          {id:`c|r|${v}|Freelance`,title:"💻 Freelance/Serviços"},
-          {id:`c|r|${v}|Investimento`,title:"📈 Investimentos"},
-          {id:`c|r|${v}|Aluguel`,title:"🏠 Aluguel"},
-          {id:`c|r|${v}|Venda`,title:"🛍️ Venda"},
-          {id:`c|r|${v}|Bônus`,title:"🎁 Bônus/Presente"},
-          {id:`c|r|${v}|Outros`,title:"📦 Outros"}
-        ]}]
+        sections:[{title:"Categorias de Receita",rows: CATEGORIAS_RECEITA.map(([cat,emoji,label]) => ({id:`c|r|${v}|${cat}`,title:`${emoji} ${label||cat}`}))}]
       }
     }
   },env);
@@ -1545,11 +1832,12 @@ function parseMonetaryValue(text) {
   return val;
 }
 
-function buildTransaction({val,cat,desc}) {
+function buildTransaction({val,cat,desc}, phone) {
+  const channel = isTelegramId(phone) ? "telegram" : "whatsapp";
   return {
-    id:`wa_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+    id:`${channel==="telegram"?"tg":"wa"}_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
     date:todayBR(),
-    desc:desc||"Sem descrição", val:val||0, cat:cat||"Outros", source:"whatsapp",
+    desc:desc||"Sem descrição", val:val||0, cat:cat||"Outros", source:channel,
   };
 }
 
