@@ -1192,14 +1192,19 @@ async function handleSync(request, env) {
   // ao perfil — sem isso, POST /sync com qualquer identificador lia ou
   // sobrescrevia os dados financeiros de qualquer pessoa, sem autenticação.
   const user = await verifySupabaseUser(access_token);
-  if (!user) return unauthorizedResponse();
+  if (!user) {
+    await debugLog(env, { kind: "sync_unauthorized", isTelegram, uid, hasAccessToken: !!access_token });
+    return unauthorizedResponse();
+  }
   if (isTelegram) {
     const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
     if (!ownChatId || ownChatId !== String(telegram_chat_id)) {
+      await debugLog(env, { kind: "sync_telegram_mismatch", sentChatId: String(telegram_chat_id), ownChatIdOnAccount: ownChatId || null, email: user.email });
       return corsResponse(new Response(JSON.stringify({ error: "telegram_chat_id does not match authenticated account" }), {
         status: 403, headers: { "Content-Type": "application/json" }
       }));
     }
+    await debugLog(env, { kind: "sync_telegram_ok", uid, email: user.email, txCount: (data && data.txs && data.txs.length) || 0 });
   } else {
     const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
     if (!phonesMatch(phone, ownWhatsapp)) {
