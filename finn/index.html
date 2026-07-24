@@ -736,6 +736,11 @@ function pollTelegramLink(code){
         if(j && j.linked && j.chatId){
           stopTelegramPoll();
           state.telegramLinkCode = null;
+          // Sem esse catch aqui, uma falha ao salvar o telegram_chat_id no
+          // perfil (ex: token expirado durante a espera) caía no catch
+          // genérico do fim da cadeia e sumia sem deixar rastro — a pessoa
+          // via a tela voltar pro botão "Conectar Telegram" sem entender por
+          // quê, e o app nunca sincronizava de verdade com o bot.
           return Auth.updateMetadata(currentSession.access_token, { telegram_chat_id: String(j.chatId) }).then(function(user){
             if(user && user.id){
               currentSession.user = user;
@@ -746,6 +751,9 @@ function pollTelegramLink(code){
             state.configMsg = "Bot do Telegram conectado.";
             render();
             return syncTelegramBot();
+          }).catch(function(err){
+            state.telegramLinkMsg = "Conectou no Telegram, mas não consegui salvar no seu perfil (" + (err && err.message ? err.message : "erro de conexão") + "). Toque em \"Conectar Telegram\" para tentar de novo.";
+            render();
           });
         }
         if(j && j.expired){
@@ -799,12 +807,24 @@ function pullBotTransactionsForChannel(identity){
         (rows || []).forEach(function(row){ state.txs.unshift(row); });
         sortTxs();
         render();
+        // Se o ack falhar (rede caiu, app fechado rápido demais), o mesmo
+        // lançamento voltaria a aparecer no próximo GET /bot-txs e seria
+        // importado de novo, duplicado — tenta mais 2 vezes antes de desistir.
         var ackBody = Object.assign({ access_token: currentSession.access_token, ids: j.txs.map(function(t){ return t.id; }) }, identity);
-        return fetch(WHATSAPP_WORKER_URL + "/bot-txs/ack", {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ackBody)
-        });
+        return ackBotTransactions(ackBody, 3);
       });
     }).catch(function(){});
+}
+
+function ackBotTransactions(ackBody, attemptsLeft){
+  return fetch(WHATSAPP_WORKER_URL + "/bot-txs/ack", {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ackBody)
+  }).then(function(r){
+    if(!r.ok && attemptsLeft > 1) return ackBotTransactions(ackBody, attemptsLeft - 1);
+    return r;
+  }).catch(function(){
+    if(attemptsLeft > 1) return ackBotTransactions(ackBody, attemptsLeft - 1);
+  });
 }
 
 function thisMonth(){
