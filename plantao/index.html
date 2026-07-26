@@ -262,11 +262,12 @@ tbody tr:last-child td{border-bottom:none}
         <select id="lancFiltroColab"><option value="">Todos os colaboradores</option></select>
         <select id="lancFiltroSit"><option value="">Todas as situações</option></select>
         <button class="btn btn-ghost btn-sm" id="lancLimparFiltro">Limpar filtros</button>
+        <button class="btn btn-danger btn-sm" id="btnLancExcluirSel" disabled style="margin-left:auto">🗑️ Excluir selecionados (<span id="lancSelCount">0</span>)</button>
       </div>
       <div class="card">
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Data</th><th>Colaborador</th><th>Tipo</th><th>Situação</th><th>Valor</th><th>Obs.</th><th></th></tr></thead>
+            <thead><tr><th style="width:36px"><input type="checkbox" id="lancCheckAll"></th><th>Data</th><th>Colaborador</th><th>Tipo</th><th>Situação</th><th>Valor</th><th>Obs.</th><th></th></tr></thead>
             <tbody id="lancTbody"></tbody>
           </table>
         </div>
@@ -767,12 +768,13 @@ function renderLancamentos(){
 
   const tbody = document.getElementById('lancTbody');
   if(!list.length){
-    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Nenhum lançamento encontrado.</td></tr>';
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">Nenhum lançamento encontrado.</td></tr>';
   } else {
     tbody.innerHTML = list.map(l => {
       const c = colabById(l.colaboradorId);
       return `
       <tr>
+        <td><input type="checkbox" class="lanc-check" value="${l.id}" onchange="App.updateLancSelCount()"></td>
         <td><strong>${fmtDate(l.data)}</strong><div class="mini">${weekdayName(l.data)}</div></td>
         <td>${c ? esc(c.nome) : '<span class="mini">(excluído)</span>'}</td>
         <td>${c ? `<span class="badge ${TIPO_BADGE[c.tipo]||''}">${esc(TIPO_LABEL[c.tipo]||c.tipo)}</span>` : '—'}</td>
@@ -787,6 +789,27 @@ function renderLancamentos(){
     }).join('');
   }
   document.getElementById('cntLanc').textContent = DB.lancamentos.length;
+  document.getElementById('lancCheckAll').checked = false;
+  updateLancSelCount();
+}
+function updateLancSelCount(){
+  const checks = document.querySelectorAll('#lancTbody .lanc-check');
+  const checked = document.querySelectorAll('#lancTbody .lanc-check:checked');
+  document.getElementById('lancSelCount').textContent = checked.length;
+  document.getElementById('btnLancExcluirSel').disabled = checked.length === 0;
+  document.getElementById('lancCheckAll').checked = checks.length > 0 && checked.length === checks.length;
+}
+function lancToggleAll(checked){
+  document.querySelectorAll('#lancTbody .lanc-check').forEach(cb => cb.checked = checked);
+  updateLancSelCount();
+}
+function delLancSelecionados(){
+  const ids = Array.from(document.querySelectorAll('#lancTbody .lanc-check:checked')).map(cb => cb.value);
+  if(!ids.length) return;
+  if(!confirm(`Excluir ${ids.length} lançamento(s) selecionado(s)? Essa ação não pode ser desfeita.`)) return;
+  const idSet = new Set(ids);
+  DB.lancamentos = DB.lancamentos.filter(l => !idSet.has(l.id));
+  save(); toast(`${ids.length} lançamento(s) excluído(s)`, 'ok'); renderAll();
 }
 
 function lancModal(lanc){
@@ -1303,6 +1326,8 @@ document.getElementById('btnLimparHist').addEventListener('click', clearHistoric
 ['colabBusca','colabFiltroTipo','colabFiltroStatus'].forEach(id => document.getElementById(id).addEventListener('input', renderColaboradores));
 ['lancMes','lancFiltroColab','lancFiltroSit'].forEach(id => document.getElementById(id).addEventListener('input', renderLancamentos));
 document.getElementById('lancLimparFiltro').addEventListener('click', () => { document.getElementById('lancMes').value=''; document.getElementById('lancFiltroColab').value=''; document.getElementById('lancFiltroSit').value=''; renderLancamentos(); });
+document.getElementById('lancCheckAll').addEventListener('change', e => lancToggleAll(e.target.checked));
+document.getElementById('btnLancExcluirSel').addEventListener('click', delLancSelecionados);
 ['relMes','relTipo'].forEach(id => document.getElementById(id).addEventListener('input', renderRelatorio));
 document.getElementById('ferAno').addEventListener('change', renderFeriados);
 
@@ -1318,7 +1343,8 @@ window.App = {
   saveLanc, delLanc,
   calcValor, onDataChange,
   bulkModal, bulkOnDateChange, bulkRecalc, bulkToggleAll, bulkSave,
-  baixarHistorico, delHistorico
+  baixarHistorico, delHistorico,
+  updateLancSelCount
 };
 
 renderAll();
