@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -170,9 +171,50 @@ tbody tr:last-child td{border-bottom:none}
   .page-title{font-size:21px}
 }
 @media print{ .mobile-bar{display:none!important} }
+
+/* ── AUTH ── */
+.auth-screen{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:300;padding:20px}
+.auth-screen.show{display:flex}
+.auth-card{width:100%;max-width:380px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-xl);padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.auth-tabs{display:flex;background:var(--bg3);border-radius:10px;padding:3px;margin-bottom:18px}
+.auth-tab{flex:1;padding:8px;border-radius:8px;font-size:13px;font-weight:700;color:var(--muted);text-align:center}
+.auth-tab.active{background:var(--accent);color:#000}
+.auth-skip{text-align:center;margin-top:14px}
+.auth-skip a{font-size:12px;color:var(--muted);text-decoration:underline}
+.auth-skip a:hover{color:var(--text)}
+#authMsg{min-height:16px;margin-bottom:4px}
+#authMsg.err{color:var(--danger)}
+#authMsg.ok{color:var(--success)}
+.sidebar-user{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border);display:none}
+.sidebar-user.show{display:block}
+.sidebar-user .email{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-user .links{display:flex;gap:10px;margin-top:3px}
+.sidebar-user .links a{font-size:11px;color:var(--accent);font-weight:600}
+.cloud-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--success)}
 </style>
 </head>
 <body>
+
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px">
+      <div class="brand-mark">🗓️</div>
+      <div>
+        <div style="font-size:18px;font-weight:900;letter-spacing:-.03em">Plantão<span style="color:var(--accent)">.</span></div>
+        <div style="font-size:10px;color:var(--muted2);font-weight:600;letter-spacing:.08em;text-transform:uppercase">Domingos &amp; Feriados</div>
+      </div>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin">Entrar</button>
+      <button class="auth-tab" id="tabSignup">Criar conta</button>
+    </div>
+    <div class="field"><label>E-mail</label><input type="email" id="authEmail" autocomplete="email" placeholder="voce@email.com"></div>
+    <div class="field"><label>Senha</label><input type="password" id="authPassword" autocomplete="current-password" placeholder="Mínimo 6 caracteres"></div>
+    <div class="hint" id="authMsg"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="authSubmit">Entrar</button>
+    <div class="auth-skip"><a href="#" id="authSkip">Continuar sem conta (só neste navegador)</a></div>
+  </div>
+</div>
 
 <div class="mobile-bar no-print">
   <button class="hamburger" id="btnHamburger" aria-label="Abrir menu">☰</button>
@@ -208,7 +250,18 @@ tbody tr:last-child td{border-bottom:none}
     <button class="nav-btn" data-view="historico"><span class="ic">📁</span> Histórico <span class="count" id="cntHist">0</span></button>
 
     <div class="sidebar-foot">
-      Dados salvos neste navegador.<br>
+      <div class="sidebar-user" id="sidebarUser">
+        <div class="email" id="userEmailLabel"></div>
+        <span class="cloud-tag">☁️ Sincronizado com a nuvem</span>
+        <div class="links">
+          <a href="#" id="btnSyncNow">Sincronizar agora</a>
+          <a href="#" id="btnLogout">Sair</a>
+        </div>
+      </div>
+      <div id="localOnlyNote">
+        Dados salvos neste navegador.<br>
+        <a href="#" id="btnShowLogin">Entrar / criar conta</a>
+      </div>
       <a href="#" id="btnBackupExport">Exportar backup</a> ·
       <a href="#" id="btnBackupImport">Importar</a>
     </div>
@@ -422,6 +475,8 @@ tbody tr:last-child td{border-bottom:none}
 'use strict';
 
 const STORAGE_KEY = 'plantaoDB_v1';
+const SUPABASE_URL = 'https://zblkznobqcztvznycyyo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_Zf-YkojOUHWDtuP_0B6BAA_dvbJguJb';
 const SITUACOES = ['Domingo','Feriado','Domingo 6h','Feriado 6h','Domingo/Feriado','Domingo/Feriado 6h'];
 const TIPOS = ['CLT','CLT - SUPERVISOR','Jovem Aprendiz'];
 const TIPO_BADGE = {'CLT':'badge-clt','CLT - SUPERVISOR':'badge-sup','Jovem Aprendiz':'badge-jov'};
@@ -438,18 +493,19 @@ const SEED_VALORES = {
 // ---------- state ----------
 let DB = load();
 
+function normalizeDB(db){
+  db = db || {};
+  db.colaboradores = db.colaboradores || [];
+  db.valores = (db.valores && Object.keys(db.valores).length) ? db.valores : JSON.parse(JSON.stringify(SEED_VALORES));
+  db.feriados = db.feriados || [];
+  db.lancamentos = db.lancamentos || [];
+  db.historico = db.historico || [];
+  return db;
+}
 function load(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw){
-      const db = JSON.parse(raw);
-      db.colaboradores = db.colaboradores || [];
-      db.valores = db.valores || JSON.parse(JSON.stringify(SEED_VALORES));
-      db.feriados = db.feriados || [];
-      db.lancamentos = db.lancamentos || [];
-      db.historico = db.historico || [];
-      return db;
-    }
+    if(raw) return normalizeDB(JSON.parse(raw));
   }catch(e){}
   const db = {
     colaboradores: SEED_COLABORADORES.map(c => ({id: uid('c'), nome:c.nome, setor:c.setor, tipo:c.tipo, ativo:true})),
@@ -462,7 +518,10 @@ function load(){
   db.feriados = [...nationalHolidays(y), ...nationalHolidays(y+1)];
   return db;
 }
-function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+  scheduleCloudSync();
+}
 function uid(p){ return p+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
 
 // ---------- helpers ----------
@@ -1347,7 +1406,156 @@ window.App = {
   updateLancSelCount
 };
 
+// ================= CONTA / SINCRONIZAÇÃO NA NUVEM =================
+let supa = null;
+let currentUser = null;
+let cloudSyncTimer = null;
+let authMode = 'login';
+
+function initSupabase(){
+  try{
+    if(typeof window.supabase === 'undefined') return null;
+    return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }catch(e){ return null; }
+}
+function scheduleCloudSync(){
+  if(!supa || !currentUser) return;
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = setTimeout(async () => {
+    try{ await supa.from('plantao_data').upsert({user_id: currentUser.id, data: DB}); }
+    catch(e){ /* fica salvo localmente; tenta de novo na próxima alteração */ }
+  }, 900);
+}
+function translateAuthError(msg){
+  const m = (msg||'').toLowerCase();
+  if(m.includes('invalid login credentials')) return 'E-mail ou senha incorretos.';
+  if(m.includes('user already registered')) return 'Já existe uma conta com esse e-mail. Tente entrar.';
+  if(m.includes('password should be at least') || m.includes('password is too short')) return 'A senha precisa ter pelo menos 6 caracteres.';
+  if(m.includes('email not confirmed')) return 'Confirme seu e-mail antes de entrar (verifique sua caixa de entrada).';
+  if(m.includes('unable to validate email') || m.includes('invalid email')) return 'E-mail inválido.';
+  if(m.includes('email rate limit')) return 'Muitas tentativas. Aguarde um pouco e tente de novo.';
+  return msg || 'Não foi possível concluir. Tente novamente.';
+}
+function authMsg(text, type){
+  const el = document.getElementById('authMsg');
+  el.textContent = text || '';
+  el.className = type ? type : '';
+}
+function setAuthMode(mode){
+  authMode = mode;
+  document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
+  document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
+  document.getElementById('authSubmit').textContent = mode === 'login' ? 'Entrar' : 'Criar conta';
+  document.getElementById('authPassword').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+  authMsg('');
+}
+function showAuthScreen(){ document.getElementById('authScreen').classList.add('show'); }
+function hideAuthScreen(){ document.getElementById('authScreen').classList.remove('show'); }
+function updateSidebarAuthUI(){
+  const logged = !!currentUser;
+  document.getElementById('sidebarUser').classList.toggle('show', logged);
+  document.getElementById('localOnlyNote').style.display = logged ? 'none' : '';
+  if(logged) document.getElementById('userEmailLabel').textContent = currentUser.email;
+}
+async function handleAuthSubmit(){
+  if(!supa){ authMsg('Sem conexão com o servidor de contas no momento.', 'err'); return; }
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  if(!email || !password){ authMsg('Preencha e-mail e senha.', 'err'); return; }
+  const btn = document.getElementById('authSubmit');
+  btn.disabled = true;
+  authMsg('');
+  try{
+    if(authMode === 'login'){
+      const { error } = await supa.auth.signInWithPassword({email, password});
+      if(error){ authMsg(translateAuthError(error.message), 'err'); return; }
+    } else {
+      const { data, error } = await supa.auth.signUp({email, password});
+      if(error){ authMsg(translateAuthError(error.message), 'err'); return; }
+      if(data.session){
+        // confirmação de e-mail desativada no projeto: já entra direto
+      } else {
+        authMsg('Conta criada! Verifique seu e-mail para confirmar antes de entrar.', 'ok');
+        setAuthMode('login');
+      }
+    }
+  } finally {
+    btn.disabled = false;
+  }
+}
+async function enterApp(user){
+  currentUser = user;
+  updateSidebarAuthUI();
+  const { data, error } = await supa.from('plantao_data').select('data').eq('user_id', user.id).maybeSingle();
+  if(error){
+    toast('Não foi possível sincronizar com a nuvem agora. Usando dados deste navegador.', 'err');
+    hideAuthScreen(); renderAll();
+    return;
+  }
+  const cloudDB = (data && data.data && Object.keys(data.data).length) ? normalizeDB(data.data) : null;
+  const localHasContent = DB.lancamentos.length > 0 || DB.historico.length > 0 ||
+    DB.colaboradores.some(c => !SEED_COLABORADORES.some(s => s.nome === c.nome));
+
+  if(cloudDB && localHasContent && JSON.stringify(cloudDB) !== JSON.stringify(DB)){
+    const useCloud = confirm('Encontramos dados salvos neste navegador E também na nuvem desta conta.\n\nOK = usar os dados da NUVEM (substitui os deste navegador)\nCancelar = manter os dados DESTE NAVEGADOR (substitui os da nuvem)');
+    if(useCloud){ DB = cloudDB; localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
+    else { await supa.from('plantao_data').upsert({user_id: user.id, data: DB}); }
+  } else if(cloudDB){
+    DB = cloudDB;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+  } else {
+    await supa.from('plantao_data').upsert({user_id: user.id, data: DB});
+  }
+  hideAuthScreen();
+  toast('Conectado — seus dados sincronizam entre seus aparelhos', 'ok');
+  renderAll();
+}
+async function handleLogout(){
+  if(!supa) return;
+  await supa.auth.signOut();
+  currentUser = null;
+  updateSidebarAuthUI();
+  toast('Você saiu da conta. Os dados deste navegador continuam aqui.', 'ok');
+}
+async function syncNow(){
+  if(!supa || !currentUser){ toast('Entre na sua conta para sincronizar', 'err'); return; }
+  const { data, error } = await supa.from('plantao_data').select('data').eq('user_id', currentUser.id).maybeSingle();
+  if(error){ toast('Erro ao sincronizar', 'err'); return; }
+  if(data && data.data && Object.keys(data.data).length){
+    DB = normalizeDB(data.data);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+    renderAll();
+    toast('Dados atualizados a partir da nuvem', 'ok');
+  } else {
+    toast('Nada de novo para sincronizar', 'ok');
+  }
+}
+async function bootAuth(){
+  supa = initSupabase();
+  if(!supa) return;
+  document.getElementById('tabLogin').addEventListener('click', () => setAuthMode('login'));
+  document.getElementById('tabSignup').addEventListener('click', () => setAuthMode('signup'));
+  document.getElementById('authSubmit').addEventListener('click', handleAuthSubmit);
+  document.getElementById('authPassword').addEventListener('keydown', e => { if(e.key === 'Enter') handleAuthSubmit(); });
+  document.getElementById('authSkip').addEventListener('click', e => { e.preventDefault(); localStorage.setItem('plantao_skip_auth','1'); hideAuthScreen(); });
+  document.getElementById('btnShowLogin').addEventListener('click', e => { e.preventDefault(); localStorage.removeItem('plantao_skip_auth'); setAuthMode('login'); showAuthScreen(); });
+  document.getElementById('btnLogout').addEventListener('click', e => { e.preventDefault(); handleLogout(); });
+  document.getElementById('btnSyncNow').addEventListener('click', e => { e.preventDefault(); syncNow(); });
+
+  const { data: { session } } = await supa.auth.getSession();
+  if(session){
+    await enterApp(session.user);
+  } else if(localStorage.getItem('plantao_skip_auth') !== '1'){
+    showAuthScreen();
+  }
+  supa.auth.onAuthStateChange((event, session) => {
+    if(event === 'SIGNED_IN' && session && (!currentUser || currentUser.id !== session.user.id)) enterApp(session.user);
+    if(event === 'SIGNED_OUT'){ currentUser = null; updateSidebarAuthUI(); }
+  });
+}
+
 renderAll();
+bootAuth();
 })();
 </script>
 </body>
