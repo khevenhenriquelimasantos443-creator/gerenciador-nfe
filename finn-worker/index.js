@@ -77,6 +77,15 @@ export default {
       return handleSubscribeWaba(env);
     }
 
+    // Resumo de uso do bot (WhatsApp + Telegram) pro painel de uso do app —
+    // requireAdminToken já aceita access_token+admin_password da conta
+    // master, então o app consegue chamar isso direto (mesmo esquema do
+    // /telegram/set-webhook, só que sem token de admin fixo).
+    if (url.pathname === "/admin/bot-stats" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleBotStats(env);
+    }
+
     // ── Telegram (novo canal — restrito às contas em TELEGRAM_ALLOWED_EMAILS) ──
     if (url.pathname === "/telegram/webhook" && request.method === "POST") {
       return handleTelegramWebhook(request, env);
@@ -247,6 +256,37 @@ async function handleDebug(env) {
       status: 200,
       headers: { "Content-Type": "application/json" }
     }));
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } }));
+  }
+}
+
+// Único lugar onde dá pra ver uso do bot (WhatsApp + Telegram) — essa parte
+// nunca aparece no Supabase, já que os lançamentos feitos na conversa e o
+// vínculo por telefone/chat vivem só no KV deste worker. Pro painel de uso
+// do app conseguir mostrar isso, precisa desse resumo agregado aqui.
+async function handleBotStats(env) {
+  try {
+    const list = await listAllKeys(env, "data_");
+    let whatsappLinked = 0, telegramLinked = 0, whatsappTx = 0, telegramTx = 0, dailyDashboardOptIn = 0;
+    for (const key of list) {
+      const id = key.name.replace("data_", "");
+      if (!id) continue;
+      const data = await getUserData(id, env);
+      const txs = data.txs || [];
+      if (isTelegramId(id)) {
+        telegramLinked++;
+        telegramTx += txs.filter(t => t.source === "telegram").length;
+      } else {
+        whatsappLinked++;
+        whatsappTx += txs.filter(t => t.source === "whatsapp").length;
+      }
+      if (data.dailyDashboardOptIn) dailyDashboardOptIn++;
+    }
+    return corsResponse(new Response(JSON.stringify({
+      ok: true, whatsappLinked, telegramLinked, whatsappTx, telegramTx, dailyDashboardOptIn,
+      totalIdentities: list.length
+    }), { status: 200, headers: { "Content-Type": "application/json" } }));
   } catch (e) {
     return corsResponse(new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } }));
   }

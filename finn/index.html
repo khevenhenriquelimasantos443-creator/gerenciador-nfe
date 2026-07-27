@@ -17,8 +17,8 @@
 <link rel="manifest" href="/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--fp:#F97316;--fpl:#FFEDD5;--fd:#1E293B;--fdk:#0F172A;--fbg:#F8F7F4;--fb:#E2E8F0;--fm:#64748B;--fs:#059669;--fe:#DC2626;--fa:#D97706;--fcard:#fff;--ftopbar:rgba(248,247,244,.92);--fscroll:#CBD5E1}
-body.finn-dark{--fpl:#3A2308;--fd:#F1F5F9;--fdk:#334155;--fbg:#0B1220;--fb:#243044;--fm:#94A3B8;--fs:#34D399;--fe:#F87171;--fa:#FBBF24;--fcard:#111827;--ftopbar:rgba(11,18,32,.92);--fscroll:#334155}
+:root{--fp:#F97316;--fpl:#FFEDD5;--fd:#1E293B;--fdk:#0F172A;--fbg:#F8F7F4;--fb:#E2E8F0;--fm:#64748B;--fs:#059669;--fe:#DC2626;--fa:#D97706;--fcard:#fff;--ftopbar:rgba(248,247,244,.92);--fscroll:#CBD5E1;--fcat1:#2a78d6;--fcat2:#eb6834;--fcat3:#1baf7a}
+body.finn-dark{--fpl:#3A2308;--fd:#F1F5F9;--fdk:#334155;--fbg:#0B1220;--fb:#243044;--fm:#94A3B8;--fs:#34D399;--fe:#F87171;--fa:#FBBF24;--fcard:#111827;--ftopbar:rgba(11,18,32,.92);--fscroll:#334155;--fcat1:#3987e5;--fcat2:#d95926;--fcat3:#199e70}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--fbg);color:var(--fd);-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--fscroll);border-radius:4px}::-webkit-scrollbar-track{background:transparent}
@@ -338,6 +338,51 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 body.finn-dark .type-btn.active.despesa,body.finn-dark .alert-card,body.finn-dark .ai-error{background:#3F1212!important;border-color:#7F1D1D!important}
 body.finn-dark .type-btn.active.receita,body.finn-dark .split-ptoggle.paid,body.finn-dark .alert-card-income{background:#0F2E22!important;border-color:#065F46!important}
 body.finn-dark .btn-google:hover{background:#1E293B}
+
+/* ── painel de uso (admin) ── */
+.adm-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.adm-kpi{background:var(--fcard);border:1px solid var(--fb);border-radius:14px;padding:14px 16px}
+.adm-kpi-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--fm);font-weight:700}
+.adm-kpi-value{font-size:23px;font-weight:800;margin-top:5px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.adm-kpi-sub{font-size:11px;color:var(--fm);margin-top:2px}
+.adm-grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:12px;margin-bottom:12px}
+.adm-bars-week{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:8px}
+.adm-bw-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end}
+.adm-bw-bar{width:100%;max-width:26px;border-radius:4px 4px 2px 2px;background:var(--fp);min-height:3px}
+.adm-bw-bar.zero{background:var(--fb)}
+.adm-bw-val{font-size:10.5px;font-weight:700;color:var(--fd)}
+.adm-bw-lbl{font-size:9.5px;color:var(--fm);white-space:nowrap}
+.adm-day-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px}
+.adm-day-tile{border:1px solid var(--fb);border-radius:12px;padding:12px;text-align:center}
+.adm-day-tile .d{font-size:10.5px;color:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.adm-day-tile .n{font-size:19px;font-weight:800;margin-top:5px;color:var(--fp);font-variant-numeric:tabular-nums}
+.adm-day-tile .u{font-size:10.5px;color:var(--fm);margin-top:2px}
+.adm-feat-row{display:grid;grid-template-columns:118px 1fr 38px;align-items:center;gap:8px;font-size:12px;padding:5px 0}
+.adm-feat-name{color:var(--fd)}
+.adm-feat-track{height:8px;border-radius:5px;background:var(--fb);overflow:hidden}
+.adm-feat-fill{height:100%;border-radius:5px;background:var(--fp)}
+.adm-feat-pct{text-align:right;font-weight:700;color:var(--fd);font-size:11.5px;font-variant-numeric:tabular-nums}
+.adm-donut-wrap{display:flex;align-items:center;gap:18px}
+.adm-donut{width:96px;height:96px;border-radius:50%;flex-shrink:0;-webkit-mask:radial-gradient(farthest-side,transparent 62%,#000 63%);mask:radial-gradient(farthest-side,transparent 62%,#000 63%)}
+.adm-donut-legend{display:flex;flex-direction:column;gap:7px;font-size:12px}
+.adm-dl-item{display:flex;align-items:center;gap:7px}
+.adm-dl-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.adm-dl-val{color:var(--fm);margin-left:auto;padding-left:8px;font-weight:700;font-variant-numeric:tabular-nums}
+.adm-table{width:100%;border-collapse:collapse;font-size:12px}
+.adm-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--fm);font-weight:700;padding:0 8px 8px}
+.adm-table th.num,.adm-table td.num{text-align:right}
+.adm-table td{padding:9px 8px;border-top:1px solid var(--fb);color:var(--fd);vertical-align:middle;font-variant-numeric:tabular-nums}
+.adm-table .name{font-weight:700}
+.adm-tag{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:5px;vertical-align:1px}
+.adm-tag.internal{background:var(--fb);color:var(--fm)}
+.adm-tag.bot{background:var(--fpl);color:var(--fp)}
+.adm-callout{margin-top:12px;border:1px solid var(--fb);border-left:3px solid var(--fp);border-radius:10px;padding:14px 18px;background:var(--fcard)}
+.adm-callout h3{font-size:12.5px;margin:0 0 8px;font-weight:800}
+.adm-callout ul{margin:0;padding-left:16px;font-size:12px;color:var(--fm);line-height:1.6}
+.adm-callout li{margin-bottom:3px}
+.adm-callout b{color:var(--fd)}
+.adm-tbl-wrap{overflow-x:auto}
+@media (max-width:760px){.adm-kpis{grid-template-columns:repeat(2,1fr)}.adm-grid2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -380,6 +425,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
       <button class="tab-btn" data-tab="ia">IA</button>
       <div class="nav-menu-bottom">
         <a href="/guia" target="_blank" rel="noopener" class="nav-menu-action" id="btnGuiaNav" style="text-decoration:none">Guia de uso</a>
+        <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
         <button type="button" class="nav-menu-action" id="btnConfigNav">Configurações</button>
         <button type="button" class="nav-menu-action" id="btnLogoutNav">Sair</button>
       </div>
@@ -597,7 +643,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, analyticsData: null, analyticsLoading: false, analyticsError: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -3276,6 +3322,141 @@ function renderTelegramCard(meta){
   '</div>';
 }
 
+/* ── Painel de uso ao vivo (só a conta master, ver btnAdminAnalyticsNav) ── */
+var ADM_FEATURE_LABELS = {
+  transactions: "Lançamentos", whatsapp: "Bot WhatsApp", telegram: "Bot Telegram",
+  spending_limits: "Limites de gastos", goals: "Metas", fixed_accounts: "Contas fixas",
+  debts: "Dívidas", credit_cards: "Cartões", splits: "Racha de contas", categories: "Categorias próprias"
+};
+function admDateBR(iso){
+  if(!iso) return "—";
+  var d = new Date(iso);
+  return String(d.getUTCDate()).padStart(2,"0") + "/" + String(d.getUTCMonth()+1).padStart(2,"0");
+}
+function admWeekLabel(iso){
+  var d = new Date(iso + "T00:00:00Z");
+  return String(d.getUTCDate()).padStart(2,"0") + "/" + String(d.getUTCMonth()+1).padStart(2,"0");
+}
+function renderAdminAnalytics(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+
+  if(state.analyticsLoading && !state.analyticsData){
+    return '<div class="card"><div class="eyebrow">Painel de uso</div><div style="font-size:13px;color:var(--fm)">Carregando dados ao vivo do Supabase e do bot…</div></div>';
+  }
+  if(state.analyticsError && !state.analyticsData){
+    return '<div class="card"><div class="eyebrow">Painel de uso</div>' +
+      '<div class="ai-error">' + escapeHtml(state.analyticsError) + '</div>' +
+      '<button type="button" class="btn-submit" id="btnRetryAnalytics" style="margin-top:10px">Tentar de novo</button></div>';
+  }
+  if(!state.analyticsData){
+    return '<div class="card"><div class="eyebrow">Painel de uso</div>' +
+      '<button type="button" class="btn-submit" id="btnLoadAnalytics">Carregar painel</button></div>';
+  }
+
+  var a = state.analyticsData;
+  var bot = a.botStats;
+  var html = "";
+
+  html += '<div class="card">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px">' +
+      '<div class="eyebrow" style="margin:0">Painel de uso</div>' +
+      '<button type="button" class="btn-ghost" id="btnRefreshAnalytics" style="padding:6px 12px;font-size:11.5px"' + (state.analyticsLoading ? " disabled" : "") + '>' + (state.analyticsLoading ? "Atualizando…" : "Atualizar agora") + '</button>' +
+    '</div>' +
+    '<div style="font-size:11.5px;color:var(--fm)">Dados ao vivo — gerado às ' + new Date(a.generated_at).toLocaleTimeString("pt-BR") + '</div>' +
+  '</div>';
+
+  html += '<div class="adm-kpis">' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Usuários</div><div class="adm-kpi-value">' + a.totals.users + '</div><div class="adm-kpi-sub">cadastrados no total</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Lançamentos</div><div class="adm-kpi-value">' + a.totals.transactions.toLocaleString("pt-BR") + '</div><div class="adm-kpi-sub">registrados no banco</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Voltaram a logar</div><div class="adm-kpi-value">' + a.totals.returned_pct + '%</div><div class="adm-kpi-sub">' + a.totals.returned + ' de ' + a.totals.users + '</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Bot vinculado</div><div class="adm-kpi-value">' + (bot ? (bot.whatsappLinked + bot.telegramLinked) : "—") + '</div><div class="adm-kpi-sub">' + (bot ? (bot.whatsappLinked + ' WhatsApp · ' + bot.telegramLinked + ' Telegram') : "worker fora do ar") + '</div></div>' +
+  '</div>';
+
+  var maxWeek = Math.max.apply(null, a.signups_by_week.map(function(w){ return w.count; }).concat([1]));
+  html += '<div class="adm-grid2">' +
+    '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 2px">Cadastros por semana</p>' +
+      '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Novas contas criadas, agrupadas por semana</p>' +
+      '<div class="adm-bars-week">' + a.signups_by_week.map(function(w){
+        var h = w.count === 0 ? 3 : Math.max(10, (w.count / maxWeek) * 100);
+        return '<div class="adm-bw-col"><div class="adm-bw-val">' + (w.count || "") + '</div>' +
+          '<div class="adm-bw-bar' + (w.count === 0 ? ' zero' : '') + '" style="height:' + h + 'px" title="Semana de ' + admWeekLabel(w.week) + ': ' + w.count + '"></div>' +
+          '<div class="adm-bw-lbl">' + admWeekLabel(w.week) + '</div></div>';
+      }).join("") + '</div>' +
+    '</div>' +
+    '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 2px">Dias com lançamentos</p>' +
+      '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Dias em que pelo menos 1 lançamento foi criado</p>' +
+      (a.active_days.length ?
+        '<div class="adm-day-tiles">' + a.active_days.slice(-6).map(function(d){
+          return '<div class="adm-day-tile"><div class="d">' + admDateBR(d.day) + '</div><div class="n">' + d.count + '</div><div class="u">lançamento(s)</div></div>';
+        }).join("") + '</div>'
+        : '<div style="font-size:12.5px;color:var(--fm)">Nenhum lançamento ainda.</div>') +
+    '</div>' +
+  '</div>';
+
+  var planCounts = { free: 0, plus: 0, pro: 0 };
+  a.users.forEach(function(u){ planCounts[u.plan] = (planCounts[u.plan] || 0) + 1; });
+  var planTotal = a.users.length || 1;
+  var planColors = { free: "var(--fb)", plus: "var(--fcat1)", pro: "var(--fp)" };
+  var acc = 0;
+  var stops = ["free","plus","pro"].map(function(p){
+    var start = acc / planTotal * 360; acc += planCounts[p];
+    var end = acc / planTotal * 360;
+    return planColors[p] + " " + start.toFixed(1) + "deg " + end.toFixed(1) + "deg";
+  }).join(", ");
+
+  html += '<div class="adm-grid2">' +
+    '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 2px">Adoção de recursos</p>' +
+      '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">% dos ' + a.totals.users + ' usuários que usaram cada recurso pelo menos uma vez</p>' +
+      a.feature_adoption.slice().sort(function(x,y){ return y.pct - x.pct; }).map(function(f){
+        return '<div class="adm-feat-row"><span class="adm-feat-name">' + (ADM_FEATURE_LABELS[f.table] || f.table) + '</span>' +
+          '<div class="adm-feat-track"><div class="adm-feat-fill" style="width:' + Math.max(f.pct, f.pct > 0 ? 3 : 0) + '%"></div></div>' +
+          '<span class="adm-feat-pct">' + f.pct + '%</span></div>';
+      }).join("") +
+    '</div>' +
+    '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 2px">Planos</p>' +
+      '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Distribuição de planos entre os ' + a.totals.users + ' usuários</p>' +
+      '<div class="adm-donut-wrap"><div class="adm-donut" style="background:conic-gradient(' + stops + ')"></div>' +
+      '<div class="adm-donut-legend">' +
+        ["free","plus","pro"].map(function(p){
+          var label = p === "free" ? "Grátis" : p === "plus" ? "Plus" : "Pro";
+          return '<div class="adm-dl-item"><span class="adm-dl-dot" style="background:' + planColors[p] + '"></span>' +
+            '<span>' + label + '</span><span class="adm-dl-val">' + planCounts[p] + '</span></div>';
+        }).join("") +
+      '</div></div>' +
+    '</div>' +
+  '</div>';
+
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 2px">Usuários mais ativos</p>' +
+    '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Ordenado por lançamentos registrados</p>' +
+    '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr>' +
+      '<th>Usuário</th><th>Cadastro</th><th class="num">Lanç.</th><th class="num">Dias ativos</th><th>Último acesso</th><th>Plano</th>' +
+    '</tr></thead><tbody>' +
+    a.users.map(function(u){
+      return '<tr><td><span class="name">' + escapeHtml(u.name) + '</span>' +
+          (u.internal ? '<span class="adm-tag internal">interna</span>' : '') +
+          (u.has_whatsapp ? '<span class="adm-tag bot">WhatsApp</span>' : '') +
+          (u.has_telegram ? '<span class="adm-tag bot">Telegram</span>' : '') +
+        '</td>' +
+        '<td>' + admDateBR(u.created_at) + '</td>' +
+        '<td class="num">' + u.tx_count.toLocaleString("pt-BR") + '</td>' +
+        '<td class="num">' + u.active_days + '</td>' +
+        '<td>' + admDateBR(u.last_sign_in_at) + '</td>' +
+        '<td>' + (u.plan === "free" ? "Grátis" : u.plan === "plus" ? "Plus" : "Pro") + '</td>' +
+      '</tr>';
+    }).join("") +
+    '</tbody></table></div>' +
+  '</div>';
+
+  html += '<div class="adm-callout"><h3>Leitura honesta dos números</h3><ul>' +
+    '<li>"Dias ativos" conta dias distintos com pelo menos 1 lançamento — <b>não</b> é o mesmo que dias de login.</li>' +
+    '<li>Não há detalhe de sessão/dispositivo por aqui — a API do Supabase não expõe isso ao vivo (só via consulta direta ao banco).</li>' +
+    (bot ? '<li>Bot: ' + bot.whatsappTx.toLocaleString("pt-BR") + ' lançamento(s) via WhatsApp, ' + bot.telegramTx.toLocaleString("pt-BR") + ' via Telegram, ' + bot.dailyDashboardOptIn + ' com resumo diário ativado.</li>' : '<li>Não foi possível carregar os dados do bot agora (worker do WhatsApp/Telegram fora do ar ou sem resposta).</li>') +
+    '<li>Volume de mensagens trocadas no bot (além dos lançamentos) não fica registrado — só um log recente de 24h via <code>/debug</code>.</li>' +
+  '</ul></div>';
+
+  return html;
+}
+
 /* ── Admin (só a conta master vê isso) ── */
 function renderAdminCard(){
   if(!isMasterUser()) return "";
@@ -3381,6 +3562,37 @@ function loadAdminSubscriptions(){
       state.adminError = "Falha de conexão.";
       render();
     });
+}
+
+// Painel de uso ao vivo (só a master): /admin/analytics roda no finn-serve
+// (Supabase — usuários, lançamentos, adoção de recursos) e /admin/bot-stats
+// roda no finn-worker (KV — a única fonte de dados do bot). Busca os dois em
+// paralelo, sem cache — cada visita ao painel reflete o estado atual.
+function loadAdminAnalytics(){
+  state.analyticsLoading = true;
+  state.analyticsError = null;
+  render();
+  var token = encodeURIComponent((currentSession && currentSession.access_token) || "");
+  var pwd = encodeURIComponent(state.adminPassword || "");
+  var qs = "access_token=" + token + "&admin_password=" + pwd;
+  Promise.all([
+    fetch("/admin/analytics?" + qs).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }),
+    fetch(WHATSAPP_WORKER_URL + "/admin/bot-stats?" + qs).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }).catch(function(){ return { status: 0, body: null }; })
+  ]).then(function(res){
+    state.analyticsLoading = false;
+    var mainRes = res[0], botRes = res[1];
+    if(mainRes.status === 200 && mainRes.body && mainRes.body.ok){
+      state.analyticsData = mainRes.body;
+      state.analyticsData.botStats = (botRes.status === 200 && botRes.body && botRes.body.ok) ? botRes.body : null;
+    } else {
+      state.analyticsError = (mainRes.body && mainRes.body.error) || "Não consegui carregar o painel.";
+    }
+    render();
+  }).catch(function(){
+    state.analyticsLoading = false;
+    state.analyticsError = "Falha de conexão.";
+    render();
+  });
 }
 
 function setAdminPlan(email, plan){
@@ -3496,6 +3708,8 @@ function render(){
   document.querySelectorAll(".tab-btn").forEach(function(btn){
     btn.classList.toggle("active", btn.dataset.tab === state.tab);
   });
+  var btnAdminAnalyticsNav = document.getElementById("btnAdminAnalyticsNav");
+  if(btnAdminAnalyticsNav) btnAdminAnalyticsNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
   var content = document.getElementById("content");
   if(state.loading){
     content.innerHTML = '<div class="empty-state">Carregando…</div>';
@@ -3519,6 +3733,7 @@ function render(){
   else if(state.tab === "dividas") content.innerHTML = renderDividas();
   else if(state.tab === "racha") content.innerHTML = renderRacha();
   else if(state.tab === "ia") content.innerHTML = renderIA();
+  else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else content.innerHTML = renderConfig();
   bindContentEvents();
 }
@@ -3842,6 +4057,14 @@ function bindContentEvents(){
         });
       }
     }
+  }
+  if(state.tab === "adminAnalytics"){
+    var btnLoadAnalytics = document.getElementById("btnLoadAnalytics");
+    if(btnLoadAnalytics) btnLoadAnalytics.addEventListener("click", loadAdminAnalytics);
+    var btnRetryAnalytics = document.getElementById("btnRetryAnalytics");
+    if(btnRetryAnalytics) btnRetryAnalytics.addEventListener("click", loadAdminAnalytics);
+    var btnRefreshAnalytics = document.getElementById("btnRefreshAnalytics");
+    if(btnRefreshAnalytics) btnRefreshAnalytics.addEventListener("click", loadAdminAnalytics);
   }
   bindTxRowEvents(document);
 }
@@ -4563,6 +4786,12 @@ document.getElementById("btnConfigNav").addEventListener("click", function(){
   state.tab = "config";
   render();
   document.getElementById("navMenu").classList.remove("open");
+});
+document.getElementById("btnAdminAnalyticsNav").addEventListener("click", function(){
+  state.tab = "adminAnalytics";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  loadAdminAnalytics();
 });
 document.getElementById("btnLogoutNav").addEventListener("click", function(){
   Auth.logout(currentSession.access_token).then(function(){

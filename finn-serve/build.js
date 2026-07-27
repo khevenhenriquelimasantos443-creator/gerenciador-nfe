@@ -734,6 +734,150 @@ async function _adminSetSubscription(request, env) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
   }
 }
+
+// Busca todos os usuários via Admin API, paginado (até 10 páginas = 2000
+// contas — sobra folga por um bom tempo). Mesmo helper de paginação que
+// _adminListSubscriptions já usa, só que devolvendo o objeto inteiro (não só
+// o email) já que o painel de uso precisa de created_at/last_sign_in_at/metadata.
+async function _adminListAllUsers(env) {
+  var all = [];
+  for (var page = 1; page <= 10; page++) {
+    var r = await fetch('${SUPA_URL_SERVER}/auth/v1/admin/users?page=' + page + '&per_page=200', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) break;
+    var j = await r.json();
+    var list = j.users || [];
+    if (!list.length) break;
+    all = all.concat(list);
+    if (list.length < 200) break;
+  }
+  return all;
+}
+
+// Conta quantos user_id DISTINTOS têm pelo menos uma linha numa tabela —
+// PostgREST não tem "count distinct" pronto via header, então busca só a
+// coluna user_id (tabelas pequenas, não pesa) e deduplica aqui.
+async function _distinctUserCount(table, env) {
+  var r = await fetch('${SUPA_URL_SERVER}/rest/v1/' + table + '?select=user_id', {
+    headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+  });
+  if (!r.ok) return 0;
+  var rows = await r.json();
+  var set = {};
+  for (var i = 0; i < rows.length; i++) set[rows[i].user_id] = true;
+  return Object.keys(set).length;
+}
+
+// GET /admin/analytics?access_token=...&admin_password=... — painel de uso
+// (só a conta master). Tudo lido ao vivo do Supabase via SUPABASE_SERVICE_KEY
+// (contorna RLS de propósito, só pra essa rota admin) — sem cache, cada
+// carregamento reflete o estado atual do banco.
+async function _adminAnalytics(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var url = new URL(request.url);
+    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
+
+    var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
+
+    var usersP = _adminListAllUsers(env);
+    var txP = fetch('${SUPA_URL_SERVER}/rest/v1/transactions?select=user_id,value,type,created_at', { headers: svcHeaders })
+      .then(function(r) { return r.ok ? r.json() : []; });
+    var subsP = fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?select=user_id,plan,status,ai_usage_count', { headers: svcHeaders })
+      .then(function(r) { return r.ok ? r.json() : []; });
+    var featureTables = ['spending_limits', 'goals', 'fixed_accounts', 'splits', 'debts', 'credit_cards', 'categories'];
+    var featureP = Promise.all(featureTables.map(function(t) { return _distinctUserCount(t, env); }));
+
+    var users = await usersP;
+    var txs = await txP;
+    var subs = await subsP;
+    var featureCounts = await featureP;
+
+    var totalUsers = users.length;
+
+    // agregados por usuário (lançamentos + primeiro/último dia de atividade)
+    var txByUser = {};
+    var txByDay = {};
+    txs.forEach(function(t) {
+      if (!txByUser[t.user_id]) txByUser[t.user_id] = { count: 0, days: {} };
+      txByUser[t.user_id].count++;
+      var day = (t.created_at || '').slice(0, 10);
+      if (day) {
+        txByUser[t.user_id].days[day] = true;
+        txByDay[day] = (txByDay[day] || 0) + 1;
+      }
+    });
+
+    var subByUser = {};
+    subs.forEach(function(s) { subByUser[s.user_id] = s; });
+
+    // cadastros por semana (segunda-feira como início, igual ao date_trunc('week') do Postgres)
+    function weekStart(iso) {
+      var d = new Date(iso + 'T00:00:00Z');
+      var day = d.getUTCDay(); // 0=domingo
+      var diff = (day === 0 ? -6 : 1) - day;
+      d.setUTCDate(d.getUTCDate() + diff);
+      return d.toISOString().slice(0, 10);
+    }
+    var signupsByWeek = {};
+    users.forEach(function(u) {
+      var wk = weekStart((u.created_at || '').slice(0, 10));
+      signupsByWeek[wk] = (signupsByWeek[wk] || 0) + 1;
+    });
+
+    var usersOut = users.map(function(u) {
+      var meta = u.user_metadata || u.raw_user_meta_data || {};
+      var tx = txByUser[u.id] || { count: 0, days: {} };
+      var sub = subByUser[u.id];
+      var returned = !!(u.last_sign_in_at && u.created_at && (new Date(u.last_sign_in_at) - new Date(u.created_at)) > 5 * 60 * 1000);
+      return {
+        id: u.id,
+        email: u.email,
+        name: meta.full_name || meta.name || (u.email || '').split('@')[0],
+        created_at: u.created_at,
+        last_sign_in_at: u.last_sign_in_at || null,
+        returned: returned,
+        internal: !!(u.email && u.email.toLowerCase() === MASTER_EMAIL.toLowerCase()),
+        has_whatsapp: !!meta.whatsapp,
+        has_telegram: !!meta.telegram_chat_id,
+        plan: (sub && sub.plan) || 'free',
+        ai_usage_count: (sub && sub.ai_usage_count) || 0,
+        tx_count: tx.count,
+        active_days: Object.keys(tx.days).length
+      };
+    }).sort(function(a, b) { return b.tx_count - a.tx_count; });
+
+    var returnedCount = usersOut.filter(function(u) { return u.returned; }).length;
+
+    var out = {
+      ok: true,
+      generated_at: new Date().toISOString(),
+      totals: {
+        users: totalUsers,
+        transactions: txs.length,
+        returned: returnedCount,
+        returned_pct: totalUsers ? Math.round(returnedCount / totalUsers * 100) : 0
+      },
+      signups_by_week: Object.keys(signupsByWeek).sort().map(function(wk) { return { week: wk, count: signupsByWeek[wk] }; }),
+      active_days: Object.keys(txByDay).sort().map(function(d) { return { day: d, count: txByDay[d] }; }),
+      feature_adoption: featureTables.map(function(t, i) {
+        return { table: t, users: featureCounts[i], pct: totalUsers ? Math.round(featureCounts[i] / totalUsers * 100) : 0 };
+      }).concat([
+        { table: 'transactions', users: Object.keys(txByUser).length, pct: totalUsers ? Math.round(Object.keys(txByUser).length / totalUsers * 100) : 0 },
+        { table: 'whatsapp', users: usersOut.filter(function(u) { return u.has_whatsapp; }).length, pct: totalUsers ? Math.round(usersOut.filter(function(u) { return u.has_whatsapp; }).length / totalUsers * 100) : 0 },
+        { table: 'telegram', users: usersOut.filter(function(u) { return u.has_telegram; }).length, pct: totalUsers ? Math.round(usersOut.filter(function(u) { return u.has_telegram; }).length / totalUsers * 100) : 0 }
+      ]),
+      users: usersOut
+    };
+    return new Response(JSON.stringify(out), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
 `;
 
 const worker = `${pluggyFns}
@@ -1019,6 +1163,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/subscriptions/set' && request.method === 'POST') {
       return _adminSetSubscription(request, env);
+    }
+    if (url.pathname === '/admin/analytics' && request.method === 'GET') {
+      return _adminAnalytics(request, env);
     }
 
     // ── PWA Manifest ──
