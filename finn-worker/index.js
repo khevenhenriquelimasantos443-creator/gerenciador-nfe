@@ -1538,6 +1538,14 @@ async function handleStatus(env) {
 async function handleWhatsAppHealth(env) {
   const out = { checked_at: new Date().toISOString(), veredito: "", conta: {}, numero: {}, webhook: {}, token: {} };
 
+  // Pista segura sobre o WHATSAPP_VERIFY_TOKEN — nunca o valor em si, só
+  // tamanho e os 2 últimos caracteres. Serve pra confirmar, de fora do
+  // painel confuso do Cloudflare, se o valor editado realmente chegou no
+  // worker publicado (edições de secret às vezes ficam num rascunho não
+  // publicado, e o "Forbidden" do /webhook não diz isso).
+  const vt = env.WHATSAPP_VERIFY_TOKEN || "";
+  out.verify_token_pista = { existe: !!env.WHATSAPP_VERIFY_TOKEN, tamanho: vt.length, ultimos_2: vt.slice(-2) };
+
   async function metaGet(path) {
     const r = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${path}`, {
       headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
