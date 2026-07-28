@@ -916,7 +916,7 @@ async function _betaSignup(request, env) {
           method: 'POST',
           headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Finn <onboarding@resend.dev>',
+            from: 'Finn <contato@finn.dev.br>',
             to: [email],
             reply_to: 'Finn.controle01@gmail.com',
             subject: 'Bem-vindo(a) ao grupo de testers do Finn! 🎉',
