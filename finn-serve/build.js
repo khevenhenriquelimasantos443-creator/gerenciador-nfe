@@ -1864,13 +1864,16 @@ h1 em{font-style:normal;color:#F97316}
       ctx.waitUntil(sendWeeklySummary(env));
     } else if (event.cron === '0 13 * * *') {
       ctx.waitUntil(checkExpiredSubscriptions(env));
-    } else if (event.cron === '0 15 * * *' || event.cron === '5 12 * * *' || event.cron === '0 21 * * *') {
-      // 3 posts/dia da campanha: 9:05, 12:00 e 18:00 BRT (12:05, 15:00 e
-      // 21:00 UTC). O minuto 5 no horário das 9h evita colidir com o cron
-      // de contas fixas, que já usa exatamente "0 12 * * *".
+    } else if (event.cron === '0 15 * * *' || event.cron === '0 21 * * *') {
+      // 2 dos 3 posts/dia da campanha: 12:00 e 18:00 BRT (15:00 e 21:00 UTC).
       ctx.waitUntil(_publishNextInstagramPost(env));
     } else {
+      // "0 12 * * *" (09:00 BRT) — a Cloudflare limita 5 cron triggers por
+      // Worker, e já estava no limite, então esse horário passou a fazer
+      // dupla função: contas fixas + o 3º post/dia da campanha, em vez de
+      // criar um cron novo só pra isso.
       ctx.waitUntil(checkFixedDueAndNotify(env));
+      ctx.waitUntil(_publishNextInstagramPost(env));
     }
   },
 };
