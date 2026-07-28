@@ -977,12 +977,24 @@ async function _adminBetaSignups(request, env) {
 
 function _betaWelcomeEmailHtml(name) {
   var safeName = String(name || 'tudo bem').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
-  return '<!DOCTYPE html><html lang="pt-BR"><body style="margin:0;padding:0;background:#F8F7F4;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F8F7F4;padding:32px 16px">' +
+  // Gmail (e outros) reescrevem cores automaticamente no "modo escuro" —
+  // <div style="background:..."> costuma ser convertido/removido, deixando
+  // a marca "F" flutuando sem o quadrado por trás (foi exatamente o que
+  // aconteceu). Duas correções: força modo claro via meta tag (respeitada
+  // pelo Gmail/Apple Mail) e troca a marca por uma <table>/<td bgcolor="…">
+  // com o atributo bgcolor de verdade, que sobrevive à reescrita bem melhor
+  // do que background-color via CSS inline num <div>.
+  return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">' +
+    '<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">' +
+    '</head>' +
+    '<body style="margin:0;padding:0;background:#F8F7F4;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#F8F7F4" style="background:#F8F7F4;padding:32px 16px">' +
     '<tr><td align="center">' +
-    '<table role="presentation" width="100%" style="max-width:480px;background:#ffffff;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden">' +
+    '<table role="presentation" width="100%" bgcolor="#ffffff" style="max-width:480px;background:#ffffff;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden">' +
     '<tr><td style="padding:28px 28px 0">' +
-      '<div style="width:32px;height:32px;background:#1E293B;border-radius:9px;display:inline-block;text-align:center;line-height:32px;color:#F97316;font-weight:800;font-size:15px">F</div>' +
+      '<table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
+      '<td width="32" height="32" bgcolor="#1E293B" style="background:#1E293B;border-radius:9px;text-align:center;vertical-align:middle;color:#F97316;font-weight:800;font-size:15px;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">F</td>' +
+      '</tr></table>' +
     '</td></tr>' +
     '<tr><td style="padding:20px 28px 8px">' +
       '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '! 🎉</h1>' +
@@ -1004,7 +1016,7 @@ function _betaWelcomeEmailHtml(name) {
       '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com" style="color:#F97316;text-decoration:none">Finn.controle01@gmail.com</a></td>' +
       '</tr></table>' +
     '</td></tr>' +
-    '<tr><td style="padding:16px 28px;border-top:1px solid #E2E8F0;background:#F8F7F4">' +
+    '<tr><td style="padding:16px 28px;border-top:1px solid #E2E8F0" bgcolor="#F8F7F4">' +
       '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Você recebeu esse e-mail porque se inscreveu no grupo de testers em finn.dev.br/beta. Não é uma lista de e-mail marketing — é só isso mesmo, um "oi, bem-vindo(a)".</p>' +
     '</td></tr>' +
     '</table></td></tr></table></body></html>';
