@@ -7,6 +7,10 @@ compatibility_date = "2024-01-01"
 # PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET
 # VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, SUPABASE_SERVICE_KEY
 # MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET
+# RESEND_API_KEY — e-mail de boas-vindas do /beta/signup (resend.com, plano
+#   grátis). Sem essa secret configurada, a inscrição continua funcionando
+#   normalmente (grava no KV), só não manda o e-mail — falha silenciosa,
+#   de propósito, pra nunca travar a inscrição de um tester por causa disso.
 
 # ─────────────────────────────────────────────
 #  Notificações push / assinaturas:

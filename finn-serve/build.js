@@ -9,6 +9,7 @@ const sw        = fs.readFileSync(path.join(__dirname,'sw.js'), 'utf8');
 const pitchInv  = fs.readFileSync(path.join(__dirname,'../finn/pitch-investidores.html'), 'utf8');
 const pitchUsr  = fs.readFileSync(path.join(__dirname,'../finn/pitch-usuarios.html'), 'utf8');
 const guia      = fs.readFileSync(path.join(__dirname,'../finn/guia.html'), 'utf8');
+const beta      = fs.readFileSync(path.join(__dirname,'../finn/beta.html'), 'utf8');
 
 // Ícones do PWA — mesmo desenho do "F" usado no favicon do app, embutidos
 // como base64 direto dos PNGs (evita depender de SVG em manifest, que
@@ -878,6 +879,93 @@ async function _adminAnalytics(request, env) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
   }
 }
+
+// POST /beta/signup — { name, email, contact, website } — endpoint público
+// (sem autenticação; é a própria página de inscrição de testers, /beta).
+// Não existe controle de acesso ao Finn hoje (qualquer login do Google já
+// entra), então essa rota é só captação + e-mail de boas-vindas com contato
+// direto — grava no KV (sem precisar de tabela nova no Supabase) e manda o
+// e-mail via Resend, se a chave estiver configurada.
+async function _betaSignup(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var name = (body.name || '').trim().slice(0, 120);
+    var email = (body.email || '').trim().slice(0, 200);
+    var contact = (body.contact || '').trim().slice(0, 120);
+
+    // honeypot: campo escondido no form que só um bot preencheria. Finge
+    // sucesso (não dá dica pro bot de que foi bloqueado) mas não grava nem manda e-mail.
+    if (body.website) return new Response(JSON.stringify({ ok: true }), { headers: cors });
+
+    if (!name || !email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      return new Response(JSON.stringify({ error: 'Nome e e-mail válido são obrigatórios.' }), { status: 400, headers: cors });
+    }
+
+    if (env.FINN_KV) {
+      var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+      await env.FINN_KV.put('beta_signup_' + signupId, JSON.stringify({
+        name: name, email: email, contact: contact, created_at: new Date().toISOString()
+      }));
+    }
+
+    if (env.RESEND_API_KEY) {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: 'Finn <onboarding@resend.dev>',
+            to: [email],
+            reply_to: 'Finn.controle01@gmail.com',
+            subject: 'Bem-vindo(a) ao grupo de testers do Finn! 🎉',
+            html: _betaWelcomeEmailHtml(name)
+          })
+        });
+      } catch (eMail) { /* falha no envio do e-mail não deve travar a inscrição */ }
+    }
+
+    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
+function _betaWelcomeEmailHtml(name) {
+  var safeName = String(name || 'tudo bem').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+  return '<!DOCTYPE html><html lang="pt-BR"><body style="margin:0;padding:0;background:#F8F7F4;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F8F7F4;padding:32px 16px">' +
+    '<tr><td align="center">' +
+    '<table role="presentation" width="100%" style="max-width:480px;background:#ffffff;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden">' +
+    '<tr><td style="padding:28px 28px 0">' +
+      '<div style="width:32px;height:32px;background:#1E293B;border-radius:9px;display:inline-block;text-align:center;line-height:32px;color:#F97316;font-weight:800;font-size:15px">F</div>' +
+    '</td></tr>' +
+    '<tr><td style="padding:20px 28px 8px">' +
+      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '! 🎉</h1>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 20px">' +
+      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Você agora faz parte do grupo de testers do <b>Finn.</b> — obrigado por topar experimentar em primeira mão!</p>' +
+      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">O app já está pronto pra usar, é 100% grátis, e você pode entrar agora mesmo com sua conta Google:</p>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 24px">' +
+      '<a href="https://finn.dev.br" style="display:block;text-align:center;background:#F97316;color:#ffffff;text-decoration:none;font-weight:800;font-size:15px;border-radius:10px;padding:14px">Abrir o Finn →</a>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 8px">' +
+      '<p style="margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#64748B">Como é uma fase de testes, é bem provável que você encontre algum bug ou algo que ainda não funcione direito — <b style="color:#1E293B">isso é super esperado</b>, e é exatamente pra isso que estou aqui. Qualquer coisa, me chama direto:</p>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 28px">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413" style="color:#F97316;text-decoration:none">(13) 99210-2413</a></td>' +
+      '</tr><tr>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com" style="color:#F97316;text-decoration:none">Finn.controle01@gmail.com</a></td>' +
+      '</tr></table>' +
+    '</td></tr>' +
+    '<tr><td style="padding:16px 28px;border-top:1px solid #E2E8F0;background:#F8F7F4">' +
+      '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Você recebeu esse e-mail porque se inscreveu no grupo de testers em finn.dev.br/beta. Não é uma lista de e-mail marketing — é só isso mesmo, um "oi, bem-vindo(a)".</p>' +
+    '</td></tr>' +
+    '</table></td></tr></table></body></html>';
+}
 `;
 
 const worker = `${pluggyFns}
@@ -1275,6 +1363,19 @@ h1 em{font-style:normal;color:#F97316}
           'Cache-Control': 'no-cache',
         },
       });
+    }
+
+    // ── Beta: inscrição de novos testers ──
+    if (url.pathname === '/beta' || url.pathname === '/beta.html') {
+      return new Response(${JSON.stringify(beta)}, {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+    if (url.pathname === '/beta/signup' && request.method === 'POST') {
+      return _betaSignup(request, env);
     }
 
     // ── Pitch decks ──
