@@ -643,7 +643,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, analyticsData: null, analyticsLoading: false, analyticsError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, analyticsData: null, analyticsLoading: false, analyticsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -3289,6 +3289,7 @@ function renderConfig(){
   '</div>';
 
   html += renderAdminCard();
+  html += renderInstagramAdminCard();
 
   return html;
 }
@@ -3500,6 +3501,89 @@ function renderAdminCard(){
   }
   html += '</div>';
   return html;
+}
+
+/* ── Campanha do Instagram (só a conta master, admin desbloqueado) ── */
+function renderInstagramAdminCard(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+  var st = state.igStatus;
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Campanha do Instagram</div>';
+
+  if(state.igStatusLoading && !st){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Carregando status…</div>';
+  } else if(!st){
+    html += '<button type="button" class="btn-ghost" id="btnLoadInstagramStatus" style="width:100%">Carregar status</button>';
+  } else if(!st.configured){
+    html += '<div style="font-size:12.5px;color:var(--fm)">IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID ainda não configurados no finn-serve.</div>';
+  } else {
+    html += '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
+      (st.done ? "Os 5 posts já foram publicados. ✅" : "Próximo post a publicar: " + st.next_index + " de 5.") +
+    '</div>';
+    if(!st.done){
+      html += '<button type="button" class="btn-submit" id="btnTestInstagramPublish"' + (state.igPublishLoading ? " disabled" : "") + '>' +
+        (state.igPublishLoading ? "Publicando…" : "Testar publicação agora") +
+      '</button>';
+    }
+    if(state.igPublishResult){
+      html += '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.igPublishResult) + '</div>';
+    }
+    if(st.recent_attempts && st.recent_attempts.length){
+      html += '<div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">';
+      st.recent_attempts.slice(0,5).forEach(function(a){
+        html += '<div class="tx-item" style="flex-wrap:wrap">' +
+          '<div class="tx-info" style="min-width:140px">' +
+            '<div class="tx-desc">Post ' + a.index + (a.ok ? ' — publicado ✅' : ' — falhou ❌') + '</div>' +
+            '<div class="tx-meta">' + new Date(a.started_at).toLocaleString("pt-BR") + '</div>' +
+          '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+function loadInstagramStatus(){
+  state.igStatusLoading = true;
+  render();
+  var token = encodeURIComponent((currentSession && currentSession.access_token) || "");
+  var pwd = encodeURIComponent(state.adminPassword || "");
+  fetch("/admin/instagram-status?access_token=" + token + "&admin_password=" + pwd)
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      state.igStatusLoading = false;
+      state.igStatus = j;
+      render();
+    }).catch(function(){
+      state.igStatusLoading = false;
+      render();
+    });
+}
+
+function testInstagramPublish(){
+  state.igPublishLoading = true;
+  state.igPublishResult = null;
+  render();
+  fetch("/admin/instagram-publish-next", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, admin_password: state.adminPassword })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.igPublishLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.igPublishResult = "Post " + res.body.index + " publicado com sucesso! (media_id: " + res.body.media_id + ")";
+      } else {
+        state.igPublishResult = "Falhou: " + JSON.stringify((res.body && (res.body.body || res.body.reason || res.body.error)) || res.body);
+      }
+      loadInstagramStatus();
+    }).catch(function(){
+      state.igPublishLoading = false;
+      state.igPublishResult = "Falha de conexão.";
+      render();
+    });
 }
 
 function unlockAdmin(){
@@ -4055,6 +4139,10 @@ function bindContentEvents(){
             if(select) setAdminPlan(email, select.value);
           });
         });
+        var btnLoadInstagramStatus = document.getElementById("btnLoadInstagramStatus");
+        if(btnLoadInstagramStatus) btnLoadInstagramStatus.addEventListener("click", loadInstagramStatus);
+        var btnTestInstagramPublish = document.getElementById("btnTestInstagramPublish");
+        if(btnTestInstagramPublish) btnTestInstagramPublish.addEventListener("click", testInstagramPublish);
       }
     }
   }
