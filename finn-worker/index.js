@@ -67,6 +67,14 @@ export default {
       return handleStatus(env);
     }
 
+    // Raio-X da conexão com o WhatsApp (conta, número, webhook, token) —
+    // admin-gated como os outros endpoints de diagnóstico, já que devolve
+    // detalhes da conta business.
+    if (url.pathname === "/whatsapp/health" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppHealth(env);
+    }
+
     if (url.pathname === "/debug" && request.method === "GET") {
       if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       return handleDebug(env);
@@ -1511,6 +1519,94 @@ async function handleStatus(env) {
   return corsResponse(new Response(JSON.stringify({ ok, checks }, null, 2), {
     status: ok ? 200 : 503,
     headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// =============================================================================
+// HEALTH — raio-X completo da conexão com o WhatsApp, numa chamada só.
+// O /status acima só diz "o token responde ou não"; quando a conta esteve
+// desabilitada, isso não bastava pra saber SE dava pra voltar e O QUE
+// faltava. Aqui pergunta pra própria Meta, em 4 frentes:
+//   1. a conta (WABA) está aprovada ou ainda em análise/restrita?
+//   2. o número está conectado, verificado e com que nota de qualidade?
+//   3. este app está inscrito nos eventos (senão o webhook nunca chega)?
+//   4. o token é válido (o /status já cobre, repetido aqui pro relatório
+//      ficar completo num lugar só).
+// Cada bloco falha isolado — um erro em um não impede os outros de
+// responderem, senão o diagnóstico ficaria cego justo quando mais importa.
+// =============================================================================
+async function handleWhatsAppHealth(env) {
+  const out = { checked_at: new Date().toISOString(), veredito: "", conta: {}, numero: {}, webhook: {}, token: {} };
+
+  async function metaGet(path) {
+    const r = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${path}`, {
+      headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
+    });
+    let body;
+    try { body = await r.json(); } catch (e) { body = { parse_error: String(e) }; }
+    return { ok: r.ok, status: r.status, body };
+  }
+
+  // 1. Token — se estiver morto, o resto vem vazio de qualquer jeito.
+  try {
+    const me = await metaGet(`${env.WHATSAPP_PHONE_NUMBER_ID}?fields=id`);
+    out.token = { valido: me.ok, http: me.status };
+    if (!me.ok) out.token.erro = me.body && me.body.error;
+  } catch (e) { out.token = { valido: false, erro: String(e) }; }
+
+  // 2. Conta (WABA) — account_review_status é o campo que diz se a Meta
+  //    liberou a conta ("APPROVED") ou não.
+  try {
+    const waba = await metaGet(`${env.WHATSAPP_WABA_ID}?fields=id,name,account_review_status,timezone_id,message_template_namespace`);
+    out.conta = waba.ok
+      ? { id: waba.body.id, nome: waba.body.name, review: waba.body.account_review_status }
+      : { erro: waba.body && waba.body.error, http: waba.status };
+  } catch (e) { out.conta = { erro: String(e) }; }
+
+  // 3. Número — status CONNECTED + verificação + nota de qualidade.
+  try {
+    const nums = await metaGet(`${env.WHATSAPP_WABA_ID}/phone_numbers?fields=id,display_phone_number,verified_name,status,quality_rating,code_verification_status`);
+    out.numero = nums.ok
+      ? { lista: (nums.body.data || []).map(n => ({
+          id: n.id,
+          numero: n.display_phone_number,
+          nome: n.verified_name,
+          status: n.status,
+          qualidade: n.quality_rating,
+          verificacao: n.code_verification_status,
+          e_o_configurado: String(n.id) === String(env.WHATSAPP_PHONE_NUMBER_ID)
+        })) }
+      : { erro: nums.body && nums.body.error, http: nums.status };
+  } catch (e) { out.numero = { erro: String(e) }; }
+
+  // 4. Webhook — app inscrito nos eventos da WABA. Sem isso a Meta aceita
+  //    tudo mas nunca entrega mensagem nenhuma no worker.
+  try {
+    const subs = await metaGet(`${env.WHATSAPP_WABA_ID}/subscribed_apps`);
+    out.webhook = subs.ok
+      ? { inscrito: Array.isArray(subs.body.data) && subs.body.data.length > 0, apps: subs.body.data }
+      : { erro: subs.body && subs.body.error, http: subs.status };
+  } catch (e) { out.webhook = { erro: String(e) }; }
+
+  // Veredito em português — o objetivo é responder "dá pra usar?" sem
+  // precisar interpretar JSON da Meta.
+  const numeroOk = Array.isArray(out.numero.lista) && out.numero.lista.some(n => n.e_o_configurado && n.status === "CONNECTED");
+  if (!out.token.valido) {
+    out.veredito = "TOKEN INVÁLIDO OU VENCIDO — gere um novo no Meta Developer e rode: wrangler secret put WHATSAPP_ACCESS_TOKEN";
+  } else if (out.conta.erro || out.numero.erro) {
+    out.veredito = "TOKEN OK, MAS A CONTA/NÚMERO NÃO RESPONDEM — provável que a conta ainda esteja restrita na Meta.";
+  } else if (out.conta.review && out.conta.review !== "APPROVED") {
+    out.veredito = `CONTA AINDA NÃO APROVADA (status: ${out.conta.review}) — precisa resolver isso na Meta antes de religar o bot.`;
+  } else if (!numeroOk) {
+    out.veredito = "CONTA OK, MAS O NÚMERO NÃO ESTÁ CONECTADO — confira o status do número no painel do WhatsApp.";
+  } else if (!out.webhook.inscrito) {
+    out.veredito = "QUASE LÁ: conta e número OK, só falta inscrever o app nos eventos — chame /subscribe com o token de admin.";
+  } else {
+    out.veredito = "TUDO CERTO — conta aprovada, número conectado e webhook inscrito. O bot pode voltar a funcionar.";
+  }
+
+  return corsResponse(new Response(JSON.stringify(out, null, 2), {
+    status: 200, headers: { "Content-Type": "application/json" }
   }));
 }
 
