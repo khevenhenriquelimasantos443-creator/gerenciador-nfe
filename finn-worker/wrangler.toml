@@ -34,7 +34,15 @@ FINN_URL = "https://finn.dev.br"
 # WhatsApp Business Account ID (Finn.Finnance) — usado por GET /subscribe
 # pra inscrever o app nos eventos dessa conta. Não é um segredo (é só um
 # identificador), por isso fica junto das outras vars não-secretas.
-WHATSAPP_WABA_ID = "1012331314486966"
+#
+# ATENÇÃO: quando a conta antiga foi excluída e o WhatsApp Business
+# reconectado, a Meta criou uma WABA NOVA, com ID novo. A antiga
+# (1012331314486966) ficou com account_review_status REJECTED e sem
+# nenhum número — era ela que o worker consultava, por isso tudo dava
+# "objeto não existe". Se um dia a conta for recriada de novo, esse ID
+# muda outra vez: confira em Configurações do negócio → Contas do
+# WhatsApp → (a conta) → "Identificação".
+WHATSAPP_WABA_ID = "27613586591583416"
 # URL pública deste worker — usado por GET /telegram/set-webhook pra montar
 # o endereço do webhook (<FINN_WORKER_URL>/telegram/webhook) que é registrado
 # na Telegram. Precisa bater com o "name" acima (ver Cloudflare dashboard).
