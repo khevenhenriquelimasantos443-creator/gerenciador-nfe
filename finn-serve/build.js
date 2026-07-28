@@ -903,16 +903,16 @@ async function _betaSignup(request, env) {
       return new Response(JSON.stringify({ error: 'Nome e e-mail válido são obrigatórios.' }), { status: 400, headers: cors });
     }
 
-    if (env.FINN_KV) {
-      var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
-      await env.FINN_KV.put('beta_signup_' + signupId, JSON.stringify({
-        name: name, email: email, contact: contact, created_at: new Date().toISOString()
-      }));
-    }
-
+    // Guarda o resultado do envio do e-mail JUNTO com a inscrição — sem isso,
+    // um erro do Resend (chave errada, domínio não verificado, etc.) sumia
+    // sem deixar rastro nenhum: a inscrição aparecia como sucesso do mesmo
+    // jeito (de propósito, pra nunca travar por causa do e-mail), mas
+    // ninguém — nem eu — conseguia saber se o e-mail realmente saiu.
+    var emailStatus = { attempted: false };
     if (env.RESEND_API_KEY) {
+      emailStatus.attempted = true;
       try {
-        await fetch('https://api.resend.com/emails', {
+        var resendResp = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -923,10 +923,53 @@ async function _betaSignup(request, env) {
             html: _betaWelcomeEmailHtml(name)
           })
         });
-      } catch (eMail) { /* falha no envio do e-mail não deve travar a inscrição */ }
+        var resendText = await resendResp.text();
+        emailStatus.ok = resendResp.ok;
+        emailStatus.status = resendResp.status;
+        emailStatus.response = resendText.slice(0, 500);
+      } catch (eMail) {
+        emailStatus.ok = false;
+        emailStatus.error = String(eMail && eMail.message || eMail);
+      }
+    }
+
+    if (env.FINN_KV) {
+      var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+      await env.FINN_KV.put('beta_signup_' + signupId, JSON.stringify({
+        name: name, email: email, contact: contact, created_at: new Date().toISOString(), email_status: emailStatus
+      }));
     }
 
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
+// GET /admin/beta-signups?access_token=...&admin_password=... — lista as
+// inscrições recentes do /beta com o status do envio do e-mail (só a
+// conta master) — único jeito de ver se o Resend está funcionando de verdade.
+async function _adminBetaSignups(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var url = new URL(request.url);
+    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.FINN_KV) return new Response(JSON.stringify({ signups: [] }), { headers: cors });
+
+    var keys = [];
+    var cursor;
+    do {
+      var page = await env.FINN_KV.list({ prefix: 'beta_signup_', cursor: cursor });
+      keys = keys.concat(page.keys);
+      cursor = page.list_complete ? undefined : page.cursor;
+    } while (cursor);
+    keys.sort(function(a, b) { return b.name.localeCompare(a.name); });
+
+    var signups = (await Promise.all(keys.slice(0, 100).map(function(k) { return env.FINN_KV.get(k.name); })))
+      .filter(Boolean).map(function(raw) { return JSON.parse(raw); });
+    return new Response(JSON.stringify({ signups: signups }), { headers: cors });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
   }
@@ -1376,6 +1419,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/beta/signup' && request.method === 'POST') {
       return _betaSignup(request, env);
+    }
+    if (url.pathname === '/admin/beta-signups' && request.method === 'GET') {
+      return _adminBetaSignups(request, env);
     }
 
     // ── Pitch decks ──
