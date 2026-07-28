@@ -18,6 +18,12 @@ const icon192      = fs.readFileSync(path.join(__dirname,'icons/icon-192.png')).
 const icon512       = fs.readFileSync(path.join(__dirname,'icons/icon-512.png')).toString('base64');
 const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-icon.png')).toString('base64');
 
+// Capa estática dos Reels — o usuário baixa direto do navegador do celular
+// (toque-e-segure), porque anexo de chat não deu opção de salvar no cliente
+// dele. JPEG em vez de PNG pra ficar bem menor (o worker já está perto do
+// limite de 3MB do plano free do Cloudflare com os 20 posts do Instagram).
+const reel1Cover = fs.readFileSync(path.join(__dirname, 'social/reel1_cover.jpg')).toString('base64');
+
 // Posts do Instagram (campanha de divulgação do beta) — servidos publicamente
 // em /social/post-N.png porque a API do Instagram só aceita image_url (não
 // tem upload direto), então a imagem precisa estar hospedada num link fixo.
@@ -1707,6 +1713,14 @@ h1 em{font-style:normal;color:#F97316}
       var iconBytes = Uint8Array.from(atob(iconB64), function(c){ return c.charCodeAt(0); });
       return new Response(iconBytes, {
         headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800' }
+      });
+    }
+
+    // ── Capa do Reel 1 (link direto pra baixar do navegador do celular) ──
+    if (url.pathname === '/social/reel1-cover.jpg') {
+      var reel1CoverBytes = Uint8Array.from(atob(${JSON.stringify(reel1Cover)}), function(c){ return c.charCodeAt(0); });
+      return new Response(reel1CoverBytes, {
+        headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' }
       });
     }
 
