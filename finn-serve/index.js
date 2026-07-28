@@ -855,6 +855,14 @@ async function _betaSignup(request, env) {
       return new Response(JSON.stringify({ error: 'Nome e e-mail válido são obrigatórios.' }), { status: 400, headers: cors });
     }
 
+    // Confirmação em duas etapas: a vaga só é confirmada de fato quando a
+    // pessoa clica no link do e-mail (token aleatório, checado em
+    // /beta/confirm) — não é uma espera artificial, é uma verificação real
+    // que também reduz e-mail inválido/digitado errado.
+    var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    var confirmToken = crypto.randomUUID();
+    var confirmUrl = 'https://finn.dev.br/beta/confirm?id=' + encodeURIComponent(signupId) + '&token=' + encodeURIComponent(confirmToken);
+
     // Guarda o resultado do envio do e-mail JUNTO com a inscrição — sem isso,
     // um erro do Resend (chave errada, domínio não verificado, etc.) sumia
     // sem deixar rastro nenhum: a inscrição aparecia como sucesso do mesmo
@@ -871,8 +879,8 @@ async function _betaSignup(request, env) {
             from: 'Finn <contato@finn.dev.br>',
             to: [email],
             reply_to: 'Finn.controle01@gmail.com',
-            subject: 'Bem-vindo(a) ao grupo de testers do Finn',
-            html: _betaWelcomeEmailHtml(name)
+            subject: 'Confirme seu cadastro no grupo de testers do Finn',
+            html: _betaConfirmEmailHtml(name, confirmUrl)
           })
         });
         var resendText = await resendResp.text();
@@ -886,13 +894,13 @@ async function _betaSignup(request, env) {
     }
 
     if (env.FINN_KV) {
-      var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
       await env.FINN_KV.put('beta_signup_' + signupId, JSON.stringify({
-        name: name, email: email, contact: contact, created_at: new Date().toISOString(), email_status: emailStatus
+        name: name, email: email, contact: contact, created_at: new Date().toISOString(),
+        confirmed: false, confirm_token: confirmToken, email_status: emailStatus
       }));
     }
 
-    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+    return new Response(JSON.stringify({ ok: true, pending: true }), { headers: cors });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
   }
@@ -927,8 +935,16 @@ async function _adminBetaSignups(request, env) {
   }
 }
 
-function _betaWelcomeEmailHtml(name) {
-  var safeName = String(name || 'tudo bem').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+function _escapeBetaHtml(s) {
+  return String(s || '').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+}
+
+// E-mail enviado assim que alguém preenche o /beta — pede a confirmação
+// (clique no link) antes de considerar a vaga garantida. Não é um atraso
+// artificial: é uma verificação real, que também reduz e-mail digitado
+// errado ou inválido indo pra lista.
+function _betaConfirmEmailHtml(name, confirmUrl) {
+  var safeName = _escapeBetaHtml(name || 'tudo bem');
   // Gmail (e outros) reescrevem cores automaticamente no "modo escuro" —
   // <div style="background:..."> costuma ser convertido/removido, deixando
   // a marca "F" flutuando sem o quadrado por trás (foi exatamente o que
@@ -949,17 +965,16 @@ function _betaWelcomeEmailHtml(name) {
       '</tr></table>' +
     '</td></tr>' +
     '<tr><td style="padding:20px 28px 8px">' +
-      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '.</h1>' +
+      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Confirme seu e-mail, ' + safeName + '.</h1>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 20px">' +
-      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Você agora faz parte do grupo de testers do <b>Finn.</b> — obrigado por topar experimentar em primeira mão!</p>' +
-      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">O app já está pronto pra usar, é 100% grátis, e você pode entrar agora mesmo com sua conta Google:</p>' +
+      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Falta só um passo pra garantir sua vaga no grupo de testers do <b>Finn.</b> — clica no botão abaixo pra confirmar sua inscrição.</p>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 24px">' +
-      '<a href="https://finn.dev.br" style="display:block;text-align:center;background:#F97316;color:#ffffff;text-decoration:none;font-weight:800;font-size:15px;border-radius:10px;padding:14px">Abrir o Finn →</a>' +
+      '<a href="' + confirmUrl + '" style="display:block;text-align:center;background:#F97316;color:#ffffff;text-decoration:none;font-weight:800;font-size:15px;border-radius:10px;padding:14px">Confirmar inscrição →</a>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 8px">' +
-      '<p style="margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#64748B">Como é uma fase de testes, é bem provável que você encontre algum bug ou algo que ainda não funcione direito — <b style="color:#1E293B">isso é super esperado</b>, e é exatamente pra isso que estou aqui. Qualquer coisa, me chama direto:</p>' +
+      '<p style="margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#64748B">Dúvidas antes mesmo de confirmar? Me chama direto:</p>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 28px">' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
@@ -971,9 +986,84 @@ function _betaWelcomeEmailHtml(name) {
       '</tr></table>' +
     '</td></tr>' +
     '<tr><td style="padding:16px 28px;border-top:1px solid #E2E8F0" bgcolor="#F8F7F4">' +
-      '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Você recebeu esse e-mail porque se inscreveu no grupo de testers em finn.dev.br/beta. Não é uma lista de e-mail marketing — é só isso mesmo, um "oi, bem-vindo(a)".</p>' +
+      '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Se você não pediu esse cadastro, pode ignorar este e-mail — nenhuma vaga é confirmada sem esse clique.</p>' +
     '</td></tr>' +
     '</table></td></tr></table></body></html>';
+}
+
+// Página mostrada quando a pessoa clica no link do e-mail (GET /beta/confirm).
+// Sucesso: mostra os contatos e o link pra abrir o app. Falha: mensagem
+// simples explicando o motivo (link inválido/expirado).
+function _betaConfirmPageHtml(name, ok, errorMessage) {
+  var safeName = _escapeBetaHtml(name || '');
+  var body = ok
+    ? (
+      '<div class="mark">✓</div>' +
+      '<h1>Inscrição confirmada' + (safeName ? ', ' + safeName : '') + '.</h1>' +
+      '<p>Você já faz parte do grupo de testers do Finn. Pode abrir o app agora mesmo com sua conta Google — e qualquer dúvida ou problema, fala direto comigo:</p>' +
+      '<a href="https://finn.dev.br" class="btn">Abrir o Finn →</a>' +
+      '<div class="contacts">' +
+        '<div class="c"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413">(13) 99210-2413</a></div>' +
+        '<div class="c"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance">@finn.finnance</a></div>' +
+        '<div class="c"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></div>' +
+      '</div>'
+    ) : (
+      '<div class="mark bad">✕</div>' +
+      '<h1>Não foi dessa vez.</h1>' +
+      '<p>' + _escapeBetaHtml(errorMessage || 'Esse link de confirmação não é válido.') + ' Se o problema continuar, me chama direto:</p>' +
+      '<a href="https://wa.me/5513992102413" class="btn">Falar no WhatsApp →</a>'
+    );
+  return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>Finn. — Confirmação de inscrição</title>' +
+    '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+    '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">' +
+    '<style>' +
+    '*{box-sizing:border-box;margin:0;padding:0}' +
+    'body{font-family:"Plus Jakarta Sans",sans-serif;background:#F8F7F4;color:#1E293B;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}' +
+    'a{color:inherit}' +
+    '.card{max-width:440px;width:100%;background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:36px 28px;text-align:center}' +
+    '.mark{width:52px;height:52px;border-radius:50%;background:#ECFDF5;border:1px solid #A7F3D0;color:#059669;font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-weight:800}' +
+    '.mark.bad{background:#FEF2F2;border-color:#FECACA;color:#DC2626}' +
+    'h1{font-size:19px;font-weight:800;color:#0F172A;margin-bottom:10px}' +
+    'p{font-size:13.5px;color:#64748B;line-height:1.6;margin-bottom:22px}' +
+    '.btn{display:block;text-align:center;background:#F97316;color:#fff!important;text-decoration:none;font-weight:800;font-size:14.5px;border-radius:10px;padding:13px}' +
+    '.contacts{display:flex;flex-direction:column;gap:10px;text-align:left;margin-top:22px}' +
+    '.c{border:1px solid #E2E8F0;border-radius:12px;padding:12px 14px;font-size:13px}' +
+    '.c a{color:#F97316;text-decoration:none;font-weight:700}' +
+    '</style></head><body><div class="card">' + body + '</div></body></html>';
+}
+
+// GET /beta/confirm?id=...&token=... — clicado a partir do e-mail de
+// confirmação. Só marca confirmed:true se o token bater com o que foi
+// gravado no signup — sem isso, qualquer um adivinhando um id confirmaria
+// a inscrição de outra pessoa.
+async function _betaConfirm(request, env) {
+  var htmlHeaders = { 'Content-Type': 'text/html; charset=utf-8' };
+  try {
+    var url = new URL(request.url);
+    var id = url.searchParams.get('id') || '';
+    var token = url.searchParams.get('token') || '';
+    if (!env.FINN_KV || !id || !token) {
+      return new Response(_betaConfirmPageHtml(null, false, 'Esse link de confirmação está incompleto.'), { status: 400, headers: htmlHeaders });
+    }
+    var raw = await env.FINN_KV.get('beta_signup_' + id);
+    if (!raw) {
+      return new Response(_betaConfirmPageHtml(null, false, 'Não encontrei essa inscrição — o link pode ter expirado.'), { status: 404, headers: htmlHeaders });
+    }
+    var signup = JSON.parse(raw);
+    if (signup.confirm_token !== token) {
+      return new Response(_betaConfirmPageHtml(null, false, 'Esse link de confirmação não é válido.'), { status: 403, headers: htmlHeaders });
+    }
+    if (!signup.confirmed) {
+      signup.confirmed = true;
+      signup.confirmed_at = new Date().toISOString();
+      await env.FINN_KV.put('beta_signup_' + id, JSON.stringify(signup));
+    }
+    return new Response(_betaConfirmPageHtml(signup.name, true), { headers: htmlHeaders });
+  } catch (e) {
+    return new Response(_betaConfirmPageHtml(null, false, 'Algo deu errado ao confirmar.'), { status: 500, headers: htmlHeaders });
+  }
 }
 
 // =============================================================================
@@ -1570,7 +1660,7 @@ ${bodyHtml}
 
     // ── Beta: inscrição de novos testers ──
     if (url.pathname === '/beta' || url.pathname === '/beta.html') {
-      return new Response("<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Finn. — Entre pro grupo de testers</title>\n<meta name=\"description\" content=\"Inscreva-se pra testar o Finn em primeira mão. App financeiro grátis, feito para o brasileiro — com suporte direto por WhatsApp e e-mail.\">\n<meta name=\"theme-color\" content=\"#F97316\">\n<meta property=\"og:title\" content=\"Finn. — Entre pro grupo de testers\">\n<meta property=\"og:description\" content=\"Inscreva-se pra testar o Finn em primeira mão. App financeiro grátis, com suporte direto.\">\n<meta property=\"og:type\" content=\"website\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link href=\"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap\" rel=\"stylesheet\">\n<style>\n*{box-sizing:border-box;margin:0;padding:0}\n:root{--primary:#F97316;--dark:#0F172A;--dark2:#1E293B;--muted:#64748B;--border:#E2E8F0;--bg:#F8F7F4;--good:#059669;--goodbg:#ECFDF5;--goodbd:#A7F3D0}\nbody{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1E293B;-webkit-font-smoothing:antialiased}\na{color:inherit;text-decoration:none}\n\nnav{position:sticky;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}\n.nav-inner{max-width:640px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}\n.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-.02em}\n.nav-logo-mark{width:32px;height:32px;background:var(--dark2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:var(--primary)}\n.nav-logo em{font-style:normal;color:var(--primary)}\n.nav-cta{color:var(--muted);font-size:13.5px;font-weight:700}\n.nav-cta:hover{color:var(--dark2)}\n\nmain{max-width:520px;margin:0 auto;padding:56px 24px 80px}\n.badge{display:inline-flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:22px}\n.badge b{color:var(--primary)}\nh1{font-size:clamp(28px,6vw,38px);font-weight:900;color:var(--dark);line-height:1.15;letter-spacing:-.02em;margin-bottom:14px;text-wrap:balance}\nh1 em{font-style:normal;color:var(--primary)}\n.sub{font-size:15.5px;color:var(--muted);line-height:1.6;margin-bottom:34px}\n.sub b{color:var(--dark2)}\n\n.card{border:1px solid var(--border);border-radius:16px;padding:28px}\n.field{margin-bottom:16px}\n.field label{display:block;font-size:12.5px;font-weight:700;color:var(--dark2);margin-bottom:7px}\n.field input{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14.5px;font-family:inherit;color:var(--dark2);background:#fff}\n.field input:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:var(--primary)}\n.field-hint{font-size:11.5px;color:#94A3B8;margin-top:5px}\n/* honeypot — invisível pra gente, visível só pra bots que preenchem tudo */\n.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}\n\n.btn-submit{width:100%;background:var(--primary);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;margin-top:6px}\n.btn-submit:hover{background:#EA6C0F}\n.btn-submit:disabled{opacity:.6;cursor:default}\n.form-error{background:#FEF2F2;border:1px solid #FECACA;color:#DC2626;border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:16px}\n\n.success{display:none;text-align:center;padding:12px 4px}\n.success.show{display:block}\n.success-mark{width:52px;height:52px;border-radius:50%;background:var(--goodbg);border:1px solid var(--goodbd);color:var(--good);font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}\n.success h2{font-size:19px;font-weight:800;color:var(--dark2);margin-bottom:8px}\n.success p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:22px}\n.contact-row{display:flex;flex-direction:column;gap:10px;text-align:left}\n.contact-btn{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;font-size:13.5px;font-weight:700;color:var(--dark2)}\n.contact-btn:hover{border-color:var(--primary)}\n.contact-icon{width:34px;height:34px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}\n.contact-sub{font-weight:500;color:var(--muted);font-size:12px}\n.btn-open-app{display:block;text-align:center;background:var(--dark2);color:#fff;border-radius:10px;padding:13px;font-size:14.5px;font-weight:800;margin-top:20px}\n.btn-open-app:hover{background:var(--dark)}\n\n.form-wrap{display:block}\n.form-wrap.hide{display:none}\n\n.trust{display:flex;flex-direction:column;gap:14px;margin-top:32px}\n.trust-item{display:flex;gap:12px;align-items:flex-start}\n.trust-icon{font-size:16px;flex-shrink:0;margin-top:1px}\n.trust-text{font-size:13px;color:var(--muted);line-height:1.55}\n.trust-text b{color:var(--dark2)}\n\nfooter{padding:32px 24px;border-top:1px solid var(--border);margin-top:20px}\n.footer-inner{max-width:520px;margin:0 auto;text-align:center}\n.footer-links{display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px}\n.footer-links a:hover{color:var(--primary)}\n.footer-fine{font-size:11px;color:#94A3B8}\n</style>\n</head>\n<body>\n\n<nav>\n  <div class=\"nav-inner\">\n    <a href=\"/landing\" class=\"nav-logo\"><div class=\"nav-logo-mark\">F</div>Finn<em>.</em></a>\n    <a href=\"/\" class=\"nav-cta\">Já tenho conta →</a>\n  </div>\n</nav>\n\n<main>\n  <div class=\"badge\">✦ Vagas limitadas <b>· grupo de testers</b></div>\n  <h1>Testa o Finn <em>antes de todo mundo</em></h1>\n  <p class=\"sub\">O Finn. é um app financeiro grátis, feito pra brasileiro — e ainda está em fase de testes. Se inscreve aqui embaixo e eu mesmo te dou boas-vindas, com um contato direto pra qualquer dúvida ou problema que aparecer.</p>\n\n  <div class=\"card\">\n    <div id=\"formError\" class=\"form-error\" style=\"display:none\"></div>\n    <form id=\"betaForm\" class=\"form-wrap\">\n      <div class=\"field\">\n        <label for=\"fName\">Seu nome</label>\n        <input type=\"text\" id=\"fName\" name=\"name\" placeholder=\"Como você se chama\" autocomplete=\"name\" required>\n      </div>\n      <div class=\"field\">\n        <label for=\"fEmail\">E-mail</label>\n        <input type=\"email\" id=\"fEmail\" name=\"email\" placeholder=\"voce@email.com\" autocomplete=\"email\" required>\n      </div>\n      <div class=\"field\">\n        <label for=\"fContact\">WhatsApp ou Instagram <span style=\"font-weight:500;color:#94A3B8\">(opcional)</span></label>\n        <input type=\"text\" id=\"fContact\" name=\"contact\" placeholder=\"(13) 99999-9999 ou @seuinstagram\" autocomplete=\"tel\">\n        <div class=\"field-hint\">Só uso isso se precisar te avisar de algo importante.</div>\n      </div>\n      <input type=\"text\" id=\"fHoneypot\" name=\"website\" class=\"hp\" tabindex=\"-1\" autocomplete=\"off\">\n      <button type=\"submit\" class=\"btn-submit\" id=\"btnSubmitBeta\">Quero testar</button>\n    </form>\n\n    <div id=\"betaSuccess\" class=\"success\">\n      <div class=\"success-mark\">✓</div>\n      <h2>Inscrição confirmada!</h2>\n      <p>Mandei um e-mail de boas-vindas pra você. Já pode abrir o Finn e começar — e qualquer coisa, fala direto comigo:</p>\n      <div class=\"contact-row\">\n        <a href=\"https://wa.me/5513992102413\" target=\"_blank\" rel=\"noopener\" class=\"contact-btn\">\n          <span class=\"contact-icon\" style=\"font-weight:800\">W</span>\n          <span>WhatsApp<div class=\"contact-sub\">(13) 99210-2413</div></span>\n        </a>\n        <a href=\"https://www.instagram.com/finn.finnance\" target=\"_blank\" rel=\"noopener\" class=\"contact-btn\">\n          <span class=\"contact-icon\" style=\"font-weight:800;font-size:13px\">IG</span>\n          <span>Instagram<div class=\"contact-sub\">@finn.finnance</div></span>\n        </a>\n        <a href=\"mailto:Finn.controle01@gmail.com\" class=\"contact-btn\">\n          <span class=\"contact-icon\" style=\"font-weight:800\">@</span>\n          <span>E-mail<div class=\"contact-sub\">Finn.controle01@gmail.com</div></span>\n        </a>\n      </div>\n      <a href=\"/\" class=\"btn-open-app\">Abrir o Finn →</a>\n    </div>\n  </div>\n\n  <div class=\"trust\">\n    <div class=\"trust-item\"><span class=\"trust-text\"><b>Sem spam.</b> Uso seus dados só pra te dar boas-vindas e falar com você se precisar — nada de lista de e-mail marketing.</span></div>\n    <div class=\"trust-item\"><span class=\"trust-text\"><b>Suporte de verdade.</b> Encontrou um bug ou travou em algo? Me chama direto — quem responde sou eu, não um robô.</span></div>\n    <div class=\"trust-item\"><span class=\"trust-text\"><b>100% grátis</b> pra testar, sem cartão de crédito.</span></div>\n  </div>\n</main>\n\n<footer>\n  <div class=\"footer-inner\">\n    <div class=\"footer-links\">\n      <a href=\"/landing\">Sobre o Finn</a>\n      <a href=\"/privacidade\">Privacidade</a>\n      <a href=\"/termos\">Termos</a>\n      <a href=\"mailto:Finn.controle01@gmail.com\">Contato</a>\n    </div>\n    <div class=\"footer-fine\">© 2026 Finn. — Controle financeiro inteligente.</div>\n  </div>\n</footer>\n\n<script>\n(function(){\n  \"use strict\";\n  var form = document.getElementById(\"betaForm\");\n  var errorBox = document.getElementById(\"formError\");\n  var btn = document.getElementById(\"btnSubmitBeta\");\n\n  form.addEventListener(\"submit\", function(e){\n    e.preventDefault();\n    errorBox.style.display = \"none\";\n    var name = document.getElementById(\"fName\").value.trim();\n    var email = document.getElementById(\"fEmail\").value.trim();\n    var contact = document.getElementById(\"fContact\").value.trim();\n    var honeypot = document.getElementById(\"fHoneypot\").value;\n\n    if(!name || !email){\n      errorBox.textContent = \"Preenche seu nome e e-mail pra continuar.\";\n      errorBox.style.display = \"block\";\n      return;\n    }\n\n    btn.disabled = true;\n    btn.textContent = \"Enviando…\";\n\n    fetch(\"/beta/signup\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify({ name: name, email: email, contact: contact, website: honeypot })\n    }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })\n      .then(function(res){\n        btn.disabled = false;\n        btn.textContent = \"Quero testar\";\n        if(res.status === 200 && res.body && res.body.ok){\n          form.classList.add(\"hide\");\n          document.getElementById(\"betaSuccess\").classList.add(\"show\");\n        } else {\n          errorBox.textContent = (res.body && res.body.error) || \"Não consegui enviar agora. Tenta de novo em instantes.\";\n          errorBox.style.display = \"block\";\n        }\n      }).catch(function(){\n        btn.disabled = false;\n        btn.textContent = \"Quero testar\";\n        errorBox.textContent = \"Falha de conexão. Tenta de novo.\";\n        errorBox.style.display = \"block\";\n      });\n  });\n})();\n</script>\n</body>\n</html>\n", {
+      return new Response("<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Finn. — Entre pro grupo de testers</title>\n<meta name=\"description\" content=\"Inscreva-se pra testar o Finn em primeira mão. App financeiro grátis, feito para o brasileiro — com suporte direto por WhatsApp e e-mail.\">\n<meta name=\"theme-color\" content=\"#F97316\">\n<meta property=\"og:title\" content=\"Finn. — Entre pro grupo de testers\">\n<meta property=\"og:description\" content=\"Inscreva-se pra testar o Finn em primeira mão. App financeiro grátis, com suporte direto.\">\n<meta property=\"og:type\" content=\"website\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link href=\"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap\" rel=\"stylesheet\">\n<style>\n*{box-sizing:border-box;margin:0;padding:0}\n:root{--primary:#F97316;--dark:#0F172A;--dark2:#1E293B;--muted:#64748B;--border:#E2E8F0;--bg:#F8F7F4;--good:#059669;--goodbg:#ECFDF5;--goodbd:#A7F3D0}\nbody{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1E293B;-webkit-font-smoothing:antialiased}\na{color:inherit;text-decoration:none}\n\nnav{position:sticky;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}\n.nav-inner{max-width:640px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}\n.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-.02em}\n.nav-logo-mark{width:32px;height:32px;background:var(--dark2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:var(--primary)}\n.nav-logo em{font-style:normal;color:var(--primary)}\n.nav-cta{color:var(--muted);font-size:13.5px;font-weight:700}\n.nav-cta:hover{color:var(--dark2)}\n\nmain{max-width:520px;margin:0 auto;padding:56px 24px 80px}\n.badge{display:inline-flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:22px}\n.badge b{color:var(--primary)}\nh1{font-size:clamp(28px,6vw,38px);font-weight:900;color:var(--dark);line-height:1.15;letter-spacing:-.02em;margin-bottom:14px;text-wrap:balance}\nh1 em{font-style:normal;color:var(--primary)}\n.sub{font-size:15.5px;color:var(--muted);line-height:1.6;margin-bottom:34px}\n.sub b{color:var(--dark2)}\n\n.card{border:1px solid var(--border);border-radius:16px;padding:28px}\n.field{margin-bottom:16px}\n.field label{display:block;font-size:12.5px;font-weight:700;color:var(--dark2);margin-bottom:7px}\n.field input{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14.5px;font-family:inherit;color:var(--dark2);background:#fff}\n.field input:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:var(--primary)}\n.field-hint{font-size:11.5px;color:#94A3B8;margin-top:5px}\n/* honeypot — invisível pra gente, visível só pra bots que preenchem tudo */\n.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}\n\n.btn-submit{width:100%;background:var(--primary);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;margin-top:6px}\n.btn-submit:hover{background:#EA6C0F}\n.btn-submit:disabled{opacity:.6;cursor:default}\n.form-error{background:#FEF2F2;border:1px solid #FECACA;color:#DC2626;border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:16px}\n\n.success{display:none;text-align:center;padding:12px 4px}\n.success.show{display:block}\n.success-mark{width:52px;height:52px;border-radius:50%;background:var(--goodbg);border:1px solid var(--goodbd);color:var(--good);font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}\n.success h2{font-size:19px;font-weight:800;color:var(--dark2);margin-bottom:8px}\n.success p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:22px}\n.contact-row{display:flex;flex-direction:column;gap:10px;text-align:left}\n.contact-btn{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;font-size:13.5px;font-weight:700;color:var(--dark2)}\n.contact-btn:hover{border-color:var(--primary)}\n.contact-icon{width:34px;height:34px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}\n.contact-sub{font-weight:500;color:var(--muted);font-size:12px}\n.btn-open-app{display:block;text-align:center;background:var(--dark2);color:#fff;border-radius:10px;padding:13px;font-size:14.5px;font-weight:800;margin-top:20px}\n.btn-open-app:hover{background:var(--dark)}\n\n.form-wrap{display:block}\n.form-wrap.hide{display:none}\n\n.trust{display:flex;flex-direction:column;gap:14px;margin-top:32px}\n.trust-item{display:flex;gap:12px;align-items:flex-start}\n.trust-icon{font-size:16px;flex-shrink:0;margin-top:1px}\n.trust-text{font-size:13px;color:var(--muted);line-height:1.55}\n.trust-text b{color:var(--dark2)}\n\nfooter{padding:32px 24px;border-top:1px solid var(--border);margin-top:20px}\n.footer-inner{max-width:520px;margin:0 auto;text-align:center}\n.footer-links{display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px}\n.footer-links a:hover{color:var(--primary)}\n.footer-fine{font-size:11px;color:#94A3B8}\n</style>\n</head>\n<body>\n\n<nav>\n  <div class=\"nav-inner\">\n    <a href=\"/landing\" class=\"nav-logo\"><div class=\"nav-logo-mark\">F</div>Finn<em>.</em></a>\n    <a href=\"/\" class=\"nav-cta\">Já tenho conta →</a>\n  </div>\n</nav>\n\n<main>\n  <div class=\"badge\">✦ Vagas limitadas <b>· grupo de testers</b></div>\n  <h1>Testa o Finn <em>antes de todo mundo</em></h1>\n  <p class=\"sub\">O Finn. é um app financeiro grátis, feito pra brasileiro — e ainda está em fase de testes. Se inscreve aqui embaixo e eu mesmo te dou boas-vindas, com um contato direto pra qualquer dúvida ou problema que aparecer.</p>\n\n  <div class=\"card\">\n    <div id=\"formError\" class=\"form-error\" style=\"display:none\"></div>\n    <form id=\"betaForm\" class=\"form-wrap\">\n      <div class=\"field\">\n        <label for=\"fName\">Seu nome</label>\n        <input type=\"text\" id=\"fName\" name=\"name\" placeholder=\"Como você se chama\" autocomplete=\"name\" required>\n      </div>\n      <div class=\"field\">\n        <label for=\"fEmail\">E-mail</label>\n        <input type=\"email\" id=\"fEmail\" name=\"email\" placeholder=\"voce@email.com\" autocomplete=\"email\" required>\n      </div>\n      <div class=\"field\">\n        <label for=\"fContact\">WhatsApp ou Instagram <span style=\"font-weight:500;color:#94A3B8\">(opcional)</span></label>\n        <input type=\"text\" id=\"fContact\" name=\"contact\" placeholder=\"(13) 99999-9999 ou @seuinstagram\" autocomplete=\"tel\">\n        <div class=\"field-hint\">Só uso isso se precisar te avisar de algo importante.</div>\n      </div>\n      <input type=\"text\" id=\"fHoneypot\" name=\"website\" class=\"hp\" tabindex=\"-1\" autocomplete=\"off\">\n      <button type=\"submit\" class=\"btn-submit\" id=\"btnSubmitBeta\">Quero testar</button>\n    </form>\n\n    <div id=\"betaSuccess\" class=\"success\">\n      <div class=\"success-mark\">✓</div>\n      <h2>Falta só um passo</h2>\n      <p>Mandei um e-mail de confirmação pra você. Clica no link dentro dele pra garantir sua vaga no grupo de testers.</p>\n      <p style=\"font-size:12.5px\">Não chegou? Confere a caixa de spam, ou fala direto comigo:</p>\n      <div class=\"contact-row\">\n        <a href=\"https://wa.me/5513992102413\" target=\"_blank\" rel=\"noopener\" class=\"contact-btn\">\n          <span class=\"contact-icon\" style=\"font-weight:800\">W</span>\n          <span>WhatsApp<div class=\"contact-sub\">(13) 99210-2413</div></span>\n        </a>\n        <a href=\"https://www.instagram.com/finn.finnance\" target=\"_blank\" rel=\"noopener\" class=\"contact-btn\">\n          <span class=\"contact-icon\" style=\"font-weight:800;font-size:13px\">IG</span>\n          <span>Instagram<div class=\"contact-sub\">@finn.finnance</div></span>\n        </a>\n        <a href=\"mailto:Finn.controle01@gmail.com\" class=\"contact-btn\">\n          <span class=\"contact-icon\" style=\"font-weight:800\">@</span>\n          <span>E-mail<div class=\"contact-sub\">Finn.controle01@gmail.com</div></span>\n        </a>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"trust\">\n    <div class=\"trust-item\"><span class=\"trust-text\"><b>Sem spam.</b> Uso seus dados só pra te dar boas-vindas e falar com você se precisar — nada de lista de e-mail marketing.</span></div>\n    <div class=\"trust-item\"><span class=\"trust-text\"><b>Suporte de verdade.</b> Encontrou um bug ou travou em algo? Me chama direto — quem responde sou eu, não um robô.</span></div>\n    <div class=\"trust-item\"><span class=\"trust-text\"><b>100% grátis</b> pra testar, sem cartão de crédito.</span></div>\n  </div>\n</main>\n\n<footer>\n  <div class=\"footer-inner\">\n    <div class=\"footer-links\">\n      <a href=\"/landing\">Sobre o Finn</a>\n      <a href=\"/privacidade\">Privacidade</a>\n      <a href=\"/termos\">Termos</a>\n      <a href=\"mailto:Finn.controle01@gmail.com\">Contato</a>\n    </div>\n    <div class=\"footer-fine\">© 2026 Finn. — Controle financeiro inteligente.</div>\n  </div>\n</footer>\n\n<script>\n(function(){\n  \"use strict\";\n  var form = document.getElementById(\"betaForm\");\n  var errorBox = document.getElementById(\"formError\");\n  var btn = document.getElementById(\"btnSubmitBeta\");\n\n  form.addEventListener(\"submit\", function(e){\n    e.preventDefault();\n    errorBox.style.display = \"none\";\n    var name = document.getElementById(\"fName\").value.trim();\n    var email = document.getElementById(\"fEmail\").value.trim();\n    var contact = document.getElementById(\"fContact\").value.trim();\n    var honeypot = document.getElementById(\"fHoneypot\").value;\n\n    if(!name || !email){\n      errorBox.textContent = \"Preenche seu nome e e-mail pra continuar.\";\n      errorBox.style.display = \"block\";\n      return;\n    }\n\n    btn.disabled = true;\n    btn.textContent = \"Enviando…\";\n\n    fetch(\"/beta/signup\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify({ name: name, email: email, contact: contact, website: honeypot })\n    }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })\n      .then(function(res){\n        btn.disabled = false;\n        btn.textContent = \"Quero testar\";\n        if(res.status === 200 && res.body && res.body.ok){\n          form.classList.add(\"hide\");\n          document.getElementById(\"betaSuccess\").classList.add(\"show\");\n        } else {\n          errorBox.textContent = (res.body && res.body.error) || \"Não consegui enviar agora. Tenta de novo em instantes.\";\n          errorBox.style.display = \"block\";\n        }\n      }).catch(function(){\n        btn.disabled = false;\n        btn.textContent = \"Quero testar\";\n        errorBox.textContent = \"Falha de conexão. Tenta de novo.\";\n        errorBox.style.display = \"block\";\n      });\n  });\n})();\n</script>\n</body>\n</html>\n", {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
@@ -1579,6 +1669,9 @@ ${bodyHtml}
     }
     if (url.pathname === '/beta/signup' && request.method === 'POST') {
       return _betaSignup(request, env);
+    }
+    if (url.pathname === '/beta/confirm' && request.method === 'GET') {
+      return _betaConfirm(request, env);
     }
     if (url.pathname === '/admin/beta-signups' && request.method === 'GET') {
       return _adminBetaSignups(request, env);

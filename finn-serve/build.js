@@ -911,6 +911,14 @@ async function _betaSignup(request, env) {
       return new Response(JSON.stringify({ error: 'Nome e e-mail válido são obrigatórios.' }), { status: 400, headers: cors });
     }
 
+    // Confirmação em duas etapas: a vaga só é confirmada de fato quando a
+    // pessoa clica no link do e-mail (token aleatório, checado em
+    // /beta/confirm) — não é uma espera artificial, é uma verificação real
+    // que também reduz e-mail inválido/digitado errado.
+    var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    var confirmToken = crypto.randomUUID();
+    var confirmUrl = 'https://finn.dev.br/beta/confirm?id=' + encodeURIComponent(signupId) + '&token=' + encodeURIComponent(confirmToken);
+
     // Guarda o resultado do envio do e-mail JUNTO com a inscrição — sem isso,
     // um erro do Resend (chave errada, domínio não verificado, etc.) sumia
     // sem deixar rastro nenhum: a inscrição aparecia como sucesso do mesmo
@@ -927,8 +935,8 @@ async function _betaSignup(request, env) {
             from: 'Finn <contato@finn.dev.br>',
             to: [email],
             reply_to: 'Finn.controle01@gmail.com',
-            subject: 'Bem-vindo(a) ao grupo de testers do Finn',
-            html: _betaWelcomeEmailHtml(name)
+            subject: 'Confirme seu cadastro no grupo de testers do Finn',
+            html: _betaConfirmEmailHtml(name, confirmUrl)
           })
         });
         var resendText = await resendResp.text();
@@ -942,13 +950,13 @@ async function _betaSignup(request, env) {
     }
 
     if (env.FINN_KV) {
-      var signupId = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
       await env.FINN_KV.put('beta_signup_' + signupId, JSON.stringify({
-        name: name, email: email, contact: contact, created_at: new Date().toISOString(), email_status: emailStatus
+        name: name, email: email, contact: contact, created_at: new Date().toISOString(),
+        confirmed: false, confirm_token: confirmToken, email_status: emailStatus
       }));
     }
 
-    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+    return new Response(JSON.stringify({ ok: true, pending: true }), { headers: cors });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
   }
@@ -983,8 +991,16 @@ async function _adminBetaSignups(request, env) {
   }
 }
 
-function _betaWelcomeEmailHtml(name) {
-  var safeName = String(name || 'tudo bem').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+function _escapeBetaHtml(s) {
+  return String(s || '').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+}
+
+// E-mail enviado assim que alguém preenche o /beta — pede a confirmação
+// (clique no link) antes de considerar a vaga garantida. Não é um atraso
+// artificial: é uma verificação real, que também reduz e-mail digitado
+// errado ou inválido indo pra lista.
+function _betaConfirmEmailHtml(name, confirmUrl) {
+  var safeName = _escapeBetaHtml(name || 'tudo bem');
   // Gmail (e outros) reescrevem cores automaticamente no "modo escuro" —
   // <div style="background:..."> costuma ser convertido/removido, deixando
   // a marca "F" flutuando sem o quadrado por trás (foi exatamente o que
@@ -1005,17 +1021,16 @@ function _betaWelcomeEmailHtml(name) {
       '</tr></table>' +
     '</td></tr>' +
     '<tr><td style="padding:20px 28px 8px">' +
-      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '.</h1>' +
+      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Confirme seu e-mail, ' + safeName + '.</h1>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 20px">' +
-      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Você agora faz parte do grupo de testers do <b>Finn.</b> — obrigado por topar experimentar em primeira mão!</p>' +
-      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">O app já está pronto pra usar, é 100% grátis, e você pode entrar agora mesmo com sua conta Google:</p>' +
+      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Falta só um passo pra garantir sua vaga no grupo de testers do <b>Finn.</b> — clica no botão abaixo pra confirmar sua inscrição.</p>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 24px">' +
-      '<a href="https://finn.dev.br" style="display:block;text-align:center;background:#F97316;color:#ffffff;text-decoration:none;font-weight:800;font-size:15px;border-radius:10px;padding:14px">Abrir o Finn →</a>' +
+      '<a href="' + confirmUrl + '" style="display:block;text-align:center;background:#F97316;color:#ffffff;text-decoration:none;font-weight:800;font-size:15px;border-radius:10px;padding:14px">Confirmar inscrição →</a>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 8px">' +
-      '<p style="margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#64748B">Como é uma fase de testes, é bem provável que você encontre algum bug ou algo que ainda não funcione direito — <b style="color:#1E293B">isso é super esperado</b>, e é exatamente pra isso que estou aqui. Qualquer coisa, me chama direto:</p>' +
+      '<p style="margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#64748B">Dúvidas antes mesmo de confirmar? Me chama direto:</p>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 28px">' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
@@ -1027,9 +1042,84 @@ function _betaWelcomeEmailHtml(name) {
       '</tr></table>' +
     '</td></tr>' +
     '<tr><td style="padding:16px 28px;border-top:1px solid #E2E8F0" bgcolor="#F8F7F4">' +
-      '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Você recebeu esse e-mail porque se inscreveu no grupo de testers em finn.dev.br/beta. Não é uma lista de e-mail marketing — é só isso mesmo, um "oi, bem-vindo(a)".</p>' +
+      '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Se você não pediu esse cadastro, pode ignorar este e-mail — nenhuma vaga é confirmada sem esse clique.</p>' +
     '</td></tr>' +
     '</table></td></tr></table></body></html>';
+}
+
+// Página mostrada quando a pessoa clica no link do e-mail (GET /beta/confirm).
+// Sucesso: mostra os contatos e o link pra abrir o app. Falha: mensagem
+// simples explicando o motivo (link inválido/expirado).
+function _betaConfirmPageHtml(name, ok, errorMessage) {
+  var safeName = _escapeBetaHtml(name || '');
+  var body = ok
+    ? (
+      '<div class="mark">✓</div>' +
+      '<h1>Inscrição confirmada' + (safeName ? ', ' + safeName : '') + '.</h1>' +
+      '<p>Você já faz parte do grupo de testers do Finn. Pode abrir o app agora mesmo com sua conta Google — e qualquer dúvida ou problema, fala direto comigo:</p>' +
+      '<a href="https://finn.dev.br" class="btn">Abrir o Finn →</a>' +
+      '<div class="contacts">' +
+        '<div class="c"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413">(13) 99210-2413</a></div>' +
+        '<div class="c"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance">@finn.finnance</a></div>' +
+        '<div class="c"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></div>' +
+      '</div>'
+    ) : (
+      '<div class="mark bad">✕</div>' +
+      '<h1>Não foi dessa vez.</h1>' +
+      '<p>' + _escapeBetaHtml(errorMessage || 'Esse link de confirmação não é válido.') + ' Se o problema continuar, me chama direto:</p>' +
+      '<a href="https://wa.me/5513992102413" class="btn">Falar no WhatsApp →</a>'
+    );
+  return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>Finn. — Confirmação de inscrição</title>' +
+    '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+    '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">' +
+    '<style>' +
+    '*{box-sizing:border-box;margin:0;padding:0}' +
+    'body{font-family:"Plus Jakarta Sans",sans-serif;background:#F8F7F4;color:#1E293B;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}' +
+    'a{color:inherit}' +
+    '.card{max-width:440px;width:100%;background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:36px 28px;text-align:center}' +
+    '.mark{width:52px;height:52px;border-radius:50%;background:#ECFDF5;border:1px solid #A7F3D0;color:#059669;font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-weight:800}' +
+    '.mark.bad{background:#FEF2F2;border-color:#FECACA;color:#DC2626}' +
+    'h1{font-size:19px;font-weight:800;color:#0F172A;margin-bottom:10px}' +
+    'p{font-size:13.5px;color:#64748B;line-height:1.6;margin-bottom:22px}' +
+    '.btn{display:block;text-align:center;background:#F97316;color:#fff!important;text-decoration:none;font-weight:800;font-size:14.5px;border-radius:10px;padding:13px}' +
+    '.contacts{display:flex;flex-direction:column;gap:10px;text-align:left;margin-top:22px}' +
+    '.c{border:1px solid #E2E8F0;border-radius:12px;padding:12px 14px;font-size:13px}' +
+    '.c a{color:#F97316;text-decoration:none;font-weight:700}' +
+    '</style></head><body><div class="card">' + body + '</div></body></html>';
+}
+
+// GET /beta/confirm?id=...&token=... — clicado a partir do e-mail de
+// confirmação. Só marca confirmed:true se o token bater com o que foi
+// gravado no signup — sem isso, qualquer um adivinhando um id confirmaria
+// a inscrição de outra pessoa.
+async function _betaConfirm(request, env) {
+  var htmlHeaders = { 'Content-Type': 'text/html; charset=utf-8' };
+  try {
+    var url = new URL(request.url);
+    var id = url.searchParams.get('id') || '';
+    var token = url.searchParams.get('token') || '';
+    if (!env.FINN_KV || !id || !token) {
+      return new Response(_betaConfirmPageHtml(null, false, 'Esse link de confirmação está incompleto.'), { status: 400, headers: htmlHeaders });
+    }
+    var raw = await env.FINN_KV.get('beta_signup_' + id);
+    if (!raw) {
+      return new Response(_betaConfirmPageHtml(null, false, 'Não encontrei essa inscrição — o link pode ter expirado.'), { status: 404, headers: htmlHeaders });
+    }
+    var signup = JSON.parse(raw);
+    if (signup.confirm_token !== token) {
+      return new Response(_betaConfirmPageHtml(null, false, 'Esse link de confirmação não é válido.'), { status: 403, headers: htmlHeaders });
+    }
+    if (!signup.confirmed) {
+      signup.confirmed = true;
+      signup.confirmed_at = new Date().toISOString();
+      await env.FINN_KV.put('beta_signup_' + id, JSON.stringify(signup));
+    }
+    return new Response(_betaConfirmPageHtml(signup.name, true), { headers: htmlHeaders });
+  } catch (e) {
+    return new Response(_betaConfirmPageHtml(null, false, 'Algo deu errado ao confirmar.'), { status: 500, headers: htmlHeaders });
+  }
 }
 
 // =============================================================================
@@ -1639,6 +1729,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/beta/signup' && request.method === 'POST') {
       return _betaSignup(request, env);
+    }
+    if (url.pathname === '/beta/confirm' && request.method === 'GET') {
+      return _betaConfirm(request, env);
     }
     if (url.pathname === '/admin/beta-signups' && request.method === 'GET') {
       return _adminBetaSignups(request, env);
