@@ -14,7 +14,8 @@ compatibility_date = "2024-01-01"
 #
 # IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID — publicação automática dos
 #   posts da campanha (3 por dia, dividido nos crons "0 12 * * *" (também
-#   usado pelas contas fixas) / "0 15 * * *" / "0 21 * * *"). Usa a "API do
+#   usado pelas contas fixas e pela checagem de assinaturas) / "0 15 * * *" /
+#   "0 21 * * *"). Usa a "API do
 #   Instagram com login do Instagram" (fluxo novo, sem precisar de Página
 #   do Facebook) — os dois valores ficam na mesma tela do Meta Developer
 #   Console (Casos de uso → API do Instagram → Configuração da API com
@@ -34,12 +35,13 @@ compatibility_date = "2024-01-01"
 
 # ─────────────────────────────────────────────
 #  Notificações push / assinaturas / campanha:
-#  - "0 12 * * *"  → contas fixas perto do vencimento (09:00 BRT) E o
-#                    1º post/dia da campanha — dividem o mesmo horário
-#                    porque a Cloudflare limita 5 cron triggers por Worker
-#                    (já estava no teto; criar um 6º trigger falha o deploy)
-#  - "0 13 * * *"  → confere assinaturas vencidas (rede de segurança pro
-#                    caso de webhook perdido), 1x/dia às 10:00 BRT
+#  - "0 12 * * *"  → 09:00 BRT — acumula 3 tarefas: contas fixas perto do
+#                    vencimento, o 1º post/dia da campanha, e a checagem de
+#                    assinaturas vencidas (rede de segurança pro caso de
+#                    webhook perdido, antes tinha horário próprio às 10h).
+#                    Tudo junto porque o limite de cron trigger é DA CONTA
+#                    inteira (5 no total) — o finn-worker do bot já usa 1,
+#                    então o finn-serve só tem 4 de sobra, não 5.
 #  - "0 15 * * *"  → 2º post/dia da campanha, 12:00 BRT
 #  - "0 21 * * *"  → 3º post/dia da campanha, 18:00 BRT (para sozinho
 #                    depois do último post da fila)
@@ -47,7 +49,7 @@ compatibility_date = "2024-01-01"
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 13 * * *", "0 15 * * *", "0 21 * * *", "0 23 * * 1"]
+crons = ["0 12 * * *", "0 15 * * *", "0 21 * * *", "0 23 * * 1"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)
