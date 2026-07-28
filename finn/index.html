@@ -463,7 +463,7 @@ var SESSION_KEY = "finn_supa_session";
 // com os do site quando o usuário cadastra o número (ver syncWhatsAppBot).
 var WHATSAPP_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev";
 var WHATSAPP_BOT_NUMBER = "5513992102413";
-var WHATSAPP_GREETING = "Oi, Finn! 👋 Vim pelo app, bora organizar minhas finanças?";
+var WHATSAPP_GREETING = "Oi, Finn! Vim pelo app, bora organizar minhas finanças?";
 // A Meta reativou o número (estava banido por engano). Antes de liberar
 // pra todo mundo, o bot fica visível só na conta master — dá pra validar
 // que voltou a funcionar direito antes de expor pros beta testers.
@@ -960,14 +960,14 @@ function monthSpentByCat(cat){
 
 /* ── Saudação ── */
 var MOTIVATIONAL_PHRASES = [
-  "Cada real guardado hoje é um passo mais perto do seu objetivo. 💪",
-  "Pequenas economias diárias constroem grandes conquistas. 🚀",
-  "Você está no controle do seu dinheiro — continue assim! ✨",
-  "Organizar as finanças hoje é construir liberdade no futuro. 🌱",
-  "Disciplina financeira agora, tranquilidade depois. 🔥",
-  "Seu futuro eu agradece cada centavo que você guarda hoje. 🙌",
-  "Foco no objetivo: seu dinheiro trabalhando por você. 📈",
-  "Um dia de cada vez, um real de cada vez — você vai longe. 🌟"
+  "Cada real guardado hoje é um passo mais perto do seu objetivo.",
+  "Pequenas economias diárias constroem grandes conquistas.",
+  "Você está no controle do seu dinheiro — continue assim.",
+  "Organizar as finanças hoje é construir liberdade no futuro.",
+  "Disciplina financeira agora, tranquilidade depois.",
+  "Seu futuro eu agradece cada centavo que você guarda hoje.",
+  "Foco no objetivo: seu dinheiro trabalhando por você.",
+  "Um dia de cada vez, um real de cada vez — você vai longe."
 ];
 function timeGreeting(){
   var h = new Date().getHours();
@@ -984,7 +984,7 @@ function renderGreeting(){
     _greetingPhrase = MOTIVATIONAL_PHRASES[Math.floor(Math.random() * MOTIVATIONAL_PHRASES.length)];
   }
   return '<div class="greet-card">' +
-    '<div class="greet-hello">' + timeGreeting() + '! 👋</div>' +
+    '<div class="greet-hello">' + timeGreeting() + '!</div>' +
     '<div class="greet-phrase">' + _greetingPhrase + '</div>' +
   '</div>';
 }
@@ -1645,7 +1645,7 @@ function renderTxList(list){
         '</div>' +
         '<div class="tx-val" style="color:' + color + '">' + sign + ' ' + fmtMoney(Number(t.value)) + '</div>' +
         '<div class="tx-actions">' +
-          '<button class="tx-btn receipt' + (t.receipt_path ? ' has' : '') + '" data-receipt-trigger="' + t.id + '" title="' + (t.receipt_path ? "Ver comprovante" : "Anexar comprovante") + '">' + (state.receiptUploadingId === t.id ? "…" : "📎") + '</button>' +
+          '<button class="tx-btn receipt' + (t.receipt_path ? ' has' : '') + '" data-receipt-trigger="' + t.id + '" title="' + (t.receipt_path ? "Ver comprovante" : "Anexar comprovante") + '" style="font-size:11px;font-weight:700">' + (state.receiptUploadingId === t.id ? "…" : "Anexo") + '</button>' +
           '<input type="file" accept="image/*" class="receipt-input" data-receipt-input="' + t.id + '" style="display:none">' +
           '<button class="tx-btn edit" data-edit="' + t.id + '">✎</button>' +
           '<button class="tx-btn del" data-del="' + t.id + '">✕</button>' +
@@ -3302,7 +3302,7 @@ function renderTelegramCard(meta){
   if(chatId){
     return '<div class="card">' +
       '<div class="eyebrow">Bot do Telegram (beta fechado)</div>' +
-      '<div style="font-size:12.5px;color:var(--fd);margin-bottom:12px">✅ Conectado.</div>' +
+      '<div style="font-size:12.5px;color:var(--fd);margin-bottom:12px">Conectado.</div>' +
       '<a href="https://t.me/' + TELEGRAM_BOT_USERNAME + '" target="_blank" rel="noopener" class="btn-ghost" style="width:100%;display:block;text-align:center;text-decoration:none;box-sizing:border-box">Abrir conversa com o bot no Telegram</a>' +
     '</div>';
   }
@@ -3518,7 +3518,7 @@ function renderInstagramAdminCard(){
     html += '<div style="font-size:12.5px;color:var(--fm)">IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID ainda não configurados no finn-serve.</div>';
   } else {
     html += '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
-      (st.done ? "Os " + st.total + " posts já foram publicados. ✅" : "Próximo post a publicar: " + st.next_index + " de " + st.total + ".") +
+      (st.done ? "Os " + st.total + " posts já foram publicados." : "Próximo post a publicar: " + st.next_index + " de " + st.total + ".") +
     '</div>';
     if(!st.done){
       html += '<button type="button" class="btn-submit" id="btnTestInstagramPublish"' + (state.igPublishLoading ? " disabled" : "") + '>' +
@@ -3533,7 +3533,7 @@ function renderInstagramAdminCard(){
       st.recent_attempts.slice(0,5).forEach(function(a){
         html += '<div class="tx-item" style="flex-wrap:wrap">' +
           '<div class="tx-info" style="min-width:140px">' +
-            '<div class="tx-desc">Post ' + a.index + (a.ok ? ' — publicado ✅' : ' — falhou ❌') + '</div>' +
+            '<div class="tx-desc">Post ' + a.index + (a.ok ? ' — publicado' : ' — falhou') + '</div>' +
             '<div class="tx-meta">' + new Date(a.started_at).toLocaleString("pt-BR") + '</div>' +
           '</div>' +
         '</div>';

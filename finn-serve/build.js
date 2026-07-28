@@ -927,7 +927,7 @@ async function _betaSignup(request, env) {
             from: 'Finn <contato@finn.dev.br>',
             to: [email],
             reply_to: 'Finn.controle01@gmail.com',
-            subject: 'Bem-vindo(a) ao grupo de testers do Finn! 🎉',
+            subject: 'Bem-vindo(a) ao grupo de testers do Finn',
             html: _betaWelcomeEmailHtml(name)
           })
         });
@@ -1005,7 +1005,7 @@ function _betaWelcomeEmailHtml(name) {
       '</tr></table>' +
     '</td></tr>' +
     '<tr><td style="padding:20px 28px 8px">' +
-      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '! 🎉</h1>' +
+      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '.</h1>' +
     '</td></tr>' +
     '<tr><td style="padding:0 28px 20px">' +
       '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Você agora faz parte do grupo de testers do <b>Finn.</b> — obrigado por topar experimentar em primeira mão!</p>' +
@@ -1338,7 +1338,7 @@ h1 em{font-style:normal;color:#F97316}
 <h2><span class="num">07</span> Contato</h2>
 <p>Dúvidas sobre privacidade? Escreva para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> e respondemos em até 48h.</p>
 </article>\`;
-      return new Response(legalShell('privacidade', 'Política de Privacidade', '🔒 Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      return new Response(legalShell('privacidade', 'Política de Privacidade', 'Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     if (url.pathname === '/termos') {
@@ -1362,7 +1362,7 @@ h1 em{font-style:normal;color:#F97316}
 <h2><span class="num">06</span> Contato</h2>
 <p>Dúvidas, sugestões ou reclamações: <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
 </article>\`;
-      return new Response(legalShell('termos', 'Termos de Serviço', '📜 Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      return new Response(legalShell('termos', 'Termos de Serviço', 'Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     if (url.pathname === '/deletar-dados') {
@@ -1371,20 +1371,20 @@ h1 em{font-style:normal;color:#F97316}
 <p style="margin-bottom:22px">Você pode excluir <strong>todos os seus dados</strong> do Finn a qualquer momento, sem precisar de aprovação ou justificativa.</p>
 
 <div class="opt">
-  <div class="opt-ic">⚡</div>
+  <div class="opt-ic" style="color:#fff;font-weight:800">1</div>
   <div><div class="opt-t">Opção 1 — Pelo app (recomendado)</div>
   <div class="opt-d">Abra o Finn → Menu → Configurações → Dados → <strong>"Excluir todos os dados"</strong>. A exclusão é imediata.</div></div>
 </div>
 
 <div class="opt">
-  <div class="opt-ic">✉️</div>
+  <div class="opt-ic" style="color:#fff;font-weight:800">2</div>
   <div><div class="opt-t">Opção 2 — Por e-mail</div>
   <div class="opt-d">Envie um e-mail para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> com o assunto <strong>"Exclusão de dados"</strong> e seu e-mail cadastrado. Excluiremos tudo em até 7 dias úteis.</div></div>
 </div>
 
-<div class="warn">⚠️ Ao excluir, <strong>todas as suas transações, metas, limites e configurações</strong> serão permanentemente removidos. Esta ação é irreversível.</div>
+<div class="warn">Ao excluir, <strong>todas as suas transações, metas, limites e configurações</strong> serão permanentemente removidos. Esta ação é irreversível.</div>
 </article>\`;
-      return new Response(legalShell('deletar-dados', 'Excluir meus dados', '🗑️ Direito do titular', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      return new Response(legalShell('deletar-dados', 'Excluir meus dados', 'Direito do titular', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     // ── AI proxy (Anthropic Claude) ──
