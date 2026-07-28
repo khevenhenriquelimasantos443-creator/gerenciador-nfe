@@ -1603,22 +1603,36 @@ async function handleWhatsAppHealth(env) {
 
   // Veredito em português — o objetivo é responder "dá pra usar?" sem
   // precisar interpretar JSON da Meta.
-  const numeroOk = Array.isArray(out.numero.lista) && out.numero.lista.some(n => n.e_o_configurado && n.status === "CONNECTED");
+  //
+  // A ORDEM aqui é o que importa: o diagnóstico tem que apontar a causa
+  // RAIZ, não o primeiro sintoma. Uma conta REJECTED sem número nenhum
+  // mostra os dois problemas ao mesmo tempo, mas trocar o ID do número não
+  // resolve nada enquanto a conta estiver rejeitada — por isso o status da
+  // conta é avaliado antes de qualquer coisa sobre número.
+  const listaNumeros = Array.isArray(out.numero.lista) ? out.numero.lista : null;
+  const semNenhumNumero = listaNumeros && listaNumeros.length === 0;
+  const numeroOk = listaNumeros && listaNumeros.some(n => n.e_o_configurado && n.status === "CONNECTED");
   const numeroConfigInacessivel = out.numero_configurado && out.numero_configurado.acessivel === false;
+  const contaReprovada = out.conta.review && out.conta.review !== "APPROVED";
+
   if (!out.token.valido) {
     out.veredito = "TOKEN INVÁLIDO OU VENCIDO — gere um novo no Meta Developer e rode: wrangler secret put WHATSAPP_ACCESS_TOKEN";
-  } else if (numeroConfigInacessivel && out.conta.erro) {
+  } else if (contaReprovada && semNenhumNumero) {
+    out.veredito = `A CONTA ESTÁ COM ANÁLISE "${out.conta.review}" E NÃO TEM NENHUM NÚMERO — nenhum ajuste no worker resolve enquanto isso não mudar na Meta. É preciso descobrir o motivo da reprovação (Business Manager → Central de Contas/Qualidade) e resolver por lá antes de adicionar número de novo.`;
+  } else if (contaReprovada) {
+    out.veredito = `CONTA REPROVADA/NÃO APROVADA (status: ${out.conta.review}) — precisa resolver isso na Meta antes de religar o bot. Trocar token ou ID de número não contorna isso.`;
+  } else if (out.conta.erro && numeroConfigInacessivel) {
     // Token vivo mas nem conta nem número respondem: o app perdeu acesso
     // à conta inteira (restrição da Meta, ou o app foi desvinculado dela).
     out.veredito = "TOKEN VÁLIDO, MAS ESTE APP NÃO ENXERGA MAIS A CONTA NEM O NÚMERO — a conta business provavelmente segue restrita na Meta, ou o app foi desvinculado dela.";
+  } else if (semNenhumNumero) {
+    out.veredito = "CONTA APROVADA, MAS SEM NENHUM NÚMERO CADASTRADO — adicione e verifique um número no painel do WhatsApp, depois atualize: wrangler secret put WHATSAPP_PHONE_NUMBER_ID";
   } else if (numeroConfigInacessivel) {
     // Conta responde mas o número específico não: o ID guardado está
     // desatualizado (número recriado costuma ganhar ID novo).
     out.veredito = "CONTA RESPONDE, MAS O ID DO NÚMERO GUARDADO NÃO EXISTE MAIS — veja em 'numero.lista' o ID atual e atualize com: wrangler secret put WHATSAPP_PHONE_NUMBER_ID";
   } else if (out.conta.erro || out.numero.erro) {
     out.veredito = "TOKEN OK, MAS A CONTA/NÚMERO NÃO RESPONDEM — provável que a conta ainda esteja restrita na Meta.";
-  } else if (out.conta.review && out.conta.review !== "APPROVED") {
-    out.veredito = `CONTA AINDA NÃO APROVADA (status: ${out.conta.review}) — precisa resolver isso na Meta antes de religar o bot.`;
   } else if (!numeroOk) {
     out.veredito = "CONTA OK, MAS O NÚMERO NÃO ESTÁ CONECTADO — confira o status do número no painel do WhatsApp.";
   } else if (!out.webhook.inscrito) {
