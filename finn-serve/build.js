@@ -1087,6 +1087,24 @@ async function _publishNextInstagramPost(env) {
       return { ok: false, step: 'media', body: createBody };
     }
 
+    // Passo 1.5: espera o container terminar de processar. A Meta baixa a
+    // imagem da URL de forma assíncrona — publicar cedo demais dá "Media ID
+    // is not available" (code 9007, subcode 2207027). Espera até uns 20s.
+    var containerReady = false;
+    for (var i = 0; i < 10; i++) {
+      var statusResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + createBody.id + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
+      var statusBody = await statusResp.json();
+      log.container_status = statusBody.status_code || statusBody;
+      if (statusBody.status_code === 'FINISHED') { containerReady = true; break; }
+      if (statusBody.status_code === 'ERROR') break;
+      await new Promise(function (resolve) { setTimeout(resolve, 2000); });
+    }
+    if (!containerReady) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      return { ok: false, step: 'container_not_ready', body: log.container_status };
+    }
+
     // Passo 2: publica o container criado.
     var publishResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
       method: 'POST',
