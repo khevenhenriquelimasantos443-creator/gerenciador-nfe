@@ -21,9 +21,10 @@ const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-ic
 // Posts do Instagram (campanha de divulgação do beta) — servidos publicamente
 // em /social/post-N.png porque a API do Instagram só aceita image_url (não
 // tem upload direto), então a imagem precisa estar hospedada num link fixo.
-const socialPosts = [1,2,3,4,5].map(function(n){
-  return fs.readFileSync(path.join(__dirname,'social/ig_post_' + n + '.png')).toString('base64');
-});
+const socialPosts = [];
+for (let n = 1; fs.existsSync(path.join(__dirname, 'social/ig_post_' + n + '.png')); n++) {
+  socialPosts.push(fs.readFileSync(path.join(__dirname, 'social/ig_post_' + n + '.png')).toString('base64'));
+}
 
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
@@ -1032,7 +1033,8 @@ function _betaWelcomeEmailHtml(name) {
 }
 
 // =============================================================================
-// INSTAGRAM — publicação automática dos 5 posts da campanha do beta, 1 por dia
+// INSTAGRAM — publicação automática dos posts da campanha do beta, 1 por dia
+// (quantidade = IG_CAPTIONS.length, cresce conforme mais posts são adicionados)
 // =============================================================================
 // Required secrets (configurados via wrangler secret / dashboard):
 //   IG_ACCESS_TOKEN        — token de longa duração gerado pela "API do
@@ -1052,11 +1054,17 @@ const IG_CAPTIONS = [
   'Chega de planilha 📊\\n\\nImporta o extrato do seu banco (Nubank, Itaú, Bradesco, BB, Inter, C6 Bank e mais) e o Finn organiza tudo sozinho — receitas, despesas e categorias, sem digitar nada na mão.\\n\\n#educacaofinanceira #financaspessoais #organizacaofinanceira',
   'IA financeira. De graça. 🤖\\n\\nAnálise dos seus gastos, sugestões de economia e previsão de saldo do mês — tudo incluso, sem plano pago e sem letra miúda.\\n\\n#inteligenciaartificial #financaspessoais #appfinanceiro',
   'Metas, limites e dívidas — tudo num só lugar 🎯\\n\\nDefina quanto quer gastar por categoria, junte dinheiro pra um objetivo e simule a quitação de uma dívida com juros de verdade.\\n\\n#planejamentofinanceiro #financaspessoais #metas',
-  '100% grátis. Sem pegadinha. 🇧🇷\\n\\nSem cartão de crédito pra começar, sem letra miúda — feito pro jeito que o brasileiro realmente vive. Link na bio.\\n\\n#appbrasileiro #financaspessoais #controlefinanceiro'
+  '100% grátis. Sem pegadinha. 🇧🇷\\n\\nSem cartão de crédito pra começar, sem letra miúda — feito pro jeito que o brasileiro realmente vive. Link na bio.\\n\\n#appbrasileiro #financaspessoais #controlefinanceiro',
+  'Divide a conta sem treta 🤝\\n\\nAluguel, mercado, jantar com os amigos — registra uma vez e o Finn calcula quanto cada um deve, sem planilha e sem constrangimento.\\n\\n#financaspessoais #dividirdespesas #appfinanceiro #educacaofinanceira',
+  'Fatura do cartão sob controle 💳\\n\\nAcompanha os gastos do cartão em tempo real, parcelas futuras e o valor que vai fechar na fatura — sem surpresa no fim do mês.\\n\\n#cartaodecredito #financaspessoais #controlefinanceiro #appfinanceiro',
+  'Lança um gasto direto pelo WhatsApp ou Telegram 💬\\n\\nManda uma mensagem tipo "50 mercado" e o Finn já categoriza e salva pra você — sem precisar abrir o app.\\n\\n#financaspessoais #appfinanceiro #whatsapp #telegram',
+  'Seus dados são só seus 🔒\\n\\nA conexão com o banco é feita direto no seu dispositivo — a gente nunca guarda sua senha nem vê seu extrato num servidor.\\n\\n#privacidade #seguranca #financaspessoais #appfinanceiro',
+  'Você no controle da sua grana 📊\\n\\nGráficos claros de pra onde o dinheiro vai, mês a mês — sem termos complicados, só o que importa pra decidir melhor.\\n\\nLink na bio pra testar de graça.\\n\\n#financaspessoais #controlefinanceiro #educacaofinanceira #appfinanceiro'
 ];
 
-// Publica o próximo post da sequência (1 a 5) — chamado pelo cron diário e
-// também pelo endpoint de disparo manual /admin/instagram-publish-next.
+// Publica o próximo post da sequência (1 a IG_CAPTIONS.length) — chamado
+// pelo cron diário e também pelo endpoint de disparo manual
+// /admin/instagram-publish-next.
 async function _publishNextInstagramPost(env) {
   if (!env.IG_ACCESS_TOKEN || !env.IG_BUSINESS_ACCOUNT_ID) {
     return { ok: false, skipped: true, reason: 'IG_ACCESS_TOKEN ou IG_BUSINESS_ACCOUNT_ID não configurados' };
@@ -1064,7 +1072,7 @@ async function _publishNextInstagramPost(env) {
   if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
 
   var nextIndex = Number((await env.FINN_KV.get('ig_post_next_index')) || '1');
-  if (nextIndex > 5) return { ok: false, done: true, reason: 'os 5 posts já foram publicados' };
+  if (nextIndex > IG_CAPTIONS.length) return { ok: false, done: true, reason: 'os ' + IG_CAPTIONS.length + ' posts já foram publicados' };
 
   var imageUrl = 'https://finn.dev.br/social/post-' + nextIndex + '.png';
   var caption = IG_CAPTIONS[nextIndex - 1];
@@ -1171,7 +1179,8 @@ async function _adminInstagramStatus(request, env) {
     return new Response(JSON.stringify({
       configured: !!(env.IG_ACCESS_TOKEN && env.IG_BUSINESS_ACCOUNT_ID),
       next_index: nextIndex,
-      done: nextIndex > 5,
+      total: IG_CAPTIONS.length,
+      done: nextIndex > IG_CAPTIONS.length,
       recent_attempts: logs
     }), { headers: cors });
   } catch (e) {
@@ -1532,13 +1541,16 @@ h1 em{font-style:normal;color:#F97316}
 
     // ── Posts do Instagram (URL pública fixa — a Graph API busca a imagem
     // por essa URL, não aceita upload direto) ──
-    var socialMatch = url.pathname.match(/^\\/social\\/post-([1-5])\\.png$/);
+    var socialMatch = url.pathname.match(/^\\/social\\/post-(\\d+)\\.png$/);
     if (socialMatch) {
-      var socialB64 = ${JSON.stringify(socialPosts)}[Number(socialMatch[1]) - 1];
-      var socialBytes = Uint8Array.from(atob(socialB64), function(c){ return c.charCodeAt(0); });
-      return new Response(socialBytes, {
-        headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }
-      });
+      var socialArr = ${JSON.stringify(socialPosts)};
+      var socialB64 = socialArr[Number(socialMatch[1]) - 1];
+      if (socialB64) {
+        var socialBytes = Uint8Array.from(atob(socialB64), function(c){ return c.charCodeAt(0); });
+        return new Response(socialBytes, {
+          headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }
+        });
+      }
     }
 
     // ── Push: subscribe ──

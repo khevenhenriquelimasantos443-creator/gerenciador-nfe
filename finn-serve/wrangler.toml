@@ -37,7 +37,7 @@ compatibility_date = "2024-01-01"
 #  - "0 13 * * *"  → confere assinaturas vencidas (rede de segurança pro
 #                    caso de webhook perdido), 1x/dia às 10:00 BRT
 #  - "0 15 * * *"  → publica o próximo post da campanha no Instagram,
-#                    1x/dia às 12:00 BRT (para sozinho depois do 5º post)
+#                    1x/dia às 12:00 BRT (para sozinho depois do último post)
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 # ─────────────────────────────────────────────
