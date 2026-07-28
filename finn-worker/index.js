@@ -1558,6 +1558,18 @@ async function handleWhatsAppHealth(env) {
     else out.token.erro = me.body && me.body.error;
   } catch (e) { out.token = { valido: false, erro: String(e) }; }
 
+  // 1a. QUAIS contas esse token enxerga? Quando todo ID dá "does not exist"
+  //     mas o token é válido, o problema é permissão — e a única forma de
+  //     confirmar (em vez de adivinhar) é perguntar à Meta o que esse
+  //     usuário do sistema tem atribuído. Se vier vazio, falta conceder
+  //     acesso; se vier com um ID diferente do configurado, é só corrigir.
+  try {
+    const mine = await metaGet(`me/assigned_whatsapp_business_accounts?fields=id,name,account_review_status`);
+    out.contas_visiveis_pelo_token = mine.ok
+      ? (mine.body.data || []).map(w => ({ id: w.id, nome: w.name, review: w.account_review_status }))
+      : { erro: mine.body && mine.body.error, http: mine.status };
+  } catch (e) { out.contas_visiveis_pelo_token = { erro: String(e) }; }
+
   // 1b. O número configurado responde? Separado do token de propósito —
   //     é essa diferença que diz se o problema é credencial ou permissão.
   try {
@@ -1615,8 +1627,18 @@ async function handleWhatsAppHealth(env) {
   const numeroConfigInacessivel = out.numero_configurado && out.numero_configurado.acessivel === false;
   const contaReprovada = out.conta.review && out.conta.review !== "APPROVED";
 
+  // Lista de contas que o token realmente enxerga — decide entre "falta
+  // permissão" e "o ID configurado está errado", que dão o mesmo erro na
+  // Graph API mas exigem consertos completamente diferentes.
+  const visiveis = Array.isArray(out.contas_visiveis_pelo_token) ? out.contas_visiveis_pelo_token : null;
+  const contaConfigVisivel = visiveis && visiveis.some(w => String(w.id) === String(env.WHATSAPP_WABA_ID));
+
   if (!out.token.valido) {
     out.veredito = "TOKEN INVÁLIDO OU VENCIDO — gere um novo no Meta Developer e rode: wrangler secret put WHATSAPP_ACCESS_TOKEN";
+  } else if (visiveis && visiveis.length === 0) {
+    out.veredito = "O TOKEN É VÁLIDO MAS NÃO TEM NENHUMA CONTA DO WHATSAPP ATRIBUÍDA — no Business Manager: Configurações do negócio → Usuários → Usuários do sistema → (o usuário) → Adicionar ativos → Contas do WhatsApp → marque a conta e dê controle total. Depois gere um token novo.";
+  } else if (visiveis && !contaConfigVisivel) {
+    out.veredito = `O TOKEN ENXERGA OUTRA(S) CONTA(S), NÃO A CONFIGURADA (${env.WHATSAPP_WABA_ID}) — veja 'contas_visiveis_pelo_token' e use o ID de lá no WHATSAPP_WABA_ID.`;
   } else if (contaReprovada && semNenhumNumero) {
     out.veredito = `A CONTA ESTÁ COM ANÁLISE "${out.conta.review}" E NÃO TEM NENHUM NÚMERO — nenhum ajuste no worker resolve enquanto isso não mudar na Meta. É preciso descobrir o motivo da reprovação (Business Manager → Central de Contas/Qualidade) e resolver por lá antes de adicionar número de novo.`;
   } else if (contaReprovada) {
