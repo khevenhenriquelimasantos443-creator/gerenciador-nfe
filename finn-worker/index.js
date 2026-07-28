@@ -1547,12 +1547,25 @@ async function handleWhatsAppHealth(env) {
     return { ok: r.ok, status: r.status, body };
   }
 
-  // 1. Token — se estiver morto, o resto vem vazio de qualquer jeito.
+  // 1. Token — testado contra /me, que responde pra QUALQUER token válido.
+  //    Testar contra o phone_number_id (como o /status fazia) confunde dois
+  //    problemas bem diferentes: token morto e número inacessível. Os dois
+  //    davam "token: false", escondendo que a conta é que estava restrita.
   try {
-    const me = await metaGet(`${env.WHATSAPP_PHONE_NUMBER_ID}?fields=id`);
+    const me = await metaGet(`me?fields=id,name`);
     out.token = { valido: me.ok, http: me.status };
-    if (!me.ok) out.token.erro = me.body && me.body.error;
+    if (me.ok) out.token.dono = me.body && (me.body.name || me.body.id);
+    else out.token.erro = me.body && me.body.error;
   } catch (e) { out.token = { valido: false, erro: String(e) }; }
+
+  // 1b. O número configurado responde? Separado do token de propósito —
+  //     é essa diferença que diz se o problema é credencial ou permissão.
+  try {
+    const pn = await metaGet(`${env.WHATSAPP_PHONE_NUMBER_ID}?fields=id,display_phone_number,verified_name,quality_rating`);
+    out.numero_configurado = pn.ok
+      ? { acessivel: true, id: pn.body.id, numero: pn.body.display_phone_number, nome: pn.body.verified_name }
+      : { acessivel: false, http: pn.status, erro: pn.body && pn.body.error };
+  } catch (e) { out.numero_configurado = { acessivel: false, erro: String(e) }; }
 
   // 2. Conta (WABA) — account_review_status é o campo que diz se a Meta
   //    liberou a conta ("APPROVED") ou não.
@@ -1591,8 +1604,17 @@ async function handleWhatsAppHealth(env) {
   // Veredito em português — o objetivo é responder "dá pra usar?" sem
   // precisar interpretar JSON da Meta.
   const numeroOk = Array.isArray(out.numero.lista) && out.numero.lista.some(n => n.e_o_configurado && n.status === "CONNECTED");
+  const numeroConfigInacessivel = out.numero_configurado && out.numero_configurado.acessivel === false;
   if (!out.token.valido) {
     out.veredito = "TOKEN INVÁLIDO OU VENCIDO — gere um novo no Meta Developer e rode: wrangler secret put WHATSAPP_ACCESS_TOKEN";
+  } else if (numeroConfigInacessivel && out.conta.erro) {
+    // Token vivo mas nem conta nem número respondem: o app perdeu acesso
+    // à conta inteira (restrição da Meta, ou o app foi desvinculado dela).
+    out.veredito = "TOKEN VÁLIDO, MAS ESTE APP NÃO ENXERGA MAIS A CONTA NEM O NÚMERO — a conta business provavelmente segue restrita na Meta, ou o app foi desvinculado dela.";
+  } else if (numeroConfigInacessivel) {
+    // Conta responde mas o número específico não: o ID guardado está
+    // desatualizado (número recriado costuma ganhar ID novo).
+    out.veredito = "CONTA RESPONDE, MAS O ID DO NÚMERO GUARDADO NÃO EXISTE MAIS — veja em 'numero.lista' o ID atual e atualize com: wrangler secret put WHATSAPP_PHONE_NUMBER_ID";
   } else if (out.conta.erro || out.numero.erro) {
     out.veredito = "TOKEN OK, MAS A CONTA/NÚMERO NÃO RESPONDEM — provável que a conta ainda esteja restrita na Meta.";
   } else if (out.conta.review && out.conta.review !== "APPROVED") {
