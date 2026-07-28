@@ -26,13 +26,6 @@ for (let n = 1; fs.existsSync(path.join(__dirname, 'social/ig_post_' + n + '.png
   socialPosts.push(fs.readFileSync(path.join(__dirname, 'social/ig_post_' + n + '.png')).toString('base64'));
 }
 
-// Reels da campanha (mesma lógica — precisam de uma URL pública fixa pro
-// video_url do Graph API buscar). Mesmo padrão do socialPosts, mas em vídeo.
-const socialReels = [];
-for (let n = 1; fs.existsSync(path.join(__dirname, 'social/reel_' + n + '.mp4')); n++) {
-  socialReels.push(fs.readFileSync(path.join(__dirname, 'social/reel_' + n + '.mp4')).toString('base64'));
-}
-
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
 
@@ -1330,80 +1323,6 @@ async function _logInstagramAttempt(env, log) {
   } catch (e) { /* log é best-effort, nunca deve derrubar a publicação */ }
 }
 
-// Legendas dos 2 reels agendados manualmente (não fazem parte da fila
-// automática dos posts-imagem — são disparados uma vez, nos horários
-// combinados, via cron fixo em datas/horas específicas).
-const REEL_CAPTIONS = [
-  'Ainda organiza os gastos numa planilha?\\n\\nExiste um jeito mais fácil — o Finn. é um app financeiro 100% grátis, feito pro brasileiro, e ainda está em fase de testes.\\n\\nTesta antes de todo mundo. Link na bio pra se inscrever.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
-  'Por dentro do Finn.: lança um gasto e ele categoriza sozinho, e você acompanha suas metas com progresso visual — tudo em segundos, sem planilha.\\n\\n100% grátis. Testa antes de todo mundo — link na bio.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira'
-];
-
-// Publica um Reel (vídeo) — mesma ideia dos posts-imagem, mas com
-// media_type:REELS e video_url em vez de image_url. Vídeo demora mais pra
-// processar do que imagem, então a espera do status_code é bem mais longa
-// (até 100s) antes de tentar o media_publish.
-async function _publishReel(env, reelIndex, caption) {
-  if (!env.IG_ACCESS_TOKEN || !env.IG_BUSINESS_ACCOUNT_ID) {
-    return { ok: false, skipped: true, reason: 'IG_ACCESS_TOKEN ou IG_BUSINESS_ACCOUNT_ID não configurados' };
-  }
-  var videoUrl = 'https://finn.dev.br/social/reel-' + reelIndex + '.mp4';
-  var log = { kind: 'reel', index: reelIndex, video_url: videoUrl, started_at: new Date().toISOString() };
-  try {
-    var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ media_type: 'REELS', video_url: videoUrl, caption: caption, access_token: env.IG_ACCESS_TOKEN })
-    });
-    var createBody = await createResp.json();
-    log.create_status = createResp.status;
-    log.create_response = createBody;
-    if (!createResp.ok || !createBody.id) {
-      log.ok = false;
-      await _logInstagramAttempt(env, log);
-      return { ok: false, step: 'media', body: createBody };
-    }
-
-    var containerReady = false;
-    for (var i = 0; i < 20; i++) {
-      var statusResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + createBody.id + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
-      var statusBody = await statusResp.json();
-      log.container_status = statusBody.status_code || statusBody;
-      if (statusBody.status_code === 'FINISHED') { containerReady = true; break; }
-      if (statusBody.status_code === 'ERROR') break;
-      await new Promise(function (resolve) { setTimeout(resolve, 5000); });
-    }
-    if (!containerReady) {
-      log.ok = false;
-      await _logInstagramAttempt(env, log);
-      return { ok: false, step: 'container_not_ready', body: log.container_status };
-    }
-
-    var publishResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })
-    });
-    var publishBody = await publishResp.json();
-    log.publish_status = publishResp.status;
-    log.publish_response = publishBody;
-    if (!publishResp.ok || !publishBody.id) {
-      log.ok = false;
-      await _logInstagramAttempt(env, log);
-      return { ok: false, step: 'media_publish', body: publishBody };
-    }
-
-    log.ok = true;
-    log.finished_at = new Date().toISOString();
-    await _logInstagramAttempt(env, log);
-    return { ok: true, index: reelIndex, media_id: publishBody.id };
-  } catch (e) {
-    log.ok = false;
-    log.error = String(e && e.message || e);
-    await _logInstagramAttempt(env, log);
-    return { ok: false, error: log.error };
-  }
-}
-
 // GET /admin/instagram-status?access_token=...&admin_password=... — mostra
 // quantos posts já foram (ou faltam) publicar, e o histórico de tentativas.
 async function _adminInstagramStatus(request, env) {
@@ -1452,25 +1371,6 @@ async function _adminInstagramPublishNext(request, env) {
     if (!_masterPasswordOk(env, body.admin_password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     var result = await _publishNextInstagramPost(env);
-    return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
-  } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
-  }
-}
-
-// POST /admin/instagram-publish-reel — { access_token, admin_password, reel:1|2 }
-// dispara a publicação de um dos 2 reels AGORA (só a conta master) — pra
-// testar sem esperar o horário agendado no cron.
-async function _adminInstagramPublishReel(request, env) {
-  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
-  try {
-    var body = {};
-    try { body = JSON.parse(await request.text()); } catch (e0) {}
-    var authUser = await _supaAuth(body.access_token);
-    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, body.admin_password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
-    var reelIndex = Number(body.reel) === 2 ? 2 : 1;
-    var result = await _publishReel(env, reelIndex, REEL_CAPTIONS[reelIndex - 1]);
     return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
@@ -1824,19 +1724,6 @@ h1 em{font-style:normal;color:#F97316}
       }
     }
 
-    // ── Reels — mesma ideia, mas o Graph API busca um video_url ──
-    var reelMatch = url.pathname.match(/^\\/social\\/reel-(\\d+)\\.mp4$/);
-    if (reelMatch) {
-      var reelArr = ${JSON.stringify(socialReels)};
-      var reelB64 = reelArr[Number(reelMatch[1]) - 1];
-      if (reelB64) {
-        var reelBytes = Uint8Array.from(atob(reelB64), function(c){ return c.charCodeAt(0); });
-        return new Response(reelBytes, {
-          headers: { 'Content-Type': 'video/mp4', 'Cache-Control': 'public, max-age=31536000, immutable' }
-        });
-      }
-    }
-
     // ── Push: subscribe ──
     if (url.pathname === '/push/subscribe' && request.method === 'POST') {
       var cors2 = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -1926,9 +1813,6 @@ h1 em{font-style:normal;color:#F97316}
     if (url.pathname === '/admin/instagram-publish-next' && request.method === 'POST') {
       return _adminInstagramPublishNext(request, env);
     }
-    if (url.pathname === '/admin/instagram-publish-reel' && request.method === 'POST') {
-      return _adminInstagramPublishReel(request, env);
-    }
 
     // ── Pitch decks ──
     if (url.pathname === '/investidores') {
@@ -1982,14 +1866,6 @@ h1 em{font-style:normal;color:#F97316}
       ctx.waitUntil(checkExpiredSubscriptions(env));
     } else if (event.cron === '0 15 * * *') {
       ctx.waitUntil(_publishNextInstagramPost(env));
-    } else if (event.cron === '0 18 28 7 *') {
-      // Disparo único combinado — reel 1 às 15h BRT de 28/07. Remover do
-      // wrangler.toml depois que publicar (senão volta a disparar só em
-      // 28/07 do ano que vem, inofensivo mas desnecessário deixar).
-      ctx.waitUntil(_publishReel(env, 1, REEL_CAPTIONS[0]));
-    } else if (event.cron === '0 23 28 7 *') {
-      // Disparo único combinado — reel 2 às 20h BRT de 28/07.
-      ctx.waitUntil(_publishReel(env, 2, REEL_CAPTIONS[1]));
     } else {
       ctx.waitUntil(checkFixedDueAndNotify(env));
     }
