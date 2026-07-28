@@ -1090,6 +1090,50 @@ function _betaConfirmPageHtml(name, ok, errorMessage) {
     '</style></head><body><div class="card">' + body + '</div></body></html>';
 }
 
+// E-mail de boas-vindas de verdade — mandado só depois que a inscrição é
+// confirmada (GET /beta/confirm), não no momento do cadastro.
+function _betaWelcomeEmailHtml(name) {
+  var safeName = _escapeBetaHtml(name || 'tudo bem');
+  return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">' +
+    '<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">' +
+    '</head>' +
+    '<body style="margin:0;padding:0;background:#F8F7F4;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#F8F7F4" style="background:#F8F7F4;padding:32px 16px">' +
+    '<tr><td align="center">' +
+    '<table role="presentation" width="100%" bgcolor="#ffffff" style="max-width:480px;background:#ffffff;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden">' +
+    '<tr><td style="padding:28px 28px 0">' +
+      '<table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
+      '<td width="32" height="32" bgcolor="#1E293B" style="background:#1E293B;border-radius:9px;text-align:center;vertical-align:middle;color:#F97316;font-weight:800;font-size:15px;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif">F</td>' +
+      '</tr></table>' +
+    '</td></tr>' +
+    '<tr><td style="padding:20px 28px 8px">' +
+      '<h1 style="margin:0;font-size:22px;font-weight:800;color:#0F172A;letter-spacing:-.02em">Bem-vindo(a), ' + safeName + '.</h1>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 20px">' +
+      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">Sua inscrição no grupo de testers do <b>Finn.</b> está confirmada — obrigado por topar experimentar em primeira mão!</p>' +
+      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#334155">O app já está pronto pra usar, é 100% grátis, e você pode entrar agora mesmo com sua conta Google:</p>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 24px">' +
+      '<a href="https://finn.dev.br" style="display:block;text-align:center;background:#F97316;color:#ffffff;text-decoration:none;font-weight:800;font-size:15px;border-radius:10px;padding:14px">Abrir o Finn →</a>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 8px">' +
+      '<p style="margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#64748B">Como é uma fase de testes, é bem provável que você encontre algum bug ou algo que ainda não funcione direito — <b style="color:#1E293B">isso é super esperado</b>, e é exatamente pra isso que estou aqui. Qualquer coisa, me chama direto:</p>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 28px 28px">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413" style="color:#F97316;text-decoration:none">(13) 99210-2413</a></td>' +
+      '</tr><tr>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance" style="color:#F97316;text-decoration:none">@finn.finnance</a></td>' +
+      '</tr><tr>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com" style="color:#F97316;text-decoration:none">Finn.controle01@gmail.com</a></td>' +
+      '</tr></table>' +
+    '</td></tr>' +
+    '<tr><td style="padding:16px 28px;border-top:1px solid #E2E8F0" bgcolor="#F8F7F4">' +
+      '<p style="margin:0;font-size:11.5px;color:#94A3B8;line-height:1.5">Você recebeu esse e-mail porque confirmou sua inscrição no grupo de testers em finn.dev.br/beta. Não é uma lista de e-mail marketing — é só isso mesmo, um "oi, bem-vindo(a)".</p>' +
+    '</td></tr>' +
+    '</table></td></tr></table></body></html>';
+}
+
 // GET /beta/confirm?id=...&token=... — clicado a partir do e-mail de
 // confirmação. Só marca confirmed:true se o token bater com o que foi
 // gravado no signup — sem isso, qualquer um adivinhando um id confirmaria
@@ -1114,6 +1158,33 @@ async function _betaConfirm(request, env) {
     if (!signup.confirmed) {
       signup.confirmed = true;
       signup.confirmed_at = new Date().toISOString();
+      // Manda o e-mail de boas-vindas só na primeira confirmação — clicar
+      // de novo no mesmo link (ex: abriu duas abas) não deve mandar outro.
+      if (env.RESEND_API_KEY) {
+        signup.welcome_email_status = { attempted: true };
+        try {
+          var welcomeResp = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              from: 'Finn <contato@finn.dev.br>',
+              to: [signup.email],
+              reply_to: 'Finn.controle01@gmail.com',
+              subject: 'Bem-vindo(a) ao grupo de testers do Finn',
+              html: _betaWelcomeEmailHtml(signup.name)
+            })
+          });
+          var welcomeText = await welcomeResp.text();
+          signup.welcome_email_status.ok = welcomeResp.ok;
+          signup.welcome_email_status.status = welcomeResp.status;
+          signup.welcome_email_status.response = welcomeText.slice(0, 500);
+        } catch (eWelcome) {
+          signup.welcome_email_status.ok = false;
+          signup.welcome_email_status.error = String(eWelcome && eWelcome.message || eWelcome);
+        }
+      } else {
+        signup.welcome_email_status = { attempted: false };
+      }
       await env.FINN_KV.put('beta_signup_' + id, JSON.stringify(signup));
     }
     return new Response(_betaConfirmPageHtml(signup.name, true), { headers: htmlHeaders });
