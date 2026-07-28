@@ -980,10 +980,15 @@ function _betaWelcomeEmailHtml(name) {
 // INSTAGRAM — publicação automática dos 5 posts da campanha do beta, 1 por dia
 // =============================================================================
 // Required secrets (configurados via wrangler secret / dashboard):
-//   IG_ACCESS_TOKEN        — token de acesso de longa duração (Page/User) com
-//                             instagram_basic + instagram_content_publish
-//   IG_BUSINESS_ACCOUNT_ID — ID numérico da conta Business do Instagram
-//                             (obtido via /me/accounts -> instagram_business_account)
+//   IG_ACCESS_TOKEN        — token de longa duração gerado pela "API do
+//                             Instagram com login do Instagram" (fluxo novo,
+//                             sem Página do Facebook), com as permissões
+//                             instagram_business_basic +
+//                             instagram_business_content_publish. Esse token
+//                             SÓ funciona em graph.instagram.com — não em
+//                             graph.facebook.com (formato de token diferente).
+//   IG_BUSINESS_ACCOUNT_ID — ID numérico da conta do Instagram (mostrado na
+//                             própria tela de "Gerar tokens de acesso").
 // Sem os dois configurados, a publicação automática só faz log e não tenta
 // nada — nunca falha travando o cron nem quebra outra coisa no worker.
 const IG_API_VERSION = 'v21.0';
@@ -1013,7 +1018,7 @@ async function _publishNextInstagramPost(env) {
   try {
     // Passo 1: cria o "container" de mídia (a Meta busca a imagem pela URL —
     // não existe upload direto de arquivo nessa API).
-    var createResp = await fetch('https://graph.facebook.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+    var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image_url: imageUrl, caption: caption, access_token: env.IG_ACCESS_TOKEN })
@@ -1028,7 +1033,7 @@ async function _publishNextInstagramPost(env) {
     }
 
     // Passo 2: publica o container criado.
-    var publishResp = await fetch('https://graph.facebook.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
+    var publishResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })

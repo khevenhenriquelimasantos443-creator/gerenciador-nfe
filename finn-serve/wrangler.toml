@@ -13,19 +13,22 @@ compatibility_date = "2024-01-01"
 #   de propósito, pra nunca travar a inscrição de um tester por causa disso.
 #
 # IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID — publicação automática dos 5
-#   posts da campanha (1 por dia, cron "0 15 * * *"). Passo a passo:
-#     1. Conta do Instagram (@finn.finnance) precisa ser Business ou Creator
-#        (app do Instagram → Configurações → Conta → Mudar para conta
-#        profissional).
-#     2. Vincular essa conta a uma Página do Facebook (pode criar uma nova,
-#        só pra isso).
-#     3. Criar um app em developers.facebook.com, adicionar o produto
-#        "Instagram Graph API".
-#     4. Gerar um token de acesso de LONGA DURAÇÃO (60 dias) com as
-#        permissões instagram_basic + instagram_content_publish +
-#        pages_show_list, pra conta ligada à Página.
-#     5. Pegar o ID da conta Business do Instagram via
-#        GET /me/accounts?fields=instagram_business_account (com o token).
+#   posts da campanha (1 por dia, cron "0 15 * * *"). Usa a "API do
+#   Instagram com login do Instagram" (fluxo novo, sem precisar de Página
+#   do Facebook) — os dois valores ficam na mesma tela do Meta Developer
+#   Console (Casos de uso → API do Instagram → Configuração da API com
+#   login do Instagram):
+#     1. Conta do Instagram (@finn.finnance) precisa ser Business ou Creator.
+#     2. Em "Permissões e recursos", adicionar instagram_business_basic +
+#        instagram_business_content_publish (a publicação de mídia exige
+#        essa segunda, que não vem marcada como obrigatória por padrão).
+#     3. Em "Configuração da API com login do Instagram" → seção
+#        "2. Gerar tokens de acesso": atribuir o papel de Testador do
+#        Instagram à conta (aba Funções, precisa aceitar o convite no
+#        app do Instagram), depois clicar em "Gerar token" — esse token
+#        SÓ funciona em graph.instagram.com, não em graph.facebook.com.
+#     4. O ID numérico da conta aparece do lado do nome dela, na mesma
+#        linha de "Gerar token" — esse é o IG_BUSINESS_ACCOUNT_ID.
 #   Sem os dois configurados, o cron só faz log e não tenta publicar nada.
 
 # ─────────────────────────────────────────────
