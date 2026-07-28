@@ -40,9 +40,13 @@ compatibility_date = "2024-01-01"
 #                    1x/dia às 12:00 BRT (para sozinho depois do último post)
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
+#  - "0 18 28 7 *" → disparo único: reel 1 às 15:00 BRT de 28/07/2026
+#  - "0 23 28 7 *" → disparo único: reel 2 às 20:00 BRT de 28/07/2026
+#    (esses dois só existem por causa do dia/mês fixo — remover depois que
+#    publicarem, senão voltam a disparar só em 28/07 do ano que vem)
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 13 * * *", "0 15 * * *", "0 23 * * 1"]
+crons = ["0 12 * * *", "0 13 * * *", "0 15 * * *", "0 23 * * 1", "0 18 28 7 *", "0 23 28 7 *"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)
