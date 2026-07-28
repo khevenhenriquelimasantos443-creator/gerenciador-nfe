@@ -1057,7 +1057,7 @@ const IG_CAPTIONS = [
   '100% grátis. Sem pegadinha. 🇧🇷\\n\\nSem cartão de crédito pra começar, sem letra miúda — feito pro jeito que o brasileiro realmente vive. Link na bio.\\n\\n#appbrasileiro #financaspessoais #controlefinanceiro',
   'Divide a conta sem treta 🤝\\n\\nAluguel, mercado, jantar com os amigos — registra uma vez e o Finn calcula quanto cada um deve, sem planilha e sem constrangimento.\\n\\n#financaspessoais #dividirdespesas #appfinanceiro #educacaofinanceira',
   'Fatura do cartão sob controle 💳\\n\\nAcompanha os gastos do cartão em tempo real, parcelas futuras e o valor que vai fechar na fatura — sem surpresa no fim do mês.\\n\\n#cartaodecredito #financaspessoais #controlefinanceiro #appfinanceiro',
-  'Lança um gasto direto pelo WhatsApp ou Telegram 💬\\n\\nManda uma mensagem tipo "50 mercado" e o Finn já categoriza e salva pra você — sem precisar abrir o app.\\n\\n#financaspessoais #appfinanceiro #whatsapp #telegram',
+  'Nunca mais esquece uma conta 🔔\\n\\nCadastra suas contas fixas — aluguel, internet, streaming — e recebe um aviso antes do vencimento, sem precisar lembrar sozinho.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #lembretes',
   'Seus dados são só seus 🔒\\n\\nA conexão com o banco é feita direto no seu dispositivo — a gente nunca guarda sua senha nem vê seu extrato num servidor.\\n\\n#privacidade #seguranca #financaspessoais #appfinanceiro',
   'Você no controle da sua grana 📊\\n\\nGráficos claros de pra onde o dinheiro vai, mês a mês — sem termos complicados, só o que importa pra decidir melhor.\\n\\nLink na bio pra testar de graça.\\n\\n#financaspessoais #controlefinanceiro #educacaofinanceira #appfinanceiro'
 ];
