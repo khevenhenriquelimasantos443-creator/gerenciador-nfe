@@ -1013,6 +1013,8 @@ function _betaWelcomeEmailHtml(name) {
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
       '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413" style="color:#F97316;text-decoration:none">(13) 99210-2413</a></td>' +
       '</tr><tr>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance" style="color:#F97316;text-decoration:none">@finn.finnance</a></td>' +
+      '</tr><tr>' +
       '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com" style="color:#F97316;text-decoration:none">Finn.controle01@gmail.com</a></td>' +
       '</tr></table>' +
     '</td></tr>' +
