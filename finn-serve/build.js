@@ -1864,7 +1864,10 @@ h1 em{font-style:normal;color:#F97316}
       ctx.waitUntil(sendWeeklySummary(env));
     } else if (event.cron === '0 13 * * *') {
       ctx.waitUntil(checkExpiredSubscriptions(env));
-    } else if (event.cron === '0 15 * * *') {
+    } else if (event.cron === '0 15 * * *' || event.cron === '5 12 * * *' || event.cron === '0 21 * * *') {
+      // 3 posts/dia da campanha: 9:05, 12:00 e 18:00 BRT (12:05, 15:00 e
+      // 21:00 UTC). O minuto 5 no horário das 9h evita colidir com o cron
+      // de contas fixas, que já usa exatamente "0 12 * * *".
       ctx.waitUntil(_publishNextInstagramPost(env));
     } else {
       ctx.waitUntil(checkFixedDueAndNotify(env));
