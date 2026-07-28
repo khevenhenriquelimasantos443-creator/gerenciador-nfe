@@ -1059,7 +1059,17 @@ const IG_CAPTIONS = [
   'Fatura do cartão sob controle 💳\\n\\nAcompanha os gastos do cartão em tempo real, parcelas futuras e o valor que vai fechar na fatura — sem surpresa no fim do mês.\\n\\n#cartaodecredito #financaspessoais #controlefinanceiro #appfinanceiro',
   'Nunca mais esquece uma conta 🔔\\n\\nCadastra suas contas fixas — aluguel, internet, streaming — e recebe um aviso antes do vencimento, sem precisar lembrar sozinho.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #lembretes',
   'Seus dados são só seus 🔒\\n\\nA conexão com o banco é feita direto no seu dispositivo — a gente nunca guarda sua senha nem vê seu extrato num servidor.\\n\\n#privacidade #seguranca #financaspessoais #appfinanceiro',
-  'Você no controle da sua grana 📊\\n\\nGráficos claros de pra onde o dinheiro vai, mês a mês — sem termos complicados, só o que importa pra decidir melhor.\\n\\nLink na bio pra testar de graça.\\n\\n#financaspessoais #controlefinanceiro #educacaofinanceira #appfinanceiro'
+  'Você no controle da sua grana 📊\\n\\nGráficos claros de pra onde o dinheiro vai, mês a mês — sem termos complicados, só o que importa pra decidir melhor.\\n\\nLink na bio pra testar de graça.\\n\\n#financaspessoais #controlefinanceiro #educacaofinanceira #appfinanceiro',
+  'Visão geral do mês, num só lugar 📊\\n\\nSaldo, receitas e despesas — tudo num painel simples, sem precisar somar nada na mão.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
+  'O Finn categoriza sozinho 🤖\\n\\nImportou o extrato? Cada gasto já cai na categoria certa, sem você mexer em nada.\\n\\n#financaspessoais #appfinanceiro #organizacaofinanceira #educacaofinanceira',
+  'Modo claro ou modo escuro — do seu jeito 🌙\\n\\nEscolhe o visual que combina com você e muda a qualquer momento, direto nas configurações.\\n\\n#appfinanceiro #financaspessoais',
+  'Instala como app, sem precisar de loja 📲\\n\\nAdiciona o Finn na tela inicial do seu celular em segundos — abre rápido, sem ocupar espaço.\\n\\n#appfinanceiro #financaspessoais #tecnologia',
+  'Junta dinheiro pra o que importa 🎯\\n\\nCria uma meta, define o valor e acompanha o progresso — viagem, reserva de emergência, o que for.\\n\\n#metasfinanceiras #financaspessoais #appfinanceiro #educacaofinanceira',
+  'Todas as contas, um só lugar 🏦\\n\\nConecta quantos bancos usar e vê o saldo geral, sem abrir um app por vez.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro',
+  'Veja se está gastando menos 📈\\n\\nCompara mês a mês e entende se seus hábitos estão melhorando de verdade — com dado, não com achismo.\\n\\n#financaspessoais #appfinanceiro #educacaofinanceira',
+  'Começa a usar em minutos ⏱️\\n\\nSem burocracia, sem cartão de crédito pra testar — cria a conta e já importa seu extrato.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro',
+  'Sem anúncio chato atrapalhando 🚫\\n\\nInterface limpa, focada no que interessa: entender e controlar seu dinheiro.\\n\\n#financaspessoais #appfinanceiro',
+  'Bora organizar sua grana hoje? 🚀\\n\\nGrupo de testers com vagas limitadas — boas-vindas pessoais e suporte direto por WhatsApp, Instagram ou e-mail.\\n\\nLink na bio pra se inscrever.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira'
 ];
 
 // Publica o próximo post da sequência (1 a IG_CAPTIONS.length) — chamado
