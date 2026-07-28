@@ -11,17 +11,35 @@ compatibility_date = "2024-01-01"
 #   grátis). Sem essa secret configurada, a inscrição continua funcionando
 #   normalmente (grava no KV), só não manda o e-mail — falha silenciosa,
 #   de propósito, pra nunca travar a inscrição de um tester por causa disso.
+#
+# IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID — publicação automática dos 5
+#   posts da campanha (1 por dia, cron "0 15 * * *"). Passo a passo:
+#     1. Conta do Instagram (@finn.finnance) precisa ser Business ou Creator
+#        (app do Instagram → Configurações → Conta → Mudar para conta
+#        profissional).
+#     2. Vincular essa conta a uma Página do Facebook (pode criar uma nova,
+#        só pra isso).
+#     3. Criar um app em developers.facebook.com, adicionar o produto
+#        "Instagram Graph API".
+#     4. Gerar um token de acesso de LONGA DURAÇÃO (60 dias) com as
+#        permissões instagram_basic + instagram_content_publish +
+#        pages_show_list, pra conta ligada à Página.
+#     5. Pegar o ID da conta Business do Instagram via
+#        GET /me/accounts?fields=instagram_business_account (com o token).
+#   Sem os dois configurados, o cron só faz log e não tenta publicar nada.
 
 # ─────────────────────────────────────────────
-#  Notificações push / assinaturas:
+#  Notificações push / assinaturas / campanha:
 #  - "0 12 * * *"  → contas fixas perto do vencimento, 1x/dia às 09:00 BRT
 #  - "0 13 * * *"  → confere assinaturas vencidas (rede de segurança pro
 #                    caso de webhook perdido), 1x/dia às 10:00 BRT
+#  - "0 15 * * *"  → publica o próximo post da campanha no Instagram,
+#                    1x/dia às 12:00 BRT (para sozinho depois do 5º post)
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 13 * * *", "0 23 * * 1"]
+crons = ["0 12 * * *", "0 13 * * *", "0 15 * * *", "0 23 * * 1"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)

@@ -18,6 +18,13 @@ const icon192      = fs.readFileSync(path.join(__dirname,'icons/icon-192.png')).
 const icon512       = fs.readFileSync(path.join(__dirname,'icons/icon-512.png')).toString('base64');
 const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-icon.png')).toString('base64');
 
+// Posts do Instagram (campanha de divulgação do beta) — servidos publicamente
+// em /social/post-N.png porque a API do Instagram só aceita image_url (não
+// tem upload direto), então a imagem precisa estar hospedada num link fixo.
+const socialPosts = [1,2,3,4,5].map(function(n){
+  return fs.readFileSync(path.join(__dirname,'social/ig_post_' + n + '.png')).toString('base64');
+});
+
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
 
@@ -1023,6 +1030,149 @@ function _betaWelcomeEmailHtml(name) {
     '</td></tr>' +
     '</table></td></tr></table></body></html>';
 }
+
+// =============================================================================
+// INSTAGRAM — publicação automática dos 5 posts da campanha do beta, 1 por dia
+// =============================================================================
+// Required secrets (configurados via wrangler secret / dashboard):
+//   IG_ACCESS_TOKEN        — token de acesso de longa duração (Page/User) com
+//                             instagram_basic + instagram_content_publish
+//   IG_BUSINESS_ACCOUNT_ID — ID numérico da conta Business do Instagram
+//                             (obtido via /me/accounts -> instagram_business_account)
+// Sem os dois configurados, a publicação automática só faz log e não tenta
+// nada — nunca falha travando o cron nem quebra outra coisa no worker.
+const IG_API_VERSION = 'v21.0';
+const IG_CAPTIONS = [
+  'Testa o Finn antes de todo mundo 🚀\\n\\nAbri um grupo de testers com vagas limitadas — você me ajuda a melhorar o app e eu dou boas-vindas pessoalmente, com suporte direto por WhatsApp, Instagram ou e-mail.\\n\\nLink na bio pra se inscrever 👆\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
+  'Chega de planilha 📊\\n\\nImporta o extrato do seu banco (Nubank, Itaú, Bradesco, BB, Inter, C6 Bank e mais) e o Finn organiza tudo sozinho — receitas, despesas e categorias, sem digitar nada na mão.\\n\\n#educacaofinanceira #financaspessoais #organizacaofinanceira',
+  'IA financeira. De graça. 🤖\\n\\nAnálise dos seus gastos, sugestões de economia e previsão de saldo do mês — tudo incluso, sem plano pago e sem letra miúda.\\n\\n#inteligenciaartificial #financaspessoais #appfinanceiro',
+  'Metas, limites e dívidas — tudo num só lugar 🎯\\n\\nDefina quanto quer gastar por categoria, junte dinheiro pra um objetivo e simule a quitação de uma dívida com juros de verdade.\\n\\n#planejamentofinanceiro #financaspessoais #metas',
+  '100% grátis. Sem pegadinha. 🇧🇷\\n\\nSem cartão de crédito pra começar, sem letra miúda — feito pro jeito que o brasileiro realmente vive. Link na bio.\\n\\n#appbrasileiro #financaspessoais #controlefinanceiro'
+];
+
+// Publica o próximo post da sequência (1 a 5) — chamado pelo cron diário e
+// também pelo endpoint de disparo manual /admin/instagram-publish-next.
+async function _publishNextInstagramPost(env) {
+  if (!env.IG_ACCESS_TOKEN || !env.IG_BUSINESS_ACCOUNT_ID) {
+    return { ok: false, skipped: true, reason: 'IG_ACCESS_TOKEN ou IG_BUSINESS_ACCOUNT_ID não configurados' };
+  }
+  if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
+
+  var nextIndex = Number((await env.FINN_KV.get('ig_post_next_index')) || '1');
+  if (nextIndex > 5) return { ok: false, done: true, reason: 'os 5 posts já foram publicados' };
+
+  var imageUrl = 'https://finn.dev.br/social/post-' + nextIndex + '.png';
+  var caption = IG_CAPTIONS[nextIndex - 1];
+  var log = { index: nextIndex, image_url: imageUrl, started_at: new Date().toISOString() };
+
+  try {
+    // Passo 1: cria o "container" de mídia (a Meta busca a imagem pela URL —
+    // não existe upload direto de arquivo nessa API).
+    var createResp = await fetch('https://graph.facebook.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image_url: imageUrl, caption: caption, access_token: env.IG_ACCESS_TOKEN })
+    });
+    var createBody = await createResp.json();
+    log.create_status = createResp.status;
+    log.create_response = createBody;
+    if (!createResp.ok || !createBody.id) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      return { ok: false, step: 'media', body: createBody };
+    }
+
+    // Passo 2: publica o container criado.
+    var publishResp = await fetch('https://graph.facebook.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })
+    });
+    var publishBody = await publishResp.json();
+    log.publish_status = publishResp.status;
+    log.publish_response = publishBody;
+
+    if (!publishResp.ok || !publishBody.id) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      return { ok: false, step: 'media_publish', body: publishBody };
+    }
+
+    log.ok = true;
+    log.finished_at = new Date().toISOString();
+    await _logInstagramAttempt(env, log);
+    // Só avança o índice em caso de sucesso — uma falha (token vencido,
+    // rate limit, etc.) tenta o MESMO post de novo no próximo cron, em vez
+    // de pular pra frente e nunca publicar o que falhou.
+    await env.FINN_KV.put('ig_post_next_index', String(nextIndex + 1));
+    return { ok: true, index: nextIndex, media_id: publishBody.id };
+  } catch (e) {
+    log.ok = false;
+    log.error = String(e && e.message || e);
+    await _logInstagramAttempt(env, log);
+    return { ok: false, error: log.error };
+  }
+}
+
+async function _logInstagramAttempt(env, log) {
+  try {
+    var id = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    await env.FINN_KV.put('ig_publish_log_' + id, JSON.stringify(log), { expirationTtl: 60 * 60 * 24 * 90 });
+  } catch (e) { /* log é best-effort, nunca deve derrubar a publicação */ }
+}
+
+// GET /admin/instagram-status?access_token=...&admin_password=... — mostra
+// quantos posts já foram (ou faltam) publicar, e o histórico de tentativas.
+async function _adminInstagramStatus(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var url = new URL(request.url);
+    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var nextIndex = Number((env.FINN_KV ? await env.FINN_KV.get('ig_post_next_index') : null) || '1');
+    var logs = [];
+    if (env.FINN_KV) {
+      var keys = [];
+      var cursor;
+      do {
+        var page = await env.FINN_KV.list({ prefix: 'ig_publish_log_', cursor: cursor });
+        keys = keys.concat(page.keys);
+        cursor = page.list_complete ? undefined : page.cursor;
+      } while (cursor);
+      keys.sort(function(a, b) { return b.name.localeCompare(a.name); });
+      logs = (await Promise.all(keys.slice(0, 20).map(function(k) { return env.FINN_KV.get(k.name); })))
+        .filter(Boolean).map(function(raw) { return JSON.parse(raw); });
+    }
+    return new Response(JSON.stringify({
+      configured: !!(env.IG_ACCESS_TOKEN && env.IG_BUSINESS_ACCOUNT_ID),
+      next_index: nextIndex,
+      done: nextIndex > 5,
+      recent_attempts: logs
+    }), { headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
+
+// POST /admin/instagram-publish-next — dispara a publicação do próximo post
+// AGORA (só a conta master) — pra testar a integração sem esperar o cron.
+async function _adminInstagramPublishNext(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, body.admin_password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var result = await _publishNextInstagramPost(env);
+    return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+  }
+}
 `;
 
 const worker = `${pluggyFns}
@@ -1357,6 +1507,17 @@ h1 em{font-style:normal;color:#F97316}
       });
     }
 
+    // ── Posts do Instagram (URL pública fixa — a Graph API busca a imagem
+    // por essa URL, não aceita upload direto) ──
+    var socialMatch = url.pathname.match(/^\\/social\\/post-([1-5])\\.png$/);
+    if (socialMatch) {
+      var socialB64 = ${JSON.stringify(socialPosts)}[Number(socialMatch[1]) - 1];
+      var socialBytes = Uint8Array.from(atob(socialB64), function(c){ return c.charCodeAt(0); });
+      return new Response(socialBytes, {
+        headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }
+      });
+    }
+
     // ── Push: subscribe ──
     if (url.pathname === '/push/subscribe' && request.method === 'POST') {
       var cors2 = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -1437,6 +1598,12 @@ h1 em{font-style:normal;color:#F97316}
     if (url.pathname === '/admin/beta-signups' && request.method === 'GET') {
       return _adminBetaSignups(request, env);
     }
+    if (url.pathname === '/admin/instagram-status' && request.method === 'GET') {
+      return _adminInstagramStatus(request, env);
+    }
+    if (url.pathname === '/admin/instagram-publish-next' && request.method === 'POST') {
+      return _adminInstagramPublishNext(request, env);
+    }
 
     // ── Pitch decks ──
     if (url.pathname === '/investidores') {
@@ -1488,6 +1655,8 @@ h1 em{font-style:normal;color:#F97316}
       ctx.waitUntil(sendWeeklySummary(env));
     } else if (event.cron === '0 13 * * *') {
       ctx.waitUntil(checkExpiredSubscriptions(env));
+    } else if (event.cron === '0 15 * * *') {
+      ctx.waitUntil(_publishNextInstagramPost(env));
     } else {
       ctx.waitUntil(checkFixedDueAndNotify(env));
     }
