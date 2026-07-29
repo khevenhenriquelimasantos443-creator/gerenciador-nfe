@@ -26,6 +26,14 @@ const PREMIUM_ENFORCEMENT_ENABLED = false;
 // Google/Supabase sozinho não é suficiente.
 const MASTER_EMAIL = "finn.controle01@gmail.com";
 
+// Número pra onde o bot manda quem pede atendimento humano — o número do
+// WhatsApp na Cloud API não tem como ser respondido na mão sem Coexistência
+// (que exige verificação de empresa/CNPJ, ainda não temos). Esse aqui é
+// pessoal por enquanto, só até ter um número dedicado — por isso o rótulo é
+// "Gerência Finn.", não o nome de ninguém.
+const SUPPORT_CONTACT_PHONE = "5513982020928";
+const SUPPORT_CONTACT_LABEL = "Gerência Finn.";
+
 // Bot do Telegram é novo — fica restrito a essas duas contas por enquanto
 // (mesma lógica de "novo recurso só pra admin primeiro" usada pro WhatsApp),
 // até validar que o fluxo de vínculo e as respostas funcionam de verdade.
@@ -490,12 +498,11 @@ async function processMessage(msg, env) {
       await saveUserData(phone, { dailyDashboardOptIn: true }, env);
       return sendText(phone, "Pronto! A partir de hoje você recebe um resumo automático todo dia às 22h. Pra parar, é só responder *parar*.", env);
     }
-    // Pedido de atendimento humano — não manda o "não entendi" nem o menu
-    // aqui. É só uma confirmação, e o resto da conversa passa a ser
-    // respondido na mão pela Caixa de Entrada do WhatsApp no Business
-    // Suite, pra não empilhar uma resposta automática em cima da manual.
+    // Pedido de atendimento humano — o número do bot está na Cloud API e não
+    // dá pra responder na mão nele sem Coexistência (que exige verificação de
+    // empresa, ainda pendente). Enquanto isso, manda pra um número separado.
     if (["atendimento","atendente","suporte","humano","falar com atendimento","falar com atendente","falar com suporte","falar com humano","quero falar com alguem","quero falar com alguém","preciso de ajuda humana"].includes(lower)) {
-      return sendText(phone, "Entendido! Alguém da equipe já te responde por aqui.", env);
+      return sendText(phone, `Entendido! Fala com a gente por aqui: https://wa.me/${SUPPORT_CONTACT_PHONE} (${SUPPORT_CONTACT_LABEL})`, env);
     }
 
     await sendText(phone, "Não entendi esse comando. Digite *menu* para ver as opções, ou mande um áudio/foto pra lançar direto.\n\nTambém aceito: *analise*, *score*, *dashboard*.", env);
