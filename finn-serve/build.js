@@ -23,6 +23,7 @@ const appleTouchIcon = fs.readFileSync(path.join(__dirname,'icons/apple-touch-ic
 // dele. JPEG em vez de PNG pra ficar bem menor (o worker já está perto do
 // limite de 3MB do plano free do Cloudflare com os 20 posts do Instagram).
 const reel1Cover = fs.readFileSync(path.join(__dirname, 'social/reel1_cover.jpg')).toString('base64');
+const reel2Cover = fs.readFileSync(path.join(__dirname, 'social/reel2_cover.jpg')).toString('base64');
 
 // Posts do Instagram (campanha de divulgação do beta) — servidos publicamente
 // em /social/post-N.png porque a API do Instagram só aceita image_url (não
@@ -1716,10 +1717,11 @@ h1 em{font-style:normal;color:#F97316}
       });
     }
 
-    // ── Capa do Reel 1 (link direto pra baixar do navegador do celular) ──
-    if (url.pathname === '/social/reel1-cover.jpg') {
-      var reel1CoverBytes = Uint8Array.from(atob(${JSON.stringify(reel1Cover)}), function(c){ return c.charCodeAt(0); });
-      return new Response(reel1CoverBytes, {
+    // ── Capas dos Reels (link direto pra baixar do navegador do celular) ──
+    if (url.pathname === '/social/reel1-cover.jpg' || url.pathname === '/social/reel2-cover.jpg') {
+      var reelCoverB64 = url.pathname === '/social/reel1-cover.jpg' ? ${JSON.stringify(reel1Cover)} : ${JSON.stringify(reel2Cover)};
+      var reelCoverBytes = Uint8Array.from(atob(reelCoverB64), function(c){ return c.charCodeAt(0); });
+      return new Response(reelCoverBytes, {
         headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' }
       });
     }
