@@ -501,7 +501,10 @@ async function processMessage(msg, env) {
     // Pedido de atendimento humano — o número do bot está na Cloud API e não
     // dá pra responder na mão nele sem Coexistência (que exige verificação de
     // empresa, ainda pendente). Enquanto isso, manda pra um número separado.
-    if (["atendimento","atendente","suporte","humano","falar com atendimento","falar com atendente","falar com suporte","falar com humano","quero falar com alguem","quero falar com alguém","preciso de ajuda humana"].includes(lower)) {
+    // Checa a PALAVRA em qualquer lugar da frase (não frase exata) — "falar
+    // com atendimento humano" tem que bater mesmo não estando na lista literal.
+    const ATENDIMENTO_KEYWORDS = ["atendimento","atendente","suporte","humano","falar com alguem","falar com alguém"];
+    if (ATENDIMENTO_KEYWORDS.some(k => lower.includes(k))) {
       return sendText(phone, `Entendido! Fala com a gente por aqui: https://wa.me/${SUPPORT_CONTACT_PHONE} (${SUPPORT_CONTACT_LABEL})`, env);
     }
 
