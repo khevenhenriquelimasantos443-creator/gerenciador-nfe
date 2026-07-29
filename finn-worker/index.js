@@ -1593,6 +1593,14 @@ async function handleWhatsAppHealth(env) {
   const vt = env.WHATSAPP_VERIFY_TOKEN || "";
   out.verify_token_pista = { existe: !!env.WHATSAPP_VERIFY_TOKEN, tamanho: vt.length, ultimos_2: vt.slice(-2) };
 
+  // Mesma pista, agora pro META_APP_SECRET — usado quando o /webhook (POST)
+  // fica rejeitando tudo com "assinatura inválida" mesmo depois de trocar o
+  // secret. App Secret da Meta tem 32 caracteres hex; se o tamanho vier
+  // diferente disso, é sinal de cola errada (aspas, quebra de linha, campo
+  // trocado) em vez do secret em si estar desatualizado.
+  const as = env.META_APP_SECRET || "";
+  out.app_secret_pista = { existe: !!env.META_APP_SECRET, tamanho: as.length, ultimos_2: as.slice(-2) };
+
   async function metaGet(path) {
     const r = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${path}`, {
       headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
