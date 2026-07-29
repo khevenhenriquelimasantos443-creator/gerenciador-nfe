@@ -1143,13 +1143,24 @@ function renderWhatsAppPromo(){
   if(localStorage.getItem("finn_wa_promo_dismissed") === "1") return "";
   var user = currentSession && currentSession.user;
   var meta = (user && user.user_metadata) || {};
-  if(meta.whatsapp) return "";
+  var hasTelegram = telegramBotVisible();
+  var waDone = !!meta.whatsapp;
+  var tgDone = !hasTelegram || !!meta.telegram_chat_id;
+  if(waDone && tgDone) return "";
+
+  var eyebrow = hasTelegram ? "Finalmente conseguimos!" : "Novo";
+  var title = hasTelegram ? "O bot do WhatsApp já está disponível — e agora também no Telegram" : "Lance gastos direto pelo WhatsApp";
+  var desc = hasTelegram
+    ? "Manda mensagem, áudio ou foto do comprovante pro bot — sem abrir o app. Conecte no WhatsApp ou no Telegram em Configurações."
+    : "Manda mensagem, áudio ou foto do comprovante pro bot — sem abrir o app. Conecte seu número em Configurações.";
+  var btnLabel = hasTelegram ? "Conectar" : "Conectar WhatsApp";
+
   return '<div class="card" style="border-color:var(--fp);position:relative">' +
     '<button type="button" id="btnDismissWaPromo" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--fm);font-size:16px;cursor:pointer;line-height:1">×</button>' +
-    '<div class="eyebrow" style="color:var(--fp)">Novo</div>' +
-    '<div style="font-weight:800;font-size:14px;margin-bottom:4px">Lance gastos direto pelo WhatsApp</div>' +
-    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Manda mensagem, áudio ou foto do comprovante pro bot — sem abrir o app. Conecte seu número em Configurações.</div>' +
-    '<button type="button" class="btn-submit" id="btnGoConfigWa">Conectar WhatsApp</button>' +
+    '<div class="eyebrow" style="color:var(--fp)">' + eyebrow + '</div>' +
+    '<div style="font-weight:800;font-size:14px;margin-bottom:4px">' + title + '</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' + desc + '</div>' +
+    '<button type="button" class="btn-submit" id="btnGoConfigWa">' + btnLabel + '</button>' +
   '</div>';
 }
 
