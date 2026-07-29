@@ -1693,14 +1693,22 @@ async function handleWhatsAppHealth(env) {
   // Lista de contas que o token realmente enxerga — decide entre "falta
   // permissão" e "o ID configurado está errado", que dão o mesmo erro na
   // Graph API mas exigem consertos completamente diferentes.
+  //
+  // MAS: só serve como diagnóstico quando a consulta DIRETA à conta (por
+  // ID conhecido) falha. /me/assigned_whatsapp_business_accounts já se
+  // mostrou um sinal não-confiável (voltou vazio com um token que, na
+  // prática, tinha acesso completo e comprovado à conta/número/webhook
+  // certos) — então uma consulta direta bem-sucedida sempre vale mais
+  // que essa lista, nunca o contrário.
+  const contaAcessoDireto = !out.conta.erro && !!out.conta.id;
   const visiveis = Array.isArray(out.contas_visiveis_pelo_token) ? out.contas_visiveis_pelo_token : null;
   const contaConfigVisivel = visiveis && visiveis.some(w => String(w.id) === String(env.WHATSAPP_WABA_ID));
 
   if (!out.token.valido) {
     out.veredito = "TOKEN INVÁLIDO OU VENCIDO — gere um novo no Meta Developer e rode: wrangler secret put WHATSAPP_ACCESS_TOKEN";
-  } else if (visiveis && visiveis.length === 0) {
+  } else if (!contaAcessoDireto && visiveis && visiveis.length === 0) {
     out.veredito = "O TOKEN É VÁLIDO MAS NÃO TEM NENHUMA CONTA DO WHATSAPP ATRIBUÍDA — no Business Manager: Configurações do negócio → Usuários → Usuários do sistema → (o usuário) → Adicionar ativos → Contas do WhatsApp → marque a conta e dê controle total. Depois gere um token novo.";
-  } else if (visiveis && !contaConfigVisivel) {
+  } else if (!contaAcessoDireto && visiveis && !contaConfigVisivel) {
     out.veredito = `O TOKEN ENXERGA OUTRA(S) CONTA(S), NÃO A CONFIGURADA (${env.WHATSAPP_WABA_ID}) — veja 'contas_visiveis_pelo_token' e use o ID de lá no WHATSAPP_WABA_ID.`;
   } else if (contaReprovada && semNenhumNumero) {
     out.veredito = `A CONTA ESTÁ COM ANÁLISE "${out.conta.review}" E NÃO TEM NENHUM NÚMERO — nenhum ajuste no worker resolve enquanto isso não mudar na Meta. É preciso descobrir o motivo da reprovação (Business Manager → Central de Contas/Qualidade) e resolver por lá antes de adicionar número de novo.`;
