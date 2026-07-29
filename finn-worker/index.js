@@ -85,6 +85,14 @@ export default {
       return handleSubscribeWaba(env);
     }
 
+    // Chama o /register da Cloud API direto, pulando a tela do Meta Developer
+    // (que só devolve "Falha na inscrição" genérico) — devolve a resposta
+    // crua da Graph API, com o código/mensagem de erro reais.
+    if (url.pathname === "/whatsapp/register-number" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppRegisterNumber(request, env);
+    }
+
     // Resumo de uso do bot (WhatsApp + Telegram) pro painel de uso do app —
     // requireAdminToken já aceita access_token+admin_password da conta
     // master, então o app consegue chamar isso direto (mesmo esquema do
@@ -1520,6 +1528,45 @@ async function handleStatus(env) {
     status: ok ? 200 : 503,
     headers: { "Content-Type": "application/json" }
   }));
+}
+
+// =============================================================================
+// REGISTER NUMBER — chama o /register da Cloud API direto, com o PIN de
+// verificação em duas etapas. A tela do Meta Developer só devolve "Falha na
+// inscrição" genérico quando isso dá errado (PIN antigo diferente, número
+// ainda preso a um vínculo anterior, etc.) — aqui a resposta crua da Graph
+// API tem o código e a mensagem reais, então dá pra saber a causa de fato
+// em vez de adivinhar pela UI.
+// =============================================================================
+async function handleWhatsAppRegisterNumber(request, env) {
+  const url = new URL(request.url);
+  const pin = url.searchParams.get("pin");
+  if (!pin || !/^\d{6}$/.test(pin)) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro: "Passe ?pin=XXXXXX (6 dígitos) na URL." }, null, 2), {
+      status: 400, headers: { "Content-Type": "application/json" }
+    }));
+  }
+  if (!env.WHATSAPP_PHONE_NUMBER_ID) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro: "WHATSAPP_PHONE_NUMBER_ID não configurado." }, null, 2), {
+      status: 400, headers: { "Content-Type": "application/json" }
+    }));
+  }
+  let body;
+  try {
+    const r = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_PHONE_NUMBER_ID}/register`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ messaging_product: "whatsapp", pin })
+    });
+    body = await r.json();
+    return corsResponse(new Response(JSON.stringify({ ok: r.ok, http: r.status, resposta_da_meta: body }, null, 2), {
+      status: 200, headers: { "Content-Type": "application/json" }
+    }));
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro: String(e) }, null, 2), {
+      status: 500, headers: { "Content-Type": "application/json" }
+    }));
+  }
 }
 
 // =============================================================================
