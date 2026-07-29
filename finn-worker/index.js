@@ -490,6 +490,13 @@ async function processMessage(msg, env) {
       await saveUserData(phone, { dailyDashboardOptIn: true }, env);
       return sendText(phone, "Pronto! A partir de hoje você recebe um resumo automático todo dia às 22h. Pra parar, é só responder *parar*.", env);
     }
+    // Pedido de atendimento humano — não manda o "não entendi" nem o menu
+    // aqui. É só uma confirmação, e o resto da conversa passa a ser
+    // respondido na mão pela Caixa de Entrada do WhatsApp no Business
+    // Suite, pra não empilhar uma resposta automática em cima da manual.
+    if (["atendimento","atendente","suporte","humano","falar com atendimento","falar com atendente","falar com suporte","falar com humano","quero falar com alguem","quero falar com alguém","preciso de ajuda humana"].includes(lower)) {
+      return sendText(phone, "Entendido! Alguém da equipe já te responde por aqui.", env);
+    }
 
     await sendText(phone, "Não entendi esse comando. Digite *menu* para ver as opções, ou mande um áudio/foto pra lançar direto.\n\nTambém aceito: *analise*, *score*, *dashboard*.", env);
   }
