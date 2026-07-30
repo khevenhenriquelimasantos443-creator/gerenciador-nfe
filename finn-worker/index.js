@@ -1340,6 +1340,11 @@ async function handleWhatsAppLinkStart(request, env) {
   try { body = await request.json(); } catch { return corsResponse(new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 })); }
   const user = await verifySupabaseUser(body.access_token);
   if (!user) return unauthorizedResponse();
+  // Teto na geração também: sem isso, uma conta autenticada podia encher o KV
+  // de códigos válidos e aumentar a chance de alguém acertar um no chute.
+  if (!(await linkAttemptOk("gen:" + user.id, env))) {
+    return corsResponse(new Response(JSON.stringify({ error: "muitas tentativas, espere alguns minutos" }), { status: 429, headers: { "Content-Type": "application/json" } }));
+  }
   const code = randomLinkCode(8);
   await env.FINN_KV.put(`walink_${code}`, JSON.stringify({ uid: user.id, email: user.email, linked: false }), { expirationTtl: 600 });
   return corsResponse(new Response(JSON.stringify({ ok: true, code }), {
@@ -1367,6 +1372,10 @@ async function handleWhatsAppLinkStatus(request, env) {
 async function tryWhatsAppLinkConfirm(phone, text, env) {
   const code = String(text || "").trim().toUpperCase();
   if (!/^[A-Z0-9]{8}$/.test(code)) return false;
+  if (!(await linkAttemptOk(phone, env))) {
+    await sendText(phone, "⏳ Muitas tentativas de código. Espere alguns minutos e gere um novo no app.", env);
+    return true;
+  }
   const raw = await env.FINN_KV.get(`walink_${code}`);
   if (!raw) return false;
   const info = JSON.parse(raw);
@@ -2110,8 +2119,21 @@ async function handleTelegramSetWebhook(env) {
 }
 
 // Alfabeto sem 0/O/1/I/L — o código é lido e digitado por gente, e confundir
-// esses caracteres gerava tentativa falha (que agora conta pro rate limit).
+// esses caracteres queimaria uma tentativa à toa (ver linkAttemptOk).
 const LINK_CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+// Teto de tentativas de resgate de código, por remetente. Com 31^8 combinações
+// e TTL de 10 min a força bruta já era impraticável, mas isso fecha a porta de
+// vez e evita que alguém fique martelando o bot de graça.
+async function linkAttemptOk(sender, env) {
+  if (!env.FINN_KV) return true;
+  const win = Math.floor(Date.now() / (900 * 1000)); // janela de 15 min
+  const key = `linktry_${String(sender).replace(/[^a-zA-Z0-9:]/g, "")}_${win}`;
+  const used = parseInt((await env.FINN_KV.get(key)) || "0", 10) || 0;
+  if (used >= 10) return false;
+  await env.FINN_KV.put(key, String(used + 1), { expirationTtl: 1800 });
+  return true;
+}
+
 function randomLinkCode(len) {
   const bytes = new Uint8Array(len);
   crypto.getRandomValues(bytes);
@@ -2129,6 +2151,9 @@ async function handleTelegramLinkStart(request, env) {
   if (!user) return unauthorizedResponse();
   if (!telegramAllowedEmail(user.email)) {
     return corsResponse(new Response(JSON.stringify({ error: "not_allowed" }), { status: 403, headers: { "Content-Type": "application/json" } }));
+  }
+  if (!(await linkAttemptOk("gen:" + user.id, env))) {
+    return corsResponse(new Response(JSON.stringify({ error: "muitas tentativas, espere alguns minutos" }), { status: 429, headers: { "Content-Type": "application/json" } }));
   }
   // Math.random() não é criptográfico: o gerador do V8 é previsível a partir de
   // algumas saídas observadas, então dava pra prever o código de vínculo de
@@ -2190,6 +2215,10 @@ async function handleTelegramWebhook(request, env) {
 async function handleTelegramLinkConfirm(phone, code, env) {
   if (!code) {
     await telegramSendMessage(phone, "👋 Olá! Pra conectar sua conta, gere um código em Configurações no app Finn e mande /start <código> aqui.", env);
+    return;
+  }
+  if (!(await linkAttemptOk(phone, env))) {
+    await telegramSendMessage(phone, "⏳ Muitas tentativas de código. Espere alguns minutos e gere um novo no app.", env);
     return;
   }
   const raw = await env.FINN_KV.get(`tglink_${code}`);

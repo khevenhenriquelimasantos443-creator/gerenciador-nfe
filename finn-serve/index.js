@@ -625,6 +625,36 @@ function _timingSafeEqual(a, b) {
   return diff === 0;
 }
 
+// Contador simples de tentativas em KV, com janela deslizante grosseira (a
+// chave carrega o número da janela, então ela expira sozinha). Devolve
+// { ok, remaining, retryAfter }.
+//
+// Não é à prova de corrida — duas requisições simultâneas podem ler o mesmo
+// valor e gravar o mesmo +1. Pra travar força bruta isso não importa: o
+// atacante precisa de milhares de tentativas, e perder uma ou outra contagem
+// no meio não muda o resultado.
+async function _rateLimit(env, bucket, id, limit, windowSec) {
+  if (!env.FINN_KV) return { ok: true, remaining: limit, retryAfter: 0 };
+  var win = Math.floor(Date.now() / (windowSec * 1000));
+  var key = 'rl_' + bucket + '_' + id + '_' + win;
+  var used = parseInt((await env.FINN_KV.get(key)) || '0', 10) || 0;
+  if (used >= limit) {
+    var elapsed = (Date.now() / 1000) % windowSec;
+    return { ok: false, remaining: 0, retryAfter: Math.ceil(windowSec - elapsed) };
+  }
+  await env.FINN_KV.put(key, String(used + 1), { expirationTtl: Math.max(60, windowSec * 2) });
+  return { ok: true, remaining: limit - used - 1, retryAfter: 0 };
+}
+
+function _clientIp(request) {
+  return request.headers.get('CF-Connecting-IP') || 'sem-ip';
+}
+
+function _tooManyRequests(cors, retryAfter, msg) {
+  var h = Object.assign({}, cors, { 'Retry-After': String(retryAfter || 60) });
+  return new Response(JSON.stringify({ error: msg || 'muitas tentativas, tente mais tarde' }), { status: 429, headers: h });
+}
+
 // Credenciais de admin saem de HEADER, não de query string. Numa URL elas vão
 // parar no log de acesso da Cloudflare, no histórico do navegador e podem
 // vazar no Referer — e essas duas juntas (JWT da master + senha) são acesso
@@ -648,6 +678,14 @@ async function _adminLogin(request, env) {
     try { body = JSON.parse(await request.text()); } catch (e0) {}
     var authUser = await _supaAuth(body.access_token);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    // Trava de força bruta: sem isso, quem conseguisse um JWT da conta master
+    // (sessão roubada, máquina emprestada) podia chutar MASTER_ADMIN_PASSWORD
+    // infinitas vezes, sem nenhum atraso nem bloqueio. 5 tentativas a cada 15
+    // min, contando por IP e por conta — bloqueia os dois vetores.
+    var rlIp = await _rateLimit(env, 'adminpw', _clientIp(request), 5, 900);
+    if (!rlIp.ok) return _tooManyRequests(cors, rlIp.retryAfter, 'muitas tentativas de senha, espere alguns minutos');
+    var rlUser = await _rateLimit(env, 'adminpw', authUser.id, 10, 900);
+    if (!rlUser.ok) return _tooManyRequests(cors, rlUser.retryAfter, 'muitas tentativas de senha, espere alguns minutos');
     if (!_masterPasswordOk(env, body.password)) return new Response(JSON.stringify({ error: 'senha incorreta' }), { status: 403, headers: cors });
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
   } catch (e) {
@@ -910,6 +948,19 @@ async function _betaSignup(request, env) {
     if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return new Response(JSON.stringify({ error: 'Nome e e-mail válido são obrigatórios.' }), { status: 400, headers: cors });
     }
+
+    // Rota pública que dispara e-mail de verdade (Resend) pro endereço que
+    // vier no corpo — sem limite, dava pra usar o Finn como arma pra encher a
+    // caixa de entrada de qualquer pessoa, e de quebra torrar a cota do
+    // Resend. O honeypot acima só pega bot burro; qualquer script que não
+    // preencha o campo escondido passava direto.
+    //
+    // Dois limites: por IP (impede o disparo em massa) e por e-mail de destino
+    // (impede bombardear uma vítima só, mesmo trocando de IP).
+    var rlIp = await _rateLimit(env, 'beta_ip', _clientIp(request), 5, 3600);
+    if (!rlIp.ok) return _tooManyRequests(cors, rlIp.retryAfter, 'muitas inscrições seguidas, tente mais tarde');
+    var rlEmail = await _rateLimit(env, 'beta_mail', email.toLowerCase(), 3, 86400);
+    if (!rlEmail.ok) return _tooManyRequests(cors, rlEmail.retryAfter, 'já enviamos o e-mail de confirmação — confira sua caixa de entrada e o spam');
 
     // Confirmação em duas etapas: a vaga só é confirmada de fato quando a
     // pessoa clica no link do e-mail (token aleatório, checado em
