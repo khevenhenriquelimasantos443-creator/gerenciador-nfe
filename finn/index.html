@@ -766,11 +766,16 @@ function connectWhatsApp(){
   state.waLinking = true;
   state.waLinkMsg = null;
   render();
-  api(WHATSAPP_WORKER_URL + "/whatsapp/link", {
+  // fetch direto, como o resto do app. (Aqui tinha uma chamada a api(), helper
+  // que não existe neste código: o ReferenceError estourava antes do .catch
+  // ser registrado, então waLinking nunca voltava pra false e o botão ficava
+  // preso em "Gerando código…" pra sempre, sem erro visível.)
+  fetch(WHATSAPP_WORKER_URL + "/whatsapp/link", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ access_token: currentSession.access_token })
-  }).then(function(res){
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token })
+  }).then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
+    .then(function(res){
       state.waLinking = false;
       if(!res.ok || !res.body || !res.body.code){
         state.waLinkMsg = (res.body && res.body.error) || "Não consegui gerar o código. Tenta de novo.";
