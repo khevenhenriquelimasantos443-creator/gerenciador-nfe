@@ -137,7 +137,7 @@ async function _pluggyToken(request, env) {
     var j = await r.json();
     return new Response(JSON.stringify({ accessToken: j.accessToken }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_pluggyToken');
   }
 }
 
@@ -172,7 +172,7 @@ async function _pluggyLink(request, env) {
     }
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_pluggyLink');
   }
 }
 
@@ -239,7 +239,7 @@ async function _pluggyTx(request, env) {
 
     return new Response(JSON.stringify({ transactions: allTxs, count: allTxs.length }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_pluggyTx');
   }
 }
 `;
@@ -549,7 +549,7 @@ async function _billingCheckout(request, env) {
     if (!r.ok) return new Response(JSON.stringify({ error: (j && j.message) || 'Falha ao criar assinatura' }), { status: 502, headers: cors });
     return new Response(JSON.stringify({ url: j.init_point }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_billingCheckout');
   }
 }
 
@@ -563,10 +563,15 @@ async function _billingWebhook(request, env) {
   var topic = body.type || body.topic || url.searchParams.get('type') || url.searchParams.get('topic') || '';
   var dataId = (body.data && body.data.id) || url.searchParams.get('data.id') || url.searchParams.get('id') || '';
 
-  if (env.MP_WEBHOOK_SECRET) {
-    var valid = await _mpVerifySignature(request, dataId, env.MP_WEBHOOK_SECRET);
-    if (!valid) return new Response('Forbidden', { status: 403 });
-  }
+  // Falha FECHADA: sem o segredo configurado, não dá pra provar que o POST veio
+  // mesmo do Mercado Pago. Antes o bloco inteiro era pulado nesse caso — uma
+  // janela aberta em toda rotação de secret ou deploy com a env faltando.
+  // (O estrago era limitado porque o handler abaixo rebusca o pagamento na API
+  // do MP com o nosso próprio token, em vez de confiar no corpo do POST — mas
+  // "só não é grave por causa de outra defesa" não é motivo pra deixar aberto.)
+  if (!env.MP_WEBHOOK_SECRET) return new Response('Forbidden', { status: 403 });
+  var valid = await _mpVerifySignature(request, dataId, env.MP_WEBHOOK_SECRET);
+  if (!valid) return new Response('Forbidden', { status: 403 });
 
   try {
     if (topic === 'payment' && dataId && env.MP_ACCESS_TOKEN) {
@@ -714,6 +719,17 @@ function _clientIp(request) {
   return request.headers.get('CF-Connecting-IP') || 'sem-ip';
 }
 
+// Erro 500 sem contar a vida ao cliente. Os catch genéricos devolviam
+// e.message direto, e várias dessas mensagens carregam trecho da resposta do
+// fornecedor (Pluggy, Mercado Pago, Resend) — status interno, formato de erro,
+// às vezes nome de campo. Nada disso ajuda quem está usando o app, e ajuda
+// quem está sondando. O detalhe continua indo pro log do Worker (visível com
+// "wrangler tail"), só não volta na resposta.
+function _serverError(cors, e, contexto) {
+  console.error('[' + (contexto || 'erro') + ']', e && e.stack || e);
+  return new Response(JSON.stringify({ error: 'Algo deu errado aqui do nosso lado. Tenta de novo em instantes.' }), { status: 500, headers: cors });
+}
+
 function _tooManyRequests(cors, retryAfter, msg) {
   var h = Object.assign({}, cors, { 'Retry-After': String(retryAfter || 60) });
   return new Response(JSON.stringify({ error: msg || 'muitas tentativas, tente mais tarde' }), { status: 429, headers: h });
@@ -753,7 +769,7 @@ async function _adminLogin(request, env) {
     if (!_masterPasswordOk(env, body.password)) return new Response(JSON.stringify({ error: 'senha incorreta' }), { status: 403, headers: cors });
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminLogin');
   }
 }
 
@@ -811,7 +827,7 @@ async function _adminListSubscriptions(request, env) {
     });
     return new Response(JSON.stringify({ subscriptions: out }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminListSubscriptions');
   }
 }
 
@@ -840,7 +856,7 @@ async function _adminSetSubscription(request, env) {
     await _subaUpsertSubscription(target.id, fields, env);
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminSetSubscription');
   }
 }
 
@@ -986,7 +1002,7 @@ async function _adminAnalytics(request, env) {
     };
     return new Response(JSON.stringify(out), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminAnalytics');
   }
 }
 
@@ -1073,7 +1089,7 @@ async function _betaSignup(request, env) {
 
     return new Response(JSON.stringify({ ok: true, pending: true }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_betaSignup');
   }
 }
 
@@ -1104,7 +1120,7 @@ async function _adminBetaSignups(request, env) {
       .filter(Boolean).map(function(raw) { return JSON.parse(raw); });
     return new Response(JSON.stringify({ signups: signups }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminBetaSignups');
   }
 }
 
@@ -1474,7 +1490,7 @@ async function _adminInstagramStatus(request, env) {
       recent_attempts: logs
     }), { headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminInstagramStatus');
   }
 }
 
@@ -1492,7 +1508,7 @@ async function _adminInstagramPublishNext(request, env) {
     var result = await _publishNextInstagramPost(env);
     return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
+    return _serverError(cors, e, '_adminInstagramPublishNext');
   }
 }
 `;

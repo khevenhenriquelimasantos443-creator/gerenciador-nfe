@@ -206,6 +206,16 @@ function bearerToken(request, url) {
   return url ? url.searchParams.get("access_token") : null;
 }
 
+// Erro 500 genérico pro cliente, detalhe só no log do Worker. Devolver
+// e.message direto entregava status e formato de erro dos fornecedores
+// (Meta, Telegram, Supabase) pra quem estivesse sondando os endpoints.
+function serverError(e, contexto) {
+  console.error("[" + (contexto || "erro") + "]", (e && e.stack) || e);
+  return corsResponse(new Response(JSON.stringify({ error: "Algo deu errado aqui do nosso lado. Tenta de novo em instantes." }), {
+    status: 500, headers: { "Content-Type": "application/json" }
+  }));
+}
+
 function timingSafeEqual(a, b) {
   const sa = String(a == null ? "" : a);
   const sb = String(b == null ? "" : b);
@@ -336,7 +346,7 @@ async function handleDebug(env) {
       headers: { "Content-Type": "application/json" }
     }));
   } catch (e) {
-    return corsResponse(new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } }));
+    return serverError(e, "handleDebug");
   }
 }
 
@@ -367,7 +377,7 @@ async function handleBotStats(env) {
       totalIdentities: list.length
     }), { status: 200, headers: { "Content-Type": "application/json" } }));
   } catch (e) {
-    return corsResponse(new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { "Content-Type": "application/json" } }));
+    return serverError(e, "handleBotStats");
   }
 }
 
@@ -1419,7 +1429,7 @@ async function handleSyncGet(request, env) {
     }
     return corsResponse(new Response(JSON.stringify({ok:true, data, fixed, matched, tried: phoneVariants(phone)}),{status:200,headers:{"Content-Type":"application/json"}}));
   } catch (e) {
-    return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
+    return serverError(e, "handleSyncGet");
   }
 }
 
@@ -1440,7 +1450,7 @@ async function handleSyncDelete(request, env) {
     }
     return corsResponse(new Response(JSON.stringify({ok:true, deleted: variants}),{status:200,headers:{"Content-Type":"application/json"}}));
   } catch (e) {
-    return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
+    return serverError(e, "handleSyncDelete");
   }
 }
 
@@ -1562,7 +1572,7 @@ async function handleSync(request, env) {
     if (fixed) await env.FINN_KV.put(`fixed_${targetPhone}`,JSON.stringify(fixed));
     return corsResponse(new Response(JSON.stringify({ok:true,phone:targetPhone}),{status:200,headers:{"Content-Type":"application/json"}}));
   } catch (e) {
-    return corsResponse(new Response(JSON.stringify({error: e.message}),{status:500,headers:{"Content-Type":"application/json"}}));
+    return serverError(e, "handleSync");
   }
 }
 
