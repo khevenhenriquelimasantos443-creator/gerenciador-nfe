@@ -23,7 +23,17 @@ body.finn-dark{--fpl:#3A2308;--fd:#F1F5F9;--fdk:#334155;--fbg:#0B1220;--fb:#2430
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--fbg);color:var(--fd);-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--fscroll);border-radius:4px}::-webkit-scrollbar-track{background:transparent}
 input,select,button{font-family:inherit}
-button{cursor:pointer}
+button{cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+button:active{transform:scale(.96)}
+a{transition:color .15s ease,opacity .15s ease}
+
+@keyframes finnViewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.view-enter{animation:finnViewIn .22s cubic-bezier(.16,1,.3,1)}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+  button:active{transform:none}
+}
 
 /* ── login ── */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
@@ -54,20 +64,21 @@ body.finn-authed #app{display:block}
 .topbar{position:sticky;top:0;z-index:50;background:var(--ftopbar);backdrop-filter:blur(10px);border-bottom:1px solid var(--fb);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
 .brand{font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--fd)}
 .brand span{color:var(--fp)}
-.btn-logout{background:transparent;border:1px solid var(--fb);border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--fm)}
+.btn-logout{background:transparent;border:1px solid var(--fb);border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--fm);transition:border-color .15s ease,color .15s ease}
 .btn-logout:hover{border-color:#CBD5E1;color:var(--fd)}
 
-.hamburger-btn{background:transparent;border:1px solid var(--fb);border-radius:10px;width:34px;height:34px;font-size:15px;line-height:1;color:var(--fm);display:flex;align-items:center;justify-content:center}
+.hamburger-btn{background:transparent;border:1px solid var(--fb);border-radius:10px;width:34px;height:34px;font-size:15px;line-height:1;color:var(--fm);display:flex;align-items:center;justify-content:center;transition:border-color .15s ease,color .15s ease}
 .hamburger-btn:hover{border-color:#CBD5E1;color:var(--fd)}
 
 .nav-brand{display:none}
 
 .nav-menu{display:none;position:absolute;top:54px;left:20px;z-index:60;flex-direction:column;gap:2px;background:var(--fcard);border:1px solid var(--fb);border-radius:12px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
-.nav-menu.open{display:flex}
-.nav-menu .tab-btn{flex:none;width:100%;text-align:left;white-space:nowrap;background:transparent;border:none;border-radius:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--fm)}
+.nav-menu.open{display:flex;animation:finnMenuIn .16s cubic-bezier(.16,1,.3,1)}
+@keyframes finnMenuIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.nav-menu .tab-btn{flex:none;width:100%;text-align:left;white-space:nowrap;background:transparent;border:none;border-radius:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--fm);transition:background-color .15s ease,color .15s ease}
 .nav-menu .tab-btn.active{background:var(--fdk);color:#fff}
 .nav-menu-bottom{margin-top:auto;border-top:1px solid var(--fb);padding-top:6px;display:flex;flex-direction:column;gap:2px}
-.nav-menu-action{display:flex;align-items:center;gap:8px;width:100%;text-align:left;white-space:nowrap;background:transparent;border:none;border-radius:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--fm)}
+.nav-menu-action{display:flex;align-items:center;gap:8px;width:100%;text-align:left;white-space:nowrap;background:transparent;border:none;border-radius:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--fm);transition:color .15s ease}
 .nav-menu-action:hover{color:var(--fd)}
 
 .content{max-width:560px;margin:0 auto;padding:18px 20px 60px}
@@ -3798,6 +3809,7 @@ function deleteAllData(){
 }
 
 /* ── render dispatch ── */
+var lastRenderedTab = null;
 function render(){
   document.querySelectorAll(".tab-btn").forEach(function(btn){
     btn.classList.toggle("active", btn.dataset.tab === state.tab);
@@ -3816,6 +3828,12 @@ function render(){
     if(retry) retry.addEventListener("click", function(){ loadData(); });
     return;
   }
+  // Só reanima a troca de tela quando a aba muda de verdade — se animasse a
+  // cada render() (também disparado por editar um lançamento, marcar uma
+  // categoria etc.), o conteúdo ficaria piscando de opacidade a cada clique
+  // dentro da mesma aba, que é o oposto de "mais leve".
+  var tabChanged = state.tab !== lastRenderedTab;
+  lastRenderedTab = state.tab;
   if(state.tab === "dashboard") content.innerHTML = renderDashboard();
   else if(state.tab === "adicionar") content.innerHTML = renderAdicionar();
   else if(state.tab === "analises") content.innerHTML = renderAnalises();
@@ -3829,6 +3847,12 @@ function render(){
   else if(state.tab === "ia") content.innerHTML = renderIA();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else content.innerHTML = renderConfig();
+  if(tabChanged){
+    window.scrollTo(0, 0);
+    content.classList.remove("view-enter");
+    void content.offsetWidth;
+    content.classList.add("view-enter");
+  }
   bindContentEvents();
 }
 
