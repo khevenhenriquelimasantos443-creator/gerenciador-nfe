@@ -6,6 +6,12 @@ on:
       - main
       - claude/finn-whatsapp-integration-sz61nv
 
+# O GITHUB_TOKEN default vem com escopo de escrita no repositório. Este workflow
+# só precisa ler o código pra buildar e publicar no Cloudflare, então restringe:
+# se alguma action da cadeia for comprometida, ela não consegue commitar aqui.
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
