@@ -2046,18 +2046,19 @@ h1 em{font-style:normal;color:#F97316}
   async scheduled(event, env, ctx) {
     if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
-    } else if (event.cron === '0 15 * * *' || event.cron === '0 21 * * *') {
-      // 2 dos 3 posts/dia da campanha: 12:00 e 18:00 BRT (15:00 e 21:00 UTC).
-      ctx.waitUntil(_publishNextInstagramPost(env));
     } else {
-      // "0 12 * * *" (09:00 BRT) — o limite de cron triggers é da CONTA
-      // inteira (5 no total, e o finn-worker do bot já usa 1), não por
-      // Worker. Pra caber, esse horário passou a acumular 3 tarefas —
-      // contas fixas, o 1º post/dia da campanha, e a checagem de
-      // assinaturas vencidas (que antes tinha seu próprio horário às 10h,
-      // liberado agora pro post das 18h).
+      // "0 12 * * *" (09:00 BRT). A publicação automática no Instagram saiu
+      // daqui: 230 visualizações em 30 dias, quase todo post abaixo de 12 — o
+      // alcance orgânico não pagava o custo de manter a automação rodando, e o
+      // plano virou anúncio pago. Os crons das 15:00 e 21:00 UTC existiam SÓ
+      // pros posts, então foram removidos do wrangler.toml (o limite de 5 cron
+      // triggers é da conta inteira, então isso devolve 2 slots).
+      //
+      // Nada foi apagado: _publishNextInstagramPost continua no código e a rota
+      // /admin/instagram-publish-next segue funcionando pra publicar na mão.
+      // Pra religar o automático, recoloque os 2 crons no wrangler.toml e o
+      // ctx.waitUntil(_publishNextInstagramPost(env)) aqui.
       ctx.waitUntil(checkFixedDueAndNotify(env));
-      ctx.waitUntil(_publishNextInstagramPost(env));
       ctx.waitUntil(checkExpiredSubscriptions(env));
     }
   },

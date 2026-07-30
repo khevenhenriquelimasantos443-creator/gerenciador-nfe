@@ -12,10 +12,12 @@ compatibility_date = "2024-01-01"
 #   normalmente (grava no KV), só não manda o e-mail — falha silenciosa,
 #   de propósito, pra nunca travar a inscrição de um tester por causa disso.
 #
-# IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID — publicação automática dos
-#   posts da campanha (3 por dia, dividido nos crons "0 12 * * *" (também
-#   usado pelas contas fixas e pela checagem de assinaturas) / "0 15 * * *" /
-#   "0 21 * * *"). Usa a "API do
+# IG_ACCESS_TOKEN / IG_BUSINESS_ACCOUNT_ID — publicação no Instagram.
+#   A publicação AUTOMÁTICA está DESLIGADA (o alcance orgânico não
+#   compensava: 230 visualizações em 30 dias). A rota manual
+#   /admin/instagram-publish-next continua funcionando e ainda usa essas
+#   duas secrets — só o gatilho por cron é que saiu.
+#   Usa a "API do
 #   Instagram com login do Instagram" (fluxo novo, sem precisar de Página
 #   do Facebook) — os dois valores ficam na mesma tela do Meta Developer
 #   Console (Casos de uso → API do Instagram → Configuração da API com
@@ -31,25 +33,24 @@ compatibility_date = "2024-01-01"
 #        SÓ funciona em graph.instagram.com, não em graph.facebook.com.
 #     4. O ID numérico da conta aparece do lado do nome dela, na mesma
 #        linha de "Gerar token" — esse é o IG_BUSINESS_ACCOUNT_ID.
-#   Sem os dois configurados, o cron só faz log e não tenta publicar nada.
+#   Sem os dois configurados, a publicação manual só faz log e não tenta nada.
 
 # ─────────────────────────────────────────────
-#  Notificações push / assinaturas / campanha:
-#  - "0 12 * * *"  → 09:00 BRT — acumula 3 tarefas: contas fixas perto do
-#                    vencimento, o 1º post/dia da campanha, e a checagem de
-#                    assinaturas vencidas (rede de segurança pro caso de
-#                    webhook perdido, antes tinha horário próprio às 10h).
-#                    Tudo junto porque o limite de cron trigger é DA CONTA
-#                    inteira (5 no total) — o finn-worker do bot já usa 1,
-#                    então o finn-serve só tem 4 de sobra, não 5.
-#  - "0 15 * * *"  → 2º post/dia da campanha, 12:00 BRT
-#  - "0 21 * * *"  → 3º post/dia da campanha, 18:00 BRT (para sozinho
-#                    depois do último post da fila)
+#  Notificações push / assinaturas:
+#  - "0 12 * * *"  → 09:00 BRT — contas fixas perto do vencimento + checagem
+#                    de assinaturas vencidas (rede de segurança pro caso de
+#                    webhook do Mercado Pago perdido).
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
+#
+#  Os crons "0 15 * * *" e "0 21 * * *" foram REMOVIDOS: existiam só pros
+#  posts automáticos do Instagram, que foram desligados. Como o limite de
+#  cron trigger é DA CONTA inteira (5 no total, e o finn-worker do bot usa
+#  1), isso devolve 2 slots livres — dá pra separar de novo tarefas que
+#  hoje se acumulam nas 09:00, se precisar.
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 15 * * *", "0 21 * * *", "0 23 * * 1"]
+crons = ["0 12 * * *", "0 23 * * 1"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)
