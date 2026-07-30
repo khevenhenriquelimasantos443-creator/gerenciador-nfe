@@ -73,6 +73,15 @@ function _pluggyCat(pluggyCat) {
   return 'Outros';
 }
 
+// Validadores de formato — tudo que entra do cliente e vai concatenado numa URL
+// da API da Pluggy passa por aqui antes (ver _pluggyLink/_pluggyTx).
+function _isUuid(v) {
+  return typeof v === 'string' && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(v);
+}
+function _isYmd(v) {
+  return typeof v === 'string' && /^\\d{4}-\\d{2}-\\d{2}$/.test(v);
+}
+
 // Autentica na Pluggy e retorna apiKey
 async function _pluggyApiKey(env) {
   var r = await fetch('https://api.pluggy.ai/auth', {
@@ -145,7 +154,22 @@ async function _pluggyLink(request, env) {
     var authUser = await _supaAuth(body.access_token);
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     if (!body.itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
-    if (env.FINN_KV) await env.FINN_KV.put('pluggy_owner_' + body.itemId, authUser.id);
+    // O itemId da Pluggy é um UUID. Aceitar string livre aqui deixava registrar
+    // um "itemId" tipo "x&itemId=<item-da-vitima>", que passava na checagem de
+    // dono (a chave do KV batia com a do próprio atacante) mas ia concatenado
+    // na URL da API da Pluggy lá em _pluggyTx, duplicando o parâmetro e
+    // trazendo o extrato de outra pessoa.
+    if (!_isUuid(body.itemId)) return new Response(JSON.stringify({ error: 'invalid itemId' }), { status: 400, headers: cors });
+    if (env.FINN_KV) {
+      // Não deixa "roubar" um item já registrado: sem isso, quem descobrisse o
+      // itemId de alguém (log, print, suporte) reivindicava a conta bancária
+      // dela pra si só chamando esse endpoint de novo.
+      var current = await env.FINN_KV.get('pluggy_owner_' + body.itemId);
+      if (current && current !== authUser.id) {
+        return new Response(JSON.stringify({ error: 'item already linked to another account' }), { status: 409, headers: cors });
+      }
+      await env.FINN_KV.put('pluggy_owner_' + body.itemId, authUser.id);
+    }
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: cors });
@@ -161,6 +185,7 @@ async function _pluggyTx(request, env) {
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     var itemId = url.searchParams.get('itemId');
     if (!itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
+    if (!_isUuid(itemId)) return new Response(JSON.stringify({ error: 'invalid itemId' }), { status: 400, headers: cors });
     // O itemId é um identificador da Pluggy, não do Finn — sem checar dono,
     // qualquer usuário autenticado podia ler o extrato bancário de qualquer
     // outra pessoa só adivinhando/observando o itemId dela.
@@ -168,13 +193,15 @@ async function _pluggyTx(request, env) {
     if (owner !== authUser.id) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
     var from   = url.searchParams.get('from') || new Date(Date.now() - 90*24*3600*1000).toISOString().slice(0,10);
     var to     = url.searchParams.get('to')   || new Date().toISOString().slice(0,10);
-    if (!itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
+    // Datas também vão concatenadas na URL da Pluggy — restringe ao formato
+    // YYYY-MM-DD pra não virar outro ponto de injeção de parâmetro.
+    if (!_isYmd(from) || !_isYmd(to)) return new Response(JSON.stringify({ error: 'invalid date range' }), { status: 400, headers: cors });
 
     var apiKey = await _pluggyApiKey(env);
     var hdrs = { 'X-API-KEY': apiKey, 'Content-Type': 'application/json' };
 
     // Busca contas do item
-    var ar = await fetch('https://api.pluggy.ai/accounts?itemId=' + itemId, { headers: hdrs });
+    var ar = await fetch('https://api.pluggy.ai/accounts?itemId=' + encodeURIComponent(itemId), { headers: hdrs });
     if (!ar.ok) throw new Error('accounts failed: ' + ar.status);
     var accounts = (await ar.json()).results || [];
 
@@ -184,8 +211,9 @@ async function _pluggyTx(request, env) {
       var page = 1, hasMore = true;
       while (hasMore) {
         var tr = await fetch(
-          'https://api.pluggy.ai/transactions?accountId=' + acc.id +
-          '&from=' + from + '&to=' + to + '&pageSize=500&page=' + page,
+          'https://api.pluggy.ai/transactions?accountId=' + encodeURIComponent(acc.id) +
+          '&from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to) +
+          '&pageSize=500&page=' + encodeURIComponent(page),
           { headers: hdrs }
         );
         if (!tr.ok) break;
@@ -1147,7 +1175,7 @@ function _betaWelcomeEmailHtml(name) {
 // gravado no signup — sem isso, qualquer um adivinhando um id confirmaria
 // a inscrição de outra pessoa.
 async function _betaConfirm(request, env) {
-  var htmlHeaders = { 'Content-Type': 'text/html; charset=utf-8' };
+  var htmlHeaders = Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS);
   try {
     var url = new URL(request.url);
     var id = url.searchParams.get('id') || '';
@@ -1392,6 +1420,42 @@ ${billingFns}
 // Estrutura de planos já está pronta, mas a cobrança só começa mês que
 // vem — enquanto isso, ninguém é bloqueado. Vira true quando for a hora.
 var PREMIUM_ENFORCEMENT_ENABLED = false;
+
+// Headers de segurança do HTML — o worker não mandava nenhum, então não havia
+// nada contendo um XSS caso algum dia apareça (o app guarda access_token E
+// refresh_token do Supabase no localStorage, ou seja, um XSS = conta tomada
+// de forma permanente).
+//
+// O 'unsafe-inline' em script-src é inevitável hoje: o app inteiro é um
+// <script> inline dentro do HTML. Mesmo assim a CSP entrega o que mais
+// importa aqui: connect-src fecha pra onde dá pra MANDAR dados (bloqueia a
+// exfiltração do token pra um servidor do atacante), script-src vira uma
+// allowlist de origem (um &lt;script src&gt; injetado pra outro domínio não roda),
+// object-src/base-uri fecham dois desvios clássicos, e frame-ancestors impede
+// clickjacking.
+var CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "img-src 'self' data: blob: https:",
+  "connect-src 'self' https://zblkznobqcztvznycyyo.supabase.co https://*.workers.dev https://cdn.jsdelivr.net",
+  "worker-src 'self' blob: https://cdn.jsdelivr.net",
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+
+var SECURITY_HEADERS = {
+  'Content-Security-Policy': CSP,
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'geolocation=(), microphone=(), camera=(), payment=(), usb=()',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+};
 
 export default {
   async fetch(request, env) {
@@ -1871,12 +1935,12 @@ h1 em{font-style:normal;color:#F97316}
     }
 
     return new Response(${JSON.stringify(html)}, {
-      headers: {
+      headers: Object.assign({
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'no-cache',
         'ETag': ETAG,
         'X-Finn-Version': '2.1.0',
-      },
+      }, SECURITY_HEADERS),
     });
   },
 

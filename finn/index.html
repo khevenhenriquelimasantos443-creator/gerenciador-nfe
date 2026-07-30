@@ -653,7 +653,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, analyticsData: null, analyticsLoading: false, analyticsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -749,6 +749,83 @@ function stopTelegramPoll(){
   if(telegramPollTimer){ clearInterval(telegramPollTimer); telegramPollTimer = null; }
 }
 
+var waPollTimer = null;
+function stopWaPoll(){
+  if(waPollTimer){ clearInterval(waPollTimer); waPollTimer = null; }
+}
+
+function connectWhatsApp(){
+  if(state.waLinking) return;
+  state.waLinking = true;
+  state.waLinkMsg = null;
+  render();
+  api(WHATSAPP_WORKER_URL + "/whatsapp/link", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession.access_token })
+  }).then(function(res){
+      state.waLinking = false;
+      if(!res.ok || !res.body || !res.body.code){
+        state.waLinkMsg = (res.body && res.body.error) || "Não consegui gerar o código. Tenta de novo.";
+        render();
+        return;
+      }
+      state.waLinkCode = res.body.code;
+      render();
+      pollWhatsAppLink(res.body.code);
+    }).catch(function(){
+      state.waLinking = false;
+      state.waLinkMsg = "Falha de conexão. Tenta de novo.";
+      render();
+    });
+}
+
+// Mesma janela do Telegram: até 2 min esperando a mensagem com o código chegar
+// no bot. Quem confirma é o servidor (ver tryWhatsAppLinkConfirm no worker).
+function pollWhatsAppLink(code){
+  stopWaPoll();
+  var attempts = 0;
+  waPollTimer = setInterval(function(){
+    attempts++;
+    fetch(WHATSAPP_WORKER_URL + "/whatsapp/link-status?code=" + encodeURIComponent(code) +
+          "&access_token=" + encodeURIComponent(currentSession ? currentSession.access_token : ""))
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j && j.linked){
+          stopWaPoll();
+          state.waLinkCode = null;
+          state.waLinkVerified = true;
+          state.waLinkMsg = null;
+          // Guarda no perfil também, pra não pedir de novo a cada refresh.
+          Auth.updateMetadata(currentSession.access_token, { whatsapp_verified: true }).then(function(user){
+            if(user && user.id){
+              currentSession.user = user;
+              var stored = JSON.parse(localStorage.getItem(SESSION_KEY) || "{}");
+              stored.user = user;
+              localStorage.setItem(SESSION_KEY, JSON.stringify(stored));
+            }
+            render();
+            return syncWhatsAppBot();
+          }).catch(function(){ render(); });
+          return;
+        }
+        if(j && j.expired){
+          stopWaPoll();
+          state.waLinkCode = null;
+          state.waLinkMsg = "O código expirou. Toque em \"Conectar WhatsApp\" de novo.";
+          render();
+          return;
+        }
+        if(attempts >= 60){
+          stopWaPoll();
+          state.waLinkCode = null;
+          state.waLinkMsg = "Não detectei a confirmação. Toque em \"Conectar WhatsApp\" de novo.";
+          render();
+        }
+      }).catch(function(){});
+  }, 2000);
+}
+
 function connectTelegram(){
   if(!telegramBotVisible() || state.telegramLinking) return;
   state.telegramLinking = true;
@@ -786,7 +863,8 @@ function pollTelegramLink(code){
   var attempts = 0;
   telegramPollTimer = setInterval(function(){
     attempts++;
-    fetch(WHATSAPP_WORKER_URL + "/telegram/link-status?code=" + encodeURIComponent(code))
+    fetch(WHATSAPP_WORKER_URL + "/telegram/link-status?code=" + encodeURIComponent(code) +
+          "&access_token=" + encodeURIComponent(currentSession ? currentSession.access_token : ""))
       .then(function(r){ return r.json(); })
       .then(function(j){
         if(j && j.linked && j.chatId){
@@ -2118,7 +2196,11 @@ function parseDayGroupedStatement(text){
 function parsePDF(arrayBuffer){
   return loadScript("https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js").then(function(){
     window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
-    return window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    // isEvalSupported:false fecha a CVE-2024-4367 do pdf.js 3.x — sem isso, um
+    // PDF forjado (com FontMatrix manipulado) executa JavaScript na origem do
+    // Finn ao ser importado, com acesso ao token de sessão no localStorage.
+    // Basta a pessoa importar um "extrato.pdf" recebido de terceiro.
+    return window.pdfjsLib.getDocument({ data: arrayBuffer, isEvalSupported: false }).promise;
   }).then(function(pdf){
     var pagePromises = [];
     for(var i = 1; i <= pdf.numPages; i++){
@@ -3254,7 +3336,7 @@ function renderConfig(){
     '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
     '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(formatBRPhone(currentWhatsapp)) + '" placeholder="(13) 99210-2413"></div>' +
-    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">' + (whatsAppBotVisible() ? 'O bot do WhatsApp já está ativo — salve seu número aqui pra conectar.' : 'O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e, assim que o bot voltar, ele já fica conectado automaticamente.') + '</div>' +
+    '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">' + (whatsAppBotVisible() ? 'Salve o número aqui e depois confirme que ele é seu no card abaixo.' : 'O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e, assim que o bot voltar, ele já fica conectado automaticamente.') + '</div>' +
     (whatsAppBotVisible() ?
       '<label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--fd);margin:-4px 0 12px;cursor:pointer">' +
         '<input type="checkbox" id="cfgDailyDashboard"' + (dailyDashboardOptIn ? ' checked' : '') + '>' +
@@ -3271,6 +3353,7 @@ function renderConfig(){
     '<button type="button" class="btn-logout" id="btnLogoutConfig" style="margin-top:10px;width:100%">Sair</button>' +
   '</div>';
 
+  html += renderWhatsAppLinkCard(meta);
   html += renderTelegramCard(meta);
 
   html += '<div class="card">' +
@@ -3316,6 +3399,40 @@ function renderConfig(){
 }
 
 /* ── Bot do Telegram (beta fechado — ver telegramBotVisible) ── */
+/* ── Confirmação de posse do número de WhatsApp ──
+   Salvar o número em Configurações não prova nada: qualquer pessoa logada
+   digitava o número de outra e o servidor aceitava, liberando os lançamentos
+   feitos pelo bot daquela pessoa. Agora o app gera um código e a pessoa manda
+   ele pro bot pelo próprio WhatsApp — quem não tem o aparelho não consegue. */
+function renderWhatsAppLinkCard(meta){
+  if(!whatsAppBotVisible()) return "";
+  if(!meta.whatsapp) return "";
+
+  if(state.waLinkVerified || meta.whatsapp_verified){
+    return '<div class="card">' +
+      '<div class="eyebrow">Bot do WhatsApp</div>' +
+      '<div style="font-size:12.5px;color:var(--fd)">Número confirmado — o bot já está conectado à sua conta.</div>' +
+    '</div>';
+  }
+
+  if(state.waLinkCode){
+    return '<div class="card" style="border-color:var(--fp)">' +
+      '<div class="eyebrow" style="color:var(--fp)">Confirme seu número</div>' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Mande este código pro bot no WhatsApp. A confirmação acontece sozinha.</div>' +
+      '<div style="font-size:24px;font-weight:800;letter-spacing:.18em;text-align:center;padding:12px;border:1px dashed var(--fb);border-radius:10px;margin-bottom:12px">' + escapeHtml(state.waLinkCode) + '</div>' +
+      '<a href="https://wa.me/' + WHATSAPP_BOT_NUMBER + '?text=' + encodeURIComponent(state.waLinkCode) + '" target="_blank" rel="noopener" class="btn-submit" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box">Abrir WhatsApp com o código</a>' +
+      (state.waLinkMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.waLinkMsg) + '</div>' : '') +
+    '</div>';
+  }
+
+  return '<div class="card" style="border-color:var(--fp)">' +
+    '<div class="eyebrow" style="color:var(--fp)">Confirme seu número</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Pra proteger seus dados, o bot só responde e sincroniza depois que você provar que este número é seu.</div>' +
+    '<button type="button" class="btn-submit" id="btnConnectWhatsApp"' + (state.waLinking ? " disabled" : "") + '>' + (state.waLinking ? "Gerando código…" : "Conectar WhatsApp") + '</button>' +
+    (state.waLinkMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.waLinkMsg) + '</div>' : '') +
+  '</div>';
+}
+
 function renderTelegramCard(meta){
   if(!telegramBotVisible()) return "";
   var chatId = meta.telegram_chat_id || "";
@@ -4155,6 +4272,8 @@ function bindContentEvents(){
     document.getElementById("btnDeleteAll").addEventListener("click", deleteAllData);
     var btnConnectTelegram = document.getElementById("btnConnectTelegram");
     if(btnConnectTelegram) btnConnectTelegram.addEventListener("click", connectTelegram);
+    var btnConnectWhatsApp = document.getElementById("btnConnectWhatsApp");
+    if(btnConnectWhatsApp) btnConnectWhatsApp.addEventListener("click", connectWhatsApp);
     if(isMasterUser()){
       if(!state.adminUnlocked){
         var btnAdminUnlock = document.getElementById("btnAdminUnlock");

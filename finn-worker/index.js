@@ -72,6 +72,11 @@ export default {
     }
 
     if (url.pathname === "/status" && request.method === "GET") {
+      // Era o único diagnóstico sem autenticação: cada acesso disparava uma
+      // chamada à Graph API com o token do bot e devolvia trecho do erro da
+      // Meta — amplificação barata pra qualquer um, e detalhe operacional de
+      // graça. Agora segue a mesma regra dos outros (/keys, /debug, /health).
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       return handleStatus(env);
     }
 
@@ -108,6 +113,14 @@ export default {
     if (url.pathname === "/admin/bot-stats" && request.method === "GET") {
       if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
       return handleBotStats(env);
+    }
+
+    // ── Vínculo verificado do número de WhatsApp (ver whatsappOwnershipOk) ──
+    if (url.pathname === "/whatsapp/link" && request.method === "POST") {
+      return handleWhatsAppLinkStart(request, env);
+    }
+    if (url.pathname === "/whatsapp/link-status" && request.method === "GET") {
+      return handleWhatsAppLinkStatus(request, env);
     }
 
     // ── Telegram (novo canal — restrito às contas em TELEGRAM_ALLOWED_EMAILS) ──
@@ -227,6 +240,19 @@ function phonesMatch(a, b) {
   return phoneVariants(b).some(v => variantsA.has(v));
 }
 
+// Um número de telefone é SÓ dígitos. Sem essa validação na entrada, dava pra
+// mandar phone="tg:123456789": phonesMatch() compara apenas os dígitos (então
+// batia com um metadata "123456789" que a própria pessoa escolheu), mas o
+// worker usava a string CRUA como chave do KV — e "data_tg:123456789" é a
+// chave de um usuário do Telegram. Ou seja, dava pra ler e sobrescrever os
+// lançamentos de qualquer conta do Telegram passando por cima de todo o
+// cerimonial de vínculo. Toda entrada de telefone passa por aqui, e a chave
+// usada depois vem SEMPRE de normalizePhone(), nunca do valor do cliente.
+function normalizePhone(phone) {
+  const digits = String(phone == null ? "" : phone).replace(/\D/g, "");
+  return /^\d{10,15}$/.test(digits) ? digits : null;
+}
+
 // Confere a assinatura X-Hub-Signature-256 que a Meta manda em todo webhook,
 // calculada com o App Secret. Sem isso, qualquer um podia forjar um POST
 // /webhook fingindo ser uma mensagem de qualquer telefone, fazendo o bot
@@ -339,15 +365,20 @@ async function handleWebhookVerification(request, env) {
 async function handleWebhook(request, env) {
   const rawBody = await request.text();
 
-  if (env.META_APP_SECRET) {
-    const sigHeader = request.headers.get("X-Hub-Signature-256");
-    const valid = await verifyMetaSignature(rawBody, sigHeader, env.META_APP_SECRET);
-    if (!valid) {
-      await debugLog(env, { kind: "webhook_signature_invalid" });
-      return new Response("Forbidden", { status: 403 });
-    }
-  } else {
+  // Falha FECHADA: sem o segredo configurado não dá pra provar que o POST veio
+  // mesmo da Meta, e qualquer um que descubra a URL do worker poderia forjar
+  // mensagens de qualquer número. Antes isso só era registrado no log e o
+  // webhook seguia processando — uma janela aberta em toda troca/rotação de
+  // secret ou deploy novo.
+  if (!env.META_APP_SECRET) {
     await debugLog(env, { kind: "webhook_signature_not_configured" });
+    return new Response("Forbidden", { status: 403 });
+  }
+  const sigHeader = request.headers.get("X-Hub-Signature-256");
+  const valid = await verifyMetaSignature(rawBody, sigHeader, env.META_APP_SECRET);
+  if (!valid) {
+    await debugLog(env, { kind: "webhook_signature_invalid" });
+    return new Response("Forbidden", { status: 403 });
   }
 
   let body;
@@ -417,6 +448,23 @@ function botPlanAllows(plan, feature) {
   return (BOT_PLAN_RANK[plan] || 0) >= BOT_PLAN_RANK[required];
 }
 
+// Teto diário por número. Mídia (áudio/imagem) custa muito mais que texto —
+// cada uma chama um modelo de IA — então tem cota própria e menor.
+const BOT_DAILY_LIMIT_TEXT = 120;
+const BOT_DAILY_LIMIT_MEDIA = 30;
+async function botRateLimitOk(phone, msgType, env) {
+  if (!env.FINN_KV) return true;
+  const isMedia = msgType === "audio" || msgType === "image" || msgType === "document";
+  const day = new Date().toISOString().slice(0, 10);
+  const key = `rate_${isMedia ? "media" : "text"}_${String(phone).replace(/\D/g, "")}_${day}`;
+  const used = parseInt((await env.FINN_KV.get(key)) || "0", 10) || 0;
+  const limit = isMedia ? BOT_DAILY_LIMIT_MEDIA : BOT_DAILY_LIMIT_TEXT;
+  if (used >= limit) return false;
+  // TTL de 48h cobre qualquer fuso — a chave já é por dia UTC.
+  await env.FINN_KV.put(key, String(used + 1), { expirationTtl: 172800 });
+  return true;
+}
+
 async function sendUpgradeNudge(phone, feature, env) {
   const required = BOT_FEATURE_MIN_PLAN[feature] === "pro" ? "Pro" : "Plus";
   await sendText(phone, `🔒 Esse recurso é do plano *${required}*. Assine no app pra desbloquear: ${env.FINN_URL || ""}`, env);
@@ -425,6 +473,27 @@ async function sendUpgradeNudge(phone, feature, env) {
 async function processMessage(msg, env) {
   const phone = msg.from;
   if (!phone) return;
+
+  // Antes de tudo: a mensagem pode ser só o código de vínculo gerado no app.
+  // É assim que a pessoa prova que controla esse número (ver whatsappOwnershipOk).
+  if (msg.type === "text" && await tryWhatsAppLinkConfirm(phone, msg.text?.body, env)) return;
+
+  // Daqui pra frente, só número já vinculado a uma conta Finn. Sem esse portão,
+  // qualquer pessoa que soubesse o número do bot (que é divulgado na landing)
+  // tinha transcrição de áudio, leitura de imagem e LLM ilimitados de graça,
+  // na conta de Workers AI do dono — e cada mensagem ainda consome conversa da
+  // Cloud API e derruba o quality rating do número na Meta.
+  if (!(await whatsappOwnerOf(phone, env))) {
+    await sendText(phone, "👋 Oi! Pra usar o Finn por aqui, primeiro conecte este número: entre no app, vá em *Configurações → Conectar WhatsApp*, e me mande o código que aparecer.\n\n" + (env.FINN_URL || ""), env);
+    return;
+  }
+
+  // Teto diário por número — mesmo já vinculado, uma conta só não pode torrar
+  // a cota de IA de todo mundo (nem por abuso, nem por script com defeito).
+  if (!(await botRateLimitOk(phone, msg.type, env))) {
+    await sendText(phone, "⏳ Você atingiu o limite de mensagens de hoje. Tente de novo amanhã — ou use o app, que não tem limite.", env);
+    return;
+  }
 
   const stateData = await getState(phone, env);
   const state = stateData.state || "idle";
@@ -1188,6 +1257,109 @@ function phoneVariants(phone) {
   return [...set];
 }
 
+// =============================================================================
+// POSSE VERIFICADA DO NÚMERO DE WHATSAPP
+// =============================================================================
+// O metadata "whatsapp" do perfil é AUTO-DECLARADO: a pessoa digita um número
+// em Configurações e o app gravava. Como /sync e /bot-txs autorizavam só
+// comparando o número enviado com esse metadata, bastava digitar o número de
+// outra pessoa pra ler os lançamentos que ela fez pelo bot, injetar lançamentos
+// falsos na conta dela e marcar os reais como "já sincronizados" (fazendo eles
+// nunca chegarem no app dela). Nenhum segredo era necessário — só o número,
+// que não é secreto.
+//
+// A correção: o dono de um número passa a ser registrado no KV do servidor
+// (wa_owner_<numero> -> user id), e só UMA conta pode ter cada número.
+// Reivindicar exige provar posse: a pessoa gera um código no app e manda ele
+// pro bot pelo próprio WhatsApp (ver handleWhatsAppLinkStart e
+// tryWhatsAppLinkConfirm) — quem não controla o número não consegue mandar.
+async function whatsappOwnerOf(phone, env) {
+  for (const cand of phoneVariants(phone)) {
+    const owner = await env.FINN_KV.get(`wa_owner_${cand}`);
+    if (owner) return { owner, phone: cand };
+  }
+  return null;
+}
+
+async function claimWhatsappOwner(phone, uid, env) {
+  // Grava em todas as variações (com/sem o 9º dígito) porque o resto do worker
+  // trata elas como o mesmo número — se registrasse só uma, a outra ficaria
+  // livre pra ser reivindicada por outra conta.
+  for (const cand of phoneVariants(phone)) {
+    await env.FINN_KV.put(`wa_owner_${cand}`, uid);
+  }
+}
+
+// Decide se `user` pode agir sobre `phone`: só se o número estiver registrado
+// pra ele, e o registro só nasce em tryWhatsAppLinkConfirm (ou seja, depois de
+// a pessoa mandar o código pelo WhatsApp dela).
+//
+// Não existe atalho de "primeiro que chegar leva": com ele, bastava um GET em
+// /bot-txs com o número de outra pessoa pra registrar o número alheio em nome
+// do atacante — travando a vítima para sempre (o vínculo dela passaria a ser
+// recusado) e entregando pro atacante tudo que ela lançasse depois.
+async function whatsappOwnershipOk(phone, user, env) {
+  const reg = await whatsappOwnerOf(phone, env);
+  return !!reg && reg.owner === user.id;
+}
+
+// POST /whatsapp/link {access_token} -> { code }
+// A pessoa manda esse código pro bot pelo WhatsApp dela; tryWhatsAppLinkConfirm
+// (chamado no processMessage) fecha o vínculo com o número que enviou.
+async function handleWhatsAppLinkStart(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return corsResponse(new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 })); }
+  const user = await verifySupabaseUser(body.access_token);
+  if (!user) return unauthorizedResponse();
+  const code = randomLinkCode(8);
+  await env.FINN_KV.put(`walink_${code}`, JSON.stringify({ uid: user.id, email: user.email, linked: false }), { expirationTtl: 600 });
+  return corsResponse(new Response(JSON.stringify({ ok: true, code }), {
+    status: 200, headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// GET /whatsapp/link-status?code=&access_token=
+async function handleWhatsAppLinkStatus(request, env) {
+  const url = new URL(request.url);
+  const code = url.searchParams.get("code");
+  if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
+  const user = await verifySupabaseUser(url.searchParams.get("access_token"));
+  if (!user) return unauthorizedResponse();
+  const raw = await env.FINN_KV.get(`walink_${code}`);
+  if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
+  const info = JSON.parse(raw);
+  if (info.uid !== user.id) return unauthorizedResponse();
+  return corsResponse(new Response(JSON.stringify({ linked: !!info.linked, phone: info.phone || null }), { status: 200, headers: { "Content-Type": "application/json" } }));
+}
+
+// Chamado no começo do processMessage: se a mensagem for só um código de
+// vínculo pendente, fecha o vínculo e devolve true (não segue pro fluxo normal
+// do bot). Devolve false pra qualquer outra mensagem.
+async function tryWhatsAppLinkConfirm(phone, text, env) {
+  const code = String(text || "").trim().toUpperCase();
+  if (!/^[A-Z0-9]{8}$/.test(code)) return false;
+  const raw = await env.FINN_KV.get(`walink_${code}`);
+  if (!raw) return false;
+  const info = JSON.parse(raw);
+  if (info.linked) {
+    await sendText(phone, "⚠️ Esse código já foi usado. Gere um novo em Configurações no Finn.", env);
+    return true;
+  }
+  // Se o número já pertence a outra conta, não transfere: quem perdeu acesso
+  // tem que resolver pelo suporte, senão isso viraria a própria brecha de novo.
+  const reg = await whatsappOwnerOf(phone, env);
+  if (reg && reg.owner !== info.uid) {
+    await sendText(phone, "⚠️ Esse número já está vinculado a outra conta Finn. Fale com o suporte se precisar transferir.", env);
+    return true;
+  }
+  info.linked = true;
+  info.phone = String(phone).replace(/\D/g, "");
+  await env.FINN_KV.put(`walink_${code}`, JSON.stringify(info), { expirationTtl: 600 });
+  await claimWhatsappOwner(phone, info.uid, env);
+  await sendText(phone, "✅ *Número confirmado!* Volte pro app Finn — já pode lançar gastos por aqui.\n\nDigite *menu* pra começar.", env);
+  return true;
+}
+
 async function handleSyncGet(request, env) {
   // Nunca usado pelo app público (só POST /sync é) — tranca atrás do token
   // de admin. Sem isso, qualquer um que soubesse um telefone lia o extrato
@@ -1258,7 +1430,17 @@ async function handleSync(request, env) {
   // Canal Telegram usa "tg:<chatId>" como identificador — mesma chave de KV
   // que o resto do bot já trata como um "phone" genérico.
   const isTelegram = !!telegram_chat_id;
-  const uid = isTelegram ? ("tg:" + telegram_chat_id) : phone;
+  // O identificador que vira chave de KV NUNCA sai cru do cliente: telefone só
+  // dígitos (normalizePhone) e chat do Telegram só o número do chat.
+  const normPhone = isTelegram ? null : normalizePhone(phone);
+  const normChat = isTelegram ? String(telegram_chat_id).replace(/\D/g, "") : null;
+  if (!isTelegram && !normPhone) {
+    return corsResponse(new Response(JSON.stringify({error:"invalid phone"}),{status:400,headers:{"Content-Type":"application/json"}}));
+  }
+  if (isTelegram && !normChat) {
+    return corsResponse(new Response(JSON.stringify({error:"invalid telegram_chat_id"}),{status:400,headers:{"Content-Type":"application/json"}}));
+  }
+  const uid = isTelegram ? ("tg:" + normChat) : normPhone;
   if (!uid) return corsResponse(new Response(JSON.stringify({error:"phone or telegram_chat_id required"}),{status:400}));
 
   // Só deixa sincronizar o telefone/chat que a PRÓPRIA conta logada vinculou
@@ -1271,7 +1453,7 @@ async function handleSync(request, env) {
   }
   if (isTelegram) {
     const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
-    if (!ownChatId || ownChatId !== String(telegram_chat_id)) {
+    if (!ownChatId || ownChatId !== normChat) {
       await debugLog(env, { kind: "sync_telegram_mismatch", sentChatId: String(telegram_chat_id), ownChatIdOnAccount: ownChatId || null, email: user.email });
       return corsResponse(new Response(JSON.stringify({ error: "telegram_chat_id does not match authenticated account" }), {
         status: 403, headers: { "Content-Type": "application/json" }
@@ -1280,8 +1462,16 @@ async function handleSync(request, env) {
     await debugLog(env, { kind: "sync_telegram_ok", uid, email: user.email, txCount: (data && data.txs && data.txs.length) || 0 });
   } else {
     const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
-    if (!phonesMatch(phone, ownWhatsapp)) {
+    if (!phonesMatch(normPhone, ownWhatsapp)) {
       return corsResponse(new Response(JSON.stringify({ error: "phone does not match authenticated account" }), {
+        status: 403, headers: { "Content-Type": "application/json" }
+      }));
+    }
+    // O metadata acima é auto-declarado — não prova nada sozinho. Quem manda é
+    // o registro de posse verificado no servidor (ver whatsappOwnershipOk).
+    if (!(await whatsappOwnershipOk(normPhone, user, env))) {
+      await debugLog(env, { kind: "sync_wa_owner_mismatch", phone: normPhone, email: user.email });
+      return corsResponse(new Response(JSON.stringify({ error: "phone_not_verified" }), {
         status: 403, headers: { "Content-Type": "application/json" }
       }));
     }
@@ -1306,7 +1496,7 @@ async function handleSync(request, env) {
     if (isTelegram) {
       existingData = await getUserData(uid, env);
     } else {
-      for (const cand of phoneVariants(phone)) {
+      for (const cand of phoneVariants(normPhone)) {
         const existing = await getUserData(cand, env);
         if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
           targetPhone = cand;
@@ -1356,14 +1546,21 @@ async function resolveBotIdentity(phone, telegramChatId, accessToken, env) {
   const user = await verifySupabaseUser(accessToken);
   if (!user) return { error: "unauthorized" };
   if (isTelegram) {
+    // Só dígitos: "tg:" + valor cru do cliente montava chave de KV arbitrária.
+    const normChat = String(telegramChatId).replace(/\D/g, "");
+    if (!normChat) return { error: "forbidden" };
     const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
-    if (!ownChatId || ownChatId !== String(telegramChatId)) return { error: "forbidden" };
-    return { uid: "tg:" + telegramChatId };
+    if (!ownChatId || ownChatId !== normChat) return { error: "forbidden" };
+    return { uid: "tg:" + normChat };
   }
+  const normPhone = normalizePhone(phone);
+  if (!normPhone) return { error: "forbidden" };
   const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
-  if (!phonesMatch(phone, ownWhatsapp)) return { error: "forbidden" };
-  let uid = phone;
-  for (const cand of phoneVariants(phone)) {
+  if (!phonesMatch(normPhone, ownWhatsapp)) return { error: "forbidden" };
+  // Mesma checagem do /sync: metadata auto-declarado não autoriza sozinho.
+  if (!(await whatsappOwnershipOk(normPhone, user, env))) return { error: "forbidden" };
+  let uid = normPhone;
+  for (const cand of phoneVariants(normPhone)) {
     const existing = await getUserData(cand, env);
     if (existing && (existing.txs?.length || Object.keys(existing.limits || {}).length || existing.goals?.length)) {
       uid = cand;
@@ -1883,8 +2080,19 @@ async function handleTelegramSetWebhook(env) {
   }));
 }
 
-// Gera um código de vínculo de 6 caracteres pra conta logada — só pra quem
-// está em TELEGRAM_ALLOWED_EMAILS, enquanto o canal estiver em teste fechado.
+// Alfabeto sem 0/O/1/I/L — o código é lido e digitado por gente, e confundir
+// esses caracteres gerava tentativa falha (que agora conta pro rate limit).
+const LINK_CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+function randomLinkCode(len) {
+  const bytes = new Uint8Array(len);
+  crypto.getRandomValues(bytes);
+  let out = "";
+  for (let i = 0; i < len; i++) out += LINK_CODE_ALPHABET[bytes[i] % LINK_CODE_ALPHABET.length];
+  return out;
+}
+
+// Gera um código de vínculo pra conta logada — só pra quem está em
+// TELEGRAM_ALLOWED_EMAILS, enquanto o canal estiver em teste fechado.
 async function handleTelegramLinkStart(request, env) {
   let body;
   try { body = await request.json(); } catch { return corsResponse(new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 })); }
@@ -1893,7 +2101,10 @@ async function handleTelegramLinkStart(request, env) {
   if (!telegramAllowedEmail(user.email)) {
     return corsResponse(new Response(JSON.stringify({ error: "not_allowed" }), { status: 403, headers: { "Content-Type": "application/json" } }));
   }
-  const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+  // Math.random() não é criptográfico: o gerador do V8 é previsível a partir de
+  // algumas saídas observadas, então dava pra prever o código de vínculo de
+  // outra pessoa e sequestrar o link. getRandomValues usa a fonte segura.
+  const code = randomLinkCode(8);
   await env.FINN_KV.put(`tglink_${code}`, JSON.stringify({ uid: user.id, email: user.email, linked: false }), { expirationTtl: 600 });
   return corsResponse(new Response(JSON.stringify({ ok: true, code, botUsername: env.TELEGRAM_BOT_USERNAME || "" }), {
     status: 200, headers: { "Content-Type": "application/json" }
@@ -1907,21 +2118,29 @@ async function handleTelegramLinkStatus(request, env) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
+  // Exige a sessão de quem gerou o código: antes, qualquer um com o código na
+  // mão lia o chatId vinculado sem se autenticar.
+  const user = await verifySupabaseUser(url.searchParams.get("access_token"));
+  if (!user) return unauthorizedResponse();
   const raw = await env.FINN_KV.get(`tglink_${code}`);
   if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
   const info = JSON.parse(raw);
+  if (info.uid !== user.id) return unauthorizedResponse();
   return corsResponse(new Response(JSON.stringify({ linked: !!info.linked, chatId: info.chatId || null }), { status: 200, headers: { "Content-Type": "application/json" } }));
 }
 
 async function handleTelegramWebhook(request, env) {
-  if (env.TELEGRAM_WEBHOOK_SECRET) {
-    const secretHeader = request.headers.get("X-Telegram-Bot-Api-Secret-Token");
-    if (secretHeader !== env.TELEGRAM_WEBHOOK_SECRET) {
-      await debugLog(env, { kind: "telegram_webhook_secret_invalid" });
-      return new Response("Forbidden", { status: 403 });
-    }
-  } else {
+  // Mesma regra do webhook do WhatsApp: sem segredo configurado, recusa em vez
+  // de confiar. Com o webhook aberto, um POST forjado consegue se passar por
+  // qualquer chat_id já vinculado e escrever na conta da pessoa.
+  if (!env.TELEGRAM_WEBHOOK_SECRET) {
     await debugLog(env, { kind: "telegram_webhook_secret_not_configured" });
+    return new Response("Forbidden", { status: 403 });
+  }
+  const secretHeader = request.headers.get("X-Telegram-Bot-Api-Secret-Token");
+  if (secretHeader !== env.TELEGRAM_WEBHOOK_SECRET) {
+    await debugLog(env, { kind: "telegram_webhook_secret_invalid" });
+    return new Response("Forbidden", { status: 403 });
   }
 
   let update;
@@ -1950,6 +2169,13 @@ async function handleTelegramLinkConfirm(phone, code, env) {
     return;
   }
   const info = JSON.parse(raw);
+  // Uso único: sem isso, um segundo /start com o mesmo código (dentro dos 10
+  // min) sobrescrevia o chatId vinculado — quem mandasse por último ficava com
+  // a conta da pessoa.
+  if (info.linked) {
+    await telegramSendMessage(phone, "⚠️ Esse código já foi usado. Gere um novo em Configurações no Finn.", env);
+    return;
+  }
   const chatId = telegramChatIdOf(phone);
   info.linked = true;
   info.chatId = chatId;
