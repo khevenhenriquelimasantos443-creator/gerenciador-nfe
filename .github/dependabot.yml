@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Nenhum app deste repositório tem package.json (são HTML/JS servidos direto e
+  # Workers da Cloudflare), então não há ecossistema npm pra vigiar hoje. O que
+  # sobra são as GitHub Actions — e elas rodam com acesso aos secrets de deploy,
+  # o que as torna o alvo de cadeia de suprimentos mais valioso aqui.
+  #
+  # Se algum app passar a ter package.json, acrescente um bloco npm apontando
+  # pro diretório dele.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
