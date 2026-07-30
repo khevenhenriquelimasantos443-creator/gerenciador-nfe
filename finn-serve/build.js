@@ -763,10 +763,21 @@ async function _adminLogin(request, env) {
     // infinitas vezes, sem nenhum atraso nem bloqueio. 5 tentativas a cada 15
     // min, contando por IP e por conta — bloqueia os dois vetores.
     var rlIp = await _rateLimit(env, 'adminpw', _clientIp(request), 5, 900);
-    if (!rlIp.ok) return _tooManyRequests(cors, rlIp.retryAfter, 'muitas tentativas de senha, espere alguns minutos');
+    if (!rlIp.ok) {
+      await _securityLog(env, request, 'rate_limit_senha_admin', 'IP travado por excesso de tentativas');
+      return _tooManyRequests(cors, rlIp.retryAfter, 'muitas tentativas de senha, espere alguns minutos');
+    }
     var rlUser = await _rateLimit(env, 'adminpw', authUser.id, 10, 900);
-    if (!rlUser.ok) return _tooManyRequests(cors, rlUser.retryAfter, 'muitas tentativas de senha, espere alguns minutos');
-    if (!_masterPasswordOk(env, body.password)) return new Response(JSON.stringify({ error: 'senha incorreta' }), { status: 403, headers: cors });
+    if (!rlUser.ok) {
+      await _securityLog(env, request, 'rate_limit_senha_admin', 'conta travada por excesso de tentativas');
+      return _tooManyRequests(cors, rlUser.retryAfter, 'muitas tentativas de senha, espere alguns minutos');
+    }
+    if (!_masterPasswordOk(env, body.password)) {
+      // Senha errada na conta master é sempre suspeito: só existe uma pessoa
+      // que deveria estar digitando isso.
+      await _securityLog(env, request, 'senha_admin_incorreta', authUser.email);
+      return new Response(JSON.stringify({ error: 'senha incorreta' }), { status: 403, headers: cors });
+    }
     return new Response(JSON.stringify({ ok: true }), { headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_adminLogin');
@@ -1520,6 +1531,110 @@ ${billingFns}
 // vem — enquanto isso, ninguém é bloqueado. Vira true quando for a hora.
 var PREMIUM_ENFORCEMENT_ENABLED = false;
 
+// ═══════════════════════════════════════════════════════════════════════════
+//  DETECÇÃO DE INTRUSÃO
+// ═══════════════════════════════════════════════════════════════════════════
+// Isto é ALARME, não tranca. Quem impede o acesso é a autorização de cada
+// rota; isto aqui só registra quem está tentando, pra dar visibilidade.
+//
+// Duas fontes de sinal:
+//  1. ISCAS — caminhos que nenhum cliente legítimo do Finn chama nunca. Robô
+//     de varredura pede /.env e /wp-login.php o tempo todo; e HONEY_PATH é um
+//     endpoint falso plantado no HTML, então quem bate nele necessariamente
+//     leu o código-fonte e resolveu testar. Zero falso positivo por definição.
+//  2. EVENTOS REAIS — falha de senha de admin, estouro de rate limit, token
+//     inválido em rota autenticada.
+//
+// LGPD: IP é dado pessoal. Guardamos só os dois primeiros octetos (13.75.x.x)
+// pra dar noção de origem, mais um hash com sal pra conseguir contar "quantas
+// tentativas do mesmo lugar" sem armazenar o endereço inteiro. Retenção de 30
+// dias, automática via TTL do KV.
+var SEC_LOG_TTL = 60 * 60 * 24 * 30;
+
+// Endpoint-isca. Ele aparece no HTML do app como LEGACY_EXPORT_ENDPOINT, com
+// cara de rota antiga de exportação — e nenhuma linha do Finn o chama. Quem
+// bater aqui necessariamente abriu o código-fonte da página e resolveu testar.
+//
+// Limite conhecido: este repositório é público, então quem ler o build.js no
+// GitHub descobre que é armadilha. Pega o curioso que dá "ver código-fonte" no
+// site, não quem audita o repositório — e é justamente o primeiro grupo que a
+// gente quer enxergar.
+var HONEY_PATH = '/admin/v1/export-all';
+
+// Caminhos que scanner automatizado tenta em qualquer site do mundo.
+var SCANNER_PATHS = [
+  '/.env', '/.env.local', '/.git/config', '/.git/HEAD',
+  '/wp-login.php', '/wp-admin', '/xmlrpc.php', '/wordpress',
+  '/phpmyadmin', '/pma', '/adminer.php',
+  '/config.json', '/credentials', '/backup.sql', '/dump.sql',
+  '/.aws/credentials', '/.ssh/id_rsa', '/server-status',
+  '/actuator/env', '/api/v1/secrets', '/vendor/phpunit'
+];
+
+async function _anonIp(request, env) {
+  var ip = request.headers.get('CF-Connecting-IP') || '';
+  var partes = ip.split('.');
+  var truncado = partes.length === 4 ? (partes[0] + '.' + partes[1] + '.x.x') : (ip ? 'ipv6' : 'desconhecido');
+  // Hash com sal pra correlacionar tentativas sem guardar o IP: sem o sal
+  // (secret do Worker), a lista de IPs possíveis é pequena o bastante pra
+  // alguém reverter o hash por força bruta.
+  var sal = (env && env.SEC_LOG_SALT) || 'finn-sal-padrao';
+  var digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sal + '|' + ip));
+  var hex = [...new Uint8Array(digest)].map(function(b){ return b.toString(16).padStart(2, '0'); }).join('');
+  return { regiao: truncado, id: hex.slice(0, 12) };
+}
+
+async function _securityLog(env, request, kind, detalhe) {
+  if (!env.FINN_KV) return;
+  try {
+    var url = new URL(request.url);
+    var origem = await _anonIp(request, env);
+    var registro = {
+      at: new Date().toISOString(),
+      kind: kind,
+      path: url.pathname.slice(0, 120),
+      method: request.method,
+      ipRegiao: origem.regiao,
+      ipId: origem.id,
+      ua: (request.headers.get('User-Agent') || '').slice(0, 160),
+      pais: request.headers.get('CF-IPCountry') || '?',
+      ref: (request.headers.get('Referer') || '').slice(0, 120),
+      detalhe: detalhe ? String(detalhe).slice(0, 160) : undefined
+    };
+    // Chave com timestamp na frente pra listar em ordem sem precisar ordenar
+    // o conteúdo depois.
+    var chave = 'seclog_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    await env.FINN_KV.put(chave, JSON.stringify(registro), { expirationTtl: SEC_LOG_TTL });
+
+    // Contador por dia — é o que o painel usa pra detectar pico sem varrer
+    // todas as chaves.
+    var dia = registro.at.slice(0, 10);
+    var ck = 'seccount_' + dia;
+    var atual = parseInt((await env.FINN_KV.get(ck)) || '0', 10) || 0;
+    await env.FINN_KV.put(ck, String(atual + 1), { expirationTtl: SEC_LOG_TTL });
+  } catch (e) {
+    // Registrar nunca pode derrubar a requisição.
+    console.error('[securityLog]', e && e.message);
+  }
+}
+
+// Resposta das iscas: 404 comum, igualzinho ao de um caminho inexistente.
+// Nada de "acesso negado" nem página de bloqueio — se o atacante perceber que
+// foi detectado, ele muda de técnica e a isca perde o valor.
+function _honeyResponse() {
+  return new Response('Not Found', {
+    status: 404,
+    headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8' }, SECURITY_HEADERS)
+  });
+}
+
+function _isScannerPath(pathname) {
+  var p = pathname.toLowerCase().replace(/\\/+$/, '');
+  if (SCANNER_PATHS.indexOf(p) !== -1) return true;
+  // Extensões que este site nunca serve — sinal claro de varredura.
+  return /\\.(php|asp|aspx|jsp|cgi|env|sql|bak|old|swp)$/.test(p);
+}
+
 // Headers de segurança do HTML — o worker não mandava nenhum, então não havia
 // nada contendo um XSS caso algum dia apareça (o app guarda access_token E
 // refresh_token do Supabase no localStorage, ou seja, um XSS = conta tomada
@@ -1557,8 +1672,21 @@ var SECURITY_HEADERS = {
 };
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     var url = new URL(request.url);
+
+    // ── Iscas: antes de qualquer rota real ──
+    // Responde 404 comum (ver _honeyResponse) e registra em segundo plano.
+    // waitUntil pra não somar latência à resposta — e pra não dar ao atacante
+    // um tempo de resposta diferente do 404 normal, que denunciaria a isca.
+    if (url.pathname === HONEY_PATH || url.pathname.indexOf(HONEY_PATH + '/') === 0) {
+      ctx.waitUntil(_securityLog(env, request, 'isca_honeytoken', 'endpoint falso plantado no HTML'));
+      return _honeyResponse();
+    }
+    if (_isScannerPath(url.pathname)) {
+      ctx.waitUntil(_securityLog(env, request, 'isca_scanner', url.pathname));
+      return _honeyResponse();
+    }
 
     // ── CORS preflight ──
     if (request.method === 'OPTIONS') {
@@ -1664,10 +1792,14 @@ h1 em{font-style:normal;color:#F97316}
 <h2><span class="num">05</span> WhatsApp Bot</h2>
 <p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenadas no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
 
-<h2><span class="num">06</span> Seus direitos</h2>
+<h2><span class="num">06</span> Registros de segurança</h2>
+<p>Para proteger as contas, registramos tentativas de acesso suspeitas — como varredura automatizada por endereços que não existem no site, ou repetidas senhas incorretas na área administrativa. Guardamos o horário, o caminho acessado, o navegador informado, o país e uma <strong>versão parcial do endereço de IP</strong> (por exemplo <em>189.45.x.x</em>), nunca o endereço completo.</p>
+<p>Esses registros existem apenas para detectar abuso, não são usados para perfilar pessoas nem cruzados com sua conta, e são <strong>apagados automaticamente após 30 dias</strong>.</p>
+
+<h2><span class="num">07</span> Seus direitos</h2>
 <div class="notice"><strong>Você está no controle.</strong><br>Pode solicitar a exclusão de todos os seus dados a qualquer momento em <a href="/deletar-dados">finn.dev.br/deletar-dados</a> — sem perguntas, sem retenção.</div>
 
-<h2><span class="num">07</span> Contato</h2>
+<h2><span class="num">08</span> Contato</h2>
 <p>Dúvidas sobre privacidade? Escreva para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> e respondemos em até 48h.</p>
 </article>\`;
       return new Response(legalShell('privacidade', 'Política de Privacidade', 'Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
@@ -1768,6 +1900,27 @@ h1 em{font-style:normal;color:#F97316}
             status: 402, headers: { 'Content-Type': 'application/json' }
           });
         }
+        // Teto diário POR CONTA, além do limite por IP. Enquanto
+        // PREMIUM_ENFORCEMENT_ENABLED for false, todo mundo entra como 'pro' e
+        // a cota mensal do Plus não vale — então o único freio era 20/min por
+        // IP, que um script contorna sozinho trocando de rede ou só sendo
+        // paciente (28 mil chamadas/dia na nossa conta da Anthropic).
+        // Este teto é por usuário autenticado, então trocar de IP não ajuda:
+        // pra multiplicar o gasto o atacante precisa criar conta atrás de conta.
+        var AI_DAILY_PER_USER = 60;
+        if (env.FINN_KV && !_isMasterUser(aiUser)) {
+          var aiDia = new Date().toISOString().slice(0, 10);
+          var aiUserKey = 'ai_day_' + aiUser.id + '_' + aiDia;
+          var aiUserCount = parseInt((await env.FINN_KV.get(aiUserKey)) || '0', 10) || 0;
+          if (aiUserCount >= AI_DAILY_PER_USER) {
+            await _securityLog(env, request, 'ai_teto_diario', 'conta atingiu ' + AI_DAILY_PER_USER + ' chamadas no dia');
+            return new Response(JSON.stringify({ error: { type: 'rate_limited', message: 'Você atingiu o limite de análises de hoje. Tenta de novo amanhã.' } }), {
+              status: 429, headers: { 'Content-Type': 'application/json' }
+            });
+          }
+          await env.FINN_KV.put(aiUserKey, String(aiUserCount + 1), { expirationTtl: 172800 });
+        }
+
         var AI_PLUS_MONTHLY_LIMIT = 10;
         if (aiPlan === 'plus') {
           var aiThisMonth = new Date().toISOString().slice(0, 7);
