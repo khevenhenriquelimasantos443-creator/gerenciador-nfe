@@ -673,7 +673,32 @@ function _isMasterUser(authUser) {
 // master, só libera Pro/admin com essa senha (wrangler secret
 // MASTER_ADMIN_PASSWORD) — sem ela configurada, ninguém passa.
 function _masterPasswordOk(env, password) {
-  return !!(env.MASTER_ADMIN_PASSWORD && password && password === env.MASTER_ADMIN_PASSWORD);
+  if (!env.MASTER_ADMIN_PASSWORD || !password) return false;
+  return _timingSafeEqual(String(password), String(env.MASTER_ADMIN_PASSWORD));
+}
+
+// Comparação de tempo constante: '===' em string sai no primeiro byte que
+// diverge, então o tempo de resposta vaza quantos caracteres do prefixo já
+// estão certos. Pela internet o jitter esconde isso na prática, mas a
+// verificação da assinatura do Mercado Pago aqui do lado já faz certo — não
+// custa nada ser consistente.
+function _timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  var diff = 0;
+  for (var i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+// Credenciais de admin saem de HEADER, não de query string. Numa URL elas vão
+// parar no log de acesso da Cloudflare, no histórico do navegador e podem
+// vazar no Referer — e essas duas juntas (JWT da master + senha) são acesso
+// admin completo. As rotas POST já mandavam no corpo; estas eram as GET.
+function _adminCreds(request) {
+  var auth = request.headers.get('Authorization') || '';
+  return {
+    accessToken: auth.indexOf('Bearer ') === 0 ? auth.slice(7) : null,
+    password: request.headers.get('X-Admin-Password'),
+  };
 }
 
 // POST /admin/login — { access_token, password } — o app chama isso uma vez
@@ -714,9 +739,10 @@ async function _adminListSubscriptions(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
-    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
     var subsR = await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?select=*&order=updated_at.desc', {
@@ -814,7 +840,8 @@ async function _distinctUserCount(table, env) {
   return Object.keys(set).length;
 }
 
-// GET /admin/analytics?access_token=...&admin_password=... — painel de uso
+// GET /admin/analytics — painel de uso. Credenciais em header:
+//   Authorization: Bearer <access_token>  +  X-Admin-Password: <senha>
 // (só a conta master). Tudo lido ao vivo do Supabase via SUPABASE_SERVICE_KEY
 // (contorna RLS de propósito, só pra essa rota admin) — sem cache, cada
 // carregamento reflete o estado atual do banco.
@@ -822,9 +849,10 @@ async function _adminAnalytics(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
-    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
     var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
@@ -998,16 +1026,18 @@ async function _betaSignup(request, env) {
   }
 }
 
-// GET /admin/beta-signups?access_token=...&admin_password=... — lista as
+// GET /admin/beta-signups — credenciais em header (Authorization: Bearer
+// <access_token> + X-Admin-Password: <senha>). Lista as
 // inscrições recentes do /beta com o status do envio do e-mail (só a
 // conta master) — único jeito de ver se o Resend está funcionando de verdade.
 async function _adminBetaSignups(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
-    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.FINN_KV) return new Response(JSON.stringify({ signups: [] }), { headers: cors });
 
     var keys = [];
@@ -1359,15 +1389,17 @@ async function _logInstagramAttempt(env, log) {
   } catch (e) { /* log é best-effort, nunca deve derrubar a publicação */ }
 }
 
-// GET /admin/instagram-status?access_token=...&admin_password=... — mostra
+// GET /admin/instagram-status — credenciais em header (Authorization:
+// Bearer <access_token> + X-Admin-Password: <senha>). Mostra
 // quantos posts já foram (ou faltam) publicar, e o histórico de tentativas.
 async function _adminInstagramStatus(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
-    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, url.searchParams.get('admin_password'))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     var nextIndex = Number((env.FINN_KV ? await env.FINN_KV.get('ig_post_next_index') : null) || '1');
     var logs = [];
@@ -1468,7 +1500,7 @@ export default {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Password',
         },
       });
     }

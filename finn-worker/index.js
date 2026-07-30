@@ -159,7 +159,9 @@ function corsResponse(response) {
   const headers = new Headers(response.headers);
   headers.set("Access-Control-Allow-Origin", "*");
   headers.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token");
+  // X-Admin-Password entrou aqui junto com a remoção das credenciais da query
+  // string: header customizado entre origens só passa se estiver nesta lista.
+  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token, X-Admin-Password");
   return new Response(response.body, { status: response.status, headers });
 }
 
@@ -191,19 +193,46 @@ async function listAllKeys(env, prefix) {
   return keys;
 }
 
+// Comparação de tempo constante — '===' em string sai no primeiro byte que
+// diverge, então o tempo gasto conta quantos caracteres do prefixo estão
+// certos. A assinatura da Meta aqui do lado já faz assim; ficou inconsistente.
+// Token de sessão vem do header Authorization, não da URL (mesmo motivo das
+// credenciais de admin: query string vaza em log, histórico e Referer). Aceita
+// o parâmetro antigo só como transição, pra não derrubar quem ainda estiver
+// com a versão anterior do app em cache do Service Worker.
+function bearerToken(request, url) {
+  const auth = request.headers.get("Authorization") || "";
+  if (/^Bearer\s+/i.test(auth)) return auth.replace(/^Bearer\s+/i, "");
+  return url ? url.searchParams.get("access_token") : null;
+}
+
+function timingSafeEqual(a, b) {
+  const sa = String(a == null ? "" : a);
+  const sb = String(b == null ? "" : b);
+  if (sa.length !== sb.length) return false;
+  let diff = 0;
+  for (let i = 0; i < sa.length; i++) diff |= sa.charCodeAt(i) ^ sb.charCodeAt(i);
+  return diff === 0;
+}
+
 // Endpoints de diagnóstico (/keys, /debug, /subscribe) — nunca usados pelo
-// app público. Aceita o token secreto (X-Admin-Token ou ?token=, definido via
-// wrangler secret ADMIN_TOKEN) OU a conta master logada de verdade no
-// Supabase (Authorization: Bearer <access_token> ou ?access_token=).
+// app público. Aceita o token secreto (X-Admin-Token, definido via wrangler
+// secret ADMIN_TOKEN) OU a conta master logada de verdade no Supabase
+// (Authorization: Bearer <access_token> + X-Admin-Password).
+//
+// Só HEADER: os fallbacks por query string (?token=, ?access_token=,
+// ?admin_password=) foram removidos porque URL vai parar no log de acesso da
+// Cloudflare, no histórico do navegador e pode vazar no Referer pros domínios
+// externos que o app linka (wa.me, t.me). Pra chamar na mão:
+//   curl -H "X-Admin-Token: <ADMIN_TOKEN>" https://<worker>/debug
 async function requireAdminToken(request, env) {
-  const url = new URL(request.url);
-  const token = request.headers.get("X-Admin-Token") || url.searchParams.get("token");
-  if (env.ADMIN_TOKEN && token && token === env.ADMIN_TOKEN) return true;
+  const token = request.headers.get("X-Admin-Token");
+  if (env.ADMIN_TOKEN && token && timingSafeEqual(token, env.ADMIN_TOKEN)) return true;
 
   const authHeader = request.headers.get("Authorization") || "";
-  const accessToken = authHeader.replace(/^Bearer\s+/i, "") || url.searchParams.get("access_token");
-  const adminPassword = request.headers.get("X-Admin-Password") || url.searchParams.get("admin_password");
-  if (accessToken && env.MASTER_ADMIN_PASSWORD && adminPassword === env.MASTER_ADMIN_PASSWORD) {
+  const accessToken = authHeader.replace(/^Bearer\s+/i, "");
+  const adminPassword = request.headers.get("X-Admin-Password");
+  if (accessToken && env.MASTER_ADMIN_PASSWORD && adminPassword && timingSafeEqual(adminPassword, env.MASTER_ADMIN_PASSWORD)) {
     const user = await verifySupabaseUser(accessToken);
     if (user && user.email && user.email.toLowerCase() === MASTER_EMAIL.toLowerCase()) return true;
   }
@@ -1323,7 +1352,7 @@ async function handleWhatsAppLinkStatus(request, env) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
-  const user = await verifySupabaseUser(url.searchParams.get("access_token"));
+  const user = await verifySupabaseUser(bearerToken(request, url));
   if (!user) return unauthorizedResponse();
   const raw = await env.FINN_KV.get(`walink_${code}`);
   if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
@@ -1574,7 +1603,7 @@ async function handleBotTxsGet(request, env) {
   const url = new URL(request.url);
   const phone = url.searchParams.get("phone");
   const telegramChatId = url.searchParams.get("telegram_chat_id");
-  const accessToken = url.searchParams.get("access_token");
+  const accessToken = bearerToken(request, url);
   if (!phone && !telegramChatId) {
     return corsResponse(new Response(JSON.stringify({ error: "phone or telegram_chat_id required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
   }
@@ -2120,7 +2149,7 @@ async function handleTelegramLinkStatus(request, env) {
   if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
   // Exige a sessão de quem gerou o código: antes, qualquer um com o código na
   // mão lia o chatId vinculado sem se autenticar.
-  const user = await verifySupabaseUser(url.searchParams.get("access_token"));
+  const user = await verifySupabaseUser(bearerToken(request, url));
   if (!user) return unauthorizedResponse();
   const raw = await env.FINN_KV.get(`tglink_${code}`);
   if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));

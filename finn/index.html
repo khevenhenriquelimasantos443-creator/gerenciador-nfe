@@ -787,8 +787,7 @@ function pollWhatsAppLink(code){
   var attempts = 0;
   waPollTimer = setInterval(function(){
     attempts++;
-    fetch(WHATSAPP_WORKER_URL + "/whatsapp/link-status?code=" + encodeURIComponent(code) +
-          "&access_token=" + encodeURIComponent(currentSession ? currentSession.access_token : ""))
+    fetch(WHATSAPP_WORKER_URL + "/whatsapp/link-status?code=" + encodeURIComponent(code), { headers: bearerHeader() })
       .then(function(r){ return r.json(); })
       .then(function(j){
         if(j && j.linked){
@@ -863,8 +862,7 @@ function pollTelegramLink(code){
   var attempts = 0;
   telegramPollTimer = setInterval(function(){
     attempts++;
-    fetch(WHATSAPP_WORKER_URL + "/telegram/link-status?code=" + encodeURIComponent(code) +
-          "&access_token=" + encodeURIComponent(currentSession ? currentSession.access_token : ""))
+    fetch(WHATSAPP_WORKER_URL + "/telegram/link-status?code=" + encodeURIComponent(code), { headers: bearerHeader() })
       .then(function(r){ return r.json(); })
       .then(function(j){
         if(j && j.linked && j.chatId){
@@ -923,10 +921,17 @@ function pullBotTransactions(){
   return Promise.all(jobs.map(pullBotTransactionsForChannel)).catch(function(){});
 }
 
+// Token de sessão vai em header, não na URL — query string entra no log de
+// acesso do servidor, no histórico do navegador e pode vazar no Referer pros
+// domínios externos que o app linka (wa.me, t.me). Um access_token vazado é a
+// conta inteira, porque é o mesmo JWT que a RLS do Supabase usa.
+function bearerHeader(){
+  return { "Authorization": "Bearer " + ((currentSession && currentSession.access_token) || "") };
+}
+
 function pullBotTransactionsForChannel(identity){
   var qs = Object.keys(identity).map(function(k){ return k + "=" + encodeURIComponent(identity[k]); }).join("&");
-  qs += "&access_token=" + encodeURIComponent(currentSession.access_token);
-  return fetch(WHATSAPP_WORKER_URL + "/bot-txs?" + qs)
+  return fetch(WHATSAPP_WORKER_URL + "/bot-txs?" + qs, { headers: bearerHeader() })
     .then(function(r){ return r.json(); })
     .then(function(j){
       if(!j || !j.ok || !j.txs || !j.txs.length) return;
@@ -3683,12 +3688,20 @@ function renderInstagramAdminCard(){
   return html;
 }
 
+// Credenciais de admin vão em header, nunca na URL: query string entra no log
+// de acesso do servidor, no histórico do navegador e pode vazar via Referer —
+// e o JWT da master junto com a senha é acesso admin completo.
+function adminHeaders(){
+  return {
+    "Authorization": "Bearer " + ((currentSession && currentSession.access_token) || ""),
+    "X-Admin-Password": state.adminPassword || ""
+  };
+}
+
 function loadInstagramStatus(){
   state.igStatusLoading = true;
   render();
-  var token = encodeURIComponent((currentSession && currentSession.access_token) || "");
-  var pwd = encodeURIComponent(state.adminPassword || "");
-  fetch("/admin/instagram-status?access_token=" + token + "&admin_password=" + pwd)
+  fetch("/admin/instagram-status", { headers: adminHeaders() })
     .then(function(r){ return r.json(); })
     .then(function(j){
       state.igStatusLoading = false;
@@ -3767,9 +3780,7 @@ function loadAdminSubscriptions(){
   state.adminLoading = true;
   state.adminError = null;
   render();
-  var token = encodeURIComponent((currentSession && currentSession.access_token) || "");
-  var pwd = encodeURIComponent(state.adminPassword || "");
-  fetch("/admin/subscriptions?access_token=" + token + "&admin_password=" + pwd)
+  fetch("/admin/subscriptions", { headers: adminHeaders() })
     .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
     .then(function(res){
       state.adminLoading = false;
@@ -3794,12 +3805,10 @@ function loadAdminAnalytics(){
   state.analyticsLoading = true;
   state.analyticsError = null;
   render();
-  var token = encodeURIComponent((currentSession && currentSession.access_token) || "");
-  var pwd = encodeURIComponent(state.adminPassword || "");
-  var qs = "access_token=" + token + "&admin_password=" + pwd;
+  var hdrs = adminHeaders();
   Promise.all([
-    fetch("/admin/analytics?" + qs).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }),
-    fetch(WHATSAPP_WORKER_URL + "/admin/bot-stats?" + qs).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }).catch(function(){ return { status: 0, body: null }; })
+    fetch("/admin/analytics", { headers: hdrs }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }),
+    fetch(WHATSAPP_WORKER_URL + "/admin/bot-stats", { headers: hdrs }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }).catch(function(){ return { status: 0, body: null }; })
   ]).then(function(res){
     state.analyticsLoading = false;
     var mainRes = res[0], botRes = res[1];

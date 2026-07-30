@@ -72,6 +72,9 @@ FINN_WORKER_URL = "https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimas
 #  wrangler secret put TELEGRAM_BOT_USERNAME
 #    → O @username do bot escolhido no BotFather, sem o @
 #
-#  Depois de configurar os 3 acima, registre o webhook uma vez:
-#    GET https://<seu-worker>.workers.dev/telegram/set-webhook?token=<ADMIN_TOKEN>
+#  Depois de configurar os 3 acima, registre o webhook uma vez. O token vai em
+#  HEADER (na URL ele ficaria gravado no log de acesso da Cloudflare e no
+#  histórico do navegador):
+#    curl -H "X-Admin-Token: <ADMIN_TOKEN>" \
+#         https://<seu-worker>.workers.dev/telegram/set-webhook
 # ─────────────────────────────────────────────
