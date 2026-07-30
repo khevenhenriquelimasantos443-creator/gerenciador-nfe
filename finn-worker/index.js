@@ -119,6 +119,12 @@ export default {
     if (url.pathname === "/whatsapp/link" && request.method === "POST") {
       return handleWhatsAppLinkStart(request, env);
     }
+    // Libera um número (trocou de chip, vinculou errado). Só admin — se a
+    // própria conta pudesse liberar, o registro de posse não valeria nada.
+    if (url.pathname === "/whatsapp/unlink" && request.method === "POST") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppUnlink(request, env);
+    }
     if (url.pathname === "/whatsapp/link-status" && request.method === "GET") {
       return handleWhatsAppLinkStatus(request, env);
     }
@@ -325,10 +331,37 @@ const DEBUG_MAX = 25;
 // chave única: o KV aceita só ~1 escrita/segundo por chave, então uma
 // rajada de mensagens perdia eventos silenciosamente quando todos
 // disputavam a mesma chave "__debug_log__".
+// Mascara o número: guarda só o suficiente pra casar dois eventos do mesmo
+// remetente ao investigar um problema, sem deixar o telefone inteiro em claro
+// no KV. "5513992102413" vira "55******2413".
+function maskPhone(v) {
+  const s = String(v == null ? "" : v);
+  if (s.startsWith("tg:")) return "tg:***" + s.slice(-4);
+  const d = s.replace(/\D/g, "");
+  if (d.length < 6) return "***";
+  return d.slice(0, 2) + "*".repeat(Math.max(0, d.length - 6)) + d.slice(-4);
+}
+
+// Campos que não podem ir pro log de debug em claro. Antes o log guardava o
+// telefone completo e o TEXTO INTEGRAL da mensagem por 24h — ou seja, dados
+// financeiros da pessoa em repouso, sem necessidade nenhuma pra diagnóstico.
+// O /debug é protegido por token de admin, mas o certo é o dado nem estar lá.
+function sanitizeDebugEntry(entry) {
+  const out = { ...entry };
+  if (out.from) out.from = maskPhone(out.from);
+  if (out.phone) out.phone = maskPhone(out.phone);
+  if (out.uid) out.uid = maskPhone(out.uid);
+  if (out.email) out.email = String(out.email).replace(/^(.).*(@.*)$/, "$1***$2");
+  // O conteúdo da mensagem some; sobra só o tamanho, que já ajuda a
+  // diferenciar "chegou vazio" de "chegou truncado".
+  if ("text" in out) { out.textLen = out.text ? String(out.text).length : 0; delete out.text; }
+  return out;
+}
+
 async function debugLog(env, entry) {
   try {
     const key = DEBUG_PREFIX + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
-    await env.FINN_KV.put(key, JSON.stringify({ at: new Date().toISOString(), ...entry }), { expirationTtl: 86400 });
+    await env.FINN_KV.put(key, JSON.stringify({ at: new Date().toISOString(), ...sanitizeDebugEntry(entry) }), { expirationTtl: 86400 });
   } catch (err) {
     console.error("debugLog error:", err);
   }
@@ -1166,13 +1199,37 @@ async function handleImageMessage(phone, msg, env) {
   }
 }
 
+// Hosts de onde a Meta serve mídia. O token do WhatsApp vai no Authorization
+// da segunda requisição, então mandá-la pra um host que não seja da Meta
+// entregaria o token pra quem controlasse aquele endereço.
+//
+// fbsbx.com é obrigatório: a Cloud API devolve as mídias do WhatsApp em
+// lookaside.fbsbx.com. Sem ele na lista, áudio e foto param de funcionar.
+// O (^|\.) na frente impede sufixo forjado tipo "fbcdn.net.atacante.com".
+const META_MEDIA_HOSTS = /(^|\.)(fbcdn\.net|fbsbx\.com|facebook\.com|whatsapp\.net)$/i;
+
 async function downloadMetaMedia(mediaId, env) {
+  // O id da mídia é numérico e vem do webhook da Meta. Com a assinatura agora
+  // fail-closed não achei caminho pra ele chegar adulterado — mas ele entra
+  // concatenado numa URL, e validar custa uma linha.
+  if (!/^\d{1,32}$/.test(String(mediaId || ""))) {
+    console.error("Media id inválido:", mediaId);
+    return null;
+  }
   const urlResp = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${mediaId}`, {
     headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
   });
   if (!urlResp.ok) { console.error("Media URL fetch error:", urlResp.status); return null; }
   const { url } = await urlResp.json();
   if (!url) return null;
+  // A URL vem da resposta da Meta, mas é ela que decide o host — confere antes
+  // de mandar o token junto.
+  let mediaHost = "";
+  try { mediaHost = new URL(url).hostname; } catch { return null; }
+  if (!META_MEDIA_HOSTS.test(mediaHost)) {
+    console.error("Host de mídia recusado:", mediaHost);
+    return null;
+  }
   const fileResp = await fetch(url, { headers: { "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` } });
   if (!fileResp.ok) { console.error("Media download error:", fileResp.status); return null; }
   return fileResp.arrayBuffer();
@@ -1358,6 +1415,28 @@ async function handleWhatsAppLinkStart(request, env) {
   const code = randomLinkCode(8);
   await env.FINN_KV.put(`walink_${code}`, JSON.stringify({ uid: user.id, email: user.email, linked: false }), { expirationTtl: 600 });
   return corsResponse(new Response(JSON.stringify({ ok: true, code }), {
+    status: 200, headers: { "Content-Type": "application/json" }
+  }));
+}
+
+// POST /whatsapp/unlink { phone } — só admin (ver rota). Sem isso, um número
+// registrado ficava preso pra sempre: quem trocasse de chip, ou vinculasse o
+// número errado, não tinha como se desvincular nem transferir, e o suporte não
+// tinha ferramenta nenhuma além de mexer no KV na unha.
+async function handleWhatsAppUnlink(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return corsResponse(new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 })); }
+  const phone = normalizePhone(body.phone);
+  if (!phone) return corsResponse(new Response(JSON.stringify({ error: "invalid phone" }), { status: 400, headers: { "Content-Type": "application/json" } }));
+  const removed = [];
+  for (const cand of phoneVariants(phone)) {
+    if (await env.FINN_KV.get(`wa_owner_${cand}`)) {
+      await env.FINN_KV.delete(`wa_owner_${cand}`);
+      removed.push(cand);
+    }
+  }
+  await debugLog(env, { kind: "wa_unlink", phone, removed: removed.length });
+  return corsResponse(new Response(JSON.stringify({ ok: true, removed: removed.length }), {
     status: 200, headers: { "Content-Type": "application/json" }
   }));
 }
