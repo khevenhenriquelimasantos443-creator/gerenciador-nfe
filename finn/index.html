@@ -517,7 +517,14 @@ var VAPID_PUBLIC_KEY = "BPPw0CSqGjNQCdILq-CvNkBkMR6cDs0TqDCh9vThrMYQZ1OGLaUYIsZI
 var CATEGORIES = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Vestuário","Salário","Freelance","Aluguel","Venda","Bônus","Investimento","Outros"];
 var EXPENSE_CATS = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Vestuário","Outros"];
 var CAT_COLOR = {"Alimentação":"#F97316","Transporte":"#0EA5E9","Moradia":"#8B5CF6","Saúde":"#EC4899","Educação":"#14B8A6","Lazer":"#F59E0B","Vestuário":"#D946EF","Salário":"#059669","Freelance":"#0891B2","Aluguel":"#CA8A04","Venda":"#65A30D","Bônus":"#DC2626","Investimento":"#6366F1","Outros":"#94A3B8"};
-function catColor(c){ return CAT_COLOR[c] || "#A78BFA"; }
+// hasOwnProperty em vez de acesso direto: uma categoria personalizada chamada
+// "constructor", "toString" ou "__proto__" faz CAT_COLOR[c] devolver a função
+// herdada do Object.prototype em vez de undefined — aí o fallback não dispara
+// e a função vai stringificada pra dentro de um style="...", quebrando o
+// layout. Só se atinge a própria conta, mas é erro fácil de evitar.
+function catColor(c){
+  return Object.prototype.hasOwnProperty.call(CAT_COLOR, c) ? CAT_COLOR[c] : "#A78BFA";
+}
 
 function allCategories(){
   var names = state.customCategories.map(function(c){ return c.name; });
