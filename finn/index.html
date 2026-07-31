@@ -2273,16 +2273,128 @@ function parsePDF(arrayBuffer){
     for(var i = 1; i <= pdf.numPages; i++){
       pagePromises.push(pdf.getPage(i).then(function(page){
         return page.getTextContent().then(function(tc){
-          return tc.items.map(function(it){ return it.str; }).join(" ");
+          // Reconstrói as LINHAS do PDF pela coordenada Y de cada pedaço de
+          // texto. Antes isso juntava tudo com espaço, num blob só — e a
+          // fronteira entre um lançamento e o seguinte é justamente a quebra
+          // de linha. Sem ela o parser colava o cabeçalho da tabela na
+          // descrição, casava valor de uma linha com data de outra, e o
+          // extrato inteiro entrava errado.
+          var porLinha = {};
+          tc.items.forEach(function(it){
+            if(!it.str || !it.str.trim()) return;
+            // transform[5] é o Y do item. Arredonda pra tolerar variação
+            // sub-pixel entre pedaços da mesma linha.
+            var y = Math.round((it.transform && it.transform[5]) || 0);
+            (porLinha[y] = porLinha[y] || []).push({ x: (it.transform && it.transform[4]) || 0, s: it.str });
+          });
+          // Y cresce de baixo pra cima no PDF, então ordena decrescente pra
+          // ler de cima pra baixo; dentro da linha, ordena por X.
+          return Object.keys(porLinha)
+            .map(Number).sort(function(a, b){ return b - a; })
+            .map(function(y){
+              return porLinha[y].sort(function(a, b){ return a.x - b.x; })
+                .map(function(p){ return p.s; }).join(" ").replace(/\s+/g, " ").trim();
+            })
+            .filter(Boolean).join("\n");
         });
       }));
     }
     return Promise.all(pagePromises);
   }).then(function(pageTexts){
     var text = pageTexts.join("\n");
-    var dayGroupedRows = parseDayGroupedStatement(text);
-    return dayGroupedRows.length ? dayGroupedRows : parseStatementText(text);
+    // Ordem importa: do formato mais específico pro mais genérico. O
+    // parseStatementText é o último recurso justamente por ser o mais solto —
+    // se ele rodar primeiro, casa qualquer coisa e produz lixo.
+    var rows = parseBancoBrasilStatement(text);
+    if(rows.length) return rows;
+    rows = parseDayGroupedStatement(text);
+    return rows.length ? rows : parseStatementText(text);
   });
+}
+
+// Extrato do Banco do Brasil (e parecidos). O layout real, depois da
+// reconstrução de linhas, é assim:
+//
+//   Pix - Recebido                                          <- o TIPO vem antes
+//   01/07/2026 14397 11905037333921 01/07 19:05 ... ANA MARIA S I 500,00 (+)
+//   Compra com Cartão
+//   01/07/2026 99008 172131 24,00 (-)
+//   01/07 20:02 AlexandrePauloDa                            <- contraparte depois
+//   Saldo do dia 289,64 (-)                                 <- não é lançamento
+//
+// Três detalhes que quebram quem tenta adivinhar: o tipo fica na linha
+// ANTERIOR, o valor e o sinal ficam no FIM da linha (não logo após a data), e
+// a contraparte às vezes cai na linha seguinte. Os dois parsers que já
+// existiam não davam conta — um espera cabeçalho "15 de julho 2026" (estilo
+// Nubank), o outro espera o marcador D/C, que aqui não aparece.
+var BB_LINHA_LANCAMENTO = /^(\d{2}\/\d{2}\/\d{4})\s+(.+?)\s+(\d{1,3}(?:\.\d{3})*,\d{2})\s*\(([+-])\)\s*$/;
+// Saldo não é lançamento — entra no extrato só como referência. Sem filtrar,
+// o "Saldo do dia" de cada dia virava uma transação inventada.
+var BB_SALDO = /saldo\s+(anterior|do\s+dia|bloqueado)|^s\s*a\s*l\s*d\s*o\b/i;
+// Cabeçalho que se repete em toda página.
+var BB_RUIDO = /^(extrato de conta|cliente\b|ag[êe]ncia:|lan[çc]amentos\s*$|dia\s+lote|dia\s+documento|per[íi]odo:|informa[çc][õo]es|folha\b|banco do brasil|ouvidoria|sac\b|total\s+aplica|sujeitos a confirma|\*\s*saldos por dia)/i;
+// O que caracteriza a linha de TIPO. Precisa ser por palavra-chave: sobra de
+// nome cortado ("AZEVE", "ALIMEN", "VA") também é linha solta com letras, e
+// sem isso viraria o "tipo" do lançamento seguinte.
+var BB_TIPO = /^(pix\b|pix-|compra\b|cobran[çc]a|transfer[êe]ncia|pagamento|saque|dep[óo]sito|tarifa|estorno|rendimento|juros\b|iof\b|d[ée]bito|cr[ée]dito|resgate|aplica[çc])/i;
+
+function parseBancoBrasilStatement(text){
+  var linhas = String(text || "").split(/\r?\n/)
+    .map(function(l){ return l.trim(); }).filter(Boolean);
+  var rows = [];
+  var tipo = "";
+
+  for(var i = 0; i < linhas.length; i++){
+    var linha = linhas[i];
+    if(BB_RUIDO.test(linha)){ tipo = ""; continue; }
+
+    var m = linha.match(BB_LINHA_LANCAMENTO);
+    if(!m){
+      // Guarda como tipo do PRÓXIMO lançamento. Fica com o último que
+      // aparecer antes dele, que é o correto quando o banco intercala
+      // linhas de detalhe ("Juros Saldo Devedor Conta").
+      if(BB_TIPO.test(linha) && !BB_SALDO.test(linha)) tipo = linha;
+      continue;
+    }
+
+    var meio = m[2];
+    if(BB_SALDO.test(meio)){ tipo = ""; continue; }
+
+    var d = parseDateStr(m[1]);
+    var v = parseMoneyStr(m[3]);
+    if(!d || v === null || v === 0){ tipo = ""; continue; }
+
+    var quem = limpaMeioBB(meio);
+    // Contraparte pode ter caído na linha seguinte ("01/07 20:02 Fulano").
+    if(!quem && i + 1 < linhas.length && /^\d{2}\/\d{2}\s+\d{2}:\d{2}\b/.test(linhas[i + 1])){
+      quem = limpaMeioBB(linhas[i + 1]);
+      i++;
+    }
+
+    var desc = [tipo, quem].filter(Boolean).join(" · ") || "Importado";
+    rows.push({
+      date: d,
+      type: m[4] === "-" ? "despesa" : "receita",
+      category: guessCategory(desc) || "Outros",
+      description: desc.slice(0, 80),
+      value: Math.abs(v),
+      include: true
+    });
+    tipo = "";
+  }
+  return rows;
+}
+
+// Do miolo da linha sobra o que interessa: com quem foi. Lote, documento,
+// chave Pix e a data/hora repetida só ocupam espaço na descrição.
+function limpaMeioBB(s){
+  var txt = String(s || "")
+    .replace(/\b\d{2}\/\d{2}\s+\d{2}:\d{2}\b/g, " ")  // "01/07 19:05"
+    .replace(/\b\d{7,}\b/g, " ")                       // documento / chave Pix
+    .replace(/\b\d{3,6}\b/g, " ")                      // lote e sequencial
+    .replace(/\s{2,}/g, " ")
+    .trim();
+  return /[A-Za-zÀ-ÿ]/.test(txt) ? txt : "";
 }
 
 function decodeText(buffer){
