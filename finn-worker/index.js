@@ -202,14 +202,17 @@ async function listAllKeys(env, prefix) {
 // Comparação de tempo constante — '===' em string sai no primeiro byte que
 // diverge, então o tempo gasto conta quantos caracteres do prefixo estão
 // certos. A assinatura da Meta aqui do lado já faz assim; ficou inconsistente.
-// Token de sessão vem do header Authorization, não da URL (mesmo motivo das
-// credenciais de admin: query string vaza em log, histórico e Referer). Aceita
-// o parâmetro antigo só como transição, pra não derrubar quem ainda estiver
-// com a versão anterior do app em cache do Service Worker.
-function bearerToken(request, url) {
+// Token de sessão vem do header Authorization, e só dele. Query string vaza em
+// log de acesso, histórico do navegador e no Referer — e um access_token é a
+// conta inteira, porque é o mesmo JWT que a RLS do Supabase usa.
+//
+// Existiu aqui um fallback pro parâmetro ?access_token= como transição, pra não
+// derrubar quem estivesse com a versão anterior do app presa no cache do
+// Service Worker. Já passou tempo suficiente desde aquele deploy; a transição
+// terminou e o fallback saiu.
+function bearerToken(request) {
   const auth = request.headers.get("Authorization") || "";
-  if (/^Bearer\s+/i.test(auth)) return auth.replace(/^Bearer\s+/i, "");
-  return url ? url.searchParams.get("access_token") : null;
+  return /^Bearer\s+/i.test(auth) ? auth.replace(/^Bearer\s+/i, "") : null;
 }
 
 // Erro 500 genérico pro cliente, detalhe só no log do Worker. Devolver
@@ -1446,7 +1449,7 @@ async function handleWhatsAppLinkStatus(request, env) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
-  const user = await verifySupabaseUser(bearerToken(request, url));
+  const user = await verifySupabaseUser(bearerToken(request));
   if (!user) return unauthorizedResponse();
   const raw = await env.FINN_KV.get(`walink_${code}`);
   if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
@@ -1701,7 +1704,7 @@ async function handleBotTxsGet(request, env) {
   const url = new URL(request.url);
   const phone = url.searchParams.get("phone");
   const telegramChatId = url.searchParams.get("telegram_chat_id");
-  const accessToken = bearerToken(request, url);
+  const accessToken = bearerToken(request);
   if (!phone && !telegramChatId) {
     return corsResponse(new Response(JSON.stringify({ error: "phone or telegram_chat_id required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
   }
@@ -2263,7 +2266,7 @@ async function handleTelegramLinkStatus(request, env) {
   if (!code) return corsResponse(new Response(JSON.stringify({ error: "code required" }), { status: 400, headers: { "Content-Type": "application/json" } }));
   // Exige a sessão de quem gerou o código: antes, qualquer um com o código na
   // mão lia o chatId vinculado sem se autenticar.
-  const user = await verifySupabaseUser(bearerToken(request, url));
+  const user = await verifySupabaseUser(bearerToken(request));
   if (!user) return unauthorizedResponse();
   const raw = await env.FINN_KV.get(`tglink_${code}`);
   if (!raw) return corsResponse(new Response(JSON.stringify({ linked: false, expired: true }), { status: 200, headers: { "Content-Type": "application/json" } }));

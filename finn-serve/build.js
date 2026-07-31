@@ -1276,7 +1276,7 @@ function _betaConfirmEmailHtml(name, confirmUrl) {
     '</td></tr>' +
     '<tr><td style="padding:0 28px 28px">' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
-      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413" style="color:#F97316;text-decoration:none">(13) 99210-2413</a></td>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513982020928" style="color:#F97316;text-decoration:none">(13) 98202-0928</a></td>' +
       '</tr><tr>' +
       '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance" style="color:#F97316;text-decoration:none">@finn.finnance</a></td>' +
       '</tr><tr>' +
@@ -1301,7 +1301,7 @@ function _betaConfirmPageHtml(name, ok, errorMessage) {
       '<p>Você já faz parte do grupo de testers do Finn. Pode abrir o app agora mesmo com sua conta Google — e qualquer dúvida ou problema, fala direto comigo:</p>' +
       '<a href="https://finn.dev.br" class="btn">Abrir o Finn →</a>' +
       '<div class="contacts">' +
-        '<div class="c"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413">(13) 99210-2413</a></div>' +
+        '<div class="c"><b>WhatsApp:</b> <a href="https://wa.me/5513982020928">(13) 98202-0928</a></div>' +
         '<div class="c"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance">@finn.finnance</a></div>' +
         '<div class="c"><b>E-mail:</b> <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></div>' +
       '</div>'
@@ -1309,7 +1309,7 @@ function _betaConfirmPageHtml(name, ok, errorMessage) {
       '<div class="mark bad">✕</div>' +
       '<h1>Não foi dessa vez.</h1>' +
       '<p>' + _escapeBetaHtml(errorMessage || 'Esse link de confirmação não é válido.') + ' Se o problema continuar, me chama direto:</p>' +
-      '<a href="https://wa.me/5513992102413" class="btn">Falar no WhatsApp →</a>'
+      '<a href="https://wa.me/5513982020928" class="btn">Falar no WhatsApp →</a>'
     );
   return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1">' +
@@ -1363,7 +1363,7 @@ function _betaWelcomeEmailHtml(name) {
     '</td></tr>' +
     '<tr><td style="padding:0 28px 28px">' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>' +
-      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513992102413" style="color:#F97316;text-decoration:none">(13) 99210-2413</a></td>' +
+      '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>WhatsApp:</b> <a href="https://wa.me/5513982020928" style="color:#F97316;text-decoration:none">(13) 98202-0928</a></td>' +
       '</tr><tr>' +
       '<td style="padding:10px 0;border-top:1px solid #E2E8F0;font-size:13.5px;color:#1E293B"><b>Instagram:</b> <a href="https://www.instagram.com/finn.finnance" style="color:#F97316;text-decoration:none">@finn.finnance</a></td>' +
       '</tr><tr>' +
