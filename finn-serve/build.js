@@ -1139,6 +1139,104 @@ function _escapeBetaHtml(s) {
   return String(s || '').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
 }
 
+// GET /admin/intrusions — resumo das tentativas registradas por _securityLog.
+// Devolve agregados, não a lista crua: 500 linhas de log não dizem nada, mas
+// "3 origens somaram 240 tentativas em /.env nas últimas 24h" diz tudo.
+async function _adminIntrusions(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.FINN_KV) return new Response(JSON.stringify({ ok: true, vazio: true }), { headers: cors });
+
+    var keys = [];
+    var cursor;
+    do {
+      var page = await env.FINN_KV.list({ prefix: 'seclog_', cursor: cursor });
+      keys = keys.concat(page.keys);
+      cursor = page.list_complete ? undefined : page.cursor;
+    } while (cursor);
+    // A chave carrega o timestamp, então ordenar por nome já é ordenar por
+    // data — sem precisar ler o conteúdo de todas antes.
+    keys.sort(function(a, b) { return b.name.localeCompare(a.name); });
+
+    var TETO_LEITURA = 600;
+    var eventos = (await Promise.all(keys.slice(0, TETO_LEITURA).map(function(k) { return env.FINN_KV.get(k.name); })))
+      .filter(Boolean)
+      .map(function(raw) { try { return JSON.parse(raw); } catch (e) { return null; } })
+      .filter(Boolean);
+
+    var agora = Date.now();
+    var h24 = agora - 24 * 3600 * 1000;
+    var d7 = agora - 7 * 24 * 3600 * 1000;
+    var ultimas24 = 0, ultimos7d = 0;
+    var porTipo = {}, porCaminho = {}, porOrigem = {}, porPais = {};
+
+    eventos.forEach(function(e) {
+      var t = Date.parse(e.at) || 0;
+      if (t >= h24) ultimas24++;
+      if (t >= d7) ultimos7d++;
+      porTipo[e.kind] = (porTipo[e.kind] || 0) + 1;
+      porCaminho[e.path] = (porCaminho[e.path] || 0) + 1;
+      porPais[e.pais || '?'] = (porPais[e.pais || '?'] || 0) + 1;
+      var chaveOrigem = e.ipId || 'sem-id';
+      if (!porOrigem[chaveOrigem]) {
+        porOrigem[chaveOrigem] = { id: chaveOrigem, regiao: e.ipRegiao || '?', pais: e.pais || '?', ua: e.ua || '', total: 0, ultimaEm: e.at, caminhos: {} };
+      }
+      var o = porOrigem[chaveOrigem];
+      o.total++;
+      o.caminhos[e.path] = true;
+      if (e.at > o.ultimaEm) o.ultimaEm = e.at;
+    });
+
+    function topN(obj, n) {
+      return Object.keys(obj).map(function(k) { return { nome: k, total: obj[k] }; })
+        .sort(function(a, b) { return b.total - a.total; }).slice(0, n);
+    }
+
+    var origens = Object.keys(porOrigem).map(function(k) {
+      var o = porOrigem[k];
+      return { id: o.id, regiao: o.regiao, pais: o.pais, ua: o.ua, total: o.total,
+               caminhosDistintos: Object.keys(o.caminhos).length, ultimaEm: o.ultimaEm };
+    }).sort(function(a, b) { return b.total - a.total; }).slice(0, 15);
+
+    // Média diária dos 7 dias anteriores (sem contar hoje) — é contra ela que
+    // se compara o dia atual pra decidir se há pico.
+    var hoje = new Date().toISOString().slice(0, 10);
+    var contagens = [];
+    for (var i = 1; i <= 7; i++) {
+      var d = new Date(agora - i * 24 * 3600 * 1000).toISOString().slice(0, 10);
+      contagens.push(parseInt((await env.FINN_KV.get('seccount_' + d)) || '0', 10) || 0);
+    }
+    var totalHoje = parseInt((await env.FINN_KV.get('seccount_' + hoje)) || '0', 10) || 0;
+    var media = contagens.reduce(function(a, b) { return a + b; }, 0) / 7;
+    // Pico = 3x a média e pelo menos 20 eventos, pra um dia de movimento zero
+    // não virar alarme com 3 tentativas.
+    var pico = totalHoje >= 20 && media > 0 && totalHoje > media * 3;
+
+    return new Response(JSON.stringify({
+      ok: true,
+      totalRegistrado: keys.length,
+      lidos: eventos.length,
+      truncado: keys.length > TETO_LEITURA,
+      ultimas24: ultimas24,
+      ultimos7d: ultimos7d,
+      totalHoje: totalHoje,
+      mediaDiaria7d: Math.round(media * 10) / 10,
+      pico: pico,
+      porTipo: topN(porTipo, 8),
+      topCaminhos: topN(porCaminho, 10),
+      topPaises: topN(porPais, 6),
+      origens: origens,
+      recentes: eventos.slice(0, 20)
+    }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminIntrusions');
+  }
+}
+
 // E-mail enviado assim que alguém preenche o /beta — pede a confirmação
 // (clique no link) antes de considerar a vaga garantida. Não é um atraso
 // artificial: é uma verificação real, que também reduz e-mail digitado
@@ -2143,6 +2241,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/beta-signups' && request.method === 'GET') {
       return _adminBetaSignups(request, env);
+    }
+    if (url.pathname === '/admin/intrusions' && request.method === 'GET') {
+      return _adminIntrusions(request, env);
     }
     if (url.pathname === '/admin/instagram-status' && request.method === 'GET') {
       return _adminInstagramStatus(request, env);

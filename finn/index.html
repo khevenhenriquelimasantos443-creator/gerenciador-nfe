@@ -662,7 +662,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -3653,6 +3653,8 @@ function renderAdminAnalytics(){
     '</tbody></table></div>' +
   '</div>';
 
+  html += renderIntrusionSection();
+
   html += '<div class="adm-callout"><h3>Leitura honesta dos números</h3><ul>' +
     '<li>"Dias ativos" conta dias distintos com pelo menos 1 lançamento — <b>não</b> é o mesmo que dias de login.</li>' +
     '<li>Não há detalhe de sessão/dispositivo por aqui — a API do Supabase não expõe isso ao vivo (só via consulta direta ao banco).</li>' +
@@ -3661,6 +3663,120 @@ function renderAdminAnalytics(){
   '</ul></div>';
 
   return html;
+}
+
+/* ── Segurança: tentativas registradas pelas iscas (ver _securityLog) ──
+   Mostra resumo, não a lista crua: 500 linhas de log não dizem nada, mas
+   "3 origens somaram 240 tentativas em /.env" diz tudo. */
+var TIPO_INTRUSAO = {
+  isca_honeytoken: "Isca do código-fonte",
+  isca_scanner: "Varredura automatizada",
+  senha_admin_incorreta: "Senha de admin errada",
+  rate_limit_senha_admin: "Excesso de tentativas de senha",
+  ai_teto_diario: "Teto diário de IA atingido"
+};
+
+function renderIntrusionSection(){
+  var s = state.intrusions;
+
+  if(state.intrusionsLoading && !s){
+    return '<div class="card"><div class="eyebrow">Segurança</div>' +
+      '<div style="font-size:13px;color:var(--fm)">Carregando tentativas registradas…</div></div>';
+  }
+  if(state.intrusionsError && !s){
+    return '<div class="card"><div class="eyebrow">Segurança</div>' +
+      '<div class="ai-error">' + escapeHtml(state.intrusionsError) + '</div>' +
+      '<button type="button" class="btn-ghost" id="btnLoadIntrusions" style="margin-top:10px">Tentar de novo</button></div>';
+  }
+  if(!s){
+    return '<div class="card"><div class="eyebrow">Segurança</div>' +
+      '<button type="button" class="btn-ghost" id="btnLoadIntrusions">Ver tentativas de acesso</button></div>';
+  }
+
+  var html = '<div class="card"><div class="eyebrow">Segurança — tentativas de acesso</div>';
+
+  if(s.pico){
+    html += '<div class="ai-error" style="margin-bottom:12px"><b>Volume acima do normal hoje.</b> ' +
+      s.totalHoje + ' tentativas contra uma média de ' + s.mediaDiaria7d + '/dia nos 7 dias anteriores.</div>';
+  }
+
+  html += '<div class="adm-kpis" style="margin-bottom:14px">' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Últimas 24h</div><div class="adm-kpi-value">' + s.ultimas24 + '</div><div class="adm-kpi-sub">tentativas</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">7 dias</div><div class="adm-kpi-value">' + s.ultimos7d + '</div><div class="adm-kpi-sub">média ' + s.mediaDiaria7d + '/dia</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Origens</div><div class="adm-kpi-value">' + s.origens.length + '</div><div class="adm-kpi-sub">distintas no período</div></div>' +
+  '</div>';
+
+  if(!s.porTipo.length){
+    html += '<div style="font-size:13px;color:var(--fm)">Nenhuma tentativa registrada até agora. É o resultado esperado — as iscas só disparam quando alguém sonda o site.</div></div>';
+    return html;
+  }
+
+  html += '<div class="import-summary">Por tipo</div>' +
+    '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">' +
+    s.porTipo.map(function(t){
+      return '<div style="display:flex;justify-content:space-between;font-size:12.5px">' +
+        '<span style="font-weight:700;color:var(--fd)">' + escapeHtml(TIPO_INTRUSAO[t.nome] || t.nome) + '</span>' +
+        '<span style="font-weight:800;font-variant-numeric:tabular-nums">' + t.total + '</span></div>';
+    }).join("") + '</div>';
+
+  if(s.topCaminhos.length){
+    html += '<div class="import-summary">Caminhos mais tentados</div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">' +
+      s.topCaminhos.map(function(c){
+        return '<span class="cat-pill" style="font-size:11.5px">' + escapeHtml(c.nome) + ' · ' + c.total + '</span>';
+      }).join("") + '</div>';
+  }
+
+  html += '<div class="import-summary">Origens (endereço parcial — ver política de privacidade)</div>' +
+    '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr>' +
+      '<th>Origem</th><th>País</th><th class="num">Tentativas</th><th class="num">Caminhos</th><th>Última</th>' +
+    '</tr></thead><tbody>' +
+    s.origens.map(function(o){
+      return '<tr><td><span class="name">' + escapeHtml(o.regiao) + '</span></td>' +
+        '<td>' + escapeHtml(o.pais) + '</td>' +
+        '<td class="num">' + o.total + '</td>' +
+        '<td class="num">' + o.caminhosDistintos + '</td>' +
+        '<td>' + escapeHtml(admDataHora(o.ultimaEm)) + '</td></tr>';
+    }).join("") +
+    '</tbody></table></div>';
+
+  html += '<div style="font-size:11.5px;color:var(--fm);margin-top:12px">' +
+    'Registros somem sozinhos após 30 dias. ' +
+    (s.truncado ? 'Mostrando os ' + s.lidos + ' mais recentes de ' + s.totalRegistrado + '. ' : '') +
+    'Isto é alarme, não bloqueio — quem impede o acesso é a autorização de cada rota.' +
+  '</div>';
+
+  html += '<button type="button" class="btn-ghost" id="btnLoadIntrusions" style="margin-top:10px">Atualizar</button>';
+  html += '</div>';
+  return html;
+}
+
+function admDataHora(iso){
+  if(!iso) return "—";
+  var d = new Date(iso);
+  if(isNaN(d)) return "—";
+  return d.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+
+function loadIntrusions(){
+  state.intrusionsLoading = true;
+  state.intrusionsError = null;
+  render();
+  fetch("/admin/intrusions", { headers: adminHeaders() })
+    .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.intrusionsLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.intrusions = res.body;
+      } else {
+        state.intrusionsError = (res.body && res.body.error) || "Não consegui carregar.";
+      }
+      render();
+    }).catch(function(){
+      state.intrusionsLoading = false;
+      state.intrusionsError = "Falha de conexão.";
+      render();
+    });
 }
 
 /* ── Admin (só a conta master vê isso) ── */
@@ -4375,6 +4491,8 @@ function bindContentEvents(){
     if(btnLoadAnalytics) btnLoadAnalytics.addEventListener("click", loadAdminAnalytics);
     var btnRetryAnalytics = document.getElementById("btnRetryAnalytics");
     if(btnRetryAnalytics) btnRetryAnalytics.addEventListener("click", loadAdminAnalytics);
+    var btnLoadIntrusions = document.getElementById("btnLoadIntrusions");
+    if(btnLoadIntrusions) btnLoadIntrusions.addEventListener("click", loadIntrusions);
     var btnRefreshAnalytics = document.getElementById("btnRefreshAnalytics");
     if(btnRefreshAnalytics) btnRefreshAnalytics.addEventListener("click", loadAdminAnalytics);
   }
