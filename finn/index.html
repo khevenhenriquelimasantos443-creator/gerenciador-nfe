@@ -662,7 +662,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -1912,6 +1912,51 @@ function exportAllCSV(){
 }
 
 /* ── Importar arquivo (CSV/TXT/XLSX/PDF) ── */
+/* ── Detector de importação suspeita ──
+   O leitor genérico de PDF falha em SILÊNCIO: quando não reconhece o layout do
+   banco, não dá erro — produz lançamentos com cara de válidos. Foi assim que um
+   extrato do BB entrou com o cabeçalho da tabela na descrição e tudo marcado
+   como receita, e nada avisou antes de salvar.
+
+   Isto não bloqueia a importação (pode existir arquivo legítimo só de receita).
+   Só levanta a mão quando os números não fecham com o que um extrato de banco
+   costuma ser, pra você conferir o preview antes de confirmar. */
+function checaImportacaoSuspeita(rows){
+  if(!rows || rows.length < 6) return null;
+  var motivos = [];
+
+  // Extrato com 100% de um tipo só é quase sempre erro de leitura de sinal —
+  // foi exatamente o sintoma do caso do BB (tudo receita).
+  var tipos = {};
+  rows.forEach(function(r){ tipos[r.type] = (tipos[r.type] || 0) + 1; });
+  if(Object.keys(tipos).length === 1){
+    motivos.push("todos os " + rows.length + " lançamentos são do mesmo tipo (" +
+      (rows[0].type === "receita" ? "receita" : "despesa") + ")");
+  }
+
+  // Cabeçalho de tabela ou linha de saldo na descrição = o parser leu a
+  // estrutura do documento como se fosse dado.
+  var comCabecalho = rows.filter(function(r){
+    return /Lan[çc]amentos|Documento|Hist[óo]rico|Extrato de Conta|Saldo\s+(Anterior|do dia)|S A L D O/i.test(r.description || "");
+  }).length;
+  if(comCabecalho) motivos.push(comCabecalho + " com cabeçalho ou saldo na descrição");
+
+  // Descrição sem nenhuma letra costuma ser número de documento solto.
+  var semTexto = rows.filter(function(r){ return !/[A-Za-zÀ-ÿ]/.test(r.description || ""); }).length;
+  if(semTexto > rows.length * 0.2) motivos.push(semTexto + " sem texto na descrição");
+
+  // Data única, ou a data de hoje na maioria, indica que o parser não achou a
+  // data de cada lançamento e caiu no padrão.
+  var datas = {};
+  rows.forEach(function(r){ datas[r.date] = (datas[r.date] || 0) + 1; });
+  var distintas = Object.keys(datas).length;
+  if(distintas === 1) motivos.push("todos na mesma data");
+  var hoje = new Date().toISOString().slice(0, 10);
+  if(distintas > 1 && (datas[hoje] || 0) > rows.length * 0.5) motivos.push("maioria com a data de hoje");
+
+  return motivos.length ? motivos : null;
+}
+
 function renderImportCard(){
   var html = '<div class="card">' +
     '<div class="eyebrow">Importar arquivo</div>' +
@@ -1924,6 +1969,15 @@ function renderImportCard(){
   if(state.importDone) html += '<div class="ai-result" style="margin:0">' + escapeHtml(state.importDone) + '</div>';
   if(state.importPreview.length){
     var n = state.importPreview.filter(function(r){ return r.include; }).length;
+    if(state.importAviso){
+      html += '<div class="ai-error" style="margin:0 0 10px">' +
+        '<b>Confira antes de importar.</b> A leitura deste arquivo tem sinais de que o formato do banco não foi reconhecido direito:' +
+        '<ul style="margin:6px 0 0;padding-left:18px">' +
+          state.importAviso.map(function(m){ return '<li>' + escapeHtml(m) + '</li>'; }).join("") +
+        '</ul>' +
+        '<div style="margin-top:6px">Dê uma olhada na lista abaixo. Se estiver errado, desmarque tudo e tente exportar em <b>OFX</b> ou <b>planilha</b> — costumam ser mais confiáveis que PDF.</div>' +
+      '</div>';
+    }
     html += '<div class="import-summary">' + n + ' de ' + state.importPreview.length + ' selecionados</div>';
     html += '<div class="import-list">' + state.importPreview.map(function(r, i){
       return '<div class="import-row">' +
@@ -2406,7 +2460,7 @@ function decodeText(buffer){
 }
 
 function handleImportFile(file){
-  state.importPreview = []; state.importError = null; state.importDone = null; state.importParsing = true;
+  state.importPreview = []; state.importError = null; state.importDone = null; state.importAviso = null; state.importParsing = true;
   render();
   var name = file.name.toLowerCase();
   var ext = name.slice(name.lastIndexOf(".") + 1);
@@ -2426,6 +2480,7 @@ function handleImportFile(file){
         return;
       }
       state.importPreview = rows;
+      state.importAviso = checaImportacaoSuspeita(rows);
       render();
     }).catch(function(err){
       state.importParsing = false;
