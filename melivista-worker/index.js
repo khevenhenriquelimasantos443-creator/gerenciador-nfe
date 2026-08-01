@@ -266,7 +266,10 @@ async function createSession(env) {
 }
 
 function sessionCookie(value, maxAge) {
-  return `mv_sid=${value}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${maxAge}`;
+  // SameSite=None é necessário porque o app (github.io) e o Worker (workers.dev)
+  // são domínios diferentes: com Lax, o navegador nunca envia o cookie nas
+  // chamadas fetch entre eles. Secure+HttpOnly seguem obrigatórios com None.
+  return `mv_sid=${value}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=${maxAge}`;
 }
 
 async function saveSession(env, sid, data) {
@@ -348,6 +351,9 @@ async function handleAuthStart(request, env) {
     code_challenge: challenge,
     code_challenge_method: 'S256',
   });
+  // O Mercado Pago exige esse parâmetro na URL de autorização; sem ele a tela
+  // de login deles recusa com "não foi possível conectar o aplicativo".
+  if (provider === 'mp') params.set('platform_id', 'mp');
 
   const authorizeUrl =
     provider === 'mp'
