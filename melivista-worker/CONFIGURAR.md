@@ -100,6 +100,25 @@ O deploy imprime a URL:
 **Volte no PASSO 1** e coloque essa URL + `/auth/callback` como redirect nas duas
 aplicações (ML e MP). O redirect precisa bater exatamente, incluindo `https://`.
 
+### Deploy automático (opcional)
+
+Depois do primeiro deploy manual, dá pra deixar as próximas atualizações
+automáticas: todo push em `melivista-worker/**` na branch `main` publica
+sozinho, via `.github/workflows/deploy-melivista-worker.yml`.
+
+Único passo necessário: criar um secret no repositório.
+
+1. **dash.cloudflare.com** → perfil → **My Profile** → **API Tokens** →
+   **Create Token** → template **"Edit Cloudflare Workers"**
+2. No GitHub: `Settings` → `Secrets and variables` → `Actions` →
+   **New repository secret** → nome `CLOUDFLARE_API_TOKEN`, cola o token —
+   direto lá, nunca em issue/PR/chat.
+
+O `account_id` e o `id` do KV namespace já estão fixos no `wrangler.toml`
+(não são segredos, só identificadores). Sem o secret configurado, o workflow
+falha ao rodar — nada quebra, só continua exigindo o deploy manual até você
+cadastrar.
+
 ---
 
 ## ✅ PASSO 5 — Apontar o app para o Worker
