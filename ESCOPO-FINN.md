@@ -229,6 +229,48 @@ Honestidade vale mais que a sensação de completude.
 O que existe é: as falhas conhecidas foram fechadas, e há alarme para o que
 ainda não se conhece.
 
+### 5.1 Os dois primeiros da fila
+
+Ambos precisam de **acesso de rede à internet** — foi o que impediu de fazer na
+rodada anterior. Quem pegar isso numa sessão com rede liberada resolve os dois
+em pouco tempo.
+
+#### Migrar o `xlsx` para versão sem CVE
+
+O `xlsx@0.18.5` tem CVE-2023-30533 (prototype pollution via planilha forjada).
+Hoje está contido por `withPrototypeGuard()` em `finn/index.html`, que limpa o
+`Object.prototype` depois do parse — mas conter não é corrigir.
+
+**A pegadinha:** o pacote `xlsx` no npm **parou na 0.18.5**. A SheetJS tirou as
+versões novas do npm e publica só no CDN próprio. Então não adianta pedir uma
+versão maior no jsDelivr — ela não existe lá.
+
+Passos:
+
+1. Baixar `https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js`
+   (ou versão mais recente).
+2. Calcular o hash SRI:
+   `openssl dgst -sha384 -binary arquivo.js | openssl base64 -A`
+3. Trocar a URL e o hash no objeto `SRI` de `finn/index.html`.
+4. **Liberar `cdn.sheetjs.com` no `script-src` da CSP**, em
+   `finn-serve/build.js` — sem isso o navegador bloqueia e a importação de
+   planilha quebra inteira.
+5. Manter o `withPrototypeGuard()` mesmo assim: custa nada e protege de CVE
+   futura.
+6. Testar com planilha real (há vários extratos `.xlsx` de teste) — não com
+   arquivo inventado.
+
+#### Fixar as GitHub Actions por SHA
+
+`.github/workflows/deploy.yml` usa `actions/checkout@v4`,
+`actions/setup-node@v4` e `cloudflare/wrangler-action@v3`. Tag é ponteiro
+móvel: quem controlar o repositório da action pode reapontá-la, e o novo commit
+roda aqui **com o `CLOUDFLARE_API_TOKEN` na mão**.
+
+O passo a passo está comentado dentro do próprio `deploy.yml`. Resumo: pegar o
+SHA completo do commit de cada release e trocar `@v4` por `@<sha>  # v4`.
+Com o Dependabot ativo, ele passa a propor a atualização desses SHAs sozinho.
+
 ---
 
 ## 6. Manutenção
