@@ -36,6 +36,10 @@ Estão no escopo os aplicativos deste repositório, com prioridade para os que
 tratam dados pessoais ou financeiros:
 
 - **Finn** — controle financeiro (`finn/`, `finn-serve/`, `finn-worker/`).
+- **MeliVista** — integração somente leitura com Mercado Livre e Mercado Pago
+  (`melivista/`, `melivista-worker/`). Trata tokens OAuth de contas de terceiros;
+  relatos sobre vazamento de token, escalada de escopo, contorno da allowlist de
+  endpoints ou acesso a dados de outra conta têm prioridade máxima.
 - Demais aplicativos do repositório (`plantao/`, `skuhub/`, `returnflow/`,
   `mercadolivre/`).
 
