@@ -274,10 +274,28 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
 }
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ── CONFIG PANEL (escondido, só via ícone no header) ─────────── */
+#config-ovl{
+  display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);
+  z-index:500;align-items:center;justify-content:center;padding:20px;
+}
+#config-ovl.on{display:flex}
+#config-panel{
+  background:var(--surface);border-radius:var(--r);max-width:580px;width:100%;
+  max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);border:1px solid var(--border);
+}
+#config-panel .cfg-hdr{
+  display:flex;align-items:center;justify-content:space-between;padding:16px 20px;
+  border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:2;
+}
+#config-panel .cfg-body{padding:6px 20px 24px}
+
 @media(max-width:640px){
   main{padding:16px 14px 56px}
   header,.tabs{padding:0 14px}
   .kpi-value{font-size:22px}
+  #config-ovl{padding:0;align-items:flex-end}
+  #config-panel{max-width:100%;border-radius:20px 20px 0 0;max-height:90vh}
 }
 </style>
 </head>
@@ -292,6 +310,9 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
     </div>
     <div class="hdr-spacer"></div>
     <span class="pill p-ok" id="mode-pill"><span class="dot"></span>Leitura</span>
+    <button class="icon-btn" id="config-btn" title="Configurações" aria-label="Configurações">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
     <button class="icon-btn" id="theme-btn" title="Alternar tema" aria-label="Alternar tema"></button>
   </div>
 </header>
@@ -405,29 +426,6 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
     </div>
 
     <div id="contas-lista"></div>
-
-    <div class="sec-title">Revogação</div>
-    <div class="card">
-      <div class="hint" style="margin-bottom:12px">
-        Desconectar aqui apaga os tokens do cofre e encerra o acesso deste app. Para revogar a autorização na origem — o que vale para qualquer aplicação — use <b>Administrar Permissões</b> na sua conta. Não é preciso trocar a senha.
-        <br><br>O Mercado Livre também revoga sozinho depois de <b>4 meses sem chamadas à API</b>.
-      </div>
-      <div class="row">
-        <a class="btn btn-ghost btn-sm" href="https://www.mercadolivre.com.br/permissoes" target="_blank" rel="noopener noreferrer">Administrar Permissões ↗</a>
-        <button class="btn btn-danger btn-sm" onclick="resetarSessao()">Apagar sessão e tokens</button>
-      </div>
-    </div>
-
-    <div class="sec-title">Conexão com o backend</div>
-    <div class="card">
-      <label class="lbl" for="cfg-worker">URL do Worker</label>
-      <input class="inp" id="cfg-worker" placeholder="https://melivista-worker.SEU-USUARIO.workers.dev">
-      <div class="hint">Único endereço que o app chama. O <code>client_secret</code> e os tokens ficam lá — nunca neste navegador. Sem essa URL o app roda em modo demonstração, com dados fictícios.</div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn btn-pri btn-sm" onclick="salvarWorker()">Salvar e testar</button>
-        <button class="btn btn-ghost btn-sm" onclick="entrarDemo()">Usar modo demonstração</button>
-      </div>
-    </div>
   </section>
 
   <!-- ══════════════ SEGURANÇA ══════════════ -->
@@ -450,7 +448,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
       </div>
       <div class="card">
         <div class="row" style="margin-bottom:9px"><span class="pill p-ok"><span class="dot"></span>Ativo</span><b style="font-size:13px">Sessão e anti-CSRF</b></div>
-        <div class="hint">Cookie opaco <code>HttpOnly · Secure · SameSite=Lax</code> assinado por HMAC, <code>state</code> de uso único no OAuth, PKCE S256, CORS com allowlist de origem e header obrigatório em toda chamada.</div>
+        <div class="hint">Cookie opaco <code>HttpOnly · Secure · SameSite=None</code> assinado por HMAC — necessário porque app e Worker vivem em domínios diferentes —, <code>state</code> de uso único no OAuth, PKCE S256, CORS com allowlist de origem e header obrigatório em toda chamada.</div>
       </div>
       <div class="card">
         <div class="row" style="margin-bottom:9px"><span class="pill p-ok"><span class="dot"></span>Ativo</span><b style="font-size:13px">Rate limit</b></div>
@@ -469,18 +467,56 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
         Criação e alteração de anúncios, vendas indevidas e e-mails enviados pela conta são compatíveis com <strong>comprometimento direto de login/senha</strong> — não com uma integração via API. Com OAuth de escopo restrito: nunca se compartilha login ou senha com a aplicação; a aplicação nunca "é" a conta, ela só recebe um token limitado ao que foi autorizado; e mesmo se o token vazar, o dano possível está limitado à leitura.
       </div>
     </div>
-
-    <div class="sec-title">Checklist antes de ir pra produção</div>
-    <div id="checklist"></div>
-
-    <div class="sec-title">Log de chamadas</div>
-    <div class="row" style="justify-content:space-between;margin-bottom:10px">
-      <div class="hint" style="margin:0">Rastreabilidade de toda chamada feita pela aplicação.</div>
-      <button class="btn btn-ghost btn-sm" onclick="carregarAuditoria()">Atualizar</button>
-    </div>
-    <div class="log" id="log"></div>
   </section>
 </main>
+
+<!-- ══════════════ CONFIGURAÇÕES (painel escondido) ══════════════ -->
+<div id="config-ovl">
+  <div id="config-panel">
+    <div class="cfg-hdr">
+      <div style="font-size:14.5px;font-weight:800;letter-spacing:-.02em">Configurações</div>
+      <button class="icon-btn" id="config-close" title="Fechar" aria-label="Fechar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cfg-body">
+
+      <div class="sec-title" style="margin-top:0">Conexão com o backend</div>
+      <div class="card">
+        <label class="lbl" for="cfg-worker">URL do Worker</label>
+        <input class="inp" id="cfg-worker" placeholder="https://melivista-worker.SEU-USUARIO.workers.dev">
+        <div class="hint">Único endereço que o app chama. O <code>client_secret</code> e os tokens ficam lá — nunca neste navegador. Sem essa URL o app roda em modo demonstração, com dados fictícios.</div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn btn-pri btn-sm" onclick="salvarWorker()">Salvar e testar</button>
+          <button class="btn btn-ghost btn-sm" onclick="entrarDemo()">Usar modo demonstração</button>
+        </div>
+      </div>
+
+      <div class="sec-title">Revogação</div>
+      <div class="card">
+        <div class="hint" style="margin-bottom:12px">
+          Desconectar em Contas apaga os tokens do cofre e encerra o acesso deste app. Para revogar a autorização na origem — o que vale para qualquer aplicação — use <b>Administrar Permissões</b> na sua conta. Não é preciso trocar a senha.
+          <br><br>O Mercado Livre também revoga sozinho depois de <b>4 meses sem chamadas à API</b>.
+        </div>
+        <div class="row">
+          <a class="btn btn-ghost btn-sm" href="https://www.mercadolivre.com.br/permissoes" target="_blank" rel="noopener noreferrer">Administrar Permissões ↗</a>
+          <button class="btn btn-danger btn-sm" onclick="resetarSessao()">Apagar sessão e tokens</button>
+        </div>
+      </div>
+
+      <div class="sec-title">Checklist antes de ir pra produção</div>
+      <div id="checklist"></div>
+
+      <div class="sec-title">Log de chamadas</div>
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <div class="hint" style="margin:0">Rastreabilidade de toda chamada feita pela aplicação.</div>
+        <button class="btn btn-ghost btn-sm" onclick="carregarAuditoria()">Atualizar</button>
+      </div>
+      <div class="log" id="log"></div>
+
+    </div>
+  </div>
+</div>
 
 <div id="toast"></div>
 
@@ -515,6 +551,26 @@ function aplicarTema(dark){
       if(s===null) aplicarTema(e.matches);
     });
   }
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   PAINEL DE CONFIGURAÇÕES — escondido, só via ícone no header
+   ══════════════════════════════════════════════════════════════ */
+function abrirConfig(){
+  document.getElementById('config-ovl').classList.add('on');
+  renderChecklist();
+  carregarAuditoria();
+}
+function fecharConfig(){ document.getElementById('config-ovl').classList.remove('on'); }
+(function(){
+  document.getElementById('config-btn').addEventListener('click', abrirConfig);
+  document.getElementById('config-close').addEventListener('click', fecharConfig);
+  document.getElementById('config-ovl').addEventListener('click', function(e){
+    if(e.target.id==='config-ovl') fecharConfig();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') fecharConfig();
+  });
 })();
 
 /* ══════════════════════════════════════════════════════════════
@@ -652,7 +708,6 @@ function irPara(id){
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='flex') carregarFlex();
   if(id==='afiliados') carregarAfiliados();
-  if(id==='seguranca') carregarAuditoria();
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -661,7 +716,7 @@ function irPara(id){
 function renderBarraDemo(){
   document.getElementById('demo-slot').innerHTML = S.demo
     ? '<div class="demo-bar"><span>🎭</span><span style="flex:1">Modo demonstração — todos os números são fictícios. Nenhuma chamada real ao Mercado Livre ou Mercado Pago.</span>'+
-      '<button onclick="irPara(\'contas\')">Conectar de verdade</button></div>'
+      '<button onclick="abrirConfig()">Conectar de verdade</button></div>'
     : '';
   document.getElementById('mode-pill').innerHTML = S.demo
     ? '<span class="dot"></span>Demo'
@@ -702,7 +757,8 @@ function entrarDemo(){
 async function conectar(provedor){
   if(S.demo || !S.worker){
     toast('Configure a URL do Worker antes de conectar uma conta.');
-    document.getElementById('cfg-worker').focus();
+    abrirConfig();
+    setTimeout(function(){ document.getElementById('cfg-worker').focus(); },50);
     return;
   }
   try{
@@ -1124,7 +1180,7 @@ function cardVazio(msg){
     document.getElementById('kpis').innerHTML='';
     document.getElementById('demo-slot').innerHTML =
       '<div class="note n-pri" style="margin-bottom:16px"><span>👋</span><div class="n-body">'+
-      '<strong>Primeiro acesso.</strong> Configure a URL do Worker na aba <b>Contas</b> para usar dados reais, '+
+      '<strong>Primeiro acesso.</strong> Configure a URL do Worker no ícone <b>⚙ Configurações</b> (topo da tela) para usar dados reais, '+
       'ou <a href="#" onclick="entrarDemo();return false;">entre no modo demonstração</a> para conhecer as telas com dados fictícios.</div></div>';
   }
 })();
