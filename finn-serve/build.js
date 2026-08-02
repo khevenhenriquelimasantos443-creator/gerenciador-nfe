@@ -2298,7 +2298,23 @@ h1 em{font-style:normal;color:#F97316}
   },
 
   async scheduled(event, env, ctx) {
-    if (event.cron === '0 23 * * 1') {
+    if (event.cron === '0 13 2 8 *') {
+      // Post único agendado para 02/08 às 10:00 BRT (13:00 UTC — o Brasil não
+      // tem mais horário de verão desde 2019, então é sempre UTC-3).
+      //
+      // O cron da Cloudflare é sempre recorrente: este dispararia de novo todo
+      // 2 de agosto. O guard de ano deixa ele valer só em 2026, e o guard de
+      // KV impede publicar duas vezes se a Cloudflare reexecutar o evento.
+      ctx.waitUntil((async () => {
+        if (new Date().getUTCFullYear() !== 2026) return;
+        if (env.FINN_KV) {
+          var jaFoi = await env.FINN_KV.get('ig_agendado_2026-08-02');
+          if (jaFoi) return;
+          await env.FINN_KV.put('ig_agendado_2026-08-02', new Date().toISOString(), { expirationTtl: 60 * 60 * 24 * 90 });
+        }
+        await _publishNextInstagramPost(env);
+      })());
+    } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
     } else {
       // "0 12 * * *" (09:00 BRT). A publicação automática no Instagram saiu
@@ -2306,7 +2322,8 @@ h1 em{font-style:normal;color:#F97316}
       // alcance orgânico não pagava o custo de manter a automação rodando, e o
       // plano virou anúncio pago. Os crons das 15:00 e 21:00 UTC existiam SÓ
       // pros posts, então foram removidos do wrangler.toml (o limite de 5 cron
-      // triggers é da conta inteira, então isso devolve 2 slots).
+      // triggers é da conta inteira, então isso devolveu 2 slots — 1 deles foi
+      // reusado pelo agendamento pontual de 02/08 no primeiro if daqui).
       //
       // Nada foi apagado: _publishNextInstagramPost continua no código e a rota
       // /admin/instagram-publish-next segue funcionando pra publicar na mão.

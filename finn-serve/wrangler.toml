@@ -16,7 +16,8 @@ compatibility_date = "2024-01-01"
 #   A publicação AUTOMÁTICA está DESLIGADA (o alcance orgânico não
 #   compensava: 230 visualizações em 30 dias). A rota manual
 #   /admin/instagram-publish-next continua funcionando e ainda usa essas
-#   duas secrets — só o gatilho por cron é que saiu.
+#   duas secrets — só o gatilho diário por cron é que saiu. Existe um
+#   agendamento pontual em [triggers] para 02/08 às 10:00 BRT.
 #   Usa a "API do
 #   Instagram com login do Instagram" (fluxo novo, sem precisar de Página
 #   do Facebook) — os dois valores ficam na mesma tela do Meta Developer
@@ -43,14 +44,23 @@ compatibility_date = "2024-01-01"
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 #
+#  - "0 13 2 8 *" → post ÚNICO no Instagram, 02/08 às 10:00 BRT (13:00 UTC;
+#                    o Brasil não tem mais horário de verão desde 2019, então
+#                    é sempre UTC-3). Publica o PRÓXIMO post da fila.
+#                    ATENÇÃO: cron da Cloudflare é sempre recorrente — este
+#                    dispararia de novo em 02/08/2027. O handler tem guard de
+#                    ano (só vale em 2026) e guard de KV (não publica duas
+#                    vezes), então em 2027 ele não faz nada; mesmo assim,
+#                    REMOVER esta linha depois que o post sair, porque o slot
+#                    continua ocupado.
+#
 #  Os crons "0 15 * * *" e "0 21 * * *" foram REMOVIDOS: existiam só pros
 #  posts automáticos do Instagram, que foram desligados. Como o limite de
 #  cron trigger é DA CONTA inteira (5 no total, e o finn-worker do bot usa
-#  1), isso devolve 2 slots livres — dá pra separar de novo tarefas que
-#  hoje se acumulam nas 09:00, se precisar.
+#  1), sobra 1 slot livre com o agendamento acima.
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 23 * * 1"]
+crons = ["0 12 * * *", "0 23 * * 1", "0 13 2 8 *"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)
