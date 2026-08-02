@@ -3467,6 +3467,35 @@ ${bodyHtml}
       });
     }
 
+    // ── /robots.txt e /.well-known/security.txt: convenção da web, não ataque ──
+    // O catch-all logo abaixo trata qualquer caminho fora de '/' e
+    // '/index.html' como tentativa de intrusão — certo pra scanner, errado
+    // pra estes dois: todo crawler de verdade (Google, Bing, prévia de link)
+    // pede /robots.txt, e /.well-known/security.txt é o padrão RFC 9116 pelo
+    // qual um PESQUISADOR DE SEGURANÇA DE BOA-FÉ acha como reportar uma falha
+    // com responsabilidade. Contar isso como "tentativa de acesso" inflava o
+    // painel com ruído (visto na prática: 9 → 13 em 24h só com esses dois) e,
+    // pra security.txt, é irônico — um app que se gaba de detectar intrusão
+    // tratando como ataque o canal formal de quem quer AVISAR sobre uma.
+    if (url.pathname === '/robots.txt') {
+      return new Response('User-agent: *\nAllow: /\n', {
+        headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
+      });
+    }
+    if (url.pathname === '/.well-known/security.txt') {
+      // Expires é campo obrigatório do RFC 9116. Calculado NA REQUISIÇÃO (o
+      // Worker chama Date normalmente em runtime, sem a restrição que existe
+      // só no sandbox de orquestração) — assim fica sempre 1 ano à frente de
+      // agora, em vez de congelado na data do último deploy.
+      var expira = new Date(Date.now() + 365 * 24 * 3600 * 1000).toISOString();
+      return new Response(
+        'Contact: mailto:contato@finn.dev.br\n' +
+        'Expires: ' + expira + '\n' +
+        'Preferred-Languages: pt-BR, en\n',
+        { headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS) }
+      );
+    }
+
     // ── Caminho desconhecido: 404, não o app ──
     // Até aqui, qualquer rota que não casou com nenhuma das de cima caía no
     // app e recebia 200 com os ~276 KB do HTML inteiro. Duas consequências
