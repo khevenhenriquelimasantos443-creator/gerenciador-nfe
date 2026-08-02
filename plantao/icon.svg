@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FCD34D"/>
+      <stop offset="0.55" stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#B45309"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- calendar rings -->
+  <rect x="176" y="112" width="26" height="64" rx="13" fill="#0A0E1A"/>
+  <rect x="310" y="112" width="26" height="64" rx="13" fill="#0A0E1A"/>
+
+  <!-- calendar body -->
+  <rect x="106" y="150" width="300" height="256" rx="30" fill="#0F172A"/>
+  <rect x="106" y="150" width="300" height="72" rx="30" fill="#0A0E1A"/>
+  <rect x="106" y="192" width="300" height="30" fill="#0A0E1A"/>
+
+  <!-- day grid -->
+  <g fill="#334155">
+    <circle cx="156" cy="264" r="11"/>
+    <circle cx="206" cy="264" r="11"/>
+    <circle cx="256" cy="264" r="11"/>
+    <circle cx="306" cy="264" r="11"/>
+    <circle cx="356" cy="264" r="11"/>
+
+    <circle cx="156" cy="312" r="11"/>
+    <circle cx="206" cy="312" r="11"/>
+    <circle cx="306" cy="312" r="11"/>
+    <circle cx="356" cy="312" r="11"/>
+
+    <circle cx="156" cy="360" r="11"/>
+    <circle cx="256" cy="360" r="11"/>
+    <circle cx="306" cy="360" r="11"/>
+  </g>
+
+  <!-- highlighted days (domingo / feriado) -->
+  <circle cx="256" cy="312" r="30" fill="#FBBF24"/>
+  <circle cx="256" cy="312" r="30" fill="none" stroke="#FEF3C7" stroke-width="5"/>
+  <circle cx="356" cy="360" r="11" fill="#FBBF24"/>
+</svg>
