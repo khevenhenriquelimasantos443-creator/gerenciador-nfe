@@ -4311,7 +4311,10 @@ var SCREENER_FLAGS = {
   suspeito: "número suspeito — costuma ser lucro não recorrente inflando o índice.",
   armadilha: "possível armadilha de yield: dividendo muito alto costuma ser preço despencando ou provento extraordinário.",
   inflado: "índice inflado por patrimônio pequeno — parece melhor do que é.",
-  nao_operacional: "resultado provavelmente não operacional (venda de ativo, evento único)."
+  // Chave SEM underscore de propósito: screenerFlagTexto normaliza a flag com
+  // scrChaveNorm, que remove tudo que não é [a-z0-9]. Com "nao_operacional" aqui,
+  // a busca por "naooperacional" não achava e a tela imprimia o slug cru.
+  naooperacional: "resultado provavelmente não operacional (venda de ativo, evento único)."
 };
 
 // hasOwnProperty em vez de acesso direto pelo mesmo motivo de catColor(): um
@@ -4432,7 +4435,11 @@ function screenerFlagTexto(flag){
 // de propósito: prometer "1h" num dado de 1h59 é mentir a favor do app.
 function screenerIdadeTexto(seg){
   if(seg === null || seg === undefined || !isFinite(seg) || seg < 0) return "";
-  if(seg < 90) return "agora há pouco";
+  // Só entra aqui quando a linha está marcada como dado guardado. Nesse caso
+  // "agora há pouco" contradiz o próprio aviso de dado velho — e acontece de
+  // verdade: o backend converte idade desconhecida (null) em 0. Sem idade
+  // confiável, o honesto é dizer "dado guardado" e não inventar um relógio.
+  if(seg < 90) return "dado guardado";
   var min = Math.floor(seg / 60);
   if(min < 60) return min + " min atrás";
   var h = Math.floor(min / 60);
@@ -4898,6 +4905,16 @@ function loadScreener(){
       state.screenerError = "Nenhum papel carregou. Pode ser o provedor de cotações fora do ar.";
     }
     screenerRender();
+  }).catch(function(e){
+    // .catch OBRIGATÓRIO: screenerLoading só era desligado dentro do .then, e o
+    // callback chama render(), que redesenha o APP INTEIRO — uma exceção em
+    // QUALQUER outra tela deixaria o screener preso em "carregando" até
+    // recarregar a página. É exatamente o bug que já travou o botão de código
+    // do WhatsApp em "Gerando código…".
+    state.screenerLoading = false;
+    state.screenerProgress = null;
+    state.screenerError = "Algo quebrou ao montar a tela: " + ((e && e.message) || e);
+    screenerRender();
   });
 }
 
@@ -4960,6 +4977,17 @@ function screenerCompara(a, b){
   if(va === null) return 1;
   if(vb === null) return -1;
   return va < vb ? -dir : (va > vb ? dir : 0);
+}
+
+// Escala máxima da nota vinda do servidor. Lê a primeira linha que de fato tem
+// nota: linhas[0] muda com a ordenação e uma linha de erro nunca chega a ler
+// nota.escalaMaxima — nasce com o padrão 25 e faria o cabeçalho mentir se os
+// pesos mudassem.
+function screenerEscalaMaxima(linhas){
+  for(var i = 0; i < (linhas || []).length; i++){
+    if(linhas[i] && linhas[i].score !== null && linhas[i].score !== undefined && linhas[i].scoreMax) return linhas[i].scoreMax;
+  }
+  return (linhas && linhas[0] && linhas[0].scoreMax) || 25;
 }
 
 function screenerOrdenarPor(chave){
@@ -5041,7 +5069,12 @@ function screenerDetalheHtml(linha){
     html += '<div class="scr-note" style="margin-top:0"><b>Isto é um fundo imobiliário, não uma empresa.</b> Fundo não tem P/L, ROE nem margem no sentido de uma companhia: ele quase não tem dívida e a margem dele é perto de 100% por construção. Aplicar a nota de ações aqui daria pontuação alta de graça, por dois indicadores que o fundo ganha sem mérito nenhum. Por isso não damos nota — olhe o dividend yield e, quando existir, o P/VP.' +
       // O número existe (o backend calcula e só depois se recusa a publicá-lo
       // como nota) e mostrá-lo é o ponto: é ele que não vale.
-      (linha.notaBruta !== null ? ' Só de referência: pelos indicadores que existem, a conta de ações daria ' + escapeHtml(screenerFmtPontos(linha.notaBruta)) + ' de ' + escapeHtml(screenerFmtPontos(linha.scoreMax)) + ' — e é exatamente esse número que não vale.' : '') +
+      // NÃO exibir aqui uma "nota que daria": num FII, roe/margem/dívida são
+      // zerados pelo backend, então a conta sobraria em cima de P/L e DY —
+      // exatamente os dois que NÃO inflam a nota de fundo. Seria um número
+      // fabricado numa tela de investimento, e contradiz o motivo de o fundo
+      // não receber nota. O honesto é mostrar os indicadores e parar aí.
+      '' +
     '</div>';
   } else if(linha.score === null && linha.notaMotivo){
     // Sem nota, o detalhe é o lugar de dizer o porquê por extenso.
@@ -5069,7 +5102,10 @@ function screenerDetalheHtml(linha){
     if(ind.flag) porque += " · Atenção: " + screenerFlagTexto(ind.flag);
     // Discreto de propósito: a nota é confiável, isto só registra que a escala
     // saiu da mediana dos 15 e não foi confirmada no próprio papel.
-    if(screenerEscalaDoLote(linha, meta)) porque += " · escala lida do conjunto dos papéis, não deste papel sozinho.";
+    // Só quando o indicador TEM valor: o aviso de escala num indicador sem dado
+    // ("fica fora da conta da nota · escala lida do conjunto…") é contraditório —
+    // não há valor nenhum cuja escala tenha sido lida.
+    if(ind.valor !== null && ind.valor !== undefined && screenerEscalaDoLote(linha, meta)) porque += " · escala lida do conjunto dos papéis, não deste papel sozinho.";
     html += '<div class="scr-det-item">' +
       '<div class="scr-det-head"><span class="scr-det-name">' + escapeHtml(meta.label) + '</span>' +
         '<span class="scr-det-val">' + escapeHtml(screenerFmtValor(meta, ind)) + '</span></div>' +
@@ -5255,7 +5291,7 @@ function renderScreener(){
 
   html += '<div class="card">' +
     '<p style="font-size:14px;font-weight:800;margin:0 0 2px">Comparativo</p>' +
-    '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Nota de 0 a ' + escapeHtml(screenerFmtPontos(linhas[0].scoreMax)) + ', somando 5 indicadores. Toque no papel para abrir o detalhe.</p>' +
+    '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Nota de 0 a ' + escapeHtml(screenerFmtPontos(screenerEscalaMaxima(linhas))) + ', somando 5 indicadores. Toque no papel para abrir o detalhe.</p>' +
     // Aviso de dado velho ANTES da tabela: depois dela o usuário já comparou.
     (temVelho ? '<div class="scr-note neutro" style="margin-top:0;margin-bottom:12px"><b>Parte destes números não é do momento.</b> Os papéis marcados com a idade ao lado do código vêm do último dado guardado — a fonte de cotações não respondeu agora. Abra o papel para ver o motivo.</div>' : '') +
     screenerSortbarHtml() +

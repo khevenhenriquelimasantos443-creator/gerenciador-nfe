@@ -42,7 +42,15 @@ self.addEventListener('fetch', function(e) {
   if (url.origin !== self.location.origin) return;
 
   // Never cache same-origin API endpoints.
-  if (url.pathname.indexOf('/ai') === 0 || url.pathname.indexOf('/pluggy') === 0) return;
+  //
+  // /api/ entrou aqui junto com o screener: o ramo final deste arquivo e
+  // cache-first, entao GET /api/stocks passava a ser servido do cache do SW e o
+  // botao "Atualizar agora" devolvia a resposta anterior — o refresh nao
+  // refrescava, e os selos de "dado guardado" ficavam presos. Pior que os
+  // outros dois casos, porque o worker JA tem cache proprio com TTL: dois
+  // caches em serie so somam confusao sobre a idade do dado.
+  if (url.pathname.indexOf('/ai') === 0 || url.pathname.indexOf('/pluggy') === 0 ||
+      url.pathname.indexOf('/api/') === 0) return;
 
   // App shell + navigations: NETWORK-FIRST so new deploys appear immediately.
   // Cache is only an offline fallback.
