@@ -10,6 +10,7 @@ const pitchInv  = fs.readFileSync(path.join(__dirname,'../finn/pitch-investidore
 const pitchUsr  = fs.readFileSync(path.join(__dirname,'../finn/pitch-usuarios.html'), 'utf8');
 const guia      = fs.readFileSync(path.join(__dirname,'../finn/guia.html'), 'utf8');
 const beta      = fs.readFileSync(path.join(__dirname,'../finn/beta.html'), 'utf8');
+const betaQuestionario = fs.readFileSync(path.join(__dirname,'../finn/beta-questionario.html'), 'utf8');
 
 // Ícones do PWA — mesmo desenho do "F" usado no favicon do app, embutidos
 // como base64 direto dos PNGs (evita depender de SVG em manifest, que
@@ -1137,6 +1138,106 @@ async function _adminBetaSignups(request, env) {
 
 function _escapeBetaHtml(s) {
   return String(s || '').replace(/[<>&]/g, function(c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+}
+
+// ── Questionário antes do link do beta ──────────────────────────────────────
+// Pedido pra rodar antes da inscrição de verdade (/beta): dá pra saber quem
+// está entrando (banco que usa, o que mais pesa hoje) antes de mandar o
+// link. Como a liberação é automática pra todo mundo — não existe reprovação
+// aqui — este endpoint só GRAVA a resposta; quem decide se inscrever de
+// verdade é a pessoa, clicando no botão que a página mostra depois.
+var BETAQ_CAMPOS = ['organiza', 'banco', 'dor', 'tempo', 'canal', 'dispositivo', 'followup'];
+// Teto de respostas gravadas por dia — mesmo raciocínio do SEC_LOG_MAX_DIA:
+// este endpoint é público e sem autenticação (tem que ser, é o primeiro
+// contato de alguém que nunca usou o Finn), então escreve no KV por conta de
+// qualquer requisição que passe do honeypot. Sem teto, uma enxurrada
+// consumiria a cota de escrita compartilhada com push, screener e log de
+// segurança. Bem folgado pro volume esperado (dezenas de pessoas, não
+// milhares) — se um dia isso disparar de verdade, é sinal bom, não bug.
+var BETAQ_MAX_DIA = 300;
+
+async function _betaQuestionario(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+
+    // Mesmo honeypot do /beta/signup: campo escondido que só um bot preenche.
+    // Finge sucesso pra não dar dica de que foi bloqueado.
+    if (body.website) return new Response(JSON.stringify({ ok: true }), { headers: cors });
+
+    var name = String(body.name || '').trim().slice(0, 120);
+    var email = String(body.email || '').trim().slice(0, 200);
+    if (!name || !email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      return new Response(JSON.stringify({ error: 'Nome e e-mail válido são obrigatórios.' }), { status: 400, headers: cors });
+    }
+
+    // Os campos de múltipla escolha (organiza/tempo/canal/dispositivo/
+    // followup) NÃO são validados contra uma lista fixa aqui: quem manda o
+    // POST não precisa ser o &lt;select&gt; da página (dá pra chamar a rota
+    // direto), então tratar como texto livre e cortar tamanho é mais robusto
+    // que rejeitar por não bater com um enum — o pior caso é um valor
+    // inesperado aparecendo na tela do admin, e ali ele sai sempre escapado.
+    var respostas = {};
+    for (var i = 0; i < BETAQ_CAMPOS.length; i++) {
+      var chave = BETAQ_CAMPOS[i];
+      respostas[chave] = String(body[chave] || '').trim().slice(0, 400);
+    }
+
+    var rlIp = await _rateLimit(env, 'betaq_ip', _clientIp(request), 5, 3600);
+    if (!rlIp.ok) return _tooManyRequests(cors, rlIp.retryAfter, 'muitas respostas seguidas, tente mais tarde');
+
+    if (env.FINN_KV) {
+      var hoje = new Date().toISOString().slice(0, 10);
+      var chaveContador = 'betaqcount_' + hoje;
+      var jaHoje = parseInt((await env.FINN_KV.get(chaveContador)) || '0', 10) || 0;
+      if (jaHoje >= BETAQ_MAX_DIA) {
+        // Finge sucesso — a pessoa não fez nada de errado, quem estourou o
+        // teto foi outra coisa (ou volume real, que é bom sinal). Mesmo
+        // espírito do honeypot: nunca devolver erro que pareça culpa dela.
+        return new Response(JSON.stringify({ ok: true }), { headers: cors });
+      }
+      await env.FINN_KV.put(chaveContador, String(jaHoje + 1), { expirationTtl: 60 * 60 * 24 * 30 });
+
+      var id = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+      await env.FINN_KV.put('betaq_' + id, JSON.stringify(Object.assign({
+        name: name, email: email, created_at: new Date().toISOString()
+      }, respostas)), { expirationTtl: 60 * 60 * 24 * 180 });
+    }
+
+    return new Response(JSON.stringify({ ok: true }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_betaQuestionario');
+  }
+}
+
+// GET /admin/beta-questionario — mesmo padrão de credencial das outras rotas
+// admin (Authorization: Bearer + X-Admin-Password). Lista bruta, sem
+// agregação: são dezenas de respostas, não milhares — dá pra ler direto.
+async function _adminBetaQuestionario(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.FINN_KV) return new Response(JSON.stringify({ respostas: [] }), { headers: cors });
+
+    var keys = [];
+    var cursor;
+    do {
+      var page = await env.FINN_KV.list({ prefix: 'betaq_', cursor: cursor });
+      keys = keys.concat(page.keys);
+      cursor = page.list_complete ? undefined : page.cursor;
+    } while (cursor);
+    keys.sort(function (a, b) { return b.name.localeCompare(a.name); });
+
+    var respostas = (await Promise.all(keys.slice(0, 300).map(function (k) { return env.FINN_KV.get(k.name); })))
+      .filter(Boolean).map(function (raw) { try { return JSON.parse(raw); } catch (e) { return null; } }).filter(Boolean);
+    return new Response(JSON.stringify({ respostas: respostas }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminBetaQuestionario');
+  }
 }
 
 // GET /admin/intrusions — resumo das tentativas registradas por _securityLog.
@@ -3542,6 +3643,21 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/beta-signups' && request.method === 'GET') {
       return _adminBetaSignups(request, env);
+    }
+    // ── Questionário antes do link do beta ──
+    if (url.pathname === '/beta-questionario' || url.pathname === '/beta-questionario.html') {
+      return new Response(${JSON.stringify(betaQuestionario)}, {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+    if (url.pathname === '/beta-questionario/enviar' && request.method === 'POST') {
+      return _betaQuestionario(request, env);
+    }
+    if (url.pathname === '/admin/beta-questionario' && request.method === 'GET') {
+      return _adminBetaQuestionario(request, env);
     }
     if (url.pathname === '/admin/intrusions' && request.method === 'GET') {
       return _adminIntrusions(request, env);

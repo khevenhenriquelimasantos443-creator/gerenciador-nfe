@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finn. — Antes de entrar no beta</title>
+<meta name="description" content="Responde 9 perguntas rápidas e libera seu acesso ao grupo de testers do Finn.">
+<meta name="theme-color" content="#F97316">
+<meta property="og:title" content="Finn. — Antes de entrar no beta">
+<meta property="og:description" content="Responde rápido e libera seu acesso ao grupo de testers do Finn.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#F97316;--dark:#0F172A;--dark2:#1E293B;--muted:#64748B;--border:#E2E8F0;--bg:#F8F7F4;--good:#059669;--goodbg:#ECFDF5;--goodbd:#A7F3D0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1E293B;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+nav{position:sticky;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:640px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-.02em}
+.nav-logo-mark{width:32px;height:32px;background:var(--dark2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:var(--primary)}
+.nav-logo em{font-style:normal;color:var(--primary)}
+.nav-cta{color:var(--muted);font-size:13.5px;font-weight:700}
+.nav-cta:hover{color:var(--dark2)}
+
+main{max-width:560px;margin:0 auto;padding:56px 24px 80px}
+.badge{display:inline-flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:22px}
+.badge b{color:var(--primary)}
+h1{font-size:clamp(26px,6vw,34px);font-weight:900;color:var(--dark);line-height:1.15;letter-spacing:-.02em;margin-bottom:14px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--primary)}
+.sub{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:32px}
+.sub b{color:var(--dark2)}
+
+.card{border:1px solid var(--border);border-radius:16px;padding:28px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--dark2);margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14.5px;font-family:inherit;color:var(--dark2);background:#fff;appearance:none}
+.field select{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path d="M1 1l5 5 5-5" stroke="%2364748B" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');background-repeat:no-repeat;background-position:right 14px center;padding-right:34px}
+.field textarea{resize:vertical;min-height:72px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:var(--primary)}
+.field-hint{font-size:11.5px;color:#94A3B8;margin-top:5px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.step-label{font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.04em;margin:26px 0 4px}
+.step-label:first-child{margin-top:0}
+
+.btn-submit{width:100%;background:var(--primary);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;margin-top:8px}
+.btn-submit:hover{background:#EA6C0F}
+.btn-submit:disabled{opacity:.6;cursor:default}
+.form-error{background:#FEF2F2;border:1px solid #FECACA;color:#DC2626;border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:16px}
+
+.success{display:none;text-align:center;padding:12px 4px}
+.success.show{display:block}
+.success-mark{width:52px;height:52px;border-radius:50%;background:var(--goodbg);border:1px solid var(--goodbd);color:var(--good);font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.success h2{font-size:19px;font-weight:800;color:var(--dark2);margin-bottom:8px}
+.success p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:22px}
+.btn-open-app{display:block;text-align:center;background:var(--primary);color:#fff;border-radius:10px;padding:14px;font-size:15px;font-weight:800}
+.btn-open-app:hover{background:#EA6C0F}
+
+.form-wrap{display:block}
+.form-wrap.hide{display:none}
+
+footer{padding:32px 24px;border-top:1px solid var(--border);margin-top:20px}
+.footer-inner{max-width:560px;margin:0 auto;text-align:center}
+.footer-links{display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--muted);flex-wrap:wrap;margin-bottom:10px}
+.footer-links a:hover{color:var(--primary)}
+.footer-fine{font-size:11px;color:#94A3B8}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/landing" class="nav-logo"><div class="nav-logo-mark">F</div>Finn<em>.</em></a>
+    <a href="/" class="nav-cta">Já tenho conta →</a>
+  </div>
+</nav>
+
+<main>
+  <div class="badge">✦ Vagas limitadas <b>· grupo de testers</b></div>
+  <h1>Antes de <em>liberar seu acesso</em></h1>
+  <p class="sub">9 perguntas rápidas — menos de 2 minutos. É só pra eu entender quem está entrando e como te ajudar melhor. Ao final, libero seu acesso pra você se inscrever no beta.</p>
+
+  <div class="card">
+    <div id="formError" class="form-error" style="display:none"></div>
+    <form id="qForm" class="form-wrap">
+      <div class="field">
+        <label for="fName">Seu nome</label>
+        <input type="text" id="fName" name="name" placeholder="Como você se chama" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="fEmail">E-mail</label>
+        <input type="email" id="fEmail" name="email" placeholder="voce@email.com" autocomplete="email" required>
+      </div>
+
+      <div class="step-label">Suas finanças hoje</div>
+      <div class="field">
+        <label for="fOrganiza">Como você organiza suas finanças hoje?</label>
+        <select id="fOrganiza" name="organiza" required>
+          <option value="" disabled selected>Escolhe uma opção</option>
+          <option value="planilha">Planilha</option>
+          <option value="papel">Papel/caderno</option>
+          <option value="outro_app">Outro app</option>
+          <option value="nao_organizo">Não organizo hoje</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fBanco">Qual banco você mais usa no dia a dia?</label>
+        <input type="text" id="fBanco" name="banco" placeholder="Nubank, Itaú, Bradesco, BB, Inter…" autocomplete="off" required>
+      </div>
+      <div class="field">
+        <label for="fDor">O que mais pesa hoje quando o assunto é controlar dinheiro?</label>
+        <textarea id="fDor" name="dor" placeholder="Conta rápido com suas palavras" required></textarea>
+      </div>
+
+      <div class="step-label">Como você vai testar</div>
+      <div class="field">
+        <label for="fTempo">Quanto tempo pretende de fato usar o Finn nas próximas semanas?</label>
+        <select id="fTempo" name="tempo" required>
+          <option value="" disabled selected>Escolhe uma opção</option>
+          <option value="so_olhar">Só vou dar uma olhada</option>
+          <option value="algumas_vezes">Algumas vezes por semana</option>
+          <option value="todo_dia">Todo dia, valendo</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fCanal">Se encontrar um bug, prefere avisar por…</label>
+        <select id="fCanal" name="canal" required>
+          <option value="" disabled selected>Escolhe uma opção</option>
+          <option value="whatsapp">WhatsApp</option>
+          <option value="email">E-mail</option>
+          <option value="formulario">Formulário</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fDispositivo">Vai usar mais no…</label>
+        <select id="fDispositivo" name="dispositivo" required>
+          <option value="" disabled selected>Escolhe uma opção</option>
+          <option value="celular">Celular</option>
+          <option value="computador">Computador</option>
+          <option value="ambos">Os dois</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fFollowup">Topa responder uma enquete rápida depois de umas duas semanas usando?</label>
+        <select id="fFollowup" name="followup" required>
+          <option value="" disabled selected>Escolhe uma opção</option>
+          <option value="sim">Sim, sem problema</option>
+          <option value="talvez">Talvez, depende do dia</option>
+          <option value="nao">Prefiro não</option>
+        </select>
+      </div>
+
+      <input type="text" id="fHoneypot" name="website" class="hp" tabindex="-1" autocomplete="off">
+      <button type="submit" class="btn-submit" id="btnSubmitQ">Liberar meu acesso</button>
+    </form>
+
+    <div id="qSuccess" class="success">
+      <div class="success-mark">✓</div>
+      <h2>Prontinho, valeu por responder</h2>
+      <p>Agora é só se inscrever no grupo de testers — o cadastro é rápido, e eu confirmo sua vaga por e-mail.</p>
+      <a href="/beta" class="btn-open-app">Ir pro cadastro do beta →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/landing">Sobre o Finn</a>
+      <a href="/privacidade">Privacidade</a>
+      <a href="/termos">Termos</a>
+      <a href="mailto:Finn.controle01@gmail.com">Contato</a>
+    </div>
+    <div class="footer-fine">© 2026 Finn. — Controle financeiro inteligente.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var form = document.getElementById("qForm");
+  var errorBox = document.getElementById("formError");
+  var btn = document.getElementById("btnSubmitQ");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    errorBox.style.display = "none";
+
+    var payload = {
+      name: document.getElementById("fName").value.trim(),
+      email: document.getElementById("fEmail").value.trim(),
+      organiza: document.getElementById("fOrganiza").value,
+      banco: document.getElementById("fBanco").value.trim(),
+      dor: document.getElementById("fDor").value.trim(),
+      tempo: document.getElementById("fTempo").value,
+      canal: document.getElementById("fCanal").value,
+      dispositivo: document.getElementById("fDispositivo").value,
+      followup: document.getElementById("fFollowup").value,
+      website: document.getElementById("fHoneypot").value
+    };
+
+    if(!payload.name || !payload.email || !payload.organiza || !payload.banco || !payload.dor || !payload.tempo || !payload.canal || !payload.dispositivo || !payload.followup){
+      errorBox.textContent = "Preenche todos os campos pra continuar.";
+      errorBox.style.display = "block";
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Enviando…";
+
+    fetch("/beta-questionario/enviar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+      .then(function(res){
+        btn.disabled = false;
+        btn.textContent = "Liberar meu acesso";
+        if(res.status === 200 && res.body && res.body.ok){
+          form.classList.add("hide");
+          document.getElementById("qSuccess").classList.add("show");
+        } else {
+          errorBox.textContent = (res.body && res.body.error) || "Não consegui enviar agora. Tenta de novo em instantes.";
+          errorBox.style.display = "block";
+        }
+      }).catch(function(){
+        btn.disabled = false;
+        btn.textContent = "Liberar meu acesso";
+        errorBox.textContent = "Falha de conexão. Tenta de novo.";
+        errorBox.style.display = "block";
+      });
+  });
+})();
+</script>
+</body>
+</html>

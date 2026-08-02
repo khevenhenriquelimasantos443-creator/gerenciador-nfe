@@ -494,6 +494,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
         <a href="/guia" target="_blank" rel="noopener" class="nav-menu-action" id="btnGuiaNav" style="text-decoration:none">Guia de uso</a>
         <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
         <button type="button" class="nav-menu-action" id="btnScreenerNav" style="display:none">Screener de ações</button>
+        <button type="button" class="nav-menu-action" id="btnBetaAdminNav" style="display:none">Questionário do beta</button>
         <button type="button" class="nav-menu-action" id="btnConfigNav">Configurações</button>
         <button type="button" class="nav-menu-action" id="btnLogoutNav">Sair</button>
       </div>
@@ -719,7 +720,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4235,6 +4236,144 @@ function loadAdminAnalytics(){
   });
 }
 
+// Busca as respostas do questionário (/admin/beta-questionario) e as
+// inscrições confirmadas do /beta (/admin/beta-signups) em paralelo — a
+// segunda rota já existia, mas nunca teve tela nenhuma pra mostrar os dados.
+function loadAdminBeta(){
+  state.betaAdminLoading = true;
+  state.betaAdminError = null;
+  render();
+  var hdrs = adminHeaders();
+  Promise.all([
+    fetch("/admin/beta-questionario", { headers: hdrs }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); }),
+    fetch("/admin/beta-signups", { headers: hdrs }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+  ]).then(function(res){
+    state.betaAdminLoading = false;
+    var respRes = res[0], signRes = res[1];
+    if(respRes.status === 200 && respRes.body && Array.isArray(respRes.body.respostas)){
+      state.betaAdminData = {
+        respostas: respRes.body.respostas,
+        signups: (signRes.status === 200 && signRes.body && Array.isArray(signRes.body.signups)) ? signRes.body.signups : []
+      };
+    } else {
+      state.betaAdminError = (respRes.body && respRes.body.error) || "Não consegui carregar as respostas.";
+    }
+    render();
+  }).catch(function(){
+    state.betaAdminLoading = false;
+    state.betaAdminError = "Falha de conexão.";
+    render();
+  });
+}
+
+var BETAQ_ORGANIZA = { planilha: "Planilha", papel: "Papel/caderno", outro_app: "Outro app", nao_organizo: "Não organiza hoje" };
+var BETAQ_TEMPO = { so_olhar: "Só vai olhar", algumas_vezes: "Algumas vezes/semana", todo_dia: "Todo dia" };
+var BETAQ_CANAL = { whatsapp: "WhatsApp", email: "E-mail", formulario: "Formulário" };
+var BETAQ_DISPOSITIVO = { celular: "Celular", computador: "Computador", ambos: "Celular e computador" };
+var BETAQ_FOLLOWUP = { sim: "Topa enquete depois", talvez: "Talvez toda enquete", nao: "Não quer enquete" };
+function betaqRotulo(mapa, chave){
+  var v = Object.prototype.hasOwnProperty.call(mapa, chave) ? mapa[chave] : chave;
+  return escapeHtml(v || "—");
+}
+
+function renderAdminBeta(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+
+  if(state.betaAdminLoading && !state.betaAdminData){
+    return '<div class="card"><div class="eyebrow">Questionário do beta</div><div style="font-size:13px;color:var(--fm)">Carregando respostas…</div></div>';
+  }
+  if(state.betaAdminError && !state.betaAdminData){
+    return '<div class="card"><div class="eyebrow">Questionário do beta</div>' +
+      '<div class="ai-error">' + escapeHtml(state.betaAdminError) + '</div>' +
+      '<button type="button" class="btn-submit" id="btnRetryBetaAdmin" style="margin-top:10px">Tentar de novo</button></div>';
+  }
+  if(!state.betaAdminData){
+    return '<div class="card"><div class="eyebrow">Questionário do beta</div>' +
+      '<button type="button" class="btn-submit" id="btnLoadBetaAdmin">Carregar respostas</button></div>';
+  }
+
+  var d = state.betaAdminData;
+  var respostas = d.respostas.slice().sort(function(a,b){ return String(b.created_at).localeCompare(String(a.created_at)); });
+  var signups = d.signups || [];
+
+  // Cruza por e-mail (minúsculo) pra saber quem respondeu o questionário mas
+  // ainda não completou a inscrição de verdade — é a lista de quem vale a
+  // pena cutucar.
+  var emailsInscritos = {};
+  signups.forEach(function(s){ if(s.email) emailsInscritos[String(s.email).toLowerCase()] = s; });
+  var respondeuMasNaoInscreveu = respostas.filter(function(r){ return !emailsInscritos[String(r.email || "").toLowerCase()]; });
+  var confirmados = signups.filter(function(s){ return s.confirmed; }).length;
+
+  var html = '<div class="card">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px">' +
+      '<div class="eyebrow" style="margin:0">Questionário do beta</div>' +
+      '<button type="button" class="btn-ghost" id="btnRefreshBetaAdmin" style="padding:6px 12px;font-size:11.5px"' + (state.betaAdminLoading ? " disabled" : "") + '>' + (state.betaAdminLoading ? "Atualizando…" : "Atualizar agora") + '</button>' +
+    '</div>' +
+    '<div style="font-size:11.5px;color:var(--fm)">Respostas ao /beta-questionario e inscrições ao /beta, lado a lado.</div>' +
+  '</div>';
+
+  html += '<div class="adm-kpis">' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Responderam</div><div class="adm-kpi-value">' + respostas.length + '</div><div class="adm-kpi-sub">o questionário</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Se inscreveram</div><div class="adm-kpi-value">' + signups.length + '</div><div class="adm-kpi-sub">' + confirmados + ' confirmaram o e-mail</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Faltam se inscrever</div><div class="adm-kpi-value">' + respondeuMasNaoInscreveu.length + '</div><div class="adm-kpi-sub">responderam, não se inscreveram ainda</div></div>' +
+  '</div>';
+
+  if(respondeuMasNaoInscreveu.length){
+    html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Vale cutucar</p>' +
+      respondeuMasNaoInscreveu.map(function(r){
+        return '<div style="display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--fb);font-size:12.5px">' +
+          '<span><b>' + escapeHtml(r.name || "—") + '</b> · ' + escapeHtml(r.email || "—") + '</span>' +
+          '<span style="color:var(--fm);white-space:nowrap">' + admDataHora(r.created_at) + '</span></div>';
+      }).join("") +
+    '</div>';
+  }
+
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Respostas do questionário (' + respostas.length + ')</p>';
+  if(!respostas.length){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Ninguém respondeu ainda.</div>';
+  } else {
+    html += respostas.map(function(r){
+      var jaInscrito = !!emailsInscritos[String(r.email || "").toLowerCase()];
+      return '<div style="border-top:1px solid var(--fb);padding:12px 0">' +
+        '<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px">' +
+          '<div><b style="font-size:13.5px">' + escapeHtml(r.name || "—") + '</b><div style="font-size:11.5px;color:var(--fm)">' + escapeHtml(r.email || "—") + '</div></div>' +
+          '<div style="text-align:right"><span style="font-size:11px;color:var(--fm)">' + admDataHora(r.created_at) + '</span>' +
+          (jaInscrito ? '<div class="cat-pill" style="font-size:10.5px;margin-top:3px;background:#ECFDF5;border:1px solid var(--fs);color:var(--fs)">já inscrito</div>' : '') + '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">' +
+          '<span class="cat-pill" style="font-size:11px">' + betaqRotulo(BETAQ_ORGANIZA, r.organiza) + '</span>' +
+          '<span class="cat-pill" style="font-size:11px">' + escapeHtml(r.banco || "—") + '</span>' +
+          '<span class="cat-pill" style="font-size:11px">' + betaqRotulo(BETAQ_TEMPO, r.tempo) + '</span>' +
+          '<span class="cat-pill" style="font-size:11px">' + betaqRotulo(BETAQ_CANAL, r.canal) + '</span>' +
+          '<span class="cat-pill" style="font-size:11px">' + betaqRotulo(BETAQ_DISPOSITIVO, r.dispositivo) + '</span>' +
+          '<span class="cat-pill" style="font-size:11px">' + betaqRotulo(BETAQ_FOLLOWUP, r.followup) + '</span>' +
+        '</div>' +
+        '<div style="font-size:12.5px;color:var(--fd)">' + escapeHtml(r.dor || "—") + '</div>' +
+      '</div>';
+    }).join("");
+  }
+  html += '</div>';
+
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Inscrições no /beta (' + signups.length + ')</p>';
+  if(!signups.length){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Ninguém se inscreveu ainda.</div>';
+  } else {
+    html += '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr>' +
+      '<th>Nome</th><th>E-mail</th><th>Contato</th><th>Status</th><th>Quando</th>' +
+    '</tr></thead><tbody>' +
+    signups.slice().sort(function(a,b){ return String(b.created_at).localeCompare(String(a.created_at)); }).map(function(s){
+      return '<tr><td><span class="name">' + escapeHtml(s.name || "—") + '</span></td>' +
+        '<td>' + escapeHtml(s.email || "—") + '</td>' +
+        '<td>' + escapeHtml(s.contact || "—") + '</td>' +
+        '<td>' + (s.confirmed ? '<span class="cat-pill" style="font-size:10.5px;background:#ECFDF5;border:1px solid var(--fs);color:var(--fs)">confirmado</span>' : '<span class="cat-pill" style="font-size:10.5px">aguardando e-mail</span>') + '</td>' +
+        '<td>' + admDataHora(s.created_at) + '</td></tr>';
+    }).join("") + '</tbody></table></div>';
+  }
+  html += '</div>';
+
+  return html;
+}
+
 /* ── screener de ações (admin) ── */
 
 // Lista fixa de 15 papéis líquidos da B3, cobrindo setores diferentes (bancos,
@@ -5427,6 +5566,8 @@ function render(){
   // então some do menu de quem não é a master desbloqueada.
   var btnScreenerNav = document.getElementById("btnScreenerNav");
   if(btnScreenerNav) btnScreenerNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
+  var btnBetaAdminNav = document.getElementById("btnBetaAdminNav");
+  if(btnBetaAdminNav) btnBetaAdminNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
   var content = document.getElementById("content");
   if(state.loading){
     content.innerHTML = '<div class="empty-state">Carregando…</div>';
@@ -5458,6 +5599,7 @@ function render(){
   else if(state.tab === "ia") content.innerHTML = renderIA();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else if(state.tab === "screener") content.innerHTML = renderScreener();
+  else if(state.tab === "adminBeta") content.innerHTML = renderAdminBeta();
   else content.innerHTML = renderConfig();
   if(tabChanged){
     window.scrollTo(0, 0);
@@ -5803,6 +5945,14 @@ function bindContentEvents(){
     if(btnLoadIntrusions) btnLoadIntrusions.addEventListener("click", loadIntrusions);
     var btnRefreshAnalytics = document.getElementById("btnRefreshAnalytics");
     if(btnRefreshAnalytics) btnRefreshAnalytics.addEventListener("click", loadAdminAnalytics);
+  }
+  if(state.tab === "adminBeta"){
+    var btnLoadBetaAdmin = document.getElementById("btnLoadBetaAdmin");
+    if(btnLoadBetaAdmin) btnLoadBetaAdmin.addEventListener("click", loadAdminBeta);
+    var btnRetryBetaAdmin = document.getElementById("btnRetryBetaAdmin");
+    if(btnRetryBetaAdmin) btnRetryBetaAdmin.addEventListener("click", loadAdminBeta);
+    var btnRefreshBetaAdmin = document.getElementById("btnRefreshBetaAdmin");
+    if(btnRefreshBetaAdmin) btnRefreshBetaAdmin.addEventListener("click", loadAdminBeta);
   }
   if(state.tab === "screener"){
     var btnScreenerLoad = document.getElementById("btnScreenerLoad");
@@ -6556,6 +6706,12 @@ document.getElementById("btnScreenerNav").addEventListener("click", function(){
   // e voltar pro screener pra reler a tabela não precisa gastar tudo de novo.
   // Pra forçar, existe o "Atualizar agora" no topo da tela.
   if(!state.screenerData) loadScreener();
+});
+document.getElementById("btnBetaAdminNav").addEventListener("click", function(){
+  state.tab = "adminBeta";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  loadAdminBeta();
 });
 document.getElementById("btnLogoutNav").addEventListener("click", function(){
   Auth.logout(currentSession.access_token).then(function(){
