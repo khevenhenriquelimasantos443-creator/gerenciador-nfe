@@ -222,7 +222,9 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
 .acc{
   display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-sm);
   background:var(--surface-2);border:1.5px solid var(--border);margin-bottom:8px;
+  flex-wrap:wrap;max-width:100%;
 }
+.acc-scope{flex-shrink:0;cursor:help}
 .acc-av{
   width:36px;height:36px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -272,10 +274,32 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
 }
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ── PAINÉIS ESCONDIDOS (Guia de uso, Configurações) — só via ícone no header ─ */
+.modal-ovl{
+  display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);
+  z-index:500;align-items:center;justify-content:center;padding:20px;
+}
+.modal-ovl.on{display:flex}
+.modal-panel{
+  background:var(--surface);border-radius:var(--r);max-width:580px;width:100%;
+  max-height:88vh;overflow-y:auto;box-shadow:var(--shadow-lg);border:1px solid var(--border);
+}
+.modal-panel .cfg-hdr{
+  display:flex;align-items:center;justify-content:space-between;padding:16px 20px;
+  border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:2;
+}
+.modal-panel .cfg-body{padding:6px 20px 24px}
+
 @media(max-width:640px){
   main{padding:16px 14px 56px}
   header,.tabs{padding:0 14px}
   .kpi-value{font-size:22px}
+  .modal-ovl{padding:0;align-items:flex-end}
+  .modal-panel{max-width:100%;border-radius:20px 20px 0 0;max-height:90vh}
+  .hdr-in{gap:8px}
+  .brand-sub{display:none}
+  #mode-pill{display:none}
+  .icon-btn{width:32px;height:32px}
 }
 </style>
 </head>
@@ -290,6 +314,12 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
     </div>
     <div class="hdr-spacer"></div>
     <span class="pill p-ok" id="mode-pill"><span class="dot"></span>Leitura</span>
+    <button class="icon-btn" id="guide-btn" title="Guia de uso" aria-label="Guia de uso">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </button>
+    <button class="icon-btn" id="config-btn" title="Configurações" aria-label="Configurações">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
     <button class="icon-btn" id="theme-btn" title="Alternar tema" aria-label="Alternar tema"></button>
   </div>
 </header>
@@ -304,38 +334,6 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
   <!-- ══════════════ VISÃO GERAL ══════════════ -->
   <section class="view on" id="v-geral">
     <div class="grid g4" id="kpis"></div>
-
-    <div class="sec-title">O que este app faz</div>
-    <div class="grid g2">
-      <div class="card">
-        <div class="row" style="margin-bottom:8px">
-          <span class="pill p-pri">1</span>
-          <b style="font-size:13.5px">Flex — reputação e bônus</b>
-        </div>
-        <div class="hint">Reputação de envio (atraso, cancelamento, claims) via <code>/users/{id}</code>, histórico de cada remessa via <code>/shipments/{id}</code> e o bônus creditado pelo Relatório de Liberações do Mercado Pago.</div>
-      </div>
-      <div class="card">
-        <div class="row" style="margin-bottom:8px">
-          <span class="pill p-pri">2</span>
-          <b style="font-size:13.5px">Full — coleta ao centro de distribuição</b>
-        </div>
-        <div class="hint">Identificação, itens, volumes, dia do envio e transportadora vêm da API. Motorista e código de autorização diário <b>não têm endpoint público confirmado</b> — ficam como registro manual.</div>
-      </div>
-      <div class="card">
-        <div class="row" style="margin-bottom:8px">
-          <span class="pill p-pri">3</span>
-          <b style="font-size:13.5px">Afiliados — reconciliação</b>
-        </div>
-        <div class="hint">Não existe endpoint que isole "esta venda veio de afiliado". O app compara o líquido esperado (comissão de categoria + frete) com o líquido repassado e destaca a diferença não explicada.</div>
-      </div>
-      <div class="card">
-        <div class="row" style="margin-bottom:8px">
-          <span class="pill p-ok">🔒</span>
-          <b style="font-size:13.5px">O que ele nunca faz</b>
-        </div>
-        <div class="hint">Criar ou editar anúncio, alterar preço, responder pergunta, enviar mensagem ou e-mail. O token é gerado só com escopo de leitura — essas ações <b>não são possíveis</b>, independente do que o código tentar.</div>
-      </div>
-    </div>
 
     <div class="sec-title">Contas conectadas</div>
     <div id="geral-contas"></div>
@@ -353,7 +351,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
 
     <div class="grid g3" id="flex-metrics"></div>
 
-    <div class="sec-title">Bônus por remessa <span style="text-transform:none;letter-spacing:0;font-weight:600;color:var(--muted)">— Relatório de Liberações (Mercado Pago)</span></div>
+    <div class="sec-title">Bônus por pedido <span style="text-transform:none;letter-spacing:0;font-weight:600;color:var(--muted)">— Relatório de Liberações (Mercado Pago)</span></div>
     <div class="tbl-wrap" id="flex-bonus"></div>
 
     <div class="sec-title">Remessas recentes</div>
@@ -403,29 +401,6 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
     </div>
 
     <div id="contas-lista"></div>
-
-    <div class="sec-title">Revogação</div>
-    <div class="card">
-      <div class="hint" style="margin-bottom:12px">
-        Desconectar aqui apaga os tokens do cofre e encerra o acesso deste app. Para revogar a autorização na origem — o que vale para qualquer aplicação — use <b>Administrar Permissões</b> na sua conta. Não é preciso trocar a senha.
-        <br><br>O Mercado Livre também revoga sozinho depois de <b>4 meses sem chamadas à API</b>.
-      </div>
-      <div class="row">
-        <a class="btn btn-ghost btn-sm" href="https://www.mercadolivre.com.br/permissoes" target="_blank" rel="noopener noreferrer">Administrar Permissões ↗</a>
-        <button class="btn btn-danger btn-sm" onclick="resetarSessao()">Apagar sessão e tokens</button>
-      </div>
-    </div>
-
-    <div class="sec-title">Conexão com o backend</div>
-    <div class="card">
-      <label class="lbl" for="cfg-worker">URL do Worker</label>
-      <input class="inp" id="cfg-worker" placeholder="https://melivista-worker.SEU-USUARIO.workers.dev">
-      <div class="hint">Único endereço que o app chama. O <code>client_secret</code> e os tokens ficam lá — nunca neste navegador. Sem essa URL o app roda em modo demonstração, com dados fictícios.</div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn btn-pri btn-sm" onclick="salvarWorker()">Salvar e testar</button>
-        <button class="btn btn-ghost btn-sm" onclick="entrarDemo()">Usar modo demonstração</button>
-      </div>
-    </div>
   </section>
 
   <!-- ══════════════ SEGURANÇA ══════════════ -->
@@ -448,7 +423,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
       </div>
       <div class="card">
         <div class="row" style="margin-bottom:9px"><span class="pill p-ok"><span class="dot"></span>Ativo</span><b style="font-size:13px">Sessão e anti-CSRF</b></div>
-        <div class="hint">Cookie opaco <code>HttpOnly · Secure · SameSite=Lax</code> assinado por HMAC, <code>state</code> de uso único no OAuth, PKCE S256, CORS com allowlist de origem e header obrigatório em toda chamada.</div>
+        <div class="hint">Cookie opaco <code>HttpOnly · Secure · SameSite=None</code> assinado por HMAC — necessário porque app e Worker vivem em domínios diferentes —, <code>state</code> de uso único no OAuth, PKCE S256, CORS com allowlist de origem e header obrigatório em toda chamada.</div>
       </div>
       <div class="card">
         <div class="row" style="margin-bottom:9px"><span class="pill p-ok"><span class="dot"></span>Ativo</span><b style="font-size:13px">Rate limit</b></div>
@@ -467,18 +442,103 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-
         Criação e alteração de anúncios, vendas indevidas e e-mails enviados pela conta são compatíveis com <strong>comprometimento direto de login/senha</strong> — não com uma integração via API. Com OAuth de escopo restrito: nunca se compartilha login ou senha com a aplicação; a aplicação nunca "é" a conta, ela só recebe um token limitado ao que foi autorizado; e mesmo se o token vazar, o dano possível está limitado à leitura.
       </div>
     </div>
-
-    <div class="sec-title">Checklist antes de ir pra produção</div>
-    <div id="checklist"></div>
-
-    <div class="sec-title">Log de chamadas</div>
-    <div class="row" style="justify-content:space-between;margin-bottom:10px">
-      <div class="hint" style="margin:0">Rastreabilidade de toda chamada feita pela aplicação.</div>
-      <button class="btn btn-ghost btn-sm" onclick="carregarAuditoria()">Atualizar</button>
-    </div>
-    <div class="log" id="log"></div>
   </section>
 </main>
+
+<!-- ══════════════ GUIA DE USO (painel escondido) ══════════════ -->
+<div id="guide-ovl" class="modal-ovl">
+  <div id="guide-panel" class="modal-panel">
+    <div class="cfg-hdr">
+      <div style="font-size:14.5px;font-weight:800;letter-spacing:-.02em">Guia de uso</div>
+      <button class="icon-btn" id="guide-close" title="Fechar" aria-label="Fechar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cfg-body">
+
+      <div class="sec-title" style="margin-top:0">O que este app faz</div>
+      <div class="grid g2">
+        <div class="card">
+          <div class="row" style="margin-bottom:8px">
+            <span class="pill p-pri">1</span>
+            <b style="font-size:13.5px">Flex — reputação e bônus</b>
+          </div>
+          <div class="hint">Reputação de envio (atraso, cancelamento, claims) via <code>/users/{id}</code>, histórico de cada remessa via <code>/shipments/{id}</code> e o bônus creditado pelo Relatório de Liberações do Mercado Pago.</div>
+        </div>
+        <div class="card">
+          <div class="row" style="margin-bottom:8px">
+            <span class="pill p-pri">2</span>
+            <b style="font-size:13.5px">Full — coleta ao centro de distribuição</b>
+          </div>
+          <div class="hint">Identificação, itens, volumes, dia do envio e transportadora vêm da API. Motorista e código de autorização diário <b>não têm endpoint público confirmado</b> — ficam como registro manual.</div>
+        </div>
+        <div class="card">
+          <div class="row" style="margin-bottom:8px">
+            <span class="pill p-pri">3</span>
+            <b style="font-size:13.5px">Afiliados — reconciliação</b>
+          </div>
+          <div class="hint">Não existe endpoint que isole "esta venda veio de afiliado". O app compara o líquido esperado (comissão de categoria + frete) com o líquido repassado e destaca a diferença não explicada.</div>
+        </div>
+        <div class="card">
+          <div class="row" style="margin-bottom:8px">
+            <span class="pill p-ok">🔒</span>
+            <b style="font-size:13.5px">O que ele nunca faz</b>
+          </div>
+          <div class="hint">Criar ou editar anúncio, alterar preço, responder pergunta, enviar mensagem ou e-mail. O token é gerado só com escopo de leitura — essas ações <b>não são possíveis</b>, independente do que o código tentar.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CONFIGURAÇÕES (painel escondido) ══════════════ -->
+<div id="config-ovl" class="modal-ovl">
+  <div id="config-panel" class="modal-panel">
+    <div class="cfg-hdr">
+      <div style="font-size:14.5px;font-weight:800;letter-spacing:-.02em">Configurações</div>
+      <button class="icon-btn" id="config-close" title="Fechar" aria-label="Fechar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cfg-body">
+
+      <div class="sec-title" style="margin-top:0">Conexão com o backend</div>
+      <div class="card">
+        <label class="lbl" for="cfg-worker">URL do Worker</label>
+        <input class="inp" id="cfg-worker" placeholder="https://melivista-worker.SEU-USUARIO.workers.dev">
+        <div class="hint">Único endereço que o app chama. O <code>client_secret</code> e os tokens ficam lá — nunca neste navegador. Sem essa URL o app roda em modo demonstração, com dados fictícios.</div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn btn-pri btn-sm" onclick="salvarWorker()">Salvar e testar</button>
+          <button class="btn btn-ghost btn-sm" onclick="entrarDemo()">Usar modo demonstração</button>
+        </div>
+      </div>
+
+      <div class="sec-title">Revogação</div>
+      <div class="card">
+        <div class="hint" style="margin-bottom:12px">
+          Desconectar em Contas apaga os tokens do cofre e encerra o acesso deste app. Para revogar a autorização na origem — o que vale para qualquer aplicação — use <b>Administrar Permissões</b> na sua conta. Não é preciso trocar a senha.
+          <br><br>O Mercado Livre também revoga sozinho depois de <b>4 meses sem chamadas à API</b>.
+        </div>
+        <div class="row">
+          <a class="btn btn-ghost btn-sm" href="https://www.mercadolivre.com.br/permissoes" target="_blank" rel="noopener noreferrer">Administrar Permissões ↗</a>
+          <button class="btn btn-danger btn-sm" onclick="resetarSessao()">Apagar sessão e tokens</button>
+        </div>
+      </div>
+
+      <div class="sec-title">Checklist antes de ir pra produção</div>
+      <div id="checklist"></div>
+
+      <div class="sec-title">Log de chamadas</div>
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <div class="hint" style="margin:0">Rastreabilidade de toda chamada feita pela aplicação.</div>
+        <button class="btn btn-ghost btn-sm" onclick="carregarAuditoria()">Atualizar</button>
+      </div>
+      <div class="log" id="log"></div>
+
+    </div>
+  </div>
+</div>
 
 <div id="toast"></div>
 
@@ -513,6 +573,33 @@ function aplicarTema(dark){
       if(s===null) aplicarTema(e.matches);
     });
   }
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   PAINÉIS ESCONDIDOS — Guia de uso e Configurações, só via ícone
+   ══════════════════════════════════════════════════════════════ */
+function abrirConfig(){
+  document.getElementById('config-ovl').classList.add('on');
+  renderChecklist();
+  carregarAuditoria();
+}
+function fecharConfig(){ document.getElementById('config-ovl').classList.remove('on'); }
+function abrirGuia(){ document.getElementById('guide-ovl').classList.add('on'); }
+function fecharGuia(){ document.getElementById('guide-ovl').classList.remove('on'); }
+(function(){
+  document.getElementById('config-btn').addEventListener('click', abrirConfig);
+  document.getElementById('config-close').addEventListener('click', fecharConfig);
+  document.getElementById('config-ovl').addEventListener('click', function(e){
+    if(e.target.id==='config-ovl') fecharConfig();
+  });
+  document.getElementById('guide-btn').addEventListener('click', abrirGuia);
+  document.getElementById('guide-close').addEventListener('click', fecharGuia);
+  document.getElementById('guide-ovl').addEventListener('click', function(e){
+    if(e.target.id==='guide-ovl') fecharGuia();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){ fecharConfig(); fecharGuia(); }
+  });
 })();
 
 /* ══════════════════════════════════════════════════════════════
@@ -575,10 +662,12 @@ var DEMO = {
   ],
   reputacao:{ atraso:0.021, cancelamento:0.006, claims:0.011, total_envios:1482 },
   bonus:[
-    {data:'2026-07-31', envios:38, valor:212.80},
-    {data:'2026-07-30', envios:41, valor:229.60},
-    {data:'2026-07-29', envios:27, valor:151.20},
-    {data:'2026-07-28', envios:35, valor:196.00}
+    {pedido:'43859201847', data:'2026-07-31T08:41:00-03:00', valor:5.60},
+    {pedido:'43859201512', data:'2026-07-31T08:38:00-03:00', valor:5.60},
+    {pedido:'43859200988', data:'2026-07-30T17:02:00-03:00', valor:6.00},
+    {pedido:'43859200201', data:'2026-07-30T10:15:00-03:00', valor:5.60},
+    {pedido:'43859199764', data:'2026-07-29T14:32:00-03:00', valor:5.20},
+    {pedido:'43859199210', data:'2026-07-28T09:05:00-03:00', valor:5.60}
   ],
   remessas:[
     {id:'43859201847', status:'delivered', sub:'entregue no destino', criado:'2026-07-31T08:41:00-03:00'},
@@ -650,7 +739,6 @@ function irPara(id){
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='flex') carregarFlex();
   if(id==='afiliados') carregarAfiliados();
-  if(id==='seguranca') carregarAuditoria();
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -659,7 +747,7 @@ function irPara(id){
 function renderBarraDemo(){
   document.getElementById('demo-slot').innerHTML = S.demo
     ? '<div class="demo-bar"><span>🎭</span><span style="flex:1">Modo demonstração — todos os números são fictícios. Nenhuma chamada real ao Mercado Livre ou Mercado Pago.</span>'+
-      '<button onclick="irPara(\'contas\')">Conectar de verdade</button></div>'
+      '<button onclick="abrirConfig()">Conectar de verdade</button></div>'
     : '';
   document.getElementById('mode-pill').innerHTML = S.demo
     ? '<span class="dot"></span>Demo'
@@ -700,7 +788,8 @@ function entrarDemo(){
 async function conectar(provedor){
   if(S.demo || !S.worker){
     toast('Configure a URL do Worker antes de conectar uma conta.');
-    document.getElementById('cfg-worker').focus();
+    abrirConfig();
+    setTimeout(function(){ document.getElementById('cfg-worker').focus(); },50);
     return;
   }
   try{
@@ -731,7 +820,7 @@ function cardConta(c){
       '<div class="acc-name">'+(isML?'Mercado Livre':'Mercado Pago')+' · '+esc(c.nickname||c.account_id)+'</div>'+
       '<div class="acc-meta">Conectada em '+dataBR(c.connected_at)+' · token renova até '+dataBR(c.expires_at)+'</div>'+
     '</div>'+
-    '<span class="pill p-ok" title="Escopo concedido">'+esc(c.scope||'read')+'</span>'+
+    '<span class="pill p-ok acc-scope" title="'+esc(c.scope||'read')+'"><span class="dot"></span>leitura</span>'+
     '<button class="btn btn-danger btn-sm" onclick="desconectar(\''+esc(c.key)+'\')">Desconectar</button>'+
   '</div>';
 }
@@ -779,8 +868,9 @@ async function carregarKpis(){
     return;
   }
   var rep = S.demo ? DEMO.reputacao : (S._rep || null);
-  var bonusTotal = (S.demo?DEMO.bonus:[]).reduce(function(a,b){return a+b.valor;},0);
-  var envios = (S.demo?DEMO.bonus:[]).reduce(function(a,b){return a+b.envios;},0);
+  var bonusData = S.demo ? DEMO.bonus : (S._bonusMP || []);
+  var bonusTotal = bonusData.reduce(function(a,b){return a+b.valor;},0);
+  var envios = bonusData.length;
   var recon = reconciliar(S.demo?DEMO.vendas:[]);
 
   el.innerHTML =
@@ -795,6 +885,48 @@ function kpi(label,valor,hint,cor){
     '<div class="kpi-label">'+label+'</div>'+
     '<div class="kpi-value" style="color:'+cor+'">'+valor+'</div>'+
     '<div class="kpi-hint">'+hint+'</div></div>';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BÔNUS FLEX — Relatório de Liberações (Mercado Pago), por pedido
+   ══════════════════════════════════════════════════════════════ */
+function faixaUltimos30Dias(){
+  var fim = new Date();
+  var ini = new Date(fim.getTime() - 30*24*60*60*1000);
+  function iso(d){ return d.toISOString().slice(0,10); }
+  return { begin_date: iso(ini)+'T00:00:00.000-03:00', end_date: iso(fim)+'T23:59:59.999-03:00' };
+}
+
+function primeiroNum(){
+  for(var i=0;i<arguments.length;i++){
+    if(arguments[i]!==undefined && arguments[i]!==null) return Number(arguments[i]);
+  }
+  return 0;
+}
+
+// Retorna array de {pedido,data,valor,descricao}, [] se não há conta MP,
+// ou null se a resposta veio num formato que não reconhecemos (os campos
+// desse relatório podem variar — nesse caso não arriscamos mostrar número
+// errado, só sinalizamos pra ajustar o parsing).
+async function carregarBonusMP(){
+  if(!S.contaMP) return [];
+  try{
+    var r = await apiGet('mp','/v1/account/release_report/list', faixaUltimos30Dias(), S.contaMP);
+    var lista = Array.isArray(r) ? r : (r.results || r.data || r.releases || null);
+    if(!Array.isArray(lista)) return null;
+    return lista.map(function(m){
+      var valor = primeiroNum(m.net_credit_amount, m.amount, m.settlement_net_amount, m.credit_amount);
+      return {
+        pedido: String(m.source_id || m.reference_id || m.external_reference || m.order_id || m.id || '—'),
+        data: m.date || m.date_created || m.settlement_date || null,
+        valor: valor,
+        descricao: m.description || m.concept || m.reason || ''
+      };
+    }).filter(function(l){ return l.valor > 0; });
+  }catch(e){
+    console.warn('release_report: falha ao ler/interpretar', e);
+    return null;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -824,15 +956,18 @@ async function carregarFlex(){
     metrica('Reclamações', rep.claims, 0.02)
   ].join('') : cardVazio('Conecte uma conta do Mercado Livre para ver a reputação de envio.');
 
-  var bonus = S.demo ? DEMO.bonus : [];
-  document.getElementById('flex-bonus').innerHTML = bonus.length ? tabela(
-    ['Data','Remessas','Bônus creditado'],
-    bonus.map(function(b){
-      return ['<b>'+b.data.split('-').reverse().join('/')+'</b>',
-              {v:b.envios,num:true},
-              {v:'<span class="pos">'+money(b.valor)+'</span>',num:true}];
-    })
-  ) : cardVazio('Conecte o Mercado Pago para puxar o Relatório de Liberações com o bônus por remessa.');
+  var bonus;
+  if(S.demo){ bonus = DEMO.bonus; }
+  else{ bonus = await carregarBonusMP(); S._bonusMP = bonus; }
+
+  document.getElementById('flex-bonus').innerHTML =
+    bonus===null ? '<div class="card"><div class="note n-warn"><span>⚠️</span><div class="n-body">O Relatório de Liberações voltou num formato que não reconheci — os campos podem variar entre contas. Nenhum valor incorreto foi mostrado; me avisa que eu ajusto o parsing.</div></div></div>' :
+    bonus.length ? tabela(
+      ['Pedido','Data','Bônus creditado'],
+      bonus.map(function(b){
+        return ['<code>'+esc(b.pedido)+'</code>', dataBR(b.data), {v:'<span class="pos">'+money(b.valor)+'</span>',num:true}];
+      })
+    ) : cardVazio('Conecte o Mercado Pago para puxar o Relatório de Liberações com o bônus por pedido.');
 
   var rem = S.demo ? DEMO.remessas : [];
   document.getElementById('flex-remessas').innerHTML = rem.length ? tabela(
@@ -1122,7 +1257,7 @@ function cardVazio(msg){
     document.getElementById('kpis').innerHTML='';
     document.getElementById('demo-slot').innerHTML =
       '<div class="note n-pri" style="margin-bottom:16px"><span>👋</span><div class="n-body">'+
-      '<strong>Primeiro acesso.</strong> Configure a URL do Worker na aba <b>Contas</b> para usar dados reais, '+
+      '<strong>Primeiro acesso.</strong> Configure a URL do Worker no ícone <b>⚙ Configurações</b> (topo da tela) para usar dados reais, '+
       'ou <a href="#" onclick="entrarDemo();return false;">entre no modo demonstração</a> para conhecer as telas com dados fictícios.</div></div>';
   }
 })();
