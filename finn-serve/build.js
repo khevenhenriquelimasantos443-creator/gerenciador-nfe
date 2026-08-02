@@ -1620,6 +1620,987 @@ async function _adminInstagramPublishNext(request, env) {
     return _serverError(cors, e, '_adminInstagramPublishNext');
   }
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  SCREENER DE AÇÕES — GET /api/stocks/:ticker
+// ═══════════════════════════════════════════════════════════════════════════
+// Dados PÚBLICOS de mercado (cotação e indicadores de empresas listadas na
+// B3), buscados na brapi.dev. Nada aqui encosta em conta bancária, Open
+// Finance ou Pluggy — e a resposta diz isso explicitamente no campo "aviso",
+// porque num app de finanças pessoais o usuário precisa conseguir distinguir,
+// olhando a tela, o que é dinheiro dele do que é cotação de mercado.
+//
+// Por que a chamada sai do Worker e não do navegador:
+//   1. o token da brapi é secret — no frontend ele seria público, já que
+//      finn/index.html é servido a qualquer um, sem autenticação;
+//   2. a CSP do app libera connect-src só pra 'self', Supabase e jsdelivr,
+//      então o browser nem conseguiria falar com brapi.dev.
+//
+// A rota devolve JSON puro: nenhuma string vira HTML aqui no servidor. Quem
+// monta a tela (finn/index.html) tem que passar TODO texto vindo daqui por
+// escapeHtml() — nome de empresa e logo vêm de terceiro, e o app guarda
+// access_token E refresh_token do Supabase no localStorage.
+
+// Universo fechado do screener. Isto é uma ALLOWLIST DE SEGURANÇA antes de
+// ser escolha de produto: o ticker vai parar dentro de uma URL que o Worker
+// busca, e aceitar entrada arbitrária transformaria a rota num proxy aberto
+// (SSRF). A URL final é montada com o elemento DESTA lista, nunca com a
+// string que chegou do cliente — assim nem um bug de normalização consegue
+// injetar caractere estranho lá.
+var SCREENER_TICKERS = [
+  'PETR3', 'PETR4', 'VALE3', 'ITUB4', 'BBAS3', 'BBDC4', 'ABEV3', 'WEGE3',
+  'B3SA3', 'BBSE3', 'PSSA3', 'RENT3', 'SUZB3', 'RADL3', 'VIVT3', 'LREN3',
+  'PRIO3', 'CMIG4', 'CPLE6', 'EGIE3', 'ELET3', 'MGLU3',
+  'TAEE11', 'SANB11', 'KLBN11', 'ENGI11', 'ALUP11', 'BPAC11',
+  'MXRF11', 'HGLG11'
+];
+
+// Terminar em 11 NÃO classifica FII: TAEE11 é unit da Taesa, empresa
+// operacional com fundamentos normais (e DY alto, que é justamente o que
+// confunde). Por isso a lista de fundos é explícita, e não uma regra de
+// sufixo — errar aqui não dá erro nenhum, só entrega nota errada.
+var SCREENER_FIIS = ['MXRF11', 'HGLG11'];
+
+// Units — ordinária + preferenciais no mesmo papel. Seguem a trilha normal de
+// ação; a lista existe pra deixar registrado que o sufixo 11 delas é esperado.
+var SCREENER_UNITS = ['TAEE11', 'SANB11', 'KLBN11', 'ENGI11', 'ALUP11', 'BPAC11'];
+
+// Banco, seguradora e bolsa: dívida é matéria-prima do negócio e EBITDA não é
+// métrica usada no setor. Calcular Dívida/EBITDA aqui dá um número enorme e
+// derruba a nota injustamente — o espelho exato do problema do FII, que ganha
+// nota 5 de graça no mesmo indicador. Nos dois casos o certo é N/A.
+var SCREENER_FINANCEIRAS = ['ITUB4', 'BBAS3', 'BBDC4', 'BBSE3', 'PSSA3', 'B3SA3', 'SANB11', 'BPAC11'];
+
+// Janela em que o dado é considerado FRESCO. Fundamento muda por trimestre,
+// preço muda o tempo todo; 20 min é o meio-termo que segura a tela inteira
+// sendo recarregada várias vezes sem estourar a cota da brapi.
+var SCREENER_CACHE_TTL_SEG = 20 * 60;
+
+// O registro fica guardado bem mais tempo do que é considerado fresco.
+// Passados os 20 min ele vira reserva ("stale") e só é usado quando a brapi
+// falha (429, 5xx, timeout): número de duas horas atrás com a idade estampada
+// é muito melhor que tela vazia.
+var SCREENER_CACHE_STALE_TTL_SEG = 6 * 60 * 60;
+
+// Uma chamada pendurada consome o tempo de CPU do request inteiro no Worker.
+var SCREENER_TIMEOUT_MS = 8000;
+
+// Teto por conta e por janela, contando SÓ as chamadas que realmente saem pra
+// brapi (ver _screenerAcao). A lista acima inteira, com cache frio, cabe numa
+// janela; um refresh em loop, não.
+var SCREENER_RL_LIMITE = 40;
+var SCREENER_RL_JANELA_SEG = 300;
+
+// Aviso que acompanha TODA resposta do screener, inclusive as de erro. Existe
+// por dois motivos, os dois de produto: (1) o Finn puxa extrato bancário por
+// Open Finance, e misturar visualmente "seu saldo" com "cotação da Petrobras"
+// é o tipo de confusão que faz o usuário achar que o app está lendo a
+// corretora dele; (2) indicador de mercado não é recomendação de
+// investimento, e dizer isso é obrigação nossa.
+var SCREENER_AVISO = 'Dados públicos de mercado, informados por um provedor externo de cotações da B3. Não têm nenhuma relação com sua conta bancária, com o Open Finance nem com seus dados no Finn — nada aqui é lido da sua conta. Também não é recomendação de compra ou venda.';
+
+// ── Normalização de valores ────────────────────────────────────────────────
+
+// Converte o que vier da API em número. A brapi (que espelha o quoteSummary
+// do Yahoo) já devolveu, em momentos diferentes, número puro, string com
+// vírgula decimal, string com "%" ou "R$", e objeto { raw, fmt }. Aceitar os
+// quatro custa dez linhas e evita o parser inteiro virar NaN numa mudança
+// silenciosa do fornecedor.
+function _screenerNum(v) {
+  if (v === null || v === undefined) return null;
+  if (typeof v === 'boolean') return null;
+  if (typeof v === 'object') {
+    if (Array.isArray(v)) return null;
+    // O Yahoo aninha o valor em .raw; a brapi às vezes achata, às vezes não.
+    if (v.raw !== undefined) return _screenerNum(v.raw);
+    if (v.value !== undefined) return _screenerNum(v.value);
+    if (v.fmt !== undefined) return _screenerNum(v.fmt);
+    return null;
+  }
+  if (typeof v === 'string') {
+    var s = v.replace(/[R$\\s%]/g, '').trim();
+    if (!s) return null;
+    // "1.234,56" (pt-BR) vs "1234.56" (en-US): só trata como pt-BR quando há
+    // vírgula, senão "38.42" viraria 3842.
+    if (s.indexOf(',') >= 0) s = s.replace(/\\./g, '').replace(',', '.');
+    v = parseFloat(s);
+  }
+  if (typeof v !== 'number' || !isFinite(v)) return null;
+  return v;
+}
+
+// Decide se um número veio em FRAÇÃO (0,285) ou em PERCENTUAL (28,5). É o
+// ponto mais perigoso do parser: errar aqui não gera erro nenhum, só entrega
+// uma nota errada com cara de certa.
+//
+// "teto" é o maior valor plausível na escala de fração para AQUELE indicador.
+// "referencia" é o mesmo indicador calculado por um caminho independente
+// (ROE = P/VP ÷ P/L, por exemplo) — quando existe, é ela que resolve a zona
+// ambígua sem adivinhação.
+function _screenerNormPct(v, teto, referencia) {
+  if (v === null || v === undefined) return { valor: null, confianca: 'ausente', escala: null };
+  var comoFracao = v;
+  var comoPct = v / 100;
+  // Acima do teto só a leitura percentual explica o número.
+  if (Math.abs(v) > teto) return { valor: comoPct, confianca: 'alta', escala: 'percentual' };
+  if (referencia !== null && referencia !== undefined && isFinite(referencia)) {
+    var dFracao = Math.abs(comoFracao - referencia);
+    var dPct = Math.abs(comoPct - referencia);
+    var ehFracao = dFracao <= dPct;
+    return { valor: ehFracao ? comoFracao : comoPct, confianca: 'alta', escala: ehFracao ? 'fracao' : 'percentual' };
+  }
+  // Zona ambígua sem segunda fonte: 0,9 tanto pode ser 90% quanto 0,9%.
+  if (Math.abs(v) >= 0.005) return { valor: comoFracao, confianca: 'baixa', escala: 'fracao' };
+  // Perto de zero as duas leituras dão praticamente no mesmo.
+  return { valor: comoFracao, confianca: 'alta', escala: 'fracao' };
+}
+
+// Varre módulo × nome procurando o primeiro campo que existe e é numérico. A
+// brapi põe returnOnEquity em defaultKeyStatistics, o Yahoo põe em
+// financialData, e nada garante que continue assim na próxima versão — então
+// em vez de fixar um caminho, procura em todos. Módulo null = raiz do result.
+// O "origem" volta na resposta de propósito: quando a nota parecer errada, é
+// ele que diz de onde o número saiu.
+function _brapiPega(result, modulos, nomes) {
+  if (!result || typeof result !== 'object') return { valor: null, origem: null };
+  for (var m = 0; m < modulos.length; m++) {
+    var alvo = modulos[m] === null ? result : result[modulos[m]];
+    if (!alvo || typeof alvo !== 'object') continue;
+    for (var n = 0; n < nomes.length; n++) {
+      var num = _screenerNum(alvo[nomes[n]]);
+      if (num === null) continue;
+      return { valor: num, origem: (modulos[m] === null ? 'topo' : modulos[m]) + '.' + nomes[n] };
+    }
+  }
+  return { valor: null, origem: null };
+}
+
+// Nomes possíveis do histórico de proventos. Esta é a parte do payload em que
+// eu tenho MENOS certeza (a brapi está bloqueada no sandbox e não deu pra
+// conferir), por isso a busca aceita vários nomes em cada posição.
+var SCREENER_MODULOS_DIV = ['dividendsData', 'dividends', 'dividendsHistory'];
+var SCREENER_LISTAS_DIV = ['cashDividends', 'cash_dividends', 'cash', 'dividends'];
+var SCREENER_CAMPOS_VALOR_DIV = ['rate', 'value', 'amount', 'paymentValue'];
+var SCREENER_CAMPOS_DATA_DIV = ['paymentDate', 'date', 'lastDatePrior', 'approvedOn'];
+
+// DY derivado: proventos EM DINHEIRO dos últimos 12 meses ÷ preço. É o
+// caminho mais confiável e às vezes o único (campo pronto de dividend yield
+// pode simplesmente não vir no plano contratado), e serve de referência de
+// escala pro campo pronto quando os dois existem.
+//
+// Bonificação em ações e subscrição ficam de fora de propósito: não são
+// dinheiro no bolso, não entram em yield.
+function _screenerDividendos12m(result, preco, agoraMs) {
+  if (!result || preco === null || preco <= 0) return { valor: null, origem: null, total: null };
+  var lista = null;
+  for (var m = 0; m < SCREENER_MODULOS_DIV.length && !lista; m++) {
+    var mod = result[SCREENER_MODULOS_DIV[m]];
+    if (!mod || typeof mod !== 'object') continue;
+    if (Array.isArray(mod)) { lista = mod; break; }
+    for (var l = 0; l < SCREENER_LISTAS_DIV.length; l++) {
+      if (Array.isArray(mod[SCREENER_LISTAS_DIV[l]])) { lista = mod[SCREENER_LISTAS_DIV[l]]; break; }
+    }
+  }
+  if (!Array.isArray(lista) || !lista.length) return { valor: null, origem: null, total: null };
+
+  var inicio = agoraMs - 365 * 24 * 60 * 60 * 1000;
+  var futuroLimite = agoraMs + 90 * 24 * 60 * 60 * 1000;
+  var soma = 0, usados = 0;
+  for (var i = 0; i < lista.length; i++) {
+    var item = lista[i];
+    if (!item || typeof item !== 'object') continue;
+    var valor = null;
+    for (var v = 0; v < SCREENER_CAMPOS_VALOR_DIV.length && valor === null; v++) {
+      valor = _screenerNum(item[SCREENER_CAMPOS_VALOR_DIV[v]]);
+    }
+    if (valor === null || valor <= 0) continue;
+    var quando = null;
+    for (var d = 0; d < SCREENER_CAMPOS_DATA_DIV.length && quando === null; d++) {
+      var bruta = item[SCREENER_CAMPOS_DATA_DIV[d]];
+      if (!bruta) continue;
+      var t = Date.parse(String(bruta));
+      if (!isNaN(t)) quando = t;
+    }
+    // Sem data confiável não dá pra saber se o provento é dos últimos 12
+    // meses — e somar tudo que veio infla o yield de quem tem histórico longo
+    // na resposta. Fora. O mesmo vale pra data absurdamente no futuro.
+    if (quando === null || quando < inicio || quando > futuroLimite) continue;
+    soma += valor;
+    usados++;
+  }
+  if (!usados) return { valor: null, origem: null, total: null };
+  return { valor: soma / preco, origem: 'derivado(proventos 12m: ' + usados + ' pagamentos)', total: soma };
+}
+
+// ── Faixas de pontuação (0 a 5 por indicador) ──────────────────────────────
+// Cada função devolve { pontos, faixa, flag } — ou null quando o valor é
+// implausível. null aqui significa "dado podre, vira N/A e sai do
+// denominador", nunca "nota 0": dado ruim não é empresa ruim.
+//
+// As faixas são calibradas pra bolsa brasileira, não pra americana: a média
+// histórica do Ibovespa gira em torno de P/L 10-12, então 15 aqui já é caro.
+
+function _notaPL(v) {
+  if (v === null || v === undefined) return null;
+  if (v > 200 || v < -500) return null;
+  if (v <= 0) return { pontos: 0, faixa: 'prejuízo nos últimos 12 meses' };
+  // Abaixo de 1 quase nunca é barganha: é lucro não recorrente ou LPA
+  // defasado. Não premiar como se fosse.
+  if (v < 1) return { pontos: 2, faixa: 'abaixo de 1 — provável lucro não recorrente', flag: 'suspeito' };
+  if (v <= 6) return { pontos: 5, faixa: 'até 6 — muito barato' };
+  if (v <= 10) return { pontos: 4, faixa: '6 a 10 — barato' };
+  if (v <= 15) return { pontos: 3, faixa: '10 a 15 — preço justo' };
+  if (v <= 22) return { pontos: 2, faixa: '15 a 22 — caro' };
+  if (v <= 35) return { pontos: 1, faixa: '22 a 35 — muito caro' };
+  return { pontos: 0, faixa: 'acima de 35 — muita expectativa embutida' };
+}
+
+// Recebe FRAÇÃO (0.081 = 8,1% ao ano).
+function _notaDY(v) {
+  if (v === null || v === undefined) return null;
+  // Acima de 40% é erro de escala ou dado podre, não pagadora generosa.
+  if (v < 0 || v > 0.40) return null;
+  if (v === 0) return { pontos: 0, faixa: 'não distribui proventos' };
+  if (v <= 0.02) return { pontos: 1, faixa: 'até 2% ao ano' };
+  if (v <= 0.04) return { pontos: 2, faixa: '2% a 4% ao ano' };
+  if (v <= 0.06) return { pontos: 3, faixa: '4% a 6% ao ano' };
+  if (v <= 0.09) return { pontos: 4, faixa: '6% a 9% ao ano' };
+  if (v <= 0.20) return { pontos: 5, faixa: '9% a 20% ao ano' };
+  // Acima de 20% quase sempre é provento extraordinário ou preço desabando —
+  // a armadilha de yield. Premiar isso seria mandar o usuário pro buraco.
+  return { pontos: 2, faixa: 'acima de 20% — possível armadilha de yield', flag: 'armadilha' };
+}
+
+// Recebe FRAÇÃO (0.285 = 28,5%).
+function _notaROE(v) {
+  if (v === null || v === undefined) return null;
+  if (v <= 0) return { pontos: 0, faixa: 'zero ou negativo — destrói valor do acionista' };
+  if (v <= 0.05) return { pontos: 1, faixa: 'até 5%' };
+  if (v <= 0.10) return { pontos: 2, faixa: '5% a 10%' };
+  if (v <= 0.15) return { pontos: 3, faixa: '10% a 15%' };
+  if (v <= 0.20) return { pontos: 4, faixa: '15% a 20%' };
+  if (v <= 1.00) return { pontos: 5, faixa: '20% a 100% — rentabilidade alta' };
+  // Acima de 100% o patrimônio líquido está perto de zero e infla o índice.
+  // É característica de balanço, não qualidade.
+  return { pontos: 3, faixa: 'acima de 100% — patrimônio pequeno infla o índice', flag: 'inflado' };
+}
+
+// Múltiplo (x). Negativo é LEGÍTIMO: significa caixa maior que dívida.
+function _notaDivEbitda(v) {
+  if (v === null || v === undefined) return null;
+  // Acima de 30x o EBITDA está quase zerado e a razão não significa nada —
+  // N/A é mais honesto que nota 0.
+  if (v > 30) return null;
+  if (v < 0) return { pontos: 5, faixa: 'caixa líquido — caixa maior que a dívida' };
+  if (v <= 1) return { pontos: 5, faixa: 'até 1x' };
+  if (v <= 2) return { pontos: 4, faixa: '1x a 2x' };
+  if (v <= 3) return { pontos: 3, faixa: '2x a 3x' };
+  if (v <= 3.5) return { pontos: 2, faixa: '3x a 3,5x — perto do covenant típico' };
+  if (v <= 4.5) return { pontos: 1, faixa: '3,5x a 4,5x — alavancagem alta' };
+  return { pontos: 0, faixa: 'acima de 4,5x — risco de refinanciamento' };
+}
+
+// Recebe FRAÇÃO (0.213 = 21,3%).
+function _notaMargem(v) {
+  if (v === null || v === undefined) return null;
+  if (v > 1.5 || v < -5) return null;
+  if (v <= 0) return { pontos: 0, faixa: 'negativa — vende e perde dinheiro' };
+  if (v <= 0.05) return { pontos: 1, faixa: 'até 5%' };
+  if (v <= 0.10) return { pontos: 2, faixa: '5% a 10%' };
+  if (v <= 0.15) return { pontos: 3, faixa: '10% a 15%' };
+  if (v <= 0.25) return { pontos: 4, faixa: '15% a 25%' };
+  if (v <= 0.90) return { pontos: 5, faixa: '25% a 90% — margem excepcional' };
+  // Acima de 90% é holding, equivalência patrimonial ou fundo classificado
+  // errado. Não é qualidade operacional.
+  return { pontos: 3, faixa: 'acima de 90% — resultado não operacional', flag: 'nao_operacional' };
+}
+
+// Pesos por indicador, ISOLADOS aqui de propósito: assim viram configuração
+// (por perfil de investidor, por exemplo) sem ninguém precisar entrar no
+// cálculo. Hoje todos valem 1 — sem histórico de qual indicador prevê melhor,
+// peso igual é a hipótese mais honesta, e peso arbitrário só esconderia
+// opinião dentro de um número.
+var SCORE_PESOS = { pl: 1, dy: 1, roe: 1, dividaEbitda: 1, margem: 1 };
+
+// Cada indicador vale de 0 a 5; com os pesos atuais o total fecha em 25.
+var SCORE_NOTA_MAX = 5;
+
+// Abaixo disso a nota não é exibida. Uma nota calculada sobre 1 ou 2
+// indicadores é ruído com aparência de precisão.
+var SCORE_MIN_INDICADORES = 3;
+
+// Metadados dos 5 indicadores — a ordem aqui é a ordem do detalhe na resposta.
+var SCREENER_INDICADORES = [
+  { chave: 'pl',           rotulo: 'P/L',                escala: 'numero',  nota: _notaPL },
+  { chave: 'dy',           rotulo: 'Dividend Yield',     escala: 'fracao',  nota: _notaDY },
+  { chave: 'roe',          rotulo: 'ROE',                escala: 'fracao',  nota: _notaROE },
+  { chave: 'dividaEbitda', rotulo: 'Dívida líq./EBITDA', escala: 'numero',  nota: _notaDivEbitda },
+  { chave: 'margem',       rotulo: 'Margem líquida',     escala: 'fracao',  nota: _notaMargem }
+];
+
+// FUNÇÃO PURA de score. Não lê env, não chama fetch, não olha o relógio, não
+// toca no KV: dá pra copiar pro node e testar com um objeto literal, que é
+// exatamente o ponto.
+//
+// Entrada: indicadores JÁ NORMALIZADOS — pl e dividaEbitda em número puro,
+// dy/roe/margem em FRAÇÃO (0.285 = 28,5%); ausente é null. O campo extra
+// ind.ebitdaNaoPositivo === true diz "EBITDA zero ou negativo", que NÃO é
+// dado faltando: é a empresa sem geração de caixa, e isso é nota 0 de verdade.
+// "motivos" (opcional) explica por que cada ausente está ausente, pra UI
+// conseguir dizer "N/A porque o setor é financeiro" em vez de só "—".
+//
+// ── DECISÃO: INDICADOR AUSENTE SAI DO DENOMINADOR ──
+// Não vira 0 e não vira 5. É a decisão mais importante desta função.
+// Contar ausente como 0 pune buraco de DADO como se fosse fundamento ruim:
+// MXRF11 não tem ROE porque é fundo imobiliário e ITUB4 não tem
+// Dívida/EBITDA porque é banco — nos dois casos zerar jogaria a nota pro
+// fundo e o ranking mentiria. Contar como 5 é pior: premiaria justamente quem
+// tem menos dado, e um papel sem nenhum indicador viraria o melhor da lista.
+// Normalizar pelo que existe mantém a nota comparável, DESDE QUE a cobertura
+// apareça junto — por isso "cobertura" volta na resposta e a nota só é dada
+// com pelo menos SCORE_MIN_INDICADORES indicadores.
+function _screenerScore(ind, motivos) {
+  ind = ind || {};
+  motivos = motivos || {};
+  var detalhes = [];
+  var pontosBrutos = 0;
+  var pontosMaximos = 0;
+  var pesoTotal = 0;
+  var cobertura = 0;
+
+  for (var i = 0; i < SCREENER_INDICADORES.length; i++) {
+    var meta = SCREENER_INDICADORES[i];
+    var peso = SCORE_PESOS[meta.chave];
+    if (peso === undefined || peso === null) peso = 1;
+    pesoTotal += peso;
+
+    var valor = ind[meta.chave];
+    if (valor === undefined) valor = null;
+    // Infinity/NaN vindo de divisão por zero é ausência disfarçada, não valor.
+    if (typeof valor === 'number' && !isFinite(valor)) valor = null;
+    if (valor !== null && typeof valor !== 'number') valor = _screenerNum(valor);
+
+    var nota = null;
+    if (meta.chave === 'dividaEbitda' && ind.ebitdaNaoPositivo === true) {
+      nota = { pontos: 0, faixa: 'EBITDA zero ou negativo — não gera caixa pra pagar dívida nenhuma' };
+      valor = null;
+    } else if (valor !== null) {
+      nota = meta.nota(valor);
+    }
+
+    if (nota === null) {
+      detalhes.push({
+        chave: meta.chave, rotulo: meta.rotulo, escala: meta.escala, peso: peso,
+        disponivel: false, valor: null, pontos: null, pontosMaximos: null,
+        faixa: 'sem dado', flag: null,
+        motivo: motivos[meta.chave] || (valor === null ? 'não veio na resposta da fonte' : 'valor fora de faixa plausível — descartado de propósito')
+      });
+      continue;
+    }
+
+    cobertura++;
+    var ganhos = nota.pontos * peso;
+    var maximo = SCORE_NOTA_MAX * peso;
+    pontosBrutos += ganhos;
+    pontosMaximos += maximo;
+    detalhes.push({
+      chave: meta.chave, rotulo: meta.rotulo, escala: meta.escala, peso: peso,
+      disponivel: true, valor: valor, pontos: ganhos, pontosMaximos: maximo,
+      faixa: nota.faixa, flag: nota.flag || null, motivo: null
+    });
+  }
+
+  var escalaMaxima = SCORE_NOTA_MAX * pesoTotal; // 25 com os pesos atuais
+  var suficiente = cobertura >= SCORE_MIN_INDICADORES;
+  // Regra de três sobre o que existe, trazida de volta pra escala cheia.
+  // Arredonda em uma casa: precisão maior aqui seria falsa, os dados de
+  // entrada não sustentam.
+  var total = pontosMaximos > 0 ? Math.round((pontosBrutos / pontosMaximos) * escalaMaxima * 10) / 10 : null;
+
+  return {
+    total: suficiente ? total : null,
+    escalaMaxima: escalaMaxima,
+    pontosBrutos: pontosBrutos,
+    pontosMaximos: pontosMaximos,
+    cobertura: cobertura,
+    totalIndicadores: SCREENER_INDICADORES.length,
+    minimoIndicadores: SCORE_MIN_INDICADORES,
+    suficiente: suficiente,
+    motivo: suficiente ? null : ('nota não calculada: só ' + cobertura + ' de ' + SCREENER_INDICADORES.length + ' indicadores disponíveis (mínimo ' + SCORE_MIN_INDICADORES + ')'),
+    pesos: SCORE_PESOS,
+    detalhes: detalhes
+  };
+}
+
+// Ajuste de trilha — também PURO. O score de 5 indicadores é de AÇÃO. Rodar
+// ele num FII não dá erro: dá nota ALTA errada, que é bem pior. Fundo
+// imobiliário não tem custo de produção (margem perto de 100% por construção)
+// e costuma ser desalavancado (dívida quase zero), então ganharia dois
+// indicadores de graça e bateria quase toda ação boa da lista. Até existir
+// trilha própria (P/VP, DY, vacância, liquidez), o honesto é mostrar os
+// números e NÃO dar nota.
+function _screenerNotaFinal(score, classe) {
+  if (classe !== 'fii') return Object.assign({ aplicavel: true }, score);
+  return Object.assign({}, score, {
+    aplicavel: false,
+    total: null,
+    suficiente: false,
+    motivo: 'fundo imobiliário — o Finn ainda não pontua fundos. O score de 5 indicadores é de ação e daria nota inflada aqui (margem perto de 100% e dívida quase zero por construção). Compare por P/VP e DY.'
+  });
+}
+
+// ── Classificação do papel ─────────────────────────────────────────────────
+
+function _screenerSetor(result) {
+  var perfil = (result && result.summaryProfile) || null;
+  return String((perfil && perfil.sector) || (result && result.sector) || '').toUpperCase();
+}
+
+function _screenerClasse(ticker, result) {
+  if (SCREENER_FIIS.indexOf(ticker) !== -1) return 'fii';
+  // Rede de segurança pra quando alguém acrescentar um papel em
+  // SCREENER_TICKERS e esquecer de classificar: nome e setor denunciam o
+  // fundo. Só vale pra sufixo 11, pra não confundir com construtora.
+  var nome = String((result && (result.longName || result.shortName)) || '').toUpperCase();
+  var setor = _screenerSetor(result);
+  if (/11$/.test(ticker) && (nome.indexOf('FII') !== -1 || nome.indexOf('IMOB') !== -1 || setor.indexOf('REAL ESTATE') !== -1)) return 'fii';
+  if (SCREENER_UNITS.indexOf(ticker) !== -1) return 'unit';
+  return 'acao';
+}
+
+function _screenerEhFinanceira(ticker, result) {
+  if (SCREENER_FINANCEIRAS.indexOf(ticker) !== -1) return true;
+  return _screenerSetor(result).indexOf('FINANCIAL') !== -1;
+}
+
+// ── Extração e normalização dos indicadores ────────────────────────────────
+// Todo campo é procurado por cadeia de fallback (módulo × nome × derivação),
+// porque não dá pra assumir onde a brapi põe cada coisa nem em que escala —
+// e um campo que sumir numa versão nova não pode derrubar os outros quatro.
+function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs) {
+  var motivos = {};
+  var origens = {};
+  var escalaDuvidosa = [];
+
+  var precoRef = _brapiPega(result, [null, 'price'], ['regularMarketPrice', 'price', 'regularMarketPreviousClose', 'close']);
+  var preco = precoRef.valor;
+
+  // ── P/L ──
+  var pl = _brapiPega(result, [null, 'defaultKeyStatistics', 'summaryDetail'], ['priceEarnings', 'trailingPE', 'priceToEarnings']);
+  if (pl.valor === null && preco !== null) {
+    // Derivação: preço ÷ lucro por ação. Denominador conferido ANTES — LPA
+    // zerado daria Infinity, que é ausência disfarçada de número.
+    var lpa = _brapiPega(result, [null, 'defaultKeyStatistics'], ['earningsPerShare', 'trailingEps', 'epsTrailingTwelveMonths']);
+    if (lpa.valor !== null && lpa.valor !== 0) pl = { valor: preco / lpa.valor, origem: 'derivado(preço ÷ ' + lpa.origem + ')' };
+  }
+  if (pl.valor === null) motivos.pl = 'P/L não veio e não deu pra derivar de preço ÷ LPA';
+  origens.pl = pl.origem;
+
+  // ── P/VP ── não pontua, mas faz dois trabalhos: é O múltiplo de FII, e é o
+  // desempatador de escala do ROE (P/VP ÷ P/L = LPA/VPA = ROE, identidade
+  // contábil exata, com os dois insumos em número puro e sem ambiguidade).
+  var pvp = _brapiPega(result, [null, 'defaultKeyStatistics', 'summaryDetail'], ['priceToBook', 'priceToBookRatio', 'pvp']);
+  if (pvp.valor === null && preco !== null) {
+    var vpa = _brapiPega(result, [null, 'defaultKeyStatistics'], ['bookValue', 'bookValuePerShare']);
+    if (vpa.valor !== null && vpa.valor !== 0) pvp = { valor: preco / vpa.valor, origem: 'derivado(preço ÷ ' + vpa.origem + ')' };
+  }
+  origens.pvp = pvp.origem;
+  // Só vale como referência com lucro positivo — com P/L negativo a razão
+  // troca de sinal e deixaria de casar com o ROE.
+  var roeReferencia = (pvp.valor !== null && pl.valor !== null && pl.valor > 0) ? (pvp.valor / pl.valor) : null;
+
+  // ── ROE ──
+  var roeBruto = _brapiPega(result, ['financialData', 'defaultKeyStatistics', null], ['returnOnEquity', 'roe']);
+  if (roeBruto.valor === null && roeReferencia !== null) {
+    roeBruto = { valor: roeReferencia, origem: 'derivado(P/VP ÷ P/L)' };
+  }
+  var roeNorm = _screenerNormPct(roeBruto.valor, 1.5, roeReferencia);
+  var roe = roeNorm.valor;
+  var roeOrigem = roeBruto.origem;
+  if (roeBruto.valor === null) {
+    motivos.roe = 'ROE não veio em nenhum módulo e não deu pra derivar de P/VP ÷ P/L';
+  } else if (roeNorm.confianca === 'baixa') {
+    // Regra dura, e a mais importante deste arquivo: escala duvidosa vira
+    // N/A. Um ROE real de 0,9% lido como 90% ganharia nota 5 — perder um
+    // indicador é infinitamente mais barato que dar nota máxima pra empresa
+    // ruim num app de investimento em beta, que o usuário vai conferir em
+    // outro site no primeiro papel.
+    escalaDuvidosa.push('roe');
+    motivos.roe = 'escala ambígua (fração ou percentual) e sem segunda fonte pra desempatar — descartado de propósito';
+    roe = null;
+    roeOrigem = null;
+  }
+  origens.roe = roeOrigem;
+
+  // ── DY ── o mais provável de faltar: o campo pronto depende do plano.
+  var divs = _screenerDividendos12m(result, preco, agoraMs);
+  var dyBruto = _brapiPega(result, [null, 'summaryDetail', 'defaultKeyStatistics'], ['dividendYield', 'trailingAnnualDividendYield', 'yield']);
+  var dyNorm = _screenerNormPct(dyBruto.valor, 0.40, divs.valor);
+  var dy = null, dyOrigem = null;
+  if (dyBruto.valor !== null && dyNorm.confianca !== 'baixa') {
+    dy = dyNorm.valor;
+    dyOrigem = dyBruto.origem + (dyNorm.escala === 'percentual' ? ' (lido como percentual)' : '');
+  } else if (divs.valor !== null) {
+    dy = divs.valor;
+    dyOrigem = divs.origem;
+  } else if (dyBruto.valor !== null) {
+    escalaDuvidosa.push('dy');
+    motivos.dy = 'escala ambígua (fração ou percentual) e sem histórico de proventos pra desempatar — descartado de propósito';
+  } else {
+    motivos.dy = 'nem campo pronto de dividend yield nem histórico de proventos vieram na resposta';
+  }
+  origens.dy = dyOrigem;
+
+  // ── Margem líquida ──
+  // NUNCA cair em grossMargins/operatingMargins/ebitdaMargins como
+  // substituto: medem outra coisa, são sistematicamente maiores e inflariam a
+  // nota sem ninguém perceber.
+  var receita = _brapiPega(result, ['financialData', 'incomeStatement', null], ['totalRevenue', 'revenue']);
+  var lucro = _brapiPega(result, ['defaultKeyStatistics', 'financialData', null], ['netIncomeToCommon', 'netIncome']);
+  var margemReferencia = (receita.valor !== null && receita.valor !== 0 && lucro.valor !== null) ? (lucro.valor / receita.valor) : null;
+  var margemBruta = _brapiPega(result, ['financialData', 'defaultKeyStatistics', null], ['profitMargins', 'netMargin']);
+  var margemNorm = _screenerNormPct(margemBruta.valor, 1.5, margemReferencia);
+  var margem = null, margemOrigem = null;
+  if (margemBruta.valor !== null && margemNorm.confianca !== 'baixa') {
+    margem = margemNorm.valor;
+    margemOrigem = margemBruta.origem + (margemNorm.escala === 'percentual' ? ' (lido como percentual)' : '');
+  } else if (margemReferencia !== null) {
+    margem = margemReferencia;
+    margemOrigem = 'derivado(lucro líquido ÷ receita)';
+  } else if (margemBruta.valor !== null) {
+    escalaDuvidosa.push('margem');
+    motivos.margem = 'escala ambígua (fração ou percentual) e sem lucro/receita pra desempatar — descartado de propósito';
+  } else {
+    motivos.margem = 'margem líquida não veio e não deu pra derivar de lucro ÷ receita';
+  }
+  origens.margem = margemOrigem;
+
+  // ── Dívida líquida / EBITDA ──
+  // Não existe pronto em lugar nenhum (nem Yahoo nem brapi têm debtToEbitda):
+  // é sempre derivado. E debtToEquity NÃO serve de substituto — mede
+  // alavancagem sobre patrimônio, não sobre geração de caixa, e a conversão
+  // entre os dois simplesmente não existe.
+  var dividaEbitda = null, dividaOrigem = null, ebitdaNaoPositivo = false;
+  if (classe === 'fii') {
+    motivos.dividaEbitda = 'fundo imobiliário — o indicador não se aplica (a maioria é desalavancada e ganharia nota 5 de graça)';
+  } else if (ehFinanceira) {
+    motivos.dividaEbitda = 'banco, seguradora ou bolsa — dívida é matéria-prima do negócio e EBITDA não é métrica do setor';
+  } else {
+    var divida = _brapiPega(result, ['financialData', 'balanceSheet', null], ['totalDebt']);
+    var caixa = _brapiPega(result, ['financialData', 'balanceSheet', null], ['totalCash', 'cash']);
+    var ebitda = _brapiPega(result, ['financialData', 'defaultKeyStatistics', null], ['ebitda', 'EBITDA']);
+    var ev = _brapiPega(result, ['defaultKeyStatistics', null], ['enterpriseValue']);
+    var evEbitda = _brapiPega(result, ['defaultKeyStatistics', null], ['enterpriseToEbitda']);
+    var valorMercado = _brapiPega(result, [null, 'defaultKeyStatistics', 'price'], ['marketCap', 'marketCapitalization']);
+
+    // Caminho alternativo via Enterprise Value: EBITDA = EV ÷ (EV/EBITDA).
+    // É álgebra exata, e salva quando financialData não vem no plano.
+    if (ebitda.valor === null && ev.valor !== null && evEbitda.valor !== null && evEbitda.valor !== 0) {
+      ebitda = { valor: ev.valor / evEbitda.valor, origem: 'derivado(EV ÷ EV/EBITDA)' };
+    }
+
+    if (ebitda.valor !== null && ebitda.valor <= 0) {
+      // Isso não é dado faltando: é a empresa sem geração de caixa nenhuma.
+      // Sinalizado à parte pro score dar nota 0 em vez de N/A.
+      ebitdaNaoPositivo = true;
+      dividaOrigem = ebitda.origem;
+    } else if (ebitda.valor !== null && divida.valor !== null) {
+      var liquida = caixa.valor !== null ? (divida.valor - caixa.valor) : divida.valor;
+      dividaEbitda = liquida / ebitda.valor;
+      // Sem totalCash sobra a dívida BRUTA: pontua igual, mas é conservador
+      // (subestima quem tem caixa grande) — por isso fica escrito na origem,
+      // pra tela poder avisar.
+      dividaOrigem = (caixa.valor !== null ? 'dívida líquida' : 'dívida BRUTA, sem totalCash') + ' ÷ ' + ebitda.origem;
+    } else if (ebitda.valor !== null && ev.valor !== null && valorMercado.valor !== null) {
+      // Dívida líquida ≈ EV − valor de mercado (aproxima: ignora minoritários).
+      dividaEbitda = (ev.valor - valorMercado.valor) / ebitda.valor;
+      dividaOrigem = 'derivado((EV − valor de mercado) ÷ EBITDA)';
+    } else {
+      motivos.dividaEbitda = 'dívida e/ou EBITDA não vieram e não deu pra derivar por Enterprise Value';
+    }
+  }
+  origens.dividaEbitda = dividaOrigem;
+
+  // FII não tem ROE nem margem no sentido de empresa: o "patrimônio" é a
+  // carteira de imóveis e não há custo de produção, então a margem fica perto
+  // de 100% por construção. São números que existem matematicamente e não
+  // significam nada — N/A explícito é mais honesto.
+  if (classe === 'fii') {
+    roe = null;
+    origens.roe = null;
+    motivos.roe = 'fundo imobiliário — ROE de empresa não se aplica';
+    margem = null;
+    origens.margem = null;
+    motivos.margem = 'fundo imobiliário — margem fica perto de 100% por construção, não mede qualidade';
+  }
+
+  return {
+    preco: preco,
+    pvp: pvp.valor,
+    proventos12m: divs.total,
+    valores: {
+      pl: pl.valor, dy: dy, roe: roe, dividaEbitda: dividaEbitda, margem: margem,
+      ebitdaNaoPositivo: ebitdaNaoPositivo
+    },
+    motivos: motivos,
+    origens: origens,
+    escalaDuvidosa: escalaDuvidosa
+  };
+}
+
+// ── Chamada à brapi ────────────────────────────────────────────────────────
+
+// O token NUNCA pode sair daqui — nem pro cliente, nem pro log do Worker.
+// Mensagem de erro de API costuma ecoar a URL chamada, e a URL da segunda
+// tentativa carrega ?token=. "wrangler tail" é lido em tela compartilhada.
+function _screenerRedige(texto, token) {
+  var t = String(texto || '');
+  if (token) t = t.split(String(token)).join('***');
+  // Rede final: qualquer coisa com cara de token na query, mesmo que o valor
+  // não seja exatamente o secret (truncado no meio da mensagem, por exemplo).
+  return t.replace(/([?&](?:token|api_?key)=)[^&\\s"']+/gi, '$1***');
+}
+
+// Chamada única à brapi, com TODO modo de falha traduzido pra um formato
+// interno { ok, motivo, status, result }. Quem chama nunca vê status nem
+// corpo do fornecedor: o repo já segue isso (ver _serverError) porque
+// mensagem de terceiro carrega formato interno e nome de campo — não ajuda o
+// usuário e ajuda quem está sondando.
+async function _brapiBusca(env, ticker) {
+  // encodeURIComponent aqui é redundante (o ticker já saiu da allowlist), mas
+  // é a mesma disciplina de _pluggyTx: validar o formato e ainda assim
+  // codificar antes de concatenar em URL de terceiro.
+  var url = 'https://brapi.dev/api/quote/' + encodeURIComponent(ticker) +
+    '?modules=defaultKeyStatistics,financialData,summaryProfile&fundamental=true&dividends=true';
+
+  // O token vai no HEADER, não na query: assim ele não entra na URL, o que
+  // remove a principal via de vazamento (provedor que ecoa a URL chamada na
+  // mensagem de erro). A brapi também aceita ?token=, e é pra isso que existe
+  // a segunda tentativa — se o header for recusado, repete uma vez com a
+  // query, e aí a redação acima entra em ação.
+  var tentativas = [
+    { url: url, headers: { Authorization: 'Bearer ' + env.BRAPI_TOKEN, Accept: 'application/json' } },
+    { url: url + '&token=' + encodeURIComponent(env.BRAPI_TOKEN), headers: { Accept: 'application/json' } }
+  ];
+
+  var ultimoStatus = 0;
+  for (var t = 0; t < tentativas.length; t++) {
+    var resp;
+    try {
+      var opcoes = { headers: tentativas[t].headers };
+      // AbortSignal.timeout pode não existir em runtime antigo — se faltar, a
+      // rota continua funcionando, só sem o corte de 8s.
+      if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opcoes.signal = AbortSignal.timeout(SCREENER_TIMEOUT_MS);
+      resp = await fetch(tentativas[t].url, opcoes);
+    } catch (e) {
+      console.error('[screener] falha de rede na brapi:', _screenerRedige(String((e && e.message) || e), env.BRAPI_TOKEN));
+      return { ok: false, motivo: 'rede', status: 0 };
+    }
+    ultimoStatus = resp.status;
+
+    var texto = '';
+    try { texto = await resp.text(); } catch (e2) { texto = ''; }
+    // A brapi fica atrás de CDN: em incidente vem página HTML de erro, e aí
+    // resp.json() lançaria. Ler texto e tentar o parse é o que evita isso.
+    var corpo = null;
+    try { corpo = JSON.parse(texto); } catch (e3) { corpo = null; }
+
+    if (resp.status === 401 || resp.status === 403) {
+      // Primeira recusa pode ser só "esta versão não aceita o header" — tenta
+      // a forma de query antes de desistir. A segunda é token errado mesmo.
+      if (t === 0) continue;
+      console.error('[screener] brapi recusou o token:', resp.status, _screenerRedige(texto.slice(0, 200), env.BRAPI_TOKEN));
+      return { ok: false, motivo: 'token_recusado', status: resp.status };
+    }
+    if (resp.status === 429) {
+      var retry = parseInt(resp.headers.get('Retry-After') || '0', 10) || 60;
+      return { ok: false, motivo: 'rate_limit_fornecedor', status: 429, retryAfter: retry };
+    }
+    if (resp.status === 402) return { ok: false, motivo: 'plano', status: 402 };
+    if (resp.status === 404) return { ok: false, motivo: 'nao_encontrado', status: 404 };
+    if (!resp.ok || corpo === null || typeof corpo !== 'object') {
+      console.error('[screener] resposta inesperada da brapi:', resp.status, _screenerRedige(texto.slice(0, 200), env.BRAPI_TOKEN));
+      return { ok: false, motivo: 'fornecedor', status: resp.status };
+    }
+    // 200 com corpo de erro também acontece — plano/limite costumam vir assim.
+    if (corpo.error) {
+      var msgErro = String(corpo.message || corpo.error || '').toLowerCase();
+      console.error('[screener] brapi devolveu erro no corpo:', _screenerRedige(msgErro.slice(0, 200), env.BRAPI_TOKEN));
+      if (msgErro.indexOf('token') !== -1) return { ok: false, motivo: 'token_recusado', status: resp.status };
+      if (msgErro.indexOf('plan') !== -1 || msgErro.indexOf('plano') !== -1) return { ok: false, motivo: 'plano', status: resp.status };
+      if (msgErro.indexOf('limit') !== -1 || msgErro.indexOf('rate') !== -1) return { ok: false, motivo: 'rate_limit_fornecedor', status: resp.status, retryAfter: 60 };
+      return { ok: false, motivo: 'nao_encontrado', status: resp.status };
+    }
+    if (!Array.isArray(corpo.results) || !corpo.results.length) {
+      return { ok: false, motivo: 'nao_encontrado', status: resp.status };
+    }
+    // Casar por symbol, NUNCA por índice: se a API devolver a lista fora de
+    // ordem ou sem um dos papéis pedidos, o índice desalinha e PETR4
+    // receberia os fundamentos da VALE3 — o pior bug possível num app de
+    // investimento, e um que ninguém percebe olhando a tela.
+    var achado = null;
+    for (var r = 0; r < corpo.results.length; r++) {
+      var it = corpo.results[r];
+      if (it && String(it.symbol || '').toUpperCase() === ticker) { achado = it; break; }
+    }
+    if (!achado) return { ok: false, motivo: 'nao_encontrado', status: resp.status };
+    return { ok: true, result: achado, status: resp.status };
+  }
+  return { ok: false, motivo: 'fornecedor', status: ultimoStatus };
+}
+
+// ── Cache: Cache API, não KV ───────────────────────────────────────────────
+// Escolha deliberada, e as duas serviriam. O que decidiu:
+//   * KV tem cota de ESCRITA (1.000/dia no plano free) e este projeto JÁ
+//     esbarra nela — SEC_LOG_MAX_DIA existe exatamente por isso. Cachear
+//     cotação no KV somaria uma escrita por papel a cada 20 min, competindo
+//     pela mesma cota com o log de segurança, as inscrições de push, o índice
+//     do Instagram e o próprio rate limit.
+//   * A Cache API não consome cota nenhuma e o TTL sai de graça no
+//     Cache-Control.
+// O preço é que a Cache API é POR DATA CENTER: acesso vindo de outro ponto do
+// país erra o cache e chama a brapi de novo. Pra um screener admin-only, com
+// universo fechado de papéis, isso é irrelevante perto de brigar pela cota do
+// KV — que é o recurso escasso aqui.
+//
+// A chave é POR TICKER (nunca por usuário nem por requisição), então o custo
+// total é limitado pelo tamanho de SCREENER_TICKERS, não pelo tráfego.
+
+// A Cache API do Worker é escopada na zona, então a chave usa o host da
+// própria requisição. O caminho /__cache/ não é rota do Worker: uma
+// requisição real a ele cai no 404 de caminho desconhecido lá embaixo, então
+// nada do que está guardado aqui fica acessível pela web.
+function _screenerCacheKey(request, ticker) {
+  var u = new URL(request.url);
+  return new Request(u.origin + '/__cache/screener/' + ticker, { method: 'GET' });
+}
+
+async function _screenerCacheLe(request, ticker) {
+  try {
+    if (typeof caches === 'undefined' || !caches.default) return null;
+    var hit = await caches.default.match(_screenerCacheKey(request, ticker));
+    if (!hit) return null;
+    var guardado = await hit.json();
+    if (!guardado || !guardado.obtidoEm || !guardado.cru) return null;
+    return guardado;
+  } catch (e) {
+    // Cache é otimização: falhar aqui nunca pode derrubar a rota.
+    return null;
+  }
+}
+
+// Guarda o JSON CRU da brapi, não o normalizado. Assim, quando a heurística
+// de escala ou a tabela de pontuação mudar, o cache não precisa ser
+// invalidado — a normalização acontece toda vez, na leitura.
+function _screenerCacheGrava(request, ticker, cru, ctx) {
+  try {
+    if (typeof caches === 'undefined' || !caches.default) return;
+    var corpo = JSON.stringify({ obtidoEm: new Date().toISOString(), cru: cru });
+    var resp = new Response(corpo, {
+      headers: {
+        'Content-Type': 'application/json',
+        // O registro VIVE bem mais que a janela de frescor: dentro dos 20 min
+        // é servido normalmente, depois disso vira reserva pra quando a brapi
+        // falhar. Quem decide se está fresco é o obtidoEm gravado no corpo.
+        'Cache-Control': 'public, max-age=' + SCREENER_CACHE_STALE_TTL_SEG
+      }
+    });
+    var p = caches.default.put(_screenerCacheKey(request, ticker), resp);
+    if (ctx && ctx.waitUntil) ctx.waitUntil(p);
+    else p.catch(function () {});
+  } catch (e) { /* idem: cache nunca derruba a rota */ }
+}
+
+// ── Respostas ──────────────────────────────────────────────────────────────
+
+// Traduz a falha da brapi em algo que dá pra mostrar na tela, sem contar nada
+// da arquitetura. "token recusado" vira mensagem genérica de propósito: não é
+// problema de quem está usando o app, e a informação só serve pra quem sonda.
+function _screenerErro(cors, ticker, busca) {
+  var mapa = {
+    nao_encontrado: { status: 404, tipo: 'nao_encontrado', msg: 'Não achamos o papel ' + ticker + ' na B3 agora.' },
+    plano: { status: 503, tipo: 'fonte_limitada', msg: 'Os indicadores completos precisam de um plano de dados que ainda não temos.' },
+    rate_limit_fornecedor: { status: 429, tipo: 'muitas_consultas', msg: 'Muita consulta de mercado agora. Tente de novo em instantes.' },
+    token_recusado: { status: 503, tipo: 'indisponivel', msg: 'O screener está indisponível no momento.' },
+    rede: { status: 504, tipo: 'indisponivel', msg: 'Não conseguimos falar com a fonte de cotações agora.' }
+  };
+  var e = mapa[busca.motivo] || { status: 502, tipo: 'indisponivel', msg: 'Não conseguimos carregar as cotações agora.' };
+  var h = e.status === 429 ? Object.assign({}, cors, { 'Retry-After': String(busca.retryAfter || 60) }) : cors;
+  return new Response(JSON.stringify({
+    ok: false, ticker: ticker,
+    erro: { tipo: e.tipo, mensagem: e.msg },
+    aviso: SCREENER_AVISO, natureza: 'dados_publicos_mercado'
+  }), { status: e.status, headers: h });
+}
+
+function _screenerResposta(cors, ticker, cru, cache, agoraMs) {
+  var classe = _screenerClasse(ticker, cru);
+  var financeira = _screenerEhFinanceira(ticker, cru);
+  var ind = _screenerIndicadores(ticker, cru, classe, financeira, agoraMs);
+  var nota = _screenerNotaFinal(_screenerScore(ind.valores, ind.motivos), classe);
+
+  // Distinguir "o plano não libera o módulo" de "a empresa não tem o dado"
+  // muda a mensagem inteira da tela — um é problema nosso, o outro não.
+  var modulosAusentes = [];
+  if (!cru || !cru.defaultKeyStatistics) modulosAusentes.push('defaultKeyStatistics');
+  if (!cru || !cru.financialData) modulosAusentes.push('financialData');
+  if (!cru || !cru.summaryProfile) modulosAusentes.push('summaryProfile');
+
+  // Único monitor automático contra "a brapi mudou a escala numa versão
+  // nova": aparece no wrangler tail e no painel de logs.
+  if (ind.escalaDuvidosa.length) {
+    console.error('[screener] escala ambígua em ' + ticker + ': ' + ind.escalaDuvidosa.join(', ') + ' — indicadores descartados');
+  }
+
+  // logourl vira src="" lá no app. Atributo escapado NÃO basta se o esquema
+  // for javascript: — por isso só passa https.
+  var logo = String((cru && cru.logourl) || '');
+  if (logo.slice(0, 8) !== 'https://') logo = null;
+
+  // Nome vem de terceiro e vai pro innerHTML do app depois de escapeHtml():
+  // o corte de tamanho aqui é só pra um campo absurdo não virar payload.
+  var nome = String((cru && (cru.longName || cru.shortName)) || ticker).slice(0, 120);
+
+  return new Response(JSON.stringify({
+    ok: true,
+    ticker: ticker,
+    classe: classe,
+    setorFinanceiro: financeira,
+    nome: nome,
+    nomeCurto: cru && cru.shortName ? String(cru.shortName).slice(0, 60) : null,
+    moeda: cru && cru.currency ? String(cru.currency).slice(0, 8) : 'BRL',
+    logo: logo,
+    preco: ind.preco,
+    variacaoPercent: _screenerNum(cru && (cru.regularMarketChangePercent !== undefined ? cru.regularMarketChangePercent : cru.changePercent)),
+    precoAtualizadoEm: (cru && (cru.regularMarketTime || cru.updatedAt)) || null,
+    pvp: ind.pvp,
+    proventos12m: ind.proventos12m,
+    // Valores já normalizados. A escala vai escrita junto de propósito: sem
+    // isso o frontend teria que adivinhar se multiplica por 100 ou não — e
+    // adivinhar escala é exatamente o bug que este parser existe pra evitar.
+    indicadores: {
+      pl: ind.valores.pl,
+      dy: ind.valores.dy,
+      roe: ind.valores.roe,
+      dividaEbitda: ind.valores.dividaEbitda,
+      margem: ind.valores.margem,
+      escala: 'dy, roe e margem em FRAÇÃO (0.285 = 28,5%); pl e dividaEbitda em número puro'
+    },
+    // De onde saiu cada número. Quando a nota parecer errada, é por aqui que
+    // se descobre o porquê sem precisar reproduzir a chamada.
+    origens: ind.origens,
+    nota: nota,
+    cache: {
+      hit: !!cache.hit,
+      idadeSegundos: cache.idadeSegundos === null || cache.idadeSegundos === undefined ? 0 : cache.idadeSegundos,
+      ttlSegundos: SCREENER_CACHE_TTL_SEG,
+      stale: !!cache.stale,
+      motivo: cache.motivo || null,
+      fonte: cache.hit ? 'cache' : 'brapi'
+    },
+    diagnostico: {
+      modulosAusentes: modulosAusentes,
+      escalaDuvidosa: ind.escalaDuvidosa,
+      ebitdaNaoPositivo: ind.valores.ebitdaNaoPositivo
+    },
+    aviso: SCREENER_AVISO,
+    natureza: 'dados_publicos_mercado',
+    naoERecomendacao: true
+  }), { headers: cors });
+}
+
+// GET /api/stocks/:ticker — credenciais em HEADER, igual às outras rotas
+// admin GET (Authorization: Bearer <access_token> + X-Admin-Password).
+// Fica restrito à conta master enquanto o screener é experimento: cada
+// chamada consome cota da brapi, e liberar pra todo mundo em beta antes de
+// saber o custo real é como o teto do log de segurança já ensinou.
+async function _screenerAcao(request, env, ctx, tickerBruto) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    // O método é conferido AQUI, e não no if de registro da rota, de
+    // propósito: se o if exigisse GET, um POST cairia no 404 de caminho
+    // desconhecido lá embaixo — resposta enganosa pra quem chama e, pior,
+    // duas escritas no KV por tentativa no log de intrusão.
+    if (request.method !== 'GET') {
+      return new Response(JSON.stringify({ error: 'método não permitido — use GET' }), {
+        status: 405, headers: Object.assign({}, cors, { Allow: 'GET, OPTIONS' })
+      });
+    }
+
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    // Allowlist em dois passos: formato primeiro, pertencimento depois. E
+    // daqui pra frente usa o elemento DA LISTA — a URL da brapi só pode ser
+    // montada com constante nossa, nunca com a string que veio do cliente.
+    var candidato = String(tickerBruto || '').toUpperCase();
+    if (!/^[A-Z0-9]{4,6}$/.test(candidato)) {
+      return new Response(JSON.stringify({ error: 'ticker inválido' }), { status: 400, headers: cors });
+    }
+    var idx = SCREENER_TICKERS.indexOf(candidato);
+    if (idx === -1) {
+      return new Response(JSON.stringify({
+        error: 'ticker fora da lista do screener',
+        ticker: candidato,
+        disponiveis: SCREENER_TICKERS
+      }), { status: 400, headers: cors });
+    }
+    var ticker = SCREENER_TICKERS[idx];
+
+    if (!env.BRAPI_TOKEN) {
+      // Mesmo espírito do IG_ACCESS_TOKEN: sem a secret o recurso não tenta
+      // nada e diz claramente o que falta, em vez de estourar. 503 (e não
+      // 200) porque o app precisa distinguir "não configurado" de "papel sem
+      // dado" — é o mesmo status que a rota /ai usa pra ANTHROPIC_API_KEY.
+      return new Response(JSON.stringify({
+        ok: false, configurado: false, skipped: true, ticker: ticker,
+        erro: { tipo: 'nao_configurado', mensagem: 'O screener ainda não está ligado neste ambiente.' },
+        motivo: 'BRAPI_TOKEN não configurado — ver o bloco [vars] do wrangler.toml',
+        aviso: SCREENER_AVISO, natureza: 'dados_publicos_mercado'
+      }), { status: 503, headers: cors });
+    }
+
+    var agora = Date.now();
+    var guardado = await _screenerCacheLe(request, ticker);
+    var idade = null;
+    if (guardado) {
+      var nasceu = Date.parse(guardado.obtidoEm);
+      idade = isFinite(nasceu) ? Math.max(0, Math.round((agora - nasceu) / 1000)) : null;
+    }
+    if (guardado && idade !== null && idade <= SCREENER_CACHE_TTL_SEG) {
+      return _screenerResposta(cors, ticker, guardado.cru, { hit: true, idadeSegundos: idade, stale: false }, agora);
+    }
+
+    // Rate limit SÓ antes de sair pra rede. O que precisa de teto é a chamada
+    // externa (cota da brapi, latência, tempo de CPU), não a leitura do
+    // cache — e contar cache hit custaria uma escrita no KV POR REQUISIÇÃO,
+    // justamente o recurso que este projeto economiza. Com isso, uma tela que
+    // carrega a lista inteira fria cabe na janela, e um refresh em loop bate
+    // no teto sem gerar 30 chamadas externas a cada vez.
+    var rl = await _rateLimit(env, 'screener', authUser.id, SCREENER_RL_LIMITE, SCREENER_RL_JANELA_SEG);
+    if (!rl.ok) {
+      // Com registro vencido na mão, servir o velho com a idade estampada é
+      // melhor que devolver 429 seco e deixar a tela vazia.
+      if (guardado) return _screenerResposta(cors, ticker, guardado.cru, { hit: true, idadeSegundos: idade, stale: true, motivo: 'limite de consultas atingido — mostrando o último dado guardado' }, agora);
+      return _tooManyRequests(cors, rl.retryAfter, 'muitas consultas de mercado seguidas, espere um pouco');
+    }
+
+    var busca = await _brapiBusca(env, ticker);
+    if (!busca.ok) {
+      // Stale-while-error: 429/5xx/timeout do fornecedor não precisa virar
+      // tela vazia se existe dado guardado, mesmo vencido.
+      if (guardado) return _screenerResposta(cors, ticker, guardado.cru, { hit: true, idadeSegundos: idade, stale: true, motivo: 'fonte indisponível agora — mostrando o último dado guardado' }, agora);
+      return _screenerErro(cors, ticker, busca);
+    }
+
+    _screenerCacheGrava(request, ticker, busca.result, ctx);
+    return _screenerResposta(cors, ticker, busca.result, { hit: false, idadeSegundos: 0, stale: false }, agora);
+  } catch (e) {
+    return _serverError(cors, e, '_screenerAcao');
+  }
+}
 `;
 
 const worker = `${pluggyFns}
@@ -2105,6 +3086,19 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/analytics' && request.method === 'GET') {
       return _adminAnalytics(request, env);
+    }
+
+    // ── Screener de ações (dados públicos de mercado) — só a conta master ──
+    // Casa por regex porque o ticker vem no caminho. Duas coisas de propósito:
+    //  1. o método NÃO é conferido aqui — se fosse, um POST não daria 405, ele
+    //     cairia no 404 de caminho desconhecido lá embaixo e ainda geraria
+    //     evento no log de intrusão (2 escritas no KV por tentativa). Quem
+    //     responde 405 é o próprio _screenerAcao;
+    //  2. este if PRECISA continuar acima do 404 de caminho desconhecido —
+    //     registrado depois dele, a rota simplesmente nunca é alcançada.
+    var screenerMatch = url.pathname.match(/^\\/api\\/stocks\\/([A-Za-z0-9]{4,6})$/);
+    if (screenerMatch) {
+      return _screenerAcao(request, env, ctx, screenerMatch[1]);
     }
 
     // ── PWA Manifest ──

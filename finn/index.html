@@ -4335,6 +4335,17 @@ function scrNum(v){
   return v;
 }
 
+// Primeiro campo da lista que seja texto de verdade. O padrão
+// {error:true, message:"..."} é comum em API financeira: pegar o "error"
+// booleano deixaria a linha com a mensagem genérica em vez do motivo real.
+function screenerPrimeiroTexto(body, names){
+  for(var i = 0; i < names.length; i++){
+    var v = scrCampo(body, [names[i]]);
+    if(typeof v === "string" && v) return v;
+  }
+  return "";
+}
+
 function scrChaveNorm(s){
   return String(s === null || s === undefined ? "" : s).toLowerCase().replace(/[^a-z0-9]/g, "");
 }
@@ -4413,9 +4424,9 @@ function screenerLinhaVazia(ticker){
 // backend vai mandar; "token inválido" de propósito não cai aqui (exige
 // também uma palavra de ausência).
 function screenerTokenAusente(status, body){
-  var codigo = scrCampo(body, ["code","codigo","error_code","erro_code"]);
-  var msg = scrCampo(body, ["error","erro","message","mensagem","detail","detalhe"]);
-  var alvo = (String(typeof codigo === "string" ? codigo : "") + " " + String(typeof msg === "string" ? msg : "")).toLowerCase();
+  var codigo = screenerPrimeiroTexto(body, ["code","codigo","error_code","erro_code"]);
+  var msg = screenerPrimeiroTexto(body, ["error","erro","message","mensagem","detail","detalhe"]);
+  var alvo = (codigo + " " + msg).toLowerCase();
   if(alvo.indexOf("brapi_token") >= 0 || alvo.indexOf("token_missing") >= 0 || alvo.indexOf("missing_token") >= 0) return true;
   if(alvo.indexOf("token") < 0) return false;
   return alvo.indexOf("configurad") >= 0 || alvo.indexOf("ausente") >= 0 ||
@@ -4484,10 +4495,10 @@ function screenerLinha(ticker, status, body){
   }
 
   var erroCampo = scrCampo(body, ["error","erro"]);
-  var msgErro = scrCampo(body, ["error","erro","message","mensagem","detail","detalhe"]);
+  var msgErro = screenerPrimeiroTexto(body, ["error","erro","message","mensagem","detail","detalhe","motivo"]);
   var falhou = status !== 200 || body.ok === false || erroCampo === true || (typeof erroCampo === "string" && erroCampo !== "");
   if(falhou){
-    linha.erro = (typeof msgErro === "string" && msgErro) ? msgErro : ("Não consegui buscar (erro " + status + ").");
+    linha.erro = msgErro || (status === 200 ? "O servidor não conseguiu buscar este papel." : ("Não consegui buscar (erro " + status + ")."));
     return linha;
   }
 

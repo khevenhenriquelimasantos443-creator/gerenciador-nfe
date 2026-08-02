@@ -35,6 +35,28 @@ compatibility_date = "2024-01-01"
 #     4. O ID numérico da conta aparece do lado do nome dela, na mesma
 #        linha de "Gerar token" — esse é o IG_BUSINESS_ACCOUNT_ID.
 #   Sem os dois configurados, a publicação manual só faz log e não tenta nada.
+#
+# BRAPI_TOKEN — screener de ações (GET /api/stocks/:ticker). Cotação e
+#   indicadores públicos de empresas da B3, vindos da brapi.dev. São DADOS DE
+#   MERCADO: não têm nenhuma relação com Open Finance, Pluggy ou a conta
+#   bancária de ninguém — a própria resposta da rota carrega esse aviso.
+#   Como obter:
+#     1. Criar conta em brapi.dev (tem plano grátis).
+#     2. Painel → "Meus tokens" → copiar o token.
+#     3. wrangler secret put BRAPI_TOKEN  (ou dashboard da Cloudflare →
+#        Workers & Pages → finn-app → Settings → Variables → Encrypt).
+#   Sem essa secret configurada, a rota NÃO quebra: responde 503 com
+#   { erro: { tipo: 'nao_configurado' } } dizendo que o screener não está
+#   ligado neste ambiente. O resto do app segue normal — nenhuma outra rota
+#   depende dela.
+#   O token só existe no Worker, nunca no frontend: finn/index.html é servido
+#   a qualquer um sem autenticação, então uma chave lá seria pública. E a CSP
+#   do app só libera connect-src pra 'self', Supabase e jsdelivr, ou seja, o
+#   navegador nem conseguiria falar com brapi.dev direto.
+#   O plano grátis da brapi pode não liberar os módulos de fundamentos
+#   (defaultKeyStatistics/financialData). Nesse caso a rota continua
+#   respondendo com preço, nome e variação, e o campo
+#   diagnostico.modulosAusentes diz o que faltou.
 
 # ─────────────────────────────────────────────
 #  Notificações push / assinaturas:
