@@ -1623,6 +1623,16 @@ var SCREENER_CACHE_STALE_TTL_SEG = 6 * 60 * 60;
 
 // Uma chamada pendurada consome o tempo de CPU do request inteiro no Worker.
 var SCREENER_TIMEOUT_MS = 8000;
+// Pausa entre chamadas sucessivas à brapi dentro de UM carregamento de lote.
+// Sem isso, 15 requisições disparadas de fio a pinho tropeçam no rate limit
+// do PRÓPRIO fornecedor — visto na prática: de 15 papéis, só 4 vieram na
+// primeira versão sem pausa. 350ms × 14 intervalos soma ~5s no pior caso, que
+// é aceitável pra uma tela que já mostra progresso.
+var SCREENER_ESPACO_MS = 350;
+// Teto da espera de retry em cima do Retry-After que o fornecedor manda —
+// existe pra um Retry-After abusivo (ou mal formatado) não travar o request
+// inteiro esperando.
+var SCREENER_RETRY_MAX_MS = 4000;
 
 // Teto por conta e por janela, contando SÓ as chamadas que realmente saem pra
 // brapi (ver _screenerAcao). A lista acima inteira, com cache frio, cabe numa
@@ -2445,15 +2455,25 @@ function _screenerCacheGrava(request, ticker, cru, ctx) {
 // Traduz a falha da brapi em algo que dá pra mostrar na tela, sem contar nada
 // da arquitetura. "token recusado" vira mensagem genérica de propósito: não é
 // problema de quem está usando o app, e a informação só serve pra quem sonda.
-function _screenerErro(cors, ticker, busca) {
+// Mapa único de motivo -> mensagem. Existia só dentro de _screenerErro (rota
+// individual) e a rota de lote (_screenerLote) NÃO usava: todo papel que
+// falhava recebia a mesma frase genérica ("não deu pra buscar este papel
+// agora"), não importa se foi 404, timeout ou rate limit do FORNECEDOR — três
+// causas que pedem ação diferente do usuário. Extraído pra ser a fonte única
+// dos dois caminhos.
+function _screenerMotivoInfo(ticker, busca) {
   var mapa = {
     nao_encontrado: { status: 404, tipo: 'nao_encontrado', msg: 'Não achamos o papel ' + ticker + ' na B3 agora.' },
     plano: { status: 503, tipo: 'fonte_limitada', msg: 'Os indicadores completos precisam de um plano de dados que ainda não temos.' },
-    rate_limit_fornecedor: { status: 429, tipo: 'muitas_consultas', msg: 'Muita consulta de mercado agora. Tente de novo em instantes.' },
+    rate_limit_fornecedor: { status: 429, tipo: 'muitas_consultas', msg: 'O provedor de cotações limitou as consultas agora. Tente de novo em instantes.' },
     token_recusado: { status: 503, tipo: 'indisponivel', msg: 'O screener está indisponível no momento.' },
-    rede: { status: 504, tipo: 'indisponivel', msg: 'Não conseguimos falar com a fonte de cotações agora.' }
+    rede: { status: 504, tipo: 'indisponivel', msg: 'Não conseguimos falar com a fonte de cotações agora — pode ter sido lentidão ou fora do ar.' }
   };
-  var e = mapa[busca.motivo] || { status: 502, tipo: 'indisponivel', msg: 'Não conseguimos carregar as cotações agora.' };
+  return mapa[busca.motivo] || { status: 502, tipo: 'indisponivel', msg: 'Não conseguimos carregar as cotações agora.' };
+}
+
+function _screenerErro(cors, ticker, busca) {
+  var e = _screenerMotivoInfo(ticker, busca);
   var h = e.status === 429 ? Object.assign({}, cors, { 'Retry-After': String(busca.retryAfter || 60) }) : cors;
   return new Response(JSON.stringify({
     ok: false, ticker: ticker,
@@ -2613,10 +2633,31 @@ async function _screenerLote(request, env, ctx) {
         else itens.push({ ticker: ticker, cru: null, erro: { tipo: 'rate_limit', mensagem: 'limite de consultas atingido antes de chegar neste papel' } });
         continue;
       }
+      // Espaçamento ANTES de cada chamada externa (menos a primeira). 15
+      // requisições em sequência sem pausa nenhuma é o padrão clássico que
+      // dispara o rate limit do PRÓPRIO FORNECEDOR (não o nosso — o nosso é o
+      // _rateLimit logo acima, e 40/5min não bloquearia isso). Fica FORA do
+      // teto de tempo do request: é espera, não CPU, e o Worker não cobra por
+      // isso — só soma no tempo de resposta, que aceitamos em troca de não
+      // perder metade da lista por 429 do provedor.
+      if (i > 0) await new Promise(function (r) { setTimeout(r, SCREENER_ESPACO_MS); });
+
       var busca = await _brapiBusca(env, ticker);
+      // Uma segunda tentativa, só quando o motivo é EXPLICITAMENTE rate limit
+      // do fornecedor: espera o Retry-After (limitado, pra não estourar o
+      // tempo do request) e tenta de novo uma vez. Os outros motivos (404,
+      // token, plano) não se resolvem repetindo.
+      if (!busca.ok && busca.motivo === 'rate_limit_fornecedor') {
+        var espera = Math.min((busca.retryAfter || 2) * 1000, SCREENER_RETRY_MAX_MS);
+        await new Promise(function (r) { setTimeout(r, espera); });
+        busca = await _brapiBusca(env, ticker);
+      }
       if (!busca.ok) {
         if (guardado) itens.push({ ticker: ticker, cru: guardado.cru, cache: { hit: true, idadeSegundos: idade, stale: true, motivo: 'fonte indisponível agora — mostrando o último dado guardado' } });
-        else itens.push({ ticker: ticker, cru: null, erro: { tipo: busca.tipo || 'falha_fonte', mensagem: 'não deu pra buscar este papel agora' } });
+        else {
+          var infoErro = _screenerMotivoInfo(ticker, busca);
+          itens.push({ ticker: ticker, cru: null, erro: { tipo: infoErro.tipo, mensagem: infoErro.msg } });
+        }
         continue;
       }
       _screenerCacheGrava(request, ticker, busca.result, ctx);
