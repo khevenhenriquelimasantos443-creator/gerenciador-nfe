@@ -4240,18 +4240,23 @@ function loadAdminAnalytics(){
 // Lista fixa de 15 papéis líquidos da B3, cobrindo setores diferentes (bancos,
 // energia, varejo, saúde, commodities, locação) e incluindo 2 FIIs de
 // propósito — são justamente eles que mostram onde a nota de ação não vale
-// (ver screenerEhFundo). É lista fixa e não busca livre porque o backend faz
-// uma chamada de cotação por papel: busca aberta viraria rate limit na
+// (ver screenerEhFundo). É lista fixa e não busca livre porque cada papel é
+// uma cotação a mais na cota do provedor: busca aberta viraria rate limit na
 // primeira digitação.
+//
+// ESTA LISTA É ESPELHO da SCREENER_TICKERS de finn-serve/build.js — conferida
+// papel a papel. Mexer aqui sem mexer lá faz o papel voltar como erro
+// permanente na tabela (já aconteceu com RDOR3 e HAPV3). A rota de lote
+// devolve o ticker de cada papel, então uma divergência futura aparece na tela
+// em vez de sumir: ver screenerAplicaLote.
 var SCREENER_TICKERS = ["ITUB4","BBAS3","BBDC4","PETR4","VALE3","TAEE11","ELET3","MGLU3","LREN3","WEGE3","RDOR3","HAPV3","MXRF11","HGLG11","RENT3"];
 // Fundos imobiliários da lista, em código. É rede de segurança: se o backend
 // não mandar o tipo do papel, mesmo assim não damos nota de ação pra fundo.
 // Terminar em 11 não serve de teste — TAEE11 é unit de uma empresa normal.
 var SCREENER_FUNDOS = ["MXRF11","HGLG11"];
-// 15 chamadas de uma vez estouram o rate limit do provedor e ainda enfileiram
-// tudo nas 6 conexões que o navegador dá por origem — a tela ficaria parada
-// esperando a última. 4 por vez mantém a UI respondendo e faz o progresso
-// subir de forma visível.
+// Concorrência do CAMINHO DE FALLBACK (um papel por requisição). O caminho
+// normal hoje é uma chamada só em GET /api/stocks; isto aqui só roda quando o
+// servidor publicado ainda não tem a rota de lote.
 var SCREENER_LOTE = 4;
 
 // Colunas da tabela. "dir" é o sentido em que a coluna abre no primeiro
@@ -4274,23 +4279,40 @@ var SCREENER_COLS = [
 // coluna some da tela sem erro nenhum e ninguém percebe. "leitura" é o texto
 // fixo que explica a direção do indicador — aparece no detalhe mesmo quando o
 // backend não manda a faixa.
+//
+// "escalaPadrao" é o contrato escrito do backend (indicadores.escala:
+// "dy, roe e margem em FRAÇÃO; pl e dividaEbitda em número puro"). Serve pra
+// tela PARAR DE ADIVINHAR escala por limiar: cada detalhe da nota já vem com
+// "escala" própria, e quando ele não vier vale o contrato — não o chute.
 var SCREENER_INDICADORES = [
-  { key: "pl", label: "P/L", curto: "P/L", fmt: "num",
+  { key: "pl", label: "P/L", curto: "P/L", fmt: "num", escalaPadrao: "numero",
     leitura: "Quanto menor, menos você paga por cada real de lucro. P/L negativo quer dizer prejuízo nos últimos 12 meses.",
     aliases: ["pl","p_l","precoLucro","preco_lucro","precoSobreLucro","priceEarnings","pe"] },
-  { key: "dy", label: "Dividend yield", curto: "DY", fmt: "pct",
+  { key: "dy", label: "Dividend yield", curto: "DY", fmt: "pct", escalaPadrao: "fracao",
     leitura: "Quanto maior, mais dividendo por real investido — mas yield muito alto costuma ser preço despencando ou provento extraordinário, não empresa boa.",
     aliases: ["dy","dividendYield","dividend_yield","dividendyield","yield"] },
-  { key: "roe", label: "ROE", curto: "ROE", fmt: "pct",
+  { key: "roe", label: "ROE", curto: "ROE", fmt: "pct", escalaPadrao: "fracao",
     leitura: "Retorno sobre o patrimônio dos sócios. Quanto maior, melhor: abaixo do juro básico, o risco de ação não se paga.",
     aliases: ["roe","returnOnEquity","return_on_equity","retornoPatrimonio","retorno_patrimonio"] },
-  { key: "dividaEbitda", label: "Dívida líquida / EBITDA", curto: "Dív/EBITDA", fmt: "mult",
+  { key: "dividaEbitda", label: "Dívida líquida / EBITDA", curto: "Dív/EBITDA", fmt: "mult", escalaPadrao: "numero",
     leitura: "Quantos anos de geração de caixa pagariam a dívida. Quanto menor, melhor; negativo quer dizer mais caixa do que dívida.",
     aliases: ["dividaEbitda","divida_ebitda","dividaLiquidaEbitda","divida_liquida_ebitda","dividaLiquidaSobreEbitda","debtToEbitda","debt_to_ebitda","netDebtToEbitda","divEbitda"] },
-  { key: "margem", label: "Margem líquida", curto: "Margem", fmt: "pct",
+  { key: "margem", label: "Margem líquida", curto: "Margem", fmt: "pct", escalaPadrao: "fracao",
     leitura: "Quanto sobra de lucro em cada real vendido. Quanto maior, mais folga a empresa tem pra aguentar aumento de custo.",
     aliases: ["margem","margemLiquida","margem_liquida","margemliquida","profitMargins","profitMargin","netMargin","net_margin"] }
 ];
+
+// Os "flag" do backend são apelidos curtos ('extremo', 'armadilha'), não frase
+// pra usuário: imprimir o apelido cru daria "Atenção: nao_operacional". Aqui
+// cada um vira a frase que explica o que aquilo quer dizer. Flag desconhecida
+// cai no texto cru mesmo (escapado) — melhor mostrar algo do que engolir.
+var SCREENER_FLAGS = {
+  extremo: "número fora de qualquer faixa plausível. Não sai da conta: pontua zero, porque dado absurdo não é dado faltando.",
+  suspeito: "número suspeito — costuma ser lucro não recorrente inflando o índice.",
+  armadilha: "possível armadilha de yield: dividendo muito alto costuma ser preço despencando ou provento extraordinário.",
+  inflado: "índice inflado por patrimônio pequeno — parece melhor do que é.",
+  nao_operacional: "resultado provavelmente não operacional (venda de ativo, evento único)."
+};
 
 // hasOwnProperty em vez de acesso direto pelo mesmo motivo de catColor(): um
 // campo herdado do Object.prototype ("constructor", "toString") devolveria uma
@@ -4338,10 +4360,19 @@ function scrNum(v){
 // Primeiro campo da lista que seja texto de verdade. O padrão
 // {error:true, message:"..."} é comum em API financeira: pegar o "error"
 // booleano deixaria a linha com a mensagem genérica em vez do motivo real.
+//
+// Desce um nível quando o campo é OBJETO porque o backend manda o erro
+// aninhado: { erro: { tipo, mensagem } }. Lendo só campo chapado, toda frase
+// escrita com cuidado do outro lado ("Não achamos o papel ITUB4 na B3 agora")
+// era jogada fora e a tela mostrava "Não consegui buscar (erro 404)".
 function screenerPrimeiroTexto(body, names){
   for(var i = 0; i < names.length; i++){
     var v = scrCampo(body, [names[i]]);
     if(typeof v === "string" && v) return v;
+    if(v && typeof v === "object" && !Array.isArray(v)){
+      var dentro = scrPick(v, ["mensagem","message","texto","detalhe","detail","descricao","motivo","erro","error"]);
+      if(typeof dentro === "string" && dentro) return dentro;
+    }
   }
   return "";
 }
@@ -4363,13 +4394,20 @@ function screenerFmtDec(v){
   return v.toFixed(2).replace(".", ",");
 }
 
-// O backend manda o indicador normalizado, mas "normalizado" tanto pode ser
-// fração (0,285) quanto percentual (28,5) — e não dá pra combinar isso em
-// tempo real com quem está escrevendo o outro lado. Se vier texto pronto, usa
-// o texto. Senão: até 1,5 é lido como fração (margem de 150% não existe,
-// então 0,28 só pode ser 28%) e o resto como percentual já pronto.
-function screenerFmtPct(v){
-  var pct = Math.abs(v) <= 1.5 ? v * 100 : v;
+// A ESCALA VEM DO BACKEND, não é mais adivinhada. Cada detalhe da nota traz
+// "escala" ('fracao' | 'percentual' | 'numero') e o contrato da resposta diz
+// que dy/roe/margem saem em fração — é o que escalaPadrao guarda.
+//
+// O limiar fixo de 1,5 que existia aqui só sobrou como último recurso, pra
+// resposta de servidor antigo que não manda escala nenhuma. Ele ERRA em
+// margem derivada: lucro 500 sobre receita 100 dá margem 5 (500%), e o limiar
+// lia isso como "já está em percentual" e mostrava 5,0% — uma das melhores
+// margens da lista virava a pior da tabela.
+function screenerFmtPct(v, escala){
+  var pct;
+  if(escala === "fracao") pct = v * 100;
+  else if(escala === "percentual") pct = v;
+  else pct = Math.abs(v) <= 1.5 ? v * 100 : v;
   return pct.toFixed(1).replace(".", ",") + "%";
 }
 
@@ -4377,9 +4415,28 @@ function screenerFmtValor(meta, ind){
   if(ind && ind.texto) return ind.texto;
   var v = ind ? ind.valor : null;
   if(v === null || v === undefined) return "—";
-  if(meta.fmt === "pct") return screenerFmtPct(v);
+  if(meta.fmt === "pct") return screenerFmtPct(v, (ind && ind.escala) || meta.escalaPadrao);
   if(meta.fmt === "mult") return screenerFmtDec(v) + "x";
   return screenerFmtDec(v);
+}
+
+// Flag em frase de gente. Desconhecida volta como veio (quem imprime escapa).
+function screenerFlagTexto(flag){
+  if(!flag) return "";
+  var k = scrChaveNorm(flag);
+  if(Object.prototype.hasOwnProperty.call(SCREENER_FLAGS, k)) return SCREENER_FLAGS[k];
+  return String(flag);
+}
+
+// Idade do dado guardado em texto curto pro selo da linha. Arredonda pra baixo
+// de propósito: prometer "1h" num dado de 1h59 é mentir a favor do app.
+function screenerIdadeTexto(seg){
+  if(seg === null || seg === undefined || !isFinite(seg) || seg < 0) return "";
+  if(seg < 90) return "agora há pouco";
+  var min = Math.floor(seg / 60);
+  if(min < 60) return min + " min atrás";
+  var h = Math.floor(min / 60);
+  return h + "h atrás";
 }
 
 function screenerFmtPontos(n){
@@ -4414,18 +4471,41 @@ function screenerLinhaVazia(ticker){
   return {
     ticker: ticker, estado: "pendente", nome: "", preco: null, tipo: "acao",
     ind: {}, score: null, scoreMax: 25, cobertura: null,
-    coberturaTotal: SCREENER_INDICADORES.length, aviso: "", erro: null, tokenMissing: false
+    coberturaTotal: SCREENER_INDICADORES.length, aviso: "", erro: null, tokenMissing: false,
+    // Por que a nota não saiu (texto do backend) — sem isso a coluna Nota é um
+    // traço mudo, e traço mudo o usuário lê como "empresa ruim".
+    notaMotivo: "", notaMinimo: null,
+    // Nota que a conta de ações daria, guardada só pra explicar por que ela
+    // NÃO vale em fundo imobiliário.
+    notaBruta: null,
+    // Indicadores cuja escala foi decidida pelo conjunto dos 15, não pelo
+    // próprio papel (diagnostico.escalaPorLote).
+    escalaPorLote: [],
+    // Preço/indicador podem vir de dado guardado de até 6 h. Sem marcar isso a
+    // tela mistura número de agora com número de 6 h atrás sem avisar.
+    cacheStale: false, cacheIdade: null, cacheMotivo: ""
   };
 }
 
 // "Token não configurado" é problema de configuração do worker, não da conta
 // do usuário — merece tela própria em vez de virar "não consegui carregar".
-// Casa por código e por mensagem porque não dá pra saber qual dos dois o
-// backend vai mandar; "token inválido" de propósito não cai aqui (exige
-// também uma palavra de ausência).
+//
+// A checagem por contrato vem PRIMEIRO: o backend responde 503 com
+// configurado:false e erro.tipo:'nao_configurado'. A caça a palavra em texto
+// continua embaixo só como rede pra servidor antigo — era só ela que existia
+// aqui, e ela não enxergava o 503 real (o campo vinha aninhado em "erro"),
+// então a tela dedicada era código morto. "token inválido" de propósito não
+// cai aqui (exige também uma palavra de ausência).
 function screenerTokenAusente(status, body){
+  if(!body || typeof body !== "object" || Array.isArray(body)) return false;
+  if(body.configurado === false) return true;
+  var erroObj = scrCampo(body, ["erro","error"]);
+  if(erroObj && typeof erroObj === "object" && !Array.isArray(erroObj)){
+    var tipo = scrPick(erroObj, ["tipo","type","codigo","code"]);
+    if(typeof tipo === "string" && scrChaveNorm(tipo) === "naoconfigurado") return true;
+  }
   var codigo = screenerPrimeiroTexto(body, ["code","codigo","error_code","erro_code"]);
-  var msg = screenerPrimeiroTexto(body, ["error","erro","message","mensagem","detail","detalhe"]);
+  var msg = screenerPrimeiroTexto(body, ["error","erro","message","mensagem","detail","detalhe","motivo"]);
   var alvo = (codigo + " " + msg).toLowerCase();
   if(alvo.indexOf("brapi_token") >= 0 || alvo.indexOf("token_missing") >= 0 || alvo.indexOf("missing_token") >= 0) return true;
   if(alvo.indexOf("token") < 0) return false;
@@ -4449,18 +4529,37 @@ function screenerLeIndicador(fonte, meta, body){
   } else if(fonte && typeof fonte === "object"){
     bruto = scrPick(fonte, meta.aliases);
   }
-  if(bruto === undefined) bruto = scrCampo(body, meta.aliases);
-  var ind = { valor: null, texto: "", pontos: null, faixa: "", flag: "" };
+  if(bruto === undefined && body) bruto = scrCampo(body, meta.aliases);
+  var ind = {
+    valor: null, texto: "", pontos: null, pontosMax: null,
+    faixa: "", motivo: "", flag: "", escala: "",
+    // achou = "esta fonte tem alguma coisa a dizer sobre este indicador".
+    // Diferente de "tem valor": o detalhe de um indicador ausente é justamente
+    // a fonte que explica POR QUE ele está ausente.
+    achou: false, disponivel: null
+  };
   if(bruto === undefined || bruto === null) return ind;
+  ind.achou = true;
   if(typeof bruto === "object" && !Array.isArray(bruto)){
     ind.valor = scrNum(scrPick(bruto, ["valor","value","v","num","raw"]));
     var texto = scrPick(bruto, ["texto","formatado","label","fmt","exibicao"]);
     ind.texto = typeof texto === "string" ? texto : "";
-    ind.pontos = scrNum(scrPick(bruto, ["pontos","nota","score","points"]));
-    var faixa = scrPick(bruto, ["faixa","motivo","explicacao","descricao","justificativa","criterio","range"]);
+    ind.pontos = scrNum(scrPick(bruto, ["pontos","score","points","nota"]));
+    ind.pontosMax = scrNum(scrPick(bruto, ["pontosMaximos","pontos_maximos","pontosMax","maxPontos","max"]));
+    // "faixa" e "motivo" são coisas DIFERENTES no backend e antes caíam no
+    // mesmo campo, com o primeiro apagando o outro: faixa diz em que trecho da
+    // régua o valor caiu ("P/L entre 6 e 10"); motivo diz por que o indicador
+    // ficou fora da conta ("fundo imobiliário — ROE de empresa não se aplica").
+    var faixa = scrPick(bruto, ["faixa","explicacao","descricao","justificativa","criterio","range"]);
     ind.faixa = typeof faixa === "string" ? faixa : "";
+    var motivo = scrPick(bruto, ["motivo","razao","porque"]);
+    ind.motivo = typeof motivo === "string" ? motivo : "";
     var flag = scrPick(bruto, ["flag","aviso","observacao","alerta"]);
     ind.flag = typeof flag === "string" ? flag : "";
+    var escala = scrPick(bruto, ["escala","scale","unidade"]);
+    ind.escala = typeof escala === "string" ? escala : "";
+    var disp = scrPick(bruto, ["disponivel","available"]);
+    if(typeof disp === "boolean") ind.disponivel = disp;
   } else {
     ind.valor = scrNum(bruto);
   }
@@ -4520,34 +4619,78 @@ function screenerLinha(ticker, status, body){
   var tipo = scrCampo(body, ["tipo","type","categoria","classe"]);
   if(typeof tipo === "string" && /fii|fundo|fund|imobili/i.test(tipo)) linha.tipo = "fii";
 
-  var fonteScore = scrCampo(body, ["score","nota","pontuacao"]);
-  var fonteInd = scrCampo(body, ["indicadores","indicators","detalhe","detalhes","metricas","metrics","fundamentos"]);
-  if(!fonteInd && fonteScore && typeof fonteScore === "object"){
-    fonteInd = scrPick(fonteScore, ["detalhe","detalhes","indicadores","itens","breakdown","componentes"]);
-  }
+  var fonteScore = scrCampo(body, ["nota","score","pontuacao"]);
+  var ehObjScore = fonteScore !== undefined && fonteScore !== null && typeof fonteScore === "object" && !Array.isArray(fonteScore);
+  // A LISTA DE DETALHES É A FONTE PRINCIPAL, o objeto chapado é só complemento.
+  // Só nota.detalhes traz pontos, faixa, flag e o motivo da ausência — que é
+  // exatamente o que o painel "Como a nota foi montada" existe pra mostrar.
+  // Lendo body.indicadores primeiro, o painel escrevia cinco vezes "o servidor
+  // não mandou os pontos" com a resposta certa na mão.
+  var detalhes = ehObjScore ? scrPick(fonteScore, ["detalhes","detalhe","itens","breakdown","componentes"]) : undefined;
+  var fonteInd = scrCampo(body, ["indicadores","indicators","metricas","metrics","fundamentos"]);
+  if(detalhes === undefined && ehObjScore) detalhes = scrPick(fonteScore, ["indicadores"]);
+  if(!fonteInd && !detalhes) fonteInd = scrCampo(body, ["detalhe","detalhes"]);
 
-  if(fonteScore !== undefined && typeof fonteScore === "object"){
+  if(ehObjScore){
     linha.score = scrNum(scrPick(fonteScore, ["total","valor","score","pontos","nota"]));
   } else {
     linha.score = scrNum(fonteScore);
   }
   if(linha.score === null) linha.score = scrNum(scrCampo(body, ["score_total","scoreTotal","nota_total","notaTotal","pontos"]));
-  var max = scrNum(scrCampo(body, ["scoreMax","score_max","maxScore","notaMax","nota_max","total_possivel"]));
-  if(max === null && fonteScore && typeof fonteScore === "object") max = scrNum(scrPick(fonteScore, ["max","total_possivel","maximo"]));
+  // "escalaMaxima" é o nome que o backend usa de verdade. Sem ele aqui, o dia
+  // em que alguém mexer em SCORE_PESOS a tela passa a dividir por 25 uma nota
+  // que vai até 30: barra saturada em 100% e rótulo "27/25".
+  var max = scrNum(scrCampo(body, ["escalaMaxima","escala_maxima","scoreMax","score_max","maxScore","notaMax","nota_max","total_possivel"]));
+  if(max === null && ehObjScore) max = scrNum(scrPick(fonteScore, ["escalaMaxima","escala_maxima","max","total_possivel","maximo"]));
   if(max !== null && max > 0) linha.scoreMax = max;
+
+  // Por que a nota não saiu, nas palavras do backend.
+  if(ehObjScore){
+    var motivoNota = scrPick(fonteScore, ["motivo","razao","explicacao"]);
+    linha.notaMotivo = typeof motivoNota === "string" ? motivoNota : "";
+    linha.notaMinimo = scrNum(scrPick(fonteScore, ["minimoIndicadores","minimo_indicadores","minimo"]));
+    // Quanto a conta de AÇÃO daria neste papel. Só serve pra explicar, no
+    // detalhe do FII, qual é o número que estamos nos recusando a dar.
+    var brutos = scrNum(scrPick(fonteScore, ["pontosBrutos","pontos_brutos"]));
+    var maximos = scrNum(scrPick(fonteScore, ["pontosMaximos","pontos_maximos"]));
+    if(brutos !== null && maximos !== null && maximos > 0){
+      linha.notaBruta = Math.round(brutos / maximos * linha.scoreMax * 10) / 10;
+    }
+  }
 
   var disponiveis = 0;
   SCREENER_INDICADORES.forEach(function(meta){
-    var ind = screenerLeIndicador(fonteInd, meta, body);
+    var ind = screenerLeIndicador(detalhes, meta, null);
+    if(!ind.achou){
+      ind = screenerLeIndicador(fonteInd, meta, body);
+    } else if(ind.valor === null && ind.disponivel !== false){
+      // Detalhe existe mas sem o número (formato antigo, ou valor só no objeto
+      // chapado): completa o VALOR e mantém pontos/faixa/motivo do detalhe.
+      // Quando disponivel === false não completa de propósito — aquele valor é
+      // justamente o que a nota DESCARTOU, e exibi-lo faria a coluna mostrar
+      // "45,00x" para um indicador que não entrou em conta nenhuma.
+      var extra = screenerLeIndicador(fonteInd, meta, body);
+      if(extra.valor !== null){ ind.valor = extra.valor; if(!ind.texto) ind.texto = extra.texto; }
+    }
+    if(!ind.escala) ind.escala = meta.escalaPadrao || "";
     linha.ind[meta.key] = ind;
-    if(ind.valor !== null || ind.pontos !== null) disponiveis++;
+    if(ind.disponivel === true || (ind.disponivel === null && (ind.valor !== null || ind.pontos !== null))) disponiveis++;
   });
 
   // Cobertura pode vir como número (4), objeto ({disponiveis, total}) ou texto
   // ("4 de 5"). Se não vier nada, conta na mão o que chegou — dizer quantos
   // indicadores a nota enxergou é o que separa um screener honesto de um que
   // parece preciso e não é.
-  var cob = scrCampo(body, ["cobertura","coverage","indicadores_disponiveis"]);
+  //
+  // A COBERTURA DA NOTA VEM PRIMEIRO. Recontar aqui a partir do objeto chapado
+  // dá o número errado: ele ainda tem o valor que a nota descartou, e a tela
+  // dizia "5 de 5, a nota viu tudo" com a nota tendo visto 4.
+  var cob = ehObjScore ? scrPick(fonteScore, ["cobertura","coverage","disponiveis"]) : undefined;
+  if(cob === undefined) cob = scrCampo(body, ["cobertura","coverage","indicadores_disponiveis"]);
+  if(ehObjScore){
+    var totalNota = scrNum(scrPick(fonteScore, ["totalIndicadores","total_indicadores"]));
+    if(totalNota !== null && totalNota > 0) linha.coberturaTotal = totalNota;
+  }
   if(cob !== undefined && typeof cob === "object"){
     linha.cobertura = scrNum(scrPick(cob, ["disponiveis","disponivel","count","n","valor","total"]));
     var totalCob = scrNum(scrPick(cob, ["total","de","max","maximo"]));
@@ -4561,8 +4704,38 @@ function screenerLinha(ticker, status, body){
   }
   if(linha.cobertura === null || linha.cobertura === undefined) linha.cobertura = disponiveis;
 
+  // Dado guardado: o servidor serve registro de até 6 h quando a fonte cai ou
+  // o limite estoura. Preço velho sem marca, num app de investimento, é pior
+  // que preço ausente — o usuário compara papéis achando que é tudo do mesmo
+  // instante. O backend estampa a idade justamente pra ela ser mostrada.
+  var cache = scrCampo(body, ["cache"]);
+  if(cache && typeof cache === "object" && !Array.isArray(cache)){
+    linha.cacheStale = scrPick(cache, ["stale","vencido"]) === true;
+    linha.cacheIdade = scrNum(scrPick(cache, ["idadeSegundos","idade_segundos","idade","ageSeconds"]));
+    var motivoCache = scrPick(cache, ["motivo","razao","reason"]);
+    linha.cacheMotivo = typeof motivoCache === "string" ? motivoCache : "";
+  }
+
+  // Indicadores cuja escala (fração x percentual) só foi resolvida porque os
+  // 15 papéis vieram juntos. A nota é confiável; o usuário só merece saber que
+  // a escala foi inferida do conjunto e não confirmada no próprio papel.
+  var diag = scrCampo(body, ["diagnostico","diagnostics"]);
+  var porLote = diag && typeof diag === "object" ? scrPick(diag, ["escalaPorLote","escala_por_lote"]) : undefined;
+  if(Array.isArray(porLote)){
+    linha.escalaPorLote = porLote.filter(function(k){ return typeof k === "string"; });
+  }
+
   linha.estado = "ok";
   return linha;
+}
+
+// O indicador teve a escala decidida pelo conjunto, e não pelo próprio papel?
+function screenerEscalaDoLote(linha, meta){
+  var lista = linha.escalaPorLote || [];
+  for(var i = 0; i < lista.length; i++){
+    if(scrBateChave(lista[i], meta.aliases)) return true;
+  }
+  return false;
 }
 
 // Uma promessa por papel que NUNCA rejeita: um ticker que falha vira linha com
@@ -4594,17 +4767,145 @@ function screenerRender(){
   if(state.tab === "screener") render();
 }
 
-// Carrega os 15 papéis em lotes de SCREENER_LOTE. Assim que um papel responde,
-// a linha dele já aparece — em vez de 15 segundos de tela em branco.
+// Transforma a resposta do LOTE nas 15 linhas da tela.
+//
+// Casa por TICKER, nunca por posição: o servidor pode devolver em outra ordem,
+// e trocar a posição faria a linha da PETR4 exibir os números da VALE3 — o
+// pior bug possível num app de investimento. Papel da nossa lista que não veio
+// vira erro na própria linha; papel que veio e não está na nossa lista entra
+// no fim, pra divergência entre as duas listas APARECER em vez de sumir (foi
+// exatamente assim que RDOR3 e HAPV3 ficaram meses em vermelho).
+function screenerAplicaLote(papeis){
+  var porTicker = {};
+  for(var i = 0; i < papeis.length; i++){
+    var p = papeis[i];
+    if(!p || typeof p !== "object") continue;
+    var t = scrCampo(p, ["ticker","symbol","simbolo","codigo","papel"]);
+    // Mesmo formato que o backend exige na allowlist dele. Não é defesa contra
+    // XSS (todo ticker sai escapado), é defesa de layout: um "ticker" de 5 mil
+    // caracteres viraria uma linha que empurra a tabela inteira pra fora.
+    if(typeof t !== "string" || !/^[A-Z0-9]{4,6}$/.test(t.toUpperCase())) continue;
+    porTicker[t.toUpperCase()] = p;
+  }
+
+  var linhas = SCREENER_TICKERS.map(function(ticker){
+    if(!Object.prototype.hasOwnProperty.call(porTicker, ticker)){
+      var vazia = screenerLinhaVazia(ticker);
+      vazia.estado = "erro";
+      vazia.erro = "O servidor não devolveu este papel na lista.";
+      return vazia;
+    }
+    var corpo = porTicker[ticker];
+    delete porTicker[ticker];
+    // status 200 porque o lote já respondeu 200: o que diz se este papel deu
+    // certo é o ok/erro DELE, e screenerLinha já sabe ler os dois.
+    return screenerLinha(ticker, 200, corpo);
+  });
+
+  Object.keys(porTicker).forEach(function(extra){
+    linhas.push(screenerLinha(extra, 200, porTicker[extra]));
+  });
+  return linhas;
+}
+
+// Uma chamada só, em GET /api/stocks. NUNCA rejeita: devolve o que deu.
+function screenerBuscaLote(){
+  return fetch("/api/stocks", { headers: adminHeaders() })
+    .then(function(r){
+      // Texto + parse na mão: rota inexistente ou proxy devolvendo HTML faria
+      // r.json() lançar e derrubar a tela inteira.
+      return r.text().then(function(t){
+        var corpo = null;
+        try { corpo = JSON.parse(t); } catch(e){ corpo = null; }
+        return { status: r.status, body: corpo };
+      });
+    })
+    .catch(function(){ return { status: 0, body: null }; });
+}
+
+// Carrega a lista inteira numa requisição só.
+//
+// O motivo é de CORREÇÃO, não de desempenho: a escala fração-vs-percentual da
+// fonte não tem como ser resolvida com um papel só na mão. Com os 15 juntos, a
+// mediana de cada campo decide a escala; papel a papel, três indicadores caem
+// por "escala ambígua" e a maioria da lista fica SEM NOTA. Por isso a rota de
+// lote é o caminho normal, e a busca papel a papel só sobra como fallback pra
+// servidor publicado antes dela existir.
 function loadScreener(){
   if(state.screenerLoading) return;
   state.screenerLoading = true;
   state.screenerError = null;
   state.screenerTokenMissing = false;
-  state.screenerProgress = { feitos: 0, total: SCREENER_TICKERS.length };
+  // Mesmo sendo uma chamada só, o estado de progresso continua: a resposta
+  // demora os mesmos segundos (são 15 cotações do outro lado) e tela parada
+  // sem nada escrito é indistinguível de tela quebrada.
+  state.screenerProgress = { feitos: 0, total: SCREENER_TICKERS.length, lote: true };
   state.screenerData = SCREENER_TICKERS.map(function(t){ return screenerLinhaVazia(t); });
   screenerRender();
 
+  screenerBuscaLote().then(function(res){
+    var body = res.body;
+
+    // Servidor publicado sem a rota de lote: cai pro caminho antigo em vez de
+    // deixar a tela vazia.
+    if(res.status === 404 || res.status === 405){
+      state.screenerProgress = { feitos: 0, total: SCREENER_TICKERS.length, lote: false };
+      screenerRender();
+      screenerCarregaUmPorUm();
+      return;
+    }
+
+    if(screenerTokenAusente(res.status, body)){
+      state.screenerTokenMissing = true;
+      state.screenerLoading = false;
+      state.screenerProgress = null;
+      screenerRender();
+      return;
+    }
+
+    var papeis = body && typeof body === "object" ? scrCampo(body, ["papeis","papéis","itens","resultados","acoes","lista"]) : undefined;
+    if(res.status !== 200 || !body || typeof body !== "object" || body.ok === false || !Array.isArray(papeis)){
+      // Preferir SEMPRE a frase que o backend escreveu: ela diz o que fazer
+      // ("os indicadores completos precisam de um plano de dados que ainda não
+      // temos"), e "erro 503" não diz nada.
+      var msg = body && typeof body === "object" ? screenerPrimeiroTexto(body, ["erro","error","message","mensagem","detail","detalhe","motivo"]) : "";
+      // 401/403 é sessão de admin vencida, não falha de mercado: o texto do
+      // servidor ("unauthorized") não diz ao usuário o que fazer.
+      if(res.status === 401 || res.status === 403) msg = "Acesso negado. Desbloqueie o painel de admin de novo em Configurações.";
+      else if(res.status === 429 && !msg) msg = "O provedor limitou as consultas agora. Tente de novo em alguns minutos.";
+      if(!msg && res.status === 0) msg = "Falha de conexão ao buscar a lista.";
+      if(!msg && res.status === 200) msg = "O servidor respondeu num formato que não sei ler.";
+      if(!msg) msg = "Não consegui carregar a lista (erro " + res.status + ").";
+      state.screenerError = msg;
+      state.screenerData = null;
+      state.screenerLoading = false;
+      state.screenerProgress = null;
+      screenerRender();
+      return;
+    }
+
+    // Um papel que falhou não derruba os outros: cada um vira a sua linha, com
+    // erro ou com número.
+    state.screenerData = screenerAplicaLote(papeis);
+    var falhas = 0;
+    state.screenerData.forEach(function(l){
+      if(l.tokenMissing) state.screenerTokenMissing = true;
+      if(l.erro) falhas++;
+    });
+    state.screenerLoading = false;
+    state.screenerProgress = null;
+    if(state.screenerData.length && falhas >= state.screenerData.length && !state.screenerTokenMissing){
+      state.screenerError = "Nenhum papel carregou. Pode ser o provedor de cotações fora do ar.";
+    }
+    screenerRender();
+  });
+}
+
+// FALLBACK: um papel por requisição, em lotes de SCREENER_LOTE. Só roda quando
+// GET /api/stocks não existe no servidor publicado. Sem a visão do conjunto, a
+// escala de dy/roe/margem pode ficar ambígua e vários papéis saem sem nota —
+// é o preço de rodar contra um deploy antigo, e o motivo aparece na coluna.
+function screenerCarregaUmPorUm(){
   var proximo = 0;
   var feitos = 0;
   var falhas = 0;
@@ -4686,12 +4987,37 @@ function screenerAvisosHtml(){
     '<div class="scr-note"><b>Isto é apoio, não é recomendação:</b> a nota é uma conta simples em cima de 5 indicadores públicos. Serve para você comparar papéis e saber o que pesquisar — não para decidir por você. Nada aqui é indicação de compra ou venda.</div>';
 }
 
+// Resumo curto de por que a nota não saiu, pra caber na célula. O texto
+// completo do backend fica no detalhe — aqui só o suficiente pra separar
+// "faltou dado" de "empresa ruim".
+function screenerMotivoCurto(linha){
+  // Cobertura incompleta é o caso comum e o mais informativo. Só vale quando
+  // é MENOR que o total: escrever "só 5 de 5" seria confissão de que a tela
+  // não sabe o motivo, disfarçada de explicação.
+  if(linha.cobertura !== null && linha.cobertura !== undefined &&
+     linha.coberturaTotal && linha.cobertura < linha.coberturaTotal){
+    var falta = linha.notaMinimo !== null && linha.notaMinimo !== undefined ? (" (mínimo " + screenerFmtPontos(linha.notaMinimo) + ")") : "";
+    return "só " + screenerFmtPontos(linha.cobertura) + " de " + screenerFmtPontos(linha.coberturaTotal) + " indicadores" + falta;
+  }
+  return linha.notaMotivo || "";
+}
+
 function screenerScoreHtml(linha){
   if(screenerEhFundo(linha)){
     return '<span class="scr-na" style="font-size:11.5px;font-weight:700">sem nota</span>' +
       '<div class="scr-name">fundo imobiliário</div>';
   }
-  if(linha.score === null) return '<span class="scr-na">—</span>';
+  // Traço seco é a pior resposta possível: num screener o usuário lê "—" como
+  // "empresa ruim" ou "app quebrado". O backend escreve o motivo em português
+  // (nota.motivo) — mesmo padrão que o FII já usa logo acima.
+  if(linha.score === null){
+    var curto = screenerMotivoCurto(linha);
+    // Sem nenhuma explicação vinda do servidor, o traço seco continua sendo a
+    // resposta honesta — inventar um motivo seria pior que não dizer nada.
+    if(!curto) return '<span class="scr-na">—</span>';
+    return '<span class="scr-na" style="font-size:11.5px;font-weight:700">sem nota</span>' +
+      '<div class="scr-name" title="' + escapeHtml(linha.notaMotivo || curto) + '">' + escapeHtml(curto) + '</div>';
+  }
   var max = linha.scoreMax > 0 ? linha.scoreMax : 25;
   var pct = Math.max(0, Math.min(100, Math.round(linha.score / max * 100)));
   return '<span class="scr-scoreval">' + screenerFmtPontos(linha.score) + '/' + screenerFmtPontos(max) + '</span>' +
@@ -4705,29 +5031,45 @@ function screenerDetalheHtml(linha){
   if(linha.estado !== "ok"){
     return '<div class="scr-det-cob">Buscando os dados deste papel…</div>';
   }
-  var maxPontos = (linha.scoreMax > 0 ? linha.scoreMax : 25) / SCREENER_INDICADORES.length;
+  // Divisão igual só vale enquanto todos os indicadores pesam o mesmo. Quando
+  // o backend manda pontosMaximos por indicador (que é o caso), é ele que
+  // manda — senão um peso diferente faria a barra e o rótulo mentirem.
+  var maxPadrao = (linha.scoreMax > 0 ? linha.scoreMax : 25) / SCREENER_INDICADORES.length;
   var html = '<div class="import-summary" style="margin-top:12px">Como a nota foi montada</div>';
 
   if(screenerEhFundo(linha)){
     html += '<div class="scr-note" style="margin-top:0"><b>Isto é um fundo imobiliário, não uma empresa.</b> Fundo não tem P/L, ROE nem margem no sentido de uma companhia: ele quase não tem dívida e a margem dele é perto de 100% por construção. Aplicar a nota de ações aqui daria pontuação alta de graça, por dois indicadores que o fundo ganha sem mérito nenhum. Por isso não damos nota — olhe o dividend yield e, quando existir, o P/VP.' +
-      (linha.score !== null ? ' Só de referência: a conta de ações daria ' + screenerFmtPontos(linha.score) + ' de ' + screenerFmtPontos(linha.scoreMax) + ', e é exatamente esse número que não vale.' : '') +
+      // O número existe (o backend calcula e só depois se recusa a publicá-lo
+      // como nota) e mostrá-lo é o ponto: é ele que não vale.
+      (linha.notaBruta !== null ? ' Só de referência: pelos indicadores que existem, a conta de ações daria ' + escapeHtml(screenerFmtPontos(linha.notaBruta)) + ' de ' + escapeHtml(screenerFmtPontos(linha.scoreMax)) + ' — e é exatamente esse número que não vale.' : '') +
     '</div>';
+  } else if(linha.score === null && linha.notaMotivo){
+    // Sem nota, o detalhe é o lugar de dizer o porquê por extenso.
+    html += '<div class="scr-note neutro" style="margin-top:0"><b>Sem nota neste papel.</b> ' + escapeHtml(linha.notaMotivo) + '</div>';
   }
 
   SCREENER_INDICADORES.forEach(function(meta){
     var ind = linha.ind[meta.key] || {};
     var temPontos = ind.pontos !== null && ind.pontos !== undefined;
-    var pct = temPontos && maxPontos > 0 ? Math.max(0, Math.min(100, Math.round(ind.pontos / maxPontos * 100))) : 0;
+    var maxInd = (ind.pontosMax !== null && ind.pontosMax !== undefined && ind.pontosMax > 0) ? ind.pontosMax : maxPadrao;
+    var pct = temPontos && maxInd > 0 ? Math.max(0, Math.min(100, Math.round(ind.pontos / maxInd * 100))) : 0;
     var porque;
-    if(!temPontos && (ind.valor === null || ind.valor === undefined)){
-      porque = "Sem dado — este indicador fica fora da conta da nota.";
-    } else if(!temPontos){
-      porque = "O servidor não mandou os pontos deste indicador.";
-    } else {
-      porque = screenerFmtPontos(ind.pontos) + " de " + screenerFmtPontos(maxPontos) + " pontos (" + screenerRotuloPontos(ind.pontos, maxPontos) + ")";
+    if(temPontos){
+      porque = screenerFmtPontos(ind.pontos) + " de " + screenerFmtPontos(maxInd) + " pontos (" + screenerRotuloPontos(ind.pontos, maxInd) + ")";
       if(ind.faixa) porque += " · " + ind.faixa;
+    } else if(ind.motivo){
+      // O motivo do backend é o que separa "faltou dado" de "não se aplica a
+      // este setor" — a frase mais útil do painel inteiro.
+      porque = "Fora da conta da nota: " + ind.motivo;
+    } else if(ind.valor === null || ind.valor === undefined){
+      porque = "Sem dado — este indicador fica fora da conta da nota.";
+    } else {
+      porque = "O servidor não mandou os pontos deste indicador.";
     }
-    if(ind.flag) porque += " · Atenção: " + ind.flag;
+    if(ind.flag) porque += " · Atenção: " + screenerFlagTexto(ind.flag);
+    // Discreto de propósito: a nota é confiável, isto só registra que a escala
+    // saiu da mediana dos 15 e não foi confirmada no próprio papel.
+    if(screenerEscalaDoLote(linha, meta)) porque += " · escala lida do conjunto dos papéis, não deste papel sozinho.";
     html += '<div class="scr-det-item">' +
       '<div class="scr-det-head"><span class="scr-det-name">' + escapeHtml(meta.label) + '</span>' +
         '<span class="scr-det-val">' + escapeHtml(screenerFmtValor(meta, ind)) + '</span></div>' +
@@ -4738,16 +5080,31 @@ function screenerDetalheHtml(linha){
   });
 
   var cob = linha.cobertura === null ? 0 : linha.cobertura;
-  html += '<div class="scr-det-cob">Cobertura: ' + screenerFmtPontos(cob) + ' de ' + screenerFmtPontos(linha.coberturaTotal) + ' indicadores vieram. ' +
+  html += '<div class="scr-det-cob">Cobertura: ' + escapeHtml(screenerFmtPontos(cob)) + ' de ' + escapeHtml(screenerFmtPontos(linha.coberturaTotal)) + ' indicadores entraram na conta. ' +
     (cob >= linha.coberturaTotal ? 'A nota viu tudo.' : 'O que faltou fica fora da conta — não conta como zero, mas a nota enxergou menos coisa.') + '</div>';
+
+  if(linha.cacheStale){
+    var idade = screenerIdadeTexto(linha.cacheIdade);
+    html += '<div class="scr-note neutro"><b>Este número não é do momento.</b> É o último dado guardado' +
+      (idade ? ', de ' + escapeHtml(idade) : '') + '.' +
+      (linha.cacheMotivo ? ' Motivo: ' + escapeHtml(linha.cacheMotivo) + '.' : '') + '</div>';
+  }
 
   if(linha.aviso) html += '<div class="scr-note neutro">' + escapeHtml(linha.aviso) + '</div>';
   return html;
 }
 
 function screenerTagHtml(linha){
-  if(screenerEhFundo(linha)) return '<span class="scr-tag fundo">FII</span>';
-  return "";
+  var tags = screenerEhFundo(linha) ? '<span class="scr-tag fundo">FII</span>' : "";
+  // Preço de dado guardado (até 6 h) desenhado igual a preço de agora faz o
+  // usuário comparar papéis achando que é tudo do mesmo instante. O selo com a
+  // idade é o mínimo — o motivo completo fica no detalhe.
+  if(linha.cacheStale){
+    var idade = screenerIdadeTexto(linha.cacheIdade);
+    tags += '<span class="scr-tag" title="' + escapeHtml(linha.cacheMotivo || "último dado guardado") + '">' +
+      escapeHtml(idade || "dado guardado") + '</span>';
+  }
+  return tags;
 }
 
 function screenerTabelaHtml(linhas){
@@ -4843,9 +5200,14 @@ function renderScreener(){
   if(state.screenerProgress){
     var feitos = state.screenerProgress.feitos;
     var total = state.screenerProgress.total;
-    var pctProg = total > 0 ? Math.round(feitos / total * 100) : 0;
+    // No caminho de lote é uma requisição só: não há "N de 15" honesto pra
+    // mostrar, e inventar um contador que anda sozinho seria pior que dizer a
+    // verdade. A barra fica indeterminada (um terço) só pra tela não parecer
+    // travada — são segundos de espera.
+    var emLote = state.screenerProgress.lote === true;
+    var pctProg = emLote ? 33 : (total > 0 ? Math.round(feitos / total * 100) : 0);
     html += '<div class="card">' +
-      '<div class="scr-progress">Carregando ' + feitos + ' de ' + total + ' papéis…</div>' +
+      '<div class="scr-progress">' + (emLote ? ('Carregando os ' + total + ' papéis numa consulta só…') : ('Carregando ' + feitos + ' de ' + total + ' papéis…')) + '</div>' +
       '<div class="bar"><i style="width:' + Math.max(3, pctProg) + '%"></i></div>' +
     '</div>';
   }
@@ -4865,7 +5227,7 @@ function renderScreener(){
       html += '<div class="card"><div class="ai-error" style="margin-top:0">' + escapeHtml(state.screenerError) + '</div>' +
         '<button type="button" class="btn-submit" id="btnScreenerRetry" style="margin-top:10px">Tentar de novo</button></div>';
     } else {
-      html += '<div class="card"><div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">São ' + SCREENER_TICKERS.length + ' consultas de cotação, uma por papel — carrega em poucos segundos.</div>' +
+      html += '<div class="card"><div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Uma consulta só, com os ' + SCREENER_TICKERS.length + ' papéis juntos — carrega em poucos segundos. Vir tudo junto não é detalhe de velocidade: é o que permite decidir a escala de cada indicador comparando os papéis entre si.</div>' +
         '<button type="button" class="btn-submit" id="btnScreenerLoad">Carregar screener</button></div>';
     }
     return html;
@@ -4885,15 +5247,25 @@ function renderScreener(){
 
   var linhas = state.screenerData.slice().sort(screenerCompara);
   var temFundo = false;
-  linhas.forEach(function(l){ if(screenerEhFundo(l)) temFundo = true; });
+  var temVelho = false;
+  linhas.forEach(function(l){
+    if(screenerEhFundo(l)) temFundo = true;
+    if(l.cacheStale) temVelho = true;
+  });
 
   html += '<div class="card">' +
     '<p style="font-size:14px;font-weight:800;margin:0 0 2px">Comparativo</p>' +
-    '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Nota de 0 a ' + screenerFmtPontos(linhas[0].scoreMax) + ', somando 5 indicadores. Toque no papel para abrir o detalhe.</p>' +
+    '<p style="font-size:12px;color:var(--fm);margin:0 0 12px">Nota de 0 a ' + escapeHtml(screenerFmtPontos(linhas[0].scoreMax)) + ', somando 5 indicadores. Toque no papel para abrir o detalhe.</p>' +
+    // Aviso de dado velho ANTES da tabela: depois dela o usuário já comparou.
+    (temVelho ? '<div class="scr-note neutro" style="margin-top:0;margin-bottom:12px"><b>Parte destes números não é do momento.</b> Os papéis marcados com a idade ao lado do código vêm do último dado guardado — a fonte de cotações não respondeu agora. Abra o papel para ver o motivo.</div>' : '') +
     screenerSortbarHtml() +
     '<div class="scr-tablewrap">' + screenerTabelaHtml(linhas) + '</div>' +
     screenerCardsHtml(linhas) +
     (temFundo ? '<div class="scr-note neutro"><b>Sobre os FII da lista:</b> MXRF11 e HGLG11 são fundos imobiliários e aparecem sem nota de propósito. Não é nota baixa — é que P/L, ROE e margem não querem dizer nada num fundo, e a conta de ações premiaria os dois de graça por não terem dívida. Para fundo, olhe o dividend yield.</div>' : '') +
+    // O aviso completo está no topo da aba, a 200px de rolagem no celular —
+    // e é aqui, ao lado das barras coloridas, que a tela mais parece dar uma
+    // indicação. Por isso a versão curta se repete junto da nota.
+    '<div class="scr-note"><b>Nota é comparação, não indicação:</b> ela ordena papéis por 5 indicadores públicos e não diz nada sobre comprar ou vender.</div>' +
   '</div>';
 
   return html;
