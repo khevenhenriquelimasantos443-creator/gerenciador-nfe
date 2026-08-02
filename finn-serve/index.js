@@ -2305,6 +2305,30 @@ function _screenerRedige(texto, token) {
 // corpo do fornecedor: o repo já segue isso (ver _serverError) porque
 // mensagem de terceiro carrega formato interno e nome de campo — não ajuda o
 // usuário e ajuda quem está sondando.
+// Le palavras-chave no corpo de erro da brapi e devolve o motivo real, ou
+// null se o corpo não ajudar a decidir (nesse caso quem chamou cai no
+// default de cada situação). Existia só dentro do ramo "200 com erro"; agora
+// também roda no 401/403, porque a brapi usa ESSES status tanto pra "token
+// mesmo errado" quanto pra "token válido, mas este ticker não está no seu
+// plano" — sem ler o corpo, os dois casos ficavam indistinguíveis e o
+// segundo (o mais comum na prática) virava "screener indisponível", uma
+// mensagem que soa a app quebrado quando o problema é o plano de dados.
+function _screenerClassificaCorpo(corpo, status) {
+  if (!corpo || typeof corpo !== 'object') return null;
+  var msg = String(corpo.message || corpo.error || '').toLowerCase();
+  if (!msg) return null;
+  // Palavras plausíveis pra "este dado é de plano pago", em pt e en — a
+  // brapi.dev está bloqueada nesta rede, então não dá pra confirmar a
+  // mensagem exata que ela usa. Lista ampla de propósito, e o texto cru vai
+  // pro console.error de qualquer forma: se nenhuma palavra bater, quem olhar
+  // o log (wrangler tail) vê a frase real e dá pra ajustar aqui depois.
+  var indicaPlano = ['plan', 'plano', 'free', 'gratuit', 'upgrade', 'pro ', 'subscri', 'assinatura', 'restri'];
+  for (var i = 0; i < indicaPlano.length; i++) { if (msg.indexOf(indicaPlano[i]) !== -1) return { ok: false, motivo: 'plano', status: status }; }
+  if (msg.indexOf('limit') !== -1 || msg.indexOf('rate') !== -1) return { ok: false, motivo: 'rate_limit_fornecedor', status: status, retryAfter: 60 };
+  if (msg.indexOf('token') !== -1) return { ok: false, motivo: 'token_recusado', status: status };
+  return null;
+}
+
 async function _brapiBusca(env, ticker) {
   // encodeURIComponent aqui é redundante (o ticker já saiu da allowlist), mas
   // é a mesma disciplina de _pluggyTx: validar o formato e ainda assim
@@ -2346,8 +2370,20 @@ async function _brapiBusca(env, ticker) {
 
     if (resp.status === 401 || resp.status === 403) {
       // Primeira recusa pode ser só "esta versão não aceita o header" — tenta
-      // a forma de query antes de desistir. A segunda é token errado mesmo.
+      // a forma de query antes de desistir.
       if (t === 0) continue;
+      // A segunda recusa NÃO é automaticamente "token errado": a brapi devolve
+      // 401/403 (não 402) também quando o TOKEN É VÁLIDO mas o TICKER está
+      // fora do que o plano libera — visto na prática, com o mesmo token
+      // aceitando alguns papéis e recusando outros sempre. Sem checar o
+      // corpo aqui, isso virava "screener indisponível" pros 11 de 15 que
+      // caem nesse caso, uma mensagem que soa a app quebrado quando o
+      // problema é o plano de dados, não o código.
+      var classificado = _screenerClassificaCorpo(corpo, resp.status);
+      if (classificado) {
+        console.error('[screener] brapi recusou (' + resp.status + ', classificado como ' + classificado.motivo + '):', _screenerRedige(texto.slice(0, 200), env.BRAPI_TOKEN));
+        return classificado;
+      }
       console.error('[screener] brapi recusou o token:', resp.status, _screenerRedige(texto.slice(0, 200), env.BRAPI_TOKEN));
       return { ok: false, motivo: 'token_recusado', status: resp.status };
     }
@@ -2363,12 +2399,9 @@ async function _brapiBusca(env, ticker) {
     }
     // 200 com corpo de erro também acontece — plano/limite costumam vir assim.
     if (corpo.error) {
-      var msgErro = String(corpo.message || corpo.error || '').toLowerCase();
-      console.error('[screener] brapi devolveu erro no corpo:', _screenerRedige(msgErro.slice(0, 200), env.BRAPI_TOKEN));
-      if (msgErro.indexOf('token') !== -1) return { ok: false, motivo: 'token_recusado', status: resp.status };
-      if (msgErro.indexOf('plan') !== -1 || msgErro.indexOf('plano') !== -1) return { ok: false, motivo: 'plano', status: resp.status };
-      if (msgErro.indexOf('limit') !== -1 || msgErro.indexOf('rate') !== -1) return { ok: false, motivo: 'rate_limit_fornecedor', status: resp.status, retryAfter: 60 };
-      return { ok: false, motivo: 'nao_encontrado', status: resp.status };
+      var classificadoOk = _screenerClassificaCorpo(corpo, resp.status);
+      console.error('[screener] brapi devolveu erro no corpo:', _screenerRedige(String(corpo.message || corpo.error || '').slice(0, 200), env.BRAPI_TOKEN));
+      return classificadoOk || { ok: false, motivo: 'nao_encontrado', status: resp.status };
     }
     if (!Array.isArray(corpo.results) || !corpo.results.length) {
       return { ok: false, motivo: 'nao_encontrado', status: resp.status };
@@ -2466,7 +2499,12 @@ function _screenerMotivoInfo(ticker, busca) {
     nao_encontrado: { status: 404, tipo: 'nao_encontrado', msg: 'Não achamos o papel ' + ticker + ' na B3 agora.' },
     plano: { status: 503, tipo: 'fonte_limitada', msg: 'Os indicadores completos precisam de um plano de dados que ainda não temos.' },
     rate_limit_fornecedor: { status: 429, tipo: 'muitas_consultas', msg: 'O provedor de cotações limitou as consultas agora. Tente de novo em instantes.' },
-    token_recusado: { status: 503, tipo: 'indisponivel', msg: 'O screener está indisponível no momento.' },
+    // "Indisponível" some por padrão parecer pane geral; se o token estivesse
+    // mesmo errado, os 15 papéis falhariam igual — quando só alguns falham
+    // sempre e outros sempre passam, é mais provável ser plano (ver
+    // _screenerClassificaCorpo) do que token. Esta mensagem só aparece quando
+    // o corpo do erro não deu pista nenhuma pra classificar melhor.
+    token_recusado: { status: 503, tipo: 'indisponivel', msg: 'O provedor recusou a consulta deste papel — pode ser token inválido ou este papel específico fora do que o plano de dados libera.' },
     rede: { status: 504, tipo: 'indisponivel', msg: 'Não conseguimos falar com a fonte de cotações agora — pode ter sido lentidão ou fora do ar.' }
   };
   return mapa[busca.motivo] || { status: 502, tipo: 'indisponivel', msg: 'Não conseguimos carregar as cotações agora.' };
