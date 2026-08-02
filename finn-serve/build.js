@@ -1682,10 +1682,31 @@ async function _anonIp(request, env) {
   return { regiao: truncado, id: hex.slice(0, 12) };
 }
 
+// Teto de registros detalhados por dia. Existe porque o próprio registro
+// escreve no KV: sem teto, quem descobrisse uma isca (o repositório é
+// público) esvaziaria a cota diária de escrita só pedindo /.env em loop — e
+// aí quebrariam as inscrições de push, o índice do Instagram e o controle de
+// limite, que gravam no mesmo KV. Passado o teto, o contador do dia continua
+// subindo (o painel mostra o volume real), só o detalhe é que para.
+var SEC_LOG_MAX_DIA = 500;
+
 async function _securityLog(env, request, kind, detalhe) {
   if (!env.FINN_KV) return;
   try {
     var url = new URL(request.url);
+    var diaAtual = new Date().toISOString().slice(0, 10);
+    var chaveContador = 'seccount_' + diaAtual;
+    var jaHoje = parseInt((await env.FINN_KV.get(chaveContador)) || '0', 10) || 0;
+
+    // Acima do teto, grava só o contador; e bem acima, para de gravar de vez,
+    // pra uma enxurrada não conseguir consumir escrita nenhuma.
+    if (jaHoje >= SEC_LOG_MAX_DIA) {
+      if (jaHoje < SEC_LOG_MAX_DIA * 10) {
+        await env.FINN_KV.put(chaveContador, String(jaHoje + 1), { expirationTtl: SEC_LOG_TTL });
+      }
+      return;
+    }
+
     var origem = await _anonIp(request, env);
     var registro = {
       at: new Date().toISOString(),
@@ -1705,11 +1726,9 @@ async function _securityLog(env, request, kind, detalhe) {
     await env.FINN_KV.put(chave, JSON.stringify(registro), { expirationTtl: SEC_LOG_TTL });
 
     // Contador por dia — é o que o painel usa pra detectar pico sem varrer
-    // todas as chaves.
-    var dia = registro.at.slice(0, 10);
-    var ck = 'seccount_' + dia;
-    var atual = parseInt((await env.FINN_KV.get(ck)) || '0', 10) || 0;
-    await env.FINN_KV.put(ck, String(atual + 1), { expirationTtl: SEC_LOG_TTL });
+    // todas as chaves. Reaproveita a leitura feita lá em cima pro teto, em
+    // vez de ler de novo.
+    await env.FINN_KV.put(chaveContador, String(jaHoje + 1), { expirationTtl: SEC_LOG_TTL });
   } catch (e) {
     // Registrar nunca pode derrubar a requisição.
     console.error('[securityLog]', e && e.message);
@@ -2270,6 +2289,21 @@ h1 em{font-style:normal;color:#F97316}
           'X-Robots-Tag': 'noindex, nofollow',
         },
       });
+    }
+
+    // ── Caminho desconhecido: 404, não o app ──
+    // Até aqui, qualquer rota que não casou com nenhuma das de cima caía no
+    // app e recebia 200 com os ~276 KB do HTML inteiro. Duas consequências
+    // ruins, as duas vistas na prática num scanner que varreu o site:
+    //   1. custo — uma varredura de mil caminhos servia ~276 MB à toa;
+    //   2. cegueira — só os caminhos da SCANNER_PATHS entravam no painel, e
+    //      um /config/database.yml ou /.svn/entries passava sem registro.
+    // O app não usa rota por caminho (a navegação é por state.tab, e o
+    // replaceState do login só tira a query preservando o pathname), então
+    // '/' e '/index.html' são as únicas entradas legítimas do HTML.
+    if (url.pathname !== '/' && url.pathname !== '/index.html') {
+      ctx.waitUntil(_securityLog(env, request, 'caminho_desconhecido', url.pathname));
+      return _honeyResponse();
     }
 
     // ── Main app ──
