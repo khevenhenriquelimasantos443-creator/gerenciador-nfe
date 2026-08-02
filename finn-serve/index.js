@@ -1583,12 +1583,15 @@ async function _adminInstagramPublishNext(request, env) {
 // (SSRF). A URL final é montada com o elemento DESTA lista, nunca com a
 // string que chegou do cliente — assim nem um bug de normalização consegue
 // injetar caractere estranho lá.
+// Exatamente os 15 papéis pedidos, nesta ordem. A lista já esteve maior aqui
+// e foi cortada de volta de propósito: cada papel a mais é uma chamada a mais
+// por atualização (o plano grátis da brapi é contado), e a lista é decisão de
+// produto de quem pediu a feature, não do código. Mexer aqui é mexer no
+// escopo — e a mesma lista precisa existir igual no finn/index.html.
 var SCREENER_TICKERS = [
-  'PETR3', 'PETR4', 'VALE3', 'ITUB4', 'BBAS3', 'BBDC4', 'ABEV3', 'WEGE3',
-  'B3SA3', 'BBSE3', 'PSSA3', 'RENT3', 'SUZB3', 'RADL3', 'VIVT3', 'LREN3',
-  'PRIO3', 'CMIG4', 'CPLE6', 'EGIE3', 'ELET3', 'MGLU3',
-  'TAEE11', 'SANB11', 'KLBN11', 'ENGI11', 'ALUP11', 'BPAC11',
-  'MXRF11', 'HGLG11'
+  'ITUB4', 'BBAS3', 'BBDC4', 'PETR4', 'VALE3',
+  'TAEE11', 'ELET3', 'MGLU3', 'LREN3', 'WEGE3',
+  'RDOR3', 'HAPV3', 'MXRF11', 'HGLG11', 'RENT3'
 ];
 
 // Terminar em 11 NÃO classifica FII: TAEE11 é unit da Taesa, empresa
@@ -1673,22 +1676,96 @@ function _screenerNum(v) {
 // "referencia" é o mesmo indicador calculado por um caminho independente
 // (ROE = P/VP ÷ P/L, por exemplo) — quando existe, é ela que resolve a zona
 // ambígua sem adivinhação.
-function _screenerNormPct(v, teto, referencia) {
+// Distância em RAZÃO (log), não em diferença. Com diferença absoluta uma
+// referência pequena puxa a decisão pro lado errado: ROE 0,25 (fração certa,
+// 25%) contra referência 0,12 dá |0,25−0,12| = 0,13 pra fração e
+// |0,0025−0,12| = 0,1175 pro percentual — o percentual "ganha" por um fio e o
+// ROE de 25% vira 0,25%, caindo de 5 pontos pra 1. Em razão: 0,25/0,12 = 2,1x
+// contra 0,0025/0,12 = 48x, e a fração ganha com folga, que é o correto.
+// Escala é uma grandeza multiplicativa; comparar por subtração era o erro.
+function _screenerDistRazao(a, b) {
+  if (!isFinite(a) || !isFinite(b) || a === 0 || b === 0) return Math.abs(a - b);
+  return Math.abs(Math.log(Math.abs(a) / Math.abs(b)));
+}
+
+function _screenerNormPct(v, teto, referencia, escalaLote) {
   if (v === null || v === undefined) return { valor: null, confianca: 'ausente', escala: null };
   var comoFracao = v;
   var comoPct = v / 100;
-  // Acima do teto só a leitura percentual explica o número.
-  if (Math.abs(v) > teto) return { valor: comoPct, confianca: 'alta', escala: 'percentual' };
+  // A REFERÊNCIA DECIDE ANTES DO TETO. Ela é evidência do próprio papel; o
+  // teto é só heurística. Um ROE real de 214% (patrimônio líquido pequeno)
+  // chega como 2,14 e o teto sozinho o rebaixaria pra 2,1% — mas o
+  // P/VP ÷ P/L confirma os 214%, e é nele que se deve acreditar.
   if (referencia !== null && referencia !== undefined && isFinite(referencia)) {
-    var dFracao = Math.abs(comoFracao - referencia);
-    var dPct = Math.abs(comoPct - referencia);
-    var ehFracao = dFracao <= dPct;
+    var ehFracao = _screenerDistRazao(comoFracao, referencia) <= _screenerDistRazao(comoPct, referencia);
     return { valor: ehFracao ? comoFracao : comoPct, confianca: 'alta', escala: ehFracao ? 'fracao' : 'percentual' };
   }
+  // Acima do teto só a leitura percentual explica o número.
+  if (Math.abs(v) > teto) return { valor: comoPct, confianca: 'alta', escala: 'percentual' };
+  // Sem segunda fonte no próprio papel, mas com o veredito do LOTE: um valor
+  // sozinho é ambíguo, quinze não são (ver _screenerEscalaLote). É este o
+  // caminho que salva o caso comum — resposta em fração e sem P/VP, sem
+  // lucro/receita e sem histórico de proventos pra desempatar.
+  if (escalaLote === 'percentual') return { valor: comoPct, confianca: 'media', escala: 'percentual', porLote: true };
+  if (escalaLote === 'fracao') return { valor: comoFracao, confianca: 'media', escala: 'fracao', porLote: true };
   // Zona ambígua sem segunda fonte: 0,9 tanto pode ser 90% quanto 0,9%.
   if (Math.abs(v) >= 0.005) return { valor: comoFracao, confianca: 'baixa', escala: 'fracao' };
   // Perto de zero as duas leituras dão praticamente no mesmo.
   return { valor: comoFracao, confianca: 'alta', escala: 'fracao' };
+}
+
+// ── Calibração de escala pelo LOTE ─────────────────────────────────────────
+// O descarte por escala ambígua é a regra certa (errar pra cima num app de
+// investimento é bem pior que perder um indicador), mas sozinho ele deixa a
+// feature sem nota nenhuma justamente no caso mais provável: resposta em
+// fração e sem nenhuma fonte de desempate. Daí este plano B.
+//
+// A ideia: um valor isolado de ROE = 0,285 é ambíguo (28,5% ou 0,285%?), mas
+// quinze papéis não são. Se o campo vier em percentual, a lista inteira fica
+// em 20, 28, 31; se vier em fração, fica em 0,20, 0,28, 0,31. A MEDIANA
+// separa os dois mundos com folga e não se deixa levar por um outlier.
+//
+// Exige amostra mínima de propósito: com 1 ou 2 papéis a mediana não decide
+// nada, e nesse caso devolve null — ou seja, cai de volta no descarte
+// conservador, que é o comportamento seguro.
+var SCREENER_ESCALA_MIN_AMOSTRA = 4;
+
+function _screenerEscalaLote(valores, teto) {
+  var limpos = [];
+  for (var i = 0; i < (valores || []).length; i++) {
+    var n = _screenerNum(valores[i]);
+    // Zero e negativo não ajudam a distinguir escala (0 é 0 nas duas leituras,
+    // e prejuízo distorce a mediana), então ficam de fora da amostra.
+    if (n !== null && isFinite(n) && n > 0) limpos.push(Math.abs(n));
+  }
+  if (limpos.length < SCREENER_ESCALA_MIN_AMOSTRA) return null;
+  limpos.sort(function (a, b) { return a - b; });
+  var meio = Math.floor(limpos.length / 2);
+  var mediana = limpos.length % 2 ? limpos[meio] : (limpos[meio - 1] + limpos[meio]) / 2;
+  return mediana > teto ? 'percentual' : 'fracao';
+}
+
+// Tetos por campo — os mesmos usados na normalização individual, num lugar só
+// pra lote e papel isolado nunca divergirem.
+var SCREENER_TETO = { roe: 1.5, margem: 1.5, dy: 0.40 };
+
+// Varre as respostas cruas do lote e devolve { roe, dy, margem } com o
+// veredito de escala de cada campo (ou null quando não deu pra decidir).
+function _screenerEscalasDoLote(crus) {
+  var brutos = { roe: [], dy: [], margem: [] };
+  for (var i = 0; i < (crus || []).length; i++) {
+    var cru = crus[i];
+    if (!cru) continue;
+    brutos.roe.push(_brapiPega(cru, ['financialData', 'defaultKeyStatistics', null], ['returnOnEquity', 'roe']).valor);
+    brutos.dy.push(_brapiPega(cru, [null, 'summaryDetail', 'defaultKeyStatistics'], ['dividendYield', 'trailingAnnualDividendYield', 'yield']).valor);
+    brutos.margem.push(_brapiPega(cru, ['financialData', 'defaultKeyStatistics', null], ['profitMargins', 'netMargin']).valor);
+  }
+  return {
+    roe: _screenerEscalaLote(brutos.roe, SCREENER_TETO.roe),
+    dy: _screenerEscalaLote(brutos.dy, SCREENER_TETO.dy),
+    margem: _screenerEscalaLote(brutos.margem, SCREENER_TETO.margem),
+    amostra: brutos.roe.length
+  };
 }
 
 // Varre módulo × nome procurando o primeiro campo que existe e é numérico. A
@@ -1778,7 +1855,11 @@ function _screenerDividendos12m(result, preco, agoraMs) {
 
 function _notaPL(v) {
   if (v === null || v === undefined) return null;
-  if (v > 200 || v < -500) return null;
+  // Extremo NÃO vira N/A: vira a PIOR faixa. N/A sai do denominador e a nota
+  // é normalizada pelo que sobrou — então o papel absurdo acabava PREMIADO,
+  // ficando acima de um papel apenas ruim que tinha o dado. Só ausência de
+  // verdade (o campo não veio) pode sair do denominador.
+  if (v > 200 || v < -500) return { pontos: 0, faixa: 'fora de qualquer faixa plausível — número não confiável', flag: 'extremo' };
   if (v <= 0) return { pontos: 0, faixa: 'prejuízo nos últimos 12 meses' };
   // Abaixo de 1 quase nunca é barganha: é lucro não recorrente ou LPA
   // defasado. Não premiar como se fosse.
@@ -1795,7 +1876,8 @@ function _notaPL(v) {
 function _notaDY(v) {
   if (v === null || v === undefined) return null;
   // Acima de 40% é erro de escala ou dado podre, não pagadora generosa.
-  if (v < 0 || v > 0.40) return null;
+  // Nota 0 e não N/A: ver o comentário em _notaPL — N/A premiaria o absurdo.
+  if (v < 0 || v > 0.40) return { pontos: 0, faixa: 'fora de qualquer faixa plausível — número não confiável', flag: 'extremo' };
   if (v === 0) return { pontos: 0, faixa: 'não distribui proventos' };
   if (v <= 0.02) return { pontos: 1, faixa: 'até 2% ao ano' };
   if (v <= 0.04) return { pontos: 2, faixa: '2% a 4% ao ano' };
@@ -1824,9 +1906,10 @@ function _notaROE(v) {
 // Múltiplo (x). Negativo é LEGÍTIMO: significa caixa maior que dívida.
 function _notaDivEbitda(v) {
   if (v === null || v === undefined) return null;
-  // Acima de 30x o EBITDA está quase zerado e a razão não significa nada —
-  // N/A é mais honesto que nota 0.
-  if (v > 30) return null;
+  // Acima de 30x o EBITDA está quase zerado. Nota 0, não N/A: com N/A o
+  // indicador saía do denominador e a empresa praticamente insolvente
+  // terminava com nota MAIOR que a de uma alavancada comum — que leva 0.
+  if (v > 30) return { pontos: 0, faixa: 'acima de 30x — dívida impagável com a geração de caixa atual', flag: 'extremo' };
   if (v < 0) return { pontos: 5, faixa: 'caixa líquido — caixa maior que a dívida' };
   if (v <= 1) return { pontos: 5, faixa: 'até 1x' };
   if (v <= 2) return { pontos: 4, faixa: '1x a 2x' };
@@ -1839,7 +1922,8 @@ function _notaDivEbitda(v) {
 // Recebe FRAÇÃO (0.213 = 21,3%).
 function _notaMargem(v) {
   if (v === null || v === undefined) return null;
-  if (v > 1.5 || v < -5) return null;
+  // Idem: extremo é a pior faixa, não ausência (ver _notaPL).
+  if (v > 1.5 || v < -5) return { pontos: 0, faixa: 'fora de qualquer faixa plausível — número não confiável', flag: 'extremo' };
   if (v <= 0) return { pontos: 0, faixa: 'negativa — vende e perde dinheiro' };
   if (v <= 0.05) return { pontos: 1, faixa: 'até 5%' };
   if (v <= 0.10) return { pontos: 2, faixa: '5% a 10%' };
@@ -2013,10 +2097,12 @@ function _screenerEhFinanceira(ticker, result) {
 // Todo campo é procurado por cadeia de fallback (módulo × nome × derivação),
 // porque não dá pra assumir onde a brapi põe cada coisa nem em que escala —
 // e um campo que sumir numa versão nova não pode derrubar os outros quatro.
-function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs) {
+function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs, escalasLote) {
   var motivos = {};
   var origens = {};
   var escalaDuvidosa = [];
+  var escalaPorLote = [];
+  escalasLote = escalasLote || {};
 
   var precoRef = _brapiPega(result, [null, 'price'], ['regularMarketPrice', 'price', 'regularMarketPreviousClose', 'close']);
   var preco = precoRef.valor;
@@ -2050,7 +2136,8 @@ function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs) {
   if (roeBruto.valor === null && roeReferencia !== null) {
     roeBruto = { valor: roeReferencia, origem: 'derivado(P/VP ÷ P/L)' };
   }
-  var roeNorm = _screenerNormPct(roeBruto.valor, 1.5, roeReferencia);
+  var roeNorm = _screenerNormPct(roeBruto.valor, SCREENER_TETO.roe, roeReferencia, escalasLote.roe);
+  if (roeNorm.porLote) escalaPorLote.push('roe');
   var roe = roeNorm.valor;
   var roeOrigem = roeBruto.origem;
   if (roeBruto.valor === null) {
@@ -2071,7 +2158,8 @@ function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs) {
   // ── DY ── o mais provável de faltar: o campo pronto depende do plano.
   var divs = _screenerDividendos12m(result, preco, agoraMs);
   var dyBruto = _brapiPega(result, [null, 'summaryDetail', 'defaultKeyStatistics'], ['dividendYield', 'trailingAnnualDividendYield', 'yield']);
-  var dyNorm = _screenerNormPct(dyBruto.valor, 0.40, divs.valor);
+  var dyNorm = _screenerNormPct(dyBruto.valor, SCREENER_TETO.dy, divs.valor, escalasLote.dy);
+  if (dyNorm.porLote) escalaPorLote.push('dy');
   var dy = null, dyOrigem = null;
   if (dyBruto.valor !== null && dyNorm.confianca !== 'baixa') {
     dy = dyNorm.valor;
@@ -2095,7 +2183,8 @@ function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs) {
   var lucro = _brapiPega(result, ['defaultKeyStatistics', 'financialData', null], ['netIncomeToCommon', 'netIncome']);
   var margemReferencia = (receita.valor !== null && receita.valor !== 0 && lucro.valor !== null) ? (lucro.valor / receita.valor) : null;
   var margemBruta = _brapiPega(result, ['financialData', 'defaultKeyStatistics', null], ['profitMargins', 'netMargin']);
-  var margemNorm = _screenerNormPct(margemBruta.valor, 1.5, margemReferencia);
+  var margemNorm = _screenerNormPct(margemBruta.valor, SCREENER_TETO.margem, margemReferencia, escalasLote.margem);
+  if (margemNorm.porLote) escalaPorLote.push('margem');
   var margem = null, margemOrigem = null;
   if (margemBruta.valor !== null && margemNorm.confianca !== 'baixa') {
     margem = margemNorm.valor;
@@ -2180,7 +2269,11 @@ function _screenerIndicadores(ticker, result, classe, ehFinanceira, agoraMs) {
     },
     motivos: motivos,
     origens: origens,
-    escalaDuvidosa: escalaDuvidosa
+    escalaDuvidosa: escalaDuvidosa,
+    // Quais indicadores só têm valor porque o LOTE decidiu a escala. Vai pra
+    // resposta e daí pra tela: a nota é confiável, mas o usuário merece saber
+    // que a escala foi inferida do conjunto e não confirmada no próprio papel.
+    escalaPorLote: escalaPorLote
   };
 }
 
@@ -2369,10 +2462,16 @@ function _screenerErro(cors, ticker, busca) {
   }), { status: e.status, headers: h });
 }
 
-function _screenerResposta(cors, ticker, cru, cache, agoraMs) {
+function _screenerResposta(cors, ticker, cru, cache, agoraMs, escalasLote) {
+  return new Response(JSON.stringify(_screenerPayload(ticker, cru, cache, agoraMs, escalasLote)), { headers: cors });
+}
+
+// Monta o objeto de um papel. Separado da Response porque a rota de lote
+// (GET /api/stocks) precisa do OBJETO de 15 papéis pra pôr num array só.
+function _screenerPayload(ticker, cru, cache, agoraMs, escalasLote) {
   var classe = _screenerClasse(ticker, cru);
   var financeira = _screenerEhFinanceira(ticker, cru);
-  var ind = _screenerIndicadores(ticker, cru, classe, financeira, agoraMs);
+  var ind = _screenerIndicadores(ticker, cru, classe, financeira, agoraMs, escalasLote);
   var nota = _screenerNotaFinal(_screenerScore(ind.valores, ind.motivos), classe);
 
   // Distinguir "o plano não libera o módulo" de "a empresa não tem o dado"
@@ -2397,7 +2496,7 @@ function _screenerResposta(cors, ticker, cru, cache, agoraMs) {
   // o corte de tamanho aqui é só pra um campo absurdo não virar payload.
   var nome = String((cru && (cru.longName || cru.shortName)) || ticker).slice(0, 120);
 
-  return new Response(JSON.stringify({
+  return {
     ok: true,
     ticker: ticker,
     classe: classe,
@@ -2437,12 +2536,119 @@ function _screenerResposta(cors, ticker, cru, cache, agoraMs) {
     diagnostico: {
       modulosAusentes: modulosAusentes,
       escalaDuvidosa: ind.escalaDuvidosa,
+      escalaPorLote: ind.escalaPorLote,
       ebitdaNaoPositivo: ind.valores.ebitdaNaoPositivo
     },
     aviso: SCREENER_AVISO,
     natureza: 'dados_publicos_mercado',
     naoERecomendacao: true
-  }), { headers: cors });
+  };
+}
+
+// GET /api/stocks — a lista inteira de uma vez.
+//
+// Existe por um motivo de CORREÇÃO, não de desempenho: a escala fração vs
+// percentual não tem como ser resolvida com um papel só na mão. Com os 15 na
+// mesma resposta, a mediana de cada campo decide a escala sem chute (ver
+// _screenerEscalaLote), e aí os indicadores que seriam descartados por
+// ambiguidade voltam a valer. De quebra, a tela faz 1 requisição em vez de 15.
+//
+// Reaproveita o MESMO cache por ticker da rota individual: papel já guardado
+// não vira chamada externa aqui.
+async function _screenerLote(request, env, ctx) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (request.method !== 'GET') {
+      return new Response(JSON.stringify({ error: 'método não permitido — use GET' }), {
+        status: 405, headers: Object.assign({}, cors, { Allow: 'GET, OPTIONS' })
+      });
+    }
+
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    if (!env.BRAPI_TOKEN) {
+      return new Response(JSON.stringify({
+        ok: false, configurado: false, skipped: true,
+        erro: { tipo: 'nao_configurado', mensagem: 'O screener ainda não está ligado neste ambiente.' },
+        motivo: 'BRAPI_TOKEN não configurado — ver o bloco [vars] do wrangler.toml',
+        aviso: SCREENER_AVISO, natureza: 'dados_publicos_mercado'
+      }), { status: 503, headers: cors });
+    }
+
+    var agora = Date.now();
+
+    // ── Passo 1: junta o dado cru de todos os papéis ──
+    // Cache primeiro; só quem faltar sai pra rede, e cada saída dessas passa
+    // pelo rate limit. Sem Promise.all de 15: um papel que falha não pode
+    // derrubar a lista inteira, e serial mantém o teto de concorrência que a
+    // brapi (e a cota do plano grátis) aguenta.
+    var itens = [];
+    var limiteAtingido = false;
+    for (var i = 0; i < SCREENER_TICKERS.length; i++) {
+      var ticker = SCREENER_TICKERS[i];
+      var guardado = await _screenerCacheLe(request, ticker);
+      var idade = null;
+      if (guardado) {
+        var nasceu = Date.parse(guardado.obtidoEm);
+        idade = isFinite(nasceu) ? Math.max(0, Math.round((agora - nasceu) / 1000)) : null;
+      }
+      if (guardado && idade !== null && idade <= SCREENER_CACHE_TTL_SEG) {
+        itens.push({ ticker: ticker, cru: guardado.cru, cache: { hit: true, idadeSegundos: idade, stale: false } });
+        continue;
+      }
+      if (limiteAtingido) {
+        // Estourou o teto no meio da lista: o resto vem do guardado (mesmo
+        // vencido) ou entra como erro. Nunca fura o limite.
+        if (guardado) itens.push({ ticker: ticker, cru: guardado.cru, cache: { hit: true, idadeSegundos: idade, stale: true, motivo: 'limite de consultas atingido — mostrando o último dado guardado' } });
+        else itens.push({ ticker: ticker, cru: null, erro: { tipo: 'rate_limit', mensagem: 'limite de consultas atingido antes de chegar neste papel' } });
+        continue;
+      }
+      var rl = await _rateLimit(env, 'screener', authUser.id, SCREENER_RL_LIMITE, SCREENER_RL_JANELA_SEG);
+      if (!rl.ok) {
+        limiteAtingido = true;
+        if (guardado) itens.push({ ticker: ticker, cru: guardado.cru, cache: { hit: true, idadeSegundos: idade, stale: true, motivo: 'limite de consultas atingido — mostrando o último dado guardado' } });
+        else itens.push({ ticker: ticker, cru: null, erro: { tipo: 'rate_limit', mensagem: 'limite de consultas atingido antes de chegar neste papel' } });
+        continue;
+      }
+      var busca = await _brapiBusca(env, ticker);
+      if (!busca.ok) {
+        if (guardado) itens.push({ ticker: ticker, cru: guardado.cru, cache: { hit: true, idadeSegundos: idade, stale: true, motivo: 'fonte indisponível agora — mostrando o último dado guardado' } });
+        else itens.push({ ticker: ticker, cru: null, erro: { tipo: busca.tipo || 'falha_fonte', mensagem: 'não deu pra buscar este papel agora' } });
+        continue;
+      }
+      _screenerCacheGrava(request, ticker, busca.result, ctx);
+      itens.push({ ticker: ticker, cru: busca.result, cache: { hit: false, idadeSegundos: 0, stale: false } });
+    }
+
+    // ── Passo 2: com a lista na mão, decide a escala de cada campo ──
+    var escalas = _screenerEscalasDoLote(itens.map(function (it) { return it.cru; }));
+
+    // ── Passo 3: pontua todo mundo já com a escala resolvida ──
+    var papeis = itens.map(function (it) {
+      if (!it.cru) {
+        return { ok: false, ticker: it.ticker, erro: it.erro || { tipo: 'sem_dado', mensagem: 'sem dado para este papel' },
+                 aviso: SCREENER_AVISO, natureza: 'dados_publicos_mercado' };
+      }
+      return _screenerPayload(it.ticker, it.cru, it.cache, agora, escalas);
+    });
+
+    return new Response(JSON.stringify({
+      ok: true,
+      total: papeis.length,
+      papeis: papeis,
+      // Fica na resposta de propósito: se um dia a nota parecer errada em
+      // bloco, é aqui que se vê se a escala foi lida errada.
+      escalas: escalas,
+      aviso: SCREENER_AVISO,
+      natureza: 'dados_publicos_mercado',
+      naoERecomendacao: true
+    }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_screenerLote');
+  }
 }
 
 // GET /api/stocks/:ticker — credenciais em HEADER, igual às outras rotas
@@ -3028,6 +3234,9 @@ ${bodyHtml}
     //     responde 405 é o próprio _screenerAcao;
     //  2. este if PRECISA continuar acima do 404 de caminho desconhecido —
     //     registrado depois dele, a rota simplesmente nunca é alcançada.
+    if (url.pathname === '/api/stocks') {
+      return _screenerLote(request, env, ctx);
+    }
     var screenerMatch = url.pathname.match(/^\/api\/stocks\/([A-Za-z0-9]{4,6})$/);
     if (screenerMatch) {
       return _screenerAcao(request, env, ctx, screenerMatch[1]);
