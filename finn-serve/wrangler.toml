@@ -57,6 +57,29 @@ compatibility_date = "2024-01-01"
 #   (defaultKeyStatistics/financialData). Nesse caso a rota continua
 #   respondendo com preço, nome e variação, e o campo
 #   diagnostico.modulosAusentes diz o que faltou.
+#
+# META_ADS_TOKEN / META_AD_ACCOUNT_ID — painel de anúncios (GET /admin/meta-ads).
+#   SOMENTE LEITURA de propósito: campanha, gasto, impressões, cliques, CTR,
+#   CPC dos últimos 30 dias. Não cria, edita nem pausa campanha — decisão que
+#   gasta dinheiro de verdade fica fora daqui até virar um pedido explícito,
+#   com um fluxo de "mostrar antes de executar".
+#   Como obter:
+#     1. business.facebook.com → Configurações do Business → Usuários →
+#        Usuários do sistema → criar um novo (ex: "Finn Ads Bot").
+#     2. Atribuir esse usuário à conta de anúncios, com acesso de gerenciar.
+#     3. Gerar token de acesso pra ele com o escopo ads_read (leitura basta —
+#        esta rota nunca escreve).
+#     4. O ID da conta de anúncios aparece no topo do Gerenciador de Anúncios,
+#        formato act_XXXXXXXXXX (o "act_" pode vir com ou sem, a rota aceita
+#        os dois).
+#     5. wrangler secret put META_ADS_TOKEN
+#        wrangler secret put META_AD_ACCOUNT_ID
+#   Sem as duas configuradas, a rota NÃO quebra: responde 503 com
+#   { erro: { tipo: 'nao_configurado' } }. O resto do app segue normal.
+#   graph.facebook.com estava bloqueado no sandbox onde isso foi escrito — os
+#   nomes de campo (spend/impressions/clicks/ctr/cpc/reach) são os
+#   documentados publicamente pela Marketing API, mas não foram confirmados
+#   contra uma resposta real. Primeira chamada de verdade é que vai validar.
 
 # ─────────────────────────────────────────────
 #  Notificações push / assinaturas:

@@ -1240,6 +1240,165 @@ async function _adminBetaQuestionario(request, env) {
   }
 }
 
+// ── Painel de anúncios (Meta Marketing API) ──────────────────────────────────
+// Só LEITURA de propósito: campanha, gasto, impressões, cliques, CTR, CPC dos
+// últimos 30 dias. Criar/editar campanha é decisão que gasta dinheiro de
+// verdade e sai daqui — fica pra quando o usuário pedir explicitamente essa
+// capacidade, com um fluxo de "preparar e mostrar antes de executar".
+//
+// A rede deste sandbox bloqueia graph.facebook.com (mesmo bloqueio que já
+// existia pra brapi.dev), então os nomes de campo abaixo NÃO foram
+// confirmados contra uma resposta real — são os documentados publicamente
+// pela Marketing API (spend/impressions/clicks/ctr/cpc/reach nesse formato
+// são estáveis há anos, mas o formato exato do envelope {data:[...]} e como
+// erros vêm no corpo eu só vou confirmar com o primeiro uso real.
+var META_ADS_API_VERSION = 'v19.0';
+var META_ADS_DATE_PRESET = 'last_30d';
+var META_ADS_CACHE_TTL_SEG = 300; // 5 min — a Marketing API tem teto de chamadas por conta, e "Atualizar agora" clicado em sequência não pode furar isso.
+
+// Mesmo raciocínio do _screenerRedige: o token nunca pode voltar pro
+// cliente, nem em mensagem de erro que ecoe a URL chamada.
+function _metaAdsRedige(texto, token) {
+  if (!token) return texto;
+  return String(texto || '').split(token).join('[TOKEN OCULTO]');
+}
+
+async function _metaAdsBusca(env, caminho, params) {
+  var url = 'https://graph.facebook.com/' + META_ADS_API_VERSION + '/' + caminho +
+    (params ? '?' + params : '');
+  var resp;
+  try {
+    var opcoes = { headers: { Authorization: 'Bearer ' + env.META_ADS_TOKEN, Accept: 'application/json' } };
+    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opcoes.signal = AbortSignal.timeout(10000);
+    resp = await fetch(url, opcoes);
+  } catch (e) {
+    console.error('[metaAds] falha de rede:', _metaAdsRedige(String((e && e.message) || e), env.META_ADS_TOKEN));
+    return { ok: false, motivo: 'rede' };
+  }
+  var texto = '';
+  try { texto = await resp.text(); } catch (e2) { texto = ''; }
+  var corpo = null;
+  try { corpo = JSON.parse(texto); } catch (e3) { corpo = null; }
+
+  if (!resp.ok || corpo === null) {
+    // Erro do Meta costuma vir como {error:{message,type,code}} mesmo em 200
+    // às vezes — mas o status não-ok já é sinal suficiente de problema.
+    var msgErro = (corpo && corpo.error && corpo.error.message) || ('status ' + resp.status);
+    console.error('[metaAds] resposta de erro em ' + caminho + ':', _metaAdsRedige(String(msgErro).slice(0, 300), env.META_ADS_TOKEN));
+    var tipo = 'fornecedor';
+    if (resp.status === 401 || resp.status === 403) tipo = 'token_recusado';
+    else if (resp.status === 429) tipo = 'rate_limit_fornecedor';
+    return { ok: false, motivo: tipo, status: resp.status, mensagemFornecedor: String(msgErro).slice(0, 200) };
+  }
+  return { ok: true, corpo: corpo };
+}
+
+function _metaAdsCacheKey(request) {
+  var u = new URL(request.url);
+  return new Request(u.origin + '/__cache/meta-ads', { method: 'GET' });
+}
+
+// GET /admin/meta-ads — mesmo padrão de credencial admin das outras rotas.
+async function _adminMetaAds(request, env, ctx) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    if (!env.META_ADS_TOKEN || !env.META_AD_ACCOUNT_ID) {
+      return new Response(JSON.stringify({
+        ok: false, configurado: false,
+        erro: { tipo: 'nao_configurado', mensagem: 'O painel de anúncios ainda não está ligado neste ambiente.' },
+        motivo: 'META_ADS_TOKEN e/ou META_AD_ACCOUNT_ID não configurados — ver o bloco [vars] do wrangler.toml'
+      }), { status: 503, headers: cors });
+    }
+
+    var cacheKey = _metaAdsCacheKey(request);
+    if (typeof caches !== 'undefined' && caches.default) {
+      var guardado = await caches.default.match(cacheKey);
+      if (guardado) {
+        var corpoCache = await guardado.json();
+        corpoCache.cache = { hit: true, ttlSegundos: META_ADS_CACHE_TTL_SEG };
+        return new Response(JSON.stringify(corpoCache), { headers: cors });
+      }
+    }
+
+    var idConta = env.META_AD_ACCOUNT_ID.indexOf('act_') === 0 ? env.META_AD_ACCOUNT_ID : ('act_' + env.META_AD_ACCOUNT_ID);
+
+    // Duas chamadas em paralelo: uma pega status/objetivo/orçamento de cada
+    // campanha (a Insights API não devolve isso), a outra pega gasto/
+    // impressões/cliques/CTR/CPC por campanha no período. Casadas por
+    // campaign_id depois — é o mesmo padrão de "duas fontes, um id em
+    // comum" que o screener usa pra casar indicador com preço.
+    var resultados = await Promise.all([
+      _metaAdsBusca(env, idConta + '/campaigns', 'fields=id,name,status,objective,daily_budget,lifetime_budget,created_time&limit=100'),
+      _metaAdsBusca(env, idConta + '/insights', 'level=campaign&fields=campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,reach,frequency&date_preset=' + META_ADS_DATE_PRESET + '&limit=100'),
+      _metaAdsBusca(env, idConta + '/insights', 'fields=spend,impressions,clicks,ctr,cpc,reach&date_preset=' + META_ADS_DATE_PRESET),
+    ]);
+    var campanhasResp = resultados[0], insightsResp = resultados[1], totalResp = resultados[2];
+
+    if (!campanhasResp.ok) {
+      var infoErro = { tipo: campanhasResp.motivo, mensagem:
+        campanhasResp.motivo === 'token_recusado' ? 'O Meta recusou o token — confira se ele ainda é válido e tem o escopo ads_read.' :
+        campanhasResp.motivo === 'rate_limit_fornecedor' ? 'O Meta limitou as consultas agora. Tenta de novo em alguns minutos.' :
+        campanhasResp.motivo === 'rede' ? 'Não consegui falar com o Meta agora.' :
+        'Não consegui carregar os anúncios agora.'
+      };
+      var statusErro = campanhasResp.motivo === 'token_recusado' ? 503 : (campanhasResp.motivo === 'rate_limit_fornecedor' ? 429 : 502);
+      return new Response(JSON.stringify({ ok: false, erro: infoErro }), { status: statusErro, headers: cors });
+    }
+
+    var campanhasCru = (campanhasResp.corpo && campanhasResp.corpo.data) || [];
+    var insightsCru = (insightsResp.ok && insightsResp.corpo && insightsResp.corpo.data) || [];
+    var totalCru = (totalResp.ok && totalResp.corpo && totalResp.corpo.data && totalResp.corpo.data[0]) || null;
+
+    var insightsPorId = {};
+    insightsCru.forEach(function (i) { if (i.campaign_id) insightsPorId[i.campaign_id] = i; });
+
+    var campanhas = campanhasCru.map(function (c) {
+      var ins = insightsPorId[c.id] || {};
+      return {
+        id: String(c.id || ''),
+        nome: String(c.name || '').slice(0, 200),
+        status: String(c.status || '').toLowerCase(),
+        objetivo: String(c.objective || '').slice(0, 80),
+        orcamentoDiario: c.daily_budget ? Number(c.daily_budget) / 100 : null, // Meta manda centavos
+        orcamentoTotal: c.lifetime_budget ? Number(c.lifetime_budget) / 100 : null,
+        gasto: ins.spend !== undefined ? Number(ins.spend) : null,
+        impressoes: ins.impressions !== undefined ? Number(ins.impressions) : null,
+        cliques: ins.clicks !== undefined ? Number(ins.clicks) : null,
+        ctr: ins.ctr !== undefined ? Number(ins.ctr) : null,
+        cpc: ins.cpc !== undefined ? Number(ins.cpc) : null,
+        alcance: ins.reach !== undefined ? Number(ins.reach) : null,
+      };
+    });
+
+    var resposta = {
+      ok: true, configurado: true,
+      periodo: META_ADS_DATE_PRESET,
+      totais: totalCru ? {
+        gasto: Number(totalCru.spend || 0), impressoes: Number(totalCru.impressions || 0),
+        cliques: Number(totalCru.clicks || 0), ctr: Number(totalCru.ctr || 0),
+        cpc: Number(totalCru.cpc || 0), alcance: Number(totalCru.reach || 0),
+      } : null,
+      campanhas: campanhas,
+      insightsIndisponivel: !insightsResp.ok, // campanhas aparecem mesmo sem métrica, avisado à parte
+      cache: { hit: false, ttlSegundos: META_ADS_CACHE_TTL_SEG },
+    };
+
+    if (typeof caches !== 'undefined' && caches.default && ctx) {
+      var paraGuardar = new Response(JSON.stringify(resposta), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=' + META_ADS_CACHE_TTL_SEG } });
+      ctx.waitUntil(caches.default.put(cacheKey, paraGuardar));
+    }
+
+    return new Response(JSON.stringify(resposta), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminMetaAds');
+  }
+}
+
 // GET /admin/intrusions — resumo das tentativas registradas por _securityLog.
 // Devolve agregados, não a lista crua: 500 linhas de log não dizem nada, mas
 // "3 origens somaram 240 tentativas em /.env nas últimas 24h" diz tudo.
@@ -3658,6 +3817,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/beta-questionario' && request.method === 'GET') {
       return _adminBetaQuestionario(request, env);
+    }
+    if (url.pathname === '/admin/meta-ads' && request.method === 'GET') {
+      return _adminMetaAds(request, env, ctx);
     }
     if (url.pathname === '/admin/intrusions' && request.method === 'GET') {
       return _adminIntrusions(request, env);

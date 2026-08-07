@@ -495,6 +495,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
         <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
         <button type="button" class="nav-menu-action" id="btnScreenerNav" style="display:none">Screener de ações</button>
         <button type="button" class="nav-menu-action" id="btnBetaAdminNav" style="display:none">Questionário do beta</button>
+        <button type="button" class="nav-menu-action" id="btnMetaAdsNav" style="display:none">Anúncios</button>
         <button type="button" class="nav-menu-action" id="btnConfigNav">Configurações</button>
         <button type="button" class="nav-menu-action" id="btnLogoutNav">Sair</button>
       </div>
@@ -720,7 +721,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4374,6 +4375,122 @@ function renderAdminBeta(){
   return html;
 }
 
+/* ── painel de anúncios (Meta Ads, admin) ── */
+function loadMetaAds(){
+  state.metaAdsLoading = true;
+  state.metaAdsError = null;
+  render();
+  fetch("/admin/meta-ads", { headers: adminHeaders() })
+    .then(function(r){ return r.text().then(function(t){
+      var body = null; try { body = JSON.parse(t); } catch(e){}
+      return { status: r.status, body: body };
+    }); })
+    .then(function(res){
+      state.metaAdsLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.metaAdsData = res.body;
+      } else {
+        var msg = (res.body && res.body.erro && res.body.erro.mensagem) || (res.body && res.body.motivo);
+        if(res.status === 401 || res.status === 403) msg = "Acesso negado. Desbloqueie o painel de admin de novo em Configurações.";
+        state.metaAdsError = msg || ("Não consegui carregar os anúncios (erro " + res.status + ").");
+        // 503 "não configurado" ainda guarda o corpo, pra tela distinguir de
+        // um erro de rede — mostra a mensagem de configuração em vez do erro genérico.
+        if(res.body && res.body.configurado === false) state.metaAdsData = res.body;
+      }
+      render();
+    }).catch(function(){
+      state.metaAdsLoading = false;
+      state.metaAdsError = "Falha de conexão.";
+      render();
+    });
+}
+
+var META_ADS_STATUS_LABEL = { active: "Ativa", paused: "Pausada", deleted: "Excluída", archived: "Arquivada" };
+function metaAdsStatusTexto(s){
+  var k = String(s || "").toLowerCase();
+  return Object.prototype.hasOwnProperty.call(META_ADS_STATUS_LABEL, k) ? META_ADS_STATUS_LABEL[k] : escapeHtml(s || "—");
+}
+function metaAdsFmtPct(v){
+  if(v === null || v === undefined || isNaN(v)) return "—";
+  return Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "%";
+}
+function metaAdsFmtNum(v){
+  if(v === null || v === undefined || isNaN(v)) return "—";
+  return Number(v).toLocaleString("pt-BR");
+}
+function metaAdsFmtMoneyOuTraco(v){
+  return (v === null || v === undefined || isNaN(v)) ? "—" : escapeHtml(fmtMoney(Number(v)));
+}
+
+function renderMetaAds(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+
+  if(state.metaAdsLoading && !state.metaAdsData){
+    return '<div class="card"><div class="eyebrow">Anúncios</div><div style="font-size:13px;color:var(--fm)">Carregando dados do Meta…</div></div>';
+  }
+  if(state.metaAdsError && !state.metaAdsData){
+    return '<div class="card"><div class="eyebrow">Anúncios</div>' +
+      '<div class="ai-error">' + escapeHtml(state.metaAdsError) + '</div>' +
+      '<button type="button" class="btn-submit" id="btnRetryMetaAds" style="margin-top:10px">Tentar de novo</button></div>';
+  }
+  if(!state.metaAdsData){
+    return '<div class="card"><div class="eyebrow">Anúncios</div>' +
+      '<button type="button" class="btn-submit" id="btnLoadMetaAds">Carregar anúncios</button></div>';
+  }
+
+  var d = state.metaAdsData;
+
+  if(d.configurado === false){
+    return '<div class="card"><div class="eyebrow">Anúncios</div>' +
+      '<div style="font-size:12.5px;color:var(--fm)">' + escapeHtml((d.erro && d.erro.mensagem) || "O painel de anúncios ainda não está configurado.") + '</div></div>';
+  }
+
+  var campanhas = (d.campanhas || []).slice().sort(function(a,b){ return (b.gasto || 0) - (a.gasto || 0); });
+  var t = d.totais;
+
+  var html = '<div class="card">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px">' +
+      '<div class="eyebrow" style="margin:0">Anúncios</div>' +
+      '<button type="button" class="btn-ghost" id="btnRefreshMetaAds" style="padding:6px 12px;font-size:11.5px"' + (state.metaAdsLoading ? " disabled" : "") + '>' + (state.metaAdsLoading ? "Atualizando…" : "Atualizar agora") + '</button>' +
+    '</div>' +
+    '<div style="font-size:11.5px;color:var(--fm)">Últimos 30 dias' + (d.cache && d.cache.hit ? " · dado em cache (até " + Math.round(d.cache.ttlSegundos / 60) + " min)" : "") + '. Só leitura — nada aqui cria, edita ou pausa campanha.</div>' +
+  '</div>';
+
+  if(d.insightsIndisponivel){
+    html += '<div class="card"><div class="ai-error" style="margin:0">Consegui a lista de campanhas, mas as métricas (gasto, cliques…) não vieram agora. Tenta atualizar de novo em instantes.</div></div>';
+  }
+
+  if(t){
+    html += '<div class="adm-kpis">' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">Gasto</div><div class="adm-kpi-value">' + metaAdsFmtMoneyOuTraco(t.gasto) + '</div><div class="adm-kpi-sub">nos últimos 30 dias</div></div>' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">Cliques</div><div class="adm-kpi-value">' + metaAdsFmtNum(t.cliques) + '</div><div class="adm-kpi-sub">CPC médio ' + metaAdsFmtMoneyOuTraco(t.cpc) + '</div></div>' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">CTR</div><div class="adm-kpi-value">' + metaAdsFmtPct(t.ctr) + '</div><div class="adm-kpi-sub">' + metaAdsFmtNum(t.impressoes) + ' impressões</div></div>' +
+    '</div>';
+  }
+
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Campanhas (' + campanhas.length + ')</p>';
+  if(!campanhas.length){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Nenhuma campanha na conta.</div>';
+  } else {
+    html += '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr>' +
+      '<th>Campanha</th><th>Status</th><th class="num">Gasto</th><th class="num">Cliques</th><th class="num">CTR</th><th class="num">CPC</th>' +
+    '</tr></thead><tbody>' +
+    campanhas.map(function(c){
+      return '<tr><td><span class="name">' + escapeHtml(c.nome) + '</span></td>' +
+        '<td>' + metaAdsStatusTexto(c.status) + '</td>' +
+        '<td class="num">' + metaAdsFmtMoneyOuTraco(c.gasto) + '</td>' +
+        '<td class="num">' + metaAdsFmtNum(c.cliques) + '</td>' +
+        '<td class="num">' + metaAdsFmtPct(c.ctr) + '</td>' +
+        '<td class="num">' + metaAdsFmtMoneyOuTraco(c.cpc) + '</td></tr>';
+    }).join("") + '</tbody></table></div>';
+  }
+  html += '</div>';
+
+  html += '<div style="font-size:11.5px;color:var(--fm);margin-top:12px">Não mostra quantos cliques viraram inscrição de verdade — isso exigiria instalar rastreamento de conversão, que ainda não está ligado.</div>';
+
+  return html;
+}
+
 /* ── screener de ações (admin) ── */
 
 // Lista fixa de 15 papéis líquidos da B3, cobrindo setores diferentes (bancos,
@@ -5568,6 +5685,8 @@ function render(){
   if(btnScreenerNav) btnScreenerNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
   var btnBetaAdminNav = document.getElementById("btnBetaAdminNav");
   if(btnBetaAdminNav) btnBetaAdminNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
+  var btnMetaAdsNav = document.getElementById("btnMetaAdsNav");
+  if(btnMetaAdsNav) btnMetaAdsNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
   var content = document.getElementById("content");
   if(state.loading){
     content.innerHTML = '<div class="empty-state">Carregando…</div>';
@@ -5600,6 +5719,7 @@ function render(){
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else if(state.tab === "screener") content.innerHTML = renderScreener();
   else if(state.tab === "adminBeta") content.innerHTML = renderAdminBeta();
+  else if(state.tab === "metaAds") content.innerHTML = renderMetaAds();
   else content.innerHTML = renderConfig();
   if(tabChanged){
     window.scrollTo(0, 0);
@@ -5953,6 +6073,14 @@ function bindContentEvents(){
     if(btnRetryBetaAdmin) btnRetryBetaAdmin.addEventListener("click", loadAdminBeta);
     var btnRefreshBetaAdmin = document.getElementById("btnRefreshBetaAdmin");
     if(btnRefreshBetaAdmin) btnRefreshBetaAdmin.addEventListener("click", loadAdminBeta);
+  }
+  if(state.tab === "metaAds"){
+    var btnLoadMetaAds = document.getElementById("btnLoadMetaAds");
+    if(btnLoadMetaAds) btnLoadMetaAds.addEventListener("click", loadMetaAds);
+    var btnRetryMetaAds = document.getElementById("btnRetryMetaAds");
+    if(btnRetryMetaAds) btnRetryMetaAds.addEventListener("click", loadMetaAds);
+    var btnRefreshMetaAds = document.getElementById("btnRefreshMetaAds");
+    if(btnRefreshMetaAds) btnRefreshMetaAds.addEventListener("click", loadMetaAds);
   }
   if(state.tab === "screener"){
     var btnScreenerLoad = document.getElementById("btnScreenerLoad");
@@ -6712,6 +6840,12 @@ document.getElementById("btnBetaAdminNav").addEventListener("click", function(){
   render();
   document.getElementById("navMenu").classList.remove("open");
   loadAdminBeta();
+});
+document.getElementById("btnMetaAdsNav").addEventListener("click", function(){
+  state.tab = "metaAds";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  loadMetaAds();
 });
 document.getElementById("btnLogoutNav").addEventListener("click", function(){
   Auth.logout(currentSession.access_token).then(function(){
