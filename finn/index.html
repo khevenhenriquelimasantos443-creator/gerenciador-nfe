@@ -721,7 +721,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -1059,6 +1059,41 @@ function daysInMonth(y, m){
   return new Date(y, m + 1, 0).getDate();
 }
 
+// Dias seguidos com pelo menos 1 lançamento, contando de hoje pra trás.
+// Se HOJE ainda não tem nada lançado, conta a partir de ONTEM em vez de
+// zerar na hora — senão todo mundo veria "sequência zerada" logo de manhã,
+// antes mesmo de abrir o app, o que desanima em vez de puxar de volta.
+function computeStreak(){
+  var diasComLancamento = {};
+  state.txs.forEach(function(t){
+    if(t.date) diasComLancamento[t.date.slice(0,10)] = true;
+  });
+  var cursor = new Date();
+  if(!diasComLancamento[todayStr()]) cursor.setDate(cursor.getDate() - 1);
+  var streak = 0;
+  while(streak < 3660){ // teto de segurança (10 anos) — nunca deveria bater nisso
+    if(!diasComLancamento[localDateStr(cursor)]) break;
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+function mesAnterior(ym){
+  var partes = ym.split("-");
+  var d = new Date(Number(partes[0]), Number(partes[1]) - 2, 1);
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0");
+}
+
+// null = sem base de comparação (mês anterior sem despesa registrada) —
+// melhor não mostrar nada do que mostrar "∞% a mais".
+function comparacaoDespesaMesAnterior(ym){
+  var despesaAtual = txsOfMonth(ym).filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
+  var despesaAnterior = txsOfMonth(mesAnterior(ym)).filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
+  if(despesaAnterior <= 0) return null;
+  return { pct: ((despesaAtual - despesaAnterior) / despesaAnterior) * 100, despesaAnterior: despesaAnterior };
+}
+
 function fmtMoney(v){
   var s = Math.abs(v).toFixed(2).split(".");
   s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -1155,6 +1190,103 @@ function renderGreeting(){
   '</div>';
 }
 
+var MESES_EXTENSO = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+function nomeMes(ym){
+  return MESES_EXTENSO[Number(ym.split("-")[1]) - 1] || ym;
+}
+
+// Só compara o mês CORRENTE com o anterior — comparar um mês passado que
+// está sendo navegado com o mês anterior a ele é uma frase que ninguém pediu
+// e polui a tela sem ajudar.
+function renderComparacaoMes(mes, mesAtual){
+  if(!mesAtual) return "";
+  var comp = comparacaoDespesaMesAnterior(mes);
+  if(!comp) return "";
+  var pct = comp.pct;
+  if(Math.abs(pct) < 1) return ""; // diferença desprezível — não vale destacar
+  var gastouMenos = pct < 0;
+  var texto = gastouMenos
+    ? "Você gastou " + Math.round(Math.abs(pct)) + "% a menos que em " + nomeMes(mesAnterior(mes)) + " 🎉"
+    : "Você gastou " + Math.round(pct) + "% a mais que em " + nomeMes(mesAnterior(mes));
+  return '<div style="font-size:12.5px;color:' + (gastouMenos ? "var(--fs)" : "var(--fm)") + ';margin-top:10px;font-weight:700">' + escapeHtml(texto) + '</div>';
+}
+
+// 0 ou 1 dia não é "sequência" de verdade ainda — mostrar isso no primeiro
+// dia desanima em vez de motivar. Só aparece a partir do 2º dia seguido.
+function renderStreakCard(){
+  var streak = computeStreak();
+  if(streak < 2) return "";
+  return '<div class="card" style="display:flex;align-items:center;gap:12px">' +
+    '<span style="font-size:26px;line-height:1">🔥</span>' +
+    '<span><span style="font-weight:800;font-size:14px;color:var(--fd)">' + streak + ' dias seguidos</span>' +
+    '<div style="font-size:12px;color:var(--fm)">registrando gastos no Finn</div></span>' +
+  '</div>';
+}
+
+/* ── Conquistas ── */
+// Tudo calculado na hora, a partir de dado que já está carregado (txs,
+// goals, limits, splits, metadata do usuário) — de propósito sem tabela
+// nova no banco: menos risco de quebrar algo perto do lançamento, e o
+// "desbloqueado" é sempre recalculado, nunca fica desatualizado.
+function mesesUnicos(){
+  var vistos = {};
+  state.txs.forEach(function(t){ if(t.date) vistos[t.date.slice(0,7)] = true; });
+  return Object.keys(vistos);
+}
+
+var CONQUISTAS_DEFS = [
+  { id: "primeiro", icone: "🌱", nome: "Primeiro lançamento", desc: "Registrou o primeiro gasto ou receita no Finn.",
+    feita: function(){ return state.txs.length >= 1; } },
+  { id: "streak7", icone: "🔥", nome: "7 dias seguidos", desc: "Lançou algo por 7 dias seguidos.",
+    feita: function(){ return computeStreak() >= 7; } },
+  { id: "streak30", icone: "💪", nome: "30 dias seguidos", desc: "Lançou algo por 30 dias seguidos — virou hábito.",
+    feita: function(){ return computeStreak() >= 30; } },
+  { id: "mesAzul", icone: "📈", nome: "Mês no azul", desc: "Fechou um mês com receita maior que despesa.",
+    feita: function(){ return mesesUnicos().some(function(ym){
+      var t = txsOfMonth(ym);
+      var r = t.filter(function(x){return x.type==="receita" && isFlowTx(x);}).reduce(function(s,x){return s+Number(x.value);},0);
+      var d = t.filter(function(x){return x.type==="despesa" && isFlowTx(x);}).reduce(function(s,x){return s+Number(x.value);},0);
+      return d > 0 && r > d;
+    }); } },
+  { id: "meta", icone: "🎯", nome: "Meta batida", desc: "Completou uma meta de verdade.",
+    feita: function(){ return state.goals.some(function(g){ return Number(g.target) > 0 && Number(g.saved) >= Number(g.target); }); } },
+  { id: "limite", icone: "🛡️", nome: "Dentro do limite", desc: "Está dentro de todos os limites configurados este mês.",
+    feita: function(){ return state.limits.length > 0 && state.limits.every(function(l){ return monthSpentByCat(l.category) <= Number(l.monthly_limit); }); } },
+  { id: "racha", icone: "🤝", nome: "Dividiu uma conta", desc: "Usou o Racha pra dividir uma despesa com alguém.",
+    feita: function(){ return state.splits.length >= 1; } },
+  { id: "bot", icone: "🔗", nome: "Conectou o bot", desc: "Vinculou o WhatsApp ou o Telegram pra lançar por lá.",
+    feita: function(){
+      var m = (currentSession && currentSession.user && currentSession.user.user_metadata) || {};
+      return !!(m.whatsapp_verified || state.waLinkVerified || m.telegram_chat_id);
+    } },
+];
+
+function renderConquistas(){
+  var status = CONQUISTAS_DEFS.map(function(c){ return { def: c, feita: c.feita() }; });
+  var feitas = status.filter(function(s){ return s.feita; }).length;
+  var html = '<div class="card">' +
+    '<button type="button" id="btnToggleConquistas" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box">' +
+      '<div class="eyebrow" style="margin:0">Conquistas · ' + feitas + '/' + status.length + '</div>' +
+      '<span style="color:var(--fp);font-weight:800;font-size:14px">' + (state.expandedConquistas ? "▲" : "▼") + '</span>' +
+    '</button>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">' +
+      status.map(function(s){
+        return '<span title="' + escapeHtml(s.def.nome) + (s.feita ? " — desbloqueada" : " — bloqueada") + '" style="font-size:22px;opacity:' + (s.feita ? "1" : ".25") + '">' + s.def.icone + '</span>';
+      }).join("") +
+    '</div>' +
+    (state.expandedConquistas ? '<div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">' +
+      status.map(function(s){
+        return '<div style="display:flex;gap:10px;align-items:flex-start;opacity:' + (s.feita ? "1" : ".55") + '">' +
+          '<span style="font-size:19px;flex-shrink:0">' + s.def.icone + '</span>' +
+          '<span><span style="font-weight:700;font-size:13px;color:var(--fd)">' + escapeHtml(s.def.nome) + (s.feita ? " ✓" : "") + '</span>' +
+          '<div style="font-size:12px;color:var(--fm)">' + escapeHtml(s.def.desc) + '</div></span>' +
+        '</div>';
+      }).join("") +
+    '</div>' : '') +
+  '</div>';
+  return html;
+}
+
 /* ── Dashboard ── */
 function renderDashboard(){
   // O Dashboard ficava travado no mês corrente — sem jeito de ver "como foi
@@ -1192,7 +1324,11 @@ function renderDashboard(){
         '<div class="total-box"><div class="lbl">Saldo</div><div class="val" style="color:' + (saldo>=0?"var(--fp)":"var(--fe)") + '">' + fmtMoney(saldo) + '</div></div>' +
       '</div>' +
       (txs.length || mesAtual ? '' : '<div style="font-size:12px;color:var(--fm);margin-top:8px">Nenhum lançamento neste mês.</div>') +
+      renderComparacaoMes(mes, mesAtual) +
     '</div>';
+
+  html += renderStreakCard();
+  html += renderConquistas();
 
   // O bot está ativo (WHATSAPP_BOT_ENABLED = true), então o ramo "Em breve"
   // deste ternário nunca chegava a ser exibido. Removido.
@@ -5786,6 +5922,11 @@ function bindContentEvents(){
     var btnDashboardMesAtual = document.getElementById("btnDashboardMesAtual");
     if(btnDashboardMesAtual) btnDashboardMesAtual.addEventListener("click", function(){
       state.dashboardMonth = null;
+      render();
+    });
+    var btnToggleConquistas = document.getElementById("btnToggleConquistas");
+    if(btnToggleConquistas) btnToggleConquistas.addEventListener("click", function(){
+      state.expandedConquistas = !state.expandedConquistas;
       render();
     });
     var btnDismissWaPromo = document.getElementById("btnDismissWaPromo");
