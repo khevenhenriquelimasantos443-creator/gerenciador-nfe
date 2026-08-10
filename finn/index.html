@@ -1120,9 +1120,20 @@ function mesAnterior(ym){
 // melhor não mostrar nada do que mostrar "∞% a mais".
 function comparacaoDespesaMesAnterior(ym){
   var despesaAtual = txsOfMonth(ym).filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
-  var despesaAnterior = txsOfMonth(mesAnterior(ym)).filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
+  // Compara o mesmo PEDACO do mes anterior, nao o mes fechado inteiro. Sem
+  // isso, no dia 1o a conta era "o que gastei hoje" contra "o mes inteiro
+  // passado" e o app dava parabens por uma economia que nao existe: em 01/09,
+  // com R$ 3.000 gastos em agosto e nada lancado ainda, saia "Voce gastou
+  // 100% a menos que em agosto". No dia 10 dizia "67% a menos", e assim por
+  // diante — a frase so ficava correta no ultimo dia do mes.
+  var diaLimite = ym === thisMonth() ? Number(todayStr().slice(8,10)) : 31;
+  var despesaAnterior = txsOfMonth(mesAnterior(ym))
+    .filter(function(t){
+      return t.type==="despesa" && isFlowTx(t) && Number((t.date||"").slice(8,10)) <= diaLimite;
+    })
+    .reduce(function(s,t){return s+Number(t.value);},0);
   if(despesaAnterior <= 0) return null;
-  return { pct: ((despesaAtual - despesaAnterior) / despesaAnterior) * 100, despesaAnterior: despesaAnterior };
+  return { pct: ((despesaAtual - despesaAnterior) / despesaAnterior) * 100, despesaAnterior: despesaAnterior, parcial: diaLimite < 28 };
 }
 
 function fmtMoney(v){
@@ -1237,9 +1248,13 @@ function renderComparacaoMes(mes, mesAtual){
   var pct = comp.pct;
   if(Math.abs(pct) < 1) return ""; // diferença desprezível — não vale destacar
   var gastouMenos = pct < 0;
+  // "ate agora" quando ainda e cedo no mes: a comparacao e contra o mesmo
+  // pedaco do mes anterior, e dizer so "gastou X% a menos que em agosto" no
+  // dia 3 soa como se o mes ja tivesse fechado.
+  var ateAgora = comp.parcial ? " (até agora)" : "";
   var texto = gastouMenos
-    ? "Você gastou " + Math.round(Math.abs(pct)) + "% a menos que em " + nomeMes(mesAnterior(mes)) + " 🎉"
-    : "Você gastou " + Math.round(pct) + "% a mais que em " + nomeMes(mesAnterior(mes));
+    ? "Você gastou " + Math.round(Math.abs(pct)) + "% a menos que em " + nomeMes(mesAnterior(mes)) + ateAgora + " 🎉"
+    : "Você gastou " + Math.round(pct) + "% a mais que em " + nomeMes(mesAnterior(mes)) + ateAgora;
   return '<div style="font-size:12.5px;color:' + (gastouMenos ? "var(--fs)" : "var(--fm)") + ';margin-top:10px;font-weight:700">' + escapeHtml(texto) + '</div>';
 }
 
@@ -1301,7 +1316,13 @@ function gerarCardCompartilhar(titulo, subtitulo){
 
   ctx.font = "600 34px system-ui, -apple-system, 'Segoe UI', sans-serif";
   ctx.fillStyle = "rgba(255,255,255,.88)";
-  ctx.fillText(subtitulo, w / 2, startY + linhas.length * 88 + 40);
+  // Quebra igual ao titulo: nome de meta longo ("Reforma completa da casa do
+  // litoral - R$ 25.000,00 guardados com o Finn") sangrava pros dois lados da
+  // imagem, porque so o titulo passava por quebraLinhaCanvas.
+  var linhasSub = quebraLinhaCanvas(ctx, subtitulo, w - 140);
+  linhasSub.forEach(function (linha, i) {
+    ctx.fillText(linha, w / 2, startY + linhas.length * 88 + 40 + i * 44);
+  });
 
   ctx.font = "800 30px system-ui, -apple-system, 'Segoe UI', sans-serif";
   ctx.fillStyle = "#fff";
@@ -1319,14 +1340,18 @@ function compartilharCard(titulo, subtitulo){
       navigator.share({ files: [file], title: "Finn", text: titulo }).catch(function(){});
       return;
     }
-    if(navigator.share){
-      navigator.share({ title: "Finn", text: titulo + " — " + subtitulo }).catch(function(){});
-      return;
-    }
+    // Sem suporte a compartilhar ARQUIVO, baixa a imagem. Antes caia num
+    // navigator.share so de TEXTO quando o navegador tinha share mas nao
+    // canShare({files}) — que e exatamente o caso do Chrome/Edge no Windows.
+    // Resultado: o card de 1080x1080 era gerado e jogado fora, e a pessoa
+    // compartilhava uma frase seca. O download so acontecia em navegador sem
+    // share nenhum.
     var a = document.createElement("a");
     a.href = canvas.toDataURL("image/png");
     a.download = "finn-conquista.png";
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
   }, "image/png");
 }
 
@@ -1403,11 +1428,22 @@ var CONQUISTAS_DEFS = [
 // "Mãos de tesoura": excluir uma despesa não deixa rastro no estado (ela
 // simplesmente some), então isso não dá pra derivar como as outras — é o
 // único contador que persiste fora do banco, só localStorage, só local.
+// Chave escopada por usuario: sem o uid, num navegador compartilhado (casal,
+// computador de casa) o contador de uma conta desbloqueava a conquista da
+// outra — e podia ate subir o titulo dela sem ela ter feito nada. Todas as
+// outras conquistas saem de state.txs/goals, que ja sao por usuario; so esta
+// vive no localStorage.
+function maosDeTesouraKey(){
+  return "finn_maos_tesoura_" + (uid() || "anon");
+}
 function maosDeTesouraCount(){
-  return Number(localStorage.getItem("finn_maos_tesoura") || 0);
+  return Number(localStorage.getItem(maosDeTesouraKey()) || 0);
 }
 function incMaosDeTesoura(){
-  localStorage.setItem("finn_maos_tesoura", String(maosDeTesouraCount() + 1));
+  localStorage.setItem(maosDeTesouraKey(), String(maosDeTesouraCount() + 1));
+}
+function decMaosDeTesoura(){
+  localStorage.setItem(maosDeTesouraKey(), String(Math.max(0, maosDeTesouraCount() - 1)));
 }
 
 // Títulos evoluem com o total de conquistas desbloqueadas (visíveis + secretas)
@@ -4367,6 +4403,15 @@ var TIPO_INTRUSAO = {
 function renderIntrusionSection(){
   var s = state.intrusions;
 
+  // O worker responde {ok:true, vazio:true} quando o KV nao esta ligado. Como
+  // ok e true, isso era gravado em state.intrusions e logo depois s.origens
+  // estourava um TypeError, abortando render() antes de escrever o conteudo —
+  // a tela inteira congelava por causa de um binding ausente.
+  if(s && s.vazio){
+    return '<div class="card"><div class="eyebrow">Segurança</div>' +
+      '<div style="font-size:13px;color:var(--fm)">Sem registros disponíveis (o armazenamento de logs não está configurado neste ambiente).</div></div>';
+  }
+
   if(state.intrusionsLoading && !s){
     return '<div class="card"><div class="eyebrow">Segurança</div>' +
       '<div style="font-size:13px;color:var(--fm)">Carregando tentativas registradas…</div></div>';
@@ -4471,13 +4516,18 @@ function baixarCSV(nomeArquivo, linhas){
   var a = document.createElement("a");
   a.href = url;
   a.download = nomeArquivo;
+  // appendChild/removeChild em volta do click(): e o que o downloadCSV deste
+  // mesmo arquivo ja faz, e alguns navegadores ignoram o clique numa ancora
+  // que nao esta no documento.
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
 function exportarIntrusoesCSV(){
   var s = state.intrusions;
-  if(!s) return;
+  if(!s || s.vazio) return;
   var linhas = [
     ["Finn - Tentativas de acesso"],
     ["Gerado em", admDataHora(new Date().toISOString())],
@@ -6170,7 +6220,20 @@ function deleteMonthTransactions(ym){
   if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
   var ids = alvo.map(function(t){ return t.id; });
   var receiptPaths = alvo.map(function(t){ return t.receipt_path; }).filter(Boolean);
-  db("transactions", "DELETE", null, { id: "in.(" + ids.join(",") + ")", user_id: "eq." + uid() }).then(function(){
+  // Fatiado em lotes: os ids vao na QUERY STRING, e o URLSearchParams
+  // percent-encoda cada virgula (%2C), dando ~39 bytes por lancamento. Quem
+  // importa o extrato do banco fecha o mes com centenas de lancamentos — 250
+  // ja passam de 10 KB de URL e o gateway do Supabase devolve 414 antes de
+  // chegar no PostgREST. Ou seja: justamente quem mais precisa do "excluir o
+  // mes" era quem nao conseguia usar.
+  var LOTE = 100;
+  var lotes = [];
+  for(var i = 0; i < ids.length; i += LOTE) lotes.push(ids.slice(i, i + LOTE));
+  lotes.reduce(function(cadeia, lote){
+    return cadeia.then(function(){
+      return db("transactions", "DELETE", null, { id: "in.(" + lote.join(",") + ")", user_id: "eq." + uid() });
+    });
+  }, Promise.resolve()).then(function(){
     state.txs = state.txs.filter(function(t){ return ids.indexOf(t.id) === -1; });
     state.txSaveError = null;
     render();
@@ -6868,6 +6931,11 @@ function deleteTransaction(id){
   }).catch(function(err){
     state.txs.push(existing);
     sortTxs();
+    // Desfaz tambem o contador do "Maos de tesoura": ele era incrementado
+    // antes do DELETE e nao voltava atras, entao clicar em excluir sem rede
+    // cinco vezes desbloqueava a conquista secreta sem nenhuma exclusao ter
+    // acontecido de verdade.
+    if(existing.type === "despesa") decMaosDeTesoura();
     state.txSaveError = "Não consegui apagar (" + ((err && err.message) || "erro") + "). Tenta de novo.";
     render();
   });

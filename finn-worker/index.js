@@ -642,12 +642,20 @@ async function processMessage(msg, env) {
     }
     // Opt-in/opt-out do resumo diário automático (Message Template) — "parar"
     // é a palavra prometida no próprio template, tem que funcionar de verdade.
+    // dailyDashboardOptOutChat e um campo SEPARADO do dailyDashboardOptIn de
+    // proposito. O optIn e reescrito a cada /sync a partir do metadata do
+    // Supabase (o checkbox em Configuracoes e a fonte de consentimento), entao
+    // gravar o "parar" so ali fazia o opt-out se desfazer sozinho: bastava a
+    // pessoa abrir o app - que sincroniza em todo carregamento - pro template
+    // voltar a sair no dia seguinte. "Parar" e a palavra prometida DENTRO do
+    // template aprovado; se ela nao funciona de verdade, e motivo pra Meta
+    // derrubar a conta. Este campo o /sync nao toca, e so "ativar resumo" limpa.
     if (lower === "parar") {
-      await saveUserData(phone, { dailyDashboardOptIn: false }, env);
+      await saveUserData(phone, { dailyDashboardOptIn: false, dailyDashboardOptOutChat: true }, env);
       return sendText(phone, "Combinado — você não recebe mais o resumo diário automático. Pra ativar de novo, é só mandar *ativar resumo*.", env);
     }
     if (["ativar resumo", "ativar resumo diário", "resumo diário", "quero o resumo diário"].includes(lower)) {
-      await saveUserData(phone, { dailyDashboardOptIn: true }, env);
+      await saveUserData(phone, { dailyDashboardOptIn: true, dailyDashboardOptOutChat: false }, env);
       return sendText(phone, "Pronto! A partir de hoje você recebe um resumo automático todo dia às 22h. Pra parar, é só responder *parar*.", env);
     }
     // Pedido de atendimento humano — o número do bot está na Cloud API e não
@@ -1279,7 +1287,13 @@ function parseAIResponse(text) {
     if (!match) return null;
     const obj = JSON.parse(match[0]);
     const rawVal = obj.val ?? obj.valor ?? obj.value;
-    const valStr = String(rawVal ?? "").replace(/[^\d,.-]/g, "").replace(",", ".");
+    // Reaproveita parseMonetaryValue em vez de um replace ingenuo: o
+    // ".replace(',', '.')" sozinho nao trata ponto de MILHAR, entao "1.200,00"
+    // virava "1.200.00" e parseFloat lia 1.2 — o card de confirmacao mostrava
+    // "R$ 1,20" e gravava isso. O modelo devolve numero em formato brasileiro
+    // com frequencia justamente porque a conversa e em portugues.
+    const valNum = parseMonetaryValue(String(rawVal ?? ""));
+    const valStr = valNum === null ? "" : String(valNum);
     const val = parseFloat(valStr);
     const desc = obj.desc ?? obj.descricao ?? obj.description;
     if (isNaN(val) || val <= 0 || !desc) return null;
@@ -1408,6 +1422,29 @@ async function claimWhatsappOwner(phone, uid, env) {
 async function whatsappOwnershipOk(phone, user, env) {
   const reg = await whatsappOwnerOf(phone, env);
   return !!reg && reg.owner === user.id;
+}
+
+// Mesma ideia do whatsappOwnershipOk, pro Telegram — e pelo mesmo motivo.
+// O vínculo do Telegram já gravava `tgchat_<chatId>` em
+// handleTelegramLinkConfirm (só depois de a pessoa mandar o código pelo
+// Telegram dela, ou seja, prova de posse de verdade), mas NINGUÉM lia esse
+// registro na hora de autorizar: /sync e /bot-txs conferiam apenas
+// user_metadata.telegram_chat_id.
+//
+// Esse metadata é auto-declarado: qualquer usuário logado pode gravar o que
+// quiser nele com um PUT /auth/v1/user no Supabase (o próprio app faz isso
+// em Auth.updateMetadata). Ou seja, bastava apontar o metadata pro chat de
+// outra pessoa pra ler os lançamentos dela pelo /bot-txs e sobrescrever
+// limites, metas e plano dela pelo /sync. O lado do WhatsApp já estava
+// fechado assim desde antes; o do Telegram tinha ficado para trás.
+async function telegramOwnershipOk(chatId, user, env) {
+  if (!env.FINN_KV) return false;
+  const raw = await env.FINN_KV.get(`tgchat_${chatId}`);
+  if (!raw) return false;
+  try {
+    const reg = JSON.parse(raw);
+    return !!reg && reg.uid === user.id;
+  } catch { return false; }
 }
 
 // POST /whatsapp/link {access_token} -> { code }
@@ -1597,6 +1634,15 @@ async function handleSync(request, env) {
         status: 403, headers: { "Content-Type": "application/json" }
       }));
     }
+    // O metadata acima é auto-declarado — não prova nada sozinho. Quem manda
+    // é o registro de posse gravado quando a pessoa mandou o código pelo
+    // Telegram dela (mesma regra do WhatsApp logo abaixo).
+    if (!(await telegramOwnershipOk(normChat, user, env))) {
+      await debugLog(env, { kind: "sync_tg_owner_mismatch", chatId: normChat, email: user.email });
+      return corsResponse(new Response(JSON.stringify({ error: "telegram_not_verified" }), {
+        status: 403, headers: { "Content-Type": "application/json" }
+      }));
+    }
     await debugLog(env, { kind: "sync_telegram_ok", uid, email: user.email, txCount: (data && data.txs && data.txs.length) || 0 });
   } else {
     const ownWhatsapp = user.user_metadata && user.user_metadata.whatsapp;
@@ -1689,6 +1735,8 @@ async function resolveBotIdentity(phone, telegramChatId, accessToken, env) {
     if (!normChat) return { error: "forbidden" };
     const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
     if (!ownChatId || ownChatId !== normChat) return { error: "forbidden" };
+    // Mesma checagem do /sync: metadata auto-declarado não autoriza sozinho.
+    if (!(await telegramOwnershipOk(normChat, user, env))) return { error: "forbidden" };
     return { uid: "tg:" + normChat };
   }
   const normPhone = normalizePhone(phone);
@@ -1766,6 +1814,11 @@ async function sendDailyDashboards(env) {
       const data=await getUserData(phone,env);
       if (!data?.txs?.length) continue;
       if (!data.dailyDashboardOptIn) continue;
+      // Opt-out feito pelo chat ("parar") vence o checkbox do app. O /sync
+      // reescreve dailyDashboardOptIn a partir do metadata a cada carregamento
+      // do app, entao sem esta linha o "parar" durava ate a proxima vez que a
+      // pessoa abrisse o Finn.
+      if (data.dailyDashboardOptOutChat) continue;
       if (PREMIUM_ENFORCEMENT_ENABLED && (data.plan || "free") !== "pro") continue;
       // O Telegram não tem a janela de 24h de atendimento da política do
       // WhatsApp Business — texto livre iniciado pelo bot é permitido lá,
@@ -1847,7 +1900,9 @@ function buildDashboardMessage(data, env) {
   if(todayTxs.length) msg+=`*Hoje:*\n  💰 R$ ${formatBRL(tR)}  💸 R$ ${formatBRL(tD)}\n\n`;
   else msg+=`_Nenhum lançamento hoje._\n\n`;
   msg+=`*Mês:*\n  💰 Receitas: R$ ${formatBRL(mR)}\n  💸 Despesas: R$ ${formatBRL(mD)}\n  ${mS>=0?"📈":"📉"} Saldo: R$ ${formatBRL(mS)}\n`;
-  if(comparacao) msg+=`  ${comparacao.includes("a menos")?"🎉":"📊"} Você gastou ${comparacao}\n`;
+  // comparacao ja termina com " 🎉" quando gastou menos — usar 🎉 tambem como
+  // prefixo deixava "🎉 Você gastou 23% a menos que em julho 🎉".
+  if(comparacao) msg+=`  ${comparacao.includes("a menos")?"✅":"📊"} Você gastou ${comparacao}\n`;
   if(catAlerts.length) msg+=`\n*Limites:*\n${catAlerts.join("\n")}\n`;
   if(streak>=2) msg+=`\n🔥 *${streak} dias seguidos* registrando no Finn!\n`;
   msg+=`\n━━━━━━━━━━━━━━━\n_${closing}_\n\n👉 ${finnUrl}`;
@@ -2483,12 +2538,21 @@ async function handleWhatsAppCreateDailyTemplate(env) {
       }
     }]
   };
-  const resp = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_WABA_ID}/message_templates`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` },
-    body: JSON.stringify(payload)
-  });
-  let body;
+  // try/catch em volta do fetch: sem ele, uma falha de rede/DNS escapava do
+  // handler, o Cloudflare devolvia a pagina de erro 1101 sem cabecalho de CORS
+  // e quem chamou via so "Failed to fetch", sem a causa.
+  let resp, body;
+  try {
+    resp = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_WABA_ID}/message_templates`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro_rede: String(e && e.message || e) }, null, 2), {
+      status: 502, headers: { "Content-Type": "application/json" }
+    }));
+  }
   try { body = await resp.json(); } catch (e) { body = { parse_error: String(e) }; }
   return corsResponse(new Response(JSON.stringify({ ok: resp.ok, status: resp.status, meta_response: body }, null, 2), {
     status: 200, headers: { "Content-Type": "application/json" }

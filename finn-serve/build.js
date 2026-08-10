@@ -683,6 +683,39 @@ function _masterPasswordOk(env, password) {
   return _timingSafeEqual(String(password), String(env.MASTER_ADMIN_PASSWORD));
 }
 
+// Trava de forca bruta pra senha de admin em TODAS as rotas, nao so em
+// /admin/login. Antes, so o /admin/login contava tentativa: quem tivesse um
+// JWT da master (o modelo de ameaca declarado neste arquivo - o token vive no
+// localStorage do navegador) podia varrer a senha a vontade contra
+// /admin/subscriptions, /admin/analytics e companhia, sem teto nenhum e sem
+// gerar UM evento no painel de intrusoes. O cabecalho do bloco de deteccao
+// promete registrar "falha de senha de admin"; fora do /admin/login isso nao
+// estava acontecendo.
+//
+// Conta so ERRO, nunca acerto. O painel de admin dispara varias rotas por
+// carregamento, entao um teto por requisicao bem-sucedida trancaria o dono do
+// app pra fora do proprio painel.
+var ADMIN_PW_MAX_ERROS = 10;
+var ADMIN_PW_JANELA_SEG = 900;
+
+async function _masterPasswordGate(request, env, password) {
+  var chave = 'adminpw_' + _clientIp(request);
+  var erros = 0;
+  if (env.FINN_KV) {
+    erros = parseInt((await env.FINN_KV.get(chave)) || '0', 10) || 0;
+    // Estourou o teto: recusa mesmo que a senha esteja certa, ate a janela
+    // expirar. Quem e dono de verdade espera 15 minutos; quem esta varrendo
+    // perde o canal.
+    if (erros >= ADMIN_PW_MAX_ERROS) return false;
+  }
+  if (_masterPasswordOk(env, password)) return true;
+  if (env.FINN_KV) {
+    await env.FINN_KV.put(chave, String(erros + 1), { expirationTtl: ADMIN_PW_JANELA_SEG });
+  }
+  await _securityLog(env, request, 'senha_admin_incorreta', 'rota admin');
+  return false;
+}
+
 // Comparação de tempo constante: '===' em string sai no primeiro byte que
 // diverge, então o tempo de resposta vaza quantos caracteres do prefixo já
 // estão certos. Pela internet o jitter esconde isso na prática, mas a
@@ -808,7 +841,7 @@ async function _adminListSubscriptions(request, env) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
     var subsR = await fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?select=*&order=updated_at.desc', {
@@ -853,7 +886,7 @@ async function _adminSetSubscription(request, env) {
     try { body = JSON.parse(await request.text()); } catch (e0) {}
     var authUser = await _supaAuth(body.access_token);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, body.admin_password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (['free', 'plus', 'pro'].indexOf(body.plan) === -1) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
@@ -1043,7 +1076,7 @@ async function _adminAnalytics(request, env) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
     var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
@@ -1158,8 +1191,15 @@ async function _adminAnalytics(request, env) {
       return { id: c.id, nome: c.nome, icone: c.icone, secreta: c.secreta, derivavel: true, usuarios: n, pct: baseConq ? Math.round(n / baseConq * 100) : 0 };
     });
     // Mesma escada de renderTituloBadge() no app.
+    // O topo da escada compara com o total DERIVAVEL, nao com o tamanho da
+    // lista: 'tesoura' tem derivavel:false e nunca entra em conquistas_total,
+    // entao comparar com _CONQUISTAS_META.length (12) deixava 'Investidor
+    // Blindado' impossivel de alcancar aqui — quem tivesse tudo desbloqueado
+    // via o titulo no proprio app e aparecia como 'Mestre do Orcamento' no
+    // painel, com a linha do topo travada em 0 usuarios pra sempre.
+    var _TOTAL_DERIVAVEL = _CONQUISTAS_META.filter(function(c) { return c.derivavel !== false; }).length;
     function _tituloDe(n) {
-      if (n >= _CONQUISTAS_META.length) return 'Investidor Blindado';
+      if (n >= _TOTAL_DERIVAVEL) return 'Investidor Blindado';
       if (n >= 8) return 'Mestre do Orçamento';
       if (n >= 4) return 'Organizador Oficial';
       return 'Aprendiz das Finanças';
@@ -1303,7 +1343,7 @@ async function _adminBetaSignups(request, env) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.FINN_KV) return new Response(JSON.stringify({ signups: [] }), { headers: cors });
 
     var keys = [];
@@ -1407,7 +1447,7 @@ async function _adminBetaQuestionario(request, env) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.FINN_KV) return new Response(JSON.stringify({ respostas: [] }), { headers: cors });
 
     var keys = [];
@@ -1492,7 +1532,7 @@ async function _adminMetaAds(request, env, ctx) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     if (!env.META_ADS_TOKEN || !env.META_AD_ACCOUNT_ID) {
       return new Response(JSON.stringify({
@@ -1595,7 +1635,7 @@ async function _adminIntrusions(request, env) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
     if (!env.FINN_KV) return new Response(JSON.stringify({ ok: true, vazio: true }), { headers: cors });
 
     var keys = [];
@@ -2022,7 +2062,7 @@ async function _adminInstagramStatus(request, env) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     var nextIndex = Number((env.FINN_KV ? await env.FINN_KV.get('ig_post_next_index') : null) || '1');
     var logs = [];
@@ -2059,7 +2099,7 @@ async function _adminInstagramPublishNext(request, env) {
     try { body = JSON.parse(await request.text()); } catch (e0) {}
     var authUser = await _supaAuth(body.access_token);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, body.admin_password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     var result = await _publishNextInstagramPost(env);
     return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
@@ -3136,7 +3176,7 @@ async function _screenerLote(request, env, ctx) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     if (!env.BRAPI_TOKEN) {
       return new Response(JSON.stringify({
@@ -3262,7 +3302,7 @@ async function _screenerAcao(request, env, ctx, tickerBruto) {
     var creds = _adminCreds(request);
     var authUser = await _supaAuth(creds.accessToken);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
-    if (!_masterPasswordOk(env, creds.password)) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
 
     // Allowlist em dois passos: formato primeiro, pertencimento depois. E
     // daqui pra frente usa o elemento DA LISTA — a URL da brapi só pode ser
@@ -3413,8 +3453,14 @@ async function _securityLog(env, request, kind, detalhe) {
 
     // Acima do teto, grava só o contador; e bem acima, para de gravar de vez,
     // pra uma enxurrada não conseguir consumir escrita nenhuma.
+    // Passado o teto, o contador sobe mais um pouco (pro painel mostrar que
+    // houve enxurrada) e para. O limite antigo de MAX_DIA*10 ainda deixava
+    // 500x2 + 4.500 = 5.500 escritas por dia — 5,5x a cota gratis do KV, ou
+    // seja, um scanner pedindo caminhos aleatorios ainda conseguia queimar a
+    // cota inteira em minutos, que e exatamente o que este teto existe pra
+    // impedir. O corte agora e logo acima do teto de detalhe.
     if (jaHoje >= SEC_LOG_MAX_DIA) {
-      if (jaHoje < SEC_LOG_MAX_DIA * 10) {
+      if (jaHoje < SEC_LOG_MAX_DIA + 100) {
         await env.FINN_KV.put(chaveContador, String(jaHoje + 1), { expirationTtl: SEC_LOG_TTL });
       }
       return;
@@ -3632,7 +3678,7 @@ h1 em{font-style:normal;color:#F97316}
 <h2><span class="num">08</span> Contato</h2>
 <p>Dúvidas sobre privacidade? Escreva para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> e respondemos em até 48h.</p>
 </article>\`;
-      return new Response(legalShell('privacidade', 'Política de Privacidade', 'Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      return new Response(legalShell('privacidade', 'Política de Privacidade', 'Documento legal', body), { headers: Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS) });
     }
 
     if (url.pathname === '/termos') {
@@ -3656,7 +3702,7 @@ h1 em{font-style:normal;color:#F97316}
 <h2><span class="num">06</span> Contato</h2>
 <p>Dúvidas, sugestões ou reclamações: <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
 </article>\`;
-      return new Response(legalShell('termos', 'Termos de Serviço', 'Documento legal', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      return new Response(legalShell('termos', 'Termos de Serviço', 'Documento legal', body), { headers: Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS) });
     }
 
     if (url.pathname === '/deletar-dados') {
@@ -3678,7 +3724,7 @@ h1 em{font-style:normal;color:#F97316}
 
 <div class="warn">Ao excluir, <strong>todas as suas transações, metas, limites e configurações</strong> serão permanentemente removidos. Esta ação é irreversível.</div>
 </article>\`;
-      return new Response(legalShell('deletar-dados', 'Excluir meus dados', 'Direito do titular', body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      return new Response(legalShell('deletar-dados', 'Excluir meus dados', 'Direito do titular', body), { headers: Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS) });
     }
 
     // ── AI proxy (Anthropic Claude) ──
@@ -3698,19 +3744,6 @@ h1 em{font-style:normal;color:#F97316}
           status: 403, headers: { 'Content-Type': 'application/json' }
         });
       }
-      // Limite simples por IP — sem isso, sem exigir sessão nem limitar volume,
-      // alguém podia esgotar a cota da chave da Anthropic num loop.
-      if (env.FINN_KV) {
-        var aiIp = request.headers.get('CF-Connecting-IP') || 'unknown';
-        var aiRlKey = 'ai_rl_' + aiIp + '_' + Math.floor(Date.now() / 60000);
-        var aiCount = parseInt((await env.FINN_KV.get(aiRlKey)) || '0', 10);
-        if (aiCount >= 20) {
-          return new Response(JSON.stringify({ error: { type: 'rate_limited', message: 'muitas requisições — tente de novo em instantes' } }), {
-            status: 429, headers: { 'Content-Type': 'application/json' }
-          });
-        }
-        await env.FINN_KV.put(aiRlKey, String(aiCount + 1), { expirationTtl: 120 });
-      }
       try {
         var aiPayload = {};
         try { aiPayload = JSON.parse(await request.text()); } catch (pe) { aiPayload = {}; }
@@ -3721,6 +3754,25 @@ h1 em{font-style:normal;color:#F97316}
           return new Response(JSON.stringify({ error: { type: 'unauthorized', message: 'faça login pra usar a Finn IA' } }), {
             status: 401, headers: { 'Content-Type': 'application/json' }
           });
+        }
+        // Teto de rajada por IP. Ficava ANTES da autenticacao, e por isso
+        // gravava no KV a cada requisicao — bastava um curl em loop com o
+        // header Origin certo (Origin e so um header, nao prova nada fora do
+        // navegador) pra queimar a cota gratis de escrita do KV em menos de
+        // uma hora, derrubando junto push, log de seguranca, indice do
+        // Instagram e os proprios rate limits, que gravam no mesmo lugar.
+        // Agora so usuario autenticado chega aqui, entao ninguem sem login
+        // consegue gastar escrita.
+        if (env.FINN_KV) {
+          var aiIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+          var aiRlKey = 'ai_rl_' + aiIp + '_' + Math.floor(Date.now() / 60000);
+          var aiCount = parseInt((await env.FINN_KV.get(aiRlKey)) || '0', 10);
+          if (aiCount >= 20) {
+            return new Response(JSON.stringify({ error: { type: 'rate_limited', message: 'muitas requisições — tente de novo em instantes' } }), {
+              status: 429, headers: { 'Content-Type': 'application/json' }
+            });
+          }
+          await env.FINN_KV.put(aiRlKey, String(aiCount + 1), { expirationTtl: 120 });
         }
         var aiSub = await _subaGetSubscription(aiUser.id, env);
         var aiPlan = PREMIUM_ENFORCEMENT_ENABLED ? ((aiSub && aiSub.plan) || 'free') : 'pro';
@@ -3955,30 +4007,30 @@ h1 em{font-style:normal;color:#F97316}
     // ── Landing page ──
     if (url.pathname === '/landing' || url.pathname === '/landing.html') {
       return new Response(${JSON.stringify(landing)}, {
-        headers: {
+        headers: Object.assign({
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
-        },
+        }, SECURITY_HEADERS),
       });
     }
 
     // ── Guia de uso ──
     if (url.pathname === '/guia' || url.pathname === '/guia.html') {
       return new Response(${JSON.stringify(guia)}, {
-        headers: {
+        headers: Object.assign({
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
-        },
+        }, SECURITY_HEADERS),
       });
     }
 
     // ── Beta: inscrição de novos testers ──
     if (url.pathname === '/beta' || url.pathname === '/beta.html') {
       return new Response(${JSON.stringify(beta)}, {
-        headers: {
+        headers: Object.assign({
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
-        },
+        }, SECURITY_HEADERS),
       });
     }
     if (url.pathname === '/beta/signup' && request.method === 'POST') {
@@ -3993,10 +4045,10 @@ h1 em{font-style:normal;color:#F97316}
     // ── Questionário antes do link do beta ──
     if (url.pathname === '/beta-questionario' || url.pathname === '/beta-questionario.html') {
       return new Response(${JSON.stringify(betaQuestionario)}, {
-        headers: {
+        headers: Object.assign({
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
-        },
+        }, SECURITY_HEADERS),
       });
     }
     if (url.pathname === '/beta-questionario/enviar' && request.method === 'POST') {
@@ -4021,20 +4073,20 @@ h1 em{font-style:normal;color:#F97316}
     // ── Pitch decks ──
     if (url.pathname === '/investidores') {
       return new Response(${JSON.stringify(pitchInv)}, {
-        headers: {
+        headers: Object.assign({
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
           'X-Robots-Tag': 'noindex, nofollow',
-        },
+        }, SECURITY_HEADERS),
       });
     }
     if (url.pathname === '/usuarios') {
       return new Response(${JSON.stringify(pitchUsr)}, {
-        headers: {
+        headers: Object.assign({
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache',
           'X-Robots-Tag': 'noindex, nofollow',
-        },
+        }, SECURITY_HEADERS),
       });
     }
 
