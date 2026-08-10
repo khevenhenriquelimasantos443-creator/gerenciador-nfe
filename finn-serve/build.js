@@ -906,6 +906,127 @@ async function _distinctUserCount(table, env) {
   return Object.keys(set).length;
 }
 
+// ── Conquistas: quem desbloqueou o quê ──────────────────────────────────────
+// Ponto importante de privacidade: NADA disto é rastreamento novo. As
+// conquistas no app são calculadas na hora, no navegador, e não gravam nada
+// em lugar nenhum. Aqui elas são RECALCULADAS no servidor a partir de dados
+// que o usuário já sincroniza de qualquer forma (lançamentos, metas,
+// limites, rachas, e o metadata que diz se ele ligou o bot). Ou seja: dá pra
+// saber quantas pessoas desbloquearam cada selo sem instalar telemetria,
+// sem pedir consentimento novo e sem guardar um byte a mais.
+//
+// A única que NÃO dá pra derivar é "Mãos de tesoura" (contador de exclusões
+// que vive só no localStorage do aparelho) — ela é devolvida com
+// derivavel:false em vez de um número inventado.
+//
+// A lógica abaixo espelha CONQUISTAS_DEFS do finn/index.html de propósito.
+// Se as regras mudarem lá, mudam aqui — senão o painel mostra um número
+// diferente do que o usuário vê na tela dele.
+//
+// UMA divergência conhecida e proposital: o app exclui do "Mês no azul" as
+// movimentações de investimento (BB Rende Fácil, Tesouro etc.), e pra isso
+// ele lê a DESCRIÇÃO de cada lançamento. Aqui não lemos descrição — puxar o
+// texto livre de tudo que todo mundo comprou, só pra refinar uma estatística
+// agregada, é dado pessoal demais pra pouco ganho. Efeito prático: pra quem
+// tem varredura automática de saldo importada do banco, o "Mês no azul"
+// pode contar um mês que o app dele não contaria. Some no painel.
+
+// Mesma regra do computeStreak() do app: dias com pelo menos 1 lançamento,
+// contando de hoje pra trás, e se hoje ainda não tem nada, começa de ontem.
+function _streakSrv(datas) {
+  var dias = {};
+  datas.forEach(function (d) { if (d) dias[d.slice(0, 10)] = true; });
+  // Fuso do usuário é o Brasil (UTC-3 fixo desde 2019) — usar UTC aqui
+  // faria a sequência "quebrar" pra quem lança entre 21h e meia-noite.
+  var cursor = new Date(Date.now() - 3 * 3600 * 1000);
+  function iso(d) { return d.toISOString().slice(0, 10); }
+  if (!dias[iso(cursor)]) cursor.setDate(cursor.getDate() - 1);
+  var streak = 0;
+  while (streak < 3660) {
+    if (!dias[iso(cursor)]) break;
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+var _CONQUISTAS_META = [
+  { id: 'primeiro', icone: '🌱', nome: 'Primeiro lançamento', secreta: false },
+  { id: 'streak7', icone: '🔥', nome: '7 dias seguidos', secreta: false },
+  { id: 'streak30', icone: '💪', nome: '30 dias seguidos', secreta: false },
+  { id: 'mesAzul', icone: '📈', nome: 'Mês no azul', secreta: false },
+  { id: 'meta', icone: '🎯', nome: 'Meta batida', secreta: false },
+  { id: 'limite', icone: '🛡️', nome: 'Dentro do limite', secreta: false },
+  { id: 'racha', icone: '🤝', nome: 'Dividiu uma conta', secreta: false },
+  { id: 'bot', icone: '🔗', nome: 'Conectou o bot', secreta: false },
+  { id: 'coruja', icone: '🦉', nome: 'Coruja financeira', secreta: true },
+  { id: 'tesoura', icone: '✂️', nome: 'Mãos de tesoura', secreta: true, derivavel: false },
+  { id: 'sextou', icone: '🍻', nome: 'Sextou com consciência', secreta: true },
+  { id: 'futuro', icone: '🕰️', nome: 'De volta pro futuro', secreta: true },
+];
+
+function _conquistasDoUsuario(txs, goals, limits, temSplit, temBot) {
+  var mesAtual = new Date(Date.now() - 3 * 3600 * 1000).toISOString().slice(0, 7);
+  var streak = _streakSrv(txs.map(function (t) { return t.date; }));
+
+  // Mês no azul: algum mês fechado com receita > despesa.
+  var porMes = {};
+  txs.forEach(function (t) {
+    var ym = (t.date || '').slice(0, 7);
+    if (!ym) return;
+    if (!porMes[ym]) porMes[ym] = { r: 0, d: 0 };
+    if (t.type === 'receita') porMes[ym].r += Number(t.value) || 0;
+    else porMes[ym].d += Number(t.value) || 0;
+  });
+  var mesAzul = Object.keys(porMes).some(function (ym) { return porMes[ym].d > 0 && porMes[ym].r > porMes[ym].d; });
+
+  // Dentro do limite: gasto do mês corrente <= limite, em TODAS as
+  // categorias configuradas (e precisa ter pelo menos uma configurada —
+  // senão a conquista viria de graça pra quem nunca usou limites).
+  var gastoMesPorCat = {};
+  txs.forEach(function (t) {
+    if (t.type !== 'despesa' || (t.date || '').slice(0, 7) !== mesAtual) return;
+    gastoMesPorCat[t.category] = (gastoMesPorCat[t.category] || 0) + (Number(t.value) || 0);
+  });
+  var dentroLimite = limits.length > 0 && limits.every(function (l) {
+    return (gastoMesPorCat[l.category] || 0) <= (Number(l.monthly_limit) || 0);
+  });
+
+  var coruja = txs.some(function (t) {
+    if (!t.created_at) return false;
+    var h = new Date(new Date(t.created_at).getTime() - 3 * 3600 * 1000).getUTCHours();
+    return h >= 1 && h < 5;
+  });
+
+  var limiteLazer = limits.filter(function (l) { return l.category === 'Lazer'; })[0];
+  var sextou = !!limiteLazer
+    && (gastoMesPorCat['Lazer'] || 0) <= (Number(limiteLazer.monthly_limit) || 0)
+    && txs.some(function (t) {
+      return t.type === 'despesa' && t.category === 'Lazer' && t.date
+        && new Date(t.date + 'T12:00:00Z').getUTCDay() === 5;
+    });
+
+  var futuro = txs.some(function (t) {
+    if (t.type !== 'despesa' || !t.date || !t.created_at) return false;
+    return (new Date(t.created_at) - new Date(t.date + 'T12:00:00Z')) / 86400000 > 15;
+  });
+
+  return {
+    primeiro: txs.length >= 1,
+    streak7: streak >= 7,
+    streak30: streak >= 30,
+    mesAzul: mesAzul,
+    meta: goals.some(function (g) { return Number(g.target) > 0 && Number(g.saved) >= Number(g.target); }),
+    limite: dentroLimite,
+    racha: temSplit,
+    bot: temBot,
+    coruja: coruja,
+    tesoura: false, // só localStorage — ver comentário do bloco
+    sextou: sextou,
+    futuro: futuro,
+  };
+}
+
 // GET /admin/analytics — painel de uso. Credenciais em header:
 //   Authorization: Bearer <access_token>  +  X-Admin-Password: <senha>
 // (só a conta master). Tudo lido ao vivo do Supabase via SUPABASE_SERVICE_KEY
@@ -924,9 +1045,18 @@ async function _adminAnalytics(request, env) {
     var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
 
     var usersP = _adminListAllUsers(env);
-    var txP = fetch('${SUPA_URL_SERVER}/rest/v1/transactions?select=user_id,value,type,created_at', { headers: svcHeaders })
+    // date e category entraram junto com o painel de conquistas — são o
+    // mínimo pra recalcular sequência/mês no azul/limite sem precisar da
+    // descrição (ver o bloco de conquistas acima).
+    var txP = fetch('${SUPA_URL_SERVER}/rest/v1/transactions?select=user_id,value,type,created_at,date,category', { headers: svcHeaders })
       .then(function(r) { return r.ok ? r.json() : []; });
     var subsP = fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?select=user_id,plan,status,ai_usage_count', { headers: svcHeaders })
+      .then(function(r) { return r.ok ? r.json() : []; });
+    var goalsP = fetch('${SUPA_URL_SERVER}/rest/v1/goals?select=user_id,target,saved', { headers: svcHeaders })
+      .then(function(r) { return r.ok ? r.json() : []; });
+    var limitsP = fetch('${SUPA_URL_SERVER}/rest/v1/spending_limits?select=user_id,category,monthly_limit', { headers: svcHeaders })
+      .then(function(r) { return r.ok ? r.json() : []; });
+    var splitsP = fetch('${SUPA_URL_SERVER}/rest/v1/splits?select=user_id', { headers: svcHeaders })
       .then(function(r) { return r.ok ? r.json() : []; });
     var featureTables = ['spending_limits', 'goals', 'fixed_accounts', 'splits', 'debts', 'credit_cards', 'categories'];
     var featureP = Promise.all(featureTables.map(function(t) { return _distinctUserCount(t, env); }));
@@ -934,6 +1064,9 @@ async function _adminAnalytics(request, env) {
     var users = await usersP;
     var txs = await txP;
     var subs = await subsP;
+    var goalsAll = await goalsP;
+    var limitsAll = await limitsP;
+    var splitsAll = await splitsP;
     var featureCounts = await featureP;
 
     var totalUsers = users.length;
@@ -942,14 +1075,21 @@ async function _adminAnalytics(request, env) {
     var txByUser = {};
     var txByDay = {};
     txs.forEach(function(t) {
-      if (!txByUser[t.user_id]) txByUser[t.user_id] = { count: 0, days: {} };
+      if (!txByUser[t.user_id]) txByUser[t.user_id] = { count: 0, days: {}, rows: [] };
       txByUser[t.user_id].count++;
+      txByUser[t.user_id].rows.push(t);
       var day = (t.created_at || '').slice(0, 10);
       if (day) {
         txByUser[t.user_id].days[day] = true;
         txByDay[day] = (txByDay[day] || 0) + 1;
       }
     });
+
+    // Índices por usuário pro cálculo de conquistas.
+    var goalsByUser = {}, limitsByUser = {}, splitUsers = {};
+    goalsAll.forEach(function(g) { (goalsByUser[g.user_id] = goalsByUser[g.user_id] || []).push(g); });
+    limitsAll.forEach(function(l) { (limitsByUser[l.user_id] = limitsByUser[l.user_id] || []).push(l); });
+    splitsAll.forEach(function(s) { splitUsers[s.user_id] = true; });
 
     var subByUser = {};
     subs.forEach(function(s) { subByUser[s.user_id] = s; });
@@ -973,7 +1113,17 @@ async function _adminAnalytics(request, env) {
       var tx = txByUser[u.id] || { count: 0, days: {} };
       var sub = subByUser[u.id];
       var returned = !!(u.last_sign_in_at && u.created_at && (new Date(u.last_sign_in_at) - new Date(u.created_at)) > 5 * 60 * 1000);
+      var conq = _conquistasDoUsuario(
+        tx.rows || [],
+        goalsByUser[u.id] || [],
+        limitsByUser[u.id] || [],
+        !!splitUsers[u.id],
+        !!(meta.whatsapp_verified || meta.telegram_chat_id)
+      );
+      var conqFeitas = _CONQUISTAS_META.filter(function(c) { return c.derivavel !== false && conq[c.id]; }).length;
       return {
+        conquistas: conq,
+        conquistas_total: conqFeitas,
         id: u.id,
         email: u.email,
         name: meta.full_name || meta.name || (u.email || '').split('@')[0],
@@ -992,6 +1142,30 @@ async function _adminAnalytics(request, env) {
 
     var returnedCount = usersOut.filter(function(u) { return u.returned; }).length;
 
+    // Agregado das conquistas. A conta master é excluída da base — senão o
+    // painel fica medindo o próprio dono testando o app.
+    var usuariosReais = usersOut.filter(function(u) { return !u.internal; });
+    var baseConq = usuariosReais.length;
+    var conquistasOut = _CONQUISTAS_META.map(function(c) {
+      if (c.derivavel === false) {
+        return { id: c.id, nome: c.nome, icone: c.icone, secreta: c.secreta, derivavel: false, usuarios: null, pct: null };
+      }
+      var n = usuariosReais.filter(function(u) { return u.conquistas[c.id]; }).length;
+      return { id: c.id, nome: c.nome, icone: c.icone, secreta: c.secreta, derivavel: true, usuarios: n, pct: baseConq ? Math.round(n / baseConq * 100) : 0 };
+    });
+    // Mesma escada de renderTituloBadge() no app.
+    function _tituloDe(n) {
+      if (n >= _CONQUISTAS_META.length) return 'Investidor Blindado';
+      if (n >= 8) return 'Mestre do Orçamento';
+      if (n >= 4) return 'Organizador Oficial';
+      return 'Aprendiz das Finanças';
+    }
+    var titulos = {};
+    usuariosReais.forEach(function(u) {
+      var t = _tituloDe(u.conquistas_total);
+      titulos[t] = (titulos[t] || 0) + 1;
+    });
+
     var out = {
       ok: true,
       generated_at: new Date().toISOString(),
@@ -1000,6 +1174,15 @@ async function _adminAnalytics(request, env) {
         transactions: txs.length,
         returned: returnedCount,
         returned_pct: totalUsers ? Math.round(returnedCount / totalUsers * 100) : 0
+      },
+      conquistas: {
+        base: baseConq,
+        itens: conquistasOut,
+        titulos: ['Aprendiz das Finanças', 'Organizador Oficial', 'Mestre do Orçamento', 'Investidor Blindado']
+          .map(function(t) { return { titulo: t, usuarios: titulos[t] || 0 }; }),
+        media_por_usuario: baseConq
+          ? Math.round(usuariosReais.reduce(function(s, u) { return s + u.conquistas_total; }, 0) / baseConq * 10) / 10
+          : 0
       },
       signups_by_week: Object.keys(signupsByWeek).sort().map(function(wk) { return { week: wk, count: signupsByWeek[wk] }; }),
       active_days: Object.keys(txByDay).sort().map(function(d) { return { day: d, count: txByDay[d] }; }),
@@ -3848,6 +4031,35 @@ h1 em{font-style:normal;color:#F97316}
           'Cache-Control': 'no-cache',
           'X-Robots-Tag': 'noindex, nofollow',
         },
+      });
+    }
+
+    // ── /favicon.ico e /.well-known/assetlinks.json: pedido automático, não ataque ──
+    // Os dois caíam no catch-all e entravam no painel como "tentativa de
+    // acesso". Não são:
+    //
+    //   /favicon.ico — o HTML já declara o ícone como data: URI inline, mas
+    //   navegador (e crawler, e prévia de link) pede /favicon.ico por padrão
+    //   de qualquer jeito. 13 registros em 7 dias vinham só disso.
+    //
+    //   /.well-known/assetlinks.json — Digital Asset Links, o arquivo que o
+    //   Android/Chrome busca pra verificar associação entre site e app ao
+    //   instalar um PWA. Sozinho eram 58 registros em 7 dias, e os endereços
+    //   66.102.x.x / 74.125.x.x que apareciam no topo do painel com "1
+    //   caminho" cada são faixas da Google — ou seja, o próprio Android
+    //   conferindo o PWA, contado como invasor. O Finn não tem app Android
+    //   publicado, então a resposta correta é uma lista vazia (que é resposta
+    //   VÁLIDA do padrão, significando "nenhum app associado") com cache
+    //   longo, em vez de 404 sem cache que faz o Android insistir pra sempre.
+    if (url.pathname === '/favicon.ico') {
+      var favBytes = Uint8Array.from(atob(${JSON.stringify(icon192)}), function(c){ return c.charCodeAt(0); });
+      return new Response(favBytes, {
+        headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800' }
+      });
+    }
+    if (url.pathname === '/.well-known/assetlinks.json') {
+      return new Response('[]', {
+        headers: Object.assign({ 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
       });
     }
 

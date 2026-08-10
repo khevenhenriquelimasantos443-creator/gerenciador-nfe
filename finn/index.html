@@ -492,10 +492,12 @@ body.finn-dark .btn-google:hover{background:#1E293B}
       <button class="tab-btn" data-tab="ia">IA</button>
       <div class="nav-menu-bottom">
         <a href="/guia" target="_blank" rel="noopener" class="nav-menu-action" id="btnGuiaNav" style="text-decoration:none">Guia de uso</a>
+        <button type="button" class="nav-menu-action" id="btnAdminHomeNav" style="display:none">Visão geral</button>
         <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
         <button type="button" class="nav-menu-action" id="btnScreenerNav" style="display:none">Screener de ações</button>
         <button type="button" class="nav-menu-action" id="btnBetaAdminNav" style="display:none">Questionário do beta</button>
         <button type="button" class="nav-menu-action" id="btnMetaAdsNav" style="display:none">Anúncios</button>
+        <button type="button" class="nav-menu-action" id="btnToggleAdminMode" style="display:none">Voltar pro Finn normal</button>
         <button type="button" class="nav-menu-action" id="btnConfigNav">Configurações</button>
         <button type="button" class="nav-menu-action" id="btnLogoutNav">Sair</button>
       </div>
@@ -565,6 +567,35 @@ var MASTER_EMAIL = "finn.controle01@gmail.com";
 function isMasterUser(){
   var email = currentSession && currentSession.user && currentSession.user.email;
   return !!(email && email.toLowerCase() === MASTER_EMAIL.toLowerCase());
+}
+
+// ── Modo admin ──────────────────────────────────────────────────────────────
+// A conta master usava o app normal com as telas de gestão penduradas no fim
+// do menu, misturadas com Dashboard/Lançamentos/Metas. Ficava confuso: pra
+// gerenciar o produto você navegava por telas de finança pessoal que não
+// eram suas. Agora são dois modos separados — no modo admin o menu só tem
+// gestão, e um botão volta pro Finn de sempre.
+//
+// Exige master E senha de admin conferida. adminUnlocked sozinho não basta
+// em lugar nenhum do código, e aqui não é diferente.
+function adminModeAtivo(){
+  return isMasterUser() && state.adminUnlocked && state.adminMode;
+}
+// Telas que só existem no modo admin. Sair do modo com uma delas aberta
+// deixaria a tela em branco, então setAdminMode reposiciona a aba.
+var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminBeta", "metaAds", "screener"];
+// Não persiste em localStorage de propósito: adminUnlocked (a senha de
+// admin) também não persiste, então a cada recarga a pessoa desbloqueia de
+// novo — e o próprio desbloqueio já liga o modo admin. Guardar o modo
+// sozinho daria a falsa impressão de que a escolha sobrevive ao refresh.
+function setAdminMode(ligado){
+  state.adminMode = !!ligado;
+  if(ligado){
+    state.tab = "adminHome";
+  } else if(ADMIN_TABS.indexOf(state.tab) !== -1){
+    state.tab = "dashboard";
+  }
+  render();
 }
 function whatsappBotLink(){
   return "https://wa.me/" + WHATSAPP_BOT_NUMBER + "?text=" + encodeURIComponent(WHATSAPP_GREETING);
@@ -721,7 +752,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4074,6 +4105,127 @@ function admWeekLabel(iso){
   var d = new Date(iso + "T00:00:00Z");
   return String(d.getUTCDate()).padStart(2,"0") + "/" + String(d.getUTCMonth()+1).padStart(2,"0");
 }
+/* ── Visão geral do admin (tela inicial do modo admin) ── */
+// Junta num lugar só o que antes exigia abrir três telas: números de uso,
+// adoção de conquistas e segurança. Cada bloco é um resumo com atalho pra
+// tela detalhada — a ideia é bater o olho aqui e só se aprofundar quando
+// algum número chamar atenção.
+function renderConquistasAdmin(a){
+  var c = a && a.conquistas;
+  if(!c || !c.itens) return "";
+  var derivaveis = c.itens.filter(function(i){ return i.derivavel !== false; });
+  var naoDerivaveis = c.itens.filter(function(i){ return i.derivavel === false; });
+  var maisRara = derivaveis.slice().sort(function(x,y){ return x.usuarios - y.usuarios; })[0];
+  var maisComum = derivaveis.slice().sort(function(x,y){ return y.usuarios - x.usuarios; })[0];
+
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Conquistas — quem está desbloqueando</div>';
+
+  if(!c.base){
+    return html + '<div style="font-size:13px;color:var(--fm)">Nenhum usuário além da conta interna ainda. Assim que entrar gente de verdade, os números aparecem aqui.</div></div>';
+  }
+
+  html += '<div class="adm-kpis" style="margin-bottom:14px">' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Base</div><div class="adm-kpi-value">' + c.base + '</div><div class="adm-kpi-sub">usuários (sem a conta interna)</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Média</div><div class="adm-kpi-value">' + c.media_por_usuario + '</div><div class="adm-kpi-sub">conquistas por pessoa</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Mais comum</div><div class="adm-kpi-value" style="font-size:19px">' + (maisComum ? escapeHtml(maisComum.icone) : "—") + '</div><div class="adm-kpi-sub">' + (maisComum ? escapeHtml(maisComum.nome) : "—") + '</div></div>' +
+  '</div>';
+
+  html += '<div class="import-summary">Desbloqueio por conquista</div>' +
+    '<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:12px">' +
+    derivaveis.map(function(i){
+      return '<div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px">' +
+          '<span style="font-weight:700;color:var(--fd)">' + escapeHtml(i.icone) + ' ' + escapeHtml(i.nome) +
+            (i.secreta ? ' <span style="color:var(--fp);font-size:10px;font-weight:800">SECRETA</span>' : '') + '</span>' +
+          '<span style="font-weight:800;font-variant-numeric:tabular-nums">' + i.usuarios + ' · ' + i.pct + '%</span>' +
+        '</div>' +
+        '<div style="width:100%;height:6px;border-radius:5px;background:var(--fb);overflow:hidden">' +
+          '<div class="adm-feat-fill" style="width:' + Math.max(2, i.pct) + '%"></div>' +
+        '</div>' +
+      '</div>';
+    }).join("") + '</div>';
+
+  html += '<div class="import-summary">Títulos</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+    c.titulos.map(function(t){
+      return '<span class="cat-pill" style="font-size:11.5px">' + escapeHtml(t.titulo) + ' · ' + t.usuarios + '</span>';
+    }).join("") + '</div>';
+
+  html += '<div class="adm-callout" style="font-size:11.5px;color:var(--fm);line-height:1.55">' +
+    '<b>De onde vêm estes números:</b> não existe rastreamento de conquista. Elas são recalculadas aqui a partir dos dados que o app já sincroniza (lançamentos, metas, limites, rachas, bot conectado) — nada novo é gravado sobre ninguém.' +
+    (maisRara ? ' Hoje a mais difícil é <b>' + escapeHtml(maisRara.nome) + '</b> (' + maisRara.usuarios + ' pessoa' + (maisRara.usuarios === 1 ? '' : 's') + ').' : '') +
+    (naoDerivaveis.length ? ' Fora da conta: ' + naoDerivaveis.map(function(i){ return escapeHtml(i.nome); }).join(", ") + ' — o contador dessa vive só no aparelho do usuário, então não dá pra medir daqui.' : '') +
+  '</div>';
+
+  return html + '</div>';
+}
+
+function renderAdminHome(){
+  if(!adminModeAtivo()) return "";
+  var a = state.analyticsData;
+
+  var html = '<div class="card" style="border-color:var(--fp)">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">' +
+      '<div><div class="eyebrow" style="margin:0;color:var(--fp)">Modo admin</div>' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-top:3px">Gestão do Finn. Suas telas de finança pessoal estão no menu, em "Voltar pro Finn normal".</div></div>' +
+      '<button type="button" class="btn-ghost" id="btnAdminHomeRefresh" style="padding:6px 12px;font-size:11.5px"' + (state.analyticsLoading ? " disabled" : "") + '>' + (state.analyticsLoading ? "Atualizando…" : "Atualizar") + '</button>' +
+    '</div>' +
+  '</div>';
+
+  if(state.analyticsLoading && !a){
+    return html + '<div class="card"><div style="font-size:13px;color:var(--fm)">Carregando os números…</div></div>';
+  }
+  if(state.analyticsError && !a){
+    return html + '<div class="card"><div class="ai-error">' + escapeHtml(state.analyticsError) + '</div>' +
+      '<button type="button" class="btn-submit" id="btnAdminHomeRetry" style="margin-top:10px">Tentar de novo</button></div>';
+  }
+  if(!a){
+    return html + '<div class="card"><button type="button" class="btn-submit" id="btnAdminHomeRetry">Carregar os números</button></div>';
+  }
+
+  var t = a.totals || {};
+  var pagantes = (a.users || []).filter(function(u){ return !u.internal && u.plan && u.plan !== "free"; }).length;
+
+  html += '<div class="card">' +
+    '<div class="eyebrow">Números principais</div>' +
+    '<div class="adm-kpis">' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">Usuários</div><div class="adm-kpi-value">' + (t.users || 0) + '</div><div class="adm-kpi-sub">cadastrados</div></div>' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">Voltaram</div><div class="adm-kpi-value">' + (t.returned || 0) + '</div><div class="adm-kpi-sub">' + (t.returned_pct || 0) + '% da base</div></div>' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">Lançamentos</div><div class="adm-kpi-value">' + (t.transactions || 0) + '</div><div class="adm-kpi-sub">no total</div></div>' +
+      '<div class="adm-kpi"><div class="adm-kpi-label">Pagantes</div><div class="adm-kpi-value">' + pagantes + '</div><div class="adm-kpi-sub">plano ativo</div></div>' +
+    '</div>' +
+    '<button type="button" class="btn-ghost" id="btnGoAnalytics" style="width:100%;margin-top:12px">Ver painel de uso completo →</button>' +
+  '</div>';
+
+  html += renderConquistasAdmin(a);
+
+  // Segurança: só o essencial aqui, o detalhe (e o export) fica no painel de uso.
+  var s = state.intrusions;
+  html += '<div class="card">' +
+    '<div class="eyebrow">Segurança</div>' +
+    (s
+      ? '<div class="adm-kpis" style="margin-bottom:10px">' +
+          '<div class="adm-kpi"><div class="adm-kpi-label">Últimas 24h</div><div class="adm-kpi-value">' + s.ultimas24 + '</div><div class="adm-kpi-sub">tentativas</div></div>' +
+          '<div class="adm-kpi"><div class="adm-kpi-label">7 dias</div><div class="adm-kpi-value">' + s.ultimos7d + '</div><div class="adm-kpi-sub">média ' + s.mediaDiaria7d + '/dia</div></div>' +
+        '</div>' +
+        (s.pico ? '<div class="ai-error" style="margin-bottom:10px"><b>Volume acima do normal hoje.</b></div>' : '') +
+        '<button type="button" class="btn-ghost" id="btnExportIntrusionsHome" style="width:100%">Baixar planilha 📄</button>'
+      : '<button type="button" class="btn-ghost" id="btnLoadIntrusionsHome" style="width:100%">Ver tentativas de acesso</button>') +
+  '</div>';
+
+  html += '<div class="card">' +
+    '<div class="eyebrow">Ir para</div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px">' +
+      '<button type="button" class="btn-ghost" id="btnGoBetaAdmin">Questionário do beta</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoMetaAds">Anúncios</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoScreener">Screener de ações</button>' +
+    '</div>' +
+  '</div>';
+
+  return html;
+}
+
 function renderAdminAnalytics(){
   if(!isMasterUser() || !state.adminUnlocked) return "";
 
@@ -4189,7 +4341,11 @@ function renderAdminAnalytics(){
   html += '<div class="adm-callout"><h3>Leitura honesta dos números</h3><ul>' +
     '<li>"Dias ativos" conta dias distintos com pelo menos 1 lançamento — <b>não</b> é o mesmo que dias de login.</li>' +
     '<li>Não há detalhe de sessão/dispositivo por aqui — a API do Supabase não expõe isso ao vivo (só via consulta direta ao banco).</li>' +
-    (bot ? '<li>Bot: ' + bot.whatsappTx.toLocaleString("pt-BR") + ' lançamento(s) via WhatsApp, ' + bot.telegramTx.toLocaleString("pt-BR") + ' via Telegram, ' + bot.dailyDashboardOptIn + ' com resumo diário ativado.</li>' : '<li>Não foi possível carregar os dados do bot agora (worker do WhatsApp/Telegram fora do ar ou sem resposta).</li>') +
+    // Number(...)||0 em vez de ler direto: se o worker do bot responder ok
+    // mas sem algum destes campos, um .toLocaleString() em undefined
+    // derrubava o painel INTEIRO — perdia-se usuários, conquistas e tudo
+    // mais por causa de uma linha opcional de rodapé.
+    (bot ? '<li>Bot: ' + (Number(bot.whatsappTx) || 0).toLocaleString("pt-BR") + ' lançamento(s) via WhatsApp, ' + (Number(bot.telegramTx) || 0).toLocaleString("pt-BR") + ' via Telegram, ' + (Number(bot.dailyDashboardOptIn) || 0) + ' com resumo diário ativado.</li>' : '<li>Não foi possível carregar os dados do bot agora (worker do WhatsApp/Telegram fora do ar ou sem resposta).</li>') +
     '<li>Volume de mensagens trocadas no bot (além dos lançamentos) não fica registrado — só um log recente de 24h via <code>/debug</code>.</li>' +
   '</ul></div>';
 
@@ -4278,7 +4434,10 @@ function renderIntrusionSection(){
     'Isto é alarme, não bloqueio — quem impede o acesso é a autorização de cada rota.' +
   '</div>';
 
-  html += '<button type="button" class="btn-ghost" id="btnLoadIntrusions" style="margin-top:10px">Atualizar</button>';
+  html += '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">' +
+    '<button type="button" class="btn-ghost" id="btnLoadIntrusions" style="flex:1;min-width:120px">Atualizar</button>' +
+    '<button type="button" class="btn-ghost" id="btnExportIntrusions" style="flex:1;min-width:120px">Baixar planilha 📄</button>' +
+  '</div>';
   html += '</div>';
   return html;
 }
@@ -4288,6 +4447,56 @@ function admDataHora(iso){
   var d = new Date(iso);
   if(isNaN(d)) return "—";
   return d.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+
+/* ── Exportar CSV (abre direto no Excel) ── */
+// Dois detalhes que decidem se o arquivo abre certo ou vira lixo no Excel
+// em português:
+//   1. separador ";" — o Excel pt-BR usa ponto e vírgula como separador de
+//      lista, porque a vírgula aqui é separador decimal. Com "," o arquivo
+//      abre com a linha inteira espremida numa coluna só.
+//   2. BOM no início — é o que faz o Excel reconhecer o arquivo como UTF-8.
+//      Sem ele, todo acento vira caractere quebrado.
+function baixarCSV(nomeArquivo, linhas){
+  var conteudo = linhas.map(function(linha){
+    return linha.map(function(celula){
+      var s = (celula === null || celula === undefined) ? "" : String(celula);
+      // Aspas escapam dobrando; envolve a célula sempre que ela contiver o
+      // separador, aspas ou quebra de linha.
+      return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(";");
+  }).join("\r\n");
+  var blob = new Blob(["﻿" + conteudo], { type: "text/csv;charset=utf-8;" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = nomeArquivo;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportarIntrusoesCSV(){
+  var s = state.intrusions;
+  if(!s) return;
+  var linhas = [
+    ["Finn - Tentativas de acesso"],
+    ["Gerado em", admDataHora(new Date().toISOString())],
+    [],
+    ["RESUMO"],
+    ["Ultimas 24h", s.ultimas24],
+    ["Ultimos 7 dias", s.ultimos7d],
+    ["Media diaria (7 dias)", s.mediaDiaria7d],
+    ["Origens distintas", s.origens.length],
+    [],
+    ["POR TIPO"],
+    ["Tipo", "Total"]
+  ];
+  s.porTipo.forEach(function(t){ linhas.push([TIPO_INTRUSAO[t.nome] || t.nome, t.total]); });
+  linhas.push([], ["CAMINHOS MAIS TENTADOS"], ["Caminho", "Total"]);
+  s.topCaminhos.forEach(function(c){ linhas.push([c.nome, c.total]); });
+  linhas.push([], ["ORIGENS (endereco parcial)"], ["Origem", "Pais", "Tentativas", "Caminhos distintos", "Ultima tentativa"]);
+  s.origens.forEach(function(o){ linhas.push([o.regiao, o.pais, o.total, o.caminhosDistintos, admDataHora(o.ultimaEm)]); });
+  baixarCSV("finn-tentativas-acesso-" + todayStr() + ".csv", linhas);
 }
 
 function loadIntrusions(){
@@ -4480,6 +4689,11 @@ function unlockAdmin(){
         syncWhatsAppBot();
         syncTelegramBot();
         pullBotTransactions();
+        // Desbloqueou a senha de admin = quer gerenciar. Cai direto no modo
+        // admin em vez de continuar no Finn normal com as telas de gestão
+        // escondidas no fim do menu.
+        setAdminMode(true);
+        loadAdminAnalytics();
       } else {
         state.adminLoginError = (res.body && res.body.error) || "Senha incorreta.";
         render();
@@ -6009,16 +6223,29 @@ function render(){
   document.querySelectorAll(".tab-btn").forEach(function(btn){
     btn.classList.toggle("active", btn.dataset.tab === state.tab);
   });
-  var btnAdminAnalyticsNav = document.getElementById("btnAdminAnalyticsNav");
-  if(btnAdminAnalyticsNav) btnAdminAnalyticsNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
-  // Mesma regra do painel de uso: o screener é ferramenta interna em teste,
-  // então some do menu de quem não é a master desbloqueada.
-  var btnScreenerNav = document.getElementById("btnScreenerNav");
-  if(btnScreenerNav) btnScreenerNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
-  var btnBetaAdminNav = document.getElementById("btnBetaAdminNav");
-  if(btnBetaAdminNav) btnBetaAdminNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
-  var btnMetaAdsNav = document.getElementById("btnMetaAdsNav");
-  if(btnMetaAdsNav) btnMetaAdsNav.style.display = (isMasterUser() && state.adminUnlocked) ? "" : "none";
+  // No modo admin as abas de finança pessoal saem do menu — a conta master
+  // está ali pra gerir o produto, não pra lançar o próprio mercado. O botão
+  // "Voltar pro Finn normal" traz tudo de volta.
+  var emAdmin = adminModeAtivo();
+  document.querySelectorAll(".nav-menu .tab-btn").forEach(function(btn){
+    btn.style.display = emAdmin ? "none" : "";
+  });
+  // As telas de gestão só aparecem no modo admin (antes bastava estar
+  // desbloqueado, e elas ficavam penduradas no menu normal).
+  ["btnAdminHomeNav","btnAdminAnalyticsNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav"].forEach(function(id){
+    var b = document.getElementById(id);
+    if(b) b.style.display = emAdmin ? "" : "none";
+  });
+  // O botão de alternar aparece pra master desbloqueada nos DOIS modos —
+  // é a única porta de entrada e de saída.
+  var btnToggleAdminMode = document.getElementById("btnToggleAdminMode");
+  if(btnToggleAdminMode){
+    var podeAlternar = isMasterUser() && state.adminUnlocked;
+    btnToggleAdminMode.style.display = podeAlternar ? "" : "none";
+    btnToggleAdminMode.textContent = emAdmin ? "Voltar pro Finn normal" : "Ir pro modo admin";
+  }
+  var btnGuiaNav = document.getElementById("btnGuiaNav");
+  if(btnGuiaNav) btnGuiaNav.style.display = emAdmin ? "none" : "";
   var content = document.getElementById("content");
   if(state.loading){
     content.innerHTML = '<div class="empty-state">Carregando…</div>';
@@ -6048,6 +6275,7 @@ function render(){
   else if(state.tab === "dividas") content.innerHTML = renderDividas();
   else if(state.tab === "racha") content.innerHTML = renderRacha();
   else if(state.tab === "ia") content.innerHTML = renderIA();
+  else if(state.tab === "adminHome") content.innerHTML = renderAdminHome();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else if(state.tab === "screener") content.innerHTML = renderScreener();
   else if(state.tab === "adminBeta") content.innerHTML = renderAdminBeta();
@@ -6417,6 +6645,21 @@ function bindContentEvents(){
       }
     }
   }
+  if(state.tab === "adminHome"){
+    var irPara = function(aba){ return function(){ state.tab = aba; render(); }; };
+    var b;
+    if((b = document.getElementById("btnGoAnalytics"))) b.addEventListener("click", function(){
+      state.tab = "adminAnalytics";
+      if(!state.analyticsData && !state.analyticsLoading) loadAdminAnalytics(); else render();
+    });
+    if((b = document.getElementById("btnGoBetaAdmin"))) b.addEventListener("click", irPara("adminBeta"));
+    if((b = document.getElementById("btnGoMetaAds"))) b.addEventListener("click", irPara("metaAds"));
+    if((b = document.getElementById("btnGoScreener"))) b.addEventListener("click", irPara("screener"));
+    if((b = document.getElementById("btnAdminHomeRefresh"))) b.addEventListener("click", loadAdminAnalytics);
+    if((b = document.getElementById("btnAdminHomeRetry"))) b.addEventListener("click", loadAdminAnalytics);
+    if((b = document.getElementById("btnLoadIntrusionsHome"))) b.addEventListener("click", loadIntrusions);
+    if((b = document.getElementById("btnExportIntrusionsHome"))) b.addEventListener("click", exportarIntrusoesCSV);
+  }
   if(state.tab === "adminAnalytics"){
     var btnLoadAnalytics = document.getElementById("btnLoadAnalytics");
     if(btnLoadAnalytics) btnLoadAnalytics.addEventListener("click", loadAdminAnalytics);
@@ -6424,6 +6667,8 @@ function bindContentEvents(){
     if(btnRetryAnalytics) btnRetryAnalytics.addEventListener("click", loadAdminAnalytics);
     var btnLoadIntrusions = document.getElementById("btnLoadIntrusions");
     if(btnLoadIntrusions) btnLoadIntrusions.addEventListener("click", loadIntrusions);
+    var btnExportIntrusions = document.getElementById("btnExportIntrusions");
+    if(btnExportIntrusions) btnExportIntrusions.addEventListener("click", exportarIntrusoesCSV);
     var btnRefreshAnalytics = document.getElementById("btnRefreshAnalytics");
     if(btnRefreshAnalytics) btnRefreshAnalytics.addEventListener("click", loadAdminAnalytics);
   }
@@ -7183,6 +7428,20 @@ document.getElementById("btnConfigNav").addEventListener("click", function(){
   state.tab = "config";
   render();
   document.getElementById("navMenu").classList.remove("open");
+});
+document.getElementById("btnAdminHomeNav").addEventListener("click", function(){
+  state.tab = "adminHome";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  // A visão geral vive dos mesmos dados do painel de uso — só busca se ainda
+  // não tiver nada em mãos, pra não refazer a consulta a cada visita.
+  if(!state.analyticsData && !state.analyticsLoading) loadAdminAnalytics();
+});
+document.getElementById("btnToggleAdminMode").addEventListener("click", function(){
+  var entrando = !state.adminMode;
+  setAdminMode(entrando);
+  document.getElementById("navMenu").classList.remove("open");
+  if(entrando && !state.analyticsData && !state.analyticsLoading) loadAdminAnalytics();
 });
 document.getElementById("btnAdminAnalyticsNav").addEventListener("click", function(){
   state.tab = "adminAnalytics";
