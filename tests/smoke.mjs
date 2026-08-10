@@ -1,0 +1,219 @@
+// Smoke de regressão do app: abre TODAS as telas, confere que renderizam sem
+// erro de JS, e valida as features desta sessão (streak, comparação mensal,
+// conquistas visíveis e secretas, título, modo admin, export CSV).
+//
+// Recriado do zero: o scratchpad é efêmero e some quando o container
+// reinicia, levando junto a suíte inteira.
+import { chromium } from 'playwright';
+import fs from 'fs'; import http from 'http';
+
+const html = fs.readFileSync(new URL('../finn/index.html', import.meta.url), 'utf8');
+const srv = http.createServer((q, r) => { r.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); r.end(html); }).listen(8995);
+
+let falhas = 0;
+const ok = (c, nome, extra) => { console.log((c ? '  ok   ' : '  FALHA') + ' ' + nome + (extra !== undefined ? '  — ' + extra : '')); if (!c) falhas++; };
+
+const hoje = new Date();
+const d = (n) => { const x = new Date(hoje); x.setDate(x.getDate() - n); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+const ym = hoje.getFullYear() + '-' + String(hoje.getMonth() + 1).padStart(2, '0');
+const mesPassado = new Date(hoje.getFullYear(), hoje.getMonth() - 1, 5);
+const ymAnt = mesPassado.getFullYear() + '-' + String(mesPassado.getMonth() + 1).padStart(2, '0');
+
+// 8 dias seguidos + receita alta + gasto grande no mês passado (gera streak,
+// mês no azul e comparação)
+const TXS = [];
+for (let i = 0; i < 8; i++) TXS.push({ id: 's' + i, user_id: 'u1', type: 'despesa', category: 'Transporte', description: 'Dia ' + i, value: 10, date: d(i), created_at: d(i) + 'T12:00:00Z' });
+TXS.push({ id: 'r1', user_id: 'u1', type: 'receita', category: 'Salário', description: 'Salário', value: 5000, date: ym + '-02', created_at: ym + '-02T12:00:00Z' });
+TXS.push({ id: 'a1', user_id: 'u1', type: 'despesa', category: 'Lazer', description: 'Mês passado', value: 900, date: ymAnt + '-05', created_at: ymAnt + '-05T12:00:00Z' });
+
+const DADOS = {
+  transactions: TXS,
+  goals: [{ id: 'g1', user_id: 'u1', name: 'Viagem', target: 1000, saved: 1000 }],
+  spending_limits: [{ id: 'l1', user_id: 'u1', category: 'Transporte', monthly_limit: 500 }],
+  splits: [{ id: 'sp1', user_id: 'u1', title: 'Churrasco', total_value: 100 }],
+};
+
+const ANALYTICS = {
+  ok: true, truncado: false, limite_lancamentos: 200000,
+  totals: { users: 12, transactions: 340, returned: 7, returned_pct: 58 },
+  conquistas: {
+    base: 11, media_por_usuario: 3.4,
+    itens: [
+      { id: 'primeiro', nome: 'Primeiro lançamento', icone: '🌱', secreta: false, derivavel: true, usuarios: 11, pct: 100 },
+      { id: 'streak7', nome: '7 dias seguidos', icone: '🔥', secreta: false, derivavel: true, usuarios: 4, pct: 36 },
+      { id: 'tesoura', nome: 'Mãos de tesoura', icone: '✂️', secreta: true, derivavel: false, usuarios: null, pct: null },
+    ],
+    titulos: [{ titulo: 'Aprendiz das Finanças', usuarios: 5 }, { titulo: 'Organizador Oficial', usuarios: 4 }, { titulo: 'Mestre do Orçamento', usuarios: 2 }, { titulo: 'Investidor Blindado', usuarios: 0 }],
+  },
+  signups_by_week: [{ week: '2026-08-03', count: 5 }],
+  active_days: [{ day: d(0), count: 12 }],
+  feature_adoption: [{ table: 'goals', users: 6, pct: 50 }],
+  users: [{ id: 'u1', email: 'a@x.com', name: 'Ana', plan: 'pro', internal: false, tx_count: 40, active_days: 12, returned: true, has_whatsapp: true, has_telegram: false, ai_usage_count: 2, created_at: '2026-07-01T10:00:00Z', last_sign_in_at: d(0) + 'T10:00:00Z' }],
+};
+const INTRUSOES = {
+  ok: true, ultimas24: 41, ultimos7d: 175, mediaDiaria7d: 14.3, pico: false, totalHoje: 41, lidos: 201, totalRegistrado: 201, truncado: false,
+  porTipo: [{ nome: 'caminho_desconhecido', total: 128 }],
+  topCaminhos: [{ nome: '/.env', total: 8 }],
+  origens: [{ regiao: '209.99.x.x', pais: 'CH', total: 33, caminhosDistintos: 22, ultimaEm: d(1) + 'T03:22:00Z' }],
+};
+
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+
+async function abrir(email) {
+  const p = await b.newPage({ viewport: { width: 1180, height: 1400 } });
+  const erros = [];
+  p.on('pageerror', e => erros.push(e.message));
+  p.on('console', m => { if (m.type() === 'error' && !/favicon|MIME|Failed to load resource/i.test(m.text())) erros.push(m.text().slice(0, 160)); });
+  await p.addInitScript((mail) => {
+    localStorage.setItem('finn_supa_session', JSON.stringify({
+      access_token: 't', refresh_token: 'r', expires_at: Math.floor(Date.now() / 1000) + 7200,
+      user: { id: 'u1', email: mail, user_metadata: { full_name: 'Teste', whatsapp_verified: true } }
+    }));
+  }, email);
+  await p.route('**/*', async route => {
+    const u = route.request().url();
+    const m = route.request().method();
+    const J = (o) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(o) });
+    if (u.includes('/admin/analytics')) return J(ANALYTICS);
+    if (u.includes('/admin/intrusions')) return J(INTRUSOES);
+    if (u.includes('bot-stats')) return J({ ok: true, whatsappTx: 25, telegramTx: 40, dailyDashboardOptIn: 3 });
+    if (u.includes('supabase.co/rest/v1/') && (m === 'DELETE' || m === 'PATCH' || m === 'POST')) return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
+    if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
+    if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
+    if (u.includes('/admin')) return J({ ok: true });
+    if (u.includes('workers.dev') || u.includes('/beta')) return J({ ok: true, txs: [] });
+    return route.continue();
+  });
+  await p.goto('http://localhost:8995/');
+  await p.waitForTimeout(2000);
+  return { p, erros };
+}
+
+console.log('=== todas as telas renderizam sem erro ===');
+{
+  const { p, erros } = await abrir('user@x.com');
+  const abas = ['dashboard', 'adicionar', 'analises', 'lancamentos', 'limites', 'metas', 'fixas', 'cartoes', 'dividas', 'racha', 'ia'];
+  for (const aba of abas) {
+    const r = await p.evaluate(async (a) => {
+      const btn = [...document.querySelectorAll('.tab-btn')].find(x => x.dataset.tab === a);
+      if (!btn) return { erro: 'aba inexistente' };
+      btn.click();
+      await new Promise(r => setTimeout(r, 350));
+      const c = document.getElementById('content');
+      return { chars: c.innerHTML.length, vazio: c.innerText.trim().length < 5 };
+    }, aba);
+    ok(!r.erro && r.chars > 200 && !r.vazio, 'aba "' + aba + '" renderiza', r.erro || (r.chars + ' chars'));
+  }
+  // config por último (não é .tab-btn)
+  const cfg = await p.evaluate(async () => {
+    document.getElementById('btnConfigNav').click();
+    await new Promise(r => setTimeout(r, 400));
+    return document.getElementById('content').innerHTML.length;
+  });
+  ok(cfg > 200, 'aba "config" renderiza', cfg + ' chars');
+  ok(erros.length === 0, 'nenhum erro de JS em nenhuma tela', erros.join(' | '));
+  await p.close();
+}
+
+console.log('\n=== features de engajamento no Dashboard ===');
+{
+  const { p, erros } = await abrir('user@x.com');
+  const t = await p.evaluate(() => document.getElementById('content').innerText);
+  // >= 8 e nao "exatamente 8": o lancamento de salario do fixture cai no dia 2
+  // do mes e, dependendo de que dia e hoje, fica ADJACENTE aos 8 dias
+  // semeados — esticando a sequencia legitimamente. O que importa aqui e que
+  // a sequencia e contada e passa do limiar de 7 (que libera o compartilhar).
+  const nStreak = Number((t.match(/(\d+) dias seguidos/) || [])[1] || 0);
+  ok(nStreak >= 8, 'streak de pelo menos 8 dias aparece', (t.match(/\d+ dias seguidos/) || [])[0]);
+  ok(/a menos que em|a mais que em/.test(t), 'comparação com o mês anterior aparece', (t.match(/Você gastou[^\n]*/) || [])[0]);
+  ok(/(até agora)/.test(t) || Number(d(0).slice(8, 10)) >= 28, 'comparação parcial marcada como "(até agora)" quando é cedo no mês', (t.match(/Você gastou[^\n]*/) || [])[0]);
+  ok(/conquistas/i.test(t), 'card de conquistas aparece');
+  ok(/Aprendiz|Organizador|Mestre|Investidor/.test(t), 'título de evolução aparece', (t.match(/Aprendiz[^\n]*|Organizador[^\n]*|Mestre[^\n]*|Investidor[^\n]*/) || [])[0]);
+  const temShare = await p.evaluate(() => !!document.getElementById('btnShareStreak'));
+  ok(temShare, 'botão de compartilhar aparece com streak >= 7');
+
+  // compartilhar sem Web Share API -> baixa a imagem (não manda só texto)
+  const baixou = await p.evaluate(async () => {
+    delete navigator.share; delete navigator.canShare;
+    let baixou = false;
+    const orig = HTMLAnchorElement.prototype.click;
+    HTMLAnchorElement.prototype.click = function () { if (this.download) baixou = true; else orig.call(this); };
+    document.getElementById('btnShareStreak').click();
+    await new Promise(r => setTimeout(r, 400));
+    HTMLAnchorElement.prototype.click = orig;
+    return baixou;
+  });
+  ok(baixou, 'sem Web Share API, compartilhar BAIXA a imagem (não manda só texto)');
+  ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
+  await p.close();
+}
+
+console.log('\n=== modo admin ===');
+{
+  const { p, erros } = await abrir('finn.controle01@gmail.com');
+  await p.evaluate(async () => {
+    document.getElementById('btnConfigNav').click();
+    await new Promise(r => setTimeout(r, 500));
+    const i = document.getElementById('adminPasswordInput');
+    if (i) { i.value = 'x'; i.dispatchEvent(new Event('input', { bubbles: true })); document.getElementById('btnAdminUnlock').click(); }
+  });
+  await p.waitForTimeout(1600);
+
+  const est = await p.evaluate(() => ({
+    abas: [...document.querySelectorAll('.nav-menu .tab-btn')].filter(x => getComputedStyle(x).display !== 'none').length,
+    home: getComputedStyle(document.getElementById('btnAdminHomeNav')).display,
+    txt: document.getElementById('content').innerText,
+  }));
+  ok(est.abas === 0, 'abas normais do Finn somem no modo admin', est.abas);
+  ok(est.home !== 'none', 'navegação de admin aparece');
+  ok(/12/.test(est.txt) && /340/.test(est.txt), 'números principais aparecem');
+  ok(/conquistas/i.test(est.txt), 'bloco de conquistas aparece');
+  ok(/Mãos de tesoura/.test(est.txt) && /não dá pra medir/i.test(est.txt), 'explica honestamente a conquista não-mensurável');
+
+  // export CSV
+  await p.evaluate(() => { const b = document.getElementById('btnLoadIntrusionsHome'); if (b) b.click(); });
+  await p.waitForTimeout(900);
+  const csv = await p.evaluate(async () => {
+    let blob = null;
+    const oc = URL.createObjectURL; URL.createObjectURL = (b) => { blob = b; return 'blob:x'; };
+    const orig = HTMLAnchorElement.prototype.click;
+    HTMLAnchorElement.prototype.click = function () { if (!this.download) orig.call(this); };
+    const btn = document.getElementById('btnExportIntrusionsHome');
+    if (btn) btn.click();
+    await new Promise(r => setTimeout(r, 300));
+    HTMLAnchorElement.prototype.click = orig; URL.createObjectURL = oc;
+    if (!blob) return null;
+    const bytes = new Uint8Array(await blob.arrayBuffer()).slice(0, 3);
+    return { bom: [...bytes], texto: await blob.text() };
+  });
+  ok(!!csv, 'exportar gera arquivo');
+  if (csv) {
+    ok(csv.bom[0] === 0xEF && csv.bom[1] === 0xBB && csv.bom[2] === 0xBF, 'CSV com BOM UTF-8 (Excel lê acento certo)', JSON.stringify(csv.bom));
+    ok(csv.texto.includes(';'), 'usa ponto e vírgula (separador do Excel pt-BR)');
+    ok(/175/.test(csv.texto), 'traz os dados');
+  }
+
+  // voltar pro Finn normal
+  await p.evaluate(() => document.getElementById('btnToggleAdminMode').click());
+  await p.waitForTimeout(600);
+  const volta = await p.evaluate(() => [...document.querySelectorAll('.nav-menu .tab-btn')].filter(x => getComputedStyle(x).display !== 'none').length);
+  ok(volta > 5, 'voltar traz as abas normais de volta', volta);
+  ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
+  await p.close();
+}
+
+console.log('\n=== usuário comum não vê nada de admin ===');
+{
+  const { p, erros } = await abrir('comum@x.com');
+  const vis = await p.evaluate(() => {
+    const dd = (id) => { const e = document.getElementById(id); return e ? getComputedStyle(e).display : 'ausente'; };
+    return { home: dd('btnAdminHomeNav'), toggle: dd('btnToggleAdminMode'), analytics: dd('btnAdminAnalyticsNav') };
+  });
+  ok(vis.home === 'none' && vis.toggle === 'none' && vis.analytics === 'none', 'nenhum item de admin visível', JSON.stringify(vis));
+  ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
+  await p.close();
+}
+
+await b.close(); srv.close();
+console.log('\n' + (falhas ? `❌ ${falhas} falha(s)` : '✅ tudo passou'));
+process.exit(falhas ? 1 : 0);

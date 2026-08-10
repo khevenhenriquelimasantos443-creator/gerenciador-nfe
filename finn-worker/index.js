@@ -807,6 +807,33 @@ async function continueFlow(phone, text, stateData, env) {
     return;
   }
 
+  // Categoria DIGITADA em vez de tocada na lista. Sem estes dois ramos, quem
+  // respondia "Alimentacao" no teclado (em vez de tocar no botao) caia no
+  // fallback la embaixo: o estado era limpo, o valor ja informado se perdia e
+  // a pessoa via "Algo deu errado" — como se fosse falha do sistema, quando
+  // ela so tinha digitado. Acontece direto em lista longa no WhatsApp, onde o
+  // seletor exige abrir um menu.
+  if (state === "awaiting_cat_despesa" || state === "awaiting_cat_receita") {
+    const lista = state === "awaiting_cat_despesa" ? CATEGORIAS_DESPESA : CATEGORIAS_RECEITA;
+    const alvo = normalizaCategoriaTexto(text);
+    // Casa pelo nome da categoria OU pelo rotulo mostrado (ex.: "Freelance/
+    // Servicos"), ignorando acento, caixa e emoji.
+    const achou = lista.find(function ([cat, emoji, label]) {
+      return normalizaCategoriaTexto(cat) === alvo
+        || (label && normalizaCategoriaTexto(label) === alvo);
+    });
+    if (achou) {
+      await handleCategorySelected(phone, achou[0], stateData, env);
+      return;
+    }
+    // Nao reconheceu: repete a lista SEM perder o valor ja informado.
+    await sendText(phone, "❓ Não reconheci essa categoria. Escolhe uma da lista abaixo (ou digita o nome exato):", env);
+    const v = Math.abs(Number((pending && pending.val) || 0));
+    if (state === "awaiting_cat_despesa") await sendCategoryList(phone, v, env);
+    else await sendCategoryListReceita(phone, v, env);
+    return;
+  }
+
   if (state === "awaiting_desc_despesa") {
     const tx = buildTransaction({ ...pending, desc: text }, phone);
     await addTransaction(phone, tx, env);
@@ -1608,7 +1635,7 @@ async function handleSync(request, env) {
   // O identificador que vira chave de KV NUNCA sai cru do cliente: telefone só
   // dígitos (normalizePhone) e chat do Telegram só o número do chat.
   const normPhone = isTelegram ? null : normalizePhone(phone);
-  const normChat = isTelegram ? String(telegram_chat_id).replace(/\D/g, "") : null;
+  const normChat = isTelegram ? normTelegramChatId(telegram_chat_id) : null;
   if (!isTelegram && !normPhone) {
     return corsResponse(new Response(JSON.stringify({error:"invalid phone"}),{status:400,headers:{"Content-Type":"application/json"}}));
   }
@@ -1694,14 +1721,29 @@ async function handleSync(request, env) {
       // Funde por id em vez de substituir a lista inteira: um lançamento feito
       // pelo bot entre o último carregamento do site e este sync não pode
       // sumir só porque o site mandou uma foto antiga dos próprios dados.
-      if (data.txs && existingData && existingData.txs) {
+      //
+      // A leitura é feita AQUI, coladinha na escrita, e a escrita é direta no
+      // KV — não via saveUserData. Antes o merge usava `existingData`, lido lá
+      // no começo do handler, e o saveUserData fazia um SEGUNDO read por
+      // baixo: o `{...existing, ...data}` dele devolvia o array fundido com a
+      // foto ANTIGA por cima do que estava no KV agora. Ou seja, o merge
+      // existia mas era desfeito na hora de gravar. Cenário real: a pessoa
+      // toca "✅ Confirmar" no WhatsApp enquanto o app carrega — o bot
+      // responde "Despesa registrada!" e o lançamento some.
+      //
+      // Isso ESTREITA a janela de corrida (de "toda a duração do handler" pra
+      // "entre estas duas linhas"), não a elimina: o KV não tem
+      // read-modify-write atômico. Fechar de vez exigiria uma chave por
+      // transação, como o log de debug já faz.
+      const atual = await getUserData(targetPhone, env);
+      if (data.txs && atual && atual.txs) {
         const byId = new Map(data.txs.map(t => [t.id, t]));
-        existingData.txs.forEach(t => { if (!byId.has(t.id)) byId.set(t.id, t); });
+        atual.txs.forEach(t => { if (!byId.has(t.id)) byId.set(t.id, t); });
         data.txs = [...byId.values()];
       }
       data.plan = plan; // sempre o plano atual, direto da fonte, nunca do cliente
       data.dailyDashboardOptIn = dailyDashboardOptIn;
-      await saveUserData(targetPhone, data, env);
+      await env.FINN_KV.put(`data_${targetPhone}`, JSON.stringify({ ...atual, ...data, phone: targetPhone }));
     } else {
       await saveUserData(targetPhone, { plan, dailyDashboardOptIn }, env);
     }
@@ -1730,8 +1772,9 @@ async function resolveBotIdentity(phone, telegramChatId, accessToken, env) {
   const user = await verifySupabaseUser(accessToken);
   if (!user) return { error: "unauthorized" };
   if (isTelegram) {
-    // Só dígitos: "tg:" + valor cru do cliente montava chave de KV arbitrária.
-    const normChat = String(telegramChatId).replace(/\D/g, "");
+    // Validado, nao mutilado: "tg:" + valor cru do cliente montava chave de KV
+    // arbitraria, e o strip de nao-digitos quebrava grupo (id negativo).
+    const normChat = normTelegramChatId(telegramChatId);
     if (!normChat) return { error: "forbidden" };
     const ownChatId = user.user_metadata && String(user.user_metadata.telegram_chat_id || "");
     if (!ownChatId || ownChatId !== normChat) return { error: "forbidden" };
@@ -2254,6 +2297,23 @@ function isTelegramId(id) {
   return typeof id === "string" && id.startsWith("tg:");
 }
 
+// Chat id do Telegram: digitos com sinal de menos OPCIONAL na frente.
+//
+// O replace(/\D/g,"") que existia aqui era seguro pra chave de KV, mas comia
+// o sinal — e chat de GRUPO no Telegram tem id negativo (-1001234567890).
+// O vinculo gravava tgchat_-100... e o metadata guardava "-100...", mas o
+// /sync normalizava pra "100..." e nunca batia: 403 permanente, engolido pelo
+// .catch do app. Na pratica o bot conversava no grupo e os dados do app nunca
+// chegavam la, sem nenhuma mensagem de erro.
+//
+// Valida em vez de mutilar: string que nao for um inteiro inteiro (com ou sem
+// sinal) e rejeitada, o que protege a chave de KV melhor do que remover
+// caracteres em silencio.
+function normTelegramChatId(v) {
+  const t = String(v == null ? "" : v).trim();
+  return /^-?\d+$/.test(t) ? t : "";
+}
+
 function telegramChatIdOf(phone) {
   return phone.slice(3);
 }
@@ -2631,6 +2691,15 @@ async function sendMainMenu(phone, env) {
 }
 
 // [cat (vai no id, é o valor gravado na transação), emoji, label de exibição (opcional, default = cat)]
+// Compara categoria digitada com a da lista ignorando acento, caixa, emoji e
+// espaco extra — "alimentacao", "Alimentação" e "ALIMENTAÇÃO " sao a mesma.
+function normalizaCategoriaTexto(t) {
+  return String(t == null ? "" : t)
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9\/ ]/g, "")
+    .trim().toLowerCase();
+}
+
 const CATEGORIAS_DESPESA = [["Alimentação","🍔"],["Transporte","🚗"],["Lazer","🎮"],["Saúde","🏥"],["Educação","📚"],["Moradia","🏠"],["Vestuário","👕"],["Investimento","📈"],["Outros","📦"]];
 const CATEGORIAS_RECEITA = [["Salário","💼"],["Freelance","💻","Freelance/Serviços"],["Investimento","📈","Investimentos"],["Aluguel","🏠"],["Venda","🛍️"],["Bônus","🎁","Bônus/Presente"],["Outros","📦"]];
 

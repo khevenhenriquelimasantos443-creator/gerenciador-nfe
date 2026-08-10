@@ -123,7 +123,11 @@ async function _pluggyToken(request, env) {
     var authUser = await _supaAuth(body.access_token);
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     if (!env.PLUGGY_CLIENT_ID || !env.PLUGGY_CLIENT_SECRET) {
-      return new Response(JSON.stringify({ error: 'Secrets não configurados: PLUGGY_CLIENT_ID=' + (env.PLUGGY_CLIENT_ID ? 'ok' : 'MISSING') + ' PLUGGY_CLIENT_SECRET=' + (env.PLUGGY_CLIENT_SECRET ? 'ok' : 'MISSING') }), { status: 500, headers: cors });
+      // Detalhe de configuracao vai pro log, nao pra resposta: dizer ao
+      // cliente QUAL secret esta faltando entrega topologia do servidor a
+      // qualquer usuario logado, sem beneficio pra ele.
+      console.error('[pluggy/token] secrets ausentes:', 'CLIENT_ID=' + (env.PLUGGY_CLIENT_ID ? 'ok' : 'MISSING'), 'CLIENT_SECRET=' + (env.PLUGGY_CLIENT_SECRET ? 'ok' : 'MISSING'));
+      return new Response(JSON.stringify({ error: 'integração bancária indisponível no momento' }), { status: 503, headers: cors });
     }
     var apiKey = await _pluggyApiKey(env);
     var r = await fetch('https://api.pluggy.ai/connect_token', {
@@ -182,7 +186,17 @@ async function _pluggyTx(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
     var url = new URL(request.url);
-    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    // Token no HEADER, nao na query string. O JWT do Supabase e a credencial
+    // completa da conta (da acesso a todos os dados financeiros via RLS), e
+    // query string vai parar no log de acesso da Cloudflare, no historico do
+    // navegador e no Referer. As rotas admin GET ja tinham sido migradas por
+    // esse motivo; esta ficou pra tras.
+    //
+    // A query e aceita como fallback pra nao quebrar chamada antiga em
+    // circulacao, mas o app nao usa nenhuma das rotas Pluggy hoje (nao ha
+    // cliente no repositorio), entao na pratica so o header e exercitado.
+    var pluggyAuthHeader = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+    var authUser = await _supaAuth(pluggyAuthHeader || url.searchParams.get('access_token'));
     if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
     var itemId = url.searchParams.get('itemId');
     if (!itemId) return new Response(JSON.stringify({ error: 'itemId required' }), { status: 400, headers: cors });
@@ -547,7 +561,13 @@ async function _billingCheckout(request, env) {
       })
     });
     var j = await r.json();
-    if (!r.ok) return new Response(JSON.stringify({ error: (j && j.message) || 'Falha ao criar assinatura' }), { status: 502, headers: cors });
+    // Mensagem do fornecedor fica no log, nao na resposta: o texto de erro do
+    // Mercado Pago traz formato interno e nome de campo deles, e nao ajuda em
+    // nada quem esta na tela de assinatura.
+    if (!r.ok) {
+      console.error('[billing/checkout] MP', r.status, (j && j.message) || '');
+      return new Response(JSON.stringify({ error: 'Falha ao criar assinatura' }), { status: 502, headers: cors });
+    }
     return new Response(JSON.stringify({ url: j.init_point }), { headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_billingCheckout');
@@ -1085,7 +1105,17 @@ async function _adminAnalytics(request, env) {
     // date e category entraram junto com o painel de conquistas — são o
     // mínimo pra recalcular sequência/mês no azul/limite sem precisar da
     // descrição (ver o bloco de conquistas acima).
-    var txP = fetch('${SUPA_URL_SERVER}/rest/v1/transactions?select=user_id,value,type,created_at,date,category', { headers: svcHeaders })
+    // Teto explicito + deteccao de truncamento. Antes a consulta vinha sem
+    // limite nenhum, com dois problemas conforme a base cresce:
+    //   1. memoria — txs + txByUser[].rows + usersOut vivem ao mesmo tempo no
+    //      isolate, que tem 128 MB. Com algumas centenas de milhares de
+    //      lancamentos o painel simplesmente parava de abrir, sem meio-termo.
+    //   2. mentira silenciosa — se o max-rows do PostgREST estiver ligado no
+    //      projeto (o default do Supabase e 1.000), a resposta ja vinha
+    //      cortada e o painel exibia numeros errados sem avisar ninguem.
+    // Agora o corte e nosso, conhecido, e sinalizado na resposta.
+    var TX_MAX = 200000;
+    var txP = fetch('${SUPA_URL_SERVER}/rest/v1/transactions?select=user_id,value,type,created_at,date,category&limit=' + TX_MAX, { headers: svcHeaders })
       .then(function(r) { return r.ok ? r.json() : []; });
     var subsP = fetch('${SUPA_URL_SERVER}/rest/v1/subscriptions?select=user_id,plan,status,ai_usage_count', { headers: svcHeaders })
       .then(function(r) { return r.ok ? r.json() : []; });
@@ -1213,6 +1243,10 @@ async function _adminAnalytics(request, env) {
     var out = {
       ok: true,
       generated_at: new Date().toISOString(),
+      // truncado=true significa que os numeros abaixo sao um PISO, nao o total.
+      // Melhor mostrar "pelo menos N" do que um numero errado com cara de exato.
+      truncado: txs.length >= TX_MAX,
+      limite_lancamentos: TX_MAX,
       totals: {
         users: totalUsers,
         transactions: txs.length,
@@ -3989,7 +4023,14 @@ h1 em{font-style:normal;color:#F97316}
         if (env.FINN_KV) await env.FINN_KV.put(key, JSON.stringify(record), {expirationTtl: 60*60*24*365});
         return new Response(JSON.stringify({ok:true}), {headers:cors2});
       } catch(e) {
-        return new Response(JSON.stringify({error:e.message}),{status:500,headers:cors2});
+        // Era o unico ponto do arquivo que devolvia e.message cru, furando a
+        // politica do _serverError: falha do KV ou do fetch pro Supabase saia
+        // com o texto interno pro cliente. JSON malformado tambem virava 500
+        // (deveria ser 400), o que confunde diagnostico.
+        console.error('[push/subscribe]', e && e.message);
+        var ehJson = e instanceof SyntaxError;
+        return new Response(JSON.stringify({ error: ehJson ? 'corpo invalido' : 'nao consegui registrar a inscricao' }),
+          { status: ehJson ? 400 : 500, headers: cors2 });
       }
     }
 

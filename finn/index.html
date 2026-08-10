@@ -4225,6 +4225,9 @@ function renderAdminHome(){
 
   html += '<div class="card">' +
     '<div class="eyebrow">Números principais</div>' +
+    // Sem este aviso, um painel truncado parece um painel exato — o pior dos
+    // dois mundos numa tela usada pra tomar decisao.
+    (a.truncado ? '<div class="ai-error" style="margin-bottom:10px">Base grande demais pra carregar de uma vez: os números abaixo consideram os primeiros ' + (a.limite_lancamentos || 0).toLocaleString('pt-BR') + ' lançamentos. Trate como piso, não como total.</div>' : '') +
     '<div class="adm-kpis">' +
       '<div class="adm-kpi"><div class="adm-kpi-label">Usuários</div><div class="adm-kpi-value">' + (t.users || 0) + '</div><div class="adm-kpi-sub">cadastrados</div></div>' +
       '<div class="adm-kpi"><div class="adm-kpi-label">Voltaram</div><div class="adm-kpi-value">' + (t.returned || 0) + '</div><div class="adm-kpi-sub">' + (t.returned_pct || 0) + '% da base</div></div>' +
