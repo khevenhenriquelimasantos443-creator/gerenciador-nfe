@@ -1768,6 +1768,48 @@ async function sendDailyDashboards(env) {
   }
 }
 
+const MESES_EXTENSO_BOT = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+
+// Mesma regra de sequência do app (finn/index.html: computeStreak) — dias
+// com pelo menos 1 lançamento, contando de hoje pra trás. Se hoje ainda não
+// tem nada, conta a partir de ontem em vez de zerar na hora (o resumo das
+// 22h é justamente o empurrão pra não deixar a sequência morrer).
+function computeStreakBot(txs) {
+  const dias = {};
+  (txs || []).forEach(t => { if (t.date) dias[t.date.slice(0, 10)] = true; });
+  const cursor = nowBR();
+  const hojeStr = cursor.toISOString().slice(0, 10);
+  if (!dias[hojeStr]) cursor.setDate(cursor.getDate() - 1);
+  let streak = 0;
+  while (streak < 3660) {
+    if (!dias[cursor.toISOString().slice(0, 10)]) break;
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+function despesaDoMesBot(txs, year, month) {
+  return (txs || [])
+    .filter(t => { const d = new Date(t.date); return d.getFullYear() === year && d.getMonth() === month && t.val < 0 && isFlowTx(t); })
+    .reduce((s, t) => s + Math.abs(t.val), 0);
+}
+
+// Mesma regra do app (comparacaoDespesaMesAnterior): null quando não há
+// base de comparação (mês anterior sem despesa) ou a diferença é
+// desprezível (<1%) — melhor não falar nada do que exibir "∞% a mais".
+function comparacaoMesAnteriorBot(txs, year, month, despesaAtual) {
+  const anteriorDate = new Date(year, month - 1, 1);
+  const despesaAnterior = despesaDoMesBot(txs, anteriorDate.getFullYear(), anteriorDate.getMonth());
+  if (despesaAnterior <= 0) return null;
+  const pct = ((despesaAtual - despesaAnterior) / despesaAnterior) * 100;
+  if (Math.abs(pct) < 1) return null;
+  const nomeMesAnterior = MESES_EXTENSO_BOT[anteriorDate.getMonth()];
+  return pct < 0
+    ? `${Math.round(Math.abs(pct))}% a menos que em ${nomeMesAnterior} 🎉`
+    : `${Math.round(pct)}% a mais que em ${nomeMesAnterior}`;
+}
+
 function buildDashboardMessage(data, env) {
   const now=nowBR();
   const year=now.getFullYear(),month=now.getMonth();
@@ -1791,11 +1833,15 @@ function buildDashboardMessage(data, env) {
   }).filter(Boolean);
   const dateStr=now.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
   const closing=getMotivationalLine(mD,mR,mS);
+  const streak=computeStreakBot(data.txs);
+  const comparacao=comparacaoMesAnteriorBot(data.txs, year, month, mD);
   let msg=`📊 *FINN. — DASHBOARD DAS 22H*\n━━━━━━━━━━━━━━━\n📅 ${capitalizeFirst(dateStr)}\n\n`;
   if(todayTxs.length) msg+=`*Hoje:*\n  💰 R$ ${formatBRL(tR)}  💸 R$ ${formatBRL(tD)}\n\n`;
   else msg+=`_Nenhum lançamento hoje._\n\n`;
   msg+=`*Mês:*\n  💰 Receitas: R$ ${formatBRL(mR)}\n  💸 Despesas: R$ ${formatBRL(mD)}\n  ${mS>=0?"📈":"📉"} Saldo: R$ ${formatBRL(mS)}\n`;
+  if(comparacao) msg+=`  ${comparacao.includes("a menos")?"🎉":"📊"} Você gastou ${comparacao}\n`;
   if(catAlerts.length) msg+=`\n*Limites:*\n${catAlerts.join("\n")}\n`;
+  if(streak>=2) msg+=`\n🔥 *${streak} dias seguidos* registrando no Finn!\n`;
   msg+=`\n━━━━━━━━━━━━━━━\n_${closing}_\n\n👉 ${finnUrl}`;
   return msg;
 }
@@ -1806,6 +1852,10 @@ function buildDashboardMessage(data, env) {
 // que estar cadastrado e aprovado no WhatsApp Manager antes de configurar
 // essa variável; sem ela, a função não manda nada (fail-safe, nunca cai
 // pra texto livre por engano).
+//
+// O template tem 4 variáveis no corpo — {{3}} e {{4}} nunca podem vir vazias
+// (a Meta rejeita parâmetro de texto vazio), por isso sempre têm um texto de
+// fallback quando não há sequência ativa ou base de comparação.
 async function sendDailyDashboardTemplate(phone, data, env) {
   const templateName = env.DAILY_DASHBOARD_TEMPLATE_NAME;
   if (!templateName) return;
@@ -1823,6 +1873,10 @@ async function sendDailyDashboardTemplate(phone, data, env) {
     ? `recebeu R$ ${formatBRL(tR)} e gastou R$ ${formatBRL(tD)}`
     : "não teve nenhum lançamento";
   const saldoMes = `R$ ${formatBRL(mS)}`;
+  const streak=computeStreakBot(data.txs);
+  const streakTexto = streak>=2 ? `🔥 ${streak} dias seguidos` : "Comece uma sequência hoje 💪";
+  const comparacao=comparacaoMesAnteriorBot(data.txs, year, month, mD);
+  const comparacaoTexto = comparacao ? `Você gastou ${comparacao}` : "Continue registrando pra ver comparações 📊";
   return metaPost({
     messaging_product: "whatsapp",
     to: phone,
@@ -1834,7 +1888,9 @@ async function sendDailyDashboardTemplate(phone, data, env) {
         type: "body",
         parameters: [
           { type: "text", text: hojeResumo },
-          { type: "text", text: saldoMes }
+          { type: "text", text: saldoMes },
+          { type: "text", text: streakTexto },
+          { type: "text", text: comparacaoTexto }
         ]
       }]
     }

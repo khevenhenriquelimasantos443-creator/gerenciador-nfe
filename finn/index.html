@@ -1187,6 +1187,7 @@ function renderGreeting(){
   return '<div class="greet-card">' +
     '<div class="greet-hello">' + timeGreeting() + '!</div>' +
     '<div class="greet-phrase">' + _greetingPhrase + '</div>' +
+    '<div style="margin-top:8px">' + renderTituloBadge() + '</div>' +
   '</div>';
 }
 
@@ -1218,9 +1219,84 @@ function renderStreakCard(){
   if(streak < 2) return "";
   return '<div class="card" style="display:flex;align-items:center;gap:12px">' +
     '<span style="font-size:26px;line-height:1">🔥</span>' +
-    '<span><span style="font-weight:800;font-size:14px;color:var(--fd)">' + streak + ' dias seguidos</span>' +
+    '<span style="flex:1"><span style="font-weight:800;font-size:14px;color:var(--fd)">' + streak + ' dias seguidos</span>' +
     '<div style="font-size:12px;color:var(--fm)">registrando gastos no Finn</div></span>' +
+    (streak >= 7 ? '<button type="button" class="btn-ghost" id="btnShareStreak" style="padding:7px 12px;font-size:11px;white-space:nowrap;flex-shrink:0">Compartilhar 📤</button>' : '') +
   '</div>';
+}
+
+/* ── Modo Biscoito: compartilhar card fora do app ── */
+// Gera uma imagem quadrada (formato Stories/feed) via canvas — sem lib
+// nenhuma — e usa a Web Share API nativa quando disponível. Em navegador
+// sem suporte a compartilhar arquivo (a maioria dos desktops), cai pra
+// baixar a imagem em vez de travar.
+function quebraLinhaCanvas(ctx, texto, larguraMax){
+  var palavras = texto.split(" ");
+  var linhas = [];
+  var atual = "";
+  palavras.forEach(function(p){
+    var teste = atual ? atual + " " + p : p;
+    if(ctx.measureText(teste).width > larguraMax && atual){
+      linhas.push(atual);
+      atual = p;
+    } else {
+      atual = teste;
+    }
+  });
+  if(atual) linhas.push(atual);
+  return linhas;
+}
+
+function gerarCardCompartilhar(titulo, subtitulo){
+  var w = 1080, h = 1080;
+  var canvas = document.createElement("canvas");
+  canvas.width = w; canvas.height = h;
+  var ctx = canvas.getContext("2d");
+
+  var grad = ctx.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, "#F97316");
+  grad.addColorStop(1, "#1E293B");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#fff";
+  ctx.font = "900 76px system-ui, -apple-system, 'Segoe UI', sans-serif";
+  var linhas = quebraLinhaCanvas(ctx, titulo, w - 140);
+  var startY = h / 2 - (linhas.length - 1) * 44;
+  linhas.forEach(function(linha, i){
+    ctx.fillText(linha, w / 2, startY + i * 88);
+  });
+
+  ctx.font = "600 34px system-ui, -apple-system, 'Segoe UI', sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,.88)";
+  ctx.fillText(subtitulo, w / 2, startY + linhas.length * 88 + 40);
+
+  ctx.font = "800 30px system-ui, -apple-system, 'Segoe UI', sans-serif";
+  ctx.fillStyle = "#fff";
+  ctx.fillText("finnapp.com.br", w / 2, h - 80);
+
+  return canvas;
+}
+
+function compartilharCard(titulo, subtitulo){
+  var canvas = gerarCardCompartilhar(titulo, subtitulo);
+  canvas.toBlob(function(blob){
+    if(!blob) return;
+    var file = new File([blob], "finn.png", { type: "image/png" });
+    if(navigator.canShare && navigator.canShare({ files: [file] })){
+      navigator.share({ files: [file], title: "Finn", text: titulo }).catch(function(){});
+      return;
+    }
+    if(navigator.share){
+      navigator.share({ title: "Finn", text: titulo + " — " + subtitulo }).catch(function(){});
+      return;
+    }
+    var a = document.createElement("a");
+    a.href = canvas.toDataURL("image/png");
+    a.download = "finn-conquista.png";
+    a.click();
+  }, "image/png");
 }
 
 /* ── Conquistas ── */
@@ -1259,26 +1335,97 @@ var CONQUISTAS_DEFS = [
       var m = (currentSession && currentSession.user && currentSession.user.user_metadata) || {};
       return !!(m.whatsapp_verified || state.waLinkVerified || m.telegram_chat_id);
     } },
+  // Secretas: não aparecem na lista com nome/descrição até serem desbloqueadas
+  // (renderConquistas trata isso) — o factor surpresa é o ponto.
+  { id: "coruja", icone: "🦉", nome: "Coruja financeira", desc: "Fez um lançamento entre 1h e 5h da manhã.", secreta: true,
+    feita: function(){
+      return state.txs.some(function(t){
+        if(!t.created_at) return false;
+        var h = new Date(t.created_at).getHours();
+        return h >= 1 && h < 5;
+      });
+    } },
+  { id: "tesoura", icone: "✂️", nome: "Mãos de tesoura", desc: "Excluiu 5 despesas ou reduziu um limite mensal — quem corta gasto de verdade.", secreta: true,
+    feita: function(){ return maosDeTesouraCount() >= 5; } },
+  { id: "sextou", icone: "🍻", nome: "Sextou com consciência", desc: "Gastou em Lazer numa sexta-feira sem estourar o limite da categoria.", secreta: true,
+    feita: function(){
+      var temGastoSextaLazer = state.txs.some(function(t){
+        return t.type === "despesa" && t.category === "Lazer" && t.date && new Date(t.date + "T12:00:00").getDay() === 5;
+      });
+      if(!temGastoSextaLazer) return false;
+      var limiteLazer = state.limits.filter(function(l){ return l.category === "Lazer"; })[0];
+      if(!limiteLazer) return false;
+      return monthSpentByCat("Lazer") <= Number(limiteLazer.monthly_limit);
+    } },
+  { id: "futuro", icone: "🕰️", nome: "De volta pro futuro", desc: "Lançou uma despesa com data de mais de 15 dias atrás pra deixar tudo certinho.", secreta: true,
+    feita: function(){
+      return state.txs.some(function(t){
+        if(t.type !== "despesa" || !t.date || !t.created_at) return false;
+        var dataLancamento = new Date(t.date + "T12:00:00");
+        var dataCriacao = new Date(t.created_at);
+        var diffDias = (dataCriacao - dataLancamento) / 86400000;
+        return diffDias > 15;
+      });
+    } },
 ];
 
+// "Mãos de tesoura": excluir uma despesa não deixa rastro no estado (ela
+// simplesmente some), então isso não dá pra derivar como as outras — é o
+// único contador que persiste fora do banco, só localStorage, só local.
+function maosDeTesouraCount(){
+  return Number(localStorage.getItem("finn_maos_tesoura") || 0);
+}
+function incMaosDeTesoura(){
+  localStorage.setItem("finn_maos_tesoura", String(maosDeTesouraCount() + 1));
+}
+
+// Títulos evoluem com o total de conquistas desbloqueadas (visíveis + secretas)
+// — mesma lista CONQUISTAS_DEFS, só lida diferente: aqui conta tudo, na tela
+// de conquistas as secretas ficam escondidas até desbloquear.
+function totalConquistasDesbloqueadas(){
+  return CONQUISTAS_DEFS.filter(function(c){ return c.feita(); }).length;
+}
+function tituloEvolucao(){
+  var n = totalConquistasDesbloqueadas();
+  var total = CONQUISTAS_DEFS.length;
+  if(n >= total) return { texto: "Investidor Blindado", estrela: true };
+  if(n >= 8) return { texto: "Mestre do Orçamento", estrela: false };
+  if(n >= 4) return { texto: "Organizador Oficial", estrela: false };
+  return { texto: "Aprendiz das Finanças", estrela: false };
+}
+function renderTituloBadge(){
+  var t = tituloEvolucao();
+  return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:800;color:var(--fp);background:var(--fpl);padding:3px 9px;border-radius:999px">' +
+    (t.estrela ? "⭐ " : "") + escapeHtml(t.texto) +
+  '</span>';
+}
+
 function renderConquistas(){
-  var status = CONQUISTAS_DEFS.map(function(c){ return { def: c, feita: c.feita() }; });
-  var feitas = status.filter(function(s){ return s.feita; }).length;
+  // Secretas: enquanto bloqueadas, não entram em lugar nenhum da tela — nem
+  // no contador, nem como ícone "???" — o susto de descobrir é o ponto. Uma
+  // vez desbloqueadas, passam a se comportar como as visíveis.
+  var visiveis = CONQUISTAS_DEFS.filter(function(c){ return !c.secreta; });
+  var secretasDesbloqueadas = CONQUISTAS_DEFS.filter(function(c){ return c.secreta && c.feita(); });
+  var status = visiveis.map(function(c){ return { def: c, feita: c.feita() }; })
+    .concat(secretasDesbloqueadas.map(function(c){ return { def: c, feita: true, secreta: true }; }));
+  var feitasVisiveis = status.filter(function(s){ return s.feita && !s.secreta; }).length;
   var html = '<div class="card">' +
     '<button type="button" id="btnToggleConquistas" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box">' +
-      '<div class="eyebrow" style="margin:0">Conquistas · ' + feitas + '/' + status.length + '</div>' +
+      '<div class="eyebrow" style="margin:0">Conquistas · ' + feitasVisiveis + '/' + visiveis.length +
+        (secretasDesbloqueadas.length ? ' · +' + secretasDesbloqueadas.length + ' secreta' + (secretasDesbloqueadas.length > 1 ? 's' : '') : '') +
+      '</div>' +
       '<span style="color:var(--fp);font-weight:800;font-size:14px">' + (state.expandedConquistas ? "▲" : "▼") + '</span>' +
     '</button>' +
     '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">' +
       status.map(function(s){
-        return '<span title="' + escapeHtml(s.def.nome) + (s.feita ? " — desbloqueada" : " — bloqueada") + '" style="font-size:22px;opacity:' + (s.feita ? "1" : ".25") + '">' + s.def.icone + '</span>';
+        return '<span title="' + escapeHtml(s.def.nome) + (s.secreta ? " (secreta)" : "") + (s.feita ? " — desbloqueada" : " — bloqueada") + '" style="font-size:22px;opacity:' + (s.feita ? "1" : ".25") + '">' + s.def.icone + '</span>';
       }).join("") +
     '</div>' +
     (state.expandedConquistas ? '<div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">' +
       status.map(function(s){
         return '<div style="display:flex;gap:10px;align-items:flex-start;opacity:' + (s.feita ? "1" : ".55") + '">' +
           '<span style="font-size:19px;flex-shrink:0">' + s.def.icone + '</span>' +
-          '<span><span style="font-weight:700;font-size:13px;color:var(--fd)">' + escapeHtml(s.def.nome) + (s.feita ? " ✓" : "") + '</span>' +
+          '<span><span style="font-weight:700;font-size:13px;color:var(--fd)">' + escapeHtml(s.def.nome) + (s.feita ? " ✓" : "") + (s.secreta ? ' <span style="color:var(--fp);font-weight:800;font-size:10.5px;text-transform:uppercase">secreta</span>' : '') + '</span>' +
           '<div style="font-size:12px;color:var(--fm)">' + escapeHtml(s.def.desc) + '</div></span>' +
         '</div>';
       }).join("") +
@@ -2897,6 +3044,7 @@ function renderGoalList(){
   if(!state.goals.length) return '<div class="empty-state">Nenhuma meta ainda.</div>';
   return state.goals.map(function(g){
     var pct = g.target > 0 ? Math.min(100, Math.round(Number(g.saved)/Number(g.target)*100)) : 0;
+    var concluida = Number(g.target) > 0 && Number(g.saved) >= Number(g.target);
     return '<div class="goal-item">' +
       '<div class="goal-top">' +
         '<span class="goal-name">' + escapeHtml(g.name) + '</span>' +
@@ -2905,6 +3053,7 @@ function renderGoalList(){
       '<div class="goal-vals"><b>' + fmtMoney(Number(g.saved)) + '</b> de ' + fmtMoney(Number(g.target)) + ' · ' + pct + '%' +
         (g.deadline ? ' · até ' + formatDate(g.deadline) : '') + '</div>' +
       '<div class="bar"><i style="width:' + Math.max(3,pct) + '%"></i></div>' +
+      (concluida ? '<button type="button" class="btn-ghost" data-sharegoal="' + g.id + '" style="margin-top:10px;width:100%">🎯 Meta batida — Compartilhar 📤</button>' : '') +
       renderGoalProjection(g) +
       renderGoalInvestTip(g) +
       '<div class="goal-addrow">' +
@@ -3781,6 +3930,7 @@ function renderConfig(){
   var html = renderPlansCard();
   html += '<div class="card">' +
     '<div class="eyebrow">Conta</div>' +
+    '<div style="margin:-6px 0 12px">' + renderTituloBadge() + '</div>' +
     '<div class="form-row"><label>E-mail</label><input type="text" value="' + escapeHtml(email) + '" disabled></div>' +
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
     '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(formatBRPhone(currentWhatsapp)) + '" placeholder="(13) 99210-2413"></div>' +
@@ -5929,6 +6079,11 @@ function bindContentEvents(){
       state.expandedConquistas = !state.expandedConquistas;
       render();
     });
+    var btnShareStreak = document.getElementById("btnShareStreak");
+    if(btnShareStreak) btnShareStreak.addEventListener("click", function(){
+      var streak = computeStreak();
+      compartilharCard(streak + " dias seguidos", "cuidando do dinheiro com o Finn");
+    });
     var btnDismissWaPromo = document.getElementById("btnDismissWaPromo");
     if(btnDismissWaPromo) btnDismissWaPromo.addEventListener("click", function(){
       localStorage.setItem("finn_wa_promo_dismissed", "1");
@@ -6097,6 +6252,13 @@ function bindContentEvents(){
         var id = btn.dataset.histgoal;
         state.expandedGoal = state.expandedGoal === id ? null : id;
         render();
+      });
+    });
+    document.querySelectorAll("[data-sharegoal]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var g = state.goals.filter(function(x){ return x.id === btn.dataset.sharegoal; })[0];
+        if(!g) return;
+        compartilharCard("Meta batida! 🎯", g.name + " — " + fmtMoney(Number(g.target)) + " guardados com o Finn");
       });
     });
   }
@@ -6451,6 +6613,7 @@ function startEdit(id){
 function deleteTransaction(id){
   var existing = state.txs.filter(function(t){ return t.id === id; })[0];
   if(!existing) return;
+  if(existing.type === "despesa") incMaosDeTesoura();
   var receiptPath = existing.receipt_path;
   state.txs = state.txs.filter(function(t){ return t.id !== id; });
   if(formState.editingId === id) resetForm();
@@ -6522,8 +6685,10 @@ function saveLimit(){
   var existing = state.limits.filter(function(l){ return l.category === cat; })[0];
   state.limitSaveError = null;
   if(existing){
+    var reduziu = value < Number(existing.monthly_limit);
     db("spending_limits", "PATCH", { monthly_limit: value }, { id: "eq." + existing.id, user_id: "eq." + uid() }).then(function(rows){
       existing.monthly_limit = value;
+      if(reduziu) incMaosDeTesoura();
       limitForm.value = ""; render();
     }).catch(function(err){
       state.limitSaveError = (err && err.message) || "Erro desconhecido";
