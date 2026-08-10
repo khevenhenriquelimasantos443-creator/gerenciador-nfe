@@ -106,6 +106,14 @@ export default {
       return handleWhatsAppRegisterNumber(request, env);
     }
 
+    // Cria o rascunho do Message Template do resumo diário direto pela API,
+    // sem precisar clicar no WhatsApp Manager. A Meta ainda revisa e aprova
+    // por fora — isso a API não pula, só a criação do rascunho é automática.
+    if (url.pathname === "/whatsapp/create-daily-template" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppCreateDailyTemplate(env);
+    }
+
     // Resumo de uso do bot (WhatsApp + Telegram) pro painel de uso do app —
     // requireAdminToken já aceita access_token+admin_password da conta
     // master, então o app consegue chamar isso direto (mesmo esquema do
@@ -2443,6 +2451,48 @@ async function processTelegramCallback(cq, env) {
       : { type: "list_reply", list_reply: { id: data } }
   };
   await processMessage(normalized, env);
+}
+
+// Cria (uma vez) o Message Template do resumo diário direto pela API da
+// Meta — evita ter que clicar no WhatsApp Manager. Não é idempotente do
+// lado do Finn: se rodar de novo com um template do mesmo nome+idioma já
+// existente, quem decide o que fazer é a resposta crua da Meta (devolvida
+// sem tratamento nenhum aqui de propósito, pra nunca esconder o motivo
+// real de uma rejeição). A aprovação em si a API não pula — isso a Meta
+// sempre revisa manualmente, só a CRIAÇÃO do rascunho é que fica automática.
+async function handleWhatsAppCreateDailyTemplate(env) {
+  if (!env.WHATSAPP_WABA_ID) {
+    return corsResponse(new Response(JSON.stringify({ error: "WHATSAPP_WABA_ID não configurado" }), {
+      status: 500, headers: { "Content-Type": "application/json" }
+    }));
+  }
+  const payload = {
+    name: "resumo_diario_finn",
+    category: "UTILITY",
+    language: "pt_BR",
+    components: [{
+      type: "BODY",
+      text: "📊 *Finn — Resumo das 22h*\n\nHoje você {{1}}.\nSaldo do mês: {{2}}.\n{{3}}\n{{4}}\n\nContinue assim! 💪",
+      example: {
+        body_text: [[
+          "recebeu R$ 150,00 e gastou R$ 80,00",
+          "R$ 1.200,00",
+          "🔥 5 dias seguidos",
+          "23% a menos que em julho 🎉"
+        ]]
+      }
+    }]
+  };
+  const resp = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_WABA_ID}/message_templates`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` },
+    body: JSON.stringify(payload)
+  });
+  let body;
+  try { body = await resp.json(); } catch (e) { body = { parse_error: String(e) }; }
+  return corsResponse(new Response(JSON.stringify({ ok: resp.ok, status: resp.status, meta_response: body }, null, 2), {
+    status: 200, headers: { "Content-Type": "application/json" }
+  }));
 }
 
 // =============================================================================
