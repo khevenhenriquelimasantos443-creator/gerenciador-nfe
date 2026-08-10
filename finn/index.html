@@ -721,7 +721,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -1157,7 +1157,14 @@ function renderGreeting(){
 
 /* ── Dashboard ── */
 function renderDashboard(){
-  var txs = txsOfMonth(thisMonth());
+  // O Dashboard ficava travado no mês corrente — sem jeito de ver "como foi
+  // julho" sem trocar pra aba Lançamentos. state.dashboardMonth é
+  // independente de state.filterMonth (que é de Lançamentos e aceita ficar
+  // vazio pra "ver todos os meses" — aqui não faz sentido vazio, o resumo
+  // sempre precisa de UM mês).
+  var mes = state.dashboardMonth || thisMonth();
+  var mesAtual = mes === thisMonth();
+  var txs = txsOfMonth(mes);
   var receita = txs.filter(function(t){return t.type==="receita" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
   var despesa = txs.filter(function(t){return t.type==="despesa" && isFlowTx(t);}).reduce(function(s,t){return s+Number(t.value);},0);
   var saldo = receita - despesa;
@@ -1174,12 +1181,17 @@ function renderDashboard(){
 
   html += '' +
     '<div class="card">' +
-      '<div class="eyebrow">Resumo do mês</div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+        '<div class="eyebrow" style="margin:0">' + (mesAtual ? "Resumo do mês" : "Resumo") + '</div>' +
+        '<input type="month" id="dashboardMonth" value="' + escapeHtml(mes) + '" style="border:1px solid var(--fb);border-radius:8px;padding:6px 8px;font-size:12.5px;font-family:inherit;color:var(--fd);background:var(--fcard)">' +
+      '</div>' +
+      (mesAtual ? '' : '<button type="button" class="btn-ghost" id="btnDashboardMesAtual" style="margin-bottom:10px;padding:6px 12px;font-size:11.5px">Voltar pro mês atual</button>') +
       '<div class="totals-grid">' +
         '<div class="total-box"><div class="lbl">Receita</div><div class="val" style="color:var(--fs)">' + fmtMoney(receita) + '</div></div>' +
         '<div class="total-box"><div class="lbl">Despesa</div><div class="val" style="color:var(--fe)">' + fmtMoney(despesa) + '</div></div>' +
         '<div class="total-box"><div class="lbl">Saldo</div><div class="val" style="color:' + (saldo>=0?"var(--fp)":"var(--fe)") + '">' + fmtMoney(saldo) + '</div></div>' +
       '</div>' +
+      (txs.length || mesAtual ? '' : '<div style="font-size:12px;color:var(--fm);margin-top:8px">Nenhum lançamento neste mês.</div>') +
     '</div>';
 
   // O bot está ativo (WHATSAPP_BOT_ENABLED = true), então o ramo "Em breve"
@@ -1205,8 +1217,11 @@ function renderDashboard(){
 
   html += '' +
     '<div class="card">' +
-      '<div class="eyebrow">Últimos lançamentos</div>' +
-      renderTxList(state.txs.slice(0, 5)) +
+      '<div class="eyebrow">' + (mesAtual ? "Últimos lançamentos" : "Lançamentos do mês") + '</div>' +
+      // txs já está no mês certo e chega ordenado (state.txs vem de
+      // "date.desc, created_at.desc" da API) — mostrar direto os 5 primeiros
+      // é mostrar os mais recentes DESTE mês, não do mês atual sempre.
+      renderTxList(txs.slice(0, 5)) +
     '</div>';
   return html;
 }
@@ -1900,6 +1915,9 @@ function renderLancamentos(){
       '</div>' +
       (state.filterMonth ? '<button type="button" class="btn-ghost" id="btnClearMonthFilter">Ver todos os meses</button>' : '') +
       '<button type="button" class="btn-ghost" id="btnExportCSV">Exportar CSV</button>' +
+      // Só aparece com UM mês escolhido — apagar "todos os meses" já existe
+      // em Configurações (Excluir todos os lançamentos), não precisa duplicar.
+      (state.filterMonth ? '<button type="button" class="btn-logout" id="btnDeleteMonthTx" style="width:100%;border-color:var(--fe);color:var(--fe);margin-top:8px">Excluir lançamentos de ' + escapeHtml(state.filterMonth.split("-").reverse().join("/")) + '</button>' : '') +
       renderBulkCatPrompt() +
       renderPriceAlert() +
       renderReceiptMsg() +
@@ -5635,6 +5653,34 @@ function deleteCustomCategory(id){
   db("categories", "DELETE", null, { id: "eq." + id, user_id: "eq." + uid() }).catch(function(){});
 }
 
+// Exclui só os lançamentos DE UM MÊS — pedido explícito, porque antes só
+// existia apagar um lançamento por vez ou "Excluir todos" (Configurações,
+// função abaixo). Mesmo padrão de dupla confirmação da exclusão total.
+//
+// Filtra pelos IDS já carregados no cliente, não por intervalo de data no
+// servidor: db() usa URLSearchParams.set(), que só guarda UM valor por
+// chave — "date gte X" e "date lt Y" na mesma chave "date" se
+// sobrescreveriam. Com os ids em mãos (state.txs já tem o mês inteiro
+// carregado), um filtro id=in.(...) resolve com uma chave só.
+function deleteMonthTransactions(ym){
+  var alvo = txsOfMonth(ym);
+  if(!alvo.length) return;
+  var label = ym.split("-").reverse().join("/");
+  if(!window.confirm("Isso vai apagar os " + alvo.length + " lançamento(s) de " + label + " (receitas e despesas). Essa ação não pode ser desfeita. Continuar?")) return;
+  if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
+  var ids = alvo.map(function(t){ return t.id; });
+  var receiptPaths = alvo.map(function(t){ return t.receipt_path; }).filter(Boolean);
+  db("transactions", "DELETE", null, { id: "in.(" + ids.join(",") + ")", user_id: "eq." + uid() }).then(function(){
+    state.txs = state.txs.filter(function(t){ return ids.indexOf(t.id) === -1; });
+    state.txSaveError = null;
+    render();
+    receiptPaths.forEach(deleteReceiptObject);
+  }).catch(function(err){
+    state.txSaveError = "Não consegui apagar os lançamentos de " + label + " (" + (err && err.message ? err.message : "erro") + "). Tenta de novo.";
+    render();
+  });
+}
+
 function deleteAllTransactions(){
   if(!window.confirm("Isso vai apagar TODOS os seus lançamentos (receitas e despesas). Limites, metas, contas fixas e categorias não são afetados. Essa ação não pode ser desfeita. Continuar?")) return;
   if(!window.confirm("Tem certeza mesmo? Não tem como recuperar depois.")) return;
@@ -5732,6 +5778,16 @@ function render(){
 
 function bindContentEvents(){
   if(state.tab === "dashboard"){
+    var dashboardMonthInput = document.getElementById("dashboardMonth");
+    if(dashboardMonthInput) dashboardMonthInput.addEventListener("change", function(e){
+      state.dashboardMonth = e.target.value || thisMonth();
+      render();
+    });
+    var btnDashboardMesAtual = document.getElementById("btnDashboardMesAtual");
+    if(btnDashboardMesAtual) btnDashboardMesAtual.addEventListener("click", function(){
+      state.dashboardMonth = null;
+      render();
+    });
     var btnDismissWaPromo = document.getElementById("btnDismissWaPromo");
     if(btnDismissWaPromo) btnDismissWaPromo.addEventListener("click", function(){
       localStorage.setItem("finn_wa_promo_dismissed", "1");
@@ -5846,6 +5902,8 @@ function bindContentEvents(){
     var btnClearMonthFilter = document.getElementById("btnClearMonthFilter");
     if(btnClearMonthFilter) btnClearMonthFilter.addEventListener("click", function(){ state.filterMonth = ""; render(); });
     document.getElementById("btnExportCSV").addEventListener("click", exportCSV);
+    var btnDeleteMonthTx = document.getElementById("btnDeleteMonthTx");
+    if(btnDeleteMonthTx) btnDeleteMonthTx.addEventListener("click", function(){ deleteMonthTransactions(state.filterMonth); });
     var btnApplyBulkCat = document.getElementById("btnApplyBulkCat");
     if(btnApplyBulkCat) btnApplyBulkCat.addEventListener("click", applyBulkCategory);
     var btnDismissBulkCat = document.getElementById("btnDismissBulkCat");
