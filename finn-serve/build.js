@@ -1008,7 +1008,11 @@ function _conquistasDoUsuario(txs, goals, limits, temSplit, temBot) {
 
   var futuro = txs.some(function (t) {
     if (t.type !== 'despesa' || !t.date || !t.created_at) return false;
-    return (new Date(t.created_at) - new Date(t.date + 'T12:00:00Z')) / 86400000 > 15;
+    // -03:00 e não 'Z': o app faz esta conta com meio-dia LOCAL, e o usuário
+    // está no Brasil. Com 'Z' o servidor ficava 3h à frente do cliente e, pra
+    // quem tem entre 15d0h e 15d3h de atraso, o painel contava a conquista
+    // como desbloqueada enquanto a pessoa não via o selo na tela dela.
+    return (new Date(t.created_at) - new Date(t.date + 'T12:00:00-03:00')) / 86400000 > 15;
   });
 
   return {
