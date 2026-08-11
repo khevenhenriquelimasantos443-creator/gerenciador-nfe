@@ -753,7 +753,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4212,7 +4212,21 @@ function renderConteudo(){
       '<div class="eyebrow" style="margin:0">Conteúdo do Instagram</div>' +
       '<button type="button" class="btn-ghost" id="btnConteudoReload" style="padding:6px 12px;font-size:11.5px">Atualizar</button>' +
     '</div>' +
-    '<div style="font-size:12.5px;color:var(--fm);margin-top:6px">Publica sozinho às 10h e 18h, na ordem da fila. O que você subir aqui sai antes da campanha antiga.</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-top:6px">Posts às 10h e 18h; stories 25 min depois. O que você subir aqui sai antes da campanha antiga.</div>' +
+  '</div>';
+
+  // Disparo manual de story. Existe pra diagnóstico: o cron roda em horário
+  // fixo, então descobrir por que um story não sai virava ciclo de esperar,
+  // olhar log e tentar de novo. Aqui a resposta da Meta volta na própria tela.
+  html += '<div class="card">' +
+    '<div class="eyebrow">Testar story agora</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Publica um story imediatamente e mostra a resposta crua do Instagram — serve pra descobrir o motivo quando algo falha.</div>' +
+    '<button type="button" class="btn-ghost" id="btnStoryTeste" style="width:100%"' + (state.storyTesteLoading ? " disabled" : "") + '>' +
+      (state.storyTesteLoading ? "Publicando… (pode levar até 30s)" : "Publicar um story agora") + '</button>' +
+    (state.storyTesteResultado
+      ? '<div class="' + (state.storyTesteResultado.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;white-space:pre-wrap;word-break:break-word;font-size:11.5px;font-family:ui-monospace,monospace">' +
+        escapeHtml(state.storyTesteResultado.texto) + '</div>'
+      : '') +
   '</div>';
 
   // ── formulário de envio ──
@@ -4271,6 +4285,32 @@ function renderConteudo(){
       '</div></div>';
   }
   return html;
+}
+
+function testarStoryAgora(){
+  state.storyTesteLoading = true;
+  state.storyTesteResultado = null;
+  render();
+  fetch("/admin/instagram-publish-story-next", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, admin_password: state.adminPassword })
+  }).then(function(r){ return r.text().then(function(t){ return { status: r.status, texto: t }; }); })
+    .then(function(res){
+      state.storyTesteLoading = false;
+      var ok = false;
+      try { ok = !!JSON.parse(res.texto).ok; } catch(e){}
+      // Mostra a resposta INTEIRA, não uma versão resumida: o que interessa
+      // aqui é justamente o código e a mensagem que a Meta devolveu.
+      state.storyTesteResultado = { ok: ok, texto: "HTTP " + res.status + "\n\n" + res.texto };
+      render();
+      loadConteudo();
+    })
+    .catch(function(err){
+      state.storyTesteLoading = false;
+      state.storyTesteResultado = { ok: false, texto: "Falha de conexão: " + ((err && err.message) || "erro") };
+      render();
+    });
 }
 
 function loadConteudo(){
@@ -6904,6 +6944,7 @@ function bindContentEvents(){
       state.conteudoLegenda = e.target.value;
     });
     if((b = document.getElementById("btnConteudoEnviar"))) b.addEventListener("click", enviarConteudo);
+    if((b = document.getElementById("btnStoryTeste"))) b.addEventListener("click", testarStoryAgora);
     document.querySelectorAll("[data-delconteudo]").forEach(function(btn){
       btn.addEventListener("click", function(){ excluirConteudo(btn.dataset.delconteudo); });
     });
