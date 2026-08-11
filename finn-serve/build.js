@@ -2070,6 +2070,14 @@ async function _publishNextInstagramPost(env) {
     // rate limit, etc.) tenta o MESMO post de novo no próximo cron, em vez
     // de pular pra frente e nunca publicar o que falhou.
     await env.FINN_KV.put('ig_post_next_index', String(nextIndex + 1));
+
+    // Story com a MESMA imagem do post, logo depois do feed. Best-effort de
+    // propósito: story é reforço, não o conteúdo principal — se falhar (por
+    // permissão faltando, por exemplo), o post do feed já saiu e não faz
+    // sentido reverter nem travar a fila por causa disso. O resultado fica no
+    // log pra dar pra diagnosticar sem adivinhação.
+    ctx_publicaStory(env, imageUrl, nextIndex);
+
     return { ok: true, index: nextIndex, media_id: publishBody.id };
   } catch (e) {
     log.ok = false;
@@ -2077,6 +2085,57 @@ async function _publishNextInstagramPost(env) {
     await _logInstagramAttempt(env, log);
     return { ok: false, error: log.error };
   }
+}
+
+// Publica um Story. Mesma API de duas etapas do feed, com media_type:
+// 'STORIES' — a diferenca que importa e que o Story NAO aceita caption
+// (a Meta ignora) e some em 24h.
+//
+// Nao usa await no chamador: e best-effort. Envolvido em try/catch proprio
+// pra que uma falha aqui nunca derrube a publicacao do feed que ja deu certo.
+function ctx_publicaStory(env, imageUrl, indice) {
+  (async function () {
+    var log = { tipo: 'story', index: indice, image_url: imageUrl, started_at: new Date().toISOString() };
+    try {
+      var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_url: imageUrl, media_type: 'STORIES', access_token: env.IG_ACCESS_TOKEN })
+      });
+      var createBody = await createResp.json();
+      log.create_status = createResp.status;
+      log.create_response = createBody;
+      if (!createResp.ok || !createBody.id) { log.ok = false; return await _logInstagramAttempt(env, log); }
+
+      // Mesma espera do feed: a Meta baixa a imagem de forma assincrona.
+      var pronto = false;
+      for (var i = 0; i < 10; i++) {
+        var st = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + createBody.id + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
+        var stBody = await st.json();
+        log.container_status = stBody.status_code || stBody;
+        if (stBody.status_code === 'FINISHED') { pronto = true; break; }
+        if (stBody.status_code === 'ERROR') break;
+        await new Promise(function (r) { setTimeout(r, 2000); });
+      }
+      if (!pronto) { log.ok = false; return await _logInstagramAttempt(env, log); }
+
+      var pubResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })
+      });
+      var pubBody = await pubResp.json();
+      log.publish_status = pubResp.status;
+      log.publish_response = pubBody;
+      log.ok = !!(pubResp.ok && pubBody.id);
+      log.finished_at = new Date().toISOString();
+      await _logInstagramAttempt(env, log);
+    } catch (e) {
+      log.ok = false;
+      log.error = String(e && e.message || e);
+      await _logInstagramAttempt(env, log);
+    }
+  })();
 }
 
 async function _logInstagramAttempt(env, log) {
@@ -4230,37 +4289,33 @@ h1 em{font-style:normal;color:#F97316}
   },
 
   async scheduled(event, env, ctx) {
-    if (event.cron === '0 13 2 8 *') {
-      // Post único agendado para 02/08 às 10:00 BRT (13:00 UTC — o Brasil não
-      // tem mais horário de verão desde 2019, então é sempre UTC-3).
+    if (event.cron === '0 13,21 * * *') {
+      // Instagram, 2 posts por dia: 10:00 e 18:00 BRT (13:00 e 21:00 UTC).
       //
-      // O cron da Cloudflare é sempre recorrente: este dispararia de novo todo
-      // 2 de agosto. O guard de ano deixa ele valer só em 2026, e o guard de
-      // KV impede publicar duas vezes se a Cloudflare reexecutar o evento.
+      // Guard de idempotência por SLOT (dia + hora), não só por dia: a
+      // Cloudflare pode reexecutar um evento de cron, e sem isso uma
+      // reexecução às 13:00 consumiria o post das 18:00 — a fila andaria
+      // sozinha e o feed ficaria com dois posts na mesma hora.
       ctx.waitUntil((async () => {
-        if (new Date().getUTCFullYear() !== 2026) return;
+        var agora = new Date();
+        var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
         if (env.FINN_KV) {
-          var jaFoi = await env.FINN_KV.get('ig_agendado_2026-08-02');
+          var jaFoi = await env.FINN_KV.get('ig_slot_' + slot);
           if (jaFoi) return;
-          await env.FINN_KV.put('ig_agendado_2026-08-02', new Date().toISOString(), { expirationTtl: 60 * 60 * 24 * 90 });
+          await env.FINN_KV.put('ig_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
         }
         await _publishNextInstagramPost(env);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
     } else {
-      // "0 12 * * *" (09:00 BRT). A publicação automática no Instagram saiu
-      // daqui: 230 visualizações em 30 dias, quase todo post abaixo de 12 — o
-      // alcance orgânico não pagava o custo de manter a automação rodando, e o
-      // plano virou anúncio pago. Os crons das 15:00 e 21:00 UTC existiam SÓ
-      // pros posts, então foram removidos do wrangler.toml (o limite de 5 cron
-      // triggers é da conta inteira, então isso devolveu 2 slots — 1 deles foi
-      // reusado pelo agendamento pontual de 02/08 no primeiro if daqui).
+      // "0 12 * * *" (09:00 BRT) — contas fixas e assinaturas vencidas.
       //
-      // Nada foi apagado: _publishNextInstagramPost continua no código e a rota
-      // /admin/instagram-publish-next segue funcionando pra publicar na mão.
-      // Pra religar o automático, recoloque os 2 crons no wrangler.toml e o
-      // ctx.waitUntil(_publishNextInstagramPost(env)) aqui.
+      // Histórico da automação do Instagram: ela já foi desligada uma vez,
+      // porque 30 dias rodando deram 230 visualizações no total, com quase
+      // todo post abaixo de 12. Foi RELIGADA a pedido, agora 2x por dia (ver
+      // o primeiro ramo). Se o alcance continuar nesse patamar, o gargalo não
+      // é frequência de publicação — é distribuição, e mais post não resolve.
       ctx.waitUntil(checkFixedDueAndNotify(env));
       ctx.waitUntil(checkExpiredSubscriptions(env));
     }

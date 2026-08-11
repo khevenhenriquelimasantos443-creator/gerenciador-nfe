@@ -89,7 +89,14 @@ compatibility_date = "2024-01-01"
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 #
-#  - "0 13 2 8 *" → post ÚNICO no Instagram, 02/08 às 10:00 BRT (13:00 UTC;
+#  - "0 13,21 * * *" → posts do Instagram, 10:00 e 18:00 BRT (13:00 e 21:00
+#                    UTC; o Brasil não tem mais horário de verão desde 2019,
+#                    então é sempre UTC-3). UMA entrada de cron cobrindo os
+#                    dois horários — a lista com vírgula é um trigger só, o que
+#                    importa porque o limite de 5 crons é DA CONTA inteira.
+#                    Substituiu o agendamento pontual de 02/08, que já passou.
+#
+#  (histórico) "0 13 2 8 *" → post ÚNICO no Instagram, 02/08 às 10:00 BRT (13:00 UTC;
 #                    o Brasil não tem mais horário de verão desde 2019, então
 #                    é sempre UTC-3). Publica o PRÓXIMO post da fila.
 #                    ATENÇÃO: cron da Cloudflare é sempre recorrente — este
@@ -105,7 +112,7 @@ compatibility_date = "2024-01-01"
 #  1), sobra 1 slot livre com o agendamento acima.
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 23 * * 1", "0 13 2 8 *"]
+crons = ["0 12 * * *", "0 23 * * 1", "0 13,21 * * *"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)
