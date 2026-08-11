@@ -141,7 +141,7 @@ console.log('\n=== imagens de story sao servidas em 9:16 (pelo worker do bot) ==
 console.log('\n=== o story usa a imagem 9:16, o feed a quadrada ===');
 {
   // post 3 ja publicado (next=4), story pendente no 3
-  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_last: '2' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
   const chamadas = mockIG(); const ctx = novoCtx();
   await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx);
   await ctx.fim();
@@ -301,7 +301,7 @@ console.log('\n=== post NAO publica story junto (story tem cron proprio) ===');
 console.log('\n=== cron das :25 publica o story do post que JA saiu ===');
 {
   // post 3 ja publicado (next_index=4), story ainda no 3
-  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_last: '2' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
   const c = mockFilaEIG([]);
   const ctx = novoCtx();
   await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
@@ -310,15 +310,15 @@ console.log('\n=== cron das :25 publica o story do post que JA saiu ===');
   ok(!!st, 'publicou um story');
   ok(st && /story-3\.jpg/.test(st.corpo.image_url), 'usou a arte 9:16 do post 3', st && st.corpo.image_url);
   ok(st && st.corpo.caption === undefined, 'sem caption (a Meta ignora em story)');
-  ok(env.FINN_KV._store.get('ig_story_next_index') === '4', 'avancou o indice do story', env.FINN_KV._store.get('ig_story_next_index'));
+  ok(env.FINN_KV._store.get('ig_story_last') === '3', 'marcou o story 3 como publicado', env.FINN_KV._store.get('ig_story_last'));
   ok(env.FINN_KV._store.get('ig_post_next_index') === '4', 'nao mexeu no indice do post', env.FINN_KV._store.get('ig_post_next_index'));
   global.fetch = realFetch;
 }
 
 console.log('\n=== story NAO sai antes do post que ele acompanha ===');
 {
-  // post e story no mesmo indice = o post 3 ainda nao saiu
-  const env = { FINN_KV: novoKV({ ig_post_next_index: '3', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
+  // o story do post 2 ja saiu e o post 3 ainda nao foi publicado
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '3', ig_story_last: '2' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
   const c = mockFilaEIG([]);
   const ctx = novoCtx();
   await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
@@ -328,14 +328,14 @@ console.log('\n=== story NAO sai antes do post que ele acompanha ===');
 
 console.log('\n=== story da FILA tem prioridade sobre a arte embutida ===');
 {
-  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_last: '2' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
   const c = mockFilaEIG([{ id: 'st1', kind: 'story', image_path: 'meu-story.jpg', caption: null, posicao: 1 }]);
   const ctx = novoCtx();
   await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
 
   const st = c.ig.find(x => x.corpo && x.corpo.media_type === 'STORIES');
   ok(st && /public\/social\/meu-story\.jpg/.test(st.corpo.image_url), 'usou o story da fila', st && st.corpo.image_url);
-  ok(env.FINN_KV._store.get('ig_story_next_index') === '3', 'nao consumiu a arte embutida', env.FINN_KV._store.get('ig_story_next_index'));
+  ok(env.FINN_KV._store.get('ig_story_last') === '2', 'nao consumiu a arte embutida', env.FINN_KV._store.get('ig_story_last'));
   const marcado = c.patch.find(x => x.corpo && x.corpo.published_at);
   ok(!!marcado && /id=eq\.st1/.test(marcado.url), 'marcou a linha do story na fila', marcado && marcado.url);
   global.fetch = realFetch;
@@ -355,14 +355,38 @@ console.log('\n=== item de STORY na fila nao sai como post no horario do feed ==
 
 console.log('\n=== falha no story nao avanca o indice ===');
 {
-  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_last: '2' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
   global.fetch = async (url) => {
     if (String(url).includes('graph.instagram.com')) return new Response(JSON.stringify({ error: { message: 'sem permissao' } }), { status: 403 });
     return realFetch(url);
   };
   const ctx = novoCtx();
   await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
-  ok(env.FINN_KV._store.get('ig_story_next_index') === '3', 'indice do story intacto — tenta o mesmo depois', env.FINN_KV._store.get('ig_story_next_index'));
+  ok(env.FINN_KV._store.get('ig_story_last') === '2', 'marcador intacto — tenta o mesmo story depois', env.FINN_KV._store.get('ig_story_last'));
+  global.fetch = realFetch;
+}
+
+
+console.log('\n=== story acompanha o post, sem contador proprio pra dessincronizar ===');
+{
+  // Cenario que motivou a mudanca: o contador de story tinha ficado la atras
+  // (nunca publicou nada) enquanto os posts ja estavam no 9. O story do dia
+  // tem que ser a arte do post 9, nao a do post 1.
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '10' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  const c = mockIG(); const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
+  const st = c.find(x => x.corpo && x.corpo.media_type === 'STORIES');
+  ok(st && /story-9\.jpg/.test(st.corpo.image_url), 'publicou a arte do post 9 (o ultimo que saiu), nao a do 1', st && st.corpo.image_url);
+  ok(env.FINN_KV._store.get('ig_story_last') === '9', 'marcou 9 como publicado', env.FINN_KV._store.get('ig_story_last'));
+  global.fetch = realFetch;
+}
+
+console.log('\n=== nao repete o story do mesmo post ===');
+{
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '10', ig_story_last: '9' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  const c = mockIG(); const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
+  ok(c.length === 0, 'story do post 9 ja saiu — nao publica de novo', c.length);
   global.fetch = realFetch;
 }
 

@@ -2122,12 +2122,21 @@ async function _publishNextInstagramStory(env) {
     filaId = daFila.id;
     imageUrl = _socialPublicUrl(daFila.image_path);
   } else {
-    // Campanha embutida: só publica o story de um post que JÁ saiu. Sem essa
-    // trava, o story apareceria antes do post que ele acompanha.
-    storyIndex = Number((await env.FINN_KV.get('ig_story_next_index')) || '1');
+    // Campanha embutida: o story é DERIVADO do post, não tem contador próprio.
+    //
+    // Com dois contadores independentes eles andavam em ritmos diferentes e o
+    // story ia ficando para trás — o story do dia era a arte de um post
+    // publicado dias antes. Aqui o alvo é sempre a arte do ÚLTIMO post que
+    // saiu (ig_post_next_index aponta pro próximo, então o último é ele menos
+    // 1), e ig_story_last só marca o que já foi pra não repetir. Assim não tem
+    // como dessincronizar de novo.
     var postIndex = Number((await env.FINN_KV.get('ig_post_next_index')) || '1');
-    if (storyIndex >= postIndex) return { ok: false, skipped: true, reason: 'nenhum story pendente (o post correspondente ainda não saiu)' };
-    if (storyIndex > IG_STORY_COUNT) return { ok: false, done: true, reason: 'os stories embutidos já foram publicados' };
+    var alvo = postIndex - 1;
+    var ultimoStory = Number((await env.FINN_KV.get('ig_story_last')) || '0');
+    if (alvo < 1) return { ok: false, skipped: true, reason: 'nenhum post publicado ainda' };
+    if (alvo <= ultimoStory) return { ok: false, skipped: true, reason: 'o story deste post já saiu' };
+    if (alvo > IG_STORY_COUNT) return { ok: false, done: true, reason: 'os stories embutidos já foram publicados' };
+    storyIndex = alvo;
     imageUrl = IG_STORY_BASE + '/social/story-' + storyIndex + '.jpg';
   }
 
@@ -2184,7 +2193,7 @@ async function _publishNextInstagramStory(env) {
 
     // Só avança em caso de sucesso — falha tenta o MESMO story no próximo cron.
     if (daFila) await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(pubBody.id), erro: null });
-    else await env.FINN_KV.put('ig_story_next_index', String(storyIndex + 1));
+    else await env.FINN_KV.put('ig_story_last', String(storyIndex));
 
     return { ok: true, index: storyIndex, fila_id: filaId, media_id: pubBody.id };
   } catch (e) {
