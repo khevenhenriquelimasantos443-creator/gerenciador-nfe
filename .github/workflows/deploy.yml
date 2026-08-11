@@ -12,28 +12,29 @@ on:
 permissions:
   contents: read
 
-# PENDENTE (endurecimento de cadeia de suprimentos): as actions abaixo estão
-# presas a tags (@v4, @v3), e tag é um ponteiro móvel — quem controla o
-# repositório da action pode reapontá-la para outro commit, e esse commit passa
-# a rodar aqui com acesso ao CLOUDFLARE_API_TOKEN. Fixar por SHA resolve.
+# As actions abaixo estão presas por SHA de commit, não por tag. Tag é um
+# ponteiro móvel: quem controla o repositório da action pode reapontar @v4 pra
+# outro commit, e esse commit passaria a rodar aqui com acesso ao
+# CLOUDFLARE_API_TOKEN. SHA não se move.
 #
-# Não foi feito aqui porque exige o SHA real de cada tag, e esta sessão não tem
-# acesso de rede ao github.com pra buscá-los — chutar quebraria o deploy.
-# Para fazer:
-#   1. Abra github.com/actions/checkout (idem setup-node, cloudflare/wrangler-action)
-#   2. Releases → a release da tag em uso → copie o SHA completo do commit
-#   3. Troque "actions/checkout@v4" por "actions/checkout@<sha>  # v4"
-# Com o Dependabot ligado, ele passa a propor a atualização desses SHAs sozinho.
+# O comentário "# v4" ao lado é só pra leitura humana — quem manda é o SHA.
+# Pra atualizar quando sair uma versão nova:
+#   git ls-remote --tags https://github.com/actions/checkout | grep 'refs/tags/v5$'
+# Se a saída trouxer uma linha terminada em "^{}", use O SHA DESSA LINHA (a tag
+# é anotada e o SHA da outra linha aponta pro objeto-tag, não pro commit — pinar
+# nele quebra o workflow). Os três SHAs abaixo foram conferidos com
+# `git cat-file -t` e são commits.
+# Com o Dependabot ligado, ele passa a propor essas atualizações sozinho.
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Build & Deploy (app)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with:
           node-version: '20'
 
@@ -41,7 +42,7 @@ jobs:
         run: node finn-serve/build.js
 
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd  # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -51,10 +52,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy WhatsApp Bot
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
 
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd  # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
