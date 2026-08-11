@@ -35,6 +35,18 @@ for (let n = 1; fs.existsSync(path.join(__dirname, 'social/ig_post_' + n + '.png
   socialPosts.push(fs.readFileSync(path.join(__dirname, 'social/ig_post_' + n + '.png')).toString('base64'));
 }
 
+// Stories (1080x1920) — servidos em /social/story-N.jpg pelo mesmo motivo dos
+// posts: a API do Instagram so aceita image_url.
+//
+// JPEG e nao PNG de proposito: a arte tem gradiente radial, que PNG guarda
+// muito mal — as mesmas 20 imagens dao 6,1 MB em PNG contra 2,0 MB em JPEG
+// q88, visualmente identicas. Como tudo isso vai embutido no Worker (que tem
+// teto de tamanho), 4 MB de diferenca decide se cabe ou nao.
+const socialStories = [];
+for (let n = 1; fs.existsSync(path.join(__dirname, 'social/ig_story_' + n + '.jpg')); n++) {
+  socialStories.push(fs.readFileSync(path.join(__dirname, 'social/ig_story_' + n + '.jpg')).toString('base64'));
+}
+
 // ETag baseado no conteúdo — muda só quando o HTML muda
 const etag = '"' + crypto.createHash('md5').update(html).digest('hex').slice(0,12) + '"';
 
@@ -2076,7 +2088,9 @@ async function _publishNextInstagramPost(env) {
     // permissão faltando, por exemplo), o post do feed já saiu e não faz
     // sentido reverter nem travar a fila por causa disso. O resultado fica no
     // log pra dar pra diagnosticar sem adivinhação.
-    ctx_publicaStory(env, imageUrl, nextIndex);
+    // Imagem PROPRIA de story (9:16). Usar a quadrada do feed funcionava, mas
+    // aparecia com barras — o formato nativo do Stories e vertical.
+    ctx_publicaStory(env, 'https://finn.dev.br/social/story-' + nextIndex + '.jpg', nextIndex);
 
     return { ok: true, index: nextIndex, media_id: publishBody.id };
   } catch (e) {
@@ -4048,6 +4062,19 @@ h1 em{font-style:normal;color:#F97316}
         var socialBytes = Uint8Array.from(atob(socialB64), function(c){ return c.charCodeAt(0); });
         return new Response(socialBytes, {
           headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }
+        });
+      }
+    }
+
+    // ── Stories do Instagram (mesma logica dos posts, formato 9:16) ──
+    var storyMatch = url.pathname.match(/^\\/social\\/story-(\\d+)\\.jpg$/);
+    if (storyMatch) {
+      var storyArr = ${JSON.stringify(socialStories)};
+      var storyB64 = storyArr[Number(storyMatch[1]) - 1];
+      if (storyB64) {
+        var storyBytes = Uint8Array.from(atob(storyB64), function(c){ return c.charCodeAt(0); });
+        return new Response(storyBytes, {
+          headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=31536000, immutable' }
         });
       }
     }

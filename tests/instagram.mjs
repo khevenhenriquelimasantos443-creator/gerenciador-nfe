@@ -106,6 +106,46 @@ console.log('\n=== outros crons não publicam no Instagram ===');
   global.fetch = realFetch;
 }
 
+console.log('\n=== imagens de story sao servidas em 9:16 ===');
+{
+  const ctx = novoCtx();
+  const r = await serve.fetch(new Request('https://finn.dev.br/social/story-1.jpg'), { FINN_KV: novoKV() }, ctx);
+  ok(r.status === 200, '/social/story-1.jpg responde 200', r.status);
+  ok((r.headers.get('Content-Type') || '') === 'image/jpeg', 'Content-Type e image/jpeg', r.headers.get('Content-Type'));
+  const buf = new Uint8Array(await r.arrayBuffer());
+  ok(buf[0] === 0xFF && buf[1] === 0xD8, 'e um JPEG de verdade (magic FFD8)', buf.slice(0, 2).join(','));
+  ok(buf.length > 20000, 'tem conteudo (nao e placeholder vazio)', Math.round(buf.length / 1024) + ' KB');
+
+  // dimensoes 1080x1920 lidas do proprio JPEG (marcador SOF0/SOF2)
+  let w = 0, h = 0;
+  for (let i = 2; i < buf.length - 9; i++) {
+    if (buf[i] === 0xFF && (buf[i + 1] === 0xC0 || buf[i + 1] === 0xC2)) {
+      h = (buf[i + 5] << 8) | buf[i + 6];
+      w = (buf[i + 7] << 8) | buf[i + 8];
+      break;
+    }
+  }
+  ok(w === 1080 && h === 1920, 'dimensoes 1080x1920 (formato nativo do Stories)', w + 'x' + h);
+
+  const r20 = await serve.fetch(new Request('https://finn.dev.br/social/story-20.jpg'), { FINN_KV: novoKV() }, ctx);
+  ok(r20.status === 200, 'a 20a story tambem existe', r20.status);
+  const r21 = await serve.fetch(new Request('https://finn.dev.br/social/story-21.jpg'), { FINN_KV: novoKV() }, ctx);
+  ok(r21.status !== 200, 'indice inexistente nao devolve imagem', r21.status);
+}
+
+console.log('\n=== o story publicado usa a imagem 9:16, nao a quadrada ===');
+{
+  const env = ENV(); const chamadas = mockIG(); const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx);
+  await ctx.fim();
+  await new Promise(r => setTimeout(r, 300));
+  const story = chamadas.find(c => c.corpo && c.corpo.media_type === 'STORIES');
+  ok(story && /story-3\.jpg/.test(story.corpo.image_url), 'story aponta pra /social/story-N.jpg', story && story.corpo.image_url);
+  const feed = chamadas.find(c => c.corpo && c.corpo.caption !== undefined);
+  ok(feed && /post-3\.png/.test(feed.corpo.image_url), 'feed continua na imagem quadrada', feed && feed.corpo.image_url);
+  global.fetch = realFetch;
+}
+
 global.fetch = realFetch;
 console.log('\n' + (falhas ? `❌ ${falhas} falha(s)` : '✅ tudo passou'));
 process.exit(falhas ? 1 : 0);
