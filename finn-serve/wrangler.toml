@@ -96,6 +96,19 @@ compatibility_date = "2024-01-01"
 #                    importa porque o limite de 5 crons é DA CONTA inteira.
 #                    Substituiu o agendamento pontual de 02/08, que já passou.
 #
+#  - "25 13,21 * * *" → Stories, 25 min depois de cada post (10:25 e 18:25
+#                    BRT). Cron PRÓPRIO, e não pendurado no fluxo do post, por
+#                    dois motivos: é o intervalo pedido, e o jeito antigo
+#                    (promise solta dentro da execução do post) não funciona no
+#                    Cloudflare — o isolate encerra quando o post termina e
+#                    mata o story no meio, que ainda espera até 20s a Meta
+#                    baixar a imagem. Era por isso que o post saía e o story
+#                    não.
+#
+#  ATENÇÃO: são 4 crons aqui + 1 no finn-worker = 5, que é o limite da CONTA.
+#  Não sobra slot. Pra agendar mais alguma coisa, junte horários numa entrada
+#  só com vírgula (como "13,21" acima) em vez de criar entrada nova.
+#
 #  (histórico) "0 13 2 8 *" → post ÚNICO no Instagram, 02/08 às 10:00 BRT (13:00 UTC;
 #                    o Brasil não tem mais horário de verão desde 2019, então
 #                    é sempre UTC-3). Publica o PRÓXIMO post da fila.
@@ -112,7 +125,7 @@ compatibility_date = "2024-01-01"
 #  1), sobra 1 slot livre com o agendamento acima.
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 23 * * 1", "0 13,21 * * *"]
+crons = ["0 12 * * *", "0 23 * * 1", "0 13,21 * * *", "25 13,21 * * *"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)

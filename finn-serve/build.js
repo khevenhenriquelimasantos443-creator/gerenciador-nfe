@@ -2013,10 +2013,28 @@ function _socialPublicUrl(caminho) {
 // Próximo item da fila que a tela de Conteúdo alimenta. Usa a service key: a
 // RLS da social_posts é por e-mail da conta master, e o Worker não tem sessão
 // de usuário nenhuma.
+// Quantas artes 9:16 embutidas existem (moram no worker do bot).
+const IG_STORY_COUNT = 20;
+
+// Próximo item da fila de um tipo específico ('feed' ou 'story').
+async function _proximoDaFilaPorTipo(env, tipo) {
+  if (!env.SUPABASE_SERVICE_KEY) return null;
+  try {
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=is.null&kind=eq.' + tipo + '&order=posicao.asc,created_at.asc&limit=1', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) return null;
+    var linhas = await r.json();
+    return (linhas && linhas[0]) || null;
+  } catch (e) { return null; }
+}
+
+// Só itens de FEED: story tem cron próprio, 25 min depois. Sem esse filtro, um
+// story da fila sairia no horário do post — e publicado como post.
 async function _proximoDaFila(env) {
   if (!env.SUPABASE_SERVICE_KEY) return null;
   try {
-    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=is.null&order=posicao.asc,created_at.asc&limit=1', {
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=is.null&kind=eq.feed&order=posicao.asc,created_at.asc&limit=1', {
       headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
     });
     if (!r.ok) return null;
@@ -2138,17 +2156,6 @@ async function _publishNextInstagramPost(env) {
       await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(publishBody.id), erro: null });
     } else {
       await env.FINN_KV.put('ig_post_next_index', String(nextIndex + 1));
-
-      // Story de acompanhamento, best-effort: se falhar (permissão faltando,
-      // por exemplo), o post do feed já saiu e não faz sentido reverter nem
-      // travar a fila. O resultado fica no log pra diagnosticar sem adivinhar.
-      //
-      // Só vale pra campanha EMBUTIDA, onde cada post tem uma arte 9:16
-      // correspondente (as imagens moram no worker do bot — embutidas no
-      // finn-serve, estouravam o teto de 3 MiB do plano free). Na fila nova,
-      // story é um item próprio com kind='story', então mandar um automático
-      // junto duplicaria conteúdo que o dono não pediu.
-      ctx_publicaStory(env, IG_STORY_BASE + '/social/story-' + nextIndex + '.jpg', nextIndex);
     }
 
     return { ok: true, index: nextIndex, fila_id: filaId || null, media_id: publishBody.id };
@@ -2160,55 +2167,99 @@ async function _publishNextInstagramPost(env) {
   }
 }
 
-// Publica um Story. Mesma API de duas etapas do feed, com media_type:
-// 'STORIES' — a diferenca que importa e que o Story NAO aceita caption
-// (a Meta ignora) e some em 24h.
+// Publica o próximo Story.
 //
-// Nao usa await no chamador: e best-effort. Envolvido em try/catch proprio
-// pra que uma falha aqui nunca derrube a publicacao do feed que ja deu certo.
-function ctx_publicaStory(env, imageUrl, indice) {
-  (async function () {
-    var log = { tipo: 'story', index: indice, image_url: imageUrl, started_at: new Date().toISOString() };
-    try {
-      var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image_url: imageUrl, media_type: 'STORIES', access_token: env.IG_ACCESS_TOKEN })
-      });
-      var createBody = await createResp.json();
-      log.create_status = createResp.status;
-      log.create_response = createBody;
-      if (!createResp.ok || !createBody.id) { log.ok = false; return await _logInstagramAttempt(env, log); }
+// Roda no PRÓPRIO cron (25 min depois do post), não pendurado no fluxo do
+// feed como antes. O jeito antigo — disparar uma promise solta, sem await e
+// sem ctx.waitUntil — não funciona no Cloudflare: assim que o post do feed
+// termina, o runtime pode encerrar o isolate e mata o story no meio. E o
+// story demora: cria o container e fica até 20s esperando a Meta baixar a
+// imagem. Era exatamente por isso que o post saía e o story não.
+async function _publishNextInstagramStory(env) {
+  if (!env.IG_ACCESS_TOKEN || !env.IG_BUSINESS_ACCOUNT_ID) {
+    return { ok: false, skipped: true, reason: 'IG_ACCESS_TOKEN ou IG_BUSINESS_ACCOUNT_ID não configurados' };
+  }
+  if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
 
-      // Mesma espera do feed: a Meta baixa a imagem de forma assincrona.
-      var pronto = false;
-      for (var i = 0; i < 10; i++) {
-        var st = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + createBody.id + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
-        var stBody = await st.json();
-        log.container_status = stBody.status_code || stBody;
-        if (stBody.status_code === 'FINISHED') { pronto = true; break; }
-        if (stBody.status_code === 'ERROR') break;
-        await new Promise(function (r) { setTimeout(r, 2000); });
-      }
-      if (!pronto) { log.ok = false; return await _logInstagramAttempt(env, log); }
+  var daFila = await _proximoDaFilaPorTipo(env, 'story');
+  var imageUrl, filaId = null, storyIndex = null;
 
-      var pubResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })
-      });
-      var pubBody = await pubResp.json();
-      log.publish_status = pubResp.status;
-      log.publish_response = pubBody;
-      log.ok = !!(pubResp.ok && pubBody.id);
-      log.finished_at = new Date().toISOString();
-      await _logInstagramAttempt(env, log);
-    } catch (e) {
+  if (daFila) {
+    filaId = daFila.id;
+    imageUrl = _socialPublicUrl(daFila.image_path);
+  } else {
+    // Campanha embutida: só publica o story de um post que JÁ saiu. Sem essa
+    // trava, o story apareceria antes do post que ele acompanha.
+    storyIndex = Number((await env.FINN_KV.get('ig_story_next_index')) || '1');
+    var postIndex = Number((await env.FINN_KV.get('ig_post_next_index')) || '1');
+    if (storyIndex >= postIndex) return { ok: false, skipped: true, reason: 'nenhum story pendente (o post correspondente ainda não saiu)' };
+    if (storyIndex > IG_STORY_COUNT) return { ok: false, done: true, reason: 'os stories embutidos já foram publicados' };
+    imageUrl = IG_STORY_BASE + '/social/story-' + storyIndex + '.jpg';
+  }
+
+  var log = { tipo: 'story', index: storyIndex, fila_id: filaId, origem: daFila ? 'fila' : 'embutido', image_url: imageUrl, started_at: new Date().toISOString() };
+  try {
+    var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // Story não leva caption — a Meta ignora.
+      body: JSON.stringify({ image_url: imageUrl, media_type: 'STORIES', access_token: env.IG_ACCESS_TOKEN })
+    });
+    var createBody = await createResp.json();
+    log.create_status = createResp.status;
+    log.create_response = createBody;
+    if (!createResp.ok || !createBody.id) {
       log.ok = false;
-      log.error = String(e && e.message || e);
       await _logInstagramAttempt(env, log);
+      if (daFila) await _marcaPublicado(env, filaId, { erro: 'story: falha ao criar container' });
+      return { ok: false, step: 'media', body: createBody };
     }
-  })();
+
+    var pronto = false;
+    for (var i = 0; i < 10; i++) {
+      var st = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + createBody.id + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
+      var stBody = await st.json();
+      log.container_status = stBody.status_code || stBody;
+      if (stBody.status_code === 'FINISHED') { pronto = true; break; }
+      if (stBody.status_code === 'ERROR') break;
+      await new Promise(function (r) { setTimeout(r, 2000); });
+    }
+    if (!pronto) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      if (daFila) await _marcaPublicado(env, filaId, { erro: 'story: container não ficou pronto' });
+      return { ok: false, step: 'container_not_ready', body: log.container_status };
+    }
+
+    var pubResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })
+    });
+    var pubBody = await pubResp.json();
+    log.publish_status = pubResp.status;
+    log.publish_response = pubBody;
+    log.ok = !!(pubResp.ok && pubBody.id);
+    log.finished_at = new Date().toISOString();
+    await _logInstagramAttempt(env, log);
+
+    if (!log.ok) {
+      if (daFila) await _marcaPublicado(env, filaId, { erro: 'story: falha ao publicar' });
+      return { ok: false, step: 'media_publish', body: pubBody };
+    }
+
+    // Só avança em caso de sucesso — falha tenta o MESMO story no próximo cron.
+    if (daFila) await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(pubBody.id), erro: null });
+    else await env.FINN_KV.put('ig_story_next_index', String(storyIndex + 1));
+
+    return { ok: true, index: storyIndex, fila_id: filaId, media_id: pubBody.id };
+  } catch (e) {
+    log.ok = false;
+    log.error = String(e && e.message || e);
+    await _logInstagramAttempt(env, log);
+    if (daFila) await _marcaPublicado(env, filaId, { erro: 'story: ' + log.error });
+    return { ok: false, error: log.error };
+  }
 }
 
 async function _logInstagramAttempt(env, log) {
@@ -4378,6 +4429,20 @@ h1 em{font-style:normal;color:#F97316}
           await env.FINN_KV.put('ig_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
         }
         await _publishNextInstagramPost(env);
+      })());
+    } else if (event.cron === '25 13,21 * * *') {
+      // Stories, 25 min depois do post. Mesmo guard por slot (dia + hora) do
+      // feed: a Cloudflare pode reexecutar um evento, e sem isso uma
+      // reexecução consumiria o story seguinte.
+      ctx.waitUntil((async () => {
+        var agora = new Date();
+        var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
+        if (env.FINN_KV) {
+          var jaFoi = await env.FINN_KV.get('ig_story_slot_' + slot);
+          if (jaFoi) return;
+          await env.FINN_KV.put('ig_story_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
+        }
+        await _publishNextInstagramStory(env);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));

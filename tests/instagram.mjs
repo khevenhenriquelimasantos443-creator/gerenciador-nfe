@@ -37,7 +37,7 @@ function mockIG() {
 
 const ENV = () => ({ FINN_KV: novoKV({ ig_post_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' });
 
-console.log('=== cron das 10h publica feed + story ===');
+console.log('=== cron das 10h publica SO o feed (story tem cron proprio) ===');
 {
   const env = ENV(); const chamadas = mockIG(); const ctx = novoCtx();
   await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx);
@@ -47,9 +47,11 @@ console.log('=== cron das 10h publica feed + story ===');
   const feeds = chamadas.filter(c => c.corpo && c.corpo.caption !== undefined);
   const stories = chamadas.filter(c => c.corpo && c.corpo.media_type === 'STORIES');
   ok(feeds.length === 1, 'criou 1 container de FEED (com caption)', feeds.length);
-  ok(stories.length === 1, 'criou 1 container de STORY (media_type STORIES)', stories.length);
+  // O story saiu daqui de proposito: pendurado no fluxo do post ele era uma
+  // promise solta, e o Cloudflare encerra o isolate assim que o post termina
+  // — matava o story no meio. Agora tem cron proprio, 25 min depois.
+  ok(stories.length === 0, 'NAO dispara story junto com o post', stories.length);
   ok(feeds[0] && /post-3\.png/.test(feeds[0].corpo.image_url), 'usou a imagem do índice atual da fila (3)', feeds[0] && feeds[0].corpo.image_url);
-  ok(stories[0] && stories[0].corpo.caption === undefined, 'story NÃO manda caption (a Meta ignora)', stories[0] && JSON.stringify(stories[0].corpo).slice(0, 80));
   ok(env.FINN_KV._store.get('ig_post_next_index') === '4', 'fila avançou pra 4', env.FINN_KV._store.get('ig_post_next_index'));
   global.fetch = realFetch;
 }
@@ -136,14 +138,23 @@ console.log('\n=== imagens de story sao servidas em 9:16 (pelo worker do bot) ==
   ok(r21.status !== 200, 'indice inexistente nao devolve imagem', r21.status);
 }
 
-console.log('\n=== o story publicado usa a imagem 9:16, nao a quadrada ===');
+console.log('\n=== o story usa a imagem 9:16, o feed a quadrada ===');
+{
+  // post 3 ja publicado (next=4), story pendente no 3
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  const chamadas = mockIG(); const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx);
+  await ctx.fim();
+  const story = chamadas.find(c => c.corpo && c.corpo.media_type === 'STORIES');
+  ok(story && /workers\.dev\/social\/story-3\.jpg/.test(story.corpo.image_url), 'story aponta pro worker do bot (9:16)', story && story.corpo.image_url);
+  ok(story && story.corpo.caption === undefined, 'story nao manda caption', story && JSON.stringify(story.corpo).slice(0, 90));
+  global.fetch = realFetch;
+}
+
+console.log('\n=== o feed continua usando a imagem quadrada ===');
 {
   const env = ENV(); const chamadas = mockIG(); const ctx = novoCtx();
-  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx);
-  await ctx.fim();
-  await new Promise(r => setTimeout(r, 300));
-  const story = chamadas.find(c => c.corpo && c.corpo.media_type === 'STORIES');
-  ok(story && /workers\.dev\/social\/story-3\.jpg/.test(story.corpo.image_url), 'story aponta pro worker do bot', story && story.corpo.image_url);
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
   const feed = chamadas.find(c => c.corpo && c.corpo.caption !== undefined);
   ok(feed && /post-3\.png/.test(feed.corpo.image_url), 'feed continua na imagem quadrada', feed && feed.corpo.image_url);
   global.fetch = realFetch;
@@ -164,7 +175,12 @@ function mockFilaEIG(fila) {
         chamadas.patch.push({ url: u, corpo: JSON.parse(opts.body) });
         return new Response('', { status: 204 });
       }
-      return new Response(JSON.stringify(fila), { status: 200 });
+      // Respeita o filtro kind=eq.X, como o PostgREST faria. Sem isso o mock
+      // devolveria um story pra consulta de feed e o teste passaria/falharia
+      // por motivo errado.
+      const m = u.match(/kind=eq\.(\w+)/);
+      const filtrada = m ? fila.filter(i => i.kind === m[1]) : fila;
+      return new Response(JSON.stringify(filtrada), { status: 200 });
     }
     if (u.includes('graph.instagram.com')) {
       const corpo = opts && opts.body ? JSON.parse(opts.body) : null;
@@ -206,8 +222,8 @@ console.log('\n=== story vindo da fila: media_type STORIES e sem caption ===');
   const env = ENV_FILA();
   const c = mockFilaEIG([{ id: 's1', kind: 'story', image_path: 'story-9.jpg', caption: null, posicao: 1 }]);
   const ctx = novoCtx();
-  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
-  await new Promise(r => setTimeout(r, 200));
+  // Cron das :25 — story tem horario proprio agora, 25 min depois do post.
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
 
   const criado = c.ig.find(x => x.corpo && x.corpo.image_url);
   ok(criado && criado.corpo.media_type === 'STORIES', 'container criado como STORIES', criado && criado.corpo.media_type);
@@ -261,6 +277,92 @@ console.log('\n=== sem service key, nao quebra: usa a campanha embutida ===');
   await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
   const criado = c.ig.find(x => x.corpo && x.corpo.image_url);
   ok(criado && /finn\.dev\.br\/social\/post-3\.png/.test(criado.corpo.image_url), 'sem service key nao consulta a fila, usa a embutida', criado && criado.corpo.image_url);
+  global.fetch = realFetch;
+}
+
+
+// ══════════════════════════════════════════════════════════════════════
+// STORY EM CRON PROPRIO, 25 MIN DEPOIS DO POST
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== post NAO publica story junto (story tem cron proprio) ===');
+{
+  const env = ENV_FILA();
+  const c = mockFilaEIG([]);  // fila vazia -> campanha embutida
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+  await new Promise(r => setTimeout(r, 300));
+  const stories = c.ig.filter(x => x.corpo && x.corpo.media_type === 'STORIES');
+  ok(stories.length === 0, 'cron do POST nao dispara story (era promise solta, morria no isolate)', stories.length);
+  const feeds = c.ig.filter(x => x.corpo && x.corpo.caption !== undefined);
+  ok(feeds.length === 1, 'o post do feed sai normalmente', feeds.length);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== cron das :25 publica o story do post que JA saiu ===');
+{
+  // post 3 ja publicado (next_index=4), story ainda no 3
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
+  const c = mockFilaEIG([]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
+
+  const st = c.ig.find(x => x.corpo && x.corpo.media_type === 'STORIES');
+  ok(!!st, 'publicou um story');
+  ok(st && /story-3\.jpg/.test(st.corpo.image_url), 'usou a arte 9:16 do post 3', st && st.corpo.image_url);
+  ok(st && st.corpo.caption === undefined, 'sem caption (a Meta ignora em story)');
+  ok(env.FINN_KV._store.get('ig_story_next_index') === '4', 'avancou o indice do story', env.FINN_KV._store.get('ig_story_next_index'));
+  ok(env.FINN_KV._store.get('ig_post_next_index') === '4', 'nao mexeu no indice do post', env.FINN_KV._store.get('ig_post_next_index'));
+  global.fetch = realFetch;
+}
+
+console.log('\n=== story NAO sai antes do post que ele acompanha ===');
+{
+  // post e story no mesmo indice = o post 3 ainda nao saiu
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '3', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
+  const c = mockFilaEIG([]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
+  ok(c.ig.length === 0, 'nao publica story de post que ainda nao foi', c.ig.length);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== story da FILA tem prioridade sobre a arte embutida ===');
+{
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123', SUPABASE_SERVICE_KEY: 'svc' };
+  const c = mockFilaEIG([{ id: 'st1', kind: 'story', image_path: 'meu-story.jpg', caption: null, posicao: 1 }]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
+
+  const st = c.ig.find(x => x.corpo && x.corpo.media_type === 'STORIES');
+  ok(st && /public\/social\/meu-story\.jpg/.test(st.corpo.image_url), 'usou o story da fila', st && st.corpo.image_url);
+  ok(env.FINN_KV._store.get('ig_story_next_index') === '3', 'nao consumiu a arte embutida', env.FINN_KV._store.get('ig_story_next_index'));
+  const marcado = c.patch.find(x => x.corpo && x.corpo.published_at);
+  ok(!!marcado && /id=eq\.st1/.test(marcado.url), 'marcou a linha do story na fila', marcado && marcado.url);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== item de STORY na fila nao sai como post no horario do feed ===');
+{
+  const env = ENV_FILA();
+  const c = mockFilaEIG([{ id: 'st9', kind: 'story', image_path: 's.jpg', caption: null, posicao: 1 }]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+  const comCaption = c.ig.filter(x => x.corpo && x.corpo.caption !== undefined);
+  ok(comCaption.length === 1 && /post-3\.png/.test(comCaption[0].corpo.image_url), 'cron do feed ignorou o story e usou a campanha embutida', comCaption[0] && comCaption[0].corpo.image_url);
+  ok(c.patch.length === 0, 'nao marcou o story como publicado', c.patch.length);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== falha no story nao avanca o indice ===');
+{
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '4', ig_story_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  global.fetch = async (url) => {
+    if (String(url).includes('graph.instagram.com')) return new Response(JSON.stringify({ error: { message: 'sem permissao' } }), { status: 403 });
+    return realFetch(url);
+  };
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '25 13,21 * * *' }, env, ctx); await ctx.fim();
+  ok(env.FINN_KV._store.get('ig_story_next_index') === '3', 'indice do story intacto — tenta o mesmo depois', env.FINN_KV._store.get('ig_story_next_index'));
   global.fetch = realFetch;
 }
 
