@@ -313,6 +313,14 @@ console.log('\n=== 9. GET /whatsapp/entregas explica o que houve depois do "acce
   ])).json();
   ok(/não entregue|ainda não confirmou/i.test(soEnviado.veredito), '"sent" sozinho não é tratado como entregue', soEnviado.veredito);
 
+  // Log maior que a varredura: "não achei" não pode virar "não houve".
+  const muitos = [];
+  for (let i = 0; i < 450; i++) muitos.push({ at: '2026-08-11T20:00:00Z', kind: 'webhook_no_messages', raw: 'x' });
+  const truncado = await (await pedir(muitos)).json();
+  ok(truncado.varredura_completa === false, 'avisa que a varredura foi truncada', truncado.varredura_completa);
+  ok(!/NENHUM status/i.test(truncado.veredito), 'e NÃO acusa o webhook de estar mudo', truncado.veredito);
+  ok(/não é prova/i.test(truncado.veredito), 'diz explicitamente que não prova nada', truncado.veredito);
+
   // Recusa no próprio envio aparece separada da recusa na entrega.
   const recusa = await (await pedir([
     { at: '2026-08-11T23:09:00Z', kind: 'meta_send_error', status: 400, body: '{"error":{"code":132015}}' },

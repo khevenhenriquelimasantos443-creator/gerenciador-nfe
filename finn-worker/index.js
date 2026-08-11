@@ -2635,9 +2635,16 @@ async function handleWhatsAppEntregas(env) {
   if (!env.FINN_KV) {
     return corsResponse(new Response(JSON.stringify({ ok: false, erro: "KV não configurado" }), { status: 500, headers: cors }));
   }
+  // Varre bem mais que a lista do /debug de propósito: os eventos de status
+  // se misturam com todo o resto do log, então uma janela curta faz os status
+  // das 22h caírem fora só porque o bot conversou de madrugada — e "não achei
+  // status" viraria "webhook não inscrito", que é conclusão errada.
+  const VARREDURA = 400;
   const keys = await listAllKeys(env, DEBUG_PREFIX);
   keys.sort((a, b) => b.name.localeCompare(a.name));
-  const eventos = (await Promise.all(keys.slice(0, 60).map(k => env.FINN_KV.get(k.name))))
+  const lidas = keys.slice(0, VARREDURA);
+  const varreduraCompleta = keys.length <= VARREDURA;
+  const eventos = (await Promise.all(lidas.map(k => env.FINN_KV.get(k.name))))
     .filter(Boolean)
     .map(raw => { try { return JSON.parse(raw); } catch (e) { return null; } })
     .filter(Boolean);
@@ -2656,7 +2663,11 @@ async function handleWhatsAppEntregas(env) {
     .map(e => ({ em: e.at, http: e.status, corpo: e.body }));
 
   let veredito;
-  if (!entregas.length && !recusas.length) {
+  if (!entregas.length && !recusas.length && !varreduraCompleta) {
+    // Não achar status numa varredura truncada não prova nada — dizer que o
+    // webhook está mudo aqui seria acusar o inocente.
+    veredito = "Não achei status nos " + VARREDURA + " eventos mais recentes, MAS o log é maior que isso — os status podem ter ficado pra trás. Isto não é prova de que nada foi entregue.";
+  } else if (!entregas.length && !recusas.length) {
     // Silêncio total aqui quase sempre é webhook não assinado — a Meta manda
     // os status pra um endpoint que ninguém está ouvindo.
     veredito = "NENHUM status recebido nas últimas 24h. Ou nada foi enviado, ou o webhook não está inscrito no campo 'messages' da WABA (é ele que traz delivered/failed). Chame GET /subscribe pra inscrever e teste de novo.";
@@ -2669,7 +2680,8 @@ async function handleWhatsAppEntregas(env) {
   }
 
   return corsResponse(new Response(JSON.stringify({
-    ok: true, veredito, entregas: entregas.slice(0, 20), recusas_no_envio: recusas.slice(0, 10)
+    ok: true, veredito, varredura_completa: varreduraCompleta, eventos_lidos: eventos.length,
+    entregas: entregas.slice(0, 20), recusas_no_envio: recusas.slice(0, 10)
   }, null, 2), { status: 200, headers: cors }));
 }
 
