@@ -7,6 +7,7 @@ Rode da raiz do repositório:
     node tests/backend.mjs    # worker + bot: sync, IDOR, fluxo de categoria, analytics, erros
     node tests/instagram.mjs  # cron dos posts e stories: prioridade da fila, idempotência
     node tests/whatsapp-template.mjs  # GET /whatsapp/templates: gate de admin, veredito, CORS
+    node tests/layout-mobile.mjs      # nada pode vazar do card num celular de 360px
 
 `smoke.mjs` precisa de um Chromium. Em ambiente sem ele instalado, ajuste
 `executablePath` ou remova a opção pra usar o que o Playwright baixar.

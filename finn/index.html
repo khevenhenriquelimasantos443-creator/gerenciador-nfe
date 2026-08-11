@@ -264,8 +264,11 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .goal-invest-tip .git-where{display:block;margin-top:2px}
 .goal-proj{font-size:11.5px;line-height:1.5;color:var(--fd);font-weight:700;background:rgba(5,150,105,.08);border:1px solid var(--fb);border-radius:9px;padding:8px 10px;margin-bottom:8px}
 .goal-addrow{display:flex;gap:6px;margin-top:10px}
-.goal-addrow input{flex:1;border:1px solid var(--fb);border-radius:9px;padding:8px 10px;font-size:13px}
-.goal-addrow button{border:none;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700;white-space:nowrap}
+/* min-width:0 é obrigatório: o padrão de um item flex é min-width:auto, e um
+   <input> tem largura intrínseca própria — sem isso o flex:1 não encolhe e
+   empurra os dois botões pra fora do card num celular de 360px. */
+.goal-addrow input{flex:1;min-width:0;border:1px solid var(--fb);border-radius:9px;padding:8px 10px;font-size:13px}
+.goal-addrow button{border:none;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
 .goal-addrow .g-add{background:var(--fs);color:#fff}
 .goal-addrow .g-sub{background:var(--fcard);color:var(--fe);border:1px solid var(--fb)}
 
@@ -1292,7 +1295,9 @@ function renderStreakCard(){
     '<span style="font-size:26px;line-height:1">🔥</span>' +
     '<span style="flex:1"><span style="font-weight:800;font-size:14px;color:var(--fd)">' + streak + ' dias seguidos</span>' +
     '<div style="font-size:12px;color:var(--fm)">registrando gastos no Finn</div></span>' +
-    (streak >= 7 ? '<button type="button" class="btn-ghost" id="btnShareStreak" style="padding:7px 12px;font-size:11px;white-space:nowrap;flex-shrink:0">Compartilhar 📤</button>' : '') +
+    // btn-inline anula o width:100% que vem do .btn-ghost — sem ele o botão
+    // ocupa a linha toda e vaza 99px pra fora do card num celular de 360px.
+    (streak >= 7 ? '<button type="button" class="btn-ghost btn-inline" id="btnShareStreak" style="padding:7px 12px;font-size:11px;white-space:nowrap">Compartilhar 📤</button>' : '') +
   '</div>';
 }
 
