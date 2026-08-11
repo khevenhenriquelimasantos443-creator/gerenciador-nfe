@@ -2309,6 +2309,31 @@ async function _adminInstagramStatus(request, env) {
 
 // POST /admin/instagram-publish-next — dispara a publicação do próximo post
 // AGORA (só a conta master) — pra testar a integração sem esperar o cron.
+// POST /admin/instagram-publish-story-next — dispara UM story na hora e
+// devolve a resposta CRUA da Meta.
+//
+// Existe pra diagnóstico: o cron roda em horário fixo e só deixa rastro no
+// log, então descobrir por que um story não sai virava ciclo de esperar,
+// olhar log, tentar de novo. Aqui a resposta da Graph API volta inteira no
+// corpo — código de erro, subcódigo e mensagem — o que basta pra separar
+// "falta permissão no token" de "conta é Creator, não Business" de "a Meta
+// não conseguiu baixar a imagem".
+async function _adminInstagramPublishStoryNext(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var result = await _publishNextInstagramStory(env);
+    return new Response(JSON.stringify(result, null, 2), { status: result.ok ? 200 : 502, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminInstagramPublishStoryNext');
+  }
+}
+
 async function _adminInstagramPublishNext(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   try {
@@ -4292,6 +4317,10 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/instagram-publish-next' && request.method === 'POST') {
       return _adminInstagramPublishNext(request, env);
+    }
+
+    if (url.pathname === '/admin/instagram-publish-story-next' && request.method === 'POST') {
+      return _adminInstagramPublishStoryNext(request, env);
     }
 
     // ── Pitch decks ──
