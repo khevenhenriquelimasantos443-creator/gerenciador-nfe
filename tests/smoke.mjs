@@ -57,6 +57,8 @@ const INTRUSOES = {
   origens: [{ regiao: '209.99.x.x', pais: 'CH', total: 33, caminhosDistintos: 22, ultimaEm: d(1) + 'T03:22:00Z' }],
 };
 
+let ULTIMA_CHAMADA_TEMPLATES = null;
+
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
 async function abrir(email) {
@@ -85,6 +87,14 @@ async function abrir(email) {
     if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
     if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
     if (u.includes('/admin')) return J({ ok: true });
+    if (u.includes('/whatsapp/templates')) {
+      // Guarda o que o botão MANDOU: o ponto do teste é provar que ele
+      // autentica sozinho (sessão + senha master), sem token pra colar.
+      const h = route.request().headers();
+      ULTIMA_CHAMADA_TEMPLATES = { url: u, auth: h['authorization'] || '', senha: h['x-admin-password'] || '' };
+      return J({ ok: true, http: 200, veredito: 'AINDA EM ANÁLISE na Meta. Nada a fazer além de esperar.',
+        resumo_diario_finn: [{ nome: 'resumo_diario_finn', status: 'PENDING' }] });
+    }
     if (u.includes('workers.dev') || u.includes('/beta')) return J({ ok: true, txs: [] });
     return route.continue();
   });
@@ -196,6 +206,21 @@ console.log('\n=== modo admin ===');
     ok(csv.texto.includes(';'), 'usa ponto e vírgula (separador do Excel pt-BR)');
     ok(/175/.test(csv.texto), 'traz os dados');
   }
+
+  // Situação do template do WhatsApp: um clique, sem token pra copiar.
+  ULTIMA_CHAMADA_TEMPLATES = null;
+  const temBotao = await p.evaluate(() => !!document.getElementById('btnTemplateStatus'));
+  ok(temBotao, 'botão "Ver situação do template" aparece no admin');
+  await p.evaluate(() => { const t = document.getElementById('btnTemplateStatus'); if (t) t.click(); });
+  await p.waitForTimeout(900);
+  const tpl = await p.evaluate(() => document.getElementById('content').innerText);
+  ok(!!ULTIMA_CHAMADA_TEMPLATES, 'o botão chama o worker do bot');
+  if (ULTIMA_CHAMADA_TEMPLATES) {
+    ok(/workers\.dev\/whatsapp\/templates$/.test(ULTIMA_CHAMADA_TEMPLATES.url), 'chama a rota certa', ULTIMA_CHAMADA_TEMPLATES.url);
+    ok(ULTIMA_CHAMADA_TEMPLATES.auth.startsWith('Bearer '), 'manda a sessão do Supabase', ULTIMA_CHAMADA_TEMPLATES.auth);
+    ok(ULTIMA_CHAMADA_TEMPLATES.senha === 'x', 'manda a senha master digitada', ULTIMA_CHAMADA_TEMPLATES.senha);
+  }
+  ok(/EM ANÁLISE/i.test(tpl), 'o veredito da Meta aparece na tela', (tpl.match(/[^\n]*ANÁLISE[^\n]*/) || [])[0]);
 
   // tela de Conteudo
   await p.evaluate(async () => {

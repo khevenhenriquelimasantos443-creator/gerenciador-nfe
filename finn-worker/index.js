@@ -107,6 +107,13 @@ export default {
       return handleWhatsAppRegisterNumber(request, env);
     }
 
+    // Situação dos Message Templates na Meta (aprovado, em análise, rejeitado).
+    // Sem isso, a única forma de saber era abrir o WhatsApp Manager na mão.
+    if (url.pathname === "/whatsapp/templates" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppTemplates(env);
+    }
+
     // Cria o rascunho do Message Template do resumo diário direto pela API,
     // sem precisar clicar no WhatsApp Manager. A Meta ainda revisa e aprova
     // por fora — isso a API não pula, só a criação do rascunho é automática.
@@ -2586,6 +2593,57 @@ async function processTelegramCallback(cq, env) {
       : { type: "list_reply", list_reply: { id: data } }
   };
   await processMessage(normalized, env);
+}
+
+// GET /whatsapp/templates — lista os Message Templates da conta com o status
+// de aprovação. Devolve também o motivo da rejeição quando existe, que é o
+// que o WhatsApp Manager mostra numa tela separada e fácil de não achar.
+async function handleWhatsAppTemplates(env) {
+  const cors = { "Content-Type": "application/json" };
+  if (!env.WHATSAPP_WABA_ID) {
+    return corsResponse(new Response(JSON.stringify({ error: "WHATSAPP_WABA_ID não configurado" }), { status: 500, headers: cors }));
+  }
+  let resp, body;
+  try {
+    resp = await fetch(`https://graph.facebook.com/${META_API_VERSION}/${env.WHATSAPP_WABA_ID}/message_templates?fields=name,status,category,language,rejected_reason,quality_score&limit=50`, {
+      headers: { Authorization: `Bearer ${env.WHATSAPP_ACCESS_TOKEN}` }
+    });
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro_rede: String(e && e.message || e) }, null, 2), { status: 502, headers: cors }));
+  }
+  try { body = await resp.json(); } catch (e) { body = { parse_error: String(e) }; }
+
+  // Resumo pronto pra ler, com a resposta crua junto pra diagnóstico.
+  const lista = (body && body.data) || [];
+  const resumo = lista.map(t => ({
+    nome: t.name,
+    status: t.status,
+    idioma: t.language,
+    categoria: t.category,
+    motivo_rejeicao: t.rejected_reason && t.rejected_reason !== "NONE" ? t.rejected_reason : undefined
+  }));
+  const alvo = resumo.filter(t => t.nome === "resumo_diario_finn");
+  // Aprovado na Meta e ligado no Finn são duas coisas diferentes: sem o
+  // secret, o resumo das 22h continua saindo só no Telegram mesmo com o
+  // template aprovado. O veredito precisa dizer QUAL das duas está faltando.
+  const jaLigado = env.DAILY_DASHBOARD_TEMPLATE_NAME === "resumo_diario_finn";
+  let veredito;
+  if (!resp.ok) veredito = "NÃO CONSEGUI CONSULTAR — veja meta_response abaixo (token sem permissão whatsapp_business_management é a causa mais comum).";
+  else if (!alvo.length) veredito = "O template 'resumo_diario_finn' NÃO EXISTE nesta conta. Crie com POST /whatsapp/create-daily-template.";
+  else if (alvo.some(t => t.status === "APPROVED")) {
+    veredito = jaLigado
+      ? "APROVADO e JÁ LIGADO no Finn — o resumo das 22h sai no WhatsApp. Nada a fazer."
+      : "APROVADO na Meta, mas AINDA NÃO LIGADO no Finn: falta a secret DAILY_DASHBOARD_TEMPLATE_NAME=resumo_diario_finn no worker do bot. Enquanto ela não existir, o resumo das 22h continua só no Telegram.";
+  }
+  else if (alvo.some(t => t.status === "PENDING" || t.status === "IN_APPEAL")) veredito = "AINDA EM ANÁLISE na Meta. Nada a fazer além de esperar.";
+  else if (alvo.some(t => t.status === "REJECTED")) veredito = "REJEITADO — veja motivo_rejeicao. Dá pra ajustar o texto e submeter de novo.";
+  else veredito = "Status inesperado — veja a lista abaixo.";
+
+  return corsResponse(new Response(JSON.stringify({
+    ok: resp.ok, http: resp.status, veredito,
+    secret_daily_dashboard_template_name: env.DAILY_DASHBOARD_TEMPLATE_NAME || null,
+    resumo_diario_finn: alvo, todos: resumo, meta_response: resp.ok ? undefined : body
+  }, null, 2), { status: 200, headers: cors }));
 }
 
 // Cria (uma vez) o Message Template do resumo diário direto pela API da
