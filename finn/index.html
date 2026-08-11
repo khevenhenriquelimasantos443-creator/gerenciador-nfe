@@ -777,7 +777,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4374,6 +4374,45 @@ function verTemplateStatus(){
     });
 }
 
+function enviarTemplateTeste(){
+  var campo = document.getElementById("templateTestePhone");
+  var phone = ((campo && campo.value) || state.templateTestePhone || "").replace(/\D/g, "");
+  if(!phone){
+    state.templateTesteResultado = { ok: false, texto: "Digite o telefone com DDI 55 (ex: 5511999999999)." };
+    render();
+    return;
+  }
+  state.templateTestePhone = phone;
+  state.templateTesteLoading = true;
+  state.templateTesteResultado = null;
+  render();
+  fetch(WHATSAPP_WORKER_URL + "/whatsapp/test-daily-template", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + ((currentSession && currentSession.access_token) || ""),
+      "X-Admin-Password": state.adminPassword || ""
+    },
+    body: JSON.stringify({ phone: phone })
+  }).then(function(r){ return r.text().then(function(t){ return { status: r.status, texto: t }; }); })
+    .then(function(res){
+      state.templateTesteLoading = false;
+      var ok = false, veredito = "";
+      try {
+        var j = JSON.parse(res.texto);
+        ok = !!j.ok;
+        if(j.veredito) veredito = j.veredito + "\n\n";
+      } catch(e){}
+      state.templateTesteResultado = { ok: ok, texto: veredito + "HTTP " + res.status + "\n\n" + res.texto };
+      render();
+    })
+    .catch(function(err){
+      state.templateTesteLoading = false;
+      state.templateTesteResultado = { ok: false, texto: "Falha de conexão com o worker do bot: " + ((err && err.message) || "erro") };
+      render();
+    });
+}
+
 function loadConteudo(){
   state.conteudoLoading = true;
   state.conteudoErro = null;
@@ -4521,6 +4560,19 @@ function renderAdminHome(){
       ? '<div class="' + (state.templateStatusResultado.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;white-space:pre-wrap;word-break:break-word;font-size:11.5px;font-family:ui-monospace,monospace">' +
         escapeHtml(state.templateStatusResultado.texto) + '</div>'
       : '') +
+    // Esperar as 22h pra descobrir que a Meta recusou o envio é o ciclo de
+    // diagnóstico mais lento possível. Aqui o resumo sai na hora.
+    '<div style="border-top:1px solid var(--fb);margin-top:14px;padding-top:14px">' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Manda o resumo agora pra um número, sem esperar as 22h — serve pra confirmar que o template aprovado funciona de verdade.</div>' +
+      '<div class="form-row"><label>Telefone (com DDI 55)</label>' +
+        '<input type="tel" id="templateTestePhone" placeholder="5511999999999" value="' + escapeHtml(state.templateTestePhone) + '"></div>' +
+      '<button type="button" class="btn-ghost" id="btnTemplateTeste" style="width:100%"' + (state.templateTesteLoading ? " disabled" : "") + '>' +
+        (state.templateTesteLoading ? "Enviando…" : "Enviar um resumo de teste") + '</button>' +
+      (state.templateTesteResultado
+        ? '<div class="' + (state.templateTesteResultado.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;white-space:pre-wrap;word-break:break-word;font-size:11.5px;font-family:ui-monospace,monospace">' +
+          escapeHtml(state.templateTesteResultado.texto) + '</div>'
+        : '') +
+    '</div>' +
   '</div>';
 
   html += '<div class="card">' +
@@ -7002,6 +7054,10 @@ function bindContentEvents(){
     if((b = document.getElementById("btnLoadIntrusionsHome"))) b.addEventListener("click", loadIntrusions);
     if((b = document.getElementById("btnExportIntrusionsHome"))) b.addEventListener("click", exportarIntrusoesCSV);
     if((b = document.getElementById("btnTemplateStatus"))) b.addEventListener("click", verTemplateStatus);
+    if((b = document.getElementById("btnTemplateTeste"))) b.addEventListener("click", enviarTemplateTeste);
+    // Guarda o que foi digitado: o render() do resultado recria o campo e o
+    // texto sumiria no meio do teste.
+    if((b = document.getElementById("templateTestePhone"))) b.addEventListener("input", function(e){ state.templateTestePhone = e.target.value; });
   }
   if(state.tab === "conteudo"){
     var b;

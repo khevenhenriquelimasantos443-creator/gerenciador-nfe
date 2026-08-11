@@ -163,5 +163,107 @@ console.log('\n=== 6. CORS: o botão do app chama de outra origem ===');
   global.fetch = realFetch;
 }
 
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 7. POST /whatsapp/test-daily-template manda o resumo na hora ===');
+{
+  const novoKV = (inicial) => {
+    const store = new Map(Object.entries(inicial || {}));
+    return { _store: store, async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); },
+      async list({ prefix }) { return { keys: [...store.keys()].filter(k => k.startsWith(prefix || '')).map(name => ({ name })), list_complete: true }; } };
+  };
+  const DADOS = JSON.stringify({ phone: '5511999999999', txs: [
+    { id: 't1', val: -30, desc: 'Café', cat: 'Alimentação', date: '2026-08-11' },
+    { id: 't2', val: 2000, desc: 'Salário', cat: 'Salário', date: '2026-08-01' },
+  ] });
+
+  // Captura o payload que sai pra Meta — é o ponto do teste: o corpo do
+  // template precisa levar exatamente 4 parâmetros, nenhum vazio.
+  let enviado = null;
+  const mockEnvio = (respostaMeta, status = 200) => {
+    global.fetch = async (url, opts) => {
+      const u = String(url);
+      if (u.includes('graph.facebook.com') && u.includes('/messages')) {
+        enviado = JSON.parse(opts.body);
+        return new Response(JSON.stringify(respostaMeta), { status });
+      }
+      if (u.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'u1', email: 'finn.controle01@gmail.com' }), { status: 200 });
+      return realFetch(url, opts);
+    };
+  };
+  const testar = (env, corpo) => bot.fetch(new Request('https://x/whatsapp/test-daily-template', {
+    method: 'POST', headers: { 'X-Admin-Token': 'token-secreto', 'Content-Type': 'application/json' },
+    body: JSON.stringify(corpo)
+  }), env, ctx);
+
+  const envKV = () => ({ ...ENV_BASE, WHATSAPP_PHONE_NUMBER_ID: '999', FINN_KV: novoKV({ 'data_5511999999999': DADOS }) });
+
+  // A rota é fechada igual à outra.
+  mockEnvio({ messages: [{ id: 'wamid.1' }] });
+  const semAuth = await bot.fetch(new Request('https://x/whatsapp/test-daily-template', { method: 'POST', body: '{}' }), envKV(), ctx);
+  ok(semAuth.status === 401, 'sem credencial -> 401', semAuth.status);
+
+  // Número que não existe no Finn não vira rota de envio pra qualquer um.
+  enviado = null;
+  const desconhecido = await testar(envKV(), { phone: '5511000000000' });
+  ok(desconhecido.status === 404, 'número sem dados no Finn -> 404', desconhecido.status);
+  ok(enviado === null, 'e nada foi enviado pra Meta');
+
+  // Caminho feliz.
+  enviado = null;
+  const r = await testar(envKV(), { phone: '55 11 99999-9999' });
+  const j = await r.json();
+  ok(r.status === 200 && j.ok === true, 'envio aceito pela Meta -> ok=true', j.veredito);
+  ok(!!enviado && enviado.type === 'template', 'saiu como template (não texto livre)', enviado && enviado.type);
+  ok(enviado && enviado.template.name === 'resumo_diario_finn', 'usou o template certo', enviado && enviado.template.name);
+  ok(enviado && enviado.template.language.code === 'pt_BR', 'idioma pt_BR', enviado && enviado.template.language.code);
+  const params = (enviado && enviado.template.components[0].parameters) || [];
+  // 4 é o número de {{n}} do template aprovado. Divergir aqui é o erro
+  // 132000 da Meta, que só apareceria às 22h do dia seguinte.
+  ok(params.length === 4, 'manda exatamente 4 parâmetros (igual ao template aprovado)', params.length);
+  ok(params.every(p => p.text && p.text.trim().length > 0), 'nenhum parâmetro vazio (a Meta rejeita)', JSON.stringify(params.map(p => p.text)));
+
+  // Sem a secret, o teste funciona mas o veredito não pode dizer que está
+  // tudo pronto — o envio das 22h continua desligado.
+  ok(/NÃO está configurada/i.test(j.veredito), 'sem a secret, avisa que o automático ainda não sai', j.veredito);
+
+  const comSecret = await testar({ ...envKV(), DAILY_DASHBOARD_TEMPLATE_NAME: 'resumo_diario_finn' }, { phone: '5511999999999' });
+  const j2 = await comSecret.json();
+  ok(/22h também vai sair/i.test(j2.veredito), 'com a secret, confirma que o automático sai', j2.veredito);
+
+  // Descasamento de variáveis tem nome próprio no veredito.
+  mockEnvio({ error: { code: 132000, message: 'number of parameters does not match' } }, 400);
+  const ruim = await testar(envKV(), { phone: '5511999999999' });
+  const j3 = await ruim.json();
+  ok(j3.ok === false, 'recusa da Meta -> ok=false');
+  ok(/variáveis do template não bate/i.test(j3.veredito), 'erro 132000 vira explicação, não código cru', j3.veredito);
+  ok(JSON.stringify(j3.meta_response).includes('132000'), 'resposta crua da Meta preservada');
+
+  global.fetch = realFetch;
+}
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 8. o envio AUTOMÁTICO continua dependendo da secret ===');
+{
+  // O nome forçado é privilégio do teste manual. Se vazasse pro caminho
+  // automático, o fail-safe que impede mensagem proativa errada sumiria.
+  const novoKV = (inicial) => {
+    const store = new Map(Object.entries(inicial || {}));
+    return { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); },
+      async list({ prefix }) { return { keys: [...store.keys()].filter(k => k.startsWith(prefix || '')).map(name => ({ name })), list_complete: true }; } };
+  };
+  let enviou = 0;
+  global.fetch = async (url, opts) => {
+    if (String(url).includes('/messages')) { enviou++; return new Response(JSON.stringify({ messages: [{ id: 'x' }] }), { status: 200 }); }
+    return realFetch(url, opts);
+  };
+  const env = {
+    ...ENV_BASE, WHATSAPP_PHONE_NUMBER_ID: '999',
+    FINN_KV: novoKV({ 'data_5511999999999': JSON.stringify({ phone: '5511999999999', plan: 'pro', dailyDashboardOptIn: true, txs: [{ id: 't1', val: -30, desc: 'x', cat: 'Outros', date: '2026-08-11' }] }) }),
+  };
+  await bot.scheduled({ cron: '0 1 * * *' }, env, ctx);
+  ok(enviou === 0, 'sem DAILY_DASHBOARD_TEMPLATE_NAME, o cron não manda nada', enviou);
+  global.fetch = realFetch;
+}
+
 console.log('\n' + (falhas === 0 ? 'TUDO PASSOU' : falhas + ' FALHA(S)'));
 process.exit(falhas === 0 ? 0 : 1);

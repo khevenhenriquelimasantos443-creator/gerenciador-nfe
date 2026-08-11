@@ -58,6 +58,7 @@ const INTRUSOES = {
 };
 
 let ULTIMA_CHAMADA_TEMPLATES = null;
+let ULTIMO_TESTE_TEMPLATE = null;
 
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
@@ -87,6 +88,11 @@ async function abrir(email) {
     if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
     if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
     if (u.includes('/admin')) return J({ ok: true });
+    if (u.includes('/whatsapp/test-daily-template')) {
+      const h = route.request().headers();
+      ULTIMO_TESTE_TEMPLATE = { corpo: route.request().postData(), auth: h['authorization'] || '', senha: h['x-admin-password'] || '' };
+      return J({ ok: true, http: 200, veredito: 'ENVIADO. Confira o WhatsApp desse número.' });
+    }
     if (u.includes('/whatsapp/templates')) {
       // Guarda o que o botão MANDOU: o ponto do teste é provar que ele
       // autentica sozinho (sessão + senha master), sem token pra colar.
@@ -221,6 +227,36 @@ console.log('\n=== modo admin ===');
     ok(ULTIMA_CHAMADA_TEMPLATES.senha === 'x', 'manda a senha master digitada', ULTIMA_CHAMADA_TEMPLATES.senha);
   }
   ok(/EM ANÁLISE/i.test(tpl), 'o veredito da Meta aparece na tela', (tpl.match(/[^\n]*ANÁLISE[^\n]*/) || [])[0]);
+
+  // Envio de teste: sem número, não pode disparar nada.
+  ULTIMO_TESTE_TEMPLATE = null;
+  await p.evaluate(() => { const t = document.getElementById('btnTemplateTeste'); if (t) t.click(); });
+  await p.waitForTimeout(500);
+  ok(ULTIMO_TESTE_TEMPLATE === null, 'sem telefone, o teste não chama o worker');
+  const semTel = await p.evaluate(() => document.getElementById('content').innerText);
+  ok(/Digite o telefone/i.test(semTel), 'e avisa que falta o telefone');
+
+  await p.evaluate(() => {
+    const i = document.getElementById('templateTestePhone');
+    i.value = '55 11 99999-9999';
+    i.dispatchEvent(new Event('input', { bubbles: true }));
+    document.getElementById('btnTemplateTeste').click();
+  });
+  await p.waitForTimeout(900);
+  ok(!!ULTIMO_TESTE_TEMPLATE, 'com telefone, chama o worker');
+  if (ULTIMO_TESTE_TEMPLATE) {
+    // O worker normaliza, mas mandar já limpo evita depender disso.
+    ok(/"phone":"5511999999999"/.test(ULTIMO_TESTE_TEMPLATE.corpo || ''), 'manda o telefone só com dígitos', ULTIMO_TESTE_TEMPLATE.corpo);
+    ok(ULTIMO_TESTE_TEMPLATE.senha === 'x', 'autentica com a senha master', ULTIMO_TESTE_TEMPLATE.senha);
+  }
+  const depois = await p.evaluate(() => ({
+    txt: document.getElementById('content').innerText,
+    campo: document.getElementById('templateTestePhone').value,
+  }));
+  ok(/ENVIADO/i.test(depois.txt), 'mostra o resultado do envio', (depois.txt.match(/[^\n]*ENVIADO[^\n]*/) || [])[0]);
+  // O render() do resultado recria o campo; sem guardar o valor no state, o
+  // número digitado sumia bem na hora de tentar de novo.
+  ok(depois.campo === '5511999999999', 'o telefone digitado sobrevive ao re-render', depois.campo);
 
   // tela de Conteudo
   await p.evaluate(async () => {

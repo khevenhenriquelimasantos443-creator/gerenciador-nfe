@@ -114,6 +114,13 @@ export default {
       return handleWhatsAppTemplates(env);
     }
 
+    // Dispara o resumo diário na hora, pra não precisar esperar as 22h só pra
+    // descobrir se o template aprovado funciona de verdade.
+    if (url.pathname === "/whatsapp/test-daily-template" && request.method === "POST") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppTestDailyTemplate(request, env);
+    }
+
     // Cria o rascunho do Message Template do resumo diário direto pela API,
     // sem precisar clicar no WhatsApp Manager. A Meta ainda revisa e aprova
     // por fora — isso a API não pula, só a criação do rascunho é automática.
@@ -1989,8 +1996,12 @@ function buildDashboardMessage(data, env) {
 // O template tem 4 variáveis no corpo — {{3}} e {{4}} nunca podem vir vazias
 // (a Meta rejeita parâmetro de texto vazio), por isso sempre têm um texto de
 // fallback quando não há sequência ativa ou base de comparação.
-async function sendDailyDashboardTemplate(phone, data, env) {
-  const templateName = env.DAILY_DASHBOARD_TEMPLATE_NAME;
+// nomeForcado existe só pro teste manual do admin: permite provar que o
+// template funciona ANTES de a secret estar configurada. O envio automático
+// das 22h nunca passa esse argumento — continua dependendo da secret, que é
+// o fail-safe contra mandar mensagem proativa sem o template certo.
+async function sendDailyDashboardTemplate(phone, data, env, nomeForcado) {
+  const templateName = nomeForcado || env.DAILY_DASHBOARD_TEMPLATE_NAME;
   if (!templateName) return;
   const now=nowBR();
   const year=now.getFullYear(),month=now.getMonth();
@@ -2595,6 +2606,61 @@ async function processTelegramCallback(cq, env) {
   await processMessage(normalized, env);
 }
 
+// POST /whatsapp/test-daily-template { phone } — manda o resumo diário AGORA,
+// pro número indicado, sem esperar as 22h. Existe porque o modo de falha aqui
+// é silencioso: se o número de variáveis do template não bater com o que o
+// código manda, a Meta recusa e só se descobre no dia seguinte, sem mensagem
+// nenhuma. Aqui a resposta da Meta volta na hora.
+async function handleWhatsAppTestDailyTemplate(request, env) {
+  const cors = { "Content-Type": "application/json" };
+  const erro = (msg, status) => corsResponse(new Response(JSON.stringify({ ok: false, erro: msg }, null, 2), { status, headers: cors }));
+
+  let corpo;
+  try { corpo = await request.json(); } catch (e) { return erro("corpo invalido", 400); }
+  const phone = normalizePhone(corpo && corpo.phone);
+  if (!phone) return erro("informe o telefone (ex: 5511999999999)", 400);
+
+  // Só manda pra quem já existe no KV: um teste de admin não é motivo pra
+  // virar rota de envio pra número arbitrário. A checagem é na chave crua
+  // porque getUserData devolve um objeto vazio pra número inexistente — daria
+  // 200 pra qualquer telefone digitado.
+  if (!env.FINN_KV) return erro("KV não configurado", 500);
+  const bruto = await env.FINN_KV.get(`data_${phone}`);
+  if (!bruto) return erro("esse número não tem dados no Finn — confira o número (com DDI 55)", 404);
+  const data = await getUserData(phone, env);
+
+  const nome = env.DAILY_DASHBOARD_TEMPLATE_NAME || "resumo_diario_finn";
+  let resp, body;
+  try {
+    resp = await sendDailyDashboardTemplate(phone, data, env, nome);
+  } catch (e) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro_rede: String((e && e.message) || e) }, null, 2), { status: 502, headers: cors }));
+  }
+  if (!resp) return erro("nada foi enviado (template sem nome)", 500);
+  try { body = await resp.json(); } catch (e) { body = { parse_error: String(e) }; }
+
+  let veredito;
+  if (resp.ok) {
+    veredito = env.DAILY_DASHBOARD_TEMPLATE_NAME
+      ? "ENVIADO. Confira o WhatsApp desse número. Como a secret já está configurada, o resumo automático das 22h também vai sair."
+      : "ENVIADO — o template funciona. Mas a secret DAILY_DASHBOARD_TEMPLATE_NAME ainda NÃO está configurada, então o resumo automático das 22h continua só no Telegram. Este teste usou o nome fixo.";
+  } else {
+    // 132000 é justamente o descasamento de variáveis — vale nomear, porque
+    // o texto cru da Meta não explica o que fazer.
+    const codigo = body && body.error && body.error.code;
+    veredito = codigo === 132000
+      ? "A META RECUSOU: o número de variáveis do template não bate com o que o bot manda (4). Veja meta_response."
+      : "A META RECUSOU o envio — veja meta_response abaixo.";
+  }
+
+  return corsResponse(new Response(JSON.stringify({
+    ok: resp.ok, http: resp.status, veredito,
+    template_usado: nome,
+    secret_daily_dashboard_template_name: env.DAILY_DASHBOARD_TEMPLATE_NAME || null,
+    meta_response: body
+  }, null, 2), { status: 200, headers: cors }));
+}
+
 // GET /whatsapp/templates — lista os Message Templates da conta com o status
 // de aprovação. Devolve também o motivo da rejeição quando existe, que é o
 // que o WhatsApp Manager mostra numa tela separada e fácil de não achar.
@@ -2708,7 +2774,10 @@ async function metaPost(payload, env) {
     body:JSON.stringify(payload)
   });
   if(!resp.ok) {
-    const body = await resp.text();
+    // clone() porque o corpo só pode ser lido uma vez: sem isso, quem chama
+    // metaPost e tenta ler a resposta de erro recebe um stream já consumido —
+    // e a mensagem da Meta, que é justamente o diagnóstico, se perde.
+    const body = await resp.clone().text();
     console.error(`Meta API error ${resp.status}:`, body);
     await debugLog(env, { kind: "meta_send_error", to: payload.to, status: resp.status, body: body.slice(0, 500) });
     // Token expirado (401) ou sem permissão (403)
