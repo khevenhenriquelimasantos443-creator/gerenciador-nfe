@@ -1,3 +1,4 @@
+import { IG_STORIES } from "./social-stories.js";
 // =============================================================================
 // Finn. WhatsApp Bot — Cloudflare Worker (Meta WhatsApp Cloud API)
 // =============================================================================
@@ -159,6 +160,25 @@ export default {
     }
     if (url.pathname === "/bot-txs/ack" && request.method === "POST") {
       return handleBotTxsAck(request, env);
+    }
+
+    // ── Imagens de Story do Instagram ────────────────────────────────────
+    // Publicas de proposito: a API do Instagram nao aceita upload direto, so
+    // image_url, entao a Meta precisa conseguir baixar a imagem sozinha.
+    // Ficam neste worker (e nao no finn-serve) porque la o script ja bateu no
+    // teto de 3 MiB do plano free; aqui sobra espaco. Ver social-stories.js.
+    const storyMatch = url.pathname.match(/^\/social\/story-(\d+)\.jpg$/);
+    if (storyMatch && request.method === "GET") {
+      const b64 = IG_STORIES[Number(storyMatch[1]) - 1];
+      if (!b64) return new Response("Not Found", { status: 404 });
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      return new Response(bytes, {
+        headers: {
+          "Content-Type": "image/jpeg",
+          // Imutavel: o conteudo de cada indice nunca muda depois de publicado.
+          "Cache-Control": "public, max-age=31536000, immutable"
+        }
+      });
     }
 
     return new Response("Finn WhatsApp Worker", { status: 200 });

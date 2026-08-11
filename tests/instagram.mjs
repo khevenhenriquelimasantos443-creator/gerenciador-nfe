@@ -2,6 +2,7 @@
 // por slot, avanço da fila só em caso de sucesso, e o Story (media_type
 // STORIES, sem caption, best-effort).
 import serve from '../finn-serve/index.js';
+import bot from '../finn-worker/index.js';
 
 let falhas = 0;
 const ok = (c, n, e) => { console.log((c ? '  ok   ' : '  FALHA') + ' ' + n + (e !== undefined ? '  — ' + e : '')); if (!c) falhas++; };
@@ -106,10 +107,12 @@ console.log('\n=== outros crons não publicam no Instagram ===');
   global.fetch = realFetch;
 }
 
-console.log('\n=== imagens de story sao servidas em 9:16 ===');
+console.log('\n=== imagens de story sao servidas em 9:16 (pelo worker do bot) ===');
 {
   const ctx = novoCtx();
-  const r = await serve.fetch(new Request('https://finn.dev.br/social/story-1.jpg'), { FINN_KV: novoKV() }, ctx);
+  // Servidas pelo finn-worker, nao pelo finn-serve: embutidas no finn-serve
+  // elas estouravam o teto de 3 MiB do plano free (erro 10027 da Cloudflare).
+  const r = await bot.fetch(new Request('https://bot.workers.dev/social/story-1.jpg'), { FINN_KV: novoKV() }, ctx);
   ok(r.status === 200, '/social/story-1.jpg responde 200', r.status);
   ok((r.headers.get('Content-Type') || '') === 'image/jpeg', 'Content-Type e image/jpeg', r.headers.get('Content-Type'));
   const buf = new Uint8Array(await r.arrayBuffer());
@@ -127,9 +130,9 @@ console.log('\n=== imagens de story sao servidas em 9:16 ===');
   }
   ok(w === 1080 && h === 1920, 'dimensoes 1080x1920 (formato nativo do Stories)', w + 'x' + h);
 
-  const r20 = await serve.fetch(new Request('https://finn.dev.br/social/story-20.jpg'), { FINN_KV: novoKV() }, ctx);
+  const r20 = await bot.fetch(new Request('https://bot.workers.dev/social/story-20.jpg'), { FINN_KV: novoKV() }, ctx);
   ok(r20.status === 200, 'a 20a story tambem existe', r20.status);
-  const r21 = await serve.fetch(new Request('https://finn.dev.br/social/story-21.jpg'), { FINN_KV: novoKV() }, ctx);
+  const r21 = await bot.fetch(new Request('https://bot.workers.dev/social/story-21.jpg'), { FINN_KV: novoKV() }, ctx);
   ok(r21.status !== 200, 'indice inexistente nao devolve imagem', r21.status);
 }
 
@@ -140,7 +143,7 @@ console.log('\n=== o story publicado usa a imagem 9:16, nao a quadrada ===');
   await ctx.fim();
   await new Promise(r => setTimeout(r, 300));
   const story = chamadas.find(c => c.corpo && c.corpo.media_type === 'STORIES');
-  ok(story && /story-3\.jpg/.test(story.corpo.image_url), 'story aponta pra /social/story-N.jpg', story && story.corpo.image_url);
+  ok(story && /workers\.dev\/social\/story-3\.jpg/.test(story.corpo.image_url), 'story aponta pro worker do bot', story && story.corpo.image_url);
   const feed = chamadas.find(c => c.corpo && c.corpo.caption !== undefined);
   ok(feed && /post-3\.png/.test(feed.corpo.image_url), 'feed continua na imagem quadrada', feed && feed.corpo.image_url);
   global.fetch = realFetch;
