@@ -497,6 +497,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
         <button type="button" class="nav-menu-action" id="btnScreenerNav" style="display:none">Screener de ações</button>
         <button type="button" class="nav-menu-action" id="btnBetaAdminNav" style="display:none">Questionário do beta</button>
         <button type="button" class="nav-menu-action" id="btnMetaAdsNav" style="display:none">Anúncios</button>
+        <button type="button" class="nav-menu-action" id="btnConteudoNav" style="display:none">Conteúdo</button>
         <button type="button" class="nav-menu-action" id="btnToggleAdminMode" style="display:none">Voltar pro Finn normal</button>
         <button type="button" class="nav-menu-action" id="btnConfigNav">Configurações</button>
         <button type="button" class="nav-menu-action" id="btnLogoutNav">Sair</button>
@@ -583,7 +584,7 @@ function adminModeAtivo(){
 }
 // Telas que só existem no modo admin. Sair do modo com uma delas aberta
 // deixaria a tela em branco, então setAdminMode reposiciona a aba.
-var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminBeta", "metaAds", "screener"];
+var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminBeta", "metaAds", "screener", "conteudo"];
 // Não persiste em localStorage de propósito: adminUnlocked (a senha de
 // admin) também não persiste, então a cada recarga a pessoa desbloqueia de
 // novo — e o próprio desbloqueio já liga o modo admin. Guardar o modo
@@ -752,7 +753,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4197,6 +4198,159 @@ function renderConquistasAdmin(a){
   return html + '</div>';
 }
 
+/* ── Conteúdo do Instagram (fila que alimenta a publicação automática) ── */
+// Antes, cada post vivia embutido no código do Worker: publicar coisa nova
+// exigia deploy, e as imagens empurraram o script contra o teto de tamanho da
+// Cloudflare. Aqui a legenda vai pro Supabase e a imagem pro Storage, então
+// dá pra abastecer a fila sozinho e o Worker para de crescer.
+var CONTEUDO_BUCKET_URL = SUPA_URL + "/storage/v1/object/public/social/";
+
+function renderConteudo(){
+  if(!adminModeAtivo()) return "";
+  var html = '<div class="card">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">' +
+      '<div class="eyebrow" style="margin:0">Conteúdo do Instagram</div>' +
+      '<button type="button" class="btn-ghost" id="btnConteudoReload" style="padding:6px 12px;font-size:11.5px">Atualizar</button>' +
+    '</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-top:6px">Publica sozinho às 10h e 18h, na ordem da fila. O que você subir aqui sai antes da campanha antiga.</div>' +
+  '</div>';
+
+  // ── formulário de envio ──
+  html += '<div class="card">' +
+    '<div class="eyebrow">Novo item</div>' +
+    '<div class="form-row"><label>Tipo</label>' +
+      '<select id="conteudoKind">' +
+        '<option value="feed"' + (state.conteudoKind === "feed" ? " selected" : "") + '>Post no feed (quadrado, com legenda)</option>' +
+        '<option value="story"' + (state.conteudoKind === "story" ? " selected" : "") + '>Story (9:16, sem legenda)</option>' +
+      '</select></div>' +
+    '<div class="form-row"><label>Imagem</label>' +
+      '<input type="file" id="conteudoArquivo" accept="image/png,image/jpeg,image/webp"></div>' +
+    (state.conteudoKind === "story"
+      ? '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Story ignora legenda — o Instagram não mostra texto de caption nesse formato.</div>'
+      : '<div class="form-row"><label>Legenda</label>' +
+        '<textarea id="conteudoLegenda" rows="5" placeholder="Texto do post, com hashtags no fim">' + escapeHtml(state.conteudoLegenda) + '</textarea></div>') +
+    '<button type="button" class="btn-submit" id="btnConteudoEnviar"' + (state.conteudoEnviando ? " disabled" : "") + '>' +
+      (state.conteudoEnviando ? "Enviando…" : "Adicionar à fila") + '</button>' +
+    (state.conteudoMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.conteudoMsg) + '</div>' : '') +
+    (state.conteudoErro ? '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.conteudoErro) + '</div>' : '') +
+  '</div>';
+
+  // ── fila ──
+  if(state.conteudoLoading && !state.conteudoLista){
+    return html + '<div class="card"><div style="font-size:13px;color:var(--fm)">Carregando a fila…</div></div>';
+  }
+  var lista = state.conteudoLista || [];
+  var naFila = lista.filter(function(i){ return !i.published_at; });
+  var publicados = lista.filter(function(i){ return i.published_at; });
+
+  html += '<div class="card">' +
+    '<div class="eyebrow">Na fila · ' + naFila.length + '</div>' +
+    (naFila.length
+      ? '<div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">' +
+        naFila.map(function(i, idx){
+          return '<div style="display:flex;gap:12px;align-items:flex-start;border:1px solid var(--fb);border-radius:12px;padding:10px">' +
+            '<img src="' + escapeHtml(CONTEUDO_BUCKET_URL + i.image_path) + '" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:8px;flex-shrink:0;background:var(--fb)">' +
+            '<div style="flex:1;min-width:0">' +
+              '<div style="font-weight:800;font-size:12.5px;color:var(--fd)">' + (idx === 0 ? "PRÓXIMO · " : "") + (i.kind === "story" ? "Story" : "Post") + '</div>' +
+              '<div style="font-size:12px;color:var(--fm);margin-top:3px;word-break:break-word">' + escapeHtml((i.caption || "(sem legenda)").slice(0, 140)) + '</div>' +
+              (i.erro ? '<div style="font-size:11.5px;color:var(--fe);margin-top:4px">Última tentativa falhou: ' + escapeHtml(i.erro) + '</div>' : '') +
+            '</div>' +
+            '<button type="button" class="btn-ghost" data-delconteudo="' + escapeHtml(i.id) + '" style="padding:6px 10px;font-size:11px;flex-shrink:0">Excluir</button>' +
+          '</div>';
+        }).join("") + '</div>'
+      : '<div style="font-size:13px;color:var(--fm);margin-top:8px">Fila vazia — enquanto estiver assim, sai a campanha antiga que está embutida no código.</div>') +
+  '</div>';
+
+  if(publicados.length){
+    html += '<div class="card">' +
+      '<div class="eyebrow">Já publicados · ' + publicados.length + '</div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">' +
+        publicados.slice(0, 24).map(function(i){
+          return '<img src="' + escapeHtml(CONTEUDO_BUCKET_URL + i.image_path) + '" title="' + escapeHtml(admDataHora(i.published_at)) + '" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:8px;background:var(--fb)">';
+        }).join("") +
+      '</div></div>';
+  }
+  return html;
+}
+
+function loadConteudo(){
+  state.conteudoLoading = true;
+  state.conteudoErro = null;
+  render();
+  db("social_posts", "GET", null, { order: "published_at.asc,posicao.asc,created_at.asc" })
+    .then(function(linhas){
+      state.conteudoLista = linhas || [];
+      state.conteudoLoading = false;
+      render();
+    })
+    .catch(function(err){
+      state.conteudoLoading = false;
+      state.conteudoErro = "Não consegui carregar a fila (" + ((err && err.message) || "erro") + ").";
+      render();
+    });
+}
+
+function enviarConteudo(){
+  var arquivo = state.conteudoArquivo;
+  if(!arquivo){ state.conteudoErro = "Escolhe uma imagem primeiro."; render(); return; }
+  if(state.conteudoKind === "feed" && !state.conteudoLegenda.trim()){
+    state.conteudoErro = "Post de feed precisa de legenda."; render(); return;
+  }
+  state.conteudoEnviando = true;
+  state.conteudoErro = null;
+  state.conteudoMsg = null;
+  render();
+
+  // Nome único: o bucket é público e cacheado pra sempre (immutable), então
+  // reaproveitar nome faria uma imagem nova aparecer com a arte antiga.
+  var ext = (arquivo.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
+  var caminho = state.conteudoKind + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + ext;
+  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+
+  fetch(SUPA_URL + "/storage/v1/object/social/" + caminho, {
+    method: "POST",
+    headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": arquivo.type || "image/png" },
+    body: arquivo
+  }).then(function(r){
+    if(!r.ok) return r.text().then(function(t){ throw new Error(t || ("Erro " + r.status)); });
+    // posicao alta o bastante pra entrar no fim da fila sem colidir.
+    return db("social_posts", "POST", {
+      kind: state.conteudoKind,
+      image_path: caminho,
+      caption: state.conteudoKind === "story" ? null : state.conteudoLegenda.trim(),
+      posicao: Math.floor(Date.now() / 1000)
+    });
+  }).then(function(){
+    state.conteudoEnviando = false;
+    state.conteudoLegenda = "";
+    state.conteudoArquivo = null;
+    state.conteudoMsg = "Adicionado à fila.";
+    loadConteudo();
+  }).catch(function(err){
+    state.conteudoEnviando = false;
+    state.conteudoErro = "Não consegui enviar (" + ((err && err.message) || "erro") + ").";
+    render();
+  });
+}
+
+function excluirConteudo(id){
+  var item = (state.conteudoLista || []).filter(function(i){ return i.id === id; })[0];
+  if(!item) return;
+  if(!window.confirm("Tirar este item da fila? A imagem também é apagada.")) return;
+  db("social_posts", "DELETE", null, { id: "eq." + id }).then(function(){
+    // Apaga o arquivo depois do registro: se a ordem fosse inversa e o DELETE
+    // do banco falhasse, sobraria uma linha apontando pra imagem inexistente.
+    var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+    fetch(SUPA_URL + "/storage/v1/object/social/" + item.image_path, {
+      method: "DELETE", headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token }
+    }).catch(function(){});
+    loadConteudo();
+  }).catch(function(err){
+    state.conteudoErro = "Não consegui excluir (" + ((err && err.message) || "erro") + ").";
+    render();
+  });
+}
+
 function renderAdminHome(){
   if(!adminModeAtivo()) return "";
   var a = state.analyticsData;
@@ -4258,6 +4412,7 @@ function renderAdminHome(){
     '<div style="display:flex;flex-direction:column;gap:8px">' +
       '<button type="button" class="btn-ghost" id="btnGoBetaAdmin">Questionário do beta</button>' +
       '<button type="button" class="btn-ghost" id="btnGoMetaAds">Anúncios</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoConteudo">Conteúdo do Instagram</button>' +
       '<button type="button" class="btn-ghost" id="btnGoScreener">Screener de ações</button>' +
     '</div>' +
   '</div>';
@@ -6298,7 +6453,7 @@ function render(){
   });
   // As telas de gestão só aparecem no modo admin (antes bastava estar
   // desbloqueado, e elas ficavam penduradas no menu normal).
-  ["btnAdminHomeNav","btnAdminAnalyticsNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav"].forEach(function(id){
+  ["btnAdminHomeNav","btnAdminAnalyticsNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
     var b = document.getElementById(id);
     if(b) b.style.display = emAdmin ? "" : "none";
   });
@@ -6342,6 +6497,7 @@ function render(){
   else if(state.tab === "racha") content.innerHTML = renderRacha();
   else if(state.tab === "ia") content.innerHTML = renderIA();
   else if(state.tab === "adminHome") content.innerHTML = renderAdminHome();
+  else if(state.tab === "conteudo") content.innerHTML = renderConteudo();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else if(state.tab === "screener") content.innerHTML = renderScreener();
   else if(state.tab === "adminBeta") content.innerHTML = renderAdminBeta();
@@ -6721,10 +6877,36 @@ function bindContentEvents(){
     if((b = document.getElementById("btnGoBetaAdmin"))) b.addEventListener("click", irPara("adminBeta"));
     if((b = document.getElementById("btnGoMetaAds"))) b.addEventListener("click", irPara("metaAds"));
     if((b = document.getElementById("btnGoScreener"))) b.addEventListener("click", irPara("screener"));
+    if((b = document.getElementById("btnGoConteudo"))) b.addEventListener("click", function(){
+      state.tab = "conteudo"; render();
+      if(!state.conteudoLista) loadConteudo();
+    });
     if((b = document.getElementById("btnAdminHomeRefresh"))) b.addEventListener("click", loadAdminAnalytics);
     if((b = document.getElementById("btnAdminHomeRetry"))) b.addEventListener("click", loadAdminAnalytics);
     if((b = document.getElementById("btnLoadIntrusionsHome"))) b.addEventListener("click", loadIntrusions);
     if((b = document.getElementById("btnExportIntrusionsHome"))) b.addEventListener("click", exportarIntrusoesCSV);
+  }
+  if(state.tab === "conteudo"){
+    var b;
+    if((b = document.getElementById("btnConteudoReload"))) b.addEventListener("click", loadConteudo);
+    if((b = document.getElementById("conteudoKind"))) b.addEventListener("change", function(e){
+      state.conteudoKind = e.target.value;
+      // Guarda o arquivo já escolhido: trocar feed<->story re-renderiza o
+      // formulário e o <input type=file> perde a seleção, o que faria a pessoa
+      // escolher a imagem de novo sem entender por quê.
+      render();
+    });
+    if((b = document.getElementById("conteudoArquivo"))) b.addEventListener("change", function(e){
+      state.conteudoArquivo = e.target.files && e.target.files[0];
+      state.conteudoErro = null;
+    });
+    if((b = document.getElementById("conteudoLegenda"))) b.addEventListener("input", function(e){
+      state.conteudoLegenda = e.target.value;
+    });
+    if((b = document.getElementById("btnConteudoEnviar"))) b.addEventListener("click", enviarConteudo);
+    document.querySelectorAll("[data-delconteudo]").forEach(function(btn){
+      btn.addEventListener("click", function(){ excluirConteudo(btn.dataset.delconteudo); });
+    });
   }
   if(state.tab === "adminAnalytics"){
     var btnLoadAnalytics = document.getElementById("btnLoadAnalytics");
@@ -7499,6 +7681,12 @@ document.getElementById("btnConfigNav").addEventListener("click", function(){
   state.tab = "config";
   render();
   document.getElementById("navMenu").classList.remove("open");
+});
+document.getElementById("btnConteudoNav").addEventListener("click", function(){
+  state.tab = "conteudo";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  if(!state.conteudoLista) loadConteudo();
 });
 document.getElementById("btnAdminHomeNav").addEventListener("click", function(){
   state.tab = "adminHome";

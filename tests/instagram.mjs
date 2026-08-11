@@ -149,6 +149,121 @@ console.log('\n=== o story publicado usa a imagem 9:16, nao a quadrada ===');
   global.fetch = realFetch;
 }
 
+
+// ══════════════════════════════════════════════════════════════════════
+// FILA DE CONTEUDO NO SUPABASE (tela "Conteudo" do admin alimenta esta fila)
+// ══════════════════════════════════════════════════════════════════════
+
+// Mock do PostgREST + Graph API juntos. `fila` e o que a consulta devolve.
+function mockFilaEIG(fila) {
+  const chamadas = { ig: [], patch: [] };
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/rest/v1/social_posts')) {
+      if (opts && opts.method === 'PATCH') {
+        chamadas.patch.push({ url: u, corpo: JSON.parse(opts.body) });
+        return new Response('', { status: 204 });
+      }
+      return new Response(JSON.stringify(fila), { status: 200 });
+    }
+    if (u.includes('graph.instagram.com')) {
+      const corpo = opts && opts.body ? JSON.parse(opts.body) : null;
+      chamadas.ig.push({ url: u, corpo });
+      if (u.includes('/media_publish')) return new Response(JSON.stringify({ id: 'pub_1' }), { status: 200 });
+      if (u.includes('status_code')) return new Response(JSON.stringify({ status_code: 'FINISHED' }), { status: 200 });
+      return new Response(JSON.stringify({ id: 'cont_1' }), { status: 200 });
+    }
+    return realFetch(url, opts);
+  };
+  return chamadas;
+}
+const ENV_FILA = () => ({
+  FINN_KV: novoKV({ ig_post_next_index: '3' }),
+  IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123',
+  SUPABASE_SERVICE_KEY: 'svc',
+});
+
+console.log('\n=== fila do Supabase tem prioridade sobre a lista embutida ===');
+{
+  const env = ENV_FILA();
+  const c = mockFilaEIG([{ id: 'f1', kind: 'feed', image_path: 'feed-9.png', caption: 'Legenda da fila', posicao: 1 }]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+
+  const criado = c.ig.find(x => x.corpo && x.corpo.image_url);
+  ok(criado && /storage\/v1\/object\/public\/social\/feed-9\.png/.test(criado.corpo.image_url), 'usou a imagem do Storage, nao a embutida', criado && criado.corpo.image_url);
+  ok(criado && criado.corpo.caption === 'Legenda da fila', 'usou a legenda da fila', criado && criado.corpo.caption);
+  ok(env.FINN_KV._store.get('ig_post_next_index') === '3', 'NAO consumiu a campanha embutida (indice intacto)', env.FINN_KV._store.get('ig_post_next_index'));
+  const marcado = c.patch.find(x => x.corpo && x.corpo.published_at);
+  ok(!!marcado, 'marcou published_at na linha da fila');
+  ok(marcado && marcado.corpo.ig_media_id === 'pub_1', 'guardou o id devolvido pela Meta', marcado && marcado.corpo.ig_media_id);
+  ok(marcado && /id=eq\.f1/.test(marcado.url), 'marcou a linha CERTA', marcado && marcado.url);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== story vindo da fila: media_type STORIES e sem caption ===');
+{
+  const env = ENV_FILA();
+  const c = mockFilaEIG([{ id: 's1', kind: 'story', image_path: 'story-9.jpg', caption: null, posicao: 1 }]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+  await new Promise(r => setTimeout(r, 200));
+
+  const criado = c.ig.find(x => x.corpo && x.corpo.image_url);
+  ok(criado && criado.corpo.media_type === 'STORIES', 'container criado como STORIES', criado && criado.corpo.media_type);
+  ok(criado && criado.corpo.caption === undefined, 'story nao manda caption', criado && JSON.stringify(criado.corpo).slice(0, 90));
+  // So um container: story da fila nao dispara story automatico de brinde
+  const containers = c.ig.filter(x => x.corpo && x.corpo.image_url);
+  ok(containers.length === 1, 'publicou UM item, sem duplicar com story automatico', containers.length);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== fila vazia: cai na campanha embutida ===');
+{
+  const env = ENV_FILA();
+  const c = mockFilaEIG([]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+
+  const criado = c.ig.find(x => x.corpo && x.corpo.image_url);
+  ok(criado && /finn\.dev\.br\/social\/post-3\.png/.test(criado.corpo.image_url), 'voltou pra imagem embutida', criado && criado.corpo.image_url);
+  ok(env.FINN_KV._store.get('ig_post_next_index') === '4', 'a campanha embutida avancou', env.FINN_KV._store.get('ig_post_next_index'));
+  ok(c.patch.length === 0, 'nao tentou marcar linha nenhuma no banco', c.patch.length);
+  global.fetch = realFetch;
+}
+
+console.log('\n=== falha ao publicar item da fila registra o erro na linha ===');
+{
+  const env = ENV_FILA();
+  const patches = [];
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/rest/v1/social_posts')) {
+      if (opts && opts.method === 'PATCH') { patches.push(JSON.parse(opts.body)); return new Response('', { status: 204 }); }
+      return new Response(JSON.stringify([{ id: 'f1', kind: 'feed', image_path: 'x.png', caption: 'c', posicao: 1 }]), { status: 200 });
+    }
+    if (u.includes('graph.instagram.com')) return new Response(JSON.stringify({ error: { message: 'token vencido' } }), { status: 401 });
+    return realFetch(url, opts);
+  };
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+  const err = patches.find(x => x.erro);
+  ok(!!err, 'gravou o erro na linha da fila (aparece na tela)', JSON.stringify(patches));
+  ok(!patches.some(x => x.published_at), 'NAO marcou como publicado', JSON.stringify(patches));
+  global.fetch = realFetch;
+}
+
+console.log('\n=== sem service key, nao quebra: usa a campanha embutida ===');
+{
+  const env = { FINN_KV: novoKV({ ig_post_next_index: '3' }), IG_ACCESS_TOKEN: 'tok', IG_BUSINESS_ACCOUNT_ID: '123' };
+  const c = mockFilaEIG([{ id: 'f1', kind: 'feed', image_path: 'nao-deve-usar.png', caption: 'x', posicao: 1 }]);
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx); await ctx.fim();
+  const criado = c.ig.find(x => x.corpo && x.corpo.image_url);
+  ok(criado && /finn\.dev\.br\/social\/post-3\.png/.test(criado.corpo.image_url), 'sem service key nao consulta a fila, usa a embutida', criado && criado.corpo.image_url);
+  global.fetch = realFetch;
+}
+
 global.fetch = realFetch;
 console.log('\n' + (falhas ? `❌ ${falhas} falha(s)` : '✅ tudo passou'));
 process.exit(falhas ? 1 : 0);

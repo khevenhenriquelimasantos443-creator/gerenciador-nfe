@@ -78,6 +78,10 @@ async function abrir(email) {
     if (u.includes('/admin/intrusions')) return J(INTRUSOES);
     if (u.includes('bot-stats')) return J({ ok: true, whatsappTx: 25, telegramTx: 40, dailyDashboardOptIn: 3 });
     if (u.includes('supabase.co/rest/v1/') && (m === 'DELETE' || m === 'PATCH' || m === 'POST')) return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
+    if (u.includes('supabase.co/rest/v1/social_posts')) return J([
+      { id: 'q1', kind: 'feed', image_path: 'feed-1.png', caption: 'Post na fila', posicao: 1, published_at: null, erro: null },
+      { id: 'q2', kind: 'story', image_path: 'story-1.jpg', caption: null, posicao: 2, published_at: null, erro: null },
+    ]);
     if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
     if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
     if (u.includes('/admin')) return J({ ok: true });
@@ -193,7 +197,35 @@ console.log('\n=== modo admin ===');
     ok(/175/.test(csv.texto), 'traz os dados');
   }
 
+  // tela de Conteudo
+  await p.evaluate(async () => {
+    document.getElementById('btnConteudoNav').click();
+    await new Promise(r => setTimeout(r, 900));
+  });
+  const cont = await p.evaluate(() => document.getElementById('content').innerText);
+  ok(/conte[úu]do do instagram/i.test(cont), 'tela de Conteudo abre', (cont.match(/CONTE[ÚU]DO[^\n]*/i) || [])[0]);
+  ok(/na fila/i.test(cont), 'mostra a fila');
+  ok(/10h e 18h/.test(cont), 'explica quando publica');
+  const campos = await p.evaluate(() => ({
+    kind: !!document.getElementById('conteudoKind'),
+    arq: !!document.getElementById('conteudoArquivo'),
+    leg: !!document.getElementById('conteudoLegenda'),
+    btn: !!document.getElementById('btnConteudoEnviar'),
+  }));
+  ok(campos.kind && campos.arq && campos.leg && campos.btn, 'formulario completo (tipo, imagem, legenda, botao)', JSON.stringify(campos));
+  // trocar pra story esconde a legenda (o Instagram ignora caption em story)
+  await p.evaluate(async () => {
+    const sel = document.getElementById('conteudoKind');
+    sel.value = 'story'; sel.dispatchEvent(new Event('change', { bubbles: true }));
+    await new Promise(r => setTimeout(r, 400));
+  });
+  const semLeg = await p.evaluate(() => !document.getElementById('conteudoLegenda'));
+  const aviso = await p.evaluate(() => document.getElementById('content').innerText);
+  ok(semLeg, 'story esconde o campo de legenda');
+  ok(/ignora legenda/i.test(aviso), 'e explica por que', (aviso.match(/[^\n]*ignora legenda[^\n]*/i) || [])[0]);
+
   // voltar pro Finn normal
+  await p.evaluate(async () => { document.getElementById('btnAdminHomeNav').click(); await new Promise(r => setTimeout(r, 500)); });
   await p.evaluate(() => document.getElementById('btnToggleAdminMode').click());
   await p.waitForTimeout(600);
   const volta = await p.evaluate(() => [...document.querySelectorAll('.nav-menu .tab-btn')].filter(x => getComputedStyle(x).display !== 'none').length);

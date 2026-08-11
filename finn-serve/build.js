@@ -2003,18 +2003,73 @@ const IG_CAPTIONS = [
 // Publica o próximo post da sequência (1 a IG_CAPTIONS.length) — chamado
 // pelo cron diário e também pelo endpoint de disparo manual
 // /admin/instagram-publish-next.
+// URL pública de um arquivo do bucket 'social'. Tem que ser pública porque a
+// API do Instagram não aceita upload de arquivo — só image_url que os
+// servidores da Meta baixam sozinhos, sem token.
+function _socialPublicUrl(caminho) {
+  return '${SUPA_URL_SERVER}/storage/v1/object/public/social/' + caminho;
+}
+
+// Próximo item da fila que a tela de Conteúdo alimenta. Usa a service key: a
+// RLS da social_posts é por e-mail da conta master, e o Worker não tem sessão
+// de usuário nenhuma.
+async function _proximoDaFila(env) {
+  if (!env.SUPABASE_SERVICE_KEY) return null;
+  try {
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=is.null&order=posicao.asc,created_at.asc&limit=1', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) return null;
+    var linhas = await r.json();
+    return (linhas && linhas[0]) || null;
+  } catch (e) { return null; }
+}
+
+async function _marcaPublicado(env, id, campos) {
+  if (!env.SUPABASE_SERVICE_KEY) return;
+  try {
+    await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?id=eq.' + encodeURIComponent(id), {
+      method: 'PATCH',
+      headers: {
+        apikey: env.SUPABASE_SERVICE_KEY,
+        Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify(campos)
+    });
+  } catch (e) { /* best-effort: não pode derrubar o que já foi publicado */ }
+}
+
 async function _publishNextInstagramPost(env) {
   if (!env.IG_ACCESS_TOKEN || !env.IG_BUSINESS_ACCOUNT_ID) {
     return { ok: false, skipped: true, reason: 'IG_ACCESS_TOKEN ou IG_BUSINESS_ACCOUNT_ID não configurados' };
   }
   if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
 
-  var nextIndex = Number((await env.FINN_KV.get('ig_post_next_index')) || '1');
-  if (nextIndex > IG_CAPTIONS.length) return { ok: false, done: true, reason: 'os ' + IG_CAPTIONS.length + ' posts já foram publicados' };
+  // A fila do Supabase tem PRIORIDADE sobre a lista embutida no código.
+  //
+  // É questão de previsibilidade: o que aparece na tela de Conteúdo é o que
+  // vai sair. Se a lista antiga viesse primeiro, o dono subiria um post hoje e
+  // ele só sairia dias depois, atrás de conteúdo que ele nem enxerga. A lista
+  // embutida vira reserva, pra campanha antiga escoar enquanto a fila nova
+  // estiver vazia.
+  var daFila = await _proximoDaFila(env);
 
-  var imageUrl = 'https://finn.dev.br/social/post-' + nextIndex + '.png';
-  var caption = IG_CAPTIONS[nextIndex - 1];
-  var log = { index: nextIndex, image_url: imageUrl, started_at: new Date().toISOString() };
+  var nextIndex = null, imageUrl, caption, filaId = null, ehStory = false;
+  if (daFila) {
+    filaId = daFila.id;
+    ehStory = daFila.kind === 'story';
+    imageUrl = _socialPublicUrl(daFila.image_path);
+    caption = daFila.caption || '';
+  } else {
+    nextIndex = Number((await env.FINN_KV.get('ig_post_next_index')) || '1');
+    if (nextIndex > IG_CAPTIONS.length) return { ok: false, done: true, reason: 'fila vazia e os ' + IG_CAPTIONS.length + ' posts embutidos já foram publicados' };
+    imageUrl = 'https://finn.dev.br/social/post-' + nextIndex + '.png';
+    caption = IG_CAPTIONS[nextIndex - 1];
+  }
+
+  var log = { index: nextIndex, fila_id: filaId, origem: daFila ? 'fila' : 'embutido', kind: ehStory ? 'story' : 'feed', image_url: imageUrl, started_at: new Date().toISOString() };
 
   try {
     // Passo 1: cria o "container" de mídia (a Meta busca a imagem pela URL —
@@ -2022,7 +2077,10 @@ async function _publishNextInstagramPost(env) {
     var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image_url: imageUrl, caption: caption, access_token: env.IG_ACCESS_TOKEN })
+      // Story não leva caption (a Meta ignora) e exige media_type.
+      body: JSON.stringify(ehStory
+        ? { image_url: imageUrl, media_type: 'STORIES', access_token: env.IG_ACCESS_TOKEN }
+        : { image_url: imageUrl, caption: caption, access_token: env.IG_ACCESS_TOKEN })
     });
     var createBody = await createResp.json();
     log.create_status = createResp.status;
@@ -2030,6 +2088,7 @@ async function _publishNextInstagramPost(env) {
     if (!createResp.ok || !createBody.id) {
       log.ok = false;
       await _logInstagramAttempt(env, log);
+      if (daFila) await _marcaPublicado(env, filaId, { erro: 'falha em media' });
       return { ok: false, step: 'media', body: createBody };
     }
 
@@ -2048,6 +2107,7 @@ async function _publishNextInstagramPost(env) {
     if (!containerReady) {
       log.ok = false;
       await _logInstagramAttempt(env, log);
+      if (daFila) await _marcaPublicado(env, filaId, { erro: 'falha em container_not_ready' });
       return { ok: false, step: 'container_not_ready', body: log.container_status };
     }
 
@@ -2064,6 +2124,7 @@ async function _publishNextInstagramPost(env) {
     if (!publishResp.ok || !publishBody.id) {
       log.ok = false;
       await _logInstagramAttempt(env, log);
+      if (daFila) await _marcaPublicado(env, filaId, { erro: 'falha em media_publish' });
       return { ok: false, step: 'media_publish', body: publishBody };
     }
 
@@ -2073,20 +2134,24 @@ async function _publishNextInstagramPost(env) {
     // Só avança o índice em caso de sucesso — uma falha (token vencido,
     // rate limit, etc.) tenta o MESMO post de novo no próximo cron, em vez
     // de pular pra frente e nunca publicar o que falhou.
-    await env.FINN_KV.put('ig_post_next_index', String(nextIndex + 1));
+    if (daFila) {
+      await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(publishBody.id), erro: null });
+    } else {
+      await env.FINN_KV.put('ig_post_next_index', String(nextIndex + 1));
 
-    // Story com a MESMA imagem do post, logo depois do feed. Best-effort de
-    // propósito: story é reforço, não o conteúdo principal — se falhar (por
-    // permissão faltando, por exemplo), o post do feed já saiu e não faz
-    // sentido reverter nem travar a fila por causa disso. O resultado fica no
-    // log pra dar pra diagnosticar sem adivinhação.
-    // Imagem PROPRIA de story (9:16). Usar a quadrada do feed funcionava, mas
-    // aparecia com barras — o formato nativo do Stories e vertical.
-    // A imagem de story mora no worker do bot (ver finn-worker/social-stories.js):
-    // embutida aqui, ela estourava o teto de 3 MiB do plano free.
-    ctx_publicaStory(env, IG_STORY_BASE + '/social/story-' + nextIndex + '.jpg', nextIndex);
+      // Story de acompanhamento, best-effort: se falhar (permissão faltando,
+      // por exemplo), o post do feed já saiu e não faz sentido reverter nem
+      // travar a fila. O resultado fica no log pra diagnosticar sem adivinhar.
+      //
+      // Só vale pra campanha EMBUTIDA, onde cada post tem uma arte 9:16
+      // correspondente (as imagens moram no worker do bot — embutidas no
+      // finn-serve, estouravam o teto de 3 MiB do plano free). Na fila nova,
+      // story é um item próprio com kind='story', então mandar um automático
+      // junto duplicaria conteúdo que o dono não pediu.
+      ctx_publicaStory(env, IG_STORY_BASE + '/social/story-' + nextIndex + '.jpg', nextIndex);
+    }
 
-    return { ok: true, index: nextIndex, media_id: publishBody.id };
+    return { ok: true, index: nextIndex, fila_id: filaId || null, media_id: publishBody.id };
   } catch (e) {
     log.ok = false;
     log.error = String(e && e.message || e);
