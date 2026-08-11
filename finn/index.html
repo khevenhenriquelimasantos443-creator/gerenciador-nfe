@@ -2155,7 +2155,9 @@ function renderAnalises(){
   html += '<div class="health-card ' + healthClass + '">' +
     '<div class="eyebrow" style="margin-bottom:10px">' + (healthClass==="good"?"Saúde financeira":(healthClass==="warn"?"Atenção necessária":"Saúde financeira")) + '</div>' +
     '<div class="health-row"><span>Saldo ' + (saldo>=0?"positivo":"negativo") + ' de ' + fmtMoney(Math.abs(saldo)) + '</span></div>' +
-    '<div class="health-row"><span>Despesas ' + (totalDespesa>totalReceita?"superam":"abaixo de") + ' as receitas</span></div>' +
+    // "abaixo de" + "as receitas" concatenava em "abaixo de as receitas".
+    // A frase inteira por ramo evita esse tipo de costura errada.
+    '<div class="health-row"><span>' + (totalDespesa>totalReceita ? "Despesas superam as receitas" : "Despesas abaixo das receitas") + '</span></div>' +
     (jurosTotal > 0 ? '<div class="health-row"><span>Pagou ' + fmtMoney(jurosTotal) + ' em juros/IOF</span></div>' : '') +
     (despesaCats[0] ? '<div class="health-row"><span>Maior gasto: ' + escapeHtml(despesaCats[0].cat) + ' (' + despesaCats[0].pct.toFixed(0) + '%)</span></div>' : '') +
     anaCardToggle("health") +
