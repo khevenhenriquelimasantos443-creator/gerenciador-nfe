@@ -777,7 +777,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4343,36 +4343,48 @@ function testarStoryAgora(){
 // Vai direto no worker do bot (é lá que ficam as credenciais do WhatsApp),
 // autenticando com a sessão do Supabase + a senha master — o mesmo par que
 // as outras rotas admin já usam. Nada de token pra copiar e colar.
-function verTemplateStatus(){
-  state.templateStatusLoading = true;
-  state.templateStatusResultado = null;
+//
+// campo é o prefixo das chaves de state ("templateStatus" -> Loading e
+// Resultado). Sempre mostra veredito em cima e resposta crua embaixo: o
+// resumo é pra decidir, o cru é pra descobrir o motivo quando o resumo
+// não basta.
+function chamarWorkerAdmin(rota, campo, corpo){
+  state[campo + "Loading"] = true;
+  state[campo + "Resultado"] = null;
   render();
-  fetch(WHATSAPP_WORKER_URL + "/whatsapp/templates", {
-    method: "GET",
+  var opcoes = {
+    method: corpo ? "POST" : "GET",
     headers: {
       "Authorization": "Bearer " + ((currentSession && currentSession.access_token) || ""),
       "X-Admin-Password": state.adminPassword || ""
     }
-  }).then(function(r){ return r.text().then(function(t){ return { status: r.status, texto: t }; }); })
+  };
+  if(corpo){
+    opcoes.headers["Content-Type"] = "application/json";
+    opcoes.body = JSON.stringify(corpo);
+  }
+  fetch(WHATSAPP_WORKER_URL + rota, opcoes)
+    .then(function(r){ return r.text().then(function(t){ return { status: r.status, texto: t }; }); })
     .then(function(res){
-      state.templateStatusLoading = false;
+      state[campo + "Loading"] = false;
       var ok = false, veredito = "";
       try {
         var j = JSON.parse(res.texto);
         ok = !!j.ok;
         if(j.veredito) veredito = j.veredito + "\n\n";
       } catch(e){}
-      // Veredito em cima, resposta inteira embaixo: o resumo é pra decidir,
-      // o cru é pra descobrir o motivo quando o resumo não basta.
-      state.templateStatusResultado = { ok: ok, texto: veredito + "HTTP " + res.status + "\n\n" + res.texto };
+      state[campo + "Resultado"] = { ok: ok, texto: veredito + "HTTP " + res.status + "\n\n" + res.texto };
       render();
     })
     .catch(function(err){
-      state.templateStatusLoading = false;
-      state.templateStatusResultado = { ok: false, texto: "Falha de conexão com o worker do bot: " + ((err && err.message) || "erro") };
+      state[campo + "Loading"] = false;
+      state[campo + "Resultado"] = { ok: false, texto: "Falha de conexão com o worker do bot: " + ((err && err.message) || "erro") };
       render();
     });
 }
+
+function verTemplateStatus(){ chamarWorkerAdmin("/whatsapp/templates", "templateStatus"); }
+function verEntregas(){ chamarWorkerAdmin("/whatsapp/entregas", "entregas"); }
 
 function enviarTemplateTeste(){
   var campo = document.getElementById("templateTestePhone");
@@ -4383,34 +4395,7 @@ function enviarTemplateTeste(){
     return;
   }
   state.templateTestePhone = phone;
-  state.templateTesteLoading = true;
-  state.templateTesteResultado = null;
-  render();
-  fetch(WHATSAPP_WORKER_URL + "/whatsapp/test-daily-template", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + ((currentSession && currentSession.access_token) || ""),
-      "X-Admin-Password": state.adminPassword || ""
-    },
-    body: JSON.stringify({ phone: phone })
-  }).then(function(r){ return r.text().then(function(t){ return { status: r.status, texto: t }; }); })
-    .then(function(res){
-      state.templateTesteLoading = false;
-      var ok = false, veredito = "";
-      try {
-        var j = JSON.parse(res.texto);
-        ok = !!j.ok;
-        if(j.veredito) veredito = j.veredito + "\n\n";
-      } catch(e){}
-      state.templateTesteResultado = { ok: ok, texto: veredito + "HTTP " + res.status + "\n\n" + res.texto };
-      render();
-    })
-    .catch(function(err){
-      state.templateTesteLoading = false;
-      state.templateTesteResultado = { ok: false, texto: "Falha de conexão com o worker do bot: " + ((err && err.message) || "erro") };
-      render();
-    });
+  chamarWorkerAdmin("/whatsapp/test-daily-template", "templateTeste", { phone: phone });
 }
 
 function loadConteudo(){
@@ -4571,6 +4556,18 @@ function renderAdminHome(){
       (state.templateTesteResultado
         ? '<div class="' + (state.templateTesteResultado.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;white-space:pre-wrap;word-break:break-word;font-size:11.5px;font-family:ui-monospace,monospace">' +
           escapeHtml(state.templateTesteResultado.texto) + '</div>'
+        : '') +
+    '</div>' +
+    // "accepted" só diz que a Meta pegou a mensagem. O que aconteceu depois
+    // chega por webhook de status — é ali que aparece o motivo de uma
+    // mensagem aceita nunca ter chegado.
+    '<div style="border-top:1px solid var(--fb);margin-top:14px;padding-top:14px">' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Enviou e não chegou? Isto mostra o que a Meta reportou <b>depois</b> do envio — entregue, lido ou falhou, com o motivo.</div>' +
+      '<button type="button" class="btn-ghost" id="btnEntregas" style="width:100%"' + (state.entregasLoading ? " disabled" : "") + '>' +
+        (state.entregasLoading ? "Consultando…" : "Ver entregas recentes") + '</button>' +
+      (state.entregasResultado
+        ? '<div class="' + (state.entregasResultado.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;white-space:pre-wrap;word-break:break-word;font-size:11.5px;font-family:ui-monospace,monospace">' +
+          escapeHtml(state.entregasResultado.texto) + '</div>'
         : '') +
     '</div>' +
   '</div>';
@@ -7055,6 +7052,7 @@ function bindContentEvents(){
     if((b = document.getElementById("btnExportIntrusionsHome"))) b.addEventListener("click", exportarIntrusoesCSV);
     if((b = document.getElementById("btnTemplateStatus"))) b.addEventListener("click", verTemplateStatus);
     if((b = document.getElementById("btnTemplateTeste"))) b.addEventListener("click", enviarTemplateTeste);
+    if((b = document.getElementById("btnEntregas"))) b.addEventListener("click", verEntregas);
     // Guarda o que foi digitado: o render() do resultado recria o campo e o
     // texto sumiria no meio do teste.
     if((b = document.getElementById("templateTestePhone"))) b.addEventListener("input", function(e){ state.templateTestePhone = e.target.value; });

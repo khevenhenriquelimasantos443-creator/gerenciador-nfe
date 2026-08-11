@@ -88,6 +88,10 @@ async function abrir(email) {
     if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
     if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
     if (u.includes('/admin')) return J({ ok: true });
+    if (u.includes('/whatsapp/entregas')) {
+      return J({ ok: true, veredito: 'A Meta FALHOU na entrega — veja explicacao.',
+        entregas: [{ em: '2026-08-11T23:10:00Z', status: 'failed', codigo: 131049, explicacao: 'A Meta ENGOLIU a mensagem de propósito.' }] });
+    }
     if (u.includes('/whatsapp/test-daily-template')) {
       const h = route.request().headers();
       ULTIMO_TESTE_TEMPLATE = { corpo: route.request().postData(), auth: h['authorization'] || '', senha: h['x-admin-password'] || '' };
@@ -257,6 +261,12 @@ console.log('\n=== modo admin ===');
   // O render() do resultado recria o campo; sem guardar o valor no state, o
   // número digitado sumia bem na hora de tentar de novo.
   ok(depois.campo === '5511999999999', 'o telefone digitado sobrevive ao re-render', depois.campo);
+
+  await p.evaluate(() => { const t = document.getElementById('btnEntregas'); if (t) t.click(); });
+  await p.waitForTimeout(900);
+  const ent = await p.evaluate(() => document.getElementById('content').innerText);
+  ok(/FALHOU/i.test(ent), 'entregas: mostra o veredito', (ent.match(/[^\n]*FALHOU[^\n]*/) || [])[0]);
+  ok(/131049/.test(ent), 'e o código da Meta', (ent.match(/[^\n]*131049[^\n]*/) || [])[0]);
 
   // tela de Conteudo
   await p.evaluate(async () => {

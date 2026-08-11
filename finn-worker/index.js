@@ -121,6 +121,13 @@ export default {
       return handleWhatsAppTestDailyTemplate(request, env);
     }
 
+    // O que a Meta reportou DEPOIS do "accepted" — sem isso, mensagem aceita
+    // e nunca entregue fica indistinguível de mensagem entregue.
+    if (url.pathname === "/whatsapp/entregas" && request.method === "GET") {
+      if (!(await requireAdminToken(request, env))) return unauthorizedResponse();
+      return handleWhatsAppEntregas(env);
+    }
+
     // Cria o rascunho do Message Template do resumo diário direto pela API,
     // sem precisar clicar no WhatsApp Manager. A Meta ainda revisa e aprova
     // por fora — isso a API não pula, só a criação do rascunho é automática.
@@ -2604,6 +2611,66 @@ async function processTelegramCallback(cq, env) {
       : { type: "list_reply", list_reply: { id: data } }
   };
   await processMessage(normalized, env);
+}
+
+// A Meta responde "accepted" só pra dizer que aceitou a mensagem na fila.
+// Se ela some depois, o motivo chega por webhook de status — e o código
+// numerico sozinho nao ajuda ninguem. Este mapa traduz os que de fato
+// aparecem quando um template aprovado nao chega.
+const MOTIVOS_ENTREGA = {
+  131049: "A Meta ENGOLIU a mensagem de propósito (\"healthy ecosystem engagement\"). Acontece com template UTILITY/MARKETING mandado pra quem nunca conversou com o número do bot, ou conversou há muito tempo. Solução: mande qualquer mensagem do SEU WhatsApp pro número do bot primeiro — isso abre a janela de 24h e marca engajamento.",
+  131026: "Mensagem indeliverável: o número não recebe do seu WhatsApp Business. Causas: número não tem WhatsApp, bloqueou o bot, ou o app ainda está em modo Desenvolvimento na Meta (nesse modo só numeros cadastrados como testador recebem).",
+  131047: "Janela de 24h expirada — só se aplica a mensagem de texto livre. Se apareceu num template, o template não foi aceito como tal.",
+  132015: "Template PAUSADO pela Meta por qualidade ruim. Fica aprovado mas não entrega.",
+  132000: "Número de variáveis do template não bate com o que o bot manda.",
+  133010: "Número do bot não está registrado na Cloud API.",
+  130472: "O número do destinatário está num experimento da Meta e não recebe mensagens de negócio.",
+};
+
+// GET /whatsapp/entregas — o que a Meta reportou DEPOIS do "accepted".
+// Sem isso, uma mensagem aceita e nunca entregue é indistinguível de uma
+// entregue, que era exatamente o beco sem saída aqui.
+async function handleWhatsAppEntregas(env) {
+  const cors = { "Content-Type": "application/json" };
+  if (!env.FINN_KV) {
+    return corsResponse(new Response(JSON.stringify({ ok: false, erro: "KV não configurado" }), { status: 500, headers: cors }));
+  }
+  const keys = await listAllKeys(env, DEBUG_PREFIX);
+  keys.sort((a, b) => b.name.localeCompare(a.name));
+  const eventos = (await Promise.all(keys.slice(0, 60).map(k => env.FINN_KV.get(k.name))))
+    .filter(Boolean)
+    .map(raw => { try { return JSON.parse(raw); } catch (e) { return null; } })
+    .filter(Boolean);
+
+  const entregas = eventos.filter(e => e.kind === "status").map(e => {
+    const erro = (e.errors && e.errors[0]) || null;
+    const codigo = erro && (erro.code || (erro.error_data && erro.error_data.code));
+    return {
+      em: e.at, status: e.status, destinatario: e.recipient,
+      codigo: codigo || undefined,
+      mensagem_meta: erro ? (erro.title || erro.message) : undefined,
+      explicacao: codigo && MOTIVOS_ENTREGA[codigo] ? MOTIVOS_ENTREGA[codigo] : undefined,
+    };
+  });
+  const recusas = eventos.filter(e => e.kind === "meta_send_error")
+    .map(e => ({ em: e.at, http: e.status, corpo: e.body }));
+
+  let veredito;
+  if (!entregas.length && !recusas.length) {
+    // Silêncio total aqui quase sempre é webhook não assinado — a Meta manda
+    // os status pra um endpoint que ninguém está ouvindo.
+    veredito = "NENHUM status recebido nas últimas 24h. Ou nada foi enviado, ou o webhook não está inscrito no campo 'messages' da WABA (é ele que traz delivered/failed). Chame GET /subscribe pra inscrever e teste de novo.";
+  } else if (entregas.some(e => e.status === "delivered" || e.status === "read")) {
+    veredito = "Teve mensagem ENTREGUE. Se você não viu, confira o número (DDI/DDD) e se o bot não está silenciado ou arquivado no seu WhatsApp.";
+  } else if (entregas.some(e => e.status === "failed")) {
+    veredito = "A Meta FALHOU na entrega — veja 'explicacao' do evento mais recente.";
+  } else {
+    veredito = "Só há status intermediário (sent/accepted): a Meta pegou a mensagem mas ainda não confirmou entrega. Se ficar assim por minutos, trate como não entregue.";
+  }
+
+  return corsResponse(new Response(JSON.stringify({
+    ok: true, veredito, entregas: entregas.slice(0, 20), recusas_no_envio: recusas.slice(0, 10)
+  }, null, 2), { status: 200, headers: cors }));
 }
 
 // POST /whatsapp/test-daily-template { phone } — manda o resumo diário AGORA,

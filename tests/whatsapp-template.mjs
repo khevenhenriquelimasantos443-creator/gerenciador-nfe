@@ -265,5 +265,62 @@ console.log('\n=== 8. o envio AUTOMÁTICO continua dependendo da secret ===');
   global.fetch = realFetch;
 }
 
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 9. GET /whatsapp/entregas explica o que houve depois do "accepted" ===');
+{
+  const kvCom = (eventos) => {
+    const store = new Map();
+    eventos.forEach((e, i) => store.set('debug_evt_' + (1000 + i) + '_aaa', JSON.stringify(e)));
+    return { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); },
+      async list({ prefix }) { return { keys: [...store.keys()].filter(k => k.startsWith(prefix || '')).map(name => ({ name })), list_complete: true }; } };
+  };
+  const pedir = (eventos) => bot.fetch(
+    new Request('https://x/whatsapp/entregas', { method: 'GET', headers: { 'X-Admin-Token': 'token-secreto' } }),
+    { ...ENV_BASE, FINN_KV: kvCom(eventos) }, ctx
+  );
+
+  global.fetch = async (url, opts) => {
+    if (String(url).includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'u1', email: 'finn.controle01@gmail.com' }), { status: 200 });
+    return realFetch(url, opts);
+  };
+
+  const semAuth = await bot.fetch(new Request('https://x/whatsapp/entregas', { method: 'GET' }), { ...ENV_BASE, FINN_KV: kvCom([]) }, ctx);
+  ok(semAuth.status === 401, 'sem credencial -> 401', semAuth.status);
+
+  // Silêncio total: quase sempre é o webhook não inscrito. Dizer "não houve
+  // falha" aqui seria mentira — não houve INFORMAÇÃO.
+  const vazio = await (await pedir([])).json();
+  ok(/NENHUM status/i.test(vazio.veredito), 'sem eventos, não finge que deu certo', vazio.veredito);
+  ok(/webhook/i.test(vazio.veredito) && /subscribe/i.test(vazio.veredito), 'e aponta a causa mais provável + o conserto');
+
+  // O caso do usuário: aceito pela Meta e engolido depois.
+  const engolido = await (await pedir([
+    { at: '2026-08-11T23:10:00Z', kind: 'status', status: 'failed', recipient: '5513982020928',
+      errors: [{ code: 131049, title: 'This message was not delivered to maintain healthy ecosystem engagement.' }] },
+  ])).json();
+  ok(/FALHOU/i.test(engolido.veredito), 'falha de entrega vira veredito de falha', engolido.veredito);
+  ok(engolido.entregas[0].codigo === 131049, 'código preservado', engolido.entregas[0].codigo);
+  ok(/janela de 24h|conversou/i.test(engolido.entregas[0].explicacao || ''), '131049 vem com o conserto explicado', engolido.entregas[0].explicacao);
+
+  const entregue = await (await pedir([
+    { at: '2026-08-11T23:10:00Z', kind: 'status', status: 'delivered', recipient: '5513982020928' },
+  ])).json();
+  ok(/ENTREGUE/i.test(entregue.veredito), 'entrega confirmada é dita como tal', entregue.veredito);
+
+  // "sent" sozinho não é entrega — não pode virar veredito otimista.
+  const soEnviado = await (await pedir([
+    { at: '2026-08-11T23:10:00Z', kind: 'status', status: 'sent', recipient: '5513982020928' },
+  ])).json();
+  ok(/não entregue|ainda não confirmou/i.test(soEnviado.veredito), '"sent" sozinho não é tratado como entregue', soEnviado.veredito);
+
+  // Recusa no próprio envio aparece separada da recusa na entrega.
+  const recusa = await (await pedir([
+    { at: '2026-08-11T23:09:00Z', kind: 'meta_send_error', status: 400, body: '{"error":{"code":132015}}' },
+  ])).json();
+  ok(recusa.recusas_no_envio.length === 1, 'erro no envio listado à parte', JSON.stringify(recusa.recusas_no_envio));
+
+  global.fetch = realFetch;
+}
+
 console.log('\n' + (falhas === 0 ? 'TUDO PASSOU' : falhas + ' FALHA(S)'));
 process.exit(falhas === 0 ? 0 : 1);
