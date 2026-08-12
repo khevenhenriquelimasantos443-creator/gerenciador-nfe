@@ -805,7 +805,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 19.90, planilhaComprando: false };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4026,7 +4026,7 @@ function renderPlansCard(){
   if(!state.planilhaComprou){
     html +=
       '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-top:10px">' +
-        '<div style="font-weight:800;font-size:14px">Planilha Finn — R$ ' + fmtMoney(state.planilhaPreco || 19.90).replace("R$ ","") + '</div>' +
+        '<div style="font-weight:800;font-size:14px">Planilha Finn — R$ ' + fmtMoney(state.planilhaPreco || 36.90).replace("R$ ","") + '</div>' +
         '<div style="font-size:11.5px;font-weight:800;color:var(--fs);margin-top:2px">Pagamento único · sem mensalidade</div>' +
         '<div style="font-size:12.5px;color:var(--fm);margin:6px 0 10px">' +
           'A planilha completa no Google Sheets: 9 abas, tudo calculado, sua pra sempre. ' +
@@ -4035,11 +4035,7 @@ function renderPlansCard(){
           (state.planilhaComprando ? "Abrindo…" : "Comprar a planilha") + '</button>' +
       '</div>';
   } else {
-    html +=
-      '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-top:10px">' +
-        '<div style="font-weight:800;font-size:14px">Planilha Finn ✓</div>' +
-        '<div style="font-size:12.5px;color:var(--fm);margin-top:4px">Você já comprou. Ela é sua para sempre.</div>' +
-      '</div>';
+    html += renderPlanilhaEntrega();
   }
   html += '</div>';
   return html;
@@ -4697,6 +4693,7 @@ function renderPlanilhaCard(){
   if(!planilhaSyncLiberado()){
     return '<div class="card">' +
       '<div class="eyebrow">Planilha Finn</div>' +
+      (state.planilhaComprou ? renderPlanilhaEntrega() : '') +
       '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
         (state.planilhaComprou
           ? 'Você já tem a Planilha Finn — ela funciona sozinha, sem depender do app. ' +
@@ -4728,6 +4725,34 @@ function renderPlanilhaCard(){
           (state.planilhaLoading ? "Gerando…" : "Conectar planilha") + '</button>') +
     (state.planilhaMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.planilhaMsg) + '</div>' : '') +
     (state.planilhaErro ? '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.planilhaErro) + '</div>' : '') +
+  '</div>';
+}
+
+// Entrega da planilha. Dois caminhos, e a ORDEM importa: o link de cópia do
+// Google Sheets deixa a planilha pronta e online em um clique, já com o
+// script de sincronização junto. O .xlsx existe pra quem prefere Excel ou
+// quer guardar o arquivo — mas exige subir no Drive na mão, então é o
+// segundo caminho, não o primeiro.
+function renderPlanilhaEntrega(){
+  var tokenUrl = "/planilha/baixar?access_token=" +
+    encodeURIComponent((currentSession && currentSession.access_token) || "");
+  return '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-top:10px">' +
+    '<div style="font-weight:800;font-size:14px">Planilha Finn ✓</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 12px">Ela é sua para sempre. Pegue do jeito que preferir:</div>' +
+    (state.planilhaCopia
+      ? '<a href="' + escapeHtml(state.planilhaCopia) + '" target="_blank" rel="noopener" class="btn-submit" ' +
+          'style="display:block;text-align:center;text-decoration:none;box-sizing:border-box;margin-bottom:8px">' +
+          'Abrir no Google Sheets</a>' +
+        '<div style="font-size:11.5px;color:var(--fm);margin:-2px 0 12px">' +
+          'Um clique: o Google cria uma cópia sua, já online e pronta pra usar.</div>'
+      : '<div style="font-size:11.5px;color:var(--fm);margin-bottom:12px">' +
+          'A versão online (Google Sheets) ainda não está publicada. Use o arquivo abaixo: ' +
+          'suba no Google Drive e abra com Google Planilhas — a conversão é automática.</div>') +
+    '<a href="' + escapeHtml(tokenUrl) + '" class="btn-ghost" ' +
+      'style="display:block;text-align:center;text-decoration:none;box-sizing:border-box">' +
+      'Baixar em Excel (.xlsx)</a>' +
+    '<div style="font-size:11.5px;color:var(--fm);margin-top:8px">' +
+      'O .xlsx abre no Excel, no LibreOffice e no Google Sheets. As fórmulas são as mesmas.</div>' +
   '</div>';
 }
 
@@ -4766,6 +4791,7 @@ function carregarStatusPlanilha(){
       if(!j || !j.ok) return;
       state.planilhaComprou = !!j.comprou;
       if(j.preco) state.planilhaPreco = j.preco;
+      state.planilhaCopia = j.copia || null;
       render();
     })
     .catch(function(){});

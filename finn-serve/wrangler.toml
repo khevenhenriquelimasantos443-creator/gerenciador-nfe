@@ -36,6 +36,22 @@ compatibility_date = "2024-01-01"
 #        linha de "Gerar token" — esse é o IG_BUSINESS_ACCOUNT_ID.
 #   Sem os dois configurados, a publicação manual só faz log e não tenta nada.
 #
+# PLANILHA_COPY_URL — link de cópia da Planilha Finn no Google Sheets.
+#   É o caminho bom de entrega: um clique e quem comprou já tem a planilha
+#   ONLINE na conta dele, com o Apps Script de sincronização junto (script
+#   vinculado viaja no "fazer uma cópia").
+#   Como obter:
+#     1. Abra a SUA planilha-mestre no Google Sheets (a que tem o script)
+#     2. Compartilhar → Acesso geral → "Qualquer pessoa com o link" → Leitor
+#     3. Copie a URL e TROQUE o final "/edit..." por "/copy"
+#        Ex.: https://docs.google.com/spreadsheets/d/ID_DA_PLANILHA/copy
+#     4. wrangler secret put PLANILHA_COPY_URL
+#   Sem essa secret, o app NÃO quebra: quem comprou continua vendo o download
+#   do .xlsx, e some só o botão "Abrir no Google Sheets".
+#   ATENÇÃO: quem tiver esse link consegue tirar uma cópia. É produto pago,
+#   então o app só mostra pra quem comprou — mas link vaza. Se vazar, crie
+#   outra planilha-mestre e troque a secret.
+#
 # BRAPI_TOKEN — screener de ações (GET /api/stocks/:ticker). Cotação e
 #   indicadores públicos de empresas da B3, vindos da brapi.dev. São DADOS DE
 #   MERCADO: não têm nenhuma relação com Open Finance, Pluggy ou a conta

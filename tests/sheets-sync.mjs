@@ -311,5 +311,56 @@ console.log('\n=== 9. plano avulso da Planilha ===');
   global.fetch = realFetch;
 }
 
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 10. download da planilha é o produto pago ===');
+{
+  let comprou = false;
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/auth/v1/user')) {
+      const t = ((opts && opts.headers && opts.headers.Authorization) || '').replace(/^Bearer\s+/i, '');
+      return t.startsWith('sessao') ? new Response(JSON.stringify({ id: 'u1', email: 'a@x.com' }), { status: 200 })
+                                    : new Response('{}', { status: 401 });
+    }
+    if (u.includes('spreadsheet_purchases')) return new Response(JSON.stringify(comprou ? [{ user_id: 'u1' }] : []), { status: 200 });
+    if (u.includes('/rest/v1/subscriptions')) return new Response(JSON.stringify([{ plan: 'free', status: 'active' }]), { status: 200 });
+    return realFetch(url, opts);
+  };
+  const env = { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'sk', PLANILHA_COPY_URL: 'https://docs.google.com/spreadsheets/d/XYZ/copy' };
+
+  // Sem sessão não baixa: a rota É o produto.
+  const semSessao = await serve.fetch(req('/planilha/baixar'), env, ctx);
+  ok(semSessao.status === 401, 'sem sessão -> 401', semSessao.status);
+
+  const r = await serve.fetch(req('/planilha/baixar?access_token=sessao'), env, ctx);
+  ok(r.status === 200, 'com sessão válida -> 200 (beta libera)', r.status);
+  ok((r.headers.get('Content-Type') || '').includes('spreadsheetml'), 'devolve um .xlsx de verdade', r.headers.get('Content-Type'));
+  ok(/attachment; filename="Planilha-Finn\.xlsx"/.test(r.headers.get('Content-Disposition') || ''), 'força download com nome certo');
+  ok(/no-store/.test(r.headers.get('Cache-Control') || ''), 'produto pago não fica em cache', r.headers.get('Cache-Control'));
+  const bytes = new Uint8Array(await r.arrayBuffer());
+  // PK = assinatura de zip, que é o que um xlsx é por dentro.
+  ok(bytes[0] === 0x50 && bytes[1] === 0x4B, 'o corpo é mesmo um arquivo xlsx', bytes.slice(0, 2).join(','));
+  ok(bytes.length > 40000, 'e tem o tamanho da planilha inteira', bytes.length);
+
+  // Status: o link de cópia só aparece pra quem tem direito.
+  const st = await (await serve.fetch(req('/billing/planilha-status?access_token=sessao'), env, ctx)).json();
+  ok(st.preco === 36.9, 'preço é R$ 36,90', st.preco);
+  ok(st.copia === 'https://docs.google.com/spreadsheets/d/XYZ/copy', 'devolve o link de cópia do Google Sheets', st.copia);
+  ok(st.comprou === false, 'e diz que ainda não comprou', st.comprou);
+
+  comprou = true;
+  const st2 = await (await serve.fetch(req('/billing/planilha-status?access_token=sessao'), env, ctx)).json();
+  ok(st2.comprou === true, 'depois da compra, comprou=true');
+
+  // Comprar de novo não cobra de novo.
+  const dupla = await serve.fetch(req('/billing/comprar-planilha', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ access_token: 'sessao' })
+  }), { ...env, MP_ACCESS_TOKEN: 'mp' }, ctx);
+  ok(dupla.status === 409, 'quem já comprou recebe 409, não uma segunda cobrança', dupla.status);
+  global.fetch = realFetch;
+}
+
 console.log('\n' + (falhas === 0 ? '✅ tudo passou' : `❌ ${falhas} falha(s)`));
 process.exit(falhas === 0 ? 0 : 1);

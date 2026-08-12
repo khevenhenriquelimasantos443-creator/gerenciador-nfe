@@ -9,6 +9,10 @@ const sw        = fs.readFileSync(path.join(__dirname,'sw.js'), 'utf8');
 const pitchInv  = fs.readFileSync(path.join(__dirname,'../finn/pitch-investidores.html'), 'utf8');
 const pitchUsr  = fs.readFileSync(path.join(__dirname,'../finn/pitch-usuarios.html'), 'utf8');
 const guia      = fs.readFileSync(path.join(__dirname,'../finn/guia.html'), 'utf8');
+// A planilha entra embutida (53 KB) pra ser entregue por download direto a
+// quem comprou. Não vai pra um bucket público de propósito: é produto pago,
+// e link público de bucket é link que vaza.
+const planilhaXlsx = fs.readFileSync(path.join(__dirname,'../finn-planilha/Planilha-Finn-v1.xlsx')).toString('base64');
 const beta      = fs.readFileSync(path.join(__dirname,'../finn/beta.html'), 'utf8');
 const betaQuestionario = fs.readFileSync(path.join(__dirname,'../finn/beta-questionario.html'), 'utf8');
 
@@ -475,7 +479,7 @@ function _planPrice(plan) {
 // tem seria vender algo que não dá pra tirar de volta.
 //
 // O que continua sendo assinatura é a SINCRONIZAÇÃO, que faz parte do Pro.
-var PRECO_PLANILHA = 19.90;
+var PRECO_PLANILHA = 36.90;
 
 // A sincronização é exclusiva do Pro. A compra única dá o arquivo, não o sync.
 function _planoTemSync(plan) {
@@ -654,6 +658,36 @@ async function _jaComprouPlanilha(userId, env) {
   } catch (e) { return false; }
 }
 
+// GET /planilha/baixar?access_token=... — entrega o arquivo a quem comprou.
+//
+// Gate no servidor porque esta rota É o produto: sem ele, qualquer pessoa
+// baixa de graça o que outra pagou. E o token vai na querystring, não em
+// header, porque isto é um download aberto pelo navegador — <a href> não
+// manda header.
+async function _baixarPlanilha(request, env) {
+  var url = new URL(request.url);
+  var authUser = await _supaAuth(url.searchParams.get('access_token'));
+  if (!authUser) return new Response('Não autorizado', { status: 401 });
+
+  var comprou = await _jaComprouPlanilha(authUser.id, env);
+  if (!comprou && PREMIUM_ENFORCEMENT_ENABLED) {
+    var sub = await _subaGetSubscription(authUser.id, env);
+    if (!_planoTemSync((sub && sub.plan) || 'free')) {
+      return new Response('A Planilha Finn é um produto à parte. Compre nas Configurações do app.', { status: 402 });
+    }
+  }
+
+  var bytes = Uint8Array.from(atob(${JSON.stringify(planilhaXlsx)}), function (c) { return c.charCodeAt(0); });
+  return new Response(bytes, {
+    headers: {
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': 'attachment; filename="Planilha-Finn.xlsx"',
+      // Produto pago: nunca em cache compartilhado.
+      'Cache-Control': 'private, no-store'
+    }
+  });
+}
+
 // GET /billing/planilha-status — a tela precisa saber se já comprou.
 async function _statusPlanilha(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -667,7 +701,11 @@ async function _statusPlanilha(request, env) {
     return new Response(JSON.stringify({
       ok: true, comprou: comprou, preco: PRECO_PLANILHA,
       // Durante o beta o sync fica liberado, igual ao resto.
-      sync: !PREMIUM_ENFORCEMENT_ENABLED || _planoTemSync(plano)
+      sync: !PREMIUM_ENFORCEMENT_ENABLED || _planoTemSync(plano),
+      // Link de cópia do Google Sheets (termina em /copy). É o caminho bom:
+      // um clique e a pessoa já tem a planilha ONLINE na conta dela, com o
+      // script de sincronização junto. Só aparece pra quem comprou.
+      copia: (comprou || !PREMIUM_ENFORCEMENT_ENABLED || _planoTemSync(plano)) ? (env.PLANILHA_COPY_URL || null) : null
     }), { status: 200, headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_statusPlanilha');
@@ -4638,6 +4676,9 @@ h1 em{font-style:normal;color:#F97316}
     // pelo handler de OPTIONS lá em cima, que já libera X-Sheet-Token.
     if (url.pathname === '/billing/comprar-planilha' && request.method === 'POST') {
       return _comprarPlanilha(request, env);
+    }
+    if (url.pathname === '/planilha/baixar' && request.method === 'GET') {
+      return _baixarPlanilha(request, env);
     }
     if (url.pathname === '/billing/planilha-status' && request.method === 'GET') {
       return _statusPlanilha(request, env);
