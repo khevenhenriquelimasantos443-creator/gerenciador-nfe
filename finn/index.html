@@ -780,7 +780,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4052,6 +4052,7 @@ function renderConfig(){
 
   html += renderWhatsAppLinkCard(meta);
   html += renderTelegramCard(meta);
+  html += renderPlanilhaCard();
 
   html += '<div class="card">' +
     '<div class="eyebrow">Categorias</div>' +
@@ -4128,6 +4129,62 @@ function renderWhatsAppLinkCard(meta){
     '<button type="button" class="btn-submit" id="btnConnectWhatsApp"' + (state.waLinking ? " disabled" : "") + '>' + (state.waLinking ? "Gerando código…" : "Conectar WhatsApp") + '</button>' +
     (state.waLinkMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.waLinkMsg) + '</div>' : '') +
   '</div>';
+}
+
+// Cartão da Planilha Finn. O token vive só aqui e no Google Sheets da pessoa
+// — nunca é gravado em lugar nenhum do app além do que a própria pessoa vê.
+function renderPlanilhaCard(){
+  var t = state.planilhaToken;
+  return '<div class="card">' +
+    '<div class="eyebrow">Planilha Finn</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
+      'Use a planilha no Google Sheets e mantenha os lançamentos iguais nos dois. ' +
+      'A planilha funciona sozinha — isto aqui é só para sincronizar.</div>' +
+    (t
+      ? '<div style="font-size:11.5px;color:var(--fm);margin-bottom:6px">Cole este token na aba <b>Config</b> da planilha:</div>' +
+        '<div style="font-family:ui-monospace,monospace;font-size:11.5px;word-break:break-all;background:var(--fbg);' +
+          'border:1px solid var(--fb);border-radius:10px;padding:10px;margin-bottom:10px">' + escapeHtml(t) + '</div>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button type="button" class="btn-ghost btn-inline" id="btnPlanilhaCopiar">Copiar</button>' +
+          '<button type="button" class="btn-ghost btn-inline" id="btnPlanilhaTrocar">Gerar outro</button>' +
+          '<button type="button" class="btn-ghost btn-inline" id="btnPlanilhaRevogar">Desconectar</button>' +
+        '</div>' +
+        '<div style="font-size:11px;color:var(--fm);margin-top:10px">' +
+          'Quem tiver este token consegue ler e gravar lançamentos na sua conta. ' +
+          'Se vazar, toque em "Gerar outro" — o antigo para de valer na hora.</div>'
+      : '<button type="button" class="btn-submit" id="btnPlanilhaGerar"' + (state.planilhaLoading ? " disabled" : "") + '>' +
+          (state.planilhaLoading ? "Gerando…" : "Conectar planilha") + '</button>') +
+    (state.planilhaMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.planilhaMsg) + '</div>' : '') +
+    (state.planilhaErro ? '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.planilhaErro) + '</div>' : '') +
+  '</div>';
+}
+
+function planilhaChamar(metodo){
+  state.planilhaLoading = true; state.planilhaErro = null; state.planilhaMsg = null;
+  render();
+  fetch("/sheets/token", {
+    method: metodo,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, j: j }; }); })
+    .then(function(res){
+      state.planilhaLoading = false;
+      if(res.status !== 200){
+        state.planilhaErro = "Não consegui agora. Tente de novo em instantes.";
+      } else if(metodo === "DELETE"){
+        state.planilhaToken = null;
+        state.planilhaMsg = "Planilha desconectada. O token antigo não vale mais.";
+      } else {
+        state.planilhaToken = res.j.token;
+        state.planilhaMsg = "Token gerado. Cole na aba Config da planilha.";
+      }
+      render();
+    })
+    .catch(function(){
+      state.planilhaLoading = false;
+      state.planilhaErro = "Falha de conexão.";
+      render();
+    });
 }
 
 function renderTelegramCard(meta){
@@ -7014,6 +7071,25 @@ function bindContentEvents(){
     if(btnConnectTelegram) btnConnectTelegram.addEventListener("click", connectTelegram);
     var btnConnectWhatsApp = document.getElementById("btnConnectWhatsApp");
     if(btnConnectWhatsApp) btnConnectWhatsApp.addEventListener("click", connectWhatsApp);
+    var bp;
+    if((bp = document.getElementById("btnPlanilhaGerar"))) bp.addEventListener("click", function(){ planilhaChamar("POST"); });
+    if((bp = document.getElementById("btnPlanilhaTrocar"))) bp.addEventListener("click", function(){ planilhaChamar("POST"); });
+    if((bp = document.getElementById("btnPlanilhaRevogar"))) bp.addEventListener("click", function(){ planilhaChamar("DELETE"); });
+    if((bp = document.getElementById("btnPlanilhaCopiar"))) bp.addEventListener("click", function(){
+      var t = state.planilhaToken || "";
+      // navigator.clipboard só existe em contexto seguro; sem ele, seleciona
+      // o texto pra pessoa copiar na mão em vez de fingir que copiou.
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(t).then(function(){
+          state.planilhaMsg = "Token copiado."; render();
+        }).catch(function(){
+          state.planilhaMsg = "Não consegui copiar — selecione o texto acima e copie na mão."; render();
+        });
+      } else {
+        state.planilhaMsg = "Selecione o texto acima e copie na mão.";
+        render();
+      }
+    });
     if(isMasterUser()){
       if(!state.adminUnlocked){
         var btnAdminUnlock = document.getElementById("btnAdminUnlock");

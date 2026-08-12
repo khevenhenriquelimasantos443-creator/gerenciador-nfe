@@ -59,6 +59,7 @@ const INTRUSOES = {
 
 let ULTIMA_CHAMADA_TEMPLATES = null;
 let ULTIMO_TESTE_TEMPLATE = null;
+let ULTIMA_PLANILHA = null;
 
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
@@ -88,6 +89,10 @@ async function abrir(email) {
     if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
     if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
     if (u.includes('/admin')) return J({ ok: true });
+    if (u.includes('/sheets/token')) {
+      ULTIMA_PLANILHA = { metodo: route.request().method(), corpo: route.request().postData() };
+      return J({ ok: true, token: 'fsh_' + 'a'.repeat(64) });
+    }
     if (u.includes('/whatsapp/entregas')) {
       return J({ ok: true, veredito: 'A Meta FALHOU na entrega — veja explicacao.',
         entregas: [{ em: '2026-08-11T23:10:00Z', status: 'failed', codigo: 131049, explicacao: 'A Meta ENGOLIU a mensagem de propósito.' }] });
@@ -301,6 +306,42 @@ console.log('\n=== modo admin ===');
   await p.waitForTimeout(600);
   const volta = await p.evaluate(() => [...document.querySelectorAll('.nav-menu .tab-btn')].filter(x => getComputedStyle(x).display !== 'none').length);
   ok(volta > 5, 'voltar traz as abas normais de volta', volta);
+  ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
+  await p.close();
+}
+
+console.log('\n=== cartão da Planilha Finn (Configurações) ===');
+{
+  const { p, erros } = await abrir('user@x.com');
+  await p.evaluate(async () => {
+    document.getElementById('btnConfigNav').click();
+    await new Promise(r => setTimeout(r, 500));
+  });
+  const tem = await p.evaluate(() => !!document.getElementById('btnPlanilhaGerar'));
+  ok(tem, 'usuário comum vê o cartão da planilha (não é recurso de admin)');
+
+  ULTIMA_PLANILHA = null;
+  await p.evaluate(() => document.getElementById('btnPlanilhaGerar').click());
+  await p.waitForTimeout(800);
+  ok(!!ULTIMA_PLANILHA && ULTIMA_PLANILHA.metodo === 'POST', 'gerar chama POST /sheets/token', ULTIMA_PLANILHA && ULTIMA_PLANILHA.metodo);
+  ok(/access_token/.test((ULTIMA_PLANILHA && ULTIMA_PLANILHA.corpo) || ''), 'manda a sessão do Supabase');
+
+  const est = await p.evaluate(() => ({
+    txt: document.getElementById('content').innerText,
+    temTrocar: !!document.getElementById('btnPlanilhaTrocar'),
+    temRevogar: !!document.getElementById('btnPlanilhaRevogar'),
+  }));
+  ok(/fsh_a{10}/.test(est.txt), 'o token aparece na tela pra copiar');
+  ok(est.temTrocar && est.temRevogar, 'aparecem os botões de trocar e desconectar');
+  // Sem este aviso, a pessoa não tem como saber que o token dá acesso à conta.
+  ok(/ler e gravar/i.test(est.txt), 'avisa o que o token permite', (est.txt.match(/[^\n]*ler e gravar[^\n]*/) || [])[0]);
+
+  ULTIMA_PLANILHA = null;
+  await p.evaluate(() => document.getElementById('btnPlanilhaRevogar').click());
+  await p.waitForTimeout(800);
+  ok(ULTIMA_PLANILHA && ULTIMA_PLANILHA.metodo === 'DELETE', 'desconectar chama DELETE', ULTIMA_PLANILHA && ULTIMA_PLANILHA.metodo);
+  const depois = await p.evaluate(() => document.getElementById('content').innerText);
+  ok(/desconectada/i.test(depois), 'e confirma na tela');
   ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
   await p.close();
 }

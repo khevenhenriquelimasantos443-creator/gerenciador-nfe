@@ -1280,6 +1280,188 @@ async function _adminAnalytics(request, env) {
   }
 }
 
+// ═══════════════════════════════════════════════════════════════════
+//  SINCRONIZAÇÃO COM A PLANILHA (Google Sheets)
+//
+//  A planilha roda dentro do Google, num Apps Script que não tem como
+//  guardar sessão do Supabase — o token de sessão expira em 1h e ninguém
+//  vai colar um novo toda hora. Então existe um token próprio da planilha:
+//  longo, aleatório, revogável, e que só abre estas duas rotas.
+//
+//  Ele NÃO é uma sessão: não serve pra nenhuma outra rota do Finn, não dá
+//  acesso ao admin, e some quando a pessoa clica em desconectar. O escopo é
+//  de propósito o menor possível — ler e gravar lançamento, mais nada.
+// ═══════════════════════════════════════════════════════════════════
+const SHEET_TOKEN_PREFIX = 'sheettok_';
+const SHEET_USER_PREFIX = 'sheetuser_';
+const SHEET_MAX_LINHAS = 500;
+
+function _novoTokenPlanilha() {
+  var bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  var hex = '';
+  for (var i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, '0');
+  return 'fsh_' + hex;
+}
+
+// Resolve o token da planilha -> dono. Devolve null pra qualquer coisa
+// suspeita, sem dizer o motivo (token inexistente e token expirado dão a
+// mesma resposta de propósito).
+async function _donoDoToken(env, token) {
+  if (!env.FINN_KV || !token || typeof token !== 'string') return null;
+  if (!/^fsh_[a-f0-9]{64}$/.test(token)) return null;
+  var raw = await env.FINN_KV.get(SHEET_TOKEN_PREFIX + token);
+  if (!raw) return null;
+  try {
+    var reg = JSON.parse(raw);
+    return reg && reg.uid ? reg : null;
+  } catch (e) { return null; }
+}
+
+// POST /sheets/token { access_token } — cria (ou troca) o token da planilha.
+// Trocar invalida o anterior: é o botão de "perdi minha planilha".
+async function _sheetsToken(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (!env.FINN_KV) return new Response(JSON.stringify({ error: 'indisponível' }), { status: 503, headers: cors });
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var user = await _supaAuth(body.access_token);
+    if (!user) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
+
+    var rl = await _rateLimit(env, 'sheettok', user.id, 10, 3600);
+    if (!rl.ok) return _tooManyRequests(cors, rl.retryAfter, 'muitas trocas de token, tente mais tarde');
+
+    var anterior = await env.FINN_KV.get(SHEET_USER_PREFIX + user.id);
+    if (anterior) await env.FINN_KV.delete(SHEET_TOKEN_PREFIX + anterior);
+
+    var token = _novoTokenPlanilha();
+    await env.FINN_KV.put(SHEET_TOKEN_PREFIX + token, JSON.stringify({
+      uid: user.id, criado_em: new Date().toISOString()
+    }));
+    await env.FINN_KV.put(SHEET_USER_PREFIX + user.id, token);
+    return new Response(JSON.stringify({ ok: true, token: token }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, 'sheets_token');
+  }
+}
+
+// DELETE /sheets/token { access_token } — desconecta a planilha.
+async function _sheetsTokenRevogar(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (!env.FINN_KV) return new Response(JSON.stringify({ error: 'indisponível' }), { status: 503, headers: cors });
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var user = await _supaAuth(body.access_token);
+    if (!user) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
+    var atual = await env.FINN_KV.get(SHEET_USER_PREFIX + user.id);
+    if (atual) await env.FINN_KV.delete(SHEET_TOKEN_PREFIX + atual);
+    await env.FINN_KV.delete(SHEET_USER_PREFIX + user.id);
+    return new Response(JSON.stringify({ ok: true }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, 'sheets_token_revogar');
+  }
+}
+
+// GET /sheets/pull — devolve os lançamentos do dono do token.
+// A planilha manda os ids que já tem, pra não rebaixar linha por linha.
+async function _sheetsPull(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'indisponível' }), { status: 503, headers: cors });
+    var reg = await _donoDoToken(env, request.headers.get('X-Sheet-Token'));
+    if (!reg) return new Response(JSON.stringify({ error: 'token inválido' }), { status: 401, headers: cors });
+
+    var rl = await _rateLimit(env, 'sheetpull', reg.uid, 120, 3600);
+    if (!rl.ok) return _tooManyRequests(cors, rl.retryAfter, 'muitas sincronizações, tente mais tarde');
+
+    var url = new URL(request.url);
+    var desde = url.searchParams.get('desde') || '';
+    var filtro = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&select=id,date,type,category,description,value' +
+                 '&order=date.desc&limit=' + SHEET_MAX_LINHAS;
+    // "desde" corta pela data do lançamento, não pelo created_at: é a data
+    // que a planilha mostra, e é por ela que a pessoa raciocina.
+    if (/^\\d{4}-\\d{2}-\\d{2}$/.test(desde)) filtro += '&date=gte.' + desde;
+
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/transactions?' + filtro, {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
+    var linhas = await r.json();
+    return new Response(JSON.stringify({ ok: true, total: linhas.length, lancamentos: linhas }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, 'sheets_pull');
+  }
+}
+
+// POST /sheets/push { lancamentos: [...] } — grava no Finn o que foi digitado
+// na planilha. Devolve os ids na MESMA ordem que recebeu, porque é assim que
+// a planilha sabe qual id escrever em qual linha.
+async function _sheetsPush(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'indisponível' }), { status: 503, headers: cors });
+    var reg = await _donoDoToken(env, request.headers.get('X-Sheet-Token'));
+    if (!reg) return new Response(JSON.stringify({ error: 'token inválido' }), { status: 401, headers: cors });
+
+    var rl = await _rateLimit(env, 'sheetpush', reg.uid, 120, 3600);
+    if (!rl.ok) return _tooManyRequests(cors, rl.retryAfter, 'muitas sincronizações, tente mais tarde');
+
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var entrada = Array.isArray(body.lancamentos) ? body.lancamentos : [];
+    if (!entrada.length) return new Response(JSON.stringify({ ok: true, gravados: 0, ids: [] }), { status: 200, headers: cors });
+    if (entrada.length > SHEET_MAX_LINHAS) {
+      return new Response(JSON.stringify({ error: 'no máximo ' + SHEET_MAX_LINHAS + ' linhas por vez' }), { status: 400, headers: cors });
+    }
+
+    // Validação linha a linha. O user_id vem SEMPRE do token, nunca do corpo:
+    // aceitar user_id do cliente aqui seria deixar qualquer planilha gravar na
+    // conta de qualquer pessoa.
+    var payload = [];
+    for (var i = 0; i < entrada.length; i++) {
+      var l = entrada[i] || {};
+      var data = String(l.date || '').slice(0, 10);
+      if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(data)) {
+        return new Response(JSON.stringify({ error: 'linha ' + (i + 1) + ': data inválida' }), { status: 400, headers: cors });
+      }
+      var tipo = l.type === 'receita' ? 'receita' : (l.type === 'despesa' ? 'despesa' : null);
+      if (!tipo) return new Response(JSON.stringify({ error: 'linha ' + (i + 1) + ': tipo tem que ser despesa ou receita' }), { status: 400, headers: cors });
+      var valor = Number(l.value);
+      if (!isFinite(valor) || valor <= 0) {
+        return new Response(JSON.stringify({ error: 'linha ' + (i + 1) + ': valor inválido' }), { status: 400, headers: cors });
+      }
+      payload.push({
+        user_id: reg.uid,
+        date: data,
+        type: tipo,
+        category: String(l.category || 'Outros').slice(0, 60),
+        description: String(l.description || '').slice(0, 200),
+        value: Math.round(valor * 100) / 100
+      });
+    }
+
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/transactions', {
+      method: 'POST',
+      headers: {
+        apikey: env.SUPABASE_SERVICE_KEY,
+        Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY,
+        'Content-Type': 'application/json',
+        Prefer: 'return=representation'
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) return new Response(JSON.stringify({ error: 'falha ao gravar' }), { status: 502, headers: cors });
+    var criados = await r.json();
+    return new Response(JSON.stringify({
+      ok: true, gravados: criados.length, ids: criados.map(function (t) { return t.id; })
+    }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, 'sheets_push');
+  }
+}
+
 // POST /beta/signup — { name, email, contact, website } — endpoint público
 // (sem autenticação; é a própria página de inscrição de testers, /beta).
 // Não existe controle de acesso ao Finn hoje (qualquer login do Google já
@@ -3816,13 +3998,17 @@ export default {
     }
 
     // ── CORS preflight ──
+    // Um handler só, bem no começo: preflight que cai aqui nunca chega nas
+    // rotas, então liberar header por rota mais abaixo não funciona — foi
+    // assim que o X-Sheet-Token da planilha ficou de fora na primeira versão.
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Password',
+          'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Password, X-Sheet-Token',
+          'Access-Control-Max-Age': '86400',
         },
       });
     }
@@ -4291,6 +4477,21 @@ h1 em{font-style:normal;color:#F97316}
         }, SECURITY_HEADERS),
       });
     }
+    // Planilha do Finn (Google Sheets). O preflight destas rotas é atendido
+    // pelo handler de OPTIONS lá em cima, que já libera X-Sheet-Token.
+    if (url.pathname === '/sheets/token' && request.method === 'POST') {
+      return _sheetsToken(request, env);
+    }
+    if (url.pathname === '/sheets/token' && request.method === 'DELETE') {
+      return _sheetsTokenRevogar(request, env);
+    }
+    if (url.pathname === '/sheets/pull' && request.method === 'GET') {
+      return _sheetsPull(request, env);
+    }
+    if (url.pathname === '/sheets/push' && request.method === 'POST') {
+      return _sheetsPush(request, env);
+    }
+
     if (url.pathname === '/beta/signup' && request.method === 'POST') {
       return _betaSignup(request, env);
     }

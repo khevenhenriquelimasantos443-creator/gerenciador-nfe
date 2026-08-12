@@ -49,11 +49,22 @@ for (const aba of abas) {
     if (btn) btn.click();
     await new Promise(r => setTimeout(r, 400));
     const saida = [];
+    // Container com overflow-x auto/scroll foi FEITO pra rolar — conteúdo
+    // passando da borda ali é o comportamento correto, não defeito. Sem esta
+    // exceção o teste acusa a barra de dias, que é um carrossel de propósito.
+    const dentroDeRolavel = (el) => {
+      for (let p = el.parentElement; p; p = p.parentElement) {
+        const ox = getComputedStyle(p).overflowX;
+        if (ox === 'auto' || ox === 'scroll') return true;
+      }
+      return false;
+    };
     // Transbordo horizontal: filho cuja borda direita passa da do pai por
     // mais de 1px (folga pra arredondamento de subpixel).
     document.querySelectorAll('#content *').forEach(el => {
       const pai = el.parentElement;
       if (!pai) return;
+      if (dentroDeRolavel(el)) return;
       const a1 = el.getBoundingClientRect(), a2 = pai.getBoundingClientRect();
       if (a1.width === 0 || a2.width === 0) return;
       const vaza = (a1.right - a2.right);
