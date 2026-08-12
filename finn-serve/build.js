@@ -466,16 +466,20 @@ const billingFns = `
 function _planPrice(plan) {
   if (plan === 'plus') return 19.90;
   if (plan === 'pro') return 29.90;
-  // 'planilha' é um plano à parte: dá acesso à Planilha Finn e à
-  // sincronização dela, sem os recursos do Plus. Existe pra quem quer só a
-  // planilha — o Pro já inclui tudo isso.
-  if (plan === 'planilha') return 19.90;
   return null;
 }
 
-// Quem pode usar a Planilha Finn e a sincronização dela.
-function _planoTemPlanilha(plan) {
-  return plan === 'planilha' || plan === 'pro';
+// A Planilha Finn é COMPRA ÚNICA, não assinatura. O motivo é prático: quem
+// compra faz uma cópia do Google Sheets, e essa cópia é dela pra sempre —
+// não há como revogar. Cobrar mensalidade por um arquivo que o cliente já
+// tem seria vender algo que não dá pra tirar de volta.
+//
+// O que continua sendo assinatura é a SINCRONIZAÇÃO, que faz parte do Pro.
+var PRECO_PLANILHA = 19.90;
+
+// A sincronização é exclusiva do Pro. A compra única dá o arquivo, não o sync.
+function _planoTemSync(plan) {
+  return plan === 'pro';
 }
 
 // O plano que o webhook grava vem do external_reference que nós mesmos
@@ -483,7 +487,7 @@ function _planoTemPlanilha(plan) {
 // brecha. Ainda assim, validar impede que uma referência malformada escreva
 // uma string qualquer na coluna de plano e deixe a conta num estado que
 // nenhuma checagem reconhece.
-var PLANOS_VALIDOS = ['free', 'plus', 'pro', 'planilha'];
+var PLANOS_VALIDOS = ['free', 'plus', 'pro'];
 function _planoValido(plan) {
   return PLANOS_VALIDOS.indexOf(plan) !== -1;
 }
@@ -571,7 +575,7 @@ async function _billingCheckout(request, env) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN },
       body: JSON.stringify({
-        reason: 'Finn ' + (body.plan === 'pro' ? 'Pro' : body.plan === 'planilha' ? 'Planilha' : 'Plus') + ' — assinatura mensal',
+        reason: 'Finn ' + (body.plan === 'pro' ? 'Pro' : 'Plus') + ' — assinatura mensal',
         // user_id + plano juntos no external_reference: assim o webhook
         // sabe pra quem e qual plano liberar sem precisar de outra tabela.
         external_reference: authUser.id + '|' + body.plan,
@@ -591,6 +595,82 @@ async function _billingCheckout(request, env) {
     return new Response(JSON.stringify({ url: j.init_point }), { headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_billingCheckout');
+  }
+}
+
+// POST /billing/comprar-planilha — pagamento ÚNICO da Planilha Finn.
+// Usa /checkout/preferences (pagamento avulso), não /preapproval (assinatura).
+async function _comprarPlanilha(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    if (!env.MP_ACCESS_TOKEN) return new Response(JSON.stringify({ error: 'Pagamentos ainda não configurados' }), { status: 500, headers: cors });
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
+
+    // Já comprou: não deixa pagar de novo por engano.
+    if (await _jaComprouPlanilha(authUser.id, env)) {
+      return new Response(JSON.stringify({ error: 'Você já tem a Planilha Finn.' }), { status: 409, headers: cors });
+    }
+
+    var origin = new URL(request.url).origin;
+    var r = await fetch('https://api.mercadopago.com/checkout/preferences', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN },
+      body: JSON.stringify({
+        items: [{
+          title: 'Planilha Finn — controle financeiro no Google Sheets',
+          quantity: 1, currency_id: 'BRL', unit_price: PRECO_PLANILHA
+        }],
+        // O sufixo distingue compra única de assinatura no webhook, que
+        // atende os dois pelo mesmo tópico 'payment'.
+        external_reference: authUser.id + '|planilha_unica',
+        payer: { email: authUser.email },
+        back_urls: { success: origin + '/?compra=planilha', pending: origin + '/?compra=pendente', failure: origin + '/?compra=falhou' },
+        auto_return: 'approved'
+      })
+    });
+    var j = await r.json();
+    if (!r.ok) {
+      console.error('[billing/comprar-planilha] MP', r.status, (j && j.message) || '');
+      return new Response(JSON.stringify({ error: 'Não consegui abrir o pagamento agora.' }), { status: 502, headers: cors });
+    }
+    return new Response(JSON.stringify({ ok: true, url: j.init_point || j.sandbox_init_point }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_comprarPlanilha');
+  }
+}
+
+async function _jaComprouPlanilha(userId, env) {
+  if (!env.SUPABASE_SERVICE_KEY) return false;
+  try {
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/spreadsheet_purchases?user_id=eq.' + userId + '&select=user_id', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) return false;
+    var linhas = await r.json();
+    return Array.isArray(linhas) && linhas.length > 0;
+  } catch (e) { return false; }
+}
+
+// GET /billing/planilha-status — a tela precisa saber se já comprou.
+async function _statusPlanilha(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var url = new URL(request.url);
+    var authUser = await _supaAuth(url.searchParams.get('access_token'));
+    if (!authUser) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors });
+    var comprou = await _jaComprouPlanilha(authUser.id, env);
+    var sub = await _subaGetSubscription(authUser.id, env);
+    var plano = (sub && sub.plan) || 'free';
+    return new Response(JSON.stringify({
+      ok: true, comprou: comprou, preco: PRECO_PLANILHA,
+      // Durante o beta o sync fica liberado, igual ao resto.
+      sync: !PREMIUM_ENFORCEMENT_ENABLED || _planoTemSync(plano)
+    }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_statusPlanilha');
   }
 }
 
@@ -623,7 +703,22 @@ async function _billingWebhook(request, env) {
         var payment = await pr.json();
         var parts = (payment.external_reference || '').split('|');
         var userId = parts[0], plan = parts[1];
-        if (userId && _planoValido(plan) && payment.status === 'approved') {
+        // Compra única da planilha: grava a compra, não mexe em assinatura.
+        if (userId && plan === 'planilha_unica' && payment.status === 'approved') {
+          await fetch('${SUPA_URL_SERVER}/rest/v1/spreadsheet_purchases?on_conflict=user_id', {
+            method: 'POST',
+            headers: {
+              apikey: env.SUPABASE_SERVICE_KEY,
+              Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY,
+              'Content-Type': 'application/json',
+              Prefer: 'resolution=merge-duplicates'
+            },
+            body: JSON.stringify({
+              user_id: userId, mp_payment_id: String(payment.id),
+              amount: payment.transaction_amount || PRECO_PLANILHA
+            })
+          });
+        } else if (userId && _planoValido(plan) && payment.status === 'approved') {
           var periodEnd = new Date(); periodEnd.setMonth(periodEnd.getMonth() + 1);
           await _subaUpsertSubscription(userId, {
             plan: plan, status: 'active',
@@ -927,7 +1022,7 @@ async function _adminSetSubscription(request, env) {
     var authUser = await _supaAuth(body.access_token);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
     if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
-    if (['free', 'plus', 'pro', 'planilha'].indexOf(body.plan) === -1) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
+    if (['free', 'plus', 'pro'].indexOf(body.plan) === -1) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
     var target = await _adminFindUserByEmail(body.target_email, env);
@@ -1347,7 +1442,7 @@ async function _podeSincronizarPlanilha(uid, env) {
   if (!PREMIUM_ENFORCEMENT_ENABLED) return true;
   var sub = await _subaGetSubscription(uid, env);
   var plano = (sub && sub.plan) || 'free';
-  return _planoTemPlanilha(plano);
+  return _planoTemSync(plano);
 }
 
 // POST /sheets/token { access_token } — cria (ou troca) o token da planilha.
@@ -4541,6 +4636,13 @@ h1 em{font-style:normal;color:#F97316}
     }
     // Planilha do Finn (Google Sheets). O preflight destas rotas é atendido
     // pelo handler de OPTIONS lá em cima, que já libera X-Sheet-Token.
+    if (url.pathname === '/billing/comprar-planilha' && request.method === 'POST') {
+      return _comprarPlanilha(request, env);
+    }
+    if (url.pathname === '/billing/planilha-status' && request.method === 'GET') {
+      return _statusPlanilha(request, env);
+    }
+
     if (url.pathname === '/sheets/token' && request.method === 'POST') {
       return _sheetsToken(request, env);
     }

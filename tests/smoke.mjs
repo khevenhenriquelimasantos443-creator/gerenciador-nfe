@@ -60,6 +60,7 @@ const INTRUSOES = {
 let ULTIMA_CHAMADA_TEMPLATES = null;
 let ULTIMO_TESTE_TEMPLATE = null;
 let ULTIMA_PLANILHA = null;
+let ULTIMA_COMPRA = null;
 
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
@@ -89,6 +90,17 @@ async function abrir(email) {
     if (u.includes('supabase.co/rest/v1/')) { const t = u.split('/rest/v1/')[1].split('?')[0]; return J(DADOS[t] || []); }
     if (u.includes('supabase.co/auth/v1/user')) return J({ id: 'u1', email, user_metadata: {} });
     if (u.includes('/admin')) return J({ ok: true });
+    if (u.includes('/billing/planilha-status')) return J({ ok: true, comprou: false, preco: 19.9, sync: true });
+    // O checkout do Mercado Pago é uma navegação de saída. Sem devolver um
+    // HTML aqui, o teste acusa erro de localStorage do documento novo — que
+    // é artefato do teste, não defeito do app.
+    if (u.startsWith('https://mp/checkout')) {
+      return route.fulfill({ status: 200, contentType: 'text/html', body: '<html><body>checkout</body></html>' });
+    }
+    if (u.includes('/billing/comprar-planilha')) {
+      ULTIMA_COMPRA = { metodo: route.request().method() };
+      return J({ ok: true, url: 'https://mp/checkout' });
+    }
     if (u.includes('/sheets/token')) {
       ULTIMA_PLANILHA = { metodo: route.request().method(), corpo: route.request().postData() };
       return J({ ok: true, token: 'fsh_' + 'a'.repeat(64) });
@@ -342,6 +354,34 @@ console.log('\n=== cartão da Planilha Finn (Configurações) ===');
   ok(ULTIMA_PLANILHA && ULTIMA_PLANILHA.metodo === 'DELETE', 'desconectar chama DELETE', ULTIMA_PLANILHA && ULTIMA_PLANILHA.metodo);
   const depois = await p.evaluate(() => document.getElementById('content').innerText);
   ok(/desconectada/i.test(depois), 'e confirma na tela');
+  ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
+  await p.close();
+}
+
+console.log('\n=== compra única da Planilha ===');
+{
+  const { p, erros } = await abrir('user@x.com');
+  await p.evaluate(async () => {
+    document.getElementById('btnConfigNav').click();
+    await new Promise(r => setTimeout(r, 700));
+  });
+  // Escopado no card da planilha: o texto da tela inteira tem "/mês" por
+  // causa do Plus e do Pro, e checar a página toda acusaria um problema
+  // que não existe.
+  const card = await p.evaluate(() => {
+    const b = document.getElementById('btnComprarPlanilha');
+    return b ? b.parentElement.innerText : '';
+  });
+  ok(/Pagamento único/i.test(card), 'o card diz que é pagamento único');
+  ok(!/\/mês/.test(card), 'e NÃO tem "/mês" nele', card.replace(/\n/g, ' | ').slice(0, 80));
+  ok(/sincroniza/i.test(card) && /Pro/.test(card), 'deixa claro que o sync é do Pro');
+
+  ULTIMA_COMPRA = null;
+  const tem = await p.evaluate(() => !!document.getElementById('btnComprarPlanilha'));
+  ok(tem, 'botão de comprar aparece');
+  await p.evaluate(() => { const b = document.getElementById('btnComprarPlanilha'); if (b) b.click(); });
+  await p.waitForTimeout(700);
+  ok(!!ULTIMA_COMPRA && ULTIMA_COMPRA.metodo === 'POST', 'clicar chama a rota de compra única', ULTIMA_COMPRA && ULTIMA_COMPRA.metodo);
   ok(erros.length === 0, 'sem erro de JS', erros.join(' | '));
   await p.close();
 }

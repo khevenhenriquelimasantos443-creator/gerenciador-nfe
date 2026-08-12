@@ -291,7 +291,8 @@ console.log('\n=== 9. plano avulso da Planilha ===');
   // MP configurado de proposito: sem isso o handler para no "pagamentos nao
   // configurados" antes de validar o plano, e o teste nao provaria nada.
   const env = { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'sk', MP_ACCESS_TOKEN: 'mp' };
-  for (const [plano, aceito] of [['planilha', true], ['plus', true], ['pro', true], ['ouro', false]]) {
+  // 'planilha' saiu da lista de PLANOS: virou compra única, com rota própria.
+  for (const [plano, aceito] of [['plus', true], ['pro', true], ['planilha', false], ['ouro', false]]) {
     const r = await serve.fetch(req('/billing/checkout', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ access_token: 'sessao', plan: plano })

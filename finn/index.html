@@ -805,7 +805,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 19.90, planilhaComprando: false };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -3981,7 +3981,7 @@ function callAI(){
 
 /* ── Configurações ── */
 function renderPlansCard(){
-  var planNames = { free: "Grátis", plus: "Plus", pro: "Pro", planilha: "Planilha" };
+  var planNames = { free: "Grátis", plus: "Plus", pro: "Pro" };
   var planLabel = planNames[state.plan] || "Grátis";
   var html = '<div class="card">' +
     '<div class="eyebrow">Seu plano atual: ' + planLabel + '</div>';
@@ -4020,16 +4020,25 @@ function renderPlansCard(){
     html += '<div style="font-size:13px;color:var(--fm)">Você já está no plano mais completo.</div>';
   }
 
-  // Plano avulso da planilha. Só faz sentido oferecer pra quem NÃO tem Pro
-  // (que já inclui) nem já assinou ele.
-  if(state.plan !== "pro" && state.plan !== "planilha"){
+  // Planilha: COMPRA ÚNICA, não assinatura. Quem compra faz uma cópia do
+  // Google Sheets e fica com ela pra sempre — cobrar mensalidade por um
+  // arquivo que não dá pra revogar seria vender o que não se pode tirar.
+  if(!state.planilhaComprou){
     html +=
       '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-top:10px">' +
-        '<div style="font-weight:800;font-size:14px">Só a Planilha — R$ 19,90/mês</div>' +
-        '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 10px">' +
-          'A Planilha Finn no Google Sheets e a sincronização com o app. Sem os recursos do Plus. ' +
-          'Já vem incluída no Pro.</div>' +
-        '<button type="button" class="btn-ghost" data-upgrade="planilha"' + (state.checkoutLoading==="planilha"?" disabled":"") + '>' + (state.checkoutLoading==="planilha"?"Abrindo…":"Assinar só a Planilha") + '</button>' +
+        '<div style="font-weight:800;font-size:14px">Planilha Finn — R$ ' + fmtMoney(state.planilhaPreco || 19.90).replace("R$ ","") + '</div>' +
+        '<div style="font-size:11.5px;font-weight:800;color:var(--fs);margin-top:2px">Pagamento único · sem mensalidade</div>' +
+        '<div style="font-size:12.5px;color:var(--fm);margin:6px 0 10px">' +
+          'A planilha completa no Google Sheets: 9 abas, tudo calculado, sua pra sempre. ' +
+          'A <b>sincronização automática</b> com o app faz parte do Pro.</div>' +
+        '<button type="button" class="btn-ghost" id="btnComprarPlanilha"' + (state.planilhaComprando ? " disabled" : "") + '>' +
+          (state.planilhaComprando ? "Abrindo…" : "Comprar a planilha") + '</button>' +
+      '</div>';
+  } else {
+    html +=
+      '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-top:10px">' +
+        '<div style="font-weight:800;font-size:14px">Planilha Finn ✓</div>' +
+        '<div style="font-size:12.5px;color:var(--fm);margin-top:4px">Você já comprou. Ela é sua para sempre.</div>' +
       '</div>';
   }
   html += '</div>';
@@ -4674,20 +4683,27 @@ function renderAprender(){
 
 // Cartão da Planilha Finn. O token vive só aqui e no Google Sheets da pessoa
 // — nunca é gravado em lugar nenhum do app além do que a própria pessoa vê.
-function planilhaLiberada(){
+// A sincronização é do Pro. A compra única dá o arquivo, não o sync — e a
+// tela precisa dizer isso com clareza pra quem comprou e não entende por que
+// o botão de conectar não aparece.
+function planilhaSyncLiberado(){
   if(!PREMIUM_ENFORCEMENT_ENABLED) return true;
   if(isMasterUser() && state.adminUnlocked) return true;
-  return state.plan === "pro" || state.plan === "planilha";
+  return state.plan === "pro";
 }
 
 function renderPlanilhaCard(){
   var t = state.planilhaToken;
-  if(!planilhaLiberada()){
+  if(!planilhaSyncLiberado()){
     return '<div class="card">' +
       '<div class="eyebrow">Planilha Finn</div>' +
       '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
-        'A Planilha Finn é a planilha de controle financeiro no Google Sheets que sincroniza ' +
-        'com o app. Faz parte do plano <b>Pro</b>.</div>' +
+        (state.planilhaComprou
+          ? 'Você já tem a Planilha Finn — ela funciona sozinha, sem depender do app. ' +
+            'A <b>sincronização automática</b> entre planilha e app faz parte do plano <b>Pro</b>.'
+          : 'A Planilha Finn é a planilha de controle financeiro no Google Sheets. ' +
+            'Ela é compra única; a <b>sincronização</b> com o app faz parte do plano <b>Pro</b>.') +
+      '</div>' +
       '<button type="button" class="btn-ghost" id="btnPlanilhaVerPlanos" style="width:100%">Ver planos</button>' +
     '</div>';
   }
@@ -4713,6 +4729,46 @@ function renderPlanilhaCard(){
     (state.planilhaMsg ? '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.planilhaMsg) + '</div>' : '') +
     (state.planilhaErro ? '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.planilhaErro) + '</div>' : '') +
   '</div>';
+}
+
+function comprarPlanilha(){
+  state.planilhaComprando = true;
+  state.checkoutError = null;
+  render();
+  fetch("/billing/comprar-planilha", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      if(res.status === 200 && res.body && res.body.url){
+        window.location.href = res.body.url;
+        return;
+      }
+      state.planilhaComprando = false;
+      state.checkoutError = (res.body && res.body.error) || "Não consegui abrir o pagamento.";
+      // 409 = já comprou. Atualiza a tela em vez de só mostrar erro.
+      if(res.status === 409){ state.planilhaComprou = true; state.checkoutError = null; }
+      render();
+    })
+    .catch(function(){
+      state.planilhaComprando = false;
+      state.checkoutError = "Falha de conexão.";
+      render();
+    });
+}
+
+function carregarStatusPlanilha(){
+  if(!currentSession) return;
+  fetch("/billing/planilha-status?access_token=" + encodeURIComponent(currentSession.access_token))
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(!j || !j.ok) return;
+      state.planilhaComprou = !!j.comprou;
+      if(j.preco) state.planilhaPreco = j.preco;
+      render();
+    })
+    .catch(function(){});
 }
 
 function planilhaChamar(metodo){
@@ -7658,6 +7714,7 @@ function bindContentEvents(){
     var btnConnectWhatsApp = document.getElementById("btnConnectWhatsApp");
     if(btnConnectWhatsApp) btnConnectWhatsApp.addEventListener("click", connectWhatsApp);
     var bp;
+    if((bp = document.getElementById("btnComprarPlanilha"))) bp.addEventListener("click", comprarPlanilha);
     if((bp = document.getElementById("btnPlanilhaVerPlanos"))) bp.addEventListener("click", function(){
       var alvo = document.getElementById("planosCard") || document.getElementById("content");
       if(alvo) alvo.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -8312,6 +8369,7 @@ function loadData(){
     // Fora do Promise.all de propósito: se o progresso das lições falhar, o
     // app inteiro não pode deixar de carregar por causa disso.
     carregarProgressoAprender();
+    carregarStatusPlanilha();
   }).catch(function(err){
     state.loading = false;
     state.loadError = (err && err.message) || "Erro desconhecido";
