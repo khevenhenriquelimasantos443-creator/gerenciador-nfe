@@ -271,5 +271,44 @@ console.log('\n=== 8. CORS: o Apps Script chama de fora ===');
   ok(h.includes('x-sheet-token'), 'X-Sheet-Token liberado no preflight', h);
 }
 
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 9. plano avulso da Planilha ===');
+{
+  let planoAtual = 'free';
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/auth/v1/user')) {
+      const t = ((opts && opts.headers && opts.headers.Authorization) || '').replace(/^Bearer\s+/i, '');
+      return t.startsWith('sessao') ? new Response(JSON.stringify({ id: 'u1', email: 'a@x.com' }), { status: 200 })
+                                    : new Response('{}', { status: 401 });
+    }
+    if (u.includes('/rest/v1/subscriptions')) return new Response(JSON.stringify([{ plan: planoAtual, status: 'active' }]), { status: 200 });
+    if (u.includes('/rest/v1/transactions')) return new Response('[]', { status: 200 });
+    if (u.includes('api.mercadopago.com/preapproval')) return new Response(JSON.stringify({ init_point: 'https://mp/x' }), { status: 200 });
+    return realFetch(url, opts);
+  };
+  // MP configurado de proposito: sem isso o handler para no "pagamentos nao
+  // configurados" antes de validar o plano, e o teste nao provaria nada.
+  const env = { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'sk', MP_ACCESS_TOKEN: 'mp' };
+  for (const [plano, aceito] of [['planilha', true], ['plus', true], ['pro', true], ['ouro', false]]) {
+    const r = await serve.fetch(req('/billing/checkout', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ access_token: 'sessao', plan: plano })
+    }), env, ctx);
+    const j = await r.json().catch(() => ({}));
+    const reconhecido = !/inv[aá]lido/i.test(j.error || '');
+    ok(reconhecido === aceito, `plano "${plano}" ${aceito ? 'é aceito' : 'é recusado'}`, j.error || r.status);
+  }
+
+  // Durante o beta todo mundo sincroniza — mesmo comportamento da IA.
+  const t = (await (await serve.fetch(req('/sheets/token', {
+    method: 'POST', body: JSON.stringify({ access_token: 'sessao' })
+  }), env, ctx)).json()).token;
+  const r = await serve.fetch(req('/sheets/pull', { headers: { 'X-Sheet-Token': t } }), env, ctx);
+  ok(r.status === 200, 'durante o beta, plano free ainda sincroniza', r.status);
+  global.fetch = realFetch;
+}
+
 console.log('\n' + (falhas === 0 ? '✅ tudo passou' : `❌ ${falhas} falha(s)`));
 process.exit(falhas === 0 ? 0 : 1);

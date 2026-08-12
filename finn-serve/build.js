@@ -466,7 +466,26 @@ const billingFns = `
 function _planPrice(plan) {
   if (plan === 'plus') return 19.90;
   if (plan === 'pro') return 29.90;
+  // 'planilha' é um plano à parte: dá acesso à Planilha Finn e à
+  // sincronização dela, sem os recursos do Plus. Existe pra quem quer só a
+  // planilha — o Pro já inclui tudo isso.
+  if (plan === 'planilha') return 19.90;
   return null;
+}
+
+// Quem pode usar a Planilha Finn e a sincronização dela.
+function _planoTemPlanilha(plan) {
+  return plan === 'planilha' || plan === 'pro';
+}
+
+// O plano que o webhook grava vem do external_reference que nós mesmos
+// montamos, e a assinatura do Mercado Pago é conferida antes — então não é
+// brecha. Ainda assim, validar impede que uma referência malformada escreva
+// uma string qualquer na coluna de plano e deixe a conta num estado que
+// nenhuma checagem reconhece.
+var PLANOS_VALIDOS = ['free', 'plus', 'pro', 'planilha'];
+function _planoValido(plan) {
+  return PLANOS_VALIDOS.indexOf(plan) !== -1;
 }
 
 // x-signature: "ts=<ms>,v1=<hmac hex>" — valida que a notificação veio
@@ -552,7 +571,7 @@ async function _billingCheckout(request, env) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + env.MP_ACCESS_TOKEN },
       body: JSON.stringify({
-        reason: 'Finn ' + (body.plan === 'pro' ? 'Pro' : 'Plus') + ' — assinatura mensal',
+        reason: 'Finn ' + (body.plan === 'pro' ? 'Pro' : body.plan === 'planilha' ? 'Planilha' : 'Plus') + ' — assinatura mensal',
         // user_id + plano juntos no external_reference: assim o webhook
         // sabe pra quem e qual plano liberar sem precisar de outra tabela.
         external_reference: authUser.id + '|' + body.plan,
@@ -604,7 +623,7 @@ async function _billingWebhook(request, env) {
         var payment = await pr.json();
         var parts = (payment.external_reference || '').split('|');
         var userId = parts[0], plan = parts[1];
-        if (userId && plan && payment.status === 'approved') {
+        if (userId && _planoValido(plan) && payment.status === 'approved') {
           var periodEnd = new Date(); periodEnd.setMonth(periodEnd.getMonth() + 1);
           await _subaUpsertSubscription(userId, {
             plan: plan, status: 'active',
@@ -621,7 +640,7 @@ async function _billingWebhook(request, env) {
         var sub = await sr.json();
         var sparts = (sub.external_reference || '').split('|');
         var suserId = sparts[0], splan = sparts[1];
-        if (suserId && splan) {
+        if (suserId && _planoValido(splan)) {
           if (sub.status === 'authorized') {
             var pe = new Date(); pe.setMonth(pe.getMonth() + 1);
             await _subaUpsertSubscription(suserId, {
@@ -908,7 +927,7 @@ async function _adminSetSubscription(request, env) {
     var authUser = await _supaAuth(body.access_token);
     if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
     if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
-    if (['free', 'plus', 'pro'].indexOf(body.plan) === -1) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
+    if (['free', 'plus', 'pro', 'planilha'].indexOf(body.plan) === -1) return new Response(JSON.stringify({ error: 'plano inválido' }), { status: 400, headers: cors });
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
 
     var target = await _adminFindUserByEmail(body.target_email, env);
@@ -1318,6 +1337,19 @@ async function _donoDoToken(env, token) {
   } catch (e) { return null; }
 }
 
+// A sincronização é do plano Planilha ou do Pro. Fica no SERVIDOR e não só
+// na tela: a planilha chama estas rotas direto, sem passar pelo app, então
+// gate só no frontend não seria gate nenhum.
+//
+// Respeita a mesma flag de beta do resto — enquanto a cobrança não começou,
+// todo mundo passa, igual à IA.
+async function _podeSincronizarPlanilha(uid, env) {
+  if (!PREMIUM_ENFORCEMENT_ENABLED) return true;
+  var sub = await _subaGetSubscription(uid, env);
+  var plano = (sub && sub.plan) || 'free';
+  return _planoTemPlanilha(plano);
+}
+
 // POST /sheets/token { access_token } — cria (ou troca) o token da planilha.
 // Trocar invalida o anterior: é o botão de "perdi minha planilha".
 async function _sheetsToken(request, env) {
@@ -1372,6 +1404,12 @@ async function _sheetsPull(request, env) {
     if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'indisponível' }), { status: 503, headers: cors });
     var reg = await _donoDoToken(env, request.headers.get('X-Sheet-Token'));
     if (!reg) return new Response(JSON.stringify({ error: 'token inválido' }), { status: 401, headers: cors });
+    if (!(await _podeSincronizarPlanilha(reg.uid, env))) {
+      return new Response(JSON.stringify({ error: 'a sincronização da planilha faz parte do plano Planilha ou Pro' }), { status: 402, headers: cors });
+    }
+    if (!(await _podeSincronizarPlanilha(reg.uid, env))) {
+      return new Response(JSON.stringify({ error: 'a sincronização da planilha faz parte do plano Planilha ou Pro' }), { status: 402, headers: cors });
+    }
 
     var rl = await _rateLimit(env, 'sheetpull', reg.uid, 120, 3600);
     if (!rl.ok) return _tooManyRequests(cors, rl.retryAfter, 'muitas sincronizações, tente mais tarde');

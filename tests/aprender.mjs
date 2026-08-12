@@ -14,6 +14,7 @@ for(let i=0;i<5;i++) TXS.push({id:'t'+i,user_id:'u1',type:'despesa',category:'Al
 TXS.push({id:'r1',user_id:'u1',type:'receita',category:'Salário',description:'Salário',value:3000,date:ym+'-05',created_at:ym+'-05T12:00:00Z'});
 const DADOS={transactions:TXS,goals:[{id:'g1',user_id:'u1',name:'Reserva',target:6000,saved:1000}],
   spending_limits:[{id:'l1',user_id:'u1',category:'Alimentação',monthly_limit:700}],splits:[]};
+let GRAVADO=[]; let PROGRESSO_SERVIDOR=[];
 const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
 async function abrir(){
   const p=await b.newPage({viewport:{width:412,height:915}});
@@ -22,6 +23,11 @@ async function abrir(){
   await p.route('**/*',async route=>{
     const u=route.request().url(), m=route.request().method();
     const J=o=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(o)});
+    if(u.includes('lesson_progress')){
+      GRAVADO.push({metodo:m,url:u,corpo:route.request().postData()});
+      if(m==='GET') return J(PROGRESSO_SERVIDOR.map(id=>({lesson_id:id})));
+      return route.fulfill({status:200,contentType:'application/json',body:'[]'});
+    }
     if(u.includes('supabase.co/rest/v1/')&&m!=='GET') return route.fulfill({status:200,contentType:'application/json',body:'[]'});
     if(u.includes('supabase.co/rest/v1/')){const t=u.split('/rest/v1/')[1].split('?')[0];return J(DADOS[t]||[]);}
     if(u.includes('supabase.co/auth/v1/user')) return J({id:'u1',email:'a@x.com',user_metadata:{}});
@@ -69,6 +75,47 @@ console.log('=== aba Aprender ===');
   ok(erros.length===0,'sem erro de JS',erros.join(' | '));
   await p.close();
 }
+
+console.log('\n=== progresso salvo no Supabase ===');
+{
+  // Servidor ja tem uma licao marcada; o aparelho tem OUTRA. As duas tem que
+  // sobreviver — substituir em vez de fundir apagaria o que a pessoa leu.
+  PROGRESSO_SERVIDOR = ['juros'];
+  GRAVADO = [];
+  const {p,erros}=await abrir();
+  await p.evaluate(()=>{
+    localStorage.setItem('finn_aprender_u1', JSON.stringify(['sobra']));
+  });
+  await p.reload(); await p.waitForTimeout(2200);
+  await p.evaluate(async()=>{document.querySelector('.tab-btn[data-tab="aprender"]').click();await new Promise(r=>setTimeout(r,600));});
+  const est=await p.evaluate(()=>({
+    txt:document.getElementById('content').innerText,
+    marcadas:document.querySelectorAll('.apr-check-ok').length,
+    local:JSON.parse(localStorage.getItem('finn_aprender_u1')||'[]')
+  }));
+  ok(est.marcadas===2,'funde servidor + aparelho, sem perder nenhuma',est.marcadas);
+  ok(est.local.includes('juros')&&est.local.includes('sobra'),'as duas ficam no cache local',JSON.stringify(est.local));
+  const subiu=GRAVADO.filter(g=>g.metodo==='POST').some(g=>(g.corpo||'').includes('sobra'));
+  ok(subiu,'o que só existia no aparelho SOBE pro servidor');
+
+  // Marcar uma nova grava no servidor
+  GRAVADO=[];
+  await p.evaluate(async()=>{document.querySelector('[data-apr="onde-vai"]').click();await new Promise(r=>setTimeout(r,300));
+    document.getElementById('btnAprLida').click();await new Promise(r=>setTimeout(r,500));});
+  const post=GRAVADO.find(g=>g.metodo==='POST'&&(g.corpo||'').includes('onde-vai'));
+  ok(!!post,'marcar grava no Supabase');
+  ok(/on_conflict=user_id%2Clesson_id|on_conflict=user_id,lesson_id/.test(post?post.url:''),'usa upsert (nao duplica se marcar de novo)',post?post.url.split('?')[1]:'');
+
+  // Desmarcar apaga
+  GRAVADO=[];
+  await p.evaluate(async()=>{document.getElementById('btnAprLida').click();await new Promise(r=>setTimeout(r,500));});
+  const del=GRAVADO.find(g=>g.metodo==='DELETE');
+  ok(!!del,'desmarcar apaga no Supabase');
+  ok(/lesson_id=eq\.onde-vai/.test(del?del.url:''),'apaga a licao certa',del?del.url.split('?')[1]:'');
+  ok(erros.length===0,'sem erro de JS',erros.join(' | '));
+  await p.close();
+}
+
 console.log('\n'+(falhas?`❌ ${falhas} falha(s)`:'✅ tudo passou'));
 await b.close(); srv.close();
 process.exit(falhas?1:0);

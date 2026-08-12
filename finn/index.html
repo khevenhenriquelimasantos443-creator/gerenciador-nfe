@@ -778,7 +778,12 @@ function db(table, method, body, query, _retried){
       Authorization: "Bearer " + token,
       "Content-Type": "application/json"
     };
-    if(method !== "GET") headers.Prefer = "return=representation";
+    if(method !== "GET"){
+      headers.Prefer = "return=representation";
+      // on_conflict sozinho não faz upsert no PostgREST: sem
+      // resolution=merge-duplicates ele responde 409 em vez de fundir.
+      if(query && query.on_conflict) headers.Prefer += ",resolution=merge-duplicates";
+    }
     return fetch(url, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined })
       .then(function(r){
         return r.text().then(function(t){
@@ -3976,7 +3981,7 @@ function callAI(){
 
 /* ── Configurações ── */
 function renderPlansCard(){
-  var planNames = { free: "Grátis", plus: "Plus", pro: "Pro" };
+  var planNames = { free: "Grátis", plus: "Plus", pro: "Pro", planilha: "Planilha" };
   var planLabel = planNames[state.plan] || "Grátis";
   var html = '<div class="card">' +
     '<div class="eyebrow">Seu plano atual: ' + planLabel + '</div>';
@@ -4013,6 +4018,19 @@ function renderPlansCard(){
       '</div>';
   } else {
     html += '<div style="font-size:13px;color:var(--fm)">Você já está no plano mais completo.</div>';
+  }
+
+  // Plano avulso da planilha. Só faz sentido oferecer pra quem NÃO tem Pro
+  // (que já inclui) nem já assinou ele.
+  if(state.plan !== "pro" && state.plan !== "planilha"){
+    html +=
+      '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-top:10px">' +
+        '<div style="font-weight:800;font-size:14px">Só a Planilha — R$ 19,90/mês</div>' +
+        '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 10px">' +
+          'A Planilha Finn no Google Sheets e a sincronização com o app. Sem os recursos do Plus. ' +
+          'Já vem incluída no Pro.</div>' +
+        '<button type="button" class="btn-ghost" data-upgrade="planilha"' + (state.checkoutLoading==="planilha"?" disabled":"") + '>' + (state.checkoutLoading==="planilha"?"Abrindo…":"Assinar só a Planilha") + '</button>' +
+      '</div>';
   }
   html += '</div>';
   return html;
@@ -4425,23 +4443,67 @@ function aprenderTotalLicoes(){
 
 // Progresso por usuário: o app é usado em navegador compartilhado (é comum
 // no Brasil), então chave global marcaria a lição de um como lida pro outro.
+// O progresso vive no Supabase pra acompanhar a pessoa quando ela troca de
+// celular. O localStorage continua existindo como CACHE: a tela lê dele (é
+// síncrono, então a lista não pisca a cada render) e o servidor é atualizado
+// em segundo plano. Se a rede falhar, a marcação continua valendo na hora e
+// sobe na próxima vez — perder o progresso por causa de sinal ruim seria o
+// pior desfecho pra um recurso que existe pra encorajar.
+//
+// Guardamos só o id da lição e a data. Nada de tempo de leitura ou rolagem:
+// não é preciso pra função e é telemetria de comportamento a mais.
 function aprenderKey(){ return "finn_aprender_" + (uid() || "anon"); }
 function aprenderLidas(){
   try { return JSON.parse(localStorage.getItem(aprenderKey()) || "[]"); }
   catch(e){ return []; }
 }
+function aprenderSalvarLocal(lista){
+  try { localStorage.setItem(aprenderKey(), JSON.stringify(lista)); } catch(e){}
+}
 function aprenderMarcar(id){
   var lidas = aprenderLidas();
   if(lidas.indexOf(id) === -1){
     lidas.push(id);
-    localStorage.setItem(aprenderKey(), JSON.stringify(lidas));
+    aprenderSalvarLocal(lidas);
   }
+  if(!uid()) return;
+  // on_conflict: marcar de novo não pode virar erro nem linha duplicada.
+  db("lesson_progress", "POST", { user_id: uid(), lesson_id: id }, { on_conflict: "user_id,lesson_id" })
+    .catch(function(){ /* fica só no cache; sobe no próximo carregamento */ });
 }
 function aprenderDesmarcar(id){
-  var lidas = aprenderLidas().filter(function(x){ return x !== id; });
-  localStorage.setItem(aprenderKey(), JSON.stringify(lidas));
+  aprenderSalvarLocal(aprenderLidas().filter(function(x){ return x !== id; }));
+  if(!uid()) return;
+  db("lesson_progress", "DELETE", null, { user_id: "eq." + uid(), lesson_id: "eq." + id })
+    .catch(function(){});
 }
 function aprenderLida(id){ return aprenderLidas().indexOf(id) !== -1; }
+
+// Puxa o progresso do servidor e funde com o que está no aparelho. União, não
+// substituição: quem leu no celular sem rede e depois abriu no computador não
+// pode perder nem uma marcação nem a outra.
+function carregarProgressoAprender(){
+  if(!uid()) return Promise.resolve();
+  return db("lesson_progress", "GET", null, { select: "lesson_id", user_id: "eq." + uid() })
+    .then(function(linhas){
+      var doServidor = (linhas || []).map(function(l){ return l.lesson_id; });
+      var local = aprenderLidas();
+      var unidas = doServidor.slice();
+      var faltando = [];
+      local.forEach(function(id){
+        if(unidas.indexOf(id) === -1){ unidas.push(id); faltando.push(id); }
+      });
+      aprenderSalvarLocal(unidas);
+      // O que só existia neste aparelho sobe agora.
+      if(faltando.length){
+        db("lesson_progress", "POST",
+           faltando.map(function(id){ return { user_id: uid(), lesson_id: id }; }),
+           { on_conflict: "user_id,lesson_id" }).catch(function(){});
+      }
+      if(state.tab === "aprender") render();
+    })
+    .catch(function(){ /* sem rede: segue com o cache local */ });
+}
 
 function aprenderLicaoPorId(id){
   for(var i = 0; i < APRENDER_TRILHAS.length; i++){
@@ -4615,7 +4677,7 @@ function renderAprender(){
 function planilhaLiberada(){
   if(!PREMIUM_ENFORCEMENT_ENABLED) return true;
   if(isMasterUser() && state.adminUnlocked) return true;
-  return state.plan === "pro";
+  return state.plan === "pro" || state.plan === "planilha";
 }
 
 function renderPlanilhaCard(){
@@ -8247,6 +8309,9 @@ function loadData(){
     syncWhatsAppBot();
     syncTelegramBot();
     pullBotTransactions();
+    // Fora do Promise.all de propósito: se o progresso das lições falhar, o
+    // app inteiro não pode deixar de carregar por causa disso.
+    carregarProgressoAprender();
   }).catch(function(err){
     state.loading = false;
     state.loadError = (err && err.message) || "Erro desconhecido";
