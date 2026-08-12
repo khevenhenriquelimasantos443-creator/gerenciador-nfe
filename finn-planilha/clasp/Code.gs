@@ -35,8 +35,20 @@ function onOpen() {
     .addItem('Só enviar para o Finn', 'finnEnviar')
     .addItem('Só puxar do Finn', 'finnPuxar')
     .addSeparator()
+    .addItem('Ligar sincronização automática', 'finnAtivarAutomatico')
+    .addItem('Desligar sincronização automática', 'finnDesativarAutomatico')
+    .addSeparator()
     .addItem('Testar conexão', 'finnTestar')
     .addToUi();
+}
+
+/**
+ * Só existe interface quando um humano abriu a planilha no navegador. Num
+ * gatilho por horário não existe UI nenhuma, e chamar getUi() ali lança
+ * exceção — que é como a sincronização automática morreria em silêncio.
+ */
+function _temUI() {
+  try { SpreadsheetApp.getUi(); return true; } catch (e) { return false; }
 }
 
 function _token() {
@@ -46,16 +58,79 @@ function _token() {
 }
 
 function _aviso(msg) {
-  SpreadsheetApp.getActive().toast(msg, 'Finn', 8);
+  try { SpreadsheetApp.getActive().toast(msg, 'Finn', 8); } catch (e) {}
+  console.log(msg);
+}
+
+function _alerta(titulo, msg) {
+  if (_temUI()) {
+    SpreadsheetApp.getUi().alert(titulo, msg, SpreadsheetApp.getUi().ButtonSet.OK);
+  } else {
+    console.log(titulo + ' — ' + msg);
+  }
 }
 
 function _semToken() {
-  SpreadsheetApp.getUi().alert(
-    'Planilha ainda não conectada',
+  _alerta('Planilha ainda não conectada',
     'Cole o token da planilha na aba Config (célula ' + CEL_TOKEN + ').\n\n' +
     'Para pegar o token: abra o Finn → Configurações → Conectar planilha.\n\n' +
-    'Você não precisa disso para usar a planilha — a sincronização é opcional.',
-    SpreadsheetApp.getUi().ButtonSet.OK);
+    'Você não precisa disso para usar a planilha — a sincronização é opcional.');
+}
+
+/**
+ * Liga o sync de hora em hora. É o que faz a planilha funcionar no CELULAR:
+ * o app do Google Sheets não mostra menu personalizado, então clicar em
+ * "Sincronizar" pelo telefone não é opção. Com o gatilho, a planilha se
+ * atualiza sozinha e o celular só precisa abrir e olhar.
+ */
+function finnAtivarAutomatico() {
+  finnDesativarAutomatico();  // nunca deixa dois gatilhos empilhados
+  ScriptApp.newTrigger('finnSincronizarSilencioso')
+    .timeBased().everyHours(1).create();
+  var quando = _celulaUltima();
+  _alerta('Sincronização automática ligada',
+    'A partir de agora a planilha troca lançamentos com o Finn a cada 1 hora, ' +
+    'sozinha — inclusive com a planilha fechada.\n\n' +
+    'Confira a hora da última sincronização na aba Config' +
+    (quando ? ' (célula ' + CEL_ULTIMA + ')' : '') + '.\n\n' +
+    'Para desligar: menu Finn → Desligar sincronização automática.');
+}
+
+function finnDesativarAutomatico() {
+  var gatilhos = ScriptApp.getProjectTriggers();
+  var removidos = 0;
+  for (var i = 0; i < gatilhos.length; i++) {
+    if (gatilhos[i].getHandlerFunction() === 'finnSincronizarSilencioso') {
+      ScriptApp.deleteTrigger(gatilhos[i]);
+      removidos++;
+    }
+  }
+  return removidos;
+}
+
+/** Versão do sync usada pelo gatilho: nunca abre caixa de diálogo. */
+function finnSincronizarSilencioso() {
+  if (!_token()) { console.log('Sem token na aba Config — nada a fazer.'); return; }
+  try {
+    var enviados = finnEnviar() || 0;
+    var trazidos = finnPuxar() || 0;
+    _marcarUltima();
+    console.log('sync automático: ' + enviados + ' enviado(s), ' + trazidos + ' trazido(s)');
+  } catch (e) {
+    console.log('sync automático falhou: ' + e);
+  }
+}
+
+function _celulaUltima() {
+  var cfg = SpreadsheetApp.getActive().getSheetByName(ABA_CONFIG);
+  return cfg ? cfg.getRange(CEL_ULTIMA) : null;
+}
+
+function _marcarUltima() {
+  var cel = _celulaUltima();
+  if (!cel) return;
+  cel.setValue(Utilities.formatDate(new Date(),
+    SpreadsheetApp.getActive().getSpreadsheetTimeZone(), 'dd/MM/yyyy HH:mm'));
 }
 
 function _chamar(caminho, opcoes) {
@@ -76,11 +151,10 @@ function _chamar(caminho, opcoes) {
   try { corpo = JSON.parse(resp.getContentText()); } catch (e) { corpo = {}; }
 
   if (codigo === 401) {
-    SpreadsheetApp.getUi().alert('Token não aceito',
+    _alerta('Token não aceito',
       'O Finn recusou o token desta planilha.\n\n' +
       'Isso acontece quando o token foi trocado ou desconectado no app. ' +
-      'Gere um novo em Finn → Configurações → Conectar planilha e cole na aba Config.',
-      SpreadsheetApp.getUi().ButtonSet.OK);
+      'Gere um novo em Finn → Configurações → Conectar planilha e cole na aba Config.');
     return null;
   }
   if (codigo === 429) {
@@ -225,12 +299,7 @@ function finnSincronizar() {
   if (!_token()) { _semToken(); return; }
   var enviados = finnEnviar() || 0;
   var trazidos = finnPuxar() || 0;
-  var cfg = SpreadsheetApp.getActive().getSheetByName(ABA_CONFIG);
-  if (cfg) {
-    cfg.getRange(CEL_ULTIMA).setValue(
-      Utilities.formatDate(new Date(), SpreadsheetApp.getActive().getSpreadsheetTimeZone(),
-                           'dd/MM/yyyy HH:mm'));
-  }
+  _marcarUltima();
   _aviso('Pronto. ' + enviados + ' enviado(s), ' + trazidos + ' trazido(s).');
 }
 
@@ -239,8 +308,7 @@ function finnTestar() {
   var resp = _chamar('/sheets/pull?desde=' +
     Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM-dd'));
   if (!resp) return;
-  SpreadsheetApp.getUi().alert('Conexão OK',
+  _alerta('Conexão OK',
     'A planilha está conectada ao Finn.\n\n' +
-    'O Finn respondeu normalmente. Use "Sincronizar agora" para trocar os lançamentos.',
-    SpreadsheetApp.getUi().ButtonSet.OK);
+    'O Finn respondeu normalmente. Use "Sincronizar agora" para trocar os lançamentos.');
 }
