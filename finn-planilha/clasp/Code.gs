@@ -8,9 +8,15 @@
  *   4. Salve (ícone de disquete) e feche a aba do Apps Script
  *   5. Recarregue a planilha — vai aparecer o menu "Finn" na barra de cima
  *
+ * NO CELULAR: o app do Google Sheets NÃO mostra menu personalizado — o menu
+ * "Finn" só aparece no navegador. Por isso existe a sincronização automática:
+ * rode "Ligar sincronização automática" uma vez (do navegador, em modo
+ * computador) e a planilha passa a se atualizar sozinha de hora em hora,
+ * inclusive fechada. No celular você só abre e olha.
+ *
  * Quem comprar uma CÓPIA da planilha recebe este script junto: o Apps Script
  * é vinculado ao arquivo e viaja no "Fazer uma cópia". A pessoa só precisa
- * colar o token dela na aba Config.
+ * colar o token dela na aba Config e ligar o automático uma vez.
  *
  * A planilha funciona sem nada disso. Sem token na Config, o menu avisa e
  * não faz nada — nunca trava o uso normal.

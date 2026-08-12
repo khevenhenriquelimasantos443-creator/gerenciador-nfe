@@ -9,6 +9,9 @@ Planilha de controle financeiro para Google Sheets, vendida à parte do app.
 - `gera_planilha.py` — gera o .xlsx do zero (`pip install openpyxl && python3 gera_planilha.py`).
   Editar aqui e regerar é mais confiável do que mexer no .xlsx na mão.
 - `AppsScript.gs` — o script de sincronização. Instruções de instalação no topo do arquivo.
+- `INSTALAR-CELULAR.md` — o caminho pra quem só tem telefone. Importante: o app
+  do Google Sheets não mostra menu personalizado, então no celular o modo de uso
+  é a sincronização automática por gatilho, não o menu.
 - `clasp/` + `INSTALAR-CLI.md` — mesmo script, pronto pra `clasp push` (CLI oficial do
   Google Apps Script). Vale a pena porque você vai repetir a cada alteração;
   o upload do .xlsx continua sendo arraste único, onde CLI só atrapalha.
