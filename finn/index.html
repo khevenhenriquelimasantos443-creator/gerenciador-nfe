@@ -272,6 +272,25 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .goal-addrow .g-add{background:var(--fs);color:#fff}
 .goal-addrow .g-sub{background:var(--fcard);color:var(--fe);border:1px solid var(--fb)}
 
+/* ── Aprender ── */
+.apr-p{font-size:14px;line-height:1.72;color:var(--fd);margin:0 0 14px}
+.apr-p b{font-weight:800}
+.apr-pratica{border-left:3px solid var(--fp);background:var(--fpl);border-radius:0 10px 10px 0;padding:12px 14px;margin:18px 0 6px;font-size:13.5px;line-height:1.6;color:var(--fd)}
+.apr-pratica-tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--fp);margin-bottom:4px}
+.apr-finn{border:1px solid var(--fb);border-radius:12px;padding:13px 14px;margin-top:14px;background:var(--fbg)}
+.apr-finn-tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--fm);margin-bottom:5px}
+.apr-finn-txt{font-size:13px;line-height:1.6;color:var(--fd);margin-bottom:10px}
+.apr-item{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:none;border-top:1px solid var(--fb);padding:12px 2px;cursor:pointer;font-family:inherit}
+.apr-item:first-child{border-top:none}
+.apr-check{flex-shrink:0;width:21px;height:21px;border-radius:50%;border:2px solid var(--fb);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff}
+.apr-check-ok{background:var(--fs);border-color:var(--fs)}
+.apr-item-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.apr-item-tit{font-size:13.5px;font-weight:600;color:var(--fd);line-height:1.35}
+.apr-item-min{font-size:11px;color:var(--fm)}
+.apr-seta{flex-shrink:0;color:var(--fm);font-size:14px}
+.apr-barra{height:8px;background:var(--fb);border-radius:99px;overflow:hidden}
+.apr-barra-fill{height:100%;background:var(--fp);border-radius:99px;transition:width .3s}
+
 /* ── fixed accounts ── */
 .fixed-item{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid var(--fb);border-radius:12px;margin-top:10px}
 .fixed-item:first-child{margin-top:0}
@@ -517,6 +536,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
       <button class="tab-btn" data-tab="dividas">Dívidas</button>
       <button class="tab-btn" data-tab="racha">Racha</button>
       <button class="tab-btn" data-tab="ia">IA</button>
+      <button class="tab-btn" data-tab="aprender">Aprender</button>
       <div class="nav-menu-bottom">
         <a href="/guia" target="_blank" rel="noopener" class="nav-menu-action" id="btnGuiaNav" style="text-decoration:none">Guia de uso</a>
         <button type="button" class="nav-menu-action" id="btnAdminHomeNav" style="display:none">Visão geral</button>
@@ -780,7 +800,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -3972,6 +3992,10 @@ function renderPlansCard(){
   }
   if(state.checkoutError) html += '<div class="ai-error" style="margin-bottom:10px">' + escapeHtml(state.checkoutError) + '</div>';
 
+  html += '<div style="font-size:12px;color:var(--fm);margin:-4px 0 12px;line-height:1.5">' +
+    'A aba <b>Aprender</b> é gratuita em todos os planos, inclusive no Grátis — e vai continuar sendo.' +
+  '</div>';
+
   if(state.plan === "free"){
     html +=
       '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px;margin-bottom:10px">' +
@@ -3984,7 +4008,7 @@ function renderPlansCard(){
     html +=
       '<div style="border:1px solid var(--fb);border-radius:12px;padding:14px">' +
         '<div style="font-weight:800;font-size:14px">Pro — R$ 29,90/mês</div>' +
-        '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 10px">Tudo do Plus, mais Finn IA ilimitada e o bot do WhatsApp completo (quando voltar).</div>' +
+        '<div style="font-size:12.5px;color:var(--fm);margin:4px 0 10px">Tudo do Plus, mais Finn IA ilimitada, o bot do WhatsApp completo (quando voltar) e a <b>Planilha Finn</b> no Google Sheets, que sincroniza com o app.</div>' +
         '<button type="button" class="btn-submit" data-upgrade="pro"' + (state.checkoutLoading==="pro"?" disabled":"") + '>' + (state.checkoutLoading==="pro"?"Abrindo…":"Assinar Pro") + '</button>' +
       '</div>';
   } else {
@@ -4131,10 +4155,480 @@ function renderWhatsAppLinkCard(meta){
   '</div>';
 }
 
+// ══════════════════════════════════════════════════════════════════
+//  APRENDER — educação financeira, de graça, para todo mundo
+//
+//  Sem trava de plano em lugar nenhum deste bloco. É de propósito: quem
+//  mais precisa de educação financeira é justamente quem não vai pagar
+//  por ela, e cobrar por isso inverteria o objetivo do recurso.
+//
+//  REGRA DE CONTEÚDO que vale pra tudo aqui: explicar como as coisas
+//  funcionam, NUNCA dizer onde a pessoa deve pôr o dinheiro. Recomendar
+//  investimento específico no Brasil é atividade regulada pela CVM e exige
+//  registro; explicar o que é CDI, como juro composto funciona ou por que
+//  o rotativo é caro não é. A fronteira é: descrever o mecanismo, sim;
+//  indicar produto, não.
+// ══════════════════════════════════════════════════════════════════
+
+var APRENDER_TRILHAS = [
+  {
+    id: "basico",
+    icone: "🌱",
+    nome: "O básico que ninguém ensinou",
+    resumo: "Por onde começa quem nunca aprendeu nada sobre dinheiro.",
+    licoes: [
+      {
+        id: "onde-vai",
+        titulo: "Para onde vai o seu dinheiro",
+        minutos: 3,
+        corpo: [
+          "Quase todo mundo sabe quanto ganha. Pouquíssima gente sabe quanto gasta — e é aí que mora o problema.",
+          "Não é falta de inteligência nem de disciplina. É que gasto some da memória. Você lembra do aluguel, que é grande e acontece uma vez. Não lembra dos R$ 12 do lanche de terça, dos R$ 8 da corrida curta, dos R$ 15 do docinho de sexta. Cada um é pequeno demais pra ficar. Somados, viram o maior gasto do mês.",
+          "R$ 15 por dia são R$ 5.475 por ano. É mais do que muita gente consegue guardar no ano inteiro.",
+          "O primeiro passo não é cortar nada. É <b>enxergar</b>. Por umas duas semanas, registre tudo — inclusive o que parece bobagem. Você não precisa julgar o gasto, só anotar.",
+          "Quando a lista existe, uma coisa acontece sozinha: alguns gastos você olha e pensa \"isso nem valeu a pena\". Esses somem sem esforço. Os que valeram, ficam. Isso é diferente de se privar."
+        ],
+        pratica: "Registre TUDO por 14 dias, sem cortar nada. Depois volte e leia a lista.",
+        finn: "streak"
+      },
+      {
+        id: "sobra",
+        titulo: "O que entra não é o que sobra",
+        minutos: 3,
+        corpo: [
+          "Existe uma conta que muda a forma de olhar o salário:",
+          "<b>Sobra = o que entrou − o que saiu.</b>",
+          "Parece óbvia, mas quase ninguém faz. A maioria olha só o saldo da conta no fim do mês — e saldo engana, porque pode estar alto só porque a fatura do cartão ainda não venceu.",
+          "Ganhar mais não resolve sozinho. Existe um efeito bem documentado: quando a renda sobe, o padrão de vida sobe junto e a sobra continua zero. Chamam de inflação do estilo de vida. É por isso que gente que ganha muito também vive apertada.",
+          "A pergunta certa não é \"quanto eu ganho?\". É <b>\"quantos por cento do que entra eu consigo não gastar?\"</b> Esse número — a taxa de poupança — é o que constrói patrimônio. Alguém que guarda 15% de um salário pequeno chega mais longe que alguém que guarda 0% de um salário grande."
+        ],
+        pratica: "Calcule sua sobra do mês passado. Mesmo que dê negativo — principalmente se der.",
+        finn: "saldo"
+      },
+      {
+        id: "tipos-gasto",
+        titulo: "Os três tipos de gasto",
+        minutos: 4,
+        corpo: [
+          "Nem todo gasto se comporta igual, e tratar todos do mesmo jeito é o que faz orçamento não funcionar.",
+          "<b>1. Fixo.</b> Aluguel, financiamento, mensalidade. Vem todo mês, no mesmo valor. É o mais pesado e o mais difícil de mudar — mas quando muda, muda muito. Trocar um aluguel de R$ 1.500 por um de R$ 1.200 economiza R$ 3.600 no ano, sem você precisar pensar nisso de novo.",
+          "<b>2. Variável.</b> Mercado, transporte, lazer. Muda todo mês e depende de escolha diária. É onde a maioria das pessoas tenta cortar — e onde o corte é mais cansativo, porque exige decidir toda vez.",
+          "<b>3. Invisível.</b> Assinatura que renova sozinha, taxa de conta, seguro embutido, aquele app que você testou e esqueceu. Ninguém decide gastar isso; simplesmente sai.",
+          "O gasto invisível é o de melhor custo-benefício pra atacar: <b>você corta uma vez e economiza pra sempre</b>, sem mudar nada do seu dia. Quatro assinaturas de R$ 39,90 são R$ 1.915 por ano.",
+          "Abra a fatura do cartão e conte quantas assinaturas você realmente usou no último mês. A resposta costuma doer um pouco."
+        ],
+        pratica: "Liste suas assinaturas. Cancele as que você não usou nos últimos 30 dias.",
+        finn: "fixas"
+      },
+      {
+        id: "parcelado",
+        titulo: "O \"parcelado sem juros\" que tem custo",
+        minutos: 4,
+        corpo: [
+          "Parcelar sem juros parece de graça. Não é bem assim, por dois motivos.",
+          "<b>Primeiro: você já poderia ter pago menos.</b> Em muita loja, o preço à vista tem desconto. Se R$ 1.000 em 10x vira R$ 900 no Pix, aqueles R$ 100 são o juro — só que embutido no preço em vez de aparecer na conta.",
+          "<b>Segundo, e mais perigoso: parcela se acumula.</b> Cada compra parcelada é um compromisso com o seu eu do futuro. Cinco compras de 10x parecem tranquilas quando você faz. Quatro meses depois, chega uma fatura com cinco parcelas dentro, e o salário é o mesmo.",
+          "É assim que gente organizada entra no rotativo do cartão: não por uma compra grande, mas pela soma de várias que pareciam pequenas.",
+          "Uma regra que ajuda: antes de parcelar, some as parcelas que <b>já</b> estão comprometidas nos próximos meses. Se a nova parcela não caberia no orçamento do mês que vem, ela não cabe hoje."
+        ],
+        pratica: "Some tudo que você já tem parcelado. Compare com um salário.",
+        finn: "cartoes"
+      }
+    ]
+  },
+  {
+    id: "vermelho",
+    icone: "🔥",
+    nome: "Saindo do vermelho",
+    resumo: "Dívida no Brasil é cara de um jeito que assusta. Como sair.",
+    licoes: [
+      {
+        id: "juros",
+        titulo: "Por que a dívida cresce sozinha",
+        minutos: 4,
+        corpo: [
+          "Juros compostos é juro sobre juro. Quando trabalham a seu favor, constroem patrimônio. Quando trabalham contra, destroem.",
+          "Uma dívida de R$ 1.000 a 14% ao mês — que é a média do rotativo do cartão no Brasil — não vira R$ 1.140 em um mês e R$ 1.280 em dois. Vira R$ 1.140, depois R$ 1.300, depois R$ 1.482. <b>Em um ano, R$ 4.818.</b> Quase cinco vezes.",
+          "O motivo é que o juro do mês seguinte incide sobre o total, incluindo o juro que já foi somado. A dívida acelera.",
+          "É por isso que \"pago o mínimo agora e resolvo depois\" quase nunca funciona: o mínimo costuma cobrir pouco mais que o juro do mês, então o principal quase não anda e o relógio continua correndo.",
+          "Conclusão prática: enquanto existe dívida cara, ela é o melhor \"investimento\" disponível. Quitar uma dívida de 14% ao mês equivale a um rendimento garantido de 14% ao mês — coisa que nenhum investimento oferece."
+        ],
+        pratica: "Descubra a taxa real de cada dívida sua. Está no contrato ou na fatura.",
+        finn: "dividas"
+      },
+      {
+        id: "caros",
+        titulo: "Os dois créditos mais caros do Brasil",
+        minutos: 3,
+        corpo: [
+          "<b>Rotativo do cartão.</b> É o que acontece quando você não paga a fatura inteira. Historicamente é o crédito mais caro do país, girando em torno de 14% ao mês — mais de 400% ao ano.",
+          "<b>Cheque especial.</b> O limite que parece uma extensão da conta. Também passa de 100% ao ano, e é traiçoeiro porque não parece dívida: o saldo só fica negativo e a vida segue.",
+          "Os dois têm a mesma armadilha: são fáceis demais de usar. Não tem pedido, análise, nem assinatura. Você só... usa.",
+          "Se você está em um dos dois, a prioridade número um é sair — mesmo que para isso você precise trocar por uma dívida mais barata. Empréstimo pessoal, consignado ou parcelamento da própria fatura costumam custar bem menos que o rotativo. Não é bonito trocar dívida por dívida, mas trocar 14% ao mês por 3% ao mês é matematicamente certo.",
+          "Isso se chama <b>portabilidade</b> ou troca de dívida cara por barata, e é uma das poucas decisões financeiras que dá pra afirmar com segurança."
+        ],
+        pratica: "Se você usa cheque especial ou rotativo, procure hoje uma linha mais barata pra trocar.",
+        finn: null
+      },
+      {
+        id: "ordem",
+        titulo: "Em que ordem pagar as dívidas",
+        minutos: 4,
+        corpo: [
+          "Com várias dívidas ao mesmo tempo, existem duas estratégias conhecidas — e elas competem.",
+          "<b>Avalanche:</b> pague primeiro a de <i>maior juro</i>, independentemente do tamanho. É a matematicamente ótima. Você paga menos no total e sai mais rápido.",
+          "<b>Bola de neve:</b> pague primeiro a <i>menor dívida</i>, independentemente do juro. Matematicamente pior, mas psicologicamente mais forte: você quita uma dívida logo, sente que funciona, e continua.",
+          "Qual usar? A resposta honesta: <b>a que você vai conseguir manter.</b> A avalanche economiza mais dinheiro no papel; a bola de neve tem taxa de conclusão maior na vida real, porque plano abandonado economiza zero.",
+          "Se suas dívidas têm juros parecidos, use bola de neve — a diferença de custo é pequena e o ganho de motivação é grande. Se uma delas é MUITO mais cara que as outras (rotativo, por exemplo), ataque ela primeiro de qualquer jeito: a diferença aí é grande demais pra ignorar.",
+          "Nos dois casos a mecânica é a mesma: pague o mínimo de todas e jogue todo o dinheiro extra em UMA só. Espalhar sobra entre todas é o que faz a sensação de nunca sair do lugar."
+        ],
+        pratica: "Escolha UMA dívida pra atacar. Mínimo em todas as outras.",
+        finn: "dividas"
+      },
+      {
+        id: "negociar",
+        titulo: "Renegociar não é vergonha",
+        minutos: 3,
+        corpo: [
+          "Muita gente evita ligar pro banco por vergonha. Vale entender o outro lado: para a empresa, dívida velha vale pouco. Ela prefere receber metade agora a receber uma promessa.",
+          "Por isso descontos grandes existem, principalmente em dívida antiga. Não é favor — é conta deles.",
+          "Três coisas que ajudam na negociação:",
+          "<b>Tenha um número seu antes de ligar.</b> Saiba quanto você consegue pagar por mês, de verdade, sem estourar de novo. Aceitar uma parcela que não cabe é como recomeçar o problema.",
+          "<b>Peça o valor à vista primeiro.</b> O desconto costuma ser bem maior. Se não der, peça o parcelado — mas confira o total, porque parcelamento com juro pode sair mais caro que a dívida original.",
+          "<b>Exija tudo por escrito antes de pagar.</b> Valor, prazo, e a confirmação de que a dívida será quitada e o nome limpo.",
+          "Feirões de renegociação (Serasa, Febraban) costumam ter os melhores descontos, mas acontecem em janelas específicas. Vale esperar por um se a dívida não está crescendo."
+        ],
+        pratica: "Se você tem dívida atrasada, consulte gratuitamente seu CPF e veja as ofertas de acordo.",
+        finn: null
+      }
+    ]
+  },
+  {
+    id: "chao",
+    icone: "🛡️",
+    nome: "Construindo chão",
+    resumo: "O que fazer quando o vermelho acabou e começa a sobrar.",
+    licoes: [
+      {
+        id: "reserva",
+        titulo: "Reserva de emergência: a primeira meta",
+        minutos: 4,
+        corpo: [
+          "Reserva de emergência é dinheiro guardado pra imprevisto — desemprego, saúde, carro quebrado, geladeira que morreu.",
+          "Ela vem antes de qualquer investimento, e o motivo é prático: sem reserva, o primeiro imprevisto vira dívida. E dívida no Brasil custa mais do que qualquer investimento rende. Ou seja, investir antes de ter reserva é matematicamente perdedor.",
+          "<b>Quanto?</b> A referência comum é de 3 a 6 meses do seu <i>custo de vida</i> — não do seu salário. Se você gasta R$ 2.500 por mês, a reserva é entre R$ 7.500 e R$ 15.000. Quanto mais instável sua renda, mais perto de 6 (ou além, se você é autônomo).",
+          "<b>Onde?</b> Sem entrar em produto específico, a reserva precisa de três características: <b>liquidez</b> (dá pra sacar hoje), <b>baixo risco</b> (não pode cair justo quando você precisar) e <b>rendimento pelo menos perto do CDI</b>. Poupança falha no terceiro. Investimento de longo prazo falha no primeiro.",
+          "E o mais importante: R$ 15.000 assusta quem nunca guardou nada. Não olhe o número final. Olhe o próximo mês. Reserva se constrói em parcelas, igual dívida — só que a seu favor."
+        ],
+        pratica: "Calcule seu custo de vida mensal e multiplique por 3. Essa é sua primeira meta.",
+        finn: "metas"
+      },
+      {
+        id: "cdi",
+        titulo: "Selic, CDI e por que a poupança perde",
+        minutos: 4,
+        corpo: [
+          "Três palavras aparecem em toda conversa sobre dinheiro no Brasil. Vale entender o que são — sem precisar decidir nada agora.",
+          "<b>Selic</b> é a taxa básica de juros do país, definida pelo Banco Central. É o \"preço do dinheiro\": quando sobe, crédito fica mais caro e investimento de renda fixa rende mais.",
+          "<b>CDI</b> é a taxa que os bancos usam entre si, e anda quase colada na Selic. Virou a régua do mercado: quando alguém diz que um investimento \"rende 100% do CDI\", quer dizer que rende praticamente a taxa básica.",
+          "<b>Poupança</b> tem uma regra própria, definida em lei. Com a Selic acima de 8,5% ao ano, ela rende 0,5% ao mês + TR — o que dá em torno de 70% do CDI. Traduzindo: <b>ela costuma render menos que outras opções de risco parecido</b>, e às vezes perde para a inflação.",
+          "Isso não quer dizer que você deva sair da poupança correndo — quer dizer que vale saber que existe diferença, e que a diferença é grande no longo prazo. Comparar rendimento com o CDI é o hábito que separa quem escolhe de quem aceita o que oferecem."
+        ],
+        pratica: "Descubra quanto rende hoje o dinheiro que você tem guardado. Compare com o CDI.",
+        finn: null
+      },
+      {
+        id: "compostos",
+        titulo: "Juros compostos a seu favor",
+        minutos: 3,
+        corpo: [
+          "A mesma força que faz dívida explodir faz patrimônio crescer. Só muda o lado.",
+          "R$ 100 por mês, a 1% ao mês, por 10 anos: você deposita R$ 12.000 e termina com cerca de <b>R$ 23.000</b>. Mais da metade veio do tempo, não de você.",
+          "Agora o detalhe que quase ninguém conta: se você começar 5 anos depois e depositar o dobro (R$ 200 por mês por 5 anos), você deposita os mesmos R$ 12.000 — e termina com cerca de R$ 16.000. <b>Sete mil a menos, pelo mesmo esforço.</b>",
+          "Juro composto não premia quem guarda muito. Premia quem começa cedo. O fator que mais pesa não é o valor nem a taxa — é o tempo, porque ele entra na conta como expoente.",
+          "A consequência prática é libertadora: você não precisa esperar \"ter dinheiro\" pra começar. R$ 50 por mês hoje valem mais que R$ 200 por mês daqui a três anos."
+        ],
+        pratica: "Comece com qualquer valor, esta semana. O valor importa menos que a data.",
+        finn: "metas"
+      },
+      {
+        id: "inflacao",
+        titulo: "Inflação: por que dinheiro parado encolhe",
+        minutos: 3,
+        corpo: [
+          "Inflação é a perda de poder de compra. O número não muda; o que ele compra, sim.",
+          "R$ 1.000 embaixo do colchão continuam R$ 1.000 daqui a 10 anos. Mas se a inflação for 5% ao ano, eles compram o equivalente a R$ 614 de hoje. <b>Você perdeu 39% sem gastar nada.</b>",
+          "Por isso \"não perder dinheiro\" e \"deixar parado\" não são a mesma coisa. Dinheiro parado perde, silenciosamente, todo mês.",
+          "É também por isso que rendimento se olha em duas camadas: o <b>nominal</b> (o número que aparece) e o <b>real</b> (o que sobra depois de descontar a inflação). Render 6% com inflação de 5% é render 1% de verdade.",
+          "Quando alguém compara investimento, a pergunta útil é sempre: isso ganha da inflação? Se não ganha, é preservação parcial, não crescimento."
+        ],
+        pratica: "Veja o IPCA dos últimos 12 meses e compare com o rendimento do seu dinheiro guardado.",
+        finn: null
+      }
+    ]
+  },
+  {
+    id: "habitos",
+    icone: "🎯",
+    nome: "Hábitos que sustentam",
+    resumo: "O que faz o controle durar depois que a empolgação passa.",
+    licoes: [
+      {
+        id: "orcamento",
+        titulo: "Um orçamento que você consegue manter",
+        minutos: 4,
+        corpo: [
+          "Orçamento perfeito que dura duas semanas perde para orçamento simples que dura dois anos.",
+          "A regra mais conhecida é a <b>50/30/20</b>: 50% do que entra para necessidades (moradia, comida, transporte, saúde), 30% para vontades (lazer, restaurante, assinatura), 20% para o futuro (reserva, investimento, quitar dívida).",
+          "Ela é um bom ponto de partida — e provavelmente não vai bater com a sua vida. No Brasil, aluguel sozinho passa de 50% em muitas cidades. Isso não significa que você fracassou; significa que a régua veio de outro país.",
+          "Use como direção, não como meta: se hoje você está em 70/28/2, o objetivo do próximo trimestre é chegar em 68/27/5. Progresso, não perfeição.",
+          "Um detalhe que muda tudo: <b>pague o futuro primeiro</b>. Separe a parte do 20% assim que o dinheiro entra, não no fim do mês com o que sobrar. Sobra é uma coisa que raramente acontece por acaso."
+        ],
+        pratica: "Calcule seus três percentuais atuais. Sem julgamento — só pra saber de onde parte.",
+        finn: "limites"
+      },
+      {
+        id: "metas",
+        titulo: "Metas que funcionam têm prazo e nome",
+        minutos: 3,
+        corpo: [
+          "\"Quero guardar dinheiro\" não é meta. É desejo, e desejo não tem como falhar nem como ser cumprido.",
+          "Meta que funciona tem três coisas: <b>valor</b>, <b>prazo</b> e <b>nome</b>.",
+          "\"R$ 6.000 até dezembro para a reserva de emergência\" funciona porque dá pra calcular: são R$ 500 por mês. Agora existe um número mensal, e você sabe todo mês se está dentro ou fora.",
+          "O nome importa mais do que parece. \"Reserva de emergência\" e \"viagem\" competem por dinheiro de forma diferente na cabeça da gente — quando o dinheiro tem dono, fica mais difícil gastar em outra coisa.",
+          "E divida metas grandes. Uma meta de R$ 20.000 desanima; \"R$ 5.000 até junho\", repetido quatro vezes, é a mesma coisa e parece possível."
+        ],
+        pratica: "Transforme sua próxima meta em: valor + prazo + nome.",
+        finn: "metas"
+      },
+      {
+        id: "recair",
+        titulo: "O mês em que tudo dá errado",
+        minutos: 3,
+        corpo: [
+          "Vai acontecer. Um mês você estoura tudo — imprevisto, festa, cansaço, ou só descuido.",
+          "O que separa quem se organiza de quem desiste não é evitar esse mês. É <b>o que acontece depois dele</b>.",
+          "A reação comum é abandonar: \"já quebrei mesmo, deixa pra janeiro\". É o mesmo mecanismo de quem sai da dieta e come o pote inteiro. O estrago do mês ruim é pequeno; o estrago de largar por três meses é grande.",
+          "Uma coisa concreta ajuda: <b>volte a registrar antes de voltar a cortar.</b> Registrar é fácil e não exige disciplina nenhuma. Cortar é difícil. Se você tentar retomar pelos dois ao mesmo tempo, provavelmente não retoma.",
+          "E olhe a sequência, não o mês. Onze meses bons e um ruim é um ano excelente. A média é que constrói."
+        ],
+        pratica: "Se você parou de registrar, registre UM gasto hoje. Só um. É assim que volta.",
+        finn: "streak"
+      }
+    ]
+  }
+];
+
+function aprenderTotalLicoes(){
+  return APRENDER_TRILHAS.reduce(function(t, tr){ return t + tr.licoes.length; }, 0);
+}
+
+// Progresso por usuário: o app é usado em navegador compartilhado (é comum
+// no Brasil), então chave global marcaria a lição de um como lida pro outro.
+function aprenderKey(){ return "finn_aprender_" + (uid() || "anon"); }
+function aprenderLidas(){
+  try { return JSON.parse(localStorage.getItem(aprenderKey()) || "[]"); }
+  catch(e){ return []; }
+}
+function aprenderMarcar(id){
+  var lidas = aprenderLidas();
+  if(lidas.indexOf(id) === -1){
+    lidas.push(id);
+    localStorage.setItem(aprenderKey(), JSON.stringify(lidas));
+  }
+}
+function aprenderDesmarcar(id){
+  var lidas = aprenderLidas().filter(function(x){ return x !== id; });
+  localStorage.setItem(aprenderKey(), JSON.stringify(lidas));
+}
+function aprenderLida(id){ return aprenderLidas().indexOf(id) !== -1; }
+
+function aprenderLicaoPorId(id){
+  for(var i = 0; i < APRENDER_TRILHAS.length; i++){
+    var tr = APRENDER_TRILHAS[i];
+    for(var j = 0; j < tr.licoes.length; j++){
+      if(tr.licoes[j].id === id) return { trilha: tr, licao: tr.licoes[j], indice: j };
+    }
+  }
+  return null;
+}
+
+// Caixa "no seu Finn": pega o conceito da lição e mostra com o dado real da
+// pessoa. É o que a planilha e o blog não fazem — e o que faz a lição sair
+// do abstrato. Cada tipo tem que degradar bem quando ainda não há dado.
+function aprenderCaixaFinn(tipo){
+  if(!tipo) return "";
+  var txt = "", acao = "", aba = "";
+  if(tipo === "streak"){
+    var s = computeStreak();
+    txt = s >= 2
+      ? "Você está registrando há <b>" + s + " dias seguidos</b>. É exatamente o hábito desta lição."
+      : "Você ainda não tem uma sequência de registro. Comece hoje — é o passo desta lição.";
+    acao = "Ir para Adicionar"; aba = "adicionar";
+  } else if(tipo === "saldo"){
+    // Mesmo filtro isFlowTx do resto do app: sem ele, transferência entre
+    // contas entraria como receita e a "sobra" viraria um número mentiroso.
+    var txsMes = txsOfMonth(thisMonth());
+    var rec = txsMes.filter(function(t){ return t.type === "receita" && isFlowTx(t); })
+                    .reduce(function(a, t){ return a + Number(t.value); }, 0);
+    var des = txsMes.filter(function(t){ return t.type === "despesa" && isFlowTx(t); })
+                    .reduce(function(a, t){ return a + Number(t.value); }, 0);
+    var sobra = rec - des;
+    var pct = rec > 0 ? Math.round(sobra / rec * 100) : null;
+    txt = (rec > 0 || des > 0)
+      ? "Neste mês entraram " + fmtMoney(rec) + " e saíram " + fmtMoney(des) + ". Sua sobra é <b>" + fmtMoney(sobra) + "</b>" +
+        (pct !== null ? ", ou seja, <b>" + pct + "%</b> do que entrou." : ".")
+      : "Você ainda não lançou nada neste mês, então não dá pra calcular sua sobra.";
+    acao = "Ver análises"; aba = "analises";
+  } else if(tipo === "fixas"){
+    var n = (state.fixed || []).length;
+    txt = n > 0
+      ? "Você tem <b>" + n + "</b> conta fixa cadastrada" + (n > 1 ? "s" : "") + ". Vale revisar uma por uma e perguntar: usei isso no último mês?"
+      : "Você ainda não cadastrou contas fixas. É lá que as assinaturas esquecidas aparecem.";
+    acao = "Ver contas fixas"; aba = "fixas";
+  } else if(tipo === "cartoes"){
+    txt = "Seus cartões e faturas ficam na aba Cartões — é onde dá pra ver o total já comprometido nos próximos meses.";
+    acao = "Ver cartões"; aba = "cartoes";
+  } else if(tipo === "dividas"){
+    var d = (state.debts || []).length;
+    txt = d > 0
+      ? "Você tem <b>" + d + "</b> dívida cadastrada" + (d > 1 ? "s" : "") + ". O Finn calcula em quantos meses cada uma acaba no ritmo atual."
+      : "Se você tem dívida, cadastre na aba Dívidas — o Finn mostra em quantos meses ela acaba e quanto o juro custa.";
+    acao = "Ver dívidas"; aba = "dividas";
+  } else if(tipo === "metas"){
+    var m = (state.goals || []).length;
+    txt = m > 0
+      ? "Você tem <b>" + m + "</b> meta" + (m > 1 ? "s" : "") + " em andamento. O Finn mostra quanto falta e quanto guardar por mês."
+      : "Você ainda não criou nenhuma meta. Comece pela reserva de emergência.";
+    acao = "Ver metas"; aba = "metas";
+  } else if(tipo === "limites"){
+    var l = (state.limits || []).length;
+    txt = l > 0
+      ? "Você tem <b>" + l + "</b> limite definido" + (l > 1 ? "s" : "") + ". Limite não é proibição — é aviso antes de estourar."
+      : "Você ainda não definiu limites por categoria. É a forma prática de aplicar um orçamento.";
+    acao = "Ver limites"; aba = "limites";
+  }
+  if(!txt) return "";
+  return '<div class="apr-finn">' +
+    '<div class="apr-finn-tag">No seu Finn</div>' +
+    '<div class="apr-finn-txt">' + txt + '</div>' +
+    (aba ? '<button type="button" class="btn-ghost btn-inline" data-aprir="' + aba + '">' + escapeHtml(acao) + '</button>' : '') +
+  '</div>';
+}
+
+function renderAprender(){
+  // Lição aberta
+  if(state.aprenderLicao){
+    var achou = aprenderLicaoPorId(state.aprenderLicao);
+    if(!achou) { state.aprenderLicao = null; return renderAprender(); }
+    var lic = achou.licao, tr = achou.trilha;
+    var lida = aprenderLida(lic.id);
+    var proxima = tr.licoes[achou.indice + 1];
+
+    return '<div class="card">' +
+      '<button type="button" class="btn-ghost btn-inline" id="btnAprVoltar" style="margin-bottom:12px">← Todas as lições</button>' +
+      '<div class="eyebrow" style="margin:0">' + escapeHtml(tr.icone + " " + tr.nome) + '</div>' +
+      '<h2 style="font-size:20px;font-weight:800;color:var(--fd);margin:8px 0 4px;line-height:1.25">' + escapeHtml(lic.titulo) + '</h2>' +
+      '<div style="font-size:12px;color:var(--fm);margin-bottom:16px">' + lic.minutos + ' min de leitura</div>' +
+      lic.corpo.map(function(p){
+        return '<p class="apr-p">' + p + '</p>';
+      }).join("") +
+      (lic.pratica
+        ? '<div class="apr-pratica"><div class="apr-pratica-tag">Pratique</div><div>' + escapeHtml(lic.pratica) + '</div></div>'
+        : '') +
+      aprenderCaixaFinn(lic.finn) +
+      '<button type="button" class="' + (lida ? "btn-ghost" : "btn-submit") + '" id="btnAprLida" style="width:100%;margin-top:16px">' +
+        (lida ? "✓ Lição concluída — desmarcar" : "Marcar como concluída") + '</button>' +
+      (proxima
+        ? '<button type="button" class="btn-ghost" id="btnAprProxima" data-apr="' + proxima.id + '" style="width:100%;margin-top:8px">Próxima: ' + escapeHtml(proxima.titulo) + ' →</button>'
+        : '') +
+    '</div>';
+  }
+
+  // Índice
+  var lidas = aprenderLidas().length;
+  var total = aprenderTotalLicoes();
+  var pct = total ? Math.round(lidas / total * 100) : 0;
+
+  var html = '<div class="card" style="background:var(--fdk);border-color:var(--fdk)">' +
+    '<div class="eyebrow" style="color:var(--fp);margin-bottom:6px">Aprender · grátis pra sempre</div>' +
+    '<div style="font-size:17px;font-weight:800;color:#fff;line-height:1.3">Educação financeira que ninguém te deu na escola</div>' +
+    '<div style="font-size:13px;color:#CBD5E1;margin-top:8px;line-height:1.5">' +
+      'Sem enrolação e sem vender nada. São ' + total + ' lições curtas, em português claro, ' +
+      'ligadas aos seus próprios números.</div>' +
+  '</div>';
+
+  if(lidas > 0){
+    html += '<div class="card">' +
+      '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">' +
+        '<div class="eyebrow" style="margin:0">Seu progresso</div>' +
+        '<div style="font-size:13px;font-weight:800;color:var(--fp)">' + lidas + ' de ' + total + '</div>' +
+      '</div>' +
+      '<div class="apr-barra"><div class="apr-barra-fill" style="width:' + pct + '%"></div></div>' +
+    '</div>';
+  }
+
+  APRENDER_TRILHAS.forEach(function(tr){
+    var feitas = tr.licoes.filter(function(l){ return aprenderLida(l.id); }).length;
+    html += '<div class="card">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">' +
+        '<span style="font-size:22px;line-height:1">' + tr.icone + '</span>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div style="font-weight:800;font-size:15px;color:var(--fd)">' + escapeHtml(tr.nome) + '</div>' +
+          '<div style="font-size:12px;color:var(--fm)">' + escapeHtml(tr.resumo) + '</div>' +
+        '</div>' +
+        '<div style="font-size:11.5px;color:' + (feitas === tr.licoes.length ? "var(--fs)" : "var(--fm)") + ';font-weight:700;flex-shrink:0">' +
+          feitas + '/' + tr.licoes.length + '</div>' +
+      '</div>' +
+      '<div style="margin-top:10px">' +
+        tr.licoes.map(function(l){
+          var ok = aprenderLida(l.id);
+          return '<button type="button" class="apr-item" data-apr="' + l.id + '">' +
+            '<span class="apr-check' + (ok ? " apr-check-ok" : "") + '">' + (ok ? "✓" : "") + '</span>' +
+            '<span class="apr-item-txt">' +
+              '<span class="apr-item-tit">' + escapeHtml(l.titulo) + '</span>' +
+              '<span class="apr-item-min">' + l.minutos + ' min</span>' +
+            '</span>' +
+            '<span class="apr-seta">→</span>' +
+          '</button>';
+        }).join("") +
+      '</div>' +
+    '</div>';
+  });
+
+  // Aviso obrigatório: educação, não consultoria. Fica no fim, sem alarde,
+  // mas presente — o conteúdo fala de dívida e investimento, e a fronteira
+  // entre explicar e recomendar precisa estar escrita em algum lugar.
+  html += '<div class="card">' +
+    '<div style="font-size:11.5px;color:var(--fm);line-height:1.6">' +
+      '<b>Sobre este conteúdo.</b> É material educativo: explica como as coisas funcionam para você decidir melhor. ' +
+      'Não é recomendação de investimento nem consultoria financeira, e o Finn não indica produto, corretora ou banco. ' +
+      'Os valores citados são exemplos para ilustrar o mecanismo — taxas reais mudam com o tempo e com o seu caso.' +
+    '</div>' +
+  '</div>';
+
+  return html;
+}
+
 // Cartão da Planilha Finn. O token vive só aqui e no Google Sheets da pessoa
 // — nunca é gravado em lugar nenhum do app além do que a própria pessoa vê.
+function planilhaLiberada(){
+  if(!PREMIUM_ENFORCEMENT_ENABLED) return true;
+  if(isMasterUser() && state.adminUnlocked) return true;
+  return state.plan === "pro";
+}
+
 function renderPlanilhaCard(){
   var t = state.planilhaToken;
+  if(!planilhaLiberada()){
+    return '<div class="card">' +
+      '<div class="eyebrow">Planilha Finn</div>' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
+        'A Planilha Finn é a planilha de controle financeiro no Google Sheets que sincroniza ' +
+        'com o app. Faz parte do plano <b>Pro</b>.</div>' +
+      '<button type="button" class="btn-ghost" id="btnPlanilhaVerPlanos" style="width:100%">Ver planos</button>' +
+    '</div>';
+  }
   return '<div class="card">' +
     '<div class="eyebrow">Planilha Finn</div>' +
     '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
@@ -6725,6 +7219,7 @@ function render(){
   else if(state.tab === "dividas") content.innerHTML = renderDividas();
   else if(state.tab === "racha") content.innerHTML = renderRacha();
   else if(state.tab === "ia") content.innerHTML = renderIA();
+  else if(state.tab === "aprender") content.innerHTML = renderAprender();
   else if(state.tab === "adminHome") content.innerHTML = renderAdminHome();
   else if(state.tab === "conteudo") content.innerHTML = renderConteudo();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
@@ -6944,6 +7439,35 @@ function bindContentEvents(){
   if(state.tab === "ia"){
     document.getElementById("btnAI").addEventListener("click", callAI);
   }
+  if(state.tab === "aprender"){
+    // Delegação: o índice tem dezenas de botões de lição e re-renderiza a
+    // cada marcação. Registrar um por um seria trabalho repetido a cada render.
+    var alvoApr;
+    [].slice.call(document.querySelectorAll("[data-apr]")).forEach(function(b){
+      b.addEventListener("click", function(){
+        state.aprenderLicao = b.getAttribute("data-apr");
+        window.scrollTo(0, 0);
+        render();
+      });
+    });
+    [].slice.call(document.querySelectorAll("[data-aprir]")).forEach(function(b){
+      b.addEventListener("click", function(){
+        state.tab = b.getAttribute("data-aprir");
+        state.aprenderLicao = null;
+        window.scrollTo(0, 0);
+        render();
+      });
+    });
+    if((alvoApr = document.getElementById("btnAprVoltar"))) alvoApr.addEventListener("click", function(){
+      state.aprenderLicao = null; window.scrollTo(0, 0); render();
+    });
+    if((alvoApr = document.getElementById("btnAprLida"))) alvoApr.addEventListener("click", function(){
+      var id = state.aprenderLicao;
+      if(!id) return;
+      if(aprenderLida(id)) aprenderDesmarcar(id); else aprenderMarcar(id);
+      render();
+    });
+  }
   if(state.tab === "racha"){
     document.getElementById("btnAddParticipant").addEventListener("click", function(){
       syncSplitForm();
@@ -7072,6 +7596,10 @@ function bindContentEvents(){
     var btnConnectWhatsApp = document.getElementById("btnConnectWhatsApp");
     if(btnConnectWhatsApp) btnConnectWhatsApp.addEventListener("click", connectWhatsApp);
     var bp;
+    if((bp = document.getElementById("btnPlanilhaVerPlanos"))) bp.addEventListener("click", function(){
+      var alvo = document.getElementById("planosCard") || document.getElementById("content");
+      if(alvo) alvo.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
     if((bp = document.getElementById("btnPlanilhaGerar"))) bp.addEventListener("click", function(){ planilhaChamar("POST"); });
     if((bp = document.getElementById("btnPlanilhaTrocar"))) bp.addEventListener("click", function(){ planilhaChamar("POST"); });
     if((bp = document.getElementById("btnPlanilhaRevogar"))) bp.addEventListener("click", function(){ planilhaChamar("DELETE"); });

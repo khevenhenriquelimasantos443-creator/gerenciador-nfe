@@ -4105,14 +4105,23 @@ h1 em{font-style:normal;color:#F97316}
 <h2><span class="num">05</span> WhatsApp Bot</h2>
 <p>Se você utilizar o bot do WhatsApp, seu número de telefone é associado às suas transações registradas pelo bot, armazenadas no Cloudflare KV. Esses dados são acessíveis apenas por você através do app Finn.</p>
 
-<h2><span class="num">06</span> Registros de segurança</h2>
+<h2><span class="num">06</span> Planilha Finn (Google Sheets)</h2>
+<p>Se você conectar a Planilha Finn, é gerado um <strong>token</strong> que autoriza somente duas coisas: ler os seus lançamentos e gravar novos lançamentos na sua conta. Ele não dá acesso a configurações, a dados de outras pessoas nem à área administrativa.</p>
+<p>Guardamos apenas o token e a identificação da sua conta, para saber a quem ele pertence. <strong>Não temos acesso à sua planilha</strong> nem ao seu Google Drive — quem lê e escreve é um script que roda dentro da sua própria conta do Google.</p>
+<p>Você revoga o token quando quiser, em Configurações → Planilha Finn → Desconectar. A revogação vale na hora.</p>
+
+<h2><span class="num">07</span> Aba Aprender</h2>
+<p>O conteúdo educativo é o mesmo para todo mundo e <strong>não é personalizado com base em perfil</strong>. As caixas "No seu Finn" fazem os cálculos no seu próprio dispositivo, com os dados que já estão na sua conta; nada é enviado para lugar nenhum por causa disso.</p>
+<p>O progresso das lições fica salvo <strong>no seu navegador</strong>, não no servidor.</p>
+
+<h2><span class="num">08</span> Registros de segurança</h2>
 <p>Para proteger as contas, registramos tentativas de acesso suspeitas — como varredura automatizada por endereços que não existem no site, ou repetidas senhas incorretas na área administrativa. Guardamos o horário, o caminho acessado, o navegador informado, o país e uma <strong>versão parcial do endereço de IP</strong> (por exemplo <em>189.45.x.x</em>), nunca o endereço completo.</p>
 <p>Esses registros existem apenas para detectar abuso, não são usados para perfilar pessoas nem cruzados com sua conta, e são <strong>apagados automaticamente após 30 dias</strong>.</p>
 
-<h2><span class="num">07</span> Seus direitos</h2>
+<h2><span class="num">09</span> Seus direitos</h2>
 <div class="notice"><strong>Você está no controle.</strong><br>Pode solicitar a exclusão de todos os seus dados a qualquer momento em <a href="/deletar-dados">finn.dev.br/deletar-dados</a> — sem perguntas, sem retenção.</div>
 
-<h2><span class="num">08</span> Contato</h2>
+<h2><span class="num">10</span> Contato</h2>
 <p>Dúvidas sobre privacidade? Escreva para <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a> e respondemos em até 48h.</p>
 </article>\`;
       return new Response(legalShell('privacidade', 'Política de Privacidade', 'Documento legal', body), { headers: Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS) });
@@ -4124,19 +4133,34 @@ h1 em{font-style:normal;color:#F97316}
 <p>Ao usar o Finn, você concorda com estes Termos. Se não concordar, não utilize o serviço.</p>
 
 <h2><span class="num">02</span> O serviço</h2>
-<p>O Finn é um aplicativo de <strong>controle financeiro pessoal oferecido gratuitamente</strong>. Reservamo-nos o direito de modificar ou encerrar o serviço a qualquer momento, com aviso prévio razoável.</p>
+<p>O Finn é um aplicativo de <strong>controle financeiro pessoal</strong>. Existe um plano gratuito e planos pagos (Plus e Pro), com recursos diferentes em cada um. Reservamo-nos o direito de modificar ou encerrar o serviço a qualquer momento, com aviso prévio razoável.</p>
+<p>Durante o período de testes, todos os recursos podem estar liberados em qualquer plano. Quando a cobrança começar, você será avisado antes, e os limites de cada plano passam a valer.</p>
 
-<h2><span class="num">03</span> Responsabilidade dos dados</h2>
+<h2><span class="num">03</span> Planos e pagamento</h2>
+<p>Os planos pagos são cobrados mensalmente. Você pode cancelar quando quiser, e o acesso continua até o fim do período já pago — não há multa nem fidelidade.</p>
+<p>O <strong>plano gratuito não tem prazo para acabar</strong>. A aba <strong>Aprender</strong>, com o conteúdo de educação financeira, é gratuita em todos os planos.</p>
+
+<h2><span class="num">04</span> Conteúdo educativo</h2>
+<p>O Finn oferece material de <strong>educação financeira</strong> com finalidade informativa: explicar como conceitos funcionam para que você decida melhor.</p>
+<p>Esse conteúdo <strong>não é recomendação de investimento, consultoria ou análise de valores mobiliários</strong>, atividades reguladas pela CVM. O Finn não indica produto financeiro, corretora ou instituição, e não recebe comissão de nenhuma delas.</p>
+<p>Valores, taxas e exemplos citados servem para ilustrar mecanismos e mudam com o tempo. Confira sempre as condições reais antes de decidir.</p>
+
+<h2><span class="num">05</span> Responsabilidade dos dados</h2>
 <p>Você é responsável pela precisão dos dados que insere no app. O Finn não se responsabiliza por decisões financeiras tomadas com base nas análises do aplicativo.</p>
 <p>As análises com IA são <strong>informativas</strong> e não constituem aconselhamento financeiro profissional.</p>
 
-<h2><span class="num">04</span> Uso adequado</h2>
+<h2><span class="num">06</span> Planilha Finn e integrações</h2>
+<p>A Planilha Finn é um arquivo do Google Sheets fornecido como parte do plano Pro. Ela funciona de forma independente do aplicativo; a sincronização é opcional.</p>
+<p>Ao conectar a planilha, é gerado um <strong>token de acesso</strong> que permite ler e gravar lançamentos na sua conta — e nada além disso. Você pode revogá-lo a qualquer momento nas Configurações. <strong>Guardar esse token em segurança é responsabilidade sua</strong>; quem tiver o token consegue ver e criar lançamentos na sua conta.</p>
+<p>O mesmo vale para a vinculação com WhatsApp e Telegram: são canais opcionais, que você conecta e desconecta quando quiser.</p>
+
+<h2><span class="num">07</span> Uso adequado</h2>
 <p>É proibido usar o Finn para fins ilegais, tentativas de acesso não autorizado à plataforma ou uso que prejudique outros usuários.</p>
 
-<h2><span class="num">05</span> Disponibilidade</h2>
+<h2><span class="num">08</span> Disponibilidade</h2>
 <p>O Finn é fornecido <strong>"como está"</strong>, sem garantias de disponibilidade ininterrupta. Fazemos o melhor para manter o serviço estável, mas não garantimos 100% de uptime.</p>
 
-<h2><span class="num">06</span> Contato</h2>
+<h2><span class="num">09</span> Contato</h2>
 <p>Dúvidas, sugestões ou reclamações: <a href="mailto:Finn.controle01@gmail.com">Finn.controle01@gmail.com</a></p>
 </article>\`;
       return new Response(legalShell('termos', 'Termos de Serviço', 'Documento legal', body), { headers: Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS) });
