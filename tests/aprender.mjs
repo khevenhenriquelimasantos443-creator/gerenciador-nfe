@@ -44,7 +44,13 @@ console.log('=== aba Aprender ===');
   ok(tem,'a aba aparece na navegação');
   await p.evaluate(async()=>{document.querySelector('.tab-btn[data-tab="aprender"]').click();await new Promise(r=>setTimeout(r,400));});
   const idx=await p.evaluate(()=>({txt:document.getElementById('content').innerText,itens:document.querySelectorAll('.apr-item').length}));
-  ok(idx.itens===15,'15 lições listadas',idx.itens);
+  ok(idx.itens===38,'38 lições listadas',idx.itens);
+  ok(/Finanças pessoais/.test(idx.txt)&&/Reservas/.test(idx.txt)&&/Investimentos/.test(idx.txt),'as 3 áreas aparecem');
+  const niveis=await p.evaluate(()=>({
+    b:document.querySelectorAll('.apr-nivel-basico').length,
+    i:document.querySelectorAll('.apr-nivel-intermediario').length,
+    a:document.querySelectorAll('.apr-nivel-avancado').length}));
+  ok(niveis.b>0&&niveis.i>0&&niveis.a>0,'os 3 níveis estão marcados',JSON.stringify(niveis));
   ok(/grátis pra sempre/i.test(idx.txt),'diz que é grátis');
   ok(/não é recomendação de investimento/i.test(idx.txt),'traz o aviso de que é educativo, não consultoria');
 
@@ -63,7 +69,7 @@ console.log('=== aba Aprender ===');
   await p.evaluate(async()=>{document.getElementById('btnAprVoltar').click();await new Promise(r=>setTimeout(r,400));});
   const prog=await p.evaluate(()=>({txt:document.getElementById('content').innerText,ok:document.querySelectorAll('.apr-check-ok').length}));
   ok(prog.ok===1,'volta ao índice com 1 lição marcada',prog.ok);
-  ok(/1 de 15/.test(prog.txt),'e mostra o progresso',(prog.txt.match(/\d+ de \d+/)||[])[0]);
+  ok(/1 de 38/.test(prog.txt),'e mostra o progresso',(prog.txt.match(/\d+ de \d+/)||[])[0]);
 
   // O botão "No seu Finn" leva pra aba certa
   await p.evaluate(async()=>{document.querySelector('[data-apr="metas"]').click();await new Promise(r=>setTimeout(r,400));});

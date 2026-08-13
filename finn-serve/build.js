@@ -4313,7 +4313,9 @@ h1 em{font-style:normal;color:#F97316}
 
 <h2><span class="num">04</span> Conteúdo educativo</h2>
 <p>O Finn oferece material de <strong>educação financeira</strong> com finalidade informativa: explicar como conceitos funcionam para que você decida melhor.</p>
-<p>Esse conteúdo <strong>não é recomendação de investimento, consultoria ou análise de valores mobiliários</strong>, atividades reguladas pela CVM. O Finn não indica produto financeiro, corretora ou instituição, e não recebe comissão de nenhuma delas.</p>
+<p>Esse conteúdo <strong>não é recomendação de investimento, consultoria ou análise de valores mobiliários</strong>, atividades reguladas pela CVM (Resoluções CVM 19 e 20, de 2021). O Finn não indica produto financeiro, corretora ou instituição, não sugere momento de compra ou venda, não promete rentabilidade e não recebe comissão de nenhuma delas.</p>
+<p>O material inclui explicações sobre instrumentos de investimento, tributação e proteção ao investidor. A finalidade é <strong>descrever como esses mecanismos funcionam</strong>, para que você avalie as ofertas que receber. Nenhuma parte dele é dirigida ao seu caso particular.</p>
+<p>Regras tributárias, limites de isenção e coberturas de garantia mudam com frequência. Os valores citados servem de exemplo; confirme a norma vigente na fonte oficial antes de decidir.</p>
 <p>Valores, taxas e exemplos citados servem para ilustrar mecanismos e mudam com o tempo. Confira sempre as condições reais antes de decidir.</p>
 
 <h2><span class="num">05</span> Responsabilidade dos dados</h2>

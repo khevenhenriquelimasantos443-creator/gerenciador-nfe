@@ -291,6 +291,20 @@ body.finn-dark .health-card.bad{background:#3F1212;border-color:#7F1D1D}
 .apr-barra{height:8px;background:var(--fb);border-radius:99px;overflow:hidden}
 .apr-barra-fill{height:100%;background:var(--fp);border-radius:99px;transition:width .3s}
 
+.apr-area{display:flex;align-items:center;gap:11px;margin:22px 0 10px;padding:0 2px}
+.apr-area-ic{font-size:24px;line-height:1;flex-shrink:0}
+.apr-area-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.apr-area-nome{font-size:16px;font-weight:900;color:var(--fd);letter-spacing:-.01em}
+.apr-area-res{font-size:11.5px;color:var(--fm);line-height:1.4}
+.apr-area-cnt{font-size:12px;font-weight:800;color:var(--fm);flex-shrink:0}
+.apr-nivel{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:99px;vertical-align:middle;margin-left:4px}
+.apr-nivel-basico{background:#DCFCE7;color:#166534}
+.apr-nivel-intermediario{background:var(--fpl);color:#9A3412}
+.apr-nivel-avancado{background:#EDE9FE;color:#5B21B6}
+body.finn-dark .apr-nivel-basico{background:#14532D;color:#86EFAC}
+body.finn-dark .apr-nivel-intermediario{background:#3A2308;color:#FDBA74}
+body.finn-dark .apr-nivel-avancado{background:#3B2E63;color:#C4B5FD}
+
 /* ── fixed accounts ── */
 .fixed-item{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid var(--fb);border-radius:12px;margin-top:10px}
 .fixed-item:first-child{margin-top:0}
@@ -4185,17 +4199,41 @@ function renderWhatsAppLinkCard(meta){
 //  mais precisa de educação financeira é justamente quem não vai pagar
 //  por ela, e cobrar por isso inverteria o objetivo do recurso.
 //
-//  REGRA DE CONTEÚDO que vale pra tudo aqui: explicar como as coisas
-//  funcionam, NUNCA dizer onde a pessoa deve pôr o dinheiro. Recomendar
-//  investimento específico no Brasil é atividade regulada pela CVM e exige
-//  registro; explicar o que é CDI, como juro composto funciona ou por que
-//  o rotativo é caro não é. A fronteira é: descrever o mecanismo, sim;
-//  indicar produto, não.
+//  ─────────────────────────────────────────────────────────────────
+//  REGRA EDITORIAL — vale pra TODA lição, sem exceção
+//
+//  Quem regula isso no Brasil é a CVM (Resoluções 19 e 20 de 2021), não a
+//  Polícia Federal. Elas exigem registro pra RECOMENDAR investimento.
+//  Conteúdo educativo e genérico não é regulado.
+//
+//  PODE: explicar como um instrumento funciona, seus riscos, como a
+//  tributação incide, como comparar, o que significa cada termo.
+//
+//  NÃO PODE: indicar produto, corretora ou banco; dizer que algo vai
+//  subir ou cair; prometer ou sugerir rentabilidade; recomendar com base
+//  no perfil de quem lê; se apresentar como consultor ou assessor.
+//
+//  Na dúvida, o teste é: a frase descreve um MECANISMO ou dá uma ORDEM?
+//  Mecanismo pode. Ordem, não.
+//  ─────────────────────────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════
 
+var APRENDER_AREAS = [
+  { id: "financas",      icone: "💰", nome: "Finanças pessoais", resumo: "Organizar o que entra, o que sai e o que sobra." },
+  { id: "reservas",      icone: "🛡️", nome: "Reservas",          resumo: "O colchão que impede que um imprevisto vire dívida." },
+  { id: "investimentos", icone: "📈", nome: "Investimentos",     resumo: "Como cada coisa funciona — pra você decidir sozinho." },
+];
+
+var APRENDER_NIVEIS = [
+  { id: "basico",        nome: "Básico" },
+  { id: "intermediario", nome: "Intermediário" },
+  { id: "avancado",      nome: "Avançado" },
+];
+
 var APRENDER_TRILHAS = [
+  // ═══════════════ FINANÇAS PESSOAIS ═══════════════
   {
-    id: "basico",
+    id: "basico", area: "financas", nivel: "basico",
     icone: "🌱",
     nome: "O básico que ninguém ensinou",
     resumo: "Por onde começa quem nunca aprendeu nada sobre dinheiro.",
@@ -4260,7 +4298,7 @@ var APRENDER_TRILHAS = [
     ]
   },
   {
-    id: "vermelho",
+    id: "vermelho", area: "financas", nivel: "intermediario",
     icone: "🔥",
     nome: "Saindo do vermelho",
     resumo: "Dívida no Brasil é cara de um jeito que assusta. Como sair.",
@@ -4327,71 +4365,7 @@ var APRENDER_TRILHAS = [
     ]
   },
   {
-    id: "chao",
-    icone: "🛡️",
-    nome: "Construindo chão",
-    resumo: "O que fazer quando o vermelho acabou e começa a sobrar.",
-    licoes: [
-      {
-        id: "reserva",
-        titulo: "Reserva de emergência: a primeira meta",
-        minutos: 4,
-        corpo: [
-          "Reserva de emergência é dinheiro guardado pra imprevisto — desemprego, saúde, carro quebrado, geladeira que morreu.",
-          "Ela vem antes de qualquer investimento, e o motivo é prático: sem reserva, o primeiro imprevisto vira dívida. E dívida no Brasil custa mais do que qualquer investimento rende. Ou seja, investir antes de ter reserva é matematicamente perdedor.",
-          "<b>Quanto?</b> A referência comum é de 3 a 6 meses do seu <i>custo de vida</i> — não do seu salário. Se você gasta R$ 2.500 por mês, a reserva é entre R$ 7.500 e R$ 15.000. Quanto mais instável sua renda, mais perto de 6 (ou além, se você é autônomo).",
-          "<b>Onde?</b> Sem entrar em produto específico, a reserva precisa de três características: <b>liquidez</b> (dá pra sacar hoje), <b>baixo risco</b> (não pode cair justo quando você precisar) e <b>rendimento pelo menos perto do CDI</b>. Poupança falha no terceiro. Investimento de longo prazo falha no primeiro.",
-          "E o mais importante: R$ 15.000 assusta quem nunca guardou nada. Não olhe o número final. Olhe o próximo mês. Reserva se constrói em parcelas, igual dívida — só que a seu favor."
-        ],
-        pratica: "Calcule seu custo de vida mensal e multiplique por 3. Essa é sua primeira meta.",
-        finn: "metas"
-      },
-      {
-        id: "cdi",
-        titulo: "Selic, CDI e por que a poupança perde",
-        minutos: 4,
-        corpo: [
-          "Três palavras aparecem em toda conversa sobre dinheiro no Brasil. Vale entender o que são — sem precisar decidir nada agora.",
-          "<b>Selic</b> é a taxa básica de juros do país, definida pelo Banco Central. É o \"preço do dinheiro\": quando sobe, crédito fica mais caro e investimento de renda fixa rende mais.",
-          "<b>CDI</b> é a taxa que os bancos usam entre si, e anda quase colada na Selic. Virou a régua do mercado: quando alguém diz que um investimento \"rende 100% do CDI\", quer dizer que rende praticamente a taxa básica.",
-          "<b>Poupança</b> tem uma regra própria, definida em lei. Com a Selic acima de 8,5% ao ano, ela rende 0,5% ao mês + TR — o que dá em torno de 70% do CDI. Traduzindo: <b>ela costuma render menos que outras opções de risco parecido</b>, e às vezes perde para a inflação.",
-          "Isso não quer dizer que você deva sair da poupança correndo — quer dizer que vale saber que existe diferença, e que a diferença é grande no longo prazo. Comparar rendimento com o CDI é o hábito que separa quem escolhe de quem aceita o que oferecem."
-        ],
-        pratica: "Descubra quanto rende hoje o dinheiro que você tem guardado. Compare com o CDI.",
-        finn: null
-      },
-      {
-        id: "compostos",
-        titulo: "Juros compostos a seu favor",
-        minutos: 3,
-        corpo: [
-          "A mesma força que faz dívida explodir faz patrimônio crescer. Só muda o lado.",
-          "R$ 100 por mês, a 1% ao mês, por 10 anos: você deposita R$ 12.000 e termina com cerca de <b>R$ 23.000</b>. Mais da metade veio do tempo, não de você.",
-          "Agora o detalhe que quase ninguém conta: se você começar 5 anos depois e depositar o dobro (R$ 200 por mês por 5 anos), você deposita os mesmos R$ 12.000 — e termina com cerca de R$ 16.000. <b>Sete mil a menos, pelo mesmo esforço.</b>",
-          "Juro composto não premia quem guarda muito. Premia quem começa cedo. O fator que mais pesa não é o valor nem a taxa — é o tempo, porque ele entra na conta como expoente.",
-          "A consequência prática é libertadora: você não precisa esperar \"ter dinheiro\" pra começar. R$ 50 por mês hoje valem mais que R$ 200 por mês daqui a três anos."
-        ],
-        pratica: "Comece com qualquer valor, esta semana. O valor importa menos que a data.",
-        finn: "metas"
-      },
-      {
-        id: "inflacao",
-        titulo: "Inflação: por que dinheiro parado encolhe",
-        minutos: 3,
-        corpo: [
-          "Inflação é a perda de poder de compra. O número não muda; o que ele compra, sim.",
-          "R$ 1.000 embaixo do colchão continuam R$ 1.000 daqui a 10 anos. Mas se a inflação for 5% ao ano, eles compram o equivalente a R$ 614 de hoje. <b>Você perdeu 39% sem gastar nada.</b>",
-          "Por isso \"não perder dinheiro\" e \"deixar parado\" não são a mesma coisa. Dinheiro parado perde, silenciosamente, todo mês.",
-          "É também por isso que rendimento se olha em duas camadas: o <b>nominal</b> (o número que aparece) e o <b>real</b> (o que sobra depois de descontar a inflação). Render 6% com inflação de 5% é render 1% de verdade.",
-          "Quando alguém compara investimento, a pergunta útil é sempre: isso ganha da inflação? Se não ganha, é preservação parcial, não crescimento."
-        ],
-        pratica: "Veja o IPCA dos últimos 12 meses e compare com o rendimento do seu dinheiro guardado.",
-        finn: null
-      }
-    ]
-  },
-  {
-    id: "habitos",
+    id: "habitos", area: "financas", nivel: "intermediario",
     icone: "🎯",
     nome: "Hábitos que sustentam",
     resumo: "O que faz o controle durar depois que a empolgação passa.",
@@ -4437,6 +4411,488 @@ var APRENDER_TRILHAS = [
         ],
         pratica: "Se você parou de registrar, registre UM gasto hoje. Só um. É assim que volta.",
         finn: "streak"
+      }
+    ]
+  },
+  {
+    id: "financas-avancado", area: "financas", nivel: "avancado",
+    icone: "🧭",
+    nome: "Finanças avançadas",
+    resumo: "Patrimônio, imposto, proteção e a matemática da liberdade.",
+    licoes: [
+      {
+        id: "patrimonio",
+        titulo: "Patrimônio líquido: o número que importa",
+        minutos: 4,
+        corpo: [
+          "Salário mede fluxo. Patrimônio mede resultado. São coisas diferentes, e só a segunda diz se você está indo bem.",
+          "<b>Patrimônio líquido = tudo que você tem − tudo que você deve.</b>",
+          "Do lado do que você tem: dinheiro em conta, reserva, investimentos, imóvel, carro, valor de venda de bens. Do lado do que deve: financiamento, empréstimo, fatura do cartão, parcelas em aberto.",
+          "O número pode dar negativo, e isso é mais comum do que parece — principalmente com financiamento imobiliário no começo. Não é motivo pra desânimo; é ponto de partida.",
+          "O que faz esse número ser útil é <b>medir sempre do mesmo jeito, uma vez por mês ou por trimestre</b>. O valor absoluto importa menos que a direção. Subiu? O que você fez funcionou.",
+          "Um cuidado: bem de uso não é investimento. Carro perde valor todo ano; imóvel onde você mora não gera renda e tem custo de manutenção e imposto. Contar os dois como patrimônio é correto, mas confundi-los com dinheiro disponível é o erro que faz gente \"rica no papel\" viver apertada."
+        ],
+        pratica: "Some tudo que você tem, subtraia tudo que deve. Anote a data. Repita em 3 meses.",
+        finn: null
+      },
+      {
+        id: "imposto",
+        titulo: "Imposto de renda sem susto",
+        minutos: 5,
+        corpo: [
+          "A declaração assusta mais pelo desconhecido do que pela dificuldade. Vale entender a estrutura.",
+          "<b>Quem precisa declarar</b> muda todo ano, mas os critérios são sempre os mesmos tipos: renda tributável acima de um limite, renda isenta acima de outro, posse de bens acima de certo valor, ganho de capital, ou operação em bolsa. A Receita publica os valores atualizados a cada exercício — confira no ano corrente, porque o limite sobe.",
+          "<b>Declarar não é o mesmo que pagar.</b> Muita gente declara e recebe restituição. Deixar de declarar quando era obrigatório é que gera multa, e a multa mínima existe mesmo quando não há imposto devido.",
+          "<b>Os dois modelos.</b> No <i>simplificado</i>, você troca todas as deduções por um desconto padrão. No <i>completo</i>, você lista despesas dedutíveis (saúde, educação até um teto, dependentes, previdência oficial). O programa da Receita calcula os dois e mostra qual dá menos imposto — não existe escolha \"certa\" universal, existe a conta.",
+          "<b>O que muita gente esquece de guardar:</b> informe de rendimentos de cada banco e corretora, comprovante de despesa médica, e o informe de quem paga aluguel a você. Sem papel, a dedução não existe.",
+          "<b>Investimentos entram na declaração mesmo quando são isentos.</b> Isento de imposto não é isento de declarar. Poupança, LCI, LCA e dividendos entram como rendimento isento; a omissão é o que costuma cair na malha fina.",
+          "E a malha fina, na prática, quase sempre é divergência de valor — algo que você digitou diferente do que a fonte informou. Conferir contra os informes resolve a maior parte."
+        ],
+        pratica: "Crie uma pasta digital e vá jogando todo informe e comprovante nela durante o ano.",
+        finn: null
+      },
+      {
+        id: "seguros",
+        titulo: "Quando seguro faz sentido",
+        minutos: 4,
+        corpo: [
+          "Seguro não é investimento e não deveria ser vendido como tal. É transferência de risco: você paga um valor pequeno e certo para não correr um prejuízo grande e incerto.",
+          "Daí sai a regra que decide tudo: <b>seguro faz sentido quando a perda seria grande demais pra você absorver, e não faz quando você conseguiria pagar do próprio bolso.</b>",
+          "Por isso seguro de celular costuma ser mau negócio pra quem tem reserva — o aparelho cabe no orçamento — e seguro de vida costuma ser bom negócio pra quem tem alguém que depende da sua renda. O valor da apólice não é o que decide; é o tamanho do estrago.",
+          "<b>Como comparar sem se perder:</b> olhe a <i>cobertura</i> (o que exatamente está coberto), as <i>exclusões</i> (o que não está — é onde moram as surpresas), a <i>franquia</i> (quanto você paga em caso de sinistro) e a <i>carência</i> (quanto tempo até valer).",
+          "Uma armadilha comum são os produtos que misturam seguro com poupança ou investimento. Misturar as duas funções costuma sair mais caro que contratar cada uma separadamente — e deixa a comparação mais difícil, o que raramente é acidente.",
+          "Nada aqui é indicação de contratar ou não. É o critério para você julgar cada oferta que aparecer."
+        ],
+        pratica: "Liste seus seguros atuais e pergunte de cada um: eu conseguiria pagar essa perda sozinho?",
+        finn: "fixas"
+      },
+      {
+        id: "previdencia",
+        titulo: "Aposentadoria: INSS e previdência privada",
+        minutos: 5,
+        corpo: [
+          "Existem duas camadas, e elas fazem coisas diferentes.",
+          "<b>INSS (previdência pública).</b> Obrigatória pra quem tem carteira assinada, opcional e por contribuição própria pra autônomo e MEI. Tem teto: quem ganha acima dele não recebe proporcional ao salário, recebe o limite. Também cobre auxílio-doença, licença-maternidade e pensão por morte — o que costuma ser esquecido quando alguém decide \"não contribuir\".",
+          "<b>Previdência privada.</b> É um produto de acumulação com regras próprias de tributação. Existem dois formatos, e a diferença entre eles é só tributária:",
+          "<b>PGBL</b> — permite deduzir as contribuições da base do IR, até 12% da renda bruta anual, mas só para quem declara no modelo completo. Na retirada, o imposto incide sobre <i>tudo</i> (o que entrou mais o rendimento).",
+          "<b>VGBL</b> — não permite dedução, mas na retirada o imposto incide <i>só sobre o rendimento</i>.",
+          "A escolha entre os dois é aritmética, não preferência: depende de você declarar no completo ou no simplificado. Quem usa o simplificado não aproveita a dedução do PGBL, então a vantagem dele desaparece.",
+          "<b>O que mais pesa no resultado, porém, não é a sigla — é a taxa.</b> Taxa de administração e taxa de carregamento incidem todo ano sobre o total acumulado, e no prazo de uma aposentadoria isso compõe. Uma diferença de 1% ao ano em taxa, ao longo de 30 anos, come uma fatia grande do resultado final.",
+          "Também existem dois regimes de tributação a escolher (progressivo e regressivo), e a escolha costuma ser definitiva. Vale ler o regulamento antes de assinar, não depois."
+        ],
+        pratica: "Se você tem previdência privada, descubra hoje a taxa de administração dela.",
+        finn: null
+      },
+      {
+        id: "independencia",
+        titulo: "A matemática da independência financeira",
+        minutos: 5,
+        corpo: [
+          "Independência financeira é quando a renda do seu patrimônio cobre seu custo de vida. Não significa parar de trabalhar — significa que trabalhar vira escolha.",
+          "A conta tem uma forma simples:",
+          "<b>Patrimônio necessário = custo de vida anual ÷ taxa de retirada.</b>",
+          "A referência mais citada é a <b>regra dos 4%</b>, que vem de um estudo americano dos anos 1990 (o Trinity Study). Ela sugere que retirar 4% ao ano de uma carteira teria sobrevivido a praticamente todos os períodos históricos analisados. Na prática: você precisaria de <b>25 vezes</b> o seu custo anual.",
+          "Alguém que gasta R$ 4.000 por mês gasta R$ 48.000 por ano, e precisaria de R$ 1,2 milhão por essa régua.",
+          "<b>Duas ressalvas honestas.</b> Primeira: o estudo é americano, feito com o histórico da bolsa e dos títulos de lá; o Brasil tem inflação e juros com comportamento diferente, então a régua é referência, não lei. Segunda: 4% é média histórica, não garantia — quem começa a retirar logo antes de uma crise longa enfrenta uma situação bem pior que a média.",
+          "O que essa conta tem de mais útil não é o número final. É que ela mostra que <b>reduzir o custo de vida faz duas coisas ao mesmo tempo</b>: aumenta o quanto você guarda e diminui o quanto você precisa. Cortar R$ 500 por mês de gasto recorrente reduz a meta em R$ 150 mil.",
+          "É por isso que a taxa de poupança pesa mais que o valor do salário. Ela mexe nos dois lados da fração."
+        ],
+        pratica: "Multiplique seu custo anual por 25. Esse é o seu número — e ele cai quando o custo cai.",
+        finn: "saldo"
+      }
+    ]
+  },
+
+  // ═══════════════ RESERVAS ═══════════════
+  {
+    id: "reserva-basico", area: "reservas", nivel: "basico",
+    icone: "🧱",
+    nome: "Sua primeira reserva",
+    resumo: "O dinheiro que impede que um imprevisto vire dívida.",
+    licoes: [
+      {
+        id: "reserva",
+        titulo: "Reserva de emergência: a primeira meta",
+        minutos: 4,
+        corpo: [
+          "Reserva de emergência é dinheiro guardado pra imprevisto — desemprego, saúde, carro quebrado, geladeira que morreu.",
+          "Ela vem antes de qualquer investimento, e o motivo é prático: sem reserva, o primeiro imprevisto vira dívida. E dívida no Brasil custa mais do que qualquer investimento rende. Ou seja, investir antes de ter reserva é matematicamente perdedor.",
+          "<b>Quanto?</b> A referência comum é de 3 a 6 meses do seu <i>custo de vida</i> — não do seu salário. Se você gasta R$ 2.500 por mês, a reserva é entre R$ 7.500 e R$ 15.000. Quanto mais instável sua renda, mais perto de 6 (ou além, se você é autônomo).",
+          "<b>Onde?</b> Sem entrar em produto específico, a reserva precisa de três características: <b>liquidez</b> (dá pra sacar hoje), <b>baixo risco</b> (não pode cair justo quando você precisar) e <b>rendimento pelo menos perto do CDI</b>. Poupança falha no terceiro. Investimento de longo prazo falha no primeiro.",
+          "E o mais importante: R$ 15.000 assusta quem nunca guardou nada. Não olhe o número final. Olhe o próximo mês. Reserva se constrói em parcelas, igual dívida — só que a seu favor."
+        ],
+        pratica: "Calcule seu custo de vida mensal e multiplique por 3. Essa é sua primeira meta.",
+        finn: "metas"
+      },
+      {
+        id: "reserva-onde",
+        titulo: "As três características que a reserva precisa ter",
+        minutos: 4,
+        corpo: [
+          "Reserva não é sobre escolher um produto. É sobre exigir três características — e recusar o que não tem as três.",
+          "<b>1. Liquidez diária.</b> Você precisa conseguir sacar hoje, sem pedir autorização e sem esperar. Emergência não avisa com antecedência. Qualquer coisa com prazo de resgate, carência ou data de vencimento distante falha aqui — mesmo que renda mais.",
+          "<b>2. Risco baixo de oscilação.</b> O valor não pode cair justamente quando você precisar. Existe uma diferença importante entre \"pode render pouco\" e \"pode valer menos do que você colocou\". A reserva não tolera a segunda.",
+          "<b>3. Rendimento razoável.</b> Perto do CDI. Não porque a reserva precisa render muito, mas porque ela vai ficar parada por anos, e a inflação come dinheiro parado. Render bem abaixo do CDI significa perder poder de compra devagar.",
+          "Note que as três <b>competem entre si</b>. Em geral, quanto mais líquido e seguro, menos rende. A reserva é o único lugar onde você aceita render menos de propósito — porque a função dela não é crescer, é estar lá.",
+          "Um erro comum é deixar a reserva render demais. Se você se pegou escolhendo algo com carência para \"aproveitar melhor\", provavelmente saiu da reserva e entrou em investimento. São duas caixas diferentes, com regras diferentes."
+        ],
+        pratica: "Pegue onde seu dinheiro de emergência está hoje e teste as três características. Passou nas três?",
+        finn: null
+      },
+      {
+        id: "reserva-quanto",
+        titulo: "3 ou 6 meses? Depende de uma coisa só",
+        minutos: 3,
+        corpo: [
+          "A faixa de 3 a 6 meses é ampla de propósito, e o que decide onde você fica dentro dela é a <b>estabilidade da sua renda</b>.",
+          "<b>Perto de 3 meses:</b> servidor público, carteira assinada em setor estável, casal em que os dois trabalham em áreas diferentes. Renda previsível e demissão improvável ou com aviso.",
+          "<b>Perto de 6 meses:</b> CLT em setor cíclico, comissionado, única fonte de renda da casa.",
+          "<b>Acima de 6:</b> autônomo, freelancer, PJ, dono de negócio pequeno. Quem tem renda que varia mês a mês precisa de reserva pra cobrir a variação, não só a interrupção.",
+          "E um detalhe que muita gente inverte: a conta é sobre <b>custo de vida</b>, não sobre salário. Quem ganha R$ 8.000 e gasta R$ 4.000 precisa de reserva sobre os R$ 4.000 — porque é isso que precisa continuar sendo pago se a renda parar.",
+          "Isso significa que cortar gasto fixo reduz a reserva necessária, o que é um efeito colateral bem-vindo: você precisa guardar menos e consegue guardar mais ao mesmo tempo."
+        ],
+        pratica: "Some só o que é indispensável por mês. É esse número que multiplica por 3 ou 6.",
+        finn: "fixas"
+      }
+    ]
+  },
+  {
+    id: "reserva-inter", area: "reservas", nivel: "intermediario",
+    icone: "🗂️",
+    nome: "Reservas por objetivo",
+    resumo: "Emergência é uma. As outras servem pra outra coisa.",
+    licoes: [
+      {
+        id: "varias-reservas",
+        titulo: "Você precisa de mais de uma reserva",
+        minutos: 4,
+        corpo: [
+          "Juntar tudo numa caixa só é o que faz a reserva de emergência sumir aos poucos, gasta em coisas que não eram emergência.",
+          "Vale separar por função:",
+          "<b>Reserva de emergência.</b> Para o que você não escolheu: desemprego, saúde, conserto urgente. Regra de uso rígida, liquidez total. Não é pra viagem nem pra troca de celular.",
+          "<b>Reserva de objetivo.</b> Para o que tem data: viagem em dezembro, entrada do carro em dois anos, curso no ano que vem. Como a data é conhecida, o prazo do dinheiro pode acompanhar o prazo do objetivo.",
+          "<b>Reserva de oportunidade.</b> Dinheiro parado esperando uma chance — geralmente de investimento. Só faz sentido depois que as outras duas existem, e vale saber que ficar esperando \"a hora certa\" tem custo: o dinheiro parado rende menos enquanto espera.",
+          "A separação pode ser física (contas ou aplicações diferentes) ou apenas contábil (uma planilha que diz quanto de cada bolo pertence a quê). A física funciona melhor pra maioria das pessoas, porque tira a decisão do calor do momento.",
+          "O ponto não é burocracia. É que <b>dinheiro sem dono é gasto mais fácil</b>."
+        ],
+        pratica: "Se você tem uma caixa só, defina hoje quanto dela é emergência de verdade.",
+        finn: "metas"
+      },
+      {
+        id: "escada-liquidez",
+        titulo: "Casar o prazo do dinheiro com o prazo do objetivo",
+        minutos: 4,
+        corpo: [
+          "Existe um princípio que evita a maior parte dos sustos: <b>o prazo do investimento deve caber dentro do prazo do objetivo.</b>",
+          "Dinheiro que você vai usar em seis meses não pode estar em algo que oscila ou que só resgata em dois anos. Dinheiro que você só vai usar em dez anos não precisa da liquidez diária que custa rendimento.",
+          "Isso forma uma escada:",
+          "<b>Degrau 1 — até 1 ano.</b> Liquidez diária e oscilação mínima. Aqui mora a emergência e o objetivo curto. A prioridade é estar disponível.",
+          "<b>Degrau 2 — 1 a 5 anos.</b> Dá pra aceitar prazo, e prazo costuma pagar melhor. Ainda com pouca tolerância a oscilação, porque a data está à vista.",
+          "<b>Degrau 3 — acima de 5 anos.</b> O tempo permite absorver oscilação. A prioridade passa a ser proteger o poder de compra ao longo de muitos anos.",
+          "O erro clássico é o degrau errado: colocar o dinheiro da entrada da casa (2 anos) em algo que oscila, ou deixar a aposentadoria (25 anos) inteira em liquidez diária. Nos dois casos a pessoa está pagando um preço — no primeiro, risco desnecessário; no segundo, rendimento abandonado.",
+          "Repare que a escada fala de <b>prazo</b>, não de produto. É um critério que continua valendo quando os produtos mudarem."
+        ],
+        pratica: "Liste seus objetivos com data. Cada um está num degrau compatível?",
+        finn: "metas"
+      },
+      {
+        id: "reserva-autonomo",
+        titulo: "Reserva para quem tem renda variável",
+        minutos: 4,
+        corpo: [
+          "Quem é autônomo, PJ ou comissionado tem um problema a mais: não é só o risco de a renda parar — é a renda variar todo mês.",
+          "Isso muda a função da reserva. Além do colchão para emergência, aparece a necessidade de um <b>amortecedor de variação</b>: dinheiro que suaviza o mês fraco usando o excedente do mês forte.",
+          "Uma forma prática de organizar isso é <b>pagar-se um salário</b>. Você define um valor fixo mensal, compatível com a média dos meses ruins, e transfere só ele para a conta pessoal. O que passar disso fica no amortecedor. Nos meses fracos, o amortecedor completa.",
+          "Isso resolve dois problemas de uma vez: o orçamento pessoal passa a ter um número previsível, e o mês bom deixa de virar consumo automático.",
+          "Ainda há um terceiro bolso que CLT não tem: <b>o dinheiro dos impostos e das obrigações</b>. DAS, INSS, imposto sobre faturamento e contador não são despesa opcional, e não são seu dinheiro — eles só estão passando pela sua conta. Misturar isso com a reserva é como se endividar sem perceber.",
+          "Somando: quem tem renda variável costuma precisar de reserva maior (6 meses ou mais), amortecedor de variação, e uma separação clara do que é imposto. São três funções, e vale que sejam visivelmente separadas."
+        ],
+        pratica: "Se sua renda varia, calcule a média dos 3 piores meses do último ano. Esse é seu 'salário'.",
+        finn: "saldo"
+      }
+    ]
+  },
+  {
+    id: "reserva-avancado", area: "reservas", nivel: "avancado",
+    icone: "🌡️",
+    nome: "Reserva sob pressão",
+    resumo: "Inflação, uso e reposição — o que acontece na vida real.",
+    licoes: [
+      {
+        id: "reserva-inflacao",
+        titulo: "A reserva também perde valor",
+        minutos: 4,
+        corpo: [
+          "Reserva é a única parte do patrimônio que você aceita render pouco. Mas \"pouco\" não pode virar \"nada\", porque a inflação não tira férias.",
+          "Se a reserva rende 8% ao ano e a inflação é 5%, o ganho real é 3% — ela cresce devagar em poder de compra. Se ela rende 4% com a mesma inflação, o ganho real é <b>negativo</b>: o número na tela sobe e a capacidade de compra cai.",
+          "Isso importa mais do que parece porque reserva é dinheiro que fica parado por anos. Uma perda real de 1% ao ano parece nada; em dez anos são quase 10% do poder de compra.",
+          "Existe também um efeito que quase ninguém calcula: <b>a reserva precisa ser recalculada quando o custo de vida sobe</b>. Uma reserva de R$ 12.000 dimensionada para um custo de R$ 2.000/mês cobre 6 meses. Se o custo virou R$ 2.600, ela passou a cobrir 4,6 meses — sem você ter gastado nada dela.",
+          "Ou seja: reserva não é uma meta que se bate uma vez. É um número que acompanha o seu custo de vida.",
+          "Uma revisão por ano costuma bastar. Recalcule o custo mensal, multiplique pelos meses que você decidiu, e veja se a reserva ainda cobre."
+        ],
+        pratica: "Refaça a conta da sua reserva com o seu custo de vida ATUAL, não o de quando você a criou.",
+        finn: "saldo"
+      },
+      {
+        id: "reserva-usar",
+        titulo: "Usar a reserva não é fracasso — mas tem regra",
+        minutos: 4,
+        corpo: [
+          "Reserva existe para ser usada. Quem passa por um imprevisto, usa e repõe, fez exatamente o que devia. O problema nunca é usar; é usar sem critério e não repor.",
+          "Vale ter uma regra escrita antes da emergência acontecer, porque no momento do aperto ninguém decide bem. Uma pergunta simples resolve a maior parte dos casos:",
+          "<b>Isso é urgente, necessário e imprevisto?</b> Precisa dos três. Uma promoção imperdível é imprevista, mas não é urgente nem necessária. A troca do celular que ainda funciona é necessária na sua cabeça, mas não é urgente. Já um dente quebrado é os três.",
+          "<b>Sobre repor:</b> trate a reposição como conta fixa. Ela entra no orçamento do mês seguinte com a mesma prioridade de aluguel, até a reserva voltar ao tamanho. Se ficar como \"o que sobrar\", não volta.",
+          "<b>Um caso especial:</b> se você tem reserva e aparece uma dívida cara — rotativo, cheque especial — a matemática favorece usar a reserva para quitar. Pagar 14% ao mês enquanto se tem dinheiro rendendo 1% é perder dos dois lados. A ressalva é que isso só vale se a causa da dívida foi resolvida; senão você fica sem reserva e com a dívida voltando.",
+          "E há uma situação em que a reserva vale mais que a matemática: risco iminente de perder a renda. Nesse cenário, liquidez tem valor próprio, e manter o colchão pode ser mais sensato do que otimizar juros."
+        ],
+        pratica: "Escreva hoje, com suas palavras, o que conta como emergência pra você. Guarde onde você veja.",
+        finn: null
+      }
+    ]
+  },
+  // ═══════════════ INVESTIMENTOS ═══════════════
+  //
+  //  Toda esta área descreve MECANISMO. Nenhuma lição indica produto,
+  //  instituição ou momento de comprar — isso exigiria registro na CVM.
+  {
+    id: "invest-basico", area: "investimentos", nivel: "basico",
+    icone: "🌾",
+    nome: "Antes de investir",
+    resumo: "O que significa investir, e as três forças que governam tudo.",
+    licoes: [
+      {
+        id: "o-que-e-investir",
+        titulo: "Investir é emprestar ou virar sócio",
+        minutos: 4,
+        corpo: [
+          "Por trás de todo nome complicado, existem só duas coisas que você pode fazer com dinheiro investido.",
+          "<b>Emprestar.</b> Você entrega o dinheiro para alguém — um banco, uma empresa, o governo — e essa parte se compromete a devolver com juros. É o que se chama de <b>renda fixa</b>. O nome não quer dizer que o rendimento é fixo; quer dizer que <i>a regra de remuneração</i> é definida desde o começo.",
+          "<b>Virar sócio.</b> Você compra um pedaço de um negócio e passa a ganhar (ou perder) conforme ele vai. É a <b>renda variável</b>. Não há promessa de devolução nem de rendimento; há participação no resultado.",
+          "Todo o resto é combinação ou embalagem disso. Um fundo é um pacote que junta vários desses. Uma previdência é uma embalagem com regra tributária própria. Um ETF é uma cesta negociada em bolsa.",
+          "Saber disso ajuda numa coisa prática: quando alguém te oferecer algo que você não entende, a primeira pergunta é <b>\"nisso aqui eu estou emprestando ou virando sócio?\"</b>. Se a resposta não for clara, ou se a pessoa disser que é seguro <i>e</i> rende muito, vale desconfiar — porque isso nos leva à próxima lição.",
+          "Uma coisa que NÃO é investimento: o que promete retorno garantido e alto. Rendimento alto sem risco não existe; quando aparece, geralmente o risco está escondido — ou é fraude."
+        ],
+        pratica: "Pegue algo em que você já investe e responda: estou emprestando ou virando sócio?",
+        finn: null
+      },
+      {
+        id: "risco-retorno",
+        titulo: "Risco e retorno andam juntos, sempre",
+        minutos: 4,
+        corpo: [
+          "Essa é a regra que sustenta todas as outras: <b>retorno maior exige risco maior</b>. Não é opinião, é como o mercado se organiza — se existisse algo com retorno alto e risco baixo, todo mundo compraria, o preço subiria e o retorno cairia até o equilíbrio.",
+          "Consequência direta: quando alguém oferece rendimento muito acima do que o mercado paga, sem risco correspondente, existem três possibilidades — você não entendeu o risco, ele não foi contado, ou é golpe.",
+          "<b>Risco não é só \"posso perder tudo\".</b> Ele tem várias formas, e vale saber os nomes:",
+          "<b>Risco de mercado</b> — o preço oscila. Vale para ações, fundos, e também para títulos vendidos antes do vencimento.",
+          "<b>Risco de crédito</b> — quem pegou seu dinheiro emprestado pode não devolver. É o risco de quem empresta.",
+          "<b>Risco de liquidez</b> — você tem o ativo, mas não consegue transformá-lo em dinheiro quando quer, ou só consegue com deságio.",
+          "<b>Risco de inflação</b> — o dinheiro volta, mas comprando menos. Silencioso e o mais subestimado.",
+          "Não existe investimento sem risco nenhum: até deixar dinheiro parado tem risco de inflação. A pergunta útil não é \"tem risco?\", é <b>\"qual risco, e ele cabe no meu prazo?\"</b>"
+        ],
+        pratica: "Pra cada aplicação sua, identifique qual desses quatro riscos é o principal.",
+        finn: null
+      },
+      {
+        id: "compostos",
+        titulo: "Juros compostos a seu favor",
+        minutos: 3,
+        corpo: [
+          "A mesma força que faz dívida explodir faz patrimônio crescer. Só muda o lado.",
+          "R$ 100 por mês, a 1% ao mês, por 10 anos: você deposita R$ 12.000 e termina com cerca de <b>R$ 23.000</b>. Mais da metade veio do tempo, não de você.",
+          "Agora o detalhe que quase ninguém conta: se você começar 5 anos depois e depositar o dobro (R$ 200 por mês por 5 anos), você deposita os mesmos R$ 12.000 — e termina com cerca de R$ 16.000. <b>Sete mil a menos, pelo mesmo esforço.</b>",
+          "Juro composto não premia quem guarda muito. Premia quem começa cedo. O fator que mais pesa não é o valor nem a taxa — é o tempo, porque ele entra na conta como expoente.",
+          "A consequência prática é libertadora: você não precisa esperar \"ter dinheiro\" pra começar. R$ 50 por mês hoje valem mais que R$ 200 por mês daqui a três anos."
+        ],
+        pratica: "Comece com qualquer valor, esta semana. O valor importa menos que a data.",
+        finn: "metas"
+      },
+      {
+        id: "inflacao",
+        titulo: "Inflação: por que dinheiro parado encolhe",
+        minutos: 3,
+        corpo: [
+          "Inflação é a perda de poder de compra. O número não muda; o que ele compra, sim.",
+          "R$ 1.000 embaixo do colchão continuam R$ 1.000 daqui a 10 anos. Mas se a inflação for 5% ao ano, eles compram o equivalente a R$ 614 de hoje. <b>Você perdeu 39% sem gastar nada.</b>",
+          "Por isso \"não perder dinheiro\" e \"deixar parado\" não são a mesma coisa. Dinheiro parado perde, silenciosamente, todo mês.",
+          "É também por isso que rendimento se olha em duas camadas: o <b>nominal</b> (o número que aparece) e o <b>real</b> (o que sobra depois de descontar a inflação). Render 6% com inflação de 5% é render 1% de verdade.",
+          "Quando alguém compara investimento, a pergunta útil é sempre: isso ganha da inflação? Se não ganha, é preservação parcial, não crescimento."
+        ],
+        pratica: "Veja o IPCA dos últimos 12 meses e compare com o rendimento do seu dinheiro guardado.",
+        finn: null
+      }
+    ]
+  },
+  {
+    id: "invest-inter", area: "investimentos", nivel: "intermediario",
+    icone: "🔧",
+    nome: "Como cada coisa funciona",
+    resumo: "Renda fixa, variável, fundos e as proteções que existem.",
+    licoes: [
+      {
+        id: "cdi",
+        titulo: "Selic, CDI e por que a poupança perde",
+        minutos: 4,
+        corpo: [
+          "Três palavras aparecem em toda conversa sobre dinheiro no Brasil. Vale entender o que são — sem precisar decidir nada agora.",
+          "<b>Selic</b> é a taxa básica de juros do país, definida pelo Banco Central. É o \"preço do dinheiro\": quando sobe, crédito fica mais caro e investimento de renda fixa rende mais.",
+          "<b>CDI</b> é a taxa que os bancos usam entre si, e anda quase colada na Selic. Virou a régua do mercado: quando alguém diz que um investimento \"rende 100% do CDI\", quer dizer que rende praticamente a taxa básica.",
+          "<b>Poupança</b> tem uma regra própria, definida em lei. Com a Selic acima de 8,5% ao ano, ela rende 0,5% ao mês + TR — o que dá em torno de 70% do CDI. Traduzindo: <b>ela costuma render menos que outras opções de risco parecido</b>, e às vezes perde para a inflação.",
+          "Isso não quer dizer que você deva sair da poupança correndo — quer dizer que vale saber que existe diferença, e que a diferença é grande no longo prazo. Comparar rendimento com o CDI é o hábito que separa quem escolhe de quem aceita o que oferecem."
+        ],
+        pratica: "Descubra quanto rende hoje o dinheiro que você tem guardado. Compare com o CDI.",
+        finn: null
+      },
+      {
+        id: "renda-fixa",
+        titulo: "Renda fixa: prefixado, pós e híbrido",
+        minutos: 5,
+        corpo: [
+          "Em renda fixa você empresta e recebe juros. O que muda entre os títulos é <b>como o juro é calculado</b> — e são só três formatos.",
+          "<b>Prefixado.</b> A taxa é conhecida desde o começo: \"12% ao ano\". Você sabe exatamente quanto vai receber no vencimento. A troca é que, se os juros do país subirem depois, você fica travado numa taxa que virou baixa; se caírem, você se deu bem.",
+          "<b>Pós-fixado.</b> A remuneração acompanha um índice, normalmente o CDI: \"100% do CDI\", \"110% do CDI\". Você não sabe o valor final, mas sabe que vai acompanhar os juros do país. É o formato que menos oscila no dia a dia.",
+          "<b>Híbrido (indexado à inflação).</b> Paga a inflação <i>mais</i> uma taxa: \"IPCA + 6%\". A função aqui é diferente das outras duas — é garantir <b>ganho real</b>, ou seja, poder de compra acima da inflação, independentemente de quanto ela for.",
+          "Uma coisa que confunde muita gente: <b>renda fixa também oscila</b>. Se você vender antes do vencimento, recebe o preço de mercado do título naquele dia, que pode ser menor do que você pagou. Isso se chama marcação a mercado. Levando até o vencimento, você recebe o combinado — mas \"até o vencimento\" é uma condição, não um detalhe.",
+          "Por isso prazo importa tanto aqui: título longo oscila mais no meio do caminho. Casar o vencimento com a data em que você vai precisar do dinheiro elimina esse problema."
+        ],
+        pratica: "Olhe uma aplicação sua de renda fixa e identifique: é pré, pós ou híbrida?",
+        finn: null
+      },
+      {
+        id: "renda-variavel",
+        titulo: "Renda variável: ações e fundos imobiliários",
+        minutos: 5,
+        corpo: [
+          "Em renda variável você não empresta — você compra uma parte de algo. Não há promessa de devolução.",
+          "<b>Ação</b> é uma fração de uma empresa. Quem tem ação participa do resultado dela de duas formas: pela valorização (o preço da fração sobe ou desce conforme o mercado avalia o negócio) e pelos <b>dividendos</b>, que é a parte do lucro distribuída aos sócios.",
+          "<b>Fundo imobiliário (FII)</b> é uma fração de um fundo que investe em imóveis ou em papéis ligados a imóveis. A lógica é parecida: o preço da cota oscila, e o fundo distribui rendimentos periodicamente, normalmente vindos de aluguel.",
+          "O que torna isso \"variável\" não é só o preço mudar — é que <b>o resultado depende de coisas fora do seu controle</b>: a empresa vender mais ou menos, o inquilino sair, o setor mudar, a economia girar.",
+          "Duas consequências práticas disso:",
+          "<b>Prazo longo.</b> No curto prazo, preço reflete humor do mercado; no longo, tende a refletir resultado do negócio. Quem entra com dinheiro que vai precisar em seis meses está apostando no humor.",
+          "<b>Concentração é o risco que dá pra evitar de graça.</b> Uma empresa pode quebrar, e isso é um evento normal do sistema, não uma anomalia. Espalhar reduz esse risco específico sem custar retorno esperado — é o assunto da lição de diversificação.",
+          "Nada disso é indicação de comprar ou não comprar. É o que os instrumentos são, para você julgar o que te oferecerem."
+        ],
+        pratica: "Se você tem renda variável, veja quanto do seu total está num único ativo.",
+        finn: null
+      },
+      {
+        id: "fundos",
+        titulo: "Fundos: conveniência tem preço",
+        minutos: 5,
+        corpo: [
+          "Fundo é um condomínio de investimento: várias pessoas juntam dinheiro, um gestor decide onde aplicar, e cada uma tem cotas proporcionais ao que colocou.",
+          "A conveniência é real — você não precisa escolher cada ativo. Mas ela é paga, e vale saber por quais canais.",
+          "<b>Taxa de administração.</b> Percentual anual sobre o <i>total</i> aplicado, cobrado independentemente de o fundo ganhar ou perder. Parece pequena; no longo prazo, não é. Um fundo com 2% ao ano de taxa consome, em 20 anos, uma fatia expressiva do resultado — porque a taxa também compõe, contra você.",
+          "<b>Taxa de performance.</b> Percentual sobre o que exceder um referencial (o \"benchmark\"). Faz mais sentido conceitualmente, porque só é cobrada quando há resultado acima da régua — mas vale conferir qual é a régua.",
+          "<b>Come-cotas.</b> Em muitos fundos de renda fixa e multimercado, a Receita antecipa o imposto duas vezes por ano (maio e novembro), abocanhando cotas. Não é uma taxa do fundo, é imposto adiantado — mas o efeito prático é o mesmo: menos cotas trabalhando pra você antes do resgate. Fundos de ações não têm come-cotas.",
+          "Como comparar sem se enganar: o rendimento divulgado de um fundo <b>já vem líquido de taxa de administração</b>, mas não do imposto. E comparar fundos diferentes só faz sentido contra o mesmo referencial e no mesmo período.",
+          "A pergunta que resume tudo: <b>o que esse fundo entrega acima do que eu conseguiria sozinho, e isso cobre o que ele cobra?</b>"
+        ],
+        pratica: "Descubra a taxa de administração de cada fundo em que você tem dinheiro.",
+        finn: null
+      },
+      {
+        id: "fgc",
+        titulo: "FGC: o que é coberto e o que não é",
+        minutos: 4,
+        corpo: [
+          "O <b>Fundo Garantidor de Créditos</b> é um mecanismo privado, mantido pelas próprias instituições financeiras, que devolve o dinheiro do investidor se o banco quebrar.",
+          "É importante entender o que ele é: uma proteção contra <b>risco de crédito da instituição</b> — o banco não conseguir devolver. Não é proteção contra o investimento render pouco, nem contra oscilação de preço.",
+          "<b>O que costuma ser coberto:</b> depósitos em conta, poupança, CDB, RDB, LCI e LCA — instrumentos em que você empresta ao banco.",
+          "<b>O que não é coberto:</b> ações, fundos de investimento, debêntures, títulos públicos e previdência. Nos fundos, o motivo é interessante: o patrimônio do fundo é separado do da gestora, então a lógica de proteção é outra.",
+          "<b>Os limites têm duas camadas</b>, e a segunda é a que quase ninguém conhece: existe um teto por CPF em cada instituição, e existe um <b>teto global por período</b>, que limita o total que uma mesma pessoa pode receber num intervalo de anos somando todas as instituições.",
+          "Os valores desses tetos mudam por decisão do órgão competente, então vale conferir os números vigentes no site do próprio FGC antes de contar com eles.",
+          "O efeito prático de saber isso: a cobertura influencia como o dinheiro se distribui entre instituições. Concentrar tudo acima do teto num lugar só significa que a parte excedente está exposta ao risco da instituição — o que não é errado, desde que seja escolha consciente, e não descoberta depois."
+        ],
+        pratica: "Se você tem aplicações em bancos menores, confira quanto tem em cada CNPJ.",
+        finn: null
+      }
+    ]
+  },
+  {
+    id: "invest-avancado", area: "investimentos", nivel: "avancado",
+    icone: "🧠",
+    nome: "Decidindo melhor",
+    resumo: "Imposto, diversificação, custos e os erros que saem caro.",
+    licoes: [
+      {
+        id: "tributacao",
+        titulo: "Como o imposto morde cada tipo",
+        minutos: 5,
+        corpo: [
+          "Rendimento bruto não é o que você leva. Comparar aplicações sem considerar imposto leva a decisões erradas com frequência.",
+          "<b>Tabela regressiva</b> — vale para a maior parte da renda fixa e para fundos que não são de ações. O imposto cai conforme o tempo: começa em 22,5% para até 180 dias e desce até <b>15% acima de 720 dias</b>. É por isso que resgatar cedo custa duas vezes: você perde o juro e paga mais imposto.",
+          "<b>Isenções para pessoa física</b> — alguns instrumentos são isentos de IR para pessoa física, como LCI, LCA e a poupança. Isenção muda a comparação: um papel isento rendendo menos pode entregar mais líquido que um tributado rendendo mais. A conta que importa é sempre a de depois do imposto.",
+          "<b>Ações</b> — o ganho na venda é tributado, com uma faixa de isenção mensal para vendas de pequeno valor (o limite é definido em norma e muda; confira o vigente). Já os <b>dividendos</b> seguem regra própria, que também é objeto de mudança legislativa recorrente — vale checar o ano em curso em vez de confiar na memória.",
+          "<b>Come-cotas</b> — a antecipação semestral em fundos que já vimos. Ele não aumenta o imposto total, mas antecipa: menos dinheiro composto ao longo do caminho.",
+          "<b>Quem recolhe.</b> Em boa parte da renda fixa, a instituição retém na fonte e você não faz nada. Em operações na bolsa, a responsabilidade de apurar e recolher costuma ser sua, via DARF, e o prazo é mensal — esquecer gera multa e juros.",
+          "Este é um assunto em que a regra muda de verdade, e com frequência. O que não muda é o método: <b>compare sempre o líquido, e confirme a regra do ano corrente antes de decidir</b>."
+        ],
+        pratica: "Pegue duas aplicações suas e calcule o rendimento LÍQUIDO de cada uma.",
+        finn: null
+      },
+      {
+        id: "diversificacao",
+        titulo: "Diversificação: o único almoço grátis",
+        minutos: 5,
+        corpo: [
+          "Existe uma frase conhecida no mercado: diversificação é o único almoço grátis que existe. A ideia é que ela <b>reduz risco sem reduzir o retorno esperado</b> — o que é raro, porque quase tudo em finanças é troca.",
+          "O mecanismo é este: parte do risco de qualquer ativo é <b>específico</b> dele (a empresa perde um contrato, o imóvel fica vago) e parte é <b>sistêmico</b> (a economia inteira desacelera). Espalhar o dinheiro entre coisas que não sofrem juntas dilui o risco específico. O sistêmico permanece — esse não some com diversificação.",
+          "A palavra-chave é <b>correlação</b>: o quanto duas coisas se movem juntas. Comprar dez ações do mesmo setor é diversificar pouco, porque elas tendem a cair juntas. Espalhar entre coisas com comportamentos diferentes é o que faz efeito.",
+          "Há um limite: a partir de certo número de ativos, cada novo acrescenta muito pouca redução de risco e acrescenta trabalho de acompanhar. Diversificação demais vira dispersão — a pessoa não conhece mais o que tem.",
+          "E há um erro de leitura comum. Diversificar <b>não</b> significa que você nunca vai perder. Numa crise ampla, quase tudo cai junto, e é justamente quando as pessoas concluem que \"diversificação não funciona\". Ela funciona contra o desastre específico — a empresa que quebra, o setor que derrete — não contra o mercado inteiro cair.",
+          "Aplicado no dia a dia, o teste é simples: <b>se uma única coisa der muito errado, quanto do seu patrimônio vai junto?</b> Se a resposta for grande demais para o seu sono, existe concentração."
+        ],
+        pratica: "Calcule quanto por cento do seu patrimônio está no maior ativo isolado.",
+        finn: null
+      },
+      {
+        id: "alocacao",
+        titulo: "Alocação e rebalanceamento",
+        minutos: 5,
+        corpo: [
+          "Estudos clássicos de mercado sugerem que a <b>divisão entre classes</b> — quanto em renda fixa, quanto em variável, quanto em cada coisa — explica a maior parte da variação de resultado de uma carteira ao longo do tempo. Mais do que a escolha de cada ativo dentro da classe.",
+          "Isso é uma boa notícia para quem não quer virar analista: a decisão que mais pesa é estrutural, não de escolha individual.",
+          "Três coisas costumam entrar nessa definição:",
+          "<b>Horizonte.</b> Quando você vai usar o dinheiro. É o fator mais objetivo e o que mais deveria pesar — volta a escada de liquidez.",
+          "<b>Tolerância a oscilação.</b> Não a que você imagina ter, a que você tem de verdade. Uma pergunta honesta ajuda: se essa parte caísse 30% e demorasse dois anos pra voltar, você aguentaria sem vender? Quem vende no fundo transforma oscilação em perda permanente.",
+          "<b>Necessidade.</b> Quem já tem patrimônio suficiente para o objetivo não precisa correr o mesmo risco de quem está começando. Correr risco que não é necessário é risco sem função.",
+          "<b>Rebalanceamento</b> é a manutenção disso. Com o tempo, o que subiu passa a ocupar um pedaço maior do que você definiu. Voltar às proporções originais, em datas fixas ou quando o desvio passa de um limite, tem um efeito curioso: obriga a reduzir o que subiu muito e reforçar o que ficou para trás — o contrário do que o impulso manda fazer.",
+          "Nada aqui define qual deve ser a sua divisão. Isso depende do seu caso, e recomendação individual é atividade regulada. O que dá pra dizer é: <b>tenha uma divisão escrita e uma data pra revisar</b>. Carteira sem plano vira coleção de decisões avulsas."
+        ],
+        pratica: "Escreva a divisão que você quer ter (%). Marque uma data no ano pra conferir.",
+        finn: null
+      },
+      {
+        id: "custos",
+        titulo: "Custo é o que mais corrói no longo prazo",
+        minutos: 4,
+        corpo: [
+          "Custo é a única variável de investimento que você controla com certeza. Retorno futuro ninguém sabe; taxa está escrita no contrato.",
+          "E o efeito é maior do que a intuição sugere, porque <b>a taxa também compõe</b> — só que contra você.",
+          "Um exemplo com números redondos: R$ 50.000 aplicados por 20 anos a 10% ao ano viram cerca de R$ 336.000. Com 1% de custo anual (ou seja, rendendo 9%), viram cerca de R$ 280.000. <b>Um ponto percentual custou aproximadamente R$ 56.000</b> — mais do que o valor investido inicialmente.",
+          "Os custos aparecem em vários lugares, e alguns não se apresentam como custo: taxa de administração, taxa de performance, taxa de custódia, corretagem, spread (a diferença entre o preço de compra e o de venda), e imposto antecipado.",
+          "O spread é o mais silencioso: não vem numa linha de extrato, está embutido no preço. Vale principalmente em produtos negociados por balcão, em que você não vê o outro lado.",
+          "Como isso vira hábito prático: <b>pergunte sempre \"quanto isso custa por ano, somando tudo?\"</b> antes de perguntar quanto rende. E desconfie de quem tem dificuldade em responder — a dificuldade costuma ser a resposta."
+        ],
+        pratica: "Some todos os custos anuais que você paga hoje, em reais. O número costuma surpreender.",
+        finn: null
+      },
+      {
+        id: "vieses",
+        titulo: "Os erros que a cabeça comete sozinha",
+        minutos: 5,
+        corpo: [
+          "Boa parte do que separa um bom resultado de um ruim não é conhecimento técnico — é comportamento. A economia comportamental catalogou padrões que se repetem em quase todo mundo.",
+          "<b>Aversão à perda.</b> Perder R$ 1.000 dói mais do que ganhar R$ 1.000 alegra, numa proporção que os estudos estimam em cerca de duas vezes. O efeito prático é vender no fundo pra parar a dor, que é exatamente o pior momento.",
+          "<b>Viés recente.</b> A gente assume que o que acabou de acontecer vai continuar. É o que faz gente comprar depois que já subiu muito e desistir depois que já caiu muito.",
+          "<b>Excesso de confiança.</b> A maioria das pessoas se avalia acima da média — o que é estatisticamente impossível. Em investimento, isso vira giro excessivo: comprar e vender demais, pagando custo e imposto a cada movimento.",
+          "<b>Custo afundado.</b> Insistir em algo ruim porque já se investiu nele. O dinheiro que já foi não volta pela sua teimosia; a pergunta certa é sempre \"compraria isso hoje, sabendo o que sei?\".",
+          "<b>Efeito manada.</b> Se muita gente está fazendo, parece seguro. Historicamente, é quando o preço está mais caro.",
+          "A defesa contra todos eles é a mesma, e é chata de propósito: <b>decidir antes, por escrito, e automatizar</b>. Aporte programado tira a decisão do humor do dia. Regra de rebalanceamento tira a decisão do noticiário. Um plano escrito é a única coisa que consegue discutir com você no momento de pânico.",
+          "Vale um lembrete final que não é técnico: quem promete que sabe o que vai acontecer com o mercado está errado ou mentindo. Ninguém sabe. O que dá pra controlar é quanto você guarda, quanto paga de custo, quanto tempo deixa, e como reage."
+        ],
+        pratica: "Escreva sua regra: quanto aportar, quando revisar, e o que fazer se cair 30%.",
+        finn: null
       }
     ]
   }
@@ -4592,9 +5048,11 @@ function renderAprender(){
     var lida = aprenderLida(lic.id);
     var proxima = tr.licoes[achou.indice + 1];
 
+    var nvNome = (APRENDER_NIVEIS.filter(function(n){ return n.id === tr.nivel; })[0] || {}).nome || "";
     return '<div class="card">' +
       '<button type="button" class="btn-ghost btn-inline" id="btnAprVoltar" style="margin-bottom:12px">← Todas as lições</button>' +
-      '<div class="eyebrow" style="margin:0">' + escapeHtml(tr.icone + " " + tr.nome) + '</div>' +
+      '<div class="eyebrow" style="margin:0">' + escapeHtml(tr.icone + " " + tr.nome) +
+        (nvNome ? ' <span class="apr-nivel apr-nivel-' + tr.nivel + '">' + escapeHtml(nvNome) + '</span>' : '') + '</div>' +
       '<h2 style="font-size:20px;font-weight:800;color:var(--fd);margin:8px 0 4px;line-height:1.25">' + escapeHtml(lic.titulo) + '</h2>' +
       '<div style="font-size:12px;color:var(--fm);margin-bottom:16px">' + lic.minutos + ' min de leitura</div>' +
       lic.corpo.map(function(p){
@@ -4635,13 +5093,32 @@ function renderAprender(){
     '</div>';
   }
 
-  APRENDER_TRILHAS.forEach(function(tr){
+  APRENDER_AREAS.forEach(function(area){
+    var trilhasDaArea = APRENDER_TRILHAS.filter(function(t){ return t.area === area.id; });
+    if(!trilhasDaArea.length) return;
+    var licoesArea = trilhasDaArea.reduce(function(a, t){ return a + t.licoes.length; }, 0);
+    var feitasArea = trilhasDaArea.reduce(function(a, t){
+      return a + t.licoes.filter(function(l){ return aprenderLida(l.id); }).length;
+    }, 0);
+
+    html += '<div class="apr-area">' +
+      '<span class="apr-area-ic">' + area.icone + '</span>' +
+      '<span class="apr-area-txt">' +
+        '<span class="apr-area-nome">' + escapeHtml(area.nome) + '</span>' +
+        '<span class="apr-area-res">' + escapeHtml(area.resumo) + '</span>' +
+      '</span>' +
+      '<span class="apr-area-cnt">' + feitasArea + '/' + licoesArea + '</span>' +
+    '</div>';
+
+  trilhasDaArea.forEach(function(tr){
     var feitas = tr.licoes.filter(function(l){ return aprenderLida(l.id); }).length;
+    var nvNome = (APRENDER_NIVEIS.filter(function(n){ return n.id === tr.nivel; })[0] || {}).nome || "";
     html += '<div class="card">' +
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">' +
         '<span style="font-size:22px;line-height:1">' + tr.icone + '</span>' +
         '<div style="flex:1;min-width:0">' +
-          '<div style="font-weight:800;font-size:15px;color:var(--fd)">' + escapeHtml(tr.nome) + '</div>' +
+          '<div style="font-weight:800;font-size:15px;color:var(--fd)">' + escapeHtml(tr.nome) +
+            (nvNome ? ' <span class="apr-nivel apr-nivel-' + tr.nivel + '">' + escapeHtml(nvNome) + '</span>' : '') + '</div>' +
           '<div style="font-size:12px;color:var(--fm)">' + escapeHtml(tr.resumo) + '</div>' +
         '</div>' +
         '<div style="font-size:11.5px;color:' + (feitas === tr.licoes.length ? "var(--fs)" : "var(--fm)") + ';font-weight:700;flex-shrink:0">' +
@@ -4662,6 +5139,7 @@ function renderAprender(){
       '</div>' +
     '</div>';
   });
+  });
 
   // Aviso obrigatório: educação, não consultoria. Fica no fim, sem alarde,
   // mas presente — o conteúdo fala de dívida e investimento, e a fronteira
@@ -4669,8 +5147,12 @@ function renderAprender(){
   html += '<div class="card">' +
     '<div style="font-size:11.5px;color:var(--fm);line-height:1.6">' +
       '<b>Sobre este conteúdo.</b> É material educativo: explica como as coisas funcionam para você decidir melhor. ' +
-      'Não é recomendação de investimento nem consultoria financeira, e o Finn não indica produto, corretora ou banco. ' +
-      'Os valores citados são exemplos para ilustrar o mecanismo — taxas reais mudam com o tempo e com o seu caso.' +
+      '<b>Não é recomendação de investimento, consultoria nem análise de valores mobiliários</b> — atividades reguladas ' +
+      'pela CVM. O Finn não indica produto, corretora ou banco, não recebe comissão de nenhum deles, e nada aqui é ' +
+      'sugestão de compra ou venda.' +
+      '<br><br>' +
+      'Os valores e taxas citados são exemplos para ilustrar o mecanismo. Regras tributárias, limites de isenção e ' +
+      'coberturas mudam com frequência — confira sempre a regra vigente na fonte oficial antes de decidir.' +
     '</div>' +
   '</div>';
 
