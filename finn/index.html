@@ -2505,21 +2505,62 @@ var SRI = {
     "sha384-SnzOobpRMLXZ52iJvZm/C0fYw0OQemTXzTjIsdsfMcrCtCEe9qgzxTd3RSklO5x2"
 };
 
+// Qual variável global cada biblioteca cria. É por ela que se sabe se o
+// script REALMENTE carregou — a tag existir no DOM não prova nada.
+var GLOBAL_DA_LIB = {
+  "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js": "XLSX",
+  "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js": "pdfjsLib"
+};
+var _scriptsEmVoo = {};
+
 function loadScript(src){
-  return new Promise(function(resolve, reject){
-    if(document.querySelector('script[src="' + src + '"]')) return resolve();
+  var nomeGlobal = GLOBAL_DA_LIB[src];
+  // Já carregado de verdade: a global existe.
+  if(nomeGlobal && window[nomeGlobal]) return Promise.resolve();
+  // Carregamento em andamento: reaproveita, pra dois cliques não baixarem
+  // a biblioteca duas vezes.
+  if(_scriptsEmVoo[src]) return _scriptsEmVoo[src];
+
+  var pendente = new Promise(function(resolve, reject){
+    // Uma tentativa anterior que FALHOU deixa a tag no DOM. Antes o código
+    // via a tag e resolvia na hora — a biblioteca nunca tinha carregado, e
+    // a chamada seguinte estourava com "XLSX is not defined", uma mensagem
+    // que não diz nada pra quem está tentando importar um extrato.
+    // Limpar a tag velha faz de uma nova tentativa uma tentativa de verdade.
+    var antigas = document.querySelectorAll('script[src="' + src + '"]');
+    for(var i = 0; i < antigas.length; i++) antigas[i].remove();
+
     var s = document.createElement("script");
     s.src = src;
     if(SRI[src]){
       s.integrity = SRI[src];
       s.crossOrigin = "anonymous"; // exigido pro navegador conseguir validar o hash
     }
-    s.onload = function(){ resolve(); };
-    // onerror também dispara quando o hash não bate — a mensagem precisa
-    // distinguir isso de "estou sem internet", senão vira suporte às cegas.
-    s.onerror = function(){ reject(new Error("Não consegui carregar a biblioteca de leitura de arquivo. Verifique sua conexão; se persistir, avise o suporte.")); };
+    s.onload = function(){
+      // Carregou a tag mas não criou a global: arquivo servido errado, ou
+      // conteúdo trocado. Falhar aqui é melhor que estourar depois num
+      // ReferenceError sem contexto.
+      if(nomeGlobal && !window[nomeGlobal]){
+        s.remove();
+        reject(new Error("A biblioteca de leitura de arquivo carregou incompleta. Tente de novo; se persistir, exporte o extrato em CSV ou OFX, que o Finn lê sem depender dela."));
+        return;
+      }
+      resolve();
+    };
+    // onerror também dispara quando o hash SRI não bate. A mensagem sugere o
+    // caminho que funciona sem biblioteca nenhuma, em vez de deixar a pessoa
+    // sem saída.
+    s.onerror = function(){
+      s.remove();
+      reject(new Error("Não consegui carregar a biblioteca de leitura de arquivo. Verifique sua conexão — ou exporte o extrato em CSV ou OFX, que o Finn lê sem precisar dela."));
+    };
     document.head.appendChild(s);
   });
+
+  // Sai do cache quando termina: falhou, a próxima tentativa recomeça.
+  pendente.catch(function(){}).then(function(){ delete _scriptsEmVoo[src]; });
+  _scriptsEmVoo[src] = pendente;
+  return pendente;
 }
 
 // Guarda contra a CVE-2023-30533 do SheetJS (poluição de Object.prototype).
@@ -2600,7 +2641,7 @@ function splitDelimLine(l, delim){
 
 var CATEGORY_KEYWORDS = [
   ["Alimentação", /supermerc|mercado|mercadinho|padaria|panifica|ifood|ifd\*|restaurante|lanchonete|lanches|a[cç]a[ií]|pizza|hambur|burguer|cantina|emp[oó]rio|caf[eé]|\bp[aã]o\b/i],
-  ["Transporte", /\buber\b|99app|99\*|t[aá]xi|\bposto\b|combust[ií]vel|gasolina|estacionamento|metr[oô]|[oô]nibus|trip help/i],
+  ["Transporte", /\buber(?!\s*eats)|99app|99\*|t[aá]xi|\bposto\b|combust[ií]vel|gasolina|estacionamento|metr[oô]|[oô]nibus|trip help|blablacar|cabify|indriver/i],
   ["Moradia", /aluguel|condom[ií]nio|\benergia\b|\bluz\b|\b[aá]gua\b|sabesp|\benel\b|cemig|\blight\b|copel|\binternet\b|\bclaro\b|\btim\b|\bvivo\b|\boi\b/i],
   ["Saúde", /farm[aá]cia|drogaria|\braia\b|hospital|cl[ií]nica|laborat[oó]rio|unimed|dentista|seguro de vida/i],
   ["Educação", /\bescola\b|faculdade|\bcurso\b|livraria|mensalidade/i],
