@@ -2618,6 +2618,12 @@ async function processTelegramCallback(cq, env) {
 // numerico sozinho nao ajuda ninguem. Este mapa traduz os que de fato
 // aparecem quando um template aprovado nao chega.
 const MOTIVOS_ENTREGA = {
+  // Este e' de conta, nao de destinatario: enquanto nao resolver, NENHUMA
+  // mensagem iniciada pelo bot sai pra ninguem. Mensagem dentro da janela de
+  // 24h continua funcionando, porque conversa de servico nao e' cobrada — e
+  // e' por isso que um teste logo depois de "oi" passa e o resumo das 22h
+  // nao, o que faz o problema parecer de janela quando e' de pagamento.
+  131042: "PROBLEMA DE PAGAMENTO NA CONTA WhatsApp Business — não é do destinatário. Mensagem iniciada pelo bot (como o resumo diário) é cobrada pela Meta, e a conta está sem forma de pagamento válida. Resolva em business.facebook.com → Configurações do WhatsApp → Faturamento: adicione ou revalide o cartão. Enquanto isso, mensagens dentro da janela de 24h (quando a pessoa escreve primeiro) continuam saindo, porque essas são gratuitas.",
   131049: "A Meta ENGOLIU a mensagem de propósito (\"healthy ecosystem engagement\"). Acontece com template UTILITY/MARKETING mandado pra quem nunca conversou com o número do bot, ou conversou há muito tempo. Solução: mande qualquer mensagem do SEU WhatsApp pro número do bot primeiro — isso abre a janela de 24h e marca engajamento.",
   131026: "Mensagem indeliverável: o número não recebe do seu WhatsApp Business. Causas: número não tem WhatsApp, bloqueou o bot, ou o app ainda está em modo Desenvolvimento na Meta (nesse modo só numeros cadastrados como testador recebem).",
   131047: "Janela de 24h expirada — só se aplica a mensagem de texto livre. Se apareceu num template, o template não foi aceito como tal.",
@@ -2673,6 +2679,10 @@ async function handleWhatsAppEntregas(env) {
     veredito = "NENHUM status recebido nas últimas 24h. Ou nada foi enviado, ou o webhook não está inscrito no campo 'messages' da WABA (é ele que traz delivered/failed). Chame GET /subscribe pra inscrever e teste de novo.";
   } else if (entregas.some(e => e.status === "delivered" || e.status === "read")) {
     veredito = "Teve mensagem ENTREGUE. Se você não viu, confira o número (DDI/DDD) e se o bot não está silenciado ou arquivado no seu WhatsApp.";
+  } else if (entregas.some(e => e.codigo === 131042)) {
+    // Separado dos outros de proposito: os demais codigos falam de UMA
+    // mensagem; este derruba o envio proativo da conta inteira.
+    veredito = "PROBLEMA DE PAGAMENTO NA CONTA — a Meta está recusando toda mensagem iniciada pelo bot, para TODOS os usuários, não só para este número. Corrija o faturamento no Business Manager (veja 'explicacao'). O bot continua respondendo normalmente quem escrever primeiro.";
   } else if (entregas.some(e => e.status === "failed")) {
     veredito = "A Meta FALHOU na entrega — veja 'explicacao' do evento mais recente.";
   } else {

@@ -302,6 +302,18 @@ console.log('\n=== 9. GET /whatsapp/entregas explica o que houve depois do "acce
   ok(engolido.entregas[0].codigo === 131049, 'código preservado', engolido.entregas[0].codigo);
   ok(/janela de 24h|conversou/i.test(engolido.entregas[0].explicacao || ''), '131049 vem com o conserto explicado', engolido.entregas[0].explicacao);
 
+  // 131042 e' erro de CONTA: atinge todo mundo, nao so' aquele numero. O
+  // veredito tem que dizer isso, senao o dono vai procurar problema no
+  // destinatario errado.
+  const pagamento = await (await pedir([
+    { at: '2026-08-13T01:00:43Z', kind: 'status', status: 'failed', recipient: '5513982020928',
+      errors: [{ code: 131042, title: 'Business eligibility payment issue' }] },
+  ])).json();
+  ok(/PAGAMENTO NA CONTA/i.test(pagamento.veredito), '131042 vira veredito de problema de conta', pagamento.veredito.slice(0, 60));
+  ok(/TODOS os usu/i.test(pagamento.veredito), 'e avisa que atinge todos os usuários');
+  ok(/faturamento|Business Manager/i.test(pagamento.entregas[0].explicacao || ''), 'a explicação diz onde resolver');
+  ok(/24h/.test(pagamento.entregas[0].explicacao || ''), 'e explica por que o teste manual funcionava');
+
   const entregue = await (await pedir([
     { at: '2026-08-11T23:10:00Z', kind: 'status', status: 'delivered', recipient: '5513982020928' },
   ])).json();
