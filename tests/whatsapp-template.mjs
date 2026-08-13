@@ -75,17 +75,22 @@ console.log('\n=== 2. cada status vira um veredito que decide alguma coisa ===')
       espera: /ANÁLISE/i,
     },
     {
+      // O resumo automático no WhatsApp está desligado (a Meta cobra por
+      // mensagem iniciada pelo bot). Enquanto estiver, o veredito NÃO pode
+      // dizer que basta a secret — a secret virou irrelevante, e mandar o
+      // admin atrás dela seria mandá-lo consertar o trinco errado.
       nome: 'APPROVED sem a secret ligada',
       templates: [{ name: 'resumo_diario_finn', status: 'APPROVED', language: 'pt_BR', category: 'UTILITY' }],
       env: ENV_BASE,
-      // Aprovado não é o fim: sem a secret o resumo continua só no Telegram.
-      espera: /NÃO LIGADO/i,
+      espera: /DESLIGADO no WhatsApp/i,
     },
     {
+      // Nem com a secret configurada o painel pode dizer "sai no WhatsApp":
+      // quem manda hoje é RESUMO_DIARIO_WHATSAPP_ATIVO.
       nome: 'APPROVED com a secret ligada',
       templates: [{ name: 'resumo_diario_finn', status: 'APPROVED', language: 'pt_BR', category: 'UTILITY' }],
       env: { ...ENV_BASE, DAILY_DASHBOARD_TEMPLATE_NAME: 'resumo_diario_finn' },
-      espera: /JÁ LIGADO/i,
+      espera: /DESLIGADO no WhatsApp/i,
     },
     {
       nome: 'REJECTED',
@@ -222,13 +227,15 @@ console.log('\n=== 7. POST /whatsapp/test-daily-template manda o resumo na hora 
   ok(params.length === 4, 'manda exatamente 4 parâmetros (igual ao template aprovado)', params.length);
   ok(params.every(p => p.text && p.text.trim().length > 0), 'nenhum parâmetro vazio (a Meta rejeita)', JSON.stringify(params.map(p => p.text)));
 
-  // Sem a secret, o teste funciona mas o veredito não pode dizer que está
-  // tudo pronto — o envio das 22h continua desligado.
-  ok(/NÃO está configurada/i.test(j.veredito), 'sem a secret, avisa que o automático ainda não sai', j.veredito);
+  // Este endpoint é teste MANUAL. Ele passar não pode ser lido como "o
+  // automático voltou" — o automático está desligado, e um veredito animado
+  // aqui faria o admin parar de procurar o problema real (o faturamento).
+  ok(/DESLIGADO/i.test(j.veredito) && /Telegram/i.test(j.veredito),
+     'teste manual avisa que o automático continua desligado', j.veredito);
 
   const comSecret = await testar({ ...envKV(), DAILY_DASHBOARD_TEMPLATE_NAME: 'resumo_diario_finn' }, { phone: '5511999999999' });
   const j2 = await comSecret.json();
-  ok(/22h também vai sair/i.test(j2.veredito), 'com a secret, confirma que o automático sai', j2.veredito);
+  ok(/DESLIGADO/i.test(j2.veredito), 'nem com a secret ele promete o envio das 22h', j2.veredito);
 
   // Descasamento de variáveis tem nome próprio no veredito.
   mockEnvio({ error: { code: 132000, message: 'number of parameters does not match' } }, 400);
@@ -242,7 +249,7 @@ console.log('\n=== 7. POST /whatsapp/test-daily-template manda o resumo na hora 
 }
 
 // ══════════════════════════════════════════════════════════════════════
-console.log('\n=== 8. o envio AUTOMÁTICO continua dependendo da secret ===');
+console.log('\n=== 8. o resumo automático saiu do WhatsApp e continua no Telegram ===');
 {
   // O nome forçado é privilégio do teste manual. Se vazasse pro caminho
   // automático, o fail-safe que impede mensagem proativa errada sumiria.
@@ -251,17 +258,36 @@ console.log('\n=== 8. o envio AUTOMÁTICO continua dependendo da secret ===');
     return { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); },
       async list({ prefix }) { return { keys: [...store.keys()].filter(k => k.startsWith(prefix || '')).map(name => ({ name })), list_complete: true }; } };
   };
-  let enviou = 0;
+  let enviouWpp = 0, enviouTg = 0;
   global.fetch = async (url, opts) => {
-    if (String(url).includes('/messages')) { enviou++; return new Response(JSON.stringify({ messages: [{ id: 'x' }] }), { status: 200 }); }
+    const u = String(url);
+    if (u.includes('api.telegram.org')) { enviouTg++; return new Response(JSON.stringify({ ok: true, result: { message_id: 1 } }), { status: 200 }); }
+    if (u.includes('/messages')) { enviouWpp++; return new Response(JSON.stringify({ messages: [{ id: 'x' }] }), { status: 200 }); }
     return realFetch(url, opts);
   };
-  const env = {
-    ...ENV_BASE, WHATSAPP_PHONE_NUMBER_ID: '999',
-    FINN_KV: novoKV({ 'data_5511999999999': JSON.stringify({ phone: '5511999999999', plan: 'pro', dailyDashboardOptIn: true, txs: [{ id: 't1', val: -30, desc: 'x', cat: 'Outros', date: '2026-08-11' }] }) }),
-  };
-  await bot.scheduled({ cron: '0 1 * * *' }, env, ctx);
-  ok(enviou === 0, 'sem DAILY_DASHBOARD_TEMPLATE_NAME, o cron não manda nada', enviou);
+  // Dois assinantes com tudo em ordem (Pro + opt-in + lançamentos): um no
+  // WhatsApp, um no Telegram. A única diferença entre eles é o canal.
+  const txs = [{ id: 't1', val: -30, desc: 'x', cat: 'Outros', date: '2026-08-11' }];
+  const dados = { plan: 'pro', dailyDashboardOptIn: true, txs };
+  const kvDupla = () => novoKV({
+    'data_5511999999999': JSON.stringify({ ...dados, phone: '5511999999999' }),
+    'data_tg:12345':      JSON.stringify({ ...dados, phone: 'tg:12345' }),
+  });
+
+  await bot.scheduled({ cron: '0 1 * * *' }, { ...ENV_BASE, WHATSAPP_PHONE_NUMBER_ID: '999', TELEGRAM_BOT_TOKEN: 'tg-token', FINN_KV: kvDupla() }, ctx);
+  ok(enviouWpp === 0, 'cron não manda nada pro WhatsApp', enviouWpp);
+  ok(enviouTg === 1, 'e continua mandando pro Telegram', enviouTg);
+
+  // O ponto que mais importa: nem com a secret do template configurada o
+  // WhatsApp volta a receber. Quem manda é RESUMO_DIARIO_WHATSAPP_ATIVO — se
+  // alguém religar por engano mexendo só na secret, este teste quebra.
+  enviouWpp = 0; enviouTg = 0;
+  await bot.scheduled({ cron: '0 1 * * *' }, {
+    ...ENV_BASE, WHATSAPP_PHONE_NUMBER_ID: '999', TELEGRAM_BOT_TOKEN: 'tg-token',
+    DAILY_DASHBOARD_TEMPLATE_NAME: 'resumo_diario_finn', FINN_KV: kvDupla(),
+  }, ctx);
+  ok(enviouWpp === 0, 'mesmo com a secret ligada, o WhatsApp segue mudo', enviouWpp);
+  ok(enviouTg === 1, 'e o Telegram segue recebendo', enviouTg);
   global.fetch = realFetch;
 }
 

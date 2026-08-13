@@ -4136,10 +4136,15 @@ function renderConfig(){
     '<div class="form-row"><label>Nome de exibição</label><input type="text" id="cfgName" value="' + escapeHtml(currentName) + '" placeholder="Seu nome"></div>' +
     '<div class="form-row"><label>Número de WhatsApp</label><input type="tel" id="cfgWhatsapp" value="' + escapeHtml(formatBRPhone(currentWhatsapp)) + '" placeholder="(13) 99210-2413"></div>' +
     '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">' + (whatsAppBotVisible() ? 'Salve o número aqui e depois confirme que ele é seu no card abaixo.' : 'O bot do WhatsApp está <b>em breve</b> — salve seu número aqui e, assim que o bot voltar, ele já fica conectado automaticamente.') + '</div>' +
-    (whatsAppBotVisible() ?
+    // O resumo automático das 22h saía por WhatsApp e por Telegram; hoje sai
+    // só pelo Telegram (mensagem que o bot inicia no WhatsApp é cobrada pela
+    // Meta por conversa, e a conta não tem como pagar). Por isso o checkbox
+    // passou a depender do Telegram, não do WhatsApp: oferecer aqui um resumo
+    // que nunca chega é pior do que não oferecer.
+    (telegramBotVisible() ?
       '<label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--fd);margin:-4px 0 12px;cursor:pointer">' +
         '<input type="checkbox" id="cfgDailyDashboard"' + (dailyDashboardOptIn ? ' checked' : '') + '>' +
-        'Quero receber um resumo diário pelo WhatsApp às 22h' +
+        'Quero receber um resumo diário pelo Telegram às 22h' +
       '</label>'
       : '') +
     '<button type="button" class="btn-submit" id="btnSaveName">Salvar</button>' +
@@ -5762,8 +5767,9 @@ function renderAdminHome(){
   // no WhatsApp Manager. Aqui vira um clique, e a resposta crua vem junto
   // porque o motivo de uma rejeição é justamente o que a Meta não resume.
   html += '<div class="card">' +
-    '<div class="eyebrow">Resumo diário no WhatsApp</div>' +
-    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Consulta na Meta se o template <b>resumo_diario_finn</b> já foi aprovado. Enquanto não for, o resumo das 22h sai só no Telegram.</div>' +
+    '<div class="eyebrow">Diagnóstico do WhatsApp</div>' +
+    '<div class="ai-error" style="margin-bottom:12px;font-size:12.5px">O <b>resumo automático das 22h está desligado no WhatsApp</b>. Mensagem que o bot inicia é cobrada pela Meta por conversa, e a conta está sem forma de pagamento válida (erro 131042). Hoje o resumo sai só pelo Telegram — o bot do WhatsApp continua respondendo normal quem escrever primeiro. Pra religar: acerte o faturamento no Business Manager e vire <b>RESUMO_DIARIO_WHATSAPP_ATIVO</b> pra <b>true</b> no worker.</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Abaixo, as ferramentas de diagnóstico continuam valendo. Esta consulta na Meta diz se o template <b>resumo_diario_finn</b> segue aprovado.</div>' +
     '<button type="button" class="btn-ghost" id="btnTemplateStatus" style="width:100%"' + (state.templateStatusLoading ? " disabled" : "") + '>' +
       (state.templateStatusLoading ? "Consultando a Meta…" : "Ver situação do template") + '</button>' +
     (state.templateStatusResultado
@@ -5773,7 +5779,7 @@ function renderAdminHome(){
     // Esperar as 22h pra descobrir que a Meta recusou o envio é o ciclo de
     // diagnóstico mais lento possível. Aqui o resumo sai na hora.
     '<div style="border-top:1px solid var(--fb);margin-top:14px;padding-top:14px">' +
-      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Manda o resumo agora pra um número, sem esperar as 22h — serve pra confirmar que o template aprovado funciona de verdade.</div>' +
+      '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">Manda o resumo agora pra um número. É um teste manual: passar aqui <b>não</b> religa o envio automático das 22h, só prova que o template em si funciona.</div>' +
       '<div class="form-row"><label>Telefone (com DDI 55)</label>' +
         '<input type="tel" id="templateTestePhone" placeholder="5511999999999" value="' + escapeHtml(state.templateTestePhone) + '"></div>' +
       '<button type="button" class="btn-ghost" id="btnTemplateTeste" style="width:100%"' + (state.templateTesteLoading ? " disabled" : "") + '>' +

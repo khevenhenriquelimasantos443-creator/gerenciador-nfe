@@ -697,6 +697,13 @@ async function processMessage(msg, env) {
     }
     if (["ativar resumo", "ativar resumo diário", "resumo diário", "quero o resumo diário"].includes(lower)) {
       await saveUserData(phone, { dailyDashboardOptIn: true, dailyDashboardOptOutChat: false }, env);
+      // No WhatsApp o envio automático está desligado (ver
+      // RESUMO_DIARIO_WHATSAPP_ATIVO). O opt-in continua sendo gravado — assim
+      // quem pediu já volta a receber no dia em que religar — mas prometer as
+      // 22h aqui seria mentira: a mensagem simplesmente não sairia.
+      if (!isTelegramId(phone) && !RESUMO_DIARIO_WHATSAPP_ATIVO) {
+        return sendText(phone, "Anotei sua preferência! Só que o resumo automático das 22h está *desligado no WhatsApp* por enquanto — hoje ele sai só pelo Telegram. Aqui você pode pedir na hora quando quiser: mande *resumo* ou *saldo*.", env);
+      }
       return sendText(phone, "Pronto! A partir de hoje você recebe um resumo automático todo dia às 22h. Pra parar, é só responder *parar*.", env);
     }
     // Pedido de atendimento humano — o número do bot está na Cloud API e não
@@ -1880,6 +1887,26 @@ async function handleBotTxsAck(request, env) {
 // =============================================================================
 // DAILY DASHBOARD (cron 01:00 UTC = 22:00 BRT)
 // =============================================================================
+
+// Resumo diário pelo WhatsApp: DESLIGADO.
+//
+// Mensagem iniciada pelo bot fora da janela de 24h só sai como Message
+// Template, e template é COBRADO pela Meta por conversa. A conta não tem
+// forma de pagamento ativa (é o erro 131042 que aparecia em /whatsapp/entregas
+// todo dia às 22h), e manter o envio ligado sem poder pagar só gera falha
+// diária silenciosa: o usuário marca o checkbox, nunca recebe nada e o Finn
+// fica devendo uma coisa que prometeu.
+//
+// O Telegram não tem esse custo nem essa janela — lá o resumo continua saindo
+// normal. O bot do WhatsApp segue inteiro pra quem escrever primeiro
+// (conversa de serviço é gratuita); o que morreu foi só o envio automático.
+//
+// Pra religar: coloque um cartão válido em business.facebook.com →
+// Configurações do WhatsApp → Faturamento, confirme em /whatsapp/entregas que
+// o 131042 sumiu, e vire esta constante pra true. Nada mais precisa mudar no
+// código — o template, o opt-in e o cron continuam todos de pé.
+const RESUMO_DIARIO_WHATSAPP_ATIVO = false;
+
 async function sendDailyDashboards(env) {
   // Mensagem proativa (a conta iniciada pelo bot, não pelo usuário) é
   // diferencial do Pro — free/plus só recebem quando eles mesmos chamam.
@@ -1908,7 +1935,7 @@ async function sendDailyDashboards(env) {
       // WhatsApp Business — texto livre iniciado pelo bot é permitido lá,
       // sem precisar de Message Template aprovado pela Meta.
       if (isTelegramId(phone)) await sendText(phone, buildDashboardMessage(data, env), env);
-      else await sendDailyDashboardTemplate(phone,data,env);
+      else if (RESUMO_DIARIO_WHATSAPP_ATIVO) await sendDailyDashboardTemplate(phone,data,env);
     } catch(err) { console.error(`Dashboard error for ${phone}:`,err); }
   }
 }
@@ -2730,9 +2757,11 @@ async function handleWhatsAppTestDailyTemplate(request, env) {
 
   let veredito;
   if (resp.ok) {
-    veredito = env.DAILY_DASHBOARD_TEMPLATE_NAME
-      ? "ENVIADO. Confira o WhatsApp desse número. Como a secret já está configurada, o resumo automático das 22h também vai sair."
-      : "ENVIADO — o template funciona. Mas a secret DAILY_DASHBOARD_TEMPLATE_NAME ainda NÃO está configurada, então o resumo automático das 22h continua só no Telegram. Este teste usou o nome fixo.";
+    // Este endpoint é teste manual: dispara na hora, custe o que custar. O
+    // envio AUTOMÁTICO das 22h é outra coisa e está desligado — dizer que ele
+    // "também vai sair" só porque o teste passou levaria o admin a acreditar
+    // num envio que nunca acontece.
+    veredito = "ENVIADO. Confira o WhatsApp desse número — o template funciona. Atenção: o resumo automático das 22h continua DESLIGADO no WhatsApp (RESUMO_DIARIO_WHATSAPP_ATIVO = false, por causa da cobrança da Meta) e sai só pelo Telegram. Este teste não religa nada.";
   } else {
     // 132000 é justamente o descasamento de variáveis — vale nomear, porque
     // o texto cru da Meta não explica o que fazer.
@@ -2781,14 +2810,20 @@ async function handleWhatsAppTemplates(env) {
   // Aprovado na Meta e ligado no Finn são duas coisas diferentes: sem o
   // secret, o resumo das 22h continua saindo só no Telegram mesmo com o
   // template aprovado. O veredito precisa dizer QUAL das duas está faltando.
+  // Hoje há um terceiro trinco antes dos dois: RESUMO_DIARIO_WHATSAPP_ATIVO.
+  // Enquanto ele for false nada sai, template aprovado ou não — e é ele que o
+  // veredito tem que mostrar primeiro, senão o painel diz "sai no WhatsApp"
+  // sobre um envio que o próprio código bloqueia duas funções acima.
   const jaLigado = env.DAILY_DASHBOARD_TEMPLATE_NAME === "resumo_diario_finn";
   let veredito;
   if (!resp.ok) veredito = "NÃO CONSEGUI CONSULTAR — veja meta_response abaixo (token sem permissão whatsapp_business_management é a causa mais comum).";
   else if (!alvo.length) veredito = "O template 'resumo_diario_finn' NÃO EXISTE nesta conta. Crie com POST /whatsapp/create-daily-template.";
   else if (alvo.some(t => t.status === "APPROVED")) {
-    veredito = jaLigado
-      ? "APROVADO e JÁ LIGADO no Finn — o resumo das 22h sai no WhatsApp. Nada a fazer."
-      : "APROVADO na Meta, mas AINDA NÃO LIGADO no Finn: falta a secret DAILY_DASHBOARD_TEMPLATE_NAME=resumo_diario_finn no worker do bot. Enquanto ela não existir, o resumo das 22h continua só no Telegram.";
+    veredito = !RESUMO_DIARIO_WHATSAPP_ATIVO
+      ? "APROVADO na Meta, mas o resumo automático está DESLIGADO no WhatsApp de propósito: template é cobrado por conversa e a conta está sem forma de pagamento válida (erro 131042). Hoje o resumo das 22h sai só pelo Telegram. Pra religar: resolva o faturamento no Business Manager e vire RESUMO_DIARIO_WHATSAPP_ATIVO pra true no worker."
+      : jaLigado
+        ? "APROVADO e JÁ LIGADO no Finn — o resumo das 22h sai no WhatsApp. Nada a fazer."
+        : "APROVADO na Meta, mas AINDA NÃO LIGADO no Finn: falta a secret DAILY_DASHBOARD_TEMPLATE_NAME=resumo_diario_finn no worker do bot. Enquanto ela não existir, o resumo das 22h continua só no Telegram.";
   }
   else if (alvo.some(t => t.status === "PENDING" || t.status === "IN_APPEAL")) veredito = "AINDA EM ANÁLISE na Meta. Nada a fazer além de esperar.";
   else if (alvo.some(t => t.status === "REJECTED")) veredito = "REJEITADO — veja motivo_rejeicao. Dá pra ajustar o texto e submeter de novo.";
