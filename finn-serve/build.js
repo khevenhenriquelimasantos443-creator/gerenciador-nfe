@@ -2424,7 +2424,7 @@ const IG_CAPTIONS = [
   'O Finn categoriza sozinho 🤖\\n\\nImportou o extrato? Cada gasto já cai na categoria certa, sem você mexer em nada.\\n\\n#financaspessoais #appfinanceiro #organizacaofinanceira #educacaofinanceira',
   'Modo claro ou modo escuro — do seu jeito 🌙\\n\\nEscolhe o visual que combina com você e muda a qualquer momento, direto nas configurações.\\n\\n#appfinanceiro #financaspessoais',
   'Instala como app, sem precisar de loja 📲\\n\\nAdiciona o Finn na tela inicial do seu celular em segundos — abre rápido, sem ocupar espaço.\\n\\n#appfinanceiro #financaspessoais #tecnologia',
-  'Junta dinheiro pra o que importa 🎯\\n\\nCria uma meta, define o valor e acompanha o progresso — viagem, reserva de emergência, o que for.\\n\\n#metasfinanceiras #financaspessoais #appfinanceiro #educacaofinanceira',
+  'Junta dinheiro pro que importa 🎯\\n\\nCria uma meta, define o valor e acompanha o progresso — viagem, reserva de emergência, o que for.\\n\\n#metasfinanceiras #financaspessoais #appfinanceiro #educacaofinanceira',
   'Todas as contas, um só lugar 🏦\\n\\nConecta quantos bancos usar e vê o saldo geral, sem abrir um app por vez.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro',
   'Veja se está gastando menos 📈\\n\\nCompara mês a mês e entende se seus hábitos estão melhorando de verdade — com dado, não com achismo.\\n\\n#financaspessoais #appfinanceiro #educacaofinanceira',
   'Começa a usar em minutos ⏱️\\n\\nSem burocracia, sem cartão de crédito pra testar — cria a conta e já importa seu extrato.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro',

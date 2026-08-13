@@ -8,6 +8,10 @@ Rode da raiz do repositório:
     node tests/instagram.mjs  # cron dos posts e stories: prioridade da fila, idempotência
     node tests/whatsapp-template.mjs  # GET /whatsapp/templates: gate de admin, veredito, CORS
     node tests/layout-mobile.mjs      # nada pode vazar do card num celular de 360px
+    node tests/sheets-sync.mjs        # planilha: token, pull/push, compra única, link de cópia
+    node tests/aprender.mjs           # trilhas e progresso das lições no Supabase
+    node tests/importar.mjs           # extrato de banco: CSV/OFX/XLSX, sinais e categorias
+    node tests/portugues.mjs          # erros de português nos textos que o usuário lê
 
 `smoke.mjs` precisa de um Chromium. Em ambiente sem ele instalado, ajuste
 `executablePath` ou remova a opção pra usar o que o Playwright baixar.
