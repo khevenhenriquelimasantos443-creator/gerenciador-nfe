@@ -688,6 +688,85 @@ async function _baixarPlanilha(request, env) {
   });
 }
 
+// O link de cópia da planilha pode vir de dois lugares: o painel de admin
+// (gravado no KV) ou a secret PLANILHA_COPY_URL. O KV ganha, e é de propósito:
+// trocar a planilha-mestre pelo celular, sem terminal e sem redeploy, é o
+// caminho que de fato vai ser usado. A secret continua valendo como fallback
+// pra não quebrar nada que já esteja configurado.
+async function _planilhaCopyUrl(env) {
+  if (env.FINN_KV) {
+    try {
+      var salvo = await env.FINN_KV.get('planilha_copy_url');
+      if (salvo) return salvo;
+    } catch (e) { /* KV fora do ar não pode derrubar a entrega — cai na secret */ }
+  }
+  return env.PLANILHA_COPY_URL || null;
+}
+
+// Aceita QUALQUER forma do link do Google Sheets e devolve sempre a forma
+// /copy. Existe porque o link que o celular copia no "Compartilhar" termina em
+// /edit?usp=drivesdk, e quem entrega esse link pro comprador dá acesso de
+// leitura à planilha-mestre em vez de uma cópia — o erro silencioso mais caro
+// possível aqui. Em vez de pedir pra editar a URL na mão, o servidor edita.
+function _normalizaLinkCopia(bruto) {
+  var texto = String(bruto == null ? '' : bruto).trim();
+  if (!texto) return { erro: 'Cole o link da planilha.' };
+  var m = texto.match(/^https:\\/\\/docs\\.google\\.com\\/spreadsheets\\/d\\/([a-zA-Z0-9_-]{20,})/);
+  if (!m) {
+    return { erro: 'Isso não parece o link de uma planilha do Google Sheets. O certo começa com https://docs.google.com/spreadsheets/d/ — abra a planilha, toque em Compartilhar, "Copiar link", e cole aqui do jeito que vier.' };
+  }
+  return { url: 'https://docs.google.com/spreadsheets/d/' + m[1] + '/copy' };
+}
+
+// GET/POST /admin/planilha-link — lê e grava o link de cópia sem terminal.
+//
+// A alternativa era "wrangler secret put PLANILHA_COPY_URL": exige notebook,
+// acertar o nome da secret e um redeploy. Aqui é colar e salvar, com o
+// servidor consertando o formato do link.
+async function _adminPlanilhaLink(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    if (request.method === 'POST') {
+      if (!env.FINN_KV) return new Response(JSON.stringify({ error: 'KV não está configurado neste ambiente' }), { status: 500, headers: cors });
+      var corpo;
+      try { corpo = await request.json(); } catch (e) { return new Response(JSON.stringify({ error: 'corpo invalido' }), { status: 400, headers: cors }); }
+      var bruto = corpo && corpo.url;
+      // Campo vazio = "apaga o que eu salvei", não "salva vazio". Sem isso não
+      // haveria como desfazer um link errado pelo painel.
+      if (!String(bruto == null ? '' : bruto).trim()) {
+        await env.FINN_KV.delete('planilha_copy_url');
+        var apósApagar = await _planilhaCopyUrl(env);
+        return new Response(JSON.stringify({
+          ok: true, url: apósApagar, origem: apósApagar ? 'secret' : null,
+          aviso: apósApagar ? 'Link do painel apagado. Voltou a valer o da secret PLANILHA_COPY_URL.' : 'Link apagado. O botão "Abrir no Google Sheets" some do app; o download do .xlsx continua.'
+        }), { status: 200, headers: cors });
+      }
+      var norm = _normalizaLinkCopia(bruto);
+      if (norm.erro) return new Response(JSON.stringify({ error: norm.erro }), { status: 400, headers: cors });
+      await env.FINN_KV.put('planilha_copy_url', norm.url);
+      return new Response(JSON.stringify({
+        ok: true, url: norm.url, origem: 'painel',
+        aviso: 'Salvo. Confira agora se a planilha está compartilhada como "Qualquer pessoa com o link → Leitor" — sem isso o comprador abre o link e leva "acesso negado".'
+      }), { status: 200, headers: cors });
+    }
+
+    var atual = await _planilhaCopyUrl(env);
+    var doPainel = null;
+    if (env.FINN_KV) { try { doPainel = await env.FINN_KV.get('planilha_copy_url'); } catch (e) {} }
+    return new Response(JSON.stringify({
+      ok: true, url: atual,
+      origem: doPainel ? 'painel' : (env.PLANILHA_COPY_URL ? 'secret' : null)
+    }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminPlanilhaLink');
+  }
+}
+
 // GET /billing/planilha-status — a tela precisa saber se já comprou.
 async function _statusPlanilha(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -705,7 +784,7 @@ async function _statusPlanilha(request, env) {
       // Link de cópia do Google Sheets (termina em /copy). É o caminho bom:
       // um clique e a pessoa já tem a planilha ONLINE na conta dela, com o
       // script de sincronização junto. Só aparece pra quem comprou.
-      copia: (comprou || !PREMIUM_ENFORCEMENT_ENABLED || _planoTemSync(plano)) ? (env.PLANILHA_COPY_URL || null) : null
+      copia: (comprou || !PREMIUM_ENFORCEMENT_ENABLED || _planoTemSync(plano)) ? (await _planilhaCopyUrl(env)) : null
     }), { status: 200, headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_statusPlanilha');
@@ -4728,6 +4807,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/intrusions' && request.method === 'GET') {
       return _adminIntrusions(request, env);
+    }
+    if (url.pathname === '/admin/planilha-link' && (request.method === 'GET' || request.method === 'POST')) {
+      return _adminPlanilhaLink(request, env);
     }
     if (url.pathname === '/admin/instagram-status' && request.method === 'GET') {
       return _adminInstagramStatus(request, env);

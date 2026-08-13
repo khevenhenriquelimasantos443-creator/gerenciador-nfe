@@ -362,5 +362,85 @@ console.log('\n=== 10. download da planilha é o produto pago ===');
   global.fetch = realFetch;
 }
 
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 11. o link da planilha se configura pelo painel, sem terminal ===');
+{
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/auth/v1/user')) {
+      const t = ((opts && opts.headers && opts.headers.Authorization) || '').replace(/^Bearer\s+/i, '');
+      if (t === 'master') return new Response(JSON.stringify({ id: 'm1', email: 'finn.controle01@gmail.com' }), { status: 200 });
+      if (t === 'zé') return new Response(JSON.stringify({ id: 'u9', email: 'ze@x.com' }), { status: 200 });
+      return new Response('{}', { status: 401 });
+    }
+    if (u.includes('spreadsheet_purchases')) return new Response(JSON.stringify([{ user_id: 'u1' }]), { status: 200 });
+    if (u.includes('/rest/v1/subscriptions')) return new Response(JSON.stringify([{ plan: 'free', status: 'active' }]), { status: 200 });
+    return realFetch(url, opts);
+  };
+  const env = { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'sk', MASTER_ADMIN_PASSWORD: 'senha-master' };
+  const comoMaster = (extra) => ({ 'Authorization': 'Bearer master', 'X-Admin-Password': 'senha-master', ...(extra || {}) });
+  const salvar = (link, headers) => serve.fetch(req('/admin/planilha-link', {
+    method: 'POST', headers: headers || comoMaster({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ url: link })
+  }), env, ctx);
+
+  // A rota escreve o que o produto entrega — precisa do mesmo gate do resto.
+  const anon = await serve.fetch(req('/admin/planilha-link'), env, ctx);
+  ok(anon.status === 403, 'sem credencial -> 403', anon.status);
+  const outro = await salvar('https://docs.google.com/spreadsheets/d/ABCDEFGHIJKLMNOPQRSTU/edit',
+    { 'Authorization': 'Bearer zé', 'X-Admin-Password': 'senha-master', 'Content-Type': 'application/json' });
+  ok(outro.status === 403, 'usuário comum não configura o link -> 403', outro.status);
+
+  // O ponto do recurso: o link que o celular copia termina em
+  // /edit?usp=drivesdk. Entregar ESSE link ao comprador dá a ele acesso de
+  // leitura à planilha-mestre em vez de uma cópia. O servidor conserta.
+  const doCelular = 'https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/edit?usp=drivesdk&ouid=114155652725311049065';
+  const j1 = await (await salvar(doCelular)).json();
+  ok(j1.ok === true, 'aceita o link do "Compartilhar" do celular', j1.error);
+  ok(j1.url === 'https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/copy',
+     'e converte pra /copy sozinho', j1.url);
+  ok(/compartilhad/i.test(j1.aviso || ''), 'lembra do passo que o código não faz (compartilhar)', j1.aviso);
+
+  // Já em /copy, ou com /edit no meio do caminho: mesmo resultado.
+  for (const variante of [
+    'https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/copy',
+    'https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/edit#gid=0',
+    '  https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/edit  ',
+  ]) {
+    const jv = await (await salvar(variante)).json();
+    ok(jv.url === 'https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/copy',
+       'normaliza tambem: ' + variante.trim().slice(0, 58), jv.url);
+  }
+
+  // Link errado tem que ser recusado NA HORA. Se passasse, o erro só
+  // apareceria quando um comprador clicasse e não abrisse nada.
+  for (const ruim of ['https://drive.google.com/file/d/ABCDEFGHIJKLMNOPQRSTU/view', 'sei lá', 'https://docs.google.com/document/d/ABCDEFGHIJKLMNOPQRSTU/edit']) {
+    const rr = await salvar(ruim);
+    const jr = await rr.json();
+    ok(rr.status === 400 && !!jr.error, 'recusa link que não é planilha: ' + ruim.slice(0, 40), jr.error && jr.error.slice(0, 40));
+  }
+
+  // Configurado pelo painel, o link tem que chegar ao comprador.
+  const st = await (await serve.fetch(req('/billing/planilha-status?access_token=master'), env, ctx)).json();
+  ok(st.copia === 'https://docs.google.com/spreadsheets/d/1hYpQDNKVr3QnT-r8jFDG3V/copy',
+     'o comprador recebe o link salvo no painel', st.copia);
+
+  // O painel ganha da secret: é ele que dá pra corrigir pelo celular.
+  const comSecret = { ...env, PLANILHA_COPY_URL: 'https://docs.google.com/spreadsheets/d/VELHOVELHOVELHOVELHO/copy' };
+  const st2 = await (await serve.fetch(req('/billing/planilha-status?access_token=master'), comSecret, ctx)).json();
+  ok(/1hYpQDNKVr3QnT-r8jFDG3V/.test(st2.copia || ''), 'painel vence a secret antiga', st2.copia);
+
+  // Apagar volta pra secret — senão não haveria como desfazer sem terminal.
+  const jz = await (await salvar('')).json();
+  ok(jz.ok === true, 'campo vazio apaga o link do painel', jz.error);
+  const st3 = await (await serve.fetch(req('/billing/planilha-status?access_token=master'), comSecret, ctx)).json();
+  ok(st3.copia === 'https://docs.google.com/spreadsheets/d/VELHOVELHOVELHOVELHO/copy',
+     'e a secret volta a valer', st3.copia);
+  const st4 = await (await serve.fetch(req('/billing/planilha-status?access_token=master'), env, ctx)).json();
+  ok(st4.copia === null, 'sem painel e sem secret, copia=null (só o .xlsx)', st4.copia);
+  global.fetch = realFetch;
+}
+
 console.log('\n' + (falhas === 0 ? '✅ tudo passou' : `❌ ${falhas} falha(s)`));
 process.exit(falhas === 0 ? 0 : 1);

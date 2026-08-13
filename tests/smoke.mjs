@@ -60,6 +60,7 @@ const INTRUSOES = {
 let ULTIMA_CHAMADA_TEMPLATES = null;
 let ULTIMO_TESTE_TEMPLATE = null;
 let ULTIMA_PLANILHA = null;
+let ULTIMO_LINK_PLANILHA = null;
 let ULTIMA_COMPRA = null;
 
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
@@ -81,6 +82,16 @@ async function abrir(email) {
     const J = (o) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(o) });
     if (u.includes('/admin/analytics')) return J(ANALYTICS);
     if (u.includes('/admin/intrusions')) return J(INTRUSOES);
+    // Link de copia da planilha: precisa vir ANTES do catch-all de /admin,
+    // senao o card recebe {ok:true} sem url e o teste nao prova nada.
+    if (u.includes('/admin/planilha-link')) {
+      if (m === 'POST') {
+        ULTIMO_LINK_PLANILHA = JSON.parse(route.request().postData() || '{}').url;
+        return J({ ok: true, url: 'https://docs.google.com/spreadsheets/d/AAA/copy', origem: 'painel',
+                   aviso: 'Salvo. Confira o compartilhamento.' });
+      }
+      return J({ ok: true, url: null, origem: null });
+    }
     if (u.includes('bot-stats')) return J({ ok: true, whatsappTx: 25, telegramTx: 40, dailyDashboardOptIn: 3 });
     if (u.includes('supabase.co/rest/v1/') && (m === 'DELETE' || m === 'PATCH' || m === 'POST')) return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' });
     if (u.includes('supabase.co/rest/v1/social_posts')) return J([
@@ -210,6 +221,37 @@ console.log('\n=== modo admin ===');
   ok(/12/.test(est.txt) && /340/.test(est.txt), 'números principais aparecem');
   ok(/conquistas/i.test(est.txt), 'bloco de conquistas aparece');
   ok(/Mãos de tesoura/.test(est.txt) && /não dá pra medir/i.test(est.txt), 'explica honestamente a conquista não-mensurável');
+
+  // Link da Planilha Finn: o card existe pra tirar o "wrangler secret put" do
+  // caminho. Se ele não carregar sozinho, ou o botão não mandar nada, a
+  // configuração volta a depender do terminal sem ninguém perceber.
+  const cardLink = await p.evaluate(() => {
+    const c = [...document.querySelectorAll('.card')].find(x => /Link da Planilha Finn/.test(x.textContent));
+    return c ? { existe: true, avisaVazio: /Nenhum link configurado/.test(c.textContent),
+                 temInput: !!c.querySelector('#planilhaLinkInput'),
+                 lembraCompartilhar: /Qualquer pessoa com o link/.test(c.textContent) } : { existe: false };
+  });
+  ok(cardLink.existe, 'card do link da planilha aparece no admin');
+  ok(cardLink.avisaVazio, 'e diz na cara que não há link configurado');
+  ok(cardLink.lembraCompartilhar, 'lembra do compartilhamento, que o código não faz sozinho');
+
+  // O link que o celular copia termina em /edit?usp=drivesdk. Ele tem que
+  // sair daqui CRU — quem normaliza é o servidor, que é onde tem teste.
+  await p.evaluate(() => {
+    const i = document.getElementById('planilhaLinkInput');
+    i.value = 'https://docs.google.com/spreadsheets/d/AAA/edit?usp=drivesdk';
+    i.dispatchEvent(new Event('input', { bubbles: true }));
+    document.getElementById('btnSalvarPlanilhaLink').click();
+  });
+  await p.waitForTimeout(800);
+  ok(ULTIMO_LINK_PLANILHA === 'https://docs.google.com/spreadsheets/d/AAA/edit?usp=drivesdk',
+     'o botão manda o link digitado pro servidor', ULTIMO_LINK_PLANILHA);
+  const depoisDeSalvar = await p.evaluate(() => {
+    const c = [...document.querySelectorAll('.card')].find(x => /Link da Planilha Finn/.test(x.textContent));
+    return { mostraCopy: /\/copy/.test(c.textContent), mostraOrigem: /daqui do painel/.test(c.textContent) };
+  });
+  ok(depoisDeSalvar.mostraCopy, 'e mostra de volta o link já convertido pra /copy');
+  ok(depoisDeSalvar.mostraOrigem, 'dizendo que veio do painel, não da secret');
 
   // export CSV
   await p.evaluate(() => { const b = document.getElementById('btnLoadIntrusionsHome'); if (b) b.click(); });

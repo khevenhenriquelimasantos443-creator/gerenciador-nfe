@@ -654,6 +654,9 @@ function setAdminMode(ligado){
   state.adminMode = !!ligado;
   if(ligado){
     state.tab = "adminHome";
+    // Carrega sozinho: é um card de "está configurado?", e um card desses que
+    // exige clicar num botão pra dizer a verdade acaba nunca sendo clicado.
+    if(!state.planilhaLink) loadPlanilhaLink();
   } else if(ADMIN_TABS.indexOf(state.tab) !== -1){
     state.tab = "dashboard";
   }
@@ -819,7 +822,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -5762,6 +5765,28 @@ function renderAdminHome(){
       : '<button type="button" class="btn-ghost" id="btnLoadIntrusionsHome" style="width:100%">Ver tentativas de acesso</button>') +
   '</div>';
 
+  // Link de cópia da Planilha Finn. Antes isso era "wrangler secret put" no
+  // notebook; aqui é colar e salvar. O servidor normaliza a URL pra /copy,
+  // então o link do "Compartilhar" do celular (que termina em
+  // /edit?usp=drivesdk) entra do jeito que vier e sai certo.
+  var pl = state.planilhaLink;
+  html += '<div class="card">' +
+    '<div class="eyebrow">Link da Planilha Finn</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">É o link que quem compra usa pra abrir a planilha no Google Sheets. Cole do jeito que o Google copiar — eu converto pra <b>/copy</b> sozinho.</div>' +
+    (pl && pl.url
+      ? '<div class="ai-result" style="margin-bottom:10px;word-break:break-all;font-size:11.5px">' + escapeHtml(pl.url) +
+        '<div style="margin-top:6px;color:var(--fm)">Vindo ' + (pl.origem === "painel" ? "daqui do painel" : "da secret do worker") + '.</div></div>'
+      : '<div class="ai-error" style="margin-bottom:10px;font-size:12.5px">Nenhum link configurado — hoje quem compra só vê o download do .xlsx.</div>') +
+    '<div class="form-row"><label>Link da planilha</label>' +
+      '<input type="url" id="planilhaLinkInput" placeholder="https://docs.google.com/spreadsheets/d/..." value="' + escapeHtml(state.planilhaLinkRascunho || "") + '"></div>' +
+    '<button type="button" class="btn-submit" id="btnSalvarPlanilhaLink" style="width:100%"' + (state.planilhaLinkSalvando ? " disabled" : "") + '>' +
+      (state.planilhaLinkSalvando ? "Salvando…" : "Salvar link") + '</button>' +
+    (state.planilhaLinkMsg
+      ? '<div class="' + (state.planilhaLinkMsg.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;font-size:12.5px">' + escapeHtml(state.planilhaLinkMsg.texto) + '</div>'
+      : '') +
+    '<div style="font-size:11.5px;color:var(--fm);margin-top:10px">Salvar aqui não compartilha a planilha. No Google Sheets, <b>Compartilhar → Qualquer pessoa com o link → Leitor</b> — sem isso o comprador leva "acesso negado".</div>' +
+  '</div>';
+
   // Situação do Message Template do resumo diário. A Meta não avisa a
   // aprovação em lugar nenhum que dê pra checar de relance — fica escondida
   // no WhatsApp Manager. Aqui vira um clique, e a resposta crua vem junto
@@ -6101,6 +6126,48 @@ function exportarIntrusoesCSV(){
   linhas.push([], ["ORIGENS (endereco parcial)"], ["Origem", "Pais", "Tentativas", "Caminhos distintos", "Ultima tentativa"]);
   s.origens.forEach(function(o){ linhas.push([o.regiao, o.pais, o.total, o.caminhosDistintos, admDataHora(o.ultimaEm)]); });
   baixarCSV("finn-tentativas-acesso-" + todayStr() + ".csv", linhas);
+}
+
+// Link de cópia da Planilha Finn (admin). Ler e gravar pelo painel evita o
+// caminho antigo, que era terminal + secret + redeploy.
+function loadPlanilhaLink(){
+  fetch("/admin/planilha-link", { headers: adminHeaders() })
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(j && j.ok){ state.planilhaLink = j; render(); }
+    }).catch(function(){ /* card mostra "nenhum link" — não vale um erro na tela */ });
+}
+
+function salvarPlanilhaLink(){
+  var campo = document.getElementById("planilhaLinkInput");
+  // Guarda o que foi digitado ANTES do render: sem isso o re-render recria o
+  // input com o value antigo e o texto some enquanto salva.
+  state.planilhaLinkRascunho = campo ? campo.value : "";
+  state.planilhaLinkSalvando = true;
+  state.planilhaLinkMsg = null;
+  render();
+  var hdrs = adminHeaders();
+  hdrs["Content-Type"] = "application/json";
+  fetch("/admin/planilha-link", {
+    method: "POST", headers: hdrs,
+    body: JSON.stringify({ url: state.planilhaLinkRascunho })
+  })
+    .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.planilhaLinkSalvando = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.planilhaLink = res.body;
+        state.planilhaLinkRascunho = "";
+        state.planilhaLinkMsg = { ok: true, texto: res.body.aviso || "Salvo." };
+      } else {
+        state.planilhaLinkMsg = { ok: false, texto: (res.body && res.body.error) || "Não consegui salvar." };
+      }
+      render();
+    }).catch(function(){
+      state.planilhaLinkSalvando = false;
+      state.planilhaLinkMsg = { ok: false, texto: "Falha de conexão." };
+      render();
+    });
 }
 
 function loadIntrusions(){
@@ -8334,6 +8401,7 @@ function bindContentEvents(){
     if((b = document.getElementById("btnAdminHomeRefresh"))) b.addEventListener("click", loadAdminAnalytics);
     if((b = document.getElementById("btnAdminHomeRetry"))) b.addEventListener("click", loadAdminAnalytics);
     if((b = document.getElementById("btnLoadIntrusionsHome"))) b.addEventListener("click", loadIntrusions);
+    if((b = document.getElementById("btnSalvarPlanilhaLink"))) b.addEventListener("click", salvarPlanilhaLink);
     if((b = document.getElementById("btnExportIntrusionsHome"))) b.addEventListener("click", exportarIntrusoesCSV);
     if((b = document.getElementById("btnTemplateStatus"))) b.addEventListener("click", verTemplateStatus);
     if((b = document.getElementById("btnTemplateTeste"))) b.addEventListener("click", enviarTemplateTeste);
