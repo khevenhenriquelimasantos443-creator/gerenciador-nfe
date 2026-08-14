@@ -51,7 +51,8 @@ const REGRAS = [
 // Comentário de código não conta — ali "pra o" nem aparece, e varrer comentário
 // só geraria ruído que faria o teste ser ignorado.
 const ALVOS = [
-  { arq: 'finn-serve/build.js', nome: 'legendas do Instagram + páginas servidas' },
+  { arq: 'finn-social/copy.cjs', nome: 'roteiro dos posts e legendas do Instagram' },
+  { arq: 'finn-serve/build.js', nome: 'páginas servidas pelo worker' },
   { arq: 'finn/index.html', nome: 'app' },
   { arq: 'finn/landing.html', nome: 'landing' },
   { arq: 'finn/guia.html', nome: 'guia de uso' },
@@ -86,6 +87,31 @@ for (const alvo of ALVOS) {
     }
   }
   ok(achados.length === 0, alvo.nome + ' (' + alvo.arq + ')', achados.length ? '\n      ' + achados.join('\n      ') : undefined);
+}
+
+// Promessa que o produto não cumpre é pior que erro de gramática: some da
+// arte só refazendo a imagem, e num app de dinheiro ainda vira problema de
+// consumidor. Estas três já foram publicadas — ficam barradas por escrito.
+console.log('\n=== nada de promessa que o Finn não cumpre ===');
+{
+  const PROIBIDO = [
+    { re: /100%\s*gr[áa]tis/i, porque: 'Plus e Pro são pagos; use "plano grátis" ou "começa de graça"' },
+    { re: /sem\s+plano\s+pago/i, porque: 'existem planos pagos desde o lançamento do Plus/Pro' },
+    { re: /(nunca|n[ãa]o)\s+v[êe]\s+(o\s+)?seu\s+extrato/i, porque: 'o worker busca os lançamentos e o banco os guarda' },
+    { re: /sem\s+acesso\s+de\s+terceiros/i, porque: 'a Pluggy é um terceiro, e é ela quem conecta o banco' },
+    { re: /nada\s+vai\s+pro\s+servidor/i, porque: 'os lançamentos vão, sim — só a leitura do arquivo é local' },
+  ];
+  for (const alvo of ALVOS) {
+    const caminho = path.join(RAIZ, alvo.arq);
+    if (!fs.existsSync(caminho)) continue;
+    const texto = semComentarios(fs.readFileSync(caminho, 'utf8'));
+    const achados = [];
+    for (const p of PROIBIDO) {
+      const m = texto.match(p.re);
+      if (m) achados.push(`"${m[0]}" — ${p.porque}`);
+    }
+    ok(achados.length === 0, alvo.arq, achados.length ? '\n      ' + achados.join('\n      ') : undefined);
+  }
 }
 
 // A regra tem que pegar o erro real e deixar o certo em paz. Sem isto, um

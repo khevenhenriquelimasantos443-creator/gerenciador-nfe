@@ -2,6 +2,7 @@
 const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
+const COPY   = require('../finn-social/copy.cjs');
 
 const html      = fs.readFileSync(path.join(__dirname,'../finn/index.html'), 'utf8');
 const landing   = fs.readFileSync(path.join(__dirname,'../finn/landing.html'), 'utf8');
@@ -2409,28 +2410,12 @@ const IG_API_VERSION = 'v21.0';
 // Onde as imagens 9:16 de story estao hospedadas. Aponta pro OUTRO worker de
 // proposito — ver o comentario em finn-worker/social-stories.js.
 const IG_STORY_BASE = 'https://wild-sun-742ffinn-whatsapp-worker.khevenhenriquelimasantos443.workers.dev';
-const IG_CAPTIONS = [
-  'Testa o Finn antes de todo mundo 🚀\\n\\nAbri um grupo de testers com vagas limitadas — você me ajuda a melhorar o app e eu dou boas-vindas pessoalmente, com suporte direto por WhatsApp, Instagram ou e-mail.\\n\\nLink na bio pra se inscrever 👆\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
-  'Chega de planilha 📊\\n\\nImporta o extrato do seu banco (Nubank, Itaú, Bradesco, BB, Inter, C6 Bank e mais) e o Finn organiza tudo sozinho — receitas, despesas e categorias, sem digitar nada na mão.\\n\\n#educacaofinanceira #financaspessoais #organizacaofinanceira',
-  'IA financeira. De graça. 🤖\\n\\nAnálise dos seus gastos, sugestões de economia e previsão de saldo do mês — tudo incluso, sem plano pago e sem letra miúda.\\n\\n#inteligenciaartificial #financaspessoais #appfinanceiro',
-  'Metas, limites e dívidas — tudo num só lugar 🎯\\n\\nDefina quanto quer gastar por categoria, junte dinheiro pra um objetivo e simule a quitação de uma dívida com juros de verdade.\\n\\n#planejamentofinanceiro #financaspessoais #metas',
-  '100% grátis. Sem pegadinha. 🇧🇷\\n\\nSem cartão de crédito pra começar, sem letra miúda — feito pro jeito que o brasileiro realmente vive. Link na bio.\\n\\n#appbrasileiro #financaspessoais #controlefinanceiro',
-  'Divide a conta sem treta 🤝\\n\\nAluguel, mercado, jantar com os amigos — registra uma vez e o Finn calcula quanto cada um deve, sem planilha e sem constrangimento.\\n\\n#financaspessoais #dividirdespesas #appfinanceiro #educacaofinanceira',
-  'Fatura do cartão sob controle 💳\\n\\nAcompanha os gastos do cartão em tempo real, parcelas futuras e o valor que vai fechar na fatura — sem surpresa no fim do mês.\\n\\n#cartaodecredito #financaspessoais #controlefinanceiro #appfinanceiro',
-  'Nunca mais esquece uma conta 🔔\\n\\nCadastra suas contas fixas — aluguel, internet, streaming — e recebe um aviso antes do vencimento, sem precisar lembrar sozinho.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #lembretes',
-  'Seus dados são só seus 🔒\\n\\nA conexão com o banco é feita direto no seu dispositivo — a gente nunca guarda sua senha nem vê seu extrato num servidor.\\n\\n#privacidade #seguranca #financaspessoais #appfinanceiro',
-  'Você no controle da sua grana 📊\\n\\nGráficos claros de pra onde o dinheiro vai, mês a mês — sem termos complicados, só o que importa pra decidir melhor.\\n\\nLink na bio pra testar de graça.\\n\\n#financaspessoais #controlefinanceiro #educacaofinanceira #appfinanceiro',
-  'Visão geral do mês, num só lugar 📊\\n\\nSaldo, receitas e despesas — tudo num painel simples, sem precisar somar nada na mão.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
-  'O Finn categoriza sozinho 🤖\\n\\nImportou o extrato? Cada gasto já cai na categoria certa, sem você mexer em nada.\\n\\n#financaspessoais #appfinanceiro #organizacaofinanceira #educacaofinanceira',
-  'Modo claro ou modo escuro — do seu jeito 🌙\\n\\nEscolhe o visual que combina com você e muda a qualquer momento, direto nas configurações.\\n\\n#appfinanceiro #financaspessoais',
-  'Instala como app, sem precisar de loja 📲\\n\\nAdiciona o Finn na tela inicial do seu celular em segundos — abre rápido, sem ocupar espaço.\\n\\n#appfinanceiro #financaspessoais #tecnologia',
-  'Junta dinheiro pro que importa 🎯\\n\\nCria uma meta, define o valor e acompanha o progresso — viagem, reserva de emergência, o que for.\\n\\n#metasfinanceiras #financaspessoais #appfinanceiro #educacaofinanceira',
-  'Todas as contas, um só lugar 🏦\\n\\nConecta quantos bancos usar e vê o saldo geral, sem abrir um app por vez.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro',
-  'Veja se está gastando menos 📈\\n\\nCompara mês a mês e entende se seus hábitos estão melhorando de verdade — com dado, não com achismo.\\n\\n#financaspessoais #appfinanceiro #educacaofinanceira',
-  'Começa a usar em minutos ⏱️\\n\\nSem burocracia, sem cartão de crédito pra testar — cria a conta e já importa seu extrato.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro',
-  'Sem anúncio chato atrapalhando 🚫\\n\\nInterface limpa, focada no que interessa: entender e controlar seu dinheiro.\\n\\n#financaspessoais #appfinanceiro',
-  'Bora organizar sua grana hoje? 🚀\\n\\nGrupo de testers com vagas limitadas — boas-vindas pessoais e suporte direto por WhatsApp, Instagram ou e-mail.\\n\\nLink na bio pra se inscrever.\\n\\n#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira'
-];
+// As legendas saem do MESMO roteiro que gera a arte (finn-social/copy.cjs).
+// Antes eram uma segunda cópia do texto aqui dentro, e legenda e imagem podiam
+// divergir sem ninguém notar. O JSON.stringify roda no BUILD, não no worker:
+// aqui dentro estamos num template literal, então o que sobra no index.js é a
+// lista pronta, sem dependência de arquivo em tempo de execução.
+const IG_CAPTIONS = ${JSON.stringify(COPY.POSTS.map(COPY.legendaDe))};
 
 // Publica o próximo post da sequência (1 a IG_CAPTIONS.length) — chamado
 // pelo cron diário e também pelo endpoint de disparo manual
