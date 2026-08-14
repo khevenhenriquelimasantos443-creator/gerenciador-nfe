@@ -262,11 +262,21 @@ function finnEnviar() {
 }
 
 /**
- * Apaga o bloco de linhas de demonstração (Origem = "Exemplo") assim que
- * existe dado de verdade pra mostrar no lugar. Ficar com "Mercado R$ 312,40"
- * misturado no extrato real é confuso, e a instrução de apagar na mão (linhas
- * 6 a 14) é fácil de esquecer quando o que importa é ver os dados que
- * acabaram de chegar.
+ * Limpa o CONTEÚDO do bloco de linhas de demonstração (Origem = "Exemplo")
+ * assim que existe dado de verdade pra mostrar no lugar. Ficar com "Mercado
+ * R$ 312,40" misturado no extrato real é confuso, e a instrução de apagar na
+ * mão (linhas 6 a 14) é fácil de esquecer quando o que importa é ver os
+ * dados que acabaram de chegar.
+ *
+ * De propósito NÃO usa deleteRows(): Início, Análises e Limites têm fórmulas
+ * (SUMIFS/COUNTIFS) que apontam pra um intervalo FIXO da Lançamentos —
+ * '$B$6:$B$905', não a coluna inteira (ver LT/LC/LV/LM em gera_planilha.py).
+ * deleteRows() desloca tudo pra cima e faz o Sheets tentar reajustar essas
+ * referências sozinho — e quando a exclusão começa bem na borda do
+ * intervalo, esse reajuste é conhecido por bagunçar a referência em vez de
+ * só encolher. Foi reproduzido ao vivo: apagou as linhas, os paineis
+ * zeraram. clearContent() muda o conteúdo, nunca a estrutura de linhas —
+ * nenhuma fórmula em nenhuma outra aba é afetada.
  *
  * Só mexe num bloco CONTÍGUO começando exatamente em LINHA_INI — na primeira
  * linha que não for "Exemplo" (ou que tiver um buraco), para. Isso garante
@@ -282,7 +292,7 @@ function _removeExemplos(r) {
     fim = linha.linha;
   }
   if (fim < LINHA_INI) return false;
-  r.ws.deleteRows(LINHA_INI, fim - LINHA_INI + 1);
+  r.ws.getRange(LINHA_INI, COL_DATA, fim - LINHA_INI + 1, COL_ORIGEM).clearContent();
   return true;
 }
 
