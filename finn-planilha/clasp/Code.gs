@@ -285,7 +285,16 @@ function finnPuxar() {
   if (!novas.length) { _aviso('A planilha já está em dia com o Finn.'); return 0; }
 
   var ws = r.ws;
-  var proxima = Math.max(ws.getLastRow() + 1, LINHA_INI);
+  // NÃO usar ws.getLastRow() aqui: a planilha pré-preenche a fórmula da
+  // coluna Mês em TODAS as linhas do template (pra calcular sozinha assim
+  // que alguém digita uma data), e uma célula com fórmula conta como "linha
+  // com conteúdo" mesmo quando a Data está vazia. getLastRow() nessas
+  // planilhas sempre bate no fim do template (linha ~905), não no fim dos
+  // dados de verdade — e o pull acabava escrevendo lá embaixo, invisível
+  // pra quem olhasse a planilha sem saber que precisava rolar 900 linhas.
+  // r.linhas já veio filtrado só com linhas que TÊM data real (ver
+  // _lerLinhas), então a última dela é o fim de verdade dos dados.
+  var proxima = r.linhas.length ? (r.linhas[r.linhas.length - 1].linha + 1) : LINHA_INI;
   // Escreve coluna a coluna pra não pisar na fórmula da coluna Mês.
   var faixaEsq = ws.getRange(proxima, COL_DATA, novas.length, 5);
   faixaEsq.setValues(novas.map(function (n) { return n.slice(0, 5); }));
