@@ -391,5 +391,81 @@ console.log('\n=== nao repete o story do mesmo post ===');
 }
 
 global.fetch = realFetch;
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== republicar um post apagado: fila com URL absoluta ===');
+{
+  // Post apagado do Instagram não volta sozinho — o contador da campanha só
+  // anda pra frente. O caminho de volta é a fila, que tem prioridade; e como a
+  // arte da campanha já é servida por URL pública, a linha da fila guarda a URL
+  // inteira em vez de copiar a imagem pro bucket. Se _socialPublicUrl voltasse
+  // a prefixar tudo com o endereço do bucket, a Meta receberia uma URL dupla e
+  // o post falharia — em silêncio, no horário do cron.
+  const chamadas = mockIG();
+  const env = {
+    ...ENV(),
+    SUPABASE_SERVICE_KEY: 'sk',
+  };
+  const fetchIG = global.fetch;
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/rest/v1/social_posts') && u.includes('kind=eq.feed')) {
+      return new Response(JSON.stringify([{
+        id: 'q3', kind: 'feed', caption: 'legenda do 3',
+        image_path: 'https://finn.dev.br/social/post-3.png'
+      }]), { status: 200 });
+    }
+    if (u.includes('/rest/v1/social_posts')) return new Response('[]', { status: 200 });
+    return fetchIG(url, opts);
+  };
+  const ctx = novoCtx();
+  await serve.scheduled({ cron: '0 13,21 * * *' }, env, ctx);
+  await ctx.fim();
+  const criacao = chamadas.filter(c => c.corpo && c.corpo.image_url)[0];
+  ok(!!criacao, 'a fila foi publicada');
+  ok(criacao && criacao.corpo.image_url === 'https://finn.dev.br/social/post-3.png',
+     'a URL absoluta da fila vai intacta pra Meta', criacao && criacao.corpo.image_url);
+  ok(criacao && !/storage\/v1\/object/.test(criacao.corpo.image_url),
+     'e NAO foi prefixada com o endereco do bucket');
+  ok(criacao && criacao.corpo.caption === 'legenda do 3', 'com a legenda da fila', criacao && criacao.corpo.caption);
+  // Contador da campanha não pode andar: quem saiu foi a fila.
+  ok((await env.FINN_KV.get('ig_post_next_index')) === '3',
+     'o contador da campanha embutida nao avanca', await env.FINN_KV.get('ig_post_next_index'));
+  global.fetch = realFetch;
+}
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== GET /admin/instagram-embutidos ===');
+{
+  const env = { ...ENV(), MASTER_ADMIN_PASSWORD: 'senha' };
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/auth/v1/user')) {
+      const t = ((opts && opts.headers && opts.headers.Authorization) || '').replace(/^Bearer\s+/i, '');
+      return t === 'master'
+        ? new Response(JSON.stringify({ id: 'm', email: 'finn.controle01@gmail.com' }), { status: 200 })
+        : new Response(JSON.stringify({ id: 'u', email: 'ze@x.com' }), { status: 200 });
+    }
+    return realFetch(url, opts);
+  };
+  const pedir = (auth, senha) => serve.fetch(new Request('https://x/admin/instagram-embutidos', {
+    headers: { Authorization: 'Bearer ' + auth, 'X-Admin-Password': senha }
+  }), env, novoCtx());
+
+  ok((await pedir('ze', 'senha')).status === 403, 'usuario comum -> 403');
+  ok((await pedir('master', 'errada')).status === 403, 'senha errada -> 403');
+
+  const j = await (await pedir('master', 'senha')).json();
+  ok(j.ok === true && j.itens.length === 20, 'lista os 20 posts embutidos', j.itens && j.itens.length);
+  const p3 = j.itens.find(i => i.n === 3);
+  ok(p3.post_url === 'https://finn.dev.br/social/post-3.png', 'URL do post', p3.post_url);
+  ok(/\/social\/story-3\.jpg$/.test(p3.story_url), 'URL do story do mesmo numero', p3.story_url);
+  ok(p3.legenda.length > 40 && p3.titulo === p3.legenda.split('\n')[0], 'legenda e titulo vem do roteiro', p3.titulo);
+  // O contador do KV é 3, então 1 e 2 já saíram e 3 é o próximo.
+  ok(j.itens.find(i => i.n === 2).ja_publicado === true, 'marca o que ja saiu');
+  ok(j.itens.find(i => i.n === 3).ja_publicado === false, 'e o que ainda nao saiu');
+  global.fetch = realFetch;
+}
+
 console.log('\n' + (falhas ? `❌ ${falhas} falha(s)` : '✅ tudo passou'));
 process.exit(falhas ? 1 : 0);

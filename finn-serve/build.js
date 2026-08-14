@@ -2423,7 +2423,16 @@ const IG_CAPTIONS = ${JSON.stringify(COPY.POSTS.map(COPY.legendaDe))};
 // URL pública de um arquivo do bucket 'social'. Tem que ser pública porque a
 // API do Instagram não aceita upload de arquivo — só image_url que os
 // servidores da Meta baixam sozinhos, sem token.
+// A fila normalmente guarda só o NOME do arquivo no bucket. Uma URL absoluta
+// passa direto: é assim que dá pra reenfileirar um post da campanha embutida,
+// cuja arte já é servida pelo próprio worker, sem copiar a imagem pro bucket.
 function _socialPublicUrl(caminho) {
+  // Comparar prefixo em vez de usar expressão regular é de propósito: este
+  // arquivo inteiro vive dentro de um template literal, que engole a barra
+  // invertida, e uma regex com escape chega quebrada no worker. Já aconteceu
+  // duas vezes neste repositório.
+  var pre = String(caminho || '').slice(0, 8).toLowerCase();
+  if (pre.indexOf('https://') === 0 || pre.indexOf('http://') === 0) return caminho;
   return '${SUPA_URL_SERVER}/storage/v1/object/public/social/' + caminho;
 }
 
@@ -2730,6 +2739,41 @@ async function _adminInstagramStatus(request, env) {
     }), { headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_adminInstagramStatus');
+  }
+}
+
+// GET /admin/instagram-embutidos — a campanha embutida, do jeito que o painel
+// precisa pra oferecer "publicar de novo": número, arte, legenda e o que já
+// saiu. Existe porque o app não tem a lista de legendas (ela vive no worker), e
+// duplicá-la no front seria repetir o erro que este trabalho todo veio
+// consertar — texto em dois lugares que podem divergir.
+async function _adminInstagramEmbutidos(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var proximo = env.FINN_KV ? Number((await env.FINN_KV.get('ig_post_next_index')) || '1') : 1;
+    var itens = IG_CAPTIONS.map(function (legenda, i) {
+      var n = i + 1;
+      return {
+        n: n,
+        titulo: legenda.split('\\n')[0],
+        legenda: legenda,
+        post_url: 'https://finn.dev.br/social/post-' + n + '.png',
+        // IG_STORY_BASE é const do WORKER, não do build. Interpolar aqui faria o
+        // Node procurar a variável no build e quebrar. Referência direta.
+        // (o comentário também não pode citar a sintaxe de interpolação: este
+        //  arquivo inteiro está dentro de um template literal)
+        story_url: IG_STORY_BASE + '/social/story-' + n + '.jpg',
+        ja_publicado: n < proximo
+      };
+    });
+    return new Response(JSON.stringify({ ok: true, proximo_index: proximo, itens: itens }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminInstagramEmbutidos');
   }
 }
 
@@ -4798,6 +4842,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/instagram-status' && request.method === 'GET') {
       return _adminInstagramStatus(request, env);
+    }
+    if (url.pathname === '/admin/instagram-embutidos' && request.method === 'GET') {
+      return _adminInstagramEmbutidos(request, env);
     }
     if (url.pathname === '/admin/instagram-publish-next' && request.method === 'POST') {
       return _adminInstagramPublishNext(request, env);

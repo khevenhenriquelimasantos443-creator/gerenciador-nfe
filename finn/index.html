@@ -822,7 +822,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -5506,6 +5506,29 @@ function renderConteudo(){
     (state.conteudoErro ? '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.conteudoErro) + '</div>' : '') +
   '</div>';
 
+  // ── republicar um post da campanha embutida ──
+  // Um post apagado do Instagram (por erro de texto, por exemplo) não volta
+  // sozinho: o contador da campanha só anda pra frente. Aqui ele entra na fila
+  // do Supabase, que tem prioridade sobre a campanha — então sai no próximo
+  // horário, com a arte já corrigida.
+  var emb = state.embutidos;
+  html += '<div class="card">' +
+    '<div class="eyebrow">Publicar de novo um post da campanha</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Reenfileira o post <b>e o story dele</b> juntos, com a arte atual. Serve pra quando um post foi apagado do Instagram.</div>' +
+    (emb
+      ? '<div class="form-row"><label>Post</label><select id="embutidoSel">' +
+          emb.itens.map(function(it){
+            return '<option value="' + it.n + '">' + it.n + '. ' + escapeHtml(it.titulo) + (it.ja_publicado ? ' (já saiu)' : '') + '</option>';
+          }).join('') +
+        '</select></div>' +
+        '<button type="button" class="btn-submit" id="btnReenfileirar"' + (state.reenfileirando ? " disabled" : "") + '>' +
+          (state.reenfileirando ? "Colocando na fila…" : "Colocar na fila") + '</button>'
+      : '<button type="button" class="btn-ghost" id="btnCarregarEmbutidos" style="width:100%">Carregar a campanha</button>') +
+    (state.reenfileirarMsg
+      ? '<div class="' + (state.reenfileirarMsg.ok ? "ai-result" : "ai-error") + '" style="margin-top:10px;font-size:12.5px">' + escapeHtml(state.reenfileirarMsg.texto) + '</div>'
+      : '') +
+  '</div>';
+
   // ── fila ──
   if(state.conteudoLoading && !state.conteudoLista){
     return html + '<div class="card"><div style="font-size:13px;color:var(--fm)">Carregando a fila…</div></div>';
@@ -5644,6 +5667,47 @@ function loadConteudo(){
     .catch(function(err){
       state.conteudoLoading = false;
       state.conteudoErro = "Não consegui carregar a fila (" + ((err && err.message) || "erro") + ").";
+      render();
+    });
+}
+
+// A lista das legendas mora no worker (finn-social/copy.cjs -> IG_CAPTIONS).
+// Buscar de lá em vez de repetir aqui é o ponto: legenda duplicada foi
+// exatamente o que deixou arte e texto divergirem.
+function carregarEmbutidos(){
+  fetch("/admin/instagram-embutidos", { headers: adminHeaders() })
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(j && j.ok){ state.embutidos = j; render(); }
+      else { state.reenfileirarMsg = { ok:false, texto: (j && j.error) || "Não consegui carregar." }; render(); }
+    })
+    .catch(function(){ state.reenfileirarMsg = { ok:false, texto:"Falha de conexão." }; render(); });
+}
+
+function reenfileirarEmbutido(){
+  var sel = document.getElementById("embutidoSel");
+  var n = sel ? Number(sel.value) : 0;
+  var item = ((state.embutidos && state.embutidos.itens) || []).filter(function(i){ return i.n === n; })[0];
+  if(!item) return;
+  state.reenfileirando = true;
+  state.reenfileirarMsg = null;
+  render();
+  // O post e o story vão juntos, com a mesma posição: o cron do story publica
+  // 25 min depois do post, e se só o post fosse reenfileirado o story do dia
+  // seria o da campanha embutida — arte de um post diferente.
+  var pos = Math.floor(Date.now() / 1000);
+  db("social_posts", "POST", { kind: "feed",  image_path: item.post_url,  caption: item.legenda, posicao: pos })
+    .then(function(){
+      return db("social_posts", "POST", { kind: "story", image_path: item.story_url, caption: null, posicao: pos });
+    })
+    .then(function(){
+      state.reenfileirando = false;
+      state.reenfileirarMsg = { ok:true, texto: "Post " + n + " e o story dele entraram na fila. Saem no próximo horário (10h ou 18h)." };
+      loadConteudo();
+    })
+    .catch(function(err){
+      state.reenfileirando = false;
+      state.reenfileirarMsg = { ok:false, texto: "Não consegui enfileirar (" + ((err && err.message) || "erro") + ")." };
       render();
     });
 }
@@ -8428,6 +8492,8 @@ function bindContentEvents(){
       state.conteudoLegenda = e.target.value;
     });
     if((b = document.getElementById("btnConteudoEnviar"))) b.addEventListener("click", enviarConteudo);
+    if((b = document.getElementById("btnCarregarEmbutidos"))) b.addEventListener("click", carregarEmbutidos);
+    if((b = document.getElementById("btnReenfileirar"))) b.addEventListener("click", reenfileirarEmbutido);
     if((b = document.getElementById("btnStoryTeste"))) b.addEventListener("click", testarStoryAgora);
     document.querySelectorAll("[data-delconteudo]").forEach(function(btn){
       btn.addEventListener("click", function(){ excluirConteudo(btn.dataset.delconteudo); });
