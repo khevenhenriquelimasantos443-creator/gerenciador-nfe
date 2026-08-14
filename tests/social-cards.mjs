@@ -1,4 +1,4 @@
-// Os 43 cartões da campanha são gerados por finn-social/gera-cards.mjs a
+// Os cartões da campanha são gerados por finn-social/gera-cards.mjs a
 // partir de um texto que muda. Texto que cresce estoura a caixa: um título de
 // mais uma linha encosta no corpo, um chip a mais sai pela direita, e nada
 // disso aparece num teste de string — só quando o post já está publicado.
@@ -10,8 +10,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { execFileSync } from 'child_process';
+import { createRequire } from 'module';
 
 const RAIZ = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+// Quantos cartões existem vem do roteiro, não de um número escrito aqui:
+// a campanha cresce, e um total fixo faria o teste continuar verde ignorando
+// justamente os cartões novos — os que ninguém revisou ainda.
+const { POSTS, REELS } = createRequire(import.meta.url)('../finn-social/copy.cjs');
+const N = POSTS.length;
 let falhas = 0;
 const ok = (c, nome, extra) => { console.log((c ? '  ok   ' : '  FALHA') + ' ' + nome + (extra !== undefined ? '  — ' + extra : '')); if (!c) falhas++; };
 
@@ -67,20 +73,20 @@ function confere(grupo, arquivos, { margem, alturaMin }) {
   ok(vazando.length === 0, grupo + ': nada encosta na margem', vazando.length ? '\n      ' + vazando.join('\n      ') : undefined);
 }
 
-const posts = Array.from({ length: 20 }, (_, i) => path.join(RAIZ, `finn-serve/social/ig_post_${i + 1}.png`)).filter(fs.existsSync);
-const stories = Array.from({ length: 20 }, (_, i) => path.join(RAIZ, `finn-worker/social/ig_story_${i + 1}.jpg`)).filter(fs.existsSync);
-const reels = [1, 2, 3].map((n) => path.join(RAIZ, `finn-serve/social/reel${n}_cover.jpg`)).filter(fs.existsSync);
+const posts = POSTS.map((p) => path.join(RAIZ, `finn-serve/social/ig_post_${p.n}.png`)).filter(fs.existsSync);
+const stories = POSTS.map((p) => path.join(RAIZ, `finn-worker/social/ig_story_${p.n}.jpg`)).filter(fs.existsSync);
+const reels = REELS.map((r) => path.join(RAIZ, `finn-serve/social/reel${r.n}_cover.jpg`)).filter(fs.existsSync);
 
 console.log('=== cartões do feed (1080x1080) ===');
-ok(posts.length === 20, 'os 20 posts existem', posts.length);
+ok(posts.length === N, `os ${N} posts do roteiro têm arte`, posts.length);
 confere('feed', posts, { margem: 40, alturaMin: 700 });
 
 console.log('\n=== stories (1080x1920) ===');
-ok(stories.length === 20, 'os 20 stories existem', stories.length);
+ok(stories.length === N, `os ${N} stories existem`, stories.length);
 confere('story', stories, { margem: 40, alturaMin: 1000 });
 
 console.log('\n=== capas de reel ===');
-ok(reels.length === 3, 'as 3 capas existem', reels.length);
+ok(reels.length === REELS.length, `as ${REELS.length} capas existem`, reels.length);
 confere('reel', reels, { margem: 40, alturaMin: 900 });
 
 // O worker do bot serve os stories a partir deste arquivo; se ele ficar pra
@@ -91,7 +97,7 @@ console.log('\n=== stories embutidos estão em dia ===');
   const js = fs.readFileSync(path.join(RAIZ, 'finn-worker/social-stories.js'), 'utf8');
   const lista = js.split('export const IG_STORIES')[1] || '';
   const embutidos = (lista.match(/"[A-Za-z0-9+/=]{100,}"/g) || []).map((s) => s.slice(1, -1));
-  ok(embutidos.length === 20, 'tem 20 stories embutidos', embutidos.length);
+  ok(embutidos.length === N, `tem ${N} stories embutidos`, embutidos.length);
   const divergentes = embutidos
     .map((b64, i) => ({ i: i + 1, igual: b64 === fs.readFileSync(stories[i]).toString('base64') }))
     .filter((x) => !x.igual)

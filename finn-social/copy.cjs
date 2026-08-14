@@ -245,6 +245,94 @@ const POSTS = [
     legenda: 'Grupo de testers com vagas limitadas — boas-vindas pessoais e suporte direto por WhatsApp, Instagram ou e-mail.\n\nLink na bio para se inscrever.',
     tags: '#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
   },
+  // ── Reposição: entram no lugar dos que saíram do feed por texto errado. ──
+  // Assuntos que a campanha original não cobria, todos conferidos no código
+  // antes de virar frase: as contagens do Aprender saem de APRENDER_TRILHAS
+  // (10 trilhas, 38 lições, 3 áreas x 3 níveis), a ordem de quitação existe
+  // mesmo (avalanche e snowball, ver simularDivida) e a previsão de data da
+  // meta está no guia. Nada aqui promete o que o app não faz.
+  {
+    n: 21, layout: 'hero', glow: true, pill: '📚 GRÁTIS EM QUALQUER PLANO',
+    h: 'Ninguém ensinou. |O Finn ensina.|',
+    body: 'Trilhas de finanças, investimentos e reservas — do básico ao avançado, dentro do app, sem pagar nada.',
+    btn: 'Link na bio → finn.dev.br',
+    rodape: '38 lições em 10 trilhas, liberadas pra todo mundo',
+    emoji: '📚',
+    legenda: 'A maior parte dos brasileiros nunca teve uma aula sobre dinheiro. Eu sou um deles — e isso me incomoda.\n\nPor isso a aba Aprender é de graça pra todo mundo, em qualquer plano: 3 áreas (finanças, investimentos e reservas), 3 níveis e 38 lições em português claro.\n\nNão é indicação de investimento. É explicação, pra você decidir sozinho.',
+    tags: '#educacaofinanceira #financaspessoais #investimentos #appfinanceiro',
+  },
+  {
+    n: 22, layout: 'cream', pill: '💬 PELO WHATSAPP',
+    h: 'Lança o gasto |mandando mensagem|.',
+    body: 'Escreve "mercado 85" na conversa e pronto: o Finn entende o valor, a descrição e sugere a categoria.',
+    itens: ['Texto', 'Áudio', 'Foto do comprovante', 'Telegram também'],
+    // O bot completo é do Pro (ver a tabela de planos). Dizer que é de graça
+    // seria o mesmo erro do post que teve que ser apagado.
+    rodape: 'O bot completo faz parte do Pro',
+    emoji: '💬',
+    legenda: 'Escreve "mercado 85" na conversa e pronto: o Finn entende o valor, a descrição e sugere a categoria.\n\nFunciona com texto, áudio e foto do comprovante, no WhatsApp e no Telegram. O bot completo faz parte do Pro.',
+    tags: '#whatsapp #financaspessoais #appfinanceiro #automacao',
+  },
+  {
+    n: 23, layout: 'laranja', pill: '📗 PLANILHA FINN',
+    h: 'Prefere planilha? Fiz uma que presta.',
+    body: 'Nove abas prontas, com as fórmulas já montadas. Compra única de R$ 36,90, sem mensalidade.',
+    itens: ['Lançamentos, metas, limites, dívidas', 'Compra única, sem mensalidade', 'Sincroniza com o app no Pro'],
+    rodape: RODAPE,
+    emoji: '📗',
+    legenda: 'Tem gente que não larga a planilha — então fiz uma que presta.\n\nNove abas prontas e com as fórmulas montadas: lançamentos, análises, limites, metas, contas fixas, dívidas e racha.\n\nR$ 36,90, compra única, sem mensalidade. Ela funciona sozinha; a sincronização automática com o app é que faz parte do Pro.',
+    tags: '#planilhafinanceira #financaspessoais #organizacaofinanceira #googlesheets',
+  },
+  {
+    n: 24, layout: 'tiles', pill: null,
+    h: 'Manda a foto. O Finn |lê o comprovante|.',
+    body: 'Valor, data e estabelecimento saem da imagem e viram lançamento, sem você digitar nada.',
+    itens: [['📸', 'Foto do cupom'], ['🔎', 'Lê valor e data'], ['✅', 'Vira lançamento']],
+    rodape: RODAPE,
+    emoji: '📸',
+    legenda: 'Tirou a foto do cupom e mandou pro bot? O Finn lê valor, data e estabelecimento e cria o lançamento sozinho.\n\nServe pra quando você não quer parar pra digitar — e funciona com áudio também.',
+    tags: '#financaspessoais #appfinanceiro #automacao #controlefinanceiro',
+  },
+  {
+    n: 25, layout: 'centro', pill: null,
+    h: 'O segredo é |não quebrar a sequência|.',
+    body: 'Cada dia que você registra alguma coisa conta. O Finn mostra a sua sequência e as conquistas que ela destrava.',
+    itens: [['🔥', 'Sequência de dias'], ['🏅', 'Conquistas'], ['📈', 'Hábito que dura']],
+    rodape: RODAPE,
+    emoji: '🔥',
+    legenda: 'Controle financeiro não morre por falta de app. Morre quando a empolgação passa.\n\nPor isso o Finn conta a sua sequência de dias registrando e vai destravando conquistas no caminho. É bobo? É. Funciona? Também.',
+    tags: '#habitos #financaspessoais #appfinanceiro #educacaofinanceira',
+  },
+  {
+    n: 26, layout: 'cream', pill: '🛟 RESERVA DE EMERGÊNCIA',
+    h: 'Imprevisto sem reserva |vira dívida|.',
+    body: 'Quanto guardar, onde deixar e quando usar — tem uma trilha inteira sobre isso na aba Aprender, de graça.',
+    itens: ['Quanto guardar', 'Onde deixar', 'Quando usar', '+ na aba Aprender'],
+    rodape: RODAPE,
+    emoji: '🛟',
+    legenda: 'Pneu furado, dente quebrado, celular no chão. Sem reserva, tudo isso vira cartão de crédito — e cartão no Brasil é caro de um jeito que assusta.\n\nQuanto guardar, onde deixar e quando usar tem uma trilha inteira na aba Aprender, de graça, em qualquer plano.',
+    tags: '#reservadeemergencia #educacaofinanceira #financaspessoais',
+  },
+  {
+    n: 27, layout: 'tiles', pill: null,
+    h: 'Quando você |chega na meta|?',
+    body: 'Coloca um prazo e o Finn calcula a previsão de quando você chega lá, no ritmo em que está guardando hoje.',
+    itens: [['🎯', 'Meta com prazo'], ['📅', 'Previsão de data'], ['📈', 'Ritmo de hoje']],
+    rodape: RODAPE,
+    emoji: '📅',
+    legenda: 'Guardar sem saber quando chega é o jeito mais rápido de desistir.\n\nColoca um prazo na meta e o Finn calcula a previsão de quando você chega lá, considerando o ritmo em que você está guardando hoje.',
+    tags: '#metasfinanceiras #planejamentofinanceiro #financaspessoais',
+  },
+  {
+    n: 28, layout: 'laranja', pill: '📉 SAIR DO VERMELHO',
+    h: 'Dívida no Brasil é cara de um jeito que assusta.',
+    body: 'Simula a quitação com os juros de verdade e vê quanto muda pagando um pouco a mais por mês.',
+    itens: ['Juros reais no cálculo', 'Ordem de quitação sugerida', 'Quanto adiantar muda o total'],
+    rodape: RODAPE,
+    emoji: '📉',
+    legenda: 'O Finn simula a quitação com os juros de verdade, sugere a ordem em que sair de cada dívida e mostra quanto muda se você conseguir pagar um pouco a mais por mês.\n\nSem julgamento e sem promessa mágica — só a conta na sua frente.',
+    tags: '#dividas #educacaofinanceira #financaspessoais #controlefinanceiro',
+  },
 ];
 
 // Selo fixo de todos os stories. Era "APP FINANCEIRO 100% GRÁTIS" — a mesma

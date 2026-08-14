@@ -1,5 +1,6 @@
 // Gera TODA a arte da campanha do Instagram a partir de finn-social/copy.cjs:
-// 20 posts de feed (1080x1080), 20 stories (1080x1920) e 3 capas de reel.
+// um post de feed (1080x1080) e um story (1080x1920) por entrada do roteiro,
+// mais as capas de reel. A quantidade sai do roteiro, não daqui.
 //
 // Por que existe: os cartões entraram no repositório como imagem pronta, sem
 // fonte. Corrigir uma vírgula exigia refazer a arte na mão — e foi assim que
@@ -217,10 +218,38 @@ const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' })
 // Os PNG do feed viajam embutidos no Worker, que tem teto de 3 MiB comprimido.
 // Sem quantizar, os 20 cartões sozinhos comem quase 500 KB de margem à toa.
 const pngGerados = [];
+// Título comprido empurra o texto pra cima do bloco de baixo. A margem do
+// cartão continua limpa, então nenhum teste de imagem acusa — só a leitura a
+// olho, e foi assim que um cartão com o corpo atropelado quase foi publicado.
+// Aqui o navegador mede: qualquer par de blocos que se sobreponha derruba a
+// geração na hora, com o nome do arquivo e quantos pixels invadiu.
+async function colisoes(p) {
+  return p.evaluate(() => {
+    const alvos = [...document.querySelectorAll('h1, p, .rodape, [data-bloco]')]
+      .map((el) => ({ nome: el.tagName.toLowerCase() + (el.className ? '.' + el.className : ''), r: el.getBoundingClientRect() }))
+      .filter((x) => x.r.height > 0);
+    const ruins = [];
+    for (let i = 0; i < alvos.length; i++) {
+      for (let j = i + 1; j < alvos.length; j++) {
+        const a = alvos[i].r, c = alvos[j].r;
+        const dx = Math.min(a.right, c.right) - Math.max(a.left, c.left);
+        const dy = Math.min(a.bottom, c.bottom) - Math.max(a.top, c.top);
+        if (dx > 2 && dy > 2) ruins.push(`${alvos[i].nome} x ${alvos[j].nome} (${Math.round(dy)}px)`);
+      }
+    }
+    return ruins;
+  });
+}
+
 async function render(html, w, h, saida, opts) {
   const p = await b.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
   await p.setContent(html, { waitUntil: 'load' });
   await p.evaluate(() => document.fonts.ready);
+  const ruins = await colisoes(p);
+  if (ruins.length) {
+    await p.close();
+    throw new Error(`${path.basename(saida)}: blocos sobrepostos — ${ruins.join('; ')}. Encurte o título ou o corpo em copy.cjs.`);
+  }
   await p.screenshot({ path: saida, ...opts });
   await p.close();
 }

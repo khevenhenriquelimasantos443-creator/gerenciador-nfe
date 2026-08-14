@@ -3,6 +3,12 @@
 // STORIES, sem caption, best-effort).
 import serve from '../finn-serve/index.js';
 import bot from '../finn-worker/index.js';
+import { createRequire } from 'module';
+
+// A campanha cresce. Amarrar teste em "20" faz ele passar a cobrir menos do
+// que existe, calado — foi o que aconteceu quando entraram os posts 21 a 28.
+const { POSTS } = createRequire(import.meta.url)('../finn-social/copy.cjs');
+const N = POSTS.length;
 
 let falhas = 0;
 const ok = (c, n, e) => { console.log((c ? '  ok   ' : '  FALHA') + ' ' + n + (e !== undefined ? '  — ' + e : '')); if (!c) falhas++; };
@@ -132,10 +138,10 @@ console.log('\n=== imagens de story sao servidas em 9:16 (pelo worker do bot) ==
   }
   ok(w === 1080 && h === 1920, 'dimensoes 1080x1920 (formato nativo do Stories)', w + 'x' + h);
 
-  const r20 = await bot.fetch(new Request('https://bot.workers.dev/social/story-20.jpg'), { FINN_KV: novoKV() }, ctx);
-  ok(r20.status === 200, 'a 20a story tambem existe', r20.status);
-  const r21 = await bot.fetch(new Request('https://bot.workers.dev/social/story-21.jpg'), { FINN_KV: novoKV() }, ctx);
-  ok(r21.status !== 200, 'indice inexistente nao devolve imagem', r21.status);
+  const rUlt = await bot.fetch(new Request(`https://bot.workers.dev/social/story-${N}.jpg`), { FINN_KV: novoKV() }, ctx);
+  ok(rUlt.status === 200, `a ${N}a story tambem existe`, rUlt.status);
+  const rAlem = await bot.fetch(new Request(`https://bot.workers.dev/social/story-${N + 1}.jpg`), { FINN_KV: novoKV() }, ctx);
+  ok(rAlem.status !== 200, 'indice inexistente nao devolve imagem', rAlem.status);
 }
 
 console.log('\n=== o story usa a imagem 9:16, o feed a quadrada ===');
@@ -456,7 +462,7 @@ console.log('\n=== GET /admin/instagram-embutidos ===');
   ok((await pedir('master', 'errada')).status === 403, 'senha errada -> 403');
 
   const j = await (await pedir('master', 'senha')).json();
-  ok(j.ok === true && j.itens.length === 20, 'lista os 20 posts embutidos', j.itens && j.itens.length);
+  ok(j.ok === true && j.itens.length === N, `lista os ${N} posts embutidos`, j.itens && j.itens.length);
   const p3 = j.itens.find(i => i.n === 3);
   ok(p3.post_url === 'https://finn.dev.br/social/post-3.png', 'URL do post', p3.post_url);
   ok(/\/social\/story-3\.jpg$/.test(p3.story_url), 'URL do story do mesmo numero', p3.story_url);

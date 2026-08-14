@@ -2440,7 +2440,7 @@ function _socialPublicUrl(caminho) {
 // RLS da social_posts é por e-mail da conta master, e o Worker não tem sessão
 // de usuário nenhuma.
 // Quantas artes 9:16 embutidas existem (moram no worker do bot).
-const IG_STORY_COUNT = 20;
+const IG_STORY_COUNT = ${COPY.POSTS.length};  // um story por post, vindo do roteiro
 
 // Próximo item da fila de um tipo específico ('feed' ou 'story').
 async function _proximoDaFilaPorTipo(env, tipo) {

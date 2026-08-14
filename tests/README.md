@@ -12,7 +12,7 @@ Rode da raiz do repositório:
     node tests/aprender.mjs           # trilhas e progresso das lições no Supabase
     node tests/importar.mjs           # extrato de banco: CSV/OFX/XLSX, sinais e categorias
     node tests/portugues.mjs          # erros de português nos textos que o usuário lê
-    node tests/social-cards.mjs       # os 43 cartões do Instagram: nada vaza da margem
+    node tests/social-cards.mjs       # cartões do Instagram: nada vaza da margem
 
 `smoke.mjs` precisa de um Chromium. Em ambiente sem ele instalado, ajuste
 `executablePath` ou remova a opção pra usar o que o Playwright baixar.
