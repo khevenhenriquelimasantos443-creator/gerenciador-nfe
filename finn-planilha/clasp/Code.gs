@@ -28,6 +28,14 @@ var ABA_CONFIG = 'Config';
 var LINHA_INI  = 6;   // primeira linha de dados em Lançamentos
 var CEL_TOKEN  = 'C35';
 var CEL_ULTIMA = 'C36';
+// Fixo em vez de SpreadsheetApp.getActive().getSpreadsheetTimeZone(): o
+// gerador da planilha nunca define o fuso do arquivo, então cada cópia nova
+// fica com o que o Google decidir por padrão (na prática, America/Los_Angeles
+// — o clássico fuso padrão do Apps Script). Resultado visto de verdade:
+// "Última sincronização" mostrando 09:27 com o relógio real em 13:31, quatro
+// horas de diferença. Fixar aqui evita depender de configuração que ninguém
+// vai lembrar de ajustar — a Planilha Finn é pro fuso do Brasil, sempre.
+var FUSO_BR = 'America/Sao_Paulo';
 
 // Colunas da aba Lançamentos (1 = A)
 var COL_DATA = 1, COL_TIPO = 2, COL_CAT = 3, COL_DESC = 4, COL_VALOR = 5,
@@ -135,8 +143,7 @@ function _celulaUltima() {
 function _marcarUltima() {
   var cel = _celulaUltima();
   if (!cel) return;
-  cel.setValue(Utilities.formatDate(new Date(),
-    SpreadsheetApp.getActive().getSpreadsheetTimeZone(), 'dd/MM/yyyy HH:mm'));
+  cel.setValue(Utilities.formatDate(new Date(), FUSO_BR, 'dd/MM/yyyy HH:mm'));
 }
 
 function _chamar(caminho, opcoes) {
@@ -192,7 +199,7 @@ function _lerLinhas() {
 
 function _paraISO(d) {
   if (Object.prototype.toString.call(d) === '[object Date]') {
-    return Utilities.formatDate(d, SpreadsheetApp.getActive().getSpreadsheetTimeZone(), 'yyyy-MM-dd');
+    return Utilities.formatDate(d, FUSO_BR, 'yyyy-MM-dd');
   }
   var s = String(d).trim();
   // dd/mm/aaaa digitado como texto
@@ -254,6 +261,31 @@ function finnEnviar() {
   return enviados;
 }
 
+/**
+ * Apaga o bloco de linhas de demonstração (Origem = "Exemplo") assim que
+ * existe dado de verdade pra mostrar no lugar. Ficar com "Mercado R$ 312,40"
+ * misturado no extrato real é confuso, e a instrução de apagar na mão (linhas
+ * 6 a 14) é fácil de esquecer quando o que importa é ver os dados que
+ * acabaram de chegar.
+ *
+ * Só mexe num bloco CONTÍGUO começando exatamente em LINHA_INI — na primeira
+ * linha que não for "Exemplo" (ou que tiver um buraco), para. Isso garante
+ * que nunca apaga algo que a pessoa já digitou por conta própria misturado
+ * com os exemplos.
+ */
+function _removeExemplos(r) {
+  var fim = LINHA_INI - 1;
+  for (var i = 0; i < r.linhas.length; i++) {
+    var linha = r.linhas[i];
+    if (linha.linha !== LINHA_INI + i) break;
+    if (String(linha.v[COL_ORIGEM - 1] || '').trim() !== 'Exemplo') break;
+    fim = linha.linha;
+  }
+  if (fim < LINHA_INI) return false;
+  r.ws.deleteRows(LINHA_INI, fim - LINHA_INI + 1);
+  return true;
+}
+
 /** Traz do Finn o que ainda não está na planilha (compara pelo ID Finn). */
 function finnPuxar() {
   var resp = _chamar('/sheets/pull');
@@ -262,6 +294,10 @@ function finnPuxar() {
   if (!vindos.length) { _aviso('Nada novo no Finn.'); return 0; }
 
   var r = _lerLinhas();
+  // Existe dado de verdade pra escrever — os exemplos podem sair do caminho.
+  // Reler depois: apagar linhas muda os números de linha de tudo que vem
+  // depois, e r.linhas ficaria com posições erradas se eu não atualizasse.
+  if (_removeExemplos(r)) r = _lerLinhas();
   var jaTem = {};
   for (var i = 0; i < r.linhas.length; i++) {
     var id = String(r.linhas[i].v[COL_ID - 1] || '').trim();
@@ -277,7 +313,15 @@ function finnPuxar() {
       t.category || 'Outros',
       t.description || '',
       Number(t.value) || 0,
-      '',            // coluna Mês tem fórmula própria; escrever aqui a apagaria
+      // Calculado aqui, em vez de fórmula na planilha: o Apps Script escreve
+      // fórmula sempre em sintaxe EUA (TEXT, vírgula), e numa planilha em
+      // outro idioma (a nossa é PT-BR) o Sheets não reconhece a função e
+      // mostra #ERRO! — "Erro de análise de fórmula". Reproduzido: digitado
+      // à mão vira TEXTO(...;...) sozinho (o editor traduz), mas gravado via
+      // API chega cru e quebra. Como o script já sabe o mês de cada
+      // lançamento (t.date vem "yyyy-mm-dd" do Finn), é só cortar a string —
+      // funciona em qualquer idioma de planilha, sem depender de tradução.
+      t.date.slice(0, 7),
       String(t.id),
       'Finn'
     ]);
@@ -295,16 +339,12 @@ function finnPuxar() {
   // r.linhas já veio filtrado só com linhas que TÊM data real (ver
   // _lerLinhas), então a última dela é o fim de verdade dos dados.
   var proxima = r.linhas.length ? (r.linhas[r.linhas.length - 1].linha + 1) : LINHA_INI;
-  // Escreve coluna a coluna pra não pisar na fórmula da coluna Mês.
-  var faixaEsq = ws.getRange(proxima, COL_DATA, novas.length, 5);
-  faixaEsq.setValues(novas.map(function (n) { return n.slice(0, 5); }));
+  // Data até Mês (A–F) num bloco só: Mês já vem como valor pronto, não tem
+  // mais fórmula pra pisar.
+  var faixaEsq = ws.getRange(proxima, COL_DATA, novas.length, 6);
+  faixaEsq.setValues(novas.map(function (n) { return n.slice(0, 6); }));
   var faixaDir = ws.getRange(proxima, COL_ID, novas.length, 2);
   faixaDir.setValues(novas.map(function (n) { return [n[6], n[7]]; }));
-  // Repõe a fórmula do mês nas linhas novas.
-  for (var m = 0; m < novas.length; m++) {
-    var lin = proxima + m;
-    ws.getRange(lin, COL_MES).setFormula('=IF($A' + lin + '="","",TEXT($A' + lin + ',"yyyy-mm"))');
-  }
   _aviso(novas.length + ' lançamento(s) trazido(s) do Finn.');
   return novas.length;
 }
