@@ -179,6 +179,80 @@ console.log('\n=== 4. /admin/analytics: teto e aviso de truncamento ===');
 }
 
 // ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 4b. /admin/ai-usage: agregação por modelo e "saldo" honesto ===');
+{
+  const logRows = [
+    { user_id: 'u1', model: 'claude-haiku-4-5-20251001', input_tokens: 1000, output_tokens: 200, cost_estimate: 0.002, created_at: '2026-08-15T10:00:00Z' },
+    { user_id: 'u1', model: 'claude-haiku-4-5-20251001', input_tokens: 500, output_tokens: 100, cost_estimate: 0.001, created_at: '2026-08-16T10:00:00Z' },
+    { user_id: 'u2', model: 'claude-3-5-haiku-20241022', input_tokens: 2000, output_tokens: 400, cost_estimate: 0.0032, created_at: '2026-08-16T11:00:00Z' },
+  ];
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    const J = (o) => new Response(JSON.stringify(o), { status: 200 });
+    if (u.includes('/auth/v1/user')) return J({ id: 'u3', email: 'finn.controle01@gmail.com', user_metadata: {} });
+    if (u.includes('/rest/v1/ai_usage_log')) return J(logRows);
+    return realFetch(url, opts);
+  };
+  // Sem credencial nenhuma -> 403, nunca vaza dado de custo por chamada.
+  const semAuth = await serve.fetch(new Request('https://finn.dev.br/admin/ai-usage'), { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'k', MASTER_ADMIN_PASSWORD: 'senha' }, ctx);
+  ok(semAuth.status === 403, 'sem credencial de admin -> 403', semAuth.status);
+
+  const r = await serve.fetch(new Request('https://finn.dev.br/admin/ai-usage', {
+    headers: { Authorization: 'Bearer tok', 'X-Admin-Password': 'senha' }
+  }), { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'k', MASTER_ADMIN_PASSWORD: 'senha' }, ctx);
+  const body = await r.json();
+  ok(r.status === 200 && body.ok, 'com credencial certa -> 200', r.status);
+  ok(body.total_chamadas === 3, 'conta as 3 chamadas do log', body.total_chamadas);
+  ok(Math.abs(body.custo_total_estimado - 0.0062) < 1e-9, 'soma o custo estimado das 3 linhas', body.custo_total_estimado);
+  ok(Math.abs(body.custo_medio_por_chamada - 0.0062 / 3) < 1e-9, 'custo médio = total / chamadas', body.custo_medio_por_chamada);
+  ok(body.por_modelo['claude-haiku-4-5-20251001'].chamadas === 2, 'agrupa por modelo (2 chamadas do haiku 4.5)', body.por_modelo['claude-haiku-4-5-20251001']);
+  ok(body.por_modelo['claude-3-5-haiku-20241022'].chamadas === 1, 'e 1 chamada do haiku 3.5', body.por_modelo['claude-3-5-haiku-20241022']);
+  ok(body.saldo_disponivel === false, 'nunca finge saber o saldo da conta Anthropic', body.saldo_disponivel);
+  ok(typeof body.saldo_nota === 'string' && body.saldo_nota.length > 0, 'explica por que o saldo não aparece', body.saldo_nota);
+  ok(Array.isArray(body.recentes) && body.recentes.length === 3, 'devolve as chamadas recentes pra auditoria', body.recentes.length);
+  global.fetch = realFetch;
+}
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 4c. /ai grava o log de uso (base do painel de admin) ===');
+{
+  // waitUntil precisa ser capturado e aguardado: o log é escrito depois da
+  // resposta sair (ver comentário "fora do caminho crítico" no /ai), então
+  // sem isso o teste checaria o mock antes da escrita acontecer.
+  let logBody = null;
+  const localCtx = { waitUntil: (p) => { localCtx._p = p; } };
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    const J = (o) => new Response(JSON.stringify(o), { status: 200 });
+    if (u.includes('/auth/v1/user')) return J({ id: 'u1', email: 'a@x.com' });
+    if (u.includes('/rest/v1/subscriptions')) return J([{ plan: 'pro', status: 'active' }]);
+    if (u.includes('api.anthropic.com')) {
+      return J({ id: 'msg_1', content: [{ type: 'text', text: 'oi' }], usage: { input_tokens: 300, output_tokens: 50 } });
+    }
+    if (u.includes('/rest/v1/ai_usage_log') && opts && opts.method === 'POST') {
+      logBody = JSON.parse(opts.body);
+      return J(logBody);
+    }
+    return realFetch(url, opts);
+  };
+  const env = { FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'k', ANTHROPIC_API_KEY: 'ak' };
+  const r = await serve.fetch(new Request('https://finn.dev.br/ai', {
+    method: 'POST', headers: { Origin: 'https://finn.dev.br', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ access_token: 'tok', model: 'claude-haiku-4-5-20251001', messages: [{ role: 'user', content: 'oi' }] })
+  }), env, localCtx);
+  ok(r.status === 200, '/ai responde 200 pro pedido normal', r.status);
+  if (localCtx._p) await localCtx._p;
+  ok(logBody !== null, 'chamada bem-sucedida grava uma linha em ai_usage_log', logBody);
+  if (logBody) {
+    const linha = logBody[0];
+    ok(linha.input_tokens === 300 && linha.output_tokens === 50, 'tokens gravados batem com o usage devolvido pela Anthropic', JSON.stringify(linha));
+    ok(linha.cost_estimate > 0, 'custo estimado é calculado (não fica zerado)', linha.cost_estimate);
+    ok(linha.user_id === 'u1', 'log amarrado ao usuário que pediu', linha.user_id);
+  }
+  global.fetch = realFetch;
+}
+
+// ══════════════════════════════════════════════════════════════════════
 console.log('\n=== 5. mensagens de erro não vazam detalhe interno ===');
 {
   // /push/subscribe com corpo quebrado -> 400 e mensagem genérica

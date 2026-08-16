@@ -72,7 +72,12 @@ body.finn-authed #app{display:block}
 
 .nav-brand{display:none}
 
-.nav-menu{display:none;position:absolute;top:54px;left:20px;z-index:60;flex-direction:column;gap:2px;background:var(--fcard);border:1px solid var(--fb);border-radius:12px;padding:6px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+/* position:fixed (não absolute) de propósito: com absolute, "top:54px" é
+   contado a partir do topo do DOCUMENTO, não da tela — rolar a página pra
+   baixo e abrir o menu fazia ele nascer lá em cima, fora da área visível.
+   Fixed ancora na tela sempre, não importa o quanto rolou. max-height +
+   overflow evita que o menu em si vire ilegível num celular baixo. */
+.nav-menu{display:none;position:fixed;top:54px;left:20px;z-index:60;flex-direction:column;gap:2px;background:var(--fcard);border:1px solid var(--fb);border-radius:12px;padding:6px;min-width:170px;max-height:calc(100vh - 74px);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .nav-menu.open{display:flex;animation:finnMenuIn .16s cubic-bezier(.16,1,.3,1)}
 @keyframes finnMenuIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .nav-menu .tab-btn{flex:none;width:100%;text-align:left;white-space:nowrap;background:transparent;border:none;border-radius:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--fm);transition:background-color .15s ease,color .15s ease}
@@ -539,22 +544,23 @@ body.finn-dark .btn-google:hover{background:#1E293B}
   <div class="app-shell">
     <div class="nav-menu" id="navMenu">
       <div class="nav-brand">Finn<span>.</span></div>
-      <button class="tab-btn" data-tab="dashboard">Dashboard</button>
       <button class="tab-btn" data-tab="adicionar">Adicionar</button>
       <button class="tab-btn" data-tab="analises">Análises</button>
+      <button class="tab-btn" data-tab="aprender">Aprender</button>
+      <button class="tab-btn" data-tab="cartoes">Cartões</button>
+      <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="dividas">Dívidas</button>
+      <button class="tab-btn" data-tab="fixas">Fixas</button>
+      <button class="tab-btn" data-tab="ia">IA</button>
       <button class="tab-btn" data-tab="lancamentos">Lançamentos</button>
       <button class="tab-btn" data-tab="limites">Limites</button>
       <button class="tab-btn" data-tab="metas">Metas</button>
-      <button class="tab-btn" data-tab="fixas">Fixas</button>
-      <button class="tab-btn" data-tab="cartoes">Cartões</button>
-      <button class="tab-btn" data-tab="dividas">Dívidas</button>
       <button class="tab-btn" data-tab="racha">Racha</button>
-      <button class="tab-btn" data-tab="ia">IA</button>
-      <button class="tab-btn" data-tab="aprender">Aprender</button>
       <div class="nav-menu-bottom">
         <a href="/guia" target="_blank" rel="noopener" class="nav-menu-action" id="btnGuiaNav" style="text-decoration:none">Guia de uso</a>
         <button type="button" class="nav-menu-action" id="btnAdminHomeNav" style="display:none">Visão geral</button>
         <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
+        <button type="button" class="nav-menu-action" id="btnAdminIaNav" style="display:none">Uso de IA</button>
         <button type="button" class="nav-menu-action" id="btnScreenerNav" style="display:none">Screener de ações</button>
         <button type="button" class="nav-menu-action" id="btnBetaAdminNav" style="display:none">Questionário do beta</button>
         <button type="button" class="nav-menu-action" id="btnMetaAdsNav" style="display:none">Anúncios</button>
@@ -645,7 +651,7 @@ function adminModeAtivo(){
 }
 // Telas que só existem no modo admin. Sair do modo com uma delas aberta
 // deixaria a tela em branco, então setAdminMode reposiciona a aba.
-var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminBeta", "metaAds", "screener", "conteudo"];
+var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminIa", "adminBeta", "metaAds", "screener", "conteudo"];
 // Não persiste em localStorage de propósito: adminUnlocked (a senha de
 // admin) também não persiste, então a cada recarga a pessoa desbloqueia de
 // novo — e o próprio desbloqueio já liga o modo admin. Guardar o modo
@@ -822,7 +828,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, adminIaData: null, adminIaLoading: false, adminIaError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -5895,6 +5901,7 @@ function renderAdminHome(){
   html += '<div class="card">' +
     '<div class="eyebrow">Ir para</div>' +
     '<div style="display:flex;flex-direction:column;gap:8px">' +
+      '<button type="button" class="btn-ghost" id="btnGoIaUsage">Uso de IA</button>' +
       '<button type="button" class="btn-ghost" id="btnGoBetaAdmin">Questionário do beta</button>' +
       '<button type="button" class="btn-ghost" id="btnGoMetaAds">Anúncios</button>' +
       '<button type="button" class="btn-ghost" id="btnGoConteudo">Conteúdo do Instagram</button>' +
@@ -6520,6 +6527,30 @@ function loadAdminBeta(){
   });
 }
 
+// Painel de uso da Finn IA (/admin/ai-usage no finn-serve): quantidade de
+// chamadas, custo estimado por chamada, e uma nota explicando por que
+// "saldo" não aparece — a Anthropic não expõe isso por API, só no Console.
+function loadAdminIa(){
+  state.adminIaLoading = true;
+  state.adminIaError = null;
+  render();
+  fetch("/admin/ai-usage", { headers: adminHeaders() }).then(function(r){
+    return r.json().then(function(j){ return { status: r.status, body: j }; });
+  }).then(function(res){
+    state.adminIaLoading = false;
+    if(res.status === 200 && res.body && res.body.ok){
+      state.adminIaData = res.body;
+    } else {
+      state.adminIaError = (res.body && res.body.error) || "Não consegui carregar o painel de IA.";
+    }
+    render();
+  }).catch(function(){
+    state.adminIaLoading = false;
+    state.adminIaError = "Falha de conexão.";
+    render();
+  });
+}
+
 var BETAQ_ORGANIZA = { planilha: "Planilha", papel: "Papel/caderno", outro_app: "Outro app", nao_organizo: "Não organiza hoje" };
 var BETAQ_TEMPO = { so_olhar: "Só vai olhar", algumas_vezes: "Algumas vezes/semana", todo_dia: "Todo dia" };
 var BETAQ_CANAL = { whatsapp: "WhatsApp", email: "E-mail", formulario: "Formulário" };
@@ -6622,6 +6653,91 @@ function renderAdminBeta(){
         '<td>' + (s.confirmed ? '<span class="cat-pill" style="font-size:10.5px;background:#ECFDF5;border:1px solid var(--fs);color:var(--fs)">confirmado</span>' : '<span class="cat-pill" style="font-size:10.5px">aguardando e-mail</span>') + '</td>' +
         '<td>' + admDataHora(s.created_at) + '</td></tr>';
     }).join("") + '</tbody></table></div>';
+  }
+  html += '</div>';
+
+  return html;
+}
+
+/* ── painel de uso da Finn IA (admin) ── */
+// Custo por chamada é ESTIMADO a partir do preço por token publicado da
+// Anthropic (ver AI_PRECOS_POR_MILHAO no finn-serve) — não é uma cobrança
+// confirmada. Rotulado como estimativa em toda a tela de propósito.
+function fmtMoneyPrecisa(v){
+  return "R$ " + Number(v || 0).toLocaleString("pt-BR", { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+}
+function renderAdminIa(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+
+  if(state.adminIaLoading && !state.adminIaData){
+    return '<div class="card"><div class="eyebrow">Uso da Finn IA</div><div style="font-size:13px;color:var(--fm)">Carregando…</div></div>';
+  }
+  if(state.adminIaError && !state.adminIaData){
+    return '<div class="card"><div class="eyebrow">Uso da Finn IA</div>' +
+      '<div class="ai-error">' + escapeHtml(state.adminIaError) + '</div>' +
+      '<button type="button" class="btn-submit" id="btnRetryAdminIa" style="margin-top:10px">Tentar de novo</button></div>';
+  }
+  if(!state.adminIaData){
+    return '<div class="card"><div class="eyebrow">Uso da Finn IA</div>' +
+      '<button type="button" class="btn-submit" id="btnLoadAdminIa">Carregar painel</button></div>';
+  }
+
+  var d = state.adminIaData;
+  var html = '<div class="card">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px">' +
+      '<div class="eyebrow" style="margin:0">Uso da Finn IA</div>' +
+      '<button type="button" class="btn-ghost" id="btnRefreshAdminIa" style="padding:6px 12px;font-size:11.5px"' + (state.adminIaLoading ? " disabled" : "") + '>' + (state.adminIaLoading ? "Atualizando…" : "Atualizar agora") + '</button>' +
+    '</div>' +
+    '<div style="font-size:11.5px;color:var(--fm)">Toda chamada bem-sucedida ao proxy /ai (Claude), com custo ESTIMADO a partir do preço por token — não é a cobrança oficial da Anthropic.</div>' +
+  '</div>';
+
+  html += '<div class="card" style="background:#FFFBEB;border-color:#FDE68A">' +
+    '<div style="font-size:12.5px;color:#92400E"><b>Saldo da conta:</b> ' + escapeHtml(d.saldo_nota || "não disponível por API.") + '</div>' +
+  '</div>';
+
+  html += '<div class="adm-kpis">' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Chamadas</div><div class="adm-kpi-value">' + (d.total_chamadas || 0) + '</div><div class="adm-kpi-sub">' + (d.truncado ? "cortado em " + d.limite_aplicado : "no total") + '</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Custo estimado</div><div class="adm-kpi-value" style="font-size:19px">' + escapeHtml(fmtMoney(d.custo_total_estimado || 0)) + '</div><div class="adm-kpi-sub">acumulado no log</div></div>' +
+    '<div class="adm-kpi"><div class="adm-kpi-label">Por chamada</div><div class="adm-kpi-value" style="font-size:16px">' + escapeHtml(fmtMoneyPrecisa(d.custo_medio_por_chamada || 0)) + '</div><div class="adm-kpi-sub">média</div></div>' +
+  '</div>';
+
+  var modelos = Object.keys(d.por_modelo || {});
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Por modelo</p>';
+  if(!modelos.length){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Nenhuma chamada registrada ainda.</div>';
+  } else {
+    html += '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr><th>Modelo</th><th>Chamadas</th><th>Custo estimado</th><th>Por chamada</th></tr></thead><tbody>' +
+      modelos.sort(function(a,b){ return d.por_modelo[b].chamadas - d.por_modelo[a].chamadas; }).map(function(m){
+        var mm = d.por_modelo[m];
+        return '<tr><td>' + escapeHtml(m) + '</td><td>' + mm.chamadas + '</td><td>' + escapeHtml(fmtMoney(mm.custo)) + '</td>' +
+          '<td>' + escapeHtml(fmtMoneyPrecisa(mm.chamadas ? mm.custo / mm.chamadas : 0)) + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  }
+  html += '</div>';
+
+  var porDia = (d.por_dia || []).slice().reverse();
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Últimos 30 dias com uso</p>';
+  if(!porDia.length){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Sem uso nos últimos dias.</div>';
+  } else {
+    html += '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr><th>Dia</th><th>Chamadas</th><th>Custo estimado</th></tr></thead><tbody>' +
+      porDia.map(function(p){
+        return '<tr><td>' + escapeHtml(p.dia.split("-").reverse().join("/")) + '</td><td>' + p.chamadas + '</td><td>' + escapeHtml(fmtMoney(p.custo)) + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  }
+  html += '</div>';
+
+  var recentes = d.recentes || [];
+  html += '<div class="card"><p style="font-size:14px;font-weight:800;margin:0 0 10px">Chamadas recentes (' + recentes.length + ')</p>';
+  if(!recentes.length){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Nenhuma chamada registrada ainda.</div>';
+  } else {
+    html += '<div class="adm-tbl-wrap"><table class="adm-table"><thead><tr><th>Quando</th><th>Modelo</th><th>Tokens (in/out)</th><th>Custo estimado</th></tr></thead><tbody>' +
+      recentes.map(function(l){
+        return '<tr><td>' + admDataHora(l.created_at) + '</td><td>' + escapeHtml(l.model || "—") + '</td>' +
+          '<td>' + (l.input_tokens || 0) + ' / ' + (l.output_tokens || 0) + '</td>' +
+          '<td>' + escapeHtml(fmtMoneyPrecisa(l.cost_estimate || 0)) + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
   }
   html += '</div>';
 
@@ -7980,7 +8096,7 @@ function render(){
   });
   // As telas de gestão só aparecem no modo admin (antes bastava estar
   // desbloqueado, e elas ficavam penduradas no menu normal).
-  ["btnAdminHomeNav","btnAdminAnalyticsNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
+  ["btnAdminHomeNav","btnAdminAnalyticsNav","btnAdminIaNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
     var b = document.getElementById(id);
     if(b) b.style.display = emAdmin ? "" : "none";
   });
@@ -8027,6 +8143,7 @@ function render(){
   else if(state.tab === "adminHome") content.innerHTML = renderAdminHome();
   else if(state.tab === "conteudo") content.innerHTML = renderConteudo();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
+  else if(state.tab === "adminIa") content.innerHTML = renderAdminIa();
   else if(state.tab === "screener") content.innerHTML = renderScreener();
   else if(state.tab === "adminBeta") content.innerHTML = renderAdminBeta();
   else if(state.tab === "metaAds") content.innerHTML = renderMetaAds();
@@ -8455,6 +8572,10 @@ function bindContentEvents(){
       state.tab = "adminAnalytics";
       if(!state.analyticsData && !state.analyticsLoading) loadAdminAnalytics(); else render();
     });
+    if((b = document.getElementById("btnGoIaUsage"))) b.addEventListener("click", function(){
+      state.tab = "adminIa";
+      if(!state.adminIaData && !state.adminIaLoading) loadAdminIa(); else render();
+    });
     if((b = document.getElementById("btnGoBetaAdmin"))) b.addEventListener("click", irPara("adminBeta"));
     if((b = document.getElementById("btnGoMetaAds"))) b.addEventListener("click", irPara("metaAds"));
     if((b = document.getElementById("btnGoScreener"))) b.addEventListener("click", irPara("screener"));
@@ -8498,6 +8619,14 @@ function bindContentEvents(){
     document.querySelectorAll("[data-delconteudo]").forEach(function(btn){
       btn.addEventListener("click", function(){ excluirConteudo(btn.dataset.delconteudo); });
     });
+  }
+  if(state.tab === "adminIa"){
+    var btnLoadAdminIa = document.getElementById("btnLoadAdminIa");
+    if(btnLoadAdminIa) btnLoadAdminIa.addEventListener("click", loadAdminIa);
+    var btnRetryAdminIa = document.getElementById("btnRetryAdminIa");
+    if(btnRetryAdminIa) btnRetryAdminIa.addEventListener("click", loadAdminIa);
+    var btnRefreshAdminIa = document.getElementById("btnRefreshAdminIa");
+    if(btnRefreshAdminIa) btnRefreshAdminIa.addEventListener("click", loadAdminIa);
   }
   if(state.tab === "adminAnalytics"){
     var btnLoadAnalytics = document.getElementById("btnLoadAnalytics");
@@ -9302,6 +9431,12 @@ document.getElementById("btnAdminAnalyticsNav").addEventListener("click", functi
   render();
   document.getElementById("navMenu").classList.remove("open");
   loadAdminAnalytics();
+});
+document.getElementById("btnAdminIaNav").addEventListener("click", function(){
+  state.tab = "adminIa";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  loadAdminIa();
 });
 document.getElementById("btnScreenerNav").addEventListener("click", function(){
   state.tab = "screener";

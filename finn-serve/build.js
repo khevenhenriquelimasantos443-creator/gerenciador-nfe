@@ -1317,6 +1317,113 @@ function _conquistasDoUsuario(txs, goals, limits, temSplit, temBot) {
   };
 }
 
+// Preço por token dos modelos liberados no proxy /ai (ALLOWED_MODELS), em
+// dólar por MILHÃO de tokens — igual à unidade da tabela de preços da
+// Anthropic (anthropic.com/pricing). NÃO vem de nenhuma API: a Anthropic não
+// expõe preço nem saldo de conta por API pra uma chave normal, só o Console
+// mostra isso. Se o preço mudar lá, precisa atualizar aqui à mão — por isso
+// todo custo calculado com esta tabela é rotulado "estimado" no painel, nunca
+// como cobrança confirmada.
+var AI_PRECOS_POR_MILHAO = {
+  'claude-haiku-4-5-20251001': { input: 1.00, output: 5.00 },
+  'claude-3-5-haiku-20241022': { input: 0.80, output: 4.00 }
+};
+function _aiCustoEstimado(model, inputTokens, outputTokens) {
+  var p = AI_PRECOS_POR_MILHAO[model] || AI_PRECOS_POR_MILHAO['claude-haiku-4-5-20251001'];
+  return (inputTokens / 1e6) * p.input + (outputTokens / 1e6) * p.output;
+}
+
+// Grava uma linha em ai_usage_log por chamada bem-sucedida ao /ai. Chamado
+// via ctx.waitUntil (ver rota /ai) — nunca deve atrasar nem derrubar a
+// resposta de quem pediu a análise.
+async function _logAiUsage(env, userId, model, respostaBrutaTexto) {
+  try {
+    if (!env.SUPABASE_SERVICE_KEY) return;
+    var usage = {};
+    try { usage = (JSON.parse(respostaBrutaTexto) || {}).usage || {}; } catch (e0) { return; }
+    var inputTokens = Number(usage.input_tokens) || 0;
+    var outputTokens = Number(usage.output_tokens) || 0;
+    var custo = _aiCustoEstimado(model, inputTokens, outputTokens);
+    await fetch('${SUPA_URL_SERVER}/rest/v1/ai_usage_log', {
+      method: 'POST',
+      headers: {
+        apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify([{
+        user_id: userId, model: model,
+        input_tokens: inputTokens, output_tokens: outputTokens, cost_estimate: custo
+      }])
+    });
+  } catch (e) {
+    // Best-effort: uma falha aqui não pode virar erro pra quem pediu a análise.
+  }
+}
+
+// GET /admin/ai-usage — painel de uso da Finn IA (quantidade de chamadas e
+// custo estimado por chamada). Mesmas credenciais do /admin/analytics.
+//
+// "Saldo" da conta Anthropic NÃO está aqui de propósito: nenhuma API com uma
+// chave normal expõe crédito restante, só o Console
+// (console.anthropic.com/settings/billing) mostra isso. O painel devolve
+// saldo_disponivel:false com uma nota, em vez de inventar um número — melhor
+// avisar que falta do que mostrar um "saldo" que não é de verdade.
+async function _adminAiUsage(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'Supabase service key não configurada' }), { status: 500, headers: cors });
+
+    var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
+    // Teto explícito pelo mesmo motivo do /admin/analytics: o volume aqui é
+    // baixo (rate limit já capa em 60 chamadas/dia por conta), mas um número
+    // fixo e conhecido é sempre melhor que confiar no default do PostgREST.
+    var LOG_MAX = 20000;
+    var r = await fetch(
+      '${SUPA_URL_SERVER}/rest/v1/ai_usage_log?select=user_id,model,input_tokens,output_tokens,cost_estimate,created_at&order=created_at.desc&limit=' + LOG_MAX,
+      { headers: svcHeaders }
+    );
+    if (!r.ok) return new Response(JSON.stringify({ error: 'falha ao ler o log de uso' }), { status: 502, headers: cors });
+    var linhas = await r.json();
+
+    var totalChamadas = linhas.length;
+    var custoTotal = 0, porModelo = {}, porDia = {};
+    linhas.forEach(function (l) {
+      var custo = Number(l.cost_estimate) || 0;
+      custoTotal += custo;
+      var m = porModelo[l.model] || (porModelo[l.model] = { chamadas: 0, custo: 0 });
+      m.chamadas++; m.custo += custo;
+      var dia = (l.created_at || '').slice(0, 10);
+      if (dia) {
+        var d = porDia[dia] || (porDia[dia] = { chamadas: 0, custo: 0 });
+        d.chamadas++; d.custo += custo;
+      }
+    });
+    var porDiaLista = Object.keys(porDia).sort().slice(-30).map(function (dia) {
+      return { dia: dia, chamadas: porDia[dia].chamadas, custo: porDia[dia].custo };
+    });
+
+    return new Response(JSON.stringify({
+      ok: true,
+      truncado: totalChamadas >= LOG_MAX,
+      limite_aplicado: LOG_MAX,
+      total_chamadas: totalChamadas,
+      custo_total_estimado: custoTotal,
+      custo_medio_por_chamada: totalChamadas ? custoTotal / totalChamadas : 0,
+      por_modelo: porModelo,
+      por_dia: porDiaLista,
+      recentes: linhas.slice(0, 50),
+      saldo_disponivel: false,
+      saldo_nota: 'A API da Anthropic não expõe saldo de crédito restante — confira em console.anthropic.com/settings/billing.'
+    }), { status: 200, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, 'admin_ai_usage');
+  }
+}
+
 // GET /admin/analytics — painel de uso. Credenciais em header:
 //   Authorization: Bearer <access_token>  +  X-Admin-Password: <senha>
 // (só a conta master). Tudo lido ao vivo do Supabase via SUPABASE_SERVICE_KEY
@@ -1527,6 +1634,10 @@ async function _adminAnalytics(request, env) {
 const SHEET_TOKEN_PREFIX = 'sheettok_';
 const SHEET_USER_PREFIX = 'sheetuser_';
 const SHEET_MAX_LINHAS = 500;
+// Limites, contas fixas, dívidas e racha são configuração, não histórico —
+// ninguém tem centenas de dívidas cadastradas. O teto é só uma rede de
+// segurança contra payload gigante, não um limite pensado pra ser atingido.
+const SHEET_MAX_OUTRAS = 200;
 
 function _novoTokenPlanilha() {
   var bytes = new Uint8Array(32);
@@ -1609,7 +1720,11 @@ async function _sheetsTokenRevogar(request, env) {
   }
 }
 
-// GET /sheets/pull — devolve os lançamentos do dono do token.
+// GET /sheets/pull — devolve os lançamentos do dono do token, e junto o
+// retrato atual de Limites, Contas fixas, Dívidas e Racha — essas quatro
+// abas não têm outro jeito de saber o que existe no app: são configuração
+// que o app deixa a pessoa editar em qualquer momento (marcar parcela como
+// paga, mudar teto de categoria), não um log que só cresce como Lançamentos.
 // A planilha manda os ids que já tem, pra não rebaixar linha por linha.
 async function _sheetsPull(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -1620,27 +1735,61 @@ async function _sheetsPull(request, env) {
     if (!(await _podeSincronizarPlanilha(reg.uid, env))) {
       return new Response(JSON.stringify({ error: 'a sincronização da planilha faz parte do plano Planilha ou Pro' }), { status: 402, headers: cors });
     }
-    if (!(await _podeSincronizarPlanilha(reg.uid, env))) {
-      return new Response(JSON.stringify({ error: 'a sincronização da planilha faz parte do plano Planilha ou Pro' }), { status: 402, headers: cors });
-    }
 
     var rl = await _rateLimit(env, 'sheetpull', reg.uid, 120, 3600);
     if (!rl.ok) return _tooManyRequests(cors, rl.retryAfter, 'muitas sincronizações, tente mais tarde');
 
     var url = new URL(request.url);
     var desde = url.searchParams.get('desde') || '';
-    var filtro = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&select=id,date,type,category,description,value' +
+    var filtroTx = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&select=id,date,type,category,description,value' +
                  '&order=date.desc&limit=' + SHEET_MAX_LINHAS;
     // "desde" corta pela data do lançamento, não pelo created_at: é a data
     // que a planilha mostra, e é por ela que a pessoa raciocina.
-    if (/^\\d{4}-\\d{2}-\\d{2}$/.test(desde)) filtro += '&date=gte.' + desde;
+    if (/^\\d{4}-\\d{2}-\\d{2}$/.test(desde)) filtroTx += '&date=gte.' + desde;
 
-    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/transactions?' + filtro, {
-      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
+    var base = '${SUPA_URL_SERVER}/rest/v1/';
+    var uidFiltro = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&limit=' + SHEET_MAX_OUTRAS;
+
+    var respostas = await Promise.all([
+      fetch(base + 'transactions?' + filtroTx, { headers: svcHeaders }),
+      fetch(base + 'spending_limits?' + uidFiltro + '&select=category,monthly_limit&order=category.asc', { headers: svcHeaders }),
+      fetch(base + 'fixed_accounts?' + uidFiltro + '&select=type,description,category,value,day_of_month&order=day_of_month.asc', { headers: svcHeaders }),
+      fetch(base + 'debts?' + uidFiltro + '&select=name,category,total_value,remaining_value,interest_rate,monthly_payment&order=created_at.asc', { headers: svcHeaders }),
+      fetch(base + 'splits?' + uidFiltro + '&select=id,description,category,total_value,date&order=date.desc', { headers: svcHeaders }),
+      // Sem limite próprio: participantes pertencem aos splits já limitados
+      // acima, então o teto dos splits já limita o total de participantes
+      // (na prática, poucos por split).
+      fetch(base + 'split_participants?user_id=eq.' + encodeURIComponent(reg.uid) + '&select=split_id,name,paid', { headers: svcHeaders })
+    ]);
+    var rTx = respostas[0];
+    if (!rTx.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
+    var linhas = await rTx.json();
+    // Cada uma das outras quatro é best-effort: se uma falhar, a planilha
+    // ainda sincroniza os lançamentos normalmente — melhor mostrar Limites
+    // vazio do que travar a sincronização inteira por causa de uma tabela.
+    var limites = respostas[1].ok ? await respostas[1].json() : [];
+    var contasFixas = respostas[2].ok ? await respostas[2].json() : [];
+    var dividas = respostas[3].ok ? await respostas[3].json() : [];
+    var splits = respostas[4].ok ? await respostas[4].json() : [];
+    var participantes = respostas[5].ok ? await respostas[5].json() : [];
+
+    var porSplit = {};
+    for (var i = 0; i < participantes.length; i++) {
+      var p = participantes[i];
+      (porSplit[p.split_id] = porSplit[p.split_id] || []).push({ name: p.name, paid: !!p.paid });
+    }
+    var racha = splits.map(function (s) {
+      return {
+        date: s.date, description: s.description, category: s.category,
+        total_value: s.total_value, participantes: porSplit[s.id] || []
+      };
     });
-    if (!r.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
-    var linhas = await r.json();
-    return new Response(JSON.stringify({ ok: true, total: linhas.length, lancamentos: linhas }), { status: 200, headers: cors });
+
+    return new Response(JSON.stringify({
+      ok: true, total: linhas.length, lancamentos: linhas,
+      limites: limites, contasFixas: contasFixas, dividas: dividas, racha: racha
+    }), { status: 200, headers: cors });
   } catch (e) {
     return _serverError(cors, e, 'sheets_pull');
   }
@@ -4569,6 +4718,13 @@ h1 em{font-style:normal;color:#F97316}
         });
         var aiText = await aiResp.text();
         if (aiResp.ok && aiPlan === 'plus') await _subaIncrementAiUsage(aiUser.id, aiSub, env);
+        // Log de uso pro painel de admin (saldo/quantidade/custo por chamada).
+        // Fora do caminho crítico de propósito: se o Supabase estiver fora do
+        // ar, quem pediu a análise não pode ficar sem resposta por causa de
+        // uma escrita de auditoria que não afeta o resultado dela.
+        if (aiResp.ok && ctx && ctx.waitUntil) {
+          ctx.waitUntil(_logAiUsage(env, aiUser.id, aiPayload.model, aiText));
+        }
         return new Response(aiText, { status: aiResp.status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': url.origin } });
       } catch (aiErr) {
         return new Response(JSON.stringify({ error: { type: 'proxy_error', message: 'falha ao contatar a IA' } }), {
@@ -4612,6 +4768,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/analytics' && request.method === 'GET') {
       return _adminAnalytics(request, env);
+    }
+    if (url.pathname === '/admin/ai-usage' && request.method === 'GET') {
+      return _adminAiUsage(request, env);
     }
 
     // ── Screener de ações (dados públicos de mercado) — só a conta master ──
