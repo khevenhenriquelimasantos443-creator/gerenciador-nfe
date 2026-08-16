@@ -39,6 +39,20 @@ var CAP_LIMITES = 20, CAP_FIXAS = 30, CAP_DIVIDAS = 20, CAP_RACHA = 30;
 // Ponte entre finnPuxar e finnSincronizar só pro aviso de truncamento — ver
 // comentário em finnPuxar.
 var _ultimaNotaConfig = '';
+
+// Mesma regra do app (finn/index.html) e do bot do WhatsApp (finn-worker):
+// varredura automática de saldo e compra/resgate de investimento (BB Rende
+// Fácil, BB Ações/MM/RF, Tesouro, previdência) não é receita nem despesa —
+// é dinheiro circulando dentro do próprio banco. O app e o bot já excluem
+// isso dos totais de Entradas/Saídas; a planilha nunca tinha essa regra, e
+// é exatamente por isso que os totais da planilha vinham maiores que os do
+// app — cada aplicação/resgate automático entrava como Receita/Despesa de
+// verdade nas somas. Precisa ficar EXATAMENTE igual às outras duas cópias,
+// senão a planilha volta a divergir do app assim que a regra mudar lá.
+var INVEST_RE = /rende f[aá]cil|\bbb\s+a[cç][õo]es\b|\bbb\s+mm\b|\bbb\s+rf\b|tesouro direto|previd[eê]ncia privada|aplica[cç][aã]o autom|resgate autom|poupan[cç]a autom|rendimento autom/i;
+function _ehInvestimento(descricao) {
+  return INVEST_RE.test(descricao || '');
+}
 // Fixo em vez de SpreadsheetApp.getActive().getSpreadsheetTimeZone(): o
 // gerador da planilha nunca define o fuso do arquivo, então cada cópia nova
 // fica com o que o Google decidir por padrão (na prática, America/Los_Angeles
@@ -56,7 +70,7 @@ var FUSO_BR = 'America/Sao_Paulo';
 // correções vieram no mesmo commit, então uma das duas conclusões tinha que
 // estar errada, e não havia como saber qual sem um número na tela. Com a
 // versão à vista, "colei o script novo?" deixa de ser suposição.
-var VERSAO = '2026-08-16.2';
+var VERSAO = '2026-08-16.3';
 
 // Colunas da aba Lançamentos (1 = A)
 var COL_DATA = 1, COL_TIPO = 2, COL_CAT = 3, COL_DESC = 4, COL_VALOR = 5,
@@ -73,7 +87,7 @@ function onOpen() {
     .addItem('Ligar sincronização automática', 'finnAtivarAutomatico')
     .addItem('Desligar sincronização automática', 'finnDesativarAutomatico')
     .addSeparator()
-    .addItem('Corrigir coluna Mês', 'finnCorrigirMes')
+    .addItem('Corrigir dados da planilha', 'finnCorrigirDados')
     .addItem('Testar conexão', 'finnTestar')
     .addToUi();
 }
@@ -389,6 +403,50 @@ function _recalcularMes(r) {
 }
 
 /**
+ * Retag de Tipo pra "Investimento" em toda linha cuja Descrição bate com
+ * INVEST_RE e ainda estiver marcada como Despesa/Receita — o mesmo problema
+ * de fundo do _recalcularMes: linhas sincronizadas ANTES desta regra existir
+ * ficam com o Tipo errado pra sempre, porque o jaTem de finnPuxar nunca mais
+ * revisita um ID que já está na planilha. Sem essa varredura, só lançamento
+ * NOVO de investimento sairia certo — os que já infestam os totais atuais
+ * continuariam infestando.
+ *
+ * Só troca o Tipo, nunca mexe em Data/Valor/Categoria: todas as somas de
+ * Início/Análises/Limites filtram por Tipo="Despesa" ou "Receita" num
+ * SUMIFS/SUMPRODUCT — trocar pra "Investimento" tira a linha de TODAS elas
+ * de uma vez, sem editar uma fórmula sequer do modelo. A linha continua
+ * visível em Lançamentos (como o app também mostra o Rende Fácil na lista,
+ * só não conta ele no resumo de Entradas/Saídas).
+ *
+ * Idempotente: linha já marcada "Investimento" não é tocada de novo.
+ */
+function _recalcularFluxo(r) {
+  if (!r.linhas.length) return 0;
+  var corrigidas = 0;
+  var bloco = [], blocoIni = 0;
+
+  function descarrega() {
+    if (!bloco.length) return;
+    r.ws.getRange(blocoIni, COL_TIPO, bloco.length, 1).setValues(bloco);
+    bloco = [];
+  }
+
+  for (var i = 0; i < r.linhas.length; i++) {
+    var it = r.linhas[i];
+    var tipoAtual = String(it.v[COL_TIPO - 1] || '');
+    var ehInvest = _ehInvestimento(it.v[COL_DESC - 1]);
+    var precisaTrocar = ehInvest && (tipoAtual === 'Despesa' || tipoAtual === 'Receita');
+    if (!precisaTrocar) { descarrega(); continue; }
+    if (!bloco.length) blocoIni = it.linha;
+    else if (it.linha !== blocoIni + bloco.length) { descarrega(); blocoIni = it.linha; }
+    bloco.push(['Investimento']);
+    corrigidas++;
+  }
+  descarrega();
+  return corrigidas;
+}
+
+/**
  * As quatro funções abaixo escrevem o retrato ATUAL de Limites, Contas
  * fixas, Dívidas e Racha — chamadas em toda sincronização, com ou sem
  * lançamento novo. Diferente de Lançamentos (que só cresce), essas abas são
@@ -505,8 +563,10 @@ function finnPuxar() {
   if (!vindos.length) {
     var r0 = _lerLinhas();
     var reparadasSemNovas = _recalcularMes(r0);
+    var fluxoSemNovas = _recalcularFluxo(_lerLinhas());
     _aviso('Limites, Contas fixas, Dívidas e Racha atualizados.' +
       (reparadasSemNovas ? ' Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).' : ' Nada novo em Lançamentos.') +
+      (fluxoSemNovas ? ' Tirei ' + fluxoSemNovas + ' lançamento(s) de investimento dos totais.' : '') +
       notaConfig);
     return 0;
   }
@@ -527,7 +587,10 @@ function finnPuxar() {
     if (jaTem[String(t.id)]) continue;
     novas.push([
       new Date(t.date + 'T12:00:00'),
-      t.type === 'receita' ? 'Receita' : 'Despesa',
+      // Varredura/compra automática de investimento não é fluxo de verdade
+      // (ver comentário em INVEST_RE) — marcado assim já na entrada, pra não
+      // depender só do _recalcularFluxo pra pegar lançamento novo.
+      _ehInvestimento(t.description) ? 'Investimento' : (t.type === 'receita' ? 'Receita' : 'Despesa'),
       t.category || 'Outros',
       t.description || '',
       Number(t.value) || 0,
@@ -550,9 +613,13 @@ function finnPuxar() {
   // aqui e as linhas quebradas nunca eram tocadas de novo.
   if (!novas.length) {
     var reparadasSemNovas = _recalcularMes(r);
-    _aviso(reparadasSemNovas
-      ? 'A planilha já estava em dia. Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).'
-      : 'A planilha já está em dia com o Finn.');
+    var fluxoSemNovas = _recalcularFluxo(_lerLinhas());
+    _aviso((reparadasSemNovas || fluxoSemNovas
+      ? 'A planilha já estava em dia.' +
+        (reparadasSemNovas ? ' Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).' : '') +
+        (fluxoSemNovas ? ' Tirei ' + fluxoSemNovas + ' lançamento(s) de investimento dos totais.' : '')
+      : 'A planilha já está em dia com o Finn.') +
+      notaConfig);
     return 0;
   }
 
@@ -582,27 +649,36 @@ function finnPuxar() {
   // qualquer linha nova em que a escrita acima não tenha pegado como esperado.
   // É barato (uma chamada por bloco contíguo) e idempotente.
   var reparadas = _recalcularMes(_lerLinhas());
+  var fluxoCorrigido = _recalcularFluxo(_lerLinhas());
   _aviso(novas.length + ' lançamento(s) trazido(s) do Finn.' +
     (reparadas ? ' Coluna Mês corrigida em ' + reparadas + ' linha(s).' : '') +
+    (fluxoCorrigido ? ' Tirei ' + fluxoCorrigido + ' lançamento(s) de investimento dos totais.' : '') +
     notaConfig);
   return novas.length;
 }
 
 /**
- * Conserta a coluna Mês sem precisar sincronizar. Existe como item de menu
- * porque quem já tem a planilha quebrada precisa de um caminho de conserto que
- * não dependa de haver lançamento novo pra puxar — que era justamente o caso
- * em que o problema ficava preso.
+ * Roda as duas correções de dados existentes (coluna Mês e Tipo de
+ * investimento) sem precisar sincronizar. Existe como item de menu porque
+ * quem já tem a planilha com dado quebrado ou com investimento inflando os
+ * totais precisa de um caminho de conserto que não dependa de haver
+ * lançamento novo pra puxar — que era justamente o caso em que os dois
+ * problemas ficavam presos pra sempre (ver comentário em _recalcularMes e
+ * _recalcularFluxo).
  */
-function finnCorrigirMes() {
+function finnCorrigirDados() {
   var r = _lerLinhas();
-  var n = _recalcularMes(r);
-  _alerta(n ? 'Coluna Mês corrigida' : 'Nada a corrigir',
-    (n ? 'Recalculei a coluna Mês em ' + n + ' linha(s) a partir da coluna Data.\n\n' +
-         'Os totais de Início, Análises e Limites devem voltar ao normal agora.'
-       : 'A coluna Mês já está correta em todas as linhas com data.') +
+  var nMes = _recalcularMes(r);
+  var nFluxo = _recalcularFluxo(_lerLinhas());
+  var partes = [];
+  if (nMes) partes.push('Recalculei a coluna Mês em ' + nMes + ' linha(s) a partir da coluna Data.');
+  if (nFluxo) partes.push('Tirei ' + nFluxo + ' lançamento(s) de investimento (Rende Fácil e afins) dos totais de Receita/Despesa — eles continuam na lista, só não contam mais como fluxo.');
+  _alerta(partes.length ? 'Planilha corrigida' : 'Nada a corrigir',
+    (partes.length
+      ? partes.join('\n\n') + '\n\nOs totais de Início, Análises e Limites devem voltar ao normal agora.'
+      : 'Coluna Mês e Tipo de investimento já estão corretos em todas as linhas.') +
     '\n\nVersão do script: ' + VERSAO);
-  return n;
+  return nMes + nFluxo;
 }
 
 /** Envia primeiro, depois puxa — nessa ordem, pra não duplicar o que acabou de subir. */
