@@ -28,6 +28,13 @@ VERMELHO  = "DC2626"
 AMBAR     = "D97706"
 BRANCO    = "FFFFFF"
 
+# Fonte única, escrita explicitamente em toda célula (antes só o "Finn." do
+# cabeçalho declarava Calibri — o resto ficava no default implícito do
+# openpyxl, que POR ACASO também é Calibri, mas sem controle: bastava um dia
+# esse default mudar de versão pra versão que a planilha ficaria com duas
+# fontes misturadas sem ninguém perceber no código).
+FONTE = "Calibri"
+
 MOEDA = 'R$ #,##0.00'
 PCT   = '0%'
 DATA  = 'dd/mm/yyyy'
@@ -42,37 +49,78 @@ CATEGORIAS  = ["Alimentação","Transporte","Moradia","Saúde","Educação","Laz
 wb = Workbook()
 
 def fill(c): return PatternFill("solid", fgColor=c)
-def borda_fina():
-    l = Side(style="thin", color=BORDA)
+
+def tint(hex_cor, fator=0.85):
+    """Clareia uma cor hex misturando com branco (fator 0 = original, 1 = branco).
+    Dá cada aba uma versão "lavada" da própria cor de identidade pra fundo de
+    cartão e faixa zebrada, em vez de escolher manualmente um pastel pra cada
+    uma — bate exatamente com a cor forte usada nos números/rótulos daquela
+    aba, garantido por fórmula, não por olho."""
+    r, g, b = int(hex_cor[0:2], 16), int(hex_cor[2:4], 16), int(hex_cor[4:6], 16)
+    r = int(r + (255 - r) * fator); g = int(g + (255 - g) * fator); b = int(b + (255 - b) * fator)
+    return f"{r:02X}{g:02X}{b:02X}"
+
+def borda_fina(cor=BORDA):
+    l = Side(style="thin", color=cor)
     return Border(left=l, right=l, top=l, bottom=l)
 
-def titulo_aba(ws, titulo, subtitulo, ncols=8):
-    """Cabeçalho comum: faixa grafite com a marca, do jeito do app."""
+# Cor de identidade de cada aba — a mesma já usada em sheet_properties.tabColor
+# (a cor da abinha lá embaixo do Google Sheets), agora também espalhada pelo
+# CONTEÚDO da aba: rótulo de seção, célula editável em destaque, zebrado.
+# Antes tudo — em toda aba — usava laranja: a aba de Dívidas tinha destaque
+# laranja, Metas tinha destaque laranja, Análises também. Cada aba parecia a
+# mesma pele repetida, e a cor da abinha (que já variava) não dizia respeito
+# a nada dentro dela. Ligar os dois dá pra cada aba uma identidade visual
+# própria dentro da mesma família — não é "tudo laranja", é "cada aba tem a
+# sua", com o laranja reservado pra marca (Config, Lançamentos, Início).
+ACCENT = {
+    "Início": LARANJA, "Lançamentos": LARANJA, "Config": LARANJA,
+    "Análises": "0EA5E9", "Limites": AMBAR, "Metas": VERDE,
+    "Contas fixas": "8B5CF6", "Dívidas": VERMELHO, "Racha": "0891B2",
+}
+
+def titulo_aba(ws, titulo, subtitulo, ncols=8, aba=None):
+    """Cabeçalho comum: faixa grafite com a marca (constante — é o selo do
+    Finn, não muda de aba pra aba), uma lasca colorida na borda esquerda e um
+    fundo lavado da cor da aba por trás do título — é o que dá a cada aba a
+    sua própria identidade sem abrir mão da marca."""
+    accent = ACCENT.get(aba, LARANJA)
+    faixa_accent = Side(style="thick", color=accent)
+
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=ncols)
     c = ws.cell(row=1, column=1, value="Finn.")
-    c.font = Font(name="Calibri", size=22, bold=True, color=BRANCO)
+    c.font = Font(name=FONTE, size=22, bold=True, color=BRANCO)
     c.fill = fill(GRAFITE_E)
     c.alignment = Alignment(vertical="center", indent=1)
+    c.border = Border(left=faixa_accent)
     ws.row_dimensions[1].height = 42
     for i in range(2, ncols + 1):
         ws.cell(row=1, column=i).fill = fill(GRAFITE_E)
 
     ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=ncols)
     c = ws.cell(row=2, column=1, value=titulo)
-    c.font = Font(size=13, bold=True, color=GRAFITE)
+    c.font = Font(name=FONTE, size=13, bold=True, color=GRAFITE)
+    c.fill = fill(tint(accent, 0.92))
     c.alignment = Alignment(vertical="center", indent=1)
+    c.border = Border(left=faixa_accent)
     ws.row_dimensions[2].height = 24
+    for i in range(2, ncols + 1):
+        ws.cell(row=2, column=i).fill = fill(tint(accent, 0.92))
 
     ws.merge_cells(start_row=3, start_column=1, end_row=3, end_column=ncols)
     c = ws.cell(row=3, column=1, value=subtitulo)
-    c.font = Font(size=10, color=CINZA)
+    c.font = Font(name=FONTE, size=10, color=CINZA)
+    c.fill = fill(tint(accent, 0.92))
     c.alignment = Alignment(vertical="center", indent=1)
+    c.border = Border(left=faixa_accent)
     ws.row_dimensions[3].height = 18
+    for i in range(2, ncols + 1):
+        ws.cell(row=3, column=i).fill = fill(tint(accent, 0.92))
 
 def cabecalho_tabela(ws, linha, valores, larguras=None):
     for i, v in enumerate(valores, start=1):
         c = ws.cell(row=linha, column=i, value=v)
-        c.font = Font(bold=True, size=10, color=BRANCO)
+        c.font = Font(name=FONTE, bold=True, size=10, color=BRANCO)
         c.fill = fill(GRAFITE)
         c.alignment = Alignment(horizontal="center", vertical="center")
         c.border = borda_fina()
@@ -81,9 +129,17 @@ def cabecalho_tabela(ws, linha, valores, larguras=None):
         for i, w in enumerate(larguras, start=1):
             ws.column_dimensions[get_column_letter(i)].width = w
 
+def zebrado(ws, faixa, cor_base=CINZA):
+    """Listra linhas pares com um lavado bem sutil da cor — separa visualmente
+    cada linha numa tabela longa sem competir com o conteúdo. stopIfTrue=False
+    porque em Lançamentos essa regra convive com outras (Receita/Despesa,
+    aviso de linha sem tipo) que também precisam continuar avaliando."""
+    ws.conditional_formatting.add(faixa,
+        FormulaRule(formula=["ISEVEN(ROW())"], fill=fill(tint(cor_base, 0.94)), stopIfTrue=False))
+
 def rotulo(ws, cell, texto, cor=CINZA, tam=9, bold=True):
     c = ws[cell]; c.value = texto
-    c.font = Font(size=tam, bold=bold, color=cor)
+    c.font = Font(name=FONTE, size=tam, bold=bold, color=cor)
 
 # ══════════════════════════════════════════════════════════════════
 #  CONFIG  — precisa existir antes das outras (elas referenciam)
@@ -91,12 +147,12 @@ def rotulo(ws, cell, texto, cor=CINZA, tam=9, bold=True):
 cfg = wb.active
 cfg.title = "Config"
 cfg.sheet_properties.tabColor = CINZA
-titulo_aba(cfg, "Configuração", "Mês de referência, categorias e conexão com o app Finn.", 7)
+titulo_aba(cfg, "Configuração", "Mês de referência, categorias e conexão com o app Finn.", 7, aba="Config")
 
 hoje = dt.date.today()
 primeiro = dt.date(hoje.year, hoje.month, 1)
 
-rotulo(cfg, "A5", "MÊS DE REFERÊNCIA", GRAFITE, 10)
+rotulo(cfg, "A5", "MÊS DE REFERÊNCIA", LARANJA, 10)
 cfg["A6"] = "Mês exibido no Início, Limites e Contas fixas:"
 cfg["A6"].font = Font(size=10, color=CINZA)
 cfg["D6"] = primeiro
@@ -126,7 +182,7 @@ cfg["C8"] = "mês anterior:"
 cfg["C8"].font = Font(size=9, color=CINZA)
 cfg["C8"].alignment = Alignment(horizontal="right")
 
-rotulo(cfg, "A11", "CATEGORIAS", GRAFITE, 10)
+rotulo(cfg, "A11", "CATEGORIAS", LARANJA, 10)
 cfg["A12"] = "Edite à vontade — as listas suspensas da aba Lançamentos seguem daqui."
 cfg["A12"].font = Font(size=9, color=CINZA)
 
@@ -138,8 +194,9 @@ for i, v in enumerate(CAT_RECEITA):
     c = cfg.cell(row=14 + i, column=2, value=v); c.border = borda_fina(); c.font = Font(size=10)
 for i, v in enumerate(CATEGORIAS):
     c = cfg.cell(row=14 + i, column=3, value=v); c.border = borda_fina(); c.font = Font(size=10, color=CINZA)
+zebrado(cfg, f"A14:C{13 + len(CATEGORIAS)}", LARANJA)
 
-rotulo(cfg, "A32", "CONEXÃO COM O APP FINN (opcional)", GRAFITE, 10)
+rotulo(cfg, "A32", "CONEXÃO COM O APP FINN (opcional)", LARANJA, 10)
 cfg["A33"] = ("A planilha funciona 100% sozinha. Preencha abaixo só se você também usa o app Finn "
               "e quer que os lançamentos apareçam nos dois.")
 cfg["A33"].font = Font(size=9, color=CINZA)
@@ -164,7 +221,7 @@ cfg.sheet_view.showGridLines = False
 # ══════════════════════════════════════════════════════════════════
 lan = wb.create_sheet("Lançamentos")
 lan.sheet_properties.tabColor = LARANJA
-titulo_aba(lan, "Lançamentos", "Uma linha por gasto ou entrada. É a única aba onde você digita valores.", 8)
+titulo_aba(lan, "Lançamentos", "Uma linha por gasto ou entrada. É a única aba onde você digita valores.", 8, aba="Lançamentos")
 
 cabecalho_tabela(lan, 5, ["Data", "Tipo", "Categoria", "Descrição", "Valor",
                           "Mês", "ID Finn", "Origem"],
@@ -237,7 +294,7 @@ LM = f"'Lançamentos'!$F$6:$F${5+LINHAS}"
 # ══════════════════════════════════════════════════════════════════
 ini = wb.create_sheet("Início", 0)
 ini.sheet_properties.tabColor = GRAFITE_E
-titulo_aba(ini, "Resumo do mês", "Tudo aqui é calculado sozinho a partir da aba Lançamentos.", 8)
+titulo_aba(ini, "Resumo do mês", "Tudo aqui é calculado sozinho a partir da aba Lançamentos.", 8, aba="Início")
 ini.sheet_view.showGridLines = False
 for col, w in zip("ABCDEFGH", [22, 16, 4, 22, 16, 4, 22, 16]):
     ini.column_dimensions[col].width = w
@@ -249,21 +306,37 @@ ini["C5"] = "(troque o mês na aba Config)"
 ini["C5"].font = Font(size=9, italic=True, color=CINZA)
 
 def cartao(ws, linha, col, titulo, formula, cor, fmt=MOEDA):
+    """Cartão de estatística: fundo lavado da cor do valor + lasca sólida na
+    borda esquerda, em vez da caixa branca com contorno fino de antes. A cor
+    já dizia o que o número significa (verde=bom, vermelho=ruim); o fundo
+    lavado deixa isso visível de relance, sem precisar ler o número."""
     cl = get_column_letter(col); cl2 = get_column_letter(col + 1)
+    fino = Side(style="thin", color=BORDA)
+    grosso = Side(style="thick", color=cor)
+    fundo = fill(tint(cor, 0.9))
+
     ws.merge_cells(f"{cl}{linha}:{cl2}{linha}")
     c = ws[f"{cl}{linha}"]; c.value = titulo
-    c.font = Font(size=9, bold=True, color=CINZA)
-    c.fill = fill(BRANCO); c.alignment = Alignment(indent=1)
+    c.font = Font(name=FONTE, size=9, bold=True, color=CINZA)
+    c.alignment = Alignment(indent=2)
     ws.merge_cells(f"{cl}{linha+1}:{cl2}{linha+1}")
     v = ws[f"{cl}{linha+1}"]; v.value = formula
-    v.font = Font(size=16, bold=True, color=cor)
+    v.font = Font(name=FONTE, size=17, bold=True, color=cor)
     v.number_format = fmt
-    v.fill = fill(BRANCO); v.alignment = Alignment(indent=1)
-    ws.row_dimensions[linha].height = 18
-    ws.row_dimensions[linha + 1].height = 26
+    v.alignment = Alignment(indent=2)
+
+    ws.row_dimensions[linha].height = 19
+    ws.row_dimensions[linha + 1].height = 28
     for r in (linha, linha + 1):
         for cc in (col, col + 1):
-            ws.cell(row=r, column=cc).border = borda_fina()
+            cel = ws.cell(row=r, column=cc)
+            cel.fill = fundo
+            cel.border = Border(
+                left=grosso if cc == col else None,
+                right=fino if cc == col + 1 else None,
+                top=fino if r == linha else None,
+                bottom=fino if r == linha + 1 else None,
+            )
 
 REC = f'SUMIFS({LV},{LM},Config!$D$7,{LT},"Receita")'
 DES = f'SUMIFS({LV},{LM},Config!$D$7,{LT},"Despesa")'
@@ -290,7 +363,7 @@ ini["A14"].fill = fill(LARANJA_C)
 ini["A14"].alignment = Alignment(indent=1, vertical="center")
 ini.row_dimensions[14].height = 24
 
-rotulo(ini, "A17", "PARA ONDE FOI O DINHEIRO", GRAFITE, 11)
+rotulo(ini, "A17", "PARA ONDE FOI O DINHEIRO", LARANJA, 11)
 cabecalho_tabela(ini, 18, ["Categoria", "Gasto", "", "% do total", "Barra"])
 ini.column_dimensions["C"].width = 4
 for i, cat in enumerate(CAT_DESPESA):
@@ -307,7 +380,7 @@ for i, cat in enumerate(CAT_DESPESA):
         ini.cell(row=r, column=cc).border = borda_fina()
 ini.column_dimensions["E"].width = 30
 
-rotulo(ini, "A30", "COMO ESTÃO SEUS LIMITES", GRAFITE, 11)
+rotulo(ini, "A30", "COMO ESTÃO SEUS LIMITES", LARANJA, 11)
 ini["A31"] = '=IF(COUNTA(Limites!$A$6:$A$25)=0,"Nenhum limite definido — vá na aba Limites.","")'
 ini["A31"].font = Font(size=9, italic=True, color=CINZA)
 cabecalho_tabela(ini, 32, ["Categoria", "Gasto", "", "Limite", "Situação"])
@@ -335,16 +408,16 @@ ini.conditional_formatting.add("E33:E40",
 # ══════════════════════════════════════════════════════════════════
 ana = wb.create_sheet("Análises")
 ana.sheet_properties.tabColor = "0EA5E9"
-titulo_aba(ana, "Análises", "Os 12 meses do ano e o comportamento por categoria.", 8)
+titulo_aba(ana, "Análises", "Os 12 meses do ano e o comportamento por categoria.", 8, aba="Análises")
 ana.sheet_view.showGridLines = False
 for col, w in zip("ABCDEFGH", [14, 16, 16, 16, 14, 4, 20, 16]):
     ana.column_dimensions[col].width = w
 
 ana["A5"] = "Ano:"
-ana["A5"].font = Font(size=10, bold=True)
+ana["A5"].font = Font(name=FONTE, size=10, bold=True)
 ana["B5"] = hoje.year
-ana["B5"].font = Font(size=12, bold=True, color=LARANJA)
-ana["B5"].fill = fill(LARANJA_C); ana["B5"].border = borda_fina()
+ana["B5"].font = Font(name=FONTE, size=12, bold=True, color=ACCENT["Análises"])
+ana["B5"].fill = fill(tint(ACCENT["Análises"])); ana["B5"].border = borda_fina()
 ana["B5"].alignment = Alignment(horizontal="center")
 ana["B5"].number_format = "0"
 
@@ -364,15 +437,16 @@ for i in range(12):
     for cc in range(1, 6):
         ana.cell(row=r, column=cc).border = borda_fina()
 r = 20
-ana.cell(row=r, column=1, value="Total").font = Font(size=10, bold=True)
+ana.cell(row=r, column=1, value="Total").font = Font(name=FONTE, size=10, bold=True)
 for cc, letra in [(2, "B"), (3, "C"), (4, "D")]:
     c = ana.cell(row=r, column=cc, value=f'=SUM({letra}8:{letra}19)')
-    c.number_format = MOEDA; c.font = Font(size=10, bold=True)
+    c.number_format = MOEDA; c.font = Font(name=FONTE, size=10, bold=True)
 for cc in range(1, 6):
-    ana.cell(row=r, column=cc).fill = fill(LARANJA_C)
+    ana.cell(row=r, column=cc).fill = fill(tint(ACCENT["Análises"]))
     ana.cell(row=r, column=cc).border = borda_fina()
 ana.conditional_formatting.add("D8:D19",
     CellIsRule(operator="lessThan", formula=["0"], font=Font(color=VERMELHO, bold=True)))
+zebrado(ana, "A8:E19", ACCENT["Análises"])
 
 graf = BarChart()
 graf.type = "col"; graf.style = 10
@@ -385,7 +459,7 @@ graf.set_categories(cats)
 graf.height = 8; graf.width = 18
 ana.add_chart(graf, "G7")
 
-rotulo(ana, "A23", "POR CATEGORIA (ANO TODO)", GRAFITE, 11)
+rotulo(ana, "A23", "POR CATEGORIA (ANO TODO)", ACCENT["Análises"], 11)
 cabecalho_tabela(ana, 24, ["Categoria", "Total gasto", "Média/mês", "% do total"])
 for i, cat in enumerate(CAT_DESPESA):
     r = 25 + i
@@ -399,6 +473,7 @@ for i, cat in enumerate(CAT_DESPESA):
     c.number_format = PCT; c.font = Font(size=10)
     for cc in range(1, 5):
         ana.cell(row=r, column=cc).border = borda_fina()
+zebrado(ana, f"A25:D{24 + len(CAT_DESPESA)}", ACCENT["Análises"])
 
 pizza = PieChart()
 pizza.title = "Gastos por categoria"
@@ -414,7 +489,7 @@ ana.add_chart(pizza, "G24")
 # ══════════════════════════════════════════════════════════════════
 lim = wb.create_sheet("Limites")
 lim.sheet_properties.tabColor = AMBAR
-titulo_aba(lim, "Limites por categoria", "Defina o teto mensal. O gasto vem sozinho dos Lançamentos.", 6)
+titulo_aba(lim, "Limites por categoria", "Defina o teto mensal. O gasto vem sozinho dos Lançamentos.", 6, aba="Limites")
 cabecalho_tabela(lim, 5, ["Categoria", "Limite mensal", "Gasto no mês", "Restante", "% usado", "Situação"],
                  larguras=[20, 16, 16, 16, 12, 16])
 lim.freeze_panes = "A6"
@@ -441,13 +516,16 @@ lim.conditional_formatting.add("F6:F25",
     FormulaRule(formula=['$F6="Atenção"'], font=Font(color=AMBAR, bold=True), fill=fill("FEF3C7")))
 lim.conditional_formatting.add("F6:F25",
     FormulaRule(formula=['$F6="Ok"'], font=Font(color=VERDE, bold=True)))
+# Só A-D: E (barra) e F (Estourou/Atenção/Ok) já têm o próprio sinal visual —
+# zebrar por cima competiria com esse fundo em vez de só separar linha.
+zebrado(lim, "A6:D25", ACCENT["Limites"])
 
 # ══════════════════════════════════════════════════════════════════
 #  METAS
 # ══════════════════════════════════════════════════════════════════
 met = wb.create_sheet("Metas")
 met.sheet_properties.tabColor = VERDE
-titulo_aba(met, "Metas", "Quanto falta, e quanto guardar por mês pra bater no prazo.", 8)
+titulo_aba(met, "Metas", "Quanto falta, e quanto guardar por mês pra bater no prazo.", 8, aba="Metas")
 cabecalho_tabela(met, 5, ["Meta", "Valor alvo", "Já guardado", "Falta", "%",
                           "Prazo", "Meses restantes", "Guardar por mês"],
                  larguras=[26, 15, 15, 15, 9, 13, 16, 17])
@@ -465,18 +543,19 @@ for i in range(20):
     c.alignment = Alignment(horizontal="center")
     c = met.cell(row=r, column=8,
                  value=f'=IFERROR(IF(OR($A{r}="",$F{r}=""),"",IF($G{r}=0,$D{r},$D{r}/$G{r})),"")')
-    c.number_format = MOEDA; c.font = Font(bold=True, color=LARANJA)
+    c.number_format = MOEDA; c.font = Font(bold=True, color=ACCENT["Metas"])
     for cc in range(1, 9):
         met.cell(row=r, column=cc).border = borda_fina()
 met.conditional_formatting.add("E6:E25", DataBarRule(start_type="num", start_value=0,
                                                      end_type="num", end_value=1, color=VERDE))
+zebrado(met, "A6:H25", ACCENT["Metas"])
 
 # ══════════════════════════════════════════════════════════════════
 #  CONTAS FIXAS
 # ══════════════════════════════════════════════════════════════════
 fix = wb.create_sheet("Contas fixas")
 fix.sheet_properties.tabColor = "8B5CF6"
-titulo_aba(fix, "Contas fixas", "O que se repete todo mês. A coluna Situação olha o mês de referência.", 7)
+titulo_aba(fix, "Contas fixas", "O que se repete todo mês. A coluna Situação olha o mês de referência.", 7, aba="Contas fixas")
 cabecalho_tabela(fix, 5, ["Descrição", "Tipo", "Categoria", "Valor", "Dia do mês", "Já lançou?", "Situação"],
                  larguras=[30, 12, 18, 15, 12, 13, 18])
 fix.freeze_panes = "A6"
@@ -503,13 +582,15 @@ fix.conditional_formatting.add("G6:G35",
     FormulaRule(formula=['$G6="Atrasada"'], font=Font(color=VERMELHO, bold=True), fill=fill("FEE2E2")))
 fix.conditional_formatting.add("G6:G35",
     FormulaRule(formula=['$G6="Lançada"'], font=Font(color=VERDE, bold=True)))
+# Só A-E: F (Já lançou?) e G (Situação) já têm o próprio fundo condicional.
+zebrado(fix, "A6:E35", ACCENT["Contas fixas"])
 
 # ══════════════════════════════════════════════════════════════════
 #  DÍVIDAS
 # ══════════════════════════════════════════════════════════════════
 div = wb.create_sheet("Dívidas")
 div.sheet_properties.tabColor = VERMELHO
-titulo_aba(div, "Dívidas", "Quanto falta, e em quantos meses acaba no ritmo atual.", 7)
+titulo_aba(div, "Dívidas", "Quanto falta, e em quantos meses acaba no ritmo atual.", 7, aba="Dívidas")
 cabecalho_tabela(div, 5, ["Dívida", "Valor total", "Já pago", "Falta", "Juros % a.m.",
                           "Parcela mensal", "Meses p/ quitar"],
                  larguras=[26, 15, 15, 15, 13, 16, 16])
@@ -530,6 +611,7 @@ for i in range(20):
     c.alignment = Alignment(horizontal="center"); c.font = Font(bold=True)
     for cc in range(1, 8):
         div.cell(row=r, column=cc).border = borda_fina()
+zebrado(div, "A6:G25", ACCENT["Dívidas"])
 div["A28"] = "Total que ainda falta pagar:"
 div["A28"].font = Font(size=11, bold=True, color=GRAFITE)
 div["D28"] = "=SUM(D6:D25)"
@@ -542,7 +624,7 @@ div["D28"].fill = fill("FEE2E2"); div["D28"].border = borda_fina()
 # ══════════════════════════════════════════════════════════════════
 rac = wb.create_sheet("Racha")
 rac.sheet_properties.tabColor = "0891B2"
-titulo_aba(rac, "Racha de contas", "Dividiu com alguém? Registre aqui quanto cada um deve.", 6)
+titulo_aba(rac, "Racha de contas", "Dividiu com alguém? Registre aqui quanto cada um deve.", 6, aba="Racha")
 cabecalho_tabela(rac, 5, ["Data", "Descrição", "Valor total", "Nº de pessoas",
                           "Cada um paga", "Quem já pagou"],
                  larguras=[13, 30, 15, 14, 16, 30])
@@ -556,6 +638,7 @@ for i in range(30):
     c.number_format = MOEDA; c.font = Font(bold=True)
     for cc in range(1, 7):
         rac.cell(row=r, column=cc).border = borda_fina()
+zebrado(rac, "A6:F35", ACCENT["Racha"])
 
 # ── ordem final das abas ──
 wb.move_sheet("Config", offset=len(wb.sheetnames))
