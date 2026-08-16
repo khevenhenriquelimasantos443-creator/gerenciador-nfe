@@ -37,6 +37,16 @@ var CEL_ULTIMA = 'C36';
 // vai lembrar de ajustar — a Planilha Finn é pro fuso do Brasil, sempre.
 var FUSO_BR = 'America/Sao_Paulo';
 
+// Aparece em toda mensagem de sincronização e em "Testar conexão".
+//
+// Existe porque diagnosticar isto às cegas custou caro: houve um caso em que
+// o horário aparecia CORRIGIDO (prova de que o script novo estava rodando) e
+// a coluna Mês continuava quebrada (prova de que não estava) — as duas
+// correções vieram no mesmo commit, então uma das duas conclusões tinha que
+// estar errada, e não havia como saber qual sem um número na tela. Com a
+// versão à vista, "colei o script novo?" deixa de ser suposição.
+var VERSAO = '2026-08-16.1';
+
 // Colunas da aba Lançamentos (1 = A)
 var COL_DATA = 1, COL_TIPO = 2, COL_CAT = 3, COL_DESC = 4, COL_VALOR = 5,
     COL_MES = 6, COL_ID = 7, COL_ORIGEM = 8;
@@ -52,6 +62,7 @@ function onOpen() {
     .addItem('Ligar sincronização automática', 'finnAtivarAutomatico')
     .addItem('Desligar sincronização automática', 'finnDesativarAutomatico')
     .addSeparator()
+    .addItem('Corrigir coluna Mês', 'finnCorrigirMes')
     .addItem('Testar conexão', 'finnTestar')
     .addToUi();
 }
@@ -296,6 +307,76 @@ function _removeExemplos(r) {
   return true;
 }
 
+/**
+ * Recalcula a coluna Mês a partir da coluna Data, em TODAS as linhas que têm
+ * data — não só nas recém-chegadas.
+ *
+ * Esta e' a peça que faltava em todas as tentativas anteriores de corrigir o
+ * #ERRO! da coluna Mês. Todas elas mudavam apenas o que era ESCRITO dali em
+ * diante; nenhuma consertava o que ja' estava gravado. E finnPuxar pula
+ * lancamento cujo ID ja' esta' na planilha (mapa jaTem), entao re-sincronizar
+ * nunca reescrevia aquelas linhas: o defeito ficava congelado pra sempre e o
+ * usuario via "nao mudou nada" depois de cada correcao.
+ *
+ * Por que isso derruba TODAS as telas, e nao so' uma coluna: Inicio, Analises
+ * e Limites filtram por essa coluna. SUMIFS trata celula com erro como "nao
+ * casa" e devolve 0 (dai' os paineis zerados); SUMPRODUCT propaga o erro (dai'
+ * o #ERRO! em "POR CATEGORIA"). Um erro numa coluna auxiliar apaga o valor de
+ * toda a planilha, sem nenhuma mensagem dizendo isso.
+ *
+ * Escreve VALOR, nunca formula: formula gravada por Apps Script vai em sintaxe
+ * EUA (TEXT, virgula) e a planilha esta' em PT-BR (TEXTO, ponto-e-virgula) —
+ * foi exatamente o que gerou o #ERRO! original. Texto "aaaa-mm" e' o que as
+ * outras abas comparam, e nao depende de idioma nem de fuso.
+ *
+ * Idempotente: rodar de novo em planilha sa' nao muda nada. Escreve em blocos
+ * contiguos pra nao tocar em linha vazia (a formula do template naquelas
+ * linhas continua servindo pra quem digitar a mao depois).
+ */
+function _recalcularMes(r) {
+  if (!r.linhas.length) return 0;
+  var corrigidas = 0;
+  var bloco = [];        // valores do bloco contiguo atual
+  var blocoIni = 0;      // primeira linha do bloco atual
+
+  function descarrega() {
+    if (!bloco.length) return;
+    var faixa = r.ws.getRange(blocoIni, COL_MES, bloco.length, 1);
+    // Texto puro ("@"), nunca o formato de data herdado do template: sem
+    // isso o Sheets pode interpretar "2026-08" como data de verdade em vez
+    // de guardar o texto, e aí a comparação String(atual) === esperado logo
+    // acima nunca mais bate — a planilha ficaria "reparando" pra sempre.
+    faixa.setNumberFormat('@');
+    faixa.setValues(bloco);
+    bloco = [];
+  }
+
+  for (var i = 0; i < r.linhas.length; i++) {
+    var it = r.linhas[i];
+    var esperado = _paraISO(it.v[COL_DATA - 1]).slice(0, 7);  // "" se a data for invalida
+    var atual = it.v[COL_MES - 1];
+    // Célula com erro chega aqui como string "#ERROR!"/"#ERRO!" ou como o
+    // proprio objeto de erro; qualquer coisa diferente do esperado e' trocada.
+    if (String(atual) === esperado) {                 // ja' esta' certa
+      descarrega();
+      continue;
+    }
+    if (!esperado) {                                  // data ilegivel: nao inventa
+      descarrega();
+      continue;
+    }
+    if (!bloco.length) blocoIni = it.linha;
+    else if (it.linha !== blocoIni + bloco.length) {  // buraco: fecha e recomeca
+      descarrega();
+      blocoIni = it.linha;
+    }
+    bloco.push([esperado]);
+    corrigidas++;
+  }
+  descarrega();
+  return corrigidas;
+}
+
 /** Traz do Finn o que ainda não está na planilha (compara pelo ID Finn). */
 function finnPuxar() {
   var resp = _chamar('/sheets/pull');
@@ -336,7 +417,17 @@ function finnPuxar() {
       'Finn'
     ]);
   }
-  if (!novas.length) { _aviso('A planilha já está em dia com o Finn.'); return 0; }
+  // Mesmo sem lançamento novo, repara a coluna Mês antes de sair. Este retorno
+  // adiantado era o motivo de toda correção parecer não surtir efeito: com os
+  // 500 lançamentos já na planilha, jaTem barrava todos, o código saía por
+  // aqui e as linhas quebradas nunca eram tocadas de novo.
+  if (!novas.length) {
+    var reparadasSemNovas = _recalcularMes(r);
+    _aviso(reparadasSemNovas
+      ? 'A planilha já estava em dia. Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).'
+      : 'A planilha já está em dia com o Finn.');
+    return 0;
+  }
 
   var ws = r.ws;
   // NÃO usar ws.getLastRow() aqui: a planilha pré-preenche a fórmula da
@@ -352,11 +443,38 @@ function finnPuxar() {
   // Data até Mês (A–F) num bloco só: Mês já vem como valor pronto, não tem
   // mais fórmula pra pisar.
   var faixaEsq = ws.getRange(proxima, COL_DATA, novas.length, 6);
+  // Mês em texto puro, pelo mesmo motivo do _recalcularMes: sem isso
+  // "2026-08" pode virar data de verdade sozinho ao ser escrito.
+  ws.getRange(proxima, COL_MES, novas.length, 1).setNumberFormat('@');
   faixaEsq.setValues(novas.map(function (n) { return n.slice(0, 6); }));
   var faixaDir = ws.getRange(proxima, COL_ID, novas.length, 2);
   faixaDir.setValues(novas.map(function (n) { return [n[6], n[7]]; }));
-  _aviso(novas.length + ' lançamento(s) trazido(s) do Finn.');
+
+  // Passa a régua na coluna Mês da planilha inteira depois de escrever. Cobre
+  // dois casos de uma vez: linhas quebradas por versões antigas do script, e
+  // qualquer linha nova em que a escrita acima não tenha pegado como esperado.
+  // É barato (uma chamada por bloco contíguo) e idempotente.
+  var reparadas = _recalcularMes(_lerLinhas());
+  _aviso(novas.length + ' lançamento(s) trazido(s) do Finn.' +
+    (reparadas ? ' Coluna Mês corrigida em ' + reparadas + ' linha(s).' : ''));
   return novas.length;
+}
+
+/**
+ * Conserta a coluna Mês sem precisar sincronizar. Existe como item de menu
+ * porque quem já tem a planilha quebrada precisa de um caminho de conserto que
+ * não dependa de haver lançamento novo pra puxar — que era justamente o caso
+ * em que o problema ficava preso.
+ */
+function finnCorrigirMes() {
+  var r = _lerLinhas();
+  var n = _recalcularMes(r);
+  _alerta(n ? 'Coluna Mês corrigida' : 'Nada a corrigir',
+    (n ? 'Recalculei a coluna Mês em ' + n + ' linha(s) a partir da coluna Data.\n\n' +
+         'Os totais de Início, Análises e Limites devem voltar ao normal agora.'
+       : 'A coluna Mês já está correta em todas as linhas com data.') +
+    '\n\nVersão do script: ' + VERSAO);
+  return n;
 }
 
 /** Envia primeiro, depois puxa — nessa ordem, pra não duplicar o que acabou de subir. */
@@ -365,7 +483,9 @@ function finnSincronizar() {
   var enviados = finnEnviar() || 0;
   var trazidos = finnPuxar() || 0;
   _marcarUltima();
-  _aviso('Pronto. ' + enviados + ' enviado(s), ' + trazidos + ' trazido(s).');
+  // A versão vai junto de propósito: sem ela, "colei o script novo?" só se
+  // responde por dedução, e foi por isso que este bug demorou tanto.
+  _aviso('Pronto. ' + enviados + ' enviado(s), ' + trazidos + ' trazido(s). [v' + VERSAO + ']');
 }
 
 function finnTestar() {
@@ -375,5 +495,6 @@ function finnTestar() {
   if (!resp) return;
   _alerta('Conexão OK',
     'A planilha está conectada ao Finn.\n\n' +
-    'O Finn respondeu normalmente. Use "Sincronizar agora" para trocar os lançamentos.');
+    'O Finn respondeu normalmente. Use "Sincronizar agora" para trocar os lançamentos.\n\n' +
+    'Versão do script: ' + VERSAO);
 }
