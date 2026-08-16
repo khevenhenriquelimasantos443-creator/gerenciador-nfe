@@ -1,5 +1,5 @@
 // Gera TODA a arte da campanha do Instagram a partir de finn-social/copy.cjs:
-// um post de feed (1080x1080) e um story (1080x1920) por entrada do roteiro,
+// um post de feed (1080x1350, 4:5) e um story (1080x1920) por entrada do roteiro,
 // mais as capas de reel. A quantidade sai do roteiro, não daqui.
 //
 // Por que existe: os cartões entraram no repositório como imagem pronta, sem
@@ -33,6 +33,19 @@ const CINZA_ESCURO = '#94A3B8';// corpo sobre navy
 const BORDA = '#E2E8F0';
 const CHIP_TXT = '#1E293B';
 const FONTE = "Arial, 'Liberation Sans', Helvetica, sans-serif";
+
+// O post de feed nasceu quadrado (1080x1080, 1:1) porque era o padrão do
+// Instagram quando os cartões foram desenhados. O feed do app passou a
+// priorizar 4:5 (retrato) pra ocupar mais tela — postar quadrado hoje faz o
+// Instagram mostrar o cartão pequeno dentro de um quadro maior, pedindo
+// "Ajustar"/"Plano de fundo" pra preencher a sobra (foi exatamente o que
+// apareceu numa prévia: post inteiro visível, mas encolhido e sobrando faixa
+// preta em cima/embaixo). POST_H sobe pra 1350 (4:5); a marca, o selo e o
+// título ficam ONDE JÁ ESTAVAM (perto do topo — é o que mais precisa
+// sobreviver a qualquer corte de grade) e só o que vem depois (corpo,
+// tiles/chips/botão, rodapé) desce pro espaço novo, com mais respiro.
+const POST_W = 1080, POST_H = 1350;
+const RODAPE_POST_TOP = 1250;
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 // |trecho| vira <i>, que o CSS pinta de laranja.
@@ -93,7 +106,9 @@ const h1Post = (h, cor) => `<h1 style="position:absolute;left:96px;top:320px;wid
 const corpoPost = (txt, top, cor, extra = '') => `<p style="position:absolute;left:96px;top:${top}px;width:830px;
   font-size:32px;line-height:1.5;color:${cor};${extra}">${esc(txt)}</p>`;
 
-const rodapePost = (txt, cor) => `<div class="rodape" style="left:96px;top:994px;font-size:22px;color:${cor}">${esc(txt)}</div>`;
+// top=994 era o certo pro post quadrado (1080x1080); o feed do Instagram
+// passou a priorizar 4:5 (1080x1350) — ver comentário em RODAPE_POST_TOP.
+const rodapePost = (txt, cor, top = RODAPE_POST_TOP) => `<div class="rodape" style="left:96px;top:${top}px;font-size:22px;color:${cor}">${esc(txt)}</div>`;
 
 // Chips de texto puro (nomes de banco, categorias) ou [emoji, rótulo].
 function chips(itens, { escuro = false, top = 800, centro = false } = {}) {
@@ -110,7 +125,7 @@ function chips(itens, { escuro = false, top = 800, centro = false } = {}) {
 }
 
 // Três tiles com emoji grande em cima do rótulo.
-const tiles = (itens, { escuro = true } = {}) => `<div style="position:absolute;left:96px;top:825px;width:888px;
+const tiles = (itens, { escuro = true, top = 825 } = {}) => `<div style="position:absolute;left:96px;top:${top}px;width:888px;
   display:grid;grid-template-columns:repeat(3,1fr);gap:21px">${itens.map(([e, rot]) => `
   <div style="height:133px;border-radius:14px;background:${escuro ? '#2B3546' : '#fff'};
        border:1px solid ${escuro ? '#444D5C' : BORDA};display:flex;flex-direction:column;
@@ -119,64 +134,68 @@ const tiles = (itens, { escuro = true } = {}) => `<div style="position:absolute;
     <div style="font-size:22px;font-weight:700;color:${escuro ? '#fff' : CHIP_TXT}">${esc(rot)}</div>
   </div>`).join('')}</div>`;
 
-const bullets = (itens) => `<div style="position:absolute;left:96px;top:812px;width:900px">${itens.map((t) => `
+const bullets = (itens, top = 812) => `<div style="position:absolute;left:96px;top:${top}px;width:900px">${itens.map((t) => `
   <div style="display:flex;align-items:center;gap:20px;height:52px;font-size:30px;font-weight:700;color:${NAVY}">
     <span style="font-size:20px;line-height:1">●</span><span>${esc(t)}</span></div>`).join('')}</div>`;
 
-const botao = (txt) => `<div style="position:absolute;left:96px;top:825px;height:88px;display:inline-flex;
+const botao = (txt, top = 825) => `<div style="position:absolute;left:96px;top:${top}px;height:88px;display:inline-flex;
   align-items:center;padding:0 40px;border-radius:14px;background:${LARANJA};
   font-size:32px;font-weight:700;color:#fff">${esc(txt)}</div>`;
 
 /* ── os cinco layouts de post ──────────────────────────────────────────── */
+// Marca/selo/título ficam nas MESMAS posições de quando o post era quadrado
+// (perto do topo, onde sobrevivem a qualquer corte de grade). Só o que vem
+// depois — corpo, tiles/chips/bullets/botão, rodapé — desce pro espaço extra
+// dos 270px a mais de POST_H, com mais respiro entre os blocos.
 function post(p) {
   const L = p.layout;
 
   if (L === 'cream') {
-    return base(1080, 1080, CREME,
+    return base(POST_W, POST_H, CREME,
       marca({ claro: true }) + pillClara(p.pill) + h1Post(p.h, NAVY) +
-      corpoPost(p.body, 660, CINZA_CLARO) + chips(p.itens) + rodapePost(p.rodape, '#94A3B8'));
+      corpoPost(p.body, 790, CINZA_CLARO) + chips(p.itens, { top: 1000 }) + rodapePost(p.rodape, '#94A3B8'));
   }
 
   if (L === 'centro') {
-    return base(1080, 1080, CREME,
+    return base(POST_W, POST_H, CREME,
       marca({ claro: true, centro: true }) +
       `<h1 style="position:absolute;left:0;top:296px;width:100%;padding:0 96px;text-align:center;
         font-size:92px;line-height:1.055;color:${NAVY}">${titulo(p.h)}</h1>` +
       `<p style="position:absolute;left:0;top:600px;width:100%;padding:0 140px;text-align:center;
         font-size:30px;font-weight:700;line-height:1.32;color:#334155">${esc(p.body)}</p>` +
-      chips(p.itens, { top: 730, centro: true }) +
-      `<div class="rodape" style="left:0;top:994px;width:100%;text-align:center;font-size:22px;color:#94A3B8">${esc(p.rodape)}</div>`);
+      chips(p.itens, { top: 850, centro: true }) +
+      `<div class="rodape" style="left:0;top:${RODAPE_POST_TOP}px;width:100%;text-align:center;font-size:22px;color:#94A3B8">${esc(p.rodape)}</div>`);
   }
 
   if (L === 'laranja') {
     // O círculo mais claro é decorativo — estava nos originais, em posições
     // que variam. Fica fixo aqui: o que importa é o texto, não a posição
     // exata de um enfeite.
-    return base(1080, 1080, LARANJA,
+    return base(POST_W, POST_H, LARANJA,
       `<div style="position:absolute;left:-120px;top:-140px;width:560px;height:560px;border-radius:50%;
         background:rgba(255,255,255,.045)"></div>` +
       marca({ claro: true, pontoLaranja: false }) + pillLaranja(p.pill) + h1Post(p.h, NAVY) +
-      corpoPost(p.body, 676, 'rgba(15,23,42,.75)', 'font-weight:700;font-size:34px;line-height:1.5') +
-      bullets(p.itens) + rodapePost(p.rodape, 'rgba(15,23,42,.58)'));
+      corpoPost(p.body, 806, 'rgba(15,23,42,.75)', 'font-weight:700;font-size:34px;line-height:1.5') +
+      bullets(p.itens, 942) + rodapePost(p.rodape, 'rgba(15,23,42,.58)'));
   }
 
   if (L === 'tiles') {
     const comBrilho = !!p.glow;
-    return base(1080, 1080, comBrilho ? NAVY : NAVY_CLARO,
+    return base(POST_W, POST_H, comBrilho ? NAVY : NAVY_CLARO,
       (comBrilho ? brilho() : '') + marca({ claro: false }) +
       (comBrilho ? pillContorno(p.pill) : pillClara(p.pill)) +
-      h1Post(p.h, '#fff') + corpoPost(p.body, 690, CINZA_ESCURO) +
-      tiles(p.itens) + rodapePost(p.rodape, CINZA_ESCURO));
+      h1Post(p.h, '#fff') + corpoPost(p.body, 820, CINZA_ESCURO) +
+      tiles(p.itens, { top: 1025 }) + rodapePost(p.rodape, CINZA_ESCURO));
   }
 
   // 'hero': fundo escuro com brilho; leva botão de ação OU chips escuros.
-  return base(1080, 1080, NAVY,
+  return base(POST_W, POST_H, NAVY,
     brilho() + marca({ claro: false }) + pillContorno(p.pill) + h1Post(p.h, '#fff') +
-    corpoPost(p.body, 660, CINZA_ESCURO) +
+    corpoPost(p.body, 790, CINZA_ESCURO) +
     // Quem manda é ter ou não um botão declarado no roteiro: um post que
     // define `btn` ganha o botão, o resto mostra chips. Antes isso dependia
     // de uma flag separada, e esquecê-la imprimia "undefined" no cartão.
-    (p.btn ? botao(p.btn) : chips(p.itens, { escuro: true, top: 820 })) +
+    (p.btn ? botao(p.btn, 1020) : chips(p.itens, { escuro: true, top: 1020 })) +
     rodapePost(p.rodape, CINZA_CLARO));
 }
 
@@ -257,7 +276,7 @@ async function render(html, w, h, saida, opts) {
 for (const p of POSTS) {
   if (!quer(p.n)) continue;
   const png = path.join(DIR, `../finn-serve/social/ig_post_${p.n}.png`);
-  await render(post(p), 1080, 1080, png, { type: 'png' });
+  await render(post(p), POST_W, POST_H, png, { type: 'png' });
   pngGerados.push(png);
   await render(story(p), 1080, 1920, path.join(DIR, `../finn-worker/social/ig_story_${p.n}.jpg`), { type: 'jpeg', quality: 92 });
   console.log(`post + story ${p.n}`);

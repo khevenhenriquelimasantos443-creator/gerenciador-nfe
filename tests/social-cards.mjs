@@ -77,7 +77,7 @@ const posts = POSTS.map((p) => path.join(RAIZ, `finn-serve/social/ig_post_${p.n}
 const stories = POSTS.map((p) => path.join(RAIZ, `finn-worker/social/ig_story_${p.n}.jpg`)).filter(fs.existsSync);
 const reels = REELS.map((r) => path.join(RAIZ, `finn-serve/social/reel${r.n}_cover.jpg`)).filter(fs.existsSync);
 
-console.log('=== cartões do feed (1080x1080) ===');
+console.log('=== cartões do feed (1080x1350, 4:5) ===');
 ok(posts.length === N, `os ${N} posts do roteiro têm arte`, posts.length);
 confere('feed', posts, { margem: 40, alturaMin: 700 });
 
