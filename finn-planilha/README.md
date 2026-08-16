@@ -42,7 +42,7 @@ Rotas no worker (`finn-serve/build.js`):
 |---|---|---|
 | `POST /sheets/token` | sessão Supabase | cria/troca o token da planilha |
 | `DELETE /sheets/token` | sessão Supabase | desconecta |
-| `GET /sheets/pull` | `X-Sheet-Token` | devolve os lançamentos do dono do token |
+| `GET /sheets/pull` | `X-Sheet-Token` | devolve lançamentos + Limites/Contas fixas/Dívidas/Racha do dono do token |
 | `POST /sheets/push` | `X-Sheet-Token` | grava lançamentos vindos da planilha |
 
 O token **não é uma sessão**: só abre estas rotas, nunca o admin, e some ao
@@ -50,5 +50,13 @@ desconectar. O `user_id` sai sempre do token, nunca do corpo da requisição.
 
 Duplicação é evitada pela coluna **ID Finn** da aba Lançamentos: linha sem id
 é enviada, linha com id é ignorada. O que vem do Finn chega já com o id.
+
+**Lançamentos** é via de mão dupla (push do que a pessoa digita na planilha,
+pull do que existe no Finn). **Limites, Contas fixas, Dívidas e Racha** são
+só pull — o app é quem manda nessas quatro; toda sincronização SOBRESCREVE o
+bloco de dados dessas abas com o que está configurado no Finn agora, pra não
+ficar com categoria/dívida desatualizada ou com o exemplo do modelo perdido
+no meio dos dados de verdade. Só as colunas de fórmula (Restante, Situação,
+Falta, Meses p/ quitar, Cada um paga) continuam calculando sozinhas.
 
 Testes: `node tests/sheets-sync.mjs`.

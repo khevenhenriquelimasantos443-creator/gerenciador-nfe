@@ -27,7 +27,10 @@ const ENV = () => ({ FINN_KV: novoKV(), SUPABASE_SERVICE_KEY: 'service-key' });
 
 // Guarda o que foi PARA o Supabase, que é onde mora o risco de vazamento.
 let ultimaChamada = null;
-function mockSupabase({ user = { id: 'u1', email: 'a@x.com' }, linhas = [], falhaRest = false } = {}) {
+function mockSupabase({
+  user = { id: 'u1', email: 'a@x.com' }, linhas = [], falhaRest = false,
+  limites = [], contasFixas = [], dividas = [], splits = [], splitParticipants = []
+} = {}) {
   global.fetch = async (url, opts) => {
     const u = String(url);
     if (u.includes('/auth/v1/user')) {
@@ -48,6 +51,15 @@ function mockSupabase({ user = { id: 'u1', email: 'a@x.com' }, linhas = [], falh
       }
       return new Response(JSON.stringify(linhas), { status: 200 });
     }
+    // As quatro tabelas de configuração (Limites, Contas fixas, Dívidas,
+    // Racha) que o pull junta com os lançamentos. Sem interceptar aqui, essas
+    // chamadas cairiam no fetch de verdade — rede real, lenta e não
+    // determinística — porque o resto do mock só conhece "transactions".
+    if (u.includes('/rest/v1/spending_limits')) return new Response(JSON.stringify(limites), { status: 200 });
+    if (u.includes('/rest/v1/fixed_accounts')) return new Response(JSON.stringify(contasFixas), { status: 200 });
+    if (u.includes('/rest/v1/debts')) return new Response(JSON.stringify(dividas), { status: 200 });
+    if (u.includes('/rest/v1/split_participants')) return new Response(JSON.stringify(splitParticipants), { status: 200 });
+    if (u.includes('/rest/v1/splits')) return new Response(JSON.stringify(splits), { status: 200 });
     return realFetch(url, opts);
   };
 }
@@ -154,6 +166,63 @@ console.log('\n=== 4. pull traz só o dono do token ===');
   ultimaChamada = null;
   await serve.fetch(req('/sheets/pull?desde=' + encodeURIComponent('2026-01-01&user_id=neq.x'), { headers: { 'X-Sheet-Token': t } }), env, ctx);
   ok(!/neq/.test(ultimaChamada.url), 'desde malformado é DESCARTADO, não repassado', ultimaChamada.url.split('?')[1].slice(0, 60));
+  global.fetch = realFetch;
+}
+
+// ══════════════════════════════════════════════════════════════════════
+console.log('\n=== 4b. pull também traz Limites, Contas fixas, Dívidas e Racha ===');
+{
+  const env = ENV();
+  mockSupabase({
+    user: { id: 'u-ana' },
+    linhas: [],
+    limites: [{ category: 'Lazer', monthly_limit: 300 }],
+    contasFixas: [{ type: 'despesa', description: 'Netflix', category: 'Lazer', value: 39.9, day_of_month: 10 }],
+    dividas: [{ name: 'Cartão', category: 'Outros', total_value: 3000, remaining_value: 2200, interest_rate: 2.5, monthly_payment: 400 }],
+    splits: [{ id: 's1', description: 'Churrasco', category: 'Lazer', total_value: 240, date: '2026-08-09' }],
+    splitParticipants: [
+      { split_id: 's1', name: 'Ana', paid: true },
+      { split_id: 's1', name: 'Bruno', paid: false },
+      { split_id: 'outro-split-que-nao-veio', name: 'Fantasma', paid: false },
+    ]
+  });
+  const t = (await (await serve.fetch(req('/sheets/token', {
+    method: 'POST', body: JSON.stringify({ access_token: 'sessao-ana' })
+  }), env, ctx)).json()).token;
+
+  const j = await (await serve.fetch(req('/sheets/pull', { headers: { 'X-Sheet-Token': t } }), env, ctx)).json();
+  ok(j.limites && j.limites.length === 1 && j.limites[0].category === 'Lazer' && j.limites[0].monthly_limit === 300,
+     'traz os limites por categoria', JSON.stringify(j.limites));
+  ok(j.contasFixas && j.contasFixas.length === 1 && j.contasFixas[0].description === 'Netflix',
+     'traz as contas fixas', JSON.stringify(j.contasFixas));
+  ok(j.dividas && j.dividas.length === 1 && j.dividas[0].name === 'Cartão' && j.dividas[0].remaining_value === 2200,
+     'traz as dívidas', JSON.stringify(j.dividas));
+  ok(j.racha && j.racha.length === 1 && j.racha[0].description === 'Churrasco',
+     'traz a racha', JSON.stringify(j.racha));
+  ok(j.racha[0].participantes.length === 2 &&
+     j.racha[0].participantes.some(p => p.name === 'Ana' && p.paid === true) &&
+     j.racha[0].participantes.some(p => p.name === 'Bruno' && p.paid === false),
+     'agrupa os participantes certos dentro do split certo, com quem já pagou', JSON.stringify(j.racha[0].participantes));
+
+  // Falha numa tabela de configuração não pode derrubar o pull inteiro: os
+  // lançamentos continuam sendo a parte essencial da sincronização.
+  const env2 = ENV();
+  global.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('/auth/v1/user')) return new Response(JSON.stringify({ id: 'u-ana' }), { status: 200 });
+    if (u.includes('/rest/v1/transactions')) {
+      return new Response(JSON.stringify([{ id: 't1', date: '2026-08-01', type: 'despesa', category: 'Lazer', description: 'x', value: 10 }]), { status: 200 });
+    }
+    if (u.includes('/rest/v1/spending_limits')) return new Response('erro', { status: 500 });
+    return new Response('[]', { status: 200 });
+  };
+  const t2 = (await (await serve.fetch(req('/sheets/token', {
+    method: 'POST', body: JSON.stringify({ access_token: 'sessao-ana' })
+  }), env2, ctx)).json()).token;
+  const r2 = await serve.fetch(req('/sheets/pull', { headers: { 'X-Sheet-Token': t2 } }), env2, ctx);
+  const j2 = await r2.json();
+  ok(r2.status === 200 && j2.total === 1, 'limites fora do ar não derruba o pull dos lançamentos', r2.status);
+  ok(Array.isArray(j2.limites) && j2.limites.length === 0, 'e devolve limites vazio nesse caso, não erro');
   global.fetch = realFetch;
 }
 

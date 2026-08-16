@@ -25,9 +25,20 @@
 var FINN_URL   = 'https://finn.dev.br';
 var ABA_LANC   = 'Lançamentos';
 var ABA_CONFIG = 'Config';
+var ABA_LIMITES = 'Limites';
+var ABA_FIXAS   = 'Contas fixas';
+var ABA_DIVIDAS = 'Dívidas';
+var ABA_RACHA   = 'Racha';
 var LINHA_INI  = 6;   // primeira linha de dados em Lançamentos
 var CEL_TOKEN  = 'C35';
 var CEL_ULTIMA = 'C36';
+// Quantas linhas o modelo pré-formata em cada aba de configuração (ver
+// gera_planilha.py). Escrever além disso não tem onde cair — as fórmulas
+// de Restante/Situação/Falta só existem até essa linha.
+var CAP_LIMITES = 20, CAP_FIXAS = 30, CAP_DIVIDAS = 20, CAP_RACHA = 30;
+// Ponte entre finnPuxar e finnSincronizar só pro aviso de truncamento — ver
+// comentário em finnPuxar.
+var _ultimaNotaConfig = '';
 // Fixo em vez de SpreadsheetApp.getActive().getSpreadsheetTimeZone(): o
 // gerador da planilha nunca define o fuso do arquivo, então cada cópia nova
 // fica com o que o Google decidir por padrão (na prática, America/Los_Angeles
@@ -45,7 +56,7 @@ var FUSO_BR = 'America/Sao_Paulo';
 // correções vieram no mesmo commit, então uma das duas conclusões tinha que
 // estar errada, e não havia como saber qual sem um número na tela. Com a
 // versão à vista, "colei o script novo?" deixa de ser suposição.
-var VERSAO = '2026-08-16.1';
+var VERSAO = '2026-08-16.2';
 
 // Colunas da aba Lançamentos (1 = A)
 var COL_DATA = 1, COL_TIPO = 2, COL_CAT = 3, COL_DESC = 4, COL_VALOR = 5,
@@ -377,12 +388,128 @@ function _recalcularMes(r) {
   return corrigidas;
 }
 
+/**
+ * As quatro funções abaixo escrevem o retrato ATUAL de Limites, Contas
+ * fixas, Dívidas e Racha — chamadas em toda sincronização, com ou sem
+ * lançamento novo. Diferente de Lançamentos (que só cresce), essas abas são
+ * configuração que a pessoa edita no app a qualquer momento — marcar parcela
+ * como paga, mudar teto de categoria — então cada sync SOBRESCREVE o bloco
+ * inteiro com o que o app tem agora, em vez de só acrescentar. É assim que
+ * "Alimentação, Transporte, Saúde" (exemplo do modelo) vira as categorias de
+ * verdade que a pessoa configurou, e uma dívida já quitada some da lista.
+ *
+ * Cada uma escreve só nas colunas de ENTRADA (as que a pessoa preenche na
+ * mão) — nunca nas colunas de fórmula (Restante, Situação, Falta, Meses p/
+ * quitar, Cada um paga), que continuam calculando sozinhas a partir do que
+ * foi escrito. Linhas além do que veio do Finn ficam em branco, o que limpa
+ * sozinho qualquer exemplo ou dado antigo que sobrou ali.
+ */
+function _escreverLimites(limites) {
+  var ws = SpreadsheetApp.getActive().getSheetByName(ABA_LIMITES);
+  if (!ws) return;
+  var linhas = [];
+  for (var i = 0; i < CAP_LIMITES; i++) {
+    var l = limites[i];
+    linhas.push(l ? [l.category || '', Number(l.monthly_limit) || 0] : ['', '']);
+  }
+  ws.getRange(LINHA_INI, 1, CAP_LIMITES, 2).setValues(linhas);
+}
+
+function _escreverContasFixas(fixas) {
+  var ws = SpreadsheetApp.getActive().getSheetByName(ABA_FIXAS);
+  if (!ws) return;
+  var linhas = [];
+  for (var i = 0; i < CAP_FIXAS; i++) {
+    var f = fixas[i];
+    linhas.push(f ? [
+      f.description || '',
+      f.type === 'receita' ? 'Receita' : 'Despesa',
+      f.category || 'Outros',
+      Number(f.value) || 0,
+      Number(f.day_of_month) || ''
+    ] : ['', '', '', '', '']);
+  }
+  ws.getRange(LINHA_INI, 1, CAP_FIXAS, 5).setValues(linhas);
+}
+
+function _escreverDividas(dividas) {
+  var ws = SpreadsheetApp.getActive().getSheetByName(ABA_DIVIDAS);
+  if (!ws) return;
+  var esq = [], dir = [];
+  for (var i = 0; i < CAP_DIVIDAS; i++) {
+    var d = dividas[i];
+    if (d) {
+      var total = Number(d.total_value) || 0;
+      var restante = Number(d.remaining_value) || 0;
+      esq.push([d.name || '', total, Math.max(0, total - restante)]);
+      dir.push([Number(d.interest_rate) || 0, Number(d.monthly_payment) || 0]);
+    } else {
+      esq.push(['', '', '']);
+      dir.push(['', '']);
+    }
+  }
+  ws.getRange(LINHA_INI, 1, CAP_DIVIDAS, 3).setValues(esq);   // A Dívida, B Valor total, C Já pago
+  ws.getRange(LINHA_INI, 5, CAP_DIVIDAS, 2).setValues(dir);   // E Juros % a.m., F Parcela mensal (pula D=Falta, fórmula)
+}
+
+function _escreverRacha(racha) {
+  var ws = SpreadsheetApp.getActive().getSheetByName(ABA_RACHA);
+  if (!ws) return;
+  var esq = [], dir = [];
+  for (var i = 0; i < CAP_RACHA; i++) {
+    var s = racha[i];
+    if (s) {
+      var participantes = s.participantes || [];
+      esq.push([new Date(s.date + 'T12:00:00'), s.description || '', Number(s.total_value) || 0, participantes.length || '']);
+      dir.push([participantes.map(function (p) { return p.name + (p.paid ? ' ✓' : ''); }).join(', ')]);
+    } else {
+      esq.push(['', '', '', '']);
+      dir.push(['']);
+    }
+  }
+  ws.getRange(LINHA_INI, 1, CAP_RACHA, 4).setValues(esq);   // A Data, B Descrição, C Valor total, D Nº de pessoas
+  ws.getRange(LINHA_INI, 6, CAP_RACHA, 1).setValues(dir);   // F Quem já pagou (pula E=Cada um paga, fórmula)
+}
+
+// Se o Finn tem mais linhas do que o modelo cabe numa aba, avisa em vez de
+// simplesmente cortar sem dizer nada — silêncio aqui pareceria "sincronizou
+// tudo" quando na verdade faltou gente na lista.
+function _notaTruncamento(nome, total, cap) {
+  return total > cap ? (' ' + nome + ': mostrando ' + cap + ' de ' + total + ' — aumente o modelo pra ver o resto.') : '';
+}
+
 /** Traz do Finn o que ainda não está na planilha (compara pelo ID Finn). */
 function finnPuxar() {
   var resp = _chamar('/sheets/pull');
   if (!resp || !resp.ok) return 0;
+
+  // Limites, Contas fixas, Dívidas e Racha são sincronizadas SEMPRE, mesmo
+  // sem lançamento novo — é exatamente o caso em que a pessoa só mudou um
+  // teto ou marcou uma parcela como paga no app, sem lançar nada.
+  var limites = resp.limites || [], contasFixas = resp.contasFixas || [],
+      dividas = resp.dividas || [], racha = resp.racha || [];
+  _escreverLimites(limites);
+  _escreverContasFixas(contasFixas);
+  _escreverDividas(dividas);
+  _escreverRacha(racha);
+  var notaConfig = _notaTruncamento('Limites', limites.length, CAP_LIMITES) +
+    _notaTruncamento('Contas fixas', contasFixas.length, CAP_FIXAS) +
+    _notaTruncamento('Dívidas', dividas.length, CAP_DIVIDAS) +
+    _notaTruncamento('Racha', racha.length, CAP_RACHA);
+  // finnSincronizar mostra o PRÓPRIO toast final depois de chamar finnPuxar,
+  // e um toast novo apaga o anterior — sem isso, um aviso de truncamento
+  // (que é acionável, não só informativo) sumiria sem ninguém ver.
+  _ultimaNotaConfig = notaConfig;
+
   var vindos = resp.lancamentos || [];
-  if (!vindos.length) { _aviso('Nada novo no Finn.'); return 0; }
+  if (!vindos.length) {
+    var r0 = _lerLinhas();
+    var reparadasSemNovas = _recalcularMes(r0);
+    _aviso('Limites, Contas fixas, Dívidas e Racha atualizados.' +
+      (reparadasSemNovas ? ' Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).' : ' Nada novo em Lançamentos.') +
+      notaConfig);
+    return 0;
+  }
 
   var r = _lerLinhas();
   // Existe dado de verdade pra escrever — os exemplos podem sair do caminho.
@@ -456,7 +583,8 @@ function finnPuxar() {
   // É barato (uma chamada por bloco contíguo) e idempotente.
   var reparadas = _recalcularMes(_lerLinhas());
   _aviso(novas.length + ' lançamento(s) trazido(s) do Finn.' +
-    (reparadas ? ' Coluna Mês corrigida em ' + reparadas + ' linha(s).' : ''));
+    (reparadas ? ' Coluna Mês corrigida em ' + reparadas + ' linha(s).' : '') +
+    notaConfig);
   return novas.length;
 }
 
@@ -481,11 +609,12 @@ function finnCorrigirMes() {
 function finnSincronizar() {
   if (!_token()) { _semToken(); return; }
   var enviados = finnEnviar() || 0;
+  _ultimaNotaConfig = '';
   var trazidos = finnPuxar() || 0;
   _marcarUltima();
   // A versão vai junto de propósito: sem ela, "colei o script novo?" só se
   // responde por dedução, e foi por isso que este bug demorou tanto.
-  _aviso('Pronto. ' + enviados + ' enviado(s), ' + trazidos + ' trazido(s). [v' + VERSAO + ']');
+  _aviso('Pronto. ' + enviados + ' enviado(s), ' + trazidos + ' trazido(s). [v' + VERSAO + ']' + _ultimaNotaConfig);
 }
 
 function finnTestar() {

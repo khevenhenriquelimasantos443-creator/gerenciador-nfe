@@ -1456,6 +1456,10 @@ async function _adminAnalytics(request, env) {
 const SHEET_TOKEN_PREFIX = 'sheettok_';
 const SHEET_USER_PREFIX = 'sheetuser_';
 const SHEET_MAX_LINHAS = 500;
+// Limites, contas fixas, dívidas e racha são configuração, não histórico —
+// ninguém tem centenas de dívidas cadastradas. O teto é só uma rede de
+// segurança contra payload gigante, não um limite pensado pra ser atingido.
+const SHEET_MAX_OUTRAS = 200;
 
 function _novoTokenPlanilha() {
   var bytes = new Uint8Array(32);
@@ -1538,7 +1542,11 @@ async function _sheetsTokenRevogar(request, env) {
   }
 }
 
-// GET /sheets/pull — devolve os lançamentos do dono do token.
+// GET /sheets/pull — devolve os lançamentos do dono do token, e junto o
+// retrato atual de Limites, Contas fixas, Dívidas e Racha — essas quatro
+// abas não têm outro jeito de saber o que existe no app: são configuração
+// que o app deixa a pessoa editar em qualquer momento (marcar parcela como
+// paga, mudar teto de categoria), não um log que só cresce como Lançamentos.
 // A planilha manda os ids que já tem, pra não rebaixar linha por linha.
 async function _sheetsPull(request, env) {
   var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
@@ -1549,27 +1557,61 @@ async function _sheetsPull(request, env) {
     if (!(await _podeSincronizarPlanilha(reg.uid, env))) {
       return new Response(JSON.stringify({ error: 'a sincronização da planilha faz parte do plano Planilha ou Pro' }), { status: 402, headers: cors });
     }
-    if (!(await _podeSincronizarPlanilha(reg.uid, env))) {
-      return new Response(JSON.stringify({ error: 'a sincronização da planilha faz parte do plano Planilha ou Pro' }), { status: 402, headers: cors });
-    }
 
     var rl = await _rateLimit(env, 'sheetpull', reg.uid, 120, 3600);
     if (!rl.ok) return _tooManyRequests(cors, rl.retryAfter, 'muitas sincronizações, tente mais tarde');
 
     var url = new URL(request.url);
     var desde = url.searchParams.get('desde') || '';
-    var filtro = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&select=id,date,type,category,description,value' +
+    var filtroTx = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&select=id,date,type,category,description,value' +
                  '&order=date.desc&limit=' + SHEET_MAX_LINHAS;
     // "desde" corta pela data do lançamento, não pelo created_at: é a data
     // que a planilha mostra, e é por ela que a pessoa raciocina.
-    if (/^\d{4}-\d{2}-\d{2}$/.test(desde)) filtro += '&date=gte.' + desde;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(desde)) filtroTx += '&date=gte.' + desde;
 
-    var r = await fetch('https://zblkznobqcztvznycyyo.supabase.co/rest/v1/transactions?' + filtro, {
-      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
+    var base = 'https://zblkznobqcztvznycyyo.supabase.co/rest/v1/';
+    var uidFiltro = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&limit=' + SHEET_MAX_OUTRAS;
+
+    var respostas = await Promise.all([
+      fetch(base + 'transactions?' + filtroTx, { headers: svcHeaders }),
+      fetch(base + 'spending_limits?' + uidFiltro + '&select=category,monthly_limit&order=category.asc', { headers: svcHeaders }),
+      fetch(base + 'fixed_accounts?' + uidFiltro + '&select=type,description,category,value,day_of_month&order=day_of_month.asc', { headers: svcHeaders }),
+      fetch(base + 'debts?' + uidFiltro + '&select=name,category,total_value,remaining_value,interest_rate,monthly_payment&order=created_at.asc', { headers: svcHeaders }),
+      fetch(base + 'splits?' + uidFiltro + '&select=id,description,category,total_value,date&order=date.desc', { headers: svcHeaders }),
+      // Sem limite próprio: participantes pertencem aos splits já limitados
+      // acima, então o teto dos splits já limita o total de participantes
+      // (na prática, poucos por split).
+      fetch(base + 'split_participants?user_id=eq.' + encodeURIComponent(reg.uid) + '&select=split_id,name,paid', { headers: svcHeaders })
+    ]);
+    var rTx = respostas[0];
+    if (!rTx.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
+    var linhas = await rTx.json();
+    // Cada uma das outras quatro é best-effort: se uma falhar, a planilha
+    // ainda sincroniza os lançamentos normalmente — melhor mostrar Limites
+    // vazio do que travar a sincronização inteira por causa de uma tabela.
+    var limites = respostas[1].ok ? await respostas[1].json() : [];
+    var contasFixas = respostas[2].ok ? await respostas[2].json() : [];
+    var dividas = respostas[3].ok ? await respostas[3].json() : [];
+    var splits = respostas[4].ok ? await respostas[4].json() : [];
+    var participantes = respostas[5].ok ? await respostas[5].json() : [];
+
+    var porSplit = {};
+    for (var i = 0; i < participantes.length; i++) {
+      var p = participantes[i];
+      (porSplit[p.split_id] = porSplit[p.split_id] || []).push({ name: p.name, paid: !!p.paid });
+    }
+    var racha = splits.map(function (s) {
+      return {
+        date: s.date, description: s.description, category: s.category,
+        total_value: s.total_value, participantes: porSplit[s.id] || []
+      };
     });
-    if (!r.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
-    var linhas = await r.json();
-    return new Response(JSON.stringify({ ok: true, total: linhas.length, lancamentos: linhas }), { status: 200, headers: cors });
+
+    return new Response(JSON.stringify({
+      ok: true, total: linhas.length, lancamentos: linhas,
+      limites: limites, contasFixas: contasFixas, dividas: dividas, racha: racha
+    }), { status: 200, headers: cors });
   } catch (e) {
     return _serverError(cors, e, 'sheets_pull');
   }
