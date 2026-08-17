@@ -2846,6 +2846,93 @@ async function _publishNextInstagramStory(env) {
   }
 }
 
+// Publica o próximo Reel. Roda no MESMO cron do story (25 min depois do
+// post) em vez de ganhar um horário próprio — a conta inteira só tem 5 slots
+// de cron trigger no plano gratuito, e os 4 que o finn-app já usa (post,
+// story, resumo semanal, contas fixas) mais o 1 do finn-worker do bot já
+// fecham a conta. Sem slot novo, o jeito é encostar no que já dispara.
+//
+// Vídeo demora mais que imagem pra Meta processar, por isso o poll aqui é
+// mais longo (até ~40s) que o do story/post (~20s). Isso não estoura o
+// limite de CPU do Worker porque a espera é por I/O (setTimeout/fetch), que
+// não conta como tempo de CPU — só tempo de parede, que o waitUntil cobre.
+async function _publishNextInstagramReel(env) {
+  if (!env.IG_ACCESS_TOKEN || !env.IG_BUSINESS_ACCOUNT_ID) {
+    return { ok: false, skipped: true, reason: 'IG_ACCESS_TOKEN ou IG_BUSINESS_ACCOUNT_ID não configurados' };
+  }
+  if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
+
+  var daFila = await _proximoDaFilaPorTipo(env, 'reels');
+  if (!daFila) return { ok: false, skipped: true, reason: 'nenhum reel na fila' };
+
+  var filaId = daFila.id;
+  var videoUrl = _socialPublicUrl(daFila.image_path);
+  var coverUrl = daFila.cover_path ? _socialPublicUrl(daFila.cover_path) : null;
+  var caption = daFila.caption || '';
+
+  var log = { tipo: 'reel', fila_id: filaId, video_url: videoUrl, started_at: new Date().toISOString() };
+  try {
+    var criarPayload = { media_type: 'REELS', video_url: videoUrl, caption: caption, access_token: env.IG_ACCESS_TOKEN };
+    if (coverUrl) criarPayload.cover_url = coverUrl;
+    var createResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(criarPayload)
+    });
+    var createBody = await createResp.json();
+    log.create_status = createResp.status;
+    log.create_response = createBody;
+    if (!createResp.ok || !createBody.id) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      await _marcaPublicado(env, filaId, { erro: 'reel: falha ao criar container' });
+      return { ok: false, step: 'media', body: createBody };
+    }
+
+    var pronto = false;
+    for (var i = 0; i < 20; i++) {
+      var st = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + createBody.id + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
+      var stBody = await st.json();
+      log.container_status = stBody.status_code || stBody;
+      if (stBody.status_code === 'FINISHED') { pronto = true; break; }
+      if (stBody.status_code === 'ERROR') break;
+      await new Promise(function (r) { setTimeout(r, 2000); });
+    }
+    if (!pronto) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      await _marcaPublicado(env, filaId, { erro: 'reel: container não ficou pronto' });
+      return { ok: false, step: 'container_not_ready', body: log.container_status };
+    }
+
+    var pubResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creation_id: createBody.id, access_token: env.IG_ACCESS_TOKEN })
+    });
+    var pubBody = await pubResp.json();
+    log.publish_status = pubResp.status;
+    log.publish_response = pubBody;
+    log.ok = !!(pubResp.ok && pubBody.id);
+    log.finished_at = new Date().toISOString();
+    await _logInstagramAttempt(env, log);
+
+    if (!log.ok) {
+      await _marcaPublicado(env, filaId, { erro: 'reel: falha ao publicar' });
+      return { ok: false, step: 'media_publish', body: pubBody };
+    }
+
+    await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(pubBody.id), erro: null });
+    return { ok: true, fila_id: filaId, media_id: pubBody.id };
+  } catch (e) {
+    log.ok = false;
+    log.error = String(e && e.message || e);
+    await _logInstagramAttempt(env, log);
+    await _marcaPublicado(env, filaId, { erro: 'reel: ' + log.error });
+    return { ok: false, error: log.error };
+  }
+}
+
 async function _logInstagramAttempt(env, log) {
   try {
     var id = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
@@ -5162,6 +5249,9 @@ h1 em{font-style:normal;color:#F97316}
           await env.FINN_KV.put('ig_story_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
         }
         await _publishNextInstagramStory(env);
+        // Reel não tem cron próprio (ver comentário em _publishNextInstagramReel)
+        // — encosta neste mesmo disparo, depois do story.
+        await _publishNextInstagramReel(env);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));

@@ -828,7 +828,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, adminIaData: null, adminIaLoading: false, adminIaError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, adminIaData: null, adminIaLoading: false, adminIaError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, conteudoCapa: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -5499,9 +5499,15 @@ function renderConteudo(){
       '<select id="conteudoKind">' +
         '<option value="feed"' + (state.conteudoKind === "feed" ? " selected" : "") + '>Post no feed (quadrado, com legenda)</option>' +
         '<option value="story"' + (state.conteudoKind === "story" ? " selected" : "") + '>Story (9:16, sem legenda)</option>' +
+        '<option value="reels"' + (state.conteudoKind === "reels" ? " selected" : "") + '>Reel (vídeo 9:16, com legenda)</option>' +
       '</select></div>' +
-    '<div class="form-row"><label>Imagem</label>' +
-      '<input type="file" id="conteudoArquivo" accept="image/png,image/jpeg,image/webp"></div>' +
+    '<div class="form-row"><label>' + (state.conteudoKind === "reels" ? "Vídeo" : "Imagem") + '</label>' +
+      '<input type="file" id="conteudoArquivo"' + (state.conteudoKind === "reels" ? ' accept="video/mp4,video/quicktime"' : ' accept="image/png,image/jpeg,image/webp"') + '></div>' +
+    (state.conteudoKind === "reels"
+      ? '<div class="form-row"><label>Capa (opcional)</label>' +
+        '<input type="file" id="conteudoCapa" accept="image/png,image/jpeg,image/webp"></div>' +
+        '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Sem capa, o Instagram escolhe um frame do próprio vídeo.</div>'
+      : '') +
     (state.conteudoKind === "story"
       ? '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Story ignora legenda — o Instagram não mostra texto de caption nesse formato.</div>'
       : '<div class="form-row"><label>Legenda</label>' +
@@ -5548,12 +5554,17 @@ function renderConteudo(){
     (naFila.length
       ? '<div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">' +
         naFila.map(function(i, idx){
+          var thumbSrc = i.kind === "reels"
+            ? (i.cover_path ? CONTEUDO_BUCKET_URL + i.cover_path : null)
+            : CONTEUDO_BUCKET_URL + i.image_path;
           return '<div class="cont-item">' +
-            '<img class="cont-thumb" src="' + escapeHtml(CONTEUDO_BUCKET_URL + i.image_path) + '" alt="" loading="lazy">' +
+            (thumbSrc
+              ? '<img class="cont-thumb" src="' + escapeHtml(thumbSrc) + '" alt="" loading="lazy">'
+              : '<div class="cont-thumb" style="display:flex;align-items:center;justify-content:center;font-size:20px">🎬</div>') +
             '<div class="cont-body">' +
               '<div class="cont-tags">' +
                 (idx === 0 ? '<span class="cont-badge prox">Próximo</span>' : '') +
-                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : "Post") + '</span>' +
+                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : "Post") + '</span>' +
               '</div>' +
               '<div class="cont-cap">' + escapeHtml(i.caption || "Story — sem legenda") + '</div>' +
               (i.erro ? '<div class="cont-erro">Última tentativa falhou: ' + escapeHtml(i.erro) + '</div>' : '') +
@@ -5569,7 +5580,9 @@ function renderConteudo(){
       '<div class="eyebrow">Já publicados · ' + publicados.length + '</div>' +
       '<div class="cont-pub">' +
         publicados.slice(0, 24).map(function(i){
-          return '<img src="' + escapeHtml(CONTEUDO_BUCKET_URL + i.image_path) + '" title="' + escapeHtml(admDataHora(i.published_at)) + '" alt="" loading="lazy">';
+          var src = i.kind === "reels" ? i.cover_path : i.image_path;
+          if(!src) return '<div title="' + escapeHtml(admDataHora(i.published_at)) + '" style="display:flex;align-items:center;justify-content:center;font-size:16px">🎬</div>';
+          return '<img src="' + escapeHtml(CONTEUDO_BUCKET_URL + src) + '" title="' + escapeHtml(admDataHora(i.published_at)) + '" alt="" loading="lazy">';
         }).join("") +
       '</div></div>';
   }
@@ -5718,47 +5731,62 @@ function reenfileirarEmbutido(){
     });
 }
 
+// Sobe um arquivo pro bucket público "social" e devolve o caminho salvo.
+// Nome único: o bucket é cacheado pra sempre (immutable), então reaproveitar
+// nome faria um arquivo novo aparecer com o conteúdo antigo.
+function _subirArquivoConteudo(arquivo, prefixo){
+  var ext = (arquivo.name.split(".").pop() || "bin").toLowerCase().replace(/[^a-z0-9]/g, "");
+  var caminho = prefixo + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + ext;
+  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+  return fetch(SUPA_URL + "/storage/v1/object/social/" + caminho, {
+    method: "POST",
+    headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": arquivo.type || "application/octet-stream" },
+    body: arquivo
+  }).then(function(r){
+    if(!r.ok) return r.text().then(function(t){ throw new Error(t || ("Erro " + r.status)); });
+    return caminho;
+  });
+}
+
 function enviarConteudo(){
   var arquivo = state.conteudoArquivo;
-  if(!arquivo){ state.conteudoErro = "Escolhe uma imagem primeiro."; render(); return; }
-  if(state.conteudoKind === "feed" && !state.conteudoLegenda.trim()){
-    state.conteudoErro = "Post de feed precisa de legenda."; render(); return;
+  var kind = state.conteudoKind;
+  if(!arquivo){ state.conteudoErro = kind === "reels" ? "Escolhe um vídeo primeiro." : "Escolhe uma imagem primeiro."; render(); return; }
+  if(kind !== "story" && !state.conteudoLegenda.trim()){
+    state.conteudoErro = "Esse tipo precisa de legenda."; render(); return;
   }
   state.conteudoEnviando = true;
   state.conteudoErro = null;
   state.conteudoMsg = null;
   render();
 
-  // Nome único: o bucket é público e cacheado pra sempre (immutable), então
-  // reaproveitar nome faria uma imagem nova aparecer com a arte antiga.
-  var ext = (arquivo.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
-  var caminho = state.conteudoKind + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + ext;
-  var token = (currentSession && currentSession.access_token) || SUPA_KEY;
+  var capa = kind === "reels" ? state.conteudoCapa : null;
 
-  fetch(SUPA_URL + "/storage/v1/object/social/" + caminho, {
-    method: "POST",
-    headers: { apikey: SUPA_KEY, Authorization: "Bearer " + token, "Content-Type": arquivo.type || "image/png" },
-    body: arquivo
-  }).then(function(r){
-    if(!r.ok) return r.text().then(function(t){ throw new Error(t || ("Erro " + r.status)); });
-    // posicao alta o bastante pra entrar no fim da fila sem colidir.
-    return db("social_posts", "POST", {
-      kind: state.conteudoKind,
-      image_path: caminho,
-      caption: state.conteudoKind === "story" ? null : state.conteudoLegenda.trim(),
-      posicao: Math.floor(Date.now() / 1000)
+  _subirArquivoConteudo(arquivo, kind)
+    .then(function(caminho){
+      return (capa ? _subirArquivoConteudo(capa, "reelscapa") : Promise.resolve(null))
+        .then(function(capaPath){
+          return db("social_posts", "POST", {
+            kind: kind,
+            image_path: caminho,
+            cover_path: capaPath,
+            caption: kind === "story" ? null : state.conteudoLegenda.trim(),
+            posicao: Math.floor(Date.now() / 1000)
+          });
+        });
+    })
+    .then(function(){
+      state.conteudoEnviando = false;
+      state.conteudoLegenda = "";
+      state.conteudoArquivo = null;
+      state.conteudoCapa = null;
+      state.conteudoMsg = "Adicionado à fila.";
+      loadConteudo();
+    }).catch(function(err){
+      state.conteudoEnviando = false;
+      state.conteudoErro = "Não consegui enviar (" + ((err && err.message) || "erro") + ").";
+      render();
     });
-  }).then(function(){
-    state.conteudoEnviando = false;
-    state.conteudoLegenda = "";
-    state.conteudoArquivo = null;
-    state.conteudoMsg = "Adicionado à fila.";
-    loadConteudo();
-  }).catch(function(err){
-    state.conteudoEnviando = false;
-    state.conteudoErro = "Não consegui enviar (" + ((err && err.message) || "erro") + ").";
-    render();
-  });
 }
 
 function excluirConteudo(id){
@@ -8608,6 +8636,9 @@ function bindContentEvents(){
     if((b = document.getElementById("conteudoArquivo"))) b.addEventListener("change", function(e){
       state.conteudoArquivo = e.target.files && e.target.files[0];
       state.conteudoErro = null;
+    });
+    if((b = document.getElementById("conteudoCapa"))) b.addEventListener("change", function(e){
+      state.conteudoCapa = e.target.files && e.target.files[0];
     });
     if((b = document.getElementById("conteudoLegenda"))) b.addEventListener("input", function(e){
       state.conteudoLegenda = e.target.value;
