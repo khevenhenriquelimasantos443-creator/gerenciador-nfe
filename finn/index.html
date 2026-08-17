@@ -828,7 +828,7 @@ function db(table, method, body, query, _retried){
   });
 }
 
-var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, adminIaData: null, adminIaLoading: false, adminIaError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, conteudoCapa: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
+var state = { tab: "dashboard", txs: [], limits: [], goals: [], fixed: [], goalMovements: [], splits: [], splitParticipants: [], splitError: null, customCategories: [], cards: [], cardsError: null, debts: [], debtsError: null, debtExtraPayment: "", debtSim: null, expandedGoal: null, expandedAnalysisCat: null, expandedAnalysisCard: null, loading: true, loadError: null, filterMonth: thisMonth(), filterCategory: "all", filterText: "", analysisPeriod: "month", aiLoading: false, aiResult: null, aiError: null, importPreview: [], importParsing: false, importError: null, importDone: null, importAviso: null, configMsg: null, pushStatus: null, bulkCatPrompt: null, priceAlert: null, receiptUploadingId: null, receiptMsg: null, txSaveError: null, limitSaveError: null, goalSaveError: null, fixedSaveError: null, debtSaveError: null, plan: "free", planLoaded: false, checkoutError: null, checkoutLoading: null, adminSubs: null, adminLoading: false, adminError: null, adminUnlocked: false, adminPassword: "", adminLoginLoading: false, adminLoginError: null, telegramLinkCode: null, telegramLinking: false, telegramLinkMsg: null, waLinkCode: null, waLinking: false, waLinkMsg: null, waLinkVerified: false, analyticsData: null, analyticsLoading: false, analyticsError: null, intrusions: null, intrusionsLoading: false, intrusionsError: null, igStatus: null, igStatusLoading: false, igPublishLoading: false, igPublishResult: null, igMetrics: null, igMetricsLoading: false, igMetricsError: null, screenerData: null, screenerLoading: false, screenerError: null, screenerProgress: null, screenerTokenMissing: false, screenerSort: "score", screenerSortDir: "desc", screenerExpandedTicker: null, betaAdminData: null, betaAdminLoading: false, betaAdminError: null, adminIaData: null, adminIaLoading: false, adminIaError: null, metaAdsData: null, metaAdsLoading: false, metaAdsError: null, dashboardMonth: null, expandedConquistas: false, adminMode: false, conteudoLista: null, conteudoLoading: false, conteudoErro: null, conteudoMsg: null, conteudoEnviando: false, conteudoKind: "feed", conteudoLegenda: "", conteudoArquivo: null, conteudoCapa: null, storyTesteLoading: false, storyTesteResultado: null, templateStatusLoading: false, templateStatusResultado: null, templateTestePhone: "", templateTesteLoading: false, templateTesteResultado: null, entregasLoading: false, entregasResultado: null, planilhaToken: null, planilhaLoading: false, planilhaMsg: null, planilhaErro: null, aprenderLicao: null, planilhaComprou: false, planilhaPreco: 36.90, planilhaComprando: false, planilhaCopia: null, planilhaLink: null, planilhaLinkRascunho: "", planilhaLinkSalvando: false, planilhaLinkMsg: null, embutidos: null, reenfileirando: false, reenfileirarMsg: null };
 
 // Atalho da tela inicial ("Novo lançamento", ver manifest.json) abre com
 // ?atalho=adicionar — cai direto na aba de lançar, sem passar pelo Dashboard.
@@ -4208,6 +4208,7 @@ function renderConfig(){
 
   html += renderAdminCard();
   html += renderInstagramAdminCard();
+  html += renderInstagramMetricsCard();
 
   return html;
 }
@@ -6380,6 +6381,93 @@ function renderInstagramAdminCard(){
   }
   html += '</div>';
   return html;
+}
+
+// Desempenho REAL (alcance/curtidas/comentários/plays), puxado direto da API
+// do Instagram — diferente do card acima, que só mostra se a publicação em
+// si deu certo ou falhou. É o que responde "esse trabalho todo está dando
+// retorno?".
+function renderInstagramMetricsCard(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+  var m = state.igMetrics;
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Métricas do Instagram</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Alcance, curtidas, comentários e salvamentos de cada post/reel publicado — puxado ao vivo da API. Stories só mostram dado enquanto ativos (24h); depois disso a Meta não devolve mais nada.</div>';
+
+  html += '<button type="button" class="btn-ghost" id="btnLoadInstagramMetrics" style="width:100%"' + (state.igMetricsLoading ? " disabled" : "") + '>' +
+    (state.igMetricsLoading ? "Carregando…" : (m ? "Atualizar" : "Carregar métricas")) + '</button>';
+
+  if(state.igMetricsError){
+    html += '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.igMetricsError) + '</div>';
+  }
+
+  if(m && m.itens){
+    var comDados = m.itens.filter(function(i){ return i.metricas; });
+    var comErro = m.itens.filter(function(i){ return i.erro; });
+    var totalAlcance = comDados.reduce(function(s,i){ return s + (i.metricas.reach || 0); }, 0);
+    var totalCurtidas = comDados.reduce(function(s,i){ return s + (i.metricas.likes || 0); }, 0);
+
+    html += '<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">' +
+      '<div class="total-box" style="flex:1;min-width:100px"><div style="font-size:11px;color:var(--fm)">ALCANCE TOTAL</div><div style="font-size:20px;font-weight:700">' + totalAlcance.toLocaleString("pt-BR") + '</div></div>' +
+      '<div class="total-box" style="flex:1;min-width:100px"><div style="font-size:11px;color:var(--fm)">CURTIDAS TOTAL</div><div style="font-size:20px;font-weight:700">' + totalCurtidas.toLocaleString("pt-BR") + '</div></div>' +
+      '<div class="total-box" style="flex:1;min-width:100px"><div style="font-size:11px;color:var(--fm)">COM DADOS</div><div style="font-size:20px;font-weight:700">' + comDados.length + '/' + m.itens.length + '</div></div>' +
+    '</div>';
+
+    if(comDados.length){
+      html += '<div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">' +
+        comDados.map(function(i){
+          var tipoLabel = i.tipo === 'REELS' ? 'Reel' : i.tipo === 'STORY' ? 'Story' : 'Post';
+          var partes = [];
+          if(i.metricas.reach !== undefined) partes.push(i.metricas.reach.toLocaleString("pt-BR") + ' alcance');
+          if(i.metricas.likes !== undefined) partes.push(i.metricas.likes + ' curtidas');
+          if(i.metricas.comments !== undefined) partes.push(i.metricas.comments + ' comentários');
+          if(i.metricas.saved !== undefined) partes.push(i.metricas.saved + ' salvos');
+          if(i.metricas.plays !== undefined) partes.push(i.metricas.plays.toLocaleString("pt-BR") + ' plays');
+          if(i.metricas.replies !== undefined) partes.push(i.metricas.replies + ' respostas');
+          return '<div class="tx-item" style="flex-wrap:wrap">' +
+            '<div class="tx-info" style="min-width:200px">' +
+              '<div class="tx-desc">' + tipoLabel + (i.caption ? ' — ' + escapeHtml(i.caption) : '') + '</div>' +
+              '<div class="tx-meta">' + (i.timestamp ? new Date(i.timestamp).toLocaleDateString("pt-BR") + ' · ' : '') + partes.join(' · ') + '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+    }
+
+    if(comErro.length){
+      html += '<div style="margin-top:14px">' +
+        '<div style="font-size:11px;color:var(--fm);margin-bottom:6px">SEM DADOS (' + comErro.length + ')</div>' +
+        comErro.map(function(i){
+          return '<div style="font-size:11.5px;color:var(--fm);margin-bottom:3px">' + (i.tipo || i.id) + ': ' + escapeHtml(i.erro) + '</div>';
+        }).join('') +
+      '</div>';
+    }
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function loadInstagramMetrics(){
+  state.igMetricsLoading = true;
+  state.igMetricsError = null;
+  render();
+  fetch("/admin/instagram-metrics", { headers: adminHeaders() })
+    .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.igMetricsLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.igMetrics = res.body;
+      } else {
+        state.igMetricsError = (res.body && res.body.error) || "Não consegui carregar as métricas.";
+      }
+      render();
+    })
+    .catch(function(){
+      state.igMetricsLoading = false;
+      state.igMetricsError = "Falha de conexão.";
+      render();
+    });
 }
 
 // Credenciais de admin vão em header, nunca na URL: query string entra no log
@@ -8588,6 +8676,8 @@ function bindContentEvents(){
         });
         var btnLoadInstagramStatus = document.getElementById("btnLoadInstagramStatus");
         if(btnLoadInstagramStatus) btnLoadInstagramStatus.addEventListener("click", loadInstagramStatus);
+        var btnLoadInstagramMetrics = document.getElementById("btnLoadInstagramMetrics");
+        if(btnLoadInstagramMetrics) btnLoadInstagramMetrics.addEventListener("click", loadInstagramMetrics);
         var btnTestInstagramPublish = document.getElementById("btnTestInstagramPublish");
         if(btnTestInstagramPublish) btnTestInstagramPublish.addEventListener("click", testInstagramPublish);
       }

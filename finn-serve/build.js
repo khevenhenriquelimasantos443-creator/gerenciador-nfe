@@ -2940,6 +2940,89 @@ async function _logInstagramAttempt(env, log) {
   } catch (e) { /* log é best-effort, nunca deve derrubar a publicação */ }
 }
 
+// Busca alcance/curtidas/etc de UMA mídia já publicada, direto na API do
+// Instagram. Nunca lança — devolve { erro } quando a Meta recusa (comum em
+// stories: a métrica só existe enquanto o story está ativo, 24h; passado
+// isso a chamada falha e não tem jeito de recuperar).
+async function _igMediaInsights(mediaId, accessToken) {
+  var infoR = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + mediaId + '?fields=media_type,media_product_type,timestamp,permalink,caption&access_token=' + encodeURIComponent(accessToken));
+  var info = await infoR.json();
+  if (!infoR.ok) return { id: mediaId, erro: (info && info.error && info.error.message) || 'falha ao buscar a mídia' };
+
+  var tipo = info.media_product_type || 'FEED';
+  // Conjunto conservador por tipo — a Meta recusa a chamada INTEIRA se uma
+  // métrica não existir pra aquele media_product_type/versão da API.
+  var metricas = tipo === 'REELS' ? 'reach,likes,comments,saved,shares,plays,total_interactions'
+    : tipo === 'STORY' ? 'reach,replies'
+    : 'reach,likes,comments,saved,shares,total_interactions';
+
+  var insR = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + mediaId + '/insights?metric=' + metricas + '&access_token=' + encodeURIComponent(accessToken));
+  var insBody = await insR.json();
+  var base = { id: mediaId, tipo: tipo, timestamp: info.timestamp, permalink: info.permalink, caption: (info.caption || '').slice(0, 90) };
+  if (!insR.ok) {
+    base.erro = (insBody && insBody.error && insBody.error.message) || 'sem métricas (story expirado?)';
+    return base;
+  }
+  var valores = {};
+  (insBody.data || []).forEach(function (m) { valores[m.name] = (m.values && m.values[0] && m.values[0].value) || 0; });
+  base.metricas = valores;
+  return base;
+}
+
+// GET /admin/instagram-metrics — desempenho REAL (alcance, curtidas,
+// comentários, salvamentos, plays de reel), puxado direto da API do
+// Instagram por mídia publicada. Diferente de /admin/instagram-status, que
+// só guarda log técnico de sucesso/falha de publicação — isso aqui é o que
+// diz se o conteúdo está dando retorno.
+//
+// Duas fontes de ig_media_id: (1) itens publicados pela fila do Supabase,
+// que já gravam o id certinho; (2) a campanha embutida, que não tem linha no
+// Supabase — o id mora só no log do KV (ig_publish_log_*), best-effort e com
+// TTL de 90 dias.
+async function _adminInstagramMetrics(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.IG_ACCESS_TOKEN) return new Response(JSON.stringify({ error: 'IG_ACCESS_TOKEN não configurado' }), { status: 500, headers: cors });
+
+    var idsUnicos = {};
+
+    if (env.SUPABASE_SERVICE_KEY) {
+      var filaR = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=not.is.null&ig_media_id=not.is.null&select=ig_media_id&order=published_at.desc&limit=25', {
+        headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+      });
+      if (filaR.ok) (await filaR.json()).forEach(function (i) { idsUnicos[i.ig_media_id] = true; });
+    }
+
+    if (env.FINN_KV) {
+      var keys = [], cursor;
+      do {
+        var page = await env.FINN_KV.list({ prefix: 'ig_publish_log_', cursor: cursor });
+        keys = keys.concat(page.keys);
+        cursor = page.list_complete ? undefined : page.cursor;
+      } while (cursor);
+      keys.sort(function (a, b) { return b.name.localeCompare(a.name); });
+      var logs = (await Promise.all(keys.slice(0, 25).map(function (k) { return env.FINN_KV.get(k.name); })))
+        .filter(Boolean).map(function (raw) { try { return JSON.parse(raw); } catch (e) { return null; } }).filter(Boolean);
+      logs.forEach(function (l) {
+        if (l.ok && l.origem === 'embutido' && l.publish_response && l.publish_response.id) idsUnicos[l.publish_response.id] = true;
+      });
+    }
+
+    var todosIds = Object.keys(idsUnicos).slice(0, 30);
+    var resultados = await Promise.all(todosIds.map(function (id) { return _igMediaInsights(id, env.IG_ACCESS_TOKEN); }));
+    // Mais recente primeiro — quem não tem timestamp (erro logo na 1ª chamada) vai pro fim.
+    resultados.sort(function (a, b) { return (b.timestamp || '').localeCompare(a.timestamp || ''); });
+
+    return new Response(JSON.stringify({ ok: true, total: resultados.length, itens: resultados }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminInstagramMetrics');
+  }
+}
+
 // GET /admin/instagram-status — credenciais em header (Authorization:
 // Bearer <access_token> + X-Admin-Password: <senha>). Mostra
 // quantos posts já foram (ou faltam) publicar, e o histórico de tentativas.
@@ -5088,6 +5171,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/instagram-status' && request.method === 'GET') {
       return _adminInstagramStatus(request, env);
+    }
+    if (url.pathname === '/admin/instagram-metrics' && request.method === 'GET') {
+      return _adminInstagramMetrics(request, env);
     }
     if (url.pathname === '/admin/instagram-embutidos' && request.method === 'GET') {
       return _adminInstagramEmbutidos(request, env);
