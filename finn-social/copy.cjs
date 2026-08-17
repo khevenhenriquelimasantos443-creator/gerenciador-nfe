@@ -248,7 +248,7 @@ const POSTS = [
   // ── Reposição: entram no lugar dos que saíram do feed por texto errado. ──
   // Assuntos que a campanha original não cobria, todos conferidos no código
   // antes de virar frase: as contagens do Aprender saem de APRENDER_TRILHAS
-  // (10 trilhas, 38 lições, 3 áreas x 3 níveis), a ordem de quitação existe
+  // (10 trilhas, 40 lições, 3 áreas x 3 níveis), a ordem de quitação existe
   // mesmo (avalanche e snowball, ver simularDivida) e a previsão de data da
   // meta está no guia. Nada aqui promete o que o app não faz.
   {
@@ -256,9 +256,9 @@ const POSTS = [
     h: 'Ninguém ensinou. |O Finn ensina.|',
     body: 'Trilhas de finanças, investimentos e reservas — do básico ao avançado, dentro do app, sem pagar nada.',
     btn: 'Link na bio → finn.dev.br',
-    rodape: '38 lições em 10 trilhas, liberadas pra todo mundo',
+    rodape: '40 lições em 10 trilhas, liberadas pra todo mundo',
     emoji: '📚',
-    legenda: 'A maior parte dos brasileiros nunca teve uma aula sobre dinheiro. Eu sou um deles — e isso me incomoda.\n\nPor isso a aba Aprender é de graça pra todo mundo, em qualquer plano: 3 áreas (finanças, investimentos e reservas), 3 níveis e 38 lições em português claro.\n\nNão é indicação de investimento. É explicação, pra você decidir sozinho.',
+    legenda: 'A maior parte dos brasileiros nunca teve uma aula sobre dinheiro. Eu sou um deles — e isso me incomoda.\n\nPor isso a aba Aprender é de graça pra todo mundo, em qualquer plano: 3 áreas (finanças, investimentos e reservas), 3 níveis e 40 lições em português claro.\n\nNão é indicação de investimento. É explicação, pra você decidir sozinho.',
     tags: '#educacaofinanceira #financaspessoais #investimentos #appfinanceiro',
   },
   {
