@@ -559,12 +559,15 @@ body.finn-dark .btn-google:hover{background:#1E293B}
       <div class="nav-menu-bottom">
         <a href="/guia" target="_blank" rel="noopener" class="nav-menu-action" id="btnGuiaNav" style="text-decoration:none">Guia de uso</a>
         <button type="button" class="nav-menu-action" id="btnAdminHomeNav" style="display:none">Visão geral</button>
+        <button type="button" class="nav-menu-action" id="btnAdminAssinaturasNav" style="display:none">Assinaturas</button>
+        <button type="button" class="nav-menu-action" id="btnConteudoNav" style="display:none">Conteúdo</button>
+        <button type="button" class="nav-menu-action" id="btnAdminInstagramNav" style="display:none">Instagram</button>
+        <button type="button" class="nav-menu-action" id="btnAdminWhatsAppNav" style="display:none">WhatsApp</button>
         <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
         <button type="button" class="nav-menu-action" id="btnAdminIaNav" style="display:none">Uso de IA</button>
+        <button type="button" class="nav-menu-action" id="btnMetaAdsNav" style="display:none">Anúncios</button>
         <button type="button" class="nav-menu-action" id="btnScreenerNav" style="display:none">Screener de ações</button>
         <button type="button" class="nav-menu-action" id="btnBetaAdminNav" style="display:none">Questionário do beta</button>
-        <button type="button" class="nav-menu-action" id="btnMetaAdsNav" style="display:none">Anúncios</button>
-        <button type="button" class="nav-menu-action" id="btnConteudoNav" style="display:none">Conteúdo</button>
         <button type="button" class="nav-menu-action" id="btnToggleAdminMode" style="display:none">Voltar pro Finn normal</button>
         <button type="button" class="nav-menu-action" id="btnConfigNav">Configurações</button>
         <button type="button" class="nav-menu-action" id="btnLogoutNav">Sair</button>
@@ -4207,8 +4210,6 @@ function renderConfig(){
   '</div>';
 
   html += renderAdminCard();
-  html += renderInstagramAdminCard();
-  html += renderInstagramMetricsCard();
 
   return html;
 }
@@ -5886,11 +5887,31 @@ function renderAdminHome(){
     '<div style="font-size:11.5px;color:var(--fm);margin-top:10px">Salvar aqui não compartilha a planilha. No Google Sheets, <b>Compartilhar → Qualquer pessoa com o link → Leitor</b> — sem isso o comprador leva "acesso negado".</div>' +
   '</div>';
 
-  // Situação do Message Template do resumo diário. A Meta não avisa a
-  // aprovação em lugar nenhum que dê pra checar de relance — fica escondida
-  // no WhatsApp Manager. Aqui vira um clique, e a resposta crua vem junto
-  // porque o motivo de uma rejeição é justamente o que a Meta não resume.
   html += '<div class="card">' +
+    '<div class="eyebrow">Ir para</div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px">' +
+      '<button type="button" class="btn-ghost" id="btnGoAssinaturas">Assinaturas</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoConteudo">Conteúdo</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoInstagram">Instagram</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoWhatsApp">WhatsApp</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoIaUsage">Uso de IA</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoMetaAds">Anúncios</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoScreener">Screener de ações</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoBetaAdmin">Questionário do beta</button>' +
+    '</div>' +
+  '</div>';
+
+  return html;
+}
+
+// Situação do Message Template do resumo diário, teste de envio e status de
+// entrega. A Meta não avisa a aprovação em lugar nenhum que dê pra checar de
+// relance — fica escondida no WhatsApp Manager. Aqui vira um clique, e a
+// resposta crua vem junto porque o motivo de uma rejeição é justamente o que
+// a Meta não resume.
+function renderAdminWhatsApp(){
+  if(!adminModeAtivo()) return "";
+  var html = '<div class="card">' +
     '<div class="eyebrow">Diagnóstico do WhatsApp</div>' +
     '<div class="ai-error" style="margin-bottom:12px;font-size:12.5px">O <b>resumo automático das 22h está desligado no WhatsApp</b>. Mensagem que o bot inicia é cobrada pela Meta por conversa, e a conta está sem forma de pagamento válida (erro 131042). Hoje o resumo sai só pelo Telegram — o bot do WhatsApp continua respondendo normal quem escrever primeiro. Pra religar: acerte o faturamento no Business Manager e vire <b>RESUMO_DIARIO_WHATSAPP_ATIVO</b> pra <b>true</b> no worker.</div>' +
     '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">Abaixo, as ferramentas de diagnóstico continuam valendo. Esta consulta na Meta diz se o template <b>resumo_diario_finn</b> segue aprovado.</div>' +
@@ -5926,18 +5947,6 @@ function renderAdminHome(){
         : '') +
     '</div>' +
   '</div>';
-
-  html += '<div class="card">' +
-    '<div class="eyebrow">Ir para</div>' +
-    '<div style="display:flex;flex-direction:column;gap:8px">' +
-      '<button type="button" class="btn-ghost" id="btnGoIaUsage">Uso de IA</button>' +
-      '<button type="button" class="btn-ghost" id="btnGoBetaAdmin">Questionário do beta</button>' +
-      '<button type="button" class="btn-ghost" id="btnGoMetaAds">Anúncios</button>' +
-      '<button type="button" class="btn-ghost" id="btnGoConteudo">Conteúdo do Instagram</button>' +
-      '<button type="button" class="btn-ghost" id="btnGoScreener">Screener de ações</button>' +
-    '</div>' +
-  '</div>';
-
   return html;
 }
 
@@ -6305,11 +6314,22 @@ function renderAdminCard(){
     '</div>';
   }
 
-  var html = '<div class="card">' +
+  // Desbloqueada, o resto da gestão mora nas abas de admin próprias (menu).
+  return '<div class="card">' +
     '<div class="eyebrow">Admin — conta master</div>' +
-    '<button type="button" class="btn-ghost" id="btnAdminLoad" style="width:100%">' +
-      (state.adminLoading ? "Carregando…" : "Carregar assinaturas") +
-    '</button>';
+    '<div style="font-size:12.5px;color:var(--fm)">Desbloqueada. A gestão do produto (assinaturas, conteúdo, Instagram, analytics) mora nas abas de admin no menu.</div>' +
+  '</div>';
+}
+
+function renderAdminAssinaturas(){
+  if(!adminModeAtivo()) return "";
+  var html = '<div class="card">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">' +
+      '<div class="eyebrow" style="margin:0">Assinaturas</div>' +
+      '<button type="button" class="btn-ghost btn-inline" id="btnAdminLoad">' +
+        (state.adminLoading ? "Carregando…" : "Atualizar") +
+      '</button>' +
+    '</div>';
   if(state.adminError) html += '<div class="ai-error" style="margin-top:10px">' + escapeHtml(state.adminError) + '</div>';
   if(state.adminSubs && state.adminSubs.length){
     html += '<div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">';
@@ -6331,9 +6351,16 @@ function renderAdminCard(){
     html += '</div>';
   } else if(state.adminSubs){
     html += '<div style="font-size:13px;color:var(--fm);margin-top:10px">Ninguém tem assinatura registrada ainda.</div>';
+  } else if(!state.adminLoading){
+    html += '<div style="font-size:13px;color:var(--fm);margin-top:10px">Carregando…</div>';
   }
   html += '</div>';
   return html;
+}
+
+function renderAdminInstagram(){
+  if(!adminModeAtivo()) return "";
+  return renderInstagramAdminCard() + renderInstagramMetricsCard();
 }
 
 /* ── Campanha do Instagram (só a conta master, admin desbloqueado) ── */
@@ -6435,12 +6462,7 @@ function renderInstagramMetricsCard(){
     }
 
     if(comErro.length){
-      html += '<div style="margin-top:14px">' +
-        '<div style="font-size:11px;color:var(--fm);margin-bottom:6px">SEM DADOS (' + comErro.length + ')</div>' +
-        comErro.map(function(i){
-          return '<div style="font-size:11.5px;color:var(--fm);margin-bottom:3px">' + (i.tipo || i.id) + ': ' + escapeHtml(i.erro) + '</div>';
-        }).join('') +
-      '</div>';
+      html += '<div style="font-size:11px;color:var(--fm);margin-top:14px">' + comErro.length + ' sem dados (story expirado ou fora do período que a API guarda).</div>';
     }
   }
 
@@ -8212,7 +8234,7 @@ function render(){
   });
   // As telas de gestão só aparecem no modo admin (antes bastava estar
   // desbloqueado, e elas ficavam penduradas no menu normal).
-  ["btnAdminHomeNav","btnAdminAnalyticsNav","btnAdminIaNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
+  ["btnAdminHomeNav","btnAdminAssinaturasNav","btnAdminInstagramNav","btnAdminWhatsAppNav","btnAdminAnalyticsNav","btnAdminIaNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
     var b = document.getElementById(id);
     if(b) b.style.display = emAdmin ? "" : "none";
   });
@@ -8257,7 +8279,10 @@ function render(){
   else if(state.tab === "ia") content.innerHTML = renderIA();
   else if(state.tab === "aprender") content.innerHTML = renderAprender();
   else if(state.tab === "adminHome") content.innerHTML = renderAdminHome();
+  else if(state.tab === "adminAssinaturas") content.innerHTML = renderAdminAssinaturas();
   else if(state.tab === "conteudo") content.innerHTML = renderConteudo();
+  else if(state.tab === "adminInstagram") content.innerHTML = renderAdminInstagram();
+  else if(state.tab === "adminWhatsApp") content.innerHTML = renderAdminWhatsApp();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else if(state.tab === "adminIa") content.innerHTML = renderAdminIa();
   else if(state.tab === "screener") content.innerHTML = renderScreener();
@@ -8656,32 +8681,33 @@ function bindContentEvents(){
         render();
       }
     });
-    if(isMasterUser()){
-      if(!state.adminUnlocked){
-        var btnAdminUnlock = document.getElementById("btnAdminUnlock");
-        if(btnAdminUnlock) btnAdminUnlock.addEventListener("click", unlockAdmin);
-        var adminPasswordInput = document.getElementById("adminPasswordInput");
-        if(adminPasswordInput) adminPasswordInput.addEventListener("keydown", function(e){
-          if(e.key === "Enter") unlockAdmin();
-        });
-      } else {
-        var btnAdminLoad = document.getElementById("btnAdminLoad");
-        if(btnAdminLoad) btnAdminLoad.addEventListener("click", loadAdminSubscriptions);
-        document.querySelectorAll(".admin-plan-save").forEach(function(btn){
-          btn.addEventListener("click", function(){
-            var email = btn.dataset.adminEmail;
-            var select = document.querySelector('.admin-plan-select[data-admin-email="' + CSS.escape(email) + '"]');
-            if(select) setAdminPlan(email, select.value);
-          });
-        });
-        var btnLoadInstagramStatus = document.getElementById("btnLoadInstagramStatus");
-        if(btnLoadInstagramStatus) btnLoadInstagramStatus.addEventListener("click", loadInstagramStatus);
-        var btnLoadInstagramMetrics = document.getElementById("btnLoadInstagramMetrics");
-        if(btnLoadInstagramMetrics) btnLoadInstagramMetrics.addEventListener("click", loadInstagramMetrics);
-        var btnTestInstagramPublish = document.getElementById("btnTestInstagramPublish");
-        if(btnTestInstagramPublish) btnTestInstagramPublish.addEventListener("click", testInstagramPublish);
-      }
+    if(isMasterUser() && !state.adminUnlocked){
+      var btnAdminUnlock = document.getElementById("btnAdminUnlock");
+      if(btnAdminUnlock) btnAdminUnlock.addEventListener("click", unlockAdmin);
+      var adminPasswordInput = document.getElementById("adminPasswordInput");
+      if(adminPasswordInput) adminPasswordInput.addEventListener("keydown", function(e){
+        if(e.key === "Enter") unlockAdmin();
+      });
     }
+  }
+  if(state.tab === "adminAssinaturas"){
+    var btnAdminLoad = document.getElementById("btnAdminLoad");
+    if(btnAdminLoad) btnAdminLoad.addEventListener("click", loadAdminSubscriptions);
+    document.querySelectorAll(".admin-plan-save").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var email = btn.dataset.adminEmail;
+        var select = document.querySelector('.admin-plan-select[data-admin-email="' + CSS.escape(email) + '"]');
+        if(select) setAdminPlan(email, select.value);
+      });
+    });
+  }
+  if(state.tab === "adminInstagram"){
+    var btnLoadInstagramStatus = document.getElementById("btnLoadInstagramStatus");
+    if(btnLoadInstagramStatus) btnLoadInstagramStatus.addEventListener("click", loadInstagramStatus);
+    var btnLoadInstagramMetrics = document.getElementById("btnLoadInstagramMetrics");
+    if(btnLoadInstagramMetrics) btnLoadInstagramMetrics.addEventListener("click", loadInstagramMetrics);
+    var btnTestInstagramPublish = document.getElementById("btnTestInstagramPublish");
+    if(btnTestInstagramPublish) btnTestInstagramPublish.addEventListener("click", testInstagramPublish);
   }
   if(state.tab === "adminHome"){
     var irPara = function(aba){ return function(){ state.tab = aba; render(); }; };
@@ -8701,11 +8727,23 @@ function bindContentEvents(){
       state.tab = "conteudo"; render();
       if(!state.conteudoLista) loadConteudo();
     });
+    if((b = document.getElementById("btnGoAssinaturas"))) b.addEventListener("click", function(){
+      state.tab = "adminAssinaturas"; render();
+      if(!state.adminSubs && !state.adminLoading) loadAdminSubscriptions();
+    });
+    if((b = document.getElementById("btnGoInstagram"))) b.addEventListener("click", function(){
+      state.tab = "adminInstagram"; render();
+      if(!state.igStatus && !state.igStatusLoading) loadInstagramStatus();
+    });
+    if((b = document.getElementById("btnGoWhatsApp"))) b.addEventListener("click", irPara("adminWhatsApp"));
     if((b = document.getElementById("btnAdminHomeRefresh"))) b.addEventListener("click", loadAdminAnalytics);
     if((b = document.getElementById("btnAdminHomeRetry"))) b.addEventListener("click", loadAdminAnalytics);
     if((b = document.getElementById("btnLoadIntrusionsHome"))) b.addEventListener("click", loadIntrusions);
     if((b = document.getElementById("btnSalvarPlanilhaLink"))) b.addEventListener("click", salvarPlanilhaLink);
     if((b = document.getElementById("btnExportIntrusionsHome"))) b.addEventListener("click", exportarIntrusoesCSV);
+  }
+  if(state.tab === "adminWhatsApp"){
+    var b;
     if((b = document.getElementById("btnTemplateStatus"))) b.addEventListener("click", verTemplateStatus);
     if((b = document.getElementById("btnTemplateTeste"))) b.addEventListener("click", enviarTemplateTeste);
     if((b = document.getElementById("btnEntregas"))) b.addEventListener("click", verEntregas);
@@ -9540,6 +9578,23 @@ document.getElementById("btnAdminHomeNav").addEventListener("click", function(){
   // A visão geral vive dos mesmos dados do painel de uso — só busca se ainda
   // não tiver nada em mãos, pra não refazer a consulta a cada visita.
   if(!state.analyticsData && !state.analyticsLoading) loadAdminAnalytics();
+});
+document.getElementById("btnAdminAssinaturasNav").addEventListener("click", function(){
+  state.tab = "adminAssinaturas";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  if(!state.adminSubs && !state.adminLoading) loadAdminSubscriptions();
+});
+document.getElementById("btnAdminInstagramNav").addEventListener("click", function(){
+  state.tab = "adminInstagram";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  if(!state.igStatus && !state.igStatusLoading) loadInstagramStatus();
+});
+document.getElementById("btnAdminWhatsAppNav").addEventListener("click", function(){
+  state.tab = "adminWhatsApp";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
 });
 document.getElementById("btnToggleAdminMode").addEventListener("click", function(){
   var entrando = !state.adminMode;
