@@ -1770,12 +1770,15 @@ async function _sheetsPull(request, env) {
       fetch(base + 'spending_limits?' + uidFiltro + '&select=category,monthly_limit&order=category.asc', { headers: svcHeaders }),
       fetch(base + 'fixed_accounts?' + uidFiltro + '&select=type,description,category,value,day_of_month&order=day_of_month.asc', { headers: svcHeaders }),
       fetch(base + 'debts?' + uidFiltro + '&select=name,category,total_value,remaining_value,interest_rate,monthly_payment&order=created_at.asc', { headers: svcHeaders }),
+      fetch(base + 'goals?' + uidFiltro + '&select=name,target,saved,deadline&order=created_at.asc', { headers: svcHeaders }),
       fetch(base + 'splits?' + uidFiltro + '&select=id,description,category,total_value,date&order=date.desc', { headers: svcHeaders }),
       // Sem limite próprio: participantes pertencem aos splits já limitados
       // acima, então o teto dos splits já limita o total de participantes
       // (na prática, poucos por split).
       fetch(base + 'split_participants?user_id=eq.' + encodeURIComponent(reg.uid) + '&select=split_id,name,paid', { headers: svcHeaders })
     ]);
+    // Índices: 0=transactions 1=spending_limits 2=fixed_accounts 3=debts
+    // 4=goals 5=splits 6=split_participants.
     var rTx = respostas[0];
     if (!rTx.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
     // Content-Range vem "0-499/1651" (count=exact acima). O total real é a
@@ -1795,8 +1798,9 @@ async function _sheetsPull(request, env) {
     var limites = respostas[1].ok ? await respostas[1].json() : [];
     var contasFixas = respostas[2].ok ? await respostas[2].json() : [];
     var dividas = respostas[3].ok ? await respostas[3].json() : [];
-    var splits = respostas[4].ok ? await respostas[4].json() : [];
-    var participantes = respostas[5].ok ? await respostas[5].json() : [];
+    var metas = respostas[4].ok ? await respostas[4].json() : [];
+    var splits = respostas[5].ok ? await respostas[5].json() : [];
+    var participantes = respostas[6].ok ? await respostas[6].json() : [];
 
     var porSplit = {};
     for (var i = 0; i < participantes.length; i++) {
@@ -1812,7 +1816,7 @@ async function _sheetsPull(request, env) {
 
     return new Response(JSON.stringify({
       ok: true, total: linhas.length, total_geral: totalGeral, lancamentos: linhas,
-      limites: limites, contasFixas: contasFixas, dividas: dividas, racha: racha
+      limites: limites, contasFixas: contasFixas, dividas: dividas, metas: metas, racha: racha
     }), { status: 200, headers: cors });
   } catch (e) {
     return _serverError(cors, e, 'sheets_pull');

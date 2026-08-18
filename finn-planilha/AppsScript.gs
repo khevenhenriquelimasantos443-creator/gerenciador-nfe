@@ -28,6 +28,7 @@ var ABA_CONFIG = 'Config';
 var ABA_LIMITES = 'Limites';
 var ABA_FIXAS   = 'Contas fixas';
 var ABA_DIVIDAS = 'Dívidas';
+var ABA_METAS   = 'Metas';
 var ABA_RACHA   = 'Racha';
 var LINHA_INI  = 6;   // primeira linha de dados em Lançamentos
 var CEL_TOKEN  = 'C35';
@@ -35,7 +36,7 @@ var CEL_ULTIMA = 'C36';
 // Quantas linhas o modelo pré-formata em cada aba de configuração (ver
 // gera_planilha.py). Escrever além disso não tem onde cair — as fórmulas
 // de Restante/Situação/Falta só existem até essa linha.
-var CAP_LIMITES = 20, CAP_FIXAS = 30, CAP_DIVIDAS = 20, CAP_RACHA = 30;
+var CAP_LIMITES = 20, CAP_FIXAS = 30, CAP_DIVIDAS = 20, CAP_METAS = 20, CAP_RACHA = 30;
 // Mesmo valor do SHEET_MAX_LINHAS no worker (finn-serve/build.js) — é o
 // teto por chamada de /sheets/pull. Serve só pra saber quando um lote veio
 // "cheio" (provavelmente tem mais história pra trás) — ver finnPuxar.
@@ -81,7 +82,7 @@ var FUSO_BR = 'America/Sao_Paulo';
 // correções vieram no mesmo commit, então uma das duas conclusões tinha que
 // estar errada, e não havia como saber qual sem um número na tela. Com a
 // versão à vista, "colei o script novo?" deixa de ser suposição.
-var VERSAO = '2026-08-18.1';
+var VERSAO = '2026-08-18.2';
 
 // Colunas da aba Lançamentos (1 = A)
 var COL_DATA = 1, COL_TIPO = 2, COL_CAT = 3, COL_DESC = 4, COL_VALOR = 5,
@@ -458,6 +459,35 @@ function _recalcularFluxo(r) {
 }
 
 /**
+ * Limpa o CONTEÚDO de linhas com "ID Finn" repetido, mantendo a primeira
+ * ocorrência de cada id. Existe por causa de um bug real do backfill (ver
+ * comentário em finnPuxar): antes da correção, sincronizar uma planilha com
+ * mais histórico que SHEET_MAX_LINHAS podia trazer a mesma transação duas
+ * vezes na fronteira entre páginas.
+ *
+ * clearContent(), não deleteRows() — mesmo motivo do _removeExemplos: as
+ * outras abas têm fórmula apontando pra um intervalo FIXO da Lançamentos, e
+ * apagar linha desloca tudo e bagunça essas referências (já reproduzido ao
+ * vivo uma vez, ver o comentário lá).
+ */
+function _removerDuplicadas(r) {
+  var vistos = {};
+  var limpadas = 0;
+  for (var i = 0; i < r.linhas.length; i++) {
+    var linha = r.linhas[i];
+    var id = String(linha.v[COL_ID - 1] || '').trim();
+    if (!id) continue;
+    if (vistos[id]) {
+      r.ws.getRange(linha.linha, COL_DATA, 1, COL_ORIGEM).clearContent();
+      limpadas++;
+    } else {
+      vistos[id] = true;
+    }
+  }
+  return limpadas;
+}
+
+/**
  * As quatro funções abaixo escrevem o retrato ATUAL de Limites, Contas
  * fixas, Dívidas e Racha — chamadas em toda sincronização, com ou sem
  * lançamento novo. Diferente de Lançamentos (que só cresce), essas abas são
@@ -521,6 +551,24 @@ function _escreverDividas(dividas) {
   ws.getRange(LINHA_INI, 5, CAP_DIVIDAS, 2).setValues(dir);   // E Juros % a.m., F Parcela mensal (pula D=Falta, fórmula)
 }
 
+function _escreverMetas(metas) {
+  var ws = SpreadsheetApp.getActive().getSheetByName(ABA_METAS);
+  if (!ws) return;
+  var esq = [], prazo = [];
+  for (var i = 0; i < CAP_METAS; i++) {
+    var m = metas[i];
+    if (m) {
+      esq.push([m.name || '', Number(m.target) || 0, Number(m.saved) || 0]);
+      prazo.push([m.deadline ? new Date(m.deadline + 'T12:00:00') : '']);
+    } else {
+      esq.push(['', '', '']);
+      prazo.push(['']);
+    }
+  }
+  ws.getRange(LINHA_INI, 1, CAP_METAS, 3).setValues(esq);   // A Meta, B Valor alvo, C Já guardado
+  ws.getRange(LINHA_INI, 6, CAP_METAS, 1).setValues(prazo); // F Prazo (pula D=Falta, E=%, fórmulas)
+}
+
 function _escreverRacha(racha) {
   var ws = SpreadsheetApp.getActive().getSheetByName(ABA_RACHA);
   if (!ws) return;
@@ -552,18 +600,20 @@ function finnPuxar() {
   var resp = _chamar('/sheets/pull');
   if (!resp || !resp.ok) return 0;
 
-  // Limites, Contas fixas, Dívidas e Racha são sincronizadas SEMPRE, mesmo
-  // sem lançamento novo — é exatamente o caso em que a pessoa só mudou um
-  // teto ou marcou uma parcela como paga no app, sem lançar nada.
+  // Limites, Contas fixas, Dívidas, Metas e Racha são sincronizadas SEMPRE,
+  // mesmo sem lançamento novo — é exatamente o caso em que a pessoa só mudou
+  // um teto ou marcou uma parcela como paga no app, sem lançar nada.
   var limites = resp.limites || [], contasFixas = resp.contasFixas || [],
-      dividas = resp.dividas || [], racha = resp.racha || [];
+      dividas = resp.dividas || [], metas = resp.metas || [], racha = resp.racha || [];
   _escreverLimites(limites);
   _escreverContasFixas(contasFixas);
   _escreverDividas(dividas);
+  _escreverMetas(metas);
   _escreverRacha(racha);
   var notaConfig = _notaTruncamento('Limites', limites.length, CAP_LIMITES) +
     _notaTruncamento('Contas fixas', contasFixas.length, CAP_FIXAS) +
     _notaTruncamento('Dívidas', dividas.length, CAP_DIVIDAS) +
+    _notaTruncamento('Metas', metas.length, CAP_METAS) +
     _notaTruncamento('Racha', racha.length, CAP_RACHA);
   // finnSincronizar mostra o PRÓPRIO toast final depois de chamar finnPuxar,
   // e um toast novo apaga o anterior — sem isso, um aviso de truncamento
@@ -594,7 +644,7 @@ function finnPuxar() {
     var r0 = _lerLinhas();
     var reparadasSemNovas = _recalcularMes(r0);
     var fluxoSemNovas = _recalcularFluxo(_lerLinhas());
-    _aviso('Limites, Contas fixas, Dívidas e Racha atualizados.' +
+    _aviso('Limites, Contas fixas, Dívidas, Metas e Racha atualizados.' +
       (reparadasSemNovas ? ' Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).' : ' Nada novo em Lançamentos.') +
       (fluxoSemNovas ? ' Tirei ' + fluxoSemNovas + ' lançamento(s) de investimento dos totais.' : '') +
       notaConfig);
@@ -614,7 +664,15 @@ function finnPuxar() {
   var novas = [];
   for (var j = 0; j < vindos.length; j++) {
     var t = vindos[j];
-    if (jaTem[String(t.id)]) continue;
+    var tid = String(t.id);
+    if (jaTem[tid]) continue;
+    // Marca como visto JÁ AQUI, não só no fim: o corte do backfill (ate=data)
+    // é inclusivo de propósito (pra não pular lançamento na fronteira entre
+    // duas páginas), então a MESMA transação pode vir duas vezes dentro de
+    // "vindos" quando várias datam do mesmo dia do corte. Sem marcar aqui,
+    // as duas cópias passavam pelo "jaTem" (que só sabia o que já estava na
+    // planilha ANTES da sincronização) e viravam duas linhas duplicadas.
+    jaTem[tid] = true;
     novas.push([
       new Date(t.date + 'T12:00:00'),
       // Varredura/compra automática de investimento não é fluxo de verdade
@@ -709,15 +767,17 @@ function finnCorrigirDados() {
   var r = _lerLinhas();
   var nMes = _recalcularMes(r);
   var nFluxo = _recalcularFluxo(_lerLinhas());
+  var nDup = _removerDuplicadas(_lerLinhas());
   var partes = [];
   if (nMes) partes.push('Recalculei a coluna Mês em ' + nMes + ' linha(s) a partir da coluna Data.');
   if (nFluxo) partes.push('Tirei ' + nFluxo + ' lançamento(s) de investimento (Rende Fácil e afins) dos totais de Receita/Despesa — eles continuam na lista, só não contam mais como fluxo.');
+  if (nDup) partes.push('Limpei ' + nDup + ' linha(s) duplicada(s) — mesmo lançamento trazido duas vezes por um bug do backfill já corrigido.');
   _alerta(partes.length ? 'Planilha corrigida' : 'Nada a corrigir',
     (partes.length
       ? partes.join('\n\n') + '\n\nOs totais de Início, Análises e Limites devem voltar ao normal agora.'
-      : 'Coluna Mês e Tipo de investimento já estão corretos em todas as linhas.') +
+      : 'Coluna Mês, Tipo de investimento e duplicidade já estão corretos em todas as linhas.') +
     '\n\nVersão do script: ' + VERSAO);
-  return nMes + nFluxo;
+  return nMes + nFluxo + nDup;
 }
 
 /** Envia primeiro, depois puxa — nessa ordem, pra não duplicar o que acabou de subir. */
