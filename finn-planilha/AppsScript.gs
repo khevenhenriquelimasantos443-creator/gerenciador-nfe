@@ -36,6 +36,17 @@ var CEL_ULTIMA = 'C36';
 // gera_planilha.py). Escrever além disso não tem onde cair — as fórmulas
 // de Restante/Situação/Falta só existem até essa linha.
 var CAP_LIMITES = 20, CAP_FIXAS = 30, CAP_DIVIDAS = 20, CAP_RACHA = 30;
+// Mesmo valor do SHEET_MAX_LINHAS no worker (finn-serve/build.js) — é o
+// teto por chamada de /sheets/pull. Serve só pra saber quando um lote veio
+// "cheio" (provavelmente tem mais história pra trás) — ver finnPuxar.
+var SHEET_MAX_LINHAS = 500;
+// Teto de segurança pras chamadas extras de backfill num único clique de
+// "Sincronizar agora": Apps Script tem 6 min de execução, e cada chamada
+// extra é uma ida e volta ao Finn. 10 passadas cobre até +5000 lançamentos
+// além dos 500 iniciais — quem tiver mais que isso termina de puxar no
+// próximo clique (o corte é sempre pela data mais antiga já trazida, então
+// nunca perde o lugar).
+var SHEET_MAX_PASSADAS_BACKFILL = 10;
 // Ponte entre finnPuxar e finnSincronizar só pro aviso de truncamento — ver
 // comentário em finnPuxar.
 var _ultimaNotaConfig = '';
@@ -70,7 +81,7 @@ var FUSO_BR = 'America/Sao_Paulo';
 // correções vieram no mesmo commit, então uma das duas conclusões tinha que
 // estar errada, e não havia como saber qual sem um número na tela. Com a
 // versão à vista, "colei o script novo?" deixa de ser suposição.
-var VERSAO = '2026-08-16.3';
+var VERSAO = '2026-08-18.1';
 
 // Colunas da aba Lançamentos (1 = A)
 var COL_DATA = 1, COL_TIPO = 2, COL_CAT = 3, COL_DESC = 4, COL_VALOR = 5,
@@ -560,6 +571,25 @@ function finnPuxar() {
   _ultimaNotaConfig = notaConfig;
 
   var vindos = resp.lancamentos || [];
+  var totalGeral = resp.total_geral;
+  // O Finn só devolve até SHEET_MAX_LINHAS por chamada, do mais recente pro
+  // mais antigo. Sem paginar pra trás, quem tem mais lançamentos que o teto
+  // nunca via o resto — sincronizar de novo trazia a MESMA janela dos mais
+  // recentes, pra sempre (era o caso real de 1651 lançamentos no Finn contra
+  // só 501 na planilha). Enquanto o último lote vier "cheio" (== o teto),
+  // provavelmente tem mais história antes dele — busca o próximo lote usando
+  // a data do lançamento mais antigo já trazido como corte.
+  var ultimoLote = vindos;
+  var passadasBackfill = 0;
+  while (ultimoLote.length >= SHEET_MAX_LINHAS && passadasBackfill < SHEET_MAX_PASSADAS_BACKFILL) {
+    var maisAntiga = ultimoLote[ultimoLote.length - 1].date;
+    var respMais = _chamar('/sheets/pull?ate=' + maisAntiga);
+    passadasBackfill++;
+    if (!respMais || !respMais.ok || !(respMais.lancamentos && respMais.lancamentos.length)) break;
+    ultimoLote = respMais.lancamentos;
+    vindos = vindos.concat(ultimoLote);
+  }
+
   if (!vindos.length) {
     var r0 = _lerLinhas();
     var reparadasSemNovas = _recalcularMes(r0);
@@ -607,6 +637,15 @@ function finnPuxar() {
       'Finn'
     ]);
   }
+  // Quanto ainda falta trazer de histórico mais antigo, mesmo depois do
+  // backfill acima (ou porque bateu no teto de passadas, ou porque tem gente
+  // com lançamento demais pra um clique só). Sem isso, "501 de 1651" e "1651
+  // de 1651" pareciam a mesma coisa pra quem olhasse a planilha.
+  var totalNaPlanilhaDepois = r.linhas.length + novas.length;
+  var notaLancamentos = (totalGeral && totalNaPlanilhaDepois < totalGeral)
+    ? (' Lançamentos: ' + totalNaPlanilhaDepois + ' de ' + totalGeral + ' — clique em "Sincronizar agora" de novo pra continuar trazendo o histórico mais antigo.')
+    : '';
+
   // Mesmo sem lançamento novo, repara a coluna Mês antes de sair. Este retorno
   // adiantado era o motivo de toda correção parecer não surtir efeito: com os
   // 500 lançamentos já na planilha, jaTem barrava todos, o código saía por
@@ -619,7 +658,7 @@ function finnPuxar() {
         (reparadasSemNovas ? ' Corrigi a coluna Mês de ' + reparadasSemNovas + ' linha(s).' : '') +
         (fluxoSemNovas ? ' Tirei ' + fluxoSemNovas + ' lançamento(s) de investimento dos totais.' : '')
       : 'A planilha já está em dia com o Finn.') +
-      notaConfig);
+      notaConfig + notaLancamentos);
     return 0;
   }
 
@@ -653,7 +692,7 @@ function finnPuxar() {
   _aviso(novas.length + ' lançamento(s) trazido(s) do Finn.' +
     (reparadas ? ' Coluna Mês corrigida em ' + reparadas + ' linha(s).' : '') +
     (fluxoCorrigido ? ' Tirei ' + fluxoCorrigido + ' lançamento(s) de investimento dos totais.' : '') +
-    notaConfig);
+    notaConfig + notaLancamentos);
   return novas.length;
 }
 

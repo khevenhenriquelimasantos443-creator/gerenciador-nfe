@@ -1741,18 +1741,32 @@ async function _sheetsPull(request, env) {
 
     var url = new URL(request.url);
     var desde = url.searchParams.get('desde') || '';
+    var ate = url.searchParams.get('ate') || '';
+    var dataValida = /^\\d{4}-\\d{2}-\\d{2}$/;
     var filtroTx = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&select=id,date,type,category,description,value' +
                  '&order=date.desc&limit=' + SHEET_MAX_LINHAS;
     // "desde" corta pela data do lançamento, não pelo created_at: é a data
     // que a planilha mostra, e é por ela que a pessoa raciocina.
-    if (/^\\d{4}-\\d{2}-\\d{2}$/.test(desde)) filtroTx += '&date=gte.' + desde;
+    if (dataValida.test(desde)) filtroTx += '&date=gte.' + desde;
+    // "ate" existe pra paginar histórico pra trás. Sem isso o limit acima
+    // travava a sincronização sempre nos SHEET_MAX_LINHAS lançamentos mais
+    // RECENTES — sincronizar de novo trazia a mesma janela, nunca o resto.
+    // Foi exatamente o caso real de 1651 lançamentos no banco contra só 501
+    // na planilha. A planilha manda a data mais antiga que já tem e busca o
+    // próximo lote mais antigo que isso (ver finnPuxar no Apps Script).
+    if (dataValida.test(ate)) filtroTx += '&date=lte.' + ate;
 
     var svcHeaders = { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY };
+    // count=exact devolve o total real (sem o limit) no header Content-Range
+    // — é o que permite a planilha saber quanto falta puxar e avisar quando
+    // não coube tudo, em vez de silenciosamente mostrar uma fração como se
+    // fosse o total.
+    var svcHeadersTx = Object.assign({ Prefer: 'count=exact' }, svcHeaders);
     var base = '${SUPA_URL_SERVER}/rest/v1/';
     var uidFiltro = 'user_id=eq.' + encodeURIComponent(reg.uid) + '&limit=' + SHEET_MAX_OUTRAS;
 
     var respostas = await Promise.all([
-      fetch(base + 'transactions?' + filtroTx, { headers: svcHeaders }),
+      fetch(base + 'transactions?' + filtroTx, { headers: svcHeadersTx }),
       fetch(base + 'spending_limits?' + uidFiltro + '&select=category,monthly_limit&order=category.asc', { headers: svcHeaders }),
       fetch(base + 'fixed_accounts?' + uidFiltro + '&select=type,description,category,value,day_of_month&order=day_of_month.asc', { headers: svcHeaders }),
       fetch(base + 'debts?' + uidFiltro + '&select=name,category,total_value,remaining_value,interest_rate,monthly_payment&order=created_at.asc', { headers: svcHeaders }),
@@ -1764,6 +1778,16 @@ async function _sheetsPull(request, env) {
     ]);
     var rTx = respostas[0];
     if (!rTx.ok) return new Response(JSON.stringify({ error: 'falha ao ler os lançamentos' }), { status: 502, headers: cors });
+    // Content-Range vem "0-499/1651" (count=exact acima). O total real é a
+    // parte depois da barra — sem o limit, é quantos lançamentos existem de
+    // verdade pra esse filtro, não só quantos vieram nesta página.
+    var totalGeral = null;
+    var contentRange = rTx.headers.get('content-range');
+    if (contentRange) {
+      var totalStr = contentRange.split('/')[1];
+      var totalNum = parseInt(totalStr, 10);
+      if (!isNaN(totalNum)) totalGeral = totalNum;
+    }
     var linhas = await rTx.json();
     // Cada uma das outras quatro é best-effort: se uma falhar, a planilha
     // ainda sincroniza os lançamentos normalmente — melhor mostrar Limites
@@ -1787,7 +1811,7 @@ async function _sheetsPull(request, env) {
     });
 
     return new Response(JSON.stringify({
-      ok: true, total: linhas.length, lancamentos: linhas,
+      ok: true, total: linhas.length, total_geral: totalGeral, lancamentos: linhas,
       limites: limites, contasFixas: contasFixas, dividas: dividas, racha: racha
     }), { status: 200, headers: cors });
   } catch (e) {
