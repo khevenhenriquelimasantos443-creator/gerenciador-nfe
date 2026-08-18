@@ -276,6 +276,11 @@ console.log('\n=== modo admin ===');
     ok(/175/.test(csv.texto), 'traz os dados');
   }
 
+  // Diagnóstico do WhatsApp mora na própria aba (Finn → aba admin
+  // "WhatsApp"), não mais dentro de Visão geral — precisa navegar antes.
+  await p.evaluate(() => { document.getElementById('btnAdminWhatsAppNav').click(); });
+  await p.waitForTimeout(400);
+
   // Situação do template do WhatsApp: um clique, sem token pra copiar.
   ULTIMA_CHAMADA_TEMPLATES = null;
   const temBotao = await p.evaluate(() => !!document.getElementById('btnTemplateStatus'));

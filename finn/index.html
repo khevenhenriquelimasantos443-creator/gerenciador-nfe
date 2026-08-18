@@ -1225,6 +1225,47 @@ function fmtMoney(v){
   return (v < 0 ? "-" : "") + "R$ " + s[0] + "," + s[1];
 }
 
+// Máscara de dinheiro nos campos de valor: digita só número, os 2 últimos
+// dígitos viram centavo e o milhar aparece sozinho — mesmo padrão de app de
+// banco. Cursor sempre fica no fim (o dígito novo é sempre o último), então
+// não tem o problema clássico de máscara reposicionando o cursor errado.
+function mascararDinheiro(bruto){
+  var digitos = String(bruto || "").replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+  if(!digitos) return "";
+  while(digitos.length < 3) digitos = "0" + digitos;
+  var centavos = digitos.slice(-2);
+  var inteiro = digitos.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return inteiro + "," + centavos;
+}
+
+// Volta pro número que o resto do app espera (parseFloat entende ponto como
+// decimal, não vírgula — sem isso "25.000,00" virava 25). Aceita também o
+// formato antigo (ponto como decimal, sem milhar) como fallback, pra não
+// quebrar nenhum valor escrito programaticamente que eu tenha esquecido de
+// formatar em algum lugar.
+function desmascararDinheiro(str){
+  var s = String(str || "").trim();
+  if(!s) return NaN;
+  if(s.indexOf(",") !== -1) s = s.replace(/\./g, "").replace(",", ".");
+  return parseFloat(s);
+}
+
+// Liga a máscara em todo campo .money-input da tela atual. Chamada a cada
+// render() (bindContentEvents), porque o innerHTML é substituído inteiro a
+// cada troca de tela — os listeners de antes já foram embora junto.
+function wireMoneyInputs(){
+  document.querySelectorAll(".money-input").forEach(function(el){
+    if(el.value) el.value = mascararDinheiro(el.value);
+    el.addEventListener("input", function(){
+      var pos = el.value.length;
+      el.value = mascararDinheiro(el.value);
+      // Cursor sempre no fim: como o próximo dígito digitado é sempre o
+      // último centavo, não existe caso de editar no meio do valor.
+      el.setSelectionRange(el.value.length, el.value.length);
+    });
+  });
+}
+
 function formatDate(d){
   if(!d) return "";
   var p = d.split("-");
@@ -2303,7 +2344,7 @@ function renderAdicionar(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Valor</label>' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="fValue" placeholder="0,00" value="' + formState.value + '"></div>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="fValue" placeholder="0,00" value="' + formState.value + '"></div>' +
       '</div>' +
       '<div class="form-row">' +
         '<label>Categoria</label>' +
@@ -3112,7 +3153,7 @@ function renderLimites(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Limite</label>' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="limValue" placeholder="0,00" value="' + limitForm.value + '"></div>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="limValue" placeholder="0,00" value="' + limitForm.value + '"></div>' +
       '</div>' +
       '<button class="btn-submit" id="btnSaveLimit">Salvar limite</button>' +
     '</div>' +
@@ -3160,7 +3201,7 @@ function renderMetas(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Valor da meta</label>' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="goalTarget" placeholder="0,00" value="' + goalForm.target + '"></div>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="goalTarget" placeholder="0,00" value="' + goalForm.target + '"></div>' +
       '</div>' +
       '<button class="btn-submit" id="btnSaveGoal">Criar meta</button>' +
     '</div>' +
@@ -3252,7 +3293,7 @@ function renderGoalList(){
       renderGoalProjection(g) +
       renderGoalInvestTip(g) +
       '<div class="goal-addrow">' +
-        '<input type="number" min="0" step="0.01" placeholder="Valor R$" id="addGoal_' + g.id + '">' +
+        '<input type="text" inputmode="decimal" class="money-input" placeholder="Valor R$" id="addGoal_' + g.id + '">' +
         '<button class="g-add" data-addgoal="' + g.id + '">+ Guardar</button>' +
         '<button class="g-sub" data-subgoal="' + g.id + '">− Retirar</button>' +
       '</div>' +
@@ -3418,7 +3459,7 @@ function renderFixas(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Valor</label>' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="fixedValue" placeholder="0,00" value="' + fixedForm.value + '"></div>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="fixedValue" placeholder="0,00" value="' + fixedForm.value + '"></div>' +
       '</div>' +
       '<button class="btn-submit" id="btnSaveFixed">Adicionar conta fixa</button>' +
     '</div>' +
@@ -3487,7 +3528,7 @@ function renderCartoes(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Limite</label>' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="cardLimit" placeholder="0,00" value="' + cardForm.limitValue + '"></div>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="cardLimit" placeholder="0,00" value="' + cardForm.limitValue + '"></div>' +
       '</div>' +
       '<div class="form-row">' +
         '<label>Dia de fechamento</label>' +
@@ -3527,10 +3568,10 @@ function renderCardList(){
 
 /* ── Dívidas ── */
 var DEBT_CATEGORIES = ["Cartão de Crédito","Empréstimo Pessoal","Financiamento","Cheque Especial","Outros"];
-var debtForm = { name: "", category: "Cartão de Crédito", totalValue: "", remainingValue: "", interestRate: "", monthlyPayment: "", dueDay: "10" };
+var debtForm = { name: "", category: "Cartão de Crédito", totalValue: "", remainingValue: "", interestRate: "", monthlyPayment: "", dueDay: "10", totalInstallments: "" };
 
 function resetDebtForm(){
-  debtForm = { name: "", category: "Cartão de Crédito", totalValue: "", remainingValue: "", interestRate: "", monthlyPayment: "", dueDay: "10" };
+  debtForm = { name: "", category: "Cartão de Crédito", totalValue: "", remainingValue: "", interestRate: "", monthlyPayment: "", dueDay: "10", totalInstallments: "" };
 }
 
 function renderDividas(){
@@ -3571,11 +3612,11 @@ function renderDividas(){
     '</div>' +
     '<div class="form-row">' +
       '<label>Valor total da dívida</label>' +
-      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtTotalValue" placeholder="0,00" value="' + debtForm.totalValue + '"></div>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="debtTotalValue" placeholder="0,00" value="' + debtForm.totalValue + '"></div>' +
     '</div>' +
     '<div class="form-row">' +
       '<label>Saldo devedor atual</label>' +
-      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtRemainingValue" placeholder="0,00" value="' + debtForm.remainingValue + '"></div>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="debtRemainingValue" placeholder="0,00" value="' + debtForm.remainingValue + '"></div>' +
     '</div>' +
     '<div class="form-row">' +
       '<label>Taxa de juros (% ao mês)</label>' +
@@ -3583,7 +3624,12 @@ function renderDividas(){
     '</div>' +
     '<div class="form-row">' +
       '<label>Parcela mensal mínima</label>' +
-      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtMonthlyPayment" placeholder="0,00" value="' + debtForm.monthlyPayment + '"></div>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="debtMonthlyPayment" placeholder="0,00" value="' + debtForm.monthlyPayment + '"></div>' +
+    '</div>' +
+    '<div class="form-row">' +
+      '<label>Parcelas totais (opcional)</label>' +
+      '<input type="number" min="0" step="1" id="debtTotalInstallments" placeholder="Ex: 24" value="' + debtForm.totalInstallments + '">' +
+      '<div style="font-size:11px;color:var(--fm);margin-top:4px">Se preencher, a lista mostra quantas faltam de verdade. Sem isso, o Finn estima com base no saldo e na parcela.</div>' +
     '</div>' +
     '<div class="form-row">' +
       '<label>Dia de vencimento</label>' +
@@ -3600,11 +3646,25 @@ function renderDividas(){
   return html;
 }
 
-// Quantas parcelas faltam pagando só o mínimo, e em que mês termina. Reusa a
-// mesma simulação mês-a-mês da Análise de quitação (com 1 dívida só e sem
-// extra) em vez de uma fórmula fechada — já lida com juro comendo o
-// pagamento (maxedOut) sem duplicar essa lógica.
+// Quantas parcelas faltam, e em que mês termina.
+//
+// Se a pessoa preencheu "Parcelas totais" na hora de cadastrar, usa isso
+// direto — parcelas pagas = parcelas totais × % já quitado (mesmo % da
+// barra de progresso), sem estimativa nenhuma. Sem esse campo, cai pra
+// simulação mês-a-mês (mesma da Análise de quitação, com 1 dívida só e sem
+// extra), que já lida com juro comendo o pagamento (maxedOut) sozinha.
 function debtParcelasRestantes(d){
+  var total = Number(d.total_value) || 0;
+  var remaining = Number(d.remaining_value) || 0;
+  var totalParcelas = parseInt(d.total_installments, 10);
+  if(totalParcelas > 0){
+    var pct = total > 0 ? Math.min(1, Math.max(0, (total - remaining) / total)) : 0;
+    var pagas = Math.round(totalParcelas * pct);
+    var restantes = Math.max(0, totalParcelas - pagas);
+    var terminaManual = new Date();
+    terminaManual.setMonth(terminaManual.getMonth() + restantes);
+    return { meses: restantes, termina: terminaManual, manual: true, pagas: pagas, totalParcelas: totalParcelas };
+  }
   var payment = Number(d.monthly_payment) || 0;
   if(payment <= 0) return null;
   var r = simulateDebtPayoff([d], 0, "avalanche");
@@ -3624,7 +3684,9 @@ function renderDebtList(){
     var parcTxt = remaining <= 0 ? "quitada" :
       !parc ? "" :
       parc.travada ? "juro maior que a parcela — nunca quita só no mínimo" :
-      parc.meses + " parcela" + (parc.meses > 1 ? "s" : "") + " restante" + (parc.meses > 1 ? "s" : "") + " · quita em " + parc.termina.toLocaleDateString("pt-BR", { month: "short", year: "numeric" });
+      parc.manual
+        ? (parc.pagas + " de " + parc.totalParcelas + " parcelas · quita em " + parc.termina.toLocaleDateString("pt-BR", { month: "short", year: "numeric" }))
+        : (parc.meses + " parcela" + (parc.meses > 1 ? "s" : "") + " restante" + (parc.meses > 1 ? "s" : "") + " (estimado) · quita em " + parc.termina.toLocaleDateString("pt-BR", { month: "short", year: "numeric" }));
     return '<div class="fixed-item" style="flex-wrap:wrap">' +
       '<div class="fixed-info">' +
         '<div class="fixed-desc">' + escapeHtml(d.name) + '</div>' +
@@ -3647,7 +3709,7 @@ function renderDebtAnalysis(){
     '<div class="eyebrow">Análise de quitação</div>' +
     '<div class="form-row">' +
       '<label>Quanto você consegue pagar A MAIS por mês (além das parcelas mínimas)?</label>' +
-      '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="debtExtraPayment" placeholder="0,00" value="' + state.debtExtraPayment + '"></div>' +
+      '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="debtExtraPayment" placeholder="0,00" value="' + state.debtExtraPayment + '"></div>' +
     '</div>' +
     '<button class="btn-submit" id="btnSimulateDebt">Simular quitação</button>';
 
@@ -3727,7 +3789,7 @@ function simulateDebtPayoff(debtsInput, extraMonthly, strategy){
 }
 
 function runDebtSimulation(){
-  var extra = parseFloat(state.debtExtraPayment) || 0;
+  var extra = desmascararDinheiro(state.debtExtraPayment) || 0;
   var activeDebts = state.debts.filter(function(d){ return Number(d.remaining_value) > 0; });
   var avalanche = simulateDebtPayoff(activeDebts, extra, "avalanche");
   var snowball = simulateDebtPayoff(activeDebts, extra, "snowball");
@@ -3745,6 +3807,7 @@ function syncDebtForm(){
   var rate = document.getElementById("debtInterestRate");
   var payment = document.getElementById("debtMonthlyPayment");
   var dueDay = document.getElementById("debtDueDay");
+  var installments = document.getElementById("debtTotalInstallments");
   if(name) debtForm.name = name.value;
   if(cat) debtForm.category = cat.value;
   if(total) debtForm.totalValue = total.value;
@@ -3752,20 +3815,24 @@ function syncDebtForm(){
   if(rate) debtForm.interestRate = rate.value;
   if(payment) debtForm.monthlyPayment = payment.value;
   if(dueDay) debtForm.dueDay = dueDay.value;
+  if(installments) debtForm.totalInstallments = installments.value;
 }
 
 function saveDebt(){
   var name = (debtForm.name || "").trim();
-  var total = parseFloat(debtForm.totalValue) || 0;
-  var remaining = debtForm.remainingValue === "" ? total : (parseFloat(debtForm.remainingValue) || 0);
+  var total = desmascararDinheiro(debtForm.totalValue) || 0;
+  var remaining = debtForm.remainingValue === "" ? total : (desmascararDinheiro(debtForm.remainingValue) || 0);
   var rate = parseFloat(debtForm.interestRate) || 0;
-  var payment = parseFloat(debtForm.monthlyPayment) || 0;
+  var payment = desmascararDinheiro(debtForm.monthlyPayment) || 0;
   var dueDay = parseInt(debtForm.dueDay, 10);
+  var totalInstallments = debtForm.totalInstallments === "" ? null : parseInt(debtForm.totalInstallments, 10);
   if(!name || total <= 0 || remaining < 0 || remaining > total || rate < 0 || payment < 0){ render(); return; }
+  if(totalInstallments !== null && (!isFinite(totalInstallments) || totalInstallments <= 0)) totalInstallments = null;
   var payload = {
     user_id: uid(), name: name, category: debtForm.category, total_value: total,
     remaining_value: remaining, interest_rate: rate, monthly_payment: payment,
-    due_day: (dueDay >= 1 && dueDay <= 31) ? dueDay : null
+    due_day: (dueDay >= 1 && dueDay <= 31) ? dueDay : null,
+    total_installments: totalInstallments
   };
   state.debtSaveError = null;
   db("debts", "POST", payload).then(function(rows){
@@ -3797,7 +3864,7 @@ function renderSplitParticipantRows(){
   return splitForm.participants.map(function(p, i){
     return '<div class="split-padd">' +
       '<input type="text" placeholder="Nome" class="splitPName" data-idx="' + i + '" value="' + escapeHtml(p.name) + '">' +
-      '<input type="number" min="0" step="0.01" placeholder="Valor" class="splitPValue" data-idx="' + i + '" value="' + p.value + '">' +
+      '<input type="text" inputmode="decimal" placeholder="Valor" class="splitPValue money-input" data-idx="' + i + '" value="' + p.value + '">' +
       (splitForm.participants.length > 1 ? '<button type="button" class="split-prm" data-rmpart="' + i + '">✕</button>' : '') +
     '</div>';
   }).join("");
@@ -3821,7 +3888,7 @@ function renderRacha(){
       '</div>' +
       '<div class="form-row">' +
         '<label>Valor total</label>' +
-        '<div class="value-input-wrap"><span>R$</span><input type="number" min="0" step="0.01" id="splitTotal" placeholder="0,00" value="' + splitForm.total + '"></div>' +
+        '<div class="value-input-wrap"><span>R$</span><input type="text" inputmode="decimal" class="money-input" id="splitTotal" placeholder="0,00" value="' + splitForm.total + '"></div>' +
       '</div>' +
       '<div class="form-row">' +
         '<label>Participantes</label>' +
@@ -3885,7 +3952,7 @@ function syncSplitForm(){
 }
 
 function splitEqually(){
-  var total = parseFloat(splitForm.total) || 0;
+  var total = desmascararDinheiro(splitForm.total) || 0;
   var n = splitForm.participants.length;
   if(!total || !n) return;
   var base = Math.floor(total / n * 100) / 100;
@@ -3901,8 +3968,8 @@ function splitEqually(){
 }
 
 function saveSplit(){
-  var total = parseFloat(splitForm.total);
-  var valid = splitForm.participants.filter(function(p){ return p.name && parseFloat(p.value) > 0; });
+  var total = desmascararDinheiro(splitForm.total);
+  var valid = splitForm.participants.filter(function(p){ return p.name && desmascararDinheiro(p.value) > 0; });
   if(!splitForm.description || !total || total <= 0 || !valid.length){ render(); return; }
   var payload = {
     user_id: uid(), description: splitForm.description, category: splitForm.category,
@@ -3913,7 +3980,7 @@ function saveSplit(){
     var split = rows && rows[0];
     if(!split) return Promise.reject(new Error("Falha ao criar a racha"));
     var participantsPayload = valid.map(function(p){
-      return { user_id: uid(), split_id: split.id, name: p.name, value: parseFloat(p.value) };
+      return { user_id: uid(), split_id: split.id, name: p.name, value: desmascararDinheiro(p.value) };
     });
     return db("split_participants", "POST", participantsPayload).then(function(prows){
       state.splits.unshift(split);
@@ -8366,6 +8433,7 @@ function render(){
 }
 
 function bindContentEvents(){
+  wireMoneyInputs();
   if(state.tab === "dashboard"){
     var dashboardMonthInput = document.getElementById("dashboardMonth");
     if(dashboardMonthInput) dashboardMonthInput.addEventListener("change", function(e){
@@ -8931,7 +8999,7 @@ function bindTxRowEvents(scope){
 
 /* ── transaction CRUD ── */
 function saveTransaction(){
-  var value = parseFloat(formState.value);
+  var value = desmascararDinheiro(formState.value);
   // Chama render() mesmo saindo cedo — sem isso, o botão desabilitado no
   // clique (pra evitar duplo-envio) ficava travado pra sempre num valor
   // inválido, já que nenhum outro render() aconteceria depois.
@@ -9123,7 +9191,7 @@ function viewReceipt(path){
 
 /* ── limits CRUD ── */
 function saveLimit(){
-  var value = parseFloat(limitForm.value);
+  var value = desmascararDinheiro(limitForm.value);
   if(isNaN(value) || value < 0){ render(); return; }
   var cat = limitForm.category;
   var existing = state.limits.filter(function(l){ return l.category === cat; })[0];
@@ -9163,7 +9231,7 @@ function deleteLimit(id){
 
 /* ── goals CRUD ── */
 function saveGoal(){
-  var target = parseFloat(goalForm.target);
+  var target = desmascararDinheiro(goalForm.target);
   if(!goalForm.name || !target || target <= 0){ render(); return; }
   var payload = {
     user_id: uid(), name: goalForm.name,
@@ -9181,7 +9249,7 @@ function saveGoal(){
 }
 
 function addToGoal(id, amountStr, direction){
-  var amount = parseFloat(amountStr);
+  var amount = desmascararDinheiro(amountStr);
   if(!amount || amount <= 0) return;
   var goal = state.goals.filter(function(g){ return g.id === id; })[0];
   if(!goal) return;
@@ -9224,7 +9292,7 @@ function syncFixedForm(){
 }
 
 function saveFixed(){
-  var value = parseFloat(fixedForm.value);
+  var value = desmascararDinheiro(fixedForm.value);
   var day = parseInt(fixedForm.dayOfMonth, 10);
   if(!fixedForm.description || !value || value <= 0 || !day || day < 1 || day > 31){ render(); return; }
   var payload = {
@@ -9305,7 +9373,7 @@ function syncCardForm(){
 
 function saveCard(){
   var name = (cardForm.name || "").trim();
-  var limitValue = parseFloat(cardForm.limitValue) || 0;
+  var limitValue = desmascararDinheiro(cardForm.limitValue) || 0;
   var closingDay = parseInt(cardForm.closingDay, 10);
   var dueDay = parseInt(cardForm.dueDay, 10);
   if(!name || limitValue < 0 || !closingDay || closingDay < 1 || closingDay > 31 || !dueDay || dueDay < 1 || dueDay > 31){ render(); return; }
