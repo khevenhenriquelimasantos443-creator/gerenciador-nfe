@@ -7,15 +7,14 @@ import { fileURLToPath } from 'url';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 
-// Logo oficial: finn-icon/icon.svg (o mesmo usado no ícone do app/PWA).
-// É SVG inline — nunca rasterizar pra PNG aqui, senão desfoca em qualquer
-// tamanho que não seja o exato em que foi exportado.
-// O SVG original tem width/height="1024" fixos (bons pro ícone do app, que
-// é sempre exportado nesse tamanho exato) — aqui ele entra num contêiner de
-// tamanho variável, então os dois primeiros atributos viram 100% pra
-// preencher o pai em vez de vazar por cima do resto do cartão.
-export const ICON_SVG = fs.readFileSync(path.join(DIR, '../../finn-icon/icon.svg'), 'utf8')
-  .replace('width="1024" height="1024"', 'width="100%" height="100%"');
+// Logo oficial: finn-serve/icons/icon-512.png — o "F" liso, sem gradiente
+// nem gráfico, que é o que realmente vai pro manifest.json e é servido em
+// /icon-512.png (ver build.js). finn-icon/icon.svg é uma versão com
+// gráfico/gradiente que nunca chegou a ser o ícone de verdade — não usar.
+// 512px é grande o bastante pra escalar pra baixo sem borrar em nenhum
+// tamanho de selo que os anúncios usam.
+const ICON_B64 = fs.readFileSync(path.join(DIR, '../../finn-serve/icons/icon-512.png')).toString('base64');
+export const ICON_IMG = `<img src="data:image/png;base64,${ICON_B64}" width="100%" height="100%" style="display:block;object-fit:contain">`;
 
 export const CREME = '#F8F7F4';
 export const NAVY = '#0F172A';
@@ -30,7 +29,7 @@ export const titulo = (h) => esc(h).replace(/\|([^|]+)\|/g, '<i>$1</i>');
 // tam = lado do quadrado da logo em px; fonte = tamanho do texto "Finn." ao lado.
 export function marca({ x = 96, y = 64, tam = 72, fonte = 30 } = {}) {
   return `<div style="position:absolute;left:${x}px;top:${y}px;display:flex;align-items:center;gap:16px">
-    <div style="width:${tam}px;height:${tam}px;flex:none">${ICON_SVG}</div>
+    <div style="width:${tam}px;height:${tam}px;flex:none">${ICON_IMG}</div>
     <div style="font-size:${fonte}px;font-weight:700;color:#fff">Finn<span style="color:${LARANJA}">.</span></div>
   </div>`;
 }
