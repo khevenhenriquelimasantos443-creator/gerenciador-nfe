@@ -39,7 +39,9 @@ MOEDA = 'R$ #,##0.00'
 PCT   = '0%'
 DATA  = 'dd/mm/yyyy'
 
-LINHAS = 900  # ~2,5 anos de lancamento diario; enxuto pra caber no upload
+LINHAS = 10000  # cobre quem sincroniza com o app (varredura automática de banco
+                 # gera vários lançamentos por dia) — 900 travava a formatação,
+                 # a validação e as fórmulas de quem passava disso, silenciosamente
 
 CAT_DESPESA = ["Alimentação","Transporte","Moradia","Saúde","Educação","Lazer","Vestuário","Outros"]
 CAT_RECEITA = ["Salário","Freelance","Aluguel","Venda","Bônus","Investimento","Outros"]
