@@ -16,6 +16,13 @@ lançar. O Finn ataca isso deixando lançar por **conversa no WhatsApp**, sem
 abrir o app.
 
 **Estado atual:** beta fechado, poucos testers, cobrança ainda não iniciada.
+**Lançamento previsto:** 10/01/2027.
+
+### Pendências antes do lançamento
+
+| Item | Quando fazer |
+|---|---|
+| Verificar o `finn.dev.br` no Google Search Console (tag HTML no `<head>`) e gerar `sitemap.xml` | ~2 semanas antes, por volta de 27/12/2026 |
 
 ### Superfícies
 
