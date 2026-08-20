@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Margem Shopee — Paris Perfumaria</title>
+<meta name="description" content="Casamento automático de relatórios Shopee com custos, cálculo de margem por produto e simulação de pedido de compra por marca.">
+<meta name="theme-color" content="#F472B6">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0E1A;--bg2:#0F172A;--bg3:#1E293B;--bg4:#293548;
+  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);
+  --text:#F8FAFC;--muted:#94A3B8;--muted2:#64748B;
+  --accent:#F472B6;--accent-d:#EC4899;--accent-l:rgba(244,114,182,.14);
+  --success:#22C55E;--success-l:rgba(34,197,94,.14);
+  --warning:#F59E0B;--warning-l:rgba(245,158,11,.14);
+  --danger:#EF4444;--danger-l:rgba(239,68,68,.14);
+  --info:#3B82F6;
+  --r-sm:8px;--r:12px;--r-lg:16px;--r-xl:20px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;font-size:14px;line-height:1.5}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:13px}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:5px}
+
+.topbar{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.topbar .back{font-size:12px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:4px}
+.topbar .back:hover{color:var(--text)}
+.brand-mark{width:34px;height:34px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#000;flex-shrink:0}
+.brand-txt{font-size:17px;font-weight:900;letter-spacing:-.03em}
+.brand-txt span{color:var(--accent)}
+.brand-sub{font-size:11px;color:var(--muted2);font-weight:600}
+.topbar .spacer{flex:1}
+
+main{padding:24px 24px 80px;max-width:1360px;width:100%;margin:0 auto}
+
+.tabs{display:flex;gap:4px;overflow-x:auto;margin-bottom:22px;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab-btn{padding:10px 16px;font-size:13px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-color:var(--accent)}
+.tab-btn .count{background:var(--bg3);color:var(--muted);font-size:10.5px;font-weight:800;padding:1px 7px;border-radius:99px}
+.tab-btn.active .count{background:var(--accent-l);color:var(--accent)}
+.tab-btn .count.warn{background:var(--danger-l);color:var(--danger)}
+
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fade .15s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-bottom:16px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.card-title{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.card-sub{font-size:12.5px;color:var(--muted);margin-top:3px}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;transition:all .12s;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-d);color:#fff}
+.btn-ghost{background:var(--bg3);color:var(--text);border-color:var(--border)}
+.btn-ghost:hover{background:var(--bg4)}
+.btn-danger{background:var(--danger-l);color:var(--danger);border-color:rgba(239,68,68,.25)}
+.btn-danger:hover{background:rgba(239,68,68,.22)}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.dropzone{border:1.5px dashed var(--border2);border-radius:var(--r-lg);padding:26px 18px;text-align:center;cursor:pointer;transition:all .15s}
+.dropzone:hover,.dropzone.over{border-color:var(--accent);background:var(--accent-l)}
+.dropzone .ic{font-size:26px;margin-bottom:8px}
+.dropzone .t1{font-weight:700;font-size:13.5px}
+.dropzone .t2{font-size:12px;color:var(--muted);margin-top:3px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:5px 6px 5px 12px;font-size:12px;font-weight:600}
+.chip .x{width:18px;height:18px;border-radius:99px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:11px}
+.chip .x:hover{background:var(--danger);color:#fff}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+.mchip{display:inline-flex;align-items:center;gap:4px;border-radius:7px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;margin:2px}
+.mchip.on{background:var(--success-l);color:var(--success);border-color:rgba(34,197,94,.3)}
+.mchip.off{background:var(--bg3);color:var(--muted2);border-color:var(--border)}
+.mchip.nodata{background:transparent;color:var(--muted2);opacity:.45;cursor:default}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:15px 17px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,var(--accent))}
+.stat-label{font-size:10.5px;color:var(--muted2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px}
+.stat-val{font-size:23px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.stat-foot{font-size:11px;color:var(--muted);margin-top:6px}
+
+.callout{border-radius:var(--r);padding:13px 16px;font-size:12.5px;line-height:1.6;margin-bottom:16px;border:1px solid}
+.callout.warn{background:var(--warning-l);border-color:rgba(245,158,11,.3);color:#FCD34D}
+.callout.danger{background:var(--danger-l);border-color:rgba(239,68,68,.3);color:#FCA5A5}
+.callout.info{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:#93C5FD}
+.callout.ok{background:var(--success-l);border-color:rgba(34,197,94,.3);color:#86EFAC}
+.callout strong{color:inherit}
+
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.search{flex:1;min-width:200px}
+.search input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--text);outline:none}
+.search input:focus{border-color:var(--accent)}
+.select-pill{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text);outline:none;font-weight:600;font-size:12.5px;cursor:pointer}
+
+.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;padding:10px 12px;font-size:10.5px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.04em;background:#0c1322;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#11192c}
+.tbl .name-cell{white-space:normal;max-width:280px;font-weight:600}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl tfoot td{background:#0c1322;font-weight:800;position:sticky;bottom:0}
+.tbl .brand-group td{background:#131c33;font-weight:800;color:var(--accent)}
+
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+.tag-ok{background:var(--success-l);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.tag-warn{background:var(--warning-l);color:var(--warning);border:1px solid rgba(245,158,11,.3)}
+.tag-danger{background:var(--danger-l);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.tag-muted{background:rgba(100,116,139,.13);color:var(--muted2);border:1px solid rgba(100,116,139,.22)}
+.tag-info{background:rgba(59,130,246,.13);color:var(--info);border:1px solid rgba(59,130,246,.3)}
+
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:11.5px;font-weight:700;color:var(--muted)}
+.field input,.field select{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);outline:none;width:100%}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.inline-num{width:90px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:6px 8px;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.inline-num:focus{border-color:var(--accent);outline:none}
+
+.empty{padding:50px 20px;text-align:center;color:var(--muted)}
+.empty .ic{font-size:34px;margin-bottom:10px}
+
+.toast-wrap{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:100}
+.toast{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:12.5px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:340px}
+.toast.success{border-color:rgba(34,197,94,.4);color:#86EFAC}
+.toast.error{border-color:rgba(239,68,68,.4);color:#FCA5A5}
+.toast.info{border-color:rgba(59,130,246,.4);color:#93C5FD}
+
+.hint{font-size:11px;color:var(--muted2)}
+.small{font-size:11.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">← Painel</a>
+  <div class="brand-mark">%</div>
+  <div>
+    <div class="brand-txt">Margem<span>Shopee</span></div>
+    <div class="brand-sub">Paris Perfumaria — recuperação de vendas</div>
+  </div>
+  <div class="spacer"></div>
+  <button class="btn btn-ghost btn-sm" onclick="exportXLSX()">⬇️ Exportar .xlsx</button>
+  <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑️ Limpar dados</button>
+</div>
+
+<main>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="import" onclick="gotoTab('import')">1. Importar dados</button>
+    <button class="tab-btn" data-tab="match" onclick="gotoTab('match')">2. Vínculos de produto <span class="count" id="cnt-match">0</span></button>
+    <button class="tab-btn" data-tab="config" onclick="gotoTab('config')">3. Configurações</button>
+    <button class="tab-btn" data-tab="margin" onclick="gotoTab('margin')">4. Margem por produto <span class="count" id="cnt-margin">0</span></button>
+    <button class="tab-btn" data-tab="purchase" onclick="gotoTab('purchase')">5. Simulação de pedido</button>
+  </div>
+
+  <!-- ═══════════ TAB 1: IMPORTAR ═══════════ -->
+  <section class="tab-panel active" id="tab-import">
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">📦 Relatórios mensais Shopee</div>
+            <div class="card-sub">Arquivos <code>shopee-shop-stats</code> (um por mês). Pode soltar vários de uma vez.</div>
+          </div>
+        </div>
+        <div class="dropzone" id="dz-months">
+          <div class="ic">📊</div>
+          <div class="t1">Arraste os .xlsx aqui ou clique para escolher</div>
+          <div class="t2">Lê vendas totais, tráfego por anúncios e vendas por produto de cada mês</div>
+        </div>
+        <input type="file" id="input-months" accept=".xlsx,.xls" multiple hidden>
+        <div class="chip-row" id="months-chips"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">💰 Planilha de custos</div>
+            <div class="card-sub">Relação de SKU / Custos (EAN, Marca, Nome do Produto, Custo).</div>
+          </div>
+        </div>
+        <div class="dropzone" id="dz-cost">
+          <div class="ic">🧾</div>
+          <div class="t1">Arraste o arquivo de custos ou clique para escolher</div>
+          <div class="t2">Todas as abas com colunas "Nome do Produto" e "Custo" são lidas automaticamente</div>
+        </div>
+        <input type="file" id="input-cost" accept=".xlsx,.xls" hidden>
+        <div id="cost-status" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Resumo mensal (gerado automaticamente)</div>
+          <div class="card-sub">Reproduz a leitura executiva mês a mês a partir dos relatórios importados — sem copiar dados na mão.</div>
+        </div>
+      </div>
+      <div id="resumo-wrap"></div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════ TAB 2: VÍNCULOS ═══════════ -->
+  <section class="tab-panel" id="tab-match">
+    <div class="stats" id="match-stats"></div>
+    <div class="callout info">
+      O casamento de produtos é automático: compara o nome do anúncio na Shopee com a planilha de custos (correspondência exata primeiro, depois por similaridade de palavras). Revise abaixo os itens marcados como <strong>prováveis</strong> ou <strong>não encontrados</strong> antes de confiar na margem.
+    </div>
+    <div class="toolbar">
+      <div class="search"><input type="text" id="match-search" placeholder="Buscar produto…" oninput="renderMatch()"></div>
+      <select class="select-pill" id="match-filter" onchange="renderMatch()">
+        <option value="all">Todos</option>
+        <option value="review">Revisar (provável)</option>
+        <option value="none">Não encontrados</option>
+        <option value="manual">Vínculo manual</option>
+        <option value="exact">Exatos</option>
+      </select>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th>Produto (Shopee)</th><th>Unid. vendidas</th><th>Correspondência (custo)</th><th>Marca</th><th class="num">Custo</th><th>Confiança</th><th>Ação</th>
+      </tr></thead>
+      <tbody id="match-tbody"></tbody>
+    </table></div>
+    <datalist id="cost-datalist"></datalist>
+  </section>
+
+  <!-- ═══════════ TAB 3: CONFIGURAÇÕES ═══════════ -->
+  <section class="tab-panel" id="tab-config">
+    <div class="callout warn" id="freight-warning">
+      ⚠️ <strong>Frete pendente de confirmação.</strong> A coluna de frete está zerada de propósito — confirme os valores reais no extrato Shopee (Carteira → Detalhamento de frete/comissão) antes de decidir pedidos de compra. Enquanto zerada, toda margem abaixo está <strong>superestimada</strong>.
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Faixas de comissão, taxa fixa, subsídio Pix e frete</div>
+          <div class="card-sub">Conta CNPJ Shopee. Edite os valores em amarelo se a Shopee mudar as regras.</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="resetCommissionDefaults()">↺ Restaurar padrão</button>
+      </div>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr>
+          <th>Faixa mín. (R$)</th><th>Faixa máx. (R$)</th><th>Comissão %</th><th>Taxa fixa (R$)</th><th>Subsídio Pix %</th><th>Frete (R$)</th><th>Descrição</th>
+        </tr></thead>
+        <tbody id="commission-tbody"></tbody>
+      </table></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">Limiar de margem</div>
+        <div class="field">
+          <label>Margem mínima aceitável (%)</label>
+          <input type="number" id="cfg-threshold" step="0.5" min="0" max="100">
+        </div>
+        <div class="hint" style="margin-top:8px">Produtos abaixo deste percentual entram como "margem apertada"; margem negativa é sempre "inviável".</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">Cobertura padrão de pedido</div>
+        <div class="field">
+          <label>Meses de estoque a cobrir</label>
+          <input type="number" id="cfg-coverage" step="0.5" min="0.5">
+        </div>
+        <div class="hint" style="margin-top:8px">Usado para sugerir quantidade = demanda mensal média × meses de cobertura. Pode ser ajustado por produto na aba de simulação.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TAB 4: MARGEM ═══════════ -->
+  <section class="tab-panel" id="tab-margin">
+    <div class="stats" id="margin-stats"></div>
+    <div id="margin-alert"></div>
+    <div class="toolbar">
+      <div class="search"><input type="text" id="margin-search" placeholder="Buscar produto ou marca…" oninput="renderMargin()"></div>
+      <select class="select-pill" id="margin-filter-status" onchange="renderMargin()">
+        <option value="all">Todos os status</option>
+        <option value="inviavel">Inviável (margem negativa)</option>
+        <option value="apertada">Margem apertada</option>
+        <option value="viavel">Viável</option>
+        <option value="sem-custo">Sem custo vinculado</option>
+      </select>
+      <select class="select-pill" id="margin-sort" onchange="renderMargin()">
+        <option value="pct-asc">Margem % (pior primeiro)</option>
+        <option value="pct-desc">Margem % (melhor primeiro)</option>
+        <option value="demand-desc">Demanda (maior primeiro)</option>
+        <option value="name">Nome (A–Z)</option>
+      </select>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th>Marca</th><th>Produto</th><th class="num">Preço médio</th><th class="num">Custo (R$)</th><th class="num">Comissão</th><th class="num">Frete</th><th class="num">Margem R$</th><th class="num">Margem %</th><th>Status</th><th>Meses considerados</th>
+      </tr></thead>
+      <tbody id="margin-tbody"></tbody>
+    </table></div>
+  </section>
+
+  <!-- ═══════════ TAB 5: SIMULAÇÃO DE PEDIDO ═══════════ -->
+  <section class="tab-panel" id="tab-purchase">
+    <div class="stats" id="purchase-stats"></div>
+    <div class="callout danger" id="purchase-blocked-note" style="display:none"></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr>
+        <th>Produto</th><th class="num">Demanda média/mês</th><th class="num">Cobertura (meses)</th><th class="num">Qtd. sugerida</th><th class="num">Custo unit.</th><th class="num">Investimento</th><th class="num">Margem unit.</th><th class="num">Margem total</th><th>Status</th>
+      </tr></thead>
+      <tbody id="purchase-tbody"></tbody>
+      <tfoot><tr>
+        <td colspan="5">TOTAL DO PEDIDO</td>
+        <td class="num" id="purchase-total-invest">—</td>
+        <td></td>
+        <td class="num" id="purchase-total-margin">—</td>
+        <td></td>
+      </tr></tfoot>
+    </table></div>
+    <div class="card" style="margin-top:16px" id="unmatched-note-card"></div>
+  </section>
+
+</main>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   Margem Shopee — lógica
+   ══════════════════════════════════════════════════════ */
+
+const STORE_KEY = 'margemshopee.data.v2';
+const MONTH_ABBR = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+const DEFAULT_COMMISSION = [
+  {min:0,   max:79.99,        pct:0.20, fixed:4,  pix:0.00, desc:'Até R$79,99'},
+  {min:80,  max:99.99,        pct:0.14, fixed:16, pix:0.05, desc:'R$80 – R$99,99'},
+  {min:100, max:199.99,       pct:0.14, fixed:20, pix:0.05, desc:'R$100 – R$199,99'},
+  {min:200, max:499.99,       pct:0.14, fixed:26, pix:0.05, desc:'R$200 – R$499,99'},
+  {min:500, max:999999999,    pct:0.14, fixed:26, pix:0.08, desc:'Acima de R$500'}
+];
+
+function emptyState(){
+  return {
+    months: {},           // monthKey -> {key,label,fileName,importedAt,summary,products,hasProductData}
+    costRaw: [],          // linhas cruas da planilha de custos
+    costFileName: null,
+    costImportedAt: null,
+    matches: {},           // itemId -> {costKey, method, score}
+    monthExclusions: {},   // itemId -> [monthKey,...]
+    costOverrides: {},     // itemId -> number
+    coverageOverrides: {}, // itemId -> number
+    qtyOverrides: {},      // itemId -> number
+    forceInclude: {},      // itemId -> true
+    commissionTable: JSON.parse(JSON.stringify(DEFAULT_COMMISSION)),
+    freightByBracket: [0,0,0,0,0],
+    marginThreshold: 0.10,
+    coverageMonths: 2
+  };
+}
+let state = loadState();
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return emptyState();
+    return Object.assign(emptyState(), JSON.parse(raw));
+  }catch(e){ console.error(e); return emptyState(); }
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch(e){ toast('Erro ao salvar dados no navegador','error'); }
+}
+
+/* ────────── utils ────────── */
+function toast(msg,type='info'){
+  const w = document.getElementById('toast-wrap');
+  const t = document.createElement('div');
+  t.className = 'toast '+type;
+  t.textContent = msg;
+  w.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transition='all .25s'; setTimeout(()=>t.remove(),250); }, 3400);
+}
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toNum(v){
+  if(v==null) return 0;
+  if(typeof v==='number') return v;
+  let s = String(v).trim();
+  if(s==='' || s==='-') return 0;
+  s = s.replace(/[^\d,.\-]/g,'');
+  // formato BR: vírgula é sempre decimal; ponto é sempre separador de milhar
+  // (mesmo em inteiros sem vírgula, ex.: "1.072" = 1072, não 1.072)
+  if(s.includes(',')) s = s.replace(/\./g,'').replace(',', '.');
+  else s = s.replace(/\./g,'');
+  const n = parseFloat(s);
+  return isNaN(n)?0:n;
+}
+function toPct(v){
+  if(v==null) return 0;
+  const s = String(v).trim();
+  if(s==='' || s==='-') return 0;
+  return toNum(s)/100;
+}
+function fmtMoney(n){ return 'R$ '+(Number(n)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtPct(n,d=1){ return (Number(n)*100).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%'; }
+function fmtInt(n){ return Math.round(Number(n)||0).toLocaleString('pt-BR'); }
+function normalize(s){
+  return (s||'').toString()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .toLowerCase()
+    .replace(/\+/g,' e ')   // "Shampoo + Condicionador" ~ "Shampoo e Condicionador" — preserva o sinal de kit/combo
+    .replace(/\([^)]*\)/g,' ')
+    .replace(/[^a-z0-9\s]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function tokenize(s){ return normalize(s).split(' ').filter(Boolean); }
+function normHeader(h){ return (h==null?'':String(h)).trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+function readWorkbook(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = e=>{ try{ resolve(XLSX.read(e.target.result,{type:'array'})); }catch(err){ reject(err); } };
+    reader.onerror = ()=> reject(new Error('Falha ao ler o arquivo'));
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+/* ────────── IMPORT: planilha de custos ────────── */
+const COST_HEADER_MAP = {
+  ean: ['ean','gtin (ean)','gtin','codigo de barras'],
+  skuPrincipal: ['sku principal'],
+  skuVariacao: ['sku variacao','sku de variacao'],
+  marca: ['marca'],
+  categoria: ['categoria'],
+  fornecedor: ['fornecedor'],
+  nome: ['nome do produto','produto'],
+  variacao: ['nome da variacao','variacao'],
+  custo: ['custo']
+};
+function findHeaderRow(aoa){
+  for(let i=0;i<Math.min(aoa.length,15);i++){
+    const row = aoa[i]||[];
+    const norm = row.map(normHeader);
+    const hasNome = norm.some(h=> COST_HEADER_MAP.nome.includes(h));
+    const hasCusto = norm.some(h=> COST_HEADER_MAP.custo.includes(h));
+    if(hasNome && hasCusto) return i;
+  }
+  return -1;
+}
+function mapColumns(headerRow){
+  const norm = headerRow.map(normHeader);
+  const col = {};
+  Object.keys(COST_HEADER_MAP).forEach(key=>{
+    const idx = norm.findIndex(h=> COST_HEADER_MAP[key].includes(h));
+    if(idx>=0) col[key]=idx;
+  });
+  return col;
+}
+async function importCostFile(file){
+  let wb;
+  try{ wb = await readWorkbook(file); }catch(e){ toast('Falha ao ler '+file.name,'error'); return; }
+  const rows = [];
+  let sheetsUsed = 0;
+  wb.SheetNames.forEach(sn=>{
+    // raw:true — colunas de custo aqui são células numéricas nativas do Excel, não texto
+    // formatado como nos relatórios Shopee; ler como texto criaria ambiguidade de separador decimal.
+    const aoa = XLSX.utils.sheet_to_json(wb.Sheets[sn], {header:1, defval:'', raw:true});
+    const hIdx = findHeaderRow(aoa);
+    if(hIdx<0) return;
+    const col = mapColumns(aoa[hIdx]);
+    if(col.nome==null || col.custo==null) return;
+    sheetsUsed++;
+    for(let i=hIdx+1;i<aoa.length;i++){
+      const r = aoa[i];
+      if(!r || !r.length) continue;
+      const nome = (r[col.nome]||'').toString().trim();
+      const custo = toNum(r[col.custo]);
+      if(!nome || !custo) continue;
+      rows.push({
+        sheet: sn,
+        ean: col.ean!=null? String(r[col.ean]||'').trim():'',
+        skuPrincipal: col.skuPrincipal!=null? String(r[col.skuPrincipal]||'').trim():'',
+        marca: col.marca!=null? String(r[col.marca]||'').trim():'',
+        categoria: col.categoria!=null? String(r[col.categoria]||'').trim():'',
+        fornecedor: col.fornecedor!=null? String(r[col.fornecedor]||'').trim():'',
+        nome,
+        variacao: col.variacao!=null? String(r[col.variacao]||'').trim():'',
+        custo
+      });
+    }
+  });
+  if(!rows.length){ toast('Nenhuma linha de custo reconhecida em '+file.name,'error'); return; }
+  state.costRaw = rows;
+  state.costFileName = file.name;
+  state.costImportedAt = Date.now();
+  save(); recompute(); renderAll();
+  toast(`${rows.length} linhas de custo importadas (${sheetsUsed} abas) de ${file.name}`,'success');
+}
+
+/* ────────── IMPORT: relatório mensal Shopee ────────── */
+async function importShopeeFile(file){
+  let wb;
+  try{ wb = await readWorkbook(file); }catch(e){ toast('Falha ao ler '+file.name,'error'); return; }
+  const sheetsNorm = wb.SheetNames.map(n=>({raw:n, norm:normHeader(n)}));
+  const findSheet = pred => { const f = sheetsNorm.find(pred); return f? wb.Sheets[f.raw] : null; };
+
+  const sPago = findSheet(s=> s.norm==='produto pago') || findSheet(s=> s.norm==='pedido feito');
+  if(!sPago){ toast('Aba "Produto Pago" não encontrada em '+file.name,'error'); return; }
+  const aoaPago = XLSX.utils.sheet_to_json(sPago,{header:1,defval:'',raw:false});
+  const hIdx = aoaPago.findIndex(r=> (r[0]||'').toString().trim().toLowerCase()==='data');
+  if(hIdx<0 || !aoaPago[hIdx+1]){ toast('Formato inesperado em '+file.name,'error'); return; }
+  const header = aoaPago[hIdx].map(h=> (h||'').toString().trim());
+  const totalsRow = aoaPago[hIdx+1];
+  const colIdx = name => header.indexOf(name);
+  const rangeText = (totalsRow[0]||'').toString();
+
+  const m = rangeText.match(/(\d{2})\/(\d{2})\/(\d{4})-(\d{2})\/(\d{2})\/(\d{4})/);
+  let monthKey, monthLabel;
+  if(m){
+    monthKey = `${m[3]}-${m[2]}`;
+    monthLabel = MONTH_ABBR[parseInt(m[2],10)-1]+'/'+m[3].slice(2);
+  }else{
+    const fm = file.name.match(/(\d{4})(\d{2})(\d{2})-\d{8}/);
+    if(fm){ monthKey = `${fm[1]}-${fm[2]}`; monthLabel = MONTH_ABBR[parseInt(fm[2],10)-1]+'/'+fm[1].slice(2); }
+    else{ toast('Não identifiquei o mês do arquivo '+file.name,'error'); return; }
+  }
+
+  const summary = {
+    rangeText,
+    vendasTotais: toNum(totalsRow[colIdx('Vendas (BRL)')]),
+    pedidos: toNum(totalsRow[colIdx('Pedidos')]),
+    cliques: toNum(totalsRow[colIdx('Cliques Por Produto')]),
+    visitantes: toNum(totalsRow[colIdx('Visitantes')]),
+    taxaConversao: toPct(totalsRow[colIdx('Taxa de Conversão de Pedidos')]),
+    vendasPorAnuncios: null,
+    pctAnuncios: null
+  };
+
+  const sFontes = findSheet(s=> s.norm.includes('fontes') && (s.norm.includes('pedidos pagos')||s.norm.includes('pedido pago')));
+  if(sFontes){
+    const aoaF = XLSX.utils.sheet_to_json(sFontes,{header:1,defval:'',raw:false});
+    const hf = aoaF.findIndex(r=> (r[0]||'').toString().trim().toLowerCase()==='data');
+    if(hf>=0 && aoaF[hf+1]){
+      const headerF = aoaF[hf].map(h=> (h||'').toString().trim());
+      const rowF = aoaF[hf+1];
+      const idxAds = headerF.indexOf('Vendas pelos Anúncios');
+      if(idxAds>=0){
+        const raw = (rowF[idxAds]||'').toString().trim();
+        if(raw && raw!=='-'){
+          summary.vendasPorAnuncios = toNum(raw);
+          summary.pctAnuncios = summary.vendasTotais>0 ? summary.vendasPorAnuncios/summary.vendasTotais : 0;
+        }
+      }
+    }
+  }
+
+  // A aba "Product Contribution" traz VÁRIAS sub-tabelas com o mesmo cabeçalho
+  // repetido (Card do Produto, Lives, Vídeo do Vendedor, Afiliado Shopee) — cada uma
+  // é um canal de atribuição diferente para o mesmo produto, então os valores devem
+  // ser SOMADOS entre as sub-tabelas, nunca sobrescritos.
+  const products = {};
+  let coverageVendas = 0;
+  const sProd = findSheet(s=> s.norm.includes('product contribution') && s.norm.includes('paid'));
+  if(sProd){
+    const aoaP = XLSX.utils.sheet_to_json(sProd,{header:1,defval:'',raw:false});
+    for(let i=0;i<aoaP.length;i++){
+      const row = aoaP[i];
+      if((row[0]||'').toString().trim()!=='ID do Item') continue;
+      const headerP = row.map(h=> (h||'').toString().trim());
+      const iId=headerP.indexOf('ID do Item'), iNome=headerP.indexOf('Produto'),
+            iStatus=headerP.indexOf('Status Atual do Item'), iVendas=headerP.indexOf('Vendas (BRL)'),
+            iUnid=headerP.indexOf('Unidades'), iPedidos=headerP.indexOf('Pedidos');
+      let j = i+1;
+      while(j<aoaP.length){
+        const r = aoaP[j];
+        const id = (r[iId]||'').toString().trim();
+        if(!id) break;
+        if(!products[id]){
+          products[id] = { itemId:id, nome:(r[iNome]||'').toString().trim(),
+            statusItem: iStatus>=0? (r[iStatus]||'').toString().trim() : '',
+            vendasBRL:0, unidades:0, pedidos:0 };
+        }
+        const v = toNum(r[iVendas]);
+        products[id].vendasBRL += v;
+        products[id].unidades += toNum(r[iUnid]);
+        products[id].pedidos += iPedidos>=0? toNum(r[iPedidos]) : 0;
+        coverageVendas += v;
+        j++;
+      }
+      i = j;
+    }
+  }
+  summary.coverageVendas = coverageVendas;
+  summary.coveragePct = summary.vendasTotais>0 ? coverageVendas/summary.vendasTotais : null;
+
+  state.months[monthKey] = {
+    key: monthKey, label: monthLabel, fileName: file.name, importedAt: Date.now(),
+    summary, products, hasProductData: Object.keys(products).length>0
+  };
+  save(); recompute(); renderAll();
+  toast(`${monthLabel} importado — ${Object.keys(products).length} produtos${Object.keys(products).length===0?' (sem detalhe por produto neste mês)':''}`,'success');
+}
+
+/* ────────── catálogo de custos + casamento de produtos ────────── */
+let CATALOG = [];
+let PRODUCTS = {};
+
+function inferBrand(nome){ const t=(nome||'').trim().split(/\s+/); return t[0]||'—'; }
+
+function buildCostCatalog(){
+  const groups = {};
+  state.costRaw.forEach(r=>{
+    const key = normalize(r.nome);
+    if(!key) return;
+    if(!groups[key]){
+      groups[key] = { key, nome:r.nome, marca:r.marca||inferBrand(r.nome), brandInferred:!r.marca,
+        categoria:r.categoria, fornecedor:r.fornecedor, custos:[], eans:new Set(), skus:new Set() };
+    }
+    groups[key].custos.push(r.custo);
+    if(r.ean) groups[key].eans.add(r.ean);
+    if(r.skuPrincipal) groups[key].skus.add(r.skuPrincipal);
+  });
+  return Object.values(groups).map(g=>({
+    key:g.key, nome:g.nome, marca:g.marca, brandInferred:g.brandInferred,
+    categoria:g.categoria, fornecedor:g.fornecedor,
+    custoMedio: g.custos.reduce((a,b)=>a+b,0)/g.custos.length,
+    custoMin: Math.min(...g.custos), custoMax: Math.max(...g.custos), n:g.custos.length,
+    eans:[...g.eans], skus:[...g.skus],
+    tokens: new Set(tokenize(g.nome))
+  }));
+}
+
+function getProductsMasterRaw(){
+  const map = {};
+  Object.keys(state.months).forEach(mk=>{
+    const month = state.months[mk];
+    Object.values(month.products||{}).forEach(p=>{
+      if(!map[p.itemId]) map[p.itemId] = {itemId:p.itemId, namesCount:{}, monthly:{}};
+      map[p.itemId].namesCount[p.nome] = (map[p.itemId].namesCount[p.nome]||0)+1;
+      map[p.itemId].monthly[mk] = {units:p.unidades, vendas:p.vendasBRL, pedidos:p.pedidos};
+    });
+  });
+  Object.values(map).forEach(prod=>{
+    prod.nome = Object.entries(prod.namesCount).sort((a,b)=>b[1]-a[1])[0][0];
+    delete prod.namesCount;
+  });
+  return map;
+}
+
+function matchAll(master, catalog){
+  const byFirstToken = {};
+  catalog.forEach(c=>{ const ft=[...c.tokens][0]||''; (byFirstToken[ft]=byFirstToken[ft]||[]).push(c); });
+  Object.values(master).forEach(prod=>{
+    const existing = state.matches[prod.itemId];
+    if(existing && existing.method==='manual') return;
+    const normName = normalize(prod.nome);
+    let best = catalog.find(c=>c.key===normName);
+    let method = best? 'exact' : null;
+    let score = best? 1 : null;
+    if(!best){
+      const tokens = new Set(tokenize(prod.nome));
+      const ft = [...tokens][0] || '';
+      const candidates = (byFirstToken[ft] && byFirstToken[ft].length) ? byFirstToken[ft] : catalog;
+      let bestScore=0, bestC=null;
+      candidates.forEach(c=>{
+        let inter=0; for(const t of tokens) if(c.tokens.has(t)) inter++;
+        const uni = tokens.size + c.tokens.size - inter;
+        const sc = uni? inter/uni : 0;
+        // em empate, prefere o candidato com mais tokens em comum (mais específico —
+        // evita, por exemplo, casar um kit com apenas um dos itens avulsos que o compõem)
+        if(sc>bestScore || (sc===bestScore && bestC && inter>0 && inter>[...tokens].filter(t=>bestC.tokens.has(t)).length)){
+          bestScore=sc; bestC=c;
+        }
+      });
+      if(bestScore>=0.72){ best=bestC; method='fuzzy-alta'; score=bestScore; }
+      else if(bestScore>=0.38){ best=bestC; method='fuzzy-baixa'; score=bestScore; }
+      else{ method='none'; score=bestScore; }
+    }
+    state.matches[prod.itemId] = { costKey: best? best.key : null, method, score };
+  });
+  save();
+}
+
+function findBracketIndex(price){
+  let idx = state.commissionTable.findIndex(b=> price>=b.min && price<=b.max);
+  if(idx<0) idx = state.commissionTable.length-1;
+  return idx;
+}
+function computeDemand(prod){
+  const excluded = new Set(state.monthExclusions[prod.itemId]||[]);
+  let used = Object.entries(prod.monthly).filter(([mk,d])=> d.units>0 && !excluded.has(mk));
+  if(used.length===0) used = Object.entries(prod.monthly).filter(([mk])=> !excluded.has(mk));
+  const totalUnits = used.reduce((a,[,d])=>a+d.units,0);
+  const totalVendas = used.reduce((a,[,d])=>a+d.vendas,0);
+  const n = used.length || 1;
+  return {
+    avgMonthlyUnits: totalUnits/n,
+    avgPrice: totalUnits>0 ? totalVendas/totalUnits : 0,
+    monthsUsed: used.map(([mk])=>mk).sort(),
+    monthsCount: n
+  };
+}
+function computeMargin(prod, matchEntry){
+  const price = prod.demand.avgPrice;
+  if(price<=0) return {status:'sem-vendas', price:0};
+  const idx = findBracketIndex(price);
+  const bracket = state.commissionTable[idx];
+  const freight = state.freightByBracket[idx] || 0;
+  const override = state.costOverrides[prod.itemId];
+  const custo = (override!=null && override!=='') ? Number(override) : (matchEntry? matchEntry.custoMedio : null);
+  if(custo==null) return {status:'sem-custo', price, bracket, freight, bracketIdx:idx};
+  const comissaoValor = price*bracket.pct;
+  const margemR = price - comissaoValor - bracket.fixed - freight - custo;
+  const margemPct = margemR/price;
+  const pixValor = price*(bracket.pix||0);
+  const status = margemR<0 ? 'inviavel' : (margemPct<state.marginThreshold ? 'apertada' : 'viavel');
+  return {status, price, bracket, bracketIdx:idx, freight, custo, comissaoValor, margemR, margemPct, pixValor};
+}
+function computePurchase(prod){
+  const coverage = state.coverageOverrides[prod.itemId] ?? state.coverageMonths;
+  const qtyOverride = state.qtyOverrides[prod.itemId];
+  const blocked = prod.margin.status==='inviavel' && !state.forceInclude[prod.itemId];
+  let qty;
+  if(qtyOverride!=null && qtyOverride!=='') qty = Number(qtyOverride);
+  else qty = blocked ? 0 : Math.round(prod.demand.avgMonthlyUnits * coverage);
+  const custo = prod.margin.custo || 0;
+  const margemUnit = prod.margin.margemR || 0;
+  return { coverage, qty, blocked, investimento: qty*custo, margemUnit, margemTotal: qty*margemUnit };
+}
+function groupByBrand(){
+  const g = {};
+  Object.values(PRODUCTS).filter(p=>p.match).forEach(p=>{
+    const b = p.match.marca || '—';
+    (g[b]=g[b]||[]).push(p);
+  });
+  return g;
+}
+function recompute(){
+  CATALOG = buildCostCatalog();
+  const master = getProductsMasterRaw();
+  matchAll(master, CATALOG);
+  Object.values(master).forEach(prod=>{
+    const mrec = state.matches[prod.itemId];
+    const matchEntry = (mrec && mrec.costKey) ? CATALOG.find(c=>c.key===mrec.costKey) : null;
+    prod.match = matchEntry || null;
+    prod.matchMethod = mrec ? mrec.method : 'none';
+    prod.matchScore = mrec ? mrec.score : null;
+    prod.demand = computeDemand(prod);
+    prod.margin = computeMargin(prod, matchEntry);
+  });
+  PRODUCTS = master;
+}
+
+/* ────────── ações de vínculo ────────── */
+function setManualMatch(itemId, costKey){
+  if(!costKey){ state.matches[itemId] = {costKey:null, method:'none', score:null}; }
+  else state.matches[itemId] = {costKey, method:'manual', score:null};
+  save(); recompute(); renderAll();
+}
+function setCostOverride(itemId, val){
+  if(val===''||val==null) delete state.costOverrides[itemId];
+  else state.costOverrides[itemId] = Number(val);
+  save(); recompute(); renderMargin(); renderPurchase();
+}
+function toggleMonthExclusion(itemId, monthKey){
+  const arr = state.monthExclusions[itemId] = state.monthExclusions[itemId] || [];
+  const idx = arr.indexOf(monthKey);
+  if(idx>=0) arr.splice(idx,1); else arr.push(monthKey);
+  save(); recompute(); renderMargin(); renderPurchase();
+}
+function setCoverageOverride(itemId, val){
+  if(val===''||val==null) delete state.coverageOverrides[itemId];
+  else state.coverageOverrides[itemId] = Number(val);
+  save(); renderPurchase();
+}
+function setQtyOverride(itemId, val){
+  if(val===''||val==null) delete state.qtyOverrides[itemId];
+  else state.qtyOverrides[itemId] = Number(val);
+  save(); renderPurchase();
+}
+function toggleForceInclude(itemId){
+  if(state.forceInclude[itemId]) delete state.forceInclude[itemId];
+  else state.forceInclude[itemId] = true;
+  save(); renderPurchase();
+}
+function removeMonth(monthKey){
+  if(!confirm('Remover o mês '+(state.months[monthKey]?.label||monthKey)+' dos dados importados?')) return;
+  delete state.months[monthKey];
+  save(); recompute(); renderAll();
+}
+function clearAllData(){
+  if(!confirm('Isso apaga todos os relatórios importados, custos e configurações salvas neste navegador. Confirmar?')) return;
+  state = emptyState();
+  save(); recompute(); renderAll();
+  toast('Dados limpos','info');
+}
+function resetCommissionDefaults(){
+  state.commissionTable = JSON.parse(JSON.stringify(DEFAULT_COMMISSION));
+  save(); recompute(); renderAll();
+  toast('Tabela de comissão restaurada ao padrão','success');
+}
+function updateCommission(i, key, val){
+  const b = state.commissionTable[i];
+  if(key==='pct'||key==='pix') b[key] = Number(val)/100;
+  else b[key] = Number(val);
+  save(); recompute(); renderMargin(); renderPurchase();
+}
+function updateFreight(i, val){
+  state.freightByBracket[i] = Number(val)||0;
+  save(); recompute(); renderMargin(); renderPurchase();
+  renderFreightWarning();
+}
+function updateThreshold(val){
+  state.marginThreshold = (Number(val)||0)/100;
+  save(); recompute(); renderMargin();
+}
+function updateCoverage(val){
+  state.coverageMonths = Number(val)||0;
+  save(); renderPurchase();
+}
+
+/* ────────── TABS ────────── */
+function gotoTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b=> b.classList.toggle('active', b.dataset.tab===name));
+  document.querySelectorAll('.tab-panel').forEach(p=> p.classList.toggle('active', p.id==='tab-'+name));
+}
+
+/* ────────── RENDER: import ────────── */
+function renderImport(){
+  const months = Object.values(state.months).sort((a,b)=>a.key.localeCompare(b.key));
+  document.getElementById('months-chips').innerHTML = months.length ? months.map(m=>`
+    <span class="chip">${esc(m.label)} · ${fmtMoney(m.summary.vendasTotais)} ${m.hasProductData?'':'<span class="tag tag-muted" style="margin-left:4px">sem detalhe/produto</span>'}
+      <span class="x" onclick="removeMonth('${m.key}')">×</span>
+    </span>`).join('') : '<span class="small">Nenhum mês importado ainda.</span>';
+
+  const cs = document.getElementById('cost-status');
+  if(state.costRaw.length){
+    const brands = new Set(CATALOG.map(c=>c.marca));
+    cs.innerHTML = `<div class="callout ok" style="margin-bottom:0">✓ <strong>${state.costFileName?esc(state.costFileName):'arquivo'}</strong> — ${state.costRaw.length.toLocaleString('pt-BR')} linhas, ${CATALOG.length.toLocaleString('pt-BR')} produtos únicos, ${brands.size} marcas.</div>`;
+  }else{
+    cs.innerHTML = `<div class="callout warn" style="margin-bottom:0">Nenhuma planilha de custos importada ainda.</div>`;
+  }
+
+  const wrap = document.getElementById('resumo-wrap');
+  if(!months.length){ wrap.innerHTML = '<div class="empty"><div class="ic">📭</div>Importe os relatórios mensais para ver o resumo.</div>'; return; }
+  wrap.innerHTML = `
+    <div class="callout info">ℹ️ A aba "Product Contribution" da Shopee só lista os produtos em destaque por canal (card do produto, lives, vídeos, afiliados) — não é a lista completa do catálogo. A coluna <strong>cobertura</strong> mostra quanto da receita do mês está identificada por produto; o restante é cauda longa sem detalhe (não entra na aba de Margem).</div>
+    <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Mês</th><th class="num">Vendas totais</th><th class="num">Vendas por anúncios</th><th class="num">% anúncios</th><th class="num">Visitantes</th><th class="num">Pedidos</th><th class="num">Conversão</th><th class="num">Cobertura por produto</th></tr></thead>
+    <tbody>${months.map(m=>`<tr>
+      <td>${esc(m.label)}</td>
+      <td class="num">${fmtMoney(m.summary.vendasTotais)}</td>
+      <td class="num">${m.summary.vendasPorAnuncios!=null?fmtMoney(m.summary.vendasPorAnuncios):'—'}</td>
+      <td class="num">${m.summary.pctAnuncios!=null?fmtPct(m.summary.pctAnuncios):'—'}</td>
+      <td class="num">${fmtInt(m.summary.visitantes)}</td>
+      <td class="num">${fmtInt(m.summary.pedidos)}</td>
+      <td class="num">${fmtPct(m.summary.taxaConversao,2)}</td>
+      <td class="num">${m.summary.coveragePct!=null?fmtPct(m.summary.coveragePct):'—'}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+/* ────────── RENDER: match ────────── */
+function matchStatusInfo(method){
+  if(method==='exact') return {label:'Exato', cls:'tag-ok'};
+  if(method==='manual') return {label:'Manual', cls:'tag-info'};
+  if(method==='fuzzy-alta') return {label:'Provável', cls:'tag-warn'};
+  if(method==='fuzzy-baixa') return {label:'Baixa confiança', cls:'tag-warn'};
+  return {label:'Não encontrado', cls:'tag-danger'};
+}
+function renderMatchDatalist(){
+  document.getElementById('cost-datalist').innerHTML = CATALOG
+    .map(c=>`<option value="${esc(c.key)}">${esc(c.nome)} — ${esc(c.marca)} (${fmtMoney(c.custoMedio)})</option>`).join('');
+}
+function renderMatch(){
+  const all = Object.values(PRODUCTS);
+  document.getElementById('cnt-match').textContent = all.filter(p=>p.matchMethod==='none'||p.matchMethod==='fuzzy-baixa'||p.matchMethod==='fuzzy-alta').length;
+  document.getElementById('cnt-match').classList.toggle('warn', all.some(p=>p.matchMethod==='none'));
+
+  const exact = all.filter(p=>p.matchMethod==='exact').length;
+  const manual = all.filter(p=>p.matchMethod==='manual').length;
+  const review = all.filter(p=>p.matchMethod==='fuzzy-alta'||p.matchMethod==='fuzzy-baixa').length;
+  const none = all.filter(p=>p.matchMethod==='none').length;
+  document.getElementById('match-stats').innerHTML = [
+    {l:'Produtos únicos (Shopee)', v:all.length, c:'var(--accent)'},
+    {l:'Vínculo exato', v:exact, c:'var(--success)'},
+    {l:'Vínculo manual', v:manual, c:'var(--info)'},
+    {l:'A revisar (provável)', v:review, c:'var(--warning)'},
+    {l:'Não encontrados', v:none, c:'var(--danger)'}
+  ].map(s=>`<div class="stat" style="--c:${s.c}"><div class="stat-label">${s.l}</div><div class="stat-val">${s.v}</div></div>`).join('');
+
+  const q = (document.getElementById('match-search').value||'').toLowerCase();
+  const filter = document.getElementById('match-filter').value;
+  let rows = all.filter(p=>{
+    if(q && !p.nome.toLowerCase().includes(q)) return false;
+    if(filter==='review') return p.matchMethod==='fuzzy-alta'||p.matchMethod==='fuzzy-baixa';
+    if(filter==='none') return p.matchMethod==='none';
+    if(filter==='manual') return p.matchMethod==='manual';
+    if(filter==='exact') return p.matchMethod==='exact';
+    return true;
+  }).sort((a,b)=> (a.matchMethod==='none'?0:1) - (b.matchMethod==='none'?0:1) || a.nome.localeCompare(b.nome));
+
+  document.getElementById('match-tbody').innerHTML = rows.map(p=>{
+    const info = matchStatusInfo(p.matchMethod);
+    const totalUnits = Object.values(p.monthly).reduce((a,d)=>a+d.units,0);
+    return `<tr>
+      <td class="name-cell">${esc(p.nome)}</td>
+      <td class="num">${fmtInt(totalUnits)}</td>
+      <td>${p.match? esc(p.match.nome) : '<span class="small">—</span>'}</td>
+      <td>${p.match? esc(p.match.marca) : '—'}</td>
+      <td class="num">${p.match? fmtMoney(p.match.custoMedio) : '—'}</td>
+      <td><span class="tag ${info.cls}">${info.label}${p.matchScore!=null && p.matchMethod.startsWith('fuzzy') ? ' '+Math.round(p.matchScore*100)+'%' : ''}</span></td>
+      <td>
+        <input list="cost-datalist" placeholder="buscar produto de custo…" style="width:220px"
+          onchange="setManualMatch('${p.itemId}', this.value)">
+      </td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="7" class="empty">Nenhum produto encontrado.</td></tr>`;
+}
+
+/* ────────── RENDER: config ────────── */
+function renderConfig(){
+  document.getElementById('commission-tbody').innerHTML = state.commissionTable.map((b,i)=>`
+    <tr>
+      <td><input class="inline-num" type="number" step="0.01" value="${b.min}" onchange="updateCommission(${i},'min',this.value)"></td>
+      <td><input class="inline-num" type="number" step="0.01" value="${b.max}" onchange="updateCommission(${i},'max',this.value)"></td>
+      <td><input class="inline-num" type="number" step="0.1" value="${(b.pct*100).toFixed(2)}" onchange="updateCommission(${i},'pct',this.value)"></td>
+      <td><input class="inline-num" type="number" step="0.01" value="${b.fixed}" onchange="updateCommission(${i},'fixed',this.value)"></td>
+      <td><input class="inline-num" type="number" step="0.1" value="${(b.pix*100).toFixed(2)}" onchange="updateCommission(${i},'pix',this.value)"></td>
+      <td><input class="inline-num" type="number" step="0.01" value="${state.freightByBracket[i]||0}" onchange="updateFreight(${i},this.value)"></td>
+      <td class="small">${esc(b.desc)}</td>
+    </tr>`).join('');
+  document.getElementById('cfg-threshold').value = (state.marginThreshold*100).toFixed(1);
+  document.getElementById('cfg-coverage').value = state.coverageMonths;
+  renderFreightWarning();
+}
+function renderFreightWarning(){
+  const anyFreight = state.freightByBracket.some(v=>v>0);
+  document.getElementById('freight-warning').style.display = anyFreight ? 'none' : 'block';
+}
+
+/* ────────── RENDER: margin ────────── */
+const STATUS_INFO = {
+  viavel:   {label:'Viável', cls:'tag-ok'},
+  apertada: {label:'Margem apertada', cls:'tag-warn'},
+  inviavel: {label:'Inviável', cls:'tag-danger'},
+  'sem-custo': {label:'Sem custo vinculado', cls:'tag-muted'},
+  'sem-vendas': {label:'Sem vendas no período', cls:'tag-muted'}
+};
+function monthChipsHTML(prod){
+  const excluded = new Set(state.monthExclusions[prod.itemId]||[]);
+  const allMonths = Object.keys(state.months).sort();
+  return allMonths.map(mk=>{
+    const label = state.months[mk].label;
+    const d = prod.monthly[mk];
+    if(!d){
+      if(!state.months[mk].hasProductData) return `<span class="mchip nodata" title="Mês sem detalhe por produto">${label}: s/dados</span>`;
+      return `<span class="mchip off" onclick="toggleMonthExclusion('${prod.itemId}','${mk}')" title="Sem venda neste mês — clique para forçar inclusão/exclusão">${label}: 0</span>`;
+    }
+    const on = !excluded.has(mk) && d.units>0;
+    return `<span class="mchip ${on?'on':'off'}" onclick="toggleMonthExclusion('${prod.itemId}','${mk}')" title="Clique para incluir/excluir da média">${label}: ${fmtInt(d.units)}</span>`;
+  }).join('');
+}
+function renderMargin(){
+  const all = Object.values(PRODUCTS);
+  const withCost = all.filter(p=>p.margin.custo!=null);
+  const inviavel = all.filter(p=>p.margin.status==='inviavel').length;
+  const apertada = all.filter(p=>p.margin.status==='apertada').length;
+  const viavel = all.filter(p=>p.margin.status==='viavel').length;
+  const semCusto = all.filter(p=>p.margin.status==='sem-custo').length;
+
+  document.getElementById('cnt-margin').textContent = inviavel+apertada;
+  document.getElementById('cnt-margin').classList.toggle('warn', inviavel>0);
+
+  document.getElementById('margin-stats').innerHTML = [
+    {l:'Produtos com margem calculada', v:withCost.length, c:'var(--accent)'},
+    {l:'Viáveis', v:viavel, c:'var(--success)'},
+    {l:'Margem apertada (<'+ (state.marginThreshold*100).toFixed(0) +'%)', v:apertada, c:'var(--warning)'},
+    {l:'Inviáveis (margem negativa)', v:inviavel, c:'var(--danger)'},
+    {l:'Sem custo vinculado', v:semCusto, c:'var(--muted2)'}
+  ].map(s=>`<div class="stat" style="--c:${s.c}"><div class="stat-label">${s.l}</div><div class="stat-val">${s.v}</div></div>`).join('');
+
+  const alertBox = document.getElementById('margin-alert');
+  if(inviavel+apertada>0){
+    alertBox.innerHTML = `<div class="callout danger">⚠️ <strong>${inviavel+apertada} produto(s)</strong> com margem negativa ou abaixo de ${(state.marginThreshold*100).toFixed(0)}% — revise antes de aprovar reposição de estoque na aba de simulação.</div>`;
+  }else alertBox.innerHTML = '';
+
+  const q = (document.getElementById('margin-search').value||'').toLowerCase();
+  const filterStatus = document.getElementById('margin-filter-status').value;
+  const sortMode = document.getElementById('margin-sort').value;
+  let rows = all.filter(p=>{
+    if(q && !(p.nome.toLowerCase().includes(q) || (p.match&&p.match.marca.toLowerCase().includes(q)))) return false;
+    if(filterStatus!=='all' && p.margin.status!==filterStatus) return false;
+    return true;
+  });
+  rows.sort((a,b)=>{
+    if(sortMode==='pct-asc') return (a.margin.margemPct??99) - (b.margin.margemPct??99);
+    if(sortMode==='pct-desc') return (b.margin.margemPct??-99) - (a.margin.margemPct??-99);
+    if(sortMode==='demand-desc') return b.demand.avgMonthlyUnits - a.demand.avgMonthlyUnits;
+    return a.nome.localeCompare(b.nome);
+  });
+
+  document.getElementById('margin-tbody').innerHTML = rows.map(p=>{
+    const st = STATUS_INFO[p.margin.status] || STATUS_INFO['sem-custo'];
+    const custoVal = state.costOverrides[p.itemId] ?? (p.match? p.match.custoMedio.toFixed(2) : '');
+    return `<tr>
+      <td>${p.match? esc(p.match.marca) : '<span class="small">—</span>'}</td>
+      <td class="name-cell">${esc(p.nome)}${p.match && p.match.n>1?`<div class="small">custo médio de ${p.match.n} variações (R$ ${p.match.custoMin.toFixed(2)}–${p.match.custoMax.toFixed(2)})</div>`:''}</td>
+      <td class="num">${p.margin.price?fmtMoney(p.margin.price):'—'}</td>
+      <td class="num"><input class="inline-num" type="number" step="0.01" placeholder="${p.match?p.match.custoMedio.toFixed(2):'—'}" value="${state.costOverrides[p.itemId]??''}" onchange="setCostOverride('${p.itemId}', this.value)" style="width:80px"></td>
+      <td class="num">${p.margin.bracket? fmtPct(p.margin.bracket.pct,0)+' + '+fmtMoney(p.margin.bracket.fixed) : '—'}</td>
+      <td class="num">${p.margin.freight!=null? fmtMoney(p.margin.freight) : '—'}</td>
+      <td class="num" style="color:${p.margin.margemR<0?'var(--danger)':'inherit'};font-weight:700">${p.margin.margemR!=null?fmtMoney(p.margin.margemR):'—'}</td>
+      <td class="num" style="font-weight:700">${p.margin.margemPct!=null?fmtPct(p.margin.margemPct):'—'}</td>
+      <td><span class="tag ${st.cls}">${st.label}</span></td>
+      <td style="white-space:normal;max-width:260px">${monthChipsHTML(p)}</td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="10" class="empty">Nenhum produto para os filtros selecionados.</td></tr>`;
+}
+
+/* ────────── RENDER: purchase ────────── */
+function renderPurchase(){
+  const grouped = groupByBrand();
+  const brands = Object.keys(grouped).sort();
+  let totalInvest=0, totalMargin=0, blockedCount=0;
+  const unmatched = Object.values(PRODUCTS).filter(p=>!p.match).length;
+
+  let body = '';
+  brands.forEach(brand=>{
+    const items = grouped[brand].sort((a,b)=>a.nome.localeCompare(b.nome));
+    let brandInvest=0, brandMargin=0;
+    const itemRows = items.map(p=>{
+      const pur = computePurchase(p);
+      brandInvest += pur.investimento; brandMargin += pur.margemTotal;
+      if(pur.blocked) blockedCount++;
+      const st = STATUS_INFO[p.margin.status] || STATUS_INFO['sem-custo'];
+      return `<tr>
+        <td class="name-cell">${esc(p.nome)}${pur.blocked?'<div class="small" style="color:var(--danger)">bloqueado — margem inviável</div>':''}</td>
+        <td class="num">${p.demand.avgMonthlyUnits.toFixed(1)}</td>
+        <td class="num"><input class="inline-num" type="number" step="0.5" value="${state.coverageOverrides[p.itemId]??state.coverageMonths}" onchange="setCoverageOverride('${p.itemId}',this.value)" style="width:60px"></td>
+        <td class="num"><input class="inline-num" type="number" step="1" value="${state.qtyOverrides[p.itemId]??pur.qty}" onchange="setQtyOverride('${p.itemId}',this.value)" style="width:70px"></td>
+        <td class="num">${fmtMoney(p.margin.custo||0)}</td>
+        <td class="num">${fmtMoney(pur.investimento)}</td>
+        <td class="num">${fmtMoney(pur.margemUnit)}</td>
+        <td class="num" style="font-weight:700">${fmtMoney(pur.margemTotal)}</td>
+        <td>
+          <span class="tag ${st.cls}">${st.label}</span>
+          ${p.margin.status==='inviavel'?`<button class="btn btn-ghost btn-sm" style="padding:3px 8px;font-size:10.5px;margin-left:4px" onclick="toggleForceInclude('${p.itemId}')">${state.forceInclude[p.itemId]?'✓ incluído':'incluir mesmo assim'}</button>`:''}
+        </td>
+      </tr>`;
+    }).join('');
+    totalInvest += brandInvest; totalMargin += brandMargin;
+    body += `<tr class="brand-group"><td colspan="5">${esc(brand)}</td><td class="num">${fmtMoney(brandInvest)}</td><td></td><td class="num">${fmtMoney(brandMargin)}</td><td></td></tr>` + itemRows;
+  });
+
+  document.getElementById('purchase-tbody').innerHTML = body || `<tr><td colspan="9" class="empty">Nenhum produto vinculado a custo ainda. Complete a aba "Vínculos de produto".</td></tr>`;
+  document.getElementById('purchase-total-invest').textContent = fmtMoney(totalInvest);
+  document.getElementById('purchase-total-margin').textContent = fmtMoney(totalMargin);
+
+  document.getElementById('purchase-stats').innerHTML = [
+    {l:'Marcas na simulação', v:brands.length, c:'var(--accent)'},
+    {l:'Investimento total sugerido', v:fmtMoney(totalInvest), c:'var(--info)'},
+    {l:'Margem total projetada', v:fmtMoney(totalMargin), c:'var(--success)'},
+    {l:'Itens bloqueados (margem inviável)', v:blockedCount, c:'var(--danger)'}
+  ].map(s=>`<div class="stat" style="--c:${s.c}"><div class="stat-label">${s.l}</div><div class="stat-val">${typeof s.v==='number'?s.v:s.v}</div></div>`).join('');
+
+  const noteBox = document.getElementById('purchase-blocked-note');
+  if(blockedCount>0){ noteBox.style.display='block'; noteBox.innerHTML = `🚫 <strong>${blockedCount} produto(s)</strong> com margem negativa foram excluídos automaticamente da quantidade sugerida. Use "incluir mesmo assim" só com justificativa (ex: produto estratégico, giro de catálogo).`; }
+  else noteBox.style.display='none';
+
+  const unmBox = document.getElementById('unmatched-note-card');
+  unmBox.innerHTML = unmatched>0 ? `<div class="card-title" style="margin-bottom:8px">⚠️ ${unmatched} produto(s) sem vínculo de custo</div><div class="card-sub">Não entram na simulação de pedido porque não têm custo/margem calculados. Resolva na aba "Vínculos de produto".</div>` : '';
+}
+
+/* ────────── EXPORT ────────── */
+function statusLabel(s){ return (STATUS_INFO[s]||{label:s}).label; }
+function exportXLSX(){
+  if(!Object.keys(state.months).length){ toast('Importe ao menos um relatório mensal antes de exportar','error'); return; }
+  const wb = XLSX.utils.book_new();
+  const months = Object.values(state.months).sort((a,b)=>a.key.localeCompare(b.key));
+
+  const aoaResumo = [['Mês','Vendas totais (R$)','Vendas por anúncios (R$)','% vindo de anúncios','Visitantes','Pedidos','Taxa de conversão','Cobertura por produto']];
+  months.forEach(m=> aoaResumo.push([m.label, +m.summary.vendasTotais.toFixed(2), m.summary.vendasPorAnuncios!=null?+m.summary.vendasPorAnuncios.toFixed(2):'—', m.summary.pctAnuncios!=null?fmtPct(m.summary.pctAnuncios):'—', m.summary.visitantes, m.summary.pedidos, fmtPct(m.summary.taxaConversao,2), m.summary.coveragePct!=null?fmtPct(m.summary.coveragePct):'—']));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoaResumo), 'Resumo Mensal');
+
+  const aoaCom = [['Faixa mínima','Faixa máxima','Comissão %','Taxa fixa (R$)','Subsídio Pix %','Frete (R$)','Descrição']];
+  state.commissionTable.forEach((b,i)=> aoaCom.push([b.min,b.max,fmtPct(b.pct),b.fixed,fmtPct(b.pix),state.freightByBracket[i]||0,b.desc]));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoaCom), 'Tabela de Comissões e Frete');
+
+  const aoaMargem = [['Marca','Produto (Shopee)','Produto (custo)','Preço médio (R$)','Custo (R$)','Comissão %','Taxa fixa (R$)','Frete (R$)','Margem (R$)','Margem (%)','Status','Meses considerados']];
+  Object.values(PRODUCTS).sort((a,b)=>(a.margin.margemPct??0)-(b.margin.margemPct??0)).forEach(p=>{
+    aoaMargem.push([
+      p.match?p.match.marca:'—', p.nome, p.match?p.match.nome:'—',
+      p.margin.price?+p.margin.price.toFixed(2):'', p.margin.custo!=null?+p.margin.custo.toFixed(2):'',
+      p.margin.bracket?fmtPct(p.margin.bracket.pct):'', p.margin.bracket?p.margin.bracket.fixed:'',
+      p.margin.freight!=null?p.margin.freight:'', p.margin.margemR!=null?+p.margin.margemR.toFixed(2):'',
+      p.margin.margemPct!=null?fmtPct(p.margin.margemPct):'', statusLabel(p.margin.status),
+      p.demand.monthsUsed.map(mk=>state.months[mk]?.label||mk).join(', ')
+    ]);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoaMargem), 'Calculadora de Margem');
+
+  const aoaSim = [['Marca','Produto','Demanda média mensal (un.)','Cobertura (meses)','Quantidade sugerida','Custo unitário (R$)','Investimento (R$)','Margem unitária (R$)','Margem total projetada (R$)','Status']];
+  const grouped = groupByBrand();
+  Object.keys(grouped).sort().forEach(brand=>{
+    grouped[brand].forEach(p=>{
+      const pur = computePurchase(p);
+      aoaSim.push([brand, p.nome, +p.demand.avgMonthlyUnits.toFixed(1), pur.coverage, pur.qty, +(p.margin.custo||0).toFixed(2), +pur.investimento.toFixed(2), +pur.margemUnit.toFixed(2), +pur.margemTotal.toFixed(2), statusLabel(p.margin.status)]);
+    });
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoaSim), 'Simulação de Pedido por Marca');
+
+  const naoVinc = Object.values(PRODUCTS).filter(p=>!p.match);
+  const aoaNv = [['Produto (Shopee)','Status do vínculo','Unidades totais vendidas no período']];
+  naoVinc.forEach(p=> aoaNv.push([p.nome, statusLabel(p.matchMethod)||p.matchMethod, Object.values(p.monthly).reduce((a,d)=>a+d.units,0)]));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoaNv), 'Não Vinculados');
+
+  XLSX.writeFile(wb, 'margem-shopee-'+new Date().toISOString().slice(0,10)+'.xlsx');
+  toast('Planilha exportada','success');
+}
+
+/* ────────── render tudo ────────── */
+function renderAll(){
+  renderImport();
+  renderMatchDatalist();
+  renderMatch();
+  renderConfig();
+  renderMargin();
+  renderPurchase();
+}
+
+/* ────────── file inputs / drag&drop ────────── */
+function wireDropzone(zoneId, inputId, onFiles){
+  const zone = document.getElementById(zoneId);
+  const input = document.getElementById(inputId);
+  zone.addEventListener('click', ()=> input.click());
+  ['dragover','dragleave','drop'].forEach(ev=> zone.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); }));
+  zone.addEventListener('dragover', ()=> zone.classList.add('over'));
+  zone.addEventListener('dragleave', ()=> zone.classList.remove('over'));
+  zone.addEventListener('drop', e=>{ zone.classList.remove('over'); onFiles(e.dataTransfer.files); });
+  input.addEventListener('change', e=> onFiles(e.target.files));
+}
+wireDropzone('dz-months','input-months', async (files)=>{
+  for(const f of Array.from(files)) await importShopeeFile(f);
+});
+wireDropzone('dz-cost','input-cost', async (files)=>{
+  if(files[0]) await importCostFile(files[0]);
+});
+
+document.getElementById('cfg-threshold').addEventListener('change', e=> updateThreshold(e.target.value));
+document.getElementById('cfg-coverage').addEventListener('change', e=> updateCoverage(e.target.value));
+
+/* ────────── init ────────── */
+recompute();
+renderAll();
+</script>
+</body>
+</html>
