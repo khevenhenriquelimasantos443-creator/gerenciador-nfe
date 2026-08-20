@@ -1,0 +1,25 @@
+# Arquivos que NÃO devem subir como asset público do site.
+# Sintaxe .gitignore — relativo à raiz (assets.directory = "./").
+# Barra inicial = ancora na raiz (sem isso, "sw.js" bateria também em
+# plantao/sw.js, que É usado de verdade pelo PWA do Plantão).
+
+/.git
+/.github
+/.wrangler
+/wrangler.toml
+/.assetsignore
+
+# Código-fonte de Workers de backend (deploy próprio, com secrets via
+# `wrangler secret put` — não fazem parte do site estático)
+/finn-worker
+/finn-serve
+/melivista-worker
+/mercadolivre/worker.js
+
+# Duplicatas órfãs na raiz (não usadas pelo hub nem por nenhuma app — cada
+# PWA tem seu próprio sw.js/manifest.json dentro da própria pasta, ex:
+# plantao/sw.js, que continua sendo publicado normalmente)
+/sw.js
+/sw (1).js
+/version.json
+/version (1).json
