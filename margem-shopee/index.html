@@ -288,17 +288,19 @@ main{padding:24px 24px 80px;max-width:1360px;width:100%;margin:0 auto}
   <!-- ═══════════ TAB 4: RENTABILIDADE ═══════════ -->
   <section class="tab-panel" id="tab-margin">
     <div class="callout info">
-      💡 Ajuste <strong>preço de venda</strong> e <strong>custo</strong> direto na tabela pra simular cenários — a margem recalcula na hora. Campos em laranja são valores que você sobrescreveu manualmente; deixe em branco pra voltar a usar o calculado.
+      💡 A lista abaixo traz <strong>todo o catálogo de custos</strong>, não só os produtos com venda recente na Shopee. Ajuste <strong>preço de venda</strong> e <strong>custo</strong> direto na tabela pra simular cenários — a margem recalcula na hora. Campos em laranja são valores que você sobrescreveu manualmente; deixe em branco pra voltar a usar o calculado. Produtos sem venda registrada ficam com status "sem venda registrada" até você digitar um preço.
     </div>
     <div class="stats" id="margin-stats"></div>
     <div id="margin-alert"></div>
     <div class="toolbar">
-      <div class="search"><input type="text" id="margin-search" placeholder="Buscar produto, marca ou SKU…" oninput="renderMargin()"></div>
+      <div class="search"><input type="text" id="margin-search" placeholder="Buscar produto, marca ou SKU…" oninput="debounce('margin-search', renderMargin)"></div>
       <select class="select-pill" id="margin-filter-status" onchange="renderMargin()">
-        <option value="all">Todos os status</option>
+        <option value="com-dados" selected>Com dado de venda (padrão)</option>
+        <option value="all" id="opt-catalog-all">Catálogo completo</option>
         <option value="inviavel">Inviável (margem negativa)</option>
         <option value="apertada">Margem apertada</option>
         <option value="viavel">Viável</option>
+        <option value="sem-vendas">Sem venda registrada</option>
         <option value="sem-custo">Sem custo vinculado</option>
       </select>
       <select class="select-pill" id="margin-sort" onchange="renderMargin()">
@@ -389,6 +391,11 @@ function save(){
 }
 
 /* ────────── utils ────────── */
+const _debounceTimers = {};
+function debounce(key, fn, delay=250){
+  clearTimeout(_debounceTimers[key]);
+  _debounceTimers[key] = setTimeout(fn, delay);
+}
 function toast(msg,type='info'){
   const w = document.getElementById('toast-wrap');
   const t = document.createElement('div');
@@ -627,6 +634,7 @@ async function importShopeeFile(file){
 /* ────────── catálogo de custos + casamento de produtos ────────── */
 let CATALOG = [];
 let PRODUCTS = {};
+let ALL_PRODUCTS = {}; // PRODUCTS + itens do catálogo de custo sem venda na Shopee
 
 function inferBrand(nome){ const t=(nome||'').trim().split(/\s+/); return t[0]||'—'; }
 
@@ -773,6 +781,24 @@ function recompute(){
     prod.margin = computeMargin(prod, matchEntry);
   });
   PRODUCTS = master;
+  ALL_PRODUCTS = buildAllProducts();
+}
+
+/* Rentabilidade/export cobrem o catálogo inteiro, não só os itens que
+   apareceram nos relatórios da Shopee: todo produto de custo sem venda
+   registrada entra com preço em branco (dá pra digitar na hora). */
+function buildAllProducts(){
+  const matchedKeys = new Set(Object.values(PRODUCTS).map(p=>p.match?p.match.key:null).filter(Boolean));
+  const extra = {};
+  CATALOG.forEach(c=>{
+    if(matchedKeys.has(c.key)) return;
+    const itemId = 'cat:'+c.key;
+    const prod = { itemId, nome:c.nome, monthly:{}, match:c, matchMethod:'catalog', matchScore:null };
+    prod.demand = computeDemand(prod);
+    prod.margin = computeMargin(prod, c);
+    extra[itemId] = prod;
+  });
+  return Object.assign({}, PRODUCTS, extra);
 }
 
 /* ────────── ações de vínculo ────────── */
@@ -992,21 +1018,25 @@ function monthChipsHTML(prod){
   }).join('');
 }
 function renderMargin(){
-  const all = Object.values(PRODUCTS);
+  const all = Object.values(ALL_PRODUCTS);
   const withCost = all.filter(p=>p.margin.custo!=null);
   const inviavel = all.filter(p=>p.margin.status==='inviavel').length;
   const apertada = all.filter(p=>p.margin.status==='apertada').length;
   const viavel = all.filter(p=>p.margin.status==='viavel').length;
   const semCusto = all.filter(p=>p.margin.status==='sem-custo').length;
+  const semVendas = all.filter(p=>p.margin.status==='sem-vendas').length;
 
   document.getElementById('cnt-margin').textContent = inviavel+apertada;
   document.getElementById('cnt-margin').classList.toggle('warn', inviavel>0);
 
+  document.getElementById('opt-catalog-all').textContent = `Catálogo completo (${all.length})`;
+
   document.getElementById('margin-stats').innerHTML = [
-    {l:'Produtos com margem calculada', v:withCost.length, c:'var(--accent)'},
+    {l:'Produtos no catálogo', v:all.length, c:'var(--accent)'},
     {l:'Viáveis', v:viavel, c:'var(--success)'},
     {l:'Margem apertada (<'+ (state.marginThreshold*100).toFixed(0) +'%)', v:apertada, c:'var(--warning)'},
     {l:'Inviáveis (margem negativa)', v:inviavel, c:'var(--danger)'},
+    {l:'Sem venda registrada', v:semVendas, c:'var(--muted2)'},
     {l:'Sem custo vinculado', v:semCusto, c:'var(--muted2)'}
   ].map(s=>`<div class="stat" style="--c:${s.c}"><div class="stat-label">${s.l}</div><div class="stat-val">${s.v}</div></div>`).join('');
 
@@ -1020,7 +1050,10 @@ function renderMargin(){
   const sortMode = document.getElementById('margin-sort').value;
   let rows = all.filter(p=>{
     if(q && !(p.nome.toLowerCase().includes(q) || (p.match&&p.match.marca.toLowerCase().includes(q)) || (p.match&&p.match.skus.join(' ').toLowerCase().includes(q)))) return false;
-    if(filterStatus!=='all' && p.margin.status!==filterStatus) return false;
+    // com "com-dados" sem busca ativa, esconde o catálogo sem venda (tabela fica leve);
+    // com um termo digitado, busca no catálogo inteiro mesmo assim
+    if(filterStatus==='com-dados'){ if(!q && p.margin.status==='sem-vendas') return false; }
+    else if(filterStatus!=='all' && p.margin.status!==filterStatus) return false;
     return true;
   });
   rows.sort((a,b)=>{
@@ -1048,7 +1081,7 @@ function renderMargin(){
       <td><span class="tag ${st.cls}">${st.label}</span></td>
       <td style="white-space:normal;max-width:260px">${monthChipsHTML(p)}</td>
     </tr>`;
-  }).join('') || `<tr><td colspan="10" class="empty">Nenhum produto para os filtros selecionados.</td></tr>`;
+  }).join('') || `<tr><td colspan="11" class="empty">Nenhum produto para os filtros selecionados.</td></tr>`;
 }
 
 /* ────────── RENDER: purchase ────────── */
@@ -1121,7 +1154,7 @@ function exportXLSX(){
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(aoaCom), 'Tabela de Comissões e Frete');
 
   const aoaMargem = [['Marca','Produto (Shopee)','Produto (custo)','SKU','Preço de venda (R$)','Custo (R$)','Comissão %','Taxa fixa (R$)','Frete (R$)','Margem (R$)','Margem (%)','Status','Meses considerados']];
-  Object.values(PRODUCTS).sort((a,b)=>(a.margin.margemPct??0)-(b.margin.margemPct??0)).forEach(p=>{
+  Object.values(ALL_PRODUCTS).sort((a,b)=>(a.margin.margemPct??99)-(b.margin.margemPct??99)).forEach(p=>{
     aoaMargem.push([
       p.match?p.match.marca:'—', p.nome, p.match?p.match.nome:'—', p.match?p.match.skus.join(', '):'',
       p.margin.price?+p.margin.price.toFixed(2):'', p.margin.custo!=null?+p.margin.custo.toFixed(2):'',
