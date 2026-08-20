@@ -18,8 +18,11 @@ id = "b7379f2c41464ac3a5be4cecf9c80445"
 #                    separadas por vírgula). Curinga "*" NÃO é aceito.
 # ─────────────────────────────────────────────
 [vars]
-APP_URL = "https://khevenhenriquelimasantos443-creator.github.io/gerenciador-nfe/melivista/"
-ALLOWED_ORIGINS = "https://khevenhenriquelimasantos443-creator.github.io"
+APP_URL = "https://gerenciador-nfe.khevenhenriquelimasantos443.workers.dev/melivista/"
+# Mantém as duas origens liberadas durante a migração do GitHub Pages pro
+# Cloudflare — remova a do github.io quando o domínio novo estiver 100% em uso
+# (e as redirect URIs do Mercado Livre/Mercado Pago já apontarem pra ele).
+ALLOWED_ORIGINS = "https://gerenciador-nfe.khevenhenriquelimasantos443.workers.dev,https://khevenhenriquelimasantos443-creator.github.io"
 
 # ─────────────────────────────────────────────
 #  SEGREDOS — nunca ficam neste arquivo nem no repositório.
