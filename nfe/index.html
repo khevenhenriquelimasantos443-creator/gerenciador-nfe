@@ -139,9 +139,18 @@
     border: 1px solid rgba(255,255,255,.07);
     border-radius: 18px;
     padding: 24px;
+    display: block;
+    text-decoration: none;
     transition: transform .18s, border-color .18s;
   }
   .card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,.35); }
+  .card-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10.5px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 99px; margin-bottom: 12px;
+  }
+  .card-status.live { background: rgba(34,197,94,.12); color: #4ADE80; }
+  .card-status.soon { background: rgba(148,163,184,.1); color: #64748B; }
   .card-icon {
     width: 42px; height: 42px;
     background: rgba(59,130,246,.12);
@@ -198,8 +207,8 @@
     </a>
     <div class="top-nav">
       <a href="#modulos">Módulos</a>
-      <a href="#roadmap">Roadmap</a>
-      <a class="cta" href="./escopo.html">Ver escopo completo</a>
+      <a href="./escopo.html">Escopo</a>
+      <a class="cta" href="./produtos.html">Abrir sistema</a>
     </div>
   </div>
 </div>
@@ -209,11 +218,11 @@
   <h1>Gestão de estoque e<br><span>fiscal</span>, num só lugar</h1>
   <p class="lede">Cadastro de produtos, entrada e saída de NF-e, inventário, fornecedores e permissões — com um motor de tributação pronto para a transição ICMS/PIS/COFINS → IBS/CBS da Reforma Tributária.</p>
   <div class="hero-ctas">
-    <a class="btn btn-primary" href="./escopo.html">
-      Ler o escopo completo
+    <a class="btn btn-primary" href="./produtos.html">
+      Abrir Cadastro de Produtos
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
-    <a class="btn btn-ghost" href="#modulos">Ver módulos</a>
+    <a class="btn btn-ghost" href="./escopo.html">Ver escopo completo</a>
   </div>
 </header>
 
@@ -230,32 +239,38 @@
     <p>Do cadastro de produtos ao motor de tributação — cada frente descrita em detalhe no documento de escopo.</p>
   </div>
   <div class="grid">
-    <div class="card">
+    <a class="card" href="./produtos.html">
+      <div class="card-status live">✅ Disponível</div>
       <div class="card-icon">🏷️</div>
       <h3>1. Cadastro de Produtos</h3>
       <p>SKU, código de barras, hierarquia Seção → Grupo → Subgrupo, custo médio ponderado e ajuste de custo auditável.</p>
-    </div>
+    </a>
     <div class="card">
+      <div class="card-status soon">🔜 Em breve</div>
       <div class="card-icon">🧾</div>
       <h3>2. Entrada e Saída de NF</h3>
       <p>Importação de XML da NF-e, conferência física, rateio de custos e emissão de saída (venda, devolução, transferência).</p>
     </div>
     <div class="card">
+      <div class="card-status soon">🔜 Em breve</div>
       <div class="card-icon">📦</div>
       <h3>3. Contagem de Estoque</h3>
       <p>Inventário geral, rotativo e contagem cega, com dupla checagem e aprovação de ajuste por alçada.</p>
     </div>
     <div class="card">
+      <div class="card-status soon">🔜 Em breve</div>
       <div class="card-icon">🔐</div>
       <h3>4. Usuários e Permissões</h3>
       <p>RBAC granular por tela e por alçada de valor, com log de auditoria em toda ação sensível.</p>
     </div>
     <div class="card">
+      <div class="card-status soon">🔜 Em breve</div>
       <div class="card-icon">🚚</div>
       <h3>5. Fornecedores</h3>
       <p>Cadastro completo com validação de CNPJ/IE, regime tributário e histórico/ranking de compras.</p>
     </div>
     <div class="card">
+      <div class="card-status soon">🔜 Em breve</div>
       <div class="card-icon">⚖️</div>
       <h3>6. Motor de Tributação</h3>
       <p>NCM, CEST, CFOP e Origem como tabela de regras configurável por vigência — pronta para IBS/CBS.</p>

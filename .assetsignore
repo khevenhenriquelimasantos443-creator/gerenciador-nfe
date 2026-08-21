@@ -15,6 +15,7 @@
 /finn-serve
 /melivista-worker
 /mercadolivre/worker.js
+/nfe-api
 
 # Duplicatas órfãs na raiz (não usadas pelo hub nem por nenhuma app — cada
 # PWA tem seu próprio sw.js/manifest.json dentro da própria pasta, ex:

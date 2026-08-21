@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Produtos — Gerenciador NFe</title>
+<meta name="description" content="Cadastro de produtos, hierarquia Seção/Grupo/Subgrupo, custo médio e ajuste de custo com auditoria.">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0A0E1A;
+    color: #E2E8F0;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  a { color: inherit; }
+  button { font-family: inherit; cursor: pointer; }
+  input, select, textarea { font-family: inherit; }
+
+  .top {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(10,14,26,.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .top-inner {
+    max-width: 1120px; margin: 0 auto;
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-size: 15px; color: #fff; }
+  .brand-mark { width: 30px; height: 30px; background: #1E293B; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #3B82F6; }
+  .top-tabs { display: flex; gap: 6px; }
+  .top-tab {
+    font-size: 13px; font-weight: 700; color: #94A3B8;
+    background: none; border: none; padding: 8px 14px; border-radius: 8px;
+  }
+  .top-tab.active { background: rgba(59,130,246,.14); color: #60A5FA; }
+  .top-tab:hover:not(.active) { color: #E2E8F0; }
+  .user-chip { font-size: 12px; color: #64748B; display: flex; align-items: center; gap: 8px; }
+  .user-chip button { background: none; border: 1px solid rgba(255,255,255,.12); color: #94A3B8; border-radius: 7px; padding: 5px 10px; font-size: 11px; font-weight: 700; }
+  .user-chip button:hover { border-color: rgba(239,68,68,.4); color: #F87171; }
+
+  main { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .toolbar h1 { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; }
+  .search {
+    background: #111827; border: 1px solid rgba(255,255,255,.09); border-radius: 10px;
+    padding: 9px 14px; color: #E2E8F0; font-size: 13px; min-width: 240px;
+  }
+  .search:focus { outline: none; border-color: rgba(59,130,246,.5); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 700; padding: 9px 16px; border-radius: 9px;
+    border: none; text-decoration: none;
+  }
+  .btn-primary { background: #3B82F6; color: #fff; }
+  .btn-primary:hover { opacity: .9; }
+  .btn-ghost { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); color: #E2E8F0; }
+  .btn-ghost:hover { border-color: rgba(59,130,246,.4); }
+  .btn-sm { padding: 5px 10px; font-size: 11.5px; border-radius: 7px; }
+  .btn-danger { background: rgba(239,68,68,.12); color: #F87171; border: 1px solid rgba(239,68,68,.25); }
+  .btn-danger:hover { background: rgba(239,68,68,.2); }
+
+  table { width: 100%; border-collapse: collapse; background: #111827; border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; font-size: 13px; }
+  thead th { text-align: left; padding: 12px 16px; background: rgba(255,255,255,.03); color: #94A3B8; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; }
+  tbody td { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,.06); color: #CBD5E1; vertical-align: middle; }
+  tbody tr:hover { background: rgba(255,255,255,.02); }
+  .sku-cell { color: #60A5FA; font-weight: 700; font-size: 12px; }
+  .status-pill { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 99px; text-transform: uppercase; letter-spacing: .03em; }
+  .status-ativo { background: rgba(34,197,94,.12); color: #4ADE80; }
+  .status-inativo { background: rgba(148,163,184,.12); color: #94A3B8; }
+  .status-descontinuado { background: rgba(239,68,68,.12); color: #F87171; }
+  .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .empty { text-align: center; padding: 48px 20px; color: #475569; font-size: 13px; }
+
+  .hier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .hier-col { background: #111827; border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 18px; }
+  .hier-col h2 { font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+  .hier-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border-radius: 8px; font-size: 12.5px; cursor: pointer; }
+  .hier-item:hover { background: rgba(255,255,255,.04); }
+  .hier-item.selected { background: rgba(59,130,246,.12); color: #60A5FA; }
+  .hier-item .code { color: #64748B; font-weight: 700; margin-right: 6px; }
+  .hier-add { display: flex; gap: 6px; margin-top: 12px; }
+  .hier-add input { flex: 1; background: #0A0E1A; border: 1px solid rgba(255,255,255,.09); border-radius: 7px; padding: 7px 10px; color: #E2E8F0; font-size: 12px; }
+  .hier-empty { color: #475569; font-size: 12px; padding: 8px 10px; }
+
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; z-index: 50; }
+  .overlay.open { display: flex; }
+  .modal { background: #0F172A; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 28px; width: 100%; max-width: 560px; }
+  .modal h2 { font-size: 18px; font-weight: 800; margin-bottom: 18px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label { font-size: 11.5px; font-weight: 700; color: #94A3B8; }
+  .form-field input, .form-field select, .form-field textarea {
+    background: #111827; border: 1px solid rgba(255,255,255,.1); border-radius: 8px;
+    padding: 9px 11px; color: #E2E8F0; font-size: 13px;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: rgba(59,130,246,.5); }
+  .form-hint { font-size: 11px; color: #64748B; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
+  .form-error { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.25); color: #FCA5A5; font-size: 12.5px; padding: 10px 12px; border-radius: 9px; margin-bottom: 14px; display: none; }
+  .form-error.show { display: block; }
+
+  .hist-list { display: flex; flex-direction: column; gap: 8px; max-height: 360px; overflow-y: auto; }
+  .hist-item { background: #111827; border: 1px solid rgba(255,255,255,.07); border-radius: 10px; padding: 12px 14px; font-size: 12.5px; }
+  .hist-item .hist-top { display: flex; justify-content: space-between; color: #94A3B8; font-size: 11px; margin-bottom: 4px; }
+  .hist-item .hist-vals { color: #E2E8F0; }
+  .hist-item .hist-vals strong { color: #60A5FA; }
+  .hist-item .hist-motivo { color: #64748B; margin-top: 4px; }
+
+  #gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .gate-card { background: #111827; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 36px; max-width: 380px; width: 100%; text-align: center; }
+  .gate-card .brand-mark { margin: 0 auto 18px; width: 46px; height: 46px; font-size: 20px; }
+  .gate-card h1 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+  .gate-card p { font-size: 12.5px; color: #94A3B8; margin-bottom: 22px; }
+  .gate-card .form-field { text-align: left; }
+
+  @media (max-width: 760px) {
+    .hier-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    table, thead, tbody, tr, th, td { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="brand-mark">NF</div>
+    <h1>Cadastro de Produtos</h1>
+    <p>Informe o token de acesso da API e seu nome (usado no log de auditoria).</p>
+    <div id="gateError" class="form-error"></div>
+    <div class="form-field">
+      <label>Token de acesso</label>
+      <input id="gateToken" type="password" placeholder="Cole o API_TOKEN">
+    </div>
+    <div class="form-field">
+      <label>Seu nome</label>
+      <input id="gateUser" type="text" placeholder="Ex: Kheven">
+    </div>
+    <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px;" onclick="doLogin()">Entrar</button>
+  </div>
+</div>
+
+<div id="app" style="display:none;">
+  <div class="top">
+    <div class="top-inner">
+      <a class="brand" href="./"><span class="brand-mark">NF</span>Gerenciador NFe</a>
+      <div class="top-tabs">
+        <button class="top-tab active" data-view="produtos" onclick="switchView('produtos')">Produtos</button>
+        <button class="top-tab" data-view="hierarquia" onclick="switchView('hierarquia')">Seção / Grupo / Subgrupo</button>
+      </div>
+      <div class="user-chip">
+        👤 <span id="userName"></span>
+        <button onclick="logout()">Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- PRODUTOS -->
+    <div class="view active" id="view-produtos">
+      <div class="toolbar">
+        <h1>Produtos</h1>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <input class="search" id="searchInput" placeholder="Buscar por SKU, descrição, código de barras..." oninput="debounceSearch()">
+          <button class="btn btn-primary" onclick="openProdutoModal()">+ Novo produto</button>
+        </div>
+      </div>
+      <div id="produtosTableWrap"></div>
+    </div>
+
+    <!-- HIERARQUIA -->
+    <div class="view" id="view-hierarquia">
+      <div class="toolbar"><h1>Seção → Grupo → Subgrupo</h1></div>
+      <div class="hier-grid">
+        <div class="hier-col">
+          <h2>Seções</h2>
+          <div id="listSecoes"></div>
+          <div class="hier-add">
+            <input id="newSecaoCodigo" placeholder="Código">
+            <input id="newSecaoDesc" placeholder="Descrição">
+            <button class="btn btn-primary btn-sm" onclick="criarSecao()">+</button>
+          </div>
+        </div>
+        <div class="hier-col">
+          <h2>Grupos <span id="grupoParentLabel" style="color:#475569; font-weight:400;"></span></h2>
+          <div id="listGrupos"></div>
+          <div class="hier-add">
+            <input id="newGrupoCodigo" placeholder="Código">
+            <input id="newGrupoDesc" placeholder="Descrição">
+            <button class="btn btn-primary btn-sm" onclick="criarGrupo()">+</button>
+          </div>
+        </div>
+        <div class="hier-col">
+          <h2>Subgrupos <span id="subgrupoParentLabel" style="color:#475569; font-weight:400;"></span></h2>
+          <div id="listSubgrupos"></div>
+          <div class="hier-add">
+            <input id="newSubgrupoCodigo" placeholder="Código">
+            <input id="newSubgrupoDesc" placeholder="Descrição">
+            <button class="btn btn-primary btn-sm" onclick="criarSubgrupo()">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL: Produto -->
+<div class="overlay" id="produtoOverlay">
+  <div class="modal">
+    <h2 id="produtoModalTitle">Novo produto</h2>
+    <div class="form-error" id="produtoError"></div>
+    <input type="hidden" id="produtoId">
+    <div class="form-grid">
+      <div class="form-field"><label>SKU (vazio = automático)</label><input id="f_sku"></div>
+      <div class="form-field"><label>Código de barras</label><input id="f_codigo_barras"></div>
+      <div class="form-field full"><label>Descrição completa *</label><input id="f_descricao"></div>
+      <div class="form-field full"><label>Descrição resumida (cupom fiscal)</label><input id="f_descricao_resumida" maxlength="30"></div>
+      <div class="form-field"><label>Unidade de medida</label><input id="f_unidade_medida" value="UN"></div>
+      <div class="form-field"><label>Unidade de compra</label><input id="f_unidade_compra"></div>
+      <div class="form-field"><label>Fator de conversão</label><input id="f_fator_conversao" type="number" step="0.0001" value="1"></div>
+      <div class="form-field"><label>Marca</label><input id="f_marca"></div>
+      <div class="form-field"><label>Categoria fiscal</label><input id="f_categoria_fiscal"></div>
+      <div class="form-field"><label>Status</label>
+        <select id="f_status"><option value="ativo">Ativo</option><option value="inativo">Inativo</option><option value="descontinuado">Descontinuado</option></select>
+      </div>
+      <div class="form-field"><label>Seção *</label><select id="f_secao_id" onchange="onFormSecaoChange()"></select></div>
+      <div class="form-field"><label>Grupo *</label><select id="f_grupo_id" onchange="onFormGrupoChange()"></select></div>
+      <div class="form-field"><label>Subgrupo *</label><select id="f_subgrupo_id"></select></div>
+      <div class="form-field"><label>Custo de compra</label><input id="f_custo_compra" type="number" step="0.01" value="0"></div>
+      <div class="form-field"><label>Markup (%)</label><input id="f_markup_pct" type="number" step="0.01" value="0"></div>
+    </div>
+    <p class="form-hint" id="createHint">O custo médio inicial = custo de compra. Preço de venda = custo médio × (1 + markup). Depois de criado, use "Ajustar custo" para alterar com auditoria.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('produtoOverlay')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarProduto()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Ajuste de custo -->
+<div class="overlay" id="ajusteOverlay">
+  <div class="modal">
+    <h2>Ajuste manual de custo/preço</h2>
+    <div class="form-error" id="ajusteError"></div>
+    <input type="hidden" id="ajusteProdutoId">
+    <div class="form-field">
+      <label>Campo</label>
+      <select id="a_campo"><option value="custo_medio">Custo médio</option><option value="preco_venda">Preço de venda</option></select>
+    </div>
+    <div class="form-field"><label>Novo valor</label><input id="a_valor" type="number" step="0.01"></div>
+    <div class="form-field"><label>Usuário</label><input id="a_usuario"></div>
+    <div class="form-field"><label>Motivo (obrigatório) *</label><textarea id="a_motivo" rows="3" placeholder="Ex: correção de digitação na entrada da NF 12345"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('ajusteOverlay')">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarAjuste()">Confirmar ajuste</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Histórico -->
+<div class="overlay" id="histOverlay">
+  <div class="modal">
+    <h2>Histórico de alterações</h2>
+    <div id="histList" class="hist-list"></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('histOverlay')">Fechar</button></div>
+  </div>
+</div>
+
+<script>
+const API_BASE = "https://gerenciador-nfe-api.khevenhenriquelimasantos443.workers.dev";
+
+let TOKEN = localStorage.getItem("nfe_token") || "";
+let USUARIO = localStorage.getItem("nfe_usuario") || "";
+let secoes = [], grupos = [], subgrupos = [];
+let searchTimer = null;
+
+function api(path, options = {}) {
+  return fetch(API_BASE + path, {
+    ...options,
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN, ...(options.headers || {}) },
+  }).then(async (res) => {
+    let data = null;
+    try { data = await res.json(); } catch {}
+    if (res.status === 401) { logout(); throw new Error("Sessão expirada"); }
+    if (!res.ok || (data && data.ok === false)) throw new Error((data && data.error) || "Erro na requisição");
+    return data;
+  });
+}
+
+function doLogin() {
+  const token = document.getElementById("gateToken").value.trim();
+  const user = document.getElementById("gateUser").value.trim();
+  const err = document.getElementById("gateError");
+  err.classList.remove("show");
+  if (!token || !user) { err.textContent = "Preencha o token e seu nome."; err.classList.add("show"); return; }
+  TOKEN = token; USUARIO = user;
+  localStorage.setItem("nfe_token", token);
+  localStorage.setItem("nfe_usuario", user);
+  boot();
+}
+
+function logout() {
+  localStorage.removeItem("nfe_token");
+  localStorage.removeItem("nfe_usuario");
+  TOKEN = ""; USUARIO = "";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("gate").style.display = "flex";
+}
+
+async function boot() {
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("userName").textContent = USUARIO;
+  try {
+    await loadHierarquia();
+    await loadProdutos();
+  } catch (e) {
+    document.getElementById("gate").style.display = "flex";
+    document.getElementById("app").style.display = "none";
+    const err = document.getElementById("gateError");
+    err.textContent = e.message;
+    err.classList.add("show");
+  }
+}
+
+function switchView(view) {
+  document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+  document.querySelectorAll(".top-tab").forEach((t) => t.classList.remove("active"));
+  document.getElementById("view-" + view).classList.add("active");
+  document.querySelector('.top-tab[data-view="' + view + '"]').classList.add("active");
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+function openModal(id) { document.getElementById(id).classList.add("open"); }
+
+// ===================== HIERARQUIA =====================
+async function loadHierarquia() {
+  const [s, g, sg] = await Promise.all([api("/secoes"), api("/grupos"), api("/subgrupos")]);
+  secoes = s.data; grupos = g.data; subgrupos = sg.data;
+  renderHierarquia();
+  renderFormSelects();
+}
+
+let selectedSecao = null, selectedGrupo = null;
+
+function renderHierarquia() {
+  const listSecoes = document.getElementById("listSecoes");
+  listSecoes.innerHTML = secoes.length ? secoes.map((s) => `
+    <div class="hier-item ${selectedSecao === s.id ? 'selected' : ''}" onclick="selectSecao(${s.id})">
+      <span><span class="code">${s.codigo}</span>${s.descricao}</span>
+    </div>`).join("") : '<div class="hier-empty">Nenhuma seção ainda.</div>';
+
+  const gruposFiltrados = grupos.filter((g) => g.secao_id === selectedSecao);
+  document.getElementById("grupoParentLabel").textContent = selectedSecao ? "· " + (secoes.find(s=>s.id===selectedSecao)?.descricao || "") : "";
+  const listGrupos = document.getElementById("listGrupos");
+  listGrupos.innerHTML = !selectedSecao ? '<div class="hier-empty">Selecione uma seção.</div>' :
+    (gruposFiltrados.length ? gruposFiltrados.map((g) => `
+      <div class="hier-item ${selectedGrupo === g.id ? 'selected' : ''}" onclick="selectGrupo(${g.id})">
+        <span><span class="code">${g.codigo}</span>${g.descricao}</span>
+      </div>`).join("") : '<div class="hier-empty">Nenhum grupo ainda.</div>');
+
+  const subgruposFiltrados = subgrupos.filter((sg) => sg.grupo_id === selectedGrupo);
+  document.getElementById("subgrupoParentLabel").textContent = selectedGrupo ? "· " + (grupos.find(g=>g.id===selectedGrupo)?.descricao || "") : "";
+  const listSubgrupos = document.getElementById("listSubgrupos");
+  listSubgrupos.innerHTML = !selectedGrupo ? '<div class="hier-empty">Selecione um grupo.</div>' :
+    (subgruposFiltrados.length ? subgruposFiltrados.map((sg) => `
+      <div class="hier-item"><span><span class="code">${sg.codigo}</span>${sg.descricao}</span></div>`).join("") : '<div class="hier-empty">Nenhum subgrupo ainda.</div>');
+}
+
+function selectSecao(id) { selectedSecao = id; selectedGrupo = null; renderHierarquia(); }
+function selectGrupo(id) { selectedGrupo = id; renderHierarquia(); }
+
+async function criarSecao() {
+  const codigo = document.getElementById("newSecaoCodigo").value.trim();
+  const descricao = document.getElementById("newSecaoDesc").value.trim();
+  if (!codigo || !descricao) return alert("Preencha código e descrição.");
+  await api("/secoes", { method: "POST", body: JSON.stringify({ codigo, descricao }) });
+  document.getElementById("newSecaoCodigo").value = ""; document.getElementById("newSecaoDesc").value = "";
+  await loadHierarquia();
+}
+async function criarGrupo() {
+  if (!selectedSecao) return alert("Selecione uma seção primeiro.");
+  const codigo = document.getElementById("newGrupoCodigo").value.trim();
+  const descricao = document.getElementById("newGrupoDesc").value.trim();
+  if (!codigo || !descricao) return alert("Preencha código e descrição.");
+  await api("/grupos", { method: "POST", body: JSON.stringify({ codigo, descricao, secao_id: selectedSecao }) });
+  document.getElementById("newGrupoCodigo").value = ""; document.getElementById("newGrupoDesc").value = "";
+  await loadHierarquia();
+}
+async function criarSubgrupo() {
+  if (!selectedGrupo) return alert("Selecione um grupo primeiro.");
+  const codigo = document.getElementById("newSubgrupoCodigo").value.trim();
+  const descricao = document.getElementById("newSubgrupoDesc").value.trim();
+  if (!codigo || !descricao) return alert("Preencha código e descrição.");
+  await api("/subgrupos", { method: "POST", body: JSON.stringify({ codigo, descricao, grupo_id: selectedGrupo }) });
+  document.getElementById("newSubgrupoCodigo").value = ""; document.getElementById("newSubgrupoDesc").value = "";
+  await loadHierarquia();
+}
+
+// ===================== FORM SELECTS (modal produto) =====================
+function renderFormSelects() {
+  const secaoSel = document.getElementById("f_secao_id");
+  secaoSel.innerHTML = '<option value="">Selecione...</option>' + secoes.map((s) => `<option value="${s.id}">${s.codigo} — ${s.descricao}</option>`).join("");
+  onFormSecaoChange();
+}
+function onFormSecaoChange() {
+  const secaoId = Number(document.getElementById("f_secao_id").value) || null;
+  const grupoSel = document.getElementById("f_grupo_id");
+  const filtrados = grupos.filter((g) => g.secao_id === secaoId);
+  grupoSel.innerHTML = '<option value="">Selecione...</option>' + filtrados.map((g) => `<option value="${g.id}">${g.codigo} — ${g.descricao}</option>`).join("");
+  onFormGrupoChange();
+}
+function onFormGrupoChange() {
+  const grupoId = Number(document.getElementById("f_grupo_id").value) || null;
+  const subSel = document.getElementById("f_subgrupo_id");
+  const filtrados = subgrupos.filter((sg) => sg.grupo_id === grupoId);
+  subSel.innerHTML = '<option value="">Selecione...</option>' + filtrados.map((sg) => `<option value="${sg.id}">${sg.codigo} — ${sg.descricao}</option>`).join("");
+}
+
+// ===================== PRODUTOS =====================
+function debounceSearch() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(loadProdutos, 300);
+}
+
+async function loadProdutos() {
+  const q = document.getElementById("searchInput")?.value.trim() || "";
+  const res = await api("/produtos" + (q ? "?q=" + encodeURIComponent(q) : ""));
+  renderProdutos(res.data);
+}
+
+function renderProdutos(list) {
+  const wrap = document.getElementById("produtosTableWrap");
+  if (!list.length) { wrap.innerHTML = '<div class="empty">Nenhum produto cadastrado ainda. Clique em "+ Novo produto" para começar.</div>'; return; }
+  wrap.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>SKU</th><th>Descrição</th><th>Seção / Grupo / Subgrupo</th><th>Custo médio</th><th>Preço venda</th><th>Status</th><th></th>
+      </tr></thead>
+      <tbody>
+        ${list.map((p) => `
+          <tr>
+            <td class="sku-cell">${p.sku}</td>
+            <td>${p.descricao}</td>
+            <td>${p.secao_nome} / ${p.grupo_nome} / ${p.subgrupo_nome}</td>
+            <td>R$ ${Number(p.custo_medio).toFixed(2)}</td>
+            <td>R$ ${Number(p.preco_venda).toFixed(2)}</td>
+            <td><span class="status-pill status-${p.status}">${p.status}</span></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn btn-ghost btn-sm" onclick="openProdutoModal(${p.id})">Editar</button>
+                <button class="btn btn-ghost btn-sm" onclick="openAjusteModal(${p.id}, ${p.custo_medio}, ${p.preco_venda})">Ajustar custo</button>
+                <button class="btn btn-ghost btn-sm" onclick="openHistorico(${p.id})">Histórico</button>
+                <button class="btn btn-danger btn-sm" onclick="excluirProduto(${p.id})">Excluir</button>
+              </div>
+            </td>
+          </tr>`).join("")}
+      </tbody>
+    </table>`;
+}
+
+let produtoCache = {};
+
+async function openProdutoModal(id) {
+  document.getElementById("produtoError").classList.remove("show");
+  document.getElementById("produtoId").value = id || "";
+  document.getElementById("produtoModalTitle").textContent = id ? "Editar produto" : "Novo produto";
+  document.getElementById("createHint").style.display = id ? "none" : "block";
+  renderFormSelects();
+
+  const fields = ["sku","codigo_barras","descricao","descricao_resumida","unidade_medida","unidade_compra","fator_conversao","marca","categoria_fiscal","status","custo_compra","markup_pct"];
+  if (id) {
+    const res = await api("/produtos/" + id);
+    const p = res.data;
+    produtoCache[id] = p;
+    fields.forEach((f) => { const el = document.getElementById("f_" + f); if (el) el.value = p[f] ?? ""; });
+    document.getElementById("f_sku").disabled = true;
+    document.getElementById("f_secao_id").value = p.secao_id;
+    onFormSecaoChange();
+    document.getElementById("f_grupo_id").value = p.grupo_id;
+    onFormGrupoChange();
+    document.getElementById("f_subgrupo_id").value = p.subgrupo_id;
+  } else {
+    fields.forEach((f) => { const el = document.getElementById("f_" + f); if (el) el.value = f === "unidade_medida" ? "UN" : f === "fator_conversao" ? "1" : ""; });
+    document.getElementById("f_sku").disabled = false;
+    document.getElementById("f_status").value = "ativo";
+  }
+  openModal("produtoOverlay");
+}
+
+async function salvarProduto() {
+  const id = document.getElementById("produtoId").value;
+  const err = document.getElementById("produtoError");
+  err.classList.remove("show");
+
+  const secao_id = Number(document.getElementById("f_secao_id").value) || null;
+  const grupo_id = Number(document.getElementById("f_grupo_id").value) || null;
+  const subgrupo_id = Number(document.getElementById("f_subgrupo_id").value) || null;
+  const descricao = document.getElementById("f_descricao").value.trim();
+
+  if (!descricao || !secao_id || !grupo_id || !subgrupo_id) {
+    err.textContent = "Descrição, Seção, Grupo e Subgrupo são obrigatórios.";
+    err.classList.add("show");
+    return;
+  }
+
+  const payload = {
+    codigo_barras: document.getElementById("f_codigo_barras").value.trim() || null,
+    descricao,
+    descricao_resumida: document.getElementById("f_descricao_resumida").value.trim() || null,
+    unidade_medida: document.getElementById("f_unidade_medida").value.trim() || "UN",
+    unidade_compra: document.getElementById("f_unidade_compra").value.trim() || null,
+    fator_conversao: Number(document.getElementById("f_fator_conversao").value) || 1,
+    marca: document.getElementById("f_marca").value.trim() || null,
+    categoria_fiscal: document.getElementById("f_categoria_fiscal").value.trim() || null,
+    status: document.getElementById("f_status").value,
+    secao_id, grupo_id, subgrupo_id,
+  };
+
+  try {
+    if (id) {
+      await api("/produtos/" + id, { method: "PUT", body: JSON.stringify(payload) });
+    } else {
+      payload.sku = document.getElementById("f_sku").value.trim() || undefined;
+      payload.custo_compra = Number(document.getElementById("f_custo_compra").value) || 0;
+      payload.markup_pct = Number(document.getElementById("f_markup_pct").value) || 0;
+      await api("/produtos", { method: "POST", body: JSON.stringify(payload) });
+    }
+    closeModal("produtoOverlay");
+    await loadProdutos();
+  } catch (e) {
+    err.textContent = e.message;
+    err.classList.add("show");
+  }
+}
+
+async function excluirProduto(id) {
+  if (!confirm("Excluir este produto? Essa ação não pode ser desfeita.")) return;
+  await api("/produtos/" + id, { method: "DELETE" });
+  await loadProdutos();
+}
+
+function openAjusteModal(id, custoAtual, precoAtual) {
+  document.getElementById("ajusteError").classList.remove("show");
+  document.getElementById("ajusteProdutoId").value = id;
+  document.getElementById("a_campo").value = "custo_medio";
+  document.getElementById("a_valor").value = custoAtual;
+  document.getElementById("a_usuario").value = USUARIO;
+  document.getElementById("a_motivo").value = "";
+  document.getElementById("a_campo").onchange = () => {
+    document.getElementById("a_valor").value = document.getElementById("a_campo").value === "preco_venda" ? precoAtual : custoAtual;
+  };
+  openModal("ajusteOverlay");
+}
+
+async function salvarAjuste() {
+  const id = document.getElementById("ajusteProdutoId").value;
+  const err = document.getElementById("ajusteError");
+  err.classList.remove("show");
+  const payload = {
+    campo: document.getElementById("a_campo").value,
+    valor_novo: Number(document.getElementById("a_valor").value),
+    usuario: document.getElementById("a_usuario").value.trim(),
+    motivo: document.getElementById("a_motivo").value.trim(),
+  };
+  if (!payload.motivo) { err.textContent = "Informe o motivo do ajuste."; err.classList.add("show"); return; }
+  try {
+    await api("/produtos/" + id + "/ajuste", { method: "POST", body: JSON.stringify(payload) });
+    closeModal("ajusteOverlay");
+    await loadProdutos();
+  } catch (e) {
+    err.textContent = e.message;
+    err.classList.add("show");
+  }
+}
+
+async function openHistorico(id) {
+  const res = await api("/produtos/" + id + "/historico");
+  const list = document.getElementById("histList");
+  list.innerHTML = res.data.length ? res.data.map((h) => `
+    <div class="hist-item">
+      <div class="hist-top"><span>${h.campo}</span><span>${new Date(h.criado_em.replace(" ", "T") + "Z").toLocaleString("pt-BR")} · ${h.usuario}</span></div>
+      <div class="hist-vals">${h.valor_anterior} → <strong>${h.valor_novo}</strong></div>
+      <div class="hist-motivo">${h.motivo}</div>
+    </div>`).join("") : '<div class="empty">Nenhum ajuste registrado ainda.</div>';
+  openModal("histOverlay");
+}
+
+if (TOKEN && USUARIO) boot();
+</script>
+</body>
+</html>
