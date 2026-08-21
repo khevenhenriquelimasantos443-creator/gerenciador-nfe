@@ -566,6 +566,7 @@ body.finn-dark .btn-google:hover{background:#1E293B}
         <button type="button" class="nav-menu-action" id="btnAdminAssinaturasNav" style="display:none">Assinaturas</button>
         <button type="button" class="nav-menu-action" id="btnConteudoNav" style="display:none">Conteúdo</button>
         <button type="button" class="nav-menu-action" id="btnAdminInstagramNav" style="display:none">Instagram</button>
+        <button type="button" class="nav-menu-action" id="btnAdminTikTokNav" style="display:none">TikTok</button>
         <button type="button" class="nav-menu-action" id="btnAdminWhatsAppNav" style="display:none">WhatsApp</button>
         <button type="button" class="nav-menu-action" id="btnAdminAnalyticsNav" style="display:none">Painel de uso</button>
         <button type="button" class="nav-menu-action" id="btnAdminIaNav" style="display:none">Uso de IA</button>
@@ -5636,9 +5637,10 @@ function renderConteudo(){
         '<option value="feed"' + (state.conteudoKind === "feed" ? " selected" : "") + '>Post no feed (quadrado, com legenda)</option>' +
         '<option value="story"' + (state.conteudoKind === "story" ? " selected" : "") + '>Story (9:16, sem legenda)</option>' +
         '<option value="reels"' + (state.conteudoKind === "reels" ? " selected" : "") + '>Reel (vídeo 9:16, com legenda)</option>' +
+        '<option value="tiktok"' + (state.conteudoKind === "tiktok" ? " selected" : "") + '>TikTok (vídeo 9:16, com legenda)</option>' +
       '</select></div>' +
-    '<div class="form-row"><label>' + (state.conteudoKind === "reels" ? "Vídeo" : "Imagem") + '</label>' +
-      '<input type="file" id="conteudoArquivo"' + (state.conteudoKind === "reels" ? ' accept="video/mp4,video/quicktime"' : ' accept="image/png,image/jpeg,image/webp"') + '></div>' +
+    '<div class="form-row"><label>' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? "Vídeo" : "Imagem") + '</label>' +
+      '<input type="file" id="conteudoArquivo"' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? ' accept="video/mp4,video/quicktime"' : ' accept="image/png,image/jpeg,image/webp"') + '></div>' +
     (state.conteudoKind === "reels"
       ? '<div class="form-row"><label>Capa (opcional)</label>' +
         '<input type="file" id="conteudoCapa" accept="image/png,image/jpeg,image/webp"></div>' +
@@ -5690,7 +5692,7 @@ function renderConteudo(){
     (naFila.length
       ? '<div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">' +
         naFila.map(function(i, idx){
-          var thumbSrc = i.kind === "reels"
+          var thumbSrc = (i.kind === "reels" || i.kind === "tiktok")
             ? (i.cover_path ? CONTEUDO_BUCKET_URL + i.cover_path : null)
             : CONTEUDO_BUCKET_URL + i.image_path;
           return '<div class="cont-item">' +
@@ -5700,7 +5702,7 @@ function renderConteudo(){
             '<div class="cont-body">' +
               '<div class="cont-tags">' +
                 (idx === 0 ? '<span class="cont-badge prox">Próximo</span>' : '') +
-                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : "Post") + '</span>' +
+                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : i.kind === "tiktok" ? "TikTok" : "Post") + '</span>' +
               '</div>' +
               '<div class="cont-cap">' + escapeHtml(i.caption || "Story — sem legenda") + '</div>' +
               (i.erro ? '<div class="cont-erro">Última tentativa falhou: ' + escapeHtml(i.erro) + '</div>' : '') +
@@ -5716,7 +5718,7 @@ function renderConteudo(){
       '<div class="eyebrow">Já publicados · ' + publicados.length + '</div>' +
       '<div class="cont-pub">' +
         publicados.slice(0, 24).map(function(i){
-          var src = i.kind === "reels" ? i.cover_path : i.image_path;
+          var src = (i.kind === "reels" || i.kind === "tiktok") ? i.cover_path : i.image_path;
           if(!src) return '<div title="' + escapeHtml(admDataHora(i.published_at)) + '" style="display:flex;align-items:center;justify-content:center;font-size:16px">🎬</div>';
           return '<img src="' + escapeHtml(CONTEUDO_BUCKET_URL + src) + '" title="' + escapeHtml(admDataHora(i.published_at)) + '" alt="" loading="lazy">';
         }).join("") +
@@ -5887,7 +5889,7 @@ function _subirArquivoConteudo(arquivo, prefixo){
 function enviarConteudo(){
   var arquivo = state.conteudoArquivo;
   var kind = state.conteudoKind;
-  if(!arquivo){ state.conteudoErro = kind === "reels" ? "Escolhe um vídeo primeiro." : "Escolhe uma imagem primeiro."; render(); return; }
+  if(!arquivo){ state.conteudoErro = (kind === "reels" || kind === "tiktok") ? "Escolhe um vídeo primeiro." : "Escolhe uma imagem primeiro."; render(); return; }
   if(kind !== "story" && !state.conteudoLegenda.trim()){
     state.conteudoErro = "Esse tipo precisa de legenda."; render(); return;
   }
@@ -6027,6 +6029,7 @@ function renderAdminHome(){
       '<button type="button" class="btn-ghost" id="btnGoAssinaturas">Assinaturas</button>' +
       '<button type="button" class="btn-ghost" id="btnGoConteudo">Conteúdo</button>' +
       '<button type="button" class="btn-ghost" id="btnGoInstagram">Instagram</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoTikTok">TikTok</button>' +
       '<button type="button" class="btn-ghost" id="btnGoWhatsApp">WhatsApp</button>' +
       '<button type="button" class="btn-ghost" id="btnGoIaUsage">Uso de IA</button>' +
       '<button type="button" class="btn-ghost" id="btnGoMetaAds">Anúncios</button>' +
@@ -6602,6 +6605,111 @@ function renderInstagramMetricsCard(){
 
   html += '</div>';
   return html;
+}
+
+function renderAdminTikTok(){
+  if(!isMasterUser() || !state.adminUnlocked) return "";
+  var st = state.tiktokStatus;
+  var html = '<div class="card">' +
+    '<div class="eyebrow">TikTok</div>';
+
+  if(state.tiktokStatusLoading && !st){
+    html += '<div style="font-size:12.5px;color:var(--fm)">Carregando status…</div>';
+  } else if(!st){
+    html += '<button type="button" class="btn-ghost" id="btnLoadTikTokStatus" style="width:100%">Carregar status</button>';
+  } else if(!st.configured){
+    html += '<div style="font-size:12.5px;color:var(--fm)">TT_CLIENT_KEY / TT_CLIENT_SECRET ainda não configurados no finn-serve.</div>';
+  } else if(!st.connected){
+    html += '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">App configurado, mas ninguém autorizou a conta do TikTok ainda.</div>' +
+      '<button type="button" class="btn-submit" id="btnConectarTikTok"' + (state.tiktokConnectLoading ? " disabled" : "") + '>' +
+        (state.tiktokConnectLoading ? "Abrindo…" : "Conectar conta do TikTok") +
+      '</button>';
+  } else {
+    html += '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">' +
+      'Conectado' + (st.open_id ? ' (open_id: ' + escapeHtml(st.open_id) + ')' : '') + '. Postagem: <b>' +
+      (st.privacy_level === 'PUBLIC_TO_EVERYONE' ? 'pública' : 'só o próprio criador vê (SELF_ONLY — antes da auditoria do TikTok)') + '</b>.' +
+    '</div>' +
+    '<button type="button" class="btn-submit" id="btnTestTikTokPublish"' + (state.tiktokPublishLoading ? " disabled" : "") + '>' +
+      (state.tiktokPublishLoading ? "Publicando…" : "Testar publicação agora") +
+    '</button>';
+    if(state.tiktokPublishResult){
+      html += '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.tiktokPublishResult) + '</div>';
+    }
+    if(st.recent_attempts && st.recent_attempts.length){
+      html += '<div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">';
+      st.recent_attempts.slice(0,5).forEach(function(a){
+        html += '<div class="tx-item" style="flex-wrap:wrap">' +
+          '<div class="tx-info" style="min-width:140px">' +
+            '<div class="tx-desc">Vídeo' + (a.ok ? ' — publicado' : ' — falhou') + '</div>' +
+            '<div class="tx-meta">' + (a.started_at ? new Date(a.started_at).toLocaleString("pt-BR") : '') + '</div>' +
+          '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+function loadTikTokStatus(){
+  state.tiktokStatusLoading = true;
+  render();
+  fetch("/admin/tiktok-status", { headers: adminHeaders() })
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      state.tiktokStatusLoading = false;
+      state.tiktokStatus = j;
+      render();
+    }).catch(function(){
+      state.tiktokStatusLoading = false;
+      render();
+    });
+}
+
+// Abre a tela de autorização do TikTok numa aba nova — o fluxo termina em
+// /tiktok/callback, fora do app, então não dá pra fazer isso com fetch.
+function conectarTikTok(){
+  state.tiktokConnectLoading = true;
+  render();
+  fetch("/admin/tiktok-connect-url", { headers: adminHeaders() })
+    .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.tiktokConnectLoading = false;
+      if(res.status === 200 && res.body && res.body.url){
+        window.open(res.body.url, "_blank", "noopener");
+      } else {
+        state.tiktokStatus = { configured: true, connected: false, erro: (res.body && res.body.error) || "Não consegui gerar o link." };
+      }
+      render();
+    }).catch(function(){
+      state.tiktokConnectLoading = false;
+      render();
+    });
+}
+
+function testTikTokPublish(){
+  state.tiktokPublishLoading = true;
+  state.tiktokPublishResult = null;
+  render();
+  fetch("/admin/tiktok-publish-next", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, admin_password: state.adminPassword })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.tiktokPublishLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.tiktokPublishResult = "Vídeo publicado com sucesso! (publish_id: " + res.body.publish_id + ")";
+      } else {
+        state.tiktokPublishResult = "Falhou: " + JSON.stringify((res.body && (res.body.body || res.body.reason || res.body.error)) || res.body);
+      }
+      loadTikTokStatus();
+    }).catch(function(){
+      state.tiktokPublishLoading = false;
+      state.tiktokPublishResult = "Falha de conexão.";
+      render();
+    });
 }
 
 function loadInstagramMetrics(){
@@ -8368,7 +8476,7 @@ function render(){
   });
   // As telas de gestão só aparecem no modo admin (antes bastava estar
   // desbloqueado, e elas ficavam penduradas no menu normal).
-  ["btnAdminHomeNav","btnAdminAssinaturasNav","btnAdminInstagramNav","btnAdminWhatsAppNav","btnAdminAnalyticsNav","btnAdminIaNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
+  ["btnAdminHomeNav","btnAdminAssinaturasNav","btnAdminInstagramNav","btnAdminTikTokNav","btnAdminWhatsAppNav","btnAdminAnalyticsNav","btnAdminIaNav","btnScreenerNav","btnBetaAdminNav","btnMetaAdsNav","btnConteudoNav"].forEach(function(id){
     var b = document.getElementById(id);
     if(b) b.style.display = emAdmin ? "" : "none";
   });
@@ -8416,6 +8524,7 @@ function render(){
   else if(state.tab === "adminAssinaturas") content.innerHTML = renderAdminAssinaturas();
   else if(state.tab === "conteudo") content.innerHTML = renderConteudo();
   else if(state.tab === "adminInstagram") content.innerHTML = renderAdminInstagram();
+  else if(state.tab === "adminTikTok") content.innerHTML = renderAdminTikTok();
   else if(state.tab === "adminWhatsApp") content.innerHTML = renderAdminWhatsApp();
   else if(state.tab === "adminAnalytics") content.innerHTML = renderAdminAnalytics();
   else if(state.tab === "adminIa") content.innerHTML = renderAdminIa();
@@ -8844,6 +8953,14 @@ function bindContentEvents(){
     var btnTestInstagramPublish = document.getElementById("btnTestInstagramPublish");
     if(btnTestInstagramPublish) btnTestInstagramPublish.addEventListener("click", testInstagramPublish);
   }
+  if(state.tab === "adminTikTok"){
+    var btnLoadTikTokStatus = document.getElementById("btnLoadTikTokStatus");
+    if(btnLoadTikTokStatus) btnLoadTikTokStatus.addEventListener("click", loadTikTokStatus);
+    var btnConectarTikTok = document.getElementById("btnConectarTikTok");
+    if(btnConectarTikTok) btnConectarTikTok.addEventListener("click", conectarTikTok);
+    var btnTestTikTokPublish = document.getElementById("btnTestTikTokPublish");
+    if(btnTestTikTokPublish) btnTestTikTokPublish.addEventListener("click", testTikTokPublish);
+  }
   if(state.tab === "adminHome"){
     var irPara = function(aba){ return function(){ state.tab = aba; render(); }; };
     var b;
@@ -8869,6 +8986,10 @@ function bindContentEvents(){
     if((b = document.getElementById("btnGoInstagram"))) b.addEventListener("click", function(){
       state.tab = "adminInstagram"; render();
       if(!state.igStatus && !state.igStatusLoading) loadInstagramStatus();
+    });
+    if((b = document.getElementById("btnGoTikTok"))) b.addEventListener("click", function(){
+      state.tab = "adminTikTok"; render();
+      if(!state.tiktokStatus && !state.tiktokStatusLoading) loadTikTokStatus();
     });
     if((b = document.getElementById("btnGoWhatsApp"))) b.addEventListener("click", irPara("adminWhatsApp"));
     if((b = document.getElementById("btnAdminHomeRefresh"))) b.addEventListener("click", loadAdminAnalytics);
@@ -9725,6 +9846,12 @@ document.getElementById("btnAdminInstagramNav").addEventListener("click", functi
   render();
   document.getElementById("navMenu").classList.remove("open");
   if(!state.igStatus && !state.igStatusLoading) loadInstagramStatus();
+});
+document.getElementById("btnAdminTikTokNav").addEventListener("click", function(){
+  state.tab = "adminTikTok";
+  render();
+  document.getElementById("navMenu").classList.remove("open");
+  if(!state.tiktokStatus && !state.tiktokStatusLoading) loadTikTokStatus();
 });
 document.getElementById("btnAdminWhatsAppNav").addEventListener("click", function(){
   state.tab = "adminWhatsApp";

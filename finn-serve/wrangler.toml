@@ -3,6 +3,11 @@ main = "index.js"
 compatibility_date = "2024-01-01"
 
 [vars]
+TT_PRIVACY_LEVEL = "SELF_ONLY"
+# ↑ TikTok Content Posting API. Apps sem auditoria do TikTok só podem postar
+#   como SELF_ONLY (só o próprio criador vê o vídeo). Depois que a auditoria
+#   aprovar, troca pra "PUBLIC_TO_EVERYONE" e faz deploy — sem mudar código.
+
 # Secrets are set via Cloudflare dashboard (encrypted):
 # PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET
 # VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, SUPABASE_SERVICE_KEY
@@ -35,6 +40,27 @@ compatibility_date = "2024-01-01"
 #     4. O ID numérico da conta aparece do lado do nome dela, na mesma
 #        linha de "Gerar token" — esse é o IG_BUSINESS_ACCOUNT_ID.
 #   Sem os dois configurados, a publicação manual só faz log e não tenta nada.
+#
+# TT_CLIENT_KEY / TT_CLIENT_SECRET — publicação no TikTok (Content Posting
+#   API). Diferente do Instagram, essas duas secrets NÃO publicam sozinhas —
+#   são só a identidade do app. Depois de configuradas, um admin ainda
+#   precisa autorizar a conta do TikTok uma vez (botão "Conectar" na aba
+#   TikTok do admin do Finn, que abre /admin/tiktok-connect-url); só depois
+#   disso é que /tiktok/callback recebe o access_token/refresh_token de
+#   verdade e guarda no FINN_KV (chave 'tiktok_tokens'), renovados sozinhos.
+#   Como obter as duas:
+#     1. developers.tiktok.com → Manage apps → Create an app.
+#     2. Privacy Policy URL: https://finn.dev.br/privacidade
+#        Terms of Service URL: https://finn.dev.br/termos
+#     3. Em Products, adicionar "Login Kit" e "Content Posting API".
+#     4. Redirect URI: https://finn.dev.br/tiktok/callback
+#     5. Scopes: user.info.basic, video.publish
+#     6. wrangler secret put TT_CLIENT_KEY
+#        wrangler secret put TT_CLIENT_SECRET
+#   Sem as duas configuradas, a publicação (manual ou automática) só faz log
+#   e não tenta nada — nunca derruba o resto do worker.
+#   Apps recém-criados só postam como SELF_ONLY até passar pela auditoria do
+#   TikTok — ver TT_PRIVACY_LEVEL em [vars] acima.
 #
 # PLANILHA_COPY_URL — link de cópia da Planilha Finn no Google Sheets.
 #   É o caminho bom de entrega: um clique e quem comprou já tem a planilha

@@ -2968,6 +2968,142 @@ async function _logInstagramAttempt(env, log) {
   } catch (e) { /* log é best-effort, nunca deve derrubar a publicação */ }
 }
 
+// =============================================================================
+// TIKTOK — publicação automática via Content Posting API (Direct Post)
+// =============================================================================
+// Required secrets (wrangler secret put, nunca em [vars]):
+//   TT_CLIENT_KEY / TT_CLIENT_SECRET — do app criado em developers.tiktok.com
+//     (produtos "Login Kit" + "Content Posting API").
+// Diferente do Instagram, o token de acesso do TikTok NÃO é um secret fixo:
+// expira em 24h. Depois que o admin autoriza uma vez (/admin/tiktok-connect-url
+// -> tela do TikTok -> /tiktok/callback), o access_token e o refresh_token
+// ficam guardados no FINN_KV (chave 'tiktok_tokens') e se renovam sozinhos —
+// ver _tiktokAccessToken.
+const TT_API_BASE = 'https://open.tiktokapis.com/v2';
+const TT_REDIRECT_URI = 'https://finn.dev.br/tiktok/callback';
+
+async function _tiktokSalvarTokens(env, dados) {
+  if (!env.FINN_KV) return;
+  await env.FINN_KV.put('tiktok_tokens', JSON.stringify({
+    access_token: dados.access_token,
+    refresh_token: dados.refresh_token,
+    open_id: dados.open_id,
+    expires_at: Date.now() + (Number(dados.expires_in) || 0) * 1000,
+    refresh_expires_at: Date.now() + (Number(dados.refresh_expires_in) || 0) * 1000
+  }));
+}
+
+// Devolve um access_token válido, renovando sozinho quando falta pouco pra
+// expirar. Sem token salvo (admin nunca autorizou) ou refresh_token vencido
+// (365 dias sem uso), devolve null — quem chama trata como "não conectado".
+async function _tiktokAccessToken(env) {
+  if (!env.FINN_KV || !env.TT_CLIENT_KEY || !env.TT_CLIENT_SECRET) return null;
+  var raw = await env.FINN_KV.get('tiktok_tokens');
+  if (!raw) return null;
+  var t;
+  try { t = JSON.parse(raw); } catch (e) { return null; }
+  if (!t.access_token) return null;
+  if (Date.now() < t.expires_at - 5 * 60 * 1000) return t.access_token; // 5 min de folga
+  if (!t.refresh_token || Date.now() > t.refresh_expires_at) return null;
+  try {
+    var r = await fetch(TT_API_BASE + '/oauth/token/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'client_key=' + encodeURIComponent(env.TT_CLIENT_KEY) +
+        '&client_secret=' + encodeURIComponent(env.TT_CLIENT_SECRET) +
+        '&grant_type=refresh_token&refresh_token=' + encodeURIComponent(t.refresh_token)
+    });
+    var body = await r.json();
+    if (!r.ok || !body.access_token) return null;
+    await _tiktokSalvarTokens(env, body);
+    return body.access_token;
+  } catch (e) { return null; }
+}
+
+// Publica o próximo vídeo da fila (kind='tiktok'), mesmo padrão do reel do
+// Instagram: PULL_FROM_URL (o TikTok baixa sozinho do bucket 'social', sem a
+// gente subir o arquivo) -> init -> poll de status -> pronto.
+// privacy_level vem de TT_PRIVACY_LEVEL ([vars] no wrangler.toml): apps sem
+// auditoria do TikTok só podem postar como SELF_ONLY (só o próprio criador
+// vê); depois que a auditoria aprovar, troca a var pra PUBLIC_TO_EVERYONE e
+// faz deploy — não precisa mudar código nenhum.
+async function _publishNextTikTokVideo(env) {
+  var accessToken = await _tiktokAccessToken(env);
+  if (!accessToken) {
+    return { ok: false, skipped: true, reason: 'TikTok não conectado — autorize em /admin/tiktok-connect-url, ou TT_CLIENT_KEY/TT_CLIENT_SECRET não configurados' };
+  }
+  if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
+
+  var daFila = await _proximoDaFilaPorTipo(env, 'tiktok');
+  if (!daFila) return { ok: false, skipped: true, reason: 'nenhum vídeo de TikTok na fila' };
+
+  var filaId = daFila.id;
+  var videoUrl = _socialPublicUrl(daFila.image_path);
+  var caption = daFila.caption || '';
+  var privacidade = env.TT_PRIVACY_LEVEL || 'SELF_ONLY';
+
+  var log = { tipo: 'tiktok', fila_id: filaId, video_url: videoUrl, started_at: new Date().toISOString() };
+  try {
+    var initResp = await fetch(TT_API_BASE + '/post/publish/video/init/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + accessToken },
+      body: JSON.stringify({
+        post_info: { title: caption, privacy_level: privacidade, disable_duet: false, disable_comment: false, disable_stitch: false },
+        source_info: { source: 'PULL_FROM_URL', video_url: videoUrl }
+      })
+    });
+    var initBody = await initResp.json();
+    log.init_status = initResp.status;
+    log.init_response = initBody;
+    var publishId = initBody && initBody.data && initBody.data.publish_id;
+    if (!initResp.ok || !publishId) {
+      log.ok = false;
+      await _logTikTokAttempt(env, log);
+      await _marcaPublicado(env, filaId, { erro: 'tiktok: falha ao iniciar publicação' });
+      return { ok: false, step: 'init', body: initBody };
+    }
+
+    var pronto = false, falhou = false, statusBody = null;
+    for (var i = 0; i < 20; i++) {
+      var stResp = await fetch(TT_API_BASE + '/post/publish/status/fetch/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + accessToken },
+        body: JSON.stringify({ publish_id: publishId })
+      });
+      statusBody = await stResp.json();
+      var status = statusBody && statusBody.data && statusBody.data.status;
+      log.publish_status_check = status;
+      if (status === 'PUBLISH_COMPLETE') { pronto = true; break; }
+      if (status === 'FAILED') { falhou = true; break; }
+      await new Promise(function (r) { setTimeout(r, 2000); });
+    }
+    log.finished_at = new Date().toISOString();
+    log.ok = pronto;
+    await _logTikTokAttempt(env, log);
+
+    if (!pronto) {
+      await _marcaPublicado(env, filaId, { erro: falhou ? 'tiktok: publicação falhou' : 'tiktok: não confirmou a tempo' });
+      return { ok: false, step: 'status', body: statusBody };
+    }
+
+    await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), tiktok_publish_id: publishId, erro: null });
+    return { ok: true, fila_id: filaId, publish_id: publishId };
+  } catch (e) {
+    log.ok = false;
+    log.error = String(e && e.message || e);
+    await _logTikTokAttempt(env, log);
+    await _marcaPublicado(env, filaId, { erro: 'tiktok: ' + log.error });
+    return { ok: false, error: log.error };
+  }
+}
+
+async function _logTikTokAttempt(env, log) {
+  try {
+    var id = Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    await env.FINN_KV.put('tiktok_publish_log_' + id, JSON.stringify(log), { expirationTtl: 60 * 60 * 24 * 90 });
+  } catch (e) { /* log é best-effort */ }
+}
+
 // Busca alcance/curtidas/etc de UMA mídia já publicada, direto na API do
 // Instagram. Nunca lança — devolve { erro } quando a Meta recusa (comum em
 // stories: a métrica só existe enquanto o story está ativo, 24h; passado
@@ -3164,6 +3300,141 @@ async function _adminInstagramPublishNext(request, env) {
     return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_adminInstagramPublishNext');
+  }
+}
+
+// GET /admin/tiktok-status — se tem app configurado, se já autorizou (tem
+// refresh_token válido) e o histórico recente de publicação.
+async function _adminTikTokStatus(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var conectado = false, openId = null;
+    if (env.FINN_KV) {
+      var raw = await env.FINN_KV.get('tiktok_tokens');
+      if (raw) {
+        try {
+          var t = JSON.parse(raw);
+          conectado = !!t.refresh_token && Date.now() < t.refresh_expires_at;
+          openId = t.open_id || null;
+        } catch (e) {}
+      }
+    }
+    var logs = [];
+    if (env.FINN_KV) {
+      var keys = [], cursor;
+      do {
+        var page = await env.FINN_KV.list({ prefix: 'tiktok_publish_log_', cursor: cursor });
+        keys = keys.concat(page.keys);
+        cursor = page.list_complete ? undefined : page.cursor;
+      } while (cursor);
+      keys.sort(function (a, b) { return b.name.localeCompare(a.name); });
+      logs = (await Promise.all(keys.slice(0, 20).map(function (k) { return env.FINN_KV.get(k.name); })))
+        .filter(Boolean).map(function (raw) { return JSON.parse(raw); });
+    }
+    return new Response(JSON.stringify({
+      configured: !!(env.TT_CLIENT_KEY && env.TT_CLIENT_SECRET),
+      connected: conectado,
+      open_id: openId,
+      privacy_level: env.TT_PRIVACY_LEVEL || 'SELF_ONLY',
+      recent_attempts: logs
+    }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminTikTokStatus');
+  }
+}
+
+// GET /admin/tiktok-connect-url — devolve a URL de autorização do TikTok,
+// com um "state" de uso único guardado no KV (10 min) pra /tiktok/callback
+// conferir depois — proteção contra CSRF, já que o callback em si não tem
+// como levar header de admin (é navegação de página, não fetch).
+async function _adminTikTokConnectUrl(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.TT_CLIENT_KEY) return new Response(JSON.stringify({ error: 'TT_CLIENT_KEY não configurado' }), { status: 500, headers: cors });
+    if (!env.FINN_KV) return new Response(JSON.stringify({ error: 'FINN_KV não configurado' }), { status: 500, headers: cors });
+
+    var state = crypto.randomUUID();
+    await env.FINN_KV.put('tiktok_oauth_state_' + state, '1', { expirationTtl: 600 });
+    var authUrl = 'https://www.tiktok.com/v2/auth/authorize/?client_key=' + encodeURIComponent(env.TT_CLIENT_KEY) +
+      '&scope=' + encodeURIComponent('user.info.basic,video.publish') +
+      '&response_type=code&redirect_uri=' + encodeURIComponent(TT_REDIRECT_URI) +
+      '&state=' + state;
+    return new Response(JSON.stringify({ ok: true, url: authUrl }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminTikTokConnectUrl');
+  }
+}
+
+// POST /admin/tiktok-publish-next — dispara a publicação do próximo vídeo da
+// fila AGORA, pra testar sem esperar o cron. Mesmo padrão do disparo manual
+// do Instagram.
+async function _adminTikTokPublishNext(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var result = await _publishNextTikTokVideo(env);
+    return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminTikTokPublishNext');
+  }
+}
+
+// GET /tiktok/callback — o TikTok manda o navegador de volta pra cá depois
+// que o admin autoriza. SEM header de autenticação (é navegação de página,
+// não fetch) — a proteção é o "state" de uso único checado contra o KV.
+async function _tiktokOAuthCallback(request, env) {
+  var url = new URL(request.url);
+  var code = url.searchParams.get('code');
+  var state = url.searchParams.get('state');
+  var erro = url.searchParams.get('error');
+  var pagina = function (titulo, corpo) {
+    return new Response(
+      '<!doctype html><meta charset="utf-8"><title>' + titulo + '</title>' +
+      '<body style="font-family:sans-serif;max-width:480px;margin:80px auto;text-align:center;color:#1E293B">' +
+      '<h1 style="font-size:20px">' + titulo + '</h1><p>' + corpo + '</p></body>',
+      { headers: Object.assign({ 'Content-Type': 'text/html; charset=utf-8' }, SECURITY_HEADERS) }
+    );
+  };
+  if (erro) return pagina('Não deu certo', 'O TikTok recusou a autorização (' + erro + '). Pode fechar essa aba e tentar de novo pelo admin do Finn.');
+  if (!code || !state) return pagina('Faltou informação', 'O TikTok não mandou o código esperado. Pode fechar essa aba e tentar de novo.');
+  if (!env.FINN_KV) return pagina('Erro', 'FINN_KV não configurado.');
+
+  var estadoValido = await env.FINN_KV.get('tiktok_oauth_state_' + state);
+  if (!estadoValido) return pagina('Link expirado', 'Esse link de autorização já expirou ou já foi usado. Volta no admin do Finn e clica em "Conectar" de novo.');
+  await env.FINN_KV.delete('tiktok_oauth_state_' + state);
+
+  if (!env.TT_CLIENT_KEY || !env.TT_CLIENT_SECRET) return pagina('Erro', 'TT_CLIENT_KEY/TT_CLIENT_SECRET não configurados no worker.');
+
+  try {
+    var r = await fetch(TT_API_BASE + '/oauth/token/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'client_key=' + encodeURIComponent(env.TT_CLIENT_KEY) +
+        '&client_secret=' + encodeURIComponent(env.TT_CLIENT_SECRET) +
+        '&code=' + encodeURIComponent(code) +
+        '&grant_type=authorization_code' +
+        '&redirect_uri=' + encodeURIComponent(TT_REDIRECT_URI)
+    });
+    var body = await r.json();
+    if (!r.ok || !body.access_token) return pagina('Não deu certo', 'O TikTok recusou trocar o código (' + (body.error_description || body.error || 'erro desconhecido') + ').');
+    await _tiktokSalvarTokens(env, body);
+    return pagina('Conectado!', 'A conta do TikTok foi conectada ao Finn. Pode fechar essa aba e voltar pro admin.');
+  } catch (e) {
+    return pagina('Erro', 'Falha de conexão com o TikTok: ' + String(e && e.message || e));
   }
 }
 
@@ -5214,6 +5485,21 @@ h1 em{font-style:normal;color:#F97316}
       return _adminInstagramPublishStoryNext(request, env);
     }
 
+    if (url.pathname === '/admin/tiktok-status' && request.method === 'GET') {
+      return _adminTikTokStatus(request, env);
+    }
+    if (url.pathname === '/admin/tiktok-connect-url' && request.method === 'GET') {
+      return _adminTikTokConnectUrl(request, env);
+    }
+    if (url.pathname === '/admin/tiktok-publish-next' && request.method === 'POST') {
+      return _adminTikTokPublishNext(request, env);
+    }
+    // Rota pública — o TikTok redireciona o navegador do admin pra cá depois
+    // da autorização, sem nenhum header nosso (ver comentário na função).
+    if (url.pathname === '/tiktok/callback') {
+      return _tiktokOAuthCallback(request, env);
+    }
+
     // ── Pitch decks ──
     if (url.pathname === '/investidores') {
       return new Response(${JSON.stringify(pitchInv)}, {
@@ -5364,8 +5650,10 @@ h1 em{font-style:normal;color:#F97316}
         }
         await _publishNextInstagramStory(env);
         // Reel não tem cron próprio (ver comentário em _publishNextInstagramReel)
-        // — encosta neste mesmo disparo, depois do story.
+        // — encosta neste mesmo disparo, depois do story. TikTok também não
+        // tem slot livre (5 crons é o limite da conta) — encosta aqui também.
         await _publishNextInstagramReel(env);
+        await _publishNextTikTokVideo(env);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
