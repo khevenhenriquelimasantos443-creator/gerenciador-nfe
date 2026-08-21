@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escopo — Módulo de Estoque, Fiscal e Cadastros</title>
+<meta name="description" content="Escopo detalhado do módulo de estoque, fiscal e cadastros: produtos, NF-e, inventário, permissões, fornecedores e motor de tributação IBS/CBS.">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0A0E1A;
+    color: #E2E8F0;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+
+  .top {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(10,14,26,.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .top-inner {
+    max-width: 880px; margin: 0 auto;
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 700; color: #94A3B8;
+    text-decoration: none;
+  }
+  .back:hover { color: #F97316; }
+
+  header.hero {
+    max-width: 880px; margin: 0 auto;
+    padding: 56px 20px 32px;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #FB923C;
+    background: rgba(249,115,22,.12);
+    border: 1px solid rgba(249,115,22,.25);
+    border-radius: 99px;
+    padding: 5px 12px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  h1 span { color: #F97316; }
+  .lede { color: #94A3B8; font-size: 16px; max-width: 640px; }
+
+  .callout {
+    max-width: 880px; margin: 0 auto 8px;
+    padding: 0 20px;
+  }
+  .callout-box {
+    background: rgba(249,115,22,.08);
+    border: 1px solid rgba(249,115,22,.25);
+    border-radius: 16px;
+    padding: 20px 22px;
+    font-size: 14px;
+    color: #CBD5E1;
+  }
+  .callout-box strong { color: #FDBA74; }
+
+  main {
+    max-width: 880px; margin: 0 auto;
+    padding: 40px 20px 80px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+  }
+  nav.toc {
+    position: sticky; top: 70px; align-self: start;
+    font-size: 13px;
+  }
+  nav.toc .toc-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: #475569; margin-bottom: 12px;
+  }
+  nav.toc a {
+    display: block;
+    color: #94A3B8;
+    text-decoration: none;
+    padding: 6px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -13px;
+    transition: color .15s, border-color .15s;
+  }
+  nav.toc a:hover { color: #F97316; border-color: rgba(249,115,22,.4); }
+
+  article section { margin-bottom: 52px; scroll-margin-top: 84px; }
+  article h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 18px;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  article h2 .num { color: #F97316; font-size: 18px; font-weight: 900; }
+  article h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #F1F5F9;
+    margin: 24px 0 10px;
+  }
+  article p { color: #CBD5E1; margin-bottom: 12px; font-size: 14.5px; }
+  article ul, article ol { margin: 0 0 14px 20px; color: #CBD5E1; font-size: 14.5px; }
+  article li { margin-bottom: 7px; }
+  article li strong { color: #F1F5F9; }
+  article code {
+    background: rgba(255,255,255,.08);
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-size: 13px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: #FDBA74;
+  }
+  article pre {
+    background: #0F172A;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 14px 0 18px;
+  }
+  article pre code {
+    background: none; padding: 0; color: #A5B4FC;
+    font-size: 13px; line-height: 1.7;
+  }
+  article table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 20px;
+    font-size: 13.5px;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  article th, article td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  article th {
+    background: rgba(255,255,255,.04);
+    color: #94A3B8;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  article td { color: #CBD5E1; }
+  article td:first-child { color: #F97316; font-weight: 700; }
+
+  .final {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .final strong { color: #F1F5F9; }
+
+  footer {
+    text-align: center;
+    color: #1E293B;
+    font-size: 12px;
+    padding: 0 20px 48px;
+  }
+
+  @media (max-width: 720px) {
+    main { grid-template-columns: 1fr; }
+    nav.toc { position: static; margin-bottom: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-inner">
+    <a class="back" href="../">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Voltar
+    </a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="kicker">Escopo · Estoque &amp; Fiscal</div>
+  <h1>Módulo de Estoque, Fiscal<br>e <span>Cadastros</span></h1>
+  <p class="lede">Escopo detalhado do módulo — cadastro de produtos, entrada/saída de NF-e, inventário, permissões, fornecedores e o motor de tributação para a transição ICMS/PIS/COFINS → IBS/CBS.</p>
+</header>
+
+<div class="callout">
+  <div class="callout-box">
+    ⚠️ <strong>Aviso da Reforma Tributária:</strong> desde 01/01/2026 o Brasil está em transição do modelo ICMS/PIS/COFINS para o IVA Dual (IBS + CBS), conforme EC 132/2023 e LC 214/2025. A partir de 03/08/2026 (regime Normal) os campos de IBS/CBS já são <strong>obrigatórios na NF-e/NFC-e</strong> (Nota Técnica 2025.002), e o CFOP está perdendo função estrutural, sendo progressivamente substituído por classificações do Comitê Gestor do IBS. Simples Nacional/MEI entram na obrigatoriedade em 2027. Isso significa que o módulo fiscal não pode ser construído só para o modelo antigo — precisa nascer com um "motor de tributação" abstrato que suporte ICMS/PIS/COFINS e IBS/CBS em paralelo durante toda a transição (até ~2033).
+  </div>
+</div>
+
+<main>
+  <nav class="toc">
+    <div class="toc-title">Neste documento</div>
+    <a href="#produtos">1. Cadastro de Produtos</a>
+    <a href="#nfe">2. Entrada e Saída de NF</a>
+    <a href="#inventario">3. Contagem de Estoque</a>
+    <a href="#usuarios">4. Usuários e Permissões</a>
+    <a href="#fornecedores">5. Fornecedores</a>
+    <a href="#fiscal">6. NCM, CEST, CFOP, Origem</a>
+    <a href="#priorizacao">7. Priorização</a>
+  </nav>
+
+  <article>
+
+    <section id="produtos">
+      <h2><span class="num">1.</span> Cadastro de Produtos</h2>
+
+      <h3>1.1 Dados cadastrais</h3>
+      <ul>
+        <li>Código interno (SKU) — gerado automaticamente ou manual</li>
+        <li>Código de barras (EAN-13, GTIN, ou código interno para produtos sem EAN)</li>
+        <li>Descrição completa e descrição resumida (para cupom fiscal, que tem limite de caracteres)</li>
+        <li>Unidade de medida (UN, KG, CX, PCT, LT...) e unidade de compra x unidade de venda (ex: compra em CX, vende em UN)</li>
+        <li>Fator de conversão entre unidades</li>
+        <li>Imagem do produto</li>
+        <li>Status (ativo/inativo/descontinuado)</li>
+      </ul>
+
+      <h3>1.2 Classificação hierárquica (Seção → Grupo → Subgrupo)</h3>
+      <ul>
+        <li><strong>Seção</strong>: nível macro (ex: Alimentos, Bazar, Limpeza)</li>
+        <li><strong>Grupo</strong>: dentro da seção (ex: Alimentos → Bebidas)</li>
+        <li><strong>Subgrupo</strong>: dentro do grupo (ex: Bebidas → Refrigerantes)</li>
+        <li>Cada nível deve ter: código, descrição, status ativo/inativo</li>
+        <li>Um produto pertence a exatamente 1 seção/grupo/subgrupo (relação obrigatória, não opcional — isso é o que permite curva ABC e relatórios gerenciais consistentes)</li>
+        <li>Deve permitir também <strong>marca</strong> e <strong>categoria fiscal</strong> como atributos independentes da hierarquia comercial</li>
+      </ul>
+
+      <h3>1.3 Cálculo de valores unitários</h3>
+      <ul>
+        <li><strong>Custo de compra</strong> (valor da NF de entrada)</li>
+        <li><strong>Custo médio ponderado</strong>: recalculado a cada entrada — fórmula padrão:</li>
+      </ul>
+      <pre><code>Novo Custo Médio = (Estoque Atual × Custo Médio Atual + Qtd Entrada × Custo Unitário Entrada)
+                    ÷ (Estoque Atual + Qtd Entrada)</code></pre>
+      <ul>
+        <li><strong>Custo de reposição</strong> (último custo de compra, sem ponderação — usado por alguns negócios em vez do custo médio)</li>
+        <li><strong>Markup / margem</strong>: percentual configurável por produto, grupo ou global</li>
+        <li><strong>Preço de venda</strong>: calculado automaticamente (custo médio × markup) ou definido manualmente, com trava de alçada (ex: vendedor não pode dar desconto abaixo do custo sem autorização)</li>
+        <li>Histórico de variação de custo e preço (auditável — quem alterou, quando, valor anterior x novo)</li>
+      </ul>
+
+      <h3>1.4 Ajuste manual de custo</h3>
+      <ul>
+        <li>Tela específica para correção de custo (ex: erro de digitação na entrada, rateio de frete)</li>
+        <li><strong>Obrigatório</strong>: registro de motivo/justificativa em campo de texto</li>
+        <li><strong>Obrigatório</strong>: log de auditoria (usuário, data/hora, valor anterior, valor novo, IP/terminal)</li>
+        <li>Recalcula automaticamente o custo médio e, se configurado, o preço de venda</li>
+        <li>Alçada por perfil: usuário comum não altera custo — só supervisor/gerente com permissão específica</li>
+      </ul>
+    </section>
+
+    <section id="nfe">
+      <h2><span class="num">2.</span> Entrada e Saída de Notas Fiscais</h2>
+
+      <h3>2.1 Entrada de NF-e (compra/transferência)</h3>
+      <ul>
+        <li>Importação via XML (leitura automática do arquivo da NF-e emitida pelo fornecedor) — <strong>essencial</strong>, evita digitação manual</li>
+        <li>Conferência física x XML (bipagem dos itens recebidos, com tolerância configurável para divergência)</li>
+        <li>Vínculo automático do produto do fornecedor com o produto interno (de-para de código de fornecedor → SKU interno)</li>
+        <li>Se o produto não existe no cadastro, gatilho para cadastro rápido a partir dos dados do XML (NCM, descrição, CFOP já vêm prontos)</li>
+        <li>Rateio de custos adicionais (frete, seguro, IPI, ICMS-ST) sobre o custo unitário dos itens</li>
+        <li>Status do recebimento: pendente → conferido → lançado no estoque → integrado ao financeiro (contas a pagar)</li>
+      </ul>
+
+      <h3>2.2 Saída de NF-e (venda, devolução, transferência, bonificação)</h3>
+      <ul>
+        <li>Emissão vinculada à venda do PDV (NFC-e) ou separada (NF-e para B2B/atacado)</li>
+        <li>Tipos de saída: venda, devolução ao fornecedor, transferência entre lojas, bonificação, amostra grátis, remessa para conserto, perda/quebra</li>
+        <li>Cada tipo de saída tem <strong>CFOP correspondente</strong> (ver seção 6) e tratamento fiscal próprio</li>
+      </ul>
+
+      <h3>2.3 Cancelamento e carta de correção</h3>
+      <ul>
+        <li>Cancelamento de NF-e dentro do prazo legal (SEFAZ)</li>
+        <li>Carta de Correção Eletrônica (CC-e) para erros que não alteram valor/tributo/destaque</li>
+      </ul>
+    </section>
+
+    <section id="inventario">
+      <h2><span class="num">3.</span> Contagem de Estoque (Inventário)</h2>
+
+      <h3>3.1 Tipos de contagem</h3>
+      <ul>
+        <li><strong>Inventário geral</strong>: conta todo o estoque, geralmente com bloqueio de vendas/movimentação durante a contagem</li>
+        <li><strong>Inventário rotativo/cíclico</strong>: conta por seção/grupo em datas alternadas, sem parar a operação</li>
+        <li><strong>Contagem cega</strong>: operador não vê o saldo do sistema durante a contagem (evita viés)</li>
+      </ul>
+
+      <h3>3.2 Fluxo</h3>
+      <ol>
+        <li>Geração de lista/planilha de contagem (por seção, por localização física)</li>
+        <li>Contagem em campo (idealmente via coletor/app mobile com leitor de código de barras)</li>
+        <li>Segunda contagem para itens com divergência (dupla checagem)</li>
+        <li>Relatório de divergência (sistema x físico), com valor financeiro do ajuste</li>
+        <li>Aprovação do ajuste por usuário com alçada (não deve ser automático — gera lançamento contábil)</li>
+        <li>Ajuste efetivado no estoque, com log de auditoria</li>
+      </ol>
+    </section>
+
+    <section id="usuarios">
+      <h2><span class="num">4.</span> Cadastros de Usuários e Permissões</h2>
+
+      <h3>4.1 Dados do usuário</h3>
+      <ul>
+        <li>Nome, CPF, login, senha (hash — nunca texto plano), e-mail</li>
+        <li>Loja(s) de acesso (para operação multiloja)</li>
+        <li>Perfil de acesso (RBAC — role-based access control)</li>
+      </ul>
+
+      <h3>4.2 Perfis sugeridos (granulares, não fixos)</h3>
+      <ul>
+        <li>Operador de caixa (só PDV)</li>
+        <li>Estoquista (entrada/saída, contagem, sem acesso a custo/preço)</li>
+        <li>Supervisor de loja (aprova ajustes, autoriza descontos)</li>
+        <li>Gerente (todos os módulos da loja, sem acesso multiloja)</li>
+        <li>Administrador/matriz (acesso total, todas as lojas, configurações fiscais)</li>
+        <li>Contador (acesso somente leitura a relatórios fiscais e exportações)</li>
+      </ul>
+
+      <h3>4.3 Controle de acesso</h3>
+      <ul>
+        <li>Permissão por <strong>tela</strong> (ver, criar, editar, excluir) — não binário de "tem acesso ou não"</li>
+        <li>Permissão por <strong>valor/alçada</strong> (ex: pode dar desconto até 10% sem aprovação)</li>
+        <li>Log de todas as ações sensíveis (alteração de preço, custo, cancelamento de venda, exclusão de produto)</li>
+        <li>Autenticação de segundo fator para ações críticas (recomendado, não obrigatório por lei ainda)</li>
+      </ul>
+    </section>
+
+    <section id="fornecedores">
+      <h2><span class="num">5.</span> Cadastro de Fornecedores (Completo)</h2>
+      <ul>
+        <li>Razão social, nome fantasia, CNPJ (com validação de dígito verificador e consulta à Receita/SINTEGRA)</li>
+        <li>Inscrição Estadual (IE) e indicador de contribuinte de ICMS (contribuinte / isento / não contribuinte)</li>
+        <li>Endereço completo com CEP validado</li>
+        <li>Contatos (comercial, financeiro, representante)</li>
+        <li>Dados bancários (para pagamento)</li>
+        <li>Condições comerciais padrão: prazo de pagamento, forma de pagamento, desconto padrão</li>
+        <li>Regime tributário do fornecedor (Simples Nacional, Lucro Presumido, Lucro Real) — <strong>impacta diretamente o cálculo de crédito de ICMS/PIS/COFINS na entrada</strong></li>
+        <li>Histórico de compras e ranking de fornecedores (por volume, prazo de entrega, divergências)</li>
+        <li>Vínculo produto-fornecedor com código do fornecedor e último custo praticado (permite comparar preços entre fornecedores do mesmo produto)</li>
+      </ul>
+    </section>
+
+    <section id="fiscal">
+      <h2><span class="num">6.</span> Parte Jurídica/Fiscal — NCM, CEST, CFOP, Origem</h2>
+      <p>Este é o núcleo mais crítico e mais caro do sistema. Recomendação forte: <strong>não tente manter essas tabelas manualmente — integre com uma API fiscal especializada</strong> (Focus NFe, eNotas, NFe.io, Tecnospeed) que já mantém tudo atualizado. Manter isso "na mão" é inviável para uma empresa que não seja especializada em tributação, porque as tabelas mudam com frequência e um erro gera rejeição de nota ou autuação fiscal.</p>
+
+      <h3>6.1 NCM (Nomenclatura Comum do Mercosul)</h3>
+      <ul>
+        <li>Código de 8 dígitos que classifica a mercadoria (base para tributação federal e para saber se o produto tem substituição tributária)</li>
+        <li>Cadastro deve validar contra a tabela oficial vigente (Receita Federal/Siscomex atualiza periodicamente)</li>
+        <li>Um produto tem exatamente 1 NCM</li>
+      </ul>
+
+      <h3>6.2 CEST (Código Especificador da Substituição Tributária)</h3>
+      <ul>
+        <li>Obrigatório quando o produto está sujeito a Substituição Tributária (ST) ou Antecipação Tributária</li>
+        <li>Relaciona-se ao NCM, mas <strong>não é 1:1</strong> — um mesmo NCM pode ter mais de um CEST possível dependendo do segmento</li>
+        <li>Vincula a alíquota de MVA (Margem de Valor Agregado) usada no cálculo do ICMS-ST, que varia <strong>por estado</strong></li>
+      </ul>
+
+      <h3>6.3 CFOP (Código Fiscal de Operações e Prestações)</h3>
+      <ul>
+        <li>Define a natureza da operação (venda dentro do estado, venda interestadual, devolução, transferência, bonificação etc.)</li>
+        <li>Muda conforme: origem/destino da operação (dentro do estado, interestadual, exterior), finalidade (venda, devolução, transferência, industrialização)</li>
+        <li><strong>Atenção 2026</strong>: com a Reforma Tributária, o CFOP está perdendo protagonismo — o Comitê Gestor do IBS está criando classificações próprias que vão progressivamente assumir o papel que o CFOP tem hoje. O sistema deve ser desenhado para trocar essa "tabela de regras de operação" sem reescrever a lógica de negócio.</li>
+      </ul>
+
+      <h3>6.4 Origem da Mercadoria (Código de Origem — Tabela A do ICMS)</h3>
+      <ul>
+        <li>0 = Nacional</li>
+        <li>1 = Estrangeira (importação direta)</li>
+        <li>2 = Estrangeira (adquirida no mercado interno)</li>
+        <li>3 a 8 = variações com/sem similar nacional, conteúdo de importação (para produtos com Lei da Informática/ZFM etc.)</li>
+        <li>Impacta diretamente a alíquota de ICMS interestadual (4% para produtos importados sem industrialização relevante, regra geral)</li>
+      </ul>
+
+      <h3>6.5 Motor de tributação (arquitetura recomendada)</h3>
+      <p>Ao invés de "hardcodar" regras de ICMS/CFOP no código, construa uma <strong>tabela de regras configurável</strong>:</p>
+      <pre><code>Regra de Tributação = f(
+  UF Origem, UF Destino,
+  Regime Tributário do Emitente (Simples/Presumido/Real),
+  Regime Tributário do Destinatário,
+  NCM/CEST do produto,
+  Finalidade da operação,
+  Vigência (data início/fim da regra) ← crítico para a transição da reforma
+)
+→ retorna: CFOP, CST/CSOSN, alíquota ICMS, MVA-ST, alíquota IBS, alíquota CBS, alíquota PIS/COFINS</code></pre>
+      <ul>
+        <li>Isso permite que, quando o governo mudar uma alíquota ou o Comitê Gestor publicar nova tabela, você <strong>atualize dados, não código</strong>.</li>
+        <li>Campo de vigência é essencial porque durante a transição (2026-2033) vão coexistir regras antigas e novas, e as notas precisam usar a regra vigente na data da operação.</li>
+      </ul>
+
+      <h3>6.6 Validações obrigatórias antes de emitir a nota</h3>
+      <ul>
+        <li>CNPJ/CPF do destinatário válido</li>
+        <li>Regime tributário do CFOP compatível com o regime do emitente (ex: CFOP de Simples Nacional não pode ser usado por empresa do Lucro Real)</li>
+        <li>NCM existe na tabela vigente</li>
+        <li>Se produto tem CEST, verificar se está na lista de ST para aquele estado (nem todo estado aplica ST ao mesmo NCM)</li>
+        <li>A partir de ago/2026: campos de IBS/CBS preenchidos para regime Normal (LC 214/2025)</li>
+        <li>Cálculo de crédito/débito de ICMS coerente entre emitente e destinatário (evitar nota rejeitada por incompatibilidade de CST)</li>
+      </ul>
+    </section>
+
+    <section id="priorizacao">
+      <h2><span class="num">7.</span> Priorização Sugerida (ordem de construção)</h2>
+      <table>
+        <thead>
+          <tr><th>Ordem</th><th>Módulo</th><th>Por quê primeiro</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Cadastro de produtos + seção/grupo/subgrupo</td><td>Base de tudo — sem isso nada funciona</td></tr>
+          <tr><td>2</td><td>Cadastro de fornecedores</td><td>Necessário para entrada de NF</td></tr>
+          <tr><td>3</td><td>Entrada de NF (com leitura de XML)</td><td>Movimenta estoque e alimenta custo médio</td></tr>
+          <tr><td>4</td><td>Cálculo de custo médio + ajuste manual</td><td>Depende da entrada funcionando</td></tr>
+          <tr><td>5</td><td>Cadastro de usuários e permissões</td><td>Deve vir cedo para já auditar tudo daqui pra frente</td></tr>
+          <tr><td>6</td><td>Saída de NF (venda)</td><td>Depende de entrada + tributação já mapeada</td></tr>
+          <tr><td>7</td><td>Motor de tributação (NCM/CEST/CFOP/Origem)</td><td>É transversal — mas comece integrando API terceira, não construindo do zero</td></tr>
+          <tr><td>8</td><td>Contagem de estoque/inventário</td><td>Só faz sentido com estoque já populado e estável</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="final" style="margin-bottom: 0;">
+      <p style="margin-bottom:0;"><strong>Recomendação final:</strong> a parte de "conforme leis federais e estaduais" (seção 6) é onde a maioria dos ERPs pequenos quebra — não pela complexidade do código, mas porque a legislação muda e ninguém no time acompanha. Se o objetivo é ter algo confiável desde o dia 1, terceirizar a emissão/validação fiscal para uma API especializada (Focus NFe, eNotas, Tecnospeed) e manter seu esforço interno focado em estoque, custo e cadastros é o caminho mais realista — mesmo os grandes ERPs fazem isso.</p>
+    </section>
+
+  </article>
+</main>
+
+<footer>Gerenciador NFe — Escopo do módulo de Estoque, Fiscal e Cadastros</footer>
+
+</body>
+</html>
