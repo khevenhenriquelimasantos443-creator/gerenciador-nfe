@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerenciador NFe — Estoque, Fiscal e Notas Fiscais</title>
+<meta name="description" content="Gerenciador NFe: cadastro de produtos, entrada e saída de NF-e, controle de estoque, fornecedores, usuários e motor de tributação pronto para a Reforma Tributária (IBS/CBS).">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0A0E1A;
+    color: #E2E8F0;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+
+  .top {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(10,14,26,.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .top-inner {
+    max-width: 1040px; margin: 0 auto;
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 15px;
+    color: #fff;
+  }
+  .brand-mark {
+    width: 30px; height: 30px;
+    background: #1E293B;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    color: #3B82F6;
+  }
+  .top-nav { display: flex; align-items: center; gap: 24px; }
+  .top-nav a {
+    font-size: 13px; font-weight: 700; color: #94A3B8;
+    text-decoration: none;
+  }
+  .top-nav a:hover { color: #3B82F6; }
+  .top-nav a.cta {
+    background: #3B82F6;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+  }
+  .top-nav a.cta:hover { color: #fff; opacity: .9; }
+
+  header.hero {
+    max-width: 780px; margin: 0 auto;
+    padding: 88px 24px 40px;
+    text-align: center;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #60A5FA;
+    background: rgba(59,130,246,.12);
+    border: 1px solid rgba(59,130,246,.25);
+    border-radius: 99px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  h1 span { color: #3B82F6; }
+  .lede {
+    color: #94A3B8; font-size: 17px;
+    max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 700;
+    padding: 12px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .btn-primary { background: #3B82F6; color: #fff; }
+  .btn-primary:hover { opacity: .9; }
+  .btn-ghost {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    color: #E2E8F0;
+  }
+  .btn-ghost:hover { border-color: rgba(59,130,246,.4); color: #60A5FA; }
+
+  .reform-strip {
+    max-width: 900px; margin: 0 auto 72px;
+    padding: 0 24px;
+  }
+  .reform-box {
+    background: rgba(59,130,246,.06);
+    border: 1px solid rgba(59,130,246,.2);
+    border-radius: 16px;
+    padding: 18px 22px;
+    font-size: 13.5px;
+    color: #94A3B8;
+    text-align: center;
+  }
+  .reform-box strong { color: #93C5FD; }
+
+  section.features {
+    max-width: 1040px; margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  .section-head { text-align: center; max-width: 560px; margin: 0 auto 44px; }
+  .section-head .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #475569; margin-bottom: 10px;
+  }
+  .section-head h2 {
+    font-size: 28px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 10px;
+  }
+  .section-head p { color: #94A3B8; font-size: 14.5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: #111827;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 18px;
+    padding: 24px;
+    transition: transform .18s, border-color .18s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,.35); }
+  .card-icon {
+    width: 42px; height: 42px;
+    background: rgba(59,130,246,.12);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    margin-bottom: 14px;
+  }
+  .card h3 { font-size: 15.5px; font-weight: 800; margin-bottom: 8px; color: #F1F5F9; }
+  .card p { font-size: 13px; color: #94A3B8; line-height: 1.6; }
+
+  section.roadmap {
+    max-width: 780px; margin: 0 auto;
+    padding: 0 24px 90px;
+  }
+  .roadmap-list { display: flex; flex-direction: column; gap: 10px; }
+  .roadmap-item {
+    display: flex; align-items: center; gap: 16px;
+    background: #111827;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 14px 18px;
+  }
+  .roadmap-num {
+    width: 28px; height: 28px; flex: 0 0 28px;
+    background: rgba(59,130,246,.14);
+    color: #60A5FA;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12.5px; font-weight: 800;
+  }
+  .roadmap-item .rm-name { font-size: 14px; font-weight: 700; color: #F1F5F9; }
+  .roadmap-item .rm-why { font-size: 12.5px; color: #64748B; margin-top: 2px; }
+
+  footer {
+    text-align: center;
+    color: #1E293B;
+    font-size: 12px;
+    padding: 0 24px 48px;
+  }
+
+  @media (max-width: 640px) {
+    .top-nav a:not(.cta) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-inner">
+    <a class="brand" href="./">
+      <span class="brand-mark">NF</span>
+      Gerenciador NFe
+    </a>
+    <div class="top-nav">
+      <a href="#modulos">Módulos</a>
+      <a href="#roadmap">Roadmap</a>
+      <a class="cta" href="./escopo.html">Ver escopo completo</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="kicker">🧾 Estoque · Fiscal · Notas Fiscais Eletrônicas</div>
+  <h1>Gestão de estoque e<br><span>fiscal</span>, num só lugar</h1>
+  <p class="lede">Cadastro de produtos, entrada e saída de NF-e, inventário, fornecedores e permissões — com um motor de tributação pronto para a transição ICMS/PIS/COFINS → IBS/CBS da Reforma Tributária.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="./escopo.html">
+      Ler o escopo completo
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a class="btn btn-ghost" href="#modulos">Ver módulos</a>
+  </div>
+</header>
+
+<div class="reform-strip">
+  <div class="reform-box">
+    ⚠️ Desde 01/01/2026 o Brasil está em transição para o IVA Dual (IBS + CBS). A partir de 03/08/2026 os campos de IBS/CBS já são <strong>obrigatórios na NF-e/NFC-e</strong>. O motor de tributação deste módulo nasce abstrato para suportar ICMS/PIS/COFINS e IBS/CBS em paralelo durante toda a transição, até ~2033.
+  </div>
+</div>
+
+<section class="features" id="modulos">
+  <div class="section-head">
+    <div class="eyebrow">O que o módulo cobre</div>
+    <h2>Sete frentes, um só sistema</h2>
+    <p>Do cadastro de produtos ao motor de tributação — cada frente descrita em detalhe no documento de escopo.</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-icon">🏷️</div>
+      <h3>1. Cadastro de Produtos</h3>
+      <p>SKU, código de barras, hierarquia Seção → Grupo → Subgrupo, custo médio ponderado e ajuste de custo auditável.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧾</div>
+      <h3>2. Entrada e Saída de NF</h3>
+      <p>Importação de XML da NF-e, conferência física, rateio de custos e emissão de saída (venda, devolução, transferência).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <h3>3. Contagem de Estoque</h3>
+      <p>Inventário geral, rotativo e contagem cega, com dupla checagem e aprovação de ajuste por alçada.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <h3>4. Usuários e Permissões</h3>
+      <p>RBAC granular por tela e por alçada de valor, com log de auditoria em toda ação sensível.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚚</div>
+      <h3>5. Fornecedores</h3>
+      <p>Cadastro completo com validação de CNPJ/IE, regime tributário e histórico/ranking de compras.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚖️</div>
+      <h3>6. Motor de Tributação</h3>
+      <p>NCM, CEST, CFOP e Origem como tabela de regras configurável por vigência — pronta para IBS/CBS.</p>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap" id="roadmap">
+  <div class="section-head">
+    <div class="eyebrow">Ordem de construção</div>
+    <h2>Priorização sugerida</h2>
+  </div>
+  <div class="roadmap-list">
+    <div class="roadmap-item">
+      <div class="roadmap-num">1</div>
+      <div><div class="rm-name">Cadastro de produtos + seção/grupo/subgrupo</div><div class="rm-why">Base de tudo — sem isso nada funciona</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">2</div>
+      <div><div class="rm-name">Cadastro de fornecedores</div><div class="rm-why">Necessário para entrada de NF</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">3</div>
+      <div><div class="rm-name">Entrada de NF (com leitura de XML)</div><div class="rm-why">Movimenta estoque e alimenta custo médio</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">4</div>
+      <div><div class="rm-name">Cálculo de custo médio + ajuste manual</div><div class="rm-why">Depende da entrada funcionando</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">5</div>
+      <div><div class="rm-name">Cadastro de usuários e permissões</div><div class="rm-why">Deve vir cedo para já auditar tudo daqui pra frente</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">6</div>
+      <div><div class="rm-name">Saída de NF (venda)</div><div class="rm-why">Depende de entrada + tributação já mapeada</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">7</div>
+      <div><div class="rm-name">Motor de tributação (NCM/CEST/CFOP/Origem)</div><div class="rm-why">Transversal — comece integrando API terceira</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">8</div>
+      <div><div class="rm-name">Contagem de estoque/inventário</div><div class="rm-why">Só faz sentido com estoque já populado e estável</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>Gerenciador NFe — Estoque, Fiscal e Cadastros</footer>
+
+</body>
+</html>
