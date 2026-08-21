@@ -1,0 +1,24 @@
+name = "gerenciador-nfe-api"
+main = "index.js"
+compatibility_date = "2024-11-01"
+account_id = "8cd9feaaea37b443866c2b6e22bbd4db"
+
+# ─────────────────────────────────────────────
+#  API do módulo de Cadastro de Produtos
+#  (Seção → Grupo → Subgrupo, produtos, ajuste de custo)
+#  Publica em: https://gerenciador-nfe-api.khevenhenriquelimasantos443.workers.dev/
+# ─────────────────────────────────────────────
+
+[[d1_databases]]
+binding = "DB"
+database_name = "gerenciador-nfe-produtos"
+database_id = "b09f0a22-c2ce-453d-9d0c-51d944068743"
+
+# ─────────────────────────────────────────────
+#  Token de acesso à API (placeholder até o Módulo 4 —
+#  Usuários e Permissões — existir de verdade).
+#  Troque quando quiser: `wrangler secret put API_TOKEN`
+#  remove esta var e passa a usar secret (não versionado).
+# ─────────────────────────────────────────────
+[vars]
+API_TOKEN = "W1R739qu_gLVwiMHagoYx5s3nO_gOYU4"
