@@ -116,13 +116,6 @@
   .hist-item .hist-vals strong { color: #60A5FA; }
   .hist-item .hist-motivo { color: #64748B; margin-top: 4px; }
 
-  #gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-  .gate-card { background: #111827; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 36px; max-width: 380px; width: 100%; text-align: center; }
-  .gate-card .brand-mark { margin: 0 auto 18px; width: 46px; height: 46px; font-size: 20px; }
-  .gate-card h1 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
-  .gate-card p { font-size: 12.5px; color: #94A3B8; margin-bottom: 22px; }
-  .gate-card .form-field { text-align: left; }
-
   @media (max-width: 760px) {
     .hier-grid { grid-template-columns: 1fr; }
     .form-grid { grid-template-columns: 1fr; }
@@ -132,25 +125,9 @@
 </head>
 <body>
 
-<div id="gate">
-  <div class="gate-card">
-    <div class="brand-mark">NF</div>
-    <h1>Cadastro de Produtos</h1>
-    <p>Informe o token de acesso da API e seu nome (usado no log de auditoria).</p>
-    <div id="gateError" class="form-error"></div>
-    <div class="form-field">
-      <label>Token de acesso</label>
-      <input id="gateToken" type="password" placeholder="Cole o API_TOKEN">
-    </div>
-    <div class="form-field">
-      <label>Seu nome</label>
-      <input id="gateUser" type="text" placeholder="Ex: Kheven">
-    </div>
-    <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px;" onclick="doLogin()">Entrar</button>
-  </div>
-</div>
+<div id="bootError" class="form-error" style="max-width:600px; margin:20px auto;"></div>
 
-<div id="app" style="display:none;">
+<div id="app">
   <div class="top">
     <div class="top-inner">
       <a class="brand" href="./"><span class="brand-mark">NF</span>Gerenciador NFe</a>
@@ -160,7 +137,7 @@
       </div>
       <div class="user-chip">
         👤 <span id="userName"></span>
-        <button onclick="logout()">Sair</button>
+        <button onclick="editUsuario()">Trocar nome</button>
       </div>
     </div>
   </div>
@@ -278,9 +255,11 @@
 
 <script>
 const API_BASE = "https://gerenciador-nfe-api.khevenhenriquelimasantos443.workers.dev";
+// Token fixo do módulo (mesmo valor de nfe-api/wrangler.toml) — acesso direto,
+// sem pedir login. Placeholder até o Módulo 4 (Usuários/RBAC) existir de verdade.
+const TOKEN = "W1R739qu_gLVwiMHagoYx5s3nO_gOYU4";
 
-let TOKEN = localStorage.getItem("nfe_token") || "";
-let USUARIO = localStorage.getItem("nfe_usuario") || "";
+let USUARIO = localStorage.getItem("nfe_usuario") || "Kheven";
 let secoes = [], grupos = [], subgrupos = [];
 let searchTimer = null;
 
@@ -291,45 +270,29 @@ function api(path, options = {}) {
   }).then(async (res) => {
     let data = null;
     try { data = await res.json(); } catch {}
-    if (res.status === 401) { logout(); throw new Error("Sessão expirada"); }
     if (!res.ok || (data && data.ok === false)) throw new Error((data && data.error) || "Erro na requisição");
     return data;
   });
 }
 
-function doLogin() {
-  const token = document.getElementById("gateToken").value.trim();
-  const user = document.getElementById("gateUser").value.trim();
-  const err = document.getElementById("gateError");
-  err.classList.remove("show");
-  if (!token || !user) { err.textContent = "Preencha o token e seu nome."; err.classList.add("show"); return; }
-  TOKEN = token; USUARIO = user;
-  localStorage.setItem("nfe_token", token);
-  localStorage.setItem("nfe_usuario", user);
-  boot();
-}
-
-function logout() {
-  localStorage.removeItem("nfe_token");
-  localStorage.removeItem("nfe_usuario");
-  TOKEN = ""; USUARIO = "";
-  document.getElementById("app").style.display = "none";
-  document.getElementById("gate").style.display = "flex";
+function editUsuario() {
+  const novo = prompt("Seu nome (usado no log de auditoria):", USUARIO);
+  if (novo && novo.trim()) {
+    USUARIO = novo.trim();
+    localStorage.setItem("nfe_usuario", USUARIO);
+    document.getElementById("userName").textContent = USUARIO;
+  }
 }
 
 async function boot() {
-  document.getElementById("gate").style.display = "none";
-  document.getElementById("app").style.display = "block";
   document.getElementById("userName").textContent = USUARIO;
+  const bootErr = document.getElementById("bootError");
   try {
     await loadHierarquia();
     await loadProdutos();
   } catch (e) {
-    document.getElementById("gate").style.display = "flex";
-    document.getElementById("app").style.display = "none";
-    const err = document.getElementById("gateError");
-    err.textContent = e.message;
-    err.classList.add("show");
+    bootErr.textContent = "Erro ao carregar dados: " + e.message;
+    bootErr.classList.add("show");
   }
 }
 
@@ -596,7 +559,7 @@ async function openHistorico(id) {
   openModal("histOverlay");
 }
 
-if (TOKEN && USUARIO) boot();
+boot();
 </script>
 </body>
 </html>
