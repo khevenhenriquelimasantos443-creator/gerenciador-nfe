@@ -5605,6 +5605,13 @@ h1 em{font-style:normal;color:#F97316}
         headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
       });
     }
+    // Token novo pedido numa segunda tentativa de verificação (o TikTok troca
+    // o token a cada nova tentativa de "Verificar domínios").
+    if (url.pathname === '/tiktokCP5EfTxP0ZTFtnKniBfl0XyM3Td86UJZ.txt') {
+      return new Response('tiktok-developers-site-verification=CP5EfTxP0ZTFtnKniBfl0XyM3Td86UJZ', {
+        headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
+      });
+    }
     // Proxy dos vídeos do bucket 'social' pro TikTok baixar via PULL_FROM_URL
     // (ver _publishNextTikTokVideo). Motivo de existir: mesmo problema do
     // 'X-Robots-Tag: none' do Supabase Storage explicado acima — repassando
