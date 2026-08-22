@@ -2,6 +2,10 @@
 node_modules/
 .wrangler/
 
+# Gravação bruta do Playwright (finn-social/ads/gera-video-*.mjs) — arquivo
+# de trabalho intermediário, nunca o resultado final.
+finn-social/ads/_tmp_video/
+
 # Segredos nunca entram no repositório — eles ficam no Cloudflare, via
 # "wrangler secret put". Hoje nenhum .env existe aqui; isto é o guarda-corpo
 # pra que um arquivo criado por engano não vá parar num commit público.
