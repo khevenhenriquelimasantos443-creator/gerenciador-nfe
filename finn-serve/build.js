@@ -3055,7 +3055,12 @@ async function _publishNextTikTokVideo(env) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + accessToken },
       body: JSON.stringify({
-        post_info: { title: caption, privacy_level: privacidade, disable_duet: false, disable_comment: false, disable_stitch: false },
+        // video_cover_timestamp_ms: sem isso o TikTok escolhe o frame 0 como
+        // capa — e nossos vídeos abrem com a tela quase vazia (elementos
+        // ainda entrando com fadeIn), o que virou uma capa cinza feia. 1s dá
+        // tempo do primeiro elemento (selo/título) já estar visível, e é
+        // curto o bastante pra caber em qualquer vídeo da fila.
+        post_info: { title: caption, privacy_level: privacidade, disable_duet: false, disable_comment: false, disable_stitch: false, video_cover_timestamp_ms: 1000 },
         source_info: { source: 'PULL_FROM_URL', video_url: videoUrl }
       })
     });
