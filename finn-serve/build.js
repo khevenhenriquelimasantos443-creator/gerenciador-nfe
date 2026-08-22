@@ -3338,6 +3338,15 @@ async function _adminTikTokStatus(request, env) {
     }
     return new Response(JSON.stringify({
       configured: !!(env.TT_CLIENT_KEY && env.TT_CLIENT_SECRET),
+      // Prévia SEGURA da client_key (começo/fim, sem miolo) — só pra admin
+      // conferir visualmente se bate com o que está no TikTok Developer sem
+      // expor a chave inteira. Ajudou a diagnosticar "client_key" errado
+      // quando o erro do TikTok não diz QUAL client_key ele recebeu.
+      client_key_preview: env.TT_CLIENT_KEY
+        ? (env.TT_CLIENT_KEY.length > 8
+            ? env.TT_CLIENT_KEY.slice(0, 4) + '…' + env.TT_CLIENT_KEY.slice(-4) + ' (' + env.TT_CLIENT_KEY.length + ' caracteres)'
+            : '(muito curta: ' + env.TT_CLIENT_KEY.length + ' caracteres — provavelmente errada)')
+        : null,
       connected: conectado,
       open_id: openId,
       privacy_level: env.TT_PRIVACY_LEVEL || 'SELF_ONLY',
