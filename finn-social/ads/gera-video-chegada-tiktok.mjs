@@ -42,25 +42,25 @@ const html = `<!doctype html><meta charset="utf-8"><style>
 
 ${marca({ x: 96, y: 96, tam: 84, fonte: 40 })}
 
-<div class="beat fadeUp" style="top:520px;animation-delay:.2s">
+<div class="beat fadeUp" style="top:520px;animation-delay:0s">
   <div style="display:inline-flex;align-items:center;gap:9px;height:60px;padding:0 30px;
     border:2px solid ${LARANJA};border-radius:30px;font-size:24px;font-weight:700;
     letter-spacing:.06em;color:${LARANJA};background:rgba(249,115,22,.08)">🎉 CHEGAMOS</div>
 </div>
 
-<div class="beat fadeUp" style="top:640px;animation-delay:.9s">
+<div class="beat fadeUp" style="top:640px;animation-delay:.1s">
   <h1 style="font-size:88px">O Finn chegou ao</h1>
 </div>
-<div class="beat pop" style="top:800px;animation-delay:1.7s">
+<div class="beat pop" style="top:800px;animation-delay:1.5s">
   <h1 style="font-size:126px"><i>TikTok!</i></h1>
 </div>
 
-<div class="beat fadeUp" style="top:1080px;animation-delay:3.0s">
-  <p style="font-size:42px;line-height:1.4;color:${CINZA_ESCURO};font-weight:400">
-    Dicas práticas para organizar suas finanças, direto por aqui.</p>
+<div class="beat fadeUp" style="top:1080px;animation-delay:2.4s">
+  <p style="font-size:46px;line-height:1.4;color:${CINZA_ESCURO};font-weight:400">
+    Dicas práticas para organizar suas finanças!</p>
 </div>
 
-<div class="beat pop" style="top:1500px;animation-delay:4.6s;display:flex;justify-content:center;width:888px">
+<div class="beat pop" style="top:1420px;animation-delay:4.8s;display:flex;justify-content:center;width:888px">
   <div style="height:104px;display:inline-flex;align-items:center;padding:0 48px;border-radius:18px;
     background:${LARANJA};font-size:36px;font-weight:700;color:#fff;
     box-shadow:0 14px 30px rgba(249,115,22,.35)">Siga o nosso perfil</div>
