@@ -6621,7 +6621,7 @@ function renderAdminTikTok(){
     html += '<div style="font-size:12.5px;color:var(--fm)">TT_CLIENT_KEY / TT_CLIENT_SECRET ainda não configurados no finn-serve.</div>';
   } else if(!st.connected){
     html += '<div style="font-size:12.5px;color:var(--fm);margin-bottom:6px">App configurado, mas ninguém autorizou a conta do TikTok ainda.</div>' +
-      (st.client_key_preview ? '<div style="font-size:11.5px;color:var(--fm);margin-bottom:12px">Client key configurada: <code>' + escapeHtml(st.client_key_preview) + '</code> — confere se bate com a do TikTok Developer.</div>' : '') +
+      (st.client_key ? '<div style="font-size:11.5px;color:var(--fm);margin-bottom:12px;word-break:break-all">Client key configurada: <code>' + escapeHtml(st.client_key) + '</code> — compara caractere a caractere com a do TikTok Developer.</div>' : '') +
       '<button type="button" class="btn-submit" id="btnConectarTikTok"' + (state.tiktokConnectLoading ? " disabled" : "") + '>' +
         (state.tiktokConnectLoading ? "Abrindo…" : "Conectar conta do TikTok") +
       '</button>';

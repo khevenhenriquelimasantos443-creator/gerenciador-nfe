@@ -3338,15 +3338,13 @@ async function _adminTikTokStatus(request, env) {
     }
     return new Response(JSON.stringify({
       configured: !!(env.TT_CLIENT_KEY && env.TT_CLIENT_SECRET),
-      // Prévia SEGURA da client_key (começo/fim, sem miolo) — só pra admin
-      // conferir visualmente se bate com o que está no TikTok Developer sem
-      // expor a chave inteira. Ajudou a diagnosticar "client_key" errado
-      // quando o erro do TikTok não diz QUAL client_key ele recebeu.
-      client_key_preview: env.TT_CLIENT_KEY
-        ? (env.TT_CLIENT_KEY.length > 8
-            ? env.TT_CLIENT_KEY.slice(0, 4) + '…' + env.TT_CLIENT_KEY.slice(-4) + ' (' + env.TT_CLIENT_KEY.length + ' caracteres)'
-            : '(muito curta: ' + env.TT_CLIENT_KEY.length + ' caracteres — provavelmente errada)')
-        : null,
+      // client_key não é segredo de verdade — viaja em texto puro na URL de
+      // autorização que o navegador mostra (client_secret que é sensível).
+      // Mostrar só início/fim escondia troca de letra no MEIO da chave (foi
+      // exatamente o bug real: "sofl" virou "solf" ao digitar) — melhor
+      // mostrar inteira pra dar pra comparar caractere a caractere com a
+      // tela do TikTok Developer.
+      client_key: env.TT_CLIENT_KEY || null,
       connected: conectado,
       open_id: openId,
       privacy_level: env.TT_PRIVACY_LEVEL || 'SELF_ONLY',
