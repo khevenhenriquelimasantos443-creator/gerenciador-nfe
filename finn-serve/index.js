@@ -5489,6 +5489,13 @@ ${bodyHtml}
         headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
       });
     }
+    // Arquivo de verificação de propriedade do TikTok for Developers (prefixo
+    // /termos/), pedido ao configurar o app do Content Posting API.
+    if (url.pathname === '/termos/tiktok3kg7m0RBHbbXHgxZGCZcxl9mlgp5UtMa.txt') {
+      return new Response('tiktok-developers-site-verification=3kg7m0RBHbbXHgxZGCZcxl9mlgp5UtMa', {
+        headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
+      });
+    }
     if (url.pathname === '/.well-known/security.txt') {
       // Expires é campo obrigatório do RFC 9116. Calculado NA REQUISIÇÃO (o
       // Worker chama Date normalmente em runtime, sem a restrição que existe
