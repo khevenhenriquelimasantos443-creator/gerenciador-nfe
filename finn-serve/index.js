@@ -5652,7 +5652,12 @@ ${bodyHtml}
         // — encosta neste mesmo disparo, depois do story. TikTok também não
         // tem slot livre (5 crons é o limite da conta) — encosta aqui também.
         await _publishNextInstagramReel(env);
-        await _publishNextTikTokVideo(env);
+        // TT_CRON_ATIVO ([vars] no wrangler.toml): desligado a pedido do
+        // Kheven em 22/08/2026 enquanto a auditoria do TikTok não aprova o
+        // app (conta tem que ficar privada — ver TT_PRIVACY_LEVEL). Ele
+        // prefere postar manual nesse meio-tempo. Não afeta o botão manual
+        // "Testar publicação agora" (/admin/tiktok-publish-next).
+        if (env.TT_CRON_ATIVO === '1') await _publishNextTikTokVideo(env);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));

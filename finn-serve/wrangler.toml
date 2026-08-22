@@ -8,6 +8,17 @@ TT_PRIVACY_LEVEL = "SELF_ONLY"
 #   como SELF_ONLY (só o próprio criador vê o vídeo). Depois que a auditoria
 #   aprovar, troca pra "PUBLIC_TO_EVERYONE" e faz deploy — sem mudar código.
 
+TT_CRON_ATIVO = "0"
+# ↑ Desligado a pedido do Kheven em 22/08/2026: enquanto a auditoria do
+#   TikTok não aprova o app, a conta tem que ficar privada pra postar (ver
+#   TT_PRIVACY_LEVEL acima) — e ele não quer isso automático, prefere postar
+#   manual pra não ficar sem conteúdo. O cron ("25 13,21 * * *") passa a
+#   pular a publicação de TikTok enquanto isto for "0". Quando o e-mail de
+#   aprovação chegar: troca TT_PRIVACY_LEVEL pra "PUBLIC_TO_EVERYONE", troca
+#   este valor pra "1", e faz deploy — os dois na mesma leva.
+#   O botão "Testar publicação agora" no admin NÃO usa este flag (continua
+#   funcionando manualmente mesmo com o cron desligado).
+
 # Secrets are set via Cloudflare dashboard (encrypted):
 # PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET
 # VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, SUPABASE_SERVICE_KEY
