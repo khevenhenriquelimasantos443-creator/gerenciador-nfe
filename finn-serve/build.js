@@ -3038,7 +3038,14 @@ async function _publishNextTikTokVideo(env) {
   if (!daFila) return { ok: false, skipped: true, reason: 'nenhum vídeo de TikTok na fila' };
 
   var filaId = daFila.id;
-  var videoUrl = _socialPublicUrl(daFila.image_path);
+  // Não usa _socialPublicUrl (URL direta do Supabase Storage): o Storage
+  // manda 'X-Robots-Tag: none' em todo objeto público, e o TikTok respeita
+  // esse header ao baixar via PULL_FROM_URL — passa pelo proxy do próprio
+  // Worker (/midia/tiktok/, ver a rota pública abaixo) pra evitar isso.
+  var nomeArquivoTikTok = String(daFila.image_path || '');
+  var videoUrl = (nomeArquivoTikTok.indexOf('http://') === 0 || nomeArquivoTikTok.indexOf('https://') === 0)
+    ? nomeArquivoTikTok
+    : 'https://finn.dev.br/midia/tiktok/' + encodeURIComponent(nomeArquivoTikTok);
   var caption = daFila.caption || '';
   var privacidade = env.TT_PRIVACY_LEVEL || 'SELF_ONLY';
 
@@ -5584,6 +5591,40 @@ h1 em{font-style:normal;color:#F97316}
       return new Response('tiktok-developers-site-verification=pSYZXqXtOqpQ70iLeeEg4ynhAPYYiJ7N', {
         headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
       });
+    }
+    // Verificação de domínio pro Content Posting API (aba "Verificar
+    // domínios" — separada da verificação de Termos/Privacidade acima). Esse
+    // é o domínio que aparece nas video_url que o TikTok baixa sozinho
+    // (PULL_FROM_URL); por isso o arquivo fica na raiz de finn.dev.br, não
+    // no domínio do Supabase Storage — o Storage manda 'X-Robots-Tag: none'
+    // em todo objeto público, e o verificador do TikTok respeita esse header
+    // (não lê o arquivo mesmo com HTTP 200 e o texto certo). Servindo pelo
+    // próprio Worker esse problema não existe.
+    if (url.pathname === '/tiktokTKCOztJWip7JPXg4NZL8s8dpEEq8Whk3.txt') {
+      return new Response('tiktok-developers-site-verification=TKCOztJWip7JPXg4NZL8s8dpEEq8Whk3', {
+        headers: Object.assign({ 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }, SECURITY_HEADERS),
+      });
+    }
+    // Proxy dos vídeos do bucket 'social' pro TikTok baixar via PULL_FROM_URL
+    // (ver _publishNextTikTokVideo). Motivo de existir: mesmo problema do
+    // 'X-Robots-Tag: none' do Supabase Storage explicado acima — repassando
+    // pelo Worker, sem esse header, o download funciona normalmente.
+    if (url.pathname.indexOf('/midia/tiktok/') === 0) {
+      var nomeArquivo = decodeURIComponent(url.pathname.slice('/midia/tiktok/'.length));
+      if (!/^[a-zA-Z0-9._-]+$/.test(nomeArquivo)) return new Response('not found', { status: 404 });
+      try {
+        var upstream = await fetch('${SUPA_URL_SERVER}/storage/v1/object/public/social/' + nomeArquivo);
+        if (!upstream.ok) return new Response('not found', { status: 404 });
+        var proxyHeaders = Object.assign({
+          'Content-Type': upstream.headers.get('content-type') || 'application/octet-stream',
+          'Cache-Control': 'public, max-age=86400',
+        }, SECURITY_HEADERS);
+        var contentLength = upstream.headers.get('content-length');
+        if (contentLength) proxyHeaders['Content-Length'] = contentLength;
+        return new Response(upstream.body, { status: 200, headers: proxyHeaders });
+      } catch (e) {
+        return new Response('erro ao buscar mídia', { status: 502 });
+      }
     }
     if (url.pathname === '/.well-known/security.txt') {
       // Expires é campo obrigatório do RFC 9116. Calculado NA REQUISIÇÃO (o
