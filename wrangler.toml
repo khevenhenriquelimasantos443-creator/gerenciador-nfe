@@ -4,7 +4,7 @@ account_id = "8cd9feaaea37b443866c2b6e22bbd4db"
 
 # ─────────────────────────────────────────────
 #  Site estático (Finn, SKUHub, Voluna, ClockIn, Plantão,
-#  MeliVista, MargemShopee...) servido direto pelo Worker,
+#  MeliVista, MargemShopee, VendaVista...) servido direto pelo Worker,
 #  sem script — cada pasta com seu próprio index.html.
 #  Publica em: https://gerenciador-nfe.khevenhenriquelimasantos443.workers.dev/
 # ─────────────────────────────────────────────
