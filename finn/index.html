@@ -5635,12 +5635,18 @@ function renderConteudo(){
     '<div class="form-row"><label>Tipo</label>' +
       '<select id="conteudoKind">' +
         '<option value="feed"' + (state.conteudoKind === "feed" ? " selected" : "") + '>Post no feed (quadrado, com legenda)</option>' +
+        '<option value="carousel"' + (state.conteudoKind === "carousel" ? " selected" : "") + '>Carrossel (2 a 10 imagens, com legenda)</option>' +
         '<option value="story"' + (state.conteudoKind === "story" ? " selected" : "") + '>Story (9:16, sem legenda)</option>' +
         '<option value="reels"' + (state.conteudoKind === "reels" ? " selected" : "") + '>Reel (vídeo 9:16, com legenda)</option>' +
         '<option value="tiktok"' + (state.conteudoKind === "tiktok" ? " selected" : "") + '>TikTok (vídeo 9:16, com legenda)</option>' +
       '</select></div>' +
-    '<div class="form-row"><label>' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? "Vídeo" : "Imagem") + '</label>' +
-      '<input type="file" id="conteudoArquivo"' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? ' accept="video/mp4,video/quicktime"' : ' accept="image/png,image/jpeg,image/webp"') + '></div>' +
+    '<div class="form-row"><label>' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? "Vídeo" : state.conteudoKind === "carousel" ? "Imagens (2 a 10, na ordem que vão aparecer)" : "Imagem") + '</label>' +
+      '<input type="file" id="conteudoArquivo"' +
+        ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? ' accept="video/mp4,video/quicktime"' : ' accept="image/png,image/jpeg,image/webp"') +
+        (state.conteudoKind === "carousel" ? ' multiple' : '') + '></div>' +
+    (state.conteudoKind === "carousel" && state.conteudoArquivo && state.conteudoArquivo.length
+      ? '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">' + state.conteudoArquivo.length + ' imagem(ns) selecionada(s).</div>'
+      : '') +
     (state.conteudoKind === "reels"
       ? '<div class="form-row"><label>Capa (opcional)</label>' +
         '<input type="file" id="conteudoCapa" accept="image/png,image/jpeg,image/webp"></div>' +
@@ -5702,7 +5708,7 @@ function renderConteudo(){
             '<div class="cont-body">' +
               '<div class="cont-tags">' +
                 (idx === 0 ? '<span class="cont-badge prox">Próximo</span>' : '') +
-                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : i.kind === "tiktok" ? "TikTok" : "Post") + '</span>' +
+                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : i.kind === "tiktok" ? "TikTok" : i.kind === "carousel" ? "Carrossel" : "Post") + '</span>' +
               '</div>' +
               '<div class="cont-cap">' + escapeHtml(i.caption || "Story — sem legenda") + '</div>' +
               (i.erro ? '<div class="cont-erro">Última tentativa falhou: ' + escapeHtml(i.erro) + '</div>' : '') +
@@ -5889,7 +5895,12 @@ function _subirArquivoConteudo(arquivo, prefixo){
 function enviarConteudo(){
   var arquivo = state.conteudoArquivo;
   var kind = state.conteudoKind;
-  if(!arquivo){ state.conteudoErro = (kind === "reels" || kind === "tiktok") ? "Escolhe um vídeo primeiro." : "Escolhe uma imagem primeiro."; render(); return; }
+  if(kind === "carousel"){
+    if(!arquivo || !arquivo.length){ state.conteudoErro = "Escolhe de 2 a 10 imagens primeiro."; render(); return; }
+    if(arquivo.length < 2 || arquivo.length > 10){ state.conteudoErro = "Carrossel precisa de 2 a 10 imagens (você escolheu " + arquivo.length + ")."; render(); return; }
+  } else if(!arquivo){
+    state.conteudoErro = (kind === "reels" || kind === "tiktok") ? "Escolhe um vídeo primeiro." : "Escolhe uma imagem primeiro."; render(); return;
+  }
   if(kind !== "story" && !state.conteudoLegenda.trim()){
     state.conteudoErro = "Esse tipo precisa de legenda."; render(); return;
   }
@@ -5900,13 +5911,19 @@ function enviarConteudo(){
 
   var capa = kind === "reels" ? state.conteudoCapa : null;
 
-  _subirArquivoConteudo(arquivo, kind)
-    .then(function(caminho){
+  var subida = kind === "carousel"
+    ? Promise.all(arquivo.map(function(f){ return _subirArquivoConteudo(f, "carousel"); }))
+      .then(function(caminhos){ return { caminho: caminhos[0], caminhos: caminhos }; })
+    : _subirArquivoConteudo(arquivo, kind).then(function(caminho){ return { caminho: caminho, caminhos: null }; });
+
+  subida
+    .then(function(subiu){
       return (capa ? _subirArquivoConteudo(capa, "reelscapa") : Promise.resolve(null))
         .then(function(capaPath){
           return db("social_posts", "POST", {
             kind: kind,
-            image_path: caminho,
+            image_path: subiu.caminho,
+            image_paths: subiu.caminhos,
             cover_path: capaPath,
             caption: kind === "story" ? null : state.conteudoLegenda.trim(),
             posicao: Math.floor(Date.now() / 1000)
@@ -9019,8 +9036,11 @@ function bindContentEvents(){
       render();
     });
     if((b = document.getElementById("conteudoArquivo"))) b.addEventListener("change", function(e){
-      state.conteudoArquivo = e.target.files && e.target.files[0];
+      state.conteudoArquivo = state.conteudoKind === "carousel"
+        ? Array.prototype.slice.call(e.target.files || [])
+        : (e.target.files && e.target.files[0]);
       state.conteudoErro = null;
+      render();
     });
     if((b = document.getElementById("conteudoCapa"))) b.addEventListener("change", function(e){
       state.conteudoCapa = e.target.files && e.target.files[0];

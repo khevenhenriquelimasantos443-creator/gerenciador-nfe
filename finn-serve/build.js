@@ -2637,13 +2637,130 @@ async function _proximoDaFilaPorTipo(env, tipo) {
 async function _proximoDaFila(env) {
   if (!env.SUPABASE_SERVICE_KEY) return null;
   try {
-    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=is.null&kind=eq.feed&order=posicao.asc,created_at.asc&limit=1', {
+    // 'carousel' entra na mesma fila do feed normal: pro Instagram os dois
+    // são post de feed comum, só muda como o container é montado (ver
+    // _publicarCarrosselInstagram). Manter os dois na mesma ordem
+    // (posicao/created_at) evita uma fila paralela que ninguém enxerga.
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?published_at=is.null&kind=in.(feed,carousel)&order=posicao.asc,created_at.asc&limit=1', {
       headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
     });
     if (!r.ok) return null;
     var linhas = await r.json();
     return (linhas && linhas[0]) || null;
   } catch (e) { return null; }
+}
+
+// Espera um container de mídia do Instagram terminar de processar (a Meta
+// baixa a imagem da URL de forma assíncrona). Usado tanto pro container
+// único do post normal quanto por CADA slide + o container-pai do carrossel.
+async function _esperaContainerPronto(env, containerId) {
+  for (var i = 0; i < 10; i++) {
+    var statusResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + containerId + '?fields=status_code&access_token=' + encodeURIComponent(env.IG_ACCESS_TOKEN));
+    var statusBody = await statusResp.json();
+    if (statusBody.status_code === 'FINISHED') return { ok: true, status_code: statusBody.status_code };
+    if (statusBody.status_code === 'ERROR') return { ok: false, status_code: statusBody.status_code, body: statusBody };
+    await new Promise(function (resolve) { setTimeout(resolve, 2000); });
+  }
+  return { ok: false, status_code: 'timeout' };
+}
+
+// Publica um carrossel (2 a 10 imagens): cria um container por slide
+// (is_carousel_item), espera cada um processar, cria o container-pai
+// (media_type CAROUSEL, children=[ids]) e publica — mesmo padrão de
+// container->espera->publish do post normal, só que repetido por slide.
+async function _publicarCarrosselInstagram(env, daFila, log) {
+  var filaId = daFila.id;
+  var caption = daFila.caption || '';
+  var caminhos = Array.isArray(daFila.image_paths) ? daFila.image_paths : [];
+  log.carousel_slides = caminhos.length;
+
+  if (caminhos.length < 2 || caminhos.length > 10) {
+    log.ok = false;
+    await _logInstagramAttempt(env, log);
+    await _marcaPublicado(env, filaId, { erro: 'carrossel precisa de 2 a 10 imagens (tinha ' + caminhos.length + ')' });
+    return { ok: false, step: 'carousel_validacao' };
+  }
+
+  try {
+    var childrenIds = [];
+    for (var i = 0; i < caminhos.length; i++) {
+      var childResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_url: _socialPublicUrl(caminhos[i]), is_carousel_item: true, access_token: env.IG_ACCESS_TOKEN })
+      });
+      var childBody = await childResp.json();
+      if (!childResp.ok || !childBody.id) {
+        log.ok = false;
+        log.step = 'carousel_child_' + i;
+        log.child_response = childBody;
+        await _logInstagramAttempt(env, log);
+        await _marcaPublicado(env, filaId, { erro: 'falha ao criar o slide ' + (i + 1) + ' do carrossel' });
+        return { ok: false, step: 'carousel_child', slide: i, body: childBody };
+      }
+      var childPronto = await _esperaContainerPronto(env, childBody.id);
+      if (!childPronto.ok) {
+        log.ok = false;
+        log.step = 'carousel_child_wait_' + i;
+        log.child_wait = childPronto;
+        await _logInstagramAttempt(env, log);
+        await _marcaPublicado(env, filaId, { erro: 'o slide ' + (i + 1) + ' do carrossel não processou a tempo' });
+        return { ok: false, step: 'carousel_child_wait', slide: i, body: childPronto };
+      }
+      childrenIds.push(childBody.id);
+    }
+
+    var parentResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ media_type: 'CAROUSEL', children: childrenIds, caption: caption, access_token: env.IG_ACCESS_TOKEN })
+    });
+    var parentBody = await parentResp.json();
+    log.create_status = parentResp.status;
+    log.create_response = parentBody;
+    if (!parentResp.ok || !parentBody.id) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      await _marcaPublicado(env, filaId, { erro: 'falha ao criar o container do carrossel' });
+      return { ok: false, step: 'carousel_parent', body: parentBody };
+    }
+
+    var parentPronto = await _esperaContainerPronto(env, parentBody.id);
+    log.container_status = parentPronto.status_code;
+    if (!parentPronto.ok) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      await _marcaPublicado(env, filaId, { erro: 'carrossel não processou a tempo' });
+      return { ok: false, step: 'carousel_parent_wait', body: parentPronto };
+    }
+
+    var publishResp = await fetch('https://graph.instagram.com/' + IG_API_VERSION + '/' + env.IG_BUSINESS_ACCOUNT_ID + '/media_publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creation_id: parentBody.id, access_token: env.IG_ACCESS_TOKEN })
+    });
+    var publishBody = await publishResp.json();
+    log.publish_status = publishResp.status;
+    log.publish_response = publishBody;
+    if (!publishResp.ok || !publishBody.id) {
+      log.ok = false;
+      await _logInstagramAttempt(env, log);
+      await _marcaPublicado(env, filaId, { erro: 'falha ao publicar o carrossel' });
+      return { ok: false, step: 'carousel_publish', body: publishBody };
+    }
+
+    log.ok = true;
+    log.finished_at = new Date().toISOString();
+    await _logInstagramAttempt(env, log);
+    await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(publishBody.id), erro: null });
+    return { ok: true, fila_id: filaId, media_id: publishBody.id };
+  } catch (e) {
+    log.ok = false;
+    log.error = String(e && e.message || e);
+    await _logInstagramAttempt(env, log);
+    await _marcaPublicado(env, filaId, { erro: 'carrossel: ' + log.error });
+    return { ok: false, error: log.error };
+  }
 }
 
 async function _marcaPublicado(env, id, campos) {
@@ -2676,6 +2793,13 @@ async function _publishNextInstagramPost(env) {
   // embutida vira reserva, pra campanha antiga escoar enquanto a fila nova
   // estiver vazia.
   var daFila = await _proximoDaFila(env);
+
+  // Carrossel é um fluxo totalmente diferente (vários containers-filho antes
+  // do container-pai) — sai daqui pra não misturar com o caminho de imagem
+  // única logo abaixo.
+  if (daFila && daFila.kind === 'carousel') {
+    return await _publicarCarrosselInstagram(env, daFila, { fila_id: daFila.id, origem: 'fila', kind: 'carousel', started_at: new Date().toISOString() });
+  }
 
   var nextIndex = null, imageUrl, caption, filaId = null, ehStory = false;
   if (daFila) {
