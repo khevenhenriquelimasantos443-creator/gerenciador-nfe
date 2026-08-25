@@ -333,6 +333,16 @@ const POSTS = [
     legenda: 'O Finn simula a quitação com os juros de verdade, sugere a ordem em que sair de cada dívida e mostra quanto muda se você conseguir pagar um pouco a mais por mês.\n\nSem julgamento e sem promessa mágica — só a conta na sua frente.',
     tags: '#dividas #educacaofinanceira #financaspessoais #controlefinanceiro',
   },
+  {
+    n: 29, layout: 'hero', glow: true, pill: '🔔 AUTOMÁTICO',
+    h: 'Resumo da semana, |sem abrir o app|.',
+    body: 'Toda semana o Finn manda uma notificação avisando quanto você gastou — e se foi mais ou menos que a semana anterior.',
+    itens: [['🔔', 'Toda semana'], ['📊', 'Compara com a anterior'], ['📱', 'Automático']],
+    rodape: RODAPE,
+    emoji: '🔔',
+    legenda: 'Toda semana o Finn manda uma notificação avisando quanto você gastou — e se foi mais ou menos que a semana anterior.\n\nÉ só ativar as notificações uma vez; o resto é automático.',
+    tags: '#financaspessoais #appfinanceiro #controlefinanceiro #educacaofinanceira',
+  },
 ];
 
 // Selo fixo de todos os stories. Era "APP FINANCEIRO 100% GRÁTIS" — a mesma
