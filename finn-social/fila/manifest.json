@@ -1,0 +1,137 @@
+{
+  "feed": [
+    {
+      "arquivo": "feed-lista-do-seu-jeito.png",
+      "caption": "Filtra por mês, por categoria ou busca pelo nome — e edita ou apaga um lançamento quando precisar, direto na lista.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed-guarda-comprovante.png",
+      "caption": "Anexa a foto do cupom, da nota ou do recibo direto no lançamento — fica guardado junto, sem precisar procurar depois.\n\n#organizacaofinanceira #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed-exporta-csv.png",
+      "caption": "Exporta os lançamentos filtrados ou o histórico inteiro em CSV — seus dados sempre disponíveis pra você, fora do Finn também.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed-foge-do-padrao.png",
+      "caption": "Se um gasto ficou bem mais caro que o de sempre (mesma descrição, valor bem acima da média), o Finn avisa na hora — antes de você nem notar.\n\n#financaspessoais #appfinanceiro #controlefinanceiro"
+    },
+    {
+      "arquivo": "feed-virou-conta-fixa.png",
+      "caption": "O Finn percebe quando um gasto se repete todo mês e sugere transformar em conta fixa, já com aviso antes de vencer.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed-categoriza-todos.png",
+      "caption": "Corrigiu a categoria de um gasto? O Finn oferece aplicar a mesma categoria em outros lançamentos com a mesma descrição — só se você quiser.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed-dois-toques.png",
+      "caption": "Segura o ícone do Finn instalado na tela inicial e cai direto na tela de lançar — quase tão rápido quanto mandar mensagem.\n\n#appfinanceiro #financaspessoais #tecnologia"
+    },
+    {
+      "arquivo": "feed-apaga-tudo.png",
+      "caption": "Seus dados são seus: exclui direto em Configurações, sem precisar de aprovação nem justificativa. Prefere por e-mail? Também dá.\n\n#privacidade #seguranca #financaspessoais"
+    },
+    {
+      "arquivo": "feed-entra-google.png",
+      "caption": "Entra com a sua conta Google — um toque, sem precisar criar nem decorar mais uma senha só pro Finn.\n\n#appfinanceiro #financaspessoais #tecnologia"
+    },
+    {
+      "arquivo": "feed-investimento-a-parte.png",
+      "caption": "O Finn separa o que é investimento do resto — sem contar como gasto nem como receita no resumo do seu mês. E dá pra corrigir lançamentos antigos que ficaram na categoria errada.\n\n#financaspessoais #appfinanceiro #investimentos"
+    },
+    {
+      "arquivo": "feed-explicacao-nao-indicacao.png",
+      "caption": "A trilha de Investimentos, na aba Aprender, explica como cada coisa funciona — nunca qual produto escolher ou se o mercado vai subir. Educação financeira de verdade, não recomendação disfarçada.\n\n#educacaofinanceira #investimentos #financaspessoais"
+    },
+    {
+      "arquivo": "feed-open-finance.png",
+      "caption": "Você autoriza a conexão, e quem cuida dela é a Pluggy, provedora de Open Finance regulada pelo Banco Central — a sua senha do banco nunca passa pelo Finn.\n\n#privacidade #seguranca #openfinance #financaspessoais"
+    },
+    {
+      "arquivo": "feed-mito-reserva.png",
+      "caption": "Mito: reserva de emergência é coisa de quem ganha muito. Verdade: é sobre guardar um pouco, sempre — tem uma trilha inteira sobre isso, de graça, na aba Aprender.\n\n#reservadeemergencia #educacaofinanceira #financaspessoais"
+    },
+    {
+      "arquivo": "feed-verdade-anotar.png",
+      "caption": "Verdade: só de ver pra onde o dinheiro vai, muita gente já gasta diferente. É o primeiro passo — e é basicamente o que o Finn faz por você, sozinho.\n\n#educacaofinanceira #financaspessoais #controlefinanceiro"
+    },
+    {
+      "arquivo": "feed-receita-com-aviso.png",
+      "caption": "Cadastrou um salário ou outra entrada fixa? O Finn avisa quando ela está a caminho, do mesmo jeito que avisa uma conta fixa pra pagar.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed-extrato-suspeito.png",
+      "caption": "Se a importação do extrato vier com algo estranho — tudo marcado como receita, por exemplo — o Finn avisa antes de salvar, pra você conferir.\n\n#financaspessoais #appfinanceiro #controlefinanceiro"
+    },
+    {
+      "arquivo": "feed-um-olhar.png",
+      "caption": "Abre o Finn, vê o saldo e os gráficos do mês, fecha. Não precisa de mais que isso pra saber como está indo.\n\n#financaspessoais #appfinanceiro #controlefinanceiro"
+    },
+    {
+      "arquivo": "feed-dois-niveis-exclusao.png",
+      "caption": "Excluir os lançamentos mantém metas, limites e contas fixas. Apagar todos os dados leva o resto junto também. As duas opções ficam em Configurações — você escolhe.\n\n#privacidade #seguranca #financaspessoais"
+    },
+    {
+      "arquivo": "feed-finn-lembra.png",
+      "caption": "Conta fixa vencendo, gasto que virou rotina, resumo da semana — os avisos chegam sozinhos. Você só decide o que fazer com eles.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed-mito-planilha.png",
+      "caption": "Mito: organizar as finanças exige planilha complicada. Verdade: importa o extrato e o Finn organiza sozinho — e se você AINDA quiser planilha, a gente fez uma que presta (R$ 36,90, compra única).\n\n#financaspessoais #appfinanceiro #planilhafinanceira"
+    }
+  ],
+  "carousels": [
+    {
+      "arquivos": [
+        "carousel-como-funciona-5-passos-1.png",
+        "carousel-como-funciona-5-passos-2.png",
+        "carousel-como-funciona-5-passos-3.png",
+        "carousel-como-funciona-5-passos-4.png",
+        "carousel-como-funciona-5-passos-5.png",
+        "carousel-como-funciona-5-passos-6.png"
+      ],
+      "caption": "Como o Finn organiza seu dinheiro, em 5 passos 🧭\n\nDo extrato importado até o resumo semanal — sem você precisar ficar calculando nada na mão.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira #controlefinanceiro"
+    },
+    {
+      "arquivos": [
+        "carousel-aprender-3-areas-1.png",
+        "carousel-aprender-3-areas-2.png",
+        "carousel-aprender-3-areas-3.png",
+        "carousel-aprender-3-areas-4.png"
+      ],
+      "caption": "O que você aprende de graça no Finn 📚\n\n3 áreas, 10 trilhas, 40 lições — em qualquer plano, inclusive no grátis. Não é indicação de investimento, é explicação, pra você decidir sozinho.\n\n#educacaofinanceira #investimentos #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivos": [
+        "carousel-5-coisas-sozinho-1.png",
+        "carousel-5-coisas-sozinho-2.png",
+        "carousel-5-coisas-sozinho-3.png",
+        "carousel-5-coisas-sozinho-4.png",
+        "carousel-5-coisas-sozinho-5.png",
+        "carousel-5-coisas-sozinho-6.png"
+      ],
+      "caption": "5 coisas que o Finn faz sozinho, sem você mexer 🤖\n\nCategoriza, percebe padrão, sugere e avisa — no piloto automático.\n\n#financaspessoais #appfinanceiro #automacao #organizacaofinanceira"
+    },
+    {
+      "arquivos": [
+        "carousel-reserva-4-passos-1.png",
+        "carousel-reserva-4-passos-2.png",
+        "carousel-reserva-4-passos-3.png",
+        "carousel-reserva-4-passos-4.png",
+        "carousel-reserva-4-passos-5.png"
+      ],
+      "caption": "Reserva de emergência, em 4 passos 🛟\n\nPra imprevisto não virar dívida. Conteúdo grátis, direto na aba Aprender do Finn.\n\n#reservadeemergencia #educacaofinanceira #financaspessoais"
+    },
+    {
+      "arquivos": [
+        "carousel-perfil-gastador-1.png",
+        "carousel-perfil-gastador-2.png",
+        "carousel-perfil-gastador-3.png",
+        "carousel-perfil-gastador-4.png",
+        "carousel-perfil-gastador-5.png"
+      ],
+      "caption": "Qual desses 4 perfis de gastador é você? 🎭\n\nSem julgamento — só um espelho. Descobre o seu de verdade nos gráficos por categoria do Finn.\n\n#financaspessoais #appfinanceiro #educacaofinanceira"
+    }
+  ]
+}
