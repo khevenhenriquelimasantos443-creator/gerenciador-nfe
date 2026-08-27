@@ -5639,8 +5639,9 @@ function renderConteudo(){
         '<option value="story"' + (state.conteudoKind === "story" ? " selected" : "") + '>Story (9:16, sem legenda)</option>' +
         '<option value="reels"' + (state.conteudoKind === "reels" ? " selected" : "") + '>Reel (vídeo 9:16, com legenda)</option>' +
         '<option value="tiktok"' + (state.conteudoKind === "tiktok" ? " selected" : "") + '>TikTok (vídeo 9:16, com legenda)</option>' +
+        '<option value="x"' + (state.conteudoKind === "x" ? " selected" : "") + '>Post no X (texto, com imagem opcional)</option>' +
       '</select></div>' +
-    '<div class="form-row"><label>' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? "Vídeo" : state.conteudoKind === "carousel" ? "Imagens (2 a 10, na ordem que vão aparecer)" : "Imagem") + '</label>' +
+    '<div class="form-row"><label>' + ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? "Vídeo" : state.conteudoKind === "carousel" ? "Imagens (2 a 10, na ordem que vão aparecer)" : state.conteudoKind === "x" ? "Imagem (opcional)" : "Imagem") + '</label>' +
       '<input type="file" id="conteudoArquivo"' +
         ((state.conteudoKind === "reels" || state.conteudoKind === "tiktok") ? ' accept="video/mp4,video/quicktime"' : ' accept="image/png,image/jpeg,image/webp"') +
         (state.conteudoKind === "carousel" ? ' multiple' : '') + '></div>' +
@@ -5654,7 +5655,7 @@ function renderConteudo(){
       : '') +
     (state.conteudoKind === "story"
       ? '<div style="font-size:12px;color:var(--fm);margin:-8px 0 12px">Story ignora legenda — o Instagram não mostra texto de caption nesse formato.</div>'
-      : '<div class="form-row"><label>Legenda</label>' +
+      : '<div class="form-row"><label>' + (state.conteudoKind === "x" ? "Texto do post (máx. 280 caracteres)" : "Legenda") + '</label>' +
         '<textarea id="conteudoLegenda" rows="5" placeholder="Texto do post, com hashtags no fim">' + escapeHtml(state.conteudoLegenda) + '</textarea></div>') +
     '<button type="button" class="btn-submit" id="btnConteudoEnviar"' + (state.conteudoEnviando ? " disabled" : "") + '>' +
       (state.conteudoEnviando ? "Enviando…" : "Adicionar à fila") + '</button>' +
@@ -5700,7 +5701,7 @@ function renderConteudo(){
         naFila.map(function(i, idx){
           var thumbSrc = (i.kind === "reels" || i.kind === "tiktok")
             ? (i.cover_path ? CONTEUDO_BUCKET_URL + i.cover_path : null)
-            : CONTEUDO_BUCKET_URL + i.image_path;
+            : i.image_path ? CONTEUDO_BUCKET_URL + i.image_path : null;
           return '<div class="cont-item">' +
             (thumbSrc
               ? '<img class="cont-thumb" src="' + escapeHtml(thumbSrc) + '" alt="" loading="lazy">'
@@ -5708,7 +5709,7 @@ function renderConteudo(){
             '<div class="cont-body">' +
               '<div class="cont-tags">' +
                 (idx === 0 ? '<span class="cont-badge prox">Próximo</span>' : '') +
-                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : i.kind === "tiktok" ? "TikTok" : i.kind === "carousel" ? "Carrossel" : "Post") + '</span>' +
+                '<span class="cont-badge">' + (i.kind === "story" ? "Story" : i.kind === "reels" ? "Reel" : i.kind === "tiktok" ? "TikTok" : i.kind === "carousel" ? "Carrossel" : i.kind === "x" ? "X" : "Post") + '</span>' +
               '</div>' +
               '<div class="cont-cap">' + escapeHtml(i.caption || "Story — sem legenda") + '</div>' +
               (i.erro ? '<div class="cont-erro">Última tentativa falhou: ' + escapeHtml(i.erro) + '</div>' : '') +
@@ -5898,11 +5899,14 @@ function enviarConteudo(){
   if(kind === "carousel"){
     if(!arquivo || !arquivo.length){ state.conteudoErro = "Escolhe de 2 a 10 imagens primeiro."; render(); return; }
     if(arquivo.length < 2 || arquivo.length > 10){ state.conteudoErro = "Carrossel precisa de 2 a 10 imagens (você escolheu " + arquivo.length + ")."; render(); return; }
-  } else if(!arquivo){
+  } else if(!arquivo && kind !== "x"){
     state.conteudoErro = (kind === "reels" || kind === "tiktok") ? "Escolhe um vídeo primeiro." : "Escolhe uma imagem primeiro."; render(); return;
   }
   if(kind !== "story" && !state.conteudoLegenda.trim()){
-    state.conteudoErro = "Esse tipo precisa de legenda."; render(); return;
+    state.conteudoErro = "Esse tipo precisa de " + (kind === "x" ? "texto" : "legenda") + "."; render(); return;
+  }
+  if(kind === "x" && state.conteudoLegenda.trim().length > 280){
+    state.conteudoErro = "O X só aceita até 280 caracteres (esse texto tem " + state.conteudoLegenda.trim().length + ")."; render(); return;
   }
   state.conteudoEnviando = true;
   state.conteudoErro = null;
@@ -5914,6 +5918,8 @@ function enviarConteudo(){
   var subida = kind === "carousel"
     ? Promise.all(arquivo.map(function(f){ return _subirArquivoConteudo(f, "carousel"); }))
       .then(function(caminhos){ return { caminho: caminhos[0], caminhos: caminhos }; })
+    : (kind === "x" && !arquivo)
+    ? Promise.resolve({ caminho: null, caminhos: null })
     : _subirArquivoConteudo(arquivo, kind).then(function(caminho){ return { caminho: caminho, caminhos: null }; });
 
   subida

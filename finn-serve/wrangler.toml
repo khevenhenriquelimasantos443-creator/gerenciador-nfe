@@ -8,6 +8,13 @@ TT_PRIVACY_LEVEL = "SELF_ONLY"
 #   como SELF_ONLY (só o próprio criador vê o vídeo). Depois que a auditoria
 #   aprovar, troca pra "PUBLIC_TO_EVERYONE" e faz deploy — sem mudar código.
 
+BUFFER_X_CHANNEL_ID = "6a8f7ce8ccaf649a6723a854"
+# ↑ Id do canal do X (Twitter) dentro do Buffer (não é segredo — só some se o
+#   canal for desconectado e reconectado no Buffer, aí precisa pegar de
+#   novo). Descoberto via GraphQL: query { channels(input: { organizationId:
+#   "<id da org, em account.organizations> }) { id name service } }.
+#   Publicação real acontece com a secret BUFFER_API_KEY (ver abaixo).
+
 TT_CRON_ATIVO = "0"
 # ↑ Desligado a pedido do Kheven em 22/08/2026: enquanto a auditoria do
 #   TikTok não aprova o app, a conta tem que ficar privada pra postar (ver
@@ -72,6 +79,21 @@ TT_CRON_ATIVO = "0"
 #   e não tenta nada — nunca derruba o resto do worker.
 #   Apps recém-criados só postam como SELF_ONLY até passar pela auditoria do
 #   TikTok — ver TT_PRIVACY_LEVEL em [vars] acima.
+#
+# BUFFER_API_KEY — publicação no X (Twitter), via API do Buffer (não a API
+#   oficial do X — ela passa a cobrar por post pra quem cria conta de
+#   desenvolvedor nova a partir de fev/2026). Chave PESSOAL, não OAuth de
+#   app — o Buffer parou de aceitar novo app de terceiro na API antiga, e a
+#   API GraphQL atual (developers.buffer.com) é assim mesmo: uma chave por
+#   conta, sem fluxo de autorização.
+#   Como obter:
+#     1. Conta grátis em buffer.com, conectar o perfil do X (Entrar com o X).
+#     2. Configurações → aba "API" → "Personal Access" → "+ New Key".
+#     3. wrangler secret put BUFFER_API_KEY
+#   O id do canal (BUFFER_X_CHANNEL_ID) já está em [vars] acima — só muda se
+#   o canal for desconectado e reconectado no Buffer.
+#   Sem a secret configurada, a publicação (manual ou automática) só faz log
+#   e não tenta nada — nunca derruba o resto do worker.
 #
 # PLANILHA_COPY_URL — link de cópia da Planilha Finn no Google Sheets.
 #   É o caminho bom de entrega: um clique e quem comprou já tem a planilha

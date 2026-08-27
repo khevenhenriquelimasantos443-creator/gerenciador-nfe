@@ -3093,6 +3093,65 @@ async function _logInstagramAttempt(env, log) {
 }
 
 // =============================================================================
+// X (TWITTER) — publicação automática via API do Buffer
+// =============================================================================
+// Não usa a API oficial do X: desde fev/2026 ela cobra por post (US$0,015
+// sem link, US$0,20 com link — 13x mais caro) pra quem cria conta de
+// desenvolvedor nova. O Buffer (plano grátis, já inclui API — 1 chave,
+// 3.000 chamadas/mês) posta em nome da conta conectada por OAuth, sem
+// custo por post e sem precisar de developer account no X. Ver
+// finn-serve/CONFIGURAR-X.md.
+//
+// Required:
+//   BUFFER_API_KEY (secret, wrangler secret put) — chave pessoal do Buffer.
+//   BUFFER_X_CHANNEL_ID ([vars] no wrangler.toml, não é segredo) — id do
+//     canal do X dentro do Buffer (query "channels" na API do Buffer).
+const BUFFER_API_BASE = 'https://api.buffer.com';
+
+async function _bufferGraphQL(env, query) {
+  try {
+    var resp = await fetch(BUFFER_API_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + env.BUFFER_API_KEY },
+      body: JSON.stringify({ query: query })
+    });
+    var body = await resp.json();
+    return { ok: resp.ok, status: resp.status, body: body };
+  } catch (e) {
+    return { ok: false, error: String(e && e.message || e) };
+  }
+}
+
+// Publica até "quantidade" posts da fila (kind='x') numa só chamada — o X
+// não tem cron próprio (5 é o limite da CONTA inteira, todos já ocupados),
+// então cada disparo do cron compartilhado publica vários de uma vez, pra
+// não ficar restrito a 2 posts por dia como os outros formatos.
+async function _publishNextXPost(env, quantidade) {
+  if (!env.BUFFER_API_KEY || !env.BUFFER_X_CHANNEL_ID) {
+    return { ok: false, skipped: true, reason: 'BUFFER_API_KEY ou BUFFER_X_CHANNEL_ID não configurados' };
+  }
+  var publicados = [];
+  for (var i = 0; i < quantidade; i++) {
+    var daFila = await _proximoDaFilaPorTipo(env, 'x');
+    if (!daFila) break;
+    var texto = JSON.stringify(daFila.caption || '');
+    var assets = daFila.image_path ? (', assets: [{ image: { url: ' + JSON.stringify(_socialPublicUrl(daFila.image_path)) + ' } }]') : '';
+    var query = 'mutation { createPost(input: { text: ' + texto + ', channelId: "' + env.BUFFER_X_CHANNEL_ID + '", schedulingType: automatic, mode: addToQueue' + assets + ' }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }';
+    var r = await _bufferGraphQL(env, query);
+    var resultado = r.body && r.body.data && r.body.data.createPost;
+    if (!r.ok || !resultado || !resultado.post) {
+      var erro = (resultado && resultado.message) || (r.body && r.body.errors && r.body.errors[0] && r.body.errors[0].message) || r.error || 'falha desconhecida';
+      await _marcaPublicado(env, daFila.id, { erro: 'x: ' + erro });
+      publicados.push({ ok: false, fila_id: daFila.id, erro: erro });
+      continue; // uma falha não deve travar os outros itens da fila
+    }
+    await _marcaPublicado(env, daFila.id, { published_at: new Date().toISOString(), erro: null });
+    publicados.push({ ok: true, fila_id: daFila.id, post_id: resultado.post.id, due_at: resultado.post.dueAt });
+  }
+  return { ok: true, publicados: publicados };
+}
+
+// =============================================================================
 // TIKTOK — publicação automática via Content Posting API (Direct Post)
 // =============================================================================
 // Required secrets (wrangler secret put, nunca em [vars]):
@@ -3514,6 +3573,25 @@ async function _adminTikTokConnectUrl(request, env) {
     return new Response(JSON.stringify({ ok: true, url: authUrl }), { headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_adminTikTokConnectUrl');
+  }
+}
+
+// POST /admin/x-publish-next — dispara a publicação dos próximos posts do X
+// (via Buffer) AGORA, pra testar sem esperar o cron. Mesmo padrão do
+// disparo manual do Instagram/TikTok.
+async function _adminXPublishNext(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var result = await _publishNextXPost(env, 1);
+    return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminXPublishNext');
   }
 }
 
@@ -5637,6 +5715,9 @@ h1 em{font-style:normal;color:#F97316}
     if (url.pathname === '/admin/tiktok-publish-next' && request.method === 'POST') {
       return _adminTikTokPublishNext(request, env);
     }
+    if (url.pathname === '/admin/x-publish-next' && request.method === 'POST') {
+      return _adminXPublishNext(request, env);
+    }
     // Rota pública — o TikTok redireciona o navegador do admin pra cá depois
     // da autorização, sem nenhum header nosso (ver comentário na função).
     if (url.pathname === '/tiktok/callback') {
@@ -5880,6 +5961,10 @@ h1 em{font-style:normal;color:#F97316}
         // prefere postar manual nesse meio-tempo. Não afeta o botão manual
         // "Testar publicação agora" (/admin/tiktok-publish-next).
         if (env.TT_CRON_ATIVO === '1') await _publishNextTikTokVideo(env);
+        // X também não tem slot de cron livre — encosta aqui também, mas
+        // publica 3 por disparo (o Buffer não cobra por post, então não faz
+        // sentido ficar preso a 1 por vez feito os outros formatos).
+        await _publishNextXPost(env, 3);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
