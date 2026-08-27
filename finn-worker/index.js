@@ -1736,7 +1736,7 @@ async function handleSync(request, env) {
     }
   }
   const isMaster = user.email && user.email.toLowerCase() === MASTER_EMAIL.toLowerCase()
-    && env.MASTER_ADMIN_PASSWORD && admin_password === env.MASTER_ADMIN_PASSWORD;
+    && env.MASTER_ADMIN_PASSWORD && admin_password && timingSafeEqual(admin_password, env.MASTER_ADMIN_PASSWORD);
   const plan = isMaster ? "pro" : await fetchUserPlan(access_token, env);
   // Consentimento pro resumo diário automático vem sempre do metadata
   // verificado no Supabase (nunca do body do cliente) — mesmo tratamento
