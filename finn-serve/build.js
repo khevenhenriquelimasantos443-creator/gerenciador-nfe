@@ -5762,6 +5762,29 @@ h1 em{font-style:normal;color:#F97316}
         return new Response('erro ao buscar mídia', { status: 502 });
       }
     }
+    // Mesmo proxy do /midia/tiktok/ acima (bucket 'social' sem o
+    // 'X-Robots-Tag: none' do Supabase Storage), só que com nome genérico —
+    // pra qualquer rede que precise de uma URL pública de imagem/vídeo
+    // servida por um domínio nosso (ex.: anexar imagem num post do X via
+    // Buffer). Rota própria, não reaproveita /midia/tiktok/ pra não deixar
+    // o nome da rota amarrado a uma plataforma só.
+    if (url.pathname.indexOf('/midia/social/') === 0) {
+      var nomeArquivoSocial = decodeURIComponent(url.pathname.slice('/midia/social/'.length));
+      if (!/^[a-zA-Z0-9._-]+$/.test(nomeArquivoSocial)) return new Response('not found', { status: 404 });
+      try {
+        var upstreamSocial = await fetch('${SUPA_URL_SERVER}/storage/v1/object/public/social/' + nomeArquivoSocial);
+        if (!upstreamSocial.ok) return new Response('not found', { status: 404 });
+        var proxyHeadersSocial = Object.assign({
+          'Content-Type': upstreamSocial.headers.get('content-type') || 'application/octet-stream',
+          'Cache-Control': 'public, max-age=86400',
+        }, SECURITY_HEADERS);
+        var contentLengthSocial = upstreamSocial.headers.get('content-length');
+        if (contentLengthSocial) proxyHeadersSocial['Content-Length'] = contentLengthSocial;
+        return new Response(upstreamSocial.body, { status: 200, headers: proxyHeadersSocial });
+      } catch (e) {
+        return new Response('erro ao buscar mídia', { status: 502 });
+      }
+    }
     if (url.pathname === '/.well-known/security.txt') {
       // Expires é campo obrigatório do RFC 9116. Calculado NA REQUISIÇÃO (o
       // Worker chama Date normalmente em runtime, sem a restrição que existe
