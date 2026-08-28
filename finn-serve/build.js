@@ -3135,8 +3135,19 @@ async function _publishNextXPost(env, quantidade) {
     var daFila = await _proximoDaFilaPorTipo(env, 'x');
     if (!daFila) break;
     var texto = JSON.stringify(daFila.caption || '');
-    var assets = daFila.image_path ? (', assets: [{ image: { url: ' + JSON.stringify(_socialPublicUrl(daFila.image_path)) + ' } }]') : '';
-    var query = 'mutation { createPost(input: { text: ' + texto + ', channelId: "' + env.BUFFER_X_CHANNEL_ID + '", schedulingType: automatic, mode: addToQueue' + assets + ' }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }';
+    // Imagem serve pelo proxy do próprio Worker (/midia/social/), não a URL
+    // direta do Supabase Storage — o Storage manda 'X-Robots-Tag: none' em
+    // todo objeto público, e já vimos esse header travar verificador de
+    // outra rede (TikTok) mesmo com o arquivo certo. Evita o mesmo risco
+    // aqui sem custar nada a mais.
+    var assets = daFila.image_path ? (', assets: [{ image: { url: ' + JSON.stringify('https://finn.dev.br/midia/social/' + encodeURIComponent(daFila.image_path)) + ' } }]') : '';
+    // customScheduled + dueAt = agora: sem isso ("automatic"/"addToQueue"),
+    // o Buffer ignora quando a gente chamou a API e usa os horários da fila
+    // AUTOMÁTICA dele (ex.: 8h26, 9h42...), que não tem nada a ver com os
+    // 08h/13h/19h BRT do cron. Postar com hora explícita = agora garante que
+    // o horário de publicação seja o horário real do disparo do cron.
+    var dueAt = JSON.stringify(new Date().toISOString());
+    var query = 'mutation { createPost(input: { text: ' + texto + ', channelId: "' + env.BUFFER_X_CHANNEL_ID + '", schedulingType: automatic, mode: customScheduled, dueAt: ' + dueAt + assets + ' }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }';
     var r = await _bufferGraphQL(env, query);
     var resultado = r.body && r.body.data && r.body.data.createPost;
     if (!r.ok || !resultado || !resultado.post) {
