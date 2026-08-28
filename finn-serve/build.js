@@ -3146,7 +3146,13 @@ async function _publishNextXPost(env, quantidade) {
     // AUTOMÁTICA dele (ex.: 8h26, 9h42...), que não tem nada a ver com os
     // 08h/13h/19h BRT do cron. Postar com hora explícita = agora garante que
     // o horário de publicação seja o horário real do disparo do cron.
-    var dueAt = JSON.stringify(new Date().toISOString());
+    // +2 min, não "agora" exato: o Buffer recusa ("Scheduled time must be in
+    // the future") se o horário já virou passado no instante em que a
+    // requisição chega nos servidores dele (rede + processamento). Sem essa
+    // margem, o primeiro item falhava sempre — e como falha não avança o
+    // índice da fila (só sucesso avança, de propósito, pra tentar de novo no
+    // próximo cron), a fila inteira travava nesse mesmo item pra sempre.
+    var dueAt = JSON.stringify(new Date(Date.now() + 2 * 60 * 1000).toISOString());
     var query = 'mutation { createPost(input: { text: ' + texto + ', channelId: "' + env.BUFFER_X_CHANNEL_ID + '", schedulingType: automatic, mode: customScheduled, dueAt: ' + dueAt + assets + ' }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }';
     var r = await _bufferGraphQL(env, query);
     var resultado = r.body && r.body.data && r.body.data.createPost;
