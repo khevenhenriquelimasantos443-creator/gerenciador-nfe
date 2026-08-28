@@ -164,21 +164,26 @@ TT_CRON_ATIVO = "0"
 #  - "0 23 * * 1"  → resumo semanal de gastos, domingo às 20:00 BRT
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 #
-#  - "0 13,21 * * *" → posts do Instagram, 10:00 e 18:00 BRT (13:00 e 21:00
-#                    UTC; o Brasil não tem mais horário de verão desde 2019,
-#                    então é sempre UTC-3). UMA entrada de cron cobrindo os
-#                    dois horários — a lista com vírgula é um trigger só, o que
-#                    importa porque o limite de 5 crons é DA CONTA inteira.
-#                    Substituiu o agendamento pontual de 02/08, que já passou.
+#  - "0 11,13,16,21,22 * * *" → posts do Instagram (13:00 e 21:00 UTC = 10:00
+#                    e 18:00 BRT) + posts do X (11:00, 16:00 e 22:00 UTC =
+#                    08:00, 13:00 e 19:00 BRT, a pedido do Kheven em
+#                    27/08/2026). MESMO trigger cobrindo os dois — dentro do
+#                    handler, checa a hora atual (UTC) pra saber qual dos dois
+#                    rodar em cada disparo (ver scheduled() no build.js). O
+#                    Brasil não tem mais horário de verão desde 2019, então é
+#                    sempre UTC-3.
+#                    Era só "0 13,21 * * *" (Instagram); ganhou 3 horários
+#                    novos pro X em vez de virar um cron à parte, porque não
+#                    sobra slot (ver ATENÇÃO abaixo).
 #
-#  - "25 13,21 * * *" → Stories, 25 min depois de cada post (10:25 e 18:25
-#                    BRT). Cron PRÓPRIO, e não pendurado no fluxo do post, por
-#                    dois motivos: é o intervalo pedido, e o jeito antigo
-#                    (promise solta dentro da execução do post) não funciona no
-#                    Cloudflare — o isolate encerra quando o post termina e
-#                    mata o story no meio, que ainda espera até 20s a Meta
-#                    baixar a imagem. Era por isso que o post saía e o story
-#                    não.
+#  - "25 13,21 * * *" → Stories, 25 min depois de cada post do Instagram
+#                    (10:25 e 18:25 BRT). Cron PRÓPRIO, e não pendurado no
+#                    fluxo do post, por dois motivos: é o intervalo pedido, e
+#                    o jeito antigo (promise solta dentro da execução do post)
+#                    não funciona no Cloudflare — o isolate encerra quando o
+#                    post termina e mata o story no meio, que ainda espera até
+#                    20s a Meta baixar a imagem. Era por isso que o post saía
+#                    e o story não.
 #
 #  ATENÇÃO: são 4 crons aqui + 1 no finn-worker = 5, que é o limite da CONTA.
 #  Não sobra slot. Pra agendar mais alguma coisa, junte horários numa entrada
@@ -200,7 +205,7 @@ TT_CRON_ATIVO = "0"
 #  1), sobra 1 slot livre com o agendamento acima.
 # ─────────────────────────────────────────────
 [triggers]
-crons = ["0 12 * * *", "0 23 * * 1", "0 13,21 * * *", "25 13,21 * * *"]
+crons = ["0 12 * * *", "0 23 * * 1", "0 11,13,16,21,22 * * *", "25 13,21 * * *"]
 
 # ─────────────────────────────────────────────
 #  KV Namespace (armazena as inscrições de push)

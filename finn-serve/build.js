@@ -5921,23 +5921,45 @@ h1 em{font-style:normal;color:#F97316}
   },
 
   async scheduled(event, env, ctx) {
-    if (event.cron === '0 13,21 * * *') {
-      // Instagram, 2 posts por dia: 10:00 e 18:00 BRT (13:00 e 21:00 UTC).
-      //
-      // Guard de idempotência por SLOT (dia + hora), não só por dia: a
-      // Cloudflare pode reexecutar um evento de cron, e sem isso uma
-      // reexecução às 13:00 consumiria o post das 18:00 — a fila andaria
-      // sozinha e o feed ficaria com dois posts na mesma hora.
-      ctx.waitUntil((async () => {
-        var agora = new Date();
-        var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
-        if (env.FINN_KV) {
-          var jaFoi = await env.FINN_KV.get('ig_slot_' + slot);
-          if (jaFoi) return;
-          await env.FINN_KV.put('ig_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
-        }
-        await _publishNextInstagramPost(env);
-      })());
+    if (event.cron === '0 11,13,16,21,22 * * *') {
+      // Trigger único cobrindo Instagram (13h/21h UTC = 10h/18h BRT) E X
+      // (11h/16h/22h UTC = 08h/13h/19h BRT, a pedido do Kheven em
+      // 27/08/2026) — não sobra slot de cron pra separar (ver ATENÇÃO no
+      // wrangler.toml). A hora atual (UTC) decide o que roda em cada disparo.
+      var horaAtualUTC = new Date().getUTCHours();
+      if (horaAtualUTC === 13 || horaAtualUTC === 21) {
+        // Instagram, 2 posts por dia: 10:00 e 18:00 BRT (13:00 e 21:00 UTC).
+        //
+        // Guard de idempotência por SLOT (dia + hora), não só por dia: a
+        // Cloudflare pode reexecutar um evento de cron, e sem isso uma
+        // reexecução às 13:00 consumiria o post das 18:00 — a fila andaria
+        // sozinha e o feed ficaria com dois posts na mesma hora.
+        ctx.waitUntil((async () => {
+          var agora = new Date();
+          var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
+          if (env.FINN_KV) {
+            var jaFoi = await env.FINN_KV.get('ig_slot_' + slot);
+            if (jaFoi) return;
+            await env.FINN_KV.put('ig_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
+          }
+          await _publishNextInstagramPost(env);
+        })());
+      }
+      if (horaAtualUTC === 11 || horaAtualUTC === 16 || horaAtualUTC === 22) {
+        // X, 3 posts por dia: 08:00, 13:00 e 19:00 BRT. 1 por disparo (em vez
+        // dos 3 de antes) — agora que tem 3 horários próprios, não precisa
+        // mais rajada. Mesmo guard por slot dos outros.
+        ctx.waitUntil((async () => {
+          var agora = new Date();
+          var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
+          if (env.FINN_KV) {
+            var jaFoi = await env.FINN_KV.get('x_slot_' + slot);
+            if (jaFoi) return;
+            await env.FINN_KV.put('x_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
+          }
+          await _publishNextXPost(env, 1);
+        })());
+      }
     } else if (event.cron === '25 13,21 * * *') {
       // Stories, 25 min depois do post. Mesmo guard por slot (dia + hora) do
       // feed: a Cloudflare pode reexecutar um evento, e sem isso uma
@@ -5961,10 +5983,6 @@ h1 em{font-style:normal;color:#F97316}
         // prefere postar manual nesse meio-tempo. Não afeta o botão manual
         // "Testar publicação agora" (/admin/tiktok-publish-next).
         if (env.TT_CRON_ATIVO === '1') await _publishNextTikTokVideo(env);
-        // X também não tem slot de cron livre — encosta aqui também, mas
-        // publica 3 por disparo (o Buffer não cobra por post, então não faz
-        // sentido ficar preso a 1 por vez feito os outros formatos).
-        await _publishNextXPost(env, 3);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
