@@ -2943,6 +2943,19 @@ async function _publishNextInstagramReel(env) {
   }
   if (!env.FINN_KV) return { ok: false, reason: 'FINN_KV não configurado' };
 
+  // Ritmo pedido pelo Kheven em 29/08/2026: em média 1 Reel por dia (no
+  // máximo — pode ficar em 1 a cada 2 dias sem problema). Sem isso, os 2
+  // disparos diários do cron compartilhado (10h/18h BRT) publicariam 2
+  // Reels por dia sempre que a fila tivesse conteúdo — rápido demais.
+  var REEL_INTERVALO_MIN_HORAS = 24;
+  var ultimoReelEm = await env.FINN_KV.get('reel_last_publish');
+  if (ultimoReelEm) {
+    var horasDesdeUltimo = (Date.now() - new Date(ultimoReelEm).getTime()) / 3600000;
+    if (horasDesdeUltimo < REEL_INTERVALO_MIN_HORAS) {
+      return { ok: false, skipped: true, reason: 'ainda dentro do intervalo mínimo entre Reels (' + horasDesdeUltimo.toFixed(1) + 'h desde o último)' };
+    }
+  }
+
   var daFila = await _proximoDaFilaPorTipo(env, 'reels');
   if (!daFila) return { ok: false, skipped: true, reason: 'nenhum reel na fila' };
 
@@ -3004,6 +3017,7 @@ async function _publishNextInstagramReel(env) {
     }
 
     await _marcaPublicado(env, filaId, { published_at: new Date().toISOString(), ig_media_id: String(pubBody.id), erro: null });
+    await env.FINN_KV.put('reel_last_publish', new Date().toISOString());
     return { ok: true, fila_id: filaId, media_id: pubBody.id };
   } catch (e) {
     log.ok = false;
