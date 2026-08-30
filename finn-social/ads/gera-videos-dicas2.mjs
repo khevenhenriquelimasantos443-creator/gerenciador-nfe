@@ -121,6 +121,11 @@ for (const d of DICAS) {
   await b.close();
 
   const saida = path.join(DIR, `dica-${d.slug}.mp4`);
-  execFileSync('ffmpeg', ['-y', '-i', webm, '-t', String(DURACAO), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+  // '-ss 0.15' ANTES do -i: pula os primeiros ~150ms do que o Playwright
+  // gravou. O primeiro frame às vezes sai em branco (a página ainda não
+  // tinha pintado quando a gravação começou) — sem cortar isso, a
+  // plataforma pode escolher esse frame como capa (foi exatamente o que
+  // aconteceu: "Chega de planilha" saiu com capa toda branca no Instagram).
+  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
   console.log('gerado:', saida);
 }
