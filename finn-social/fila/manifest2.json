@@ -1,0 +1,137 @@
+{
+  "feed": [
+    {
+      "arquivo": "feed2-titulo-evolucao.png",
+      "caption": "De Aprendiz das Finanças a Investidor Blindado: o Finn acompanha suas conquistas e evolui seu título sozinho, sem você precisar fazer nada além de usar o app.\n\n#gamificacao #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-streak-fogo.png",
+      "caption": "Lançou algo por 7 dias seguidos? Conquista desbloqueada. Chegou a 30? Virou hábito de verdade — e o Finn conta tudo sozinho.\n\n#gamificacao #habitos #financaspessoais"
+    },
+    {
+      "arquivo": "feed2-conquistas-secretas.png",
+      "caption": "Tem conquista escondida no Finn — nem o nome nem a dica a gente revela antes de você desbloquear. O jeito é usar o app e descobrir sozinho.\n\n#gamificacao #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-compartilha-conquista.png",
+      "caption": "Desbloqueou uma conquista? Baixa como imagem prontinha pra postar nos stories — sem print feio de tela.\n\n#gamificacao #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-cartao-fechamento.png",
+      "caption": "Configura o dia de fechamento e vencimento de cada cartão, e o Finn calcula o total da fatura atual automaticamente — sem você somar nada na mão.\n\n#cartaodecredito #financaspessoais #controlefinanceiro"
+    },
+    {
+      "arquivo": "feed2-categoria-sua-cara.png",
+      "caption": "As categorias padrão não bastam pra sua vida? Cria as suas próprias, do jeito que fizer sentido — e apaga quando quiser.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed2-modo-escuro.png",
+      "caption": "Prefere modo escuro? Troca direto nas configurações, um toque — o Finn se ajusta na hora e lembra da sua escolha da próxima vez.\n\n#appfinanceiro #financaspessoais #tecnologia"
+    },
+    {
+      "arquivo": "feed2-racha-sem-instalar.png",
+      "caption": "No Racha, cada participante entra só com o nome — ninguém mais precisa instalar o Finn pra você saber exatamente quem já pagou e quem ainda deve.\n\n#dividirdespesas #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-divida-juros-reais.png",
+      "caption": "Antes de decidir pagar só o mínimo do cartão, simula com os juros reais — o Finn calcula o custo de verdade da dívida, não uma estimativa solta.\n\n#cartaodecredito #educacaofinanceira #financaspessoais"
+    },
+    {
+      "arquivo": "feed2-grafico-por-categoria.png",
+      "caption": "Pra onde seu dinheiro realmente vai? Um gráfico simples, por categoria, mostra de bandeja — sem precisar ler tabela nenhuma.\n\n#financaspessoais #appfinanceiro #controlefinanceiro"
+    },
+    {
+      "arquivo": "feed2-whatsapp-lanca-por-mensagem.png",
+      "caption": "Conecta seu WhatsApp ao Finn e lança um gasto batendo um papo — tipo \"Uber 32\" — e ele categoriza sozinho, sem precisar abrir o app.\n\n#whatsapp #financaspessoais #automacao"
+    },
+    {
+      "arquivo": "feed2-meta-com-prazo.png",
+      "caption": "Define o valor e o prazo da meta, e o Finn calcula quando você chega lá no ritmo que está guardando hoje — e recalcula se o ritmo mudar.\n\n#metasfinanceiras #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-lancamento-manual-sem-banco.png",
+      "caption": "Não quer conectar o banco? Não precisa — dá pra usar o Finn 100% manual, lançando cada gasto na mão, e a organização funciona do mesmo jeito.\n\n#financaspessoais #appfinanceiro #privacidade"
+    },
+    {
+      "arquivo": "feed2-edita-lancamento-antigo.png",
+      "caption": "Achou um lançamento errado do mês passado? Edita valor, data ou categoria a qualquer momento — nunca é tarde pra corrigir.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    },
+    {
+      "arquivo": "feed2-pluggy-varios-bancos.png",
+      "caption": "Tem conta em mais de um banco? O Finn conecta todos via Open Finance e junta o extrato num só lugar — sem precisar abrir um app pra cada.\n\n#openfinance #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-sem-pegadinha-teste-gratis.png",
+      "caption": "Testa grátis, sem cartão de crédito e sem cobrança escondida depois. Se fizer sentido pra você, o resto está lá quando quiser.\n\n#appfinanceiro #financaspessoais"
+    },
+    {
+      "arquivo": "feed2-primeiro-lancamento-conquista.png",
+      "caption": "Registrou seu primeiro gasto ou receita no Finn? Isso já desbloqueia a primeira conquista — o resto do progresso vem no seu ritmo.\n\n#gamificacao #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivo": "feed2-instala-sem-loja.png",
+      "caption": "O Finn é um app web instalável: abre no navegador, adiciona à tela inicial e usa como qualquer outro app — sem passar pela loja e sem ocupar espaço com atualização.\n\n#appfinanceiro #tecnologia #financaspessoais"
+    },
+    {
+      "arquivo": "feed2-dados-isolados-rls.png",
+      "caption": "No banco de dados do Finn, cada conta só enxerga os próprios dados — a regra fica no próprio banco, não só na tela, então nem por engano um usuário vê o lançamento de outro.\n\n#privacidade #seguranca #financaspessoais"
+    },
+    {
+      "arquivo": "feed2-mito-cartao-vilao.png",
+      "caption": "Mito: cartão de crédito é sempre vilão. Verdade: o problema nunca foi o cartão — é não saber quanto vai fechar a fatura. Com isso claro, ele volta a ser só uma ferramenta.\n\n#cartaodecredito #educacaofinanceira #financaspessoais"
+    }
+  ],
+  "carousels": [
+    {
+      "arquivos": [
+        "carousel2-conquistas-no-finn-1.png",
+        "carousel2-conquistas-no-finn-2.png",
+        "carousel2-conquistas-no-finn-3.png",
+        "carousel2-conquistas-no-finn-4.png",
+        "carousel2-conquistas-no-finn-5.png",
+        "carousel2-conquistas-no-finn-6.png"
+      ],
+      "caption": "Tem toda uma camada de jogo escondida no Finn 🏆\n\nTítulos que evoluem, sequência de dias, conquistas secretas — quanto mais você organiza a vida financeira, mais desbloqueia. Vai começar por onde?\n\n#gamificacao #financaspessoais #appfinanceiro #metasfinanceiras"
+    },
+    {
+      "arquivos": [
+        "carousel2-cartao-sem-susto-1.png",
+        "carousel2-cartao-sem-susto-2.png",
+        "carousel2-cartao-sem-susto-3.png",
+        "carousel2-cartao-sem-susto-4.png",
+        "carousel2-cartao-sem-susto-5.png"
+      ],
+      "caption": "Cartão de crédito sem sustos, em 4 recursos 💳\n\nFechamento, vencimento, fatura em tempo real e simulação de dívida com juros reais — tudo no mesmo lugar.\n\n#cartaodecredito #financaspessoais #controlefinanceiro #appfinanceiro"
+    },
+    {
+      "arquivos": [
+        "carousel2-5-mitos-financas-1.png",
+        "carousel2-5-mitos-financas-2.png",
+        "carousel2-5-mitos-financas-3.png",
+        "carousel2-5-mitos-financas-4.png",
+        "carousel2-5-mitos-financas-5.png"
+      ],
+      "caption": "5 mitos sobre dinheiro que a gente ainda acredita 🙃\n\nSpoiler: nenhum deles é verdade.\n\n#educacaofinanceira #mitosfinanceiros #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivos": [
+        "carousel2-seguranca-explicada-1.png",
+        "carousel2-seguranca-explicada-2.png",
+        "carousel2-seguranca-explicada-3.png",
+        "carousel2-seguranca-explicada-4.png",
+        "carousel2-seguranca-explicada-5.png"
+      ],
+      "caption": "Como o Finn cuida dos seus dados, sem enrolação 🔒\n\nA gente já auditou isso de verdade — não é só discurso.\n\n#privacidade #seguranca #financaspessoais #appfinanceiro"
+    },
+    {
+      "arquivos": [
+        "carousel2-um-dia-com-finn-1.png",
+        "carousel2-um-dia-com-finn-2.png",
+        "carousel2-um-dia-com-finn-3.png",
+        "carousel2-um-dia-com-finn-4.png",
+        "carousel2-um-dia-com-finn-5.png"
+      ],
+      "caption": "Um dia normal, com o Finn rodando por trás 🌤️\n\nNada dramático — só automação silenciosa, o dia inteiro.\n\n#financaspessoais #appfinanceiro #organizacaofinanceira"
+    }
+  ]
+}
