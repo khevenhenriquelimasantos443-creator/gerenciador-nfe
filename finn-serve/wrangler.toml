@@ -26,16 +26,15 @@ TT_CRON_ATIVO = "0"
 #   pro botão manual "Testar publicação agora" (/admin/tiktok-publish-next),
 #   caso um dia valha a pena usar a conta Sandbox (SELF_ONLY) de novo.
 
-BUFFER_TIKTOK_CHANNEL_ID = ""
-# ↑ Id do canal do TikTok dentro do Buffer (mesmo padrão do
-#   BUFFER_X_CHANNEL_ID acima) — publicação automática via
-#   _publishNextTikTokBuffer no build.js. VAZIO até o Kheven conectar a
-#   conta do TikTok no Buffer (buffer.com → Adicionar canal → TikTok); com
-#   isto vazio, a função só faz log e não tenta nada (nunca derruba o resto
-#   do worker). Depois de conectar, pegar o id com a mesma query GraphQL:
-#   query { channels(input: { organizationId: "<id da org>" }) { id name
-#   service } } — procurar o item com service: "tiktok". Reaproveita a
-#   secret BUFFER_API_KEY que o X já usa (não precisa de chave nova).
+BUFFER_TIKTOK_CHANNEL_ID = "6aa87bb6ea19ca0bde43a177"
+# ↑ Id do canal do TikTok (@finn.finnance) dentro do Buffer, conectado pelo
+#   Kheven em 14/09/2026 — mesmo padrão do BUFFER_X_CHANNEL_ID acima.
+#   Publicação automática via _publishNextTikTokBuffer no build.js.
+#   Descoberto com a mesma query GraphQL: query { channels(input: {
+#   organizationId: "<id da org>" }) { id name service } } — item com
+#   service: "tiktok". Só muda se o canal for desconectado e reconectado no
+#   Buffer. Reaproveita a secret BUFFER_API_KEY que o X já usa (não precisa
+#   de chave nova).
 
 # Secrets are set via Cloudflare dashboard (encrypted):
 # PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET
