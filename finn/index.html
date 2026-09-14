@@ -6634,7 +6634,18 @@ function renderAdminTikTok(){
   if(!isMasterUser() || !state.adminUnlocked) return "";
   var st = state.tiktokStatus;
   var html = '<div class="card">' +
-    '<div class="eyebrow">TikTok</div>';
+    '<div class="eyebrow">TikTok</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:10px">' +
+      'A API oficial do TikTok teve a publicação em produção rejeitada (política — não aceita app que só publica pra conta que a gente mesmo gerencia). A publicação automática agora vai pelo Buffer, mesmo caminho do X.' +
+    '</div>' +
+    '<button type="button" class="btn-submit" id="btnTestTikTokBufferPublish"' + (state.tiktokBufferPublishLoading ? " disabled" : "") + '>' +
+      (state.tiktokBufferPublishLoading ? "Publicando…" : "Testar publicação via Buffer") +
+    '</button>';
+  if(state.tiktokBufferPublishResult){
+    html += '<div class="ai-result" style="margin-top:10px">' + escapeHtml(state.tiktokBufferPublishResult) + '</div>';
+  }
+  html += '<div style="border-top:1px solid var(--bd);margin:14px 0" ></div>' +
+    '<div class="eyebrow" style="font-size:10.5px">API oficial (desativada, só teste manual)</div>';
 
   if(state.tiktokStatusLoading && !st){
     html += '<div style="font-size:12.5px;color:var(--fm)">Carregando status…</div>';
@@ -6732,6 +6743,30 @@ function testTikTokPublish(){
     }).catch(function(){
       state.tiktokPublishLoading = false;
       state.tiktokPublishResult = "Falha de conexão.";
+      render();
+    });
+}
+
+function testTikTokBufferPublish(){
+  state.tiktokBufferPublishLoading = true;
+  state.tiktokBufferPublishResult = null;
+  render();
+  fetch("/admin/tiktok-publish-next-buffer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ access_token: currentSession && currentSession.access_token, admin_password: state.adminPassword })
+  }).then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.tiktokBufferPublishLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.tiktokBufferPublishResult = "Publicado via Buffer! (post_id: " + res.body.post_id + ")";
+      } else {
+        state.tiktokBufferPublishResult = "Falhou: " + JSON.stringify((res.body && (res.body.erro || res.body.reason || res.body.error)) || res.body);
+      }
+      render();
+    }).catch(function(){
+      state.tiktokBufferPublishLoading = false;
+      state.tiktokBufferPublishResult = "Falha de conexão.";
       render();
     });
 }
@@ -8984,6 +9019,8 @@ function bindContentEvents(){
     if(btnConectarTikTok) btnConectarTikTok.addEventListener("click", conectarTikTok);
     var btnTestTikTokPublish = document.getElementById("btnTestTikTokPublish");
     if(btnTestTikTokPublish) btnTestTikTokPublish.addEventListener("click", testTikTokPublish);
+    var btnTestTikTokBufferPublish = document.getElementById("btnTestTikTokBufferPublish");
+    if(btnTestTikTokBufferPublish) btnTestTikTokBufferPublish.addEventListener("click", testTikTokBufferPublish);
   }
   if(state.tab === "adminHome"){
     var irPara = function(aba){ return function(){ state.tab = aba; render(); }; };

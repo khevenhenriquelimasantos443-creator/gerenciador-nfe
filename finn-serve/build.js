@@ -3183,6 +3183,57 @@ async function _publishNextXPost(env, quantidade) {
 }
 
 // =============================================================================
+// TIKTOK — publicação automática via Buffer (mesmo caminho do X)
+// =============================================================================
+// A API oficial do TikTok (Content Posting API) teve a publicação em
+// produção REJEITADA pela revisão do TikTok em 29/08/2026: a política deles
+// não aceita app que só publica pra conta que o próprio dono/equipe
+// gerencia (é exatamente o caso do Finn) — não é algo que dá pra corrigir no
+// código, então esse app só serve como Sandbox (SELF_ONLY, ver
+// _publishNextTikTokVideo acima, mantido no código mas fora do cron). O
+// Buffer já tem sua própria aprovação com o TikTok e publica em nome da
+// conta conectada, do mesmo jeito que faz com o X — ver _bufferGraphQL.
+//
+// Required:
+//   BUFFER_API_KEY (secret, já existe — mesmo usado pelo X).
+//   BUFFER_TIKTOK_CHANNEL_ID ([vars] no wrangler.toml, não é segredo) — id
+//     do canal do TikTok dentro do Buffer (query "channels" na API do
+//     Buffer, depois de conectar a conta do TikTok no Buffer).
+// Reaproveita a MESMA fila (kind='tiktok') que a API oficial usava — o
+// conteúdo já gerado não muda, só o canal de publicação.
+async function _publishNextTikTokBuffer(env) {
+  if (!env.BUFFER_API_KEY || !env.BUFFER_TIKTOK_CHANNEL_ID) {
+    return { ok: false, skipped: true, reason: 'BUFFER_API_KEY ou BUFFER_TIKTOK_CHANNEL_ID não configurados' };
+  }
+  var daFila = await _proximoDaFilaPorTipo(env, 'tiktok');
+  if (!daFila) return { ok: false, skipped: true, reason: 'nenhum vídeo de TikTok na fila' };
+
+  var texto = JSON.stringify(daFila.caption || '');
+  // Mesmo proxy do Worker usado pela API oficial do TikTok (/midia/tiktok/):
+  // o Supabase Storage manda 'X-Robots-Tag: none' em todo objeto público, e
+  // já vimos esse header travar downloader de outra rede.
+  var nomeArquivoTikTok = String(daFila.image_path || '');
+  var videoUrl = (nomeArquivoTikTok.indexOf('http://') === 0 || nomeArquivoTikTok.indexOf('https://') === 0)
+    ? nomeArquivoTikTok
+    : 'https://finn.dev.br/midia/tiktok/' + encodeURIComponent(nomeArquivoTikTok);
+  var assets = ', assets: [{ video: { url: ' + JSON.stringify(videoUrl) + ' } }]';
+  // customScheduled + dueAt = agora+2min, mesmo motivo do X: sem hora
+  // explícita o Buffer usa a fila automática dele, e "agora" exato às vezes
+  // já virou passado quando a requisição chega no servidor.
+  var dueAt = JSON.stringify(new Date(Date.now() + 2 * 60 * 1000).toISOString());
+  var query = 'mutation { createPost(input: { text: ' + texto + ', channelId: "' + env.BUFFER_TIKTOK_CHANNEL_ID + '", schedulingType: automatic, mode: customScheduled, dueAt: ' + dueAt + assets + ' }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }';
+  var r = await _bufferGraphQL(env, query);
+  var resultado = r.body && r.body.data && r.body.data.createPost;
+  if (!r.ok || !resultado || !resultado.post) {
+    var erro = (resultado && resultado.message) || (r.body && r.body.errors && r.body.errors[0] && r.body.errors[0].message) || r.error || 'falha desconhecida';
+    await _marcaPublicado(env, daFila.id, { erro: 'tiktok-buffer: ' + erro });
+    return { ok: false, fila_id: daFila.id, erro: erro };
+  }
+  await _marcaPublicado(env, daFila.id, { published_at: new Date().toISOString(), erro: null });
+  return { ok: true, fila_id: daFila.id, post_id: resultado.post.id, due_at: resultado.post.dueAt };
+}
+
+// =============================================================================
 // TIKTOK — publicação automática via Content Posting API (Direct Post)
 // =============================================================================
 // Required secrets (wrangler secret put, nunca em [vars]):
@@ -3623,6 +3674,25 @@ async function _adminXPublishNext(request, env) {
     return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
   } catch (e) {
     return _serverError(cors, e, '_adminXPublishNext');
+  }
+}
+
+// POST /admin/tiktok-publish-next-buffer — dispara a publicação do próximo
+// vídeo da fila do TikTok VIA BUFFER, pra testar sem esperar o cron. Mesmo
+// padrão do disparo manual do X.
+async function _adminTikTokPublishNextBuffer(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var body = {};
+    try { body = JSON.parse(await request.text()); } catch (e0) {}
+    var authUser = await _supaAuth(body.access_token);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, body.admin_password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+
+    var result = await _publishNextTikTokBuffer(env);
+    return new Response(JSON.stringify(result), { status: result.ok ? 200 : 502, headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminTikTokPublishNextBuffer');
   }
 }
 
@@ -5749,6 +5819,9 @@ h1 em{font-style:normal;color:#F97316}
     if (url.pathname === '/admin/x-publish-next' && request.method === 'POST') {
       return _adminXPublishNext(request, env);
     }
+    if (url.pathname === '/admin/tiktok-publish-next-buffer' && request.method === 'POST') {
+      return _adminTikTokPublishNextBuffer(request, env);
+    }
     // Rota pública — o TikTok redireciona o navegador do admin pra cá depois
     // da autorização, sem nenhum header nosso (ver comentário na função).
     if (url.pathname === '/tiktok/callback') {
@@ -6008,12 +6081,13 @@ h1 em{font-style:normal;color:#F97316}
         // — encosta neste mesmo disparo, depois do story. TikTok também não
         // tem slot livre (5 crons é o limite da conta) — encosta aqui também.
         await _publishNextInstagramReel(env);
-        // TT_CRON_ATIVO ([vars] no wrangler.toml): desligado a pedido do
-        // Kheven em 22/08/2026 enquanto a auditoria do TikTok não aprova o
-        // app (conta tem que ficar privada — ver TT_PRIVACY_LEVEL). Ele
-        // prefere postar manual nesse meio-tempo. Não afeta o botão manual
-        // "Testar publicação agora" (/admin/tiktok-publish-next).
-        if (env.TT_CRON_ATIVO === '1') await _publishNextTikTokVideo(env);
+        // TikTok: a API oficial (Content Posting API) teve a publicação em
+        // produção REJEITADA pela revisão do TikTok em 29/08/2026 (política,
+        // não dá pra corrigir no código — ver _publishNextTikTokBuffer). O
+        // cron agora chama a versão via Buffer; a função antiga
+        // (_publishNextTikTokVideo, gated por TT_CRON_ATIVO) fica no código
+        // só pro botão manual/histórico, não roda mais sozinha.
+        await _publishNextTikTokBuffer(env);
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
