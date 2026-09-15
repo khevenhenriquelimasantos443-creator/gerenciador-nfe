@@ -3632,6 +3632,72 @@ async function _adminTikTokStatus(request, env) {
   }
 }
 
+// GET /admin/social-queue — visão única da fila de publicação (social_posts)
+// nas 3 redes, pra não precisar entrar no Supabase toda vez que quiser saber
+// o que está prestes a sair. Agrupa 'feed'+'carousel' (mesma fila real do
+// Instagram, ver _proximoDaFila) e separa reels/story/tiktok/x — cada um com
+// cron e regra própria.
+async function _adminSocialQueue(request, env) {
+  var cors = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+  try {
+    var creds = _adminCreds(request);
+    var authUser = await _supaAuth(creds.accessToken);
+    if (!authUser || !_isMasterUser(authUser)) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 403, headers: cors });
+    if (!(await _masterPasswordGate(request, env, creds.password))) return new Response(JSON.stringify({ error: 'senha de admin incorreta' }), { status: 403, headers: cors });
+    if (!env.SUPABASE_SERVICE_KEY) return new Response(JSON.stringify({ error: 'SUPABASE_SERVICE_KEY não configurado' }), { status: 500, headers: cors });
+
+    var r = await fetch('${SUPA_URL_SERVER}/rest/v1/social_posts?select=id,kind,image_path,image_paths,caption,posicao,published_at&order=posicao.asc,created_at.asc&limit=1000', {
+      headers: { apikey: env.SUPABASE_SERVICE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_KEY }
+    });
+    if (!r.ok) return new Response(JSON.stringify({ error: 'falha ao consultar a fila' }), { status: 502, headers: cors });
+    var linhas = await r.json();
+
+    function grupoDe(kind) {
+      if (kind === 'feed' || kind === 'carousel') return 'instagram_feed';
+      if (kind === 'reels') return 'instagram_reels';
+      if (kind === 'story') return 'instagram_story';
+      return kind; // 'tiktok' ou 'x'
+    }
+    // Vídeo (reels/tiktok) não tem preview de imagem — só o nome do arquivo.
+    // Carrossel guarda os slides em image_paths (jsonb array); o primeiro
+    // slide representa o post na prévia, igual a miniatura da fila no admin.
+    function imagemDe(linha) {
+      if (linha.kind === 'reels' || linha.kind === 'tiktok') return null;
+      var arquivo = (linha.kind === 'carousel' && linha.image_paths && linha.image_paths[0]) ? linha.image_paths[0] : linha.image_path;
+      if (!arquivo) return null;
+      if (String(arquivo).indexOf('http') === 0) return arquivo;
+      return 'https://finn.dev.br/midia/social/' + encodeURIComponent(arquivo);
+    }
+
+    var grupos = {};
+    ['instagram_feed', 'instagram_reels', 'instagram_story', 'tiktok', 'x'].forEach(function(g) {
+      grupos[g] = { pendentes: 0, ultimo_publicado: null, proximos: [] };
+    });
+    linhas.forEach(function(linha) {
+      var g = grupoDe(linha.kind);
+      if (!grupos[g]) grupos[g] = { pendentes: 0, ultimo_publicado: null, proximos: [] };
+      if (linha.published_at) {
+        if (!grupos[g].ultimo_publicado || linha.published_at > grupos[g].ultimo_publicado) grupos[g].ultimo_publicado = linha.published_at;
+        return;
+      }
+      grupos[g].pendentes++;
+      if (grupos[g].proximos.length < 8) {
+        grupos[g].proximos.push({
+          id: linha.id,
+          kind: linha.kind,
+          caption: String(linha.caption || '').slice(0, 180),
+          imagem: imagemDe(linha),
+          arquivo: (linha.kind === 'reels' || linha.kind === 'tiktok') ? linha.image_path : null
+        });
+      }
+    });
+
+    return new Response(JSON.stringify({ ok: true, grupos: grupos }), { headers: cors });
+  } catch (e) {
+    return _serverError(cors, e, '_adminSocialQueue');
+  }
+}
+
 // GET /admin/tiktok-connect-url — devolve a URL de autorização do TikTok,
 // com um "state" de uso único guardado no KV (10 min) pra /tiktok/callback
 // conferir depois — proteção contra CSRF, já que o callback em si não tem
@@ -5821,6 +5887,9 @@ h1 em{font-style:normal;color:#F97316}
     }
     if (url.pathname === '/admin/tiktok-publish-next-buffer' && request.method === 'POST') {
       return _adminTikTokPublishNextBuffer(request, env);
+    }
+    if (url.pathname === '/admin/social-queue' && request.method === 'GET') {
+      return _adminSocialQueue(request, env);
     }
     // Rota pública — o TikTok redireciona o navegador do admin pra cá depois
     // da autorização, sem nenhum header nosso (ver comentário na função).

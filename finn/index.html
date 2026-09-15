@@ -659,7 +659,8 @@ function adminModeAtivo(){
 }
 // Telas que só existem no modo admin. Sair do modo com uma delas aberta
 // deixaria a tela em branco, então setAdminMode reposiciona a aba.
-var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminIa", "adminBeta", "metaAds", "screener", "conteudo"];
+var ADMIN_TABS = ["adminHome", "adminAnalytics", "adminIa", "adminBeta", "metaAds", "screener", "conteudo",
+  "adminAssinaturas", "adminFilaSocial", "adminInstagram", "adminTikTok", "adminWhatsApp"];
 // Não persiste em localStorage de propósito: adminUnlocked (a senha de
 // admin) também não persiste, então a cada recarga a pessoa desbloqueia de
 // novo — e o próprio desbloqueio já liga o modo admin. Guardar o modo
@@ -6051,6 +6052,7 @@ function renderAdminHome(){
     '<div style="display:flex;flex-direction:column;gap:8px">' +
       '<button type="button" class="btn-ghost" id="btnGoAssinaturas">Assinaturas</button>' +
       '<button type="button" class="btn-ghost" id="btnGoConteudo">Conteúdo</button>' +
+      '<button type="button" class="btn-ghost" id="btnGoFilaSocial">Fila social</button>' +
       '<button type="button" class="btn-ghost" id="btnGoInstagram">Instagram</button>' +
       '<button type="button" class="btn-ghost" id="btnGoTikTok">TikTok</button>' +
       '<button type="button" class="btn-ghost" id="btnGoWhatsApp">WhatsApp</button>' +
@@ -6516,6 +6518,102 @@ function renderAdminAssinaturas(){
   }
   html += '</div>';
   return html;
+}
+
+/* ── Fila social (Instagram feed/carrossel, Reels, Stories, TikTok, X) ── */
+var FILA_SOCIAL_GRUPOS = [
+  { chave: "instagram_feed", titulo: "Instagram — Feed e carrossel" },
+  { chave: "instagram_reels", titulo: "Instagram — Reels" },
+  { chave: "instagram_story", titulo: "Instagram — Stories" },
+  { chave: "tiktok", titulo: "TikTok" },
+  { chave: "x", titulo: "X (Twitter)" },
+];
+
+function haQuanto(iso){
+  if(!iso) return "nunca";
+  var diffMs = Date.now() - new Date(iso).getTime();
+  if(diffMs < 0) return "agora há pouco";
+  var horas = diffMs / 3600000;
+  if(horas < 1) return "há poucos minutos";
+  if(horas < 24) return "há " + Math.floor(horas) + (Math.floor(horas) === 1 ? " hora" : " horas");
+  var dias = Math.floor(horas / 24);
+  return "há " + dias + (dias === 1 ? " dia" : " dias");
+}
+
+function renderAdminFilaSocial(){
+  if(!adminModeAtivo()) return "";
+  var g = state.socialQueue && state.socialQueue.grupos;
+  var html = '<div class="card">' +
+    '<div class="eyebrow">Fila de publicação — as 3 redes</div>' +
+    '<div style="font-size:12.5px;color:var(--fm);margin-bottom:12px">O Buffer só mostra o post uns 2 minutos antes de sair — quem manda no que vem a seguir é essa fila aqui, direto do banco.</div>' +
+    '<button type="button" class="btn-ghost" id="btnLoadSocialQueue" style="width:100%"' + (state.socialQueueLoading ? " disabled" : "") + '>' +
+      (state.socialQueueLoading ? "Carregando…" : "Atualizar") +
+    '</button>' +
+  '</div>';
+
+  if(state.socialQueueError){
+    html += '<div class="card"><div class="ai-error">Não consegui carregar a fila (' + escapeHtml(state.socialQueueError) + ').</div></div>';
+    return html;
+  }
+  if(!g){
+    return html;
+  }
+
+  FILA_SOCIAL_GRUPOS.forEach(function(grupo){
+    var dados = g[grupo.chave] || { pendentes: 0, ultimo_publicado: null, proximos: [] };
+    html += '<div class="card">' +
+      '<div class="eyebrow">' + escapeHtml(grupo.titulo) + '</div>' +
+      '<div style="display:flex;gap:10px;margin-bottom:12px">' +
+        '<div class="total-box" style="flex:1"><div style="font-size:11px;color:var(--fm)">PENDENTES</div><div style="font-size:22px;font-weight:700">' + dados.pendentes + '</div></div>' +
+        '<div class="total-box" style="flex:1"><div style="font-size:11px;color:var(--fm)">ÚLTIMO PUBLICADO</div><div style="font-size:14px;font-weight:700;margin-top:4px">' + escapeHtml(haQuanto(dados.ultimo_publicado)) + '</div></div>' +
+      '</div>';
+
+    if(!dados.proximos.length){
+      html += '<div style="font-size:12.5px;color:var(--fm)">' + (dados.pendentes ? "Sem prévia — atualiza a fila." : "Fila vazia. Ninguém na fila pra sair.") + '</div>';
+    } else {
+      html += '<div style="display:flex;flex-direction:column;gap:8px">' +
+        dados.proximos.map(function(item, i){
+          var thumb = item.imagem
+            ? '<img src="' + escapeHtml(item.imagem) + '" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0">'
+            : '<div style="width:44px;height:44px;border-radius:8px;background:var(--fb);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">' + (item.arquivo ? "🎬" : "📝") + '</div>';
+          return '<div class="tx-item" style="align-items:center">' +
+            thumb +
+            '<div class="tx-info" style="margin-left:10px;min-width:0">' +
+              '<div class="tx-desc" style="font-size:12px;color:var(--fm);font-weight:700">' + (i === 0 ? "PRÓXIMO" : "#" + (i + 1)) + '</div>' +
+              '<div class="tx-desc" style="white-space:normal;overflow-wrap:break-word">' + escapeHtml(item.caption || item.arquivo || "(sem legenda)") + '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+      if(dados.pendentes > dados.proximos.length){
+        html += '<div style="font-size:11.5px;color:var(--fm);margin-top:8px">+ ' + (dados.pendentes - dados.proximos.length) + ' depois desses.</div>';
+      }
+    }
+    html += '</div>';
+  });
+
+  return html;
+}
+
+function loadSocialQueue(){
+  state.socialQueueLoading = true;
+  state.socialQueueError = null;
+  render();
+  fetch("/admin/social-queue", { headers: adminHeaders() })
+    .then(function(r){ return r.json().then(function(j){ return { status: r.status, body: j }; }); })
+    .then(function(res){
+      state.socialQueueLoading = false;
+      if(res.status === 200 && res.body && res.body.ok){
+        state.socialQueue = res.body;
+      } else {
+        state.socialQueueError = (res.body && res.body.error) || "falha desconhecida";
+      }
+      render();
+    }).catch(function(){
+      state.socialQueueLoading = false;
+      state.socialQueueError = "falha de conexão";
+      render();
+    });
 }
 
 function renderAdminInstagram(){
@@ -8582,6 +8680,7 @@ function render(){
   else if(state.tab === "adminHome") content.innerHTML = renderAdminHome();
   else if(state.tab === "adminAssinaturas") content.innerHTML = renderAdminAssinaturas();
   else if(state.tab === "conteudo") content.innerHTML = renderConteudo();
+  else if(state.tab === "adminFilaSocial") content.innerHTML = renderAdminFilaSocial();
   else if(state.tab === "adminInstagram") content.innerHTML = renderAdminInstagram();
   else if(state.tab === "adminTikTok") content.innerHTML = renderAdminTikTok();
   else if(state.tab === "adminWhatsApp") content.innerHTML = renderAdminWhatsApp();
@@ -9004,6 +9103,10 @@ function bindContentEvents(){
       });
     });
   }
+  if(state.tab === "adminFilaSocial"){
+    var btnLoadSocialQueue = document.getElementById("btnLoadSocialQueue");
+    if(btnLoadSocialQueue) btnLoadSocialQueue.addEventListener("click", loadSocialQueue);
+  }
   if(state.tab === "adminInstagram"){
     var btnLoadInstagramStatus = document.getElementById("btnLoadInstagramStatus");
     if(btnLoadInstagramStatus) btnLoadInstagramStatus.addEventListener("click", loadInstagramStatus);
@@ -9043,6 +9146,10 @@ function bindContentEvents(){
     if((b = document.getElementById("btnGoAssinaturas"))) b.addEventListener("click", function(){
       state.tab = "adminAssinaturas"; render();
       if(!state.adminSubs && !state.adminLoading) loadAdminSubscriptions();
+    });
+    if((b = document.getElementById("btnGoFilaSocial"))) b.addEventListener("click", function(){
+      state.tab = "adminFilaSocial"; render();
+      if(!state.socialQueue && !state.socialQueueLoading) loadSocialQueue();
     });
     if((b = document.getElementById("btnGoInstagram"))) b.addEventListener("click", function(){
       state.tab = "adminInstagram"; render();
