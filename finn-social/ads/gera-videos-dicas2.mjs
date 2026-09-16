@@ -76,24 +76,27 @@ function html(d) {
 
 ${marca({ x: 96, y: 96, tam: 84, fonte: 40 })}
 
+<!-- Mesmo ajuste de gancho do lote 1 (ver gera-videos-dicas.mjs) — feito
+     junto, em 16/09/2026, pro mesmo problema (tempo médio de visualização
+     de 2,67s no TikTok, texto principal aparecendo tarde demais). -->
 <div class="beat fadeUp" style="top:560px;animation-delay:0s">
   <div style="display:inline-flex;align-items:center;gap:9px;height:60px;padding:0 30px;
     border:2px solid ${LARANJA};border-radius:30px;font-size:24px;font-weight:700;
     letter-spacing:.06em;color:${LARANJA};background:rgba(249,115,22,.08)">${d.badge}</div>
 </div>
 
-<div class="beat fadeUp" style="top:680px;animation-delay:.5s">
+<div class="beat fadeUp" style="top:680px;animation-delay:.05s">
   <h1 style="font-size:80px">${titulo(d.h1a)}</h1>
 </div>
-<div class="beat fadeUp" style="top:800px;animation-delay:1s">
+<div class="beat fadeUp" style="top:800px;animation-delay:.25s">
   <h1 style="font-size:80px">${titulo(d.h1b)}</h1>
 </div>
 
-<div class="beat fadeUp" style="top:1000px;animation-delay:2s">
+<div class="beat fadeUp" style="top:1000px;animation-delay:1.1s">
   <p style="font-size:44px;line-height:1.45;color:${CINZA_ESCURO};font-weight:400">${d.sub}</p>
 </div>
 
-<div class="beat pop" style="top:1420px;animation-delay:4.2s;display:flex;justify-content:center;width:888px">
+<div class="beat pop" style="top:1420px;animation-delay:3.3s;display:flex;justify-content:center;width:888px">
   <div style="height:104px;display:inline-flex;align-items:center;padding:0 48px;border-radius:18px;
     background:${LARANJA};font-size:36px;font-weight:700;color:#fff;
     box-shadow:0 14px 30px rgba(249,115,22,.35)">${d.cta}</div>

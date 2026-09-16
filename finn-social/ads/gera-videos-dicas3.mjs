@@ -1,14 +1,17 @@
-// Vídeos curtos (9:16, silenciosos) pra TikTok/Reels, mesma identidade visual
-// do anúncio "chegamos no TikTok" (gera-video-chegada-tiktok.mjs). Sem
-// narração: o HIggsfield (TTS/geração de vídeo) está indisponível nesta
-// sessão — ver finn-social/ads/_voz_padrao.md pra narrar quando ele voltar
-// (fica só regravar o áudio e remuxar com ffmpeg, igual foi feito lá).
+// Terceiro lote de vídeos curtos (9:16, silenciosos) pra Reels/TikTok — mesmo
+// gerador e identidade visual de gera-videos-dicas.mjs/2.mjs. Temas novos,
+// ainda não usados em vídeo: sistema de conquistas/gamificação (títulos que
+// evoluem, sequência de dias) e fatura de cartão calculada automaticamente —
+// recursos reais, já auditados (ver CONQUISTAS_DEFS em finn/index.html e o
+// carrossel "conquistas-no-finn" em finn-social/gera-fila2.mjs pros mesmos
+// temas em outro formato).
 //
-// O texto de cada vídeo é o MESMO já auditado dos cartões do Instagram
-// (finn-social/copy.cjs POSTS #2, #3 e #4) — não é conteúdo novo, é o
-// roteiro existente em formato animado.
+// Timing do gancho ajustado (16/09/2026): ver o comentário em
+// gera-videos-dicas.mjs — badge+h1a+h1b terminam de aparecer por volta de
+// 0,85s (era ~1,6s), depois de ver no Buffer que o tempo médio de
+// visualização do TikTok estava em só 2,67s.
 //
-// Uso:  node finn-social/ads/gera-videos-dicas.mjs
+// Uso:  node finn-social/ads/gera-videos-dicas3.mjs
 import { chromium } from 'playwright';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -18,26 +21,37 @@ import { NAVY, LARANJA, CINZA_ESCURO, FONTE, marca, titulo } from './_shared.mjs
 const W = 1080, H = 1920;
 const DURACAO = 7.2;
 
-// "Chega de planilha" (slug 'importa-extrato') foi REMOVIDO em 29/08/2026:
-// batia de frente com a Planilha Finn (produto pago, R$ 36,90) — o Kheven
-// pediu pra tirar do ar. Não gerar de novo com essa mensagem; se quiser um
-// vídeo sobre importar extrato, usar o ângulo do post "mito-planilha" em
-// finn-social/gera-fila.mjs (reconhece que a planilha existe como opção).
 const DICAS = [
   {
-    slug: 'ia-gastos',
-    badge: '🤖 IA FINANCEIRA',
-    h1a: 'Uma IA que lê',
-    h1b: '|seus gastos|.',
-    sub: 'Analisa o seu mês e devolve o que dá para cortar, em português claro.',
+    slug: 'conquista-secreta',
+    badge: '🤫 CONQUISTA SECRETA',
+    h1a: 'Tem uma conquista',
+    h1b: '|escondida| no Finn.',
+    sub: 'Ela só aparece depois que você desbloqueia sem querer. Ninguém conta antes.',
+    cta: 'Descobre a sua',
+  },
+  {
+    slug: 'streak-dias',
+    badge: '🔥 SEQUÊNCIA',
+    h1a: 'Quantos dias seguidos',
+    h1b: 'você |aguenta|?',
+    sub: '7 dias seguidos lançando gasto já desbloqueia uma conquista no Finn.',
     cta: 'Testa grátis',
   },
   {
-    slug: 'metas-limites-dividas',
-    badge: '🎯 TUDO NUM LUGAR',
-    h1a: 'Metas, limites e',
-    h1b: '|dívidas|.',
-    sub: 'Define quanto quer gastar por categoria, junta dinheiro pra um objetivo e simula a quitação de uma dívida.',
+    slug: 'cartao-fatura-automatica',
+    badge: '💳 SEM SUSTO',
+    h1a: 'Sabe quanto vai fechar',
+    h1b: 'sua |fatura| agora?',
+    sub: 'O Finn calcula sozinho, a partir do dia de fechamento do seu cartão.',
+    cta: 'Testa grátis',
+  },
+  {
+    slug: 'titulo-evolui',
+    badge: '🏆 CONQUISTAS',
+    h1a: 'De Aprendiz a',
+    h1b: '|Investidor Blindado|.',
+    sub: 'Seu título evolui sozinho conforme você organiza as finanças no Finn.',
     cta: 'Testa grátis',
   },
 ];
@@ -67,12 +81,6 @@ function html(d) {
 
 ${marca({ x: 96, y: 96, tam: 84, fonte: 40 })}
 
-<!-- Gancho (badge + h1a + h1b) aparece quase todo dentro do 1º segundo —
-     ajustado em 16/09/2026 depois de ver, nas métricas reais do TikTok via
-     Buffer, tempo médio de visualização de só 2,67s: o texto que prendia
-     atenção (h1b, a parte colorida) só terminava de aparecer perto de 1,6s
-     no timing antigo (delay 1s + fade de 0,6s), tarde demais pro scroll
-     do TikTok. -->
 <div class="beat fadeUp" style="top:560px;animation-delay:0s">
   <div style="display:inline-flex;align-items:center;gap:9px;height:60px;padding:0 30px;
     border:2px solid ${LARANJA};border-radius:30px;font-size:24px;font-weight:700;
@@ -80,10 +88,10 @@ ${marca({ x: 96, y: 96, tam: 84, fonte: 40 })}
 </div>
 
 <div class="beat fadeUp" style="top:680px;animation-delay:.05s">
-  <h1 style="font-size:92px">${titulo(d.h1a)}</h1>
+  <h1 style="font-size:80px">${titulo(d.h1a)}</h1>
 </div>
 <div class="beat fadeUp" style="top:800px;animation-delay:.25s">
-  <h1 style="font-size:92px">${titulo(d.h1b)}</h1>
+  <h1 style="font-size:80px">${titulo(d.h1b)}</h1>
 </div>
 
 <div class="beat fadeUp" style="top:1000px;animation-delay:1.1s">
