@@ -23,11 +23,19 @@ const W = 1080, H = 1920;
 // sobrar folga de leitura no CTA depois desse arrasto.
 const DURACAO = 15.5;
 
+// Gancho trocado de afirmação de recurso ("o app que organiza sozinho") pra
+// pergunta de dor — testado em post orgânico (feed2-grafico-por-categoria)
+// e é o formato que realmente para o scroll, não só descreve o produto.
+// A resposta ("é o Finn") só vem no sub, 1s depois — mantém a curiosidade
+// sem deixar tráfego frio sem saber do que se trata.
 const pill = '✦ APP BRASILEIRO, GRÁTIS PRA TESTAR';
-const h1 = 'O app que organiza sua grana |sozinho|.';
-const sub = 'Importa o extrato, categoriza cada gasto e avisa antes de uma conta vencer. Você só acompanha.';
+const h1 = 'Você sabe pra onde vai |o seu dinheiro|?';
+const sub = 'O Finn mostra isso sozinho. Categoriza cada gasto sem você fazer nada.';
 const chips1 = ['📷 Extrato automático', '🎯 Metas e dívidas', '💬 Lança pelo WhatsApp'];
-const maisLabel = 'E tem mais:';
+// "E tem mais" virou uma segunda fisgada, não só uma transição — mantém
+// quem já ia sair (justo no meio do vídeo, quando a atenção mais cai) até
+// ver o recurso mais diferenciado (gamificação), que só aparece aqui.
+const maisLabel = 'Mas o melhor ainda nem chegou:';
 const chips2 = ['🏆 Conquistas e metas gamificadas', '🔒 Seus dados, só seus'];
 const rodapeTxt = 'Sem cartão de crédito. Plano grátis de verdade.';
 const ctaTxt = 'Testa grátis  →  finn.dev.br';
