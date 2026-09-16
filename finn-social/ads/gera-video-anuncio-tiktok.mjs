@@ -173,5 +173,9 @@ await b.close();
 const saida = path.join(DIR, 'anuncio-video-tiktok.mp4');
 // '-ss 0.15' pula o frame em branco inicial do Playwright (mesmo motivo dos
 // vídeos orgânicos — ver comentário em gera-videos-dicas.mjs).
-execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+// '-crf 16 -preset slow -tune animation': qualidade bem acima do padrão do
+// libx264 (crf 23 saía com só ~870kbps num 1080x1920 — bloco/borrão visível
+// em degradê e texto pequeno). Ver o comentário completo em
+// gera-video-anuncio-tiktok-15s.mjs.
+execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
 console.log('gerado:', saida);

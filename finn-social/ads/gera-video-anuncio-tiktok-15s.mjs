@@ -191,5 +191,13 @@ await b.close();
 const saida = path.join(DIR, 'anuncio-video-tiktok-15s.mp4');
 // '-ss 0.15' pula o frame em branco inicial do Playwright (mesmo motivo dos
 // outros vídeos — ver comentário em gera-videos-dicas.mjs).
-execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+// '-crf 16 -preset slow': sem isso, o libx264 usa o padrão dele (crf 23,
+// preset medium) — prioriza arquivo pequeno, não qualidade, e saía com só
+// ~870kbps num vídeo 1080x1920 (bem abaixo do recomendado pra esse tamanho,
+// dava bloco/borrão visível nos degradês e no texto pequeno). crf 16 é
+// bem mais pesado de banda (~5-6x maior) mas visualmente quase sem perda.
+// '-tune animation': o conteúdo é gráfico plano (texto, ícone, degradê),
+// não vídeo filmado — esse tune do x264 é feito pra exatamente esse tipo
+// de fonte, preserva borda nítida melhor que o tune padrão.
+execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
 console.log('gerado:', saida);
