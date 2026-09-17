@@ -28,9 +28,16 @@ const DURACAO = 15.5;
 // e é o formato que realmente para o scroll, não só descreve o produto.
 // A resposta ("é o Finn") só vem no sub, 1s depois — mantém a curiosidade
 // sem deixar tráfego frio sem saber do que se trata.
+// sub reescrito em 17/09/2026: o TikTok Ads rejeitou o anúncio por
+// "Financial Misrepresentation" — a frase antiga ("mostra isso sozinho...
+// sem você fazer nada") foi sinalizada como promessa exagerada, sem
+// explicar como a categorização automática realmente funciona. Trocado por
+// uma frase que descreve o mecanismo de verdade (importa o extrato do
+// banco, categoriza a partir disso) em vez de só afirmar "automático"
+// sem contexto — mesmo recurso, mais defensável e mais claro.
 const pill = '✦ APP BRASILEIRO, GRÁTIS PRA TESTAR';
 const h1 = 'Você sabe pra onde vai |o seu dinheiro|?';
-const sub = 'O Finn mostra isso sozinho. Categoriza cada gasto sem você fazer nada.';
+const sub = 'O Finn categoriza os gastos automaticamente, a partir do extrato do banco.';
 const chips1 = ['📷 Extrato automático', '🎯 Metas e dívidas', '💬 Lança pelo WhatsApp'];
 // "E tem mais" virou uma segunda fisgada, não só uma transição — mantém
 // quem já ia sair (justo no meio do vídeo, quando a atenção mais cai) até
