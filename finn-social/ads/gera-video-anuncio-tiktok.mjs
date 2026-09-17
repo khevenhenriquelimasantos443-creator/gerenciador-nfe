@@ -28,8 +28,12 @@ const W = 1080, H = 1920;
 const DURACAO = 9.5;
 
 const pill = '✦ APP BRASILEIRO, GRÁTIS PRA TESTAR';
-const h1 = 'O app que organiza sua grana |sozinho|.';
-const sub = 'Importa o extrato, categoriza cada gasto e avisa antes de uma conta vencer.';
+// h1 trocado em 17/09/2026 (mesmo motivo do fix em
+// gera-video-anuncio-tiktok-15s.mjs): "organiza sua grana sozinho" é o tipo
+// de afirmação que o TikTok Ads rejeitou por "Financial Misrepresentation"
+// numa peça irmã — promessa de automação total sem explicar o mecanismo.
+const h1 = 'Você sabe pra onde vai |o seu dinheiro|?';
+const sub = 'O Finn categoriza os gastos automaticamente, a partir do extrato do banco.';
 const chips = ['📷 Extrato automático', '🎯 Metas e dívidas', '💬 Lança pelo WhatsApp'];
 const rodapeTxt = 'Sem cartão de crédito. Plano grátis de verdade.';
 const ctaTxt = 'Testa grátis  →  finn.dev.br';

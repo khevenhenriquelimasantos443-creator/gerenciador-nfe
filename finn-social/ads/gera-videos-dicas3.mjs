@@ -43,7 +43,9 @@ const DICAS = [
     badge: '💳 SEM SUSTO',
     h1a: 'Sabe quanto vai fechar',
     h1b: 'sua |fatura| agora?',
-    sub: 'O Finn calcula sozinho, a partir do dia de fechamento do seu cartão.',
+    // "sozinho" trocado em 17/09/2026: mesmo tipo de frase que o TikTok Ads
+    // rejeitou (Financial Misrepresentation) num anúncio irmão.
+    sub: 'O Finn calcula automaticamente, a partir do dia de fechamento do seu cartão.',
     cta: 'Testa grátis',
   },
   {
@@ -51,7 +53,7 @@ const DICAS = [
     badge: '🏆 CONQUISTAS',
     h1a: 'De Aprendiz a',
     h1b: '|Investidor Blindado|.',
-    sub: 'Seu título evolui sozinho conforme você organiza as finanças no Finn.',
+    sub: 'Seu título evolui automaticamente conforme você organiza as finanças no Finn.',
     cta: 'Testa grátis',
   },
 ];

@@ -15,9 +15,13 @@ import { NAVY, LARANJA, CINZA_CLARO, CINZA_ESCURO, FONTE, esc, titulo, marca, co
 
 const W = 1080, H = 1350;
 
+// headline/corpo trocados em 17/09/2026: "organiza sozinho... você só
+// acompanha" é o tipo de frase que o TikTok Ads rejeitou por "Financial
+// Misrepresentation" numa peça de vídeo irmã — promessa de automação total
+// sem explicar o mecanismo. Mesmo texto usado no vídeo de anúncio.
 const pill = '✦ APP BRASILEIRO, COM PLANO GRÁTIS';
-const headline = 'O app que organiza sua grana |sozinho|.';
-const corpo = 'Importa o extrato, categoriza cada gasto e avisa antes de uma conta vencer. Você só acompanha.';
+const headline = 'Você sabe pra onde vai |o seu dinheiro|?';
+const corpo = 'O Finn categoriza os gastos automaticamente, a partir do extrato do banco.';
 const btnTxt = 'Testa grátis  →  finn.dev.br';
 const rodapeTxt = 'Sem cartão de crédito. Plano grátis de verdade.';
 

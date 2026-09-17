@@ -23,7 +23,11 @@ const DICAS = [
     badge: '🪄 MÁGICA NO WHATSAPP',
     h1a: 'Manda o gasto',
     h1b: 'pro |WhatsApp|.',
-    sub: 'O Finn categoriza sozinho. Sem abrir o app, sem digitar nada.',
+    // sub reescrito em 17/09/2026: "categoriza sozinho... sem fazer nada" é
+    // quase a frase exata que o TikTok Ads rejeitou (Financial
+    // Misrepresentation) num anúncio irmão — promessa de automação total
+    // sem explicar o mecanismo.
+    sub: 'O Finn recebe a mensagem e categoriza o gasto automaticamente.',
     cta: 'Testa grátis',
   },
   {
