@@ -166,6 +166,13 @@ ${marca({ x: 96, y: 96, tam: 84, fonte: 40 })}
 <div class="rodape fadeUp" style="animation-delay:10.4s">${esc(rodapeTxt)}</div>
 `;
 
+// Tentativa de gravar direto em 2160x3840 (deviceScaleFactor 2) foi
+// abandonada: o Playwright não escala a gravação de vídeo corretamente
+// junto com deviceScaleFactor — metade do frame saía cinza (bug
+// confirmado, não é erro de configuração). A gravação em si continua em
+// 1080x1920, que funciona de forma confiável; a resolução 4K (pedido
+// explícito) sai depois, na exportação com ffmpeg — ver o filtro de escala
+// mais abaixo.
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const videosDir = path.join(DIR, '_tmp_video');
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
@@ -199,5 +206,11 @@ const saida = path.join(DIR, 'anuncio-video-tiktok-15s.mp4');
 // '-tune animation': o conteúdo é gráfico plano (texto, ícone, degradê),
 // não vídeo filmado — esse tune do x264 é feito pra exatamente esse tipo
 // de fonte, preserva borda nítida melhor que o tune padrão.
-execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+// '-vf scale=2160:3840:flags=lanczos': sobe pra resolução 4K vertical na
+// exportação (pedido explícito). Lanczos é o algoritmo de reamostragem que
+// preserva melhor borda reta e texto — importante aqui porque o conteúdo é
+// vetorial (texto/ícone/degradê já nítidos na origem, sem ruído de foto pra
+// atrapalhar), então o upscale sai limpo, bem diferente de ampliar uma
+// foto real.
+execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-vf', 'scale=2160:3840:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
 console.log('gerado:', saida);
