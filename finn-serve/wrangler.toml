@@ -177,14 +177,23 @@ BUFFER_TIKTOK_CHANNEL_ID = "6aa87bb6ea19ca0bde43a177"
 #  - "0 11,13,16,21,22 * * *" → posts do Instagram (13:00 e 21:00 UTC = 10:00
 #                    e 18:00 BRT) + posts do X (11:00, 16:00 e 22:00 UTC =
 #                    08:00, 13:00 e 19:00 BRT, a pedido do Kheven em
-#                    27/08/2026). MESMO trigger cobrindo os dois — dentro do
-#                    handler, checa a hora atual (UTC) pra saber qual dos dois
-#                    rodar em cada disparo (ver scheduled() no build.js). O
-#                    Brasil não tem mais horário de verão desde 2019, então é
-#                    sempre UTC-3.
+#                    27/08/2026) + TikTok (22:00 UTC = 19:00 BRT, mesmo
+#                    disparo do último X do dia — ver abaixo). MESMO trigger
+#                    cobrindo os três — dentro do handler, checa a hora atual
+#                    (UTC) pra saber o que rodar em cada disparo (ver
+#                    scheduled() no build.js). O Brasil não tem mais horário
+#                    de verão desde 2019, então é sempre UTC-3.
 #                    Era só "0 13,21 * * *" (Instagram); ganhou 3 horários
 #                    novos pro X em vez de virar um cron à parte, porque não
 #                    sobra slot (ver ATENÇÃO abaixo).
+#                    TikTok (19h BRT) entrou em 21/09/2026 nesse mesmo
+#                    disparo das 22h UTC, sem gastar slot novo — horário
+#                    escolhido a partir do "Horários mais ativos" real da
+#                    conta no TikTok Studio (picos entre 18h-22h BRT em
+#                    terça/quarta/quinta/sexta). Antes publicava 2x/dia
+#                    encostado no cron de story (10:25 e 18:25 BRT); o
+#                    horário da manhã não batia com nenhum pico visto nos
+#                    dados, então virou 1x/dia só no horário bom.
 #
 #  - "25 13,21 * * *" → Stories, 25 min depois de cada post do Instagram
 #                    (10:25 e 18:25 BRT). Cron PRÓPRIO, e não pendurado no
@@ -195,9 +204,8 @@ BUFFER_TIKTOK_CHANNEL_ID = "6aa87bb6ea19ca0bde43a177"
 #                    20s a Meta baixar a imagem. Era por isso que o post saía
 #                    e o story não.
 #                    Mesmo disparo também publica o Reel (sem cron próprio,
-#                    ver _publishNextInstagramReel) e o TikTok — que agora vai
-#                    via Buffer (_publishNextTikTokBuffer), não mais pela API
-#                    oficial (rejeitada pro uso do Finn, ver TT_CRON_ATIVO).
+#                    ver _publishNextInstagramReel). TikTok NÃO está mais
+#                    aqui — saiu em 21/09/2026, ver o cron acima.
 #
 #  ATENÇÃO: são 4 crons aqui + 1 no finn-worker = 5, que é o limite da CONTA.
 #  Não sobra slot. Pra agendar mais alguma coisa, junte horários numa entrada

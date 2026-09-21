@@ -6058,6 +6058,27 @@ ${bodyHtml}
           await _publishNextXPost(env, 1);
         })());
       }
+      if (horaAtualUTC === 22) {
+        // TikTok, 1 post por dia às 19h BRT (22h UTC) — horário escolhido a
+        // partir do "Horários mais ativos" real da conta no TikTok Studio
+        // (picos entre 18h-22h BRT em terça/quarta/quinta/sexta, conferido
+        // pelo Kheven em 21/09/2026). Antes publicava 2x/dia encostado no
+        // cron do story (10:25 e 18:25 BRT) — o horário da manhã (10:25) caía
+        // fora de qualquer pico visto nos dados, então saiu daqui: 1 post por
+        // dia, mas no horário que a audiência de verdade está online, em vez
+        // de 2 com um deles jogado fora. Reaproveita este disparo (hora 22
+        // já existe pro X) em vez de abrir outro branch — sem gastar slot.
+        ctx.waitUntil((async () => {
+          var agora = new Date();
+          var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
+          if (env.FINN_KV) {
+            var jaFoi = await env.FINN_KV.get('tiktok_slot_' + slot);
+            if (jaFoi) return;
+            await env.FINN_KV.put('tiktok_slot_' + slot, agora.toISOString(), { expirationTtl: 60 * 60 * 24 * 7 });
+          }
+          await _publishNextTikTokBuffer(env);
+        })());
+      }
     } else if (event.cron === '25 13,21 * * *') {
       // Stories, 25 min depois do post. Mesmo guard por slot (dia + hora) do
       // feed: a Cloudflare pode reexecutar um evento, e sem isso uma
@@ -6072,16 +6093,12 @@ ${bodyHtml}
         }
         await _publishNextInstagramStory(env);
         // Reel não tem cron próprio (ver comentário em _publishNextInstagramReel)
-        // — encosta neste mesmo disparo, depois do story. TikTok também não
-        // tem slot livre (5 crons é o limite da conta) — encosta aqui também.
+        // — encosta neste mesmo disparo, depois do story.
         await _publishNextInstagramReel(env);
-        // TikTok: a API oficial (Content Posting API) teve a publicação em
-        // produção REJEITADA pela revisão do TikTok em 29/08/2026 (política,
-        // não dá pra corrigir no código — ver _publishNextTikTokBuffer). O
-        // cron agora chama a versão via Buffer; a função antiga
-        // (_publishNextTikTokVideo, gated por TT_CRON_ATIVO) fica no código
-        // só pro botão manual/histórico, não roda mais sozinha.
-        await _publishNextTikTokBuffer(env);
+        // TikTok SAIU daqui em 21/09/2026 — publicava 2x/dia (10:25 e 18:25
+        // BRT), e o horário da manhã não batia com nenhum pico real de
+        // audiência da conta. Agora publica 1x/dia, só às 19h BRT, ver o
+        // branch do cron "0 11,13,16,21,22 * * *" acima.
       })());
     } else if (event.cron === '0 23 * * 1') {
       ctx.waitUntil(sendWeeklySummary(env));
