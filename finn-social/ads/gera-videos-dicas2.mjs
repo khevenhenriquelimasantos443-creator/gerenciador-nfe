@@ -131,6 +131,7 @@ for (const d of DICAS) {
   // aconteceu: "Chega de planilha" saiu com capa toda branca no Instagram).
   // '-crf 16 -preset slow -tune animation': ver comentário completo em
   // finn-social/ads/gera-video-anuncio-tiktok-15s.mjs.
-  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+  // 4K vertical na exportação — ver comentário completo em gera-videos-dicas5.mjs.
+  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-vf', 'scale=2160:3840:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
   console.log('gerado:', saida);
 }

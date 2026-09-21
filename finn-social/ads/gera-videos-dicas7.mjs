@@ -19,9 +19,9 @@ const DICAS = [
   {
     slug: 'trilhas-aprender',
     badge: '📚 DE GRAÇA',
-    h1a: '40 lições sobre',
-    h1b: '|dinheiro|, de graça.',
-    sub: 'Ninguém te ensinou isso na escola. O Finn ensina agora.',
+    h1a: 'Quem te ensinou a',
+    h1b: 'mexer com |dinheiro|?',
+    sub: 'Ninguém, geralmente. O Finn ensina, de graça, na aba Aprender.',
     cta: 'Aprende grátis',
   },
   {
@@ -35,9 +35,9 @@ const DICAS = [
   {
     slug: 'verdade-anotar-video',
     badge: '✅ VERDADE',
-    h1a: 'Só de ver pra onde',
-    h1b: 'vai, |você já muda|.',
-    sub: 'Anotar o gasto muda a forma como você decide gastar.',
+    h1a: 'O que muda só de',
+    h1b: '|anotar o gasto|?',
+    sub: 'Muita gente já gasta diferente, só de ver pra onde vai.',
     cta: 'Testa grátis',
   },
   {
@@ -75,17 +75,17 @@ const DICAS = [
   {
     slug: 'financas-sem-vergonha',
     badge: '💬 SEM JULGAMENTO',
-    h1a: 'Não entender de',
-    h1b: '|dinheiro| não é falha.',
-    sub: 'Ninguém te ensinou isso — o Finn explica do zero.',
+    h1a: 'Não entende nada',
+    h1b: 'de |dinheiro|?',
+    sub: 'Não é falha sua — ninguém te ensinou. O Finn explica do zero.',
     cta: 'Aprende grátis',
   },
   {
     slug: 'dashboard-mensal',
     badge: '📊 VISÃO GERAL',
-    h1a: 'Receita, despesa e',
-    h1b: '|saldo|, num olhar.',
-    sub: 'O resumo do mês inteiro, sem abrir planilha nenhuma.',
+    h1a: 'Onde fica o resumo',
+    h1b: 'do seu |mês|?',
+    sub: 'Receita, despesa e saldo, tudo num lugar só no Finn.',
     cta: 'Testa grátis',
   },
   {
@@ -168,6 +168,7 @@ for (const d of DICAS) {
   await b.close();
 
   const saida = path.join(DIR, `dica-${d.slug}.mp4`);
-  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+  // 4K vertical na exportação — ver comentário completo em gera-videos-dicas5.mjs.
+  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-vf', 'scale=2160:3840:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
   console.log('gerado:', saida);
 }

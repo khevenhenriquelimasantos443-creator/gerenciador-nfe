@@ -20,49 +20,49 @@ const DICAS = [
   {
     slug: 'dados-isolados',
     badge: '🔒 SÓ SEUS DADOS',
-    h1a: 'Seus dados só',
-    h1b: 'aparecem |pra você|.',
-    sub: 'A regra de isolamento fica no próprio banco de dados.',
+    h1a: 'Alguém mais pode',
+    h1b: 'ver |seus dados|?',
+    sub: 'No Finn, cada conta só enxerga os próprios dados.',
     cta: 'Testa grátis',
   },
   {
     slug: 'login-google',
     badge: '🔑 ENTRADA RÁPIDA',
-    h1a: 'Entra com o Google.',
-    h1b: '|Sem senha nova.|',
-    sub: 'Um toque, sem decorar mais uma senha só pro Finn.',
+    h1a: 'Precisa criar',
+    h1b: '|senha nova|?',
+    sub: 'Não — entra com o Google, um toque, e pronto.',
     cta: 'Testa grátis',
   },
   {
     slug: 'anexa-comprovante',
     badge: '🧾 TUDO NUM LUGAR',
-    h1a: 'Guarda o comprovante',
-    h1b: '|junto do gasto|.',
-    sub: 'Anexa a foto da nota ou do cupom direto no lançamento.',
+    h1a: 'Perdeu o comprovante',
+    h1b: '|de novo|?',
+    sub: 'Anexa a foto direto no lançamento — nunca mais perde.',
     cta: 'Testa grátis',
   },
   {
     slug: 'exporta-csv',
     badge: '📤 SEUS DADOS, SUA CÓPIA',
-    h1a: 'Exporta seus',
-    h1b: '|lançamentos|.',
-    sub: 'Formato CSV, abre em qualquer planilha, quando quiser.',
+    h1a: 'E se você quiser',
+    h1b: 'seus dados |fora do Finn|?',
+    sub: 'Exporta tudo em CSV, quando quiser — formato de qualquer planilha.',
     cta: 'Testa grátis',
   },
   {
     slug: 'apaga-dados',
     badge: '🗑️ VOCÊ NO CONTROLE',
-    h1a: 'Pode apagar tudo',
-    h1b: '|quando quiser|.',
-    sub: 'Direto em Configurações, sem pedir satisfação a ninguém.',
+    h1a: 'Quer apagar tudo',
+    h1b: 'e |sumir|?',
+    sub: 'Pode, direto em Configurações — sem pedir satisfação.',
     cta: 'Testa grátis',
   },
   {
     slug: 'investimento-separado',
     badge: '📈 RESUMO LIMPO',
-    h1a: 'Investimento não',
-    h1b: '|bagunça seu resumo|.',
-    sub: 'O Finn separa isso do resto do seu mês.',
+    h1a: 'Seu investimento conta',
+    h1b: 'como |gasto|?',
+    sub: 'No Finn não — ele fica separado do resto do resumo.',
     cta: 'Testa grátis',
   },
   {
@@ -76,25 +76,25 @@ const DICAS = [
   {
     slug: 'olhar-rapido',
     badge: '👁️ RÁPIDO ASSIM',
-    h1a: 'Um olhar. Só isso',
-    h1b: 'pra |saber como está|.',
-    sub: 'Vê o saldo e os gráficos do mês, fecha o app.',
+    h1a: 'Quanto tempo leva pra',
+    h1b: 'saber como está o |mês|?',
+    sub: 'No Finn, um olhar rápido já basta.',
     cta: 'Testa grátis',
   },
   {
     slug: 'receita-aviso',
     badge: '💰 RECEITA TAMBÉM',
-    h1a: 'Seu salário também',
-    h1b: 'tem |aviso|.',
-    sub: 'O Finn avisa quando uma receita fixa está a caminho.',
+    h1a: 'Só conta que vence',
+    h1b: 'tem |aviso|?',
+    sub: 'No Finn, sua receita fixa também avisa quando chega.',
     cta: 'Testa grátis',
   },
   {
     slug: 'dois-niveis-exclusao',
     badge: '🗑️ DOIS NÍVEIS',
-    h1a: 'Duas formas de',
-    h1b: '|apagar dados|.',
-    sub: 'Só os lançamentos, ou tudo junto — você escolhe.',
+    h1a: 'E se quiser apagar',
+    h1b: 'só |uma parte|?',
+    sub: 'No Finn tem duas formas: só os lançamentos, ou tudo junto.',
     cta: 'Testa grátis',
   },
 ];
@@ -169,6 +169,7 @@ for (const d of DICAS) {
   await b.close();
 
   const saida = path.join(DIR, `dica-${d.slug}.mp4`);
-  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+  // 4K vertical na exportação — ver comentário completo em gera-videos-dicas5.mjs.
+  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-vf', 'scale=2160:3840:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
   console.log('gerado:', saida);
 }

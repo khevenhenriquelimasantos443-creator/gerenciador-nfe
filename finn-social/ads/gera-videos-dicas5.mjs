@@ -42,9 +42,9 @@ const DICAS = [
   {
     slug: 'racha-sem-instalar',
     badge: '🤝 SEM COMPLICAÇÃO',
-    h1a: 'A galera não precisa',
-    h1b: '|instalar nada|.',
-    sub: 'No Racha, cada participante entra só com o nome.',
+    h1a: 'Todo mundo tem que',
+    h1b: '|instalar o app|?',
+    sub: 'Não — no Racha, cada participante entra só com o nome.',
     cta: 'Testa grátis',
   },
   {
@@ -90,17 +90,17 @@ const DICAS = [
   {
     slug: 'teste-gratis-sem-pegadinha',
     badge: '🆓 SEM PEGADINHA',
-    h1a: 'Testa grátis.',
-    h1b: '|Sem cartão.|',
-    sub: 'Não pede cartão de crédito, não cobra escondido depois.',
+    h1a: 'Tem alguma',
+    h1b: '|pegadinha| no teste grátis?',
+    sub: 'Não. Sem cartão de crédito, sem cobrança escondida depois.',
     cta: 'Testa grátis',
   },
   {
     slug: 'instala-sem-loja',
     badge: '📲 SEM LOJA DE APP',
-    h1a: 'Instala o Finn sem',
-    h1b: 'passar pela |loja|.',
-    sub: 'Abre no navegador, adiciona à tela inicial, pronto.',
+    h1a: 'Precisa baixar',
+    h1b: 'na |loja de app|?',
+    sub: 'Não — o Finn abre no navegador e instala na tela inicial.',
     cta: 'Testa grátis',
   },
 ];
@@ -178,6 +178,11 @@ for (const d of DICAS) {
   // '-ss 0.15' pula o frame em branco inicial do Playwright (ver
   // gera-videos-dicas.mjs). '-crf 16 -preset slow -tune animation': ver
   // comentário completo em gera-video-anuncio-tiktok-15s.mjs.
-  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
+  // '-vf scale=2160:3840:flags=lanczos': exporta em 4K vertical, mesmo
+  // tratamento dos anúncios pagos (ver gera-video-anuncio-tiktok-15s.mjs) —
+  // gravar direto em 4K quebra a gravação do Playwright (bug real,
+  // documentado naquele arquivo), então a gravação continua em 1080x1920 e
+  // sobe de resolução só na exportação.
+  execFileSync('ffmpeg', ['-y', '-ss', '0.15', '-i', webm, '-t', String(DURACAO - 0.15), '-vf', 'scale=2160:3840:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-an', saida], { stdio: 'inherit' });
   console.log('gerado:', saida);
 }
