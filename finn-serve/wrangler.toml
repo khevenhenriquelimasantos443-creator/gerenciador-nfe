@@ -175,17 +175,25 @@ BUFFER_TIKTOK_CHANNEL_ID = "6aa87bb6ea19ca0bde43a177"
 #    (no cron da Cloudflare, dia da semana vai de 1=domingo a 7=sábado)
 #
 #  - "0 11,13,16,21,22 * * *" → posts do Instagram (13:00 e 21:00 UTC = 10:00
-#                    e 18:00 BRT) + posts do X (11:00, 16:00 e 22:00 UTC =
-#                    08:00, 13:00 e 19:00 BRT, a pedido do Kheven em
-#                    27/08/2026) + TikTok (22:00 UTC = 19:00 BRT, mesmo
-#                    disparo do último X do dia — ver abaixo). MESMO trigger
-#                    cobrindo os três — dentro do handler, checa a hora atual
-#                    (UTC) pra saber o que rodar em cada disparo (ver
-#                    scheduled() no build.js). O Brasil não tem mais horário
-#                    de verão desde 2019, então é sempre UTC-3.
-#                    Era só "0 13,21 * * *" (Instagram); ganhou 3 horários
-#                    novos pro X em vez de virar um cron à parte, porque não
-#                    sobra slot (ver ATENÇÃO abaixo).
+#                    e 18:00 BRT) + posts do X (só 16:00 UTC = 13:00 BRT desde
+#                    25/09/2026, ver abaixo) + TikTok (22:00 UTC = 19:00 BRT,
+#                    mesmo disparo do último horário — ver abaixo). MESMO
+#                    trigger cobrindo os três — dentro do handler, checa a
+#                    hora atual (UTC) pra saber o que rodar em cada disparo
+#                    (ver scheduled() no build.js). O Brasil não tem mais
+#                    horário de verão desde 2019, então é sempre UTC-3.
+#                    Era só "0 13,21 * * *" (Instagram); ganhou os horários
+#                    de 11 e 22 (hoje só o 22 ainda em uso, pelo TikTok) em
+#                    vez do X virar um cron à parte, porque não sobra slot
+#                    (ver ATENÇÃO abaixo).
+#                    X foi de 3x/dia (08:00, 13:00, 19:00 BRT) pra 1x/dia só
+#                    às 13:00 BRT em 25/09/2026: 30 dias reais no Buffer
+#                    deram 54 posts pra só 162 impressões NO TOTAL (~3 por
+#                    post, zero curtida/comentário/clique) — não era falta
+#                    de conteúdo, o X não distribui pra conta sem histórico
+#                    de engajamento. Manter 3x/dia só queimava fila sem
+#                    retorno. O horário 11h UTC ficou livre (não é mais
+#                    usado por nada) — pode reaproveitar se precisar.
 #                    TikTok (19h BRT) entrou em 21/09/2026 nesse mesmo
 #                    disparo das 22h UTC, sem gastar slot novo — horário
 #                    escolhido a partir do "Horários mais ativos" real da

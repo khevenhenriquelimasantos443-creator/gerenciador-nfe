@@ -6118,10 +6118,16 @@ h1 em{font-style:normal;color:#F97316}
           await _publishNextInstagramPost(env);
         })());
       }
-      if (horaAtualUTC === 11 || horaAtualUTC === 16 || horaAtualUTC === 22) {
-        // X, 3 posts por dia: 08:00, 13:00 e 19:00 BRT. 1 por disparo (em vez
-        // dos 3 de antes) — agora que tem 3 horários próprios, não precisa
-        // mais rajada. Mesmo guard por slot dos outros.
+      if (horaAtualUTC === 16) {
+        // X, 1 post por dia às 13h BRT (16h UTC) — reduzido de 3x/dia em
+        // 25/09/2026: 30 dias reais no Buffer deram 54 posts pra só 162
+        // impressões no TOTAL (~3 por post, zero curtida/comentário/clique).
+        // Não é falta de conteúdo, é o próprio X não distribuindo pra conta
+        // sem histórico de engajamento — manter o ritmo de 3x/dia só
+        // queimava conteúdo sem retorno. Reduzido pra 1x/dia (mantém
+        // presença, sem desperdiçar mais fila) e o esforço vai pro TikTok,
+        // que está performando bem melhor (ver conversa com o Kheven).
+        // Mesmo guard por slot dos outros.
         ctx.waitUntil((async () => {
           var agora = new Date();
           var slot = agora.toISOString().slice(0, 10) + '_' + String(agora.getUTCHours()).padStart(2, '0');
