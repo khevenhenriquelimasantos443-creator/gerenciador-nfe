@@ -1162,14 +1162,23 @@ function lerRomaneioVarejoFacil(texto, cfg) {
     .replace(/\s*\|\s*/g, ' ')
     .replace(/\s+/g, ' ');
   var NUM = '-?\\d[\\d.]*,\\d+';
-  var re = new RegExp('(?:^|\\s)(\\d{1,4}) (\\* )?(\\d{5,14}) - (.+?) (' + NUM + ') ([A-Za-z]{1,5})\\/(' + NUM + ')' +
-    '((?: ' + NUM + ')+)(.*?)(?=\\s\\d{1,4} (?:\\* )?\\d{5,14} - |\\sQtd\\. de itens|$)', 'g');
+  // Quantidade grande espreme a coluna e o item quebra em 3 linhas: a embalagem fica "UN/1," em cima,
+  // o "0000" vai para baixo e o nº do item desce para o meio, antes dos valores. Por isso o nº do item
+  // pode vir antes do código ou depois da embalagem.
+  var re = new RegExp('(?:^|\\s)(?:(\\d{1,4}) )?(\\* )?(\\d{5,14}) - (.+?) (' + NUM + ') ([A-Za-z]{1,5})\\/(\\d[\\d.]*,?\\d*)' +
+    '(?: (\\d{1,4}))?((?: ' + NUM + ')+)(.*?)(?=\\s(?:\\d{1,4} )?(?:\\* )?\\d{5,14} - |\\sQtd\\. de itens|$)', 'g');
   while ((m = re.exec(plano))) {
-    var nums = m[8].trim().split(' ').map(numeroBR);
+    var nums = m[9].trim().split(' ').map(numeroBR);
     var qtd = numeroBR(m[5]);
     if (nums.length < 4 || !qtd) continue;
     var vUnit = nums[0], total = nums[3];
-    var resto = m[9].replace(/(Valores|Base ICMS|Observa[çc][ãa]o|Loja:|ROMANEIO).*$/i, '').trim();
+    var resto = m[10].replace(/(Valores|Base ICMS|Observa[çc][ãa]o|Loja:|ROMANEIO).*$/i, '').trim();
+    var fatorTxt = m[7];
+    if (/,$/.test(fatorTxt)) { // decimais da embalagem foram para a linha de baixo
+      var dec = resto.match(/(^|\s)(\d{1,4})(?=\s|$)/);
+      if (dec) { fatorTxt += dec[2]; resto = (resto.slice(0, dec.index) + ' ' + resto.slice(dec.index + dec[0].length)).trim(); }
+      else fatorTxt += '0';
+    }
     doc.itens.push({
       cod: '',
       codInterno: m[3].replace(/^0+(?=\d)/, ''),
@@ -1177,7 +1186,7 @@ function lerRomaneioVarejoFacil(texto, cfg) {
       desc: (m[4] + ' ' + resto).replace(/\s+/g, ' ').trim(),
       qtd: qtd,
       unid: m[6].toUpperCase(),
-      fator: numeroBR(m[7]) || 1,
+      fator: numeroBR(fatorTxt) || 1,
       vUnit: vUnit,
       vTotal: total,
       bonif: bonifDoc || total === 0 || vUnit === 0
