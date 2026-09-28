@@ -384,17 +384,18 @@ function importarRomaneios() {
     var cfg = lerConfig();
     var entrada = DriveApp.getFolderById(cfg.pastaEntrada);
     var ctx = carregarContexto(cfg);
-    var arquivos = entrada.getFiles();
-    var n = 0;
-    while (arquivos.hasNext()) {
-      var arq = arquivos.next();
+    // PDFs primeiro: o XML da mesma nota, se vier junto, só completa o EAN dos itens
+    var it = entrada.getFiles(), fila = [];
+    while (it.hasNext()) {
+      var arq = it.next();
       var tipo = arq.getMimeType();
       var ehXml = /xml/i.test(tipo) || /\.xml$/i.test(arq.getName());
       var ehPdf = tipo === MimeType.PDF || /\.pdf$/i.test(arq.getName());
-      if (!ehXml && !ehPdf) continue;
-      importarArquivo(arq, ehXml, cfg, ctx);
-      n++;
+      if (ehXml || ehPdf) fila.push({ arq: arq, ehXml: ehXml });
     }
+    fila.sort(function (a, b) { return a.ehXml - b.ehXml; });
+    fila.forEach(function (f) { importarArquivo(f.arq, f.ehXml, cfg, ctx); });
+    var n = fila.length;
     if (n && cfg.planilhaMkt && cfg.planilhaCustos) {
       SpreadsheetApp.flush();
       try {
@@ -426,6 +427,15 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
       registrarLog(nome, arq.getId(), 'ERRO', 0, 0, 0, 0,
         'Nenhum item reconhecido. Se for PDF escaneado ou layout diferente, envie o XML da NF-e.');
       moverPara(arq, cfg.pastaErro);
+      return;
+    }
+    if (ehXml && ctx.docsImportados[chaveDoc(doc)]) {
+      var r = completarComXml(doc);
+      registrarLog(nome, arq.getId(), r.diferencas.length ? 'CONFERIR' : 'OK', doc.itens.length, 0, 0, 0,
+        'XML da nota ' + doc.numero + ' conferido com o romaneio: ' + r.batem + ' de ' + doc.itens.length +
+        ' itens com quantidade, valor unitário e total iguais. ' + r.eans + ' EAN(s) gravado(s) em SKUs.' +
+        (r.diferencas.length ? ' DIFERENÇAS: ' + r.diferencas.join(' | ') : ''));
+      moverPara(arq, cfg.pastaProcessados);
       return;
     }
     if (ctx.docsImportados[chaveDoc(doc)]) {
@@ -463,6 +473,49 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
     registrarLog(nome, arq.getId(), 'ERRO', 0, 0, 0, 0, String(e && e.message || e));
     moverPara(arq, cfg.pastaErro);
   }
+}
+
+// Pareia os itens do XML com as linhas de ENTRADAS da mesma nota (qtd + valor unit.),
+// confere o total e grava o EAN do XML na coluna C de SKUs.
+function completarComXml(doc) {
+  var ss = SpreadsheetApp.getActive();
+  var ent = ss.getSheetByName(ABA.ENTRADAS);
+  var n = ultimaLinhaColA(ent);
+  var v = n > 1 ? ent.getRange(2, 1, n - 1, 13).getValues() : [];
+  var chave = chaveDoc(doc), linhas = [];
+  v.forEach(function (r) {
+    if (chaveDoc({ numero: r[1], fornecedor: r[2], cnpj: r[3] }) === chave) linhas.push({ q: Number(r[7]), vu: Number(r[9]), tot: Number(r[10]), bon: r[11] === 'SIM', sku: String(r[12]), desc: r[6], usado: false });
+  });
+  var perto = function (a, b, tol) { return Math.abs(a - b) <= tol; };
+  var eanPorSku = {}, batem = 0, diferencas = [];
+  doc.itens.forEach(function (it, i) {
+    var cand = linhas[i] && !linhas[i].usado && perto(linhas[i].q, it.qtd, 1e-6) && perto(linhas[i].vu, it.vUnit, 0.005) ? linhas[i] : null;
+    for (var k = 0; !cand && k < linhas.length; k++) {
+      if (!linhas[k].usado && perto(linhas[k].q, it.qtd, 1e-6) && perto(linhas[k].vu, it.vUnit, 0.005)) cand = linhas[k];
+    }
+    if (!cand) { diferencas.push('item ' + (i + 1) + ' do XML (' + it.desc + ') sem linha igual no romaneio'); return; }
+    cand.usado = true;
+    var totXml = it.bonif ? 0 : it.vTotal;
+    if (perto(cand.tot, totXml, 0.01)) batem++;
+    else diferencas.push(cand.desc + ': romaneio ' + cand.tot.toFixed(2) + ' x XML ' + totXml.toFixed(2));
+    if (it.ean) eanPorSku[cand.sku] = it.ean;
+  });
+  linhas.forEach(function (l) { if (!l.usado) diferencas.push(l.desc + ': está no romaneio e não no XML'); });
+
+  var skus = ss.getSheetByName(ABA.SKUS);
+  var nS = ultimaLinhaColA(skus), eans = 0;
+  if (nS > 1) {
+    var col = skus.getRange(2, 1, nS - 1, 3).getValues();
+    col.forEach(function (r, i) {
+      var e = eanPorSku[String(r[0]).trim()];
+      if (!e) return;
+      var atuais = String(r[2]).split(/[,;\s]+/).map(eanTexto).filter(Boolean);
+      if (atuais.indexOf(eanTexto(e)) >= 0) return;
+      skus.getRange(i + 2, 3).setValue(atuais.concat([eanTexto(e)]).join(', '));
+      eans++;
+    });
+  }
+  return { batem: batem, eans: eans, diferencas: diferencas };
 }
 
 function chaveDoc(doc) {
@@ -1250,7 +1303,8 @@ function carregarCatalogo(cfg) {
       var skuVar = String(r[4] || '').trim();
       var sku = skuVar || principal;
       if (!sku) continue;
-      var desc = String(r[2] || ''), variacao = r[3] === '' || r[3] == null ? '' : String(r[3]);
+      // linha de variação costuma deixar a descrição em branco: vale a da linha de cima
+      var desc = String(r[2] || descAnterior || ''), variacao = r[3] === '' || r[3] == null ? '' : String(r[3]);
       itens.push({
         aba: aba, principal: principal, skuVar: skuVar, sku: sku, ean: eanTexto(r[1]),
         desc: desc, variacao: variacao,
@@ -1265,8 +1319,8 @@ function carregarCatalogo(cfg) {
 
 function eanTexto(v) {
   if (v === '' || v == null) return '';
-  if (typeof v === 'number') return String(Math.round(v));
-  return soDigitos(v);
+  var d = typeof v === 'number' ? String(Math.round(v)) : soDigitos(v);
+  return d.replace(/^0+/, '');
 }
 
 function normalizarCat(s) {
@@ -1342,15 +1396,16 @@ function sugerirVinculos(silencioso) {
     vin.getRange(2, 1, ultimaLinhaColA(vin) - 1, 1).getValues().forEach(function (r) { jaListados[String(r[0])] = 1; });
   }
   var fornecedores = fornecedorPorSku();
-  var novas = [], agora = new Date();
+  var novas = [], agora = new Date(), porEanFeitos = {};
   v.forEach(function (r, i) {
     var sku = String(r[0]).trim();
-    if (!sku || r[9] !== '' || jaListados[sku]) return;
-    var eans = String(r[2]).split(/[,;\s]+/).map(soDigitos).filter(Boolean);
+    if (!sku || r[9] !== '') return;
+    var eans = String(r[2]).split(/[,;\s]+/).map(eanTexto).filter(Boolean);
     for (var k = 0; k < eans.length; k++) {
       var achado = porEan[eans[k]];
-      if (achado) { gravarVinculo(skus, i + 2, achado, agora); return; }
+      if (achado) { gravarVinculo(skus, i + 2, achado, agora); porEanFeitos[sku] = 1; return; }
     }
+    if (jaListados[sku]) return;
     var top = melhoresDoCatalogo(String(r[1]), catalogo, 2);
     var a = top[0], b = top[1];
     var bom = a && a.s >= 0.5;
@@ -1360,6 +1415,10 @@ function sugerirVinculos(silencioso) {
       b && b.s >= 0.5 ? b.it.sku + ' - ' + b.it.desc + (b.it.variacao ? ' [' + b.it.variacao + ']' : '') : '',
       bom && a.s >= cfg.limiarVinculo && (!b || a.s - b.s >= 0.05) ? a.it.sku : '']);
   });
+  if (Object.keys(porEanFeitos).length && ultimaLinhaColA(vin) > 1) {
+    var cods = vin.getRange(2, 1, ultimaLinhaColA(vin) - 1, 1).getValues();
+    for (var j = cods.length - 1; j >= 0; j--) if (porEanFeitos[String(cods[j][0])]) vin.deleteRow(j + 2);
+  }
   anexar(ABA.VINCULAR, novas);
   if (!silencioso) ss.toast(novas.length + ' produto(s) para conferir na aba VINCULAR.', 'Custos', 8);
   return novas.length;
@@ -1407,7 +1466,7 @@ function confirmarVinculos() {
       feitos.push(i + 2);
       return;
     }
-    var it = porSku[escolha.toUpperCase()] || porEan[soDigitos(escolha)];
+    var it = porSku[escolha.toUpperCase()] || porEan[eanTexto(escolha)];
     if (!it) { erros.push('Linha ' + (i + 2) + ': "' + escolha + '" não existe no SKU - MKTPLACE.'); return; }
     gravarVinculo(skus, linha, it, agora);
     feitos.push(i + 2);
@@ -1603,7 +1662,7 @@ var BOTAO_VINCULOS = 'iVBORw0KGgoAAAANSUhEUgAAAggAAABYCAYAAACQ7Q+9AAATiklEQVR42u
 var BOTAO_APLICAR = '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';
 
 if (typeof module !== 'undefined') {
-  module.exports = { tokensCat: tokensCat, pontuarCatalogo: pontuarCatalogo, melhoresDoCatalogo: melhoresDoCatalogo,
+  module.exports = { lerXmlNfe: lerXmlNfe, tokensCat: tokensCat, pontuarCatalogo: pontuarCatalogo, melhoresDoCatalogo: melhoresDoCatalogo,
     textoPdfDireto: textoPdfDireto, lerRomaneioVarejoFacil: lerRomaneioVarejoFacil, lerLinhaItem: lerLinhaItem, lerTextoRomaneio: lerTextoRomaneio, similaridade: similaridade,
     normalizar: normalizar, gtinValido: gtinValido, numeroBR: numeroBR, casarItem: casarItem, mesmaUnidade: mesmaUnidade };
 }
