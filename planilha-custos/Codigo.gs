@@ -293,7 +293,9 @@ function escreverLeiaMe(sh) {
     ['Se a nota de faturamento é separada da nota de remessa: solte o XML da nota de faturamento na pasta. Ele entra sozinho.'],
     ['Para qualquer outro caso, use a aba LANÇAR CUSTO: código de barras ou SKU (ou só o nome) e o custo unitário.'],
     ['Clique em Lançar custos. Com a importação automática ligada, as linhas também são lançadas a cada 15 minutos.'],
-    ['A coluna Situação mostra LANÇADO, ou CONFIRA quando o nome não bateu com certeza (aí escreva o SKU na coluna A e apague a Situação).'],
+    ['Depois de gravar, o script confere na planilha de custos: se o valor chegou, a linha some daqui e fica registrada no LOG'],
+    ['(ex.: "LOREAL-0038 = R$ 49,90 conferido em SKUSHOPPEATUALIZADO, linha 5008"). Se não chegou, a linha fica com o motivo.'],
+    ['CONFIRA = o nome bateu com mais de um produto: escreva o SKU na coluna A e apague a Situação. NÃO ACHEI = código não existe.'],
     ['O último lançamento vale: um romaneio mais novo do mesmo produto substitui o custo lançado à mão.'],
     [''],
     ['BONIFICAÇÃO'],
@@ -449,6 +451,7 @@ function importarRomaneios() {
     var msg = fila.length ? fila.length + ' arquivo(s) importado(s). ' : '';
     if (lancados) msg += lancados + ' custo(s) lançado(s) da aba LANÇAR CUSTO. ';
     if (fila.length || lancados) msg += sincronizar(cfg);
+    if (lancados) msg += ' ' + conferirLancamentos(cfg).resumo;
     SpreadsheetApp.getActive().toast(msg || 'Nenhum PDF ou XML novo na pasta Romaneios - Entrada.', 'Custos', 10);
   } finally {
     lock.releaseLock();
@@ -654,6 +657,66 @@ function desfazerNota() {
 // Lançamento manual de custo (aba LANÇAR CUSTO)
 // ===========================================================================
 
+// Confere na planilha de custos cada linha LANÇADO da aba LANÇAR CUSTO.
+// Chegou com o mesmo valor: registra no LOG e apaga a linha. Não chegou: a linha fica com o motivo.
+function conferirLancamentos(cfg) {
+  var ss = SpreadsheetApp.getActive();
+  var sh = ss.getSheetByName(ABA.LANCAR);
+  var res = { resumo: '', detalhes: [] };
+  if (!sh || sh.getLastRow() < 2) return res;
+  var v = sh.getRange(2, 1, sh.getLastRow() - 1, CAB.LANCAR.length).getValues();
+  var pendentes = [];
+  v.forEach(function (r, i) { if (/^LANÇADO/.test(String(r[7]))) pendentes.push(i); });
+  if (!pendentes.length) return res;
+
+  // SKU interno -> SKU do marketplace
+  var mktDoInterno = {};
+  var skus = ss.getSheetByName(ABA.SKUS);
+  if (ultimaLinhaColA(skus) > 1) {
+    skus.getRange(2, 1, ultimaLinhaColA(skus) - 1, 10).getValues().forEach(function (r) { mktDoInterno[String(r[0]).trim()] = String(r[9]).trim(); });
+  }
+  var alvo = cfg.planilhaCustos ? SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos) : null;
+  var linhasAlvo = alvo && alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
+  var achar = function (sku) {
+    sku = sku.toUpperCase();
+    for (var k = 0; k < linhasAlvo.length; k++) {
+      if (String(linhasAlvo[k][1]).trim().toUpperCase() === sku || String(linhasAlvo[k][2]).trim().toUpperCase() === sku) {
+        return { linha: k + 2, valor: Number(linhasAlvo[k][8]) || 0 };
+      }
+    }
+    return null;
+  };
+  var apagar = [], log = [], agora = new Date(), ok = 0;
+  pendentes.forEach(function (i) {
+    var r = v[i], custo = Number(r[2]);
+    var produto = String(r[8]);
+    var sku = produto.indexOf(' - ') > 0 ? produto.split(' - ')[0].trim() : (mktDoInterno[produto.trim()] || '');
+    var motivo = '', a = null;
+    if (!sku || sku === SEM_CADASTRO) motivo = 'produto sem vínculo com o SKU - MKTPLACE: confirme na aba VINCULAR';
+    else if (!alvo) motivo = 'preencha em CONFIG o link da planilha de custos';
+    else if (!(a = achar(sku))) motivo = cfg.aplicarAuto ? sku + ' não está na planilha de custos' : 'esperando Aplicar na aba PRÉVIA';
+    else if (Math.abs(a.valor - custo) >= 0.005) {
+      motivo = cfg.aplicarAuto ? 'na planilha de custos está R$ ' + a.valor.toFixed(2).replace('.', ',') +
+        ' (tem compra mais recente deste produto?)' : 'esperando Aplicar na aba PRÉVIA';
+    }
+    if (motivo) {
+      sh.getRange(i + 2, 8).setValue('LANÇADO, mas NÃO chegou na planilha de custos: ' + motivo);
+      res.detalhes.push('✗ ' + (sku || produto) + ': ' + motivo);
+      return;
+    }
+    ok++;
+    apagar.push(i + 2);
+    var txt = sku + ' = R$ ' + custo.toFixed(2).replace('.', ',') + ' conferido em ' + cfg.abaCustos + ', linha ' + a.linha;
+    res.detalhes.push('✓ ' + txt);
+    log.push([agora, 'LANÇAR CUSTO', '', 'OK', 1, 1, '', 0, txt + (r[5] ? ' | nota ' + r[5] : '') + (r[4] ? ' | ' + r[4] : '')]);
+  });
+  anexar(ABA.LOG, log);
+  apagar.reverse().forEach(function (l) { sh.deleteRow(l); });
+  res.resumo = ok + ' lançamento(s) conferido(s) na planilha de custos e tirado(s) da aba LANÇAR CUSTO (registro no LOG)' +
+    (pendentes.length > ok ? '; ' + (pendentes.length - ok) + ' ficaram na aba com o motivo na coluna Situação.' : '.');
+  return res;
+}
+
 function temLancamentoPendente() {
   var sh = SpreadsheetApp.getActive().getSheetByName(ABA.LANCAR);
   if (!sh || sh.getLastRow() < 2) return false;
@@ -734,7 +797,11 @@ function lancarCustos(silencioso, semSincronizar) {
   });
   gravarEntradas(linhas, extras);
   var msg = lancados + ' custo(s) lançado(s)' + (conferir ? ', ' + conferir + ' para conferir (veja a coluna Situação)' : '') + '. ';
-  if (lancados && !semSincronizar) msg += sincronizar(cfg);
+  if (lancados && !semSincronizar) {
+    msg += sincronizar(cfg);
+    var c = conferirLancamentos(cfg);
+    msg += '\n\n' + c.resumo + (c.detalhes.length ? '\n\n' + c.detalhes.join('\n') : '');
+  }
   if (!silencioso) SpreadsheetApp.getUi().alert(msg);
   return lancados;
 }

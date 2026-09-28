@@ -48,12 +48,20 @@ Use para frete ou acerto de preço, ou quando você só tem o valor.
 | D a G | Opcionais: quantidade, fornecedor, nº da nota, data (padrão: hoje) |
 
 Clique em **Lançar custos**. Com a importação automática ligada, as linhas também são lançadas
-a cada 15 minutos. A coluna **Situação** mostra:
+a cada 15 minutos.
 
-- **LANÇADO**: o custo já foi para a planilha de custos;
-- **CONFIRA**: o nome bateu com mais de um produto, e as opções aparecem na coluna I. Escreva o
-  SKU certo na coluna A e apague a Situação para lançar de novo;
-- **NÃO ACHEI**: o código não existe no SKU - MKTPLACE.
+**Como saber se chegou:** depois de gravar, o script abre a planilha de custos e confere o valor
+de cada lançamento.
+
+- **Chegou:** a linha **sai da aba LANÇAR CUSTO**. A janela e o **LOG** mostram onde foi gravado,
+  por exemplo "LOREAL-0038 = R$ 49,90 conferido em SKUSHOPPEATUALIZADO, linha 5012". O valor
+  anterior fica no **HISTÓRICO DE CUSTOS**.
+- **Não chegou:** a linha fica, com o motivo na coluna Situação. Por exemplo: "na planilha de custos
+  está R$ 91,99 (tem compra mais recente deste produto?)" ou "produto sem vínculo". A conferência se
+  repete a cada importação; apague a linha se não precisar mais dela.
+- **CONFIRA:** o nome bateu com mais de um produto, e as opções aparecem na coluna I. Escreva o
+  SKU certo na coluna A e apague a Situação para lançar de novo.
+- **NÃO ACHEI:** o código não existe no SKU - MKTPLACE.
 
 Vale sempre a compra **mais recente**. Um romaneio novo do mesmo produto substitui o custo
 lançado à mão.
