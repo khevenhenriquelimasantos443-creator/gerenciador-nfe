@@ -586,7 +586,7 @@ function completarComXml(doc) {
 function chaveDoc(doc) {
   var chave = soDigitos(doc.chave);
   var cnpj = chave.length === 44 ? chave.substr(6, 14) : soDigitos(doc.cnpj);
-  return (cnpj || normalizar(doc.fornecedor)) + '|' + String(doc.numero).replace(/^0+/, '');
+  return (cnpj || normalizarCat(doc.fornecedor)) + '|' + String(doc.numero).replace(/^0+/, '');
 }
 
 function moverPara(arq, pastaId) {
