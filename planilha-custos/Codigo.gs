@@ -1429,8 +1429,10 @@ function garantirAbasVinculo() {
 // Lê todas as abas de marca do SKU - MKTPLACE.
 // Colunas: SKU PRINCIPAL, EAN, Descrição do Produto, Variação, SKU DA VARIAÇÃO, CUSTO...
 // Linha de variação sem SKU principal herda o da linha de cima.
+var CATALOGO_CACHE = null;
 function carregarCatalogo(cfg) {
   if (!cfg.planilhaMkt) throw new Error('Preencha em CONFIG o link da planilha SKU - MKTPLACE.');
+  if (CATALOGO_CACHE) return CATALOGO_CACHE;
   var itens = [];
   SpreadsheetApp.openById(cfg.planilhaMkt).getSheets().forEach(function (sh) {
     var aba = sh.getName();
@@ -1458,6 +1460,7 @@ function carregarCatalogo(cfg) {
       });
     }
   });
+  CATALOGO_CACHE = itens;
   return itens;
 }
 
@@ -1743,6 +1746,8 @@ function aplicarPrevia(silencioso) {
       }
       if (!linha) { avisos.push(r[1] + ': não achei mais na planilha de custos.'); return; }
       var anterior = Number(skusAlvo[linha - 1][7]) || 0;
+      // já estava com o valor novo (prévia aplicada antes, pela metade): o anterior é o da prévia
+      if (Math.abs(anterior - r[6]) < 0.005 && Number(r[5])) anterior = Number(r[5]);
       alvo.getRange(linha, 9).setValue(r[6]);
       hist.push([agora, r[1], r[2], r[3], r[4], anterior || '', r[6], anterior ? r[6] / anterior - 1 : '',
                  'CUSTO ATUALIZADO', r[9], r[10], cfg.abaCustos + ' linha ' + linha, anterior ? r[6] - anterior : '']);
@@ -1753,14 +1758,22 @@ function aplicarPrevia(silencioso) {
       hist.push([agora, r[1], r[2], r[3], r[4], '', r[6], '', 'LINHA ADICIONADA', r[9], r[10], cfg.abaCustos, '']);
     }
   });
-  if (novas.length) {
-    var ini = ult + 1;
-    alvo.getRange(ult, 1, 1, 9).copyTo(alvo.getRange(ini, 1, novas.length, 9), SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
-    alvo.getRange(ini, 1, novas.length, 9).setValues(novas);
-    feitos += novas.length;
+  var linhasNovasOk = !novas.length;
+  try {
+    if (novas.length) {
+      var ini = ult + 1;
+      var faltam = ini + novas.length - 1 - alvo.getMaxRows();
+      if (faltam > 0) alvo.insertRowsAfter(alvo.getMaxRows(), faltam); // a aba acaba na última linha usada
+      alvo.getRange(ult, 1, 1, 9).copyTo(alvo.getRange(ini, 1, novas.length, 9), SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
+      alvo.getRange(ini, 1, novas.length, 9).setValues(novas);
+      feitos += novas.length;
+      linhasNovasOk = true;
+    }
+  } finally {
+    // o que já foi gravado vai para o histórico mesmo se as linhas novas falharem
+    anexar(ABA.HISTORICO, linhasNovasOk ? hist : hist.filter(function (h) { return h[8] === 'CUSTO ATUALIZADO'; }));
   }
   sh.getRange(2, 1, n - 1, CAB.PREVIA.length).clearContent();
-  anexar(ABA.HISTORICO, hist);
   registrarLog('PLANILHA DE CUSTOS', '', avisos.length ? 'CONFERIR' : 'OK', v.length, feitos, 0, 0,
     (nAt - avisos.length) + ' custo(s) atualizado(s), ' + novas.length + ' linha(s) adicionada(s) em ' + cfg.abaCustos +
     (silencioso ? ' (automático)' : '') + (avisos.length ? ' | ' + avisos.join(' | ') : ''));
