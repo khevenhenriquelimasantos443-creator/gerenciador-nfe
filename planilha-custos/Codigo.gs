@@ -62,7 +62,7 @@ var CONFIG_ITENS = [
   ['Similaridade mínima para sugerir', 0.55, 'De 0 a 1. Acima disso o item vai para PENDENTES com sugestão; abaixo vira SKU novo.'],
   ['Criar SKU novo automaticamente', 'SIM', 'SIM: item sem correspondência vira SKU novo. NÃO: vai para PENDENTES.'],
   ['Prefixo do SKU novo', 'NOVO-', 'SKU criado automaticamente = prefixo + número sequencial. Renomeie depois se quiser.'],
-  ['CFOPs de bonificação', '5910, 6910', 'CFOPs que marcam o item como bonificado.'],
+  ['CFOPs de bonificação', '1910, 2910, 5910, 6910', 'CFOPs que marcam a nota ou o item como bonificado (1910/2910 = entrada; 5910/6910 = saída do fornecedor).'],
   ['Somar frete, seguro, IPI e ST no custo (XML)', 'SIM', 'Só vale para XML de NF-e, que traz esses valores por item.'],
   ['CNPJ da sua empresa', '', 'Para o leitor de PDF não confundir o seu CNPJ com o do fornecedor.']
 ];
@@ -255,6 +255,7 @@ function escreverLeiaMe(sh) {
     ['4. O custo de cada SKU aparece em CUSTOS e na coluna "Custo oficial" de SKUs.'],
     [''],
     ['COMO O PRODUTO É RECONHECIDO (nesta ordem)'],
+    ['0. Romaneio do VarejoFácil: o código do produto que vem no romaneio (00000000100463 -> 100463) já é o seu SKU. Se ainda não existir em SKUs, é criado com esse código.'],
     ['1. DE_PARA: fornecedor + código do produto no fornecedor. É o vínculo mais seguro e fica salvo para sempre.'],
     ['2. EAN (código de barras), se for válido e estiver cadastrado em SKUs.'],
     ['3. Descrição idêntica (ignorando acentos, maiúsculas e pontuação).'],
@@ -278,8 +279,8 @@ function escreverLeiaMe(sh) {
   sh.getRange(1, 1, t.length, 1).setValues(t);
   sh.setColumnWidth(1, 1000);
   sh.getRange('A1').setFontSize(14).setFontWeight('bold');
-  [3, 9, 18, 24].forEach(function (l) { sh.getRange(l, 1).setFontWeight('bold').setBackground('#e5e7eb'); });
-  sh.getRange('A28').setFontColor('#b91c1c');
+  [3, 9, 19, 25].forEach(function (l) { sh.getRange(l, 1).setFontWeight('bold').setBackground('#e5e7eb'); });
+  sh.getRange('A29').setFontColor('#b91c1c');
 }
 
 function garantirAba(ss, nome) {
@@ -353,7 +354,7 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
   var nome = arq.getName();
   try {
     var doc = ehXml ? lerXmlNfe(arq.getBlob().getDataAsString('UTF-8'), cfg)
-                    : lerTextoRomaneio(extrairTextoPdf(arq), cfg);
+                    : lerPdfRomaneio(extrairTextoPdf(arq), cfg);
     if (!doc.numero) doc.numero = nome.replace(/\.[^.]+$/, '');
     if (!doc.data) doc.data = new Date();
 
@@ -501,6 +502,14 @@ function casarItem(it, doc, ctx, cfg) {
   var norm = normalizar(it.desc);
   var v;
 
+  // 0. romaneio do ERP já traz o código interno do produto: é o próprio SKU
+  if (it.codInterno) {
+    var existente = acharSkuPorCodigo(ctx, it.codInterno);
+    if (existente) return ok(existente, it.fator, 'CÓDIGO INTERNO');
+    var criado = criarSku(ctx, cfg, it.desc, it.ean, it.unid, 'Romaneio ' + doc.numero, it.codInterno);
+    return { tipo: 'OK', sku: criado, fator: it.fator || 1, como: 'CÓDIGO INTERNO (SKU NOVO)', novo: true };
+  }
+
   // 1. vínculo salvo: fornecedor + código
   if (it.cod && (v = ctx.depara[f + '|' + String(it.cod).toUpperCase()])) return ok(v.sku, v.fator, 'DE_PARA (código)');
   // 1b. vínculo salvo: fornecedor + descrição (romaneios sem código)
@@ -543,9 +552,21 @@ function casarItem(it, doc, ctx, cfg) {
   }
 }
 
-function criarSku(ctx, cfg, desc, ean, unid, origem) {
-  ctx.maiorSeqNovo++;
-  var sku = cfg.prefixo + ('00000' + ctx.maiorSeqNovo).slice(-5);
+// Aceita o código com ou sem zeros à esquerda (00000000100463 = 100463)
+function acharSkuPorCodigo(ctx, cod) {
+  var c = String(cod).trim(), semZeros = c.replace(/^0+(?=\d)/, '');
+  if (ctx.skus[c]) return c;
+  if (ctx.skus[semZeros]) return semZeros;
+  for (var k in ctx.skus) if (/^\d+$/.test(k) && k.replace(/^0+(?=\d)/, '') === semZeros) return k;
+  return '';
+}
+
+function criarSku(ctx, cfg, desc, ean, unid, origem, codigo) {
+  var sku = codigo;
+  if (!sku) {
+    ctx.maiorSeqNovo++;
+    sku = cfg.prefixo + ('00000' + ctx.maiorSeqNovo).slice(-5);
+  }
   var linha = [sku, desc, ean || '', String(unid || '').toUpperCase(), '', 'NOVO - REVISAR', new Date(), origem];
   anexar(ABA.SKUS, [linha]);
   indexarSku(ctx, sku, desc, ean || '', unid, null);
@@ -595,8 +616,8 @@ function processarPendentes() {
       var sku;
       if (escolha.toUpperCase() === 'NOVO') {
         sku = criarSku(ctx, cfg, r[6], gtinValido(r[5]) ? soDigitos(r[5]) : '', r[8], 'PENDENTES');
-      } else if (ctx.skus[escolha]) {
-        sku = escolha;
+      } else if (acharSkuPorCodigo(ctx, escolha)) {
+        sku = acharSkuPorCodigo(ctx, escolha);
       } else {
         erros.push('Linha ' + (i + 2) + ': SKU "' + escolha + '" não existe em SKUs.');
         return;
@@ -712,6 +733,67 @@ function extrairTextoPdf(arq) {
   } finally {
     DriveApp.getFileById(tmp.id).setTrashed(true);
   }
+}
+
+function lerPdfRomaneio(texto, cfg) {
+  var doc = lerRomaneioVarejoFacil(texto, cfg);
+  return doc.itens.length ? doc : lerTextoRomaneio(texto, cfg);
+}
+
+/**
+ * "ROMANEIO NOTA DE ENTRADA" do VarejoFácil. Cada item:
+ *   1 * 00000000100463 - BT SHIMMER BLUSH BAKED 150,0000 UN/1,0000 35,31 0,00 0,00 5.296,50 0,00 35,31 ...
+ *   QUARTZO 8G                      <- resto da descrição, na linha de baixo
+ * Colunas depois da embalagem: Valor Unit., Desc %, IPI, Valor Total, Custo Anterior,
+ * Custo Reposição, Variação %, Preço Venda, Margem Pratic. %, Margem Cad. %, Sugestão.
+ * O texto é achatado numa linha só, então tanto faz como o PDF quebrou as linhas.
+ */
+function lerRomaneioVarejoFacil(texto, cfg) {
+  var doc = { numero: '', data: null, fornecedor: '', cnpj: '', chave: '', itens: [] };
+  var t = String(texto);
+  var m;
+  if ((m = t.match(/N[º°o]\s*(\d+)\s*S[ée]rie/i))) doc.numero = m[1];
+  if ((m = t.match(/Data\s+Entrada:?\s*(\d{2})\/(\d{2})\/(\d{4})/i)) ||
+      (m = t.match(/Data\s+Emiss[ãa]o:?\s*(\d{2})\/(\d{2})\/(\d{4})/i))) {
+    doc.data = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+  }
+  if ((m = t.match(/Fornecedor:?\s*\d+\s*-\s*([^\n]+)/i))) {
+    doc.fornecedor = m[1].replace(/\s+(S\s*N\s*e\s*F|Local:|Loja:|Comprador:|Chave|Cadastrado|Alterado)[\s\S]*$/i, '').trim();
+  }
+  if ((m = t.replace(/\s/g, '').match(/Chave(?:NF-?e)?:?(\d{44})/i))) {
+    doc.chave = m[1];
+    doc.cnpj = m[1].substr(6, 14); // posições 7 a 20 da chave = CNPJ do emitente
+  }
+  var bonifDoc = /Opera[çc][ãa]o:?[^\n]{0,40}BONIFICA/i.test(t);
+  if ((m = t.match(/CFOP:?\s*(\d{4})/i)) && cfg.cfopsBonif.indexOf(m[1]) >= 0) bonifDoc = true;
+
+  var plano = t
+    .replace(/\d{2}\/\d{2}\/\d{4}\s+\d{2}:\d{2}\s+varejofacil\s*-?\s*[\d.]*/gi, ' ') // rodapé de página
+    .replace(/S\s*N\s*e\s*F\s*q\.[\s\S]*?Sugest[ãa]o/g, ' ')                        // cabeçalho da tabela
+    .replace(/\s+/g, ' ');
+  var NUM = '-?\\d[\\d.]*,\\d+';
+  var re = new RegExp('(?:^|\\s)(\\d{1,4}) (\\* )?(\\d{5,14}) - (.+?) (' + NUM + ') ([A-Za-z]{1,5})\\/(' + NUM + ')' +
+    '((?: ' + NUM + ')+)(.*?)(?=\\s\\d{1,4} (?:\\* )?\\d{5,14} - |\\sQtd\\. de itens|$)', 'g');
+  while ((m = re.exec(plano))) {
+    var nums = m[8].trim().split(' ').map(numeroBR);
+    var qtd = numeroBR(m[5]);
+    if (nums.length < 4 || !qtd) continue;
+    var vUnit = nums[0], total = nums[3];
+    var resto = m[9].replace(/(Valores|Base ICMS|Observa[çc][ãa]o|Loja:|ROMANEIO).*$/i, '').trim();
+    doc.itens.push({
+      cod: '',
+      codInterno: m[3].replace(/^0+(?=\d)/, ''),
+      ean: '',
+      desc: (m[4] + ' ' + resto).replace(/\s+/g, ' ').trim(),
+      qtd: qtd,
+      unid: m[6].toUpperCase(),
+      fator: numeroBR(m[7]) || 1,
+      vUnit: vUnit,
+      vTotal: total,
+      bonif: bonifDoc || total === 0 || vUnit === 0
+    });
+  }
+  return doc;
 }
 
 /**
@@ -876,6 +958,6 @@ function similaridade(a, b) {
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { lerLinhaItem: lerLinhaItem, lerTextoRomaneio: lerTextoRomaneio, similaridade: similaridade,
+  module.exports = { lerRomaneioVarejoFacil: lerRomaneioVarejoFacil, lerLinhaItem: lerLinhaItem, lerTextoRomaneio: lerTextoRomaneio, similaridade: similaridade,
     normalizar: normalizar, gtinValido: gtinValido, numeroBR: numeroBR, casarItem: casarItem, mesmaUnidade: mesmaUnidade };
 }
