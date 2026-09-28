@@ -97,6 +97,7 @@ function onOpen() {
     .addItem('Recriar botões', 'criarBotoes')
     .addItem('Desfazer importação de uma nota', 'desfazerNota')
     .addSeparator()
+    .addItem('Sincronizar com a planilha de custos agora', 'sincronizarAgora')
     .addItem('Sugerir vínculos com o SKU - MKTPLACE', 'sugerirVinculos')
     .addItem('Confirmar vínculos preenchidos', 'confirmarVinculos')
     .addItem('Gerar prévia dos custos', 'gerarPrevia')
@@ -461,9 +462,12 @@ function importarRomaneios() {
       } catch (e) {
         registrarLog('VÍNCULO', '', 'ERRO', 0, 0, 0, 0, 'Importou, mas falhou ao montar VINCULAR/PRÉVIA: ' + (e && e.message || e));
       }
+    } else if (n) {
+      registrarLog('VÍNCULO', '', 'CONFERIR', 0, 0, 0, 0, 'Importou, mas não sincronizou: preencha em CONFIG ' +
+        'os links da planilha SKU - MKTPLACE e da planilha de custos.');
+      SpreadsheetApp.getActive().toast(n + ' arquivo(s) importado(s). Para enviar à planilha de custos, preencha os links em CONFIG.', 'Custos', 10);
     } else {
-      SpreadsheetApp.getActive().toast(n ? n + ' arquivo(s) processado(s). Veja a aba LOG.'
-                                         : 'Nenhum PDF ou XML novo na pasta Romaneios - Entrada.');
+      SpreadsheetApp.getActive().toast('Nenhum PDF ou XML novo na pasta Romaneios - Entrada.');
     }
   } finally {
     lock.releaseLock();
@@ -1476,6 +1480,27 @@ function melhoresDoCatalogo(desc, catalogo, n) {
   var tok = tokensCat(desc, true);
   return catalogo.map(function (it) { return { it: it, s: pontuarCatalogo(tok, it) }; })
     .sort(function (a, b) { return b.s - a.s; }).slice(0, n);
+}
+
+// Vincula, monta a prévia e (com Aplicar automaticamente = SIM) grava, sem precisar importar nada
+function sincronizarAgora() {
+  var ui = SpreadsheetApp.getUi();
+  var cfg = lerConfig();
+  var faltando = [];
+  if (!cfg.planilhaMkt) faltando.push('Planilha SKU - MKTPLACE (link ou ID)');
+  if (!cfg.planilhaCustos) faltando.push('Planilha de custos (link ou ID)');
+  if (faltando.length) {
+    ui.alert('Preencha na aba CONFIG, coluna B:\n\n- ' + faltando.join('\n- ') + '\n\nDepois rode de novo.');
+    return;
+  }
+  SpreadsheetApp.flush();
+  var sv = sugerirVinculos(true);
+  var pv = gerarPrevia(true);
+  var ap = pv && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
+  ui.alert('Sincronização:\n\n' +
+    '- ' + sv + ' produto(s) sem EAN esperando confirmação na aba VINCULAR\n' +
+    (cfg.aplicarAuto ? '- ' + ap + ' alteração(ões) gravada(s) em ' + cfg.abaCustos + ' (veja HISTÓRICO DE CUSTOS e AUMENTOS 7 DIAS)'
+                     : '- ' + pv + ' alteração(ões) na aba PRÉVIA esperando o botão Aplicar'));
 }
 
 // SKUs sem vínculo -> aba VINCULAR com sugestão. EAN igual vincula direto.
