@@ -95,12 +95,57 @@ function onOpen() {
     .addSeparator()
     .addItem('Configurar planilha (1ª vez)', 'configurarPlanilha')
     .addItem('Recriar botões', 'criarBotoes')
+    .addItem('Desfazer importação de uma nota', 'desfazerNota')
     .addSeparator()
     .addItem('Sugerir vínculos com o SKU - MKTPLACE', 'sugerirVinculos')
     .addItem('Confirmar vínculos preenchidos', 'confirmarVinculos')
     .addItem('Gerar prévia dos custos', 'gerarPrevia')
     .addItem('Aplicar prévia na planilha de custos', 'aplicarPrevia')
     .addToUi();
+}
+
+// Apaga de ENTRADAS/PENDENTES as linhas de uma nota, e os SKUs e vínculos criados só por ela.
+// Não mexe na planilha de custos: o que já foi gravado lá está no HISTÓRICO DE CUSTOS.
+function desfazerNota() {
+  var ui = SpreadsheetApp.getUi();
+  var resp = ui.prompt('Desfazer importação', 'Número da nota (ex.: 86725):', ui.ButtonSet.OK_CANCEL);
+  if (resp.getSelectedButton() !== ui.Button.OK) return;
+  var num = String(resp.getResponseText()).trim().replace(/^0+/, '');
+  if (!num) return;
+  var ss = SpreadsheetApp.getActive();
+  var mesmoNum = function (x) { return String(x).trim().replace(/^0+/, '') === num; };
+  var apagarLinhas = function (sh, teste) {
+    var n = ultimaLinhaColA(sh), apagadas = 0;
+    if (n < 2) return 0;
+    var v = sh.getRange(2, 1, n - 1, sh.getLastColumn()).getValues();
+    for (var i = v.length - 1; i >= 0; i--) if (teste(v[i])) { sh.deleteRow(i + 2); apagadas++; }
+    return apagadas;
+  };
+  var ent = ss.getSheetByName(ABA.ENTRADAS);
+  var skusDaNota = {};
+  if (ultimaLinhaColA(ent) > 1) {
+    ent.getRange(2, 1, ultimaLinhaColA(ent) - 1, 13).getValues().forEach(function (r) {
+      if (mesmoNum(r[1])) skusDaNota[String(r[12])] = 1;
+    });
+  }
+  var nEnt = apagarLinhas(ent, function (r) { return mesmoNum(r[1]); });
+  var nPen = apagarLinhas(ss.getSheetByName(ABA.PENDENTES), function (r) { return mesmoNum(r[1]); });
+  var usados = {};
+  if (ultimaLinhaColA(ent) > 1) ent.getRange(2, 13, ultimaLinhaColA(ent) - 1, 1).getValues().forEach(function (r) { usados[String(r[0])] = 1; });
+  var removidos = {};
+  var nSku = apagarLinhas(ss.getSheetByName(ABA.SKUS), function (r) {
+    var sku = String(r[0]);
+    var criadoPelaNota = /^Romaneio\s+0*/i.test(String(r[7])) && mesmoNum(String(r[7]).replace(/^Romaneio\s+/i, ''));
+    if (skusDaNota[sku] && criadoPelaNota && !usados[sku]) { removidos[sku] = 1; return true; }
+    return false;
+  });
+  apagarLinhas(ss.getSheetByName(ABA.DEPARA), function (r) { return removidos[String(r[5])]; });
+  var vin = ss.getSheetByName(ABA.VINCULAR);
+  if (vin) apagarLinhas(vin, function (r) { return removidos[String(r[0])]; });
+  registrarLog('DESFAZER', '', 'OK', 0, 0, 0, 0, 'Nota ' + num + ': ' + nEnt + ' linha(s) de ENTRADAS, ' + nPen +
+    ' de PENDENTES e ' + nSku + ' SKU(s) apagados.');
+  ui.alert('Nota ' + num + ' desfeita: ' + nEnt + ' linha(s) de ENTRADAS, ' + nPen + ' de PENDENTES, ' + nSku +
+    ' SKU(s) criado(s) por ela.\n\nPara importar de novo, mova os arquivos de "Romaneios - Processados" para "Romaneios - Entrada".');
 }
 
 function ativarAutomatico() {
@@ -529,7 +574,9 @@ function completarComXml(doc) {
 }
 
 function chaveDoc(doc) {
-  return (soDigitos(doc.cnpj) || normalizar(doc.fornecedor)) + '|' + String(doc.numero).replace(/^0+/, '');
+  var chave = soDigitos(doc.chave);
+  var cnpj = chave.length === 44 ? chave.substr(6, 14) : soDigitos(doc.cnpj);
+  return (cnpj || normalizar(doc.fornecedor)) + '|' + String(doc.numero).replace(/^0+/, '');
 }
 
 function moverPara(arq, pastaId) {
@@ -776,6 +823,7 @@ function lerXmlNfe(xml, cfg) {
   if (!infNFe) throw new Error('XML não é uma NF-e.');
   var ide = achar(infNFe, 'ide'), emit = achar(infNFe, 'emit');
   var doc = {
+    chave: txt(root, 'chNFe'),
     numero: txt(ide, 'nNF'),
     data: dataIso(txt(ide, 'dhEmi') || txt(ide, 'dEmi')),
     fornecedor: txt(emit, 'xNome'),
@@ -1074,7 +1122,10 @@ function extrairTextoPdf(arq) {
 
 function lerPdfRomaneio(texto, cfg) {
   var doc = lerRomaneioVarejoFacil(texto, cfg);
-  return doc.itens.length ? doc : lerTextoRomaneio(texto, cfg);
+  // romaneio do VarejoFácil que o leitor próprio não entendeu vira erro (e DIAGNOSTICO),
+  // em vez de passar pelo leitor genérico e gravar linha errada
+  if (doc.itens.length || /ROMANEIO\s+NOTA\s+DE\s+ENTRADA|varejofacil/i.test(texto)) return doc;
+  return lerTextoRomaneio(texto, cfg);
 }
 
 /**
@@ -1143,7 +1194,7 @@ function lerTextoRomaneio(texto, cfg) {
   var linhas = String(texto).split(/\n/);
   var doc = { numero: '', data: null, fornecedor: '', cnpj: '', itens: [] };
 
-  var cnpjs = (texto.match(/\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}/g) || [])
+  var cnpjs = (texto.match(/(?<![\d.\/-])\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}(?![\d.\/-])/g) || [])
     .map(soDigitos).filter(function (c) { return c.length === 14 && c !== cfg.cnpjProprio; });
   doc.cnpj = cnpjs[0] || '';
 
@@ -1225,7 +1276,7 @@ function lerLinhaItem(linha, cfg) {
   });
   var descStr = desc.join(' ').trim();
   if ((descStr.match(/[A-Za-zÀ-ú]/g) || []).length < 3) return null;
-  if (/^(sub)?total|^valor|^frete|^desconto|^base de c/i.test(normalizar(descStr))) return null;
+  if (/^(SUB)?TOTAL|^VALOR|^FRETE|^DESCONTO|^BASE|^ICMS|^OUTRAS|^QTD|^PESO|^CUBAGEM/.test(normalizar(descStr))) return null;
 
   return {
     cod: cod, ean: ean, desc: descStr, qtd: melhor.q.v, unid: unid,
