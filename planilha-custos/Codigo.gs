@@ -94,6 +94,7 @@ function onOpen() {
     .addItem('Desativar importação automática', 'desativarAutomatico')
     .addSeparator()
     .addItem('Configurar planilha (1ª vez)', 'configurarPlanilha')
+    .addItem('Corrigir fórmulas (#ERROR!)', 'corrigirFormulas')
     .addItem('Recriar botões', 'criarBotoes')
     .addItem('Desfazer importação de uma nota', 'desfazerNota')
     .addSeparator()
@@ -190,8 +191,6 @@ function configurarPlanilha() {
     skus.getRange(1, 1, 1, CAB.SKUS.length).setValues([CAB.SKUS]);
     skus.getRange('A:A').setNumberFormat('@');
     skus.getRange('C:C').setNumberFormat('@');
-    skus.getRange('I1').setFormula(
-      '={"Custo oficial"; MAP(A2:A, LAMBDA(s, IF(s="",, IFERROR(XLOOKUP(s, CUSTOS!A2:A, CUSTOS!L2:L), ))))}');
     skus.getRange('I2:I').setNumberFormat('R$ #,##0.00');
     estilizar(skus, CAB.SKUS.length);
   }
@@ -213,10 +212,6 @@ function configurarPlanilha() {
     ent.getRange('T2:T').setNumberFormat('dd/mm/yyyy hh:mm');
     ent.getRange('J2:K').setNumberFormat('R$ #,##0.00');
     ent.getRange('P2:P').setNumberFormat('R$ #,##0.0000');
-    ent.getRange('O1').setFormula(
-      '={"Qtd em un. estoque"; ARRAYFORMULA(IF(LEN(H2:H), H2:H*IF(N2:N="", 1, N2:N), ))}');
-    ent.getRange('P1').setFormula(
-      '={"Custo unit. pago"; ARRAYFORMULA(IF(LEN(H2:H), IF(L2:L="SIM", 0, IFERROR(K2:K/O2:O, 0)), ))}');
     ent.getRange('L2:L').setDataValidation(
       SpreadsheetApp.newDataValidation().requireValueInList(['SIM', 'NÃO']).build());
     estilizar(ent, CAB.ENTRADAS.length);
@@ -256,6 +251,7 @@ function configurarPlanilha() {
   if (padrao && padrao.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(padrao);
 
   garantirPastas();
+  corrigirFormulas(true);
   criarBotoes();
   ss.setActiveSheet(leia);
   SpreadsheetApp.getUi().alert(
@@ -287,33 +283,89 @@ function criarBotoes() {
   });
 }
 
-function escreverFormulasCustos(cus) {
-  var linhasPagas = 'SORT(FILTER({ENTRADAS!A2:A, ENTRADAS!T2:T, ENTRADAS!P2:P, ENTRADAS!C2:C}, ' +
-                    'ENTRADAS!M2:M=s, ENTRADAS!L2:L<>"SIM"), 1, FALSE, 2, FALSE)';
-  var mapa = function (titulo, corpo) {
-    return '={"' + titulo + '"; MAP(A2:A, LAMBDA(s, IF(s="",, ' + corpo + ')))}';
-  };
-  var grupo = 'INDEX(SORT(FILTER({ENTRADAS!A2:A, ENTRADAS!T2:T, ENTRADAS!Q2:Q}, ENTRADAS!M2:M=s), 1, FALSE, 2, FALSE), 1, 3)';
+var FORMULAS_ESCRITAS = [];
+function definirFormula(range, formula) {
+  range.setFormula(formula);
+  FORMULAS_ESCRITAS.push([range, formula]);
+}
 
-  cus.getRange('A1').setFormula('={"SKU"; FILTER(SKUs!A2:A, SKUs!A2:A<>"")}');
-  cus.getRange('B1').setFormula(mapa('Descrição', 'XLOOKUP(s, SKUs!A2:A, SKUs!B2:B, "")'));
-  cus.getRange('C1').setFormula(mapa('Último custo pago', 'IFERROR(INDEX(' + linhasPagas + ', 1, 3), )'));
-  cus.getRange('D1').setFormula(mapa('Data da última compra', 'IFERROR(INDEX(' + linhasPagas + ', 1, 1), )'));
-  cus.getRange('E1').setFormula(mapa('Fornecedor da última compra', 'IFERROR(INDEX(' + linhasPagas + ', 1, 4), )'));
-  cus.getRange('F1').setFormula(mapa('Custo pago anterior', 'IFERROR(INDEX(' + linhasPagas + ', 2, 3), )'));
-  cus.getRange('G1').setFormula(
-    '={"Variação vs anterior"; MAP(C2:C, F2:F, LAMBDA(c, f, IF(OR(c="", f="", f=0),, c/f-1)))}');
-  cus.getRange('H1').setFormula(mapa('Custo efetivo da última compra (com bonificação)',
+// Se o Google não traduziu a fórmula para o idioma da planilha, reescreve no formato
+// português (argumentos separados por ';'). Nenhuma fórmula daqui tem vírgula dentro de texto.
+function conferirFormulas() {
+  SpreadsheetApp.flush();
+  var refeitas = 0;
+  FORMULAS_ESCRITAS.forEach(function (x) {
+    if (/^#(ERROR|ERRO)!?$/i.test(String(x[0].getDisplayValue()))) {
+      x[0].setFormula(x[1].replace(/,/g, ';'));
+      refeitas++;
+    }
+  });
+  FORMULAS_ESCRITAS = [];
+  return refeitas;
+}
+
+function corrigirFormulas(silencioso) {
+  var ss = SpreadsheetApp.getActive();
+  garantirAbasVinculo();
+  var ent = ss.getSheetByName(ABA.ENTRADAS);
+  ent.getRange('O1:P').clearContent();
+  ent.getRange('O1:P1').setValues([['Qtd em un. estoque', 'Custo unit. pago']]);
+  definirFormula(ent.getRange('O2'), '=ARRAYFORMULA(IF(LEN(H2:H), H2:H*IF(N2:N="", 1, N2:N), ))');
+  definirFormula(ent.getRange('P2'), '=ARRAYFORMULA(IF(LEN(H2:H), IF(L2:L="SIM", 0, IFERROR(K2:K/O2:O, 0)), ))');
+
+  var skus = ss.getSheetByName(ABA.SKUS);
+  skus.getRange('I1:I').clearContent();
+  skus.getRange('I1').setValue('Custo oficial');
+  definirFormula(skus.getRange('I2'), '=MAP(A2:A, LAMBDA(s, IF(s="",, IFERROR(XLOOKUP(s, CUSTOS!A2:A, CUSTOS!L2:L), ))))');
+
+  escreverFormulasCustos(ss.getSheetByName(ABA.CUSTOS));
+
+  var hi = ss.getSheetByName(ABA.HISTORICO);
+  hi.getRange(1, 1, 1, CAB.HISTORICO.length).setValues([CAB.HISTORICO]);
+  var au = ss.getSheetByName(ABA.AUMENTOS);
+  var h = "'" + ABA.HISTORICO + "'!";
+  au.getRange(1, 1, au.getMaxRows(), Math.max(au.getMaxColumns(), CAB.HISTORICO.length)).clearContent();
+  au.getRange(1, 1, 1, CAB.HISTORICO.length).setValues([CAB.HISTORICO]);
+  // aumentos gravados nos últimos 7 dias, maior aumento (%) primeiro
+  definirFormula(au.getRange('A2'), '=IFERROR(SORT(FILTER(' + h + 'A2:M, ' + h + 'A2:A>=NOW()-7, ' + h + 'F2:F<>"", ' +
+    h + 'G2:G>' + h + 'F2:F), 8, FALSE), "Nenhum aumento nos últimos 7 dias")');
+  au.getRange('A2:A').setNumberFormat('dd/mm/yyyy hh:mm');
+  au.getRange('F2:G').setNumberFormat('R$ #,##0.00');
+  au.getRange('H2:H').setNumberFormat('+0.0%');
+  au.getRange('M2:M').setNumberFormat('R$ #,##0.00');
+  estilizar(au, CAB.HISTORICO.length);
+  au.getRange(1, 1, 1, CAB.HISTORICO.length).setBackground('#b91c1c');
+  au.setColumnWidth(4, 380);
+  conferirFormulas();
+  if (!silencioso) ss.toast('Fórmulas refeitas em CUSTOS, ENTRADAS, SKUs e AUMENTOS 7 DIAS.', 'Custos', 8);
+}
+
+// Cabeçalho sempre em texto na linha 1 e fórmula na linha 2, sem {...}:
+// array literal com chaves não funciona em planilha em português (vira #ERROR!).
+function escreverFormulasCustos(cus) {
+  var linhasPagas = 'SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 16, 3), ' +
+                    'ENTRADAS!M2:M=s, ENTRADAS!L2:L<>"SIM"), 1, FALSE, 2, FALSE)';
+  var mapa = function (corpo) { return '=MAP(A2:A, LAMBDA(s, IF(s="",, ' + corpo + ')))'; };
+  var grupo = 'INDEX(SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 17), ENTRADAS!M2:M=s), 1, FALSE, 2, FALSE), 1, 3)';
+
+  cus.getRange(1, 1, cus.getMaxRows(), CAB.CUSTOS.length).clearContent();
+  cus.getRange(1, 1, 1, CAB.CUSTOS.length).setValues([CAB.CUSTOS]);
+  definirFormula(cus.getRange('A2'), '=FILTER(SKUs!A2:A, SKUs!A2:A<>"")');
+  definirFormula(cus.getRange('B2'), mapa('XLOOKUP(s, SKUs!A2:A, SKUs!B2:B, "")'));
+  definirFormula(cus.getRange('C2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 1, 3), )'));
+  definirFormula(cus.getRange('D2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 1, 1), )'));
+  definirFormula(cus.getRange('E2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 1, 4), )'));
+  definirFormula(cus.getRange('F2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 2, 3), )'));
+  definirFormula(cus.getRange('G2'), '=MAP(C2:C, F2:F, LAMBDA(c, f, IF(OR(c="", f="", f=0),, c/f-1)))');
+  definirFormula(cus.getRange('H2'), mapa(
     'IFERROR(LET(g, ' + grupo + ', SUMIFS(ENTRADAS!K2:K, ENTRADAS!M2:M, s, ENTRADAS!Q2:Q, g) / ' +
     'SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s, ENTRADAS!Q2:Q, g)), )'));
-  cus.getRange('I1').setFormula(mapa('Custo médio histórico',
+  definirFormula(cus.getRange('I2'), mapa(
     'IFERROR(SUMIFS(ENTRADAS!K2:K, ENTRADAS!M2:M, s) / SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s), )'));
-  cus.getRange('J1').setFormula(mapa('Qtd total recebida', 'SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s)'));
-  cus.getRange('K1').setFormula(mapa('Qtd recebida bonificada',
-    'SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s, ENTRADAS!L2:L, "SIM")'));
-  cus.getRange('L1').setFormula(
-    '={"Custo oficial"; MAP(C2:C, H2:H, I2:I, A2:A, LAMBDA(c, h, i, s, IF(s="",, ' +
-    'SWITCH(CONFIG!$B$' + CFG_LINHA.CUSTO_OFICIAL + ', "EFETIVO", h, "MÉDIO", i, c))))}');
+  definirFormula(cus.getRange('J2'), mapa('SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s)'));
+  definirFormula(cus.getRange('K2'), mapa('SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s, ENTRADAS!L2:L, "SIM")'));
+  definirFormula(cus.getRange('L2'), '=MAP(C2:C, H2:H, I2:I, A2:A, LAMBDA(c, h, i, s, IF(s="",, ' +
+    'SWITCH(CONFIG!$B$' + CFG_LINHA.CUSTO_OFICIAL + ', "EFETIVO", h, "MÉDIO", i, c))))');
 
   cus.getRange('C2:C').setNumberFormat('R$ #,##0.00');
   cus.getRange('D2:D').setNumberFormat('dd/mm/yyyy');
@@ -1311,7 +1363,7 @@ CAB.VINCULAR = ['Código VarejoFácil', 'Descrição no romaneio', 'Fornecedor',
 CAB.PREVIA = ['Ação', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo atual', 'Custo novo',
               'Variação', 'Linha na planilha de custos', 'Código VarejoFácil', 'Fornecedor', 'Marca (aba)'];
 CAB.HISTORICO = ['Data', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo anterior', 'Custo novo',
-                 'Variação', 'O que foi feito', 'Código VarejoFácil', 'Fornecedor', 'Onde'];
+                 'Variação', 'O que foi feito', 'Código VarejoFácil', 'Fornecedor', 'Onde', 'Diferença em R$'];
 var CAB_SKUS_VINCULO = ['SKU marketplace', 'EAN marketplace', 'Aba (marca)', 'Vinculado em'];
 var SEM_CADASTRO = 'NÃO TEM NO MKTPLACE';
 
@@ -1351,21 +1403,7 @@ function garantirAbasVinculo() {
   var au = ss.getSheetByName(ABA.AUMENTOS);
   if (!au) {
     au = ss.insertSheet(ABA.AUMENTOS);
-    var h = "'" + ABA.HISTORICO + "'!";
-    // só fórmula: aumentos de custo gravados nos últimos 7 dias, maior aumento primeiro
-    au.getRange('A1').setFormula('={"Data","SKU","EAN","Nome do Produto","Nome da Variação","Custo anterior",' +
-      '"Custo novo","Aumento","Aumento em R$","Fornecedor"; IFERROR(SORT(FILTER({' +
-      h + 'A2:A, ' + h + 'B2:B, ' + h + 'C2:C, ' + h + 'D2:D, ' + h + 'E2:E, ' + h + 'F2:F, ' + h + 'G2:G, ' +
-      h + 'H2:H, ' + h + 'G2:G-' + h + 'F2:F, ' + h + 'K2:K}, ' +
-      h + 'A2:A>=NOW()-7, ' + h + 'F2:F<>"", ' + h + 'G2:G>' + h + 'F2:F), 8, FALSE), ' +
-      '{"Nenhum aumento nos últimos 7 dias","","","","","","","","",""})}');
-    au.getRange('A2:A').setNumberFormat('dd/mm/yyyy hh:mm');
-    au.getRange('F2:G').setNumberFormat('R$ #,##0.00');
-    au.getRange('H2:H').setNumberFormat('+0.0%');
-    au.getRange('I2:I').setNumberFormat('R$ #,##0.00');
-    estilizar(au, 10);
-    au.getRange(1, 1, 1, 10).setBackground('#b91c1c');
-    au.setColumnWidth(4, 380);
+    au.getRange('A1').setValue('Rode Custos > Corrigir fórmulas');
   }
   [[ABA.VINCULAR, CAB.VINCULAR], [ABA.PREVIA, CAB.PREVIA]].forEach(function (a) {
     var sh = ss.getSheetByName(a[0]);
@@ -1707,12 +1745,12 @@ function aplicarPrevia(silencioso) {
       var anterior = Number(skusAlvo[linha - 1][7]) || 0;
       alvo.getRange(linha, 9).setValue(r[6]);
       hist.push([agora, r[1], r[2], r[3], r[4], anterior || '', r[6], anterior ? r[6] / anterior - 1 : '',
-                 'CUSTO ATUALIZADO', r[9], r[10], cfg.abaCustos + ' linha ' + linha]);
+                 'CUSTO ATUALIZADO', r[9], r[10], cfg.abaCustos + ' linha ' + linha, anterior ? r[6] - anterior : '']);
       feitos++;
     } else {
       // EAN | SKU Principal | SKU Variação | Marca | Categoria | Fornecedor | Nome | Nome da Variação | Custo
       novas.push([r[2] ? Number(r[2]) : '', r[1], r[1], r[11], '', r[10], r[3], r[4], r[6]]);
-      hist.push([agora, r[1], r[2], r[3], r[4], '', r[6], '', 'LINHA ADICIONADA', r[9], r[10], cfg.abaCustos]);
+      hist.push([agora, r[1], r[2], r[3], r[4], '', r[6], '', 'LINHA ADICIONADA', r[9], r[10], cfg.abaCustos, '']);
     }
   });
   if (novas.length) {
