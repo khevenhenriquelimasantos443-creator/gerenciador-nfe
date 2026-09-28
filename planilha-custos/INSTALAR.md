@@ -35,3 +35,18 @@ Se você já tem uma lista de SKUs, cole na aba **SKUs** (SKU, Descrição, EANs
 | LOG | O que aconteceu com cada arquivo |
 
 As regras de correspondência e de bonificação estão explicadas na aba LEIA-ME.
+
+## Ligação com as planilhas de marketplace
+
+Na aba **CONFIG** (linhas do final) ficam o link da **SKU - MKTPLACE**, o link da planilha de custos
+e a aba **SKUSHOPPEATUALIZADO**.
+
+Fluxo de cada nota: coloque o **PDF do romaneio e o XML** na pasta `Romaneios - Entrada`. O script:
+
+1. importa o romaneio (código do VarejoFácil, quantidade, valor);
+2. confere o XML item por item com o romaneio (resultado no LOG) e grava o EAN em SKUs;
+3. liga cada produto ao SKU - MKTPLACE pelo EAN (sem XML: sugestão pela descrição na aba VINCULAR);
+4. monta a PRÉVIA e, com "Aplicar automaticamente" = SIM, grava na SKUSHOPPEATUALIZADO:
+   só a coluna I (Custo) nas linhas existentes e linhas novas com os dados do SKU - MKTPLACE;
+5. registra tudo em **HISTÓRICO DE CUSTOS**; a aba **AUMENTOS 7 DIAS** lista os custos que subiram
+   nos últimos 7 dias, do maior aumento para o menor, para reajustar os preços de venda.

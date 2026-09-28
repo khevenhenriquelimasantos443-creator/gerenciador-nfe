@@ -29,7 +29,9 @@ var ABA = {
   CONFIG: 'CONFIG',
   LOG: 'LOG',
   VINCULAR: 'VINCULAR',
-  PREVIA: 'PRÉVIA'
+  PREVIA: 'PRÉVIA',
+  HISTORICO: 'HISTÓRICO DE CUSTOS',
+  AUMENTOS: 'AUMENTOS 7 DIAS'
 };
 
 var CAB = {
@@ -71,7 +73,8 @@ var CONFIG_ITENS = [
   ['Planilha de custos (link ou ID)', '', 'Planilha onde o custo é atualizado e os produtos novos são adicionados.'],
   ['Aba da planilha de custos', 'SKUSHOPPEATUALIZADO', 'Só a coluna I (Custo) é alterada nas linhas que já existem.'],
   ['Abas ignoradas no SKU - MKTPLACE', 'MENU', 'Separe por vírgula.'],
-  ['Similaridade para já deixar o vínculo preenchido', 0.85, 'Acima disso a sugestão já vem na coluna CONFIRMAR de VINCULAR (você ainda confirma).']
+  ['Similaridade para já deixar o vínculo preenchido', 0.85, 'Acima disso a sugestão já vem na coluna CONFIRMAR de VINCULAR (você ainda confirma).'],
+  ['Aplicar automaticamente na planilha de custos', 'SIM', 'SIM: depois de importar, grava a PRÉVIA sozinho. NÃO: espera o botão Aplicar na planilha.']
 ];
 var CFG_LINHA = { CUSTO_OFICIAL: 5 }; // linha de "Custo oficial" (cabeçalho na linha 1)
 
@@ -357,6 +360,7 @@ function lerConfig() {
     abaCustos: String(v[12][0] || 'SKUSHOPPEATUALIZADO').trim(),
     abasIgnoradas: String(v[13][0]).split(',').map(function (x) { return x.trim().toUpperCase(); }).filter(String),
     limiarVinculo: Number(v[14][0]) || 0.85,
+    aplicarAuto: String(v[15][0]).toUpperCase() !== 'NÃO',
     pastaEntrada: String(v[0][0]).trim(),
     pastaProcessados: String(v[1][0]).trim(),
     pastaErro: String(v[2][0]).trim(),
@@ -401,8 +405,14 @@ function importarRomaneios() {
       try {
         var sv = sugerirVinculos(true);
         var pv = gerarPrevia(true);
-        SpreadsheetApp.getActive().toast(n + ' arquivo(s) importado(s). ' + sv + ' produto(s) para vincular em VINCULAR, ' +
-          pv + ' alteração(ões) em PRÉVIA.', 'Custos', 10);
+        var msg = n + ' arquivo(s) importado(s). ' + sv + ' produto(s) para vincular em VINCULAR. ';
+        if (pv && cfg.aplicarAuto) {
+          var ap = aplicarPrevia(true);
+          msg += ap + ' alteração(ões) gravada(s) na planilha de custos. Aumentos na aba AUMENTOS 7 DIAS.';
+        } else {
+          msg += pv + ' alteração(ões) em PRÉVIA.';
+        }
+        SpreadsheetApp.getActive().toast(msg, 'Custos', 10);
       } catch (e) {
         registrarLog('VÍNCULO', '', 'ERRO', 0, 0, 0, 0, 'Importou, mas falhou ao montar VINCULAR/PRÉVIA: ' + (e && e.message || e));
       }
@@ -1236,6 +1246,8 @@ CAB.VINCULAR = ['Código VarejoFácil', 'Descrição no romaneio', 'Fornecedor',
                 '2ª sugestão', 'CONFIRMAR (SKU, EAN ou NÃO TEM)'];
 CAB.PREVIA = ['Ação', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo atual', 'Custo novo',
               'Variação', 'Linha na planilha de custos', 'Código VarejoFácil', 'Fornecedor', 'Marca (aba)'];
+CAB.HISTORICO = ['Data', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo anterior', 'Custo novo',
+                 'Variação', 'O que foi feito', 'Código VarejoFácil', 'Fornecedor', 'Onde'];
 var CAB_SKUS_VINCULO = ['SKU marketplace', 'EAN marketplace', 'Aba (marca)', 'Vinculado em'];
 var SEM_CADASTRO = 'NÃO TEM NO MKTPLACE';
 
@@ -1260,6 +1272,36 @@ function garantirAbasVinculo() {
     skus.getRange(1, 10, 1, CAB_SKUS_VINCULO.length).setValues([CAB_SKUS_VINCULO])
       .setFontWeight('bold').setBackground('#1d4ed8').setFontColor('#ffffff').setWrap(true);
     skus.getRange('J:K').setNumberFormat('@');
+  }
+  var hi = ss.getSheetByName(ABA.HISTORICO);
+  if (!hi) {
+    hi = ss.insertSheet(ABA.HISTORICO);
+    hi.getRange(1, 1, 1, CAB.HISTORICO.length).setValues([CAB.HISTORICO]);
+    hi.getRange('B:C').setNumberFormat('@');
+    hi.getRange('A2:A').setNumberFormat('dd/mm/yyyy hh:mm');
+    hi.getRange('F2:G').setNumberFormat('R$ #,##0.00');
+    hi.getRange('H2:H').setNumberFormat('+0.0%;-0.0%;0.0%');
+    estilizar(hi, CAB.HISTORICO.length);
+    hi.setColumnWidth(4, 380);
+  }
+  var au = ss.getSheetByName(ABA.AUMENTOS);
+  if (!au) {
+    au = ss.insertSheet(ABA.AUMENTOS);
+    var h = "'" + ABA.HISTORICO + "'!";
+    // só fórmula: aumentos de custo gravados nos últimos 7 dias, maior aumento primeiro
+    au.getRange('A1').setFormula('={"Data","SKU","EAN","Nome do Produto","Nome da Variação","Custo anterior",' +
+      '"Custo novo","Aumento","Aumento em R$","Fornecedor"; IFERROR(SORT(FILTER({' +
+      h + 'A2:A, ' + h + 'B2:B, ' + h + 'C2:C, ' + h + 'D2:D, ' + h + 'E2:E, ' + h + 'F2:F, ' + h + 'G2:G, ' +
+      h + 'H2:H, ' + h + 'G2:G-' + h + 'F2:F, ' + h + 'K2:K}, ' +
+      h + 'A2:A>=NOW()-7, ' + h + 'F2:F<>"", ' + h + 'G2:G>' + h + 'F2:F), 8, FALSE), ' +
+      '{"Nenhum aumento nos últimos 7 dias","","","","","","","","",""})}');
+    au.getRange('A2:A').setNumberFormat('dd/mm/yyyy hh:mm');
+    au.getRange('F2:G').setNumberFormat('R$ #,##0.00');
+    au.getRange('H2:H').setNumberFormat('+0.0%');
+    au.getRange('I2:I').setNumberFormat('R$ #,##0.00');
+    estilizar(au, 10);
+    au.getRange(1, 1, 1, 10).setBackground('#b91c1c');
+    au.setColumnWidth(4, 380);
   }
   [[ABA.VINCULAR, CAB.VINCULAR], [ABA.PREVIA, CAB.PREVIA]].forEach(function (a) {
     var sh = ss.getSheetByName(a[0]);
@@ -1474,8 +1516,10 @@ function confirmarVinculos() {
   feitos.reverse().forEach(function (l) { vin.deleteRow(l); });
   SpreadsheetApp.flush();
   var pv = feitos.length ? gerarPrevia(true) : 0;
+  var ap = pv && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
   SpreadsheetApp.getUi().alert(feitos.length + ' vínculo(s) confirmado(s).' +
-    (feitos.length ? '\n' + pv + ' alteração(ões) de custo/produto na aba PRÉVIA.' : '') +
+    (ap ? '\n' + ap + ' alteração(ões) gravada(s) na planilha de custos.'
+        : feitos.length ? '\n' + pv + ' alteração(ões) de custo/produto na aba PRÉVIA.' : '') +
     (erros.length ? '\n\nNão confirmados:\n' + erros.join('\n') : ''));
 }
 
@@ -1541,23 +1585,28 @@ function gerarPrevia(silencioso) {
   return previa.length;
 }
 
-function aplicarPrevia() {
+// silencioso = true quando roda sozinho (importação automática): sem janelas de confirmação
+function aplicarPrevia(silencioso) {
+  silencioso = silencioso === true;
   var ss = SpreadsheetApp.getActive();
   var cfg = lerConfig();
+  garantirAbasVinculo();
   var sh = ss.getSheetByName(ABA.PREVIA);
   var n = ultimaLinhaColA(sh);
-  if (n < 2) { ss.toast('A PRÉVIA está vazia.'); return; }
-  var ui = SpreadsheetApp.getUi();
+  if (n < 2) { if (!silencioso) ss.toast('A PRÉVIA está vazia.'); return 0; }
   var v = sh.getRange(2, 1, n - 1, CAB.PREVIA.length).getValues();
   var nAt = v.filter(function (r) { return r[0] === 'ATUALIZAR CUSTO'; }).length;
   var nAd = v.length - nAt;
-  if (ui.alert('Aplicar na planilha de custos?', nAt + ' custo(s) atualizado(s) na coluna I e ' + nAd +
-      ' linha(s) nova(s) em ' + cfg.abaCustos + '.', ui.ButtonSet.OK_CANCEL) !== ui.Button.OK) return;
+  if (!silencioso) {
+    var ui = SpreadsheetApp.getUi();
+    if (ui.alert('Aplicar na planilha de custos?', nAt + ' custo(s) atualizado(s) na coluna I e ' + nAd +
+        ' linha(s) nova(s) em ' + cfg.abaCustos + '.', ui.ButtonSet.OK_CANCEL) !== ui.Button.OK) return 0;
+  }
 
   var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
   var ult = alvo.getLastRow();
-  var skusAlvo = alvo.getRange(1, 2, ult, 2).getValues();
-  var feitos = 0, avisos = [], novas = [];
+  var skusAlvo = alvo.getRange(1, 2, ult, 8).getValues(); // B..I
+  var feitos = 0, avisos = [], novas = [], hist = [], agora = new Date();
   v.forEach(function (r) {
     if (r[0] === 'ATUALIZAR CUSTO') {
       var linha = Number(r[8]);
@@ -1570,11 +1619,15 @@ function aplicarPrevia() {
         for (var i = 2; i <= ult; i++) if (confere(i)) { linha = i; break; }
       }
       if (!linha) { avisos.push(r[1] + ': não achei mais na planilha de custos.'); return; }
+      var anterior = Number(skusAlvo[linha - 1][7]) || 0;
       alvo.getRange(linha, 9).setValue(r[6]);
+      hist.push([agora, r[1], r[2], r[3], r[4], anterior || '', r[6], anterior ? r[6] / anterior - 1 : '',
+                 'CUSTO ATUALIZADO', r[9], r[10], cfg.abaCustos + ' linha ' + linha]);
       feitos++;
     } else {
       // EAN | SKU Principal | SKU Variação | Marca | Categoria | Fornecedor | Nome | Nome da Variação | Custo
       novas.push([r[2] ? Number(r[2]) : '', r[1], r[1], r[11], '', r[10], r[3], r[4], r[6]]);
+      hist.push([agora, r[1], r[2], r[3], r[4], '', r[6], '', 'LINHA ADICIONADA', r[9], r[10], cfg.abaCustos]);
     }
   });
   if (novas.length) {
@@ -1584,11 +1637,15 @@ function aplicarPrevia() {
     feitos += novas.length;
   }
   sh.getRange(2, 1, n - 1, CAB.PREVIA.length).clearContent();
-  registrarLog('PRÉVIA', '', 'OK', v.length, feitos, 0, 0,
-    nAt + ' custo(s) atualizado(s), ' + novas.length + ' linha(s) adicionada(s) em ' + cfg.abaCustos +
-    (avisos.length ? ' | ' + avisos.join(' | ') : ''));
-  ui.alert('Pronto: ' + feitos + ' alteração(ões) gravada(s) em ' + cfg.abaCustos + '.' +
-    (avisos.length ? '\n\nAvisos:\n' + avisos.join('\n') : ''));
+  anexar(ABA.HISTORICO, hist);
+  registrarLog('PLANILHA DE CUSTOS', '', avisos.length ? 'CONFERIR' : 'OK', v.length, feitos, 0, 0,
+    (nAt - avisos.length) + ' custo(s) atualizado(s), ' + novas.length + ' linha(s) adicionada(s) em ' + cfg.abaCustos +
+    (silencioso ? ' (automático)' : '') + (avisos.length ? ' | ' + avisos.join(' | ') : ''));
+  if (!silencioso) {
+    SpreadsheetApp.getUi().alert('Pronto: ' + feitos + ' alteração(ões) gravada(s) em ' + cfg.abaCustos + '.' +
+      (avisos.length ? '\n\nAvisos:\n' + avisos.join('\n') : ''));
+  }
+  return feitos;
 }
 
 // ---------------------------------------------------------------------------
