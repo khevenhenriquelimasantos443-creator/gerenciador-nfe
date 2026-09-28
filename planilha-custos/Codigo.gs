@@ -379,7 +379,7 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
   var nome = arq.getName();
   try {
     var doc = ehXml ? lerXmlNfe(arq.getBlob().getDataAsString('UTF-8'), cfg)
-                    : lerPdfRomaneio(extrairTextoPdf(arq), cfg);
+                    : lerPdf(arq, cfg);
     if (!doc.numero) doc.numero = nome.replace(/\.[^.]+$/, '');
     if (!doc.data) doc.data = new Date();
 
@@ -731,6 +731,216 @@ function dataIso(s) {
 // Leitura de PDF
 // ---------------------------------------------------------------------------
 
+// 1º tenta ler o texto direto do PDF (exato, com a posição de cada pedaço de texto).
+// 2º se não achar itens, usa a conversão do Google (serve para PDF escaneado).
+// Se nenhum der certo, grava o texto lido na aba DIAGNOSTICO para ajuste do leitor.
+function lerPdf(arq, cfg) {
+  var textos = [];
+  try {
+    var t1 = textoPdfDireto(arq.getBlob().getBytes());
+    textos.push(['LEITURA DIRETA'].concat(t1.split('\n')));
+    var d1 = lerPdfRomaneio(t1, cfg);
+    if (d1.itens.length) return d1;
+  } catch (e) {
+    textos.push(['LEITURA DIRETA: erro ' + (e && e.message || e)]);
+  }
+  var t2 = extrairTextoPdf(arq);
+  textos.push(['CONVERSÃO DO GOOGLE'].concat(t2.split('\n')));
+  var d2 = lerPdfRomaneio(t2, cfg);
+  if (!d2.itens.length) gravarDiagnostico(arq.getName(), textos);
+  return d2;
+}
+
+function gravarDiagnostico(nome, blocos) {
+  var ss = SpreadsheetApp.getActive();
+  var sh = ss.getSheetByName('DIAGNOSTICO') || ss.insertSheet('DIAGNOSTICO');
+  sh.clear();
+  var linhas = [['Texto lido de ' + nome + ' em ' + new Date().toLocaleString('pt-BR')]];
+  blocos.forEach(function (b) { linhas.push(['']); b.forEach(function (l) { linhas.push([String(l).slice(0, 5000)]); }); });
+  sh.getRange(1, 1, linhas.length, 1).setNumberFormat('@').setValues(linhas);
+  sh.setColumnWidth(1, 1400);
+}
+
+// ---------------------------------------------------------------------------
+// Leitor de PDF próprio: descompacta as páginas, pega cada texto com sua
+// posição (x, y) e remonta as linhas da esquerda para a direita, de cima para baixo.
+// Funciona para PDFs gerados por sistema (como o VarejoFácil), não para escaneados.
+// ---------------------------------------------------------------------------
+
+function textoPdfDireto(bytes) {
+  var dados = [];
+  for (var i = 0; i < bytes.length; i++) dados.push(bytes[i] & 255);
+  var bruto = bytesParaTexto(dados);
+  var paginas = [];
+  var re = /stream\r?\n/g, m;
+  while ((m = re.exec(bruto))) {
+    var ini = m.index + m[0].length;
+    var fim = bruto.indexOf('endstream', ini);
+    if (fim < 0) break;
+    var dict = bruto.slice(Math.max(0, bruto.lastIndexOf('<<', m.index)), m.index);
+    var conteudo = dados.slice(ini, fim);
+    try {
+      if (/FlateDecode/.test(dict)) conteudo = inflar(conteudo.slice(2)); // pula o cabeçalho zlib
+      else if (/\/Filter/.test(dict)) continue;                         // outro filtro: imagem etc.
+    } catch (e) { continue; }
+    var txt = bytesParaTexto(conteudo);
+    if (/\bBT\b/.test(txt) && /T[jJ]/.test(txt)) paginas.push(linhasDoConteudo(txt));
+    re.lastIndex = fim;
+  }
+  return paginas.join('\n');
+}
+
+function bytesParaTexto(arr) {
+  var s = '';
+  for (var i = 0; i < arr.length; i += 8192) s += String.fromCharCode.apply(null, arr.slice(i, i + 8192));
+  return s;
+}
+
+function linhasDoConteudo(c) {
+  var pedacos = [], x = 0, y = 0, lx = 0, ly = 0, ordem = 0, m;
+  var re = /(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+Tm|(-?[\d.]+)\s+(-?[\d.]+)\s+T[dD]|T\*|\bBT\b|(\((?:\\[\s\S]|[^\\)])*\))\s*(?:Tj|'|")|\[((?:\((?:\\[\s\S]|[^\\)])*\)|[^\]])*)\]\s*TJ/g;
+  while ((m = re.exec(c))) {
+    if (m[1] !== undefined) { x = lx = Number(m[5]); y = ly = Number(m[6]); }
+    else if (m[7] !== undefined) { x = lx = lx + Number(m[7]); y = ly = ly + Number(m[8]); }
+    else if (m[0] === 'BT') { x = lx = 0; y = ly = 0; }
+    else if (m[0] === 'T*') { y = ly = ly - 12; x = lx; }
+    else {
+      var texto = '';
+      if (m[9] !== undefined) texto = stringPdf(m[9]);
+      else (m[10].match(/\((?:\\[\s\S]|[^\\)])*\)/g) || []).forEach(function (p) { texto += stringPdf(p); });
+      if (texto.trim()) pedacos.push({ x: x, y: y, t: texto, o: ordem++ });
+    }
+  }
+  pedacos.sort(function (a, b) { return b.y - a.y || a.x - b.x || a.o - b.o; });
+  var linhas = [], atual = null;
+  pedacos.forEach(function (p) {
+    if (!atual || Math.abs(atual.y - p.y) > 2.5) { atual = { y: p.y, itens: [] }; linhas.push(atual); }
+    atual.itens.push(p);
+  });
+  return linhas.map(function (l) {
+    return l.itens.sort(function (a, b) { return a.x - b.x || a.o - b.o; })
+      .map(function (p) { return p.t.trim(); }).join(' ');
+  }).join('\n');
+}
+
+function stringPdf(s) {
+  s = s.slice(1, -1);
+  var win = { 128: '€', 130: '‚', 132: '„', 133: '…', 145: '‘', 146: '’', 147: '“', 148: '”', 150: '–', 151: '—' };
+  var out = '';
+  for (var i = 0; i < s.length; i++) {
+    var ch = s[i];
+    if (ch === '\\') {
+      var n = s[++i];
+      if (/[0-7]/.test(n)) {
+        var oct = n;
+        while (oct.length < 3 && /[0-7]/.test(s[i + 1])) oct += s[++i];
+        ch = String.fromCharCode(parseInt(oct, 8));
+      } else {
+        ch = { n: '\n', r: '', t: ' ', b: '', f: '' }[n];
+        if (ch === undefined) ch = n === '\n' || n === '\r' ? '' : n;
+      }
+    }
+    var code = ch.charCodeAt(0);
+    out += win[code] || ch;
+  }
+  return out;
+}
+
+// Descompactador DEFLATE (RFC 1951), baseado no puff.c de Mark Adler
+function inflar(src) {
+  var out = [], pos = 0, buf = 0, cnt = 0;
+  var LBASE = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258];
+  var LEXT = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0];
+  var DBASE = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073,
+               4097, 6145, 8193, 12289, 16385, 24577];
+  var DEXT = [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13];
+  var ORDEM = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15];
+
+  function bits(n) {
+    while (cnt < n) {
+      if (pos >= src.length) throw new Error('PDF truncado');
+      buf |= src[pos++] << cnt; cnt += 8;
+    }
+    var v = buf & ((1 << n) - 1);
+    buf >>>= n; cnt -= n;
+    return v;
+  }
+  function tabela(tams, ini, n) {
+    var count = [], offs = [], sym = [], i;
+    for (i = 0; i < 16; i++) count[i] = 0;
+    for (i = 0; i < n; i++) count[tams[ini + i]]++;
+    count[0] = 0; offs[1] = 0;
+    for (i = 1; i < 15; i++) offs[i + 1] = offs[i] + count[i];
+    for (i = 0; i < n; i++) if (tams[ini + i]) sym[offs[tams[ini + i]]++] = i;
+    return { count: count, sym: sym };
+  }
+  function decodificar(h) {
+    var code = 0, first = 0, index = 0;
+    for (var len = 1; len <= 15; len++) {
+      code |= bits(1);
+      var c = h.count[len];
+      if (code - c < first) return h.sym[index + (code - first)];
+      index += c; first += c; first <<= 1; code <<= 1;
+    }
+    throw new Error('código inválido');
+  }
+  function blocos(lc, dc) {
+    for (;;) {
+      var s = decodificar(lc);
+      if (s < 256) out.push(s);
+      else if (s === 256) return;
+      else {
+        s -= 257;
+        var len = LBASE[s] + bits(LEXT[s]);
+        var d = decodificar(dc);
+        var dist = DBASE[d] + bits(DEXT[d]);
+        for (var k = 0; k < len; k++) out.push(out[out.length - dist]);
+      }
+    }
+  }
+  var fixoL, fixoD, ultimo;
+  do {
+    ultimo = bits(1);
+    var tipo = bits(2), i;
+    if (tipo === 0) {
+      buf = 0; cnt = 0;
+      var n = src[pos] | (src[pos + 1] << 8);
+      pos += 4;
+      for (i = 0; i < n; i++) out.push(src[pos++]);
+    } else if (tipo === 1) {
+      if (!fixoL) {
+        var t = [];
+        for (i = 0; i < 144; i++) t[i] = 8;
+        for (; i < 256; i++) t[i] = 9;
+        for (; i < 280; i++) t[i] = 7;
+        for (; i < 288; i++) t[i] = 8;
+        fixoL = tabela(t, 0, 288);
+        var td = [];
+        for (i = 0; i < 30; i++) td[i] = 5;
+        fixoD = tabela(td, 0, 30);
+      }
+      blocos(fixoL, fixoD);
+    } else if (tipo === 2) {
+      var nlen = bits(5) + 257, ndist = bits(5) + 1, ncode = bits(4) + 4, tams = [];
+      for (i = 0; i < 19; i++) tams[i] = 0;
+      for (i = 0; i < ncode; i++) tams[ORDEM[i]] = bits(3);
+      var cc = tabela(tams, 0, 19), todos = [], idx = 0;
+      while (idx < nlen + ndist) {
+        var sym = decodificar(cc), rep, val = 0;
+        if (sym < 16) { todos[idx++] = sym; continue; }
+        if (sym === 16) { val = todos[idx - 1]; rep = 3 + bits(2); }
+        else if (sym === 17) rep = 3 + bits(3);
+        else rep = 11 + bits(7);
+        while (rep--) todos[idx++] = val;
+      }
+      blocos(tabela(todos, 0, nlen), tabela(todos, nlen, ndist));
+    } else {
+      throw new Error('bloco inválido');
+    }
+  } while (!ultimo);
+  return out;
+}
+
 // Converte o PDF em Google Doc (com OCR, serve até para PDF escaneado),
 // pega o texto e apaga o Doc temporário. Requer o serviço avançado "Drive API".
 function extrairTextoPdf(arq) {
@@ -795,6 +1005,8 @@ function lerRomaneioVarejoFacil(texto, cfg) {
   var plano = t
     .replace(/\d{2}\/\d{2}\/\d{4}\s+\d{2}:\d{2}\s+varejofacil\s*-?\s*[\d.]*/gi, ' ') // rodapé de página
     .replace(/S\s*N\s*e\s*F\s*q\.[\s\S]*?Sugest[ãa]o/g, ' ')                        // cabeçalho da tabela
+    .replace(/Seq\.[\s\S]{0,300}?Custo \(%\)/g, ' ')                                   // cabeçalho (leitura direta)
+    .replace(/\s*\|\s*/g, ' ')
     .replace(/\s+/g, ' ');
   var NUM = '-?\\d[\\d.]*,\\d+';
   var re = new RegExp('(?:^|\\s)(\\d{1,4}) (\\* )?(\\d{5,14}) - (.+?) (' + NUM + ') ([A-Za-z]{1,5})\\/(' + NUM + ')' +
@@ -987,6 +1199,6 @@ var BOTAO_IMPORTAR = 'iVBORw0KGgoAAAANSUhEUgAAAeAAAABYCAYAAAAtOiQ5AAARIklEQVR42u
 var BOTAO_PENDENTES = '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';
 
 if (typeof module !== 'undefined') {
-  module.exports = { lerRomaneioVarejoFacil: lerRomaneioVarejoFacil, lerLinhaItem: lerLinhaItem, lerTextoRomaneio: lerTextoRomaneio, similaridade: similaridade,
+  module.exports = { textoPdfDireto: textoPdfDireto, lerRomaneioVarejoFacil: lerRomaneioVarejoFacil, lerLinhaItem: lerLinhaItem, lerTextoRomaneio: lerTextoRomaneio, similaridade: similaridade,
     normalizar: normalizar, gtinValido: gtinValido, numeroBR: numeroBR, casarItem: casarItem, mesmaUnidade: mesmaUnidade };
 }
