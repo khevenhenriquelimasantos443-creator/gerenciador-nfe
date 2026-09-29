@@ -57,14 +57,15 @@ de cada lançamento.
   por exemplo "LOREAL-0038 = R$ 49,90 conferido em SKUSHOPPEATUALIZADO, linha 5012". O valor
   anterior fica no **HISTÓRICO DE CUSTOS**.
 - **Não chegou:** a linha fica, com o motivo na coluna Situação. Por exemplo: "na planilha de custos
-  está R$ 91,99 (tem compra mais recente deste produto?)" ou "produto sem vínculo". A conferência se
+  continua R$ 12,38" ou "produto sem vínculo". A conferência se
   repete a cada importação; apague a linha se não precisar mais dela.
 - **CONFIRA:** o nome bateu com mais de um produto, e as opções aparecem na coluna I. Escreva o
   SKU certo na coluna A e apague a Situação para lançar de novo.
 - **NÃO ACHEI:** o código não existe no SKU - MKTPLACE.
 
-Vale sempre a compra **mais recente**. Um romaneio novo do mesmo produto substitui o custo
-lançado à mão.
+Vale sempre o **último valor que entrou**, seja por romaneio, XML ou lançamento, na ordem em que foi
+importado ou lançado, e não pela data da nota. Um lançamento feito hoje substitui o custo que estava
+lá, e um romaneio importado depois substitui o lançamento.
 
 ## Bonificação
 

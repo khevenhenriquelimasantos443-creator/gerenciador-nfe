@@ -237,9 +237,9 @@ function conferirFormulas() {
 
 function escreverFormulasCustos(cus) {
   var linhasPagas = 'SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 16, 3), ' +
-                    'ENTRADAS!M2:M=s, ENTRADAS!L2:L<>"SIM"), 1, FALSE, 2, FALSE)';
+                    'ENTRADAS!M2:M=s, ENTRADAS!L2:L<>"SIM"), 2, FALSE, 1, FALSE)';
   var mapa = function (corpo) { return '=MAP(A2:A, LAMBDA(s, IF(s="",, ' + corpo + ')))'; };
-  var grupo = 'INDEX(SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 17), ENTRADAS!M2:M=s), 1, FALSE, 2, FALSE), 1, 3)';
+  var grupo = 'INDEX(SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 17), ENTRADAS!M2:M=s), 2, FALSE, 1, FALSE), 1, 3)';
 
   cus.getRange(1, 1, cus.getMaxRows(), CAB.CUSTOS.length).clearContent();
   cus.getRange(1, 1, 1, CAB.CUSTOS.length).setValues([CAB.CUSTOS]);
@@ -296,7 +296,7 @@ function escreverLeiaMe(sh) {
     ['Depois de gravar, o script confere na planilha de custos: se o valor chegou, a linha some daqui e fica registrada no LOG'],
     ['(ex.: "LOREAL-0038 = R$ 49,90 conferido em SKUSHOPPEATUALIZADO, linha 5008"). Se não chegou, a linha fica com o motivo.'],
     ['CONFIRA = o nome bateu com mais de um produto: escreva o SKU na coluna A e apague a Situação. NÃO ACHEI = código não existe.'],
-    ['O último lançamento vale: um romaneio mais novo do mesmo produto substitui o custo lançado à mão.'],
+    ['Vale sempre o último valor que entrou (romaneio, XML ou lançamento), na ordem em que entrou, não pela data da nota.'],
     [''],
     ['BONIFICAÇÃO'],
     ['Item bonificado (CFOP 1910/2910/5910/6910 ou valor zero) entra com valor pago 0 e não muda o "último custo pago".'],
@@ -418,7 +418,8 @@ function lerConfig() {
     abaCustos: txt('Aba da planilha de custos', 'SKUSHOPPEATUALIZADO'),
     abasIgnoradas: txt('Abas ignoradas no SKU - MKTPLACE').split(',').map(function (x) { return x.trim().toUpperCase(); }).filter(String),
     limiarVinculo: Number(p['Similaridade para já deixar o vínculo preenchido']) || 0.85,
-    aplicarAuto: txt('Aplicar automaticamente na planilha de custos', 'SIM').toUpperCase() !== 'NÃO'
+    aplicarAuto: txt('Aplicar automaticamente na planilha de custos', 'SIM').toUpperCase() !== 'NÃO',
+    custoOficial: txt('Custo oficial', 'ÚLTIMO PAGO').toUpperCase()
   };
 }
 
@@ -670,21 +671,25 @@ function conferirLancamentos(cfg) {
   if (!pendentes.length) return res;
 
   // SKU interno -> SKU do marketplace
-  var mktDoInterno = {};
+  var mktDoInterno = {}, eanDoMkt = {};
   var skus = ss.getSheetByName(ABA.SKUS);
   if (ultimaLinhaColA(skus) > 1) {
-    skus.getRange(2, 1, ultimaLinhaColA(skus) - 1, 10).getValues().forEach(function (r) { mktDoInterno[String(r[0]).trim()] = String(r[9]).trim(); });
+    skus.getRange(2, 1, ultimaLinhaColA(skus) - 1, 11).getValues().forEach(function (r) {
+      mktDoInterno[String(r[0]).trim()] = String(r[9]).trim();
+      if (r[10] !== '') eanDoMkt[String(r[9]).trim().toUpperCase()] = eanTexto(r[10]);
+    });
   }
   var alvo = cfg.planilhaCustos ? SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos) : null;
   var linhasAlvo = alvo && alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
   var achar = function (sku) {
     sku = sku.toUpperCase();
+    var ean = eanDoMkt[sku] || '', porEan = null;
     for (var k = 0; k < linhasAlvo.length; k++) {
-      if (String(linhasAlvo[k][1]).trim().toUpperCase() === sku || String(linhasAlvo[k][2]).trim().toUpperCase() === sku) {
-        return { linha: k + 2, valor: Number(linhasAlvo[k][8]) || 0 };
-      }
+      var x = linhasAlvo[k], achado = { linha: k + 2, valor: Number(x[8]) || 0 };
+      if (String(x[1]).trim().toUpperCase() === sku || String(x[2]).trim().toUpperCase() === sku) return achado;
+      if (!porEan && ean && eanTexto(x[0]) === ean) porEan = achado;
     }
-    return null;
+    return porEan;
   };
   var apagar = [], log = [], agora = new Date(), ok = 0;
   pendentes.forEach(function (i) {
@@ -696,8 +701,8 @@ function conferirLancamentos(cfg) {
     else if (!alvo) motivo = 'preencha em CONFIG o link da planilha de custos';
     else if (!(a = achar(sku))) motivo = cfg.aplicarAuto ? sku + ' não está na planilha de custos' : 'esperando Aplicar na aba PRÉVIA';
     else if (Math.abs(a.valor - custo) >= 0.005) {
-      motivo = cfg.aplicarAuto ? 'na planilha de custos está R$ ' + a.valor.toFixed(2).replace('.', ',') +
-        ' (tem compra mais recente deste produto?)' : 'esperando Aplicar na aba PRÉVIA';
+      motivo = cfg.aplicarAuto ? 'na planilha de custos continua R$ ' + a.valor.toFixed(2).replace('.', ',') +
+        ' (veja o LOG; clique em Sincronizar para tentar de novo)' : 'esperando Aplicar na aba PRÉVIA';
     }
     if (motivo) {
       sh.getRange(i + 2, 8).setValue('LANÇADO, mas NÃO chegou na planilha de custos: ' + motivo);
@@ -810,6 +815,42 @@ function lancarCustos(silencioso, semSincronizar) {
 // Vínculo com o SKU - MKTPLACE e envio para a planilha de custos
 // ===========================================================================
 
+// Custo de cada SKU interno calculado direto de ENTRADAS (mesma regra da aba CUSTOS, sem depender
+// do recálculo das fórmulas). Vale o que entrou por último (coluna Importado em), não a data da nota.
+//   ÚLTIMO PAGO: valor pago / qtd da última linha não bonificada
+//   EFETIVO: total pago / qtd total do último grupo de compra (bonificação dilui)
+//   MÉDIO: total pago / qtd total de todas as entradas
+function calcularCustos(oficial) {
+  var ent = SpreadsheetApp.getActive().getSheetByName(ABA.ENTRADAS);
+  var n = ultimaLinhaColA(ent), por = {};
+  if (n < 2) return {};
+  ent.getRange(2, 1, n - 1, 20).getValues().forEach(function (r) {
+    var sku = String(r[12]).trim();
+    if (!sku || r[0] === '') return;
+    var qtd = (Number(r[7]) || 0) * (Number(r[13]) || 1);
+    var quando = r[19] instanceof Date ? r[19].getTime() : 0;
+    var doc = r[0] instanceof Date ? r[0].getTime() : 0;
+    (por[sku] = por[sku] || []).push({ qtd: qtd, pago: Number(r[10]) || 0, bonif: r[11] === 'SIM',
+      grupo: String(r[16] || r[1]), forn: r[2], quando: quando, doc: doc });
+  });
+  var res = {};
+  Object.keys(por).forEach(function (sku) {
+    var l = por[sku].sort(function (a, b) { return (b.quando - a.quando) || (b.doc - a.doc); });
+    var pagas = l.filter(function (x) { return !x.bonif && x.qtd > 0; });
+    if (!pagas.length) return;
+    var soma = function (lista, campo) { return lista.reduce(function (t, x) { return t + x[campo]; }, 0); };
+    var custo = pagas[0].pago / pagas[0].qtd;
+    if (oficial === 'EFETIVO') {
+      var g = l.filter(function (x) { return x.grupo === l[0].grupo; });
+      if (soma(g, 'qtd')) custo = soma(g, 'pago') / soma(g, 'qtd');
+    } else if (oficial === 'MÉDIO' && soma(l, 'qtd')) {
+      custo = soma(l, 'pago') / soma(l, 'qtd');
+    }
+    res[sku] = { custo: custo, fornecedor: pagas[0].forn, data: l[0].quando };
+  });
+  return res;
+}
+
 // Vincula, monta a prévia e (Aplicar automaticamente = SIM) grava. Devolve um resumo.
 function sincronizar(cfg) {
   if (!cfg.planilhaMkt || !cfg.planilhaCustos) {
@@ -831,7 +872,10 @@ function sincronizar(cfg) {
 
 function sincronizarAgora() {
   var cfg = lerConfig();
-  SpreadsheetApp.getUi().alert('Sincronização', sincronizar(cfg), SpreadsheetApp.getUi().ButtonSet.OK);
+  var msg = sincronizar(cfg);
+  var c = conferirLancamentos(cfg); // linhas LANÇADO que ainda não tinham chegado
+  if (c.detalhes.length) msg += '\n\n' + c.resumo + '\n\n' + c.detalhes.join('\n');
+  SpreadsheetApp.getUi().alert('Sincronização', msg, SpreadsheetApp.getUi().ButtonSet.OK);
 }
 
 function idDePlanilha(s) {
@@ -959,14 +1003,7 @@ function gerarPrevia(silencioso) {
     if (e) (idxEan[e] = idxEan[e] || []).push(i);
   });
 
-  var custos = {};
-  var cus = ss.getSheetByName(ABA.CUSTOS);
-  if (cus.getLastRow() > 1) {
-    cus.getRange(2, 1, cus.getLastRow() - 1, 12).getValues().forEach(function (r) {
-      if (r[0] !== '') custos[String(r[0])] = { custo: Number(r[11]) || 0, fornecedor: r[4],
-                                                data: r[3] instanceof Date ? r[3].getTime() : 0 };
-    });
-  }
+  var custos = calcularCustos(cfg.custoOficial);
   var catalogo = null; // só carrega se tiver produto novo para adicionar
   var skus = ss.getSheetByName(ABA.SKUS);
   var nS = ultimaLinhaColA(skus);
@@ -1026,21 +1063,25 @@ function aplicarPrevia(silencioso) {
 
   var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
   var ult = alvo.getLastRow();
-  var skusAlvo = alvo.getRange(1, 2, ult, 8).getValues(); // B..I
+  var skusAlvo = alvo.getRange(1, 1, ult, 9).getValues(); // A (EAN) .. I (Custo)
   var feitos = 0, avisos = [], novas = [], hist = [], agora = new Date();
   v.forEach(function (r) {
     if (r[0] === 'ATUALIZAR CUSTO') {
       var linha = Number(r[8]);
+      // a linha é do produto se o SKU (B ou C) ou o EAN (A) bate: o SKU - MKTPLACE às vezes usa o SKU
+      // da variação e a planilha de custos o principal
       var confere = function (l) {
         var x = skusAlvo[l - 1];
-        return x && [x[0], x[1]].some(function (s) { return String(s).trim().toUpperCase() === String(r[1]).toUpperCase(); });
+        if (!x) return false;
+        if ([x[1], x[2]].some(function (s) { return String(s).trim().toUpperCase() === String(r[1]).toUpperCase(); })) return true;
+        return !!r[2] && eanTexto(x[0]) === eanTexto(r[2]);
       };
       if (!confere(linha)) { // a planilha mudou desde a prévia: procura o SKU de novo
         linha = 0;
         for (var i = 2; i <= ult; i++) if (confere(i)) { linha = i; break; }
       }
       if (!linha) { avisos.push(r[1] + ': não achei mais na planilha de custos.'); return; }
-      var anterior = Number(skusAlvo[linha - 1][7]) || 0;
+      var anterior = Number(skusAlvo[linha - 1][8]) || 0;
       // já estava com o valor novo (prévia aplicada antes, pela metade): o anterior é o da prévia
       if (Math.abs(anterior - r[6]) < 0.005 && Number(r[5])) anterior = Number(r[5]);
       alvo.getRange(linha, 9).setValue(r[6]);
