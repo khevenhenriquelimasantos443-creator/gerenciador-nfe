@@ -801,8 +801,10 @@ function lancarCustos(silencioso, semSincronizar) {
     sh.getRange(i + 2, 8, 1, 2).setValues([[situacao, achado]]);
   });
   gravarEntradas(linhas, extras);
-  var msg = lancados + ' custo(s) lançado(s)' + (conferir ? ', ' + conferir + ' para conferir (veja a coluna Situação)' : '') + '. ';
-  if (lancados && !semSincronizar) {
+  var msg = lancados + ' custo(s) novo(s) lançado(s)' + (conferir ? ', ' + conferir + ' para conferir (veja a coluna Situação)' : '') + '. ';
+  // linhas LANÇADO que ainda não tinham chegado na planilha de custos também são reenviadas
+  var travadas = v.some(function (r) { return /^LANÇADO,/.test(String(r[7])); });
+  if ((lancados || travadas) && !semSincronizar) {
     msg += sincronizar(cfg);
     var c = conferirLancamentos(cfg);
     msg += '\n\n' + c.resumo + (c.detalhes.length ? '\n\n' + c.detalhes.join('\n') : '');
