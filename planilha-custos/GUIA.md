@@ -79,16 +79,26 @@ e aparecem em AUMENTOS 7 DIAS, marcados como "KIT ATUALIZADO" no histórico.
 2. Rode **Custos > Sugerir componentes dos kits**. A aba **KITS** ganha uma linha por componente,
    separado a partir do nome do kit. A quantidade também vem do nome: "3 Ampolas", "3x30ml", "12un",
    "2 Shampoo e 1 Condicionador". A sugestão é o produto mais parecido **da mesma marca** no SKU - MKTPLACE.
-3. Confira a coluna laranja **CONFIRMAR**. Ela já vem preenchida quando a sugestão é segura, ou seja,
-   quando todas as palavras do componente e a linha batem, com folga para a 2ª opção. Nas outras,
-   escreva o SKU do componente ou **NÃO TEM**. A quantidade (coluna F) também pode ser corrigida.
-4. Clique em **Calcular kits**. A coluna **Situação** mostra, para cada kit, o custo e a conta
-   (ex.: "OK: R$ 215,00 = 105,00 + 110,00") ou o que falta: componente para confirmar, componente sem
-   custo na planilha de custos, ou kit que não está na planilha de custos.
+3. Revise na aba **REVISAR KITS**, que mostra **um kit por linha**:
+   - o nome do kit ao lado dos produtos escolhidos, cada um com o custo atual;
+   - o **custo calculado** e o **custo atual** na planilha de custos, com a diferença em %;
+   - a cor da linha: 🟢 diferença até 10%, 🟡 até 25%, 🔴 diferença grande (componente ou quantidade
+     errada, ou custo de kit desatualizado), ⚪ incompleto (falta confirmar componente, componente sem
+     custo ou kit fora da planilha). Os mais seguros ficam em cima.
+4. **Kit errado:** escreva na coluna laranja **CORRIGIR** os componentes certos, separados por `+`,
+   com a quantidade na frente quando for mais de um. Ex.: `LOREAL-0024 + 2x LOREAL-0038`. Clique em
+   **Atualizar revisão**: o script troca os componentes do kit na aba KITS, refaz a conta e limpa a
+   coluna. Se algum SKU não existir no SKU - MKTPLACE, nada é trocado, o texto fica e a coluna Alerta
+   diz qual SKU não foi achado.
+5. Marque **Aprovar** nos kits conferidos. **Custos > Aprovar todos os kits verdes** marca de uma vez
+   os que têm diferença de até 10%. Depois clique em **Gravar aprovados**. Os aprovados **saem da
+   lista**, e a data da aprovação fica na coluna "Aprovado em" da aba KITS, com as linhas em verde.
+   Na lista fica só o que falta revisar.
 
-Kit recém-sugerido só entra na sincronização automática depois do primeiro **Calcular kits**, para
-nada ser gravado antes da sua revisão. Para kits novos na planilha de kits, rode **Sugerir componentes**
-de novo: só os kits que ainda não estão na aba KITS são adicionados.
+**Só kit aprovado vai para a planilha de custos.** Depois de aprovado, ele se atualiza sozinho em cada
+sincronização. Para mexer num kit já aprovado, use **Custos > Reabrir um kit aprovado para revisão**:
+ele volta para a lista e deixa de ser atualizado até ser aprovado de novo. Para kits novos na planilha
+de kits, rode **Sugerir componentes** de novo: só os kits que ainda não estão na aba KITS são adicionados.
 
 O kit que tinha fórmula na coluna I da planilha de custos (ex.: `=I329+I330` ou IMPORTRANGE) passa a
 ter o valor calculado. As fórmulas por número de linha estavam apontando para produtos errados
@@ -122,6 +132,8 @@ Não escreva nas abas **CUSTOS** e **AUMENTOS 7 DIAS**, nem nas colunas **O e P 
 | LEIA-ME | Este guia, resumido |
 | CUSTOS | Custo de cada produto: último pago, anterior, efetivo, médio e oficial (só fórmulas) |
 | LANÇAR CUSTO | Custo que não vem em romaneio ou XML |
+| REVISAR KITS | Kits pendentes, um por linha: produtos escolhidos, custo calculado x atual, cor, Aprovar e CORRIGIR |
+| KITS | Componentes de cada kit e data de aprovação |
 | KITS | Componentes de cada kit e a conta do custo do kit |
 | AUMENTOS 7 DIAS | Custos que subiram na última semana |
 | HISTÓRICO DE CUSTOS | Tudo que foi gravado na planilha de custos |
