@@ -42,9 +42,11 @@ var CAB = {
            'Quantidade (opcional)', 'Fornecedor (opcional)', 'Nº da nota (opcional)',
            'Data (opcional, padrão hoje)', 'Situação (preenchida pelo script)', 'Produto encontrado'],
   KITS: ['SKU do kit', 'SKU atual', 'EAN do kit', 'Nome do kit', 'Componente (do nome)', 'Qtd', 'SKU sugerido',
-         'Produto sugerido', 'Similaridade', '2ª sugestão', 'CONFIRMAR (SKU do componente ou NÃO TEM)', 'Situação do kit'],
+         'Produto sugerido', 'Similaridade', '2ª sugestão', 'CONFIRMAR (SKU do componente ou NÃO TEM)', 'Situação do kit',
+         'Aprovado em'],
   REVISAR_KITS: ['SKU do kit', 'Aprovar', 'Nome do kit', 'Componentes escolhidos (produto e custo)', 'Custo calculado',
-                 'Custo atual na planilha', 'Diferença', 'Alerta', 'Linha na planilha de custos'],
+                 'Custo atual na planilha', 'Diferença', 'Alerta', 'Linha na planilha de custos',
+                 'CORRIGIR (ex.: HON-0001 + 2x HON-0002)'],
   // colunas A-H: cadastro; I: fórmula; J-M: vínculo com o SKU - MKTPLACE
   SKUS: ['SKU', 'Descrição', 'EANs (separe por vírgula)', 'Unidade', 'Categoria', 'Status',
          'Cadastrado em', 'Origem', 'Custo oficial', 'SKU marketplace', 'EAN marketplace',
@@ -102,6 +104,7 @@ function onOpen() {
     .addItem('Revisar kits (aba REVISAR KITS)', 'revisarKits')
     .addItem('Aprovar todos os kits verdes', 'aprovarKitsVerdes')
     .addItem('Gravar kits aprovados', 'calcularKits')
+    .addItem('Reabrir um kit aprovado para revisão', 'reabrirKit')
     .addItem('Aplicar a PRÉVIA (se o automático estiver em NÃO)', 'aplicarPrevia')
     .addSeparator()
     .addItem('Ligar importação automática (a cada 15 min)', 'ativarAutomatico')
@@ -161,6 +164,7 @@ function atualizarEstrutura() {
       sh.getRange('A:A').setNumberFormat('@'); sh.getRange('E2:F').setNumberFormat('R$ #,##0.00');
       sh.getRange('G2:G').setNumberFormat('+0%;-0%;0%'); sh.setColumnWidth(2, 70); sh.setColumnWidth(3, 380);
       sh.setColumnWidth(4, 700); sh.setColumnWidth(8, 300); sh.getRange(1, 2).setBackground('#15803d');
+      sh.getRange('J:J').setNumberFormat('@'); sh.setColumnWidth(10, 320); sh.getRange(1, 10).setBackground('#b45309');
     },
     VINCULAR: function (sh) {
       sh.getRange('A:D').setNumberFormat('@'); sh.getRange('G:G').setNumberFormat('@');
@@ -1324,7 +1328,7 @@ function sugerirKits(silencioso) {
       var a = top[0], b = top[1];
       var certo = a && a.cob === 1 && a.ctx >= 0.5 && (!b || a.s - b.s >= 0.05);
       linhas.push([k.sku, k.atual, k.ean, k.nome, q.texto, q.qtd, a ? a.it.sku : '', a ? nomeCat(a.it) : '', a ? a.s : '',
-        b ? b.it.sku + ' - ' + nomeCat(b.it) : '', certo ? a.it.sku : '', '']);
+        b ? b.it.sku + ' - ' + nomeCat(b.it) : '', certo ? a.it.sku : '', '', '']);
     });
     feitos++;
   });
@@ -1375,7 +1379,8 @@ function contasDosKits(cfg) {
   });
   var contas = ordem.map(function (k) {
     var g = grupos[k], r0 = g[0].r, c = { sku: k, atual: String(r0[1]), nome: String(r0[3]), linhas: g, comps: [],
-      total: 0, iKit: undefined, custoAtual: '', situacao: '', pronto: false };
+      total: 0, iKit: undefined, custoAtual: '', situacao: '', pronto: false,
+      aprovado: g.some(function (x) { return String(x.r[12]).trim() !== ''; }) };
     var falta = g.filter(function (x) { return String(x.r[10]).trim() === ''; });
     var semCadastro = g.filter(function (x) { return /^N[AÃ]O\s*TEM$/i.test(String(x.r[10]).trim()); });
     var semCusto = [];
@@ -1407,10 +1412,10 @@ function contasDosKits(cfg) {
     }
     return c;
   });
-  return { contas: contas, linhasAlvo: linhasAlvo };
+  return { contas: contas, linhasAlvo: linhasAlvo, nLinhas: v.length };
 }
 
-// Kits aprovados (caixa marcada na aba REVISAR KITS)
+// Kits com a caixa Aprovar marcada na aba REVISAR KITS (a aprovação é gravada em KITS no Gravar aprovados)
 function kitsAprovados() {
   var sh = SpreadsheetApp.getActive().getSheetByName(ABA.REVISAR_KITS);
   var ap = {};
@@ -1421,25 +1426,73 @@ function kitsAprovados() {
   return ap;
 }
 
+// Coluna CORRIGIR da REVISAR KITS ("HON-0001 + 2x HON-0002"): troca os componentes do kit na aba KITS.
+// Devolve as correções que não deram certo ({sku do kit: {texto, erro}}) para continuarem na revisão.
+function aplicarCorrecoesKits(cfg) {
+  var ss = SpreadsheetApp.getActive();
+  var rev = ss.getSheetByName(ABA.REVISAR_KITS), kits = ss.getSheetByName(ABA.KITS);
+  var falhas = {};
+  if (!rev || ultimaLinhaColA(rev) < 2) return falhas;
+  var pedidos = rev.getRange(2, 1, ultimaLinhaColA(rev) - 1, CAB.REVISAR_KITS.length).getValues()
+    .filter(function (r) { return String(r[9]).trim() !== ''; });
+  if (!pedidos.length) return falhas;
+  var porSku = {};
+  carregarCatalogo(cfg).forEach(function (it) {
+    porSku[it.sku.toUpperCase()] = it;
+    if (it.principal && !porSku[it.principal.toUpperCase()]) porSku[it.principal.toUpperCase()] = it;
+  });
+  var nK = ultimaLinhaColA(kits);
+  var v = nK > 1 ? kits.getRange(2, 1, nK - 1, CAB.KITS.length).getValues() : [];
+  var apagar = [], novas = [];
+  pedidos.forEach(function (p) {
+    var kit = String(p[0]).trim(), texto = String(p[9]).trim(), comps = [], erro = '';
+    texto.split('+').forEach(function (parte) {
+      parte = parte.trim();
+      if (!parte) return;
+      var m = parte.match(/^(\d+)\s*[x×*]\s*(.+)$/i), qtd = m ? Number(m[1]) : 1, sku = (m ? m[2] : parte).trim();
+      var it = porSku[sku.toUpperCase()];
+      if (!it) erro += (erro ? ', ' : '') + sku;
+      else comps.push({ qtd: qtd, it: it });
+    });
+    if (erro || !comps.length) { falhas[kit] = { texto: texto, erro: 'CORRIGIR: não achei no SKU - MKTPLACE: ' + (erro || '(vazio)') }; return; }
+    var base = null;
+    v.forEach(function (r, i) { if (String(r[0]).trim() === kit) { apagar.push(i + 2); base = base || r; } });
+    if (!base) { falhas[kit] = { texto: texto, erro: 'CORRIGIR: kit não está na aba KITS' }; return; }
+    comps.forEach(function (c) {
+      var desc = c.it.desc + (c.it.variacao ? ' [' + c.it.variacao + ']' : '');
+      novas.push([kit, base[1], base[2], base[3], 'corrigido: ' + c.it.sku, c.qtd, c.it.sku, desc, 1, '', c.it.sku, '', base[12]]);
+    });
+  });
+  apagar.sort(function (a, b) { return b - a; }).forEach(function (l) { kits.deleteRow(l); });
+  anexar(ABA.KITS, novas);
+  return falhas;
+}
+
 // Aba REVISAR KITS: um kit por linha, com os produtos escolhidos, o custo calculado, o custo atual e a
 // diferença. Mais seguro em cima. Mantém as aprovações já marcadas. Também pinta a aba KITS.
-function atualizarRevisaoKits(cfg, dados) {
+function atualizarRevisaoKits(cfg, dados, falhas) {
   var ss = SpreadsheetApp.getActive();
   dados = dados || contasDosKits(cfg);
+  falhas = falhas || {};
   var aprov = kitsAprovados();
   var real = function (x) { return 'R$ ' + x.toFixed(2).replace('.', ','); };
-  var linhas = dados.contas.map(function (c) {
+  var jaAprovados = 0;
+  var linhas = dados.contas.filter(function (c) {
+    if (c.aprovado && !falhas[c.sku]) { jaAprovados++; return false; } // aprovado sai da lista
+    return true;
+  }).map(function (c) {
     var dif = c.pronto && c.custoAtual ? c.total / c.custoAtual - 1 : '';
     var alerta = !c.pronto ? c.situacao :
       c.custoAtual === 0 ? 'sem custo atual na planilha para comparar' :
       Math.abs(dif) > 0.25 ? 'DIFERENÇA GRANDE: confira componentes e quantidades' :
       Math.abs(dif) > 0.10 ? 'diferença média: vale conferir' : 'ok';
     var nivel = !c.pronto ? 3 : alerta === 'ok' ? 0 : /^diferença média|sem custo atual/.test(alerta) ? 1 : 2;
+    if (falhas[c.sku]) { alerta = falhas[c.sku].erro; nivel = 2; }
     return { nivel: nivel, dif: dif === '' ? 9 : Math.abs(dif), linha: [
       c.sku, !!aprov[c.sku], c.nome,
       c.comps.map(function (x) { return (x.qtd > 1 ? x.qtd + '× ' : '') + x.desc + (x.custo ? ' (' + real(x.custo) + ')' : ''); }).join('  +  '),
       c.pronto ? c.total : '', c.custoAtual === '' ? '' : c.custoAtual, dif, alerta,
-      c.iKit === undefined ? '' : c.iKit + 2] };
+      c.iKit === undefined ? '' : c.iKit + 2, falhas[c.sku] ? falhas[c.sku].texto : ''] };
   });
   linhas.sort(function (a, b) { return (a.nivel - b.nivel) || (a.dif - b.dif); });
 
@@ -1458,32 +1511,33 @@ function atualizarRevisaoKits(cfg, dados) {
 
   // aba KITS: faixas alternadas por kit; componente sem confirmação em amarelo
   var kits = ss.getSheetByName(ABA.KITS);
-  var fundo = [], alterna = false;
+  var fundo = [], sit = [], alterna = false;
+  for (var i = 0; i < dados.nLinhas; i++) { fundo.push(CAB.KITS.map(function () { return '#ffffff'; })); sit.push(['']); }
   dados.contas.forEach(function (c) {
     alterna = !alterna;
     c.linhas.forEach(function (x) {
-      var cor = String(x.r[10]).trim() === '' ? '#fef9c3' : (alterna ? '#ffffff' : '#eef2ff');
-      fundo.push(CAB.KITS.map(function () { return cor; }));
+      var cor = c.aprovado ? '#dcfce7' : String(x.r[10]).trim() === '' ? '#fef9c3' : (alterna ? '#ffffff' : '#eef2ff');
+      fundo[x.linha - 2] = CAB.KITS.map(function () { return cor; });
+      sit[x.linha - 2] = [c.situacao];
     });
-    c.linhas.forEach(function (x) { x.situacao = c.situacao; });
   });
-  if (fundo.length) kits.getRange(2, 1, fundo.length, CAB.KITS.length).setBackgrounds(fundo);
-  var sit = [];
-  dados.contas.forEach(function (c) { c.linhas.forEach(function () { sit.push([c.situacao]); }); });
-  if (sit.length) kits.getRange(2, 12, sit.length, 1).setValues(sit);
+  if (fundo.length) {
+    kits.getRange(2, 1, fundo.length, CAB.KITS.length).setBackgrounds(fundo);
+    kits.getRange(2, 12, sit.length, 1).setValues(sit);
+  }
 
   var cont = [0, 0, 0, 0];
   linhas.forEach(function (l) { cont[l.nivel]++; });
-  return { verdes: cont[0], amarelos: cont[1], vermelhos: cont[2], incompletos: cont[3], total: linhas.length };
+  return { verdes: cont[0], amarelos: cont[1], vermelhos: cont[2], incompletos: cont[3], total: linhas.length,
+           aprovados: jaAprovados, falhas: Object.keys(falhas).length };
 }
 
 // Custo dos kits APROVADOS na PRÉVIA ("ATUALIZAR KIT"). Kit não aprovado não vai para a planilha.
 function previaKits(cfg, acrescentar) {
   var dados = contasDosKits(cfg);
-  var aprov = kitsAprovados();
   var previa = [];
   dados.contas.forEach(function (c) {
-    if (!c.pronto || !aprov[c.sku]) return;
+    if (!c.pronto || !c.aprovado) return;
     if (Math.abs((Number(c.custoAtual) || 0) - c.total) < 0.005) return;
     var r = dados.linhasAlvo[c.iKit];
     previa.push(['ATUALIZAR KIT', String(r[1] || c.sku), eanTexto(r[0]), r[6], r[7], c.custoAtual || '', c.total,
@@ -1498,14 +1552,34 @@ function previaKits(cfg, acrescentar) {
 // Botão "Atualizar revisão" (aba KITS e REVISAR KITS): refaz a conta e a aba de revisão, sem gravar nada
 function revisarKits() {
   var cfg = lerConfig();
-  var r = atualizarRevisaoKits(cfg);
+  var falhas = aplicarCorrecoesKits(cfg);
+  var r = atualizarRevisaoKits(cfg, null, falhas);
   SpreadsheetApp.getActive().setActiveSheet(SpreadsheetApp.getActive().getSheetByName(ABA.REVISAR_KITS));
   SpreadsheetApp.getUi().alert('Revisão dos kits (' + r.total + '):\n\n' +
     '🟢 ' + r.verdes + ' com diferença até 10% do custo atual\n' +
     '🟡 ' + r.amarelos + ' com diferença entre 10% e 25% (ou sem custo atual para comparar)\n' +
     '🔴 ' + r.vermelhos + ' com diferença acima de 25%: confira componentes e quantidades\n' +
-    '⚪ ' + r.incompletos + ' incompletos (falta confirmar componente, sem custo ou fora da planilha)\n\n' +
-    'Marque Aprovar nos kits conferidos e clique em Gravar aprovados.');
+    '⚪ ' + r.incompletos + ' incompletos (falta confirmar componente, sem custo ou fora da planilha)\n' +
+    '✓ ' + r.aprovados + ' já aprovados (fora da lista, atualizados sozinhos)\n' +
+    (r.falhas ? '\n' + r.falhas + ' correção(ões) com SKU não encontrado: veja a coluna Alerta.\n' : '') +
+    '\nMarque Aprovar nos kits conferidos e clique em Gravar aprovados. Para corrigir um kit, escreva os\n' +
+    'componentes certos na coluna CORRIGIR (ex.: HON-0001 + 2x HON-0002) e clique em Atualizar revisão.');
+}
+
+// Volta um kit aprovado para a lista de revisão (apaga a data de aprovação)
+function reabrirKit() {
+  var ui = SpreadsheetApp.getUi();
+  var resp = ui.prompt('Reabrir kit', 'SKU do kit (ex.: KT-HON-0003):', ui.ButtonSet.OK_CANCEL);
+  if (resp.getSelectedButton() !== ui.Button.OK) return;
+  var sku = String(resp.getResponseText()).trim().toUpperCase();
+  var kits = SpreadsheetApp.getActive().getSheetByName(ABA.KITS);
+  var n = ultimaLinhaColA(kits), achou = 0;
+  if (n > 1) kits.getRange(2, 1, n - 1, 1).getValues().forEach(function (r, i) {
+    if (String(r[0]).trim().toUpperCase() === sku) { kits.getRange(i + 2, 13).setValue(''); achou++; }
+  });
+  if (!achou) { ui.alert('Kit ' + sku + ' não está na aba KITS.'); return; }
+  atualizarRevisaoKits(lerConfig());
+  ui.alert('Kit ' + sku + ' voltou para a aba REVISAR KITS. Enquanto não for aprovado de novo, o custo dele não é atualizado.');
 }
 
 // Marca Aprovar em todos os verdes (diferença até 10%)
@@ -1527,11 +1601,21 @@ function aprovarKitsVerdes() {
 // Botão "Gravar aprovados": grava na planilha de custos o custo dos kits com Aprovar marcado
 function calcularKits() {
   var cfg = lerConfig();
+  var falhas = aplicarCorrecoesKits(cfg);
+  // grava a aprovação na aba KITS (coluna Aprovado em) para os kits marcados e prontos
+  var marcados = kitsAprovados(), dados = contasDosKits(cfg), kits = SpreadsheetApp.getActive().getSheetByName(ABA.KITS);
+  var agora = new Date(), novos = 0, naoProntos = [];
+  dados.contas.forEach(function (c) {
+    if (!marcados[c.sku] || c.aprovado || falhas[c.sku]) return;
+    if (!c.pronto) { naoProntos.push(c.sku); return; }
+    c.linhas.forEach(function (x) { kits.getRange(x.linha, 13).setValue(agora); });
+    novos++;
+  });
   var r = previaKits(cfg, false);
   var ap = r.n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
-  atualizarRevisaoKits(cfg);
-  var aprov = Object.keys(kitsAprovados()).length;
-  SpreadsheetApp.getUi().alert(aprov + ' kit(s) aprovado(s). ' +
+  var rev = atualizarRevisaoKits(cfg, null, falhas);
+  SpreadsheetApp.getUi().alert(novos + ' kit(s) aprovado(s) agora (' + rev.aprovados + ' no total, fora da lista de revisão). ' +
+    (naoProntos.length ? '\nNão aprovados porque estão incompletos: ' + naoProntos.join(', ') + '. ' : '') +
     (cfg.aplicarAuto ? ap + ' custo(s) de kit gravado(s) em ' + cfg.abaCustos + ' (os outros já estavam com o valor certo).'
                      : r.n + ' alteração(ões) na aba PRÉVIA.') +
     '\n\nDaqui em diante esses kits se atualizam sozinhos quando um componente mudar de custo.');
