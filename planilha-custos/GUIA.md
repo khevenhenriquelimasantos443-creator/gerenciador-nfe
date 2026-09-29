@@ -67,6 +67,33 @@ Vale sempre o **último valor que entrou**, seja por romaneio, XML ou lançament
 importado ou lançado, e não pela data da nota. Um lançamento feito hoje substitui o custo que estava
 lá, e um romaneio importado depois substitui o lançamento.
 
+## Kits
+
+O custo de cada kit é **a soma de quantidade × custo de cada componente**, lido da planilha de
+custos. Quando o custo de um componente muda, os kits que usam esse componente se atualizam sozinhos
+e aparecem em AUMENTOS 7 DIAS, marcados como "KIT ATUALIZADO" no histórico.
+
+**Primeira vez:**
+
+1. Em **CONFIG**, cole o link da **planilha de kits** (a lista com SKU novo, SKU atual, nome, marca e EAN).
+2. Rode **Custos > Sugerir componentes dos kits**. A aba **KITS** ganha uma linha por componente,
+   separado a partir do nome do kit. A quantidade também vem do nome: "3 Ampolas", "3x30ml", "12un",
+   "2 Shampoo e 1 Condicionador". A sugestão é o produto mais parecido **da mesma marca** no SKU - MKTPLACE.
+3. Confira a coluna laranja **CONFIRMAR**. Ela já vem preenchida quando a sugestão é segura, ou seja,
+   quando todas as palavras do componente e a linha batem, com folga para a 2ª opção. Nas outras,
+   escreva o SKU do componente ou **NÃO TEM**. A quantidade (coluna F) também pode ser corrigida.
+4. Clique em **Calcular kits**. A coluna **Situação** mostra, para cada kit, o custo e a conta
+   (ex.: "OK: R$ 215,00 = 105,00 + 110,00") ou o que falta: componente para confirmar, componente sem
+   custo na planilha de custos, ou kit que não está na planilha de custos.
+
+Kit recém-sugerido só entra na sincronização automática depois do primeiro **Calcular kits**, para
+nada ser gravado antes da sua revisão. Para kits novos na planilha de kits, rode **Sugerir componentes**
+de novo: só os kits que ainda não estão na aba KITS são adicionados.
+
+O kit que tinha fórmula na coluna I da planilha de custos (ex.: `=I329+I330` ou IMPORTRANGE) passa a
+ter o valor calculado. As fórmulas por número de linha estavam apontando para produtos errados
+depois que a aba foi reordenada.
+
 ## Bonificação
 
 - Item bonificado (CFOP 1910/2910/5910/6910 ou valor zero) entra com valor pago 0 e **não muda
@@ -95,6 +122,7 @@ Não escreva nas abas **CUSTOS** e **AUMENTOS 7 DIAS**, nem nas colunas **O e P 
 | LEIA-ME | Este guia, resumido |
 | CUSTOS | Custo de cada produto: último pago, anterior, efetivo, médio e oficial (só fórmulas) |
 | LANÇAR CUSTO | Custo que não vem em romaneio ou XML |
+| KITS | Componentes de cada kit e a conta do custo do kit |
 | AUMENTOS 7 DIAS | Custos que subiram na última semana |
 | HISTÓRICO DE CUSTOS | Tudo que foi gravado na planilha de custos |
 | SKUs | Produtos (código VarejoFácil) e o vínculo com o SKU - MKTPLACE (colunas J a M) |
