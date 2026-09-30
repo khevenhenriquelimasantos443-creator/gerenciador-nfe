@@ -159,19 +159,19 @@ depois que a aba foi reordenada.
 | Situação | O que fazer |
 |---|---|
 | Nota importada errada | **Custos > Desfazer importação de uma nota**; depois mova os arquivos de *Processados* para *Entrada* |
-| Arquivo em *Romaneios - Com erro* | O motivo está no **LOG**. Se for romaneio, o texto lido fica na aba **DIAGNOSTICO** |
+| Arquivo em *Romaneios - Com erro* | O motivo está no **LOG**. Se for romaneio, o texto lido fica na aba **DIAGNOSTICO** (ela só aparece nesse caso; pode apagar depois) |
 | `#ERROR!`, botão sumido ou aba faltando | **Custos > Atualizar estrutura** (não apaga dados) |
 | Quer conferir antes de gravar | Em CONFIG, **Aplicar automaticamente** = `NÃO`; as alterações ficam na **PRÉVIA** até o botão *Aplicar na planilha* |
 
 Não escreva nas abas **CUSTOS** e **AUMENTOS 7 DIAS**, nem nas colunas **O e P de ENTRADAS** e
-**I de SKUs**: são fórmulas.
+**I de SKUs**: o script preenche.
 
 ## Abas
 
 | Aba | Para que serve |
 |---|---|
 | LEIA-ME | Este guia, resumido |
-| CUSTOS | Custo de cada produto: último pago, anterior, efetivo, médio e oficial (só fórmulas) |
+| CUSTOS | Custo de cada produto: último pago, anterior, efetivo, médio e oficial (refeita a cada sincronização) |
 | LANÇAR CUSTO | Custo que não vem em romaneio ou XML |
 | SEM CUSTO | Produtos da planilha de custos ainda sem custo, e o que fazer com cada um |
 | REVISAR KITS | Kits pendentes, um por linha: produtos escolhidos, custo calculado x atual, cor, Aprovar e CORRIGIR |
@@ -193,6 +193,15 @@ Não escreva nas abas **CUSTOS** e **AUMENTOS 7 DIAS**, nem nas colunas **O e P 
    pedir. As abas e as pastas `Romaneios - Entrada / Processados / Com erro` são criadas no Drive.
 3. Em **CONFIG**, cole os links da **SKU - MKTPLACE** e da **planilha de custos**.
 4. **Custos > Ligar importação automática**.
+
+### Velocidade
+
+O script lê o SKU - MKTPLACE inteiro (todas as abas) com um pedido só à API do Google Sheets e guarda
+o resultado por até 6 horas. Ele só relê quando o SKU - MKTPLACE é alterado. A planilha de custos é lida
+uma vez por execução, e as gravações são feitas em bloco. Na primeira execução depois de atualizar o
+código, o Google pede uma autorização nova ("conectar a um serviço externo"): é o script chamando a
+API do Google Sheets com a sua própria conta. Se a API falhar, o script volta a ler aba por aba (mais
+lento, mesmo resultado).
 
 ### Atualizando de uma versão anterior
 

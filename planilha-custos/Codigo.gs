@@ -8,7 +8,7 @@
  *   2. importarRomaneios: romaneio -> ENTRADAS (código VarejoFácil = SKU interno);
  *      XML da mesma nota -> confere valores e grava o EAN em SKUs
  *   3. sincronizar: EAN liga o SKU interno ao SKU - MKTPLACE (sem EAN: sugestão em VINCULAR),
- *      compara o custo oficial (aba CUSTOS) com a coluna I da planilha de custos e grava
+ *      compara o custo oficial (calculado de ENTRADAS) com a coluna I da planilha de custos e grava
  *   4. HISTÓRICO DE CUSTOS guarda cada alteração; AUMENTOS 7 DIAS mostra o que subiu
  * Custo que não vem em romaneio/XML: aba LANÇAR CUSTO.
  */
@@ -202,11 +202,11 @@ function atualizarEstrutura() {
     sh.getRange(1, 1, 1, CAB[k].length).setValues([CAB[k]]);
     if (nova) { estilizar(sh, CAB[k].length); formatos[k](sh); }
   });
-  var custosNova = !ss.getSheetByName(ABA.CUSTOS);
+  var custosNova = !abaAtiva(ABA.CUSTOS);
   garantirAba(ss, ABA.CUSTOS);
   garantirAba(ss, ABA.AUMENTOS);
   corrigirFormulas();
-  if (custosNova) estilizar(ss.getSheetByName(ABA.CUSTOS), CAB.CUSTOS.length);
+  if (custosNova) estilizar(abaAtiva(ABA.CUSTOS), CAB.CUSTOS.length);
   escreverLeiaMe(garantirAba(ss, ABA.LEIAME));
   garantirPastas();
   criarBotoes();
@@ -216,7 +216,7 @@ function atualizarEstrutura() {
   ordem.forEach(function (nome, i) { ss.setActiveSheet(ss.getSheetByName(nome)); ss.moveActiveSheet(i + 1); });
   var padrao = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
   if (padrao && padrao.getLastRow() === 0) ss.deleteSheet(padrao);
-  ss.setActiveSheet(ss.getSheetByName(ABA.LEIAME));
+  ss.setActiveSheet(abaAtiva(ABA.LEIAME));
 
   var sobras = ['DE_PARA', 'PENDENTES'].filter(function (n) { return ss.getSheetByName(n); });
   ss.toast('Estrutura atualizada.' + (sobras.length ? ' As abas ' + sobras.join(' e ') +
@@ -227,18 +227,18 @@ function atualizarEstrutura() {
 // array literal com chaves não funciona em planilha em português (vira #ERROR!).
 function corrigirFormulas() {
   var ss = SpreadsheetApp.getActive();
-  var ent = ss.getSheetByName(ABA.ENTRADAS);
+  var ent = abaAtiva(ABA.ENTRADAS);
   ent.getRange('O2:P').clearContent();
   definirFormula(ent.getRange('O2'), '=ARRAYFORMULA(IF(LEN(H2:H), H2:H*IF(N2:N="", 1, N2:N), ))');
   definirFormula(ent.getRange('P2'), '=ARRAYFORMULA(IF(LEN(H2:H), IF(L2:L="SIM", 0, IFERROR(K2:K/O2:O, 0)), ))');
 
-  var skus = ss.getSheetByName(ABA.SKUS);
-  skus.getRange('I2:I').clearContent();
-  definirFormula(skus.getRange('I2'), '=MAP(A2:A, LAMBDA(s, IF(s="",, IFERROR(XLOOKUP(s, CUSTOS!A2:A, CUSTOS!L2:L), ))))');
+  // CUSTOS e a coluna I de SKUs são preenchidas pelo script (atualizarAbaCustos): fórmula MAP/FILTER
+  // por SKU era recalculada a cada gravação e deixava tudo lento
+  abaAtiva(ABA.SKUS).getRange('I2:I').clearContent();
+  formatarAbaCustos(abaAtiva(ABA.CUSTOS));
+  atualizarAbaCustos();
 
-  escreverFormulasCustos(ss.getSheetByName(ABA.CUSTOS));
-
-  var au = ss.getSheetByName(ABA.AUMENTOS);
+  var au = abaAtiva(ABA.AUMENTOS);
   var h = "'" + ABA.HISTORICO + "'!";
   au.getRange(1, 1, au.getMaxRows(), Math.max(au.getMaxColumns(), CAB.HISTORICO.length)).clearContent();
   au.getRange(1, 1, 1, CAB.HISTORICO.length).setValues([CAB.HISTORICO]);
@@ -274,31 +274,9 @@ function conferirFormulas() {
   return refeitas;
 }
 
-function escreverFormulasCustos(cus) {
-  var linhasPagas = 'SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 16, 3), ' +
-                    'ENTRADAS!M2:M=s, ENTRADAS!L2:L<>"SIM"), 2, FALSE, 1, FALSE)';
-  var mapa = function (corpo) { return '=MAP(A2:A, LAMBDA(s, IF(s="",, ' + corpo + ')))'; };
-  var grupo = 'INDEX(SORT(FILTER(CHOOSECOLS(ENTRADAS!A2:T, 1, 20, 17), ENTRADAS!M2:M=s), 2, FALSE, 1, FALSE), 1, 3)';
-
+function formatarAbaCustos(cus) {
   cus.getRange(1, 1, cus.getMaxRows(), CAB.CUSTOS.length).clearContent();
   cus.getRange(1, 1, 1, CAB.CUSTOS.length).setValues([CAB.CUSTOS]);
-  definirFormula(cus.getRange('A2'), '=FILTER(SKUs!A2:A, SKUs!A2:A<>"")');
-  definirFormula(cus.getRange('B2'), mapa('XLOOKUP(s, SKUs!A2:A, SKUs!B2:B, "")'));
-  definirFormula(cus.getRange('C2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 1, 3), )'));
-  definirFormula(cus.getRange('D2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 1, 1), )'));
-  definirFormula(cus.getRange('E2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 1, 4), )'));
-  definirFormula(cus.getRange('F2'), mapa('IFERROR(INDEX(' + linhasPagas + ', 2, 3), )'));
-  definirFormula(cus.getRange('G2'), '=MAP(C2:C, F2:F, LAMBDA(c, f, IF(OR(c="", f="", f=0),, c/f-1)))');
-  definirFormula(cus.getRange('H2'), mapa(
-    'IFERROR(LET(g, ' + grupo + ', SUMIFS(ENTRADAS!K2:K, ENTRADAS!M2:M, s, ENTRADAS!Q2:Q, g) / ' +
-    'SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s, ENTRADAS!Q2:Q, g)), )'));
-  definirFormula(cus.getRange('I2'), mapa(
-    'IFERROR(SUMIFS(ENTRADAS!K2:K, ENTRADAS!M2:M, s) / SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s), )'));
-  definirFormula(cus.getRange('J2'), mapa('SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s)'));
-  definirFormula(cus.getRange('K2'), mapa('SUMIFS(ENTRADAS!O2:O, ENTRADAS!M2:M, s, ENTRADAS!L2:L, "SIM")'));
-  definirFormula(cus.getRange('L2'), '=LET(o, XLOOKUP("Custo oficial", CONFIG!A:A, CONFIG!B:B, "ÚLTIMO PAGO"), ' +
-    'MAP(C2:C, H2:H, I2:I, A2:A, LAMBDA(c, h, i, s, IF(s="",, SWITCH(o, "EFETIVO", h, "MÉDIO", i, c)))))');
-
   cus.getRange('C2:C').setNumberFormat('R$ #,##0.00');
   cus.getRange('D2:D').setNumberFormat('dd/mm/yyyy');
   cus.getRange('F2:F').setNumberFormat('R$ #,##0.00');
@@ -369,7 +347,7 @@ function escreverLeiaMe(sh) {
     ['Fórmula com erro ou botão sumido: Custos > Atualizar estrutura.'],
     ['Arquivo em "Romaneios - Com erro": o motivo está no LOG; se for romaneio, o texto lido fica na aba DIAGNOSTICO.'],
     [''],
-    ['NÃO ESCREVA nas abas CUSTOS e AUMENTOS 7 DIAS nem nas colunas O e P de ENTRADAS e I de SKUs: são fórmulas.']
+    ['NÃO ESCREVA nas abas CUSTOS e AUMENTOS 7 DIAS nem nas colunas O e P de ENTRADAS e I de SKUs: o script preenche.']
   ];
   sh.clear();
   sh.getRange(1, 1, t.length, 1).setValues(t);
@@ -434,7 +412,7 @@ function garantirPastas() {
 // Garante que todo parâmetro existe em CONFIG. limpar = true também tira os obsoletos.
 function prepararConfig(limpar) {
   var ss = SpreadsheetApp.getActive();
-  var sh = ss.getSheetByName(ABA.CONFIG);
+  var sh = abaAtiva(ABA.CONFIG);
   if (!sh) {
     sh = ss.insertSheet(ABA.CONFIG);
     sh.getRange(1, 1, 1, 3).setValues([['Parâmetro', 'Valor', 'Explicação']]);
@@ -465,17 +443,19 @@ function prepararConfig(limpar) {
 }
 
 function gravarConfig(rotulo, valor) {
+  CFG_CACHE = null;
   var sh = prepararConfig(false);
   var v = sh.getRange(2, 1, sh.getLastRow() - 1, 1).getValues();
   for (var i = 0; i < v.length; i++) if (String(v[i][0]).trim() === rotulo) { sh.getRange(i + 2, 2).setValue(valor); return; }
 }
 
 function lerConfig() {
+  if (CFG_CACHE) return CFG_CACHE;
   var sh = prepararConfig(false);
   var p = {};
   sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) { p[String(r[0]).trim()] = r[1]; });
   var txt = function (k, padrao) { var x = String(p[k] == null ? '' : p[k]).trim(); return x || padrao || ''; };
-  return {
+  var cfg = {
     pastaEntrada: txt('Pasta de entrada (ID)'),
     pastaProcessados: txt('Pasta de processados (ID)'),
     pastaErro: txt('Pasta com erro (ID)'),
@@ -494,6 +474,109 @@ function lerConfig() {
     preencherFornecedor: txt('Preencher fornecedor vazio com a primeira nota', 'SIM').toUpperCase() !== 'NÃO',
     ordenarCustos: txt('Ordenar a planilha de custos por nome', 'SIM').toUpperCase() !== 'NÃO'
   };
+  CFG_CACHE = cfg;
+  return cfg;
+}
+
+// ===========================================================================
+// Desempenho: no Apps Script cada chamada à planilha leva de dezenas a centenas de milissegundos.
+// Por isso o que é lido fica guardado durante a execução, e a gravação é feita em bloco.
+// (As variáveis abaixo voltam a zero a cada execução.)
+// ===========================================================================
+
+var CFG_CACHE = null, PLANILHAS = {}, ALVO_CACHE = null, ENTRADAS_CACHE = null, ABAS_CACHE = {};
+
+function zerarCachesDaExecucao() {
+  CFG_CACHE = null; PLANILHAS = {}; ALVO_CACHE = null; ENTRADAS_CACHE = null; CATALOGO_CACHE = null; MEDIDAS = {}; ABAS_CACHE = {};
+}
+
+// Aba desta planilha, buscada uma vez por execução
+function abaAtiva(nome) {
+  if (ABAS_CACHE[nome]) return ABAS_CACHE[nome];
+  var sh = SpreadsheetApp.getActive().getSheetByName(nome);
+  if (sh) ABAS_CACHE[nome] = sh;
+  return sh;
+}
+
+function abrirPlanilha(id) {
+  return PLANILHAS[id] || (PLANILHAS[id] = SpreadsheetApp.openById(id));
+}
+
+// Planilha de custos, colunas A:I a partir da linha 2 (v[i] = linha i + 2). Lida uma vez por execução;
+// quem grava nela atualiza v (ou chama esquecerAlvo, como a ordenação).
+function dadosAlvo(cfg) {
+  var chave = cfg.planilhaCustos + '|' + cfg.abaCustos;
+  if (ALVO_CACHE && ALVO_CACHE.chave === chave) return ALVO_CACHE;
+  if (!cfg.planilhaCustos) return null;
+  var sh = abrirPlanilha(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
+  if (!sh) return null;
+  var n = sh.getLastRow();
+  ALVO_CACHE = { chave: chave, sh: sh, v: n > 1 ? sh.getRange(2, 1, n - 1, 9).getValues() : [] };
+  return ALVO_CACHE;
+}
+
+function esquecerAlvo() { ALVO_CACHE = null; }
+
+// ENTRADAS A:T a partir da linha 2, lida uma vez por execução (gravarEntradas e desfazerNota esquecem)
+function valoresEntradas() {
+  if (ENTRADAS_CACHE) return ENTRADAS_CACHE;
+  var ent = abaAtiva(ABA.ENTRADAS);
+  var n = ultimaLinhaColA(ent);
+  ENTRADAS_CACHE = n > 1 ? ent.getRange(2, 1, n - 1, 20).getValues() : [];
+  return ENTRADAS_CACHE;
+}
+
+// API do Google Sheets direto: lê todas as abas de uma vez e grava células espalhadas num pedido só.
+// Usa a mesma autorização do script.
+function sheetsApi(caminho, corpo) {
+  var opcoes = { method: corpo ? 'post' : 'get', muteHttpExceptions: true,
+                 headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } };
+  if (corpo) { opcoes.contentType = 'application/json'; opcoes.payload = JSON.stringify(corpo); }
+  var r = UrlFetchApp.fetch('https://sheets.googleapis.com/v4/spreadsheets/' + caminho, opcoes);
+  if (r.getResponseCode() !== 200) throw new Error('Sheets API ' + r.getResponseCode() + ': ' + r.getContentText().slice(0, 300));
+  return JSON.parse(r.getContentText());
+}
+
+function nomeA1(aba) { return "'" + String(aba).replace(/'/g, "''") + "'"; }
+
+// Apaga linhas (números da planilha), juntando as vizinhas num deleteRows só, de baixo para cima
+function apagarLinhas(sh, linhas) {
+  var l = linhas.slice().sort(function (a, b) { return b - a; });
+  for (var i = 0; i < l.length;) {
+    var fim = l[i], ini = fim;
+    while (i + 1 < l.length && l[i + 1] === ini - 1) { ini--; i++; }
+    i++;
+    sh.deleteRows(ini, fim - ini + 1);
+  }
+}
+
+function letraColuna(c) {
+  var s = '';
+  for (; c > 0; c = Math.floor((c - 1) / 26)) s = String.fromCharCode(65 + (c - 1) % 26) + s;
+  return s;
+}
+
+// Grava células espalhadas da planilha de custos: [[linha, coluna, valor], ...]. Muitas células:
+// um pedido só pela API; se a API falhar, uma a uma.
+function gravarCelulasAlvo(cfg, celulas) {
+  if (!celulas.length) return;
+  var a = dadosAlvo(cfg);
+  if (celulas.length > 3) {
+    try {
+      SpreadsheetApp.flush();
+      var aba = nomeA1(cfg.abaCustos) + '!';
+      for (var i = 0; i < celulas.length; i += 2000) {
+        sheetsApi(cfg.planilhaCustos + '/values:batchUpdate', { valueInputOption: 'RAW',
+          data: celulas.slice(i, i + 2000).map(function (c) {
+            return { range: aba + letraColuna(c[1]) + c[0], values: [[c[2]]] };
+          }) });
+      }
+      return;
+    } catch (e) {
+      console.log('gravarCelulasAlvo: API indisponível, gravando uma a uma. ' + (e && e.message || e));
+    }
+  }
+  celulas.forEach(function (c) { a.sh.getRange(c[0], c[1]).setValue(c[2]); });
 }
 
 // ===========================================================================
@@ -507,11 +590,12 @@ function importarRomaneios() {
     return;
   }
   try {
-    garantirPastas();
     var cfg = lerConfig();
-    var ctx = carregarContexto();
+    var pasta = null;
+    try { pasta = DriveApp.getFolderById(cfg.pastaEntrada); } catch (e) {}
+    if (!pasta) { garantirPastas(); cfg = lerConfig(); pasta = DriveApp.getFolderById(cfg.pastaEntrada); }
     // PDFs primeiro: o XML da mesma nota só confere e completa o EAN
-    var it = DriveApp.getFolderById(cfg.pastaEntrada).getFiles(), fila = [];
+    var it = pasta.getFiles(), fila = [];
     while (it.hasNext()) {
       var arq = it.next();
       var ehXml = /xml/i.test(arq.getMimeType()) || /\.xml$/i.test(arq.getName());
@@ -519,9 +603,15 @@ function importarRomaneios() {
       if (ehXml || ehPdf) fila.push({ arq: arq, ehXml: ehXml });
     }
     fila.sort(function (a, b) { return a.ehXml - b.ehXml; });
+    var pendente = temLancamentoPendente();
+    if (!fila.length && !pendente) { // nada a fazer: sai sem ler as abas
+      SpreadsheetApp.getActive().toast('Nenhum PDF ou XML novo na pasta Romaneios - Entrada.', 'Custos', 5);
+      return;
+    }
+    var ctx = fila.length ? carregarContexto() : null;
     fila.forEach(function (f) { importarArquivo(f.arq, f.ehXml, cfg, ctx); });
 
-    var lancados = temLancamentoPendente() ? lancarCustos(true, true) : 0;
+    var lancados = pendente ? lancarCustos(true, true) : 0;
     var msg = fila.length ? fila.length + ' arquivo(s) importado(s). ' : '';
     if (lancados) msg += lancados + ' custo(s) lançado(s) da aba LANÇAR CUSTO. ';
     if (fila.length || lancados) msg += sincronizar(cfg);
@@ -573,6 +663,7 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
                    it.vUnit, it.bonif ? 0 : it.vTotal, it.bonif ? 'SIM' : 'NÃO', sku, it.fator || 1]);
       extras.push([doc.numero, ehXml ? 'XML' : 'ROMANEIO', nome, agora]);
     });
+    salvarSkusNovos(ctx);
     gravarEntradas(linhas, extras);
     ctx.docs[chave] = true;
     registrarLog(nome, arq.getId(), 'OK', doc.itens.length, linhas.length, novos,
@@ -587,9 +678,10 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
 // SKUs e notas já importadas, lidos uma vez por execução
 function carregarContexto() {
   var ss = SpreadsheetApp.getActive();
-  var ctx = { skus: {}, porEan: {}, porSkuMkt: {}, docs: {} };
-  var s = ss.getSheetByName(ABA.SKUS);
+  var ctx = { skus: {}, porEan: {}, porSkuMkt: {}, docs: {}, skusNovos: [] };
+  var s = abaAtiva(ABA.SKUS);
   var n = ultimaLinhaColA(s);
+  ctx.ultimaSku = n;
   if (n > 1) {
     s.getRange(2, 1, n - 1, 13).getValues().forEach(function (r, i) {
       var sku = String(r[0]).trim();
@@ -600,27 +692,38 @@ function carregarContexto() {
       if (r[9] !== '' && r[9] !== SEM_CADASTRO) ctx.porSkuMkt[String(r[9]).trim().toUpperCase()] = sku;
     });
   }
-  var ent = ss.getSheetByName(ABA.ENTRADAS);
-  if (ultimaLinhaColA(ent) > 1) {
-    ent.getRange(2, 2, ultimaLinhaColA(ent) - 1, 3).getValues().forEach(function (r) {
-      if (r[0] !== '') ctx.docs[chaveDoc({ numero: r[0], fornecedor: r[1], cnpj: r[2] })] = true;
-    });
-  }
+  valoresEntradas().forEach(function (r) {
+    if (r[1] !== '') ctx.docs[chaveDoc({ numero: r[1], fornecedor: r[2], cnpj: r[3] })] = true;
+  });
   return ctx;
 }
 
-function novoSku(ctx, sku, desc, ean, unid, origem) {
-  anexar(ABA.SKUS, [[sku, desc, ean || '', String(unid || '').toUpperCase(), '', 'ATIVO', new Date(), origem]]);
-  ctx.skus[sku] = { linha: ultimaLinhaColA(SpreadsheetApp.getActive().getSheetByName(ABA.SKUS)), mkt: '' };
+// SKU novo fica guardado em ctx e vai para a aba SKUs de uma vez (salvarSkusNovos).
+// item (opcional): produto do SKU - MKTPLACE, já grava o vínculo (colunas J a M).
+function novoSku(ctx, sku, desc, ean, unid, origem, item) {
+  var linha = ++ctx.ultimaSku;
+  ctx.skusNovos.push([sku, desc, ean || '', String(unid || '').toUpperCase(), '', 'ATIVO', new Date(), origem, '',
+    item ? item.sku : '', item ? item.ean : '', item ? item.aba : '', item ? new Date() : '']);
+  ctx.skus[sku] = { linha: linha, mkt: item ? item.sku : '' };
   if (ean && !ctx.porEan[ean]) ctx.porEan[ean] = sku;
-  return ctx.skus[sku].linha;
+  return linha;
+}
+
+function salvarSkusNovos(ctx) {
+  if (!ctx.skusNovos.length) return;
+  var sh = abaAtiva(ABA.SKUS);
+  var ini = ctx.ultimaSku - ctx.skusNovos.length + 1;
+  garantirLinhas(sh, ctx.ultimaSku);
+  sh.getRange(ini, 1, ctx.skusNovos.length, 8).setValues(ctx.skusNovos.map(function (r) { return r.slice(0, 8); }));
+  // colunas J a M só onde já veio o vínculo (a coluna I é do script, não é apagada)
+  var comVinculo = ctx.skusNovos.some(function (r) { return r[9] !== ''; });
+  if (comVinculo) sh.getRange(ini, 10, ctx.skusNovos.length, 4).setValues(ctx.skusNovos.map(function (r) { return r.slice(9, 13); }));
+  ctx.skusNovos = [];
 }
 
 function completarComXml(doc) {
   var ss = SpreadsheetApp.getActive();
-  var ent = ss.getSheetByName(ABA.ENTRADAS);
-  var n = ultimaLinhaColA(ent);
-  var v = n > 1 ? ent.getRange(2, 1, n - 1, 13).getValues() : [];
+  var v = valoresEntradas();
   var chave = chaveDoc(doc), linhas = [];
   v.forEach(function (r) {
     if (chaveDoc({ numero: r[1], fornecedor: r[2], cnpj: r[3] }) === chave) linhas.push({ q: Number(r[7]), vu: Number(r[9]), tot: Number(r[10]), bon: r[11] === 'SIM', sku: String(r[12]), desc: r[6], usado: false });
@@ -641,18 +744,19 @@ function completarComXml(doc) {
   });
   linhas.forEach(function (l) { if (!l.usado) diferencas.push(l.desc + ': está no romaneio e não no XML'); });
 
-  var skus = ss.getSheetByName(ABA.SKUS);
+  var skus = abaAtiva(ABA.SKUS);
   var nS = ultimaLinhaColA(skus), eans = 0;
   if (nS > 1) {
     var col = skus.getRange(2, 1, nS - 1, 3).getValues();
-    col.forEach(function (r, i) {
+    col.forEach(function (r) {
       var e = eanPorSku[String(r[0]).trim()];
       if (!e) return;
       var atuais = String(r[2]).split(/[,;\s]+/).map(eanTexto).filter(Boolean);
       if (atuais.indexOf(eanTexto(e)) >= 0) return;
-      skus.getRange(i + 2, 3).setValue(atuais.concat([eanTexto(e)]).join(', '));
+      r[2] = atuais.concat([eanTexto(e)]).join(', ');
       eans++;
     });
+    if (eans) skus.getRange(2, 3, col.length, 1).setValues(col.map(function (r) { return [r[2]]; }));
   }
   return { batem: batem, eans: eans, diferencas: diferencas };
 }
@@ -685,17 +789,22 @@ function garantirLinhas(sh, ultima) {
   if (faltam > 0) sh.insertRowsAfter(sh.getMaxRows(), faltam + 100);
 }
 
+// abas em que só o script escreve: a última linha usada é a última com dado, sem ler a coluna A
+var ABAS_DO_SCRIPT = {};
+ABAS_DO_SCRIPT[ABA.LOG] = ABAS_DO_SCRIPT[ABA.HISTORICO] = ABAS_DO_SCRIPT[ABA.PREVIA] = 1;
+
 function anexar(nomeAba, linhas) {
   if (!linhas.length) return;
-  var sh = SpreadsheetApp.getActive().getSheetByName(nomeAba);
-  var ini = ultimaLinhaColA(sh) + 1;
+  var sh = abaAtiva(nomeAba);
+  var ini = (ABAS_DO_SCRIPT[nomeAba] ? sh.getLastRow() : ultimaLinhaColA(sh)) + 1;
   garantirLinhas(sh, ini + linhas.length - 1);
   sh.getRange(ini, 1, linhas.length, linhas[0].length).setValues(linhas);
 }
 
 function gravarEntradas(linhas, extras) {
   if (!linhas.length) return;
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.ENTRADAS);
+  ENTRADAS_CACHE = null;
+  var sh = abaAtiva(ABA.ENTRADAS);
   var ini = ultimaLinhaColA(sh) + 1;
   garantirLinhas(sh, ini + linhas.length - 1);
   sh.getRange(ini, 1, linhas.length, 14).setValues(linhas);
@@ -715,21 +824,24 @@ function desfazerNota() {
   var apagar = function (sh, teste) {
     var n = ultimaLinhaColA(sh), apagadas = 0;
     if (n < 2) return 0;
-    var v = sh.getRange(2, 1, n - 1, sh.getLastColumn()).getValues();
-    for (var i = v.length - 1; i >= 0; i--) if (teste(v[i])) { sh.deleteRow(i + 2); apagadas++; }
+    var v = sh.getRange(2, 1, n - 1, sh.getLastColumn()).getValues(), linhas = [];
+    for (var i = v.length - 1; i >= 0; i--) if (teste(v[i])) { linhas.push(i + 2); apagadas++; }
+    apagarLinhas(sh, linhas);
     return apagadas;
   };
-  var ent = ss.getSheetByName(ABA.ENTRADAS);
+  var ent = abaAtiva(ABA.ENTRADAS);
   var nEnt = apagar(ent, function (r) { return mesmoNum(r[1]); });
+  ENTRADAS_CACHE = null;
   var usados = {};
   if (ultimaLinhaColA(ent) > 1) ent.getRange(2, 13, ultimaLinhaColA(ent) - 1, 1).getValues().forEach(function (r) { usados[String(r[0])] = 1; });
   var removidos = {};
-  var nSku = apagar(ss.getSheetByName(ABA.SKUS), function (r) {
+  var nSku = apagar(abaAtiva(ABA.SKUS), function (r) {
     var origem = String(r[7]).match(/^(Romaneio|XML)\s+(\S+)$/i);
     if (origem && mesmoNum(origem[2]) && !usados[String(r[0])]) { removidos[String(r[0])] = 1; return true; }
     return false;
   });
-  apagar(ss.getSheetByName(ABA.VINCULAR), function (r) { return removidos[String(r[0])]; });
+  apagar(abaAtiva(ABA.VINCULAR), function (r) { return removidos[String(r[0])]; });
+  atualizarAbaCustos();
   registrarLog('DESFAZER', '', 'OK', 0, nEnt, 0, 'Nota ' + num + ': ' + nEnt + ' linha(s) de ENTRADAS e ' + nSku + ' SKU(s) apagados.');
   ui.alert('Nota ' + num + ' desfeita: ' + nEnt + ' linha(s) de ENTRADAS e ' + nSku + ' SKU(s) criado(s) por ela.\n\n' +
     'Para importar de novo, mova os arquivos de "Romaneios - Processados" para "Romaneios - Entrada".');
@@ -743,7 +855,7 @@ function desfazerNota() {
 // Chegou com o mesmo valor: registra no LOG e apaga a linha. Não chegou: a linha fica com o motivo.
 function conferirLancamentos(cfg) {
   var ss = SpreadsheetApp.getActive();
-  var sh = ss.getSheetByName(ABA.LANCAR);
+  var sh = abaAtiva(ABA.LANCAR);
   var res = { resumo: '', detalhes: [] };
   if (!sh || sh.getLastRow() < 2) return res;
   var v = sh.getRange(2, 1, sh.getLastRow() - 1, CAB.LANCAR.length).getValues();
@@ -753,15 +865,15 @@ function conferirLancamentos(cfg) {
 
   // SKU interno -> SKU do marketplace
   var mktDoInterno = {}, eanDoMkt = {};
-  var skus = ss.getSheetByName(ABA.SKUS);
+  var skus = abaAtiva(ABA.SKUS);
   if (ultimaLinhaColA(skus) > 1) {
     skus.getRange(2, 1, ultimaLinhaColA(skus) - 1, 11).getValues().forEach(function (r) {
       mktDoInterno[String(r[0]).trim()] = String(r[9]).trim();
       if (r[10] !== '') eanDoMkt[String(r[9]).trim().toUpperCase()] = eanTexto(r[10]);
     });
   }
-  var alvo = cfg.planilhaCustos ? SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos) : null;
-  var linhasAlvo = alvo && alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
+  var dAlvo = dadosAlvo(cfg), alvo = dAlvo ? dAlvo.sh : null;
+  var linhasAlvo = dAlvo ? dAlvo.v : [];
   var achar = function (sku) {
     sku = sku.toUpperCase();
     var ean = eanDoMkt[sku] || '', porEan = null;
@@ -772,7 +884,7 @@ function conferirLancamentos(cfg) {
     }
     return porEan;
   };
-  var apagar = [], log = [], agora = new Date(), ok = 0;
+  var apagar = [], log = [], agora = new Date(), ok = 0, mudouSituacao = false;
   pendentes.forEach(function (i) {
     var r = v[i], custo = Number(r[2]);
     var produto = String(r[8]);
@@ -786,7 +898,8 @@ function conferirLancamentos(cfg) {
         ' (veja o LOG; clique em Sincronizar para tentar de novo)' : 'esperando Aplicar na aba PRÉVIA';
     }
     if (motivo) {
-      sh.getRange(i + 2, 8).setValue('LANÇADO, mas NÃO chegou na planilha de custos: ' + motivo);
+      v[i][7] = 'LANÇADO, mas NÃO chegou na planilha de custos: ' + motivo;
+      mudouSituacao = true;
       res.detalhes.push('✗ ' + (sku || produto) + ': ' + motivo);
       return;
     }
@@ -797,14 +910,15 @@ function conferirLancamentos(cfg) {
     log.push([agora, 'LANÇAR CUSTO', '', 'OK', 1, 1, '', 0, txt + (r[5] ? ' | nota ' + r[5] : '') + (r[4] ? ' | ' + r[4] : '')]);
   });
   anexar(ABA.LOG, log);
-  apagar.reverse().forEach(function (l) { sh.deleteRow(l); });
+  if (mudouSituacao) sh.getRange(2, 8, v.length, 1).setValues(v.map(function (r) { return [r[7]]; }));
+  apagarLinhas(sh, apagar);
   res.resumo = ok + ' lançamento(s) conferido(s) na planilha de custos e tirado(s) da aba LANÇAR CUSTO (registro no LOG)' +
     (pendentes.length > ok ? '; ' + (pendentes.length - ok) + ' ficaram na aba com o motivo na coluna Situação.' : '.');
   return res;
 }
 
 function temLancamentoPendente() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.LANCAR);
+  var sh = abaAtiva(ABA.LANCAR);
   if (!sh || sh.getLastRow() < 2) return false;
   return sh.getRange(2, 1, sh.getLastRow() - 1, 8).getValues().some(function (r) {
     return (r[0] !== '' || r[1] !== '') && Number(r[2]) > 0 && r[7] === '';
@@ -816,7 +930,7 @@ function temLancamentoPendente() {
 function lancarCustos(silencioso, semSincronizar) {
   silencioso = silencioso === true;
   var ss = SpreadsheetApp.getActive();
-  var sh = ss.getSheetByName(ABA.LANCAR);
+  var sh = abaAtiva(ABA.LANCAR);
   if (!sh || sh.getLastRow() < 2) { if (!silencioso) ss.toast('A aba LANÇAR CUSTO está vazia.'); return 0; }
   var cfg = lerConfig();
   var ctx = carregarContexto();
@@ -833,7 +947,7 @@ function lancarCustos(silencioso, semSincronizar) {
   var nomeCat = function (it) { return it.sku + ' - ' + it.desc + (it.variacao ? ' [' + it.variacao + ']' : ''); };
 
   var v = sh.getRange(2, 1, sh.getLastRow() - 1, CAB.LANCAR.length).getValues();
-  var agora = new Date(), linhas = [], extras = [], lancados = 0, conferir = 0;
+  var agora = new Date(), linhas = [], extras = [], lancados = 0, conferir = 0, vinculos = [], mudou = false;
   var hoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
   v.forEach(function (r, i) {
     var cod = String(r[0]).trim(), nome = String(r[1]).trim(), custo = Number(r[2]);
@@ -861,10 +975,10 @@ function lancarCustos(silencioso, semSincronizar) {
       if (!sku && item) sku = ctx.porSkuMkt[item.sku.toUpperCase()] || ctx.porEan[item.ean] || '';
       if (!sku) {
         sku = item.sku;
-        novoSku(ctx, sku, item.desc + (item.variacao ? ' ' + item.variacao : ''), item.ean, 'UN', 'Lançamento manual');
+        novoSku(ctx, sku, item.desc + (item.variacao ? ' ' + item.variacao : ''), item.ean, 'UN', 'Lançamento manual', item);
       }
       if (item && !ctx.skus[sku].mkt) {
-        gravarVinculo(ss.getSheetByName(ABA.SKUS), ctx.skus[sku].linha, item, agora);
+        vinculos.push([ctx.skus[sku].linha, item]);
         ctx.skus[sku].mkt = item.sku;
       }
       var qtd = Number(r[3]) > 0 ? Number(r[3]) : 1;
@@ -879,8 +993,12 @@ function lancarCustos(silencioso, semSincronizar) {
     } else {
       conferir++;
     }
-    sh.getRange(i + 2, 8, 1, 2).setValues([[situacao, achado]]);
+    r[7] = situacao; r[8] = achado; mudou = true;
   });
+  if (mudou) sh.getRange(2, 8, v.length, 2).setValues(v.map(function (r) { return [r[7], r[8]]; }));
+  salvarSkusNovos(ctx);
+  var abaSkus = abaAtiva(ABA.SKUS);
+  vinculos.forEach(function (x) { gravarVinculo(abaSkus, x[0], x[1], agora); });
   gravarEntradas(linhas, extras);
   var msg = lancados + ' custo(s) novo(s) lançado(s)' + (conferir ? ', ' + conferir + ' para conferir (veja a coluna Situação)' : '') + '. ';
   // linhas LANÇADO que ainda não tinham chegado na planilha de custos também são reenviadas
@@ -904,10 +1022,8 @@ function lancarCustos(silencioso, semSincronizar) {
 //   EFETIVO: total pago / qtd total do último grupo de compra (bonificação dilui)
 //   MÉDIO: total pago / qtd total de todas as entradas
 function calcularCustos(oficial) {
-  var ent = SpreadsheetApp.getActive().getSheetByName(ABA.ENTRADAS);
-  var n = ultimaLinhaColA(ent), por = {};
-  if (n < 2) return {};
-  ent.getRange(2, 1, n - 1, 20).getValues().forEach(function (r) {
+  var por = {};
+  valoresEntradas().forEach(function (r) {
     var sku = String(r[12]).trim();
     if (!sku || r[0] === '') return;
     var qtd = (Number(r[7]) || 0) * (Number(r[13]) || 1);
@@ -934,14 +1050,57 @@ function calcularCustos(oficial) {
   return res;
 }
 
+// Aba CUSTOS (e coluna I de SKUs), calculada aqui a partir de ENTRADAS, com as mesmas regras de antes.
+// Ordem das compras: a que entrou por último (Importado em) primeiro, depois a data da nota.
+function atualizarAbaCustos() {
+  var ss = SpreadsheetApp.getActive();
+  var cus = abaAtiva(ABA.CUSTOS), skus = abaAtiva(ABA.SKUS);
+  if (!cus || !skus) return;
+  var oficial = lerConfig().custoOficial;
+  var por = {};
+  valoresEntradas().forEach(function (r) {
+    var sku = String(r[12]).trim();
+    if (!sku || r[0] === '') return;
+    var qtd = (Number(r[7]) || 0) * (Number(r[13]) || 1), pago = Number(r[10]) || 0, bonif = r[11] === 'SIM';
+    (por[sku] = por[sku] || []).push({ qtd: qtd, pago: pago, bonif: bonif, unit: bonif ? 0 : (qtd ? pago / qtd : 0),
+      grupo: String(r[16] === '' ? r[1] : r[16]), forn: r[2], data: r[0],
+      quando: r[19] instanceof Date ? r[19].getTime() : 0, doc: r[0] instanceof Date ? r[0].getTime() : 0 });
+  });
+  var soma = function (l, campo) { return l.reduce(function (t, x) { return t + x[campo]; }, 0); };
+  var nS = ultimaLinhaColA(skus);
+  var lista = nS > 1 ? skus.getRange(2, 1, nS - 1, 2).getValues() : [];
+  var linhas = [], colI = [];
+  lista.forEach(function (s) {
+    var sku = String(s[0]).trim();
+    if (!sku) { colI.push(['']); return; }
+    var l = (por[sku] || []).sort(function (a, b) { return (b.quando - a.quando) || (b.doc - a.doc); });
+    var pagas = l.filter(function (x) { return !x.bonif; });
+    var c = pagas[0] ? pagas[0].unit : '', f = pagas[1] ? pagas[1].unit : '';
+    var g = l.length ? l.filter(function (x) { return x.grupo === l[0].grupo; }) : [];
+    var ef = soma(g, 'qtd') ? soma(g, 'pago') / soma(g, 'qtd') : '';
+    var med = soma(l, 'qtd') ? soma(l, 'pago') / soma(l, 'qtd') : '';
+    var of = oficial === 'EFETIVO' ? ef : oficial === 'MÉDIO' ? med : c;
+    linhas.push([sku, s[1], c, pagas[0] ? pagas[0].data : '', pagas[0] ? pagas[0].forn : '', f,
+      c !== '' && f ? c / f - 1 : '', ef, med, soma(l, 'qtd'), soma(l.filter(function (x) { return x.bonif; }), 'qtd'), of]);
+    colI.push([of]);
+  });
+  var velhas = cus.getLastRow();
+  if (velhas > 1) cus.getRange(2, 1, velhas - 1, CAB.CUSTOS.length).clearContent();
+  if (linhas.length) {
+    garantirLinhas(cus, linhas.length + 1);
+    cus.getRange(2, 1, linhas.length, CAB.CUSTOS.length).setValues(linhas);
+  }
+  if (colI.length) skus.getRange(2, 9, colI.length, 1).setValues(colI);
+}
+
 // Vincula, monta a prévia e (Aplicar automaticamente = SIM) grava. Devolve um resumo.
 function sincronizar(cfg) {
+  try { atualizarAbaCustos(); } catch (e) { registrarLog('CUSTOS', '', 'ERRO', 0, 0, 0, String(e && e.message || e)); }
   if (!cfg.planilhaMkt || !cfg.planilhaCustos) {
     registrarLog('SINCRONIZAR', '', 'CONFERIR', 0, 0, 0, 'Preencha em CONFIG os links da planilha SKU - MKTPLACE e da planilha de custos.');
     return 'Não sincronizou: faltam os links das planilhas em CONFIG.';
   }
   try {
-    SpreadsheetApp.flush();
     var sv = sugerirVinculos(true);
     var pv = gerarPrevia(true);
     var ap = pv && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
@@ -969,15 +1128,12 @@ function sincronizar(cfg) {
 // Produtos do SKU - MKTPLACE (fora das abas ignoradas) que não estão na planilha de custos nem pelo SKU
 // (da variação ou principal) nem pelo EAN -> "ADICIONAR LINHA" na PRÉVIA, com o custo da coluna CUSTO.
 function previaNovosDoMktplace(cfg, acrescentar) {
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
   var tem = {}, temEan = {};
-  if (alvo.getLastRow() > 1) {
-    alvo.getRange(2, 1, alvo.getLastRow() - 1, 3).getValues().forEach(function (r) {
-      [r[1], r[2]].forEach(function (x) { x = String(x).trim().toUpperCase(); if (x) tem[x] = 1; });
-      var e = eanTexto(r[0]); if (e) temEan[e] = 1;
-    });
-  }
-  var pv = SpreadsheetApp.getActive().getSheetByName(ABA.PREVIA);
+  dadosAlvo(cfg).v.forEach(function (r) {
+    [r[1], r[2]].forEach(function (x) { x = String(x).trim().toUpperCase(); if (x) tem[x] = 1; });
+    var e = eanTexto(r[0]); if (e) temEan[e] = 1;
+  });
+  var pv = abaAtiva(ABA.PREVIA);
   if (acrescentar && ultimaLinhaColA(pv) > 1) {
     pv.getRange(2, 2, ultimaLinhaColA(pv) - 1, 1).getValues().forEach(function (r) { tem[String(r[0]).trim().toUpperCase()] = 1; });
   } else if (!acrescentar && pv.getLastRow() > 1) {
@@ -998,11 +1154,10 @@ function previaNovosDoMktplace(cfg, acrescentar) {
 // Coluna F (Fornecedor) vazia na planilha de custos -> fornecedor da primeira nota fiscal (romaneio ou XML)
 // que entrou do produto. Lançamento manual não conta. Só preenche o que está vazio.
 function preencherFornecedores(cfg) {
-  var ss = SpreadsheetApp.getActive();
-  var ent = ss.getSheetByName(ABA.ENTRADAS), skus = ss.getSheetByName(ABA.SKUS);
-  if (ultimaLinhaColA(ent) < 2 || ultimaLinhaColA(skus) < 2) return 0;
+  var skus = abaAtiva(ABA.SKUS);
+  if (!valoresEntradas().length || ultimaLinhaColA(skus) < 2) return 0;
   var primeira = {}; // SKU interno -> {forn, quando}
-  ent.getRange(2, 1, ultimaLinhaColA(ent) - 1, 20).getValues().forEach(function (r) {
+  valoresEntradas().forEach(function (r) {
     var sku = String(r[12]).trim(), forn = String(r[2]).trim();
     if (!sku || !forn || String(r[17]).trim().toUpperCase() === 'MANUAL') return;
     var quando = r[19] instanceof Date ? r[19].getTime() : (r[0] instanceof Date ? r[0].getTime() : 0);
@@ -1016,17 +1171,19 @@ function preencherFornecedores(cfg) {
     var e = eanTexto(r[10]);
     if (e && (!porEan[e] || p.quando < porEan[e].quando)) porEan[e] = p;
   });
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
-  if (!alvo || alvo.getLastRow() < 2) return 0;
-  var n = 0, feitos = [];
-  alvo.getRange(2, 1, alvo.getLastRow() - 1, 6).getValues().forEach(function (r, i) {
+  var dAlvo = dadosAlvo(cfg);
+  if (!dAlvo) return 0;
+  var n = 0, feitos = [], celulas = [];
+  dAlvo.v.forEach(function (r, i) {
     if (String(r[5]).trim()) return;
     var p = porSku[String(r[2]).trim().toUpperCase()] || porSku[String(r[1]).trim().toUpperCase()] || porEan[eanTexto(r[0])];
     if (!p) return;
-    alvo.getRange(i + 2, 6).setValue(p.forn);
+    celulas.push([i + 2, 6, p.forn]);
+    r[5] = p.forn;
     feitos.push(String(r[2] || r[1]).trim() + ' = ' + p.forn);
     n++;
   });
+  gravarCelulasAlvo(cfg, celulas);
   if (n) registrarLog('FORNECEDOR', '', 'OK', n, n, 0, 'Fornecedor preenchido em ' + cfg.abaCustos + ': ' + feitos.join('; '));
   return n;
 }
@@ -1042,24 +1199,27 @@ function arrumarDepoisDeGravar(cfg) {
 // ordenar: antes, ela vira o valor que mostra agora (fica registrado no LOG). Fórmula da própria linha
 // (ex.: =LEFT(G19; ...) na linha 19) continua fórmula, porque acompanha a linha.
 function ordenarPlanilhaCustos(cfg) {
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
+  var dAlvo = dadosAlvo(cfg);
+  var alvo = dAlvo ? dAlvo.sh : null;
   var n = alvo ? alvo.getLastRow() - 1 : 0;
   if (n < 2) return;
   var nc = alvo.getLastColumn(), faixa = alvo.getRange(2, 1, n, nc);
-  var formulas = faixa.getFormulas(), valores = null, fixadas = [];
+  var formulas = faixa.getFormulas(), valores = null, fixadas = [], celulas = [];
   formulas.forEach(function (l, i) {
     l.forEach(function (f, j) {
       if (!f || !formulaDeOutraLinha(f, i + 2)) return;
       valores = valores || faixa.getValues();
-      alvo.getRange(i + 2, j + 1).setValue(valores[i][j]);
-      fixadas.push(String.fromCharCode(65 + j) + (i + 2) + ' ' + f + ' = ' + valores[i][j]);
+      celulas.push([i + 2, j + 1, valores[i][j]]);
+      fixadas.push(letraColuna(j + 1) + (i + 2) + ' ' + f + ' = ' + valores[i][j]);
     });
   });
+  gravarCelulasAlvo(cfg, celulas);
   if (fixadas.length) {
     registrarLog('ORDENAR', '', 'OK', fixadas.length, fixadas.length, 0, 'Antes de ordenar ' + cfg.abaCustos +
       ', fórmula(s) que apontavam para outra linha viraram valor: ' + fixadas.join('; '));
   }
   faixa.sort([{ column: 7, ascending: true }, { column: 8, ascending: true }]);
+  esquecerAlvo(); // as linhas mudaram de lugar
 }
 
 // true se a fórmula usa uma célula de outra linha (texto entre aspas não conta)
@@ -1073,12 +1233,12 @@ function formulaDeOutraLinha(f, linha) {
 // Aba SEM CUSTO: linhas da planilha de custos com a coluna I vazia ou zero. É refeita a cada sincronização,
 // então o produto sai da lista sozinho quando o custo chega (compra, XML, lançamento ou kit aprovado).
 function atualizarSemCusto(cfg) {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.SEM_CUSTO);
+  var sh = abaAtiva(ABA.SEM_CUSTO);
   if (!sh || !cfg.planilhaCustos) return 0;
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
-  if (!alvo) return 0;
+  var dAlvo = dadosAlvo(cfg);
+  if (!dAlvo) return 0;
   var kits = {}, aprovados = {};
-  var abaKits = SpreadsheetApp.getActive().getSheetByName(ABA.KITS);
+  var abaKits = abaAtiva(ABA.KITS);
   if (abaKits && ultimaLinhaColA(abaKits) > 1) {
     abaKits.getRange(2, 1, ultimaLinhaColA(abaKits) - 1, CAB.KITS.length).getValues().forEach(function (r) {
       [r[0], r[1]].forEach(function (x) {
@@ -1090,8 +1250,7 @@ function atualizarSemCusto(cfg) {
     });
   }
   var lista = [];
-  var v = alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
-  v.forEach(function (r, i) {
+  dAlvo.v.forEach(function (r, i) {
     var sku = String(r[2] || r[1] || '').trim(), nome = String(r[6] || '').trim();
     if (!sku && !nome) return;
     if (valorCusto(r[8]) > 0) return;
@@ -1155,12 +1314,12 @@ function sugerirVinculos(silencioso) {
   var porEan = {};
   catalogo.forEach(function (it) { if (it.ean) porEan[it.ean] = porEan[it.ean] || it; });
 
-  var skus = ss.getSheetByName(ABA.SKUS);
+  var skus = abaAtiva(ABA.SKUS);
   var n = ultimaLinhaColA(skus);
   if (n < 2) return 0;
   var v = skus.getRange(2, 1, n - 1, 13).getValues();
 
-  var vin = ss.getSheetByName(ABA.VINCULAR);
+  var vin = abaAtiva(ABA.VINCULAR);
   var jaListados = {};
   if (ultimaLinhaColA(vin) > 1) {
     vin.getRange(2, 1, ultimaLinhaColA(vin) - 1, 1).getValues().forEach(function (r) { jaListados[String(r[0])] = 1; });
@@ -1173,7 +1332,7 @@ function sugerirVinculos(silencioso) {
     var eans = String(r[2]).split(/[,;\s]+/).map(eanTexto).filter(Boolean);
     for (var k = 0; k < eans.length; k++) {
       var achado = porEan[eans[k]];
-      if (achado) { gravarVinculo(skus, i + 2, achado, agora); porEanFeitos[sku] = 1; return; }
+      if (achado) { r[9] = achado.sku; r[10] = achado.ean; r[11] = achado.aba; r[12] = agora; porEanFeitos[sku] = 1; return; }
     }
     if (jaListados[sku]) return;
     var top = melhoresDoCatalogo(String(r[1]), catalogo, 2);
@@ -1185,9 +1344,12 @@ function sugerirVinculos(silencioso) {
       b && b.s >= 0.5 ? b.it.sku + ' - ' + b.it.desc + (b.it.variacao ? ' [' + b.it.variacao + ']' : '') : '',
       bom && a.s >= cfg.limiarVinculo && (!b || a.s - b.s >= 0.05) ? a.it.sku : '']);
   });
+  if (Object.keys(porEanFeitos).length) skus.getRange(2, 10, v.length, 4).setValues(v.map(function (r) { return r.slice(9, 13); }));
   if (Object.keys(porEanFeitos).length && ultimaLinhaColA(vin) > 1) {
     var cods = vin.getRange(2, 1, ultimaLinhaColA(vin) - 1, 1).getValues();
-    for (var j = cods.length - 1; j >= 0; j--) if (porEanFeitos[String(cods[j][0])]) vin.deleteRow(j + 2);
+    var sair = [];
+    for (var j = cods.length - 1; j >= 0; j--) if (porEanFeitos[String(cods[j][0])]) sair.push(j + 2);
+    apagarLinhas(vin, sair);
   }
   anexar(ABA.VINCULAR, novas);
   if (!silencioso) ss.toast(novas.length + ' produto(s) para conferir na aba VINCULAR.', 'Custos', 8);
@@ -1199,17 +1361,15 @@ function gravarVinculo(skus, linha, item, quando) {
 }
 
 function fornecedorPorSku() {
-  var cus = SpreadsheetApp.getActive().getSheetByName(ABA.CUSTOS);
   var r = {};
-  if (cus.getLastRow() < 2) return r;
-  cus.getRange(2, 1, cus.getLastRow() - 1, 5).getValues().forEach(function (x) { if (x[0] !== '') r[String(x[0])] = x[4]; });
+  valoresEntradas().forEach(function (x) { if (x[12] !== '' && x[2] !== '') r[String(x[12]).trim()] = x[2]; });
   return r;
 }
 
 function confirmarVinculos() {
   var ss = SpreadsheetApp.getActive();
   var cfg = lerConfig();
-  var vin = ss.getSheetByName(ABA.VINCULAR);
+  var vin = abaAtiva(ABA.VINCULAR);
   var n = ultimaLinhaColA(vin);
   if (n < 2) { ss.toast('Nada para confirmar em VINCULAR.'); return; }
   var catalogo = carregarCatalogo(cfg);
@@ -1219,10 +1379,11 @@ function confirmarVinculos() {
     if (it.principal && !porSku[it.principal.toUpperCase()]) porSku[it.principal.toUpperCase()] = it;
     if (it.ean && !porEan[it.ean]) porEan[it.ean] = it;
   });
-  var skus = ss.getSheetByName(ABA.SKUS);
+  var skus = abaAtiva(ABA.SKUS);
   var linhaSku = {};
-  skus.getRange(2, 1, Math.max(1, ultimaLinhaColA(skus) - 1), 1).getValues()
-    .forEach(function (r, i) { linhaSku[String(r[0]).trim()] = i + 2; });
+  var jm = skus.getRange(2, 1, Math.max(1, ultimaLinhaColA(skus) - 1), 13).getValues();
+  jm.forEach(function (r, i) { linhaSku[String(r[0]).trim()] = i + 2; });
+  var poe = function (linha, x) { for (var c = 0; c < 4; c++) jm[linha - 2][9 + c] = x[c]; };
 
   var v = vin.getRange(2, 1, n - 1, CAB.VINCULAR.length).getValues();
   var feitos = [], erros = [], agora = new Date();
@@ -1232,17 +1393,17 @@ function confirmarVinculos() {
     var linha = linhaSku[String(r[0]).trim()];
     if (!linha) { erros.push('Linha ' + (i + 2) + ': código ' + r[0] + ' não está em SKUs.'); return; }
     if (/^N[AÃ]O\s*TEM$/i.test(escolha)) {
-      skus.getRange(linha, 10, 1, 4).setValues([[SEM_CADASTRO, '', '', agora]]);
+      poe(linha, [SEM_CADASTRO, '', '', agora]);
       feitos.push(i + 2);
       return;
     }
     var it = porSku[escolha.toUpperCase()] || porEan[eanTexto(escolha)];
     if (!it) { erros.push('Linha ' + (i + 2) + ': "' + escolha + '" não existe no SKU - MKTPLACE.'); return; }
-    gravarVinculo(skus, linha, it, agora);
+    poe(linha, [it.sku, it.ean, it.aba, agora]);
     feitos.push(i + 2);
   });
-  feitos.reverse().forEach(function (l) { vin.deleteRow(l); });
-  SpreadsheetApp.flush();
+  if (feitos.length) skus.getRange(2, 10, jm.length, 4).setValues(jm.map(function (r) { return r.slice(9, 13); }));
+  apagarLinhas(vin, feitos);
   var pv = feitos.length ? gerarPrevia(true) : 0;
   var ap = pv && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
   SpreadsheetApp.getUi().alert(feitos.length + ' vínculo(s) confirmado(s).' +
@@ -1255,9 +1416,9 @@ function gerarPrevia(silencioso) {
   var ss = SpreadsheetApp.getActive();
   var cfg = lerConfig();
   if (!cfg.planilhaCustos) throw new Error('Preencha em CONFIG o link da planilha de custos.');
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
-  if (!alvo) throw new Error('Aba "' + cfg.abaCustos + '" não encontrada na planilha de custos.');
-  var linhasAlvo = alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
+  var dAlvo = dadosAlvo(cfg);
+  if (!dAlvo) throw new Error('Aba "' + cfg.abaCustos + '" não encontrada na planilha de custos.');
+  var linhasAlvo = dAlvo.v;
   var idxSku = {}, idxEan = {};
   linhasAlvo.forEach(function (r, i) {
     [r[1], r[2]].forEach(function (s) {
@@ -1270,7 +1431,7 @@ function gerarPrevia(silencioso) {
 
   var custos = calcularCustos(cfg.custoOficial);
   var catalogo = null; // só carrega se tiver produto novo para adicionar
-  var skus = ss.getSheetByName(ABA.SKUS);
+  var skus = abaAtiva(ABA.SKUS);
   var nS = ultimaLinhaColA(skus);
   var v = nS > 1 ? skus.getRange(2, 1, nS - 1, 13).getValues() : [];
   // o mesmo produto do marketplace pode ter mais de um SKU interno (romaneio, XML, lançamento manual):
@@ -1303,7 +1464,7 @@ function gerarPrevia(silencioso) {
     }
   });
 
-  var sh = ss.getSheetByName(ABA.PREVIA);
+  var sh = abaAtiva(ABA.PREVIA);
   if (sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, CAB.PREVIA.length).clearContent();
   if (previa.length) { garantirLinhas(sh, previa.length + 1); sh.getRange(2, 1, previa.length, CAB.PREVIA.length).setValues(previa); }
   if (!silencioso) ss.toast(previa.length + ' alteração(ões) na aba PRÉVIA. Confira e clique em Aplicar na planilha.', 'Custos', 8);
@@ -1314,7 +1475,7 @@ function aplicarPrevia(silencioso) {
   silencioso = silencioso === true;
   var ss = SpreadsheetApp.getActive();
   var cfg = lerConfig();
-  var sh = ss.getSheetByName(ABA.PREVIA);
+  var sh = abaAtiva(ABA.PREVIA);
   var n = ultimaLinhaColA(sh);
   if (n < 2) { if (!silencioso) ss.toast('A PRÉVIA está vazia.'); return 0; }
   var v = sh.getRange(2, 1, n - 1, CAB.PREVIA.length).getValues();
@@ -1326,10 +1487,10 @@ function aplicarPrevia(silencioso) {
         ' linha(s) nova(s) em ' + cfg.abaCustos + '.', ui.ButtonSet.OK_CANCEL) !== ui.Button.OK) return 0;
   }
 
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
-  var ult = alvo.getLastRow();
-  var skusAlvo = alvo.getRange(1, 1, ult, 9).getValues(); // A (EAN) .. I (Custo)
-  var feitos = 0, avisos = [], novas = [], hist = [], agora = new Date();
+  var dAlvo = dadosAlvo(cfg), alvo = dAlvo.sh;
+  var ult = dAlvo.v.length + 1;
+  var skusAlvo = [[]].concat(dAlvo.v); // skusAlvo[linha - 1] = colunas A (EAN) .. I (Custo)
+  var feitos = 0, avisos = [], novas = [], hist = [], celulas = [], agora = new Date();
   v.forEach(function (r) {
     if (/^ATUALIZAR/.test(r[0])) {
       var linha = Number(r[8]);
@@ -1349,7 +1510,8 @@ function aplicarPrevia(silencioso) {
       var anterior = valorCusto(skusAlvo[linha - 1][8]);
       // já estava com o valor novo (prévia aplicada antes, pela metade): o anterior é o da prévia
       if (Math.abs(anterior - r[6]) < 0.005 && Number(r[5])) anterior = Number(r[5]);
-      alvo.getRange(linha, 9).setValue(r[6]);
+      celulas.push([linha, 9, r[6]]);
+      dAlvo.v[linha - 2][8] = r[6];
       hist.push([agora, r[1], r[2], r[3], r[4], anterior || '', r[6], anterior ? r[6] / anterior - 1 : '',
                  r[0] === 'ATUALIZAR KIT' ? 'KIT ATUALIZADO' : 'CUSTO ATUALIZADO', r[9], r[10],
                  cfg.abaCustos + ' linha ' + linha, anterior ? r[6] - anterior : '']);
@@ -1362,17 +1524,20 @@ function aplicarPrevia(silencioso) {
   });
   var linhasNovasOk = !novas.length;
   try {
+    gravarCelulasAlvo(cfg, celulas);
     if (novas.length) {
       var ini = ult + 1;
       var faltam = ini + novas.length - 1 - alvo.getMaxRows();
       if (faltam > 0) alvo.insertRowsAfter(alvo.getMaxRows(), faltam); // a aba acaba na última linha usada
       alvo.getRange(ult, 1, 1, 9).copyTo(alvo.getRange(ini, 1, novas.length, 9), SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
       alvo.getRange(ini, 1, novas.length, 9).setValues(novas);
+      novas.forEach(function (x) { dAlvo.v.push(x.slice()); });
       feitos += novas.length;
       linhasNovasOk = true;
     }
   } finally {
     // o que já foi gravado vai para o histórico mesmo se as linhas novas falharem
+    if (!linhasNovasOk) esquecerAlvo();
     anexar(ABA.HISTORICO, linhasNovasOk ? hist : hist.filter(function (h) { return h[8] !== 'LINHA ADICIONADA'; }));
   }
   sh.getRange(2, 1, n - 1, CAB.PREVIA.length).clearContent();
@@ -1401,7 +1566,9 @@ var TIPOS_PRODUTO = ['SHAMPOO', 'CONDICIONADOR', 'MASCARA', 'LEAVE', 'OLEO', 'OI
   'MASK', 'CONDITIONER', 'LOTION', 'CREAM', 'PINCEL', 'ESPONJA', 'LIXA', 'ALICATE', 'TESOURA', 'SECADOR', 'PRANCHA',
   'MODELADOR', 'TOUCA', 'FIBRA', 'LAPIS', 'DELINEADOR', 'SOMBRA', 'RIMEL', 'CILIOS', 'COLA', 'VITAMINA', 'SUPLEMENTO',
   'GELATINA', 'AGUA', 'OXIGENADA', 'EMULSAO'];
-function ehTipo(t) { return TIPOS_PRODUTO.indexOf(t) >= 0; }
+var TIPO = {};
+TIPOS_PRODUTO.forEach(function (t) { TIPO[t] = 1; });
+function ehTipo(t) { return TIPO.hasOwnProperty(t); }
 function ehMedida(t) { return !!medida(t); }
 
 // "Kit Truss 2 Shampoo e 1 Condicionador 300ml" -> [{texto: 'Truss Shampoo 300ml', qtd: 2}, {texto: 'Condicionador 300ml', qtd: 1}]
@@ -1456,6 +1623,9 @@ function consultasDoKit(nome, marca) {
 }
 
 function pontuarComponente(q, item) {
+  // o que não muda entre comparações fica guardado no próprio objeto
+  if (!q.medReq) { q.medReq = q.req.filter(ehMedida); q.tipoReq = q.req.filter(ehTipo); q.todos = q.req.concat(q.ctx); }
+  if (!item.medCat) { item.medCat = item.tok.filter(ehMedida); item.ehKitDesc = /\bkit\b/i.test(item.desc); }
   var cat = item.tok, usados = {};
   var bate = function (lista) {
     var n = 0;
@@ -1469,21 +1639,21 @@ function pontuarComponente(q, item) {
   var nCtx = bate(q.ctx);
   var cob = nReq / Math.max(1, q.req.length), cobCtx = q.ctx.length ? nCtx / q.ctx.length : 1;
   var s = 0.6 * cob + 0.35 * cobCtx + 0.05 * Math.min(1, 2 * (nReq + nCtx) / cat.length);
-  var medReq = q.req.filter(ehMedida), medCat = cat.filter(ehMedida);
+  var medReq = q.medReq, medCat = item.medCat;
   if (medReq.length && !medReq.every(function (m) { return medCat.some(function (c) { return tokenBate(m, c); }); }))
     s *= medCat.length ? 0.5 : 0.9;
-  var tipoReq = q.req.filter(ehTipo);
+  var tipoReq = q.tipoReq;
   if (tipoReq.length && !tipoReq.some(function (t) { return cat.some(function (c) { return tokenBate(t, c); }); })) s *= 0.6;
-  var todos = q.req.concat(q.ctx);
+  var todos = q.todos;
   if (item.tokVar.length && !item.tokVar.every(function (v) { return todos.some(function (t) { return tokenBate(t, v); }); })) s *= 0.4;
-  if (/\bkit\b/i.test(item.desc)) s *= 0.7;
+  if (item.ehKitDesc) s *= 0.7;
   return { s: Math.round(s * 1000) / 1000, cob: cob, ctx: cobCtx };
 }
 
 // Lê a planilha com a lista de kits (colunas pelo cabeçalho: SKU novo, SKU atual, nome, marca, EAN)
 function lerListaDeKits(cfg) {
   if (!cfg.planilhaKits) throw new Error('Preencha em CONFIG o link da planilha de kits.');
-  var ss = SpreadsheetApp.openById(cfg.planilhaKits);
+  var ss = abrirPlanilha(cfg.planilhaKits);
   var sh = cfg.abaKits ? ss.getSheetByName(cfg.abaKits) : ss.getSheets()[0];
   if (!sh) throw new Error('Aba "' + cfg.abaKits + '" não encontrada na planilha de kits.');
   var v = sh.getDataRange().getValues();
@@ -1508,7 +1678,7 @@ function sugerirKits(silencioso) {
   var inicio = Date.now();
   var ss = SpreadsheetApp.getActive();
   var cfg = lerConfig();
-  var sh = ss.getSheetByName(ABA.KITS);
+  var sh = abaAtiva(ABA.KITS);
   var jaTem = {};
   if (ultimaLinhaColA(sh) > 1) sh.getRange(2, 1, ultimaLinhaColA(sh) - 1, 1).getValues().forEach(function (r) { jaTem[String(r[0]).trim().toUpperCase()] = 1; });
   var kits = lerListaDeKits(cfg);
@@ -1535,9 +1705,11 @@ function sugerirKits(silencioso) {
     if (Date.now() - inicio > 240000) { faltam++; return; } // limite de tempo do Google: continua na próxima
     var base = daMarca(k.marca || k.nome.split(' ')[1] || '');
     consultasDoKit(k.nome, k.marca).forEach(function (q) {
-      var top = base.map(function (it) { var p = pontuarComponente(q, it); return { it: it, s: p.s, cob: p.cob, ctx: p.ctx }; })
-        .sort(function (a, b) { return b.s - a.s; }).slice(0, 2);
-      var a = top[0], b = top[1];
+      var a = null, b = null; // os 2 melhores, sem ordenar a lista toda
+      base.forEach(function (it) {
+        var p = pontuarComponente(q, it), x = { it: it, s: p.s, cob: p.cob, ctx: p.ctx };
+        if (!a || x.s > a.s) { b = a; a = x; } else if (!b || x.s > b.s) b = x;
+      });
       var certo = a && a.cob === 1 && a.ctx >= 0.5 && (!b || a.s - b.s >= 0.05);
       linhas.push([k.sku, k.atual, k.ean, k.nome, q.texto, q.qtd, a ? a.it.sku : '', a ? nomeCat(a.it) : '', a ? a.s : '',
         b ? b.it.sku + ' - ' + nomeCat(b.it) : '', certo ? a.it.sku : '', '', '']);
@@ -1557,12 +1729,11 @@ function sugerirKits(silencioso) {
 // Devolve [{sku, atual, nome, comps: [{qtd, sku, desc, custo}], total, iKit, atual$, situacao, pronto}]
 function contasDosKits(cfg) {
   var ss = SpreadsheetApp.getActive();
-  var sh = ss.getSheetByName(ABA.KITS);
+  var sh = abaAtiva(ABA.KITS);
   var n = sh ? ultimaLinhaColA(sh) : 0;
   if (n < 2) return { contas: [], linhasAlvo: [] };
   var v = sh.getRange(2, 1, n - 1, CAB.KITS.length).getValues();
-  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
-  var linhasAlvo = alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
+  var linhasAlvo = dadosAlvo(cfg).v;
   var porSku = {}, porEan = {};
   linhasAlvo.forEach(function (r, i) {
     [r[1], r[2]].forEach(function (s) { s = String(s).trim().toUpperCase(); if (s && porSku[s] === undefined) porSku[s] = i; });
@@ -1629,7 +1800,7 @@ function contasDosKits(cfg) {
 
 // Kits com a caixa Aprovar marcada na aba REVISAR KITS (a aprovação é gravada em KITS no Gravar aprovados)
 function kitsAprovados() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.REVISAR_KITS);
+  var sh = abaAtiva(ABA.REVISAR_KITS);
   var ap = {};
   if (!sh || ultimaLinhaColA(sh) < 2) return ap;
   sh.getRange(2, 1, ultimaLinhaColA(sh) - 1, 2).getValues().forEach(function (r) {
@@ -1642,7 +1813,7 @@ function kitsAprovados() {
 // Devolve as correções que não deram certo ({sku do kit: {texto, erro}}) para continuarem na revisão.
 function aplicarCorrecoesKits(cfg) {
   var ss = SpreadsheetApp.getActive();
-  var rev = ss.getSheetByName(ABA.REVISAR_KITS), kits = ss.getSheetByName(ABA.KITS);
+  var rev = abaAtiva(ABA.REVISAR_KITS), kits = abaAtiva(ABA.KITS);
   var falhas = {};
   if (!rev || ultimaLinhaColA(rev) < 2) return falhas;
   var pedidos = rev.getRange(2, 1, ultimaLinhaColA(rev) - 1, CAB.REVISAR_KITS.length).getValues()
@@ -1675,7 +1846,7 @@ function aplicarCorrecoesKits(cfg) {
       novas.push([kit, base[1], base[2], base[3], 'corrigido: ' + c.it.sku, c.qtd, c.it.sku, desc, 1, '', c.it.sku, '', base[12]]);
     });
   });
-  apagar.sort(function (a, b) { return b - a; }).forEach(function (l) { kits.deleteRow(l); });
+  apagarLinhas(kits, apagar);
   anexar(ABA.KITS, novas);
   return falhas;
 }
@@ -1708,7 +1879,7 @@ function atualizarRevisaoKits(cfg, dados, falhas) {
   });
   linhas.sort(function (a, b) { return (a.nivel - b.nivel) || (a.dif - b.dif); });
 
-  var sh = ss.getSheetByName(ABA.REVISAR_KITS);
+  var sh = abaAtiva(ABA.REVISAR_KITS);
   if (sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, CAB.REVISAR_KITS.length).clearContent().setBackground(null);
   if (linhas.length) {
     garantirLinhas(sh, linhas.length + 1);
@@ -1722,7 +1893,7 @@ function atualizarRevisaoKits(cfg, dados, falhas) {
   }
 
   // aba KITS: faixas alternadas por kit; componente sem confirmação em amarelo
-  var kits = ss.getSheetByName(ABA.KITS);
+  var kits = abaAtiva(ABA.KITS);
   var fundo = [], sit = [], alterna = false;
   for (var i = 0; i < dados.nLinhas; i++) { fundo.push(CAB.KITS.map(function () { return '#ffffff'; })); sit.push(['']); }
   dados.contas.forEach(function (c) {
@@ -1755,7 +1926,7 @@ function previaKits(cfg, acrescentar) {
     previa.push(['ATUALIZAR KIT', String(r[1] || c.sku), eanTexto(r[0]), r[6], r[7], c.custoAtual || '', c.total,
       c.custoAtual ? c.total / c.custoAtual - 1 : '', c.iKit + 2, '', '', 'KIT']);
   });
-  var pv = SpreadsheetApp.getActive().getSheetByName(ABA.PREVIA);
+  var pv = abaAtiva(ABA.PREVIA);
   if (!acrescentar && pv.getLastRow() > 1) pv.getRange(2, 1, pv.getLastRow() - 1, CAB.PREVIA.length).clearContent();
   if (previa.length) anexar(ABA.PREVIA, previa);
   return { n: previa.length, dados: dados };
@@ -1766,7 +1937,7 @@ function revisarKits() {
   var cfg = lerConfig();
   var falhas = aplicarCorrecoesKits(cfg);
   var r = atualizarRevisaoKits(cfg, null, falhas);
-  SpreadsheetApp.getActive().setActiveSheet(SpreadsheetApp.getActive().getSheetByName(ABA.REVISAR_KITS));
+  SpreadsheetApp.getActive().setActiveSheet(abaAtiva(ABA.REVISAR_KITS));
   SpreadsheetApp.getUi().alert('Revisão dos kits (' + r.total + '):\n\n' +
     '🟢 ' + r.verdes + ' com diferença até 10% do custo atual\n' +
     '🟡 ' + r.amarelos + ' com diferença entre 10% e 25% (ou sem custo atual para comparar)\n' +
@@ -1784,7 +1955,7 @@ function reabrirKit() {
   var resp = ui.prompt('Reabrir kit', 'SKU do kit (ex.: KT-HON-0003):', ui.ButtonSet.OK_CANCEL);
   if (resp.getSelectedButton() !== ui.Button.OK) return;
   var sku = String(resp.getResponseText()).trim().toUpperCase();
-  var kits = SpreadsheetApp.getActive().getSheetByName(ABA.KITS);
+  var kits = abaAtiva(ABA.KITS);
   var n = ultimaLinhaColA(kits), achou = 0;
   if (n > 1) kits.getRange(2, 1, n - 1, 1).getValues().forEach(function (r, i) {
     if (String(r[0]).trim().toUpperCase() === sku) { kits.getRange(i + 2, 13).setValue(''); achou++; }
@@ -1796,7 +1967,7 @@ function reabrirKit() {
 
 // Marca Aprovar em todos os verdes (diferença até 10%)
 function aprovarKitsVerdes() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.REVISAR_KITS);
+  var sh = abaAtiva(ABA.REVISAR_KITS);
   var n = ultimaLinhaColA(sh);
   if (n < 2) return;
   var v = sh.getRange(2, 1, n - 1, CAB.REVISAR_KITS.length).getValues();
@@ -1815,14 +1986,16 @@ function calcularKits() {
   var cfg = lerConfig();
   var falhas = aplicarCorrecoesKits(cfg);
   // grava a aprovação na aba KITS (coluna Aprovado em) para os kits marcados e prontos
-  var marcados = kitsAprovados(), dados = contasDosKits(cfg), kits = SpreadsheetApp.getActive().getSheetByName(ABA.KITS);
+  var marcados = kitsAprovados(), dados = contasDosKits(cfg), kits = abaAtiva(ABA.KITS);
   var agora = new Date(), novos = 0, naoProntos = [];
+  var colM = dados.nLinhas ? kits.getRange(2, 13, dados.nLinhas, 1).getValues() : [];
   dados.contas.forEach(function (c) {
     if (!marcados[c.sku] || c.aprovado || falhas[c.sku]) return;
     if (!c.pronto) { naoProntos.push(c.sku); return; }
-    c.linhas.forEach(function (x) { kits.getRange(x.linha, 13).setValue(agora); });
+    c.linhas.forEach(function (x) { colM[x.linha - 2][0] = agora; });
     novos++;
   });
+  if (novos) kits.getRange(2, 13, colM.length, 1).setValues(colM);
   var r = previaKits(cfg, false);
   var ap = r.n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
   var rev = atualizarRevisaoKits(cfg, null, falhas);
@@ -1852,14 +2025,12 @@ function carregarCatalogo(cfg) {
   if (!cfg.planilhaMkt) throw new Error('Preencha em CONFIG o link da planilha SKU - MKTPLACE.');
   if (CATALOGO_CACHE) return CATALOGO_CACHE;
   var itens = [];
-  SpreadsheetApp.openById(cfg.planilhaMkt).getSheets().forEach(function (sh) {
-    var aba = sh.getName();
-    if (cfg.abasIgnoradas.indexOf(aba.toUpperCase()) >= 0 || sh.getLastRow() < 2) return;
-    var v = sh.getRange(1, 1, sh.getLastRow(), Math.min(6, sh.getLastColumn())).getValues(); // até F (CUSTO)
-    if (!/SKU/i.test(String(v[0][0]))) return; // aba que não é de marca
+  abasDoMktplace(cfg).forEach(function (t) {
+    var aba = t.aba, v = t.v;
+    if (!v.length || !/SKU/i.test(String(v[0][0]))) return; // aba que não é de marca
     var principal = '', descAnterior = '';
     for (var i = 1; i < v.length; i++) {
-      var r = v[i].concat(['', '', '', '', '']);
+      var r = v[i].concat(['', '', '', '', '', '']);
       if (!r[0] && !r[1] && !r[2] && !r[4]) continue;
       if (r[0]) principal = String(r[0]).trim();
       else if (r[2] && r[2] !== descAnterior && !r[4]) principal = '';
@@ -1882,6 +2053,69 @@ function carregarCatalogo(cfg) {
   return itens;
 }
 
+// Colunas A:F de cada aba do SKU - MKTPLACE (fora as ignoradas): [{aba, v}].
+// Fica em cache (até 6 h) e só é relido quando a planilha muda (data de alteração no Drive).
+function abasDoMktplace(cfg) {
+  var chave = null, cache = null;
+  try {
+    cache = CacheService.getScriptCache();
+    chave = 'mkt' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5,
+      cfg.planilhaMkt + '|' + DriveApp.getFileById(cfg.planilhaMkt).getLastUpdated().getTime() + '|' + cfg.abasIgnoradas.join(',')));
+    var n = Number(cache.get(chave));
+    if (n) {
+      var nomes = [];
+      for (var i = 0; i < n; i++) nomes.push(chave + '.' + i);
+      var partes = cache.getAll(nomes);
+      if (nomes.every(function (k) { return partes[k]; })) {
+        var z = Utilities.newBlob(Utilities.base64Decode(nomes.map(function (k) { return partes[k]; }).join('')), 'application/x-gzip');
+        return JSON.parse(Utilities.ungzip(z).getDataAsString());
+      }
+    }
+  } catch (e) { chave = null; }
+
+  var abas = lerAbasDoMktplace(cfg);
+  if (chave) {
+    try {
+      var texto = Utilities.base64Encode(Utilities.gzip(Utilities.newBlob(JSON.stringify(abas))).getBytes());
+      var obj = {}, k = 0;
+      for (var p = 0; p < texto.length; p += 90000) obj[chave + '.' + (k++)] = texto.slice(p, p + 90000);
+      obj[chave] = String(k);
+      cache.putAll(obj, 21600);
+    } catch (e) {}
+  }
+  return abas;
+}
+
+function lerAbasDoMktplace(cfg) {
+  var ignorar = function (aba) { return cfg.abasIgnoradas.indexOf(String(aba).toUpperCase()) >= 0; };
+  try {
+    // 2 pedidos para a planilha inteira, em vez de 4 chamadas por aba
+    var titulos = sheetsApi(cfg.planilhaMkt + '?fields=sheets.properties.title').sheets
+      .map(function (x) { return x.properties.title; }).filter(function (t) { return !ignorar(t); });
+    if (!titulos.length) return [];
+    var r = sheetsApi(cfg.planilhaMkt + '/values:batchGetByDataFilter', {
+      dataFilters: titulos.map(function (t) { return { a1Range: nomeA1(t) + '!A:F' }; }),
+      valueRenderOption: 'UNFORMATTED_VALUE', majorDimension: 'ROWS' });
+    var porAba = {};
+    (r.valueRanges || []).forEach(function (m) {
+      var faixa = String(m.valueRange.range), aba = faixa.slice(0, faixa.lastIndexOf('!'));
+      if (/^'.*'$/.test(aba)) aba = aba.slice(1, -1).replace(/''/g, "'");
+      porAba[aba] = m.valueRange.values || [];
+    });
+    return titulos.map(function (t) { return { aba: t, v: porAba[t] || [] }; });
+  } catch (e) {
+    console.log('SKU - MKTPLACE: API indisponível, lendo aba por aba. ' + (e && e.message || e));
+  }
+  var abas = [];
+  abrirPlanilha(cfg.planilhaMkt).getSheets().forEach(function (sh) {
+    var aba = sh.getName();
+    if (ignorar(aba)) return;
+    var v = sh.getDataRange().getValues();
+    abas.push({ aba: aba, v: v.map(function (l) { return l.slice(0, 6); }) });
+  });
+  return abas;
+}
+
 function normalizarCat(s) {
   return String(s == null ? '' : s).toUpperCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -1898,7 +2132,12 @@ function tokensCat(s, expandir) {
 }
 
 // 250G e 250ML contam como a mesma medida (o romaneio e o marketplace misturam)
-function medida(t) { var m = t.match(/^(\d+(?:\.\d+)?)(ML|L|LT|G|GR|KG|MG)$/); return m ? m[1] : null; }
+var MEDIDAS = {};
+function medida(t) {
+  if (MEDIDAS.hasOwnProperty(t)) return MEDIDAS[t];
+  var m = t.match(/^(\d+(?:\.\d+)?)(ML|L|LT|G|GR|KG|MG)$/);
+  return (MEDIDAS[t] = m ? m[1] : null);
+}
 
 function tokenBate(a, b) {
   if (a === b) return true;
@@ -1986,9 +2225,10 @@ function lerRomaneioVarejoFacil(texto, cfg) {
   var NUM = '-?\\d[\\d.]*,\\d+';
   // Quantidade grande espreme a coluna e o item quebra em 3 linhas: a embalagem fica "UN/1," em cima,
   // o "0000" vai para baixo e o nº do item desce para o meio, antes dos valores. Por isso o nº do item
-  // pode vir antes do código ou depois da embalagem.
+  // pode vir antes do código ou depois da embalagem. Uma coluna espremida também pode vir sem os
+  // decimais ("11196,"): conta como número, para não mudar a posição do total.
   var re = new RegExp('(?:^|\\s)(?:(\\d{1,4}) )?(\\* )?(\\d{5,14}) - (.+?) (' + NUM + ') ([A-Za-z]{1,5})\\/(\\d[\\d.]*,?\\d*)' +
-    '(?: (\\d{1,4}))?((?: ' + NUM + ')+)(.*?)(?=\\s(?:\\d{1,4} )?(?:\\* )?\\d{5,14} - |\\sQtd\\. de itens|$)', 'g');
+    '(?: (\\d{1,4}))?((?: ' + NUM + '| -?\\d[\\d.]*,(?= ))+)(.*?)(?=\\s(?:\\d{1,4} )?(?:\\* )?\\d{5,14} - |\\sQtd\\. de itens|$)', 'g');
   while ((m = re.exec(plano))) {
     var nums = m[9].trim().split(' ').map(numeroBR);
     var qtd = numeroBR(m[5]);
