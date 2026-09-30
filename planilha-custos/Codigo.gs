@@ -742,7 +742,7 @@ function conferirLancamentos(cfg) {
     sku = sku.toUpperCase();
     var ean = eanDoMkt[sku] || '', porEan = null;
     for (var k = 0; k < linhasAlvo.length; k++) {
-      var x = linhasAlvo[k], achado = { linha: k + 2, valor: Number(x[8]) || 0 };
+      var x = linhasAlvo[k], achado = { linha: k + 2, valor: valorCusto(x[8]) };
       if (String(x[1]).trim().toUpperCase() === sku || String(x[2]).trim().toUpperCase() === sku) return achado;
       if (!porEan && ean && eanTexto(x[0]) === ean) porEan = achado;
     }
@@ -1129,7 +1129,7 @@ function gerarPrevia(silencioso) {
     var linhas = idxSku[skuMkt.toUpperCase()] || idxEan[eanTexto(r[10])] || [];
     if (linhas.length) {
       linhas.forEach(function (i) {
-        var atual = Number(linhasAlvo[i][8]) || 0;
+        var atual = valorCusto(linhasAlvo[i][8]);
         if (Math.abs(atual - novo) < 0.005) return;
         previa.push(['ATUALIZAR CUSTO', skuMkt, eanTexto(linhasAlvo[i][0]), linhasAlvo[i][6], linhasAlvo[i][7],
           atual || '', novo, atual ? novo / atual - 1 : '', i + 2, cod, c.fornecedor, r[11]]);
@@ -1186,7 +1186,7 @@ function aplicarPrevia(silencioso) {
         for (var i = 2; i <= ult; i++) if (confere(i)) { linha = i; break; }
       }
       if (!linha) { avisos.push(r[1] + ': não achei mais na planilha de custos.'); return; }
-      var anterior = Number(skusAlvo[linha - 1][8]) || 0;
+      var anterior = valorCusto(skusAlvo[linha - 1][8]);
       // já estava com o valor novo (prévia aplicada antes, pela metade): o anterior é o da prévia
       if (Math.abs(anterior - r[6]) < 0.005 && Number(r[5])) anterior = Number(r[5]);
       alvo.getRange(linha, 9).setValue(r[6]);
@@ -1439,7 +1439,7 @@ function contasDosKits(cfg) {
       var sku = String(x.r[10]).trim(), qtd = Number(x.r[5]) || 1;
       var usado = sku && !/^N[AÃ]O\s*TEM$/i.test(sku);
       var i = usado ? acharLinha(sku, '') : undefined;
-      var custo = i === undefined ? 0 : Number(linhasAlvo[i][8]) || 0;
+      var custo = i === undefined ? 0 : valorCusto(linhasAlvo[i][8]);
       var desc = !usado ? '(' + (sku ? 'não tem' : 'falta confirmar') + ': ' + x.r[4] + ')' :
         descDoSku[sku.toUpperCase()] || (i !== undefined ? String(linhasAlvo[i][6]) + (linhasAlvo[i][7] ? ' [' + linhasAlvo[i][7] + ']' : '') : sku);
       c.comps.push({ qtd: qtd, sku: sku, desc: desc, custo: custo });
@@ -1449,7 +1449,7 @@ function contasDosKits(cfg) {
     c.total = Math.round(c.total * 100) / 100;
     c.iKit = acharLinha(k, r0[2]);
     if (c.iKit === undefined && r0[1]) c.iKit = acharLinha(r0[1], '');
-    if (c.iKit !== undefined) c.custoAtual = Number(linhasAlvo[c.iKit][8]) || 0;
+    if (c.iKit !== undefined) c.custoAtual = valorCusto(linhasAlvo[c.iKit][8]);
     var real = function (x) { return 'R$ ' + x.toFixed(2).replace('.', ','); };
     if (falta.length) c.situacao = 'FALTA CONFIRMAR ' + falta.length + ' componente(s)';
     else if (semCadastro.length) c.situacao = 'componente sem cadastro: ' + semCadastro.map(function (x) { return x.r[4]; }).join(', ');
@@ -2100,6 +2100,13 @@ function dataIso(s) {
 // ===========================================================================
 // Utilitários
 // ===========================================================================
+
+// Custo da planilha de custos: número, ou texto como "R$ 19,95" (algumas linhas estão assim)
+function valorCusto(v) {
+  if (typeof v === 'number') return v;
+  var t = String(v == null ? '' : v).replace(/R\$|\s/g, '');
+  return numeroBR(t) || Number(t) || 0;
+}
 
 function soDigitos(s) { return String(s == null ? '' : s).replace(/\D/g, ''); }
 
