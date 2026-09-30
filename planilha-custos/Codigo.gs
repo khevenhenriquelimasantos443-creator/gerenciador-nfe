@@ -29,6 +29,7 @@ var ABA = {
   PREVIA: 'PRÉVIA',
   HISTORICO: 'HISTÓRICO DE CUSTOS',
   AUMENTOS: 'AUMENTOS 7 DIAS',
+  SEM_CUSTO: 'SEM CUSTO',
   CONFIG: 'CONFIG',
   LOG: 'LOG'
 };
@@ -63,6 +64,8 @@ var CAB = {
            'Variação', 'Linha na planilha de custos', 'Código VarejoFácil', 'Fornecedor', 'Marca (aba)'],
   HISTORICO: ['Data', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo anterior', 'Custo novo',
               'Variação', 'O que foi feito', 'Código VarejoFácil', 'Fornecedor', 'Onde', 'Diferença em R$'],
+  SEM_CUSTO: ['SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Marca', 'Fornecedor',
+              'Linha na planilha de custos', 'Tipo', 'Como resolver'],
   LOG: ['Data/hora', 'Arquivo', 'ID do arquivo', 'Status', 'Itens lidos', 'Itens gravados',
         '(não usado)', 'SKUs novos', 'Mensagem']
 };
@@ -82,6 +85,8 @@ var CONFIG_ITENS = [
   ['Similaridade para já deixar o vínculo preenchido', 0.85, 'Acima disso a sugestão já vem preenchida em VINCULAR.'],
   ['Aplicar automaticamente na planilha de custos', 'SIM', 'SIM: grava sozinho. NÃO: espera o botão Aplicar na aba PRÉVIA.'],
   ['Adicionar produtos novos do SKU - MKTPLACE', 'SIM', 'SIM: a sincronização adiciona na planilha de custos os produtos do SKU - MKTPLACE que ainda não estão lá (custo da coluna CUSTO, se tiver). Para deixar uma aba de fora, ponha em "Abas ignoradas".'],
+  ['Preencher fornecedor vazio com a primeira nota', 'SIM', 'SIM: produto sem fornecedor (coluna F) na planilha de custos recebe o fornecedor da primeira nota fiscal que entrou dele.'],
+  ['Ordenar a planilha de custos por nome', 'SIM', 'SIM: depois de cada atualização, a planilha de custos fica em ordem alfabética pelo Nome do Produto (coluna G) e pela variação (coluna H).'],
   ['Planilha de kits (link ou ID)', '', 'Lista de kits (SKU novo, SKU atual, nome, marca, EAN) usada para sugerir os componentes.'],
   ['Aba da planilha de kits', '', 'Vazio: a primeira aba.']
 ];
@@ -100,6 +105,7 @@ function onOpen() {
     .addItem('Lançar custos da aba LANÇAR CUSTO', 'lancarCustos')
     .addItem('Sincronizar com a planilha de custos', 'sincronizarAgora')
     .addItem('Adicionar agora os produtos novos do SKU - MKTPLACE', 'adicionarNovosAgora')
+    .addItem('Atualizar a lista SEM CUSTO', 'atualizarSemCustoAgora')
     .addSeparator()
     .addItem('Confirmar vínculos (aba VINCULAR)', 'confirmarVinculos')
     .addItem('Sugerir componentes dos kits (aba KITS)', 'sugerirKits')
@@ -183,9 +189,13 @@ function atualizarEstrutura() {
       sh.getRange('F2:G').setNumberFormat('R$ #,##0.00'); sh.getRange('H2:H').setNumberFormat('+0.0%;-0.0%;0.0%');
       sh.getRange('M2:M').setNumberFormat('R$ #,##0.00'); sh.setColumnWidth(4, 380);
     },
+    SEM_CUSTO: function (sh) {
+      sh.getRange('A:B').setNumberFormat('@'); sh.setColumnWidth(3, 380); sh.setColumnWidth(4, 200);
+      sh.setColumnWidth(9, 420); sh.getRange(1, 1, 1, CAB.SEM_CUSTO.length).setBackground('#b91c1c');
+    },
     LOG: function (sh) { sh.getRange('A2:A').setNumberFormat('dd/mm/yyyy hh:mm'); sh.setColumnWidth(9, 600); }
   };
-  ['SKUS', 'ENTRADAS', 'LANCAR', 'KITS', 'REVISAR_KITS', 'VINCULAR', 'PREVIA', 'HISTORICO', 'LOG'].forEach(function (k) {
+  ['SKUS', 'ENTRADAS', 'LANCAR', 'SEM_CUSTO', 'KITS', 'REVISAR_KITS', 'VINCULAR', 'PREVIA', 'HISTORICO', 'LOG'].forEach(function (k) {
     var sh = garantirAba(ss, ABA[k]);
     var nova = sh.getLastRow() === 0;
     // cabeçalho: sempre regravado (texto fixo), a não ser nas colunas de fórmula
@@ -201,7 +211,7 @@ function atualizarEstrutura() {
   garantirPastas();
   criarBotoes();
 
-  var ordem = [ABA.LEIAME, ABA.CUSTOS, ABA.LANCAR, ABA.REVISAR_KITS, ABA.KITS, ABA.AUMENTOS, ABA.HISTORICO, ABA.SKUS, ABA.ENTRADAS,
+  var ordem = [ABA.LEIAME, ABA.CUSTOS, ABA.LANCAR, ABA.SEM_CUSTO, ABA.REVISAR_KITS, ABA.KITS, ABA.AUMENTOS, ABA.HISTORICO, ABA.SKUS, ABA.ENTRADAS,
                ABA.VINCULAR, ABA.PREVIA, ABA.CONFIG, ABA.LOG];
   ordem.forEach(function (nome, i) { ss.setActiveSheet(ss.getSheetByName(nome)); ss.moveActiveSheet(i + 1); });
   var padrao = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
@@ -331,6 +341,15 @@ function escreverLeiaMe(sh) {
     ['A cada sincronização, produto cadastrado no SKU - MKTPLACE que ainda não está na planilha de custos é adicionado lá'],
     ['(custo da coluna CUSTO do SKU - MKTPLACE, se tiver). Para deixar uma aba de fora, ponha em CONFIG > Abas ignoradas.'],
     [''],
+    ['PRODUTOS SEM CUSTO (ABA SEM CUSTO)'],
+    ['Lista, em ordem alfabética, os produtos da planilha de custos com a coluna I vazia ou zero, e o que fazer com cada um.'],
+    ['É refeita a cada sincronização: o produto sai sozinho quando o custo chega. Botão Atualizar lista para refazer na hora.'],
+    [''],
+    ['FORNECEDOR E ORDEM ALFABÉTICA'],
+    ['Produto sem fornecedor (coluna F) recebe o fornecedor da primeira nota que entrar dele. O que já está preenchido não muda.'],
+    ['Depois de cada atualização a planilha de custos fica em ordem alfabética pelo Nome do Produto (G) e pela variação (H).'],
+    ['Os dois podem ser desligados em CONFIG.'],
+    [''],
     ['KITS'],
     ['O custo de cada kit é a soma de quantidade × custo de cada componente, e se atualiza sozinho quando um componente muda.'],
     ['Primeira vez: Custos > Sugerir componentes dos kits (lê a planilha de kits de CONFIG e separa os componentes pelo nome).'],
@@ -369,6 +388,7 @@ function criarBotoes() {
     [ABA.CUSTOS, CAB.CUSTOS.length + 2, 2, 'importarRomaneios', BOTAO_IMPORTAR, 'Importar romaneios'],
     [ABA.CUSTOS, CAB.CUSTOS.length + 2, 5, 'sincronizarAgora', BOTAO_SINCRONIZAR, 'Sincronizar'],
     [ABA.LANCAR, CAB.LANCAR.length + 2, 2, 'lancarCustos', BOTAO_LANCAR, 'Lançar custos'],
+    [ABA.SEM_CUSTO, CAB.SEM_CUSTO.length + 2, 2, 'atualizarSemCustoAgora', BOTAO_SINCRONIZAR, 'Atualizar lista'],
     [ABA.KITS, CAB.KITS.length + 2, 2, 'revisarKits', BOTAO_REVISAR, 'Atualizar revisão'],
     [ABA.REVISAR_KITS, CAB.REVISAR_KITS.length + 2, 2, 'revisarKits', BOTAO_REVISAR, 'Atualizar revisão'],
     [ABA.REVISAR_KITS, CAB.REVISAR_KITS.length + 2, 5, 'calcularKits', BOTAO_KITS, 'Gravar aprovados'],
@@ -431,6 +451,8 @@ function prepararConfig(limpar) {
   if (limpar) {
     var listas = { 'Custo oficial': ['ÚLTIMO PAGO', 'EFETIVO', 'MÉDIO'],
                    'Adicionar produtos novos do SKU - MKTPLACE': ['SIM', 'NÃO'],
+                   'Preencher fornecedor vazio com a primeira nota': ['SIM', 'NÃO'],
+                   'Ordenar a planilha de custos por nome': ['SIM', 'NÃO'],
                    'Aplicar automaticamente na planilha de custos': ['SIM', 'NÃO'],
                    'Somar frete, seguro, IPI e ST no custo (XML)': ['SIM', 'NÃO'] };
     var v = sh.getRange(2, 1, sh.getLastRow() - 1, 1).getValues();
@@ -468,7 +490,9 @@ function lerConfig() {
     custoOficial: txt('Custo oficial', 'ÚLTIMO PAGO').toUpperCase(),
     planilhaKits: idDePlanilha(txt('Planilha de kits (link ou ID)')),
     adicionarNovos: txt('Adicionar produtos novos do SKU - MKTPLACE', 'SIM').toUpperCase() !== 'NÃO',
-    abaKits: txt('Aba da planilha de kits')
+    abaKits: txt('Aba da planilha de kits'),
+    preencherFornecedor: txt('Preencher fornecedor vazio com a primeira nota', 'SIM').toUpperCase() !== 'NÃO',
+    ordenarCustos: txt('Ordenar a planilha de custos por nome', 'SIM').toUpperCase() !== 'NÃO'
   };
 }
 
@@ -927,10 +951,15 @@ function sincronizar(cfg) {
     // kits por último: usam o custo dos componentes que acabou de ser gravado
     var k = previaKits(cfg, !cfg.aplicarAuto);
     var apk = k.n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
+    var nf = cfg.preencherFornecedor ? preencherFornecedores(cfg) : 0;
+    if (cfg.ordenarCustos) ordenarPlanilhaCustos(cfg);
+    var sc = atualizarSemCusto(cfg);
     return (sv ? sv + ' produto(s) para confirmar em VINCULAR. ' : '') +
       (cfg.aplicarAuto ? ap + ' alteração(ões) gravada(s) em ' + cfg.abaCustos + '.' : pv + ' alteração(ões) na aba PRÉVIA.') +
       (nv ? ' Produtos novos do SKU - MKTPLACE: ' + (cfg.aplicarAuto ? apn + ' adicionado(s).' : nv + ' na PRÉVIA.') : '') +
-      (k.n ? ' Kits: ' + (cfg.aplicarAuto ? apk + ' custo(s) de kit atualizado(s).' : k.n + ' na PRÉVIA.') : '');
+      (k.n ? ' Kits: ' + (cfg.aplicarAuto ? apk + ' custo(s) de kit atualizado(s).' : k.n + ' na PRÉVIA.') : '') +
+      (nf ? ' Fornecedor preenchido em ' + nf + ' produto(s).' : '') +
+      (sc ? ' ' + sc + ' produto(s) sem custo (aba SEM CUSTO).' : ' Nenhum produto sem custo.');
   } catch (e) {
     registrarLog('SINCRONIZAR', '', 'ERRO', 0, 0, 0, String(e && e.message || e));
     return 'Erro ao sincronizar: ' + (e && e.message || e);
@@ -966,10 +995,141 @@ function previaNovosDoMktplace(cfg, acrescentar) {
   return previa.length;
 }
 
+// Coluna F (Fornecedor) vazia na planilha de custos -> fornecedor da primeira nota fiscal (romaneio ou XML)
+// que entrou do produto. Lançamento manual não conta. Só preenche o que está vazio.
+function preencherFornecedores(cfg) {
+  var ss = SpreadsheetApp.getActive();
+  var ent = ss.getSheetByName(ABA.ENTRADAS), skus = ss.getSheetByName(ABA.SKUS);
+  if (ultimaLinhaColA(ent) < 2 || ultimaLinhaColA(skus) < 2) return 0;
+  var primeira = {}; // SKU interno -> {forn, quando}
+  ent.getRange(2, 1, ultimaLinhaColA(ent) - 1, 20).getValues().forEach(function (r) {
+    var sku = String(r[12]).trim(), forn = String(r[2]).trim();
+    if (!sku || !forn || String(r[17]).trim().toUpperCase() === 'MANUAL') return;
+    var quando = r[19] instanceof Date ? r[19].getTime() : (r[0] instanceof Date ? r[0].getTime() : 0);
+    if (!primeira[sku] || quando < primeira[sku].quando) primeira[sku] = { forn: forn, quando: quando };
+  });
+  var porSku = {}, porEan = {};
+  skus.getRange(2, 1, ultimaLinhaColA(skus) - 1, 11).getValues().forEach(function (r) {
+    var p = primeira[String(r[0]).trim()], mkt = String(r[9]).trim().toUpperCase();
+    if (!p || !mkt || mkt === SEM_CADASTRO) return;
+    if (!porSku[mkt] || p.quando < porSku[mkt].quando) porSku[mkt] = p;
+    var e = eanTexto(r[10]);
+    if (e && (!porEan[e] || p.quando < porEan[e].quando)) porEan[e] = p;
+  });
+  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
+  if (!alvo || alvo.getLastRow() < 2) return 0;
+  var n = 0, feitos = [];
+  alvo.getRange(2, 1, alvo.getLastRow() - 1, 6).getValues().forEach(function (r, i) {
+    if (String(r[5]).trim()) return;
+    var p = porSku[String(r[2]).trim().toUpperCase()] || porSku[String(r[1]).trim().toUpperCase()] || porEan[eanTexto(r[0])];
+    if (!p) return;
+    alvo.getRange(i + 2, 6).setValue(p.forn);
+    feitos.push(String(r[2] || r[1]).trim() + ' = ' + p.forn);
+    n++;
+  });
+  if (n) registrarLog('FORNECEDOR', '', 'OK', n, n, 0, 'Fornecedor preenchido em ' + cfg.abaCustos + ': ' + feitos.join('; '));
+  return n;
+}
+
+// Fora da sincronização (botões de kits e de produtos novos): ordena e refaz a SEM CUSTO
+function arrumarDepoisDeGravar(cfg) {
+  if (cfg.ordenarCustos) ordenarPlanilhaCustos(cfg);
+  atualizarSemCusto(cfg);
+}
+
+// Ordem alfabética pelo Nome do Produto (G) e pela variação (H), no fim de toda sincronização.
+// Fórmula que aponta para outra linha (ex.: kit "=I329+I330") passaria a somar outro produto depois de
+// ordenar: antes, ela vira o valor que mostra agora (fica registrado no LOG). Fórmula da própria linha
+// (ex.: =LEFT(G19; ...) na linha 19) continua fórmula, porque acompanha a linha.
+function ordenarPlanilhaCustos(cfg) {
+  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
+  var n = alvo ? alvo.getLastRow() - 1 : 0;
+  if (n < 2) return;
+  var nc = alvo.getLastColumn(), faixa = alvo.getRange(2, 1, n, nc);
+  var formulas = faixa.getFormulas(), valores = null, fixadas = [];
+  formulas.forEach(function (l, i) {
+    l.forEach(function (f, j) {
+      if (!f || !formulaDeOutraLinha(f, i + 2)) return;
+      valores = valores || faixa.getValues();
+      alvo.getRange(i + 2, j + 1).setValue(valores[i][j]);
+      fixadas.push(String.fromCharCode(65 + j) + (i + 2) + ' ' + f + ' = ' + valores[i][j]);
+    });
+  });
+  if (fixadas.length) {
+    registrarLog('ORDENAR', '', 'OK', fixadas.length, fixadas.length, 0, 'Antes de ordenar ' + cfg.abaCustos +
+      ', fórmula(s) que apontavam para outra linha viraram valor: ' + fixadas.join('; '));
+  }
+  faixa.sort([{ column: 7, ascending: true }, { column: 8, ascending: true }]);
+}
+
+// true se a fórmula usa uma célula de outra linha (texto entre aspas não conta)
+function formulaDeOutraLinha(f, linha) {
+  var t = String(f).replace(/"[^"]*"/g, '');
+  var re = /(^|[^A-Za-z0-9_])\$?[A-Z]{1,3}\$?(\d+)(?![\d(A-Za-z_])/g, m;
+  while ((m = re.exec(t))) if (Number(m[2]) !== linha) return true;
+  return false;
+}
+
+// Aba SEM CUSTO: linhas da planilha de custos com a coluna I vazia ou zero. É refeita a cada sincronização,
+// então o produto sai da lista sozinho quando o custo chega (compra, XML, lançamento ou kit aprovado).
+function atualizarSemCusto(cfg) {
+  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.SEM_CUSTO);
+  if (!sh || !cfg.planilhaCustos) return 0;
+  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
+  if (!alvo) return 0;
+  var kits = {}, aprovados = {};
+  var abaKits = SpreadsheetApp.getActive().getSheetByName(ABA.KITS);
+  if (abaKits && ultimaLinhaColA(abaKits) > 1) {
+    abaKits.getRange(2, 1, ultimaLinhaColA(abaKits) - 1, CAB.KITS.length).getValues().forEach(function (r) {
+      [r[0], r[1]].forEach(function (x) {
+        x = String(x).trim().toUpperCase();
+        if (!x) return;
+        kits[x] = 1;
+        if (r[12] !== '' && r[12] != null) aprovados[x] = 1;
+      });
+    });
+  }
+  var lista = [];
+  var v = alvo.getLastRow() > 1 ? alvo.getRange(2, 1, alvo.getLastRow() - 1, 9).getValues() : [];
+  v.forEach(function (r, i) {
+    var sku = String(r[2] || r[1] || '').trim(), nome = String(r[6] || '').trim();
+    if (!sku && !nome) return;
+    if (valorCusto(r[8]) > 0) return;
+    var chaves = [r[1], r[2]].map(function (x) { return String(x).trim().toUpperCase(); }).filter(String);
+    var ehKit = chaves.some(function (x) { return kits[x]; }) || /^KT-/i.test(sku) || /^\s*kit\b/i.test(nome) || / \+ /.test(nome);
+    var dica;
+    if (!ehKit) dica = 'Importe a nota de compra ou lance o custo na aba LANÇAR CUSTO';
+    else if (chaves.some(function (x) { return aprovados[x]; })) dica = 'Kit aprovado com componente sem custo: resolva o componente';
+    else if (chaves.some(function (x) { return kits[x]; })) dica = 'Kit: confira e aprove na aba REVISAR KITS';
+    else dica = 'Kit: rode Custos > Sugerir componentes dos kits e aprove em REVISAR KITS';
+    lista.push([sku, eanTexto(r[0]), nome, String(r[7] || ''), String(r[3] || ''), String(r[5] || ''), i + 2,
+                ehKit ? 'KIT' : 'PRODUTO', dica]);
+  });
+  lista.sort(function (a, b) {
+    return a[2].localeCompare(b[2], 'pt', { sensitivity: 'base' }) || a[3].localeCompare(b[3], 'pt', { sensitivity: 'base' }) ||
+      a[6] - b[6];
+  });
+  var ncol = CAB.SEM_CUSTO.length;
+  if (sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, ncol).clearContent();
+  if (lista.length) {
+    garantirLinhas(sh, lista.length + 1);
+    sh.getRange(2, 1, lista.length, ncol).setValues(lista);
+  }
+  return lista.length;
+}
+
+function atualizarSemCustoAgora() {
+  var cfg = lerConfig();
+  var n = atualizarSemCusto(cfg);
+  SpreadsheetApp.getActive().toast(n ? n + ' produto(s) sem custo em ' + cfg.abaCustos + '.' :
+    'Nenhum produto sem custo em ' + cfg.abaCustos + '.', 'SEM CUSTO', 8);
+}
+
 function adicionarNovosAgora() {
   var cfg = lerConfig();
   var n = previaNovosDoMktplace(cfg, false);
   var ap = n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
+  if (ap) arrumarDepoisDeGravar(cfg);
   SpreadsheetApp.getUi().alert(n ? (cfg.aplicarAuto ? ap + ' produto(s) do SKU - MKTPLACE adicionado(s) em ' + cfg.abaCustos +
     '. A lista está no HISTÓRICO DE CUSTOS (LINHA ADICIONADA).' : n + ' produto(s) na aba PRÉVIA esperando o Aplicar.')
     : 'Nenhum produto novo: tudo do SKU - MKTPLACE já está em ' + cfg.abaCustos + '.');
@@ -1220,6 +1380,7 @@ function aplicarPrevia(silencioso) {
     (nAt - avisos.length) + ' custo(s) atualizado(s), ' + novas.length + ' linha(s) adicionada(s) em ' + cfg.abaCustos +
     (silencioso ? ' (automático)' : '') + (avisos.length ? ' | ' + avisos.join(' | ') : ''));
   if (!silencioso) {
+    if (feitos) arrumarDepoisDeGravar(cfg);
     SpreadsheetApp.getUi().alert('Pronto: ' + feitos + ' alteração(ões) gravada(s) em ' + cfg.abaCustos + '.' +
       (avisos.length ? '\n\nAvisos:\n' + avisos.join('\n') : ''));
   }
@@ -1665,6 +1826,7 @@ function calcularKits() {
   var r = previaKits(cfg, false);
   var ap = r.n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
   var rev = atualizarRevisaoKits(cfg, null, falhas);
+  if (ap) arrumarDepoisDeGravar(cfg);
   SpreadsheetApp.getUi().alert(novos + ' kit(s) aprovado(s) agora (' + rev.aprovados + ' no total, fora da lista de revisão). ' +
     (naoProntos.length ? '\nNão aprovados porque estão incompletos: ' + naoProntos.join(', ') + '. ' : '') +
     (cfg.aplicarAuto ? ap + ' custo(s) de kit gravado(s) em ' + cfg.abaCustos + ' (os outros já estavam com o valor certo).'

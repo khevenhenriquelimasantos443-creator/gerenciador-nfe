@@ -14,7 +14,11 @@ ainda não está lá é adicionado com os dados do SKU - MKTPLACE.
      por exemplo "14 de 14 itens iguais";
    - liga cada produto ao SKU - MKTPLACE pelo EAN do XML;
    - atualiza a **coluna I (Custo)** da SKUSHOPPEATUALIZADO e adiciona as linhas que faltam;
-   - registra cada alteração em **HISTÓRICO DE CUSTOS**.
+   - registra cada alteração em **HISTÓRICO DE CUSTOS**;
+   - preenche o **Fornecedor** (coluna F) dos produtos que estavam sem, com o fornecedor da primeira
+     nota que entrou do produto;
+   - deixa a SKUSHOPPEATUALIZADO em **ordem alfabética** pelo Nome do Produto e pela variação;
+   - refaz a aba **SEM CUSTO**.
 4. Abra **AUMENTOS 7 DIAS** para ver o que subiu, do maior aumento para o menor, e reajustar
    os preços de venda.
 
@@ -81,6 +85,29 @@ como "LINHA ADICIONADA".
   no SKU - MKTPLACE**, separado por vírgula.
 - Para desligar, use **CONFIG > Adicionar produtos novos do SKU - MKTPLACE** = `NÃO`.
 
+## Produtos sem custo: aba SEM CUSTO
+
+Lista, em ordem alfabética, cada linha da SKUSHOPPEATUALIZADO com a coluna I (Custo) vazia ou zero:
+SKU, EAN, nome, variação, marca, fornecedor, a linha na planilha de custos e o que fazer.
+
+- **PRODUTO:** importe a nota de compra ou lance o custo na aba **LANÇAR CUSTO**.
+- **KIT:** confira e aprove em **REVISAR KITS**. O custo vem da soma dos componentes. Se o kit já foi
+  aprovado e continua na lista, falta o custo de algum componente, que também aparece aqui.
+
+A lista é refeita a cada sincronização, e o produto sai dela sozinho quando o custo chega. Para
+refazer na hora, use o botão **Atualizar lista** ou **Custos > Atualizar a lista SEM CUSTO**.
+
+## Fornecedor e ordem alfabética
+
+- **Fornecedor vazio:** quando entra a primeira nota (romaneio ou XML) de um produto sem fornecedor
+  na coluna F, o fornecedor dessa nota é gravado ali. O que já está preenchido não é trocado, e
+  lançamento manual não conta. Cada preenchimento fica no **LOG** (FORNECEDOR). Para desligar:
+  **CONFIG > Preencher fornecedor vazio com a primeira nota** = `NÃO`.
+- **Ordem alfabética:** depois de cada sincronização (e dos botões Gravar aprovados, Aplicar na
+  planilha e Adicionar produtos novos), a SKUSHOPPEATUALIZADO é ordenada pelo **Nome do Produto
+  (coluna G)** e pela **variação (coluna H)**, com a linha inteira junto. Para desligar:
+  **CONFIG > Ordenar a planilha de custos por nome** = `NÃO`.
+
 ## Kits
 
 O custo de cada kit é **a soma de quantidade × custo de cada componente**, lido da planilha de
@@ -146,9 +173,9 @@ Não escreva nas abas **CUSTOS** e **AUMENTOS 7 DIAS**, nem nas colunas **O e P 
 | LEIA-ME | Este guia, resumido |
 | CUSTOS | Custo de cada produto: último pago, anterior, efetivo, médio e oficial (só fórmulas) |
 | LANÇAR CUSTO | Custo que não vem em romaneio ou XML |
+| SEM CUSTO | Produtos da planilha de custos ainda sem custo, e o que fazer com cada um |
 | REVISAR KITS | Kits pendentes, um por linha: produtos escolhidos, custo calculado x atual, cor, Aprovar e CORRIGIR |
 | KITS | Componentes de cada kit e data de aprovação |
-| KITS | Componentes de cada kit e a conta do custo do kit |
 | AUMENTOS 7 DIAS | Custos que subiram na última semana |
 | HISTÓRICO DE CUSTOS | Tudo que foi gravado na planilha de custos |
 | SKUs | Produtos (código VarejoFácil) e o vínculo com o SKU - MKTPLACE (colunas J a M) |
