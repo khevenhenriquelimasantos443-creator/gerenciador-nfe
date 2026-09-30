@@ -67,6 +67,20 @@ Vale sempre o **último valor que entrou**, seja por romaneio, XML ou lançament
 importado ou lançado, e não pela data da nota. Um lançamento feito hoje substitui o custo que estava
 lá, e um romaneio importado depois substitui o lançamento.
 
+## Produtos novos do SKU - MKTPLACE
+
+A cada sincronização (a automática a cada 15 minutos, o botão **Sincronizar** ou
+**Custos > Adicionar agora os produtos novos do SKU - MKTPLACE**), o script compara as duas
+planilhas. Produto do SKU - MKTPLACE que não está na SKUSHOPPEATUALIZADO, nem pelo SKU (da variação
+ou principal) nem pelo EAN, é **adicionado no final**, com EAN, SKU, marca (nome da aba), nome e
+variação. O custo vem da coluna **CUSTO** do SKU - MKTPLACE; se ela estiver vazia, o custo fica em
+branco até chegar uma compra ou um lançamento. Cada linha adicionada fica no **HISTÓRICO DE CUSTOS**
+como "LINHA ADICIONADA".
+
+- Para deixar uma aba de fora (ex.: **Brindes**), escreva o nome dela em **CONFIG > Abas ignoradas
+  no SKU - MKTPLACE**, separado por vírgula.
+- Para desligar, use **CONFIG > Adicionar produtos novos do SKU - MKTPLACE** = `NÃO`.
+
 ## Kits
 
 O custo de cada kit é **a soma de quantidade × custo de cada componente**, lido da planilha de

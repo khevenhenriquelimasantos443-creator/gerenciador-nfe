@@ -81,6 +81,7 @@ var CONFIG_ITENS = [
   ['Abas ignoradas no SKU - MKTPLACE', 'MENU', 'Separe por vírgula.'],
   ['Similaridade para já deixar o vínculo preenchido', 0.85, 'Acima disso a sugestão já vem preenchida em VINCULAR.'],
   ['Aplicar automaticamente na planilha de custos', 'SIM', 'SIM: grava sozinho. NÃO: espera o botão Aplicar na aba PRÉVIA.'],
+  ['Adicionar produtos novos do SKU - MKTPLACE', 'SIM', 'SIM: a sincronização adiciona na planilha de custos os produtos do SKU - MKTPLACE que ainda não estão lá (custo da coluna CUSTO, se tiver). Para deixar uma aba de fora, ponha em "Abas ignoradas".'],
   ['Planilha de kits (link ou ID)', '', 'Lista de kits (SKU novo, SKU atual, nome, marca, EAN) usada para sugerir os componentes.'],
   ['Aba da planilha de kits', '', 'Vazio: a primeira aba.']
 ];
@@ -98,6 +99,7 @@ function onOpen() {
     .addItem('Importar romaneios agora', 'importarRomaneios')
     .addItem('Lançar custos da aba LANÇAR CUSTO', 'lancarCustos')
     .addItem('Sincronizar com a planilha de custos', 'sincronizarAgora')
+    .addItem('Adicionar agora os produtos novos do SKU - MKTPLACE', 'adicionarNovosAgora')
     .addSeparator()
     .addItem('Confirmar vínculos (aba VINCULAR)', 'confirmarVinculos')
     .addItem('Sugerir componentes dos kits (aba KITS)', 'sugerirKits')
@@ -325,6 +327,10 @@ function escreverLeiaMe(sh) {
     ['CONFIRA = o nome bateu com mais de um produto: escreva o SKU na coluna A e apague a Situação. NÃO ACHEI = código não existe.'],
     ['Vale sempre o último valor que entrou (romaneio, XML ou lançamento), na ordem em que entrou, não pela data da nota.'],
     [''],
+    ['PRODUTOS NOVOS DO SKU - MKTPLACE'],
+    ['A cada sincronização, produto cadastrado no SKU - MKTPLACE que ainda não está na planilha de custos é adicionado lá'],
+    ['(custo da coluna CUSTO do SKU - MKTPLACE, se tiver). Para deixar uma aba de fora, ponha em CONFIG > Abas ignoradas.'],
+    [''],
     ['KITS'],
     ['O custo de cada kit é a soma de quantidade × custo de cada componente, e se atualiza sozinho quando um componente muda.'],
     ['Primeira vez: Custos > Sugerir componentes dos kits (lê a planilha de kits de CONFIG e separa os componentes pelo nome).'],
@@ -424,6 +430,7 @@ function prepararConfig(limpar) {
   if (faltando.length) sh.getRange(sh.getLastRow() + 1, 1, faltando.length, 3).setValues(faltando);
   if (limpar) {
     var listas = { 'Custo oficial': ['ÚLTIMO PAGO', 'EFETIVO', 'MÉDIO'],
+                   'Adicionar produtos novos do SKU - MKTPLACE': ['SIM', 'NÃO'],
                    'Aplicar automaticamente na planilha de custos': ['SIM', 'NÃO'],
                    'Somar frete, seguro, IPI e ST no custo (XML)': ['SIM', 'NÃO'] };
     var v = sh.getRange(2, 1, sh.getLastRow() - 1, 1).getValues();
@@ -460,6 +467,7 @@ function lerConfig() {
     aplicarAuto: txt('Aplicar automaticamente na planilha de custos', 'SIM').toUpperCase() !== 'NÃO',
     custoOficial: txt('Custo oficial', 'ÚLTIMO PAGO').toUpperCase(),
     planilhaKits: idDePlanilha(txt('Planilha de kits (link ou ID)')),
+    adicionarNovos: txt('Adicionar produtos novos do SKU - MKTPLACE', 'SIM').toUpperCase() !== 'NÃO',
     abaKits: txt('Aba da planilha de kits')
   };
 }
@@ -913,16 +921,58 @@ function sincronizar(cfg) {
     var sv = sugerirVinculos(true);
     var pv = gerarPrevia(true);
     var ap = pv && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
+    // produtos do SKU - MKTPLACE que ainda não estão na planilha de custos
+    var nv = cfg.adicionarNovos ? previaNovosDoMktplace(cfg, !cfg.aplicarAuto) : 0;
+    var apn = nv && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
     // kits por último: usam o custo dos componentes que acabou de ser gravado
     var k = previaKits(cfg, !cfg.aplicarAuto);
     var apk = k.n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
     return (sv ? sv + ' produto(s) para confirmar em VINCULAR. ' : '') +
       (cfg.aplicarAuto ? ap + ' alteração(ões) gravada(s) em ' + cfg.abaCustos + '.' : pv + ' alteração(ões) na aba PRÉVIA.') +
+      (nv ? ' Produtos novos do SKU - MKTPLACE: ' + (cfg.aplicarAuto ? apn + ' adicionado(s).' : nv + ' na PRÉVIA.') : '') +
       (k.n ? ' Kits: ' + (cfg.aplicarAuto ? apk + ' custo(s) de kit atualizado(s).' : k.n + ' na PRÉVIA.') : '');
   } catch (e) {
     registrarLog('SINCRONIZAR', '', 'ERRO', 0, 0, 0, String(e && e.message || e));
     return 'Erro ao sincronizar: ' + (e && e.message || e);
   }
+}
+
+// Produtos do SKU - MKTPLACE (fora das abas ignoradas) que não estão na planilha de custos nem pelo SKU
+// (da variação ou principal) nem pelo EAN -> "ADICIONAR LINHA" na PRÉVIA, com o custo da coluna CUSTO.
+function previaNovosDoMktplace(cfg, acrescentar) {
+  var alvo = SpreadsheetApp.openById(cfg.planilhaCustos).getSheetByName(cfg.abaCustos);
+  var tem = {}, temEan = {};
+  if (alvo.getLastRow() > 1) {
+    alvo.getRange(2, 1, alvo.getLastRow() - 1, 3).getValues().forEach(function (r) {
+      [r[1], r[2]].forEach(function (x) { x = String(x).trim().toUpperCase(); if (x) tem[x] = 1; });
+      var e = eanTexto(r[0]); if (e) temEan[e] = 1;
+    });
+  }
+  var pv = SpreadsheetApp.getActive().getSheetByName(ABA.PREVIA);
+  if (acrescentar && ultimaLinhaColA(pv) > 1) {
+    pv.getRange(2, 2, ultimaLinhaColA(pv) - 1, 1).getValues().forEach(function (r) { tem[String(r[0]).trim().toUpperCase()] = 1; });
+  } else if (!acrescentar && pv.getLastRow() > 1) {
+    pv.getRange(2, 1, pv.getLastRow() - 1, CAB.PREVIA.length).clearContent();
+  }
+  var previa = [];
+  carregarCatalogo(cfg).forEach(function (it) {
+    var sku = it.sku.toUpperCase();
+    if (tem[sku] || (!it.skuVar && tem[String(it.principal).toUpperCase()]) || (it.ean && temEan[it.ean])) return;
+    tem[sku] = 1;
+    if (it.ean) temEan[it.ean] = 1;
+    previa.push(['ADICIONAR LINHA', it.sku, it.ean, it.desc, it.variacao, '', it.custo, '', '', '', '', it.aba]);
+  });
+  if (previa.length) anexar(ABA.PREVIA, previa);
+  return previa.length;
+}
+
+function adicionarNovosAgora() {
+  var cfg = lerConfig();
+  var n = previaNovosDoMktplace(cfg, false);
+  var ap = n && cfg.aplicarAuto ? aplicarPrevia(true) : 0;
+  SpreadsheetApp.getUi().alert(n ? (cfg.aplicarAuto ? ap + ' produto(s) do SKU - MKTPLACE adicionado(s) em ' + cfg.abaCustos +
+    '. A lista está no HISTÓRICO DE CUSTOS (LINHA ADICIONADA).' : n + ' produto(s) na aba PRÉVIA esperando o Aplicar.')
+    : 'Nenhum produto novo: tudo do SKU - MKTPLACE já está em ' + cfg.abaCustos + '.');
 }
 
 function sincronizarAgora() {
@@ -1643,7 +1693,7 @@ function carregarCatalogo(cfg) {
   SpreadsheetApp.openById(cfg.planilhaMkt).getSheets().forEach(function (sh) {
     var aba = sh.getName();
     if (cfg.abasIgnoradas.indexOf(aba.toUpperCase()) >= 0 || sh.getLastRow() < 2) return;
-    var v = sh.getRange(1, 1, sh.getLastRow(), Math.min(5, sh.getLastColumn())).getValues();
+    var v = sh.getRange(1, 1, sh.getLastRow(), Math.min(6, sh.getLastColumn())).getValues(); // até F (CUSTO)
     if (!/SKU/i.test(String(v[0][0]))) return; // aba que não é de marca
     var principal = '', descAnterior = '';
     for (var i = 1; i < v.length; i++) {
@@ -1654,12 +1704,12 @@ function carregarCatalogo(cfg) {
       if (r[2]) descAnterior = r[2];
       var skuVar = String(r[4] || '').trim();
       var sku = skuVar || principal;
-      if (!sku) continue;
+      if (!/[A-Za-z0-9]/.test(sku)) continue; // "-" e afins não são produto
       // linha de variação costuma deixar a descrição em branco: vale a da linha de cima
       var desc = String(r[2] || descAnterior || ''), variacao = r[3] === '' || r[3] == null ? '' : String(r[3]);
       itens.push({
         aba: aba, principal: principal, skuVar: skuVar, sku: sku, ean: eanTexto(r[1]),
-        desc: desc, variacao: variacao,
+        desc: desc, variacao: variacao, custo: typeof r[5] === 'number' && r[5] > 0 ? r[5] : '',
         tok: tokensCat(aba + ' ' + desc + ' ' + variacao, false),
         tokVar: tokensCat(variacao, false),
         kit: /^KT-/i.test(sku) || / \+ /.test(desc) || /\(\d+ PRODUTOS\)/i.test(desc)
