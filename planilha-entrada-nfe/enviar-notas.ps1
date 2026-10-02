@@ -7,8 +7,8 @@
 
 # ---- PREENCHA ESTAS 3 LINHAS (mantenha as aspas simples ' ') ----------------
 $Pasta = '\\SERVIDOR\NOTAS'   # pasta das notas na rede (subpastas tambem sao lidas)
-$Url   = 'COLE_AQUI_O_LINK'   # planilha: NF-e > Ver link e chave para o script do PC
-$Token = 'COLE_AQUI_A_CHAVE'  # idem
+$Url   = 'COLE_AQUI_O_LINK'   # Apps Script: Implantar > Gerenciar implantacoes > URL do App da Web (inteira, termina em /exec)
+$Token = 'COLE_AQUI_A_CHAVE'  # planilha: CONFIG > Chave do envio
 # -----------------------------------------------------------------------------
 # Este arquivo precisa se chamar enviar-notas.ps1
 
