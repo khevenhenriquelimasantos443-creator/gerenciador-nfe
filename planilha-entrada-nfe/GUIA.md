@@ -95,7 +95,12 @@ No PC, ao lado do enviar-notas.ps1, ficam o **envio-log.txt** (o que foi enviado
 3. **Executar como: Eu** e **Quem pode acessar: Qualquer pessoa**. Só quem tem a Chave do envio
    consegue mandar arquivos.
 4. **Implantar** e autorize.
-5. Na planilha, **NF-e > Ver link e chave para o script do PC** mostra o link e a chave.
+5. Copie a **URL do app da Web** que aparece no fim (também fica em **Implantar > Gerenciar
+   implantações**). Ela começa com `https://script.google.com/macros/s/` e termina em `/exec`. Copie
+   inteira: o código do meio tem uns 70 caracteres.
+6. Para conferir, abra a URL numa **janela anônima** do navegador. Deve aparecer "Controle de entrada
+   de NF-e: envio no ar.". Se aparecer "Página não encontrada", a URL está errada ou incompleta.
+7. A chave fica em **CONFIG > Chave do envio** (ou em **NF-e > Ver a chave e como pegar o link**).
 
 **Quando trocar o código no futuro:** **Implantar > Gerenciar implantações > lápis (Editar) > Versão:
 Nova versão > Implantar**. Sem isso, o envio continua usando o código antigo.

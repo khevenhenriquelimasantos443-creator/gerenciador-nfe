@@ -68,7 +68,7 @@ function onOpen() {
     .addItem('Ligar atualização automática (a cada 15 min)', 'ativarAutomatico')
     .addItem('Desligar atualização automática', 'desativarAutomatico')
     .addItem('Configurar planilha (abas e pasta)', 'configurarPlanilha')
-    .addItem('Ver link e chave para o script do PC', 'mostrarDadosDoEnvio')
+    .addItem('Ver a chave e como pegar o link para o script do PC', 'mostrarDadosDoEnvio')
     .addToUi();
 }
 
@@ -297,11 +297,12 @@ function receberArquivo(d, cfg) {
 }
 
 function mostrarDadosDoEnvio() {
-  var url = '';
-  try { url = ScriptApp.getService().getUrl() || ''; } catch (e) {}
   SpreadsheetApp.getUi().alert('Dados para o enviar-notas.ps1',
-    'Link do app da Web ($Url):\n' + (url || '(ainda não implantado: Implantar > Nova implantação > App da Web)') +
-    '\n\nChave do envio ($Token):\n' + lerConfig().token, SpreadsheetApp.getUi().ButtonSet.OK);
+    'Chave do envio ($Token):\n' + lerConfig().token +
+    '\n\nLink do app da Web ($Url): no Apps Script, Implantar > Gerenciar implantações > clique na implantação ' +
+    'do tipo App da Web > copie a URL inteira (começa com https://script.google.com/macros/s/ e termina em /exec).' +
+    '\n\nPara conferir: abra a URL numa janela anônima do navegador. Deve aparecer ' +
+    '"Controle de entrada de NF-e: envio no ar."', SpreadsheetApp.getUi().ButtonSet.OK);
 }
 
 // Planilha desta conta: a ativa ou, no app da Web, a guardada no Configurar planilha

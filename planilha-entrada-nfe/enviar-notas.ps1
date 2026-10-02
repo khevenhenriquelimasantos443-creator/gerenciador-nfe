@@ -60,12 +60,26 @@ foreach ($a in $arquivos) {
   try {
     $r = Enviar @{ token = $Token; acao = 'arquivo'; nome = $a.Name; caminho = $a.FullName
                    conteudo = [Convert]::ToBase64String([IO.File]::ReadAllBytes($a.FullName)) }
+    if ($null -eq $r -or -not ($r.PSObject.Properties.Name -contains 'ok')) {
+      # resposta em HTML (tela de login do Google): o app da Web nao esta liberado para "Qualquer pessoa"
+      Registrar 'ERRO: a planilha respondeu com uma pagina de login. No Apps Script: Implantar > Gerenciar implantacoes > Editar > Quem pode acessar: Qualquer pessoa.'
+      exit 1
+    }
     if ($r.ok) {
       Add-Content -LiteralPath $Lista -Value $id -Encoding UTF8
       $enviados[$id] = $true
       if ($r.situacao -eq 'salvo') { $novos++ }
     } else { $erros++; Registrar "ERRO em $($a.FullName): $($r.erro)" }
-  } catch { $erros++; Registrar "ERRO em $($a.FullName): $($_.Exception.Message)" }
+  } catch {
+    $codigo = 0
+    if ($_.Exception.Response) { $codigo = [int]$_.Exception.Response.StatusCode }
+    if ($codigo -eq 404 -or $codigo -eq 401 -or $codigo -eq 403) {
+      # o link esta errado: nao adianta tentar os outros arquivos
+      Registrar "ERRO $codigo no link do app da Web: o `$Url esta errado ou a implantacao nao existe. No Apps Script: Implantar > Gerenciar implantacoes > App da Web > copie a URL inteira (termina em /exec) e cole no `$Url."
+      exit 1
+    }
+    $erros++; Registrar "ERRO em $($a.FullName): $($_.Exception.Message)"
+  }
 }
 
 if ($novos -gt 0) {
