@@ -1,36 +1,32 @@
 # Controle de entrada de NF-e (galpão): guia de uso
 
 Uma planilha para acompanhar a entrada de cada nota fiscal no galpão: de quem é, o PDF, quanto vale,
-quando vencem os boletos e se a mercadoria entrou certa. O script lê os XMLs e PDFs da pasta de notas e
-preenche quase tudo sozinho.
+quando vencem os boletos e se a mercadoria entrou certa. As notas continuam na pasta da rede; uma cópia
+de cada XML e PDF vai para o Drive, para a planilha ler o XML e o link do PDF abrir com um clique.
 
-## Onde salvar as notas: continua no seu PC
+## Como as notas chegam na planilha
 
-A planilha roda no Google e não enxerga o computador. Por isso a pasta onde você já salva as notas
-precisa ter uma **cópia** no Drive. Você continua salvando no PC, no mesmo lugar de sempre; o **Google
-Drive para computador** (gratuito, do próprio Google) copia só essa pasta, sozinho:
+```
+pasta da rede (\\SERVIDOR\NOTAS)  ──  enviar-notas.ps1, num PC da rede, a cada 15 min
+        │  manda só os XML e PDF novos (cópia; o original fica na rede)
+        ▼
+app da Web da planilha  ──  guarda a cópia em "NF-e Galpão" no Drive (uma subpasta por mês)
+        ▼
+aba NOTAS: linha nova com o link "Abrir PDF"
+```
 
-1. Baixe em <https://www.google.com/drive/download/> e entre com a sua conta Google.
-2. Clique no ícone do Drive perto do relógio > engrenagem > **Preferências**.
-3. Em **Meu computador**, clique em **Adicionar pasta**, escolha a pasta onde você salva as notas (XML e
-   PDF) e marque **Sincronizar com o Google Drive**. Salve.
-4. No navegador, abra <https://drive.google.com> > **Computadores** > **Meu computador** e entre na
-   pasta. Copie o link da barra de endereço e cole em **CONFIG > Pasta das notas**.
-
-Só essa pasta é copiada, nada mais do PC. Subpastas (ex.: uma por mês) também são lidas.
-
-**Espaço:** cada nota (XML e PDF) ocupa cerca de 250 KB. Com 100 notas por mês, são uns 300 MB por ano,
-perto de 2% dos 15 GB gratuitos. A planilha não fica pesada, porque guarda só os links e não os arquivos,
-e cada atualização lê só os arquivos novos.
-
-**Cuidado:** apagar uma nota no PC também apaga a cópia (ela vai para a lixeira do Drive), e o link da
-planilha para de abrir. Renomear ou mover para outra subpasta não tem problema.
+- Vocês continuam salvando as notas na pasta da rede, do jeito de sempre.
+- O **enviar-notas.ps1** roda num PC que fica ligado no horário de trabalho e enxerga a pasta da rede.
+  Ele usa só o que já vem no Windows (PowerShell e Agendador de Tarefas).
+- Só vão para o Drive os **XML e PDF**. Arquivo repetido é recusado pela planilha, mesmo que o PC envie
+  de novo.
+- **Espaço:** cada nota (XML e PDF) ocupa cerca de 250 KB. Com 100 notas por mês, são uns 300 MB por
+  ano, perto de 2% dos 15 GB gratuitos.
 
 ## Dia a dia
 
-1. Salve o **XML** e o **PDF** da nota na pasta de notas do seu PC, como sempre.
-2. Em até 15 minutos (ou em **NF-e > Atualizar agora**) a nota aparece na aba **NOTAS**, com status
-   **AGUARDANDO**.
+1. Salve o **XML** e o **PDF** da nota na pasta de notas da rede, como sempre.
+2. Em até 15 minutos a nota aparece na aba **NOTAS**, com status **AGUARDANDO**.
 3. Quando a mercadoria chegar, mude o **Status da entrada**:
    - **ENTRADA OK**: a **Data da entrada** é preenchida com o dia de hoje (dá para corrigir).
    - **COM PROBLEMA**: escolha o **Motivo** na lista. Enquanto não tiver motivo, a célula fica vermelha
@@ -74,18 +70,48 @@ na aba **ARQUIVOS**. Nota sem XML não entra sozinha, porque é o XML que traz f
 
 ## Abas do script
 
-- **ARQUIVOS**: cada arquivo da pasta que já foi lido. Não apague, senão os arquivos são lidos de novo.
+- **ARQUIVOS**: cada arquivo da pasta do Drive que já foi lido.
+- **RECEBIDOS**: cada arquivo que veio do PC, com o caminho na rede. É o que impede cópia repetida.
 - **LOG**: o que aconteceu em cada atualização.
 
-Os arquivos **nunca são movidos nem apagados**: a planilha só lê a pasta.
+Não apague ARQUIVOS nem RECEBIDOS. Os arquivos da rede **nunca são movidos nem apagados**.
+
+No PC, ao lado do enviar-notas.ps1, ficam o **envio-log.txt** (o que foi enviado e os erros) e o
+**enviados.txt** (o que já foi enviado; se apagar, ele reenvia e a planilha recusa os repetidos).
 
 ## Instalação (uma vez)
 
+### 1. Planilha
+
 1. Crie uma planilha Google nova (ex.: **Controle de entrada NF-e**).
 2. **Extensões > Apps Script**: apague o conteúdo de `Código.gs`, cole o [`Codigo.gs`](Codigo.gs) e salve.
-3. Recarregue a planilha. No menu **NF-e**, rode **Configurar planilha**. Autorize quando o Google pedir:
-   o script lê a pasta do Drive e usa a API do Drive com a sua conta.
-4. Em **CONFIG > Pasta das notas**, cole o link da pasta das notas (veja "Onde salvar as notas"). Se
-   ficar vazio, o script usa a pasta **NF-e Galpão** do Drive, criada no passo 3 (se você usar a pasta do
-   PC, essa pode ser apagada).
-5. **NF-e > Ligar atualização automática**.
+3. Recarregue a planilha e rode **NF-e > Configurar planilha**. Autorize quando o Google pedir. Isso cria
+   as abas, a pasta **NF-e Galpão** no Drive e a **Chave do envio** em CONFIG.
+
+### 2. App da Web (o "endereço" que recebe os arquivos)
+
+1. No Apps Script, clique em **Implantar > Nova implantação**.
+2. Na engrenagem de **Selecionar tipo**, escolha **App da Web**.
+3. **Executar como: Eu** e **Quem pode acessar: Qualquer pessoa**. Só quem tem a Chave do envio
+   consegue mandar arquivos.
+4. **Implantar** e autorize.
+5. Na planilha, **NF-e > Ver link e chave para o script do PC** mostra o link e a chave.
+
+**Quando trocar o código no futuro:** **Implantar > Gerenciar implantações > lápis (Editar) > Versão:
+Nova versão > Implantar**. Sem isso, o envio continua usando o código antigo.
+
+### 3. PC da rede
+
+1. Crie uma pasta no PC, por exemplo `C:\EnvioNFe`, e coloque nela o
+   [`enviar-notas.ps1`](enviar-notas.ps1) e o [`instalar-agendamento.bat`](instalar-agendamento.bat).
+2. Abra o `enviar-notas.ps1` no Bloco de Notas e preencha as 3 linhas do começo:
+   - `$Pasta`: o caminho da pasta das notas na rede, de preferência no formato `\\SERVIDOR\PASTA`
+     (letra de unidade, como `Z:\`, pode não existir quando o agendamento roda);
+   - `$Url` e `$Token`: o link e a chave da etapa anterior.
+3. Dê dois cliques no `instalar-agendamento.bat`. Ele agenda o envio a cada 15 minutos e já roda a
+   primeira vez. Na primeira vez são enviadas só as notas dos últimos 30 dias (dá para mudar no
+   `$ApenasDesde`).
+4. Confira o `envio-log.txt` e a aba NOTAS.
+
+O agendamento roda enquanto o usuário do Windows estiver logado nesse PC, que é quando ele enxerga a
+pasta da rede.

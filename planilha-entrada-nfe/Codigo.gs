@@ -4,7 +4,9 @@
  * Como instalar e usar: veja a aba LEIA-ME (ou GUIA.md no repositório).
  *
  * Caminho de uma nota:
- *   1. XML e PDF (DANFE) da nota na pasta "NF-e Galpão" do Drive (pode ter subpastas, ex.: uma por mês)
+ *   1. XML e PDF (DANFE) da nota na pasta de notas da rede. O script enviar-notas.ps1, agendado num PC da
+ *      rede, manda uma cópia de cada arquivo novo para o app da Web desta planilha (doPost), que guarda
+ *      a cópia na pasta "NF-e Galpão" do Drive (uma subpasta por mês)
  *   2. atualizarNotas: o XML vira uma linha na aba NOTAS (nº e razão social, emissão, valor, vencimentos
  *      dos boletos); o PDF é ligado à nota pela chave de acesso
  *      (no nome do arquivo ou dentro do PDF) ou pelo número da nota no nome do arquivo
@@ -21,6 +23,7 @@ var ABA = {
   NOTAS: 'NOTAS',
   CONFIG: 'CONFIG',
   ARQ: 'ARQUIVOS',
+  RECEBIDOS: 'RECEBIDOS',
   LOG: 'LOG'
 };
 
@@ -30,7 +33,8 @@ var CAB = {
           'Status da entrada', 'Motivo (obrigatório se COM PROBLEMA)', 'Observação', 'CNPJ do fornecedor',
           'Chave de acesso', 'XML'],
   ARQ: ['ID do arquivo', 'Nome', 'Tipo', 'Chave de acesso', 'Situação', 'Visto em'],
-  LOG: ['Data/hora', 'Arquivo', 'Situação', 'Mensagem']
+  LOG: ['Data/hora', 'Arquivo', 'Situação', 'Mensagem'],
+  RECEBIDOS: ['Conteúdo (MD5)', 'Nome', 'Caminho na rede', 'ID no Drive', 'Recebido em']
 };
 
 // colunas da aba NOTAS (1 = A)
@@ -48,7 +52,8 @@ var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#
 var SEM_PDF = 'aguardando PDF';
 
 var CONFIG_ITENS = [
-  ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde ficam o XML e o PDF de cada nota (pode ser a cópia de uma pasta do PC, em "Computadores"). Vazio: o script cria "NF-e Galpão".']
+  ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde fica a cópia do XML e do PDF de cada nota. Vazio: o script cria "NF-e Galpão".'],
+  ['Chave do envio', '', 'Senha que o enviar-notas.ps1 usa para mandar arquivos. Criada sozinha; copie para o script do PC.']
 ];
 var CONFIG_OBSOLETOS = ['Avisar vencimento com quantos dias'];
 
@@ -63,13 +68,14 @@ function onOpen() {
     .addItem('Ligar atualização automática (a cada 15 min)', 'ativarAutomatico')
     .addItem('Desligar atualização automática', 'desativarAutomatico')
     .addItem('Configurar planilha (abas e pasta)', 'configurarPlanilha')
+    .addItem('Ver link e chave para o script do PC', 'mostrarDadosDoEnvio')
     .addToUi();
 }
 
 function ativarAutomatico() {
   desativarAutomatico();
   ScriptApp.newTrigger('atualizarNotasAutomatico').timeBased().everyMinutes(15).create();
-  SpreadsheetApp.getActive().toast('Atualização automática ligada: a cada 15 minutos.', 'NF-e', 8);
+  aviso('Atualização automática ligada: a cada 15 minutos.');
 }
 
 function desativarAutomatico() {
@@ -85,8 +91,10 @@ function atualizarNotasAutomatico() { atualizarNotas(true); }
 // ===========================================================================
 
 function configurarPlanilha() {
-  var ss = SpreadsheetApp.getActive();
+  var ss = planilha();
+  PropertiesService.getScriptProperties().setProperty('PLANILHA_ID', ss.getId()); // para o app da Web
   prepararConfig();
+  if (!lerConfig().token) gravarConfig('Chave do envio', Utilities.getUuid());
   var notas = garantirAba(ss, ABA.NOTAS, CAB.NOTAS);
   notas.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
   notas.getRange('A:A').setNumberFormat('@');
@@ -104,6 +112,9 @@ function configurarPlanilha() {
   var arq = garantirAba(ss, ABA.ARQ, CAB.ARQ);
   arq.getRange(1, 1, 1, CAB.ARQ.length).setValues([CAB.ARQ]);
   arq.getRange('F2:F').setNumberFormat('dd/mm/yyyy hh:mm');
+  var rec = garantirAba(ss, ABA.RECEBIDOS, CAB.RECEBIDOS);
+  rec.getRange('E2:E').setNumberFormat('dd/mm/yyyy hh:mm');
+  rec.setColumnWidth(2, 300); rec.setColumnWidth(3, 420);
   var log = garantirAba(ss, ABA.LOG, CAB.LOG);
   log.getRange(1, 1, 1, CAB.LOG.length).setValues([CAB.LOG]);
   log.getRange('A2:A').setNumberFormat('dd/mm/yyyy hh:mm');
@@ -115,13 +126,14 @@ function configurarPlanilha() {
   if (velha) ss.deleteSheet(velha);
 
   var pasta = garantirPasta();
-  [ABA.LEIAME, ABA.NOTAS, ABA.CONFIG, ABA.ARQ, ABA.LOG].forEach(function (nome, i) {
+  [ABA.LEIAME, ABA.NOTAS, ABA.CONFIG, ABA.ARQ, ABA.RECEBIDOS, ABA.LOG].forEach(function (nome, i) {
     ss.setActiveSheet(ss.getSheetByName(nome)); ss.moveActiveSheet(i + 1);
   });
   var padrao = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
   if (padrao && padrao.getLastRow() === 0) ss.deleteSheet(padrao);
   ss.setActiveSheet(ss.getSheetByName(ABA.NOTAS));
-  ss.toast('Planilha pronta. Pasta das notas: "' + pasta.getName() + '". Coloque o XML e o PDF de cada nota lá.', 'NF-e', 10);
+  aviso('Planilha pronta. Cópias das notas vão para a pasta "' + pasta.getName() + '" do Drive. ' +
+    'Falta implantar o app da Web e configurar o script do PC (veja o LEIA-ME).', 15);
 }
 
 function validacoesNotas(sh) {
@@ -148,7 +160,7 @@ function garantirAba(ss, nome, cab) {
 }
 
 function prepararConfig() {
-  var ss = SpreadsheetApp.getActive();
+  var ss = planilha();
   var sh = ss.getSheetByName(ABA.CONFIG);
   if (!sh) {
     sh = garantirAba(ss, ABA.CONFIG, ['Parâmetro', 'Valor', 'Explicação']);
@@ -166,7 +178,8 @@ function lerConfig() {
   var p = {};
   sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) { p[String(r[0]).trim()] = r[1]; });
   return {
-    pasta: idDoDrive(p['Pasta das notas (link ou ID)'])
+    pasta: idDoDrive(p['Pasta das notas (link ou ID)']),
+    token: String(p['Chave do envio'] == null ? '' : p['Chave do envio']).trim()
   };
 }
 
@@ -197,8 +210,8 @@ function escreverLeiaMe(sh) {
     ['CONTROLE DE ENTRADA DE NF-e - COMO USAR'],
     [''],
     ['TODO DIA'],
-    ['1. Salve o XML e o PDF (DANFE) de cada nota na pasta de notas (a do PC copiada pelo Google Drive para computador,'],
-    ['   ou a "NF-e Galpão" do Drive; o link fica em CONFIG). Subpastas, ex.: uma por mês, também são lidas.'],
+    ['1. Salve o XML e o PDF (DANFE) de cada nota na pasta de notas da rede, como sempre.'],
+    ['   O enviar-notas.ps1 (agendado num PC da rede) manda uma cópia para a pasta "NF-e Galpão" do Drive a cada 15 minutos.'],
     ['2. Em até 15 minutos (ou NF-e > Atualizar agora) a nota aparece na aba NOTAS com status AGUARDANDO.'],
     ['3. Quando a mercadoria chegar, mude o Status da entrada:'],
     ['   ENTRADA OK: a Data da entrada é preenchida com hoje (pode corrigir).'],
@@ -215,8 +228,9 @@ function escreverLeiaMe(sh) {
     ['Nota sem XML não entra sozinha: o XML é que traz fornecedor, valor e boletos.'],
     [''],
     ['ABAS DO SCRIPT'],
-    ['ARQUIVOS: cada arquivo da pasta já lido (não apague). LOG: o que aconteceu em cada atualização.'],
-    ['Os arquivos nunca são movidos nem apagados: a planilha só lê a pasta.']
+    ['ARQUIVOS: cada arquivo da pasta do Drive já lido. RECEBIDOS: cada arquivo que veio do PC (evita cópia repetida).'],
+    ['LOG: o que aconteceu em cada atualização. Não apague ARQUIVOS nem RECEBIDOS.'],
+    ['Os arquivos da rede nunca são movidos nem apagados: vai só uma cópia.']
   ];
   sh.clear();
   sh.getRange(1, 1, t.length, 1).setValues(t);
@@ -228,19 +242,93 @@ function escreverLeiaMe(sh) {
 }
 
 // ===========================================================================
+// Envio pelo PC da rede (app da Web): recebe a cópia de cada arquivo e guarda no Drive
+// ===========================================================================
+
+// O enviar-notas.ps1 manda {token, acao: 'arquivo', nome, caminho, conteudo (base64)} para cada arquivo
+// novo e, no fim, {token, acao: 'processar'} para criar as notas e ligar os PDFs.
+function doPost(e) {
+  try {
+    var d = JSON.parse(e.postData.contents);
+    var cfg = lerConfig();
+    if (!cfg.token || d.token !== cfg.token) return resposta({ ok: false, erro: 'chave do envio errada (veja CONFIG > Chave do envio)' });
+    if (d.acao === 'processar') return resposta({ ok: true, resumo: atualizarNotas(true) || '' });
+    if (d.acao === 'arquivo') return resposta(receberArquivo(d, cfg));
+    return resposta({ ok: false, erro: 'ação desconhecida: ' + d.acao });
+  } catch (err) {
+    return resposta({ ok: false, erro: String(err && err.message || err) });
+  }
+}
+
+// Abrir o link do app da Web no navegador só mostra que ele está no ar
+function doGet() {
+  return ContentService.createTextOutput('Controle de entrada de NF-e: envio no ar.');
+}
+
+function resposta(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function receberArquivo(d, cfg) {
+  var tipo = tipoArquivo(d.nome, '');
+  if (!tipo) return { ok: true, situacao: 'ignorado (não é XML nem PDF)' };
+  var bytes = Utilities.base64Decode(d.conteudo);
+  var md5 = Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, bytes).map(function (b) {
+    return ((b + 256) % 256).toString(16).replace(/^(.)$/, '0$1');
+  }).join('');
+  var lock = LockService.getScriptLock();
+  lock.waitLock(60000);
+  try {
+    var sh = planilha().getSheetByName(ABA.RECEBIDOS);
+    var n = sh.getLastRow();
+    if (n > 1 && sh.getRange(2, 1, n - 1, 1).getValues().some(function (r) { return r[0] === md5; })) {
+      return { ok: true, situacao: 'já recebido' };
+    }
+    var pasta = cfg.pasta ? DriveApp.getFolderById(cfg.pasta) : garantirPasta();
+    var mes = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM');
+    var it = pasta.getFoldersByName(mes);
+    var destino = it.hasNext() ? it.next() : pasta.createFolder(mes);
+    var arq = destino.createFile(Utilities.newBlob(bytes, tipo === 'XML' ? 'text/xml' : 'application/pdf', d.nome));
+    anexar(ABA.RECEBIDOS, [[md5, d.nome, d.caminho || '', arq.getId(), new Date()]]);
+    return { ok: true, situacao: 'salvo' };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function mostrarDadosDoEnvio() {
+  var url = '';
+  try { url = ScriptApp.getService().getUrl() || ''; } catch (e) {}
+  SpreadsheetApp.getUi().alert('Dados para o enviar-notas.ps1',
+    'Link do app da Web ($Url):\n' + (url || '(ainda não implantado: Implantar > Nova implantação > App da Web)') +
+    '\n\nChave do envio ($Token):\n' + lerConfig().token, SpreadsheetApp.getUi().ButtonSet.OK);
+}
+
+// Planilha desta conta: a ativa ou, no app da Web, a guardada no Configurar planilha
+function planilha() {
+  var ss = SpreadsheetApp.getActive();
+  if (ss) return ss;
+  return SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('PLANILHA_ID'));
+}
+
+function aviso(msg, seg) {
+  try { planilha().toast(msg, 'NF-e', seg || 10); } catch (e) {}
+}
+
+// ===========================================================================
 // Atualização: lê a pasta, cria as notas novas e liga os PDFs
 // ===========================================================================
 
 function atualizarNotas(silencioso) {
   silencioso = silencioso === true;
   var lock = LockService.getScriptLock();
-  if (!lock.tryLock(1000)) {
-    if (!silencioso) SpreadsheetApp.getActive().toast('Já tem uma atualização em andamento.', 'NF-e', 5);
+  if (!lock.tryLock(silencioso ? 60000 : 1000)) {
+    if (!silencioso) aviso('Já tem uma atualização em andamento.');
     return;
   }
   var inicio = Date.now();
   try {
-    var ss = SpreadsheetApp.getActive();
+    var ss = planilha();
     if (!ss.getSheetByName(ABA.NOTAS)) configurarPlanilha();
     var cfg = lerConfig();
     var pasta = cfg.pasta ? cfg.pasta : garantirPasta().getId();
@@ -313,7 +401,8 @@ function atualizarNotas(silencioso) {
     if (semPdf) msg += ' ' + semPdf + ' nota(s) ainda sem PDF.';
     var pdfSemNota = pdfs.filter(function (p) { return p.r[4] === 'PENDENTE'; }).length;
     if (pdfSemNota) msg += ' ' + pdfSemNota + ' PDF(s) sem nota (aba ARQUIVOS, situação PENDENTE).';
-    if (!silencioso || novasNotas.length || ligados) ss.toast(msg, 'NF-e', 10);
+    if (!silencioso || novasNotas.length || ligados) aviso(msg);
+    return msg;
   } finally {
     lock.releaseLock();
   }
@@ -367,7 +456,7 @@ function tipoArquivo(nome, mime) {
 
 // Aba ARQUIVOS: cada arquivo lido uma vez só. pendentes = PDFs que ainda não acharam a nota.
 function lerRegistro() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.ARQ);
+  var sh = planilha().getSheetByName(ABA.ARQ);
   var porId = {}, pendentes = [];
   var n = sh.getLastRow();
   if (n > 1) {
@@ -381,14 +470,14 @@ function lerRegistro() {
 }
 
 function gravarRegistro(reg, novos, pdfs) {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.ARQ);
+  var sh = planilha().getSheetByName(ABA.ARQ);
   pdfs.forEach(function (p) { if (p.linha) sh.getRange(p.linha, 4, 1, 2).setValues([[p.r[3], p.r[4]]]); });
   if (novos.length) anexar(ABA.ARQ, novos);
 }
 
 // Notas já na planilha: chave -> {linha, numero, pdf (tem?), xml (tem?)}
 function lerNotas() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.NOTAS);
+  var sh = planilha().getSheetByName(ABA.NOTAS);
   var porChave = {}, lista = [];
   var n = sh.getLastRow();
   if (n > 1) {
@@ -406,7 +495,7 @@ function lerNotas() {
 
 // Grava as notas novas (em bloco) e os links de PDF/XML que apareceram
 function gravarNotas(notas, novas) {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.NOTAS);
+  var sh = planilha().getSheetByName(ABA.NOTAS);
   if (novas.length) {
     var ini = sh.getLastRow() + 1;
     garantirLinhas(sh, ini + novas.length - 1);
@@ -431,7 +520,7 @@ function garantirLinhas(sh, ultima) {
 
 function anexar(nomeAba, linhas) {
   if (!linhas.length) return;
-  var sh = SpreadsheetApp.getActive().getSheetByName(nomeAba);
+  var sh = planilha().getSheetByName(nomeAba);
   var ini = sh.getLastRow() + 1;
   garantirLinhas(sh, ini + linhas.length - 1);
   sh.getRange(ini, 1, linhas.length, linhas[0].length).setValues(linhas);
@@ -564,7 +653,7 @@ function coresDaLinha(r) {
 }
 
 function pintarTudo() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.NOTAS);
+  var sh = planilha().getSheetByName(ABA.NOTAS);
   var n = sh.getLastRow() - 1;
   if (n < 1) return;
   var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
