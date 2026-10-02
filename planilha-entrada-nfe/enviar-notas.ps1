@@ -5,11 +5,12 @@
 # (instale com o instalar-agendamento.bat).
 # =============================================================================
 
-# ---- PREENCHA ESTAS 3 LINHAS ------------------------------------------------
+# ---- PREENCHA ESTAS 3 LINHAS (mantenha as aspas simples ' ') ----------------
 $Pasta = '\\SERVIDOR\NOTAS'   # pasta das notas na rede (subpastas tambem sao lidas)
 $Url   = 'COLE_AQUI_O_LINK'   # planilha: NF-e > Ver link e chave para o script do PC
 $Token = 'COLE_AQUI_A_CHAVE'  # idem
 # -----------------------------------------------------------------------------
+# Este arquivo precisa se chamar enviar-notas.ps1
 
 # Na primeira vez, envia so os arquivos dos ultimos 30 dias (mude se quiser mais)
 $ApenasDesde = (Get-Date).AddDays(-30)
@@ -21,6 +22,17 @@ $Log    = Join-Path $Aqui 'envio-log.txt'  # o que aconteceu em cada envio
 
 function Registrar($msg) {
   Add-Content -Path $Log -Value ((Get-Date -Format 'dd/MM/yyyy HH:mm:ss') + '  ' + $msg) -Encoding UTF8
+}
+
+# o log guarda so as ultimas 2000 linhas
+if ((Test-Path -LiteralPath $Log) -and (Get-Item -LiteralPath $Log).Length -gt 300KB) {
+  $resto = Get-Content -LiteralPath $Log -Encoding UTF8 | Select-Object -Last 2000
+  Set-Content -LiteralPath $Log -Value $resto -Encoding UTF8
+}
+
+if ($Url -notmatch '^https://script\.google\.com/.+/exec$' -or $Token -match 'COLE_AQUI' -or $Pasta -match 'SERVIDOR\\NOTAS$') {
+  Registrar 'ERRO: preencha $Pasta, $Url e $Token no comeco do enviar-notas.ps1 (entre aspas simples).'
+  exit 1
 }
 
 function Enviar($dados) {
@@ -61,3 +73,4 @@ if ($novos -gt 0) {
   catch { Registrar "Enviados $novos arquivo(s), mas a planilha nao respondeu: $($_.Exception.Message)" }
 }
 if ($erros -gt 0) { Registrar "$erros arquivo(s) com erro: tenta de novo na proxima vez." }
+if ($novos -eq 0 -and $erros -eq 0) { Registrar "Rodou: nenhum arquivo novo em $Pasta." }
