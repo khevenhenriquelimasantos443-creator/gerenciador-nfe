@@ -5,8 +5,8 @@
  *
  * Caminho de uma nota:
  *   1. XML e PDF (DANFE) da nota na pasta "NF-e Galpão" do Drive (pode ter subpastas, ex.: uma por mês)
- *   2. atualizarNotas: o XML vira uma linha na aba NOTAS (nº e razão social, emissão, valor, boletos)
- *      e cada boleto vira uma linha na aba VENCIMENTOS; o PDF é ligado à nota pela chave de acesso
+ *   2. atualizarNotas: o XML vira uma linha na aba NOTAS (nº e razão social, emissão, valor, vencimentos
+ *      dos boletos); o PDF é ligado à nota pela chave de acesso
  *      (no nome do arquivo ou dentro do PDF) ou pelo número da nota no nome do arquivo
  *   3. Quem recebe a mercadoria muda o Status da entrada; COM PROBLEMA exige um motivo
  * Os arquivos não saem do lugar: a planilha só lê a pasta.
@@ -19,7 +19,6 @@
 var ABA = {
   LEIAME: 'LEIA-ME',
   NOTAS: 'NOTAS',
-  VENC: 'VENCIMENTOS',
   CONFIG: 'CONFIG',
   ARQ: 'ARQUIVOS',
   LOG: 'LOG'
@@ -30,8 +29,6 @@ var CAB = {
           'Vencimentos dos boletos', 'Data do lançamento na planilha', 'Data da entrada no galpão',
           'Status da entrada', 'Motivo (obrigatório se COM PROBLEMA)', 'Observação', 'CNPJ do fornecedor',
           'Chave de acesso', 'XML'],
-  VENC: ['Vencimento', 'Valor', 'Parcela', 'Nota fiscal (nº e razão social)', 'Status da entrada', 'Pago',
-         'Chave de acesso'],
   ARQ: ['ID do arquivo', 'Nome', 'Tipo', 'Chave de acesso', 'Situação', 'Visto em'],
   LOG: ['Data/hora', 'Arquivo', 'Situação', 'Mensagem']
 };
@@ -47,13 +44,13 @@ var MOTIVOS = ['Quantidade diferente da nota', 'Produto faltando', 'Produto avar
                'Nota com erro (dados, impostos ou CFOP)', 'Mercadoria não chegou', 'Nota cancelada pelo fornecedor',
                MOTIVO_OUTRO];
 var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#fee2e2', FALTA: '#f87171',
-            VENCIDO: '#fecaca', PERTO: '#fde68a', PAGO: '#e5e7eb', BRANCO: '#ffffff' };
+            BRANCO: '#ffffff' };
 var SEM_PDF = 'aguardando PDF';
 
 var CONFIG_ITENS = [
-  ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde ficam o XML e o PDF de cada nota. Vazio: o script cria "NF-e Galpão".'],
-  ['Avisar vencimento com quantos dias', 3, 'Na aba VENCIMENTOS, boleto que vence nesses dias fica amarelo; vencido e não pago fica vermelho.']
+  ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde ficam o XML e o PDF de cada nota (pode ser a cópia de uma pasta do PC, em "Computadores"). Vazio: o script cria "NF-e Galpão".']
 ];
+var CONFIG_OBSOLETOS = ['Avisar vencimento com quantos dias'];
 
 // ===========================================================================
 // Menu e automação
@@ -104,15 +101,6 @@ function configurarPlanilha() {
   notas.getRange(1, COL.ENTRADA).setBackground('#b45309');
   validacoesNotas(notas);
 
-  var venc = garantirAba(ss, ABA.VENC, CAB.VENC);
-  venc.getRange(1, 1, 1, CAB.VENC.length).setValues([CAB.VENC]);
-  venc.getRange('A2:A').setNumberFormat('dd/mm/yyyy');
-  venc.getRange('B2:B').setNumberFormat('R$ #,##0.00');
-  venc.getRange('C:C').setNumberFormat('@');
-  venc.getRange('G:G').setNumberFormat('@');
-  [[1, 100], [2, 110], [3, 70], [4, 380], [5, 130], [6, 60], [7, 330]].forEach(function (c) { venc.setColumnWidth(c[0], c[1]); });
-  venc.getRange(1, 6).setBackground('#b45309');
-
   var arq = garantirAba(ss, ABA.ARQ, CAB.ARQ);
   arq.getRange(1, 1, 1, CAB.ARQ.length).setValues([CAB.ARQ]);
   arq.getRange('F2:F').setNumberFormat('dd/mm/yyyy hh:mm');
@@ -122,8 +110,12 @@ function configurarPlanilha() {
   log.setColumnWidth(2, 300); log.setColumnWidth(4, 600);
   escreverLeiaMe(garantirAba(ss, ABA.LEIAME));
 
+  // versão anterior tinha a aba VENCIMENTOS: não é mais usada
+  var velha = ss.getSheetByName('VENCIMENTOS');
+  if (velha) ss.deleteSheet(velha);
+
   var pasta = garantirPasta();
-  [ABA.LEIAME, ABA.NOTAS, ABA.VENC, ABA.CONFIG, ABA.ARQ, ABA.LOG].forEach(function (nome, i) {
+  [ABA.LEIAME, ABA.NOTAS, ABA.CONFIG, ABA.ARQ, ABA.LOG].forEach(function (nome, i) {
     ss.setActiveSheet(ss.getSheetByName(nome)); ss.moveActiveSheet(i + 1);
   });
   var padrao = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
@@ -163,6 +155,7 @@ function prepararConfig() {
     sh.setColumnWidth(1, 280); sh.setColumnWidth(2, 320); sh.setColumnWidth(3, 620);
   }
   var tem = sh.getLastRow() > 1 ? sh.getRange(2, 1, sh.getLastRow() - 1, 1).getValues().map(function (r) { return String(r[0]).trim(); }) : [];
+  for (var i = tem.length - 1; i >= 0; i--) if (CONFIG_OBSOLETOS.indexOf(tem[i]) >= 0) { sh.deleteRow(i + 2); tem.splice(i, 1); }
   var faltam = CONFIG_ITENS.filter(function (c) { return tem.indexOf(c[0]) < 0; });
   if (faltam.length) sh.getRange(sh.getLastRow() + 1, 1, faltam.length, 3).setValues(faltam);
   return sh;
@@ -173,8 +166,7 @@ function lerConfig() {
   var p = {};
   sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) { p[String(r[0]).trim()] = r[1]; });
   return {
-    pasta: idDoDrive(p['Pasta das notas (link ou ID)']),
-    diasAviso: Number(p['Avisar vencimento com quantos dias']) || 3
+    pasta: idDoDrive(p['Pasta das notas (link ou ID)'])
   };
 }
 
@@ -205,7 +197,8 @@ function escreverLeiaMe(sh) {
     ['CONTROLE DE ENTRADA DE NF-e - COMO USAR'],
     [''],
     ['TODO DIA'],
-    ['1. Salve o XML e o PDF (DANFE) de cada nota na pasta "NF-e Galpão" do Drive (pode criar subpastas, ex.: uma por mês).'],
+    ['1. Salve o XML e o PDF (DANFE) de cada nota na pasta de notas (a do PC copiada pelo Google Drive para computador,'],
+    ['   ou a "NF-e Galpão" do Drive; o link fica em CONFIG). Subpastas, ex.: uma por mês, também são lidas.'],
     ['2. Em até 15 minutos (ou NF-e > Atualizar agora) a nota aparece na aba NOTAS com status AGUARDANDO.'],
     ['3. Quando a mercadoria chegar, mude o Status da entrada:'],
     ['   ENTRADA OK: a Data da entrada é preenchida com hoje (pode corrigir).'],
@@ -214,16 +207,12 @@ function escreverLeiaMe(sh) {
     [''],
     ['O QUE A PLANILHA PREENCHE SOZINHA'],
     ['Nº e razão social, link do PDF, data de emissão, valor, boletos (vencimento e valor de cada parcela, do XML),'],
-    ['data do lançamento, CNPJ, chave de acesso e link do XML. Cada boleto também vira uma linha na aba VENCIMENTOS.'],
+    ['data do lançamento, CNPJ, chave de acesso e link do XML.'],
     [''],
     ['PDF DA NOTA'],
     ['O PDF é ligado à nota pela chave de acesso (no nome do arquivo ou escrita dentro do PDF) ou pelo número da nota'],
     ['no nome do arquivo (ex.: "NF 289804.pdf"). Enquanto não acha, a coluna PDF mostra "aguardando PDF".'],
     ['Nota sem XML não entra sozinha: o XML é que traz fornecedor, valor e boletos.'],
-    [''],
-    ['VENCIMENTOS'],
-    ['Um boleto por linha, do mais próximo para o mais distante. Marque Pago quando pagar.'],
-    ['Vermelho = vencido e não pago. Amarelo = vence nos próximos dias (CONFIG). Cinza = pago.'],
     [''],
     ['ABAS DO SCRIPT'],
     ['ARQUIVOS: cada arquivo da pasta já lido (não apague). LOG: o que aconteceu em cada atualização.'],
@@ -258,7 +247,7 @@ function atualizarNotas(silencioso) {
     var arquivos = listarArquivos(pasta);
     var reg = lerRegistro();
     var notas = lerNotas();
-    var log = [], novasNotas = [], novosVenc = [], novosReg = [], agora = new Date(), faltou = 0;
+    var log = [], novasNotas = [], novosReg = [], agora = new Date(), faltou = 0;
 
     arquivos.forEach(function (a) {
       if (reg.porId[a.id]) return;
@@ -284,9 +273,6 @@ function atualizarNotas(silencioso) {
         var nome = x.numero + ' - ' + x.fornecedor;
         novasNotas.push({ ref: nova, valores: [nome, SEM_PDF, x.emissao || '', x.valor, textoVencimentos(x), agora, '', 'AGUARDANDO', '', '',
                                             x.cnpj, x.chave, ''] });
-        x.dups.forEach(function (d, i) {
-          novosVenc.push([d.venc || '', d.valor, (i + 1) + '/' + x.dups.length, nome, 'AGUARDANDO', false, x.chave]);
-        });
         novosReg.push([a.id, a.nome, 'XML', x.chave, 'OK', agora]);
         log.push([agora, a.nome, 'OK', 'Nota ' + x.numero + ' | ' + x.fornecedor + ' | ' + real(x.valor) +
           (x.dups.length ? ' | ' + x.dups.length + ' boleto(s)' : ' | sem boleto no XML')]);
@@ -317,9 +303,8 @@ function atualizarNotas(silencioso) {
     });
 
     gravarNotas(notas, novasNotas);
-    gravarVencimentos(novosVenc);
     gravarRegistro(reg, novosReg, pdfs);
-    pintarTudo(cfg);
+    pintarTudo();
     if (log.length) anexar(ABA.LOG, log);
 
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
@@ -439,17 +424,6 @@ function link(texto, idArquivo) {
   return SpreadsheetApp.newRichTextValue().setText(texto).setLinkUrl('https://drive.google.com/file/d/' + idArquivo + '/view').build();
 }
 
-function gravarVencimentos(novos) {
-  if (!novos.length) return;
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.VENC);
-  var ini = sh.getLastRow() + 1;
-  garantirLinhas(sh, ini + novos.length - 1);
-  sh.getRange(ini, 1, novos.length, CAB.VENC.length).setValues(novos);
-  var n = sh.getLastRow() - 1;
-  sh.getRange(2, 6, n, 1).insertCheckboxes();
-  sh.getRange(2, 1, n, CAB.VENC.length).sort([{ column: 1, ascending: true }]); // do mais próximo para o mais distante
-}
-
 function garantirLinhas(sh, ultima) {
   var faltam = ultima - sh.getMaxRows();
   if (faltam > 0) sh.insertRowsAfter(sh.getMaxRows(), faltam + 100);
@@ -551,12 +525,10 @@ function real(v) {
 // Status, motivo e cores
 // ===========================================================================
 
-// Ao editar NOTAS: ENTRADA OK preenche a data da entrada; COM PROBLEMA sem motivo fica vermelho;
-// o status vai junto para os boletos da nota na aba VENCIMENTOS.
+// Ao editar NOTAS: ENTRADA OK preenche a data da entrada; COM PROBLEMA sem motivo fica vermelho.
 function onEdit(e) {
   if (!e || !e.range) return;
   var sh = e.range.getSheet();
-  if (sh.getName() === ABA.VENC) { pintarVencimentos(sh, lerConfigSemCriar()); return; }
   if (sh.getName() !== ABA.NOTAS) return;
   var r1 = Math.max(2, e.range.getRow()), r2 = e.range.getLastRow();
   if (r2 < r1) return;
@@ -574,7 +546,6 @@ function onEdit(e) {
   });
   if (mudouData) sh.getRange(r1, COL.ENTRADA, v.length, 1).setValues(v.map(function (r) { return [r[COL.ENTRADA - 1]]; }));
   faixa.setBackgrounds(v.map(coresDaLinha));
-  if (c1 <= COL.STATUS && c2 >= COL.STATUS) levarStatusParaVencimentos(v);
   if (avisos.length) e.source.toast(avisos.join('\n'), 'Falta informação', 8);
 }
 
@@ -592,59 +563,14 @@ function coresDaLinha(r) {
   return cores;
 }
 
-function levarStatusParaVencimentos(linhasNotas) {
-  var porChave = {};
-  linhasNotas.forEach(function (r) { var c = String(r[COL.CHAVE - 1]); if (c) porChave[c] = r[COL.STATUS - 1]; });
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.VENC);
-  var n = sh ? sh.getLastRow() - 1 : 0;
-  if (n < 1) return;
-  var v = sh.getRange(2, 1, n, CAB.VENC.length).getValues(), mudou = false;
-  v.forEach(function (r) {
-    var s = porChave[String(r[6])];
-    if (s !== undefined && s !== r[4]) { r[4] = s; mudou = true; }
-  });
-  if (mudou) sh.getRange(2, 5, n, 1).setValues(v.map(function (r) { return [r[4]]; }));
-}
-
-function pintarTudo(cfg) {
-  var ss = SpreadsheetApp.getActive();
-  var sh = ss.getSheetByName(ABA.NOTAS);
-  var n = sh.getLastRow() - 1;
-  if (n > 0) {
-    var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
-    sh.getRange(2, 1, n, CAB.NOTAS.length).setBackgrounds(v.map(coresDaLinha));
-    levarStatusParaVencimentos(v);
-  }
-  pintarVencimentos(ss.getSheetByName(ABA.VENC), cfg);
-}
-
-// VENCIMENTOS: vencido e não pago = vermelho; vence em até N dias = amarelo; pago = cinza
-function pintarVencimentos(sh, cfg) {
+function pintarTudo() {
+  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.NOTAS);
   var n = sh.getLastRow() - 1;
   if (n < 1) return;
-  var v = sh.getRange(2, 1, n, CAB.VENC.length).getValues();
-  var hoje = new Date(); hoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()).getTime();
-  var dia = 86400000;
-  sh.getRange(2, 1, n, CAB.VENC.length).setBackgrounds(v.map(function (r) {
-    var cor = COR.BRANCO;
-    if (r[5] === true) cor = COR.PAGO;
-    else if (r[0] instanceof Date) {
-      var d = new Date(r[0].getFullYear(), r[0].getMonth(), r[0].getDate()).getTime();
-      if (d < hoje) cor = COR.VENCIDO;
-      else if (d - hoje <= cfg.diasAviso * dia) cor = COR.PERTO;
-    }
-    return CAB.VENC.map(function () { return cor; });
-  }));
+  var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
+  sh.getRange(2, 1, n, CAB.NOTAS.length).setBackgrounds(v.map(coresDaLinha));
 }
 
-// onEdit é um gatilho simples: lê a CONFIG sem criar nada
-function lerConfigSemCriar() {
-  var sh = SpreadsheetApp.getActive().getSheetByName(ABA.CONFIG), dias = 3;
-  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) {
-    if (String(r[0]).trim() === 'Avisar vencimento com quantos dias') dias = Number(r[1]) || 3;
-  });
-  return { diasAviso: dias };
-}
 
 // ===========================================================================
 // Leitura do texto do PDF (DANFE), para achar a chave de acesso

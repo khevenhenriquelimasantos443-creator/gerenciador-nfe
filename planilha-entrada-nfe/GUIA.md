@@ -1,26 +1,34 @@
 # Controle de entrada de NF-e (galpão): guia de uso
 
-Uma planilha para acompanhar cada nota fiscal que chega: de quem é, o PDF, quanto vale, quando vencem
-os boletos e se a mercadoria entrou certa no galpão. O script lê os XMLs e PDFs de uma pasta do Drive e
+Uma planilha para acompanhar a entrada de cada nota fiscal no galpão: de quem é, o PDF, quanto vale,
+quando vencem os boletos e se a mercadoria entrou certa. O script lê os XMLs e PDFs da pasta de notas e
 preenche quase tudo sozinho.
 
-## Onde salvar as notas: direto no Drive
+## Onde salvar as notas: continua no seu PC
 
-Hoje as notas ficam só no seu computador, e a planilha não consegue ler o PC. A forma mais simples é
-instalar o **Google Drive para computador** (gratuito, do próprio Google):
+A planilha roda no Google e não enxerga o computador. Por isso a pasta onde você já salva as notas
+precisa ter uma **cópia** no Drive. Você continua salvando no PC, no mesmo lugar de sempre; o **Google
+Drive para computador** (gratuito, do próprio Google) copia só essa pasta, sozinho:
 
 1. Baixe em <https://www.google.com/drive/download/> e entre com a sua conta Google.
-2. Ele cria uma unidade no Windows (normalmente **G:**). Dentro de **G:\Meu Drive** fica a pasta
-   **NF-e Galpão**, que a planilha cria na instalação.
-3. Passe a salvar o **XML** e o **PDF** de cada nota nessa pasta, do mesmo jeito que você salva hoje no
-   PC. O arquivo continua acessível no computador e sobe sozinho para o Drive.
+2. Clique no ícone do Drive perto do relógio > engrenagem > **Preferências**.
+3. Em **Meu computador**, clique em **Adicionar pasta**, escolha a pasta onde você salva as notas (XML e
+   PDF) e marque **Sincronizar com o Google Drive**. Salve.
+4. No navegador, abra <https://drive.google.com> > **Computadores** > **Meu computador** e entre na
+   pasta. Copie o link da barra de endereço e cole em **CONFIG > Pasta das notas**.
 
-Você pode criar subpastas (ex.: uma por mês): a planilha lê todas. As notas antigas também podem ser
-copiadas para lá, e entram todas na primeira leitura.
+Só essa pasta é copiada, nada mais do PC. Subpastas (ex.: uma por mês) também são lidas.
+
+**Espaço:** cada nota (XML e PDF) ocupa cerca de 250 KB. Com 100 notas por mês, são uns 300 MB por ano,
+perto de 2% dos 15 GB gratuitos. A planilha não fica pesada, porque guarda só os links e não os arquivos,
+e cada atualização lê só os arquivos novos.
+
+**Cuidado:** apagar uma nota no PC também apaga a cópia (ela vai para a lixeira do Drive), e o link da
+planilha para de abrir. Renomear ou mover para outra subpasta não tem problema.
 
 ## Dia a dia
 
-1. Salve o **XML** e o **PDF** da nota na pasta **NF-e Galpão**.
+1. Salve o **XML** e o **PDF** da nota na pasta de notas do seu PC, como sempre.
 2. Em até 15 minutos (ou em **NF-e > Atualizar agora**) a nota aparece na aba **NOTAS**, com status
    **AGUARDANDO**.
 3. Quando a mercadoria chegar, mude o **Status da entrada**:
@@ -52,17 +60,6 @@ produto errado ou não pedido, preço diferente do pedido, prazo ou vencimento d
 nota com erro (dados, impostos ou CFOP), mercadoria não chegou, nota cancelada pelo fornecedor e
 outro (descreva na Observação).
 
-## Aba VENCIMENTOS
-
-Um boleto por linha, do mais próximo para o mais distante: vencimento, valor, parcela (ex.: `2/3`), a
-nota e o status da entrada dela. Marque **Pago** quando pagar.
-
-- **Vermelho**: vencido e não pago.
-- **Amarelo**: vence nos próximos dias (em **CONFIG**, padrão 3).
-- **Cinza**: pago.
-
-Assim dá para ver, antes de pagar, se a mercadoria daquele boleto chegou ou se teve problema.
-
 ## Como o PDF é ligado à nota
 
 Em ordem:
@@ -88,5 +85,7 @@ Os arquivos **nunca são movidos nem apagados**: a planilha só lê a pasta.
 2. **Extensões > Apps Script**: apague o conteúdo de `Código.gs`, cole o [`Codigo.gs`](Codigo.gs) e salve.
 3. Recarregue a planilha. No menu **NF-e**, rode **Configurar planilha**. Autorize quando o Google pedir:
    o script lê a pasta do Drive e usa a API do Drive com a sua conta.
-4. A pasta **NF-e Galpão** é criada no seu Drive. Para usar outra pasta, cole o link dela em **CONFIG**.
+4. Em **CONFIG > Pasta das notas**, cole o link da pasta das notas (veja "Onde salvar as notas"). Se
+   ficar vazio, o script usa a pasta **NF-e Galpão** do Drive, criada no passo 3 (se você usar a pasta do
+   PC, essa pode ser apagada).
 5. **NF-e > Ligar atualização automática**.
