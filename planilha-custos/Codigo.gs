@@ -1698,7 +1698,7 @@ function sugerirKits(silencioso) {
     });
     return (porMarca[chave] = lista.length ? lista : avulsos);
   };
-  var nomeCat = function (it) { return it.desc + (it.variacao ? ' [' + it.variacao + ']' : ''); };
+  var nomeCat = function (it) { return nomeCurto(it.desc) + (it.variacao ? ' [' + it.variacao + ']' : ''); };
   var linhas = [], feitos = 0, faltam = 0;
   kits.forEach(function (k) {
     if (jaTem[k.sku.toUpperCase()]) return;
@@ -1744,7 +1744,7 @@ function contasDosKits(cfg) {
     carregarCatalogo(cfg).forEach(function (it) {
       var k = it.sku.toUpperCase();
       if (it.ean) eanDoSku[k] = it.ean;
-      descDoSku[k] = it.desc + (it.variacao ? ' [' + it.variacao + ']' : '');
+      descDoSku[k] = nomeCurto(it.desc) + (it.variacao ? ' [' + it.variacao + ']' : '');
     });
   } catch (e) {}
   var acharLinha = function (sku, ean) {
@@ -1773,7 +1773,7 @@ function contasDosKits(cfg) {
       var i = usado ? acharLinha(sku, '') : undefined;
       var custo = i === undefined ? 0 : valorCusto(linhasAlvo[i][8]);
       var desc = !usado ? '(' + (sku ? 'não tem' : 'falta confirmar') + ': ' + x.r[4] + ')' :
-        descDoSku[sku.toUpperCase()] || (i !== undefined ? String(linhasAlvo[i][6]) + (linhasAlvo[i][7] ? ' [' + linhasAlvo[i][7] + ']' : '') : sku);
+        descDoSku[sku.toUpperCase()] || (i !== undefined ? nomeCurto(linhasAlvo[i][6]) + (linhasAlvo[i][7] ? ' [' + linhasAlvo[i][7] + ']' : '') : sku);
       c.comps.push({ qtd: qtd, sku: sku, desc: desc, custo: custo });
       if (usado && !(custo > 0)) semCusto.push(sku);
       if (usado) c.total += qtd * custo;
@@ -1796,6 +1796,14 @@ function contasDosKits(cfg) {
     return c;
   });
   return { contas: contas, linhasAlvo: linhasAlvo, nLinhas: v.length };
+}
+
+// Nome sem o que vem depois do "(" (a explicação do anúncio), para a revisão dos kits ficar fácil de ler.
+// "Widi Care Juba Shampoo 1L (Limpeza Inteligente...)" -> "Widi Care Juba Shampoo 1L"
+function nomeCurto(nome) {
+  var s = String(nome == null ? '' : nome);
+  var curto = s.replace(/\s*\(.*$/, '').replace(/\s+/g, ' ').trim();
+  return curto || s.trim(); // nome que começa com "(" fica inteiro
 }
 
 // Kits com a caixa Aprovar marcada na aba REVISAR KITS (a aprovação é gravada em KITS no Gravar aprovados)
@@ -1842,7 +1850,7 @@ function aplicarCorrecoesKits(cfg) {
     v.forEach(function (r, i) { if (String(r[0]).trim() === kit) { apagar.push(i + 2); base = base || r; } });
     if (!base) { falhas[kit] = { texto: texto, erro: 'CORRIGIR: kit não está na aba KITS' }; return; }
     comps.forEach(function (c) {
-      var desc = c.it.desc + (c.it.variacao ? ' [' + c.it.variacao + ']' : '');
+      var desc = nomeCurto(c.it.desc) + (c.it.variacao ? ' [' + c.it.variacao + ']' : '');
       novas.push([kit, base[1], base[2], base[3], 'corrigido: ' + c.it.sku, c.qtd, c.it.sku, desc, 1, '', c.it.sku, '', base[12]]);
     });
   });
@@ -1872,7 +1880,7 @@ function atualizarRevisaoKits(cfg, dados, falhas) {
     var nivel = !c.pronto ? 3 : alerta === 'ok' ? 0 : /^diferença média|sem custo atual/.test(alerta) ? 1 : 2;
     if (falhas[c.sku]) { alerta = falhas[c.sku].erro; nivel = 2; }
     return { nivel: nivel, dif: dif === '' ? 9 : Math.abs(dif), linha: [
-      c.sku, !!aprov[c.sku], c.nome,
+      c.sku, !!aprov[c.sku], nomeCurto(c.nome),
       c.comps.map(function (x) { return (x.qtd > 1 ? x.qtd + '× ' : '') + x.desc + (x.custo ? ' (' + real(x.custo) + ')' : ''); }).join('  +  '),
       c.pronto ? c.total : '', c.custoAtual === '' ? '' : c.custoAtual, dif, alerta,
       c.iKit === undefined ? '' : c.iKit + 2, falhas[c.sku] ? falhas[c.sku].texto : ''] };
