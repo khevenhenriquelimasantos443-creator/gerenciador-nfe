@@ -28,7 +28,7 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 1. Salve o **XML** e o **PDF** da nota na pasta de notas da rede, como sempre.
 2. Em até 15 minutos a nota aparece na aba **NOTAS**, com status **AGUARDANDO**.
 3. Quando a mercadoria chegar, mude o **Status da entrada**:
-   - **ENTRADA OK**: a **Data da entrada** é preenchida com o dia de hoje (dá para corrigir).
+   - **ENTRADA OK**: a mercadoria entrou. A data de entrada é a mesma do lançamento na planilha.
    - **COM PROBLEMA**: escolha o **Motivo** na lista. Enquanto não tiver motivo, a célula fica vermelha
      e aparece um aviso.
    - Motivo **"Outro (descreva na Observação)"**: a Observação fica vermelha até ser preenchida.
@@ -44,18 +44,21 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 | E. CNPJ do comprador | Nosso CNPJ que comprou | script |
 | F. Data de emissão | Da nota | script |
 | G. Valor da nota | Total da nota | script |
-| H. 1º boleto | Só a primeira parcela: `12/10/2026  R$ 18.788,82  (1 de 3)`. Sem boleto: **BONIFICAÇÃO (sem boleto)** (natureza da operação ou CFOP x910) ou a forma de pagamento do XML (PIX, cartão etc.) | script |
-| I. Data do lançamento | Quando a nota entrou na planilha | script |
-| J. Data da entrada | Quando a mercadoria chegou no galpão | automática no ENTRADA OK, editável |
-| K. Status da entrada | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
-| L. Motivo | Obrigatório no COM PROBLEMA (lista fixa) | você |
-| M. Observação | Livre; obrigatória no motivo "Outro" | você |
-| N. Chave de acesso, O. XML | Chave da nota e link do XML | script |
+| H. 1º vencimento | Só a data do 1º boleto. Sem boleto: **Bonificação** (natureza da operação ou CFOP x910) ou **Pagamento antecipado** | script |
+| I. Data do lançamento (entrada no galpão) | Quando a nota entrou na planilha; vale também como data de entrada | script |
+| J. Status da entrada | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
+| K. Motivo | Obrigatório no COM PROBLEMA (lista fixa) | você |
+| L. Observação | Livre; obrigatória no motivo "Outro" | você |
+| M. Chave de acesso, N. XML | Chave da nota e link do XML | script |
 
-Planilha da versão anterior (nº e razão social juntos na coluna A): **NF-e > Configurar planilha** converte
-as linhas para o formato novo, mantendo status, datas, motivo, observação e links.
+O **Comprador** sai padronizado: sem os códigos que alguns fornecedores colocam antes ou depois do nome e,
+para cada CNPJ, a forma do nome que mais aparece.
 
-A linha inteira fica com a cor do status: amarelo (aguardando), verde (entrada ok), vermelho (problema).
+Planilhas de versões anteriores (nº e razão social juntos na coluna A, ou com a coluna "Data da entrada no
+galpão") são convertidas sozinhas na próxima atualização, mantendo status, motivo, observação e links.
+
+A linha inteira fica com a cor do status: amarelo (aguardando), verde (entrada ok), vermelho (problema). A cor
+vem da formatação condicional da planilha, então muda na hora em que o status é trocado.
 
 **Motivos da lista:** quantidade diferente da nota, produto faltando, produto avariado ou vencido,
 produto errado ou não pedido, preço diferente do pedido, prazo ou vencimento diferente do combinado,
@@ -71,8 +74,10 @@ Em ordem:
 3. pelo **número da nota** no nome do arquivo (ex.: `NF 289804.pdf`), se só uma nota sem PDF tiver esse
    número.
 
-PDF que chega antes do XML espera e é ligado quando o XML aparecer. PDF repetido fica como DUPLICADO
-na aba **ARQUIVOS**. Nota sem XML não entra sozinha, porque é o XML que traz fornecedor, valor e boletos.
+**Todo PDF entra na planilha.** PDF que não acha nota (pedido de compra, nota sem XML) vira uma linha própria,
+com o nome do arquivo no lugar do fornecedor e a observação "Só PDF, sem XML". Se o XML chegar depois, ele
+completa essa mesma linha (pela chave ou pelo número da nota). PDF repetido fica como DUPLICADO na aba
+**ARQUIVOS**; **PENDENTE** lá é só o PDF que ainda não foi lido (fica para a próxima atualização).
 
 ## Abas do script
 

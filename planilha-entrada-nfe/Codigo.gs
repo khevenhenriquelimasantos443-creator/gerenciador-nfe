@@ -29,8 +29,8 @@ var ABA = {
 
 var CAB = {
   NOTAS: ['Nº da nota', 'PDF da nota', 'Fornecedor (razão social)', 'Comprador (nossa razão social)',
-          'CNPJ do comprador (nosso)', 'Data de emissão', 'Valor da nota', '1º boleto (vencimento e valor)',
-          'Data do lançamento na planilha', 'Data da entrada no galpão', 'Status da entrada',
+          'CNPJ do comprador (nosso)', 'Data de emissão', 'Valor da nota', '1º vencimento',
+          'Data do lançamento (entrada no galpão)', 'Status da entrada',
           'Motivo (obrigatório se COM PROBLEMA)', 'Observação', 'Chave de acesso', 'XML'],
   ARQ: ['ID do arquivo', 'Nome', 'Tipo', 'Chave de acesso', 'Situação', 'Visto em'],
   LOG: ['Data/hora', 'Arquivo', 'Situação', 'Mensagem'],
@@ -39,9 +39,13 @@ var CAB = {
 
 // colunas da aba NOTAS (1 = A)
 var COL = { NUM: 1, PDF: 2, FORN: 3, COMPRADOR: 4, CNPJ_COMPRADOR: 5, EMISSAO: 6, VALOR: 7, BOLETOS: 8, LANC: 9,
-            ENTRADA: 10, STATUS: 11, MOTIVO: 12, OBS: 13, CHAVE: 14, XML: 15 };
-// cabeçalho da versão anterior (nº e razão social juntos); Configurar planilha converte para o novo
+            STATUS: 10, MOTIVO: 11, OBS: 12, CHAVE: 13, XML: 14 };
+// cabeçalhos de versões anteriores, convertidas sozinhas para o formato atual:
+// nº e razão social juntos na coluna A; coluna J separada para a data da entrada
 var CAB_ANTIGO_A = 'Nota fiscal (nº e razão social)';
+var CAB_ANTIGO_ENTRADA = 'Data da entrada no galpão';
+// PDF sem XML (pedido de compra, nota de serviço...): entra mesmo assim, com esta observação
+var OBS_SO_PDF = 'Só PDF, sem XML (ex.: pedido de compra)';
 
 var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
@@ -49,8 +53,7 @@ var MOTIVOS = ['Quantidade diferente da nota', 'Produto faltando', 'Produto avar
                'Produto errado ou não pedido', 'Preço diferente do pedido', 'Prazo ou vencimento diferente do combinado',
                'Nota com erro (dados, impostos ou CFOP)', 'Mercadoria não chegou', 'Nota cancelada pelo fornecedor',
                MOTIVO_OUTRO];
-var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#fee2e2', FALTA: '#f87171',
-            BRANCO: '#ffffff' };
+var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#fee2e2', FALTA: '#f87171' };
 var SEM_PDF = 'aguardando PDF';
 var SEM_CHAVE = 'sem chave no PDF';
 // tempo de cada atualização (o Google para tudo em 6 min): até aqui lê arquivos novos, até ali abre PDFs;
@@ -115,19 +118,21 @@ function configurarPlanilha() {
   prepararConfig();
   if (!lerConfig().token) gravarConfig('Chave do envio', Utilities.getUuid());
   var notas = garantirAba(ss, ABA.NOTAS, CAB.NOTAS);
-  if (String(notas.getRange(1, 1).getValue()) === CAB_ANTIGO_A) migrarNotasAntigas(notas);
-  notas.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
+  formatoAtual(notas);
   var col = function (c) { return notas.getRange(2, c, notas.getMaxRows() - 1, 1); };
   col(COL.NUM).setNumberFormat('@'); col(COL.CNPJ_COMPRADOR).setNumberFormat('@'); col(COL.CHAVE).setNumberFormat('@');
-  col(COL.EMISSAO).setNumberFormat('dd/mm/yyyy'); col(COL.ENTRADA).setNumberFormat('dd/mm/yyyy');
+  col(COL.EMISSAO).setNumberFormat('dd/mm/yyyy'); col(COL.BOLETOS).setNumberFormat('dd/mm/yyyy');
   col(COL.VALOR).setNumberFormat('R$ #,##0.00'); col(COL.LANC).setNumberFormat('dd/mm/yyyy hh:mm');
   col(COL.BOLETOS).setWrap(false);
   [[COL.NUM, 90], [COL.PDF, 100], [COL.FORN, 300], [COL.COMPRADOR, 260], [COL.CNPJ_COMPRADOR, 150], [COL.EMISSAO, 100],
-   [COL.VALOR, 110], [COL.BOLETOS, 250], [COL.LANC, 140], [COL.ENTRADA, 130], [COL.STATUS, 130], [COL.MOTIVO, 260],
+   [COL.VALOR, 110], [COL.BOLETOS, 120], [COL.LANC, 150], [COL.STATUS, 130], [COL.MOTIVO, 260],
    [COL.OBS, 280], [COL.CHAVE, 330], [COL.XML, 60]].forEach(function (c) { notas.setColumnWidth(c[0], c[1]); });
   notas.getRange(1, 1, 1, CAB.NOTAS.length).setFontWeight('bold').setBackground('#1f2937').setFontColor('#ffffff').setWrap(true);
-  notas.getRange(1, COL.ENTRADA, 1, 4).setBackground('#b45309');
+  notas.getRange(1, COL.STATUS, 1, 3).setBackground('#b45309');
   validacoesNotas(notas);
+  regrasDeCor(notas);
+  boletosNoFormatoNovo(notas);
+  compradoresPadronizados(notas);
 
   var arq = garantirAba(ss, ABA.ARQ, CAB.ARQ);
   arq.getRange(1, 1, 1, CAB.ARQ.length).setValues([CAB.ARQ]);
@@ -165,8 +170,39 @@ function validacoesNotas(sh, ini, n) {
   sh.getRange(ini, COL.MOTIVO, n, 1).setDataValidation(SpreadsheetApp.newDataValidation()
     .requireValueInList(MOTIVOS, true).setAllowInvalid(false)
     .setHelpText('Escolha o motivo. Se não estiver na lista, use "' + MOTIVO_OUTRO + '" e explique na Observação.').build());
-  sh.getRange(ini, COL.ENTRADA, n, 1).setDataValidation(SpreadsheetApp.newDataValidation()
-    .requireDate().setAllowInvalid(false).setHelpText('Data em que a mercadoria chegou no galpão.').build());
+}
+
+// Cores pela formatação condicional: mudam na hora em que o status é trocado, sem esperar o script
+function regrasDeCor(sh) {
+  var n = sh.getMaxRows() - 1, linha = sh.getRange(2, 1, n, CAB.NOTAS.length);
+  var st = '$' + letraColuna(COL.STATUS) + '2', mo = '$' + letraColuna(COL.MOTIVO) + '2', ob = '$' + letraColuna(COL.OBS) + '2';
+  var regra = function (faixa, formula, cor) {
+    return SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied(formula).setBackground(cor).setRanges([faixa]).build();
+  };
+  // a primeira regra que bate vale: as de "falta informação" vêm antes da cor da linha
+  sh.setConditionalFormatRules([
+    regra(sh.getRange(2, COL.MOTIVO, n, 1), '=(' + st + '="COM PROBLEMA")*(' + mo + '="")', COR.FALTA),
+    regra(sh.getRange(2, COL.OBS, n, 1), '=(' + mo + '="' + MOTIVO_OUTRO + '")*(' + ob + '="")', COR.FALTA),
+    regra(linha, '=' + st + '="ENTRADA OK"', COR['ENTRADA OK']),
+    regra(linha, '=' + st + '="COM PROBLEMA"', COR['COM PROBLEMA']),
+    regra(linha, '=' + st + '="AGUARDANDO"', COR['AGUARDANDO'])
+  ]);
+}
+
+// Deixa a aba NOTAS no formato atual (converte as versões anteriores) e garante as cores automáticas
+function formatoAtual(sh) {
+  var cab = sh.getRange(1, 1, 1, sh.getMaxColumns()).getValues()[0].map(String);
+  var mudou = false;
+  if (cab[0] === CAB_ANTIGO_A) { migrarNotasAntigas(sh); mudou = true; }
+  else if (cab.indexOf(CAB_ANTIGO_ENTRADA) >= 0) { sh.deleteColumn(cab.indexOf(CAB_ANTIGO_ENTRADA) + 1); mudou = true; }
+  if (mudou || cab[COL.BOLETOS - 1] !== CAB.NOTAS[COL.BOLETOS - 1]) {
+    sh.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
+    sh.getRange(2, COL.BOLETOS, sh.getMaxRows() - 1, 1).setNumberFormat('dd/mm/yyyy');
+    sh.getRange(2, 1, sh.getMaxRows() - 1, CAB.NOTAS.length).setBackground(null); // cor agora vem das regras
+    regrasDeCor(sh);
+  } else if (!sh.getConditionalFormatRules().length) {
+    regrasDeCor(sh);
+  }
 }
 
 function garantirAba(ss, nome, cab) {
@@ -237,18 +273,19 @@ function escreverLeiaMe(sh) {
     ['   O enviar-notas.ps1 (agendado num PC da rede) manda uma cópia para a pasta "NF-e Galpão" do Drive a cada 15 minutos.'],
     ['2. Em até 15 minutos (ou NF-e > Atualizar agora) a nota aparece na aba NOTAS com status AGUARDANDO.'],
     ['3. Quando a mercadoria chegar, mude o Status da entrada:'],
-    ['   ENTRADA OK: a Data da entrada é preenchida com hoje (pode corrigir).'],
+    ['   ENTRADA OK: a mercadoria entrou (a data de entrada é a data do lançamento na planilha).'],
     ['   COM PROBLEMA: escolha o Motivo (obrigatório; a célula fica vermelha até ter motivo).'],
     ['   Motivo "Outro": explique na Observação (fica vermelha até ter explicação).'],
     [''],
     ['O QUE A PLANILHA PREENCHE SOZINHA'],
-    ['Nº da nota, link do PDF, fornecedor, comprador (nossa razão social e CNPJ), emissão, valor, 1º boleto (vencimento e valor;'],
-    ['sem boleto: BONIFICAÇÃO ou a forma de pagamento), data do lançamento, chave e link do XML.'],
+    ['Nº da nota, link do PDF, fornecedor, comprador (nossa razão social e CNPJ), emissão, valor, 1º vencimento'],
+    ['(sem boleto: Bonificação ou Pagamento antecipado), data do lançamento, chave e link do XML.'],
     [''],
     ['PDF DA NOTA'],
     ['O PDF é ligado à nota pela chave de acesso (no nome do arquivo ou escrita dentro do PDF) ou pelo número da nota'],
     ['no nome do arquivo (ex.: "NF 289804.pdf"). Enquanto não acha, a coluna PDF mostra "aguardando PDF".'],
-    ['Nota sem XML não entra sozinha: o XML é que traz fornecedor, valor e boletos.'],
+    ['PDF sem XML (pedido de compra, por exemplo) também entra, com o nome do arquivo no lugar do fornecedor.'],
+    ['Se o XML chegar depois, ele completa essa mesma linha (pela chave ou pelo número da nota).'],
     [''],
     ['ABAS DO SCRIPT'],
     ['ARQUIVOS: cada arquivo da pasta do Drive já lido. RECEBIDOS: cada arquivo que veio do PC (evita cópia repetida).'],
@@ -383,17 +420,14 @@ function atualizarNotas(silencioso) {
     if (!ss.getSheetByName(ABA.NOTAS)) configurarPlanilha();
     // planilha ainda no formato antigo (nº e razão social juntos): converte antes, senão as notas duplicariam
     var abaNotas = ss.getSheetByName(ABA.NOTAS);
-    if (String(abaNotas.getRange(1, 1).getValue()) === CAB_ANTIGO_A) {
-      migrarNotasAntigas(abaNotas);
-      abaNotas.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
-    }
+    formatoAtual(abaNotas);
     boletosNoFormatoNovo(abaNotas);
     var cfg = lerConfig();
     var pasta = cfg.pasta ? cfg.pasta : garantirPasta().getId();
     var arquivos = listarArquivos(pasta);
     var reg = lerRegistro();
     var notas = lerNotas();
-    var log = [], novasNotas = [], novosReg = [], agora = new Date(), faltou = 0;
+    var log = [], novasNotas = [], novosReg = [], completadas = [], agora = new Date(), faltou = 0, faltouXml = false;
 
     // XMLs novos: baixa vários de uma vez (em paralelo), em vez de um por um
     var conteudos = baixarVarios(arquivos.filter(function (a) {
@@ -402,7 +436,7 @@ function atualizarNotas(silencioso) {
 
     arquivos.forEach(function (a) {
       if (reg.porId[a.id]) return;
-      if (a.tipo === 'XML' && !XML_RECEBIDO[a.id] && conteudos[a.id] === undefined) { faltou++; return; } // fica para a próxima
+      if (a.tipo === 'XML' && !XML_RECEBIDO[a.id] && conteudos[a.id] === undefined) { faltou++; faltouXml = true; return; } // fica para a próxima
       if (a.tipo === 'XML') {
         var x = null, erro = '';
         try { x = lerXmlControle(XML_RECEBIDO[a.id] || conteudos[a.id] || DriveApp.getFileById(a.id).getBlob().getDataAsString('UTF-8')); }
@@ -412,7 +446,14 @@ function atualizarNotas(silencioso) {
           log.push([agora, a.nome, 'IGNORADO', erro || 'XML não é de NF-e (pode ser evento, CT-e ou nota cancelada).']);
           return;
         }
-        var ja = notas.porChave[x.chave];
+        var ja = notas.porChave[x.chave] || soPdfPeloNumero(x.numero, notas.lista);
+        if (ja && ja.soPdf) {
+          ja.soPdf = false; ja.xml = true; ja.linkXml = a.id; ja.chave = x.chave; notas.porChave[x.chave] = ja;
+          completadas.push({ ref: ja, x: x });
+          novosReg.push([a.id, a.nome, 'XML', x.chave, 'OK', agora]);
+          log.push([agora, a.nome, 'OK', 'Nota ' + x.numero + ': XML completou a linha que só tinha o PDF.']);
+          return;
+        }
         if (ja) {
           if (!ja.xml) { ja.linkXml = a.id; ja.xml = true; }
           novosReg.push([a.id, a.nome, 'XML', x.chave, 'DUPLICADO', agora]);
@@ -453,7 +494,7 @@ function atualizarNotas(silencioso) {
     });
 
     // grava já o que foi feito: se o Google cortar a execução abrindo um PDF, isto não se perde
-    gravarNotas(notas, novasNotas);
+    gravarNotas(notas, novasNotas, completadas);
     gravarRegistro(reg, novosReg, pdfs);
     if (log.length) anexar(ABA.LOG, log);
 
@@ -481,13 +522,34 @@ function atualizarNotas(silencioso) {
     var naoAbertos = paraAbrir.length - abertos;
     if (naoAbertos) faltou += naoAbertos;
 
+    // PDF que já foi lido e não achou nota (pedido de compra, nota sem XML...): entra como linha própria
+    // (se ficaram XMLs para a próxima, espera: o XML deste PDF pode estar entre eles)
+    var soPdf = faltouXml ? [] : pdfs.filter(function (p) { return p.r[4] === 'PENDENTE' && p.linha && p.r[3] !== ''; });
+    if (soPdf.length) {
+      var linhasPdf = soPdf.map(function (p) {
+        var nota = linhaSoPdf(p.r, agora);
+        nota.ref = { chave: /^\d{44}$/.test(p.r[3]) ? p.r[3] : '', numero: String(nota.valores[COL.NUM - 1]),
+                     pdf: true, xml: false, soPdf: true, linkPdf: p.r[0], nova: true };
+        notas.lista.push(nota.ref);
+        if (nota.ref.chave) notas.porChave[nota.ref.chave] = nota.ref;
+        return nota;
+      });
+      gravarNotas(notas, linhasPdf);
+      var shArq2 = ss.getSheetByName(ABA.ARQ);
+      soPdf.forEach(function (p) { p.r[4] = 'SÓ PDF'; shArq2.getRange(p.linha, 5).setValue('SÓ PDF'); });
+      anexar(ABA.LOG, soPdf.map(function (p) { return [agora, p.r[1], 'SÓ PDF', 'PDF sem XML: entrou como linha própria na aba NOTAS.']; }));
+    }
+    compradoresPadronizados(abaNotas);
+
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
+      (completadas.length ? ' ' + completadas.length + ' linha(s) só com PDF completada(s) pelo XML.' : '') +
+      (soPdf.length ? ' ' + soPdf.length + ' PDF(s) sem XML entraram como linha própria.' : '') +
       (faltou ? ' Faltaram ' + faltou + ' arquivo(s): continuam na próxima atualização.' : '');
     var semPdf = notas.lista.filter(function (n) { return !n.pdf; }).length;
     if (semPdf) msg += ' ' + semPdf + ' nota(s) ainda sem PDF.';
     var pdfSemNota = pdfs.filter(function (p) { return p.r[4] === 'PENDENTE'; }).length;
-    if (pdfSemNota) msg += ' ' + pdfSemNota + ' PDF(s) sem nota (aba ARQUIVOS, situação PENDENTE).';
-    if (!silencioso || novasNotas.length || ligados) aviso(msg);
+    if (pdfSemNota) msg += ' ' + pdfSemNota + ' PDF(s) ainda não lidos (aba ARQUIVOS, situação PENDENTE).';
+    if (!silencioso || novasNotas.length || ligados || soPdf.length || completadas.length) aviso(msg);
     return msg;
   } finally {
     lock.releaseLock();
@@ -596,7 +658,8 @@ function lerNotas() {
     v.forEach(function (r, i) {
       var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, '');
       var nota = { linha: i + 2, chave: chave, numero: String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, ''),
-                   pdf: r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF, xml: r[COL.XML - 1] !== '' };
+                   pdf: r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF, xml: r[COL.XML - 1] !== '',
+                   soPdf: r[COL.XML - 1] === '' && r[COL.OBS - 1] === OBS_SO_PDF };
       lista.push(nota);
       if (chave) porChave[chave] = nota;
     });
@@ -605,7 +668,7 @@ function lerNotas() {
 }
 
 // Grava as notas novas (em bloco) e os links de PDF/XML que apareceram
-function gravarNotas(notas, novas) {
+function gravarNotas(notas, novas, completadas) {
   var sh = planilha().getSheetByName(ABA.NOTAS);
   if (novas.length) {
     var ini = sh.getLastRow() + 1;
@@ -613,8 +676,16 @@ function gravarNotas(notas, novas) {
     sh.getRange(ini, 1, novas.length, CAB.NOTAS.length).setValues(novas.map(function (x) { return x.valores; }));
     novas.forEach(function (x, i) { x.ref.linha = ini + i; });
     validacoesNotas(sh, ini, novas.length);   // só as linhas novas: refazer a aba toda a cada nota deixava lento
-    sh.getRange(ini, 1, novas.length, CAB.NOTAS.length).setBackgrounds(novas.map(function (x) { return coresDaLinha(x.valores); }));
   }
+  // linha que só tinha o PDF e ganhou o XML: troca os dados, mantém PDF, lançamento, status, motivo e observação
+  (completadas || []).forEach(function (c) {
+    var l = linhaDaNota(c.x, null);
+    sh.getRange(c.ref.linha, COL.NUM).setValue(l[COL.NUM - 1]);
+    sh.getRange(c.ref.linha, COL.FORN, 1, COL.BOLETOS - COL.FORN + 1).setValues([l.slice(COL.FORN - 1, COL.BOLETOS)]);
+    sh.getRange(c.ref.linha, COL.CHAVE).setValue(l[COL.CHAVE - 1]);
+    var obs = sh.getRange(c.ref.linha, COL.OBS);
+    if (obs.getValue() === OBS_SO_PDF) obs.setValue('');
+  });
   // links: lê as colunas B e M inteiras, troca o que mudou e grava de uma vez (uma chamada por coluna)
   var mudaram = notas.lista.filter(function (n) { return n.linkPdf || n.linkXml; });
   if (!mudaram.length) return;
@@ -634,7 +705,9 @@ function link(texto, idArquivo) {
 
 function garantirLinhas(sh, ultima) {
   var faltam = ultima - sh.getMaxRows();
-  if (faltam > 0) sh.insertRowsAfter(sh.getMaxRows(), faltam + 100);
+  if (faltam <= 0) return;
+  sh.insertRowsAfter(sh.getMaxRows(), faltam + 100);
+  if (sh.getName() === ABA.NOTAS) regrasDeCor(sh); // as regras de cor vão até a última linha da aba
 }
 
 function anexar(nomeAba, linhas) {
@@ -685,17 +758,11 @@ var FORMAS_PAGAMENTO = { '01': 'dinheiro', '02': 'cheque', '03': 'cartão de cr�
   '05': 'crédito loja', '15': 'boleto', '16': 'depósito', '17': 'PIX', '18': 'transferência', '90': 'sem pagamento',
   '99': 'outros' };
 
-// Só o 1º boleto: "12/10/2026  R$ 18.788,82  (1 de 3)". Sem boleto: BONIFICAÇÃO ou como foi pago.
+// Só a data do 1º vencimento. Sem boleto: Bonificação (natureza da operação ou CFOP x910) ou Pagamento antecipado.
+var SEM_BOLETO = { BONIF: 'Bonificação', ANTECIPADO: 'Pagamento antecipado' };
 function textoBoletos(x) {
-  if (x.dups.length) {
-    var d = x.dups[0];
-    return (d.venc ? dataBR(d.venc) : '?') + '  ' + real(d.valor) + (x.dups.length > 1 ? '  (1 de ' + x.dups.length + ')' : '');
-  }
-  if (x.bonificacao) return 'BONIFICAÇÃO (sem boleto)';
-  var formas = x.tPags.map(function (t) { return FORMAS_PAGAMENTO[t] || ('tipo ' + t); })
-    .filter(function (f, i, a) { return a.indexOf(f) === i; });
-  return 'Sem boleto' + (formas.length ? ' (pagamento: ' + formas.join(', ') + ')' : '') +
-    (x.natOp ? ' - ' + x.natOp : '');
+  if (x.dups.length) return x.dups[0].venc || '';
+  return x.bonificacao ? SEM_BOLETO.BONIF : SEM_BOLETO.ANTECIPADO;
 }
 
 function letraColuna(c) {
@@ -717,22 +784,25 @@ function linhaDaNota(x, agora) {
   l[COL.NUM - 1] = x.numero; l[COL.PDF - 1] = SEM_PDF; l[COL.FORN - 1] = x.fornecedor;
   l[COL.COMPRADOR - 1] = x.comprador; l[COL.CNPJ_COMPRADOR - 1] = cnpjFormatado(x.cnpjComprador);
   l[COL.EMISSAO - 1] = x.emissao || ''; l[COL.VALOR - 1] = x.valor; l[COL.BOLETOS - 1] = textoBoletos(x);
-  l[COL.LANC - 1] = agora; l[COL.ENTRADA - 1] = ''; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.MOTIVO - 1] = '';
+  l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.MOTIVO - 1] = '';
   l[COL.OBS - 1] = ''; l[COL.CHAVE - 1] = x.chave; l[COL.XML - 1] = '';
   return l;
 }
 
-// Notas lançadas quando a coluna H tinha todas as parcelas, uma por linha ("1/3   12/10/2026   R$ 18.788,82"):
-// deixa só a 1ª, como nas notas novas. Só mexe nas células que ainda estão no formato antigo.
+// Coluna H das notas lançadas em versões anteriores ("1/3   12/10/2026   R$ 18.788,82", "12/10/2026  R$ ...  (1 de 3)",
+// "BONIFICAÇÃO (sem boleto)", "Sem boleto (pagamento: PIX)"): passa para o formato atual. Só mexe no que ainda é antigo.
 function boletosNoFormatoNovo(sh) {
   var n = sh.getLastRow() - 1;
   if (n < 1) return;
   var faixa = sh.getRange(2, COL.BOLETOS, n, 1), v = faixa.getValues(), mudou = false;
   v.forEach(function (l) {
-    var t = String(l[0]);
-    var m = t.match(/^\s*(\d+)\/(\d+)\s+(\S+)\s+(R\$\s*[\d.,-]+)/);
-    if (m) { l[0] = m[3] + '  ' + m[4] + (Number(m[2]) > 1 ? '  (1 de ' + m[2] + ')' : ''); mudou = true; }
-    else if (/\n/.test(t)) { l[0] = t.split('\n')[0].trim(); mudou = true; }
+    if (l[0] instanceof Date || l[0] === '' || l[0] === SEM_BOLETO.BONIF || l[0] === SEM_BOLETO.ANTECIPADO) return;
+    var t = String(l[0]), d = t.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    if (d) l[0] = new Date(Number(d[3]), Number(d[2]) - 1, Number(d[1]));
+    else if (/BONIFICA/i.test(t)) l[0] = SEM_BOLETO.BONIF;
+    else if (/^Sem boleto/i.test(t)) l[0] = SEM_BOLETO.ANTECIPADO;
+    else return;
+    mudou = true;
   });
   if (!mudou) return;
   faixa.setValues(v);
@@ -761,7 +831,7 @@ function migrarNotasAntigas(sh) {
     l[COL.NUM - 1] = num; l[COL.PDF - 1] = r[1]; l[COL.FORN - 1] = forn;
     l[COL.COMPRADOR - 1] = x ? x.comprador : ''; l[COL.CNPJ_COMPRADOR - 1] = x ? cnpjFormatado(x.cnpjComprador) : '';
     l[COL.EMISSAO - 1] = r[2]; l[COL.VALOR - 1] = r[3]; l[COL.BOLETOS - 1] = x ? textoBoletos(x) : r[4];
-    l[COL.LANC - 1] = r[5]; l[COL.ENTRADA - 1] = r[6]; l[COL.STATUS - 1] = r[7]; l[COL.MOTIVO - 1] = r[8];
+    l[COL.LANC - 1] = r[5]; l[COL.STATUS - 1] = r[7]; l[COL.MOTIVO - 1] = r[8];
     l[COL.OBS - 1] = r[9]; l[COL.CHAVE - 1] = r[11]; l[COL.XML - 1] = r[12];
     novas.push(l);
   });
@@ -770,7 +840,7 @@ function migrarNotasAntigas(sh) {
   var vazio = function (rt) { return rt || SpreadsheetApp.newRichTextValue().setText('').build(); };
   sh.getRange(2, COL.PDF, n, 1).setRichTextValues(rtPdf.map(function (l) { return [vazio(l[0])]; }));
   sh.getRange(2, COL.XML, n, 1).setRichTextValues(rtXml.map(function (l) { return [vazio(l[0])]; }));
-  sh.getRange(2, 1, n, CAB.NOTAS.length).setBackgrounds(novas.map(coresDaLinha));
+  if (sh.getMaxColumns() > CAB.NOTAS.length) sh.getRange(1, CAB.NOTAS.length + 1, sh.getMaxRows(), 1).clear();
 }
 
 // 44 dígitos começando pelo código de uma UF (11 a 53), com ou sem espaços/pontos entre os blocos
@@ -787,6 +857,50 @@ function chaveNoTexto(texto, conhecidas) {
     primeira = primeira || m[0];
   }
   return primeira;
+}
+
+// Linha para um PDF sem XML. Nº: o da chave achada no PDF ou, se o nome do arquivo tiver um número só, esse.
+function linhaSoPdf(r, agora) {
+  var chave = /^\d{44}$/.test(r[3]) ? r[3] : '';
+  var nums = String(r[1]).replace(/\.pdf$/i, '').match(/\d{3,9}/g) || [];
+  var num = chave ? chave.substr(25, 9).replace(/^0+(?=\d)/, '') : nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
+  var l = CAB.NOTAS.map(function () { return ''; });
+  l[COL.NUM - 1] = num; l[COL.PDF - 1] = 'Abrir PDF'; l[COL.FORN - 1] = String(r[1]).replace(/\.pdf$/i, '');
+  l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.OBS - 1] = OBS_SO_PDF; l[COL.CHAVE - 1] = chave;
+  return { valores: l };
+}
+
+// Linha "só PDF" sem chave com o mesmo nº da nota (só se for uma)
+function soPdfPeloNumero(numero, lista) {
+  var achadas = lista.filter(function (n) { return n.soPdf && !n.chave && n.numero && n.numero === numero; });
+  return achadas.length === 1 ? achadas[0] : null;
+}
+
+// Nossa razão social vem escrita de jeitos diferentes em cada nota ("15286 - BEM BARATO...", "... LTDA - 174288",
+// cortada no fim). Tira os códigos e usa, para cada CNPJ, a forma que mais aparece (empate: a mais completa).
+function compradoresPadronizados(sh) {
+  var n = sh.getLastRow() - 1;
+  if (n < 1) return;
+  var faixa = sh.getRange(2, COL.COMPRADOR, n, 2), v = faixa.getValues();
+  var limpo = function (s) { return String(s).replace(/^\s*\d+\s*-\s*/, '').replace(/\s*-\s*\d+\s*$/, '').replace(/\s+/g, ' ').trim(); };
+  var conta = {};
+  v.forEach(function (r) {
+    var c = String(r[1]).replace(/\D/g, ''), nome = limpo(r[0]);
+    if (!c || !nome) return;
+    conta[c] = conta[c] || {};
+    conta[c][nome] = (conta[c][nome] || 0) + 1;
+  });
+  var padrao = {};
+  Object.keys(conta).forEach(function (c) {
+    padrao[c] = Object.keys(conta[c]).sort(function (a, b) { return conta[c][b] - conta[c][a] || b.length - a.length; })[0];
+  });
+  var mudou = false;
+  v.forEach(function (r) {
+    if (!String(r[0])) return;
+    var novo = padrao[String(r[1]).replace(/\D/g, '')] || limpo(r[0]);
+    if (novo !== r[0]) { r[0] = novo; mudou = true; }
+  });
+  if (mudou) sh.getRange(2, COL.COMPRADOR, n, 1).setValues(v.map(function (r) { return [r[0]]; }));
 }
 
 // "NF 289804.pdf", "danfe_289804.pdf": número de uma nota que ainda não tem PDF (só se for uma só)
@@ -829,7 +943,7 @@ function real(v) {
 // Status, motivo e cores
 // ===========================================================================
 
-// Ao editar NOTAS: ENTRADA OK preenche a data da entrada; COM PROBLEMA sem motivo fica vermelho.
+// Ao editar NOTAS: só avisa o que falta (a cor muda sozinha pela formatação condicional)
 function onEdit(e) {
   if (!e || !e.range) return;
   var sh = e.range.getSheet();
@@ -837,19 +951,12 @@ function onEdit(e) {
   var r1 = Math.max(2, e.range.getRow()), r2 = e.range.getLastRow();
   if (r2 < r1) return;
   var c1 = e.range.getColumn(), c2 = e.range.getLastColumn();
-  if (c2 < COL.ENTRADA || c1 > COL.OBS) return;
-  var faixa = sh.getRange(r1, 1, r2 - r1 + 1, CAB.NOTAS.length);
-  var v = faixa.getValues(), hoje = new Date(), avisos = [], mudouData = false;
-  hoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-  v.forEach(function (r) {
-    if (c1 <= COL.STATUS && c2 >= COL.STATUS && r[COL.STATUS - 1] === 'ENTRADA OK' && r[COL.ENTRADA - 1] === '') {
-      r[COL.ENTRADA - 1] = hoje; mudouData = true;
-    }
+  if (c2 < COL.STATUS || c1 > COL.OBS) return;
+  var avisos = [];
+  sh.getRange(r1, 1, r2 - r1 + 1, CAB.NOTAS.length).getValues().forEach(function (r) {
     var p = problemaDaLinha(r);
     if (p) avisos.push('Nota ' + r[COL.NUM - 1] + ': ' + p);
   });
-  if (mudouData) sh.getRange(r1, COL.ENTRADA, v.length, 1).setValues(v.map(function (r) { return [r[COL.ENTRADA - 1]]; }));
-  faixa.setBackgrounds(v.map(coresDaLinha));
   if (avisos.length) e.source.toast(avisos.join('\n'), 'Falta informação', 8);
 }
 
@@ -858,23 +965,6 @@ function problemaDaLinha(r) {
   if (r[COL.MOTIVO - 1] === MOTIVO_OUTRO && !String(r[COL.OBS - 1]).trim()) return 'explique o motivo na Observação (coluna ' + letraColuna(COL.OBS) + ').';
   return '';
 }
-
-function coresDaLinha(r) {
-  var base = COR[r[COL.STATUS - 1]] || COR.BRANCO;
-  var cores = CAB.NOTAS.map(function () { return base; });
-  if (r[COL.STATUS - 1] === 'COM PROBLEMA' && !String(r[COL.MOTIVO - 1]).trim()) cores[COL.MOTIVO - 1] = COR.FALTA;
-  if (r[COL.MOTIVO - 1] === MOTIVO_OUTRO && !String(r[COL.OBS - 1]).trim()) cores[COL.OBS - 1] = COR.FALTA;
-  return cores;
-}
-
-function pintarTudo() {
-  var sh = planilha().getSheetByName(ABA.NOTAS);
-  var n = sh.getLastRow() - 1;
-  if (n < 1) return;
-  var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
-  sh.getRange(2, 1, n, CAB.NOTAS.length).setBackgrounds(v.map(coresDaLinha));
-}
-
 
 // ===========================================================================
 // Leitura do texto do PDF (DANFE), para achar a chave de acesso
