@@ -387,6 +387,7 @@ function atualizarNotas(silencioso) {
       migrarNotasAntigas(abaNotas);
       abaNotas.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
     }
+    boletosNoFormatoNovo(abaNotas);
     var cfg = lerConfig();
     var pasta = cfg.pasta ? cfg.pasta : garantirPasta().getId();
     var arquivos = listarArquivos(pasta);
@@ -719,6 +720,23 @@ function linhaDaNota(x, agora) {
   l[COL.LANC - 1] = agora; l[COL.ENTRADA - 1] = ''; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.MOTIVO - 1] = '';
   l[COL.OBS - 1] = ''; l[COL.CHAVE - 1] = x.chave; l[COL.XML - 1] = '';
   return l;
+}
+
+// Notas lançadas quando a coluna H tinha todas as parcelas, uma por linha ("1/3   12/10/2026   R$ 18.788,82"):
+// deixa só a 1ª, como nas notas novas. Só mexe nas células que ainda estão no formato antigo.
+function boletosNoFormatoNovo(sh) {
+  var n = sh.getLastRow() - 1;
+  if (n < 1) return;
+  var faixa = sh.getRange(2, COL.BOLETOS, n, 1), v = faixa.getValues(), mudou = false;
+  v.forEach(function (l) {
+    var t = String(l[0]);
+    var m = t.match(/^\s*(\d+)\/(\d+)\s+(\S+)\s+(R\$\s*[\d.,-]+)/);
+    if (m) { l[0] = m[3] + '  ' + m[4] + (Number(m[2]) > 1 ? '  (1 de ' + m[2] + ')' : ''); mudou = true; }
+    else if (/\n/.test(t)) { l[0] = t.split('\n')[0].trim(); mudou = true; }
+  });
+  if (!mudou) return;
+  faixa.setValues(v);
+  faixa.setWrap(false);
 }
 
 // Versão anterior: A = "nº - razão social", 13 colunas, sem comprador. Converte as linhas mantendo status,
