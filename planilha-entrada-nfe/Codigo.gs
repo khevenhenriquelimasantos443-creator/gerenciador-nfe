@@ -55,7 +55,8 @@ var SEM_PDF = 'aguardando PDF';
 var SEM_CHAVE = 'sem chave no PDF';
 // tempo de cada atualização (o Google para tudo em 6 min): até aqui lê arquivos novos, até ali abre PDFs;
 // o resto é gravar. O que sobrar fica para a próxima atualização.
-var LIMITE_LEITURA = 150000, LIMITE_PDF = 220000;
+var LIMITE_LEITURA = 150000, LIMITE_PDF = 240000;
+var LIMITE_TAMANHO_PDF = 3000000; // DANFE costuma ter menos de 500 KB; maior que isso não vale abrir
 
 var CONFIG_ITENS = [
   ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde fica a cópia do XML e do PDF de cada nota. Vazio: o script cria "NF-e Galpão".'],
@@ -393,12 +394,17 @@ function atualizarNotas(silencioso) {
     var notas = lerNotas();
     var log = [], novasNotas = [], novosReg = [], agora = new Date(), faltou = 0;
 
+    // XMLs novos: baixa vários de uma vez (em paralelo), em vez de um por um
+    var conteudos = baixarVarios(arquivos.filter(function (a) {
+      return a.tipo === 'XML' && !reg.porId[a.id] && !XML_RECEBIDO[a.id];
+    }).map(function (a) { return a.id; }), inicio + LIMITE_LEITURA);
+
     arquivos.forEach(function (a) {
       if (reg.porId[a.id]) return;
-      if (Date.now() - inicio > LIMITE_LEITURA) { faltou++; return; } // limite do Google (6 min): o resto fica para a próxima
+      if (a.tipo === 'XML' && !XML_RECEBIDO[a.id] && conteudos[a.id] === undefined) { faltou++; return; } // fica para a próxima
       if (a.tipo === 'XML') {
         var x = null, erro = '';
-        try { x = lerXmlControle(XML_RECEBIDO[a.id] || DriveApp.getFileById(a.id).getBlob().getDataAsString('UTF-8')); }
+        try { x = lerXmlControle(XML_RECEBIDO[a.id] || conteudos[a.id] || DriveApp.getFileById(a.id).getBlob().getDataAsString('UTF-8')); }
         catch (e) { erro = String(e && e.message || e); }
         if (!x || !x.chave) {
           novosReg.push([a.id, a.nome, 'XML', '', 'IGNORADO', agora]);
@@ -429,30 +435,50 @@ function atualizarNotas(silencioso) {
     var pdfs = reg.pendentes.concat(novosReg.filter(function (r) { return r[2] === 'PDF'; }).map(function (r) {
       return { linha: 0, r: r };
     }));
-    var ligados = 0;
-    pdfs.forEach(function (p) {
-      var r = p.r, chave = /^\d{44}$/.test(r[3]) ? r[3] : '';
-      var nota = chave ? notas.porChave[chave] : notaPeloNumero(r[1], notas.lista);
-      // sem chave no nome nem número que bata: procura a chave escrita dentro do PDF (uma vez só por arquivo)
-      if (!nota && !chave && r[3] !== SEM_CHAVE && Date.now() - inicio < LIMITE_PDF) {
-        try { r[3] = chaveNoTexto(textoPdfDireto(DriveApp.getFileById(r[0]).getBlob().getBytes()), notas.porChave) || SEM_CHAVE; }
-        catch (e) { r[3] = SEM_CHAVE; }
-        chave = r[3] === SEM_CHAVE ? '' : r[3];
-        if (chave) nota = notas.porChave[chave];
-      }
-      if (!nota) {
-        var mesma = !chave && notaPeloNumero(r[1], notas.lista, true);
-        if (mesma) { r[4] = 'DUPLICADO'; log.push([agora, r[1], 'DUPLICADO', 'A nota ' + mesma.numero + ' já tinha PDF.']); }
-        return;
-      }
+    var ligados = 0, paraAbrir = [];
+    var ligar = function (p, nota) {
+      var r = p.r;
       if (nota.pdf) { r[4] = 'DUPLICADO'; log.push([agora, r[1], 'DUPLICADO', 'A nota ' + nota.numero + ' já tinha PDF.']); return; }
       nota.pdf = true; nota.linkPdf = r[0]; r[3] = nota.chave; r[4] = 'OK'; ligados++;
       log.push([agora, r[1], 'OK', 'PDF ligado à nota ' + nota.numero + '.']);
+    };
+    pdfs.forEach(function (p) {
+      var r = p.r, chave = /^\d{44}$/.test(r[3]) ? r[3] : '';
+      var nota = chave ? notas.porChave[chave] : notaPeloNumero(r[1], notas.lista);
+      if (nota) return ligar(p, nota);
+      var mesma = !chave && notaPeloNumero(r[1], notas.lista, true);
+      if (mesma) { r[4] = 'DUPLICADO'; log.push([agora, r[1], 'DUPLICADO', 'A nota ' + mesma.numero + ' já tinha PDF.']); return; }
+      if (!chave && r[3] !== SEM_CHAVE) paraAbrir.push(p);
     });
 
+    // grava já o que foi feito: se o Google cortar a execução abrindo um PDF, isto não se perde
     gravarNotas(notas, novasNotas);
     gravarRegistro(reg, novosReg, pdfs);
     if (log.length) anexar(ABA.LOG, log);
+
+    // sem chave no nome nem número que bata: procura a chave escrita dentro do PDF (uma vez só por arquivo)
+    var abertos = 0;
+    paraAbrir.forEach(function (p) {
+      if (Date.now() - inicio > LIMITE_PDF || !p.linha) return;
+      var r = p.r, shArq = ss.getSheetByName(ABA.ARQ);
+      r[3] = SEM_CHAVE;
+      shArq.getRange(p.linha, 4).setValue(SEM_CHAVE); // marca antes: um PDF problemático não trava as próximas
+      SpreadsheetApp.flush();
+      abertos++;
+      try {
+        var bytes = DriveApp.getFileById(r[0]).getBlob().getBytes();
+        if (bytes.length <= LIMITE_TAMANHO_PDF) r[3] = chaveDentroDoPdf(bytes, notas.porChave) || SEM_CHAVE;
+      } catch (e) {}
+      var nota = r[3] !== SEM_CHAVE && notas.porChave[r[3]];
+      if (!nota) return;
+      var antes = log.length;
+      ligar(p, nota);
+      shArq.getRange(p.linha, 4, 1, 2).setValues([[r[3], r[4]]]);
+      if (r[4] === 'OK') ss.getSheetByName(ABA.NOTAS).getRange(nota.linha, COL.PDF).setRichTextValue(link('Abrir PDF', r[0]));
+      anexar(ABA.LOG, log.slice(antes));
+    });
+    var naoAbertos = paraAbrir.length - abertos;
+    if (naoAbertos) faltou += naoAbertos;
 
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
       (faltou ? ' Faltaram ' + faltou + ' arquivo(s): continuam na próxima atualização.' : '');
@@ -507,6 +533,27 @@ function listarPelaApi(pastaId) {
   return out;
 }
 
+// Baixa o conteúdo de vários arquivos do Drive em paralelo (lotes de 25). Devolve {id: texto}.
+// Para de começar lotes novos depois de "ate" (ms); os que faltarem ficam de fora.
+function baixarVarios(ids, ate) {
+  var out = {}, token = ScriptApp.getOAuthToken();
+  for (var i = 0; i < ids.length && Date.now() < ate; i += 25) {
+    var lote = ids.slice(i, i + 25), resps;
+    try {
+      resps = UrlFetchApp.fetchAll(lote.map(function (id) {
+        return { url: 'https://www.googleapis.com/drive/v3/files/' + id + '?alt=media&supportsAllDrives=true',
+                 headers: { Authorization: 'Bearer ' + token }, muteHttpExceptions: true };
+      }));
+    } catch (e) { resps = []; }
+    lote.forEach(function (id, k) {
+      var r = resps[k];
+      if (r && r.getResponseCode() === 200) { out[id] = r.getContentText('UTF-8'); return; }
+      try { out[id] = DriveApp.getFileById(id).getBlob().getDataAsString('UTF-8'); } catch (e) { out[id] = ''; }
+    });
+  }
+  return out;
+}
+
 function tipoArquivo(nome, mime) {
   if (/\.xml$/i.test(nome) || /xml/i.test(mime)) return 'XML';
   if (/\.pdf$/i.test(nome) || mime === 'application/pdf') return 'PDF';
@@ -522,16 +569,20 @@ function lerRegistro() {
     sh.getRange(2, 1, n - 1, CAB.ARQ.length).getValues().forEach(function (r, i) {
       if (!r[0]) return;
       porId[r[0]] = true;
-      if (r[2] === 'PDF' && r[4] === 'PENDENTE') pendentes.push({ linha: i + 2, r: r });
+      if (r[2] === 'PDF' && r[4] === 'PENDENTE') pendentes.push({ linha: i + 2, r: r, antes: r[3] });
     });
   }
   return { porId: porId, pendentes: pendentes };
 }
 
+// Atualiza os PDFs que estavam pendentes e acrescenta os novos (que passam a saber a própria linha)
 function gravarRegistro(reg, novos, pdfs) {
   var sh = planilha().getSheetByName(ABA.ARQ);
-  pdfs.forEach(function (p) { if (p.linha) sh.getRange(p.linha, 4, 1, 2).setValues([[p.r[3], p.r[4]]]); });
-  if (novos.length) anexar(ABA.ARQ, novos);
+  var mudou = pdfs.filter(function (p) { return p.linha && (p.r[4] !== 'PENDENTE' || p.antes !== p.r[3]); });
+  mudou.forEach(function (p) { sh.getRange(p.linha, 4, 1, 2).setValues([[p.r[3], p.r[4]]]); });
+  if (!novos.length) return;
+  var ini = anexar(ABA.ARQ, novos);
+  pdfs.forEach(function (p) { if (!p.linha) p.linha = ini + novos.indexOf(p.r); });
 }
 
 // Notas já na planilha: chave -> {linha, numero, pdf (tem?), xml (tem?)}
@@ -591,6 +642,7 @@ function anexar(nomeAba, linhas) {
   var ini = sh.getLastRow() + 1;
   garantirLinhas(sh, ini + linhas.length - 1);
   sh.getRange(ini, 1, linhas.length, linhas[0].length).setValues(linhas);
+  return ini;
 }
 
 // ===========================================================================
@@ -678,11 +730,15 @@ function migrarNotasAntigas(sh) {
   var v = sh.getRange(2, 1, n, 13).getValues();
   var rtPdf = sh.getRange(2, 2, n, 1).getRichTextValues(), rtXml = sh.getRange(2, 13, n, 1).getRichTextValues();
   var novas = [];
+  var idsXml = rtXml.map(function (l) {
+    var url = l[0] && l[0].getLinkUrl ? l[0].getLinkUrl() : '';
+    return (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1] || '';
+  });
+  var xmls = baixarVarios(idsXml.filter(String), Date.now() + 200000); // todos de uma vez, em paralelo
   v.forEach(function (r, i) {
     var a = String(r[0]), num = (a.match(/^\s*(\d+)/) || [])[1] || a, forn = a.replace(/^\s*\d+\s*-\s*/, '');
-    var x = null, url = rtXml[i][0] && rtXml[i][0].getLinkUrl ? rtXml[i][0].getLinkUrl() : '';
-    var idXml = (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1];
-    if (idXml) { try { x = lerXmlControle(DriveApp.getFileById(idXml).getBlob().getDataAsString('UTF-8')); } catch (e) {} }
+    var x = null;
+    if (xmls[idsXml[i]]) { try { x = lerXmlControle(xmls[idsXml[i]]); } catch (e) {} }
     var l = [];
     l[COL.NUM - 1] = num; l[COL.PDF - 1] = r[1]; l[COL.FORN - 1] = forn;
     l[COL.COMPRADOR - 1] = x ? x.comprador : ''; l[COL.CNPJ_COMPRADOR - 1] = x ? cnpjFormatado(x.cnpjComprador) : '';
@@ -809,7 +865,15 @@ function pintarTudo() {
 
 // Leitor de PDF próprio: descompacta as páginas, pega cada texto com sua posição (x, y)
 // e remonta as linhas da esquerda para a direita, de cima para baixo.
-function textoPdfDireto(bytes) {
+// Chave de acesso escrita no DANFE. Só descompacta o texto das páginas e para quando acha.
+function chaveDentroDoPdf(bytes, conhecidas) {
+  var achada = '';
+  textoPdfDireto(bytes, function (texto) { achada = chaveNoTexto(texto, conhecidas); return !!achada; });
+  return achada;
+}
+
+// parar(textoDaPagina): opcional; se devolver true, para de ler o resto do PDF
+function textoPdfDireto(bytes, parar) {
   var dados = [];
   for (var i = 0; i < bytes.length; i++) dados.push(bytes[i] & 255);
   var bruto = bytesParaTexto(dados);
@@ -820,14 +884,20 @@ function textoPdfDireto(bytes) {
     var fim = bruto.indexOf('endstream', ini);
     if (fim < 0) break;
     var dict = bruto.slice(Math.max(0, bruto.lastIndexOf('<<', m.index)), m.index);
+    re.lastIndex = fim + 9; // depois do "endstream" (senão o "stream" dele conta como outro)
+    // imagens, fontes embutidas e metadados não têm o texto da página e são o que mais demora para descompactar
+    if (/\/Subtype\s*\/Image|\/Length[123]\b|\/Type\s*\/(XRef|ObjStm|Metadata|EmbeddedFile)|\/FontFile/.test(dict)) continue;
+    if (parar && fim - ini > 400000) continue;
     var conteudo = dados.slice(ini, fim);
     try {
       if (/FlateDecode/.test(dict)) conteudo = inflar(conteudo.slice(2)); // pula o cabeçalho zlib
       else if (/\/Filter/.test(dict)) continue;                         // outro filtro: imagem etc.
     } catch (e) { continue; }
     var txt = bytesParaTexto(conteudo);
-    if (/\bBT\b/.test(txt) && /T[jJ]/.test(txt)) paginas.push(linhasDoConteudo(txt));
-    re.lastIndex = fim;
+    if (/\bBT\b/.test(txt) && /T[jJ]/.test(txt)) {
+      paginas.push(linhasDoConteudo(txt));
+      if (parar && parar(paginas[paginas.length - 1])) break;
+    }
   }
   return paginas.join('\n');
 }
