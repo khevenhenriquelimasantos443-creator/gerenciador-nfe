@@ -40,8 +40,18 @@ if ($Url -notmatch '^https://script\.google\.com/.+/exec$' -or $Token -match 'CO
 
 function Enviar($dados) {
   $corpo = [Text.Encoding]::UTF8.GetBytes(($dados | ConvertTo-Json -Compress))
-  return Invoke-RestMethod -Uri $Url -Method Post -ContentType 'application/json; charset=utf-8' -Body $corpo -TimeoutSec 300
+  return Invoke-RestMethod -Uri $Url -Method Post -ContentType 'application/json; charset=utf-8' -Body $corpo -TimeoutSec 420
 }
+
+# Pede para a planilha criar as notas com os XMLs que ja chegaram e ligar os PDFs
+function Processar($quantos) {
+  try { $r = Enviar @{ token = $Token; acao = 'processar' }; Registrar "$quantos arquivo(s) enviado(s) ate agora. Planilha: $($r.resumo)" }
+  catch { Registrar "Enviados $quantos arquivo(s), mas a planilha nao respondeu ao criar as notas: $($_.Exception.Message) (tenta de novo no fim)" }
+}
+
+# So uma copia por vez: o agendamento de 15 min nao comeca outra enquanto esta ainda envia
+$trava = New-Object System.Threading.Mutex($false, 'Global\EnviarNotasPlanilha')
+if (-not $trava.WaitOne(0)) { exit 0 }
 
 foreach ($p in $Pastas) { if (-not (Test-Path -LiteralPath $p)) { Registrar "ERRO: pasta nao encontrada: $p"; exit 1 } }
 
@@ -54,7 +64,10 @@ $arquivos = Get-ChildItem -LiteralPath $Pastas -Recurse -File -ErrorAction Silen
   # arquivo copiado guarda a data antiga de alteracao: vale a mais nova entre criacao e alteracao
   (@($_.CreationTime, $_.LastWriteTime) | Measure-Object -Maximum).Maximum -ge $ApenasDesde -and
   $_.LastWriteTime -lt $agora.AddMinutes(-1)   # ainda sendo gravado: fica para a proxima
-}
+} | Sort-Object @{ Expression = { if ($_.Extension -ieq '.xml') { 0 } else { 1 } } }, Name   # XML primeiro: e ele que cria a nota
+
+$faltam = @($arquivos | Where-Object { -not $enviados.ContainsKey($_.FullName + '|' + $_.Length + '|' + $_.LastWriteTime.Ticks) }).Count
+if ($faltam -gt 0) { Registrar "Comecou: $faltam arquivo(s) novo(s) para enviar." }
 
 $novos = 0; $erros = 0
 foreach ($a in $arquivos) {
@@ -71,7 +84,10 @@ foreach ($a in $arquivos) {
     if ($r.ok) {
       Add-Content -LiteralPath $Lista -Value $id -Encoding UTF8
       $enviados[$id] = $true
-      if ($r.situacao -eq 'salvo') { $novos++ }
+      if ($r.situacao -eq 'salvo') {
+        $novos++
+        if ($novos % 20 -eq 0) { Processar $novos }   # as notas vao aparecendo durante o envio
+      }
     } else { $erros++; Registrar "ERRO em $($a.FullName): $($r.erro)" }
   } catch {
     $codigo = 0
@@ -86,8 +102,8 @@ foreach ($a in $arquivos) {
 }
 
 if ($novos -gt 0) {
-  try { $r = Enviar @{ token = $Token; acao = 'processar' }; Registrar "$novos arquivo(s) enviado(s). $($r.resumo)" }
-  catch { Registrar "Enviados $novos arquivo(s), mas a planilha nao respondeu: $($_.Exception.Message)" }
+  try { $r = Enviar @{ token = $Token; acao = 'processar' }; Registrar "Terminou: $novos arquivo(s) enviado(s). Planilha: $($r.resumo)" }
+  catch { Registrar "Terminou: $novos arquivo(s) enviado(s), mas a planilha nao respondeu ao criar as notas: $($_.Exception.Message)" }
 }
 if ($erros -gt 0) { Registrar "$erros arquivo(s) com erro: tenta de novo na proxima vez." }
 if ($novos -eq 0 -and $erros -eq 0) { Registrar "Rodou: nenhum arquivo novo em $($Pastas -join ' e ')." }
