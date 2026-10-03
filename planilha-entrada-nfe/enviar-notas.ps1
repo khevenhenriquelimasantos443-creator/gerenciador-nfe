@@ -1,4 +1,6 @@
-﻿# =============================================================================
+﻿param([switch]$Agendado)   # -Agendado: chamado pelo Agendador (respeita o horario abaixo)
+
+# =============================================================================
 # enviar-notas.ps1 - manda para a planilha "Controle de entrada NF-e" uma COPIA
 # de cada XML e PDF novo da pasta de notas da rede. Os arquivos da rede nao
 # saem do lugar. Roda pelo Agendador de Tarefas a cada 15 minutos
@@ -13,6 +15,11 @@ $Url   = 'COLE_AQUI_O_LINK'   # Apps Script: Implantar > Gerenciar implantacoes 
 $Token = 'COLE_AQUI_A_CHAVE'  # planilha: CONFIG > Chave do envio
 # -----------------------------------------------------------------------------
 # Este arquivo precisa se chamar enviar-notas.ps1
+
+# Horario de funcionamento: fora dele o agendamento nao envia nada (rodando na mao, envia sempre)
+$HoraInicio = 7    # 07:00
+$HoraFim    = 20   # ate 20:00
+if ($Agendado -and ((Get-Date).Hour -lt $HoraInicio -or (Get-Date).Hour -ge $HoraFim)) { exit 0 }
 
 # Na primeira vez, envia so os arquivos dos ultimos 30 dias (mude se quiser mais)
 $ApenasDesde = (Get-Date).AddDays(-30)

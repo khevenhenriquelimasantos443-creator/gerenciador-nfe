@@ -120,3 +120,7 @@ Nova versão > Implantar**. Sem isso, o envio continua usando o código antigo.
 
 O agendamento roda enquanto o usuário do Windows estiver logado nesse PC, que é quando ele enxerga a
 pasta da rede.
+
+**Horário:** o envio agendado e a atualização automática da planilha só rodam das **07h às 20h**. Para
+mudar: no PC, `$HoraInicio` e `$HoraFim` no começo do `enviar-notas.ps1`; na planilha, **CONFIG >
+Horário da atualização automática**. Rodando o `.bat` na mão, o envio acontece em qualquer horário.

@@ -53,7 +53,8 @@ var SEM_PDF = 'aguardando PDF';
 
 var CONFIG_ITENS = [
   ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde fica a cópia do XML e do PDF de cada nota. Vazio: o script cria "NF-e Galpão".'],
-  ['Chave do envio', '', 'Senha que o enviar-notas.ps1 usa para mandar arquivos. Criada sozinha; copie para o script do PC.']
+  ['Chave do envio', '', 'Senha que o enviar-notas.ps1 usa para mandar arquivos. Criada sozinha; copie para o script do PC.'],
+  ['Horário da atualização automática', '07-20', 'Fora desse horário a atualização automática (a cada 15 min) não roda. Ex.: 07-20 = das 07:00 às 20:00.']
 ];
 var CONFIG_OBSOLETOS = ['Avisar vencimento com quantos dias'];
 
@@ -75,7 +76,7 @@ function onOpen() {
 function ativarAutomatico() {
   desativarAutomatico();
   ScriptApp.newTrigger('atualizarNotasAutomatico').timeBased().everyMinutes(15).create();
-  aviso('Atualização automática ligada: a cada 15 minutos.');
+  aviso('Atualização automática ligada: a cada 15 minutos, no horário de CONFIG (' + (lerConfig().horario || '07-20') + ').');
 }
 
 function desativarAutomatico() {
@@ -84,7 +85,18 @@ function desativarAutomatico() {
   });
 }
 
-function atualizarNotasAutomatico() { atualizarNotas(true); }
+function atualizarNotasAutomatico() {
+  if (!dentroDoHorario()) return;
+  atualizarNotas(true);
+}
+
+// "07-20" em CONFIG: das 07:00 às 20:00, no fuso da planilha
+function dentroDoHorario() {
+  var faixa = String(lerConfig().horario || '07-20').match(/(\d{1,2})\D+(\d{1,2})/);
+  if (!faixa) return true;
+  var hora = Number(Utilities.formatDate(new Date(), planilha().getSpreadsheetTimeZone(), 'H'));
+  return hora >= Number(faixa[1]) && hora < Number(faixa[2]);
+}
 
 // ===========================================================================
 // Estrutura
@@ -179,7 +191,8 @@ function lerConfig() {
   sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) { p[String(r[0]).trim()] = r[1]; });
   return {
     pasta: idDoDrive(p['Pasta das notas (link ou ID)']),
-    token: String(p['Chave do envio'] == null ? '' : p['Chave do envio']).trim()
+    token: String(p['Chave do envio'] == null ? '' : p['Chave do envio']).trim(),
+    horario: String(p['Horário da atualização automática'] == null ? '' : p['Horário da atualização automática']).trim()
   };
 }
 
