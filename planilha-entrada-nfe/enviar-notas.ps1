@@ -7,6 +7,8 @@
 
 # ---- PREENCHA ESTAS 3 LINHAS (mantenha as aspas simples ' ') ----------------
 $Pasta = '\\SERVIDOR\NOTAS'   # pasta das notas na rede (subpastas tambem sao lidas)
+# XML e PDF em pastas separadas? Ponha as duas, separadas por virgula:
+#   $Pasta = '\\SERVIDOR\NOTAS', '\\SERVIDOR\XML'
 $Url   = 'COLE_AQUI_O_LINK'   # Apps Script: Implantar > Gerenciar implantacoes > URL do App da Web (inteira, termina em /exec)
 $Token = 'COLE_AQUI_A_CHAVE'  # planilha: CONFIG > Chave do envio
 # -----------------------------------------------------------------------------
@@ -30,7 +32,8 @@ if ((Test-Path -LiteralPath $Log) -and (Get-Item -LiteralPath $Log).Length -gt 3
   Set-Content -LiteralPath $Log -Value $resto -Encoding UTF8
 }
 
-if ($Url -notmatch '^https://script\.google\.com/.+/exec$' -or $Token -match 'COLE_AQUI' -or $Pasta -match 'SERVIDOR\\NOTAS$') {
+$Pastas = @($Pasta)
+if ($Url -notmatch '^https://script\.google\.com/.+/exec$' -or $Token -match 'COLE_AQUI' -or ($Pastas -match 'SERVIDOR\\').Count -gt 0) {
   Registrar 'ERRO: preencha $Pasta, $Url e $Token no comeco do enviar-notas.ps1 (entre aspas simples).'
   exit 1
 }
@@ -40,13 +43,13 @@ function Enviar($dados) {
   return Invoke-RestMethod -Uri $Url -Method Post -ContentType 'application/json; charset=utf-8' -Body $corpo -TimeoutSec 300
 }
 
-if (-not (Test-Path -LiteralPath $Pasta)) { Registrar "ERRO: pasta nao encontrada: $Pasta"; exit 1 }
+foreach ($p in $Pastas) { if (-not (Test-Path -LiteralPath $p)) { Registrar "ERRO: pasta nao encontrada: $p"; exit 1 } }
 
 $enviados = @{}
 if (Test-Path -LiteralPath $Lista) { Get-Content -LiteralPath $Lista -Encoding UTF8 | ForEach-Object { $enviados[$_] = $true } }
 
 $agora = Get-Date
-$arquivos = Get-ChildItem -LiteralPath $Pasta -Recurse -File -ErrorAction SilentlyContinue | Where-Object {
+$arquivos = Get-ChildItem -LiteralPath $Pastas -Recurse -File -ErrorAction SilentlyContinue | Where-Object {
   ($_.Extension -ieq '.xml' -or $_.Extension -ieq '.pdf') -and
   # arquivo copiado guarda a data antiga de alteracao: vale a mais nova entre criacao e alteracao
   (@($_.CreationTime, $_.LastWriteTime) | Measure-Object -Maximum).Maximum -ge $ApenasDesde -and
@@ -87,4 +90,4 @@ if ($novos -gt 0) {
   catch { Registrar "Enviados $novos arquivo(s), mas a planilha nao respondeu: $($_.Exception.Message)" }
 }
 if ($erros -gt 0) { Registrar "$erros arquivo(s) com erro: tenta de novo na proxima vez." }
-if ($novos -eq 0 -and $erros -eq 0) { Registrar "Rodou: nenhum arquivo novo em $Pasta." }
+if ($novos -eq 0 -and $erros -eq 0) { Registrar "Rodou: nenhum arquivo novo em $($Pastas -join ' e ')." }
