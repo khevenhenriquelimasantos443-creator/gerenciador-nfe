@@ -44,7 +44,7 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 | E. CNPJ do comprador | Nosso CNPJ que comprou | script |
 | F. Data de emissão | Da nota | script |
 | G. Valor da nota | Total da nota | script |
-| H. Boletos | Um boleto por linha: `1/3   12/10/2026   R$ 18.788,82`. Sem boleto: **BONIFICAÇÃO (sem boleto)** (natureza da operação ou CFOP x910) ou a forma de pagamento do XML (PIX, cartão etc.) | script |
+| H. 1º boleto | Só a primeira parcela: `12/10/2026  R$ 18.788,82  (1 de 3)`. Sem boleto: **BONIFICAÇÃO (sem boleto)** (natureza da operação ou CFOP x910) ou a forma de pagamento do XML (PIX, cartão etc.) | script |
 | I. Data do lançamento | Quando a nota entrou na planilha | script |
 | J. Data da entrada | Quando a mercadoria chegou no galpão | automática no ENTRADA OK, editável |
 | K. Status da entrada | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |

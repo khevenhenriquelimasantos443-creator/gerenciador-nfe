@@ -70,7 +70,7 @@ $arquivos = Get-ChildItem -LiteralPath $Pastas -Recurse -File -ErrorAction Silen
 $faltam = @($arquivos | Where-Object { -not $enviados.ContainsKey($_.FullName + '|' + $_.Length + '|' + $_.LastWriteTime.Ticks) }).Count
 if ($faltam -gt 0) { Registrar "Comecou: $faltam arquivo(s) novo(s) para enviar." }
 
-$novos = 0; $erros = 0; $ultimoResumo = ''
+$novos = 0; $erros = 0; $ultimoResumo = ''; $algumOk = $false; $falhasSeguidas = 0
 $lote = New-Object System.Collections.ArrayList; $tamanhoLote = 0
 
 # Manda o lote (ate 10 arquivos ou ~4 MB) num pedido so; a planilha guarda e ja cria as notas
@@ -81,18 +81,35 @@ function EnviarLote {
   } catch {
     $codigo = 0
     if ($_.Exception.Response) { $codigo = [int]$_.Exception.Response.StatusCode }
+    $nomes = ($lote | ForEach-Object { Split-Path -Leaf $_.caminho }) -join ', '
     if ($codigo -eq 404 -or $codigo -eq 401 -or $codigo -eq 403) {
-      Registrar "ERRO $codigo no link do app da Web: o `$Url esta errado ou a implantacao nao existe. No Apps Script: Implantar > Gerenciar implantacoes > App da Web > copie a URL inteira (termina em /exec) e cole no `$Url."
-      exit 1
+      $script:falhasSeguidas++
+      # nunca funcionou ou falhou 3 vezes seguidas: e o link
+      if (-not $script:algumOk -and $script:falhasSeguidas -ge 2 -or $script:falhasSeguidas -ge 3) {
+        Registrar "ERRO $codigo no link do app da Web: o `$Url esta errado ou a implantacao nao existe. No Apps Script: Implantar > Gerenciar implantacoes > App da Web > copie a URL inteira (termina em /exec) e cole no `$Url."
+        exit 1
+      }
+      # falha isolada: a execucao da planilha parou no meio (erro ou tempo esgotado). Tenta de novo na proxima vez.
+      $script:erros += $lote.Count
+      Registrar "ERRO $codigo ao enviar ($nomes): a planilha nao terminou de processar (veja Execucoes no Apps Script). Tenta de novo na proxima vez."
+    } else {
+      foreach ($item in $lote) { $script:erros++; Registrar "ERRO em $($item.caminho): $($_.Exception.Message)" }
     }
-    foreach ($item in $lote) { $script:erros++; Registrar "ERRO em $($item.caminho): $($_.Exception.Message)" }
     $lote.Clear(); $script:tamanhoLote = 0
     return
   }
   if ($null -eq $r -or -not ($r.PSObject.Properties.Name -contains 'ok')) {
-    Registrar 'ERRO: a planilha respondeu com uma pagina de login. No Apps Script: Implantar > Gerenciar implantacoes > Editar > Quem pode acessar: Qualquer pessoa.'
-    exit 1
+    $script:falhasSeguidas++
+    if (-not $script:algumOk -and $script:falhasSeguidas -ge 2 -or $script:falhasSeguidas -ge 3) {
+      Registrar 'ERRO: a planilha respondeu com uma pagina de login. No Apps Script: Implantar > Gerenciar implantacoes > Editar > Quem pode acessar: Qualquer pessoa.'
+      exit 1
+    }
+    $script:erros += $lote.Count
+    Registrar "ERRO ao enviar ($(($lote | ForEach-Object { Split-Path -Leaf $_.caminho }) -join ', ')): a planilha respondeu com uma pagina do Google em vez do resultado (execucao interrompida). Tenta de novo na proxima vez."
+    $lote.Clear(); $script:tamanhoLote = 0
+    return
   }
+  $script:algumOk = $true; $script:falhasSeguidas = 0
   if (-not $r.ok) {
     foreach ($item in $lote) { $script:erros++; Registrar "ERRO em $($item.caminho): $($r.erro)" }
   } else {

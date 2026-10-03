@@ -29,7 +29,7 @@ var ABA = {
 
 var CAB = {
   NOTAS: ['Nº da nota', 'PDF da nota', 'Fornecedor (razão social)', 'Comprador (nossa razão social)',
-          'CNPJ do comprador (nosso)', 'Data de emissão', 'Valor da nota', 'Boletos (parcela, vencimento e valor)',
+          'CNPJ do comprador (nosso)', 'Data de emissão', 'Valor da nota', '1º boleto (vencimento e valor)',
           'Data do lançamento na planilha', 'Data da entrada no galpão', 'Status da entrada',
           'Motivo (obrigatório se COM PROBLEMA)', 'Observação', 'Chave de acesso', 'XML'],
   ARQ: ['ID do arquivo', 'Nome', 'Tipo', 'Chave de acesso', 'Situação', 'Visto em'],
@@ -120,7 +120,7 @@ function configurarPlanilha() {
   col(COL.NUM).setNumberFormat('@'); col(COL.CNPJ_COMPRADOR).setNumberFormat('@'); col(COL.CHAVE).setNumberFormat('@');
   col(COL.EMISSAO).setNumberFormat('dd/mm/yyyy'); col(COL.ENTRADA).setNumberFormat('dd/mm/yyyy');
   col(COL.VALOR).setNumberFormat('R$ #,##0.00'); col(COL.LANC).setNumberFormat('dd/mm/yyyy hh:mm');
-  col(COL.BOLETOS).setWrap(true);
+  col(COL.BOLETOS).setWrap(false);
   [[COL.NUM, 90], [COL.PDF, 100], [COL.FORN, 300], [COL.COMPRADOR, 260], [COL.CNPJ_COMPRADOR, 150], [COL.EMISSAO, 100],
    [COL.VALOR, 110], [COL.BOLETOS, 250], [COL.LANC, 140], [COL.ENTRADA, 130], [COL.STATUS, 130], [COL.MOTIVO, 260],
    [COL.OBS, 280], [COL.CHAVE, 330], [COL.XML, 60]].forEach(function (c) { notas.setColumnWidth(c[0], c[1]); });
@@ -241,8 +241,8 @@ function escreverLeiaMe(sh) {
     ['   Motivo "Outro": explique na Observação (fica vermelha até ter explicação).'],
     [''],
     ['O QUE A PLANILHA PREENCHE SOZINHA'],
-    ['Nº da nota, link do PDF, fornecedor, comprador (nossa razão social e CNPJ), emissão, valor, boletos (um por linha:'],
-    ['parcela, vencimento e valor; sem boleto: BONIFICAÇÃO ou a forma de pagamento), data do lançamento, chave e link do XML.'],
+    ['Nº da nota, link do PDF, fornecedor, comprador (nossa razão social e CNPJ), emissão, valor, 1º boleto (vencimento e valor;'],
+    ['sem boleto: BONIFICAÇÃO ou a forma de pagamento), data do lançamento, chave e link do XML.'],
     [''],
     ['PDF DA NOTA'],
     ['O PDF é ligado à nota pela chave de acesso (no nome do arquivo ou escrita dentro do PDF) ou pelo número da nota'],
@@ -380,6 +380,12 @@ function atualizarNotas(silencioso) {
   try {
     var ss = planilha();
     if (!ss.getSheetByName(ABA.NOTAS)) configurarPlanilha();
+    // planilha ainda no formato antigo (nº e razão social juntos): converte antes, senão as notas duplicariam
+    var abaNotas = ss.getSheetByName(ABA.NOTAS);
+    if (String(abaNotas.getRange(1, 1).getValue()) === CAB_ANTIGO_A) {
+      migrarNotasAntigas(abaNotas);
+      abaNotas.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
+    }
     var cfg = lerConfig();
     var pasta = cfg.pasta ? cfg.pasta : garantirPasta().getId();
     var arquivos = listarArquivos(pasta);
@@ -626,12 +632,11 @@ var FORMAS_PAGAMENTO = { '01': 'dinheiro', '02': 'cheque', '03': 'cartão de cr�
   '05': 'crédito loja', '15': 'boleto', '16': 'depósito', '17': 'PIX', '18': 'transferência', '90': 'sem pagamento',
   '99': 'outros' };
 
-// Um boleto por linha: "1/3   12/10/2026   R$ 18.788,82". Sem boleto: diz se é bonificação ou como foi pago.
+// Só o 1º boleto: "12/10/2026  R$ 18.788,82  (1 de 3)". Sem boleto: BONIFICAÇÃO ou como foi pago.
 function textoBoletos(x) {
   if (x.dups.length) {
-    return x.dups.map(function (d, i) {
-      return (i + 1) + '/' + x.dups.length + '   ' + (d.venc ? dataBR(d.venc) : '?') + '   ' + real(d.valor);
-    }).join('\n');
+    var d = x.dups[0];
+    return (d.venc ? dataBR(d.venc) : '?') + '  ' + real(d.valor) + (x.dups.length > 1 ? '  (1 de ' + x.dups.length + ')' : '');
   }
   if (x.bonificacao) return 'BONIFICAÇÃO (sem boleto)';
   var formas = x.tPags.map(function (t) { return FORMAS_PAGAMENTO[t] || ('tipo ' + t); })
