@@ -50,6 +50,10 @@ var MOTIVOS = ['Quantidade diferente da nota', 'Produto faltando', 'Produto avar
 var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#fee2e2', FALTA: '#f87171',
             BRANCO: '#ffffff' };
 var SEM_PDF = 'aguardando PDF';
+var SEM_CHAVE = 'sem chave no PDF';
+// tempo de cada atualização (o Google para tudo em 6 min): até aqui lê arquivos novos, até ali abre PDFs;
+// o resto é gravar. O que sobrar fica para a próxima atualização.
+var LIMITE_LEITURA = 150000, LIMITE_PDF = 220000;
 
 var CONFIG_ITENS = [
   ['Pasta das notas (link ou ID)', '', 'Pasta do Drive onde fica a cópia do XML e do PDF de cada nota. Vazio: o script cria "NF-e Galpão".'],
@@ -353,7 +357,7 @@ function atualizarNotas(silencioso) {
 
     arquivos.forEach(function (a) {
       if (reg.porId[a.id]) return;
-      if (Date.now() - inicio > 270000) { faltou++; return; } // limite do Google: o resto fica para a próxima
+      if (Date.now() - inicio > LIMITE_LEITURA) { faltou++; return; } // limite do Google (6 min): o resto fica para a próxima
       if (a.tipo === 'XML') {
         var x = null, erro = '';
         try { x = lerXmlControle(DriveApp.getFileById(a.id).getBlob().getDataAsString('UTF-8')); } catch (e) { erro = String(e && e.message || e); }
@@ -379,11 +383,8 @@ function atualizarNotas(silencioso) {
         log.push([agora, a.nome, 'OK', 'Nota ' + x.numero + ' | ' + x.fornecedor + ' | ' + real(x.valor) +
           (x.dups.length ? ' | ' + x.dups.length + ' boleto(s)' : ' | sem boleto no XML')]);
       } else {
-        var chave = chaveNoNome(a.nome);
-        if (!chave) {
-          try { chave = chaveNoTexto(textoPdfDireto(DriveApp.getFileById(a.id).getBlob().getBytes()), notas.porChave); } catch (e) {}
-        }
-        novosReg.push([a.id, a.nome, 'PDF', chave || '', 'PENDENTE', agora]);
+        // abrir o PDF é lento: aqui só a chave no nome; número da nota e texto do PDF ficam para a ligação abaixo
+        novosReg.push([a.id, a.nome, 'PDF', chaveNoNome(a.nome), 'PENDENTE', agora]);
       }
     });
 
@@ -393,9 +394,17 @@ function atualizarNotas(silencioso) {
     }));
     var ligados = 0;
     pdfs.forEach(function (p) {
-      var r = p.r, nota = r[3] ? notas.porChave[r[3]] : notaPeloNumero(r[1], notas.lista);
+      var r = p.r, chave = /^\d{44}$/.test(r[3]) ? r[3] : '';
+      var nota = chave ? notas.porChave[chave] : notaPeloNumero(r[1], notas.lista);
+      // sem chave no nome nem número que bata: procura a chave escrita dentro do PDF (uma vez só por arquivo)
+      if (!nota && !chave && r[3] !== SEM_CHAVE && Date.now() - inicio < LIMITE_PDF) {
+        try { r[3] = chaveNoTexto(textoPdfDireto(DriveApp.getFileById(r[0]).getBlob().getBytes()), notas.porChave) || SEM_CHAVE; }
+        catch (e) { r[3] = SEM_CHAVE; }
+        chave = r[3] === SEM_CHAVE ? '' : r[3];
+        if (chave) nota = notas.porChave[chave];
+      }
       if (!nota) {
-        var mesma = !r[3] && notaPeloNumero(r[1], notas.lista, true);
+        var mesma = !chave && notaPeloNumero(r[1], notas.lista, true);
         if (mesma) { r[4] = 'DUPLICADO'; log.push([agora, r[1], 'DUPLICADO', 'A nota ' + mesma.numero + ' já tinha PDF.']); }
         return;
       }
@@ -517,9 +526,16 @@ function gravarNotas(notas, novas) {
     novas.forEach(function (x, i) { x.ref.linha = ini + i; });
     validacoesNotas(sh);
   }
-  notas.lista.forEach(function (n) {
-    if (n.linkPdf) sh.getRange(n.linha, COL.PDF).setRichTextValue(link('Abrir PDF', n.linkPdf));
-    if (n.linkXml) sh.getRange(n.linha, COL.XML).setRichTextValue(link('XML', n.linkXml));
+  // links: lê as colunas B e M inteiras, troca o que mudou e grava de uma vez (uma chamada por coluna)
+  var mudaram = notas.lista.filter(function (n) { return n.linkPdf || n.linkXml; });
+  if (!mudaram.length) return;
+  var n = sh.getLastRow() - 1;
+  [[COL.PDF, 'linkPdf', 'Abrir PDF'], [COL.XML, 'linkXml', 'XML']].forEach(function (c) {
+    if (!mudaram.some(function (x) { return x[c[1]]; })) return;
+    var faixa = sh.getRange(2, c[0], n, 1);
+    var rt = faixa.getRichTextValues().map(function (l) { return [l[0] || SpreadsheetApp.newRichTextValue().setText('').build()]; });
+    mudaram.forEach(function (x) { if (x[c[1]]) rt[x.linha - 2][0] = link(c[2], x[c[1]]); });
+    faixa.setRichTextValues(rt);
   });
 }
 
