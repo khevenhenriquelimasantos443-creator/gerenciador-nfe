@@ -293,7 +293,9 @@ function receberArquivo(d, cfg) {
   var md5 = Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, bytes).map(function (b) {
     return ((b + 256) % 256).toString(16).replace(/^(.)$/, '0$1');
   }).join('');
-  var lock = LockService.getScriptLock();
+  // trava própria do recebimento (da planilha), separada da trava da atualização: receber arquivo não espera
+  // a planilha terminar de criar as notas
+  var lock = (LockService.getDocumentLock && LockService.getDocumentLock()) || LockService.getScriptLock();
   lock.waitLock(60000);
   try {
     var sh = planilha().getSheetByName(ABA.RECEBIDOS);
