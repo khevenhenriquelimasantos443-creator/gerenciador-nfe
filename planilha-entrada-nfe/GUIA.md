@@ -37,17 +37,23 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 
 | Coluna | O que é | Quem preenche |
 |---|---|---|
-| A. Nota fiscal | Número e razão social do fornecedor (ex.: `289804 - CONSIGLIO & NATHAN LTDA`) | script |
+| A. Nº da nota | Número da nota fiscal | script |
 | B. PDF da nota | Link **Abrir PDF**; "aguardando PDF" enquanto não acha | script |
-| C. Data de emissão | Da nota | script |
-| D. Valor da nota | Total da nota | script |
-| E. Vencimentos dos boletos | Cada parcela com data e valor (ex.: `12/10/2026 R$ 18.788,82  \|  19/10/2026 ...`) | script |
-| F. Data do lançamento | Quando a nota entrou na planilha | script |
-| G. Data da entrada | Quando a mercadoria chegou no galpão | automática no ENTRADA OK, editável |
-| H. Status da entrada | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
-| I. Motivo | Obrigatório no COM PROBLEMA (lista fixa) | você |
-| J. Observação | Livre; obrigatória no motivo "Outro" | você |
-| K. CNPJ, L. Chave de acesso, M. XML | Dados da nota e link do XML | script |
+| C. Fornecedor | Razão social de quem emitiu a nota | script |
+| D. Comprador | Nossa razão social (destinatário da nota) | script |
+| E. CNPJ do comprador | Nosso CNPJ que comprou | script |
+| F. Data de emissão | Da nota | script |
+| G. Valor da nota | Total da nota | script |
+| H. Boletos | Um boleto por linha: `1/3   12/10/2026   R$ 18.788,82`. Sem boleto: **BONIFICAÇÃO (sem boleto)** (natureza da operação ou CFOP x910) ou a forma de pagamento do XML (PIX, cartão etc.) | script |
+| I. Data do lançamento | Quando a nota entrou na planilha | script |
+| J. Data da entrada | Quando a mercadoria chegou no galpão | automática no ENTRADA OK, editável |
+| K. Status da entrada | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
+| L. Motivo | Obrigatório no COM PROBLEMA (lista fixa) | você |
+| M. Observação | Livre; obrigatória no motivo "Outro" | você |
+| N. Chave de acesso, O. XML | Chave da nota e link do XML | script |
+
+Planilha da versão anterior (nº e razão social juntos na coluna A): **NF-e > Configurar planilha** converte
+as linhas para o formato novo, mantendo status, datas, motivo, observação e links.
 
 A linha inteira fica com a cor do status: amarelo (aguardando), verde (entrada ok), vermelho (problema).
 

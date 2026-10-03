@@ -46,14 +46,8 @@ if ($Url -notmatch '^https://script\.google\.com/.+/exec$' -or $Token -match 'CO
 }
 
 function Enviar($dados) {
-  $corpo = [Text.Encoding]::UTF8.GetBytes(($dados | ConvertTo-Json -Compress))
+  $corpo = [Text.Encoding]::UTF8.GetBytes(($dados | ConvertTo-Json -Compress -Depth 6))
   return Invoke-RestMethod -Uri $Url -Method Post -ContentType 'application/json; charset=utf-8' -Body $corpo -TimeoutSec 420
-}
-
-# Pede para a planilha criar as notas com os XMLs que ja chegaram e ligar os PDFs
-function Processar($quantos) {
-  try { $r = Enviar @{ token = $Token; acao = 'processar' }; Registrar "$quantos arquivo(s) enviado(s) ate agora. Planilha: $($r.resumo)" }
-  catch { Registrar "Enviados $quantos arquivo(s), mas a planilha nao respondeu ao criar as notas: $($_.Exception.Message) (tenta de novo no fim)" }
 }
 
 # So uma copia por vez: o agendamento de 15 min nao comeca outra enquanto esta ainda envia
@@ -76,41 +70,57 @@ $arquivos = Get-ChildItem -LiteralPath $Pastas -Recurse -File -ErrorAction Silen
 $faltam = @($arquivos | Where-Object { -not $enviados.ContainsKey($_.FullName + '|' + $_.Length + '|' + $_.LastWriteTime.Ticks) }).Count
 if ($faltam -gt 0) { Registrar "Comecou: $faltam arquivo(s) novo(s) para enviar." }
 
-$novos = 0; $erros = 0
-foreach ($a in $arquivos) {
-  $id = $a.FullName + '|' + $a.Length + '|' + $a.LastWriteTime.Ticks
-  if ($enviados.ContainsKey($id)) { continue }
+$novos = 0; $erros = 0; $ultimoResumo = ''
+$lote = New-Object System.Collections.ArrayList; $tamanhoLote = 0
+
+# Manda o lote (ate 10 arquivos ou ~4 MB) num pedido so; a planilha guarda e ja cria as notas
+function EnviarLote {
+  if ($lote.Count -eq 0) { return }
   try {
-    $r = Enviar @{ token = $Token; acao = 'arquivo'; nome = $a.Name; caminho = $a.FullName
-                   conteudo = [Convert]::ToBase64String([IO.File]::ReadAllBytes($a.FullName)) }
-    if ($null -eq $r -or -not ($r.PSObject.Properties.Name -contains 'ok')) {
-      # resposta em HTML (tela de login do Google): o app da Web nao esta liberado para "Qualquer pessoa"
-      Registrar 'ERRO: a planilha respondeu com uma pagina de login. No Apps Script: Implantar > Gerenciar implantacoes > Editar > Quem pode acessar: Qualquer pessoa.'
-      exit 1
-    }
-    if ($r.ok) {
-      Add-Content -LiteralPath $Lista -Value $id -Encoding UTF8
-      $enviados[$id] = $true
-      if ($r.situacao -eq 'salvo') {
-        $novos++
-        if ($novos % 20 -eq 0) { Processar $novos }   # as notas vao aparecendo durante o envio
-      }
-    } else { $erros++; Registrar "ERRO em $($a.FullName): $($r.erro)" }
+    $r = Enviar @{ token = $Token; acao = 'arquivos'; arquivos = @($lote | ForEach-Object { $_.dados }) }
   } catch {
     $codigo = 0
     if ($_.Exception.Response) { $codigo = [int]$_.Exception.Response.StatusCode }
     if ($codigo -eq 404 -or $codigo -eq 401 -or $codigo -eq 403) {
-      # o link esta errado: nao adianta tentar os outros arquivos
       Registrar "ERRO $codigo no link do app da Web: o `$Url esta errado ou a implantacao nao existe. No Apps Script: Implantar > Gerenciar implantacoes > App da Web > copie a URL inteira (termina em /exec) e cole no `$Url."
       exit 1
     }
-    $erros++; Registrar "ERRO em $($a.FullName): $($_.Exception.Message)"
+    foreach ($item in $lote) { $script:erros++; Registrar "ERRO em $($item.caminho): $($_.Exception.Message)" }
+    $lote.Clear(); $script:tamanhoLote = 0
+    return
   }
+  if ($null -eq $r -or -not ($r.PSObject.Properties.Name -contains 'ok')) {
+    Registrar 'ERRO: a planilha respondeu com uma pagina de login. No Apps Script: Implantar > Gerenciar implantacoes > Editar > Quem pode acessar: Qualquer pessoa.'
+    exit 1
+  }
+  if (-not $r.ok) {
+    foreach ($item in $lote) { $script:erros++; Registrar "ERRO em $($item.caminho): $($r.erro)" }
+  } else {
+    for ($i = 0; $i -lt $lote.Count; $i++) {
+      $res = $r.resultados[$i]; $item = $lote[$i]
+      if ($res.ok) {
+        Add-Content -LiteralPath $Lista -Value $item.id -Encoding UTF8
+        $enviados[$item.id] = $true
+        if ($res.situacao -eq 'salvo') { $script:novos++ }
+      } else { $script:erros++; Registrar "ERRO em $($item.caminho): $($res.erro)" }
+    }
+    if ($r.resumo) { $script:ultimoResumo = $r.resumo }
+    if ($script:novos -gt 0 -and $script:novos % 50 -lt $lote.Count) { Registrar "$($script:novos) arquivo(s) enviado(s) ate agora. Planilha: $($r.resumo)" }
+  }
+  $lote.Clear(); $script:tamanhoLote = 0
 }
 
-if ($novos -gt 0) {
-  try { $r = Enviar @{ token = $Token; acao = 'processar' }; Registrar "Terminou: $novos arquivo(s) enviado(s). Planilha: $($r.resumo)" }
-  catch { Registrar "Terminou: $novos arquivo(s) enviado(s), mas a planilha nao respondeu ao criar as notas: $($_.Exception.Message)" }
+foreach ($a in $arquivos) {
+  $id = $a.FullName + '|' + $a.Length + '|' + $a.LastWriteTime.Ticks
+  if ($enviados.ContainsKey($id)) { continue }
+  try { $conteudo = [Convert]::ToBase64String([IO.File]::ReadAllBytes($a.FullName)) }
+  catch { $erros++; Registrar "ERRO ao ler $($a.FullName): $($_.Exception.Message)"; continue }
+  if ($lote.Count -gt 0 -and ($lote.Count -ge 10 -or $tamanhoLote + $conteudo.Length -gt 4MB)) { EnviarLote }
+  [void]$lote.Add(@{ id = $id; caminho = $a.FullName; dados = @{ nome = $a.Name; caminho = $a.FullName; conteudo = $conteudo } })
+  $tamanhoLote += $conteudo.Length
 }
+EnviarLote
+
+if ($novos -gt 0) { Registrar "Terminou: $novos arquivo(s) enviado(s). Planilha: $ultimoResumo" }
 if ($erros -gt 0) { Registrar "$erros arquivo(s) com erro: tenta de novo na proxima vez." }
 if ($novos -eq 0 -and $erros -eq 0) { Registrar "Rodou: nenhum arquivo novo em $($Pastas -join ' e ')." }
