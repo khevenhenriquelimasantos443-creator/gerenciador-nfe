@@ -46,6 +46,10 @@ var CAB_ANTIGO_A = 'Nota fiscal (nº e razão social)';
 var CAB_ANTIGO_ENTRADA = 'Data da entrada no galpão';
 // PDF sem XML (pedido de compra, nota de serviço...): entra mesmo assim, com esta observação
 var OBS_SO_PDF = 'Só PDF, sem XML (ex.: pedido de compra)';
+// depois de ler os dados do próprio PDF (pelo Google Drive), a observação diz como foi
+var OBS_PDF_LIDO = 'Só PDF, sem XML: dados lidos do PDF (confira)';
+var OBS_PDF_ILEGIVEL = 'Só PDF, sem XML: não deu para ler os dados do PDF';
+function ehSoPdf(obs) { return String(obs).indexOf('Só PDF, sem XML') === 0; }
 
 var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
@@ -59,6 +63,7 @@ var SEM_CHAVE = 'sem chave no PDF';
 // tempo de cada atualização (o Google para tudo em 6 min): até aqui lê arquivos novos, até ali abre PDFs;
 // o resto é gravar. O que sobrar fica para a próxima atualização.
 var LIMITE_LEITURA = 150000, LIMITE_PDF = 240000;
+var LIMITE_DADOS_PDF = 270000;  // até aqui ainda começa a ler os dados de um PDF sem XML (cada um leva uns segundos)
 var LIMITE_TAMANHO_PDF = 3000000; // DANFE costuma ter menos de 500 KB; maior que isso não vale abrir
 
 var CONFIG_ITENS = [
@@ -539,17 +544,19 @@ function atualizarNotas(silencioso) {
       soPdf.forEach(function (p) { p.r[4] = 'SÓ PDF'; shArq2.getRange(p.linha, 5).setValue('SÓ PDF'); });
       anexar(ABA.LOG, soPdf.map(function (p) { return [agora, p.r[1], 'SÓ PDF', 'PDF sem XML: entrou como linha própria na aba NOTAS.']; }));
     }
+    var lidosDoPdf = dadosDosPdfsSemXml(abaNotas, inicio + LIMITE_DADOS_PDF);
     compradoresPadronizados(abaNotas);
 
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
       (completadas.length ? ' ' + completadas.length + ' linha(s) só com PDF completada(s) pelo XML.' : '') +
       (soPdf.length ? ' ' + soPdf.length + ' PDF(s) sem XML entraram como linha própria.' : '') +
+      (lidosDoPdf ? ' Dados de ' + lidosDoPdf + ' PDF(s) sem XML lidos do próprio PDF.' : '') +
       (faltou ? ' Faltaram ' + faltou + ' arquivo(s): continuam na próxima atualização.' : '');
     var semPdf = notas.lista.filter(function (n) { return !n.pdf; }).length;
     if (semPdf) msg += ' ' + semPdf + ' nota(s) ainda sem PDF.';
     var pdfSemNota = pdfs.filter(function (p) { return p.r[4] === 'PENDENTE'; }).length;
     if (pdfSemNota) msg += ' ' + pdfSemNota + ' PDF(s) ainda não lidos (aba ARQUIVOS, situação PENDENTE).';
-    if (!silencioso || novasNotas.length || ligados || soPdf.length || completadas.length) aviso(msg);
+    if (!silencioso || novasNotas.length || ligados || soPdf.length || completadas.length || lidosDoPdf) aviso(msg);
     return msg;
   } finally {
     lock.releaseLock();
@@ -659,7 +666,7 @@ function lerNotas() {
       var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, '');
       var nota = { linha: i + 2, chave: chave, numero: String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, ''),
                    pdf: r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF, xml: r[COL.XML - 1] !== '',
-                   soPdf: r[COL.XML - 1] === '' && r[COL.OBS - 1] === OBS_SO_PDF };
+                   soPdf: r[COL.XML - 1] === '' && ehSoPdf(r[COL.OBS - 1]) };
       lista.push(nota);
       if (chave) porChave[chave] = nota;
     });
@@ -684,7 +691,7 @@ function gravarNotas(notas, novas, completadas) {
     sh.getRange(c.ref.linha, COL.FORN, 1, COL.BOLETOS - COL.FORN + 1).setValues([l.slice(COL.FORN - 1, COL.BOLETOS)]);
     sh.getRange(c.ref.linha, COL.CHAVE).setValue(l[COL.CHAVE - 1]);
     var obs = sh.getRange(c.ref.linha, COL.OBS);
-    if (obs.getValue() === OBS_SO_PDF) obs.setValue('');
+    if (ehSoPdf(obs.getValue())) obs.setValue('');
   });
   // links: lê as colunas B e M inteiras, troca o que mudou e grava de uma vez (uma chamada por coluna)
   var mudaram = notas.lista.filter(function (n) { return n.linkPdf || n.linkXml; });
@@ -865,9 +872,139 @@ function linhaSoPdf(r, agora) {
   var nums = String(r[1]).replace(/\.pdf$/i, '').match(/\d{3,9}/g) || [];
   var num = chave ? chave.substr(25, 9).replace(/^0+(?=\d)/, '') : nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
   var l = CAB.NOTAS.map(function () { return ''; });
-  l[COL.NUM - 1] = num; l[COL.PDF - 1] = 'Abrir PDF'; l[COL.FORN - 1] = String(r[1]).replace(/\.pdf$/i, '');
+  l[COL.NUM - 1] = num; l[COL.PDF - 1] = 'Abrir PDF'; l[COL.FORN - 1] = fornecedorDoNome(r[1]);
   l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.OBS - 1] = OBS_SO_PDF; l[COL.CHAVE - 1] = chave;
   return { valores: l };
+}
+
+// "VILLE 03-09 NFE 79570.pdf" -> "VILLE" (o resto do nome é data e número)
+function fornecedorDoNome(nome) {
+  var n = String(nome).replace(/\.pdf$/i, '').trim();
+  return n.replace(/\s+\d{1,2}[-.\/]\d{1,2}([-.\/]\d{2,4})?\s+(NF-?E?|NOTA)?\s*\d+.*$/i, '').trim() || n;
+}
+
+// Linhas "só PDF" ainda não lidas: o Google Drive converte o PDF em texto (lê até PDF escaneado) e daí saem
+// chave, nº, fornecedor, comprador, CNPJ, emissão, valor e 1º vencimento. Devolve quantas linhas leu.
+function dadosDosPdfsSemXml(sh, ate) {
+  var n = sh.getLastRow() - 1;
+  if (n < 1 || Date.now() > ate) return 0;
+  var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
+  var faltam = [];
+  v.forEach(function (r, i) { if (r[COL.OBS - 1] === OBS_SO_PDF && r[COL.XML - 1] === '') faltam.push(i); });
+  if (!faltam.length) return 0;
+  var links = sh.getRange(2, COL.PDF, n, 1).getRichTextValues();
+  // quem já conhecemos pelas notas com XML: CNPJ do comprador -> nome; CNPJ do emitente (da chave) -> fornecedor
+  var conhecidos = { compradores: {}, fornecedores: {} };
+  v.forEach(function (r) {
+    var cnpj = String(r[COL.CNPJ_COMPRADOR - 1]).replace(/\D/g, ''), chave = String(r[COL.CHAVE - 1]);
+    if (cnpj && r[COL.COMPRADOR - 1]) conhecidos.compradores[cnpj] = r[COL.COMPRADOR - 1];
+    if (/^\d{44}$/.test(chave) && r[COL.XML - 1] !== '') conhecidos.fornecedores[chave.substr(6, 14)] = r[COL.FORN - 1];
+  });
+  var lidos = 0;
+  faltam.forEach(function (i) {
+    if (Date.now() > ate) return;
+    var linha = i + 2, r = v[i];
+    var url = links[i][0] && links[i][0].getLinkUrl ? links[i][0].getLinkUrl() : '';
+    var id = (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1];
+    var d = null;
+    if (id) { try { d = dadosDoTextoDoPdf(textoDoPdfPeloDrive(id), conhecidos); } catch (e) { console.log('PDF ' + id + ': ' + (e && e.message || e)); } }
+    lidos++;
+    if (!d) { sh.getRange(linha, COL.OBS).setValue(OBS_PDF_ILEGIVEL); return; }
+    var l = r.slice();
+    if (d.numero) l[COL.NUM - 1] = d.numero;
+    l[COL.FORN - 1] = d.fornecedor || fornecedorDoNome(r[COL.FORN - 1]);
+    if (d.cnpjComprador) { l[COL.COMPRADOR - 1] = d.comprador || ''; l[COL.CNPJ_COMPRADOR - 1] = cnpjFormatado(d.cnpjComprador); }
+    if (d.emissao) l[COL.EMISSAO - 1] = d.emissao;
+    if (d.valor) l[COL.VALOR - 1] = d.valor;
+    if (d.vencimento) l[COL.BOLETOS - 1] = d.vencimento;
+    if (d.chave) l[COL.CHAVE - 1] = d.chave;
+    l[COL.OBS - 1] = OBS_PDF_LIDO;
+    sh.getRange(linha, 1).setValue(l[0]);
+    sh.getRange(linha, COL.FORN, 1, COL.BOLETOS - COL.FORN + 1).setValues([l.slice(COL.FORN - 1, COL.BOLETOS)]);
+    sh.getRange(linha, COL.OBS, 1, 2).setValues([[l[COL.OBS - 1], l[COL.CHAVE - 1]]]);
+  });
+  return lidos;
+}
+
+// Texto do PDF pelo Google Drive: copia como Documento Google (com OCR), exporta o texto e apaga a cópia
+function textoDoPdfPeloDrive(id) {
+  var api = 'https://www.googleapis.com/drive/v3/files/', h = { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() };
+  var c = UrlFetchApp.fetch(api + id + '/copy?ocrLanguage=pt&supportsAllDrives=true&fields=id', {
+    method: 'post', contentType: 'application/json', headers: h, muteHttpExceptions: true,
+    payload: JSON.stringify({ name: 'leitura temporaria ' + id, mimeType: 'application/vnd.google-apps.document' })
+  });
+  if (c.getResponseCode() !== 200) throw new Error('Drive ' + c.getResponseCode() + ': ' + c.getContentText().slice(0, 200));
+  var doc = JSON.parse(c.getContentText()).id;
+  try {
+    var t = UrlFetchApp.fetch(api + doc + '/export?mimeType=text%2Fplain', { headers: h, muteHttpExceptions: true });
+    if (t.getResponseCode() !== 200) throw new Error('Drive ' + t.getResponseCode() + ' ao exportar o texto');
+    return t.getContentText('UTF-8');
+  } finally {
+    UrlFetchApp.fetch(api + doc + '?supportsAllDrives=true', { method: 'delete', headers: h, muteHttpExceptions: true });
+  }
+}
+
+// Dígito verificador da chave de acesso (módulo 11): evita aceitar 44 dígitos lidos errado
+function chaveValida(c) {
+  if (!/^\d{44}$/.test(c)) return false;
+  var soma = 0, peso = 2;
+  for (var i = 42; i >= 0; i--) { soma += Number(c[i]) * peso; peso = peso === 9 ? 2 : peso + 1; }
+  var dv = 11 - soma % 11;
+  return (dv >= 10 ? 0 : dv) === Number(c[43]);
+}
+
+// Dados da nota a partir do texto do DANFE (ou de um pedido de compra, com o que der para achar)
+function dadosDoTextoDoPdf(texto, conhecidos) {
+  var t = String(texto || '').replace(/\r/g, '');
+  if (t.replace(/\s/g, '').length < 30) return null;
+  var d = {};
+  var data = function (s) {
+    var m = String(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    if (!m || Number(m[3]) < 2000 || Number(m[2]) > 12 || Number(m[1]) > 31) return null;
+    return new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+  };
+  var datas = function (s) { return (String(s).match(/\d{2}\/\d{2}\/\d{4}/g) || []).map(data).filter(Boolean); };
+  var dinheiro = function (s) {
+    return (String(s).match(/\d{1,3}(?:\.\d{3})+,\d{2}(?!\d)|\d+,\d{2}(?!\d)/g) || [])
+      .map(function (x) { return Number(x.replace(/\./g, '').replace(',', '.')); });
+  };
+  var trecho = function (re, tam) { var m = t.search(re); return m < 0 ? '' : t.substr(m, tam || 400); };
+
+  // chave: 44 dígitos (com ou sem espaços) com o dígito verificador certo
+  var semEsp = t.replace(/[ . ]/g, ''), re = /\d{44}/g, m;
+  while ((m = re.exec(semEsp))) if (chaveValida(m[0])) { d.chave = m[0]; break; }
+  if (d.chave) {
+    d.numero = d.chave.substr(25, 9).replace(/^0+(?=\d)/, '');
+    d.fornecedor = conhecidos.fornecedores[d.chave.substr(6, 14)] || '';
+  }
+  // CNPJs do texto: o nosso (já conhecido) é o comprador; outro conhecido como fornecedor dá o nome dele
+  var cnpjs = (t.match(/\d{2}\.?\d{3}\.?\d{3}\s*\/?\s*\d{4}\s*-?\s*\d{2}/g) || []).map(function (x) { return x.replace(/\D/g, ''); });
+  var emitente = d.chave ? d.chave.substr(6, 14) : '';
+  cnpjs.forEach(function (c) {
+    if (c === emitente) return;
+    if (!d.cnpjComprador && conhecidos.compradores[c]) { d.cnpjComprador = c; d.comprador = conhecidos.compradores[c]; }
+    if (!d.fornecedor && conhecidos.fornecedores[c]) d.fornecedor = conhecidos.fornecedores[c];
+  });
+  if (!d.cnpjComprador) {
+    // comprador ainda não conhecido: o CNPJ que vem depois de "DESTINATÁRIO"
+    var dest = trecho(/DESTINAT[ÁA]RIO/i, 600).match(/\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/);
+    if (dest) d.cnpjComprador = dest[0].replace(/\D/g, '');
+  }
+  // emissão: a primeira data depois de "EMISSÃO" (ou a primeira data do documento)
+  d.emissao = datas(trecho(/EMISS[ÃA]O/i, 200))[0] || datas(t)[0] || null;
+  // valor: no DANFE é o maior valor do quadro de impostos (o total da nota); no pedido, o maior valor do documento
+  var quadro = (trecho(/C[ÁA]LCULO DO IMPOSTO/i, 900) || trecho(/VALOR TOTAL/i, 300)).split(/TRANSPORTADOR/i)[0];
+  var valores = dinheiro(quadro || t);
+  if (valores.length) d.valor = Math.max.apply(null, valores);
+  // 1º vencimento: a primeira data do quadro FATURA/DUPLICATA que não seja antes da emissão
+  var natureza = trecho(/NATUREZA DA OPERA/i, 160);
+  var bonificacao = /BONIFICA|BRINDE/i.test(natureza);
+  var fatura = trecho(/FATURA|DUPLICATA/i, 700).split(/C[ÁA]LCULO DO IMPOSTO/i)[0];
+  var vencs = datas(fatura).filter(function (x) { return !d.emissao || x >= d.emissao; });
+  if (vencs.length) d.vencimento = vencs[0];
+  else if (bonificacao) d.vencimento = SEM_BOLETO.BONIF;
+  else if (d.chave) d.vencimento = SEM_BOLETO.ANTECIPADO;
+  return d;
 }
 
 // Linha "só PDF" sem chave com o mesmo nº da nota (só se for uma)
@@ -896,7 +1033,6 @@ function compradoresPadronizados(sh) {
   });
   var mudou = false;
   v.forEach(function (r) {
-    if (!String(r[0])) return;
     var novo = padrao[String(r[1]).replace(/\D/g, '')] || limpo(r[0]);
     if (novo !== r[0]) { r[0] = novo; mudou = true; }
   });

@@ -76,7 +76,13 @@ Em ordem:
 
 **Todo PDF entra na planilha.** PDF que não acha nota (pedido de compra, nota sem XML) vira uma linha própria,
 com o nome do arquivo no lugar do fornecedor e a observação "Só PDF, sem XML". Se o XML chegar depois, ele
-completa essa mesma linha (pela chave ou pelo número da nota). PDF repetido fica como DUPLICADO na aba
+completa essa mesma linha (pela chave ou pelo número da nota).
+
+Enquanto o XML não chega, a planilha **lê os dados do próprio PDF**: o Google Drive converte o PDF em texto
+(lê até PDF escaneado) e daí saem chave, nº, comprador, CNPJ, emissão, valor e 1º vencimento. A observação
+fica "dados lidos do PDF (confira)", porque o PDF não é tão exato quanto o XML. Se não der para ler, fica
+"não deu para ler os dados do PDF". O fornecedor sai do nome de um fornecedor já conhecido (pelo CNPJ) ou
+do nome do arquivo (`VILLE 03-09 NFE 79570.pdf` → `VILLE`). PDF repetido fica como DUPLICADO na aba
 **ARQUIVOS**; **PENDENTE** lá é só o PDF que ainda não foi lido (fica para a próxima atualização).
 
 ## Abas do script
