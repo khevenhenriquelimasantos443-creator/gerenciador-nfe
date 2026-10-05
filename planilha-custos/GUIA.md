@@ -29,13 +29,15 @@ ainda não está lá é adicionado com os dados do SKU - MKTPLACE.
 
 Isso acontece quando o romaneio ainda está **sem o XML** (a chave não achou nenhum XML no Drive), então não
 há EAN. Quando o XML aparecer, o EAN é gravado e o produto pode sair sozinho da lista. A planilha sugere o produto
-do SKU - MKTPLACE pela descrição. Na coluna laranja **CONFIRMAR**:
+do SKU - MKTPLACE pela descrição. Nas colunas laranja:
 
-- se estiver certo, deixe o SKU sugerido;
-- se estiver errado, troque pelo SKU certo ou pelo EAN;
-- se o produto não existir no SKU - MKTPLACE, escreva **NÃO TEM**.
+- **VINCULAR ☑** (caixa de seleção): marcada = vincula ao **SKU sugerido**. Ela já vem marcada quando a sugestão é
+  bem parecida; desmarque se estiver errada. Para marcar várias de uma vez, selecione as caixas e aperte
+  **espaço**, ou use **Custos > Marcar todas as sugestões**;
+- **CONFIRMAR**: sugestão errada? Escreva o SKU certo ou o EAN. Produto que não existe no SKU - MKTPLACE: **NÃO TEM**.
 
-Depois clique em **Confirmar vínculos**. Cada produto só precisa ser confirmado uma vez.
+Depois clique em **Confirmar vínculos**. Só as linhas marcadas ou com CONFIRMAR preenchido são vinculadas; as
+outras continuam na aba. Cada produto só precisa ser confirmado uma vez.
 
 **Atualizar vínculos** (botão na aba VINCULAR, ou menu Custos): as notas que entraram só pelo romaneio, sem XML
 e portanto sem EAN, procuram o XML no Drive, na pasta **NF-e Galpão** da planilha de entrada de NF-e, pelo

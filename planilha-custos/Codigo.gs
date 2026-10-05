@@ -59,7 +59,7 @@ var CAB = {
              'Custo unit. pago', 'Grupo de compra', 'Origem', 'Arquivo', 'Importado em'],
   VINCULAR: ['Código VarejoFácil', 'Descrição no romaneio', 'Fornecedor', 'SKU sugerido',
              'Produto no SKU - MKTPLACE', 'Variação', 'EAN', 'Aba (marca)', 'Similaridade',
-             '2ª sugestão', 'CONFIRMAR (SKU, EAN ou NÃO TEM)'],
+             '2ª sugestão', 'CONFIRMAR (SKU, EAN ou NÃO TEM)', 'VINCULAR ☑ (usa o SKU sugerido)'],
   PREVIA: ['Ação', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo atual', 'Custo novo',
            'Variação', 'Linha na planilha de custos', 'Código VarejoFácil', 'Fornecedor', 'Marca (aba)'],
   HISTORICO: ['Data', 'SKU', 'EAN', 'Nome do Produto', 'Nome da Variação', 'Custo anterior', 'Custo novo',
@@ -110,6 +110,7 @@ function onOpen() {
     .addItem('Adicionar agora os produtos novos do SKU - MKTPLACE', 'adicionarNovosAgora')
     .addItem('Atualizar a lista SEM CUSTO', 'atualizarSemCustoAgora')
     .addSeparator()
+    .addItem('Marcar todas as sugestões (aba VINCULAR)', 'marcarTodasSugestoes')
     .addItem('Confirmar vínculos (aba VINCULAR)', 'confirmarVinculos')
     .addItem('Atualizar vínculos (busca o XML das notas antigas no Drive)', 'atualizarVinculos')
     .addItem('Sugerir componentes dos kits (aba KITS)', 'sugerirKits')
@@ -181,7 +182,7 @@ function atualizarEstrutura() {
     VINCULAR: function (sh) {
       sh.getRange('A:D').setNumberFormat('@'); sh.getRange('G:G').setNumberFormat('@');
       sh.getRange('K:K').setNumberFormat('@'); sh.getRange('I2:I').setNumberFormat('0%');
-      sh.getRange(1, CAB.VINCULAR.length).setBackground('#b45309');
+      sh.getRange(1, CAB.VINCULAR.length - 1, 1, 2).setBackground('#b45309');
       sh.setColumnWidth(2, 300); sh.setColumnWidth(5, 380); sh.setColumnWidth(10, 300);
     },
     PREVIA: function (sh) {
@@ -206,6 +207,8 @@ function atualizarEstrutura() {
     sh.getRange(1, 1, 1, CAB[k].length).setValues([CAB[k]]);
     if (nova) { estilizar(sh, CAB[k].length); formatos[k](sh); }
   });
+  caixasVincular(abaAtiva(ABA.VINCULAR));
+  abaAtiva(ABA.VINCULAR).getRange(1, CAB.VINCULAR.length - 1, 1, 2).setBackground('#b45309');
   var custosNova = !abaAtiva(ABA.CUSTOS);
   garantirAba(ss, ABA.CUSTOS);
   garantirAba(ss, ABA.AUMENTOS);
@@ -315,8 +318,11 @@ function escreverLeiaMe(sh) {
     ['4. Veja em AUMENTOS 7 DIAS o que subiu e reajuste o preço de venda. Tudo que foi gravado fica em HISTÓRICO DE CUSTOS.'],
     [''],
     ['SE APARECER ALGO NA ABA VINCULAR'],
-    ['São produtos sem EAN (romaneio sem XML). Confira a coluna laranja: deixe o SKU sugerido, troque pelo certo ou escreva NÃO TEM.'],
-    ['Depois clique em Confirmar vínculos. Cada produto só é confirmado uma vez.'],
+    ['São produtos sem EAN (romaneio sem XML). Confira a sugestão e use as colunas laranja:'],
+    ['- sugestão certa: marque a caixa VINCULAR ☑ (vem marcada quando a sugestão é bem parecida; desmarque se estiver errada);'],
+    ['  para marcar várias: selecione as caixas e aperte espaço, ou Custos > Marcar todas as sugestões;'],
+    ['- sugestão errada: escreva o SKU certo (ou o EAN) em CONFIRMAR; produto que não existe no SKU - MKTPLACE: NÃO TEM.'],
+    ['Depois clique em Confirmar vínculos: só as linhas marcadas ou com CONFIRMAR preenchido são vinculadas. Cada produto só uma vez.'],
     ['Atualizar vínculos (botão na aba VINCULAR): as notas antigas que entraram só pelo romaneio procuram o XML no Drive;'],
     ['achou, o EAN é gravado e o produto se liga sozinho ao SKU - MKTPLACE (sai da VINCULAR).'],
     [''],
@@ -1565,7 +1571,7 @@ function sugerirVinculos(silencioso) {
       bom ? a.it.sku : '', bom ? a.it.desc : '(nada parecido no SKU - MKTPLACE)', bom ? a.it.variacao : '',
       bom ? a.it.ean : '', bom ? a.it.aba : '', a ? a.s : 0,
       b && b.s >= 0.5 ? b.it.sku + ' - ' + b.it.desc + (b.it.variacao ? ' [' + b.it.variacao + ']' : '') : '',
-      bom && a.s >= cfg.limiarVinculo && (!b || a.s - b.s >= 0.05) ? a.it.sku : '']);
+      '', !!(bom && a.s >= cfg.limiarVinculo && (!b || a.s - b.s >= 0.05))]);
   });
   if (Object.keys(porEanFeitos).length) skus.getRange(2, 10, v.length, 4).setValues(v.map(function (r) { return r.slice(9, 13); }));
   if (Object.keys(porEanFeitos).length && ultimaLinhaColA(vin) > 1) {
@@ -1575,8 +1581,31 @@ function sugerirVinculos(silencioso) {
     apagarLinhas(vin, sair);
   }
   anexar(ABA.VINCULAR, novas);
+  caixasVincular(vin);
   if (!silencioso) ss.toast(novas.length + ' produto(s) para conferir na aba VINCULAR.', 'Custos', 8);
   return novas.length;
+}
+
+// Coluna "VINCULAR ☑" da aba VINCULAR: caixa de seleção em todas as linhas com produto
+function caixasVincular(vin) {
+  var n = ultimaLinhaColA(vin);
+  if (n < 2) return;
+  var col = CAB.VINCULAR.length;
+  var faixa = vin.getRange(2, col, n - 1, 1);
+  var v = faixa.getValues().map(function (r) { return [r[0] === true || String(r[0]).toUpperCase() === 'TRUE']; });
+  faixa.setDataValidation(SpreadsheetApp.newDataValidation().requireCheckbox().build());
+  faixa.setValues(v);
+}
+
+// Menu: marca a caixa de todos os produtos que têm SKU sugerido (depois é só desmarcar os errados)
+function marcarTodasSugestoes() {
+  var vin = abaAtiva(ABA.VINCULAR), n = ultimaLinhaColA(vin);
+  if (n < 2) { SpreadsheetApp.getActive().toast('Nada em VINCULAR.'); return; }
+  caixasVincular(vin);
+  var v = vin.getRange(2, 1, n - 1, CAB.VINCULAR.length).getValues(), marcadas = 0;
+  var col = v.map(function (r) { var m = r[11] === true || (String(r[3]).trim() !== ''); if (m && r[11] !== true) marcadas++; return [m]; });
+  vin.getRange(2, CAB.VINCULAR.length, n - 1, 1).setValues(col);
+  SpreadsheetApp.getActive().toast(marcadas + ' produto(s) marcado(s). Desmarque os errados e clique em Confirmar vínculos.', 'Custos', 10);
 }
 
 function gravarVinculo(skus, linha, item, quando) {
@@ -1612,6 +1641,10 @@ function confirmarVinculos() {
   var feitos = [], erros = [], agora = new Date();
   v.forEach(function (r, i) {
     var escolha = String(r[10]).trim();
+    if (!escolha && r[11] === true) {
+      escolha = String(r[3]).trim(); // caixa marcada: vale o SKU sugerido
+      if (!escolha) { erros.push('Linha ' + (i + 2) + ': marcado, mas sem SKU sugerido. Escreva o SKU certo em CONFIRMAR.'); return; }
+    }
     if (!escolha) return;
     var linha = linhaSku[String(r[0]).trim()];
     if (!linha) { erros.push('Linha ' + (i + 2) + ': código ' + r[0] + ' não está em SKUs.'); return; }
