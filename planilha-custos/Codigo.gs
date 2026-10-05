@@ -92,7 +92,9 @@ var CONFIG_ITENS = [
   ['Buscar o XML da nota pela chave do romaneio', 'SIM', 'SIM: romaneio com a chave da NF-e faz o script procurar o XML no Drive (as cópias que a planilha de entrada de NF-e guarda) e conferir/gravar o EAN sozinho, sem precisar soltar o XML na pasta. Se o XML ainda não chegou, tenta de novo a cada importação por até 30 dias.']
 ];
 var CONFIG_OBSOLETOS = ['Similaridade mínima para sugerir', 'Criar SKU novo automaticamente',
-                        'Prefixo do SKU novo', 'CNPJ da sua empresa'];
+                        'Prefixo do SKU novo', 'CNPJ da sua empresa',
+                        // do código da planilha de entrada de NF-e (se foi colado aqui por engano)
+                        'Pasta das notas (link ou ID)', 'Chave do envio', 'Horário da atualização automática'];
 
 var SEM_CADASTRO = 'NÃO TEM NO MKTPLACE';
 
@@ -218,6 +220,12 @@ function atualizarEstrutura() {
   var padrao = ss.getSheetByName('Página1') || ss.getSheetByName('Sheet1');
   if (padrao && padrao.getLastRow() === 0) ss.deleteSheet(padrao);
   ss.setActiveSheet(abaAtiva(ABA.LEIAME));
+
+  // abas que o código da planilha de entrada de NF-e cria, se ele for colado aqui por engano (só se o cabeçalho for o dele)
+  [['NOTAS', 'Nº da nota'], ['ARQUIVOS', 'ID do arquivo'], ['RECEBIDOS', 'Conteúdo (MD5)']].forEach(function (a) {
+    var sh = ss.getSheetByName(a[0]);
+    if (sh && String(sh.getRange(1, 1).getValue()) === a[1]) ss.deleteSheet(sh);
+  });
 
   var sobras = ['DE_PARA', 'PENDENTES'].filter(function (n) { return ss.getSheetByName(n); });
   ss.toast('Estrutura atualizada.' + (sobras.length ? ' As abas ' + sobras.join(' e ') +
