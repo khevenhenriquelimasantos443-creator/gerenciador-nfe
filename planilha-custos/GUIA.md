@@ -37,6 +37,13 @@ do SKU - MKTPLACE pela descrição. Na coluna laranja **CONFIRMAR**:
 
 Depois clique em **Confirmar vínculos**. Cada produto só precisa ser confirmado uma vez.
 
+**Atualizar vínculos** (botão na aba VINCULAR, ou menu Custos): as notas que entraram só pelo romaneio, sem XML
+e portanto sem EAN, procuram o XML no Drive, na pasta **NF-e Galpão** da planilha de entrada de NF-e, pelo
+CNPJ e número da nota. Quando acha, confere com o romaneio, grava o EAN, liga o produto ao SKU - MKTPLACE e
+tira ele da VINCULAR. Em **ENTRADAS**, a coluna Origem dessas notas passa de ROMANEIO para **ROMANEIO+XML**,
+então uma nota já conferida não é conferida de novo. Com muitas notas, o Google pode cortar no limite de
+tempo; é só clicar de novo que ele continua de onde parou.
+
 ## Custo que não vem no romaneio
 
 ### Nota de faturamento separada da nota de remessa
