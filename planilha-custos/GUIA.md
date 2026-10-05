@@ -146,13 +146,20 @@ e aparecem em AUMENTOS 7 DIAS, marcados como "KIT ATUALIZADO" no histórico.
    diz qual SKU não foi achado.
 5. Marque **Aprovar** nos kits conferidos. **Custos > Aprovar todos os kits verdes** marca de uma vez
    os que têm diferença de até 10%. Depois clique em **Gravar aprovados**. Os aprovados **saem da
-   lista**, e a data da aprovação fica na coluna "Aprovado em" da aba KITS, com as linhas em verde.
-   Na lista fica só o que falta revisar.
+   lista** e passam para a aba **KITS**. Na lista fica só o que falta revisar.
 
 **Só kit aprovado vai para a planilha de custos.** Depois de aprovado, ele se atualiza sozinho em cada
-sincronização. Para mexer num kit já aprovado, use **Custos > Reabrir um kit aprovado para revisão**:
-ele volta para a lista e deixa de ser atualizado até ser aprovado de novo. Para kits novos na planilha
-de kits, rode **Sugerir componentes** de novo: só os kits que ainda não estão na aba KITS são adicionados.
+sincronização.
+
+**Aba KITS: o que foi vinculado.** Mostra só os kits **aprovados**, um componente por linha: o componente
+como está no nome do kit, a quantidade, o **SKU e o produto que foram vinculados**, o custo e a data da
+aprovação. Serve para conferir se algum componente foi ligado ao produto errado. Achou um errado? Marque
+**REABRIR ☑** no kit e clique em **Reabrir marcados** (ou use **Custos > Reabrir um kit aprovado para
+revisão**). Ele volta para a REVISAR KITS para corrigir e aprovar de novo, e deixa de ser atualizado até lá.
+
+As sugestões e os dados de cada kit ficam na aba escondida **KITS - SUGESTÕES**, que o script mantém. Na
+primeira vez, **Atualizar estrutura** transforma a aba KITS antiga nessa aba escondida. Para kits novos na
+planilha de kits, rode **Sugerir componentes** de novo: só os kits que ainda não estão lá são adicionados.
 
 O kit que tinha fórmula na coluna I da planilha de custos (ex.: `=I329+I330` ou IMPORTRANGE) passa a
 ter o valor calculado. As fórmulas por número de linha estavam apontando para produtos errados
