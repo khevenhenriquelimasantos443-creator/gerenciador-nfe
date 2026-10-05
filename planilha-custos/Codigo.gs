@@ -88,7 +88,8 @@ var CONFIG_ITENS = [
   ['Preencher fornecedor vazio com a primeira nota', 'SIM', 'SIM: produto sem fornecedor (coluna F) na planilha de custos recebe o fornecedor da primeira nota fiscal que entrou dele.'],
   ['Ordenar a planilha de custos por nome', 'SIM', 'SIM: depois de cada atualização, a planilha de custos fica em ordem alfabética pelo Nome do Produto (coluna G) e pela variação (coluna H).'],
   ['Planilha de kits (link ou ID)', '', 'Lista de kits (SKU novo, SKU atual, nome, marca, EAN) usada para sugerir os componentes.'],
-  ['Aba da planilha de kits', '', 'Vazio: a primeira aba.']
+  ['Aba da planilha de kits', '', 'Vazio: a primeira aba.'],
+  ['Buscar o XML da nota pela chave do romaneio', 'SIM', 'SIM: romaneio com a chave da NF-e faz o script procurar o XML no Drive (as cópias que a planilha de entrada de NF-e guarda) e conferir/gravar o EAN sozinho, sem precisar soltar o XML na pasta. Se o XML ainda não chegou, tenta de novo a cada importação por até 30 dias.']
 ];
 var CONFIG_OBSOLETOS = ['Similaridade mínima para sugerir', 'Criar SKU novo automaticamente',
                         'Prefixo do SKU novo', 'CNPJ da sua empresa'];
@@ -297,7 +298,9 @@ function escreverLeiaMe(sh) {
     ['PLANILHA DE CUSTOS - COMO USAR'],
     [''],
     ['NOTA NOVA (o normal do dia a dia)'],
-    ['1. Solte o PDF do romaneio do VarejoFácil e o XML da mesma nota na pasta "Romaneios - Entrada" do Drive.'],
+    ['1. Solte o PDF do romaneio do VarejoFácil na pasta "Romaneios - Entrada" do Drive. O XML não precisa: o script acha'],
+    ['   o XML no Drive pela chave da NF-e que vem no romaneio (cópia da planilha de entrada de NF-e). Se ainda não chegou,'],
+    ['   tenta de novo a cada importação por até 30 dias. Soltar o XML junto na pasta também continua funcionando.'],
     ['2. Clique em Importar romaneios (aba CUSTOS) ou espere: com a importação automática ligada, roda a cada 15 minutos.'],
     ['3. Pronto. O custo novo vai para a coluna I da planilha de custos e os produtos que ainda não estão lá são adicionados.'],
     ['4. Veja em AUMENTOS 7 DIAS o que subiu e reajuste o preço de venda. Tudo que foi gravado fica em HISTÓRICO DE CUSTOS.'],
@@ -432,7 +435,8 @@ function prepararConfig(limpar) {
                    'Preencher fornecedor vazio com a primeira nota': ['SIM', 'NÃO'],
                    'Ordenar a planilha de custos por nome': ['SIM', 'NÃO'],
                    'Aplicar automaticamente na planilha de custos': ['SIM', 'NÃO'],
-                   'Somar frete, seguro, IPI e ST no custo (XML)': ['SIM', 'NÃO'] };
+                   'Somar frete, seguro, IPI e ST no custo (XML)': ['SIM', 'NÃO'],
+                   'Buscar o XML da nota pela chave do romaneio': ['SIM', 'NÃO'] };
     var v = sh.getRange(2, 1, sh.getLastRow() - 1, 1).getValues();
     v.forEach(function (r, i) {
       var l = listas[String(r[0]).trim()];
@@ -472,7 +476,8 @@ function lerConfig() {
     adicionarNovos: txt('Adicionar produtos novos do SKU - MKTPLACE', 'SIM').toUpperCase() !== 'NÃO',
     abaKits: txt('Aba da planilha de kits'),
     preencherFornecedor: txt('Preencher fornecedor vazio com a primeira nota', 'SIM').toUpperCase() !== 'NÃO',
-    ordenarCustos: txt('Ordenar a planilha de custos por nome', 'SIM').toUpperCase() !== 'NÃO'
+    ordenarCustos: txt('Ordenar a planilha de custos por nome', 'SIM').toUpperCase() !== 'NÃO',
+    buscarXml: txt('Buscar o XML da nota pela chave do romaneio', 'SIM').toUpperCase() !== 'NÃO'
   };
   CFG_CACHE = cfg;
   return cfg;
@@ -604,17 +609,20 @@ function importarRomaneios() {
     }
     fila.sort(function (a, b) { return a.ehXml - b.ehXml; });
     var pendente = temLancamentoPendente();
-    if (!fila.length && !pendente) { // nada a fazer: sai sem ler as abas
+    var xmlsPendentes = cfg.buscarXml ? Object.keys(lerXmlsPendentes()).length : 0;
+    if (!fila.length && !pendente && !xmlsPendentes) { // nada a fazer: sai sem ler as abas
       SpreadsheetApp.getActive().toast('Nenhum PDF ou XML novo na pasta Romaneios - Entrada.', 'Custos', 5);
       return;
     }
     var ctx = fila.length ? carregarContexto() : null;
     fila.forEach(function (f) { importarArquivo(f.arq, f.ehXml, cfg, ctx); });
+    var xmlsAchados = cfg.buscarXml ? conferirXmlsPelaChave(cfg) : 0;
 
     var lancados = pendente ? lancarCustos(true, true) : 0;
     var msg = fila.length ? fila.length + ' arquivo(s) importado(s). ' : '';
+    if (xmlsAchados) msg += xmlsAchados + ' XML(s) achado(s) no Drive pela chave do romaneio. ';
     if (lancados) msg += lancados + ' custo(s) lançado(s) da aba LANÇAR CUSTO. ';
-    if (fila.length || lancados) msg += sincronizar(cfg);
+    if (fila.length || lancados || xmlsAchados) msg += sincronizar(cfg);
     if (lancados) msg += ' ' + conferirLancamentos(cfg).resumo;
     SpreadsheetApp.getActive().toast(msg || 'Nenhum PDF ou XML novo na pasta Romaneios - Entrada.', 'Custos', 10);
   } finally {
@@ -636,6 +644,7 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
     }
     var chave = chaveDoc(doc);
     if (ehXml && ctx.docs[chave]) {
+      esquecerXmlPendente(doc.chave);
       var r = completarComXml(doc, ctx);
       registrarLog(nome, arq.getId(), r.diferencas.length ? 'CONFERIR' : 'OK', doc.itens.length, 0, 0,
         'XML da nota ' + doc.numero + ' conferido com o romaneio: ' + r.batem + ' de ' + doc.itens.length +
@@ -666,6 +675,7 @@ function importarArquivo(arq, ehXml, cfg, ctx) {
     salvarSkusNovos(ctx);
     gravarEntradas(linhas, extras);
     ctx.docs[chave] = true;
+    if (!ehXml && cfg.buscarXml && soDigitos(doc.chave).length === 44) guardarXmlPendente(doc.chave, doc.numero);
     registrarLog(nome, arq.getId(), 'OK', doc.itens.length, linhas.length, novos,
       'Nota ' + doc.numero + ' | ' + (doc.fornecedor || 'fornecedor não identificado') + (ehXml ? ' | XML' : ' | romaneio'));
     moverPara(arq, cfg.pastaProcessados);
@@ -759,6 +769,98 @@ function completarComXml(doc) {
     if (eans) skus.getRange(2, 3, col.length, 1).setValues(col.map(function (r) { return [r[2]]; }));
   }
   return { batem: batem, eans: eans, diferencas: diferencas };
+}
+
+// ---------------------------------------------------------------------------
+// XML pela chave do romaneio: o romaneio do VarejoFácil traz a chave da NF-e; o XML da nota já está no Drive
+// (cópia guardada pela planilha de entrada de NF-e). Achou: confere com o romaneio e grava o EAN, como se o
+// XML tivesse sido solto na pasta. Não move nem apaga o XML (ele é da outra planilha).
+// ---------------------------------------------------------------------------
+
+var DIAS_ESPERANDO_XML = 30;
+
+function lerXmlsPendentes() {
+  try { return JSON.parse(PropertiesService.getScriptProperties().getProperty('XML_PENDENTES') || '{}'); } catch (e) { return {}; }
+}
+
+function gravarXmlsPendentes(p) {
+  PropertiesService.getScriptProperties().setProperty('XML_PENDENTES', JSON.stringify(p));
+}
+
+function guardarXmlPendente(chave, numero) {
+  try { // falhar aqui não pode estragar a importação do romaneio
+    var p = lerXmlsPendentes();
+    p[soDigitos(chave)] = { numero: String(numero), desde: Date.now() };
+    gravarXmlsPendentes(p);
+  } catch (e) { console.log('XML pendente ' + chave + ': ' + (e && e.message || e)); }
+}
+
+function esquecerXmlPendente(chave) {
+  var c = soDigitos(chave), p = lerXmlsPendentes();
+  if (p[c]) { delete p[c]; gravarXmlsPendentes(p); }
+}
+
+// Procura o XML de cada romaneio que está esperando. Devolve quantos achou.
+function conferirXmlsPelaChave(cfg) {
+  var p = lerXmlsPendentes(), chaves = Object.keys(p);
+  if (!chaves.length) return 0;
+  var inicio = Date.now(), achados = 0, mudou = false;
+  chaves.forEach(function (chave) {
+    if (Date.now() - inicio > 90000) return; // o resto fica para a próxima importação
+    var x = null;
+    try { x = xmlPelaChave(chave); } catch (e) { console.log('Busca do XML ' + chave + ': ' + (e && e.message || e)); return; }
+    if (!x) {
+      if (Date.now() - p[chave].desde > DIAS_ESPERANDO_XML * 86400000) {
+        registrarLog('chave ' + chave, '', 'SEM XML', 0, 0, 0, 'Nota ' + p[chave].numero + ': o XML não apareceu no Drive em ' +
+          DIAS_ESPERANDO_XML + ' dias. Se quiser conferir, solte o XML na pasta Romaneios - Entrada.');
+        delete p[chave]; mudou = true;
+      }
+      return;
+    }
+    delete p[chave]; mudou = true;
+    try {
+      var doc = lerXmlNfe(x.xml, cfg);
+      if (!doc.chave) doc.chave = chave;
+      // nota desfeita depois de importada: não há o que conferir
+      var temRomaneio = valoresEntradas().some(function (r) { return r[1] !== '' && chaveDoc({ numero: r[1], fornecedor: r[2], cnpj: r[3] }) === chaveDoc(doc); });
+      if (!temRomaneio) return;
+      var r = completarComXml(doc);
+      achados++;
+      registrarLog(x.nome, x.id, r.diferencas.length ? 'CONFERIR' : 'OK', doc.itens.length, 0, 0,
+        'XML da nota ' + doc.numero + ' achado no Drive pela chave do romaneio e conferido: ' + r.batem + ' de ' + doc.itens.length +
+        ' itens iguais (quantidade, valor unitário e total). ' + r.eans + ' EAN(s) gravado(s) em SKUs.' +
+        (r.diferencas.length ? ' DIFERENÇAS: ' + r.diferencas.join(' | ') : ''));
+    } catch (e) {
+      registrarLog(x.nome, x.id, 'ERRO', 0, 0, 0, 'XML achado pela chave, mas não deu para ler: ' + (e && e.message || e));
+    }
+  });
+  if (mudou) gravarXmlsPendentes(p);
+  return achados;
+}
+
+// XML da NF-e no Drive pela chave: primeiro pelo nome do arquivo (os XMLs costumam ter a chave no nome),
+// depois pelo conteúdo. Só vale o arquivo que tem a chave dentro.
+function xmlPelaChave(chave) {
+  var h = { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() };
+  var buscas = ["name contains '" + chave + "' and trashed = false",
+                "fullText contains '" + chave + "' and trashed = false and mimeType != 'application/pdf'"];
+  for (var b = 0; b < buscas.length; b++) {
+    var url = 'https://www.googleapis.com/drive/v3/files?pageSize=20&supportsAllDrives=true&includeItemsFromAllDrives=true' +
+      '&fields=' + encodeURIComponent('files(id,name,mimeType)') + '&q=' + encodeURIComponent(buscas[b]);
+    var r = UrlFetchApp.fetch(url, { headers: h, muteHttpExceptions: true });
+    if (r.getResponseCode() !== 200) throw new Error('Drive ' + r.getResponseCode() + ': ' + r.getContentText().slice(0, 200));
+    var arqs = (JSON.parse(r.getContentText()).files || []).filter(function (f) {
+      return /\.xml$/i.test(f.name) || /xml/i.test(f.mimeType);
+    });
+    for (var i = 0; i < arqs.length; i++) {
+      var c = UrlFetchApp.fetch('https://www.googleapis.com/drive/v3/files/' + arqs[i].id + '?alt=media&supportsAllDrives=true',
+        { headers: h, muteHttpExceptions: true });
+      if (c.getResponseCode() !== 200) continue;
+      var xml = c.getContentText('UTF-8');
+      if (xml.indexOf(chave) >= 0 && /<infNFe/.test(xml)) return { id: arqs[i].id, nome: arqs[i].name, xml: xml };
+    }
+  }
+  return null;
 }
 
 function chaveDoc(doc) {

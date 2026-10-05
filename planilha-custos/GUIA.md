@@ -6,7 +6,10 @@ ainda não está lá é adicionado com os dados do SKU - MKTPLACE.
 
 ## Dia a dia
 
-1. Coloque o **PDF do romaneio** e o **XML da mesma nota** na pasta **Romaneios - Entrada** do Drive.
+1. Coloque o **PDF do romaneio** na pasta **Romaneios - Entrada** do Drive. O XML não precisa ir junto:
+   o romaneio traz a **chave da NF-e**, e a planilha procura o XML dessa chave no Drive, onde a planilha de
+   entrada de NF-e já guarda uma cópia de cada XML. Se o XML ainda não chegou, ela tenta de novo a cada
+   importação, por até 30 dias. Soltar o XML junto na pasta continua funcionando.
 2. Clique em **Importar romaneios** (aba CUSTOS) ou espere. Com a importação automática
    ligada, ela roda sozinha a cada 15 minutos.
 3. A planilha faz o resto:
@@ -24,7 +27,8 @@ ainda não está lá é adicionado com os dados do SKU - MKTPLACE.
 
 ### Se aparecer produto na aba VINCULAR
 
-Isso acontece quando o romaneio veio **sem o XML**, então não há EAN. A planilha sugere o produto
+Isso acontece quando o romaneio ainda está **sem o XML** (a chave não achou nenhum XML no Drive), então não
+há EAN. Quando o XML aparecer, o EAN é gravado e o produto pode sair sozinho da lista. A planilha sugere o produto
 do SKU - MKTPLACE pela descrição. Na coluna laranja **CONFIRMAR**:
 
 - se estiver certo, deixe o SKU sugerido;
@@ -210,3 +214,12 @@ lento, mesmo resultado).
    sai e entram a aba **LANÇAR CUSTO** e o botão **Sincronizar**.
 3. Opcional: apague as abas **DE_PARA** e **PENDENTES**, que não são mais usadas, e tire a
    **Drive API** de *Serviços* no Apps Script, que não é mais necessária.
+
+## XML pela chave do romaneio
+
+- Liga e desliga em **CONFIG > Buscar o XML da nota pela chave do romaneio** (padrão: SIM).
+- A busca é pelo nome do arquivo (os XMLs costumam ter a chave no nome) e, se não achar, pelo conteúdo.
+  Só vale o arquivo que tem aquela chave dentro.
+- O XML achado **não é movido nem apagado**: ele continua sendo da planilha de entrada de NF-e.
+- No **LOG** aparece "XML da nota … achado no Drive pela chave do romaneio e conferido". Se em 30 dias o XML
+  não aparecer, fica uma linha **SEM XML**; aí dá para soltar o XML na pasta Romaneios - Entrada.
