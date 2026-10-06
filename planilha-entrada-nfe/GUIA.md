@@ -39,7 +39,7 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 |---|---|---|
 | A. Nº NFE | Número da nota fiscal | script |
 | B. PDF | Link **Abrir PDF**; "aguardando PDF" enquanto não acha | script |
-| C. FORNECEDOR | Razão social de quem emitiu a nota | script |
+| C. FORNECEDOR | Razão social de quem emitiu a nota, em MAIÚSCULAS | script |
 | D. RAZÃO SOCIAL COMPRA | Nossa razão social (destinatário da nota), padronizada | script |
 | E. EMISSÃO | Data de emissão da nota | script |
 | F. VALOR NFE | Total da nota | script |

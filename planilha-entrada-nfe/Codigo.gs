@@ -137,6 +137,7 @@ function configurarPlanilha() {
   regrasDeCor(notas);
   boletosNoFormatoNovo(notas);
   compradoresPadronizados(notas);
+  fornecedoresMaiusculos(notas);
 
   var arq = garantirAba(ss, ABA.ARQ, CAB.ARQ);
   arq.getRange(1, 1, 1, CAB.ARQ.length).setValues([CAB.ARQ]);
@@ -559,6 +560,7 @@ function atualizarNotas(silencioso) {
     gravarCompradores();
     var lidosDoPdf = dadosDosPdfsSemXml(abaNotas, inicio + LIMITE_DADOS_PDF);
     compradoresPadronizados(abaNotas);
+    fornecedoresMaiusculos(abaNotas);
 
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
       (completadas.length ? ' ' + completadas.length + ' linha(s) só com PDF completada(s) pelo XML.' : '') +
@@ -802,7 +804,7 @@ function cnpjFormatado(c) {
 // Linha da aba NOTAS para uma nota nova (links de PDF e XML entram depois, como texto com link)
 function linhaDaNota(x, agora) {
   var l = [];
-  l[COL.NUM - 1] = x.numero; l[COL.PDF - 1] = SEM_PDF; l[COL.FORN - 1] = x.fornecedor;
+  l[COL.NUM - 1] = x.numero; l[COL.PDF - 1] = SEM_PDF; l[COL.FORN - 1] = String(x.fornecedor || '').toUpperCase();
   l[COL.COMPRADOR - 1] = x.comprador;
   lembrarComprador(x.cnpjComprador, x.comprador);
   l[COL.EMISSAO - 1] = x.emissao || ''; l[COL.VALOR - 1] = x.valor; l[COL.BOLETOS - 1] = textoBoletos(x);
@@ -1029,6 +1031,19 @@ function soPdfPeloNumero(numero, lista) {
 
 // Nossa razão social vem escrita de jeitos diferentes em cada nota ("15286 - BEM BARATO...", "... LTDA - 174288",
 // cortada no fim). Tira os códigos; nome cortado vira o nome inteiro mais comum que começa igual.
+// Razão social dos fornecedores sempre em MAIÚSCULAS (também nas linhas que já estavam na planilha)
+function fornecedoresMaiusculos(sh) {
+  var n = sh.getLastRow() - 1;
+  if (n < 1) return;
+  var faixa = sh.getRange(2, COL.FORN, n, 1), v = faixa.getValues(), mudou = false;
+  v.forEach(function (r) {
+    if (typeof r[0] !== 'string') return;
+    var m = r[0].toUpperCase();
+    if (m !== r[0]) { r[0] = m; mudou = true; }
+  });
+  if (mudou) faixa.setValues(v);
+}
+
 function compradoresPadronizados(sh) {
   var n = sh.getLastRow() - 1;
   if (n < 1) return;
