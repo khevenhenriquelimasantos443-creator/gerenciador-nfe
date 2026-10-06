@@ -43,7 +43,7 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 | D. RAZÃO SOCIAL COMPRA | Nossa razão social (destinatário da nota), padronizada | script |
 | E. EMISSÃO | Data de emissão da nota | script |
 | F. VALOR NFE | Total da nota | script |
-| G. 1º VENCIMENTO | Só a data do 1º boleto. Sem boleto: **Bonificação** (natureza da operação ou CFOP x910) ou **Pagamento antecipado** | script |
+| G. 1º VENCIMENTO | Só a data do 1º boleto. Nota sem boleto (bonificação, pagamento antecipado): em branco | script |
 | H. ENTRADA GALPÃO | Quando a nota entrou na planilha; vale como data de entrada no galpão | script |
 | I. STATUS ENTRADA | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
 | J. MOTIVO DA NÃO ENTRADA | Obrigatório no COM PROBLEMA (lista fixa) | você |

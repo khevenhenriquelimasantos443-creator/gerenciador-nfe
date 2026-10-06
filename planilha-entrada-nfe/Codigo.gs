@@ -297,7 +297,7 @@ function escreverLeiaMe(sh) {
     [''],
     ['O QUE A PLANILHA PREENCHE SOZINHA'],
     ['Nº da NF-e, link do PDF, fornecedor, razão social da compra (nossa), emissão, valor, 1º vencimento'],
-    ['(sem boleto: Bonificação ou Pagamento antecipado), data do lançamento, chave e link do XML.'],
+    ['(nota sem boleto: em branco), data do lançamento, chave e link do XML.'],
     [''],
     ['PDF DA NOTA'],
     ['O PDF é ligado à nota pela chave de acesso (no nome do arquivo ou escrita dentro do PDF) ou pelo número da nota'],
@@ -781,11 +781,10 @@ var FORMAS_PAGAMENTO = { '01': 'dinheiro', '02': 'cheque', '03': 'cartão de cr�
   '05': 'crédito loja', '15': 'boleto', '16': 'depósito', '17': 'PIX', '18': 'transferência', '90': 'sem pagamento',
   '99': 'outros' };
 
-// Só a data do 1º vencimento. Sem boleto: Bonificação (natureza da operação ou CFOP x910) ou Pagamento antecipado.
-var SEM_BOLETO = { BONIF: 'Bonificação', ANTECIPADO: 'Pagamento antecipado' };
+// Só a data do 1º vencimento. Nota sem boleto (bonificação, pagamento antecipado...): fica em branco.
 function textoBoletos(x) {
   if (x.dups.length) return x.dups[0].venc || '';
-  return x.bonificacao ? SEM_BOLETO.BONIF : SEM_BOLETO.ANTECIPADO;
+  return '';
 }
 
 function letraColuna(c) {
@@ -814,18 +813,15 @@ function linhaDaNota(x, agora) {
 }
 
 // Coluna H das notas lançadas em versões anteriores ("1/3   12/10/2026   R$ 18.788,82", "12/10/2026  R$ ...  (1 de 3)",
-// "BONIFICAÇÃO (sem boleto)", "Sem boleto (pagamento: PIX)"): passa para o formato atual. Só mexe no que ainda é antigo.
+// "BONIFICAÇÃO (sem boleto)", "Sem boleto (pagamento: PIX)"): vira só a data ou fica em branco. Só mexe no que ainda é antigo.
 function boletosNoFormatoNovo(sh) {
   var n = sh.getLastRow() - 1;
   if (n < 1) return;
   var faixa = sh.getRange(2, COL.BOLETOS, n, 1), v = faixa.getValues(), mudou = false;
   v.forEach(function (l) {
-    if (l[0] instanceof Date || l[0] === '' || l[0] === SEM_BOLETO.BONIF || l[0] === SEM_BOLETO.ANTECIPADO) return;
+    if (l[0] instanceof Date || l[0] === '') return;
     var t = String(l[0]), d = t.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-    if (d) l[0] = new Date(Number(d[3]), Number(d[2]) - 1, Number(d[1]));
-    else if (/BONIFICA/i.test(t)) l[0] = SEM_BOLETO.BONIF;
-    else if (/^Sem boleto/i.test(t)) l[0] = SEM_BOLETO.ANTECIPADO;
-    else return;
+    l[0] = d ? new Date(Number(d[3]), Number(d[2]) - 1, Number(d[1])) : ''; // sem data (sem boleto): em branco
     mudou = true;
   });
   if (!mudou) return;
@@ -1013,13 +1009,9 @@ function dadosDoTextoDoPdf(texto, conhecidos) {
   var valores = dinheiro(quadro || t);
   if (valores.length) d.valor = Math.max.apply(null, valores);
   // 1º vencimento: a primeira data do quadro FATURA/DUPLICATA que não seja antes da emissão
-  var natureza = trecho(/NATUREZA DA OPERA/i, 160);
-  var bonificacao = /BONIFICA|BRINDE/i.test(natureza);
   var fatura = trecho(/FATURA|DUPLICATA/i, 700).split(/C[ÁA]LCULO DO IMPOSTO/i)[0];
   var vencs = datas(fatura).filter(function (x) { return !d.emissao || x >= d.emissao; });
   if (vencs.length) d.vencimento = vencs[0];
-  else if (bonificacao) d.vencimento = SEM_BOLETO.BONIF;
-  else if (d.chave) d.vencimento = SEM_BOLETO.ANTECIPADO;
   return d;
 }
 
