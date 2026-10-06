@@ -28,22 +28,21 @@ var ABA = {
 };
 
 var CAB = {
-  NOTAS: ['Nº da nota', 'PDF da nota', 'Fornecedor (razão social)', 'Comprador (nossa razão social)',
-          'CNPJ do comprador (nosso)', 'Data de emissão', 'Valor da nota', '1º vencimento',
-          'Data do lançamento (entrada no galpão)', 'Status da entrada',
-          'Motivo (obrigatório se COM PROBLEMA)', 'Observação', 'Chave de acesso', 'XML'],
+  NOTAS: ['Nº NFE', 'PDF', 'FORNECEDOR', 'RAZÃO SOCIAL COMPRA', 'EMISSÃO', 'VALOR NFE', '1º VENCIMENTO',
+          'ENTRADA GALPÃO', 'STATUS ENTRADA', 'MOTIVO DA NÃO ENTRADA', 'OBSERVAÇÃO', 'CHAVE DE ACESSO', 'XML'],
   ARQ: ['ID do arquivo', 'Nome', 'Tipo', 'Chave de acesso', 'Situação', 'Visto em'],
   LOG: ['Data/hora', 'Arquivo', 'Situação', 'Mensagem'],
   RECEBIDOS: ['Conteúdo (MD5)', 'Nome', 'Caminho na rede', 'ID no Drive', 'Recebido em']
 };
 
 // colunas da aba NOTAS (1 = A)
-var COL = { NUM: 1, PDF: 2, FORN: 3, COMPRADOR: 4, CNPJ_COMPRADOR: 5, EMISSAO: 6, VALOR: 7, BOLETOS: 8, LANC: 9,
-            STATUS: 10, MOTIVO: 11, OBS: 12, CHAVE: 13, XML: 14 };
+var COL = { NUM: 1, PDF: 2, FORN: 3, COMPRADOR: 4, EMISSAO: 5, VALOR: 6, BOLETOS: 7, LANC: 8,
+            STATUS: 9, MOTIVO: 10, OBS: 11, CHAVE: 12, XML: 13 };
 // cabeçalhos de versões anteriores, convertidas sozinhas para o formato atual:
 // nº e razão social juntos na coluna A; coluna J separada para a data da entrada
 var CAB_ANTIGO_A = 'Nota fiscal (nº e razão social)';
 var CAB_ANTIGO_ENTRADA = 'Data da entrada no galpão';
+var CAB_ANTIGO_CNPJ = 'CNPJ do comprador (nosso)'; // coluna tirada; o CNPJ -> razão social fica guardado no script
 // PDF sem XML (pedido de compra, nota de serviço...): entra mesmo assim, com esta observação
 var OBS_SO_PDF = 'Só PDF, sem XML (ex.: pedido de compra)';
 // depois de ler os dados do próprio PDF (pelo Google Drive), a observação diz como foi
@@ -125,11 +124,11 @@ function configurarPlanilha() {
   var notas = garantirAba(ss, ABA.NOTAS, CAB.NOTAS);
   formatoAtual(notas);
   var col = function (c) { return notas.getRange(2, c, notas.getMaxRows() - 1, 1); };
-  col(COL.NUM).setNumberFormat('@'); col(COL.CNPJ_COMPRADOR).setNumberFormat('@'); col(COL.CHAVE).setNumberFormat('@');
+  col(COL.NUM).setNumberFormat('@'); col(COL.CHAVE).setNumberFormat('@');
   col(COL.EMISSAO).setNumberFormat('dd/mm/yyyy'); col(COL.BOLETOS).setNumberFormat('dd/mm/yyyy');
   col(COL.VALOR).setNumberFormat('R$ #,##0.00'); col(COL.LANC).setNumberFormat('dd/mm/yyyy hh:mm');
   col(COL.BOLETOS).setWrap(false);
-  [[COL.NUM, 90], [COL.PDF, 100], [COL.FORN, 300], [COL.COMPRADOR, 260], [COL.CNPJ_COMPRADOR, 150], [COL.EMISSAO, 100],
+  [[COL.NUM, 90], [COL.PDF, 100], [COL.FORN, 300], [COL.COMPRADOR, 300], [COL.EMISSAO, 100],
    [COL.VALOR, 110], [COL.BOLETOS, 120], [COL.LANC, 150], [COL.STATUS, 130], [COL.MOTIVO, 260],
    [COL.OBS, 280], [COL.CHAVE, 330], [COL.XML, 60]].forEach(function (c) { notas.setColumnWidth(c[0], c[1]); });
   notas.getRange(1, 1, 1, CAB.NOTAS.length).setFontWeight('bold').setBackground('#1f2937').setFontColor('#ffffff').setWrap(true);
@@ -196,13 +195,26 @@ function regrasDeCor(sh) {
 
 // Deixa a aba NOTAS no formato atual (converte as versões anteriores) e garante as cores automáticas
 function formatoAtual(sh) {
-  var cab = sh.getRange(1, 1, 1, sh.getMaxColumns()).getValues()[0].map(String);
+  var lerCab = function () { return sh.getRange(1, 1, 1, sh.getMaxColumns()).getValues()[0].map(String); };
+  var cab = lerCab();
   var mudou = false;
   if (cab[0] === CAB_ANTIGO_A) { migrarNotasAntigas(sh); mudou = true; }
   else if (cab.indexOf(CAB_ANTIGO_ENTRADA) >= 0) { sh.deleteColumn(cab.indexOf(CAB_ANTIGO_ENTRADA) + 1); mudou = true; }
-  if (mudou || cab[COL.BOLETOS - 1] !== CAB.NOTAS[COL.BOLETOS - 1]) {
+  cab = lerCab();
+  var k = cab.indexOf(CAB_ANTIGO_CNPJ);
+  if (k >= 0) {
+    // antes de apagar a coluna do CNPJ, guarda CNPJ -> razão social (para ler o comprador dos PDFs sem XML)
+    var n = sh.getLastRow() - 1;
+    if (n > 0) sh.getRange(2, k, n, 2).getValues().forEach(function (r) { lembrarComprador(r[1], r[0]); });
+    gravarCompradores();
+    sh.deleteColumn(k + 1);
+    mudou = true;
+    cab = lerCab();
+  }
+  if (mudou || cab.slice(0, CAB.NOTAS.length).join('|') !== CAB.NOTAS.join('|')) {
     sh.getRange(1, 1, 1, CAB.NOTAS.length).setValues([CAB.NOTAS]);
     sh.getRange(2, COL.BOLETOS, sh.getMaxRows() - 1, 1).setNumberFormat('dd/mm/yyyy');
+    sh.getRange(2, COL.LANC, sh.getMaxRows() - 1, 1).setNumberFormat('dd/mm/yyyy');
     sh.getRange(2, 1, sh.getMaxRows() - 1, CAB.NOTAS.length).setBackground(null); // cor agora vem das regras
     regrasDeCor(sh);
   } else if (!sh.getConditionalFormatRules().length) {
@@ -283,7 +295,7 @@ function escreverLeiaMe(sh) {
     ['   Motivo "Outro": explique na Observação (fica vermelha até ter explicação).'],
     [''],
     ['O QUE A PLANILHA PREENCHE SOZINHA'],
-    ['Nº da nota, link do PDF, fornecedor, comprador (nossa razão social e CNPJ), emissão, valor, 1º vencimento'],
+    ['Nº da NF-e, link do PDF, fornecedor, razão social da compra (nossa), emissão, valor, 1º vencimento'],
     ['(sem boleto: Bonificação ou Pagamento antecipado), data do lançamento, chave e link do XML.'],
     [''],
     ['PDF DA NOTA'],
@@ -544,6 +556,7 @@ function atualizarNotas(silencioso) {
       soPdf.forEach(function (p) { p.r[4] = 'SÓ PDF'; shArq2.getRange(p.linha, 5).setValue('SÓ PDF'); });
       anexar(ABA.LOG, soPdf.map(function (p) { return [agora, p.r[1], 'SÓ PDF', 'PDF sem XML: entrou como linha própria na aba NOTAS.']; }));
     }
+    gravarCompradores();
     var lidosDoPdf = dadosDosPdfsSemXml(abaNotas, inicio + LIMITE_DADOS_PDF);
     compradoresPadronizados(abaNotas);
 
@@ -683,6 +696,7 @@ function gravarNotas(notas, novas, completadas) {
     sh.getRange(ini, 1, novas.length, CAB.NOTAS.length).setValues(novas.map(function (x) { return x.valores; }));
     novas.forEach(function (x, i) { x.ref.linha = ini + i; });
     validacoesNotas(sh, ini, novas.length);   // só as linhas novas: refazer a aba toda a cada nota deixava lento
+    sh.getRange(ini, COL.BOLETOS, novas.length, 1).setNumberFormat('dd/mm/yyyy');
   }
   // linha que só tinha o PDF e ganhou o XML: troca os dados, mantém PDF, lançamento, status, motivo e observação
   (completadas || []).forEach(function (c) {
@@ -789,7 +803,8 @@ function cnpjFormatado(c) {
 function linhaDaNota(x, agora) {
   var l = [];
   l[COL.NUM - 1] = x.numero; l[COL.PDF - 1] = SEM_PDF; l[COL.FORN - 1] = x.fornecedor;
-  l[COL.COMPRADOR - 1] = x.comprador; l[COL.CNPJ_COMPRADOR - 1] = cnpjFormatado(x.cnpjComprador);
+  l[COL.COMPRADOR - 1] = x.comprador;
+  lembrarComprador(x.cnpjComprador, x.comprador);
   l[COL.EMISSAO - 1] = x.emissao || ''; l[COL.VALOR - 1] = x.valor; l[COL.BOLETOS - 1] = textoBoletos(x);
   l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.MOTIVO - 1] = '';
   l[COL.OBS - 1] = ''; l[COL.CHAVE - 1] = x.chave; l[COL.XML - 1] = '';
@@ -836,7 +851,7 @@ function migrarNotasAntigas(sh) {
     if (xmls[idsXml[i]]) { try { x = lerXmlControle(xmls[idsXml[i]]); } catch (e) {} }
     var l = [];
     l[COL.NUM - 1] = num; l[COL.PDF - 1] = r[1]; l[COL.FORN - 1] = forn;
-    l[COL.COMPRADOR - 1] = x ? x.comprador : ''; l[COL.CNPJ_COMPRADOR - 1] = x ? cnpjFormatado(x.cnpjComprador) : '';
+    l[COL.COMPRADOR - 1] = x ? x.comprador : '';
     l[COL.EMISSAO - 1] = r[2]; l[COL.VALOR - 1] = r[3]; l[COL.BOLETOS - 1] = x ? textoBoletos(x) : r[4];
     l[COL.LANC - 1] = r[5]; l[COL.STATUS - 1] = r[7]; l[COL.MOTIVO - 1] = r[8];
     l[COL.OBS - 1] = r[9]; l[COL.CHAVE - 1] = r[11]; l[COL.XML - 1] = r[12];
@@ -894,10 +909,9 @@ function dadosDosPdfsSemXml(sh, ate) {
   if (!faltam.length) return 0;
   var links = sh.getRange(2, COL.PDF, n, 1).getRichTextValues();
   // quem já conhecemos pelas notas com XML: CNPJ do comprador -> nome; CNPJ do emitente (da chave) -> fornecedor
-  var conhecidos = { compradores: {}, fornecedores: {} };
+  var conhecidos = { compradores: lerCompradores(), fornecedores: {} };
   v.forEach(function (r) {
-    var cnpj = String(r[COL.CNPJ_COMPRADOR - 1]).replace(/\D/g, ''), chave = String(r[COL.CHAVE - 1]);
-    if (cnpj && r[COL.COMPRADOR - 1]) conhecidos.compradores[cnpj] = r[COL.COMPRADOR - 1];
+    var chave = String(r[COL.CHAVE - 1]);
     if (/^\d{44}$/.test(chave) && r[COL.XML - 1] !== '') conhecidos.fornecedores[chave.substr(6, 14)] = r[COL.FORN - 1];
   });
   var lidos = 0;
@@ -913,7 +927,7 @@ function dadosDosPdfsSemXml(sh, ate) {
     var l = r.slice();
     if (d.numero) l[COL.NUM - 1] = d.numero;
     l[COL.FORN - 1] = d.fornecedor || fornecedorDoNome(r[COL.FORN - 1]);
-    if (d.cnpjComprador) { l[COL.COMPRADOR - 1] = d.comprador || ''; l[COL.CNPJ_COMPRADOR - 1] = cnpjFormatado(d.cnpjComprador); }
+    if (d.cnpjComprador) l[COL.COMPRADOR - 1] = d.comprador || cnpjFormatado(d.cnpjComprador); // nome desconhecido: fica o CNPJ
     if (d.emissao) l[COL.EMISSAO - 1] = d.emissao;
     if (d.valor) l[COL.VALOR - 1] = d.valor;
     if (d.vencimento) l[COL.BOLETOS - 1] = d.vencimento;
@@ -1014,29 +1028,44 @@ function soPdfPeloNumero(numero, lista) {
 }
 
 // Nossa razão social vem escrita de jeitos diferentes em cada nota ("15286 - BEM BARATO...", "... LTDA - 174288",
-// cortada no fim). Tira os códigos e usa, para cada CNPJ, a forma que mais aparece (empate: a mais completa).
+// cortada no fim). Tira os códigos; nome cortado vira o nome inteiro mais comum que começa igual.
 function compradoresPadronizados(sh) {
   var n = sh.getLastRow() - 1;
   if (n < 1) return;
-  var faixa = sh.getRange(2, COL.COMPRADOR, n, 2), v = faixa.getValues();
+  var v = sh.getRange(2, COL.COMPRADOR, n, 1).getValues();
   var limpo = function (s) { return String(s).replace(/^\s*\d+\s*-\s*/, '').replace(/\s*-\s*\d+\s*$/, '').replace(/\s+/g, ' ').trim(); };
   var conta = {};
-  v.forEach(function (r) {
-    var c = String(r[1]).replace(/\D/g, ''), nome = limpo(r[0]);
-    if (!c || !nome) return;
-    conta[c] = conta[c] || {};
-    conta[c][nome] = (conta[c][nome] || 0) + 1;
-  });
-  var padrao = {};
-  Object.keys(conta).forEach(function (c) {
-    padrao[c] = Object.keys(conta[c]).sort(function (a, b) { return conta[c][b] - conta[c][a] || b.length - a.length; })[0];
+  v.forEach(function (r) { var nome = limpo(r[0]); if (nome && !/^\d/.test(nome)) conta[nome] = (conta[nome] || 0) + 1; });
+  var nomes = Object.keys(conta), padrao = {};
+  nomes.forEach(function (nome) {
+    padrao[nome] = nomes.filter(function (o) { return o.indexOf(nome) === 0; })
+      .sort(function (a, b) { return conta[b] - conta[a] || b.length - a.length; })[0];
   });
   var mudou = false;
   v.forEach(function (r) {
-    var novo = padrao[String(r[1]).replace(/\D/g, '')] || limpo(r[0]);
+    var l = limpo(r[0]), novo = padrao[l] || l;
     if (novo !== r[0]) { r[0] = novo; mudou = true; }
   });
-  if (mudou) sh.getRange(2, COL.COMPRADOR, n, 1).setValues(v.map(function (r) { return [r[0]]; }));
+  if (mudou) sh.getRange(2, COL.COMPRADOR, n, 1).setValues(v);
+}
+
+// CNPJ -> nossa razão social, das notas com XML (guardado no script, já que a coluna do CNPJ saiu da planilha).
+// Serve para achar o comprador nos PDFs sem XML.
+var COMPRADORES = null, COMPRADORES_MUDOU = false;
+function lerCompradores() {
+  if (COMPRADORES) return COMPRADORES;
+  try { COMPRADORES = JSON.parse(PropertiesService.getScriptProperties().getProperty('COMPRADORES') || '{}'); } catch (e) { COMPRADORES = {}; }
+  return COMPRADORES;
+}
+function lembrarComprador(cnpj, nome) {
+  var c = String(cnpj || '').replace(/\D/g, ''), m = lerCompradores();
+  nome = String(nome || '').replace(/^\s*\d+\s*-\s*/, '').replace(/\s*-\s*\d+\s*$/, '').trim();
+  if (c.length < 11 || !nome || /^\d/.test(nome)) return;
+  if (!m[c] || nome.length > m[c].length && nome.indexOf(m[c]) === 0) { m[c] = nome; COMPRADORES_MUDOU = true; }
+}
+function gravarCompradores() {
+  if (!COMPRADORES_MUDOU) return;
+  try { PropertiesService.getScriptProperties().setProperty('COMPRADORES', JSON.stringify(COMPRADORES)); COMPRADORES_MUDOU = false; } catch (e) {}
 }
 
 // "NF 289804.pdf", "danfe_289804.pdf": número de uma nota que ainda não tem PDF (só se for uma só)

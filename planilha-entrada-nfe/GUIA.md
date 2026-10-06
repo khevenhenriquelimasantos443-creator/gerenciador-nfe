@@ -37,19 +37,21 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 
 | Coluna | O que é | Quem preenche |
 |---|---|---|
-| A. Nº da nota | Número da nota fiscal | script |
-| B. PDF da nota | Link **Abrir PDF**; "aguardando PDF" enquanto não acha | script |
-| C. Fornecedor | Razão social de quem emitiu a nota | script |
-| D. Comprador | Nossa razão social (destinatário da nota) | script |
-| E. CNPJ do comprador | Nosso CNPJ que comprou | script |
-| F. Data de emissão | Da nota | script |
-| G. Valor da nota | Total da nota | script |
-| H. 1º vencimento | Só a data do 1º boleto. Sem boleto: **Bonificação** (natureza da operação ou CFOP x910) ou **Pagamento antecipado** | script |
-| I. Data do lançamento (entrada no galpão) | Quando a nota entrou na planilha; vale também como data de entrada | script |
-| J. Status da entrada | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
-| K. Motivo | Obrigatório no COM PROBLEMA (lista fixa) | você |
-| L. Observação | Livre; obrigatória no motivo "Outro" | você |
-| M. Chave de acesso, N. XML | Chave da nota e link do XML | script |
+| A. Nº NFE | Número da nota fiscal | script |
+| B. PDF | Link **Abrir PDF**; "aguardando PDF" enquanto não acha | script |
+| C. FORNECEDOR | Razão social de quem emitiu a nota | script |
+| D. RAZÃO SOCIAL COMPRA | Nossa razão social (destinatário da nota), padronizada | script |
+| E. EMISSÃO | Data de emissão da nota | script |
+| F. VALOR NFE | Total da nota | script |
+| G. 1º VENCIMENTO | Só a data do 1º boleto. Sem boleto: **Bonificação** (natureza da operação ou CFOP x910) ou **Pagamento antecipado** | script |
+| H. ENTRADA GALPÃO | Quando a nota entrou na planilha; vale como data de entrada no galpão | script |
+| I. STATUS ENTRADA | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
+| J. MOTIVO DA NÃO ENTRADA | Obrigatório no COM PROBLEMA (lista fixa) | você |
+| K. OBSERVAÇÃO | Livre; obrigatória no motivo "Outro" | você |
+| L. CHAVE DE ACESSO, M. XML | Chave da nota e link do XML | script |
+
+O CNPJ do comprador não aparece mais na planilha. O script guarda sozinho qual CNPJ é de qual razão social (das
+notas com XML), para achar o comprador nos PDFs sem XML.
 
 O **Comprador** sai padronizado: sem os códigos que alguns fornecedores colocam antes ou depois do nome e,
 para cada CNPJ, a forma do nome que mais aparece.
