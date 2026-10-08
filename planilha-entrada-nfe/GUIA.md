@@ -26,8 +26,8 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 ## Dia a dia
 
 1. Salve o **XML** e o **PDF** da nota na pasta de notas da rede, como sempre.
-2. Em até 15 minutos a nota aparece na aba **NOTAS**, com o status **em branco**. As notas mais recentes
-   (pela data de emissão) ficam em cima; nota sem emissão (PDF que não deu para ler) usa a data de entrada.
+2. Em até 15 minutos a nota aparece na aba **NOTAS**, com o status **em branco**. As últimas notas lançadas
+   ficam em cima (pelo dia da ENTRADA GALPÃO; no mesmo dia, pela emissão mais nova).
 3. Quando a mercadoria chegar, mude o **Status da entrada**:
    - **ENTRADA OK**: a mercadoria entrou. A data de entrada é a mesma do lançamento na planilha.
    - **COM PROBLEMA**: escolha o **Motivo** na lista. Enquanto não tiver motivo, a célula fica vermelha

@@ -54,7 +54,7 @@ function ehSoPdf(obs) { return String(obs).indexOf('Só PDF, sem XML') === 0; }
 // situação do PDF sem XML na aba ARQUIVOS: entrou como linha própria e ainda falta ler os dados / já leu
 var SIT_SO_PDF = 'SÓ PDF', SIT_PDF_LIDO = 'SÓ PDF - LIDO', SIT_PDF_ILEGIVEL = 'SÓ PDF - ILEGÍVEL';
 // muda quando o formato da aba NOTAS muda (status novo, cores...): a próxima atualização reaplica tudo
-var FORMATO_NOTAS = '2026-10-09';
+var FORMATO_NOTAS = '2026-10-10';
 
 var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA', 'BONIFICAÇÃO'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
@@ -236,7 +236,7 @@ function formatoAtual(sh) {
     validacoesNotas(sh);   // lista do status com BONIFICAÇÃO em todas as linhas
     regrasDeCor(sh);
     tirarMarcasDaObservacao(sh);
-    refazerLinks(sh); // a ordenação de 08/10 deixou links de PDF/XML em linhas trocadas
+    refazerLinks(sh); // a ordenação de 08/10 deixou links de PDF/XML em linhas trocadas (e reaplica as cores)
     props.setProperty('FORMATO_NOTAS', FORMATO_NOTAS);
   }
 }
@@ -331,7 +331,7 @@ function escreverLeiaMe(sh) {
     ['1. Salve o XML e o PDF (DANFE) de cada nota na pasta de notas da rede, como sempre.'],
     ['   O enviar-notas.ps1 (agendado num PC da rede) manda uma cópia para a pasta "NF-e Galpão" do Drive a cada 15 minutos.'],
     ['2. Em até 15 minutos (ou NF-e > Atualizar agora) a nota aparece na aba NOTAS, com o status em branco.'],
-    ['   As notas mais recentes (pela emissão) ficam em cima.'],
+    ['   As últimas notas lançadas ficam em cima (no mesmo dia, pela emissão mais nova).'],
     ['3. Quando a mercadoria chegar, mude o Status da entrada:'],
     ['   ENTRADA OK: a mercadoria entrou (a data de entrada é a data do lançamento na planilha).'],
     ['   COM PROBLEMA: escolha o Motivo (obrigatório; a célula fica vermelha até ter motivo).'],
@@ -1071,8 +1071,8 @@ function soPdfPeloNumero(numero, lista) {
 
 // Nossa razão social vem escrita de jeitos diferentes em cada nota ("15286 - BEM BARATO...", "... LTDA - 174288",
 // cortada no fim). Tira os códigos; nome cortado vira o nome inteiro mais comum que começa igual.
-// Notas mais recentes em cima: pela EMISSÃO, da mais nova para a mais velha (sem emissão, vale a data de
-// ENTRADA GALPÃO). Usa a ordenação do próprio Google (a linha inteira muda de lugar, com os links de PDF e XML,
+// Últimas notas lançadas em cima: pelo dia da ENTRADA GALPÃO (lançamento na planilha), do mais novo para o mais
+// velho; no mesmo dia, pela EMISSÃO (mais nova primeiro). Usa a ordenação do próprio Google (a linha inteira muda de lugar, com os links de PDF e XML,
 // o status e tudo o que foi digitado). Só ordena quando a ordem mudou.
 // O link no Google fica como formatação da célula: regravar o texto em outra ordem deixava o link para trás.
 function ordenarNotas(sh) {
@@ -1084,11 +1084,15 @@ function ordenarNotas(sh) {
     var m = String(x).match(/(\d{2})\/(\d{2})\/(\d{4})/);
     return m ? new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime() : 0;
   };
+  var dia = function (t) { if (!t) return 0; var d = new Date(t); return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(); };
   var ordem = v.map(function (r, i) {
     var lanc = tempo(r[COL.LANC - 1]);
-    return { i: i, emissao: tempo(r[COL.EMISSAO - 1]) || lanc, lanc: lanc, num: Number(String(r[COL.NUM - 1]).replace(/\D/g, '')) || 0 };
+    return { i: i, dia: dia(lanc), emissao: tempo(r[COL.EMISSAO - 1]), lanc: lanc,
+             num: Number(String(r[COL.NUM - 1]).replace(/\D/g, '')) || 0 };
   });
-  ordem.sort(function (a, b) { return b.emissao - a.emissao || b.lanc - a.lanc || b.num - a.num || a.i - b.i; });
+  ordem.sort(function (a, b) {
+    return b.dia - a.dia || b.emissao - a.emissao || b.lanc - a.lanc || b.num - a.num || a.i - b.i;
+  });
   if (ordem.every(function (o, j) { return o.i === j; })) return false;
   // coluna auxiliar (a 1ª vazia depois de tudo) com a posição nova de cada linha; ordena por ela e apaga
   var col = Math.max(CAB.NOTAS.length, sh.getLastColumn()) + 1;
@@ -1164,6 +1168,7 @@ function refazerLinks(sh) {
   // tira os links antigos (ficam na formatação da célula) e grava os certos
   faixaPdf.clear({ formatOnly: true }); faixaPdf.setRichTextValues(novoPdf);
   faixaXml.clear({ formatOnly: true }); faixaXml.setRichTextValues(novoXml);
+  regrasDeCor(sh); // limpar a formatação também tira a formatação condicional dessas colunas: põe de volta
   return res;
 }
 
