@@ -54,7 +54,7 @@ function ehSoPdf(obs) { return String(obs).indexOf('Só PDF, sem XML') === 0; }
 // situação do PDF sem XML na aba ARQUIVOS: entrou como linha própria e ainda falta ler os dados / já leu
 var SIT_SO_PDF = 'SÓ PDF', SIT_PDF_LIDO = 'SÓ PDF - LIDO', SIT_PDF_ILEGIVEL = 'SÓ PDF - ILEGÍVEL';
 // muda quando o formato da aba NOTAS muda (status novo, cores...): a próxima atualização reaplica tudo
-var FORMATO_NOTAS = '2026-10-08';
+var FORMATO_NOTAS = '2026-10-09';
 
 var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA', 'BONIFICAÇÃO'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
@@ -90,6 +90,7 @@ function onOpen() {
     .addItem('Ligar atualização automática (a cada 15 min)', 'ativarAutomatico')
     .addItem('Desligar atualização automática', 'desativarAutomatico')
     .addItem('Configurar planilha (abas e pasta)', 'configurarPlanilha')
+    .addItem('Refazer os links de PDF e XML (se algum estiver na nota errada)', 'refazerLinksAgora')
     .addItem('Ver a chave e como pegar o link para o script do PC', 'mostrarDadosDoEnvio')
     .addToUi();
 }
@@ -235,6 +236,7 @@ function formatoAtual(sh) {
     validacoesNotas(sh);   // lista do status com BONIFICAÇÃO em todas as linhas
     regrasDeCor(sh);
     tirarMarcasDaObservacao(sh);
+    refazerLinks(sh); // a ordenação de 08/10 deixou links de PDF/XML em linhas trocadas
     props.setProperty('FORMATO_NOTAS', FORMATO_NOTAS);
   }
 }
@@ -1070,12 +1072,13 @@ function soPdfPeloNumero(numero, lista) {
 // Nossa razão social vem escrita de jeitos diferentes em cada nota ("15286 - BEM BARATO...", "... LTDA - 174288",
 // cortada no fim). Tira os códigos; nome cortado vira o nome inteiro mais comum que começa igual.
 // Notas mais recentes em cima: pela EMISSÃO, da mais nova para a mais velha (sem emissão, vale a data de
-// ENTRADA GALPÃO). Só regrava quando a ordem mudou. Se alguém mexer no status, motivo ou observação enquanto
-// isso, não regrava: fica para a próxima atualização, para não perder o que foi digitado.
+// ENTRADA GALPÃO). Usa a ordenação do próprio Google (a linha inteira muda de lugar, com os links de PDF e XML,
+// o status e tudo o que foi digitado). Só ordena quando a ordem mudou.
+// O link no Google fica como formatação da célula: regravar o texto em outra ordem deixava o link para trás.
 function ordenarNotas(sh) {
   var n = sh.getLastRow() - 1;
   if (n < 2) return false;
-  var faixa = sh.getRange(2, 1, n, CAB.NOTAS.length), v = faixa.getValues();
+  var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
   var tempo = function (x) {
     if (x instanceof Date) return x.getTime();
     var m = String(x).match(/(\d{2})\/(\d{2})\/(\d{4})/);
@@ -1087,16 +1090,81 @@ function ordenarNotas(sh) {
   });
   ordem.sort(function (a, b) { return b.emissao - a.emissao || b.lanc - a.lanc || b.num - a.num || a.i - b.i; });
   if (ordem.every(function (o, j) { return o.i === j; })) return false;
-  var pdf = sh.getRange(2, COL.PDF, n, 1).getRichTextValues(), xml = sh.getRange(2, COL.XML, n, 1).getRichTextValues();
-  var digitado = function (linhas) {
-    return JSON.stringify(linhas.map(function (r) { return r.slice(COL.STATUS - 1, COL.OBS); }));
-  };
-  if (digitado(sh.getRange(2, 1, n, CAB.NOTAS.length).getValues()) !== digitado(v)) return false;
-  var vazio = function (rt) { return rt || SpreadsheetApp.newRichTextValue().setText('').build(); };
-  faixa.setValues(ordem.map(function (o) { return v[o.i]; }));
-  sh.getRange(2, COL.PDF, n, 1).setRichTextValues(ordem.map(function (o) { return [vazio(pdf[o.i][0])]; }));
-  sh.getRange(2, COL.XML, n, 1).setRichTextValues(ordem.map(function (o) { return [vazio(xml[o.i][0])]; }));
+  // coluna auxiliar (a 1ª vazia depois de tudo) com a posição nova de cada linha; ordena por ela e apaga
+  var col = Math.max(CAB.NOTAS.length, sh.getLastColumn()) + 1;
+  if (sh.getMaxColumns() < col) sh.insertColumnsAfter(sh.getMaxColumns(), col - sh.getMaxColumns());
+  var pos = [];
+  ordem.forEach(function (o, j) { pos[o.i] = [j + 1]; });
+  var aux = sh.getRange(2, col, n, 1);
+  aux.setValues(pos);
+  sh.getRange(2, 1, n, col).sort({ column: col, ascending: true });
+  aux.clearContent();
   return true;
+}
+
+function refazerLinksAgora() {
+  var r = refazerLinks(planilha().getSheetByName(ABA.NOTAS));
+  aviso(r.pdf + ' link(s) de PDF e ' + r.xml + ' de XML corrigido(s).' +
+    (r.semAchar ? ' ' + r.semAchar + ' PDF(s) sem XML não deu para identificar (ficaram como estavam).' : ''), 15);
+}
+
+// Refaz os links das colunas PDF e XML a partir da aba ARQUIVOS (que guarda qual arquivo é de qual nota):
+// PDF e XML ligados pela chave de acesso; PDF sem XML pela chave ou pelo nº no nome do arquivo.
+function refazerLinks(sh) {
+  var res = { pdf: 0, xml: 0, semAchar: 0 };
+  var n = sh.getLastRow() - 1;
+  if (n < 1) return res;
+  var arq = planilha().getSheetByName(ABA.ARQ), nA = arq.getLastRow() - 1;
+  var pdfPorChave = {}, xmlPorChave = {}, soPdf = [];
+  (nA > 0 ? arq.getRange(2, 1, nA, 5).getValues() : []).forEach(function (r) {
+    var id = String(r[0]), chave = String(r[3]).replace(/\D/g, ''), sit = String(r[4]);
+    if (!id) return;
+    if (chave.length !== 44) chave = '';
+    if (r[2] === 'XML' && sit === 'OK' && chave && !xmlPorChave[chave]) xmlPorChave[chave] = id;
+    if (r[2] === 'PDF' && sit === 'OK' && chave && !pdfPorChave[chave]) pdfPorChave[chave] = id;
+    if (r[2] === 'PDF' && sit.indexOf(SIT_SO_PDF) === 0) soPdf.push({ id: id, nome: String(r[1]), chave: chave });
+  });
+  var numDoNome = function (nome) {
+    var nums = String(nome).replace(/\.pdf$/i, '').match(/\d{3,9}/g) || [];
+    return nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
+  };
+  var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
+  var faixaPdf = sh.getRange(2, COL.PDF, n, 1), faixaXml = sh.getRange(2, COL.XML, n, 1);
+  var rtPdf = faixaPdf.getRichTextValues(), rtXml = faixaXml.getRichTextValues();
+  var urlDe = function (rt) { return rt && rt.getLinkUrl ? rt.getLinkUrl() || '' : ''; };
+  var texto = function (t) { return SpreadsheetApp.newRichTextValue().setText(t).build(); };
+  var novoPdf = [], novoXml = [];
+  v.forEach(function (r, i) {
+    var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, ''), num = String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+    if (chave.length !== 44) chave = '';
+    var temXml = String(r[COL.XML - 1]) !== '';
+    // XML
+    var idXml = chave && xmlPorChave[chave];
+    var xml = idXml ? link('XML', idXml) : temXml ? rtXml[i][0] || texto('XML') : texto('');
+    if (urlDe(xml) !== urlDe(rtXml[i][0])) res.xml++;
+    novoXml.push([xml]);
+    // PDF
+    var idPdf = chave && pdfPorChave[chave];
+    if (!idPdf) {
+      var c = soPdf.filter(function (p) { return chave && p.chave === chave; });
+      if (c.length !== 1 && num) c = soPdf.filter(function (p) { return numDoNome(p.nome) === num; });
+      if (c.length !== 1 && !temXml) {
+        var forn = String(r[COL.FORN - 1]).toUpperCase();
+        c = soPdf.filter(function (p) { return fornecedorDoNome(p.nome).toUpperCase() === forn && (!num || numDoNome(p.nome) === num); });
+      }
+      if (c.length === 1) idPdf = c[0].id;
+    }
+    var pdf;
+    if (idPdf) pdf = link('Abrir PDF', idPdf);
+    else if (String(r[COL.PDF - 1]) === SEM_PDF || String(r[COL.PDF - 1]) === '') pdf = texto(String(r[COL.PDF - 1]) || SEM_PDF);
+    else { pdf = rtPdf[i][0] || texto(String(r[COL.PDF - 1])); res.semAchar++; } // não deu para saber: fica como está
+    if (urlDe(pdf) !== urlDe(rtPdf[i][0]) || String(r[COL.PDF - 1]) === SEM_PDF && urlDe(rtPdf[i][0])) res.pdf++;
+    novoPdf.push([pdf]);
+  });
+  // tira os links antigos (ficam na formatação da célula) e grava os certos
+  faixaPdf.clear({ formatOnly: true }); faixaPdf.setRichTextValues(novoPdf);
+  faixaXml.clear({ formatOnly: true }); faixaXml.setRichTextValues(novoXml);
+  return res;
 }
 
 // Razão social dos fornecedores sempre em MAIÚSCULAS (também nas linhas que já estavam na planilha)

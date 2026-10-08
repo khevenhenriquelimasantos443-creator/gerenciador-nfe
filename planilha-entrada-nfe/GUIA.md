@@ -93,6 +93,10 @@ linhas, porque o PDF não é tão exato quanto o XML. Na aba **ARQUIVOS**, a sit
 do nome do arquivo (`VILLE 03-09 NFE 79570.pdf` → `VILLE`). PDF repetido fica como DUPLICADO na aba
 **ARQUIVOS**; **PENDENTE** lá é só o PDF que ainda não foi lido (fica para a próxima atualização).
 
+**Link do PDF ou do XML na nota errada?** **NF-e > Refazer os links de PDF e XML** refaz os links das duas
+colunas a partir da aba ARQUIVOS (que guarda qual arquivo é de qual nota): pela chave de acesso e, no PDF sem
+XML, pelo número no nome do arquivo. O que não der para identificar fica como está.
+
 ## Abas do script
 
 - **ARQUIVOS**: cada arquivo da pasta do Drive que já foi lido.
