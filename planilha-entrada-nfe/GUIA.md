@@ -26,12 +26,17 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 ## Dia a dia
 
 1. Salve o **XML** e o **PDF** da nota na pasta de notas da rede, como sempre.
-2. Em até 15 minutos a nota aparece na aba **NOTAS**, com status **AGUARDANDO**.
+2. Em até 15 minutos a nota aparece na aba **NOTAS**, com o status **em branco**. As notas mais recentes
+   (pela data de emissão) ficam em cima; nota sem emissão (PDF que não deu para ler) usa a data de entrada.
 3. Quando a mercadoria chegar, mude o **Status da entrada**:
    - **ENTRADA OK**: a mercadoria entrou. A data de entrada é a mesma do lançamento na planilha.
    - **COM PROBLEMA**: escolha o **Motivo** na lista. Enquanto não tiver motivo, a célula fica vermelha
      e aparece um aviso.
+   - **BONIFICAÇÃO**: mercadoria de bonificação.
+   - **AGUARDANDO** continua na lista, se quiser marcar.
    - Motivo **"Outro (descreva na Observação)"**: a Observação fica vermelha até ser preenchida.
+
+A **OBSERVAÇÃO** é só de vocês: o script nunca escreve nela.
 
 ## Aba NOTAS
 
@@ -45,7 +50,7 @@ aba NOTAS: linha nova com o link "Abrir PDF"
 | F. VALOR NFE | Total da nota | script |
 | G. 1º VENCIMENTO | Só a data do 1º boleto. Nota sem boleto (bonificação, pagamento antecipado): em branco | script |
 | H. ENTRADA GALPÃO | Quando a nota entrou na planilha; vale como data de entrada no galpão | script |
-| I. STATUS ENTRADA | AGUARDANDO, ENTRADA OK ou COM PROBLEMA | você |
+| I. STATUS ENTRADA | Em branco ao entrar; AGUARDANDO, ENTRADA OK, COM PROBLEMA ou BONIFICAÇÃO | você |
 | J. MOTIVO DA NÃO ENTRADA | Obrigatório no COM PROBLEMA (lista fixa) | você |
 | K. OBSERVAÇÃO | Livre; obrigatória no motivo "Outro" | você |
 | L. CHAVE DE ACESSO, M. XML | Chave da nota e link do XML | script |
@@ -59,7 +64,8 @@ para cada CNPJ, a forma do nome que mais aparece.
 Planilhas de versões anteriores (nº e razão social juntos na coluna A, ou com a coluna "Data da entrada no
 galpão") são convertidas sozinhas na próxima atualização, mantendo status, motivo, observação e links.
 
-A linha inteira fica com a cor do status: amarelo (aguardando), verde (entrada ok), vermelho (problema). A cor
+A linha inteira fica com a cor do status: amarelo (aguardando), verde (entrada ok), vermelho (problema),
+azul-claro (bonificação); status em branco, sem cor. A cor
 vem da formatação condicional da planilha, então muda na hora em que o status é trocado.
 
 **Motivos da lista:** quantidade diferente da nota, produto faltando, produto avariado ou vencido,
@@ -77,13 +83,13 @@ Em ordem:
    número.
 
 **Todo PDF entra na planilha.** PDF que não acha nota (pedido de compra, nota sem XML) vira uma linha própria,
-com o nome do arquivo no lugar do fornecedor e a observação "Só PDF, sem XML". Se o XML chegar depois, ele
+com o nome do arquivo no lugar do fornecedor e a coluna XML vazia. Se o XML chegar depois, ele
 completa essa mesma linha (pela chave ou pelo número da nota).
 
 Enquanto o XML não chega, a planilha **lê os dados do próprio PDF**: o Google Drive converte o PDF em texto
-(lê até PDF escaneado) e daí saem chave, nº, comprador, CNPJ, emissão, valor e 1º vencimento. A observação
-fica "dados lidos do PDF (confira)", porque o PDF não é tão exato quanto o XML. Se não der para ler, fica
-"não deu para ler os dados do PDF". O fornecedor sai do nome de um fornecedor já conhecido (pelo CNPJ) ou
+(lê até PDF escaneado) e daí saem chave, nº, comprador, emissão, valor e 1º vencimento. Confira essas
+linhas, porque o PDF não é tão exato quanto o XML. Na aba **ARQUIVOS**, a situação do PDF diz como ficou:
+**SÓ PDF** (ainda vai ler), **SÓ PDF - LIDO** ou **SÓ PDF - ILEGÍVEL**. O fornecedor sai do nome de um fornecedor já conhecido (pelo CNPJ) ou
 do nome do arquivo (`VILLE 03-09 NFE 79570.pdf` → `VILLE`). PDF repetido fica como DUPLICADO na aba
 **ARQUIVOS**; **PENDENTE** lá é só o PDF que ainda não foi lido (fica para a próxima atualização).
 

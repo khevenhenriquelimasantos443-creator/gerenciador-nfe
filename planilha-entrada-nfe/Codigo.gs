@@ -44,19 +44,26 @@ var CAB_ANTIGO_A = 'Nota fiscal (nº e razão social)';
 var CAB_ANTIGO_ENTRADA = 'Data da entrada no galpão';
 var CAB_ANTIGO_CNPJ = 'CNPJ do comprador (nosso)'; // coluna tirada; o CNPJ -> razão social fica guardado no script
 // PDF sem XML (pedido de compra, nota de serviço...): entra mesmo assim, com esta observação
+// Versões anteriores escreviam na OBSERVAÇÃO se a linha era "só PDF"; agora isso fica na aba ARQUIVOS
+// (situação do PDF) e a OBSERVAÇÃO é só de quem usa a planilha. As marcas antigas são apagadas sozinhas.
 var OBS_SO_PDF = 'Só PDF, sem XML (ex.: pedido de compra)';
 // depois de ler os dados do próprio PDF (pelo Google Drive), a observação diz como foi
 var OBS_PDF_LIDO = 'Só PDF, sem XML: dados lidos do PDF (confira)';
 var OBS_PDF_ILEGIVEL = 'Só PDF, sem XML: não deu para ler os dados do PDF';
 function ehSoPdf(obs) { return String(obs).indexOf('Só PDF, sem XML') === 0; }
+// situação do PDF sem XML na aba ARQUIVOS: entrou como linha própria e ainda falta ler os dados / já leu
+var SIT_SO_PDF = 'SÓ PDF', SIT_PDF_LIDO = 'SÓ PDF - LIDO', SIT_PDF_ILEGIVEL = 'SÓ PDF - ILEGÍVEL';
+// muda quando o formato da aba NOTAS muda (status novo, cores...): a próxima atualização reaplica tudo
+var FORMATO_NOTAS = '2026-10-08';
 
-var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA'];
+var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA', 'BONIFICAÇÃO'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
 var MOTIVOS = ['Quantidade diferente da nota', 'Produto faltando', 'Produto avariado ou vencido',
                'Produto errado ou não pedido', 'Preço diferente do pedido', 'Prazo ou vencimento diferente do combinado',
                'Nota com erro (dados, impostos ou CFOP)', 'Mercadoria não chegou', 'Nota cancelada pelo fornecedor',
                MOTIVO_OUTRO];
-var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#fee2e2', FALTA: '#f87171' };
+var COR = { 'AGUARDANDO': '#fef9c3', 'ENTRADA OK': '#dcfce7', 'COM PROBLEMA': '#fee2e2', 'BONIFICAÇÃO': '#9fc5e8', // azul-claro 2
+            FALTA: '#f87171' };
 var SEM_PDF = 'aguardando PDF';
 var SEM_CHAVE = 'sem chave no PDF';
 // tempo de cada atualização (o Google para tudo em 6 min): até aqui lê arquivos novos, até ali abre PDFs;
@@ -138,6 +145,7 @@ function configurarPlanilha() {
   boletosNoFormatoNovo(notas);
   compradoresPadronizados(notas);
   fornecedoresMaiusculos(notas);
+  ordenarNotas(notas);
 
   var arq = garantirAba(ss, ABA.ARQ, CAB.ARQ);
   arq.getRange(1, 1, 1, CAB.ARQ.length).setValues([CAB.ARQ]);
@@ -190,7 +198,8 @@ function regrasDeCor(sh) {
     regra(sh.getRange(2, COL.OBS, n, 1), '=(' + mo + '="' + MOTIVO_OUTRO + '")*(' + ob + '="")', COR.FALTA),
     regra(linha, '=' + st + '="ENTRADA OK"', COR['ENTRADA OK']),
     regra(linha, '=' + st + '="COM PROBLEMA"', COR['COM PROBLEMA']),
-    regra(linha, '=' + st + '="AGUARDANDO"', COR['AGUARDANDO'])
+    regra(linha, '=' + st + '="AGUARDANDO"', COR['AGUARDANDO']),
+    regra(linha, '=' + st + '="BONIFICAÇÃO"', COR['BONIFICAÇÃO'])
   ]);
 }
 
@@ -221,6 +230,36 @@ function formatoAtual(sh) {
   } else if (!sh.getConditionalFormatRules().length) {
     regrasDeCor(sh);
   }
+  var props = PropertiesService.getScriptProperties();
+  if (props.getProperty('FORMATO_NOTAS') !== FORMATO_NOTAS) {
+    validacoesNotas(sh);   // lista do status com BONIFICAÇÃO em todas as linhas
+    regrasDeCor(sh);
+    tirarMarcasDaObservacao(sh);
+    props.setProperty('FORMATO_NOTAS', FORMATO_NOTAS);
+  }
+}
+
+// Marcas "Só PDF, sem XML..." que versões anteriores escreviam na OBSERVAÇÃO: passam para a situação do PDF na
+// aba ARQUIVOS e somem da OBSERVAÇÃO
+function tirarMarcasDaObservacao(sh) {
+  var n = sh.getLastRow() - 1;
+  if (n < 1) return;
+  var obs = sh.getRange(2, COL.OBS, n, 1).getValues();
+  if (!obs.some(function (r) { return ehSoPdf(r[0]); })) return;
+  var links = sh.getRange(2, COL.PDF, n, 1).getRichTextValues(), situacao = {};
+  obs.forEach(function (r, i) {
+    if (!ehSoPdf(r[0])) return;
+    var url = links[i][0] && links[i][0].getLinkUrl ? links[i][0].getLinkUrl() : '';
+    var id = (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1];
+    if (id) situacao[id] = r[0] === OBS_PDF_LIDO ? SIT_PDF_LIDO : r[0] === OBS_PDF_ILEGIVEL ? SIT_PDF_ILEGIVEL : SIT_SO_PDF;
+    r[0] = '';
+  });
+  sh.getRange(2, COL.OBS, n, 1).setValues(obs);
+  var arq = planilha().getSheetByName(ABA.ARQ), nA = arq.getLastRow() - 1;
+  if (nA < 1) return;
+  var v = arq.getRange(2, 1, nA, 5).getValues(), mudou = false;
+  v.forEach(function (r) { if (situacao[r[0]] && r[4] !== situacao[r[0]]) { r[4] = situacao[r[0]]; mudou = true; } });
+  if (mudou) arq.getRange(2, 5, nA, 1).setValues(v.map(function (r) { return [r[4]]; }));
 }
 
 function garantirAba(ss, nome, cab) {
@@ -289,10 +328,12 @@ function escreverLeiaMe(sh) {
     ['TODO DIA'],
     ['1. Salve o XML e o PDF (DANFE) de cada nota na pasta de notas da rede, como sempre.'],
     ['   O enviar-notas.ps1 (agendado num PC da rede) manda uma cópia para a pasta "NF-e Galpão" do Drive a cada 15 minutos.'],
-    ['2. Em até 15 minutos (ou NF-e > Atualizar agora) a nota aparece na aba NOTAS com status AGUARDANDO.'],
+    ['2. Em até 15 minutos (ou NF-e > Atualizar agora) a nota aparece na aba NOTAS, com o status em branco.'],
+    ['   As notas mais recentes (pela emissão) ficam em cima.'],
     ['3. Quando a mercadoria chegar, mude o Status da entrada:'],
     ['   ENTRADA OK: a mercadoria entrou (a data de entrada é a data do lançamento na planilha).'],
     ['   COM PROBLEMA: escolha o Motivo (obrigatório; a célula fica vermelha até ter motivo).'],
+    ['   BONIFICAÇÃO: mercadoria de bonificação (a linha fica azul).'],
     ['   Motivo "Outro": explique na Observação (fica vermelha até ter explicação).'],
     [''],
     ['O QUE A PLANILHA PREENCHE SOZINHA'],
@@ -554,13 +595,14 @@ function atualizarNotas(silencioso) {
       });
       gravarNotas(notas, linhasPdf);
       var shArq2 = ss.getSheetByName(ABA.ARQ);
-      soPdf.forEach(function (p) { p.r[4] = 'SÓ PDF'; shArq2.getRange(p.linha, 5).setValue('SÓ PDF'); });
+      soPdf.forEach(function (p) { p.r[4] = SIT_SO_PDF; shArq2.getRange(p.linha, 5).setValue(SIT_SO_PDF); });
       anexar(ABA.LOG, soPdf.map(function (p) { return [agora, p.r[1], 'SÓ PDF', 'PDF sem XML: entrou como linha própria na aba NOTAS.']; }));
     }
     gravarCompradores();
     var lidosDoPdf = dadosDosPdfsSemXml(abaNotas, inicio + LIMITE_DADOS_PDF);
     compradoresPadronizados(abaNotas);
     fornecedoresMaiusculos(abaNotas);
+    ordenarNotas(abaNotas);
 
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
       (completadas.length ? ' ' + completadas.length + ' linha(s) só com PDF completada(s) pelo XML.' : '') +
@@ -681,7 +723,7 @@ function lerNotas() {
       var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, '');
       var nota = { linha: i + 2, chave: chave, numero: String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, ''),
                    pdf: r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF, xml: r[COL.XML - 1] !== '',
-                   soPdf: r[COL.XML - 1] === '' && ehSoPdf(r[COL.OBS - 1]) };
+                   soPdf: r[COL.XML - 1] === '' && r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF };
       lista.push(nota);
       if (chave) porChave[chave] = nota;
     });
@@ -706,8 +748,6 @@ function gravarNotas(notas, novas, completadas) {
     sh.getRange(c.ref.linha, COL.NUM).setValue(l[COL.NUM - 1]);
     sh.getRange(c.ref.linha, COL.FORN, 1, COL.BOLETOS - COL.FORN + 1).setValues([l.slice(COL.FORN - 1, COL.BOLETOS)]);
     sh.getRange(c.ref.linha, COL.CHAVE).setValue(l[COL.CHAVE - 1]);
-    var obs = sh.getRange(c.ref.linha, COL.OBS);
-    if (ehSoPdf(obs.getValue())) obs.setValue('');
   });
   // links: lê as colunas B e M inteiras, troca o que mudou e grava de uma vez (uma chamada por coluna)
   var mudaram = notas.lista.filter(function (n) { return n.linkPdf || n.linkXml; });
@@ -807,7 +847,7 @@ function linhaDaNota(x, agora) {
   l[COL.COMPRADOR - 1] = x.comprador;
   lembrarComprador(x.cnpjComprador, x.comprador);
   l[COL.EMISSAO - 1] = x.emissao || ''; l[COL.VALOR - 1] = x.valor; l[COL.BOLETOS - 1] = textoBoletos(x);
-  l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.MOTIVO - 1] = '';
+  l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = ''; l[COL.MOTIVO - 1] = '';
   l[COL.OBS - 1] = ''; l[COL.CHAVE - 1] = x.chave; l[COL.XML - 1] = '';
   return l;
 }
@@ -886,7 +926,7 @@ function linhaSoPdf(r, agora) {
   var num = chave ? chave.substr(25, 9).replace(/^0+(?=\d)/, '') : nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
   var l = CAB.NOTAS.map(function () { return ''; });
   l[COL.NUM - 1] = num; l[COL.PDF - 1] = 'Abrir PDF'; l[COL.FORN - 1] = fornecedorDoNome(r[1]);
-  l[COL.LANC - 1] = agora; l[COL.STATUS - 1] = 'AGUARDANDO'; l[COL.OBS - 1] = OBS_SO_PDF; l[COL.CHAVE - 1] = chave;
+  l[COL.LANC - 1] = agora; l[COL.CHAVE - 1] = chave; // status e observação em branco
   return { valores: l };
 }
 
@@ -901,11 +941,19 @@ function fornecedorDoNome(nome) {
 function dadosDosPdfsSemXml(sh, ate) {
   var n = sh.getLastRow() - 1;
   if (n < 1 || Date.now() > ate) return 0;
+  // PDFs que entraram como linha própria e ainda não foram lidos: situação SÓ PDF na aba ARQUIVOS
+  var arq = planilha().getSheetByName(ABA.ARQ), nA = arq.getLastRow() - 1, linhaArq = {};
+  if (nA > 0) arq.getRange(2, 1, nA, 5).getValues().forEach(function (r, i) { if (r[4] === SIT_SO_PDF) linhaArq[r[0]] = i + 2; });
+  if (!Object.keys(linhaArq).length) return 0;
   var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
-  var faltam = [];
-  v.forEach(function (r, i) { if (r[COL.OBS - 1] === OBS_SO_PDF && r[COL.XML - 1] === '') faltam.push(i); });
-  if (!faltam.length) return 0;
   var links = sh.getRange(2, COL.PDF, n, 1).getRichTextValues();
+  var idDaLinha = function (i) {
+    var url = links[i][0] && links[i][0].getLinkUrl ? links[i][0].getLinkUrl() : '';
+    return (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1] || '';
+  };
+  var faltam = [];
+  v.forEach(function (r, i) { if (r[COL.XML - 1] === '' && linhaArq[idDaLinha(i)]) faltam.push(i); });
+  if (!faltam.length) return 0;
   // quem já conhecemos pelas notas com XML: CNPJ do comprador -> nome; CNPJ do emitente (da chave) -> fornecedor
   var conhecidos = { compradores: lerCompradores(), fornecedores: {} };
   v.forEach(function (r) {
@@ -915,13 +963,12 @@ function dadosDosPdfsSemXml(sh, ate) {
   var lidos = 0;
   faltam.forEach(function (i) {
     if (Date.now() > ate) return;
-    var linha = i + 2, r = v[i];
-    var url = links[i][0] && links[i][0].getLinkUrl ? links[i][0].getLinkUrl() : '';
-    var id = (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1];
+    var linha = i + 2, r = v[i], id = idDaLinha(i);
     var d = null;
     if (id) { try { d = dadosDoTextoDoPdf(textoDoPdfPeloDrive(id), conhecidos); } catch (e) { console.log('PDF ' + id + ': ' + (e && e.message || e)); } }
     lidos++;
-    if (!d) { sh.getRange(linha, COL.OBS).setValue(OBS_PDF_ILEGIVEL); return; }
+    arq.getRange(linhaArq[id], 5).setValue(d ? SIT_PDF_LIDO : SIT_PDF_ILEGIVEL);
+    if (!d) return;
     var l = r.slice();
     if (d.numero) l[COL.NUM - 1] = d.numero;
     l[COL.FORN - 1] = d.fornecedor || fornecedorDoNome(r[COL.FORN - 1]);
@@ -930,10 +977,9 @@ function dadosDosPdfsSemXml(sh, ate) {
     if (d.valor) l[COL.VALOR - 1] = d.valor;
     if (d.vencimento) l[COL.BOLETOS - 1] = d.vencimento;
     if (d.chave) l[COL.CHAVE - 1] = d.chave;
-    l[COL.OBS - 1] = OBS_PDF_LIDO;
     sh.getRange(linha, 1).setValue(l[0]);
     sh.getRange(linha, COL.FORN, 1, COL.BOLETOS - COL.FORN + 1).setValues([l.slice(COL.FORN - 1, COL.BOLETOS)]);
-    sh.getRange(linha, COL.OBS, 1, 2).setValues([[l[COL.OBS - 1], l[COL.CHAVE - 1]]]);
+    sh.getRange(linha, COL.CHAVE).setValue(l[COL.CHAVE - 1]);
   });
   return lidos;
 }
@@ -1023,6 +1069,36 @@ function soPdfPeloNumero(numero, lista) {
 
 // Nossa razão social vem escrita de jeitos diferentes em cada nota ("15286 - BEM BARATO...", "... LTDA - 174288",
 // cortada no fim). Tira os códigos; nome cortado vira o nome inteiro mais comum que começa igual.
+// Notas mais recentes em cima: pela EMISSÃO, da mais nova para a mais velha (sem emissão, vale a data de
+// ENTRADA GALPÃO). Só regrava quando a ordem mudou. Se alguém mexer no status, motivo ou observação enquanto
+// isso, não regrava: fica para a próxima atualização, para não perder o que foi digitado.
+function ordenarNotas(sh) {
+  var n = sh.getLastRow() - 1;
+  if (n < 2) return false;
+  var faixa = sh.getRange(2, 1, n, CAB.NOTAS.length), v = faixa.getValues();
+  var tempo = function (x) {
+    if (x instanceof Date) return x.getTime();
+    var m = String(x).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    return m ? new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime() : 0;
+  };
+  var ordem = v.map(function (r, i) {
+    var lanc = tempo(r[COL.LANC - 1]);
+    return { i: i, emissao: tempo(r[COL.EMISSAO - 1]) || lanc, lanc: lanc, num: Number(String(r[COL.NUM - 1]).replace(/\D/g, '')) || 0 };
+  });
+  ordem.sort(function (a, b) { return b.emissao - a.emissao || b.lanc - a.lanc || b.num - a.num || a.i - b.i; });
+  if (ordem.every(function (o, j) { return o.i === j; })) return false;
+  var pdf = sh.getRange(2, COL.PDF, n, 1).getRichTextValues(), xml = sh.getRange(2, COL.XML, n, 1).getRichTextValues();
+  var digitado = function (linhas) {
+    return JSON.stringify(linhas.map(function (r) { return r.slice(COL.STATUS - 1, COL.OBS); }));
+  };
+  if (digitado(sh.getRange(2, 1, n, CAB.NOTAS.length).getValues()) !== digitado(v)) return false;
+  var vazio = function (rt) { return rt || SpreadsheetApp.newRichTextValue().setText('').build(); };
+  faixa.setValues(ordem.map(function (o) { return v[o.i]; }));
+  sh.getRange(2, COL.PDF, n, 1).setRichTextValues(ordem.map(function (o) { return [vazio(pdf[o.i][0])]; }));
+  sh.getRange(2, COL.XML, n, 1).setRichTextValues(ordem.map(function (o) { return [vazio(xml[o.i][0])]; }));
+  return true;
+}
+
 // Razão social dos fornecedores sempre em MAIÚSCULAS (também nas linhas que já estavam na planilha)
 function fornecedoresMaiusculos(sh) {
   var n = sh.getLastRow() - 1;
