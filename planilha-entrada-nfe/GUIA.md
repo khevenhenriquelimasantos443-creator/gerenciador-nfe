@@ -94,8 +94,10 @@ do nome do arquivo (`VILLE 03-09 NFE 79570.pdf` → `VILLE`). PDF repetido fica 
 **ARQUIVOS**; **PENDENTE** lá é só o PDF que ainda não foi lido (fica para a próxima atualização).
 
 **Nota repetida em duas linhas?** A cada atualização a planilha junta sozinha: fica a linha com o XML, e da outra
-vêm o link do PDF, o status, o motivo e a observação (onde a que fica estava em branco). Fica registrado no LOG
-como DUPLICADO; se as duas tinham status diferentes, o LOG diz qual era o da linha apagada.
+vêm o link do PDF, o status, o motivo e a observação (onde a que fica estava em branco). Duas linhas só com PDF
+também se juntam quando abrem o mesmo arquivo de PDF ou têm a mesma chave de acesso (fica a de cima). Fica
+registrado no LOG como DUPLICADO; se as duas tinham status diferentes, o LOG diz qual era o da linha apagada. Um PDF
+que já está numa linha nunca cria outra, mesmo que uma atualização tenha sido cortada no meio.
 
 **Link do PDF ou do XML na nota errada?** **NF-e > Refazer os links de PDF e XML** refaz os links das duas
 colunas a partir da aba ARQUIVOS (que guarda qual arquivo é de qual nota): pela chave de acesso e, no PDF sem

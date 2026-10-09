@@ -550,6 +550,9 @@ function atualizarNotas(silencioso) {
     };
     pdfs.forEach(function (p) {
       var r = p.r, chave = /^\d{44}$/.test(r[3]) ? r[3] : '';
+      // já tem linha com o link deste PDF (uma atualização cortada no meio não chegou a marcar aqui): não cria outra
+      var dona = notas.porPdf[r[0]];
+      if (dona) { r[3] = dona.chave || r[3]; r[4] = dona.xml ? 'OK' : SIT_SO_PDF; return; }
       var nota = chave ? notas.porChave[chave] : notaPeloNumero(r[1], notas.lista);
       if (nota) return ligar(p, nota);
       var mesma = !chave && notaPeloNumero(r[1], notas.lista, true);
@@ -623,6 +626,8 @@ function atualizarNotas(silencioso) {
     if (!silencioso || novasNotas.length || ligados || soPdf.length || completadas.length || lidosDoPdf || juntadas) aviso(msg);
     return msg;
   } finally {
+    // grava tudo antes de soltar a trava: a próxima atualização tem que ler a planilha já atualizada
+    try { SpreadsheetApp.flush(); } catch (e) {}
     lock.releaseLock();
   }
 }
@@ -719,13 +724,14 @@ function gravarRegistro(reg, novos, pdfs) {
   pdfs.forEach(function (p) { if (!p.linha) p.linha = ini + novos.indexOf(p.r); });
 }
 
-// Notas já na planilha: chave -> {linha, numero, pdf (tem?), xml (tem?)}
+// Notas já na planilha: chave -> {linha, numero, pdf (tem?), xml (tem?)}; porPdf: id do PDF no link -> nota
 function lerNotas() {
   var sh = planilha().getSheetByName(ABA.NOTAS);
-  var porChave = {}, lista = [];
+  var porChave = {}, porPdf = {}, lista = [];
   var n = sh.getLastRow();
   if (n > 1) {
     var v = sh.getRange(2, 1, n - 1, CAB.NOTAS.length).getValues();
+    var links = sh.getRange(2, COL.PDF, n - 1, 1).getRichTextValues();
     v.forEach(function (r, i) {
       var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, '');
       if (chave.length !== 44) chave = ''; // chave estragada (ex.: virou número na planilha) não vale
@@ -735,9 +741,12 @@ function lerNotas() {
                    soPdf: r[COL.XML - 1] === '' && r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF };
       lista.push(nota);
       if (chave) porChave[chave] = nota;
+      var url = links[i][0] && links[i][0].getLinkUrl ? links[i][0].getLinkUrl() : '';
+      var id = (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1];
+      if (id && nota.pdf && !porPdf[id]) porPdf[id] = nota;
     });
   }
-  return { porChave: porChave, lista: lista };
+  return { porChave: porChave, porPdf: porPdf, lista: lista };
 }
 
 // Grava as notas novas (em bloco) e os links de PDF/XML que apareceram
@@ -1214,29 +1223,37 @@ function refazerLinks(sh) {
   return res;
 }
 
-// Mesma nota em duas linhas (o PDF chegou antes do XML e o XML não reconheceu a linha, ou uma versão antiga do
-// script lançou de novo): fica a linha com o XML; da outra vêm o link do PDF, o status, o motivo e a observação
-// (só onde a que fica está em branco) e a data de entrada mais antiga. Depois a repetida é apagada.
+// Mesma nota em duas linhas (o PDF chegou antes do XML e o XML não reconheceu a linha, uma atualização cortada no
+// meio, ou uma versão antiga do script lançou de novo): fica a linha com o XML (ou, entre linhas só com PDF, a de
+// cima); da outra vêm o link do PDF, o status, o motivo e a observação (só onde a que fica está em branco) e a data
+// de entrada mais antiga. Depois a repetida é apagada.
 function removerDuplicadas(sh) {
   var n = sh.getLastRow() - 1;
   if (n < 2) return 0;
   var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
+  var rtPdf = sh.getRange(2, COL.PDF, n, 1).getRichTextValues();
+  var urlDe = function (rt) { return rt && rt.getLinkUrl ? rt.getLinkUrl() || '' : ''; };
+  var idDe = function (i) { return (urlDe(rtPdf[i][0]).match(/\/d\/([^\/?#]+)/) || [])[1] || ''; };
   var chaveDe = function (r) { var c = String(r[COL.CHAVE - 1]).replace(/\D/g, ''); return c.length === 44 ? c : ''; };
   var numDe = function (r) { return String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, ''); };
   var fornDe = function (r) { return String(r[COL.FORN - 1]).trim().toUpperCase(); };
   var temXml = function (r) { return String(r[COL.XML - 1]) !== ''; };
-  var fica = {}, porNum = {}, juntar = [];
+  var fica = {}, porNum = {}, xmlPorPdf = {}, juntar = [];
   v.forEach(function (r, i) {
     if (!temXml(r)) return;
     var c = chaveDe(r);
     if (c && fica[c] !== undefined) { juntar.push({ de: i, para: fica[c] }); return; }
     if (c) fica[c] = i;
     if (numDe(r)) (porNum[numDe(r)] = porNum[numDe(r)] || []).push(i);
+    if (idDe(i) && xmlPorPdf[idDe(i)] === undefined) xmlPorPdf[idDe(i)] = i;
   });
   var mesmoForn = function (a, b) { return a && b && (a.indexOf(b) === 0 || b.indexOf(a) === 0); };
+  // linhas só com PDF que ficam: id do PDF -> linha, chave -> linha
+  var soPorPdf = {}, soPorChave = {};
   v.forEach(function (r, i) {
     if (temXml(r)) return;
-    var c = chaveDe(r), para = c ? fica[c] : undefined;
+    var c = chaveDe(r), id = idDe(i), para = c ? fica[c] : undefined;
+    if (para === undefined && id) para = xmlPorPdf[id]; // o mesmo arquivo de PDF já está na linha de um XML
     if (para === undefined && numDe(r)) {
       // mesmo nº, mesmo fornecedor (nome igual ou um começa com o outro) e, se tiver chave, mesmo emitente
       var cand = (porNum[numDe(r)] || []).filter(function (p) {
@@ -1245,13 +1262,17 @@ function removerDuplicadas(sh) {
       });
       if (cand.length === 1) para = cand[0];
     }
-    if (para !== undefined) juntar.push({ de: i, para: para });
+    // duas linhas só com PDF: o mesmo arquivo de PDF ou a mesma chave lida do PDF
+    if (para === undefined && id) para = soPorPdf[id];
+    if (para === undefined && c) para = soPorChave[c];
+    if (para !== undefined) { juntar.push({ de: i, para: para }); return; }
+    if (id) soPorPdf[id] = i;
+    if (c) soPorChave[c] = i;
   });
   if (!juntar.length) return 0;
-  var rtPdf = sh.getRange(2, COL.PDF, n, 1).getRichTextValues();
-  var urlDe = function (rt) { return rt && rt.getLinkUrl ? rt.getLinkUrl() || '' : ''; };
   var arq = planilha().getSheetByName(ABA.ARQ), nA = arq.getLastRow() - 1;
   var regArq = nA > 0 ? arq.getRange(2, 1, nA, 5).getValues() : [], arqMudou = false, log = [], agora = new Date();
+  var dados = [COL.NUM, COL.FORN, COL.COMPRADOR, COL.EMISSAO, COL.VALOR, COL.BOLETOS, COL.CHAVE];
   juntar.forEach(function (j) {
     var de = v[j.de], para = v[j.para], linha = j.para + 2, aviso = '';
     // PDF: a que fica não tem, a repetida tem
@@ -1260,8 +1281,16 @@ function removerDuplicadas(sh) {
       var id = (url.match(/\/d\/([^\/?#]+)/) || [])[1];
       sh.getRange(linha, COL.PDF).setRichTextValue(link('Abrir PDF', id));
       para[COL.PDF - 1] = 'Abrir PDF'; rtPdf[j.para][0] = rtPdf[j.de][0];
-      regArq.forEach(function (r) { if (r[0] === id) { r[3] = chaveDe(para) || r[3]; r[4] = 'OK'; arqMudou = true; } });
+      if (temXml(para)) regArq.forEach(function (r) { if (r[0] === id) { r[3] = chaveDe(para) || r[3]; r[4] = 'OK'; arqMudou = true; } });
     }
+    // as duas só com PDF: o que foi lido do PDF numa e falta na outra
+    if (!temXml(para)) dados.forEach(function (c) {
+      if (String(para[c - 1]).trim() !== '' || String(de[c - 1]).trim() === '') return;
+      para[c - 1] = de[c - 1];
+      var cel = sh.getRange(linha, c);
+      if (c === COL.CHAVE || c === COL.NUM) cel.setNumberFormat('@');
+      cel.setValue(de[c - 1]);
+    });
     // o que foi digitado: só onde a que fica está em branco
     [COL.STATUS, COL.MOTIVO, COL.OBS].forEach(function (c) {
       var a = String(para[c - 1]).trim(), b = String(de[c - 1]).trim();
@@ -1271,8 +1300,16 @@ function removerDuplicadas(sh) {
     if (de[COL.LANC - 1] instanceof Date && (!(para[COL.LANC - 1] instanceof Date) || de[COL.LANC - 1] < para[COL.LANC - 1])) para[COL.LANC - 1] = de[COL.LANC - 1];
     sh.getRange(linha, COL.LANC).setValue(para[COL.LANC - 1]);
     sh.getRange(linha, COL.STATUS, 1, 3).setValues([[para[COL.STATUS - 1], para[COL.MOTIVO - 1], para[COL.OBS - 1]]]);
-    log.push([agora, 'Nota ' + (para[COL.NUM - 1] || '?'), 'DUPLICADO', 'Nota ' + para[COL.NUM - 1] + ' ' + fornDe(para) +
+    log.push([agora, 'Nota ' + (para[COL.NUM - 1] || '?'), 'DUPLICADO', 'Nota ' + (para[COL.NUM - 1] || '?') + ' ' + fornDe(para) +
       ' estava em duas linhas: ficou uma só.' + aviso]);
+  });
+  // PDF da linha apagada que não ficou em nenhuma linha (outra cópia do mesmo arquivo): DUPLICADO na aba ARQUIVOS
+  var apagadas = {}, usados = {};
+  juntar.forEach(function (j) { apagadas[j.de] = true; });
+  v.forEach(function (r, i) { if (!apagadas[i] && idDe(i)) usados[idDe(i)] = true; });
+  juntar.forEach(function (j) {
+    var id = idDe(j.de);
+    if (id && !usados[id]) regArq.forEach(function (r) { if (r[0] === id) { r[4] = 'DUPLICADO'; arqMudou = true; } });
   });
   if (arqMudou) arq.getRange(2, 4, nA, 2).setValues(regArq.map(function (r) { return [r[3], r[4]]; }));
   // apaga as repetidas de baixo para cima (para as linhas de cima não mudarem de lugar)
