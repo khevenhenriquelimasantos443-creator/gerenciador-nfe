@@ -54,7 +54,7 @@ function ehSoPdf(obs) { return String(obs).indexOf('Só PDF, sem XML') === 0; }
 // situação do PDF sem XML na aba ARQUIVOS: entrou como linha própria e ainda falta ler os dados / já leu
 var SIT_SO_PDF = 'SÓ PDF', SIT_PDF_LIDO = 'SÓ PDF - LIDO', SIT_PDF_ILEGIVEL = 'SÓ PDF - ILEGÍVEL';
 // muda quando o formato da aba NOTAS muda (status novo, cores...): a próxima atualização reaplica tudo
-var FORMATO_NOTAS = '2026-10-10';
+var FORMATO_NOTAS = '2026-10-11';
 
 var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA', 'BONIFICAÇÃO'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
@@ -924,8 +924,7 @@ function chaveNoTexto(texto, conhecidas) {
 // Linha para um PDF sem XML. Nº: o da chave achada no PDF ou, se o nome do arquivo tiver um número só, esse.
 function linhaSoPdf(r, agora) {
   var chave = /^\d{44}$/.test(r[3]) ? r[3] : '';
-  var nums = String(r[1]).replace(/\.pdf$/i, '').match(/\d{3,9}/g) || [];
-  var num = chave ? chave.substr(25, 9).replace(/^0+(?=\d)/, '') : nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
+  var num = chave ? chave.substr(25, 9).replace(/^0+(?=\d)/, '') : numeroNoNome(r[1]);
   var l = CAB.NOTAS.map(function () { return ''; });
   l[COL.NUM - 1] = num; l[COL.PDF - 1] = 'Abrir PDF'; l[COL.FORN - 1] = fornecedorDoNome(r[1]);
   l[COL.LANC - 1] = agora; l[COL.CHAVE - 1] = chave; // status e observação em branco
@@ -969,7 +968,8 @@ function dadosDosPdfsSemXml(sh, ate) {
     var d = null;
     if (id) { try { d = dadosDoTextoDoPdf(textoDoPdfPeloDrive(id), conhecidos); } catch (e) { console.log('PDF ' + id + ': ' + (e && e.message || e)); } }
     lidos++;
-    arq.getRange(linhaArq[id], 5).setValue(d ? SIT_PDF_LIDO : SIT_PDF_ILEGIVEL);
+    if (d && d.chave) arq.getRange(linhaArq[id], 4, 1, 2).setValues([[d.chave, SIT_PDF_LIDO]]);
+    else arq.getRange(linhaArq[id], 5).setValue(d ? SIT_PDF_LIDO : SIT_PDF_ILEGIVEL);
     if (!d) return;
     var l = r.slice();
     if (d.numero) l[COL.NUM - 1] = d.numero;
@@ -1109,13 +1109,13 @@ function ordenarNotas(sh) {
 function refazerLinksAgora() {
   var r = refazerLinks(planilha().getSheetByName(ABA.NOTAS));
   aviso(r.pdf + ' link(s) de PDF e ' + r.xml + ' de XML corrigido(s).' +
-    (r.semAchar ? ' ' + r.semAchar + ' PDF(s) sem XML não deu para identificar (ficaram como estavam).' : ''), 15);
+    (r.duvidas.length ? ' Confira o PDF das notas (veja o LOG): ' + r.duvidas.join('; ') : ''), 30);
 }
 
 // Refaz os links das colunas PDF e XML a partir da aba ARQUIVOS (que guarda qual arquivo é de qual nota):
 // PDF e XML ligados pela chave de acesso; PDF sem XML pela chave ou pelo nº no nome do arquivo.
 function refazerLinks(sh) {
-  var res = { pdf: 0, xml: 0, semAchar: 0 };
+  var res = { pdf: 0, xml: 0, semAchar: 0, duvidas: [] };
   var n = sh.getLastRow() - 1;
   if (n < 1) return res;
   var arq = planilha().getSheetByName(ABA.ARQ), nA = arq.getLastRow() - 1;
@@ -1128,16 +1128,16 @@ function refazerLinks(sh) {
     if (r[2] === 'PDF' && sit === 'OK' && chave && !pdfPorChave[chave]) pdfPorChave[chave] = id;
     if (r[2] === 'PDF' && sit.indexOf(SIT_SO_PDF) === 0) soPdf.push({ id: id, nome: String(r[1]), chave: chave });
   });
-  var numDoNome = function (nome) {
-    var nums = String(nome).replace(/\.pdf$/i, '').match(/\d{3,9}/g) || [];
-    return nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
-  };
+  var numDoNome = numeroNoNome;
+  var idDoLink = function (url) { return (String(url || '').match(/\/d\/([^\/?#]+)/) || [])[1] || ''; };
+  var pdfsDeNotas = {}; // PDFs que já são de uma nota com XML
+  Object.keys(pdfPorChave).forEach(function (c) { pdfsDeNotas[pdfPorChave[c]] = 1; });
   var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
   var faixaPdf = sh.getRange(2, COL.PDF, n, 1), faixaXml = sh.getRange(2, COL.XML, n, 1);
   var rtPdf = faixaPdf.getRichTextValues(), rtXml = faixaXml.getRichTextValues();
   var urlDe = function (rt) { return rt && rt.getLinkUrl ? rt.getLinkUrl() || '' : ''; };
   var texto = function (t) { return SpreadsheetApp.newRichTextValue().setText(t).build(); };
-  var novoPdf = [], novoXml = [];
+  var novoPdf = [], novoXml = [], achados = [];
   v.forEach(function (r, i) {
     var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, ''), num = String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, '');
     if (chave.length !== 44) chave = '';
@@ -1151,20 +1151,46 @@ function refazerLinks(sh) {
     var idPdf = chave && pdfPorChave[chave];
     if (!idPdf) {
       var c = soPdf.filter(function (p) { return chave && p.chave === chave; });
-      if (c.length !== 1 && num) c = soPdf.filter(function (p) { return numDoNome(p.nome) === num; });
+      var forn = String(r[COL.FORN - 1]).toUpperCase();
+      var mesmoForn = function (p) { var f = fornecedorDoNome(p.nome).toUpperCase(); return f && (forn.indexOf(f) === 0 || f.indexOf(forn) === 0); };
+      if (c.length !== 1 && num) {
+        c = soPdf.filter(function (p) { return numDoNome(p.nome) === num; });
+        if (c.length > 1) c = c.filter(mesmoForn); // mesmo nº de fornecedores diferentes
+      }
       if (c.length !== 1 && !temXml) {
-        var forn = String(r[COL.FORN - 1]).toUpperCase();
         c = soPdf.filter(function (p) { return fornecedorDoNome(p.nome).toUpperCase() === forn && (!num || numDoNome(p.nome) === num); });
       }
       if (c.length === 1) idPdf = c[0].id;
     }
-    var pdf;
+    achados.push(idPdf || '');
+  });
+  var usados = {};
+  achados.forEach(function (id) { if (id) usados[id] = 1; });
+  // sobrou um só PDF sem XML sem dono e uma só linha sem XML sem PDF identificado: são um do outro
+  var soltos = soPdf.filter(function (p) { return !usados[p.id]; });
+  var semId = [];
+  v.forEach(function (r, i) {
+    var t = String(r[COL.PDF - 1]);
+    if (!achados[i] && String(r[COL.XML - 1]) === '' && t !== '' && t !== SEM_PDF) semId.push(i);
+  });
+  if (soltos.length === 1 && semId.length === 1) { achados[semId[0]] = soltos[0].id; usados[soltos[0].id] = 1; }
+  v.forEach(function (r, i) {
+    var idPdf = achados[i], pdf, atual = idDoLink(urlDe(rtPdf[i][0]));
     if (idPdf) pdf = link('Abrir PDF', idPdf);
     else if (String(r[COL.PDF - 1]) === SEM_PDF || String(r[COL.PDF - 1]) === '') pdf = texto(String(r[COL.PDF - 1]) || SEM_PDF);
-    else { pdf = rtPdf[i][0] || texto(String(r[COL.PDF - 1])); res.semAchar++; } // não deu para saber: fica como está
+    else {
+      // não deu para saber qual é o PDF desta linha. Se o link atual é de outra nota, está errado: tira.
+      res.semAchar++;
+      res.duvidas.push('nº ' + (r[COL.NUM - 1] || '?') + ' ' + String(r[COL.FORN - 1]).slice(0, 30));
+      pdf = atual && (usados[atual] || pdfsDeNotas[atual]) ? texto(SEM_PDF) : rtPdf[i][0] || texto(String(r[COL.PDF - 1]));
+    }
     if (urlDe(pdf) !== urlDe(rtPdf[i][0]) || String(r[COL.PDF - 1]) === SEM_PDF && urlDe(rtPdf[i][0])) res.pdf++;
     novoPdf.push([pdf]);
   });
+  if (res.duvidas.length) anexar(ABA.LOG, res.duvidas.map(function (d) {
+    return [new Date(), d, 'CONFERIR', 'Refazer links: não deu para confirmar qual é o PDF desta nota. Confira o link (ou ' +
+      'apague a linha e deixe a nota entrar de novo).'];
+  }));
   // tira os links antigos (ficam na formatação da célula) e grava os certos
   faixaPdf.clear({ formatOnly: true }); faixaPdf.setRichTextValues(novoPdf);
   faixaXml.clear({ formatOnly: true }); faixaXml.setRichTextValues(novoXml);
@@ -1224,10 +1250,22 @@ function gravarCompradores() {
   try { PropertiesService.getScriptProperties().setProperty('COMPRADORES', JSON.stringify(COMPRADORES)); COMPRADORES_MUDOU = false; } catch (e) {}
 }
 
+// Nº da nota no nome do arquivo: "REBAJ 15-06 NFE 80.pdf" -> 80, "NF 289804.pdf" -> 289804, "NFE 037" -> 37;
+// sem "NF/NFE" no nome, vale o único número de 3 a 9 dígitos ("danfe_289804.pdf" -> 289804)
+function numeroNoNome(nome) {
+  var n = String(nome).replace(/\.pdf$/i, '');
+  var m = n.match(/\bNF\s*-?\s*E?\s*[nº°.:#-]*\s*0*(\d{1,9})(?!\d)/i);
+  if (m) return m[1] || '0';
+  var nums = n.match(/\d{3,9}/g) || [];
+  return nums.length === 1 ? nums[0].replace(/^0+(?=\d)/, '') : '';
+}
+
 // "NF 289804.pdf", "danfe_289804.pdf": número de uma nota que ainda não tem PDF (só se for uma só)
 // comPdf = true: procura entre as que já têm PDF (para avisar que o arquivo é repetido)
 function notaPeloNumero(nome, lista, comPdf) {
   var nums = (String(nome).replace(/\.pdf$/i, '').match(/\d{3,9}/g) || []).map(function (x) { return x.replace(/^0+/, ''); });
+  var doNome = numeroNoNome(nome);
+  if (doNome && nums.indexOf(doNome) < 0) nums.push(doNome);
   var achadas = lista.filter(function (n) { return !n.pdf === !comPdf && n.numero && nums.indexOf(n.numero) >= 0; });
   return achadas.length === 1 ? achadas[0] : null;
 }
