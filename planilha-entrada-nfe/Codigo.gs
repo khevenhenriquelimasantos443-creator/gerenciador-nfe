@@ -54,7 +54,7 @@ function ehSoPdf(obs) { return String(obs).indexOf('Só PDF, sem XML') === 0; }
 // situação do PDF sem XML na aba ARQUIVOS: entrou como linha própria e ainda falta ler os dados / já leu
 var SIT_SO_PDF = 'SÓ PDF', SIT_PDF_LIDO = 'SÓ PDF - LIDO', SIT_PDF_ILEGIVEL = 'SÓ PDF - ILEGÍVEL';
 // muda quando o formato da aba NOTAS muda (status novo, cores...): a próxima atualização reaplica tudo
-var FORMATO_NOTAS = '2026-10-11';
+var FORMATO_NOTAS = '2026-10-12';
 
 var STATUS = ['AGUARDANDO', 'ENTRADA OK', 'COM PROBLEMA', 'BONIFICAÇÃO'];
 var MOTIVO_OUTRO = 'Outro (descreva na Observação)';
@@ -146,6 +146,7 @@ function configurarPlanilha() {
   boletosNoFormatoNovo(notas);
   compradoresPadronizados(notas);
   fornecedoresMaiusculos(notas);
+  removerDuplicadas(notas);
   ordenarNotas(notas);
 
   var arq = garantirAba(ss, ABA.ARQ, CAB.ARQ);
@@ -234,6 +235,8 @@ function formatoAtual(sh) {
   var props = PropertiesService.getScriptProperties();
   if (props.getProperty('FORMATO_NOTAS') !== FORMATO_NOTAS) {
     validacoesNotas(sh);   // lista do status com BONIFICAÇÃO em todas as linhas
+    sh.getRange(2, COL.NUM, sh.getMaxRows() - 1, 1).setNumberFormat('@');
+    sh.getRange(2, COL.CHAVE, sh.getMaxRows() - 1, 1).setNumberFormat('@');
     regrasDeCor(sh);
     tirarMarcasDaObservacao(sh);
     refazerLinks(sh); // a ordenação de 08/10 deixou links de PDF/XML em linhas trocadas (e reaplica as cores)
@@ -507,7 +510,7 @@ function atualizarNotas(silencioso) {
           log.push([agora, a.nome, 'IGNORADO', erro || 'XML não é de NF-e (pode ser evento, CT-e ou nota cancelada).']);
           return;
         }
-        var ja = notas.porChave[x.chave] || soPdfPeloNumero(x.numero, notas.lista);
+        var ja = notas.porChave[x.chave] || soPdfPeloNumero(x.numero, notas.lista, x.chave, x.fornecedor);
         if (ja && ja.soPdf) {
           ja.soPdf = false; ja.xml = true; ja.linkXml = a.id; ja.chave = x.chave; notas.porChave[x.chave] = ja;
           completadas.push({ ref: ja, x: x });
@@ -604,18 +607,20 @@ function atualizarNotas(silencioso) {
     var lidosDoPdf = dadosDosPdfsSemXml(abaNotas, inicio + LIMITE_DADOS_PDF);
     compradoresPadronizados(abaNotas);
     fornecedoresMaiusculos(abaNotas);
+    var juntadas = removerDuplicadas(abaNotas);
     ordenarNotas(abaNotas);
 
     var msg = novasNotas.length + ' nota(s) nova(s), ' + ligados + ' PDF(s) ligado(s).' +
       (completadas.length ? ' ' + completadas.length + ' linha(s) só com PDF completada(s) pelo XML.' : '') +
       (soPdf.length ? ' ' + soPdf.length + ' PDF(s) sem XML entraram como linha própria.' : '') +
       (lidosDoPdf ? ' Dados de ' + lidosDoPdf + ' PDF(s) sem XML lidos do próprio PDF.' : '') +
+      (juntadas ? ' ' + juntadas + ' linha(s) repetida(s) juntada(s).' : '') +
       (faltou ? ' Faltaram ' + faltou + ' arquivo(s): continuam na próxima atualização.' : '');
     var semPdf = notas.lista.filter(function (n) { return !n.pdf; }).length;
     if (semPdf) msg += ' ' + semPdf + ' nota(s) ainda sem PDF.';
     var pdfSemNota = pdfs.filter(function (p) { return p.r[4] === 'PENDENTE'; }).length;
     if (pdfSemNota) msg += ' ' + pdfSemNota + ' PDF(s) ainda não lidos (aba ARQUIVOS, situação PENDENTE).';
-    if (!silencioso || novasNotas.length || ligados || soPdf.length || completadas.length || lidosDoPdf) aviso(msg);
+    if (!silencioso || novasNotas.length || ligados || soPdf.length || completadas.length || lidosDoPdf || juntadas) aviso(msg);
     return msg;
   } finally {
     lock.releaseLock();
@@ -723,7 +728,9 @@ function lerNotas() {
     var v = sh.getRange(2, 1, n - 1, CAB.NOTAS.length).getValues();
     v.forEach(function (r, i) {
       var chave = String(r[COL.CHAVE - 1]).replace(/\D/g, '');
+      if (chave.length !== 44) chave = ''; // chave estragada (ex.: virou número na planilha) não vale
       var nota = { linha: i + 2, chave: chave, numero: String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, ''),
+                   forn: String(r[COL.FORN - 1]).trim().toUpperCase(),
                    pdf: r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF, xml: r[COL.XML - 1] !== '',
                    soPdf: r[COL.XML - 1] === '' && r[COL.PDF - 1] !== '' && r[COL.PDF - 1] !== SEM_PDF };
       lista.push(nota);
@@ -979,6 +986,7 @@ function dadosDosPdfsSemXml(sh, ate) {
     if (d.valor) l[COL.VALOR - 1] = d.valor;
     if (d.vencimento) l[COL.BOLETOS - 1] = d.vencimento;
     if (d.chave) l[COL.CHAVE - 1] = d.chave;
+    sh.getRange(linha, COL.CHAVE).setNumberFormat('@'); // 44 dígitos como número perdem os últimos dígitos
     sh.getRange(linha, 1).setValue(l[0]);
     sh.getRange(linha, COL.FORN, 1, COL.BOLETOS - COL.FORN + 1).setValues([l.slice(COL.FORN - 1, COL.BOLETOS)]);
     sh.getRange(linha, COL.CHAVE).setValue(l[COL.CHAVE - 1]);
@@ -1064,8 +1072,16 @@ function dadosDoTextoDoPdf(texto, conhecidos) {
 }
 
 // Linha "só PDF" sem chave com o mesmo nº da nota (só se for uma)
-function soPdfPeloNumero(numero, lista) {
-  var achadas = lista.filter(function (n) { return n.soPdf && !n.chave && n.numero && n.numero === numero; });
+// (chave e fornecedor do XML: a linha só PDF com chave de outro emitente não vale; empate, pelo fornecedor)
+function soPdfPeloNumero(numero, lista, chave, fornecedor) {
+  var emitente = String(chave || '').substr(6, 14);
+  var achadas = lista.filter(function (n) {
+    return n.soPdf && n.numero && n.numero === numero && (!n.chave || !emitente || n.chave.substr(6, 14) === emitente);
+  });
+  if (achadas.length > 1 && fornecedor) {
+    var f = String(fornecedor).trim().toUpperCase();
+    achadas = achadas.filter(function (n) { return n.forn && (f.indexOf(n.forn) === 0 || n.forn.indexOf(f) === 0); });
+  }
   return achadas.length === 1 ? achadas[0] : null;
 }
 
@@ -1196,6 +1212,74 @@ function refazerLinks(sh) {
   faixaXml.clear({ formatOnly: true }); faixaXml.setRichTextValues(novoXml);
   regrasDeCor(sh); // limpar a formatação também tira a formatação condicional dessas colunas: põe de volta
   return res;
+}
+
+// Mesma nota em duas linhas (o PDF chegou antes do XML e o XML não reconheceu a linha, ou uma versão antiga do
+// script lançou de novo): fica a linha com o XML; da outra vêm o link do PDF, o status, o motivo e a observação
+// (só onde a que fica está em branco) e a data de entrada mais antiga. Depois a repetida é apagada.
+function removerDuplicadas(sh) {
+  var n = sh.getLastRow() - 1;
+  if (n < 2) return 0;
+  var v = sh.getRange(2, 1, n, CAB.NOTAS.length).getValues();
+  var chaveDe = function (r) { var c = String(r[COL.CHAVE - 1]).replace(/\D/g, ''); return c.length === 44 ? c : ''; };
+  var numDe = function (r) { return String(r[COL.NUM - 1]).replace(/\D/g, '').replace(/^0+(?=\d)/, ''); };
+  var fornDe = function (r) { return String(r[COL.FORN - 1]).trim().toUpperCase(); };
+  var temXml = function (r) { return String(r[COL.XML - 1]) !== ''; };
+  var fica = {}, porNum = {}, juntar = [];
+  v.forEach(function (r, i) {
+    if (!temXml(r)) return;
+    var c = chaveDe(r);
+    if (c && fica[c] !== undefined) { juntar.push({ de: i, para: fica[c] }); return; }
+    if (c) fica[c] = i;
+    if (numDe(r)) (porNum[numDe(r)] = porNum[numDe(r)] || []).push(i);
+  });
+  var mesmoForn = function (a, b) { return a && b && (a.indexOf(b) === 0 || b.indexOf(a) === 0); };
+  v.forEach(function (r, i) {
+    if (temXml(r)) return;
+    var c = chaveDe(r), para = c ? fica[c] : undefined;
+    if (para === undefined && numDe(r)) {
+      // mesmo nº, mesmo fornecedor (nome igual ou um começa com o outro) e, se tiver chave, mesmo emitente
+      var cand = (porNum[numDe(r)] || []).filter(function (p) {
+        var cp = chaveDe(v[p]);
+        return mesmoForn(fornDe(r), fornDe(v[p])) && (!c || !cp || c.substr(6, 14) === cp.substr(6, 14));
+      });
+      if (cand.length === 1) para = cand[0];
+    }
+    if (para !== undefined) juntar.push({ de: i, para: para });
+  });
+  if (!juntar.length) return 0;
+  var rtPdf = sh.getRange(2, COL.PDF, n, 1).getRichTextValues();
+  var urlDe = function (rt) { return rt && rt.getLinkUrl ? rt.getLinkUrl() || '' : ''; };
+  var arq = planilha().getSheetByName(ABA.ARQ), nA = arq.getLastRow() - 1;
+  var regArq = nA > 0 ? arq.getRange(2, 1, nA, 5).getValues() : [], arqMudou = false, log = [], agora = new Date();
+  juntar.forEach(function (j) {
+    var de = v[j.de], para = v[j.para], linha = j.para + 2, aviso = '';
+    // PDF: a que fica não tem, a repetida tem
+    var url = urlDe(rtPdf[j.de][0]);
+    if (url && (String(para[COL.PDF - 1]) === SEM_PDF || !urlDe(rtPdf[j.para][0]))) {
+      var id = (url.match(/\/d\/([^\/?#]+)/) || [])[1];
+      sh.getRange(linha, COL.PDF).setRichTextValue(link('Abrir PDF', id));
+      para[COL.PDF - 1] = 'Abrir PDF'; rtPdf[j.para][0] = rtPdf[j.de][0];
+      regArq.forEach(function (r) { if (r[0] === id) { r[3] = chaveDe(para) || r[3]; r[4] = 'OK'; arqMudou = true; } });
+    }
+    // o que foi digitado: só onde a que fica está em branco
+    [COL.STATUS, COL.MOTIVO, COL.OBS].forEach(function (c) {
+      var a = String(para[c - 1]).trim(), b = String(de[c - 1]).trim();
+      if (!a && b) para[c - 1] = de[c - 1];
+      else if (a && b && a !== b) aviso += ' A linha apagada tinha ' + CAB.NOTAS[c - 1] + ' = "' + b + '".';
+    });
+    if (de[COL.LANC - 1] instanceof Date && (!(para[COL.LANC - 1] instanceof Date) || de[COL.LANC - 1] < para[COL.LANC - 1])) para[COL.LANC - 1] = de[COL.LANC - 1];
+    sh.getRange(linha, COL.LANC).setValue(para[COL.LANC - 1]);
+    sh.getRange(linha, COL.STATUS, 1, 3).setValues([[para[COL.STATUS - 1], para[COL.MOTIVO - 1], para[COL.OBS - 1]]]);
+    log.push([agora, 'Nota ' + (para[COL.NUM - 1] || '?'), 'DUPLICADO', 'Nota ' + para[COL.NUM - 1] + ' ' + fornDe(para) +
+      ' estava em duas linhas: ficou uma só.' + aviso]);
+  });
+  if (arqMudou) arq.getRange(2, 4, nA, 2).setValues(regArq.map(function (r) { return [r[3], r[4]]; }));
+  // apaga as repetidas de baixo para cima (para as linhas de cima não mudarem de lugar)
+  juntar.map(function (j) { return j.de + 2; }).sort(function (a, b) { return b - a; })
+    .forEach(function (l) { sh.deleteRow(l); });
+  anexar(ABA.LOG, log);
+  return juntar.length;
 }
 
 // Razão social dos fornecedores sempre em MAIÚSCULAS (também nas linhas que já estavam na planilha)
