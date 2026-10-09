@@ -144,6 +144,12 @@ e aparecem em AUMENTOS 7 DIAS, marcados como "KIT ATUALIZADO" no histórico.
    **Atualizar revisão**: o script troca os componentes do kit na aba KITS, refaz a conta e limpa a
    coluna. Se algum SKU não existir no SKU - MKTPLACE, nada é trocado, o texto fica e a coluna Alerta
    diz qual SKU não foi achado.
+
+   **Kit com "falta confirmar":** basta escrever o SKU do que falta. Ex.: `Pó Descolorante + (falta
+   confirmar: OX 20 vol 1L)` → escreva só `BRAE-0090`. Os componentes já escolhidos ficam. Se faltam
+   dois, escreva os dois na ordem em que aparecem (`BRAE-0090 + BRAE-0189`). Escrevendo mais SKUs do que
+   os que faltam, vale como o kit inteiro (troca todos). Em kit sem "falta confirmar", o CORRIGIR sempre
+   troca o kit inteiro.
 5. Marque **Aprovar** nos kits conferidos. **Custos > Aprovar todos os kits verdes** marca de uma vez
    os que têm diferença de até 10%. Depois clique em **Gravar aprovados**. Os aprovados **saem da
    lista** e passam para a aba **KITS**. Na lista fica só o que falta revisar.

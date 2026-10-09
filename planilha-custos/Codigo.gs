@@ -376,6 +376,7 @@ function escreverLeiaMe(sh) {
     ['Revise na aba REVISAR KITS: um kit por linha, com os produtos escolhidos e o custo calculado x o custo atual.'],
     ['Verde = diferença até 10%; amarelo = até 25%; vermelho = diferença grande (componente ou quantidade errada?).'],
     ['Kit errado: escreva na coluna CORRIGIR os componentes certos (ex.: LOREAL-0024 + 2x LOREAL-0038) e clique em Atualizar revisão.'],
+    ['Kit com "falta confirmar": escreva no CORRIGIR só o SKU do que falta (se faltam dois, os dois na ordem); o resto do kit fica.'],
     ['Marque Aprovar (ou Custos > Aprovar todos os kits verdes) e clique em Gravar aprovados. Só kit aprovado é gravado.'],
     ['Aprovados saem da lista e se atualizam sozinhos.'],
     ['A aba KITS mostra só os kits aprovados, com o produto que foi vinculado a cada componente e o custo. Vínculo errado:'],
@@ -2099,6 +2100,7 @@ function kitsAprovados() {
 }
 
 // Coluna CORRIGIR da REVISAR KITS ("HON-0001 + 2x HON-0002"): troca os componentes do kit na aba KITS - SUGESTÕES.
+// Kit com componente faltando confirmar e um SKU para cada um que falta: preenche só esses e mantém os outros.
 // Devolve as correções que não deram certo ({sku do kit: {texto, erro}}) para continuarem na revisão.
 function aplicarCorrecoesKits(cfg) {
   var ss = SpreadsheetApp.getActive();
@@ -2124,12 +2126,29 @@ function aplicarCorrecoesKits(cfg) {
       var m = parte.match(/^(\d+)\s*[x×*]\s*(.+)$/i), qtd = m ? Number(m[1]) : 1, sku = (m ? m[2] : parte).trim();
       var it = porSku[sku.toUpperCase()];
       if (!it) erro += (erro ? ', ' : '') + sku;
-      else comps.push({ qtd: qtd, it: it });
+      else comps.push({ qtd: qtd, it: it, qtdEscrita: !!m });
     });
     if (erro || !comps.length) { falhas[kit] = { texto: texto, erro: 'CORRIGIR: não achei no SKU - MKTPLACE: ' + (erro || '(vazio)') }; return; }
-    var base = null;
-    v.forEach(function (r, i) { if (String(r[0]).trim() === kit) { apagar.push(i + 2); base = base || r; } });
-    if (!base) { falhas[kit] = { texto: texto, erro: 'CORRIGIR: kit não está na aba KITS - SUGESTÕES' }; return; }
+    var doKit = [];
+    v.forEach(function (r, i) { if (String(r[0]).trim() === kit) doKit.push(i); });
+    if (!doKit.length) { falhas[kit] = { texto: texto, erro: 'CORRIGIR: kit não está na aba KITS - SUGESTÕES' }; return; }
+    // só os que faltam confirmar: tantos SKUs quantos componentes faltam -> preenche esses (na ordem) e mantém o resto
+    var faltam = doKit.filter(function (i) { return String(v[i][10]).trim() === ''; });
+    if (faltam.length && comps.length === faltam.length) {
+      faltam.forEach(function (i, k) {
+        kits.getRange(i + 2, 11).setValue(comps[k].it.sku);
+        if (comps[k].qtdEscrita) kits.getRange(i + 2, 6).setValue(comps[k].qtd);
+      });
+      return;
+    }
+    if (faltam.length && comps.length < faltam.length) {
+      falhas[kit] = { texto: texto, erro: 'CORRIGIR: faltam ' + faltam.length + ' componentes; escreva os ' + faltam.length +
+        ' SKUs (na ordem, separados por +) ou o kit inteiro' };
+      return;
+    }
+    // o kit inteiro: troca todos os componentes
+    var base = v[doKit[0]];
+    doKit.forEach(function (i) { apagar.push(i + 2); });
     comps.forEach(function (c) {
       var desc = nomeCurto(c.it.desc) + (c.it.variacao ? ' [' + c.it.variacao + ']' : '');
       novas.push([kit, base[1], base[2], base[3], 'corrigido: ' + c.it.sku, c.qtd, c.it.sku, desc, 1, '', c.it.sku, '', base[12]]);
@@ -2292,7 +2311,8 @@ function revisarKits() {
     '✓ ' + r.aprovados + ' já aprovados (fora da lista, atualizados sozinhos)\n' +
     (r.falhas ? '\n' + r.falhas + ' correção(ões) com SKU não encontrado: veja a coluna Alerta.\n' : '') +
     '\nMarque Aprovar nos kits conferidos e clique em Gravar aprovados. Para corrigir um kit, escreva os\n' +
-    'componentes certos na coluna CORRIGIR (ex.: HON-0001 + 2x HON-0002) e clique em Atualizar revisão.');
+    'componentes certos na coluna CORRIGIR (ex.: HON-0001 + 2x HON-0002) e clique em Atualizar revisão.\n' +
+    'Kit com "falta confirmar": no CORRIGIR, basta o SKU do que falta.');
 }
 
 // Volta um kit aprovado para a lista de revisão (apaga a data de aprovação)
