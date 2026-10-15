@@ -24,3 +24,6 @@
 /sw (1).js
 /version.json
 /version (1).json
+
+# Apps Script dos recibos de VT — roda dentro do Google Planilhas, não no site
+/recibo-vt
