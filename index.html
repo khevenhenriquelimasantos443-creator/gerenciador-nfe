@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finn. — Controle Financeiro</title>
-<meta name="description" content="Finn — controle financeiro. Voluna — devoluções. SKUHub — SKU marketplaces. ClockIn — controle de ponto.">
+<meta name="description" content="Finn — controle financeiro. ClockIn — controle de ponto. Plantão — controle de domingos e feriados.">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -112,20 +112,10 @@
 
   /* Finn */
   .finn { --accent: #F97316; --glow: #F97316; --icon-bg: rgba(249,115,22,.12); }
-  /* Voluna (antigo ReturnFlow) */
-  .voluna { --accent: #4F46E5; --glow: #4F46E5; --icon-bg: rgba(79,70,229,.14); }
-  /* SKUHub */
-  .sku { --accent: #14B8A6; --glow: #14B8A6; --icon-bg: rgba(20,184,166,.12); }
   /* ClockIn */
   .clockin { --accent: #0EA5E9; --glow: #0EA5E9; --icon-bg: rgba(14,165,233,.14); }
   /* Plantão */
   .plantao { --accent: #F59E0B; --glow: #F59E0B; --icon-bg: rgba(245,158,11,.14); }
-  /* MeliVista */
-  .melivista { --accent: #FFE600; --glow: #FFE600; --icon-bg: rgba(255,230,0,.12); }
-  /* MargemShopee */
-  .margem { --accent: #F472B6; --glow: #F472B6; --icon-bg: rgba(244,114,182,.12); }
-  /* VendaVista */
-  .vendavista { --accent: #10B981; --glow: #10B981; --icon-bg: rgba(16,185,129,.12); }
 
   .badge-new {
     position: absolute;
@@ -193,48 +183,6 @@
     </div>
   </a>
 
-  <!-- SKUHUB -->
-  <a href="./skuhub/" class="app-card sku">
-    <div class="badge-new">Novo</div>
-    <div class="app-icon">🏷️</div>
-    <div>
-      <div class="app-name">SKUHub.</div>
-      <div class="app-desc">Gestão de SKU Pai, Variação e KIT para Shopee, Shein, Mercado Livre e Plugg.to.</div>
-    </div>
-    <div class="features-row">
-      <span class="feat-chip">📊 Catálogo</span>
-      <span class="feat-chip">🔢 SKU auto</span>
-      <span class="feat-chip">📥 Excel</span>
-      <span class="feat-chip">📚 Guias</span>
-    </div>
-    <div class="app-cta">
-      Abrir SKUHub.
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </a>
-
-  <!-- VOLUNA (antigo ReturnFlow) -->
-  <a href="./returnflow/" class="app-card voluna">
-    <div class="app-icon">↩️</div>
-    <div>
-      <div class="app-name">Voluna</div>
-      <div class="app-desc">Gestão de devoluções e disputas em marketplaces. Shopee, Amazon, Mercado Livre e mais.</div>
-    </div>
-    <div class="features-row">
-      <span class="feat-chip">📦 Devoluções</span>
-      <span class="feat-chip">⚖️ Disputas</span>
-      <span class="feat-chip">📈 Dashboard</span>
-    </div>
-    <div class="app-cta">
-      Abrir Voluna
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </a>
-
   <!-- CLOCKIN -->
   <a href="./clockin/" class="app-card clockin">
     <div class="app-icon">⏱️</div>
@@ -271,72 +219,6 @@
     </div>
     <div class="app-cta">
       Abrir Plantão.
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </a>
-
-  <!-- MELIVISTA -->
-  <a href="./melivista/" class="app-card melivista">
-    <div class="badge-new">Novo</div>
-    <div class="app-icon">📦</div>
-    <div>
-      <div class="app-name">MeliVista</div>
-      <div class="app-desc">Flex, Full e reconciliação de afiliados em um painel só. Somente leitura, sem nenhum escopo de escrita.</div>
-    </div>
-    <div class="features-row">
-      <span class="feat-chip">🔒 Read-only</span>
-      <span class="feat-chip">🚚 Flex</span>
-      <span class="feat-chip">🏭 Full</span>
-      <span class="feat-chip">🌗 Claro/escuro</span>
-    </div>
-    <div class="app-cta">
-      Abrir MeliVista
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </a>
-
-  <!-- MARGEM SHOPEE -->
-  <a href="./margem-shopee/" class="app-card margem">
-    <div class="badge-new">Novo</div>
-    <div class="app-icon">%</div>
-    <div>
-      <div class="app-name">MargemShopee</div>
-      <div class="app-desc">Casa relatórios Shopee com custos automaticamente, calcula margem por produto e monta a simulação de pedido por marca.</div>
-    </div>
-    <div class="features-row">
-      <span class="feat-chip">🧮 Margem</span>
-      <span class="feat-chip">🔗 Vínculo auto</span>
-      <span class="feat-chip">📦 Pedido por marca</span>
-      <span class="feat-chip">📥 Excel</span>
-    </div>
-    <div class="app-cta">
-      Abrir MargemShopee
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </a>
-
-  <!-- VENDAVISTA -->
-  <a href="./vendavista/" class="app-card vendavista">
-    <div class="badge-new">Novo</div>
-    <div class="app-icon">🛍️</div>
-    <div>
-      <div class="app-name">VendaVista</div>
-      <div class="app-desc">Importe o relatório de pedidos do Plugg.to e veja produtos vendidos, quantidades por marketplace e o ranking de quem mais vende.</div>
-    </div>
-    <div class="features-row">
-      <span class="feat-chip">🏆 Ranking</span>
-      <span class="feat-chip">🏷️ Produtos</span>
-      <span class="feat-chip">📥 Excel</span>
-      <span class="feat-chip">🔒 100% local</span>
-    </div>
-    <div class="app-cta">
-      Abrir VendaVista
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
