@@ -1,11 +1,12 @@
 import { Dimension, Player, StructureRotation, Vector3, system, world } from "@minecraft/server";
 import { MUNDO_PLANO, PROPS, RELEVO, TEMPLO_SAQUE } from "../config.js";
 import { Pilha, criarBauCom } from "../util/inventario.js";
+import { porMinerios } from "./minerios.js";
 
 /*
- * Relevo do mundo plano: o .mctemplate gera só camadas planas de areia. Este módulo
- * decora cada chunk UMA vez, quando ele carrega perto de um jogador: às vezes uma duna,
- * um morro pequeno, rochas ou um templo soterrado (estruturas em BP/structures/cl/).
+ * Relevo do mundo plano: o mundo gera só camadas planas de areia, pedra e ardósia. Este módulo
+ * decora cada chunk UMA vez, quando ele carrega perto de um jogador: veios de minério e, às
+ * vezes, uma duna, um morro pequeno, rochas ou um templo soterrado (estruturas em BP/structures/cl/).
  *
  * Custo: a cada 1 s, consulta um conjunto em memória para os chunks em volta e
  * decora no máximo RELEVO.maxPorCiclo chunks novos. Chunks já decorados ficam marcados
@@ -81,6 +82,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
 
   const sorte = rng(semente ^ Math.imul(cx, 73856093) ^ Math.imul(cz, 83492791));
   const pertoDaNave = Math.max(Math.abs(cx - nave[0]), Math.abs(cz - nave[1])) < RELEVO.distanciaNave;
+  porMinerios(dimensao, x0, z0, sorte);
 
   if (!pertoDaNave) {
     let rolagem = sorte();

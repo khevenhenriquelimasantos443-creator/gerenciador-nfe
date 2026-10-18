@@ -1,14 +1,18 @@
-// Gera o level.dat do modelo de mundo (.mctemplate): mundo plano de deserto.
+// Gera o level.dat do mundo plano de deserto que vai no .mcworld/.mcaddon.
 // Campos e tipos baseados no level.dat do Bedrock (ver README, seção "Modelo de mundo").
 import { byte, comp, float, int, list, long, nbt, str } from "./nbt.mjs";
 
-// Camadas de baixo para cima, a partir de y = -64. Total 12: o topo (areia) fica em y = -53
-// e o primeiro bloco de ar em y = -52 (igual a MUNDO_PLANO.superficieY em scripts/config.ts).
+// Camadas de baixo para cima, a partir de y = -64. Total 109: o topo (areia) fica em y = 44
+// e o primeiro bloco de ar em y = 45 (igual a MUNDO_PLANO.superficieY em scripts/config.ts).
+// Ardósia de -63 a 0 e pedra de 1 a 32, como no mundo normal; os minérios entram por script.
+// Chão acima de y = 40 também evita slimes nascendo de dia (no Bedrock eles nascem em
+// "slime chunks" abaixo de y = 40 em qualquer luz).
 export const CAMADAS = [
   { block_name: "minecraft:bedrock", count: 1 },
-  { block_name: "minecraft:stone", count: 3 },
-  { block_name: "minecraft:sandstone", count: 4 },
-  { block_name: "minecraft:sand", count: 4 },
+  { block_name: "minecraft:deepslate", count: 64 },
+  { block_name: "minecraft:stone", count: 32 },
+  { block_name: "minecraft:sandstone", count: 7 },
+  { block_name: "minecraft:sand", count: 5 },
 ];
 const BIOMA_DESERTO = 2;
 

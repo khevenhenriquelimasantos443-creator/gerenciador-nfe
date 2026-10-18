@@ -27,6 +27,7 @@ const TEXTURAS = {
   "RP/textures/blocks/cl/condensador_topo.png": { fundo: "#7d8a96", borda: "#3a4148", centro: "#2b3f5c" },
   "RP/textures/blocks/cl/condensador_topo_cheio.png": { fundo: "#7d8a96", borda: "#3a4148", centro: "#3f8ce0" },
   "RP/textures/blocks/cl/condensador_base.png": { fundo: "#5b6670", borda: "#3a4148" },
+  "RP/textures/items/cl/diario_bordo.png": { fundo: "#8b5a2b", borda: "#3e2410", centro: "#e8d9a8", margemCentro: 6 },
   "RP/pack_icon.png": { tamanho: 64, fundo: "#d9a066", borda: "#6b3f1d", centro: "#3f8ce0", margemCentro: 6 },
   "BP/pack_icon.png": { tamanho: 64, fundo: "#d9a066", borda: "#6b3f1d", centro: "#c0392b", margemCentro: 6 },
 };

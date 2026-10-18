@@ -3,7 +3,22 @@
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
 Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
 
-**Fase atual: 1** (mundo plano de deserto com dunas, nave caída, sem água, sem animais, mais monstros). Fase 0: estrutura, Condensador de Água e boas-vindas.
+**Fase atual: 2** (Diário de Bordo e missões). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas) e 1 (mundo plano de deserto, nave caída, sem água, sem animais, mais monstros).
+
+## Fases até o fim
+
+| Fase | O que entra | Situação |
+|---|---|---|
+| 0 | Estrutura do projeto, Condensador de Água, boas-vindas | pronta |
+| 1 | Mundo plano de deserto: dunas, morros, templo soterrado, nave caída, sem água, sem animais, mais monstros à noite, minérios | pronta |
+| 2 | **Diário de Bordo**: item com menu de missões, recompensas e progresso salvo por jogador; 12 missões dos primeiros dias | **esta versão** |
+| 3 | Máquinas de sobrevivência: Purificador/Coletor de orvalho melhor, Peneira (areia → sementes, argila, pepitas), Compostor de terra (gera terra a partir de restos), Estufa | próxima |
+| 4 | Comida e vida: sementes raras na peneira, ovos/animais vindos de "cápsulas de carga" da nave, sede (barra de hidratação simples) | |
+| 5 | Energia: painel solar, baterias e cabos simples; máquinas mais rápidas com energia | |
+| 6 | Exploração e perigos: tempestade de areia, destroços de outras naves com saque, monstros novos do deserto, um chefe | |
+| 7 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
+| 8 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; texturas finais, sons, balanceamento e versão 1.0 | |
+
 
 ## Versões usadas (conferidas na documentação oficial)
 
@@ -11,7 +26,7 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 |---|---|---|
 | `min_engine_version` | `[1, 26, 30]` (o jogo "26.30" é o motor `1.26.30`) | `version.json` do Mojang/bedrock-samples e notas "1.26.30 Update Notes" no Microsoft Learn |
 | `@minecraft/server` | `2.8.0` (estável) | Notas 1.26.30: "ships @minecraft/server v2.8.0 and @minecraft/server-ui v2.1.0" |
-| `@minecraft/server-ui` | `2.1.0` (estável) | idem (já declarado, mas só será usado na Fase 2) |
+| `@minecraft/server-ui` | `2.1.0` (estável) | idem (menus do Diário de Bordo) |
 | `format_version` do manifest | `2` (a versão 3 ainda está em preview) | Referência do manifest.json no Microsoft Learn |
 | `format_version` de blocos | `1.26.30` | |
 | `format_version` de receitas | `1.20.10` (o mesmo das receitas vanilla de 1.26.30) | bedrock-samples, tag v1.26.30.5 |
@@ -30,6 +45,7 @@ pouso-forcado/
 │   ├── manifest.json
 │   ├── biomes/             deserto seco (para quem usar o add-on num mundo infinito normal)
 │   ├── blocks/             definições de blocos (cl:...)
+│   ├── items/              itens (Diário de Bordo)
 │   ├── recipes/            receitas
 │   ├── spawn_rules/        sem animais; monstros reforçados
 │   ├── structures/cl/      nave, dunas, morro, mesa, rochas e templo (geradas por tools/)
@@ -44,14 +60,15 @@ pouso-forcado/
 │   ├── main.ts             ponto de entrada: cada fase registra seus módulos aqui
 │   ├── config.ts           IDs, chaves de dynamic properties, balanceamento (relevo, saque, horda...)
 │   ├── blocos/             componentes customizados de blocos (máquinas)
-│   ├── jogador/            eventos de jogador (boas-vindas; depois: Diário de Bordo)
-│   ├── mundo/              nave caída, relevo, horda noturna, diagnóstico
+│   ├── jogador/            eventos de jogador (boas-vindas)
+│   ├── missoes/            lista de missões, progresso e menu do Diário de Bordo
+│   ├── mundo/              nave caída, relevo, minérios, horda noturna, diagnóstico
 │   └── util/               helpers de inventário e estados de bloco
 ├── tools/                  build e geradores (texturas, nave, relevo, level.dat, db vazio), zip/png/nbt sem dependências
 └── dist/                   saída: pouso-forcado.mcaddon (packs + mundo) e pouso-forcado.mcworld
 ```
 
-Para as próximas fases, a ideia é: máquinas novas em `scripts/blocos/` (uma por arquivo, registradas no `main.ts`), missões em `scripts/missoes/` e menus com `@minecraft/server-ui`, e todo número de balanceamento em `config.ts`.
+Para as próximas fases, a ideia é: máquinas novas em `scripts/blocos/` (uma por arquivo, registradas no `main.ts`), missões novas no fim de `scripts/missoes/lista.ts`, e todo número de balanceamento em `config.ts`.
 
 Escolhi TypeScript com `tsc` puro (sem bundler): o build só compila os `.ts` em `.js`, sem nada a mais para configurar.
 
@@ -95,21 +112,47 @@ Outros comandos:
 2. Antes de entrar, você pode mudar dificuldade, trapaças etc. em **Editar**.
 3. Cada vez que você importa o `.mcaddon` de novo, entra mais uma cópia nova do mundo, útil para recomeçar do zero.
 
+## Diário de Bordo (Fase 2)
+
+- Ao entrar, cada jogador recebe o **Diário de Bordo**. Segure-o e use (no celular: toque e segure na tela) para abrir o menu.
+- O menu mostra a missão atual, o progresso e a recompensa. Ao concluir, a recompensa vai para o inventário (ou cai no chão, se estiver cheio), toca um som e a próxima missão aparece no chat.
+- **Missões concluídas** lista o que você já fez. **Pular esta missão** passa para a próxima sem recompensa (só para o caso de alguma missão travar).
+- Perdeu o diário? Faça outro: **graveto + areia** (sem formato, dá até no inventário).
+- O progresso é salvo por jogador. Num mundo com amigos, cada um tem suas missões.
+
+| # | Missão | Objetivo | Recompensa |
+|---|---|---|---|
+| 1 | Água no deserto | colocar o Condensador de Água | 2 terras |
+| 2 | Primeira gota | ter 1 balde de água | 3 farinhas de osso |
+| 3 | Raízes | plantar 1 muda de carvalho | 1 muda, 2 farinhas de osso |
+| 4 | Lenha | quebrar 4 troncos de carvalho | 4 sementes de trigo |
+| 5 | Oficina improvisada | colocar uma mesa de trabalho | 2 terras |
+| 6 | Debaixo da areia | ter uma picareta de pedra | 4 tochas |
+| 7 | Fogo | colocar uma fornalha | 4 carvões |
+| 8 | Metal | ter 3 barras de ferro | 1 balde |
+| 9 | Sobreviva à noite | chegar ao próximo amanhecer | 4 pães |
+| 10 | Caçador | derrotar 5 monstros | 2 canas-de-açúcar |
+| 11 | Primeira colheita | ter 3 trigos | 2 terras, 4 farinhas de osso |
+| 12 | Papel para o diário | ter 3 papéis | 2 sementes de abóbora |
+
+Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`; textos em `RP/texts/*.lang` (`cl.missao.<id>.titulo` / `.desc`).
+
 ## O mundo (Fase 1)
 
-- **Plano, de areia.** O mundo que vem no `.mcaddon` é plano, com bioma de deserto. Camadas de baixo para cima: 1 bedrock, 3 pedra, 4 arenito, 4 areia. A superfície fica em y = -52.
+- **Plano, de areia.** O mundo que vem no `.mcaddon` é plano, com bioma de deserto. Camadas de baixo para cima: 1 bedrock, 64 ardósia (y -63 a 0), 32 pedra (1 a 32), 7 arenito, 5 areia. Você pisa em **y = 45**.
 - **Dunas e morros pequenos.** O mundo plano não tem relevo. O script `scripts/mundo/relevo.ts` decora cada chunk **uma única vez**, quando ele carrega perto de você:
   - dunas pequenas e médias, morros de até 7 blocos, mesas (platôs com faixa de terracota), grupos de rochas e arbustos secos (dão gravetos);
   - raramente, um **templo soterrado**: uma pirâmide de arenito própria do add-on, com um baú de saque (ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde).
   - Chances, tamanhos e o saque ficam em `RELEVO` e `TEMPLO_SAQUE` no `scripts/config.ts`.
-  - Cada chunk decorado ganha um bloco de **deepslate reforçado** na primeira camada de pedra (y = -63), no canto do chunk. É a marca de "já feito", para nada ser refeito ao reabrir o mundo. Ele não quebra no modo sobrevivência.
+  - **Minérios:** cada chunk recebe veios de carvão, cobre, ferro, ouro, redstone, lápis-lazúli e diamante, em alturas parecidas com as do mundo normal (abaixo de y = 0 saem as versões de ardósia). Quantidades em `MINERIOS` no `scripts/config.ts`.
+  - Cada chunk decorado ganha um bloco de **deepslate reforçado** na primeira camada de ardósia (y = -63), no canto do chunk. É a marca de "já feito", para nada ser refeito ao reabrir o mundo. Ele não quebra no modo sobrevivência.
 - **Sem cavernas e sem água.** Mundo plano não tem cavernas, aquíferos, rios nem mares. Também não chove (bioma de deserto).
-- **Sem minérios naturais.** Abaixo da areia há só arenito, pedra e bedrock. O ferro vai vir das máquinas (Fase 3); por enquanto, um pouco vem dos templos.
 - **Sem animais:** em `BP/spawn_rules/` as regras de spawn de todos os animais do Overworld estão vazias: vaca, porco, ovelha, galinha, coelho, cavalo, burro, lhama, camelo, lobo, raposa, abelha, sapo, cabra, panda, papagaio, jaguatirica, urso-polar, tatu, tartaruga, morcego, peixes, lula, golfinho, axolote e náutilo.
-- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, à noite, a cada 10 s nascem 2 monstros extras a 24–40 blocos de cada jogador, se houver menos de 14 por perto. Isso não acontece no Pacífico, no criativo nem fora do Overworld. Ajuste em `HORDA` no `scripts/config.ts`.
+- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, à noite, a cada 10 s nascem 2 monstros extras a 24–40 blocos de cada jogador, se houver menos de 14 por perto. Isso não acontece no Pacífico, no criativo nem fora do Overworld. Quando amanhece, esses monstros extras somem numa nuvem de fumaça (husks e aranhas não queimam no sol e ficavam andando de dia). Ajuste em `HORDA` no `scripts/config.ts`.
+- **Monstros de dia:** no Bedrock, slimes nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 isso não acontece mais na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Nenhum relevo é gerado a menos de 3 chunks da nave.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.4.0] biomas: ... | bioma aqui: ...`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.5.0] biomas: ... | bioma aqui: ...`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
@@ -124,23 +167,25 @@ Por que há dois arquivos de bioma: a doc oficial manda escrever os biomas-alvo 
 
 Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do log de conteúdo**. Erros de script ou JSON aparecem na tela.
 
-1. **Mundo:** abra o mundo **Pouso Forçado** da lista. Deve ser plano, de areia, com coordenadas visíveis.
-2. **Boas-vindas e nave:** aparece o título "Pouso Forçado", a mensagem no chat e, em ~2 s, a nave ao seu lado. Entre pela abertura lateral e abra o baú.
-3. **Relevo:** ande para longe da nave. Dunas, morros pequenos, mesas e rochas vão aparecendo a cada poucos chunks. Elas surgem quando o chunk carrega, a ~4 chunks de você.
-4. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
-5. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
-6. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
-7. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal.
-8. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
-9. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".
-10. **Baú adjacente:** coloque um baú (ou barril/funil) encostado no condensador com baldes vazios dentro. A cada ~30 s um balde do baú vira balde de água.
-11. **Receita** (mesa de trabalho):
+1. **Mundo:** abra o mundo **Pouso Forçado** da lista. Deve ser plano, de areia, com coordenadas visíveis, em y = 45.
+2. **Diário:** ao entrar, o Diário de Bordo vai para o inventário. Use-o: o menu mostra a missão 1. Coloque o condensador: a missão conclui e chegam 2 terras.
+3. **Minérios:** cave um poço até y = 0 ou menos. Deve haver carvão e ferro na pedra, e ouro, redstone, lápis e (raro) diamante na ardósia.
+4. **Boas-vindas e nave:** aparece o título "Pouso Forçado", a mensagem no chat e, em ~2 s, a nave ao seu lado. Entre pela abertura lateral e abra o baú.
+5. **Relevo:** ande para longe da nave. Dunas, morros pequenos, mesas e rochas vão aparecendo a cada poucos chunks. Elas surgem quando o chunk carrega, a ~4 chunks de você.
+6. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
+7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
+8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
+9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal.
+10. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
+11. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".
+12. **Baú adjacente:** coloque um baú (ou barril/funil) encostado no condensador com baldes vazios dentro. A cada ~30 s um balde do baú vira balde de água.
+13. **Receita** (mesa de trabalho):
     ```
     Ferro   Vidro  Ferro
     Ferro   Balde  Ferro
     Pedra   Pedra  Pedra     (pedregulho, pedra-negra ou pedregulho de ardósia)
     ```
-12. **Idioma:** com o jogo em inglês, o bloco se chama "Water Condenser".
+14. **Idioma:** com o jogo em inglês, o bloco se chama "Water Condenser".
 
 ## Como o Condensador funciona (e por que assim)
 

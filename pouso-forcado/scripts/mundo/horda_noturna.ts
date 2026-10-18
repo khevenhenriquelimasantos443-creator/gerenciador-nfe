@@ -5,7 +5,9 @@ import { HORDA } from "../config.js";
  * Reforço noturno: além do spawn normal (já reforçado em BP/spawn_rules),
  * a cada HORDA.intervaloTicks, à noite, nasce um pequeno grupo de monstros
  * perto de cada jogador que estiver com poucos monstros em volta.
- * Custo: uma contagem de entidades por jogador a cada 10 s, e só à noite.
+ * Quando amanhece, esses monstros extras (marcados com HORDA.tag) somem, para a horda
+ * da noite não ficar andando de dia (husks e aranhas não queimam no sol).
+ * Custo: uma contagem de entidades por jogador a cada 10 s à noite; de dia, uma busca por tag.
  */
 const NOITE_INICIO = 13000;
 const NOITE_FIM = 23000;
@@ -29,12 +31,28 @@ function tentarNascer(jogador: Player): void {
   if (!acima?.isAir || !acima.above()?.isAir) return;
 
   const mob = HORDA.mobs[Math.floor(Math.random() * HORDA.mobs.length)];
-  dimensao.spawnEntity(mob, { x: x + 0.5, y: acima.y, z: z + 0.5 });
+  dimensao.spawnEntity(mob, { x: x + 0.5, y: acima.y, z: z + 0.5 }).addTag(HORDA.tag);
+}
+
+function recolherHorda(): void {
+  for (const mob of world.getDimension("minecraft:overworld").getEntities({ tags: [HORDA.tag] })) {
+    try {
+      mob.dimension.spawnParticle("minecraft:basic_smoke_particle", mob.location);
+    } catch {
+      // partícula é só enfeite
+    }
+    try {
+      mob.remove();
+    } catch {
+      // já saiu do mundo carregado
+    }
+  }
 }
 
 export function registrarHordaNoturna(): void {
   system.runInterval(() => {
-    if (world.getDifficulty() === Difficulty.Peaceful || !ehNoite()) return;
+    if (!ehNoite()) return recolherHorda();
+    if (world.getDifficulty() === Difficulty.Peaceful) return;
     for (const jogador of world.getPlayers({ excludeGameModes: [GameMode.Creative, GameMode.Spectator] })) {
       if (jogador.dimension.id !== "minecraft:overworld") continue;
       const perto = jogador.dimension.getEntities({

@@ -3,13 +3,14 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.4.0";
+export const VERSAO = "0.5.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
 
 export const IDS = {
   condensadorAgua: `${NS}:condensador_agua`,
+  diarioBordo: `${NS}:diario_bordo`,
 } as const;
 
 // Chaves de dynamic properties (salvas no mundo/jogador).
@@ -18,6 +19,8 @@ export const PROPS = {
   naveColocada: `${NS}:nave_colocada`, // mundo
   naveChunk: `${NS}:nave_chunk`, // mundo: "cx,cz" do chunk da nave
   sementeRelevo: `${NS}:semente_relevo`, // mundo
+  diarioRecebido: `${NS}:diario_recebido`, // jogador
+  missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
 } as const;
 
 // Nave caída: estrutura em BP/structures/cl/nave_caida.mcstructure.
@@ -47,17 +50,33 @@ export const HORDA = {
   distanciaMin: 24, // longe o bastante para não nascer na cara do jogador
   distanciaMax: 40,
   mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider"],
+  tag: `${NS}:horda`, // os monstros extras somem quando amanhece
 } as const;
 
-// Mundo plano do modelo (.mctemplate). Tem que bater com tools/gerar-mundo.mjs.
+// Mundo plano do .mcworld. Tem que bater com tools/gerar-mundo.mjs.
 export const MUNDO_PLANO = {
-  superficieY: -52, // primeiro bloco de ar acima da areia
-  // Marca de "chunk já decorado": um bloco na 1ª camada de pedra, no canto do chunk.
+  superficieY: 45, // primeiro bloco de ar acima da areia
+  // Marca de "chunk já decorado": um bloco na 1ª camada de ardósia, no canto do chunk.
   // Deepslate reforçado não quebra no sobrevivência, então a marca não some.
   marcadorY: -63,
   marcador: "minecraft:reinforced_deepslate",
-  pedraEsperada: "minecraft:stone", // como é o mundo plano em y = -63 (em mundo normal não bate, e nada é gerado)
+  // Como é o mundo plano em y = -63. Em mundo normal (ou no mundo plano antigo, de pedra) não
+  // bate, e nada é gerado.
+  pedraEsperada: "minecraft:deepslate",
 } as const;
+
+// Minérios espalhados por script em cada chunk do mundo plano (scripts/mundo/minerios.ts).
+// veios = quantos por chunk; tamanho = blocos por veio (aprox.); y = faixa de altura.
+// Só substituem pedra e ardósia; abaixo de y = 0 sai a versão de ardósia do minério.
+export const MINERIOS: ReadonlyArray<{ minerio: string; veios: number; tamanho: number; yMin: number; yMax: number }> = [
+  { minerio: "coal", veios: 10, tamanho: 9, yMin: 0, yMax: 32 },
+  { minerio: "copper", veios: 5, tamanho: 8, yMin: -16, yMax: 32 },
+  { minerio: "iron", veios: 9, tamanho: 7, yMin: -60, yMax: 32 },
+  { minerio: "gold", veios: 3, tamanho: 6, yMin: -60, yMax: -10 },
+  { minerio: "redstone", veios: 4, tamanho: 6, yMin: -60, yMax: -40 },
+  { minerio: "lapis", veios: 2, tamanho: 5, yMin: -60, yMax: 0 },
+  { minerio: "diamond", veios: 1, tamanho: 4, yMin: -60, yMax: -50 },
+];
 
 // Relevo espalhado por script conforme o jogador explora (scripts/mundo/relevo.ts).
 // chance = probabilidade por chunk; tamanho = área no chão; deslocY = quanto fica enterrado.
