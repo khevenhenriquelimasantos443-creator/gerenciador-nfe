@@ -3,7 +3,7 @@
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
 Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
 
-**Fase atual: 2** (Diário de Bordo e missões). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas) e 1 (mundo plano de deserto, nave caída, sem água, sem animais, mais monstros).
+**Fase atual: 3** (máquinas de sobrevivência). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, sem água, sem animais, horda) e 2 (Diário de Bordo e missões).
 
 ## Fases até o fim
 
@@ -11,9 +11,9 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 |---|---|---|
 | 0 | Estrutura do projeto, Condensador de Água, boas-vindas | pronta |
 | 1 | Mundo plano de deserto: dunas, morros, templo soterrado, nave caída, sem água, sem animais, mais monstros à noite, minérios | pronta |
-| 2 | **Diário de Bordo**: item com menu de missões, recompensas e progresso salvo por jogador; 12 missões dos primeiros dias | **esta versão** |
-| 3 | Máquinas de sobrevivência: Purificador/Coletor de orvalho melhor, Peneira (areia → sementes, argila, pepitas), Compostor de terra (gera terra a partir de restos), Estufa | próxima |
-| 4 | Comida e vida: sementes raras na peneira, ovos/animais vindos de "cápsulas de carga" da nave, sede (barra de hidratação simples) | |
+| 2 | Diário de Bordo: item com menu de missões, recompensas e progresso salvo por jogador; 12 missões dos primeiros dias | pronta |
+| 3 | **Máquinas de sobrevivência**: Peneira (areia/cascalho → sementes, argila, pepitas, mudas), Compostor de Terra (restos → terra), Condensador Avançado, Estufa (molha a terra e acelera plantas); +8 missões | **esta versão** |
+| 4 | (próxima) Comida e vida: sementes raras na peneira, ovos/animais vindos de "cápsulas de carga" da nave, sede (barra de hidratação simples) | |
 | 5 | Energia: painel solar, baterias e cabos simples; máquinas mais rápidas com energia | |
 | 6 | Exploração e perigos: tempestade de areia, destroços de outras naves com saque, monstros novos do deserto, um chefe | |
 | 7 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
@@ -116,7 +116,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.8.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.9.0] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -142,7 +142,27 @@ Outros comandos:
 | 11 | Primeira colheita | ter 3 trigos | 2 terras, 4 farinhas de osso |
 | 12 | Papel para o diário | ter 3 papéis | 2 sementes de abóbora |
 
+| 13 | Garimpeiro | colocar uma Peneira | 4 farinhas de osso |
+| 14 | Ouro na areia | peneirar 20 vezes | 2 barras de ferro |
+| 15 | Barro | ter 8 bolas de argila | 6 farinhas de osso |
+| 16 | Nada se perde | colocar um Compostor de Terra | 8 carnes podres |
+| 17 | Terra nova | tirar 3 terras do compostor | 2 mudas de carvalho |
+| 18 | Mais água | colocar um Condensador Avançado | 2 barras de ferro |
+| 19 | Estufa | colocar uma Estufa | 2 cenouras, 2 batatas |
+| 20 | Fazenda no deserto | ter 32 trigos | 4 barras de ferro |
+
 Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`; textos em `RP/texts/*.lang` (`cl.missao.<id>.titulo` / `.desc`).
+
+## Máquinas (Fase 3)
+
+| Máquina | Receita (mesa de trabalho) | Como usar |
+|---|---|---|
+| **Peneira** | `G . G` / `G L G` / `T . T` (G = graveto, L = linha, T = tábua) | Toque nela com **areia** ou **cascalho** na mão. Gasta 1 bloco e às vezes sai: argila, sementes (trigo, beterraba, abóbora, melancia), farinha de osso, pepitas de ferro/ouro, sílex, cacto, cana, mudas (carvalho, bétula, acácia). Do cascalho sai mais minério: sílex, ferro, ouro, cobre, carvão, redstone, lápis e, raramente, diamante. |
+| **Compostor de Terra** | `T . T` / `T D T` / `T T T` (D = terra) | Toque com restos na mão: carne podre (2 pontos), trigo, maçã, pão, sementes, folhas, mudas, cacto, cana, arbusto seco, graveto... Com 8 pontos ele decompõe por ~20 s (topo marrom) e aí, tocando, sai **1 terra**. A carne podre da horda vira terra! |
+| **Condensador Avançado** | `C V C` / `V X V` / `C V C` (C = barra de cobre, V = vidro, X = Condensador de Água) | Como o condensador, mas 1 balde a cada **10 s** e guarda até **4**. Também enche baldes vazios de baú/barril/funil encostado. |
+| **Estufa** | `V V V` / `V X V` / `C C C` | A cada 10 s, numa área de 9×9 em volta (da camada de baixo até 2 acima): a **terra arada fica sempre molhada** (planta longe da água), as plantações crescem mais rápido e as mudas viram árvore mais cedo. |
+
+Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `scripts/config.ts`.
 
 ## O mundo (Fase 1)
 
@@ -164,7 +184,7 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.8.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.9.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
