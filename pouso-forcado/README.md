@@ -3,7 +3,7 @@
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
 Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
 
-**Fase atual: 0** (estrutura + Condensador de Água + boas-vindas com kit).
+**Fase atual: 1** (mundo desértico seco + nave caída no spawn). Fase 0: estrutura, Condensador de Água e boas-vindas.
 
 ## Versões usadas (conferidas na documentação oficial)
 
@@ -15,6 +15,8 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | `format_version` do manifest | `2` (a versão 3 ainda está em preview) | Referência do manifest.json no Microsoft Learn |
 | `format_version` de blocos | `1.26.30` | |
 | `format_version` de receitas | `1.20.10` (o mesmo das receitas vanilla de 1.26.30) | bedrock-samples, tag v1.26.30.5 |
+| `format_version` de bioma | `1.26.30` (validado contra o JSON Schema oficial de 1.26.30) | bedrock-samples `metadata/json_schemas` |
+| Biomas customizados / `minecraft:replace_biomes` | estável desde 1.21.110 | Notas "1.21.110 Update Notes" no Microsoft Learn |
 
 Nada aqui usa Beta APIs nem experimentos. Funciona em 26.30 e em versões mais novas.
 
@@ -24,11 +26,14 @@ Nada aqui usa Beta APIs nem experimentos. Funciona em 26.30 e em versões mais n
 pouso-forcado/
 ├── BP/                     Behavior Pack
 │   ├── manifest.json
+│   ├── biomes/             bioma cl:deserto_seco (substitui os biomas da superfície)
 │   ├── blocks/             definições de blocos (cl:...)
 │   ├── recipes/            receitas
+│   ├── structures/cl/      nave_caida.mcstructure (gerada por tools/gerar-nave.mjs)
 │   └── scripts/            (gerado pelo build a partir de scripts/, não editar)
 ├── RP/                     Resource Pack
 │   ├── manifest.json
+│   ├── biomes/             aparência do bioma (névoa, céu, música do deserto)
 │   ├── blocks.json         sons dos blocos
 │   ├── texts/              pt_BR.lang, en_US.lang
 │   └── textures/           texturas (placeholders gerados)
@@ -37,8 +42,9 @@ pouso-forcado/
 │   ├── config.ts           IDs, chaves de dynamic properties, kit, balanceamento
 │   ├── blocos/             componentes customizados de blocos (máquinas)
 │   ├── jogador/            eventos de jogador (boas-vindas; depois: Diário de Bordo)
+│   ├── mundo/              coisas do mundo (nave caída)
 │   └── util/               helpers de inventário e estados de bloco
-├── tools/                  build, gerador de texturas, zip/png sem dependências
+├── tools/                  build, geradores de texturas e da nave, zip/png/nbt sem dependências
 └── dist/                   saída: pouso-forcado.mcaddon
 ```
 
@@ -63,6 +69,7 @@ Sai em `dist/`:
 Outros comandos:
 - `npm run texturas`: cria só as texturas que estiverem faltando (não apaga as suas). Para regerar todas: `node tools/gerar-texturas.mjs --force`.
 - `npm run compilar`: só compila o TypeScript.
+- `node tools/gerar-nave.mjs --force`: regera a nave a partir do modelo em código.
 
 > O `dist/pouso-forcado.mcaddon` já vem no repositório, então dá para baixar direto no celular sem fazer o build.
 
@@ -82,30 +89,45 @@ Outros comandos:
 
 ## Como ativar num mundo
 
-1. **Criar novo** → **Criar novo mundo**.
+> **Use sempre um mundo NOVO.** O deserto só vale para terreno gerado com o add-on ativo. Num mundo antigo, o que já foi explorado continua como era.
+
+1. **Criar novo** → **Criar novo mundo** (tipo **Infinito**, não plano).
 2. Em **Pacotes de comportamento** → **Disponível** → ative **Pouso Forçado (Comportamento)**.
 3. O jogo pergunta se quer ativar o pacote de recursos dependente → **Ativar**. (Ou ative manualmente **Pouso Forçado (Recursos)** em **Pacotes de recursos**.)
 4. **Não** precisa ligar nenhum experimento.
 5. Crie o mundo.
 
-Para atualizar o add-on num mundo já existente, aumente o `version` dos dois manifests antes do build. Senão o jogo pode manter a versão antiga em cache.
+Ao atualizar o add-on, o `version` dos manifests sobe (Fase 1 = `0.2.0`). Se o jogo continuar mostrando a versão antiga, apague os packs antigos em **Configurações → Armazenamento** e importe de novo.
 
-## Como testar (Fase 0)
+## O mundo (Fase 1)
+
+- **Só deserto.** O bioma próprio `cl:deserto_seco` substitui todos os biomas da superfície (florestas, planícies, neve, oceanos, rios, etc.). O deserto vanilla continua existindo; os dois têm a mesma cara.
+- **Sem mares e sem rios.** No `cl:deserto_seco` o "material do mar" é ar: onde haveria oceano ou rio fica um vale/cânion seco com fundo de areia.
+- **Não chove.** O bioma tem clima de deserto.
+- **Relevo normal do jogo.** O formato do terreno (morros, serras, vales) continua sendo o do Minecraft, só que coberto de areia e arenito.
+- **Estruturas.** Templos do deserto e poços do deserto continuam aparecendo nas áreas de deserto vanilla. Nas áreas de `cl:deserto_seco`, depende do jogo aceitar a tag `desert`; está no roteiro de teste.
+- **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro dela há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário.
+- **Trocar a nave.** Construa a sua no jogo, salve com o **Bloco de Estrutura** e substitua `BP/structures/cl/nave_caida.mcstructure`. Ajuste `NAVE.bau` em `scripts/config.ts` para a posição do baú.
+
+## Como testar
 
 Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do log de conteúdo**. Erros de script ou JSON aparecem na tela.
 
-1. **Boas-vindas:** ao entrar no mundo novo aparece o título "Pouso Forçado", uma mensagem no chat e o kit: 1 Condensador de Água, 1 balde, 6 pães e 8 tochas.
-2. **Só uma vez:** saia e entre de novo, ou morra. O kit **não** deve vir de novo.
-3. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
-4. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".
-5. **Baú adjacente:** coloque um baú (ou barril/funil) encostado no condensador com baldes vazios dentro. A cada ~30 s um balde do baú vira balde de água.
-6. **Receita** (mesa de trabalho):
+1. **Boas-vindas:** ao entrar no mundo novo aparece o título "Pouso Forçado" e uma mensagem no chat.
+2. **Nave:** em ~2 s a nave aparece do seu lado (cauda com magma, cabine de vidro enterrada). Entre pela abertura lateral e abra o baú.
+3. **Só uma vez:** saia e entre de novo, ou morra. Não pode aparecer outra nave nem a mensagem de novo.
+4. **Deserto:** ative "Mostrar coordenadas" e ande/voe (no criativo) uns 1000 blocos. Deve ser só areia, sem árvores, sem neve e sem água nos vales onde seriam oceanos/rios.
+5. **Templos:** no criativo, com trapaças ligadas num mundo de teste, use `/locate structure temple` e vá até lá. Se aparecer templo da selva ou vila, me avise.
+6. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
+7. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".
+8. **Baú adjacente:** coloque um baú (ou barril/funil) encostado no condensador com baldes vazios dentro. A cada ~30 s um balde do baú vira balde de água.
+9. **Receita** (mesa de trabalho):
    ```
    Ferro   Vidro  Ferro
    Ferro   Balde  Ferro
    Pedra   Pedra  Pedra     (pedregulho, pedra-negra ou pedregulho de ardósia)
    ```
-7. **Idioma:** com o jogo em inglês, o bloco se chama "Water Condenser".
+10. **Idioma:** com o jogo em inglês, o bloco se chama "Water Condenser".
 
 ## Como o Condensador funciona (e por que assim)
 
@@ -119,3 +141,11 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 ## Texturas
 
 Os PNGs 16×16 em `RP/textures/blocks/cl/` são placeholders (cor sólida + borda). Substitua pelos seus com o **mesmo nome**. O build não sobrescreve arquivos existentes.
+
+## Limitações do Bedrock (e o que fiz no lugar)
+
+- **Altura das montanhas:** um add-on estável não consegue mudar o formato do terreno. Ele só troca o bioma *depois* que o jogo já decidiu o relevo. Então há morros pequenos, mas também podem aparecer serras altas onde o jogo geraria montanhas. A alternativa mais simples, se incomodar, é escolher uma semente com relevo mais baixo.
+- **Minérios:** os minérios do subsolo são gerados pelo jogo e não dá para reduzi-los por JSON. Por enquanto, a escassez vem da superfície (sem água, sem árvores, sem animais de fazenda). Na Fase 3 dá para equilibrar pelas máquinas.
+- **Água infinita (2 baldes formando fonte):** o Bedrock não tem regra para desligar. Bloquear isso exigiria vigiar a água em volta do jogador o tempo todo, e esse é o tipo de gambiarra pesada que evitei. Ficou como marco de progressão: no começo só há 1 balde e não há ferro na superfície.
+- **Água escondida:** cavernas subterrâneas (aquíferos e cavernas exuberantes) e os poços do deserto ainda têm água. É pouca e fica longe, então funciona como um "oásis raro".
+- **Vilas:** nas áreas de deserto vanilla ainda podem aparecer vilas do deserto. As cidades próprias vêm numa fase futura.

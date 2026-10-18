@@ -9,4 +9,4 @@ cl.condensador.coletado=You filled a bucket with condensed water.
 ## Welcome
 cl.boas_vindas.titulo=Forced Landing
 cl.boas_vindas.subtitulo=Your ship went down. Survive.
-cl.boas_vindas.mensagem=§6[Logbook]§r Your ship crashed in a waterless desert. You received an emergency kit: use the Water Condenser to get water.
+cl.boas_vindas.mensagem=§6[Logbook]§r The ship went down on a dry planet. No rivers, no seas, only sand. Search the wreck: the cabin chest holds what is left of the cargo, including a Water Condenser.
