@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.7.0";
+export const VERSAO = "0.8.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -89,20 +89,33 @@ export const MINERIOS: ReadonlyArray<{ minerio: string; veios: number; tamanho: 
 // Relevo espalhado por script conforme o jogador explora (scripts/mundo/relevo.ts).
 // chance = probabilidade por chunk; tamanho = área no chão; deslocY = quanto fica enterrado.
 export const RELEVO = {
-  intervaloTicks: 20,
-  raioChunks: 4,
-  maxPorCiclo: 3, // limita o trabalho por segundo (voando rápido não trava)
-  distanciaNave: 3, // chunks sem relevo em volta da nave
+  intervaloTicks: 10, // a cada 0,5 s
+  raioChunks: 12, // prepara o relevo até esta distância (em chunks), carregando chunks à frente
+  maxPorCiclo: 3, // chunks decorados por ciclo (6 por segundo): limita o peso
+  areaLado: 4, // ticking area de 4×4 chunks para carregar os chunks distantes
+  areaEsperaTicks: 200, // desiste de uma ticking area que não carregou em 10 s
+  distanciaNave: 3, // chunks sem estruturas em volta da nave
   arbustoSeco: 0.3, // chance de 1 a 3 arbustos secos (gravetos) no chunk
   cacto: { chance: 0.35, maxPorChunk: 3 }, // chance de ter cactos no chunk; até quantos
   pecas: [
-    { estrutura: `${NS}:templo_soterrado`, chance: 0.012, tamanho: 15, deslocY: -3, girar: false, bau: { x: 7, y: 1, z: 7 } },
-    { estrutura: `${NS}:morro`, chance: 0.04, tamanho: 17, deslocY: 0, girar: true },
-    { estrutura: `${NS}:mesa`, chance: 0.02, tamanho: 13, deslocY: 0, girar: true },
-    { estrutura: `${NS}:duna_media`, chance: 0.15, tamanho: 19, deslocY: 0, girar: true },
-    { estrutura: `${NS}:duna_pequena`, chance: 0.2, tamanho: 11, deslocY: 0, girar: true },
-    { estrutura: `${NS}:rochas`, chance: 0.07, tamanho: 9, deslocY: 0, girar: true },
+    // Só nas planícies (onde não há duna). Templo mais comum que antes porque metade do mapa é duna.
+    { estrutura: `${NS}:templo_soterrado`, chance: 0.025, tamanho: 15, deslocY: -3, girar: false, bau: { x: 7, y: 1, z: 7 } },
+    { estrutura: `${NS}:morro`, chance: 0.06, tamanho: 17, deslocY: 0, girar: true },
+    { estrutura: `${NS}:mesa`, chance: 0.04, tamanho: 13, deslocY: 0, girar: true },
+    { estrutura: `${NS}:rochas`, chance: 0.1, tamanho: 9, deslocY: 0, girar: true },
   ],
+} as const;
+
+// Dunas por ruído contínuo (scripts/mundo/dunas.ts). Escalas em blocos.
+export const DUNAS = {
+  escalaCampo: 260, // tamanho dos campos de dunas e das planícies entre eles
+  campoMin: -0.15, // abaixo disso: planície lisa
+  campoMax: 0.25, // acima disso: campo de dunas completo
+  escalaCrista: 34, // distância entre cristas (na direção do vento)
+  comprimentoCrista: 110, // comprimento das cristas
+  alturaMin: 3,
+  alturaMax: 10,
+  planoNave: 40, // raio plano em volta da nave (blocos); as dunas sobem nos 40 seguintes
 } as const;
 
 // Saque do baú do templo soterrado: cada linha entra com a chance indicada.

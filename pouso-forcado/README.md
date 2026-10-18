@@ -116,7 +116,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.7.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.8.0] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -147,12 +147,14 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 ## O mundo (Fase 1)
 
 - **Plano, de areia.** O mundo que vem no `.mcaddon` é plano, com bioma de deserto. Camadas de baixo para cima: 1 bedrock, 64 ardósia (y -63 a 0), 32 pedra (1 a 32), 7 arenito, 5 areia. Você pisa em **y = 45**.
-- **Dunas e morros pequenos.** O mundo plano não tem relevo. O script `scripts/mundo/relevo.ts` decora cada chunk **uma única vez**, quando ele carrega perto de você:
-  - dunas pequenas e médias, morros de até 7 blocos, mesas (platôs com faixa de terracota), grupos de rochas, arbustos secos (dão gravetos) e **cactos** de 1 a 3 blocos (em ~1 a cada 3 chunks; `RELEVO.cacto`);
-  - raramente, um **templo soterrado**: uma pirâmide de arenito própria do add-on, com um baú de saque (ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde).
-  - Chances, tamanhos e o saque ficam em `RELEVO` e `TEMPLO_SAQUE` no `scripts/config.ts`.
-  - **Minérios:** cada chunk recebe veios de carvão, cobre, ferro, ouro, redstone, lápis-lazúli e diamante, em alturas parecidas com as do mundo normal (abaixo de y = 0 saem as versões de ardósia). Quantidades em `MINERIOS` no `scripts/config.ts`.
-  - Cada chunk decorado ganha um bloco de **deepslate reforçado** na primeira camada de ardósia (y = -63), no canto do chunk. É a marca de "já feito", para nada ser refeito ao reabrir o mundo. Ele não quebra no modo sobrevivência.
+- **Dunas de verdade.** O mundo plano não tem relevo, então o script `scripts/mundo/relevo.ts` decora cada chunk **uma única vez**:
+  - **dunas por ruído contínuo** (`scripts/mundo/dunas.ts`): campos de dunas em cristas compridas, de 3 a ~10 blocos, que atravessam os chunks sem emenda, separados por planícies lisas. A direção do vento muda de mundo para mundo. Em volta da nave fica plano (raio de ~40 blocos). Ajuste em `DUNAS` no `scripts/config.ts`;
+  - **prontas antes de você chegar:** o script prepara os chunks até 12 chunks de distância. Os que o jogo ainda não carregou ele carrega por conta própria (uma *ticking area* de 4×4 chunks por vez), decora e solta. Assim as dunas já estão lá quando aparecem no horizonte. No começo do mundo leva cerca de 1 a 2 minutos para preparar tudo em volta;
+  - nas **planícies**: morros de até 7 blocos, mesas (platôs com faixa de terracota), grupos de rochas e, raramente, um **templo soterrado** (pirâmide de arenito própria do add-on, com baú de saque: ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde);
+  - em todo lugar: arbustos secos (dão gravetos) e **cactos** de 1 a 3 blocos (`RELEVO.cacto`);
+  - **minérios:** cada chunk recebe veios de carvão, cobre, ferro, ouro, redstone, lápis-lazúli e diamante, em alturas parecidas com as do mundo normal (abaixo de y = 0 saem as versões de ardósia). Quantidades em `MINERIOS` no `scripts/config.ts`;
+  - chances, tamanhos e o saque ficam em `RELEVO` e `TEMPLO_SAQUE` no `scripts/config.ts`;
+  - cada chunk decorado ganha um bloco de **deepslate reforçado** na primeira camada de ardósia (y = -63), no canto do chunk. É a marca de "já feito", para nada ser refeito ao reabrir o mundo. Ele não quebra no modo sobrevivência.
 - **Sem cavernas e sem água.** Mundo plano não tem cavernas, aquíferos, rios nem mares. Também não chove (bioma de deserto).
 - **Sem animais:** em `BP/spawn_rules/` as regras de spawn de todos os animais do Overworld estão vazias: vaca, porco, ovelha, galinha, coelho, cavalo, burro, lhama, camelo, lobo, raposa, abelha, sapo, cabra, panda, papagaio, jaguatirica, urso-polar, tatu, tartaruga, morcego, peixes, lula, golfinho, axolote e náutilo.
 - **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, a cada 5 s nascem 4 monstros extras a 12–28 blocos de cada jogador, até ter 60 por perto.
@@ -160,9 +162,9 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 - **O sol queima tudo:** de dia, todo monstro exposto ao céu pega fogo, inclusive husks, aranhas e creepers, que no jogo normal não queimam. Quem estiver na sombra (dentro de um templo, embaixo de um teto) ou no subsolo escapa.
 - **Nada nasce de dia ao ar livre:** se o jogo fizer um monstro nascer de dia sob o céu aberto, o script remove na hora. No subsolo e na sombra o spawn continua normal. (Ovos de spawn usados de dia ao ar livre também são removidos.)
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
-- **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Nenhum relevo é gerado a menos de 3 chunks da nave.
+- **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.7.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.8.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
@@ -181,7 +183,7 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 2. **Diário:** ao entrar, o Diário de Bordo vai para o inventário. Use-o: o menu mostra a missão 1. Coloque o condensador: a missão conclui e chegam 2 terras.
 3. **Minérios:** cave um poço até y = 0 ou menos. Deve haver carvão e ferro na pedra, e ouro, redstone, lápis e (raro) diamante na ardósia.
 4. **Boas-vindas e nave:** aparece o título "Pouso Forçado", a mensagem no chat e, em ~2 s, a nave ao seu lado. Entre pela abertura lateral e abra o baú.
-5. **Relevo:** ande para longe da nave. Dunas, morros pequenos, mesas e rochas vão aparecendo a cada poucos chunks. Elas surgem quando o chunk carrega, a ~4 chunks de você.
+5. **Relevo:** espere 1 a 2 minutos perto da nave e olhe o horizonte: devem aparecer campos de dunas compridas, separados por planícies com morros, mesas e rochas. Ande: as dunas já devem estar prontas antes de você chegar.
 6. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
 7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
 8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
@@ -220,7 +222,7 @@ Os PNGs 16×16 em `RP/textures/blocks/cl/` são placeholders (cor sólida + bord
 
 ## Limitações do Bedrock (e o que fiz no lugar)
 
-- **Relevo do mundo plano:** o jogo não gera relevo em mundo plano, então as dunas e os morros são colocados por script quando o chunk carrega. Por isso eles "aparecem" a uns 4 chunks de distância (o raio que o jogo mantém carregado no celular), não no horizonte. O custo é baixo: no máximo 3 chunks decorados por segundo.
+- **Relevo do mundo plano:** o jogo não gera relevo em mundo plano, então as dunas e os morros são colocados por script. Para não aparecerem "brotando" perto de você, o script carrega e decora os chunks até 12 chunks de distância com ticking areas. Se a sua distância de renderização for maior que 12 chunks, o que estiver mais longe ainda aparece plano até você se aproximar (dá para aumentar `RELEVO.raioChunks`, mas pesa mais). Custo: no máximo 6 chunks decorados por segundo e uma ticking area aberta por vez.
 - **Templos e vilas vanilla:** não existem no mundo plano, e `/place structure` só aceita estruturas "jigsaw". O templo soterrado é próprio do add-on.
 - **Água infinita (2 baldes formando fonte):** o Bedrock não tem regra para desligar. Bloquear isso exigiria vigiar a água em volta do jogador o tempo todo, e esse é o tipo de gambiarra pesada que evitei. Ficou como marco de progressão: no começo só há 1 balde e quase não há ferro.
 - **Mundo montado à mão:** o `level.dat` foi montado sem passar pelo jogo. Se o mundo não abrir ou não sair plano, use os `.mcpack` num mundo infinito enquanto eu ajusto o arquivo.

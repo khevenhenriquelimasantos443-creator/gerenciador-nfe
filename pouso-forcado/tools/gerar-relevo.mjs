@@ -1,4 +1,4 @@
-// Gera as estruturas de relevo do mundo plano (dunas, morros pequenos, rochas)
+// Gera as estruturas de relevo do mundo plano (morros pequenos, mesas, rochas)
 // e o templo soterrado. O script scripts/mundo/relevo.ts espalha estas peças
 // pelos chunks conforme o jogador explora. Use --force para regerar.
 import { dirname, join } from "node:path";
@@ -44,8 +44,7 @@ function monte({ rx, rz, altura, assimetria = 1, nucleo = null, semente = 0 }) {
   return est;
 }
 
-salvar(monte({ rx: 5, rz: 4, altura: 2, semente: 1 }), "duna_pequena");
-salvar(monte({ rx: 9, rz: 5, altura: 4, assimetria: 1.8, semente: 2 }), "duna_media");
+// As dunas não são mais estruturas: saem de ruído contínuo em scripts/mundo/dunas.ts.
 salvar(monte({ rx: 8, rz: 8, altura: 7, nucleo: ARENITO, semente: 3 }), "morro");
 
 // Mesa: platô de topo plano com faixas de terracota.
