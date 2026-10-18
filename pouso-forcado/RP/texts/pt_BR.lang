@@ -1,0 +1,12 @@
+## Blocos
+tile.cl:condensador_agua.name=Condensador de Água
+
+## Condensador
+cl.condensador.condensando=O condensador ainda está juntando umidade. Volte daqui a pouco.
+cl.condensador.sem_balde=O condensador está cheio. Traga um balde vazio.
+cl.condensador.coletado=Você encheu um balde com água condensada.
+
+## Boas-vindas
+cl.boas_vindas.titulo=Pouso Forçado
+cl.boas_vindas.subtitulo=A nave caiu. Sobreviva.
+cl.boas_vindas.mensagem=§6[Diário de Bordo]§r Sua nave caiu num deserto sem água. Você recebeu um kit de emergência: use o Condensador de Água para conseguir água.

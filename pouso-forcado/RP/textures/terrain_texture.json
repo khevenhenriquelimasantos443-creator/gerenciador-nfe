@@ -1,0 +1,12 @@
+{
+  "resource_pack_name": "pouso_forcado",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "cl_condensador_lado": { "textures": "textures/blocks/cl/condensador_lado" },
+    "cl_condensador_topo": { "textures": "textures/blocks/cl/condensador_topo" },
+    "cl_condensador_topo_cheio": { "textures": "textures/blocks/cl/condensador_topo_cheio" },
+    "cl_condensador_base": { "textures": "textures/blocks/cl/condensador_base" }
+  }
+}

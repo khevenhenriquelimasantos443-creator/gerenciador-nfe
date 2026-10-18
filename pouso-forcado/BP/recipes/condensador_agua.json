@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:condensador_agua"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "IGI",
+      "IBI",
+      "SSS"
+    ],
+    "key": {
+      "I": { "item": "minecraft:iron_ingot" },
+      "G": { "item": "minecraft:glass" },
+      "B": { "item": "minecraft:bucket" },
+      "S": { "tag": "minecraft:stone_crafting_materials" }
+    },
+    "unlock": [
+      { "item": "minecraft:bucket" }
+    ],
+    "result": {
+      "item": "cl:condensador_agua"
+    }
+  }
+}

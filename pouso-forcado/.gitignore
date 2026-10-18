@@ -1,0 +1,4 @@
+node_modules/
+BP/scripts/
+dist/*
+!dist/pouso-forcado.mcaddon
