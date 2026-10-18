@@ -163,3 +163,30 @@ cl.missao.automacao.titulo=Production line
 cl.missao.automacao.desc=Let the automatic sieve work: 64 blocks sifted near you.
 cl.missao.turbo.titulo=Turbo
 cl.missao.turbo.desc=Connect the Greenhouse or the Advanced Condenser to a battery: 10 powered cycles.
+
+## Exploration (Phase 6)
+tile.cl:gerador_monstros.name=Monster Generator
+cl.ponto.cidade=You reached an abandoned city. Careful: the dark buildings are full of monsters. There is a radio tower in the center.
+cl.ponto.masmorra=You found a dungeon. Break the Monster Generator before it fills the room.
+cl.ponto.masmorra_funda=You found a deep dungeon, in the deepslate. The loot here is much better.
+cl.ponto.destrocos=Wreckage of another ship! Someone else crashed on this planet. Check the cabin chest.
+cl.diario.sinal_cidade=§bWeak radio signal near x %s, z %s (%s blocks away).
+cl.tempestade.titulo=§6Sandstorm!
+cl.tempestade.subtitulo=Find shelter: outside you are slowed and get thirsty.
+cl.tempestade.fim=The sandstorm has passed.
+
+## Missions (Phase 6)
+cl.missao.cidade.titulo=Radio signal
+cl.missao.cidade.desc=A radio signal is coming from an abandoned city. Go there (the Logbook shows where).
+cl.missao.spawner.titulo=Cut off the source
+cl.missao.spawner.desc=Break a Monster Generator (in cities and dungeons).
+cl.missao.masmorra.titulo=Underground
+cl.missao.masmorra.desc=Find an underground dungeon. Look for rings of chiseled sandstone in the sand: they are shafts.
+cl.missao.destrocos.titulo=We are not alone
+cl.missao.destrocos.desc=Find the wreckage of another ship.
+cl.missao.tempestade.titulo=Weather the wind
+cl.missao.tempestade.desc=Survive a sandstorm.
+cl.missao.exterminador.titulo=Exterminator
+cl.missao.exterminador.desc=Break 5 more Monster Generators.
+cl.missao.profundezas.titulo=The depths
+cl.missao.profundezas.desc=Find a deep dungeon, in the deepslate layer.

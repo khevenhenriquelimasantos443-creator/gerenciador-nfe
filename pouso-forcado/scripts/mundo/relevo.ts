@@ -1,14 +1,19 @@
 import { Dimension, StructureRotation, Vector3, system, world } from "@minecraft/server";
+import { DESTROCOS_SAQUE, MUNDO_PLANO, PROPS, RELEVO, TEMPLO_SAQUE } from "../config.js";
+import { chunkDaNave, rng, sementeDe, sementeDoMundo, sortearSaque } from "../util/aleatorio.js";
+import { criarBauCom } from "../util/inventario.js";
+import { cidadeDoChunk, construirQuarteirao } from "./cidade.js";
 import { alturaDuna, porDunas } from "./dunas.js";
-import { MUNDO_PLANO, PROPS, RELEVO, TEMPLO_SAQUE } from "../config.js";
-import { Pilha, criarBauCom } from "../util/inventario.js";
+import { talvezMasmorra } from "./masmorra.js";
 import { porMinerios } from "./minerios.js";
+import { registrarPonto } from "./pontos.js";
 
 /*
  * Relevo do mundo plano: o mundo gera só camadas planas de areia, pedra e ardósia. Este módulo
  * decora cada chunk UMA vez: dunas por ruído contínuo (scripts/mundo/dunas.ts), veios de minério,
- * cactos, arbustos secos e, nas planícies, às vezes um morro, uma mesa, rochas ou um templo
- * soterrado (estruturas em BP/structures/cl/).
+ * cactos, arbustos secos, masmorras no subsolo (masmorra.ts) e, nas planícies, às vezes um morro,
+ * uma mesa, rochas, um templo soterrado ou destroços de nave (estruturas em BP/structures/cl/).
+ * Chunks de cidade (cidade.ts) viram quarteirões em vez disso.
  *
  * Para o relevo já estar pronto quando aparece no horizonte, os chunks até RELEVO.raioChunks
  * são decorados antes de o jogador chegar: os que o jogo já carregou, direto; os outros, abrindo
@@ -22,34 +27,6 @@ import { porMinerios } from "./minerios.js";
 const vistos = new Set<string>(); // chunks já resolvidos nesta sessão
 const GIROS = [StructureRotation.None, StructureRotation.Rotate90, StructureRotation.Rotate180, StructureRotation.Rotate270];
 
-// Gerador pseudoaleatório determinístico por chunk (mulberry32).
-function rng(semente: number): () => number {
-  let a = semente >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function sementeDoMundo(): number {
-  let s = world.getDynamicProperty(PROPS.sementeRelevo);
-  if (typeof s !== "number") {
-    s = Math.floor(Math.random() * 2 ** 31);
-    world.setDynamicProperty(PROPS.sementeRelevo, s);
-  }
-  return s;
-}
-
-function chunkDaNave(): [number, number] | undefined {
-  const valor = world.getDynamicProperty(PROPS.naveChunk);
-  if (typeof valor !== "string") return undefined;
-  const [cx, cz] = valor.split(",").map(Number);
-  return [cx, cz];
-}
-
 function areaCarregada(dimensao: Dimension, x: number, z: number, tamanho: number): boolean {
   const y = MUNDO_PLANO.superficieY;
   return [[x, z], [x + tamanho, z], [x, z + tamanho], [x + tamanho, z + tamanho]].every(([px, pz]) =>
@@ -57,12 +34,7 @@ function areaCarregada(dimensao: Dimension, x: number, z: number, tamanho: numbe
   );
 }
 
-function sortearSaque(sorte: () => number): Pilha[] {
-  return TEMPLO_SAQUE.filter((l) => sorte() < l.chance).map((l) => ({
-    item: l.item,
-    quantidade: l.min + Math.floor(sorte() * (l.max - l.min + 1)),
-  }));
-}
+const SAQUES = { templo: TEMPLO_SAQUE, destrocos: DESTROCOS_SAQUE } as const;
 
 // Cactos de 1 a 3 blocos, só em areia e sem nada encostado nos lados (como no jogo normal).
 function porCactos(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
@@ -164,8 +136,18 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   if (marca.typeId !== MUNDO_PLANO.pedraEsperada) return "pronto";
   if (!ehChunkDoMundoPlano(dimensao, x0, z0)) return "pronto";
 
-  const sorte = rng(semente ^ Math.imul(cx, 73856093) ^ Math.imul(cz, 83492791));
+  const sorte = rng(sementeDe(semente, cx, cz));
   const nave = { x: naveChunk[0] * 16 + 8, z: naveChunk[1] * 16 + 8 };
+
+  // Cidade: o chunk é um quarteirão (sem dunas nem peças), com minérios por baixo.
+  const cidade = cidadeDoChunk(cx, cz, semente, naveChunk);
+  if (cidade) {
+    porMinerios(dimensao, x0, z0, sorte);
+    construirQuarteirao(dimensao, cx, cz, cidade.dist, semente);
+    desenterrarJogadores(dimensao, x0, z0);
+    marca.setType(MUNDO_PLANO.marcador);
+    return "decorado";
+  }
   const pertoDaNave = Math.max(Math.abs(cx - naveChunk[0]), Math.abs(cz - naveChunk[1])) < RELEVO.distanciaNave;
 
   // Primeiro decide a peça e confere se a área dela está carregada, antes de mexer em qualquer bloco.
@@ -180,6 +162,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   porDunas(dimensao, x0, z0, semente, nave);
   desenterrarJogadores(dimensao, x0, z0);
   porMinerios(dimensao, x0, z0, sorte);
+  if (!pertoDaNave) talvezMasmorra(dimensao, x0, z0, sorte);
 
   if (colocaPeca && peca) {
     const origem: Vector3 = { x: ox, y: MUNDO_PLANO.superficieY + peca.deslocY, z: oz };
@@ -187,7 +170,9 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
     world.structureManager.place(peca.estrutura, dimensao, origem, { rotation });
     if ("bau" in peca) {
       const b = peca.bau;
-      criarBauCom(dimensao, { x: ox + b.x, y: origem.y + b.y, z: oz + b.z }, sortearSaque(sorte));
+      const tabela = SAQUES["saque" in peca ? peca.saque : "templo"];
+      criarBauCom(dimensao, { x: ox + b.x, y: origem.y + b.y, z: oz + b.z }, sortearSaque(tabela, sorte));
+      if ("ponto" in peca) registrarPonto(peca.ponto, ox + b.x, origem.y + b.y, oz + b.z, 7);
     }
   }
   if (!pertoDaNave) {

@@ -16,7 +16,18 @@ export type Objetivo =
   | { tipo: "noites"; qtd: number } // sobreviver a tantas noites desde o início da missão
   | { tipo: "acao"; acao: Acao; qtd: number }; // usar uma máquina (contado pelo script da máquina)
 
-export type Acao = "peneirar" | "compostar" | "capsula" | "procriar" | "turbo";
+export type Acao =
+  | "peneirar"
+  | "compostar"
+  | "capsula"
+  | "procriar"
+  | "turbo"
+  | "cidade"
+  | "spawner"
+  | "masmorra"
+  | "masmorra_funda"
+  | "destrocos"
+  | "tempestade";
 
 export type Missao = { id: string; objetivo: Objetivo; recompensa: ReadonlyArray<Pilha> };
 
@@ -84,4 +95,17 @@ export const MISSOES: ReadonlyArray<Missao> = [
   },
   { id: "automacao", objetivo: { tipo: "acao", acao: "peneirar", qtd: 64 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
   { id: "turbo", objetivo: { tipo: "acao", acao: "turbo", qtd: 10 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+
+  // Fase 6: exploração e perigos
+  { id: "cidade", objetivo: { tipo: "acao", acao: "cidade", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 16 }] },
+  { id: "spawner", objetivo: { tipo: "acao", acao: "spawner", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
+  { id: "masmorra", objetivo: { tipo: "acao", acao: "masmorra", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
+  { id: "destrocos", objetivo: { tipo: "acao", acao: "destrocos", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 4 }] },
+  { id: "tempestade", objetivo: { tipo: "acao", acao: "tempestade", qtd: 1 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 4 }] },
+  { id: "exterminador", objetivo: { tipo: "acao", acao: "spawner", qtd: 5 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+  {
+    id: "profundezas",
+    objetivo: { tipo: "acao", acao: "masmorra_funda", qtd: 1 },
+    recompensa: [{ item: "minecraft:golden_apple", quantidade: 1 }],
+  },
 ];

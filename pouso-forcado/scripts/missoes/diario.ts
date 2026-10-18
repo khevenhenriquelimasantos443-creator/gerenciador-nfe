@@ -1,6 +1,7 @@
 import { Player, RawMessage, system, world } from "@minecraft/server";
 import { ActionFormData, MessageFormData } from "@minecraft/server-ui";
 import { IDS, PROPS } from "../config.js";
+import { cidadeMaisProxima } from "../mundo/cidade.js";
 import { MISSOES } from "./lista.js";
 import { avancar, conferir, contar, darItens, feitoAtual, lerEstado, missaoAtual, textoPilhas } from "./progresso.js";
 
@@ -45,8 +46,17 @@ function corpoMissao(jogador: Player): RawMessage | undefined {
       { translate: "cl.diario.recompensa" },
       { text: " " },
       textoPilhas(m.recompensa),
+      ...dicaDaMissao(jogador, m.id),
     ],
   };
+}
+
+/** Missões de achar cidade: mostra onde está o sinal mais próximo. */
+function dicaDaMissao(jogador: Player, id: string): RawMessage[] {
+  if (id !== "cidade") return [];
+  const c = cidadeMaisProxima(jogador.location.x, jogador.location.z);
+  if (!c) return [];
+  return [{ text: "\n\n" }, { translate: "cl.diario.sinal_cidade", with: [String(Math.round(c.x)), String(Math.round(c.z)), String(Math.round(c.distancia))] }];
 }
 
 async function mostrarConcluidas(jogador: Player): Promise<void> {

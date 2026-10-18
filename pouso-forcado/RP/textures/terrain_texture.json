@@ -87,6 +87,9 @@
     },
     "cl_moinho_topo": {
       "textures": "textures/blocks/cl/moinho_topo"
+    },
+    "cl_gerador_monstros": {
+      "textures": "textures/blocks/cl/gerador_monstros"
     }
   }
 }

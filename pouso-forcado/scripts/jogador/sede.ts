@@ -1,5 +1,6 @@
 import { Difficulty, EntityDamageCause, GameMode, ItemStack, Player, system, world } from "@minecraft/server";
-import { FRUTA_CACTO_CHANCE, IDS, PROPS, SEDE } from "../config.js";
+import { FRUTA_CACTO_CHANCE, IDS, PROPS, SEDE, TEMPESTADE } from "../config.js";
+import { tempestadeAtiva } from "../mundo/tempestade.js";
 import { multiplicadorSede } from "./temperatura.js";
 
 /*
@@ -37,7 +38,8 @@ export function registrarSede(): void {
     if (world.getDifficulty() === Difficulty.Peaceful) return;
     const base = ehDia() ? SEDE.segundosDia : SEDE.segundosNoite;
     for (const jogador of world.getPlayers({ excludeGameModes: [GameMode.Creative, GameMode.Spectator] })) {
-      const intervalo = Math.round(base / multiplicadorSede(jogador));
+      const tempestade = tempestadeAtiva() ? TEMPESTADE.sedeMultiplicador : 1;
+      const intervalo = Math.max(1, Math.round(base / (multiplicadorSede(jogador) * tempestade)));
       const s = (contador.get(jogador.id) ?? 0) + 1;
       contador.set(jogador.id, s);
       let valor = lerSede(jogador);

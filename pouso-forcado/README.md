@@ -3,7 +3,7 @@
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
 Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
 
-**Fase atual: 5** (energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, horda), 2 (Diário de Bordo e missões), 3 (máquinas) e 4 (sede, temperatura, águas, cápsulas de carga).
+**Fase atual: 6** (exploração: cidades abandonadas, masmorras, geradores de monstros, tempestade de areia, destroços de naves). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, horda), 2 (Diário de Bordo e missões), 3 (máquinas), 4 (sede, temperatura, águas, cápsulas de carga) e 5 (energia).
 
 ## Fases até o fim
 
@@ -14,11 +14,12 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 2 | Diário de Bordo: item com menu de missões, recompensas e progresso salvo por jogador; 12 missões dos primeiros dias | pronta |
 | 3 | Máquinas de sobrevivência: Peneira, Compostor de Terra, Condensador Avançado, Estufa; +8 missões | pronta |
 | 4 | Comida e vida: sede, temperatura do corpo, 5 qualidades de água, fruta do cacto, cápsulas de carga com animais; +8 missões | pronta |
-| 5 | **Energia**: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | **esta versão** |
-| 6 | (próxima) Exploração e perigos: tempestade de areia, destroços de outras naves com saque, monstros novos do deserto, um chefe | |
-| 7 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
-| 8 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
-| 9 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
+| 5 | Energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | pronta |
+| 6 | **Exploração**: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | **esta versão** |
+| 7 | (próxima) Perigos: monstros novos do deserto e um chefe | |
+| 8 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
+| 9 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
+| 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
 
 ## Versões usadas (conferidas na documentação oficial)
 
@@ -116,7 +117,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.12.2] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.0] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -169,6 +170,14 @@ Outros comandos:
 | 35 | Linha de produção | 64 blocos peneirados pela peneira automática perto de você | 2 barras de ouro |
 | 36 | Turbo | 10 ciclos da Estufa ou do Condensador Avançado com energia | 1 diamante |
 
+| 37 | Sinal de rádio | chegar numa cidade abandonada (o Diário mostra as coordenadas) | 16 tochas |
+| 38 | Desligar a fonte | quebrar um Gerador de Monstros | 4 barras de ferro |
+| 39 | Debaixo da terra | achar uma masmorra | 2 barras de ouro |
+| 40 | Não estamos sozinhos | achar destroços de outra nave | 4 redstones |
+| 41 | Aguentar o vento | sobreviver a uma tempestade de areia | 4 Águas Boas |
+| 42 | Exterminador | quebrar mais 5 Geradores de Monstros | 1 diamante |
+| 43 | Profundezas | achar uma masmorra funda | 1 maçã dourada |
+
 Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`; textos em `RP/texts/*.lang` (`cl.missao.<id>.titulo` / `.desc`).
 
 ## Máquinas (Fase 3)
@@ -181,6 +190,21 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 | **Estufa** | `V V V` / `V X V` / `C C C` | A cada 10 s, numa área de 9×9 em volta (da camada de baixo até 2 acima): a **terra arada fica sempre molhada** (planta longe da água), as plantações crescem mais rápido e as mudas viram árvore mais cedo. |
 
 Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `scripts/config.ts`.
+
+## Exploração (Fase 6)
+
+- **Cidades abandonadas.** O mapa é dividido em quadrados de 640×640 blocos; cada um tem uma cidade (menos o da nave), então a mais perto fica a algumas centenas de blocos. Na missão "Sinal de rádio" o **Diário de Bordo mostra as coordenadas** da cidade mais próxima. Cada cidade tem 112×112 blocos, numa planície sem dunas:
+  - **prédios ocos** de 2 a 9 andares (mais altos no centro), de concreto, tijolo de pedra, arenito ou terracota, com janelas quebradas, topo desmoronado, areia acumulada e um **andaime** para subir até o telhado;
+  - por dentro: **escuro** (monstros nascem sozinhos), **baús** em vários andares e **Geradores de Monstros**;
+  - alguns quarteirões são só escombros; ruas de andesito cobertas de areia;
+  - no **centro**, uma praça com a **torre de rádio** (34 blocos, andaime por dentro). Lá em cima: um baú com diamantes, ferro, redstone, Água Excelente e às vezes maçã dourada… guardado por um gerador.
+- **Masmorras.** Salas escondidas no subsolo (~1 a cada 25 chunks), escuras, com um Gerador de Monstros no meio e 1 ou 2 baús:
+  - **comuns** na pedra (y 12 a 26), de pedregulho com musgo. Metade tem um **poço** até a superfície, marcado por um **anel de arenito entalhado** na areia (com feno no fundo para amortecer a queda; para sair, cave ou faça uma escada);
+  - **fundas** na ardósia (y -45 a -25), com 2 geradores e saque muito melhor (diamantes, ouro, esmeraldas, maçã dourada).
+- **Gerador de Monstros.** Com um jogador a até 20 blocos, põe 1 ou 2 monstros em volta a cada 10 s (até 5 por perto). Abaixo de y = 0 vêm esqueletos, errantes, aranhas das cavernas e creepers. Leva uns 5 s para quebrar, não cai como item e dá ferro, ouro, redstone e experiência. Não explode com creeper.
+- **Destroços de outras naves.** Nas planícies, às vezes, uma nave igual à sua, meio enterrada, com um baú de ferro, cobre, redstone, vidro e água.
+- **Tempestade de areia.** No máximo uma por dia (35% de chance), de dia, por 2 minutos: aviso na tela, **névoa amarela** que fecha a visão, e quem estiver ao ar livre fica lento. A sede cai 1,5× mais rápido. Com trapaças, `/scriptevent cl:tempestade` começa uma na hora.
+- Números em `CIDADE`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
 ## Energia (Fase 5)
 
@@ -258,7 +282,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.12.2] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

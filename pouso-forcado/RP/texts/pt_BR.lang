@@ -163,3 +163,30 @@ cl.missao.automacao.titulo=Linha de produção
 cl.missao.automacao.desc=Deixe a peneira automática trabalhar: 64 blocos peneirados perto de você.
 cl.missao.turbo.titulo=Turbo
 cl.missao.turbo.desc=Ligue a Estufa ou o Condensador Avançado numa bateria: 10 ciclos com energia.
+
+## Exploração (Fase 6)
+tile.cl:gerador_monstros.name=Gerador de Monstros
+cl.ponto.cidade=Você chegou numa cidade abandonada. Cuidado: os prédios escuros estão cheios de monstros. No centro há uma torre de rádio.
+cl.ponto.masmorra=Você achou uma masmorra. Quebre o Gerador de Monstros antes que ele encha a sala.
+cl.ponto.masmorra_funda=Você achou uma masmorra funda, na ardósia. O saque aqui é muito melhor.
+cl.ponto.destrocos=Destroços de outra nave! Alguém mais caiu neste planeta. Veja o baú da cabine.
+cl.diario.sinal_cidade=§bSinal de rádio fraco perto de x %s, z %s (%s blocos daqui).
+cl.tempestade.titulo=§6Tempestade de areia!
+cl.tempestade.subtitulo=Procure abrigo: lá fora você fica lento e com sede.
+cl.tempestade.fim=A tempestade de areia passou.
+
+## Missões (Fase 6)
+cl.missao.cidade.titulo=Sinal de rádio
+cl.missao.cidade.desc=Há um sinal de rádio vindo de uma cidade abandonada. Vá até lá (o Diário mostra onde).
+cl.missao.spawner.titulo=Desligar a fonte
+cl.missao.spawner.desc=Quebre um Gerador de Monstros (nas cidades e nas masmorras).
+cl.missao.masmorra.titulo=Debaixo da terra
+cl.missao.masmorra.desc=Ache uma masmorra no subsolo. Procure anéis de arenito entalhado na areia: são poços.
+cl.missao.destrocos.titulo=Não estamos sozinhos
+cl.missao.destrocos.desc=Ache os destroços de outra nave.
+cl.missao.tempestade.titulo=Aguentar o vento
+cl.missao.tempestade.desc=Sobreviva a uma tempestade de areia.
+cl.missao.exterminador.titulo=Exterminador
+cl.missao.exterminador.desc=Quebre mais 5 Geradores de Monstros.
+cl.missao.profundezas.titulo=Profundezas
+cl.missao.profundezas.desc=Ache uma masmorra funda, na camada de ardósia.

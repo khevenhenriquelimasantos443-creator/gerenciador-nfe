@@ -36,5 +36,8 @@
   },
   "cl:moinho": {
     "sound": "wood"
+  },
+  "cl:gerador_monstros": {
+    "sound": "metal"
   }
 }

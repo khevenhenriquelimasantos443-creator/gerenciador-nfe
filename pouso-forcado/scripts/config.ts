@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.12.2";
+export const VERSAO = "0.13.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -20,6 +20,7 @@ export const IDS = {
   cabo: `${NS}:cabo`,
   peneiraAutomatica: `${NS}:peneira_automatica`,
   moinho: `${NS}:moinho`,
+  geradorMonstros: `${NS}:gerador_monstros`,
   diarioBordo: `${NS}:diario_bordo`,
   frutaCacto: `${NS}:fruta_cacto`,
   aguaExcelente: `${NS}:agua_excelente`,
@@ -36,6 +37,10 @@ export const PROPS = {
   naveChunk: `${NS}:nave_chunk`, // mundo: "cx,cz" do chunk da nave
   sementeRelevo: `${NS}:semente_relevo`, // mundo
   tipoMundo: `${NS}:tipo_mundo`, // mundo: "plano" (o do add-on) ou "normal" (relevo desligado)
+  pontos: `${NS}:pontos`, // mundo: JSON com masmorras e destroços já gerados (para as missões)
+  visitados: `${NS}:visitados`, // jogador: JSON com os lugares que ele já achou
+  tempestadeAte: `${NS}:tempestade_ate`, // mundo: tempo absoluto em que a tempestade acaba
+  tempestadeDia: `${NS}:tempestade_dia`, // mundo: último dia em que se sorteou tempestade
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
@@ -132,6 +137,17 @@ export const RELEVO = {
     { estrutura: `${NS}:morro`, chance: 0.06, tamanho: 17, deslocY: 0, girar: true },
     { estrutura: `${NS}:mesa`, chance: 0.04, tamanho: 13, deslocY: 0, girar: true },
     { estrutura: `${NS}:rochas`, chance: 0.1, tamanho: 9, deslocY: 0, girar: true },
+    // Destroços de outra nave (a mesma estrutura da sua, com outro saque). Fase 6.
+    {
+      estrutura: `${NS}:nave_caida`,
+      chance: 0.02,
+      tamanho: 17, // a nave tem 13×17
+      deslocY: -2,
+      girar: false,
+      bau: { x: 6, y: 2, z: 8 },
+      saque: "destrocos",
+      ponto: "destrocos",
+    },
   ],
 } as const;
 
@@ -386,4 +402,120 @@ export const ENERGIA = {
   peneiraPorE: 2, // a peneira automática peneira 2 blocos por E (a cada 5 s)
   rede: { maxBlocos: 64 },
   avisoRaio: 24, // jogador a até tantos blocos de uma máquina automática ganha o progresso das missões
+} as const;
+
+// ---- Fase 6: exploração e perigos ----
+
+export type LinhaSaque = { item: string; min: number; max: number; chance: number };
+
+// Cidades abandonadas (scripts/mundo/cidade.ts). O mapa é dividido em células de
+// "celula" × "celula" chunks; cada célula tem uma cidade (menos a da nave) de
+// (2·raio+1)² chunks, cada chunk um quarteirão: prédio, ruína ou, no centro, a torre de rádio.
+export const CIDADE = {
+  celula: 40, // chunks (640 blocos)
+  raio: 3, // chunks em volta do centro (cidade de 7×7 chunks, 112×112 blocos)
+  margem: 6, // a cidade fica inteira dentro da célula
+  distanciaNave: 18, // nenhuma cidade a menos de tantos chunks da nave
+  bordaPlana: 32, // blocos sem dunas em volta da cidade
+  andaresMin: 2,
+  andaresMax: 9, // perto do centro; diminui para as bordas
+  chanceRuina: 0.2, // quarteirão só com escombros
+  chanceBauPorAndar: 0.4,
+  materiais: [
+    "minecraft:light_gray_concrete",
+    "minecraft:white_concrete",
+    "minecraft:gray_concrete",
+    "minecraft:stone_bricks",
+    "minecraft:cut_sandstone",
+    "minecraft:smooth_sandstone",
+    "minecraft:white_terracotta",
+  ],
+  rua: "minecraft:polished_andesite",
+} as const;
+
+export const CIDADE_SAQUE: ReadonlyArray<LinhaSaque> = [
+  { item: "minecraft:iron_ingot", min: 1, max: 4, chance: 0.5 },
+  { item: "minecraft:copper_ingot", min: 2, max: 6, chance: 0.5 },
+  { item: "minecraft:redstone", min: 2, max: 6, chance: 0.4 },
+  { item: "minecraft:glass_bottle", min: 1, max: 3, chance: 0.4 },
+  { item: "cl:agua_boa", min: 1, max: 2, chance: 0.4 },
+  { item: "cl:agua_suja", min: 1, max: 3, chance: 0.3 },
+  { item: "minecraft:bread", min: 1, max: 3, chance: 0.35 },
+  { item: "minecraft:paper", min: 2, max: 6, chance: 0.3 },
+  { item: "minecraft:book", min: 1, max: 2, chance: 0.15 },
+  { item: "minecraft:torch", min: 4, max: 10, chance: 0.35 },
+  { item: "minecraft:leather_helmet", min: 1, max: 1, chance: 0.1 },
+  { item: "minecraft:iron_pickaxe", min: 1, max: 1, chance: 0.05 },
+  { item: "minecraft:gold_ingot", min: 1, max: 2, chance: 0.1 },
+  { item: "minecraft:diamond", min: 1, max: 1, chance: 0.03 },
+];
+export const TORRE_SAQUE: ReadonlyArray<LinhaSaque> = [
+  { item: "minecraft:diamond", min: 1, max: 3, chance: 1 },
+  { item: "minecraft:iron_ingot", min: 4, max: 8, chance: 1 },
+  { item: "minecraft:redstone", min: 8, max: 16, chance: 1 },
+  { item: "minecraft:golden_apple", min: 1, max: 1, chance: 0.5 },
+  { item: "cl:agua_excelente", min: 2, max: 3, chance: 1 },
+];
+
+// Masmorras (scripts/mundo/masmorra.ts): salas escondidas no subsolo com gerador de monstros.
+export const MASMORRA = {
+  chance: 0.04, // por chunk (fora das cidades)
+  chanceFunda: 0.35, // das masmorras, quantas ficam na ardósia (mais perigosas e mais ricas)
+  chancePoco: 0.5, // das comuns, quantas têm um poço até a superfície (anel de arenito entalhado)
+  yComum: [12, 26],
+  yFunda: [-45, -25],
+} as const;
+export const MASMORRA_SAQUE: ReadonlyArray<LinhaSaque> = [
+  { item: "minecraft:bone", min: 2, max: 6, chance: 0.8 },
+  { item: "minecraft:iron_ingot", min: 2, max: 5, chance: 0.6 },
+  { item: "minecraft:gold_ingot", min: 1, max: 3, chance: 0.35 },
+  { item: "minecraft:redstone", min: 2, max: 6, chance: 0.4 },
+  { item: "minecraft:saddle", min: 1, max: 1, chance: 0.15 },
+  { item: "minecraft:name_tag", min: 1, max: 1, chance: 0.1 },
+  { item: "minecraft:melon_seeds", min: 2, max: 4, chance: 0.25 },
+  { item: "cl:agua_boa", min: 1, max: 2, chance: 0.4 },
+  { item: "minecraft:diamond", min: 1, max: 2, chance: 0.08 },
+];
+export const MASMORRA_FUNDA_SAQUE: ReadonlyArray<LinhaSaque> = [
+  { item: "minecraft:diamond", min: 1, max: 3, chance: 0.6 },
+  { item: "minecraft:gold_ingot", min: 2, max: 6, chance: 0.7 },
+  { item: "minecraft:iron_ingot", min: 4, max: 8, chance: 0.8 },
+  { item: "minecraft:emerald", min: 1, max: 3, chance: 0.4 },
+  { item: "minecraft:golden_apple", min: 1, max: 1, chance: 0.3 },
+  { item: "minecraft:enchanted_golden_apple", min: 1, max: 1, chance: 0.02 },
+  { item: "cl:agua_excelente", min: 1, max: 2, chance: 0.5 },
+];
+
+// Destroços de outras naves (peça do relevo com saque "destrocos").
+export const DESTROCOS_SAQUE: ReadonlyArray<LinhaSaque> = [
+  { item: "minecraft:iron_ingot", min: 2, max: 6, chance: 0.8 },
+  { item: "minecraft:copper_ingot", min: 3, max: 8, chance: 0.7 },
+  { item: "minecraft:redstone", min: 3, max: 8, chance: 0.6 },
+  { item: "minecraft:glass", min: 2, max: 6, chance: 0.5 },
+  { item: "cl:agua_boa", min: 1, max: 3, chance: 0.6 },
+  { item: "minecraft:bucket", min: 1, max: 1, chance: 0.25 },
+  { item: "minecraft:gold_ingot", min: 1, max: 2, chance: 0.2 },
+];
+
+// Gerador de Monstros (scripts/blocos/gerador_monstros.ts): bloco das cidades e masmorras.
+export const GERADOR_MONSTROS = {
+  raioJogador: 20, // só funciona com jogador a até tantos blocos
+  limitePerto: 5, // não põe mais se já houver tantos monstros a até 10 blocos
+  porVez: [1, 2],
+  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider"],
+  mobsFundo: ["minecraft:skeleton", "minecraft:stray", "minecraft:cave_spider", "minecraft:creeper", "minecraft:zombie"], // abaixo de y = 0
+  saque: [
+    { item: "minecraft:iron_ingot", min: 1, max: 3, chance: 1 },
+    { item: "minecraft:gold_nugget", min: 2, max: 6, chance: 0.8 },
+    { item: "minecraft:redstone", min: 2, max: 4, chance: 0.6 },
+  ] as ReadonlyArray<LinhaSaque>,
+} as const;
+
+// Tempestade de areia (scripts/mundo/tempestade.ts).
+export const TEMPESTADE = {
+  chancePorDia: 0.35,
+  horaMin: 2000, // começa entre estas horas do dia
+  horaMax: 9000,
+  duracaoTicks: 2400, // 2 minutos
+  sedeMultiplicador: 1.5, // a água do corpo cai mais rápido durante a tempestade
 } as const;

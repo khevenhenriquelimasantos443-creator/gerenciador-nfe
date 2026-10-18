@@ -55,6 +55,7 @@ const TEXTURAS = {
   "RP/textures/blocks/cl/bateria_topo_cheia.png": { fundo: "#b87333", borda: "#4a2a10", centro: "#40e040", margemCentro: 4 },
   "RP/textures/blocks/cl/moinho_lado.png": { fundo: "#d8d8d8", borda: "#6b4a2b", centro: "#a07850", margemCentro: 3 },
   "RP/textures/blocks/cl/moinho_topo.png": { fundo: "#a07850", borda: "#6b4a2b", centro: "#d8d8d8", margemCentro: 6 },
+  "RP/textures/blocks/cl/gerador_monstros.png": { fundo: "#2a1a22", borda: "#111111", centro: "#a01c2c", margemCentro: 5 },
   "RP/textures/blocks/cl/cabo.png": { fundo: "#c46a2b", borda: "#6a3010", centro: "#e08a4a", margemCentro: 6 },
   "RP/textures/blocks/cl/peneira_auto_lado.png": { fundo: "#8a7a5a", borda: "#3a4148", centro: "#b87333", margemCentro: 5 },
   "RP/textures/items/cl/diario_bordo.png": { fundo: "#8b5a2b", borda: "#3e2410", centro: "#e8d9a8", margemCentro: 6 },
