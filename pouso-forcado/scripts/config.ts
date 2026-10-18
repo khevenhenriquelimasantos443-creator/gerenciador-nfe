@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.9.0";
+export const VERSAO = "0.10.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -15,6 +15,7 @@ export const IDS = {
   compostor: `${NS}:compostor`,
   estufa: `${NS}:estufa`,
   diarioBordo: `${NS}:diario_bordo`,
+  frutaCacto: `${NS}:fruta_cacto`,
 } as const;
 
 // Chaves de dynamic properties (salvas no mundo/jogador).
@@ -26,6 +27,9 @@ export const PROPS = {
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
+  sede: `${NS}:sede`, // jogador: água no corpo (0 a SEDE.max)
+  capsulaDia: `${NS}:capsula_dia`, // mundo: dia da última cápsula de carga
+  capsulas: `${NS}:capsulas`, // mundo: JSON com as cápsulas ainda não encontradas
 } as const;
 
 // Nave caída: estrutura em BP/structures/cl/nave_caida.mcstructure.
@@ -211,4 +215,59 @@ export const ESTUFA = {
   yAbaixo: 1, // da camada abaixo da estufa...
   yAcima: 2, // ...até 2 acima
   chanceCrescer: 0.5, // por planta, por ciclo
+} as const;
+
+// ---- Fase 4: comida e vida ----
+
+// Sede (scripts/jogador/sede.ts). A água cai 1 ponto a cada "segundosDia" de dia (sol) e
+// "segundosNoite" à noite. Com pouca água, lentidão; com zero, dano.
+export const SEDE = {
+  max: 20,
+  segundosDia: 30,
+  segundosNoite: 50,
+  lentidaoAbaixoDe: 5,
+  danoACadaSegundos: 4,
+  // O que mata a sede ao terminar de comer/beber.
+  bebidas: {
+    "minecraft:potion": 8, // garrafa de água (e poções)
+    "minecraft:milk_bucket": 6,
+    "minecraft:honey_bottle": 4,
+    "cl:fruta_cacto": 4,
+    "minecraft:melon_slice": 2,
+    "minecraft:sweet_berries": 1,
+  } as Readonly<Record<string, number>>,
+} as const;
+
+// Fruta do cacto: chance de cair ao quebrar um cacto.
+export const FRUTA_CACTO_CHANCE = 0.3;
+
+// Cápsulas de carga (scripts/mundo/capsulas.ts): uma por dia, de manhã, a partir do dia 1,
+// perto de um jogador. Trazem um casal de animais e um barril com o que está abaixo.
+export const CAPSULA = {
+  horaMin: 1000, // entre estas horas do dia
+  horaMax: 9000,
+  primeiroDia: 1,
+  distanciaMin: 20,
+  distanciaMax: 48,
+  achouRaio: 5, // chegar a tantos blocos dela conta como "encontrada"
+  animais: ["minecraft:cow", "minecraft:sheep", "minecraft:chicken", "minecraft:pig"],
+  saque: [
+    { item: "minecraft:glass_bottle", min: 2, max: 4, chance: 0.9 },
+    { item: "minecraft:bread", min: 2, max: 4, chance: 0.7 },
+    { item: "minecraft:carrot", min: 1, max: 3, chance: 0.45 },
+    { item: "minecraft:potato", min: 1, max: 3, chance: 0.45 },
+    { item: "minecraft:sweet_berries", min: 2, max: 4, chance: 0.35 },
+    { item: "minecraft:melon_seeds", min: 1, max: 2, chance: 0.35 },
+    { item: "minecraft:pumpkin_seeds", min: 1, max: 2, chance: 0.3 },
+    { item: "minecraft:beetroot_seeds", min: 2, max: 4, chance: 0.35 },
+    { item: "minecraft:egg", min: 2, max: 4, chance: 0.3 },
+    { item: "minecraft:apple", min: 1, max: 3, chance: 0.3 },
+    { item: "minecraft:birch_sapling", min: 1, max: 2, chance: 0.25 },
+    { item: "minecraft:string", min: 2, max: 5, chance: 0.4 },
+    { item: "minecraft:lead", min: 1, max: 2, chance: 0.4 },
+    { item: "minecraft:iron_ingot", min: 1, max: 3, chance: 0.3 },
+    { item: "minecraft:copper_ingot", min: 2, max: 5, chance: 0.3 },
+    { item: "minecraft:name_tag", min: 1, max: 1, chance: 0.05 },
+    { item: "minecraft:diamond", min: 1, max: 1, chance: 0.03 },
+  ],
 } as const;

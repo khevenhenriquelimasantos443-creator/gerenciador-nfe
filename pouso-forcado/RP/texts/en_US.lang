@@ -3,8 +3,8 @@ tile.cl:condensador_agua.name=Water Condenser
 
 ## Condenser
 cl.condensador.condensando=The condenser is still collecting moisture. Come back in a while.
-cl.condensador.sem_balde=The condenser is full. Bring an empty bucket.
-cl.condensador.coletado=You filled a bucket with condensed water.
+cl.condensador.sem_balde=The condenser is full. Bring an empty bucket or glass bottles in hand.
+cl.condensador.coletado=You collected the condensed water.
 
 ## Welcome
 cl.boas_vindas.titulo=Forced Landing
@@ -88,3 +88,29 @@ cl.missao.estufa.titulo=Greenhouse
 cl.missao.estufa.desc=Craft a Greenhouse (glass, condenser and copper). It keeps soil wet and speeds up plants around it.
 cl.missao.fazenda.titulo=Desert farm
 cl.missao.fazenda.desc=Collect 32 wheat.
+
+## Food and life (Phase 4)
+item.cl:fruta_cacto.name=Cactus Fruit
+cl.sede.rotulo=§bWater§r
+cl.sede.morrendo=§cYou are dying of thirst! Drink water (bottle from the condenser), milk or eat cactus fruit.
+cl.capsula.titulo=§6Cargo pod!
+cl.capsula.subtitulo=Falling near %s, %s, %s
+cl.capsula.encontrada=You found a cargo pod. Open the barrel and look after the animals: there are no others left on this planet.
+
+## Missions (Phase 4)
+cl.missao.capsula.titulo=Lost cargo
+cl.missao.capsula.desc=A pod from the ship falls every morning. Go to the impact site.
+cl.missao.garrafa.titulo=Canteen
+cl.missao.garrafa.desc=Tap a full condenser holding glass bottles and have 3 water bottles. Drinking quenches thirst.
+cl.missao.fruta.titulo=Desert fruit
+cl.missao.fruta.desc=Break cacti and collect 3 cactus fruits. They ease hunger and thirst.
+cl.missao.rebanho.titulo=Herd
+cl.missao.rebanho.desc=Breed two animals from the pod (wheat for cows and sheep, seeds for chickens, carrots for pigs).
+cl.missao.couro.titulo=Leather
+cl.missao.couro.desc=Collect 3 leather.
+cl.missao.despensa.titulo=Full pantry
+cl.missao.despensa.desc=Keep 10 bread stored.
+cl.missao.criador.titulo=Breeder
+cl.missao.criador.desc=Breed 5 more babies.
+cl.missao.sinais.titulo=Signals from the ship
+cl.missao.sinais.desc=Find 3 more cargo pods.

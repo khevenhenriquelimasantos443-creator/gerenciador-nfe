@@ -1,13 +1,14 @@
 import { BlockComponentPlayerInteractEvent, BlockComponentTickEvent, BlockCustomComponent, Player } from "@minecraft/server";
 import { CONDENSADOR_AVANCADO, IDS } from "../config.js";
 import { definirEstado, lerEstado, vizinhos } from "../util/blocos.js";
-import { encherUmBalde } from "../util/inventario.js";
+import { encherGarrafasDaMao, encherUmBalde } from "../util/inventario.js";
 
 /*
  * Condensador de Água
  * - A cada ciclo (minecraft:tick no JSON, 30 s) produz 1 balde de água.
  * - Se houver baú/barril/funil adjacente com balde vazio, entrega lá automaticamente.
  * - Senão, guarda (máx. 1, estado cl:cheio) até o jogador interagir com um balde vazio no inventário.
+ * - Com garrafas de vidro na mão, a mesma água enche até 3 garrafas (para beber: Fase 4, sede).
  * O tick só roda em chunks carregados, então o custo é 1 checagem a cada 30 s por condensador.
  */
 const CHEIO = "cl:cheio";
@@ -22,6 +23,15 @@ function entregarEmBauAdjacente(e: BlockComponentTickEvent): boolean {
 
 function avisar(jogador: Player, chave: string): void {
   jogador.onScreenDisplay.setActionBar({ translate: chave });
+}
+
+/** Garrafas na mão: enche até 3. Senão, enche um balde vazio do inventário. Avisa se não tiver nenhum. */
+function retirarAgua(jogador: Player): boolean {
+  if (encherGarrafasDaMao(jogador)) return true;
+  const container = jogador.getComponent("minecraft:inventory")?.container;
+  if (encherUmBalde(container, jogador.selectedSlotIndex)) return true;
+  avisar(jogador, "cl.condensador.sem_balde");
+  return false;
 }
 
 export const condensadorAgua: BlockCustomComponent = {
@@ -41,12 +51,7 @@ export const condensadorAgua: BlockCustomComponent = {
       return;
     }
 
-    const container = jogador.getComponent("minecraft:inventory")?.container;
-    if (!encherUmBalde(container, jogador.selectedSlotIndex)) {
-      avisar(jogador, "cl.condensador.sem_balde");
-      return;
-    }
-
+    if (!retirarAgua(jogador)) return;
     definirEstado(e.block, CHEIO, false);
     e.dimension.playSound("bucket.fill_water", e.block.center());
     avisar(jogador, "cl.condensador.coletado");
@@ -75,11 +80,7 @@ export const condensadorAvancado: BlockCustomComponent = {
       avisar(jogador, "cl.condensador.condensando");
       return;
     }
-    const container = jogador.getComponent("minecraft:inventory")?.container;
-    if (!encherUmBalde(container, jogador.selectedSlotIndex)) {
-      avisar(jogador, "cl.condensador.sem_balde");
-      return;
-    }
+    if (!retirarAgua(jogador)) return;
     definirEstado(e.block, NIVEL, nivel - 1);
     e.dimension.playSound("bucket.fill_water", e.block.center());
     avisar(jogador, "cl.condensador.coletado");

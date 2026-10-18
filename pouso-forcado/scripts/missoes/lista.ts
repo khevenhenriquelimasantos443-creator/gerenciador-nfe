@@ -16,7 +16,7 @@ export type Objetivo =
   | { tipo: "noites"; qtd: number } // sobreviver a tantas noites desde o início da missão
   | { tipo: "acao"; acao: Acao; qtd: number }; // usar uma máquina (contado pelo script da máquina)
 
-export type Acao = "peneirar" | "compostar";
+export type Acao = "peneirar" | "compostar" | "capsula" | "procriar";
 
 export type Missao = { id: string; objetivo: Objetivo; recompensa: ReadonlyArray<Pilha> };
 
@@ -60,4 +60,14 @@ export const MISSOES: ReadonlyArray<Missao> = [
     recompensa: [{ item: "minecraft:carrot", quantidade: 2 }, { item: "minecraft:potato", quantidade: 2 }],
   },
   { id: "fazenda", objetivo: { tipo: "ter", item: "minecraft:wheat", qtd: 32 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
+
+  // Fase 4: comida e vida
+  { id: "capsula", objetivo: { tipo: "acao", acao: "capsula", qtd: 1 }, recompensa: [{ item: "minecraft:glass_bottle", quantidade: 4 }] },
+  { id: "garrafa", objetivo: { tipo: "ter", item: "minecraft:potion", qtd: 3 }, recompensa: [{ item: "minecraft:bread", quantidade: 4 }] },
+  { id: "fruta", objetivo: { tipo: "ter", item: IDS.frutaCacto, qtd: 3 }, recompensa: [{ item: "minecraft:melon_seeds", quantidade: 2 }] },
+  { id: "rebanho", objetivo: { tipo: "acao", acao: "procriar", qtd: 1 }, recompensa: [{ item: "minecraft:lead", quantidade: 2 }] },
+  { id: "couro", objetivo: { tipo: "ter", item: "minecraft:leather", qtd: 3 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },
+  { id: "despensa", objetivo: { tipo: "ter", item: "minecraft:bread", qtd: 10 }, recompensa: [{ item: "minecraft:sweet_berries", quantidade: 4 }] },
+  { id: "criador", objetivo: { tipo: "acao", acao: "procriar", qtd: 5 }, recompensa: [{ item: "minecraft:name_tag", quantidade: 1 }] },
+  { id: "sinais", objetivo: { tipo: "acao", acao: "capsula", qtd: 3 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
 ];

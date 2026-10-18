@@ -38,6 +38,7 @@ const TEXTURAS = {
   "RP/textures/blocks/cl/condensador_avancado_topo_cheio.png": { fundo: "#6f8fa8", borda: "#2c3e50", centro: "#3f8ce0" },
   "RP/textures/blocks/cl/estufa_lado.png": { fundo: "#cfeedd", borda: "#b87333", centro: "#7cc58a", margemCentro: 5 },
   "RP/textures/blocks/cl/estufa_topo.png": { fundo: "#e6f7ee", borda: "#b87333", centro: "#9fd6a0", margemCentro: 4 },
+  "RP/textures/items/cl/fruta_cacto.png": { fundo: "#c2185b", borda: "#4a7a2a", centro: "#f48fb1", margemCentro: 5 },
   "RP/textures/items/cl/diario_bordo.png": { fundo: "#8b5a2b", borda: "#3e2410", centro: "#e8d9a8", margemCentro: 6 },
   "RP/pack_icon.png": { tamanho: 64, fundo: "#d9a066", borda: "#6b3f1d", centro: "#3f8ce0", margemCentro: 6 },
   "BP/pack_icon.png": { tamanho: 64, fundo: "#d9a066", borda: "#6b3f1d", centro: "#c0392b", margemCentro: 6 },

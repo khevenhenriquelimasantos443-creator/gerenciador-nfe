@@ -3,7 +3,7 @@
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
 Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
 
-**Fase atual: 3** (máquinas de sobrevivência). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, sem água, sem animais, horda) e 2 (Diário de Bordo e missões).
+**Fase atual: 4** (comida e vida: sede, cápsulas de carga com animais, fruta do cacto). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, sem água, sem animais, horda), 2 (Diário de Bordo e missões) e 3 (máquinas).
 
 ## Fases até o fim
 
@@ -12,13 +12,13 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 0 | Estrutura do projeto, Condensador de Água, boas-vindas | pronta |
 | 1 | Mundo plano de deserto: dunas, morros, templo soterrado, nave caída, sem água, sem animais, mais monstros à noite, minérios | pronta |
 | 2 | Diário de Bordo: item com menu de missões, recompensas e progresso salvo por jogador; 12 missões dos primeiros dias | pronta |
-| 3 | **Máquinas de sobrevivência**: Peneira (areia/cascalho → sementes, argila, pepitas, mudas), Compostor de Terra (restos → terra), Condensador Avançado, Estufa (molha a terra e acelera plantas); +8 missões | **esta versão** |
-| 4 | (próxima) Comida e vida: sementes raras na peneira, ovos/animais vindos de "cápsulas de carga" da nave, sede (barra de hidratação simples) | |
-| 5 | Energia: painel solar, baterias e cabos simples; máquinas mais rápidas com energia | |
+| 3 | Máquinas de sobrevivência: Peneira, Compostor de Terra, Condensador Avançado, Estufa; +8 missões | pronta |
+| 4 | **Comida e vida**: sede (barra de água), garrafas de água no condensador, fruta do cacto, cápsulas de carga diárias com casal de animais e saque; +8 missões | **esta versão** |
+| 5 | (próxima) Energia: painel solar, bateria e cabos simples; máquinas mais rápidas com energia | |
 | 6 | Exploração e perigos: tempestade de areia, destroços de outras naves com saque, monstros novos do deserto, um chefe | |
 | 7 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
-| 8 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; texturas finais, sons, balanceamento e versão 1.0 | |
-
+| 8 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
+| 9 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
 
 ## Versões usadas (conferidas na documentação oficial)
 
@@ -116,7 +116,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.9.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.10.0] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -151,6 +151,15 @@ Outros comandos:
 | 19 | Estufa | colocar uma Estufa | 2 cenouras, 2 batatas |
 | 20 | Fazenda no deserto | ter 32 trigos | 4 barras de ferro |
 
+| 21 | Carga perdida | achar uma cápsula de carga | 4 garrafas de vidro |
+| 22 | Cantil | ter 3 garrafas de água | 4 pães |
+| 23 | Fruta do deserto | ter 3 frutas do cacto | 2 sementes de melancia |
+| 24 | Rebanho | fazer nascer 1 filhote | 2 laços |
+| 25 | Couro | ter 3 couros | 2 barras de ferro |
+| 26 | Despensa cheia | ter 10 pães | 4 frutas vermelhas |
+| 27 | Criador | fazer nascer mais 5 filhotes | 1 etiqueta |
+| 28 | Sinais da nave | achar mais 3 cápsulas | 1 diamante |
+
 Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`; textos em `RP/texts/*.lang` (`cl.missao.<id>.titulo` / `.desc`).
 
 ## Máquinas (Fase 3)
@@ -163,6 +172,19 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 | **Estufa** | `V V V` / `V X V` / `C C C` | A cada 10 s, numa área de 9×9 em volta (da camada de baixo até 2 acima): a **terra arada fica sempre molhada** (planta longe da água), as plantações crescem mais rápido e as mudas viram árvore mais cedo. |
 
 Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `scripts/config.ts`.
+
+## Comida e vida (Fase 4)
+
+- **Sede.** Além da fome, você tem **20 pontos de água**. Cai 1 ponto a cada 30 s de dia e 50 s à noite. A barra aparece embaixo da tela (`Água ||||||||||`) quando muda. Com menos de 5: lentidão. Com zero: 1 de dano a cada 4 s. Ao renascer, volta cheia. Não roda no criativo nem no Pacífico.
+- **Como beber:**
+  - **garrafa de água** (+8): toque no condensador cheio com **garrafas de vidro na mão**: enche até 3 de uma vez. (Garrafa de vidro = 3 vidros em V na mesa.)
+  - **leite** (+6), **mel** (+4), **fruta do cacto** (+4), **fatia de melancia** (+2), **frutas vermelhas** (+1).
+- **Fruta do Cacto.** 30% de chance ao quebrar um cacto. Mata a fome (3) e a sede (4) e pode ser comida mesmo sem fome.
+- **Cápsulas de carga.** A partir do dia 1, toda manhã cai uma cápsula a 20–48 blocos de um jogador: aviso na tela com as coordenadas, rastro de fogo e impacto (que não quebra nada). É uma gaiola de ardósia e barras de ferro, aberta para o sul, com:
+  - um **barril** de saque: garrafas, pão, cenoura, batata, frutas vermelhas, sementes de melancia/abóbora/beterraba, ovos, maçã, muda de bétula, linha, laços, ferro, cobre e, raramente, etiqueta ou diamante;
+  - um **casal de animais** (vaca, ovelha, galinha ou porco). Os animais não nascem sozinhos neste planeta: cuide deles e faça filhotes (trigo para vaca e ovelha, sementes para galinha, cenoura para porco). Ovos jogados também dão pintinhos.
+  - Para testar: com trapaças ligadas, `/scriptevent cl:capsula` derruba uma perto de você.
+- Números em `SEDE`, `FRUTA_CACTO_CHANCE` e `CAPSULA` no fim do `scripts/config.ts`.
 
 ## O mundo (Fase 1)
 
@@ -184,7 +206,7 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.9.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.10.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

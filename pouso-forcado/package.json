@@ -2,7 +2,7 @@
   "name": "pouso-forcado",
   "version": "0.1.0",
   "private": true,
-  "description": "Add-on de sobrevivência para Minecraft Bedrock 26.30+ (Fase 3)",
+  "description": "Add-on de sobrevivência para Minecraft Bedrock 26.30+ (Fase 4)",
   "type": "module",
   "scripts": {
     "texturas": "node tools/gerar-texturas.mjs",

@@ -40,11 +40,11 @@ function acharBalde(container: Container, slotPreferido?: number): number | unde
 
 export type Pilha = { item: string; quantidade: number };
 
-/** Coloca um baú na posição e guarda os itens. Lança erro se não conseguir. */
-export function criarBauCom(dimensao: Dimension, posicao: Vector3, itens: ReadonlyArray<Pilha>): void {
+/** Coloca um baú (ou barril) na posição e guarda os itens. Lança erro se não conseguir. */
+export function criarBauCom(dimensao: Dimension, posicao: Vector3, itens: ReadonlyArray<Pilha>, tipo = "minecraft:chest"): void {
   const bloco = dimensao.getBlock(posicao);
   if (!bloco) throw new Error("bloco do baú fora do mundo carregado");
-  bloco.setType("minecraft:chest");
+  bloco.setType(tipo);
   const container = bloco.getComponent("minecraft:inventory")?.container;
   if (!container) throw new Error("baú sem inventário");
   for (const { item, quantidade } of itens) container.addItem(new ItemStack(item, quantidade));
@@ -70,4 +70,20 @@ export function itemNaMao(jogador: Player): ItemStack | undefined {
 /** Solta itens em cima do bloco, como se tivessem saído da máquina. */
 export function soltarEmCima(dimensao: Dimension, bloco: Vector3, item: string, quantidade: number): void {
   dimensao.spawnItem(new ItemStack(item, quantidade), { x: bloco.x + 0.5, y: bloco.y + 1.1, z: bloco.z + 0.5 });
+}
+
+/** Enche até `max` garrafas de vidro da mão com água. Retorna true se encheu alguma. */
+export function encherGarrafasDaMao(jogador: Player, max = 3): boolean {
+  const inv = jogador.getComponent("minecraft:inventory")?.container;
+  const pilha = inv?.getItem(jogador.selectedSlotIndex);
+  if (!inv || pilha?.typeId !== "minecraft:glass_bottle") return false;
+  const n = Math.min(max, pilha.amount);
+  if (pilha.amount === n) inv.setItem(jogador.selectedSlotIndex, new ItemStack("minecraft:potion", n));
+  else {
+    pilha.amount -= n;
+    inv.setItem(jogador.selectedSlotIndex, pilha);
+    const sobra = inv.addItem(new ItemStack("minecraft:potion", n));
+    if (sobra) jogador.dimension.spawnItem(sobra, jogador.location);
+  }
+  return true;
 }
