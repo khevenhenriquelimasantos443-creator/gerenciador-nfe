@@ -141,18 +141,20 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 
 - **Plano, de areia.** O mundo que vem no `.mcaddon` é plano, com bioma de deserto. Camadas de baixo para cima: 1 bedrock, 64 ardósia (y -63 a 0), 32 pedra (1 a 32), 7 arenito, 5 areia. Você pisa em **y = 45**.
 - **Dunas e morros pequenos.** O mundo plano não tem relevo. O script `scripts/mundo/relevo.ts` decora cada chunk **uma única vez**, quando ele carrega perto de você:
-  - dunas pequenas e médias, morros de até 7 blocos, mesas (platôs com faixa de terracota), grupos de rochas e arbustos secos (dão gravetos);
+  - dunas pequenas e médias, morros de até 7 blocos, mesas (platôs com faixa de terracota), grupos de rochas, arbustos secos (dão gravetos) e **cactos** de 1 a 3 blocos (em ~1 a cada 3 chunks; `RELEVO.cacto`);
   - raramente, um **templo soterrado**: uma pirâmide de arenito própria do add-on, com um baú de saque (ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde).
   - Chances, tamanhos e o saque ficam em `RELEVO` e `TEMPLO_SAQUE` no `scripts/config.ts`.
   - **Minérios:** cada chunk recebe veios de carvão, cobre, ferro, ouro, redstone, lápis-lazúli e diamante, em alturas parecidas com as do mundo normal (abaixo de y = 0 saem as versões de ardósia). Quantidades em `MINERIOS` no `scripts/config.ts`.
   - Cada chunk decorado ganha um bloco de **deepslate reforçado** na primeira camada de ardósia (y = -63), no canto do chunk. É a marca de "já feito", para nada ser refeito ao reabrir o mundo. Ele não quebra no modo sobrevivência.
 - **Sem cavernas e sem água.** Mundo plano não tem cavernas, aquíferos, rios nem mares. Também não chove (bioma de deserto).
 - **Sem animais:** em `BP/spawn_rules/` as regras de spawn de todos os animais do Overworld estão vazias: vaca, porco, ovelha, galinha, coelho, cavalo, burro, lhama, camelo, lobo, raposa, abelha, sapo, cabra, panda, papagaio, jaguatirica, urso-polar, tatu, tartaruga, morcego, peixes, lula, golfinho, axolote e náutilo.
-- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, à noite, a cada 10 s nascem 2 monstros extras a 24–40 blocos de cada jogador, se houver menos de 14 por perto. Isso não acontece no Pacífico, no criativo nem fora do Overworld. Quando amanhece, esses monstros extras somem numa nuvem de fumaça (husks e aranhas não queimam no sol e ficavam andando de dia). Ajuste em `HORDA` no `scripts/config.ts`.
-- **Monstros de dia:** no Bedrock, slimes nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 isso não acontece mais na superfície (as regras do slime também ganharam filtro de escuridão).
+- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, a cada 10 s nascem 3 monstros extras a 18–32 blocos de cada jogador, se houver menos de 30 por perto.
+- **A horda:** uma vez por noite, à meia-noite, aparece "A horda chegou!", toca uma corneta e uma onda de monstros nasce a 12–22 blocos de cada jogador: 8 na primeira noite, +2 a cada dia (até 24). Nada disso acontece no Pacífico, no criativo nem fora do Overworld. Ajuste em `HORDA` no `scripts/config.ts`.
+- **O sol queima tudo:** de dia, todo monstro exposto ao céu pega fogo, inclusive husks, aranhas e creepers, que no jogo normal não queimam. Quem estiver na sombra (dentro de um templo, embaixo de um teto) ou no subsolo escapa.
+- **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Nenhum relevo é gerado a menos de 3 chunks da nave.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.5.0] biomas: ... | bioma aqui: ...`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.6.0] biomas: ... | bioma aqui: ...`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
@@ -175,7 +177,8 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 6. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
 7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
 8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
-9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal.
+9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal. À meia-noite (pode usar `/time set 17900` com trapaças ligadas) aparece "A horda chegou!" e chega a onda.
+   De manhã (`/time set 1000`), os monstros no descampado pegam fogo. Pelo caminho devem aparecer cactos.
 10. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
 11. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".
 12. **Baú adjacente:** coloque um baú (ou barril/funil) encostado no condensador com baldes vazios dentro. A cada ~30 s um balde do baú vira balde de água.

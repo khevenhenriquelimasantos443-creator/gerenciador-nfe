@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.5.0";
+export const VERSAO = "0.6.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -21,6 +21,7 @@ export const PROPS = {
   sementeRelevo: `${NS}:semente_relevo`, // mundo
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
+  ondaDia: `${NS}:onda_dia`, // mundo: dia da última onda da horda
 } as const;
 
 // Nave caída: estrutura em BP/structures/cl/nave_caida.mcstructure.
@@ -41,16 +42,19 @@ export const SUPRIMENTOS: ReadonlyArray<{ item: string; quantidade: number }> = 
   { item: "minecraft:oak_sapling", quantidade: 2 },
 ];
 
-// Reforço de monstros à noite (scripts/mundo/horda_noturna.ts).
+// Noite e dia (scripts/mundo/horda_noturna.ts).
 export const HORDA = {
-  intervaloTicks: 200, // a cada 10 s
-  porVez: 2, // monstros extras por jogador por ciclo
-  limitePerto: 14, // não reforça se já houver tantos monstros por perto
+  intervaloTicks: 200, // a cada 10 s, à noite
+  porVez: 3, // monstros extras por jogador por ciclo
+  limitePerto: 30, // não reforça se já houver tantos monstros por perto
   raioContagem: 48,
-  distanciaMin: 24, // longe o bastante para não nascer na cara do jogador
-  distanciaMax: 40,
-  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider"],
-  tag: `${NS}:horda`, // os monstros extras somem quando amanhece
+  distanciaMin: 18, // longe o bastante para não nascer na cara do jogador
+  distanciaMax: 32,
+  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider", "minecraft:creeper"],
+  // A horda: uma onda por noite, à meia-noite. Tamanho = base + porDia × dia do mundo (até max).
+  onda: { hora: 18000, base: 8, porDia: 2, max: 24, distanciaMin: 12, distanciaMax: 22 },
+  // De dia, monstros expostos ao céu pegam fogo.
+  sol: { intervaloTicks: 100, segundosFogo: 8 },
 } as const;
 
 // Mundo plano do .mcworld. Tem que bater com tools/gerar-mundo.mjs.
@@ -86,6 +90,7 @@ export const RELEVO = {
   maxPorCiclo: 3, // limita o trabalho por segundo (voando rápido não trava)
   distanciaNave: 3, // chunks sem relevo em volta da nave
   arbustoSeco: 0.3, // chance de 1 a 3 arbustos secos (gravetos) no chunk
+  cacto: { chance: 0.35, maxPorChunk: 3 }, // chance de ter cactos no chunk; até quantos
   pecas: [
     { estrutura: `${NS}:templo_soterrado`, chance: 0.012, tamanho: 15, deslocY: -3, girar: false, bau: { x: 7, y: 1, z: 7 } },
     { estrutura: `${NS}:morro`, chance: 0.04, tamanho: 17, deslocY: 0, girar: true },

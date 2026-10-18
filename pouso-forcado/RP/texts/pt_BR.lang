@@ -56,3 +56,7 @@ cl.missao.trigo.titulo=Primeira colheita
 cl.missao.trigo.desc=Prepare terra arada perto da água, plante as sementes e colha 3 trigos.
 cl.missao.papel.titulo=Papel para o diário
 cl.missao.papel.desc=Plante cana-de-açúcar ao lado da água e faça 3 papéis.
+
+## Horda
+cl.horda.titulo=§cA horda chegou!
+cl.horda.subtitulo=Aguente até o amanhecer.

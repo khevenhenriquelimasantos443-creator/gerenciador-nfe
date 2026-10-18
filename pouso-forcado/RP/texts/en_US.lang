@@ -56,3 +56,7 @@ cl.missao.trigo.titulo=First harvest
 cl.missao.trigo.desc=Till soil next to water, plant the seeds and harvest 3 wheat.
 cl.missao.papel.titulo=Paper for the logbook
 cl.missao.papel.desc=Plant sugar cane next to water and craft 3 paper.
+
+## Horde
+cl.horda.titulo=§cThe horde is here!
+cl.horda.subtitulo=Hold out until sunrise.

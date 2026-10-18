@@ -58,6 +58,24 @@ function sortearSaque(sorte: () => number): Pilha[] {
   }));
 }
 
+// Cactos de 1 a 3 blocos, só em areia e sem nada encostado nos lados (como no jogo normal).
+function porCactos(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
+  if (sorte() >= RELEVO.cacto.chance) return;
+  const quantos = 1 + Math.floor(sorte() * RELEVO.cacto.maxPorChunk);
+  for (let i = 0; i < quantos; i++) {
+    const topo = dimensao.getTopmostBlock({ x: x0 + 1 + Math.floor(sorte() * 14), z: z0 + 1 + Math.floor(sorte() * 14) });
+    if (topo?.typeId !== "minecraft:sand") continue;
+    const altura = 1 + Math.floor(sorte() * 3);
+    let bloco = topo.above();
+    for (let h = 0; h < altura && bloco?.isAir; h++) {
+      const lados = [bloco.north(), bloco.south(), bloco.east(), bloco.west()];
+      if (!lados.every((l) => l?.isAir)) break;
+      bloco.setType("minecraft:cactus");
+      bloco = bloco.above();
+    }
+  }
+}
+
 function porArbustosSecos(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
   if (sorte() >= RELEVO.arbustoSeco) return;
   const quantos = 1 + Math.floor(sorte() * 3);
@@ -100,6 +118,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
       }
     }
     porArbustosSecos(dimensao, x0, z0, sorte);
+    porCactos(dimensao, x0, z0, sorte);
   }
 
   marca.setType(MUNDO_PLANO.marcador);
