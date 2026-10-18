@@ -129,3 +129,37 @@ item.cl:agua_impropria.name=Água Imprópria
 cl.agua.gosto_ruim=Essa água tinha um gosto ruim...
 cl.agua.sem_sede=Você não está com sede.
 cl.agua.impropria=Essa água não dá para beber. Ferva na fornalha ou na fogueira.
+
+## Energia (Fase 5)
+tile.cl:painel_solar.name=Painel Solar
+tile.cl:gerador.name=Gerador a Carvão
+tile.cl:moinho.name=Moinho de Vento
+cl.energia.moinho_ok=Moinho de Vento: girando, %s de energia a cada 5 s.
+cl.energia.moinho_parado=Moinho de Vento: parado. Precisa estar a partir de y = %s e com os 4 lados livres.
+tile.cl:bateria.name=Bateria
+tile.cl:cabo.name=Cabo de Cobre
+tile.cl:peneira_automatica.name=Peneira Automática
+cl.energia.painel_ok=Painel Solar: gerando energia.
+cl.energia.painel_noite=Painel Solar: sem sol agora.
+cl.energia.painel_coberto=Painel Solar: tem algo tapando o céu em cima dele.
+cl.energia.gerador=Gerador: combustível %s/%s. Toque com carvão ou madeira para abastecer.
+cl.energia.bateria=Bateria: %s/%s de energia.
+cl.energia.peneira_auto=Peneira Automática: ponha areia/cascalho num baú em cima e um baú embaixo. Precisa de bateria ligada.
+
+## Missões (Fase 5)
+cl.missao.painel.titulo=Luz do sol
+cl.missao.painel.desc=Faça um Painel Solar (vidro, lápis, redstone e cobre) e coloque-o a céu aberto.
+cl.missao.bateria.titulo=Guardar energia
+cl.missao.bateria.desc=Faça uma Bateria (cobre, redstone e ferro) e coloque-a encostada no painel.
+cl.missao.cabos.titulo=Fiação
+cl.missao.cabos.desc=Coloque 8 Cabos de Cobre (cobre e redstone) para ligar as máquinas à bateria.
+cl.missao.gerador.titulo=Energia à noite
+cl.missao.gerador.desc=Faça um Gerador a Carvão (ferro, fornalha, cobre e redstone). Ele queima carvão ou madeira.
+cl.missao.moinho.titulo=Vento do deserto
+cl.missao.moinho.desc=Faça um Moinho de Vento (gravetos, tábuas, ferro e redstone) e ponha no alto, com os lados livres.
+cl.missao.peneira_automatica.titulo=Garimpo automático
+cl.missao.peneira_automatica.desc=Faça uma Peneira Automática (ferro, funil, redstone, peneira e cobre).
+cl.missao.automacao.titulo=Linha de produção
+cl.missao.automacao.desc=Deixe a peneira automática trabalhar: 64 blocos peneirados perto de você.
+cl.missao.turbo.titulo=Turbo
+cl.missao.turbo.desc=Ligue a Estufa ou o Condensador Avançado numa bateria: 10 ciclos com energia.

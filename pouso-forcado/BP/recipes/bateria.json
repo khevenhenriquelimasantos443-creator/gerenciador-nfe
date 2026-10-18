@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:bateria"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CRC",
+      "CIC",
+      "CRC"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "cl:bateria"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:bateria",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:carga": {
+          "values": {
+            "min": 0,
+            "max": 20
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_bateria_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_bateria_topo_vazia",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cl_condensador_base",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#b87333",
+      "cl:bateria": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:carga') >= 1 && q.block_state('cl:carga') <= 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cl_bateria_lado",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cl_bateria_topo_meia",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "cl_condensador_base",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:carga') >= 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cl_bateria_lado",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cl_bateria_topo_cheia",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "cl_condensador_base",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

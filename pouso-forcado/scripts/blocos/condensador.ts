@@ -3,6 +3,8 @@ import { CONDENSADOR_AVANCADO } from "../config.js";
 import { aviso } from "../jogador/hud.js";
 import { definirEstado, lerEstado, vizinhos } from "../util/blocos.js";
 import { aguaDoCondensador, beberDireto } from "../jogador/aguas.js";
+import { consumir } from "../util/rede.js";
+import { creditar } from "./energia.js";
 import { encherUmBalde, itemNaMao, trocarDaMao } from "../util/inventario.js";
 
 /*
@@ -70,14 +72,21 @@ export const condensadorAgua: BlockCustomComponent = {
 /*
  * Condensador Avançado: mesmo funcionamento, mas 1 balde a cada 10 s (minecraft:tick no JSON)
  * e guarda até CONDENSADOR_AVANCADO.capacidade baldes no estado cl:nivel.
+ * Com energia (bateria ligada, Fase 5), gasta 1 E por ciclo e produz em dobro.
  */
 const NIVEL = "cl:nivel";
 
 export const condensadorAvancado: BlockCustomComponent = {
   onTick(e) {
-    if (entregarEmBauAdjacente(e)) return;
-    const nivel = lerEstado<number>(e.block, NIVEL);
-    if (nivel < CONDENSADOR_AVANCADO.capacidade) definirEstado(e.block, NIVEL, nivel + 1);
+    // Só gasta energia se ainda houver espaço para guardar água.
+    const cabe = lerEstado<number>(e.block, NIVEL) < CONDENSADOR_AVANCADO.capacidade;
+    const vezes = cabe && consumir(e.block) ? 2 : 1;
+    if (vezes === 2) creditar(e.block, "turbo");
+    for (let i = 0; i < vezes; i++) {
+      if (entregarEmBauAdjacente(e)) continue;
+      const nivel = lerEstado<number>(e.block, NIVEL);
+      if (nivel < CONDENSADOR_AVANCADO.capacidade) definirEstado(e.block, NIVEL, nivel + 1);
+    }
   },
 
   onPlayerInteract(e: BlockComponentPlayerInteractEvent) {

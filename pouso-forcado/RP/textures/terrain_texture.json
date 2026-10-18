@@ -48,6 +48,45 @@
     },
     "cl_estufa_topo": {
       "textures": "textures/blocks/cl/estufa_topo"
+    },
+    "cl_painel_lado": {
+      "textures": "textures/blocks/cl/painel_lado"
+    },
+    "cl_painel_topo": {
+      "textures": "textures/blocks/cl/painel_topo"
+    },
+    "cl_gerador_lado": {
+      "textures": "textures/blocks/cl/gerador_lado"
+    },
+    "cl_gerador_lado_aceso": {
+      "textures": "textures/blocks/cl/gerador_lado_aceso"
+    },
+    "cl_gerador_topo": {
+      "textures": "textures/blocks/cl/gerador_topo"
+    },
+    "cl_bateria_lado": {
+      "textures": "textures/blocks/cl/bateria_lado"
+    },
+    "cl_bateria_topo_vazia": {
+      "textures": "textures/blocks/cl/bateria_topo_vazia"
+    },
+    "cl_bateria_topo_meia": {
+      "textures": "textures/blocks/cl/bateria_topo_meia"
+    },
+    "cl_bateria_topo_cheia": {
+      "textures": "textures/blocks/cl/bateria_topo_cheia"
+    },
+    "cl_cabo": {
+      "textures": "textures/blocks/cl/cabo"
+    },
+    "cl_peneira_auto_lado": {
+      "textures": "textures/blocks/cl/peneira_auto_lado"
+    },
+    "cl_moinho_lado": {
+      "textures": "textures/blocks/cl/moinho_lado"
+    },
+    "cl_moinho_topo": {
+      "textures": "textures/blocks/cl/moinho_topo"
     }
   }
 }

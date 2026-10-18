@@ -16,7 +16,7 @@ export type Objetivo =
   | { tipo: "noites"; qtd: number } // sobreviver a tantas noites desde o início da missão
   | { tipo: "acao"; acao: Acao; qtd: number }; // usar uma máquina (contado pelo script da máquina)
 
-export type Acao = "peneirar" | "compostar" | "capsula" | "procriar";
+export type Acao = "peneirar" | "compostar" | "capsula" | "procriar" | "turbo";
 
 export type Missao = { id: string; objetivo: Objetivo; recompensa: ReadonlyArray<Pilha> };
 
@@ -70,4 +70,18 @@ export const MISSOES: ReadonlyArray<Missao> = [
   { id: "despensa", objetivo: { tipo: "ter", item: "minecraft:bread", qtd: 10 }, recompensa: [{ item: "minecraft:sweet_berries", quantidade: 4 }] },
   { id: "criador", objetivo: { tipo: "acao", acao: "procriar", qtd: 5 }, recompensa: [{ item: "minecraft:name_tag", quantidade: 1 }] },
   { id: "sinais", objetivo: { tipo: "acao", acao: "capsula", qtd: 3 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+
+  // Fase 5: energia
+  { id: "painel", objetivo: { tipo: "colocar", bloco: IDS.painelSolar, qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 4 }] },
+  { id: "bateria", objetivo: { tipo: "colocar", bloco: IDS.bateria, qtd: 1 }, recompensa: [{ item: "minecraft:copper_ingot", quantidade: 4 }] },
+  { id: "cabos", objetivo: { tipo: "colocar", bloco: IDS.cabo, qtd: 8 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },
+  { id: "gerador", objetivo: { tipo: "colocar", bloco: IDS.gerador, qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 8 }] },
+  { id: "moinho", objetivo: { tipo: "colocar", bloco: IDS.moinho, qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 6 }] },
+  {
+    id: "peneira_automatica",
+    objetivo: { tipo: "colocar", bloco: IDS.peneiraAutomatica, qtd: 1 },
+    recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }],
+  },
+  { id: "automacao", objetivo: { tipo: "acao", acao: "peneirar", qtd: 64 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
+  { id: "turbo", objetivo: { tipo: "acao", acao: "turbo", qtd: 10 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
 ];

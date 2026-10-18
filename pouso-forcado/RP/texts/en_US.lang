@@ -129,3 +129,37 @@ item.cl:agua_impropria.name=Undrinkable Water
 cl.agua.gosto_ruim=That water tasted awful...
 cl.agua.sem_sede=You are not thirsty.
 cl.agua.impropria=You can't drink this. Boil it in a furnace or on a campfire.
+
+## Energy (Phase 5)
+tile.cl:painel_solar.name=Solar Panel
+tile.cl:gerador.name=Coal Generator
+tile.cl:moinho.name=Windmill
+cl.energia.moinho_ok=Windmill: spinning, %s energy every 5 s.
+cl.energia.moinho_parado=Windmill: stopped. It must be at y = %s or higher with all 4 sides clear.
+tile.cl:bateria.name=Battery
+tile.cl:cabo.name=Copper Cable
+tile.cl:peneira_automatica.name=Automatic Sieve
+cl.energia.painel_ok=Solar Panel: generating power.
+cl.energia.painel_noite=Solar Panel: no sun right now.
+cl.energia.painel_coberto=Solar Panel: something is blocking the sky above it.
+cl.energia.gerador=Generator: fuel %s/%s. Tap with coal or wood to refuel.
+cl.energia.bateria=Battery: %s/%s energy.
+cl.energia.peneira_auto=Automatic Sieve: put sand/gravel in a chest on top and a chest below. Needs a connected battery.
+
+## Missions (Phase 5)
+cl.missao.painel.titulo=Sunlight
+cl.missao.painel.desc=Craft a Solar Panel (glass, lapis, redstone and copper) and place it under open sky.
+cl.missao.bateria.titulo=Storing power
+cl.missao.bateria.desc=Craft a Battery (copper, redstone and iron) and place it touching the panel.
+cl.missao.cabos.titulo=Wiring
+cl.missao.cabos.desc=Place 8 Copper Cables (copper and redstone) to connect machines to the battery.
+cl.missao.gerador.titulo=Power at night
+cl.missao.gerador.desc=Craft a Coal Generator (iron, furnace, copper and redstone). It burns coal or wood.
+cl.missao.moinho.titulo=Desert wind
+cl.missao.moinho.desc=Craft a Windmill (sticks, planks, iron and redstone) and put it up high with its sides clear.
+cl.missao.peneira_automatica.titulo=Automatic prospecting
+cl.missao.peneira_automatica.desc=Craft an Automatic Sieve (iron, hopper, redstone, sieve and copper).
+cl.missao.automacao.titulo=Production line
+cl.missao.automacao.desc=Let the automatic sieve work: 64 blocks sifted near you.
+cl.missao.turbo.titulo=Turbo
+cl.missao.turbo.desc=Connect the Greenhouse or the Advanced Condenser to a battery: 10 powered cycles.

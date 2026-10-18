@@ -18,5 +18,23 @@
   },
   "cl:estufa": {
     "sound": "glass"
+  },
+  "cl:painel_solar": {
+    "sound": "metal"
+  },
+  "cl:gerador": {
+    "sound": "metal"
+  },
+  "cl:bateria": {
+    "sound": "metal"
+  },
+  "cl:cabo": {
+    "sound": "metal"
+  },
+  "cl:peneira_automatica": {
+    "sound": "metal"
+  },
+  "cl:moinho": {
+    "sound": "wood"
   }
 }

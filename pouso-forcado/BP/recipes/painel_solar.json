@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:painel_solar"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VVV",
+      "LRL",
+      "CCC"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "L": {
+        "item": "minecraft:lapis_lazuli"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "cl:painel_solar"
+    }
+  }
+}

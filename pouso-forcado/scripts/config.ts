@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.11.0";
+export const VERSAO = "0.12.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -14,6 +14,12 @@ export const IDS = {
   peneira: `${NS}:peneira`,
   compostor: `${NS}:compostor`,
   estufa: `${NS}:estufa`,
+  painelSolar: `${NS}:painel_solar`,
+  gerador: `${NS}:gerador`,
+  bateria: `${NS}:bateria`,
+  cabo: `${NS}:cabo`,
+  peneiraAutomatica: `${NS}:peneira_automatica`,
+  moinho: `${NS}:moinho`,
   diarioBordo: `${NS}:diario_bordo`,
   frutaCacto: `${NS}:fruta_cacto`,
   aguaExcelente: `${NS}:agua_excelente`,
@@ -339,3 +345,36 @@ export const AGUA_DOS_MONSTROS: ReadonlyArray<{ item: string; chance: number }> 
   { item: "cl:agua_muito_suja", chance: 0.06 },
   { item: "cl:agua_impropria", chance: 0.05 },
 ];
+
+// ---- Fase 5: energia (scripts/util/rede.ts e scripts/blocos/energia.ts) ----
+// Unidades de energia ("E") ficam guardadas nas baterias. Geradores mandam para a bateria
+// mais próxima que tenha espaço; máquinas puxam da mais próxima que tenha carga.
+// "Próxima" = encostada ou ligada por cabos (até rede.maxBlocos blocos de cabo).
+export const ENERGIA = {
+  bateriaMax: 20, // E por bateria
+  painelPorCiclo: 1, // E a cada 5 s, de dia, com céu aberto em cima do painel
+  geradorPorCiclo: 2, // E a cada 5 s, gastando 1 de combustível
+  // Moinho de vento: dia e noite, se os 4 lados estiverem livres (ar). Mais alto = mais vento.
+  moinho: [
+    { yMin: 75, porCiclo: 3 },
+    { yMin: 60, porCiclo: 2 },
+    { yMin: 50, porCiclo: 1 },
+  ],
+  geradorMax: 16, // combustível guardado no gerador
+  combustivel: {
+    "minecraft:coal": 4,
+    "minecraft:charcoal": 4,
+    "minecraft:coal_block": 36,
+    "minecraft:oak_log": 2,
+    "minecraft:birch_log": 2,
+    "minecraft:acacia_log": 2,
+    "minecraft:oak_planks": 1,
+    "minecraft:birch_planks": 1,
+    "minecraft:acacia_planks": 1,
+    "minecraft:stick": 1,
+    "minecraft:dried_kelp_block": 8,
+  } as Readonly<Record<string, number>>,
+  peneiraPorE: 2, // a peneira automática peneira 2 blocos por E (a cada 5 s)
+  rede: { maxBlocos: 64 },
+  avisoRaio: 24, // jogador a até tantos blocos de uma máquina automática ganha o progresso das missões
+} as const;

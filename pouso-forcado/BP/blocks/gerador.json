@@ -1,0 +1,72 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:gerador",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:combustivel": {
+          "values": {
+            "min": 0,
+            "max": 16
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_gerador_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_gerador_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cl_condensador_base",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#555555",
+      "minecraft:tick": {
+        "interval_range": [
+          100,
+          100
+        ],
+        "looping": true
+      },
+      "cl:gerador": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:combustivel') >= 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cl_gerador_lado_aceso",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cl_gerador_topo",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "cl_condensador_base",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -2,6 +2,7 @@
 import { system } from "@minecraft/server";
 import { compostor } from "./blocos/compostor.js";
 import { condensadorAgua, condensadorAvancado } from "./blocos/condensador.js";
+import { bateria, gerador, moinho, painelSolar, peneiraAutomatica } from "./blocos/energia.js";
 import { estufa } from "./blocos/estufa.js";
 import { peneira } from "./blocos/peneira.js";
 import { IDS } from "./config.js";
@@ -22,6 +23,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
   blockComponentRegistry.registerCustomComponent(IDS.peneira, peneira);
   blockComponentRegistry.registerCustomComponent(IDS.compostor, compostor);
   blockComponentRegistry.registerCustomComponent(IDS.estufa, estufa);
+  blockComponentRegistry.registerCustomComponent(IDS.painelSolar, painelSolar);
+  blockComponentRegistry.registerCustomComponent(IDS.gerador, gerador);
+  blockComponentRegistry.registerCustomComponent(IDS.bateria, bateria);
+  blockComponentRegistry.registerCustomComponent(IDS.peneiraAutomatica, peneiraAutomatica);
+  blockComponentRegistry.registerCustomComponent(IDS.moinho, moinho);
 });
 
 registrarBoasVindas();

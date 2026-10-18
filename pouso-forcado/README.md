@@ -3,7 +3,7 @@
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
 Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
 
-**Fase atual: 4** (comida e vida: sede, cápsulas de carga com animais, fruta do cacto). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, sem água, sem animais, horda), 2 (Diário de Bordo e missões) e 3 (máquinas).
+**Fase atual: 5** (energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, horda), 2 (Diário de Bordo e missões), 3 (máquinas) e 4 (sede, temperatura, águas, cápsulas de carga).
 
 ## Fases até o fim
 
@@ -13,9 +13,9 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 1 | Mundo plano de deserto: dunas, morros, templo soterrado, nave caída, sem água, sem animais, mais monstros à noite, minérios | pronta |
 | 2 | Diário de Bordo: item com menu de missões, recompensas e progresso salvo por jogador; 12 missões dos primeiros dias | pronta |
 | 3 | Máquinas de sobrevivência: Peneira, Compostor de Terra, Condensador Avançado, Estufa; +8 missões | pronta |
-| 4 | **Comida e vida**: sede (barra de água), garrafas de água no condensador, fruta do cacto, cápsulas de carga diárias com casal de animais e saque; +8 missões | **esta versão** |
-| 5 | (próxima) Energia: painel solar, bateria e cabos simples; máquinas mais rápidas com energia | |
-| 6 | Exploração e perigos: tempestade de areia, destroços de outras naves com saque, monstros novos do deserto, um chefe | |
+| 4 | Comida e vida: sede, temperatura do corpo, 5 qualidades de água, fruta do cacto, cápsulas de carga com animais; +8 missões | pronta |
+| 5 | **Energia**: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | **esta versão** |
+| 6 | (próxima) Exploração e perigos: tempestade de areia, destroços de outras naves com saque, monstros novos do deserto, um chefe | |
 | 7 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
 | 8 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
 | 9 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
@@ -116,7 +116,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.11.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.12.0] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -160,6 +160,15 @@ Outros comandos:
 | 27 | Criador | fazer nascer mais 5 filhotes | 1 etiqueta |
 | 28 | Sinais da nave | achar mais 3 cápsulas | 1 diamante |
 
+| 29 | Luz do sol | colocar um Painel Solar | 4 redstones |
+| 30 | Guardar energia | colocar uma Bateria | 4 barras de cobre |
+| 31 | Fiação | colocar 8 Cabos de Cobre | 2 barras de ferro |
+| 32 | Energia à noite | colocar um Gerador a Carvão | 8 carvões |
+| 33 | Vento do deserto | colocar um Moinho de Vento | 6 redstones |
+| 34 | Garimpo automático | colocar uma Peneira Automática | 4 barras de ferro |
+| 35 | Linha de produção | 64 blocos peneirados pela peneira automática perto de você | 2 barras de ouro |
+| 36 | Turbo | 10 ciclos da Estufa ou do Condensador Avançado com energia | 1 diamante |
+
 Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`; textos em `RP/texts/*.lang` (`cl.missao.<id>.titulo` / `.desc`).
 
 ## Máquinas (Fase 3)
@@ -172,6 +181,25 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 | **Estufa** | `V V V` / `V X V` / `C C C` | A cada 10 s, numa área de 9×9 em volta (da camada de baixo até 2 acima): a **terra arada fica sempre molhada** (planta longe da água), as plantações crescem mais rápido e as mudas viram árvore mais cedo. |
 
 Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `scripts/config.ts`.
+
+## Energia (Fase 5)
+
+A energia fica guardada nas **baterias** (20 cada). Geradores mandam energia para a bateria mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" = encostada ou ligada por **cabos** (até 64 cabos). Painéis, moinhos, geradores e baterias também passam energia, como os cabos. Toque em qualquer bloco de energia com a mão vazia para ver o estado.
+
+| Bloco | Receita (mesa de trabalho) | O que faz |
+|---|---|---|
+| **Painel Solar** | `V V V` / `L R L` / `C C C` (V = vidro, L = lápis, R = redstone, C = cobre) | 1 de energia a cada 5 s, **de dia** e com **céu aberto** em cima dele. |
+| **Moinho de Vento** | `G T G` / `T F T` / `G R G` (G = graveto, T = tábua, F = ferro) | Dia e noite, se os **4 lados estiverem livres**. A partir de y = 50: 1 a cada 5 s; y = 60: 2; y = 75: 3. Ponha em cima de uma duna ou de uma torre (de cabos, para a energia descer). |
+| **Gerador a Carvão** | `F F F` / `F N F` / `C R C` (N = fornalha) | Toque com **carvão, carvão vegetal, bloco de carvão, toras, tábuas ou gravetos** para abastecer (guarda 16). Gasta 1 a cada 5 s e gera 2, só quando há bateria com espaço. Funciona à noite. |
+| **Bateria** | `C R C` / `C F C` / `C R C` | Guarda 20. O topo muda de cor: vermelho (vazia), amarelo, verde (cheia). |
+| **Cabo de Cobre** | `C` / `R` / `C` → 4 cabos | Liga tudo. |
+| **Peneira Automática** | `F H F` / `R P R` / `F C F` (H = funil, P = Peneira) | A cada 5 s gasta 1 de energia e peneira **2 blocos** de areia/cascalho de um **baú ou funil em cima**; o resultado vai para um **baú ou funil embaixo** (ou cai do lado). |
+
+Máquinas da Fase 3 com bateria ligada:
+- **Condensador Avançado**: gasta 1 por ciclo e produz **em dobro** (só gasta se tiver espaço para guardar água);
+- **Estufa**: gasta 1 por ciclo e tudo em volta **cresce sempre** (chance de 100%).
+
+Números em `ENERGIA` no `scripts/config.ts`.
 
 ## Comida e vida (Fase 4)
 
@@ -230,7 +258,7 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.11.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.12.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
