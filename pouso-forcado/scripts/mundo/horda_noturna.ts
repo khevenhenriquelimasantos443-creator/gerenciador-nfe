@@ -1,4 +1,4 @@
-import { Difficulty, GameMode, Player, system, world } from "@minecraft/server";
+import { Difficulty, Dimension, EntityInitializationCause, GameMode, Player, Vector3, system, world } from "@minecraft/server";
 import { HORDA, PROPS } from "../config.js";
 
 /*
@@ -9,6 +9,8 @@ import { HORDA, PROPS } from "../config.js";
  *   de monstros em volta de cada jogador, maior a cada dia que passa.
  * - De dia, o sol do planeta incendeia todo monstro exposto ao céu (até husks, aranhas
  *   e creepers, que no jogo normal não queimam). Quem está na sombra ou no subsolo escapa.
+ * - De dia, nenhum monstro nasce sob o céu aberto: se o jogo fizer um nascer (spawn natural),
+ *   ele é removido no mesmo instante. No subsolo e na sombra o spawn segue normal.
  * Custo: uma busca de entidades por jogador a cada 10 s à noite; de dia, uma busca de
  * monstros no Overworld a cada HORDA.sol.intervaloTicks.
  */
@@ -96,14 +98,17 @@ function talvezOnda(): void {
   }
 }
 
+// Exposto ao céu: nada acima da cabeça (o bloco mais alto da coluna está embaixo do mob).
+function soloCeu(dimensao: Dimension, { x, y, z }: Vector3): boolean {
+  const topo = dimensao.getTopmostBlock({ x, z });
+  return !topo || Math.floor(y) > topo.y;
+}
+
 function solQueima(): void {
   const dimensao = world.getDimension("minecraft:overworld");
   for (const mob of dimensao.getEntities({ families: ["monster"] })) {
     try {
-      const { x, y, z } = mob.location;
-      const topo = dimensao.getTopmostBlock({ x, z });
-      // Exposto ao céu: nada acima da cabeça (o bloco mais alto da coluna está embaixo do mob).
-      if (!topo || Math.floor(y) > topo.y) mob.setOnFire(HORDA.sol.segundosFogo, true);
+      if (soloCeu(dimensao, mob.location)) mob.setOnFire(HORDA.sol.segundosFogo, true);
     } catch {
       // mob no limite do mundo carregado
     }
@@ -120,4 +125,14 @@ export function registrarHordaNoturna(): void {
   system.runInterval(() => {
     if (solAlto()) solQueima();
   }, HORDA.sol.intervaloTicks);
+
+  world.afterEvents.entitySpawn.subscribe(({ entity, cause }) => {
+    if (cause !== EntityInitializationCause.Spawned || !solAlto()) return;
+    if (entity.typeId === "minecraft:item" || entity.dimension.id !== "minecraft:overworld") return;
+    try {
+      if (entity.matches({ families: ["monster"] }) && soloCeu(entity.dimension, entity.location)) entity.remove();
+    } catch {
+      // entidade já saiu do mundo
+    }
+  });
 }

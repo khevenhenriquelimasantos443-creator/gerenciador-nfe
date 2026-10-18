@@ -151,10 +151,11 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
 - **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, a cada 10 s nascem 3 monstros extras a 18–32 blocos de cada jogador, se houver menos de 30 por perto.
 - **A horda:** uma vez por noite, à meia-noite, aparece "A horda chegou!", toca uma corneta e uma onda de monstros nasce a 12–22 blocos de cada jogador: 8 na primeira noite, +2 a cada dia (até 24). Nada disso acontece no Pacífico, no criativo nem fora do Overworld. Ajuste em `HORDA` no `scripts/config.ts`.
 - **O sol queima tudo:** de dia, todo monstro exposto ao céu pega fogo, inclusive husks, aranhas e creepers, que no jogo normal não queimam. Quem estiver na sombra (dentro de um templo, embaixo de um teto) ou no subsolo escapa.
+- **Nada nasce de dia ao ar livre:** se o jogo fizer um monstro nascer de dia sob o céu aberto, o script remove na hora. No subsolo e na sombra o spawn continua normal. (Ovos de spawn usados de dia ao ar livre também são removidos.)
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Nenhum relevo é gerado a menos de 3 chunks da nave.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.6.0] biomas: ... | bioma aqui: ...`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.6.1] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
