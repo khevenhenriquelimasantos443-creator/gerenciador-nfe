@@ -97,15 +97,19 @@ Outros comandos:
 4. **Não** precisa ligar nenhum experimento.
 5. Crie o mundo.
 
-Ao atualizar o add-on, o `version` dos manifests sobe (Fase 1 = `0.2.1`). Se o jogo continuar mostrando a versão antiga, apague os packs antigos em **Configurações → Armazenamento** e importe de novo.
+Ao atualizar o add-on, o `version` dos manifests sobe (Fase 1 = `0.3.0`). Se o jogo continuar mostrando a versão antiga, apague os packs antigos em **Configurações → Armazenamento** e importe de novo.
 
 ## O mundo (Fase 1)
 
 - **Só deserto.** O bioma próprio `cl:deserto_seco` substitui todos os biomas da superfície (florestas, planícies, neve, oceanos, rios, etc.). O deserto vanilla continua existindo; os dois têm a mesma cara.
 - **Por que dois arquivos de bioma:** a doc oficial manda escrever os biomas-alvo **sem** prefixo (`plains`), mas o exemplo oficial da Microsoft usa **com** prefixo (`minecraft:plains`). Na 0.2.0 o jogo ignorou a versão sem prefixo. Por isso vão as duas: `cl:deserto_seco` (sem) e `cl:deserto_seco_ns` (com). Se o jogo aceitar as duas, elas são idênticas e dividem o mundo sem diferença visível. Depois do teste fica só a que funcionou.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.2.1] biomas: ... | bioma aqui: ...`. Ela diz se o jogo carregou cada bioma e em qual bioma você está.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.3.0] biomas: ... | bioma aqui: ...`. Ela diz se o jogo carregou cada bioma e em qual bioma você está.
 - **Sem mares e sem rios.** No `cl:deserto_seco` o "material do mar" é ar: onde haveria oceano ou rio fica um vale/cânion seco com fundo de areia.
 - **Não chove.** O bioma tem clima de deserto.
+- **Desertos originais também secos:** `minecraft:desert`, `desert_hills` e `desert_mutated` são sobrescritos (arquivos `BP/biomes/vanilla_*.biome.json`) só para trocar o mar por ar. O resto é igual ao vanilla, então templos e poços continuam.
+- **Cavernas exuberantes** (que têm poças d'água) também viram `cl:deserto_seco`.
+- **Sem animais:** em `BP/spawn_rules/` as regras de spawn de todos os animais do Overworld estão vazias: vaca, porco, ovelha, galinha, coelho, cavalo, burro, lhama, camelo, lobo, raposa, abelha, sapo, cabra, panda, papagaio, jaguatirica, urso-polar, tatu, tartaruga, morcego, peixes, lula, golfinho, axolote e náutilo. Animais que já vêm prontos em estruturas (ex.: dentro de vilas) não são afetados.
+- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, à noite, a cada 10 s nascem 2 monstros extras a 24–40 blocos de cada jogador, se houver menos de 14 por perto (no Pacífico, no criativo e fora do Overworld isso não acontece). Ajuste em `HORDA` no `scripts/config.ts`.
 - **Relevo normal do jogo.** O formato do terreno (morros, serras, vales) continua sendo o do Minecraft, só que coberto de areia e arenito.
 - **Estruturas.** Templos do deserto e poços do deserto continuam aparecendo nas áreas de deserto vanilla. Nas áreas de `cl:deserto_seco`, depende do jogo aceitar a tag `desert`; está no roteiro de teste.
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro dela há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário.
@@ -149,5 +153,5 @@ Os PNGs 16×16 em `RP/textures/blocks/cl/` são placeholders (cor sólida + bord
 - **Altura das montanhas:** um add-on estável não consegue mudar o formato do terreno. Ele só troca o bioma *depois* que o jogo já decidiu o relevo. Então há morros pequenos, mas também podem aparecer serras altas onde o jogo geraria montanhas. A alternativa mais simples, se incomodar, é escolher uma semente com relevo mais baixo.
 - **Minérios:** os minérios do subsolo são gerados pelo jogo e não dá para reduzi-los por JSON. Por enquanto, a escassez vem da superfície (sem água, sem árvores, sem animais de fazenda). Na Fase 3 dá para equilibrar pelas máquinas.
 - **Água infinita (2 baldes formando fonte):** o Bedrock não tem regra para desligar. Bloquear isso exigiria vigiar a água em volta do jogador o tempo todo, e esse é o tipo de gambiarra pesada que evitei. Ficou como marco de progressão: no começo só há 1 balde e não há ferro na superfície.
-- **Água escondida:** cavernas subterrâneas (aquíferos e cavernas exuberantes) e os poços do deserto ainda têm água. É pouca e fica longe, então funciona como um "oásis raro".
+- **Água subterrânea (aquíferos) e poços do deserto:** os aquíferos são bolsões de água no subsolo que o jogo gera direto. Às vezes aparecem em ravinas e cavernas, e nenhum JSON estável controla isso. Removê-los exigiria um script varrendo os blocos em volta de cada jogador sem parar, que também apagaria a água que você coloca. Os poços do deserto (1 bloco de água cada) também ficam.
 - **Vilas:** nas áreas de deserto vanilla ainda podem aparecer vilas do deserto. As cidades próprias vêm numa fase futura.

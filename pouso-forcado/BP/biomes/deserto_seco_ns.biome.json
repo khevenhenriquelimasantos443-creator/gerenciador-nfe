@@ -106,7 +106,8 @@
               "minecraft:taiga",
               "minecraft:taiga_hills",
               "minecraft:taiga_mutated",
-              "minecraft:warm_ocean"
+              "minecraft:warm_ocean",
+              "minecraft:lush_caves"
             ],
             "amount": 1.0,
             "noise_frequency_scale": 1.0

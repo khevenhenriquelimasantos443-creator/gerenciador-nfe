@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.2.1";
+export const VERSAO = "0.3.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -35,6 +35,17 @@ export const SUPRIMENTOS: ReadonlyArray<{ item: string; quantidade: number }> = 
   { item: "minecraft:dirt", quantidade: 4 },
   { item: "minecraft:oak_sapling", quantidade: 2 },
 ];
+
+// Reforço de monstros à noite (scripts/mundo/horda_noturna.ts).
+export const HORDA = {
+  intervaloTicks: 200, // a cada 10 s
+  porVez: 2, // monstros extras por jogador por ciclo
+  limitePerto: 14, // não reforça se já houver tantos monstros por perto
+  raioContagem: 48,
+  distanciaMin: 24, // longe o bastante para não nascer na cara do jogador
+  distanciaMax: 40,
+  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider"],
+} as const;
 
 // O intervalo do condensador é definido no JSON do bloco (minecraft:tick, 600 ticks = 30 s).
 // Mantido aqui só como referência para textos e testes.
