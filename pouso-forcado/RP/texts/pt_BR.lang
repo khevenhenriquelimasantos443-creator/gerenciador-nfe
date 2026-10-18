@@ -60,3 +60,31 @@ cl.missao.papel.desc=Plante cana-de-açúcar ao lado da água e faça 3 papéis.
 ## Horda
 cl.horda.titulo=§cA horda chegou!
 cl.horda.subtitulo=Onda %s de %s: %s monstros. Aguente até o amanhecer.
+
+## Máquinas (Fase 3)
+tile.cl:peneira.name=Peneira
+tile.cl:compostor.name=Compostor de Terra
+tile.cl:condensador_avancado.name=Condensador Avançado
+tile.cl:estufa.name=Estufa
+cl.peneira.como=Toque na peneira com areia ou cascalho na mão.
+cl.peneira.nada=Só areia fina... tente de novo.
+cl.compostor.como=Toque com restos na mão: carne podre, sementes, folhas, mudas, colheitas, cacto, graveto.
+cl.compostor.decompondo=O compostor está cheio e decompondo. Volte daqui a pouco.
+
+## Missões (Fase 3)
+cl.missao.peneira.titulo=Garimpeiro
+cl.missao.peneira.desc=Faça uma Peneira (gravetos, linha e tábuas) e coloque-a.
+cl.missao.garimpo.titulo=Ouro na areia
+cl.missao.garimpo.desc=Peneire 20 blocos de areia ou cascalho. Saem sementes, argila, pepitas e até mudas.
+cl.missao.argila.titulo=Barro
+cl.missao.argila.desc=Junte 8 bolas de argila da peneira.
+cl.missao.compostor.titulo=Nada se perde
+cl.missao.compostor.desc=Faça um Compostor de Terra (tábuas e terra) e coloque-o.
+cl.missao.adubo.titulo=Terra nova
+cl.missao.adubo.desc=Encha o compostor com restos (carne podre serve!) e tire 3 terras dele.
+cl.missao.condensador_avancado.titulo=Mais água
+cl.missao.condensador_avancado.desc=Melhore o condensador: Condensador Avançado (cobre, vidro e o condensador).
+cl.missao.estufa.titulo=Estufa
+cl.missao.estufa.desc=Faça uma Estufa (vidro, condensador e cobre). Ela molha a terra e acelera as plantas em volta.
+cl.missao.fazenda.titulo=Fazenda no deserto
+cl.missao.fazenda.desc=Junte 32 trigos.

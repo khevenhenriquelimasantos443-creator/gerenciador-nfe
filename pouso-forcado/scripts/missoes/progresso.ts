@@ -1,6 +1,6 @@
 import { ItemStack, Player, RawMessage, world } from "@minecraft/server";
 import { PROPS } from "../config.js";
-import { MISSOES, Missao, Objetivo } from "./lista.js";
+import { Acao, MISSOES, Missao, Objetivo } from "./lista.js";
 
 /*
  * Progresso das missões, salvo por jogador numa dynamic property (JSON):
@@ -114,8 +114,8 @@ export function avancar(jogador: Player, pulou = false): void {
   anunciarNova(jogador, e);
 }
 
-/** Soma progresso de eventos (colocar, quebrar, matar). */
-export function contar(jogador: Player, tipo: "colocar" | "quebrar" | "matar", combina: (obj: Objetivo) => boolean): void {
+/** Soma progresso de eventos (colocar, quebrar, matar, usar máquina). */
+export function contar(jogador: Player, tipo: "colocar" | "quebrar" | "matar" | "acao", combina: (obj: Objetivo) => boolean): void {
   const e = lerEstado(jogador);
   const m = missaoAtual(e);
   if (!m || m.objetivo.tipo !== tipo || !combina(m.objetivo)) return;
@@ -130,4 +130,9 @@ export function conferir(jogador: Player): void {
   const m = missaoAtual(e);
   if (!m || (m.objetivo.tipo !== "ter" && m.objetivo.tipo !== "noites")) return;
   if (feitoAtual(jogador, e, m.objetivo) >= m.objetivo.qtd) avancar(jogador);
+}
+
+/** Chamado pelas máquinas quando o jogador usa uma (peneirar, compostar...). */
+export function registrarAcao(jogador: Player, acao: Acao): void {
+  contar(jogador, "acao", (o) => o.tipo === "acao" && o.acao === acao);
 }

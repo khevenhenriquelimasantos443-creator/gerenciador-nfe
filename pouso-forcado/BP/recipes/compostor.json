@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:compostor"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P P",
+      "PDP",
+      "PPP"
+    ],
+    "key": {
+      "P": {
+        "tag": "minecraft:planks"
+      },
+      "D": {
+        "item": "minecraft:dirt"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:dirt"
+      }
+    ],
+    "result": {
+      "item": "cl:compostor"
+    }
+  }
+}

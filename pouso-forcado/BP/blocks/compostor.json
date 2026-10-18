@@ -1,0 +1,83 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:compostor",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:nivel": {
+          "values": {
+            "min": 0,
+            "max": 8
+          }
+        },
+        "cl:pronto": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_compostor_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_compostor_topo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.8
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#7a5a35",
+      "minecraft:tick": {
+        "interval_range": [
+          400,
+          400
+        ],
+        "looping": true
+      },
+      "cl:compostor": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:nivel') >= 1 && !q.block_state('cl:pronto')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cl_compostor_lado",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cl_compostor_topo_cheio",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:pronto')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cl_compostor_lado",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cl_compostor_topo_pronto",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

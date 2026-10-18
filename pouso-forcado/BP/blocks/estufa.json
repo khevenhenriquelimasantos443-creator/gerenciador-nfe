@@ -1,0 +1,43 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:estufa",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_estufa_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_estufa_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cl_condensador_base",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#9fd6a0",
+      "minecraft:tick": {
+        "interval_range": [
+          200,
+          200
+        ],
+        "looping": true
+      },
+      "cl:estufa": {}
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:condensador_avancado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CGC",
+      "GXG",
+      "CGC"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "X": {
+        "item": "cl:condensador_agua"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:condensador_agua"
+      }
+    ],
+    "result": {
+      "item": "cl:condensador_avancado"
+    }
+  }
+}

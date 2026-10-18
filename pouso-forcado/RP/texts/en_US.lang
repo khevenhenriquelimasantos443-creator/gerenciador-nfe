@@ -60,3 +60,31 @@ cl.missao.papel.desc=Plant sugar cane next to water and craft 3 paper.
 ## Horde
 cl.horda.titulo=§cThe horde is here!
 cl.horda.subtitulo=Wave %s of %s: %s monsters. Hold out until sunrise.
+
+## Machines (Phase 3)
+tile.cl:peneira.name=Sieve
+tile.cl:compostor.name=Dirt Composter
+tile.cl:condensador_avancado.name=Advanced Condenser
+tile.cl:estufa.name=Greenhouse
+cl.peneira.como=Tap the sieve while holding sand or gravel.
+cl.peneira.nada=Just fine sand... try again.
+cl.compostor.como=Tap while holding scraps: rotten flesh, seeds, leaves, saplings, crops, cactus, sticks.
+cl.compostor.decompondo=The composter is full and decomposing. Come back in a while.
+
+## Missions (Phase 3)
+cl.missao.peneira.titulo=Prospector
+cl.missao.peneira.desc=Craft a Sieve (sticks, string and planks) and place it.
+cl.missao.garimpo.titulo=Gold in the sand
+cl.missao.garimpo.desc=Sift 20 blocks of sand or gravel. Seeds, clay, nuggets and even saplings come out.
+cl.missao.argila.titulo=Clay
+cl.missao.argila.desc=Collect 8 clay balls from the sieve.
+cl.missao.compostor.titulo=Nothing goes to waste
+cl.missao.compostor.desc=Craft a Dirt Composter (planks and dirt) and place it.
+cl.missao.adubo.titulo=Fresh soil
+cl.missao.adubo.desc=Fill the composter with scraps (rotten flesh works!) and take 3 dirt out of it.
+cl.missao.condensador_avancado.titulo=More water
+cl.missao.condensador_avancado.desc=Upgrade the condenser: Advanced Condenser (copper, glass and the condenser).
+cl.missao.estufa.titulo=Greenhouse
+cl.missao.estufa.desc=Craft a Greenhouse (glass, condenser and copper). It keeps soil wet and speeds up plants around it.
+cl.missao.fazenda.titulo=Desert farm
+cl.missao.fazenda.desc=Collect 32 wheat.

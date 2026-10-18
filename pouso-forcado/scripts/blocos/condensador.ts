@@ -1,5 +1,5 @@
 import { BlockComponentPlayerInteractEvent, BlockComponentTickEvent, BlockCustomComponent, Player } from "@minecraft/server";
-import { IDS } from "../config.js";
+import { CONDENSADOR_AVANCADO, IDS } from "../config.js";
 import { definirEstado, lerEstado, vizinhos } from "../util/blocos.js";
 import { encherUmBalde } from "../util/inventario.js";
 
@@ -53,4 +53,35 @@ export const condensadorAgua: BlockCustomComponent = {
   },
 };
 
-export const ID_COMPONENTE_CONDENSADOR = IDS.condensadorAgua;
+
+/*
+ * Condensador Avançado: mesmo funcionamento, mas 1 balde a cada 10 s (minecraft:tick no JSON)
+ * e guarda até CONDENSADOR_AVANCADO.capacidade baldes no estado cl:nivel.
+ */
+const NIVEL = "cl:nivel";
+
+export const condensadorAvancado: BlockCustomComponent = {
+  onTick(e) {
+    if (entregarEmBauAdjacente(e)) return;
+    const nivel = lerEstado<number>(e.block, NIVEL);
+    if (nivel < CONDENSADOR_AVANCADO.capacidade) definirEstado(e.block, NIVEL, nivel + 1);
+  },
+
+  onPlayerInteract(e: BlockComponentPlayerInteractEvent) {
+    const jogador = e.player;
+    if (!jogador) return;
+    const nivel = lerEstado<number>(e.block, NIVEL);
+    if (nivel <= 0) {
+      avisar(jogador, "cl.condensador.condensando");
+      return;
+    }
+    const container = jogador.getComponent("minecraft:inventory")?.container;
+    if (!encherUmBalde(container, jogador.selectedSlotIndex)) {
+      avisar(jogador, "cl.condensador.sem_balde");
+      return;
+    }
+    definirEstado(e.block, NIVEL, nivel - 1);
+    e.dimension.playSound("bucket.fill_water", e.block.center());
+    avisar(jogador, "cl.condensador.coletado");
+  },
+};

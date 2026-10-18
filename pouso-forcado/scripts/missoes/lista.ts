@@ -13,7 +13,10 @@ export type Objetivo =
   | { tipo: "quebrar"; bloco: string; qtd: number } // quebrar blocos
   | { tipo: "ter"; item: string; qtd: number } // ter no inventário (não consome)
   | { tipo: "matar"; familia: string; qtd: number } // matar mobs dessa família
-  | { tipo: "noites"; qtd: number }; // sobreviver a tantas noites desde o início da missão
+  | { tipo: "noites"; qtd: number } // sobreviver a tantas noites desde o início da missão
+  | { tipo: "acao"; acao: Acao; qtd: number }; // usar uma máquina (contado pelo script da máquina)
+
+export type Acao = "peneirar" | "compostar";
 
 export type Missao = { id: string; objetivo: Objetivo; recompensa: ReadonlyArray<Pilha> };
 
@@ -39,4 +42,22 @@ export const MISSOES: ReadonlyArray<Missao> = [
     recompensa: [{ item: "minecraft:dirt", quantidade: 2 }, { item: "minecraft:bone_meal", quantidade: 4 }],
   },
   { id: "papel", objetivo: { tipo: "ter", item: "minecraft:paper", qtd: 3 }, recompensa: [{ item: "minecraft:pumpkin_seeds", quantidade: 2 }] },
+
+  // Fase 3: máquinas
+  { id: "peneira", objetivo: { tipo: "colocar", bloco: IDS.peneira, qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 4 }] },
+  { id: "garimpo", objetivo: { tipo: "acao", acao: "peneirar", qtd: 20 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },
+  { id: "argila", objetivo: { tipo: "ter", item: "minecraft:clay_ball", qtd: 8 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 6 }] },
+  { id: "compostor", objetivo: { tipo: "colocar", bloco: IDS.compostor, qtd: 1 }, recompensa: [{ item: "minecraft:rotten_flesh", quantidade: 8 }] },
+  { id: "adubo", objetivo: { tipo: "acao", acao: "compostar", qtd: 3 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
+  {
+    id: "condensador_avancado",
+    objetivo: { tipo: "colocar", bloco: IDS.condensadorAvancado, qtd: 1 },
+    recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }],
+  },
+  {
+    id: "estufa",
+    objetivo: { tipo: "colocar", bloco: IDS.estufa, qtd: 1 },
+    recompensa: [{ item: "minecraft:carrot", quantidade: 2 }, { item: "minecraft:potato", quantidade: 2 }],
+  },
+  { id: "fazenda", objetivo: { tipo: "ter", item: "minecraft:wheat", qtd: 32 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
 ];

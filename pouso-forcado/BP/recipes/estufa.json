@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:estufa"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GGG",
+      "GXG",
+      "CCC"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "X": {
+        "item": "cl:condensador_agua"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:estufa"
+    }
+  }
+}

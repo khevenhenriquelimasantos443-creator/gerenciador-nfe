@@ -3,13 +3,17 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.8.0";
+export const VERSAO = "0.9.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
 
 export const IDS = {
   condensadorAgua: `${NS}:condensador_agua`,
+  condensadorAvancado: `${NS}:condensador_avancado`,
+  peneira: `${NS}:peneira`,
+  compostor: `${NS}:compostor`,
+  estufa: `${NS}:estufa`,
   diarioBordo: `${NS}:diario_bordo`,
 } as const;
 
@@ -134,3 +138,77 @@ export const TEMPLO_SAQUE: ReadonlyArray<{ item: string; min: number; max: numbe
 // O intervalo do condensador é definido no JSON do bloco (minecraft:tick, 600 ticks = 30 s).
 // Mantido aqui só como referência para textos e testes.
 export const CONDENSADOR_SEGUNDOS = 30;
+
+// ---- Fase 3: máquinas (scripts/blocos/) ----
+
+// Peneira: cada toque com areia/cascalho na mão gasta 1 bloco e sorteia cada linha da tabela.
+export type Achado = { item: string; chance: number; max?: number };
+export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
+  "minecraft:sand": [
+    { item: "minecraft:clay_ball", chance: 0.14, max: 2 },
+    { item: "minecraft:wheat_seeds", chance: 0.08 },
+    { item: "minecraft:beetroot_seeds", chance: 0.05 },
+    { item: "minecraft:pumpkin_seeds", chance: 0.03 },
+    { item: "minecraft:melon_seeds", chance: 0.03 },
+    { item: "minecraft:bone_meal", chance: 0.06 },
+    { item: "minecraft:iron_nugget", chance: 0.06, max: 2 },
+    { item: "minecraft:gold_nugget", chance: 0.03 },
+    { item: "minecraft:flint", chance: 0.03 },
+    { item: "minecraft:cactus", chance: 0.02 },
+    { item: "minecraft:sugar_cane", chance: 0.015 },
+    { item: "minecraft:oak_sapling", chance: 0.015 },
+    { item: "minecraft:birch_sapling", chance: 0.01 },
+    { item: "minecraft:acacia_sapling", chance: 0.01 },
+  ],
+  "minecraft:gravel": [
+    { item: "minecraft:flint", chance: 0.25 },
+    { item: "minecraft:iron_nugget", chance: 0.15, max: 3 },
+    { item: "minecraft:gold_nugget", chance: 0.06, max: 2 },
+    { item: "minecraft:raw_copper", chance: 0.05 },
+    { item: "minecraft:coal", chance: 0.06 },
+    { item: "minecraft:redstone", chance: 0.04, max: 2 },
+    { item: "minecraft:lapis_lazuli", chance: 0.03 },
+    { item: "minecraft:diamond", chance: 0.003 },
+  ],
+};
+
+// Compostor de terra: restos valem pontos; com 8 pontos ele decompõe por COMPOSTOR_SEGUNDOS
+// (minecraft:tick no JSON) e vira 1 terra.
+export const COMPOSTOR_PONTOS: Readonly<Record<string, number>> = {
+  "minecraft:rotten_flesh": 2,
+  "minecraft:wheat": 2,
+  "minecraft:apple": 2,
+  "minecraft:bread": 3,
+  "minecraft:carrot": 1,
+  "minecraft:potato": 1,
+  "minecraft:beetroot": 1,
+  "minecraft:melon_slice": 1,
+  "minecraft:pumpkin": 4,
+  "minecraft:wheat_seeds": 1,
+  "minecraft:beetroot_seeds": 1,
+  "minecraft:pumpkin_seeds": 1,
+  "minecraft:melon_seeds": 1,
+  "minecraft:oak_leaves": 1,
+  "minecraft:birch_leaves": 1,
+  "minecraft:acacia_leaves": 1,
+  "minecraft:oak_sapling": 1,
+  "minecraft:birch_sapling": 1,
+  "minecraft:acacia_sapling": 1,
+  "minecraft:cactus": 1,
+  "minecraft:sugar_cane": 1,
+  "minecraft:deadbush": 1,
+  "minecraft:stick": 1,
+};
+export const COMPOSTOR_CHEIO = 8;
+export const COMPOSTOR_SEGUNDOS = 20;
+
+// Condensador Avançado: 1 balde a cada 10 s, guarda até 4.
+export const CONDENSADOR_AVANCADO = { capacidade: 4, segundos: 10 } as const;
+
+// Estufa: a cada 10 s (minecraft:tick no JSON) molha a terra arada e acelera plantas em volta.
+export const ESTUFA = {
+  raio: 4, // blocos para cada lado (área 9×9)
+  yAbaixo: 1, // da camada abaixo da estufa...
+  yAcima: 2, // ...até 2 acima
+  chanceCrescer: 0.5, // por planta, por ciclo
+} as const;

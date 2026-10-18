@@ -1,4 +1,4 @@
-import { Container, Dimension, ItemStack, Vector3 } from "@minecraft/server";
+import { Container, Dimension, GameMode, ItemStack, Player, Vector3 } from "@minecraft/server";
 
 const BALDE = "minecraft:bucket";
 const BALDE_AGUA = "minecraft:water_bucket";
@@ -48,4 +48,26 @@ export function criarBauCom(dimensao: Dimension, posicao: Vector3, itens: Readon
   const container = bloco.getComponent("minecraft:inventory")?.container;
   if (!container) throw new Error("baú sem inventário");
   for (const { item, quantidade } of itens) container.addItem(new ItemStack(item, quantidade));
+}
+
+/** Gasta `quantidade` do item na mão do jogador (no criativo não gasta). */
+export function gastarDaMao(jogador: Player, quantidade = 1): void {
+  if (jogador.getGameMode() === GameMode.Creative) return;
+  const inv = jogador.getComponent("minecraft:inventory")?.container;
+  const pilha = inv?.getItem(jogador.selectedSlotIndex);
+  if (!inv || !pilha) return;
+  if (pilha.amount <= quantidade) inv.setItem(jogador.selectedSlotIndex, undefined);
+  else {
+    pilha.amount -= quantidade;
+    inv.setItem(jogador.selectedSlotIndex, pilha);
+  }
+}
+
+export function itemNaMao(jogador: Player): ItemStack | undefined {
+  return jogador.getComponent("minecraft:inventory")?.container?.getItem(jogador.selectedSlotIndex);
+}
+
+/** Solta itens em cima do bloco, como se tivessem saído da máquina. */
+export function soltarEmCima(dimensao: Dimension, bloco: Vector3, item: string, quantidade: number): void {
+  dimensao.spawnItem(new ItemStack(item, quantidade), { x: bloco.x + 0.5, y: bloco.y + 1.1, z: bloco.z + 0.5 });
 }

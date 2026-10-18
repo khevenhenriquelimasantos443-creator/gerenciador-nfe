@@ -4,9 +4,50 @@
   "padding": 8,
   "num_mip_levels": 4,
   "texture_data": {
-    "cl_condensador_lado": { "textures": "textures/blocks/cl/condensador_lado" },
-    "cl_condensador_topo": { "textures": "textures/blocks/cl/condensador_topo" },
-    "cl_condensador_topo_cheio": { "textures": "textures/blocks/cl/condensador_topo_cheio" },
-    "cl_condensador_base": { "textures": "textures/blocks/cl/condensador_base" }
+    "cl_condensador_lado": {
+      "textures": "textures/blocks/cl/condensador_lado"
+    },
+    "cl_condensador_topo": {
+      "textures": "textures/blocks/cl/condensador_topo"
+    },
+    "cl_condensador_topo_cheio": {
+      "textures": "textures/blocks/cl/condensador_topo_cheio"
+    },
+    "cl_condensador_base": {
+      "textures": "textures/blocks/cl/condensador_base"
+    },
+    "cl_peneira_lado": {
+      "textures": "textures/blocks/cl/peneira_lado"
+    },
+    "cl_peneira_topo": {
+      "textures": "textures/blocks/cl/peneira_topo"
+    },
+    "cl_compostor_lado": {
+      "textures": "textures/blocks/cl/compostor_lado"
+    },
+    "cl_compostor_topo": {
+      "textures": "textures/blocks/cl/compostor_topo"
+    },
+    "cl_compostor_topo_cheio": {
+      "textures": "textures/blocks/cl/compostor_topo_cheio"
+    },
+    "cl_compostor_topo_pronto": {
+      "textures": "textures/blocks/cl/compostor_topo_pronto"
+    },
+    "cl_condensador_avancado_lado": {
+      "textures": "textures/blocks/cl/condensador_avancado_lado"
+    },
+    "cl_condensador_avancado_topo": {
+      "textures": "textures/blocks/cl/condensador_avancado_topo"
+    },
+    "cl_condensador_avancado_topo_cheio": {
+      "textures": "textures/blocks/cl/condensador_avancado_topo_cheio"
+    },
+    "cl_estufa_lado": {
+      "textures": "textures/blocks/cl/estufa_lado"
+    },
+    "cl_estufa_topo": {
+      "textures": "textures/blocks/cl/estufa_topo"
+    }
   }
 }
