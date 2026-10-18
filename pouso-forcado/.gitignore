@@ -2,4 +2,4 @@ node_modules/
 BP/scripts/
 dist/*
 !dist/pouso-forcado.mcaddon
-!dist/pouso-forcado.mctemplate
+!dist/pouso-forcado.mcworld

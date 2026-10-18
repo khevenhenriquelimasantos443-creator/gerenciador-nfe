@@ -18,7 +18,7 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | `format_version` de bioma | `1.26.30` (validado contra o JSON Schema oficial de 1.26.30) | bedrock-samples `metadata/json_schemas` |
 | Biomas customizados / `minecraft:replace_biomes` | estável desde 1.21.110 | Notas "1.21.110 Update Notes" no Microsoft Learn |
 | Regras de spawn | `1.8.0`, a partir das regras vanilla de 1.26.30 | bedrock-samples `behavior_pack/spawn_rules` |
-| Modelo de mundo (`.mctemplate`) | manifest `world_template` com `base_game_version` `[1, 26, 30]` | "Create a World Template" no Microsoft Learn |
+| Mundo dentro do `.mcaddon` | "`.mcaddon`: um zip que contém arquivos .mcpack ou .mcworld" | "Minecraft File Extensions" no Microsoft Learn |
 
 Nada aqui usa Beta APIs nem experimentos. Funciona em 26.30 e em versões mais novas.
 
@@ -40,7 +40,6 @@ pouso-forcado/
 │   ├── blocks.json         sons dos blocos
 │   ├── texts/              pt_BR.lang, en_US.lang
 │   └── textures/           texturas (placeholders gerados)
-├── MUNDO/                  manifest e textos do modelo de mundo (.mctemplate)
 ├── scripts/                código TypeScript
 │   ├── main.ts             ponto de entrada: cada fase registra seus módulos aqui
 │   ├── config.ts           IDs, chaves de dynamic properties, balanceamento (relevo, saque, horda...)
@@ -48,8 +47,8 @@ pouso-forcado/
 │   ├── jogador/            eventos de jogador (boas-vindas; depois: Diário de Bordo)
 │   ├── mundo/              nave caída, relevo, horda noturna, diagnóstico
 │   └── util/               helpers de inventário e estados de bloco
-├── tools/                  build e geradores (texturas, nave, relevo, level.dat), zip/png/nbt sem dependências
-└── dist/                   saída: pouso-forcado.mctemplate e pouso-forcado.mcaddon
+├── tools/                  build e geradores (texturas, nave, relevo, level.dat, db vazio), zip/png/nbt sem dependências
+└── dist/                   saída: pouso-forcado.mcaddon (packs + mundo) e pouso-forcado.mcworld
 ```
 
 Para as próximas fases, a ideia é: máquinas novas em `scripts/blocos/` (uma por arquivo, registradas no `main.ts`), missões em `scripts/missoes/` e menus com `@minecraft/server-ui`, e todo número de balanceamento em `config.ts`.
@@ -67,40 +66,38 @@ npm run build
 ```
 
 Sai em `dist/`:
-- `pouso-forcado.mctemplate` → **modelo de mundo**: o mundo plano de deserto já com os dois packs (é este que você usa);
-- `pouso-forcado.mcaddon` → só os packs, para usar num mundo infinito normal (sem o relevo plano);
-- `pouso-forcado_BP.mcpack` e `pouso-forcado_RP.mcpack` → plano B, se o `.mcaddon` não abrir.
+- `pouso-forcado.mcaddon` → **é este que você usa**: instala os dois packs e coloca o mundo plano "Pouso Forçado" direto na sua lista de mundos;
+- `pouso-forcado.mcworld` → só o mundo (plano B, se o `.mcaddon` não trouxer o mundo);
+- `pouso-forcado_BP.mcpack` e `pouso-forcado_RP.mcpack` → só os packs, para usar num mundo infinito normal.
 
 Outros comandos:
 - `npm run texturas`: cria só as texturas que estiverem faltando (não apaga as suas). Para regerar todas: `node tools/gerar-texturas.mjs --force`.
 - `npm run compilar`: só compila o TypeScript.
 - `node tools/gerar-nave.mjs --force` / `node tools/gerar-relevo.mjs --force`: regeram a nave / as dunas, morros e o templo a partir do modelo em código.
 
-> Os arquivos `dist/pouso-forcado.mctemplate` e `dist/pouso-forcado.mcaddon` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
+> Os arquivos `dist/pouso-forcado.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
 
 ## Como instalar no celular
 
 ### Android
-1. Baixe o `pouso-forcado.mctemplate` (pelo navegador ou pelo app do GitHub).
+1. Baixe o `pouso-forcado.mcaddon` (pelo navegador ou pelo app do GitHub).
 2. Abra a pasta **Downloads** no gerenciador de arquivos e toque no arquivo.
-3. Escolha **Minecraft** em "Abrir com". O jogo abre e importa o modelo.
+3. Escolha **Minecraft** em "Abrir com". O jogo importa os dois packs e o mundo.
 
 ### iOS (iPhone/iPad)
-1. Baixe o `pouso-forcado.mctemplate` pelo Safari. Ele vai para o app **Arquivos** (pasta Downloads).
+1. Baixe o `pouso-forcado.mcaddon` pelo Safari. Ele vai para o app **Arquivos** (pasta Downloads).
 2. No app Arquivos, toque e segure o arquivo → **Compartilhar** → **Minecraft**.
-3. O jogo abre e importa o modelo.
+3. O jogo importa os dois packs e o mundo.
 
-## Como criar o mundo
+## Como jogar
 
-1. **Jogar** → **Criar novo**. O modelo **Pouso Forçado** aparece na lista de modelos (pode estar em "Modelos" ou "Importados").
-2. Toque nele → **Criar**. Os packs já vêm ativados; **não** precisa ligar experimentos nem ativar nada.
-3. As opções (dificuldade, trapaças etc.) podem ser mudadas antes de criar.
-
-Se você também tiver importado o `.mcaddon` antes, não tem problema: o modelo usa a mesma versão dos packs.
+1. **Jogar** → aba **Mundos**: aparece o mundo **Pouso Forçado**, já com os packs ativados. Não precisa ligar experimentos nem ativar nada.
+2. Antes de entrar, você pode mudar dificuldade, trapaças etc. em **Editar**.
+3. Cada vez que você importa o `.mcaddon` de novo, entra mais uma cópia nova do mundo, útil para recomeçar do zero.
 
 ## O mundo (Fase 1)
 
-- **Plano, de areia.** O modelo de mundo gera um mundo plano com bioma de deserto. Camadas de baixo para cima: 1 bedrock, 3 pedra, 4 arenito, 4 areia. A superfície fica em y = -52.
+- **Plano, de areia.** O mundo que vem no `.mcaddon` é plano, com bioma de deserto. Camadas de baixo para cima: 1 bedrock, 3 pedra, 4 arenito, 4 areia. A superfície fica em y = -52.
 - **Dunas e morros pequenos.** O mundo plano não tem relevo. O script `scripts/mundo/relevo.ts` decora cada chunk **uma única vez**, quando ele carrega perto de você:
   - dunas pequenas e médias, morros de até 7 blocos, mesas (platôs com faixa de terracota), grupos de rochas e arbustos secos (dão gravetos);
   - raramente, um **templo soterrado**: uma pirâmide de arenito própria do add-on, com um baú de saque (ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde).
@@ -127,7 +124,7 @@ Por que há dois arquivos de bioma: a doc oficial manda escrever os biomas-alvo 
 
 Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do log de conteúdo**. Erros de script ou JSON aparecem na tela.
 
-1. **Mundo:** crie o mundo pelo modelo. Deve ser plano, de areia, com coordenadas visíveis.
+1. **Mundo:** abra o mundo **Pouso Forçado** da lista. Deve ser plano, de areia, com coordenadas visíveis.
 2. **Boas-vindas e nave:** aparece o título "Pouso Forçado", a mensagem no chat e, em ~2 s, a nave ao seu lado. Entre pela abertura lateral e abra o baú.
 3. **Relevo:** ande para longe da nave. Dunas, morros pequenos, mesas e rochas vão aparecendo a cada poucos chunks. Elas surgem quando o chunk carrega, a ~4 chunks de você.
 4. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
@@ -158,10 +155,11 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 
 Os PNGs 16×16 em `RP/textures/blocks/cl/` são placeholders (cor sólida + borda). Substitua pelos seus com o **mesmo nome**. O build não sobrescreve arquivos existentes.
 
-## Modelo de mundo (detalhes técnicos)
+## O mundo plano (detalhes técnicos)
 
 - O `level.dat` é gerado por `tools/gerar-mundo.mjs`: NBT little-endian com cabeçalho de 8 bytes, `Generator = 2` (plano) e `FlatWorldLayers` no formato `{"biome_id":2,"block_layers":[...],"encoding_version":6,"structure_options":null,"world_version":"version.post_1_18"}`.
-- Os campos seguem o `level.dat` do Bedrock usado por servidores open-source (Dragonfly e PocketMine-MP). O modelo não traz a pasta `db`: o jogo gera o terreno na primeira vez que o mundo abre.
+- Os campos seguem o `level.dat` do Bedrock usado por servidores open-source (Dragonfly e PocketMine-MP).
+- A pasta `db/` vai vazia (um LevelDB vazio, gerado por `tools/leveldb-vazio.mjs` e testado abrindo-o com um LevelDB de verdade). O jogo gera o terreno na primeira vez que o mundo abre.
 - Se mudar as camadas, mude também `MUNDO_PLANO.superficieY` no `scripts/config.ts`.
 
 ## Limitações do Bedrock (e o que fiz no lugar)
@@ -169,4 +167,4 @@ Os PNGs 16×16 em `RP/textures/blocks/cl/` são placeholders (cor sólida + bord
 - **Relevo do mundo plano:** o jogo não gera relevo em mundo plano, então as dunas e os morros são colocados por script quando o chunk carrega. Por isso eles "aparecem" a uns 4 chunks de distância (o raio que o jogo mantém carregado no celular), não no horizonte. O custo é baixo: no máximo 3 chunks decorados por segundo.
 - **Templos e vilas vanilla:** não existem no mundo plano, e `/place structure` só aceita estruturas "jigsaw". O templo soterrado é próprio do add-on.
 - **Água infinita (2 baldes formando fonte):** o Bedrock não tem regra para desligar. Bloquear isso exigiria vigiar a água em volta do jogador o tempo todo, e esse é o tipo de gambiarra pesada que evitei. Ficou como marco de progressão: no começo só há 1 balde e quase não há ferro.
-- **Modelo de mundo montado à mão:** o `level.dat` foi montado sem passar pelo jogo. Se o celular recusar o modelo, use o `.mcaddon` num mundo infinito enquanto eu ajusto o arquivo.
+- **Mundo montado à mão:** o `level.dat` foi montado sem passar pelo jogo. Se o mundo não abrir ou não sair plano, use os `.mcpack` num mundo infinito enquanto eu ajusto o arquivo.
