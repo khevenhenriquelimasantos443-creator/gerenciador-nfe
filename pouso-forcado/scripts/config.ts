@@ -2,6 +2,12 @@
 
 export const NS = "cl";
 
+// Mesma versão dos manifests (mostrada no diagnóstico do chat).
+export const VERSAO = "0.2.1";
+
+// Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
+export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
+
 export const IDS = {
   condensadorAgua: `${NS}:condensador_agua`,
 } as const;

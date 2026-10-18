@@ -97,11 +97,13 @@ Outros comandos:
 4. **Não** precisa ligar nenhum experimento.
 5. Crie o mundo.
 
-Ao atualizar o add-on, o `version` dos manifests sobe (Fase 1 = `0.2.0`). Se o jogo continuar mostrando a versão antiga, apague os packs antigos em **Configurações → Armazenamento** e importe de novo.
+Ao atualizar o add-on, o `version` dos manifests sobe (Fase 1 = `0.2.1`). Se o jogo continuar mostrando a versão antiga, apague os packs antigos em **Configurações → Armazenamento** e importe de novo.
 
 ## O mundo (Fase 1)
 
 - **Só deserto.** O bioma próprio `cl:deserto_seco` substitui todos os biomas da superfície (florestas, planícies, neve, oceanos, rios, etc.). O deserto vanilla continua existindo; os dois têm a mesma cara.
+- **Por que dois arquivos de bioma:** a doc oficial manda escrever os biomas-alvo **sem** prefixo (`plains`), mas o exemplo oficial da Microsoft usa **com** prefixo (`minecraft:plains`). Na 0.2.0 o jogo ignorou a versão sem prefixo. Por isso vão as duas: `cl:deserto_seco` (sem) e `cl:deserto_seco_ns` (com). Se o jogo aceitar as duas, elas são idênticas e dividem o mundo sem diferença visível. Depois do teste fica só a que funcionou.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.2.1] biomas: ... | bioma aqui: ...`. Ela diz se o jogo carregou cada bioma e em qual bioma você está.
 - **Sem mares e sem rios.** No `cl:deserto_seco` o "material do mar" é ar: onde haveria oceano ou rio fica um vale/cânion seco com fundo de areia.
 - **Não chove.** O bioma tem clima de deserto.
 - **Relevo normal do jogo.** O formato do terreno (morros, serras, vales) continua sendo o do Minecraft, só que coberto de areia e arenito.

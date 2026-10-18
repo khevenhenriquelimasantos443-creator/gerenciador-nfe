@@ -13,6 +13,9 @@
         ],
         "temperature": 2.0
       },
+      "minecraft:overworld_height": {
+        "noise_type": "lowlands"
+      },
       "minecraft:surface_builder": {
         "builder": {
           "type": "minecraft:overworld",
