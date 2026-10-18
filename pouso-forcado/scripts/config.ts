@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.12.1";
+export const VERSAO = "0.12.2";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -35,6 +35,7 @@ export const PROPS = {
   naveColocada: `${NS}:nave_colocada`, // mundo
   naveChunk: `${NS}:nave_chunk`, // mundo: "cx,cz" do chunk da nave
   sementeRelevo: `${NS}:semente_relevo`, // mundo
+  tipoMundo: `${NS}:tipo_mundo`, // mundo: "plano" (o do add-on) ou "normal" (relevo desligado)
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
@@ -88,9 +89,17 @@ export const MUNDO_PLANO = {
   // Deepslate reforçado não quebra no sobrevivência, então a marca não some.
   marcadorY: -63,
   marcador: "minecraft:reinforced_deepslate",
-  // Como é o mundo plano em y = -63. Em mundo normal (ou no mundo plano antigo, de pedra) não
-  // bate, e nada é gerado.
+  // Como é o mundo plano em y = -63 (onde fica a marca de "chunk ainda não decorado").
   pedraEsperada: "minecraft:deepslate",
+  // Assinatura do mundo plano: estas camadas exatas, na coluna do canto do chunk. O mundo normal
+  // também tem ardósia em y = -63, então só ela não basta para saber se o mundo é o plano.
+  assinatura: [
+    { y: 0, bloco: "minecraft:deepslate" },
+    { y: 1, bloco: "minecraft:stone" },
+    { y: 32, bloco: "minecraft:stone" },
+    { y: 33, bloco: "minecraft:sandstone" },
+    { y: 39, bloco: "minecraft:sandstone" },
+  ],
 } as const;
 
 // Minérios espalhados por script em cada chunk do mundo plano (scripts/mundo/minerios.ts).

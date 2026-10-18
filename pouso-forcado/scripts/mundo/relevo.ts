@@ -92,6 +92,44 @@ function porArbustosSecos(dimensao: Dimension, x0: number, z0: number, sorte: ()
   }
 }
 
+/** O bloco bate com a camada esperada? Minério conta como a pedra/ardósia onde ele nasceu. */
+function bate(achado: string | undefined, esperado: string): boolean {
+  if (achado === esperado) return true;
+  if (!achado?.endsWith("_ore")) return false;
+  if (esperado === "minecraft:deepslate") return achado.startsWith("minecraft:deepslate_");
+  if (esperado === "minecraft:stone") return !achado.startsWith("minecraft:deepslate_");
+  return false;
+}
+
+/** A coluna x, z tem as camadas exatas do mundo plano do add-on? */
+function ehColunaDoMundoPlano(dimensao: Dimension, x: number, z: number): boolean {
+  return MUNDO_PLANO.assinatura.every(({ y, bloco }) => bate(dimensao.getBlock({ x, y, z })?.typeId, bloco));
+}
+
+/** Pelo menos 2 de 3 colunas do chunk batem (o jogador pode ter cavado uma). */
+function ehChunkDoMundoPlano(dimensao: Dimension, x0: number, z0: number): boolean {
+  return [[0, 0], [8, 8], [15, 15]].filter(([dx, dz]) => ehColunaDoMundoPlano(dimensao, x0 + dx, z0 + dz)).length >= 2;
+}
+
+/**
+ * Descobre uma vez se este mundo é o plano do add-on, olhando a coluna do primeiro jogador.
+ * Num mundo normal o relevo fica desligado para sempre (senão punha areia e minério por cima
+ * do relevo do jogo). Retorna undefined enquanto o chunk ainda não carregou.
+ */
+function tipoDoMundo(): "plano" | "normal" | undefined {
+  const salvo = world.getDynamicProperty(PROPS.tipoMundo);
+  if (salvo === "plano" || salvo === "normal") return salvo;
+  const jogador = world.getPlayers().find((j) => j.dimension.id === "minecraft:overworld");
+  if (!jogador) return undefined;
+  const x = Math.floor(jogador.location.x / 16) * 16, z = Math.floor(jogador.location.z / 16) * 16;
+  if (!jogador.dimension.isChunkLoaded({ x, y: 0, z })) return undefined;
+  const plano = ehChunkDoMundoPlano(jogador.dimension, x, z);
+  const tipo = plano ? "plano" : "normal";
+  world.setDynamicProperty(PROPS.tipoMundo, tipo);
+  console.warn(`[Pouso Forçado] tipo de mundo: ${tipo}`);
+  return tipo;
+}
+
 // pronto = nada a fazer (já marcado ou não é mundo plano); decorado = trabalho feito; esperar = área ainda não carregada
 type Resultado = "pronto" | "decorado" | "esperar";
 
@@ -124,6 +162,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   if (!marca) return "esperar";
   // Já decorado, ou não é o mundo plano do modelo (ex.: add-on num mundo normal): não mexe.
   if (marca.typeId !== MUNDO_PLANO.pedraEsperada) return "pronto";
+  if (!ehChunkDoMundoPlano(dimensao, x0, z0)) return "pronto";
 
   const sorte = rng(semente ^ Math.imul(cx, 73856093) ^ Math.imul(cz, 83492791));
   const nave = { x: naveChunk[0] * 16 + 8, z: naveChunk[1] * 16 + 8 };
@@ -213,6 +252,7 @@ export function registrarRelevo(): void {
     // Só depois que a nave já foi posta, para nada nascer em cima dela.
     const nave = chunkDaNave();
     if (!nave) return;
+    if (tipoDoMundo() !== "plano") return;
     if (!limpouAreas) {
       limpouAreas = true; // sobras de uma sessão anterior
       try {
