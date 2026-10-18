@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.10.0";
+export const VERSAO = "0.11.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -16,6 +16,11 @@ export const IDS = {
   estufa: `${NS}:estufa`,
   diarioBordo: `${NS}:diario_bordo`,
   frutaCacto: `${NS}:fruta_cacto`,
+  aguaExcelente: `${NS}:agua_excelente`,
+  aguaBoa: `${NS}:agua_boa`,
+  aguaSuja: `${NS}:agua_suja`,
+  aguaMuitoSuja: `${NS}:agua_muito_suja`,
+  aguaImpropria: `${NS}:agua_impropria`,
 } as const;
 
 // Chaves de dynamic properties (salvas no mundo/jogador).
@@ -28,6 +33,7 @@ export const PROPS = {
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
   sede: `${NS}:sede`, // jogador: água no corpo (0 a SEDE.max)
+  temperatura: `${NS}:temperatura`, // jogador: temperatura do corpo (TEMPERATURA.min a max; 0 = normal)
   capsulaDia: `${NS}:capsula_dia`, // mundo: dia da última cápsula de carga
   capsulas: `${NS}:capsulas`, // mundo: JSON com as cápsulas ainda não encontradas
 } as const;
@@ -227,9 +233,8 @@ export const SEDE = {
   segundosNoite: 50,
   lentidaoAbaixoDe: 5,
   danoACadaSegundos: 4,
-  // O que mata a sede ao terminar de comer/beber.
+  // Comidas que também matam a sede ao terminar de comer/beber. As águas ficam em AGUAS.
   bebidas: {
-    "minecraft:potion": 8, // garrafa de água (e poções)
     "minecraft:milk_bucket": 6,
     "minecraft:honey_bottle": 4,
     "cl:fruta_cacto": 4,
@@ -253,6 +258,8 @@ export const CAPSULA = {
   animais: ["minecraft:cow", "minecraft:sheep", "minecraft:chicken", "minecraft:pig"],
   saque: [
     { item: "minecraft:glass_bottle", min: 2, max: 4, chance: 0.9 },
+    { item: "cl:agua_boa", min: 1, max: 3, chance: 0.6 },
+    { item: "cl:agua_excelente", min: 1, max: 1, chance: 0.15 },
     { item: "minecraft:bread", min: 2, max: 4, chance: 0.7 },
     { item: "minecraft:carrot", min: 1, max: 3, chance: 0.45 },
     { item: "minecraft:potato", min: 1, max: 3, chance: 0.45 },
@@ -271,3 +278,64 @@ export const CAPSULA = {
     { item: "minecraft:diamond", min: 1, max: 1, chance: 0.03 },
   ],
 } as const;
+
+// Temperatura do corpo (scripts/jogador/temperatura.ts). Escala de -20 (congelando) a +20
+// (insolação), 0 = normal; na tela aparece em °C (36,5 + 0,3 por ponto).
+// A cada segundo o script calcula a temperatura "do ambiente" (alvo) e o corpo anda
+// 1 ponto na direção dela a cada "segundosPorPonto".
+export const TEMPERATURA = {
+  min: -20,
+  max: 20,
+  segundosPorPonto: 4,
+  // Alvos (somados): sol aberto ao meio-dia / noite ao relento / na sombra / sombra à noite.
+  solAberto: 17,
+  noiteAberta: -17,
+  solSombra: 6,
+  noiteAbrigo: -7,
+  subsolo: 0, // abaixo de y = superfície - 4 e sem céu: fresco e estável
+  fogo: 14, // fogueira, fogo, lava, magma ou fornalha acesa a até 3 blocos
+  agua: -8, // dentro da água
+  correndo: 3,
+  capacete: -4, // qualquer capacete protege do sol (só quando está quente)
+  couroPorPeca: 0.15, // cada peça de couro corta 15% do frio
+  // Efeitos
+  quente: 12, // a partir daqui: sede cai 2× mais rápido
+  frio: -12, // a partir daqui: lentidão
+  danoAcima: 16, // insolação: 1 de dano a cada "danoACadaSegundos"
+  danoAbaixo: -16, // hipotermia: idem
+  danoACadaSegundos: 3,
+} as const;
+
+// Qualidades de água (scripts/jogador/aguas.ts). agua = pontos de sede; esfria = pontos de
+// temperatura a menos (se estiver quente); efeitos sorteados ao beber.
+// A garrafa de água do jogo (minecraft:potion) conta como água boa.
+// "Água imprópria" não se bebe: ferva na fornalha ou fogueira.
+export type Efeito = { id: string; segundos: number; chance: number; nivel?: number };
+export const AGUAS: Readonly<Record<string, { agua: number; esfria: number; efeitos: ReadonlyArray<Efeito> }>> = {
+  "cl:agua_excelente": { agua: 10, esfria: 5, efeitos: [{ id: "regeneration", segundos: 5, chance: 1 }] },
+  "cl:agua_boa": { agua: 7, esfria: 3, efeitos: [] },
+  "minecraft:potion": { agua: 7, esfria: 3, efeitos: [] },
+  "cl:agua_suja": {
+    agua: 5,
+    esfria: 2,
+    efeitos: [{ id: "nausea", segundos: 8, chance: 0.4 }, { id: "hunger", segundos: 15, chance: 0.25 }],
+  },
+  "cl:agua_muito_suja": {
+    agua: 3,
+    esfria: 1,
+    efeitos: [
+      { id: "nausea", segundos: 10, chance: 0.8 },
+      { id: "poison", segundos: 4, chance: 0.5 },
+      { id: "hunger", segundos: 20, chance: 0.4 },
+    ],
+  },
+};
+
+// Beber direto de uma poça/fonte de água: agachado dentro da água, 1 gole a cada 2 s.
+export const POCA = { aguaPorGole: 1, chanceEnjoo: 0.15 } as const;
+
+// Husks e zumbis carregam cantis velhos: chance de soltar água ruim ao morrer.
+export const AGUA_DOS_MONSTROS: ReadonlyArray<{ item: string; chance: number }> = [
+  { item: "cl:agua_muito_suja", chance: 0.06 },
+  { item: "cl:agua_impropria", chance: 0.05 },
+];

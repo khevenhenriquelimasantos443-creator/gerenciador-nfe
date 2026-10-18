@@ -1,5 +1,6 @@
 import { ItemStack, Player, RawMessage, world } from "@minecraft/server";
 import { PROPS } from "../config.js";
+import { aviso } from "../jogador/hud.js";
 import { Acao, MISSOES, Missao, Objetivo } from "./lista.js";
 
 /*
@@ -93,7 +94,7 @@ export function avancar(jogador: Player, pulou = false): void {
   } else {
     darItens(jogador, m.recompensa);
     jogador.playSound("random.levelup");
-    jogador.onScreenDisplay.setActionBar({ rawtext: [{ translate: "cl.diario.concluida_curta" }, { text: " " }, { translate: `cl.missao.${m.id}.titulo` }] });
+    aviso(jogador, { rawtext: [{ translate: "cl.diario.concluida_curta" }, { text: " " }, { translate: `cl.missao.${m.id}.titulo` }] }, 4);
     jogador.sendMessage({
       rawtext: [
         { text: PREFIXO },

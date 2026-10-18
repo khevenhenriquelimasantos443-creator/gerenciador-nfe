@@ -63,7 +63,7 @@ export const MISSOES: ReadonlyArray<Missao> = [
 
   // Fase 4: comida e vida
   { id: "capsula", objetivo: { tipo: "acao", acao: "capsula", qtd: 1 }, recompensa: [{ item: "minecraft:glass_bottle", quantidade: 4 }] },
-  { id: "garrafa", objetivo: { tipo: "ter", item: "minecraft:potion", qtd: 3 }, recompensa: [{ item: "minecraft:bread", quantidade: 4 }] },
+  { id: "garrafa", objetivo: { tipo: "ter", item: IDS.aguaBoa, qtd: 3 }, recompensa: [{ item: "minecraft:bread", quantidade: 4 }] },
   { id: "fruta", objetivo: { tipo: "ter", item: IDS.frutaCacto, qtd: 3 }, recompensa: [{ item: "minecraft:melon_seeds", quantidade: 2 }] },
   { id: "rebanho", objetivo: { tipo: "acao", acao: "procriar", qtd: 1 }, recompensa: [{ item: "minecraft:lead", quantidade: 2 }] },
   { id: "couro", objetivo: { tipo: "ter", item: "minecraft:leather", qtd: 3 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },

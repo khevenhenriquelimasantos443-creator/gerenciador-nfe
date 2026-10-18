@@ -116,7 +116,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.10.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.11.0] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -152,7 +152,7 @@ Outros comandos:
 | 20 | Fazenda no deserto | ter 32 trigos | 4 barras de ferro |
 
 | 21 | Carga perdida | achar uma cápsula de carga | 4 garrafas de vidro |
-| 22 | Cantil | ter 3 garrafas de água | 4 pães |
+| 22 | Cantil | ter 3 Águas Boas (tigelas no condensador) | 4 pães |
 | 23 | Fruta do deserto | ter 3 frutas do cacto | 2 sementes de melancia |
 | 24 | Rebanho | fazer nascer 1 filhote | 2 laços |
 | 25 | Couro | ter 3 couros | 2 barras de ferro |
@@ -175,16 +175,40 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 
 ## Comida e vida (Fase 4)
 
-- **Sede.** Além da fome, você tem **20 pontos de água**. Cai 1 ponto a cada 30 s de dia e 50 s à noite. A barra aparece embaixo da tela (`Água ||||||||||`) quando muda. Com menos de 5: lentidão. Com zero: 1 de dano a cada 4 s. Ao renascer, volta cheia. Não roda no criativo nem no Pacífico.
-- **Como beber:**
-  - **garrafa de água** (+8): toque no condensador cheio com **garrafas de vidro na mão**: enche até 3 de uma vez. (Garrafa de vidro = 3 vidros em V na mesa.)
-  - **leite** (+6), **mel** (+4), **fruta do cacto** (+4), **fatia de melancia** (+2), **frutas vermelhas** (+1).
+- **Painel fixo.** Embaixo da tela fica sempre: `Água |||||||||| 20   Corpo 36.5°C`. Avisos das máquinas e das missões aparecem numa linha acima dele por alguns segundos, sem apagar o painel.
+- **Sede.** Além da fome, você tem **20 pontos de água**. Cai 1 ponto a cada 30 s de dia e 50 s à noite (2× mais rápido com calor). Com menos de 5: lentidão. Com zero: 1 de dano a cada 4 s. Ao renascer, volta cheia. Não roda no criativo nem no Pacífico.
+- **Temperatura do corpo** (de ~30,5 °C a ~42,5 °C; normal 36,5 °C). O corpo vai aos poucos para a temperatura do lugar:
+  - **sol aberto** esquenta muito (pico ao meio-dia); **noite ao relento** esfria muito;
+  - **sombra/abrigo** (qualquer bloco acima da cabeça) amortece os dois; **subsolo** é fresco;
+  - **fogueira, fogo, lava, magma ou fornalha acesa** a até 3 blocos esquenta; **água** esfria; **correr** esquenta;
+  - **qualquer capacete** protege do sol; **roupas de couro** protegem do frio (15% por peça);
+  - beber água esfria na hora.
+  - Efeitos: com **calor** (amarelo/vermelho), a sede cai 2× mais rápido; com **frio** (azul), lentidão; nos **extremos** (abaixo de ~31,7 °C ou acima de ~41,3 °C), 1 de dano a cada 3 s.
+  - Na prática: meio-dia ao sol sem capacete ou a noite inteira fora sem fogueira machucam. Números em `TEMPERATURA` no `scripts/config.ts`.
+- **Águas.** Cinco qualidades:
+
+  | Água | Água no corpo | Efeito |
+  |---|---|---|
+  | Excelente | +10 | regeneração curta, esfria bem |
+  | Boa (e a garrafa de água do jogo) | +7 | esfria |
+  | Suja | +5 | às vezes enjoo e fome |
+  | Muito suja | +3 | quase sempre enjoo; às vezes veneno e fome |
+  | Imprópria | não dá para beber | precisa ferver |
+
+- **Jeitos de beber** (do mais fácil ao melhor):
+  - **direto do condensador**: toque nele cheio com a **mão vazia** (água boa; o avançado dá excelente). Não precisa de nada;
+  - **poça**: fique **agachado dentro da água** (de um balde despejado): 1 gole a cada 2 s, às vezes enjoa;
+  - **tigela de cacto**: tigela + cacto na mesa = água suja;
+  - **tigela** (3 tábuas) ou **garrafa de vidro** na mão, tocando no condensador: leva até 3 doses (tigela = água boa/excelente; garrafa = garrafa de água). A tigela volta vazia depois de beber;
+  - husks e zumbis às vezes soltam água muito suja ou imprópria; as cápsulas trazem água boa e, às vezes, excelente.
+- **Melhorar a água:** **ferva** na fornalha ou fogueira (imprópria → muito suja → suja → boa) e **filtre** na mesa (água boa + carvão vegetal = excelente).
+- Leite (+6), mel (+4), fruta do cacto (+4), melancia (+2) e frutas vermelhas (+1) também matam a sede.
 - **Fruta do Cacto.** 30% de chance ao quebrar um cacto. Mata a fome (3) e a sede (4) e pode ser comida mesmo sem fome.
 - **Cápsulas de carga.** A partir do dia 1, toda manhã cai uma cápsula a 20–48 blocos de um jogador: aviso na tela com as coordenadas, rastro de fogo e impacto (que não quebra nada). É uma gaiola de ardósia e barras de ferro, aberta para o sul, com:
   - um **barril** de saque: garrafas, pão, cenoura, batata, frutas vermelhas, sementes de melancia/abóbora/beterraba, ovos, maçã, muda de bétula, linha, laços, ferro, cobre e, raramente, etiqueta ou diamante;
   - um **casal de animais** (vaca, ovelha, galinha ou porco). Os animais não nascem sozinhos neste planeta: cuide deles e faça filhotes (trigo para vaca e ovelha, sementes para galinha, cenoura para porco). Ovos jogados também dão pintinhos.
   - Para testar: com trapaças ligadas, `/scriptevent cl:capsula` derruba uma perto de você.
-- Números em `SEDE`, `FRUTA_CACTO_CHANCE` e `CAPSULA` no fim do `scripts/config.ts`.
+- Números em `SEDE`, `TEMPERATURA`, `AGUAS`, `POCA`, `FRUTA_CACTO_CHANCE` e `CAPSULA` no fim do `scripts/config.ts`.
 
 ## O mundo (Fase 1)
 
@@ -206,7 +230,7 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.10.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.11.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

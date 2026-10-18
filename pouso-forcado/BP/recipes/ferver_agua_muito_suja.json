@@ -1,0 +1,15 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:ferver_agua_muito_suja"
+    },
+    "tags": [
+      "furnace",
+      "campfire",
+      "soul_campfire"
+    ],
+    "input": "cl:agua_muito_suja",
+    "output": "cl:agua_suja"
+  }
+}

@@ -72,17 +72,17 @@ export function soltarEmCima(dimensao: Dimension, bloco: Vector3, item: string, 
   dimensao.spawnItem(new ItemStack(item, quantidade), { x: bloco.x + 0.5, y: bloco.y + 1.1, z: bloco.z + 0.5 });
 }
 
-/** Enche até `max` garrafas de vidro da mão com água. Retorna true se encheu alguma. */
-export function encherGarrafasDaMao(jogador: Player, max = 3): boolean {
+/** Troca até `max` itens `de` da mão por `para` (ex.: garrafa vazia → garrafa de água). Retorna true se trocou. */
+export function trocarDaMao(jogador: Player, de: string, para: string, max = 3): boolean {
   const inv = jogador.getComponent("minecraft:inventory")?.container;
   const pilha = inv?.getItem(jogador.selectedSlotIndex);
-  if (!inv || pilha?.typeId !== "minecraft:glass_bottle") return false;
+  if (!inv || pilha?.typeId !== de) return false;
   const n = Math.min(max, pilha.amount);
-  if (pilha.amount === n) inv.setItem(jogador.selectedSlotIndex, new ItemStack("minecraft:potion", n));
+  if (pilha.amount === n) inv.setItem(jogador.selectedSlotIndex, new ItemStack(para, n));
   else {
     pilha.amount -= n;
     inv.setItem(jogador.selectedSlotIndex, pilha);
-    const sobra = inv.addItem(new ItemStack("minecraft:potion", n));
+    const sobra = inv.addItem(new ItemStack(para, n));
     if (sobra) jogador.dimension.spawnItem(sobra, jogador.location);
   }
   return true;

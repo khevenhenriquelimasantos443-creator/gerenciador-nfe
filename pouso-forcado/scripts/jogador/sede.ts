@@ -1,12 +1,14 @@
 import { Difficulty, EntityDamageCause, GameMode, ItemStack, Player, system, world } from "@minecraft/server";
 import { FRUTA_CACTO_CHANCE, IDS, PROPS, SEDE } from "../config.js";
+import { multiplicadorSede } from "./temperatura.js";
 
 /*
  * Sede: cada jogador tem SEDE.max pontos de água (dynamic property PROPS.sede).
  * - Cai 1 ponto a cada SEDE.segundosDia (de dia) ou SEDE.segundosNoite (à noite).
- * - Beber/comer o que está em SEDE.bebidas devolve pontos (garrafa de água, leite, fruta do cacto...).
+ * - Comer/beber o que está em SEDE.bebidas devolve pontos (leite, mel, fruta do cacto...).
+ *   As águas e seus jeitos de beber ficam em aguas.ts.
  * - Com menos de SEDE.lentidaoAbaixoDe: lentidão. Com zero: 1 de dano a cada SEDE.danoACadaSegundos.
- * - A barra aparece na barra de ação quando o valor muda e, com pouca água, a cada poucos segundos.
+ * - A barra fica fixa no painel da barra de ação (hud.ts). Com calor (temperatura.ts) a água cai 2× mais rápido.
  * - Não roda no criativo, no espectador nem no Pacífico. Ao renascer, volta cheia.
  * Aqui também fica a fruta do cacto (FRUTA_CACTO_CHANCE ao quebrar um cacto), que mata a sede.
  * Custo: 1 leitura de propriedade por jogador por segundo.
@@ -18,20 +20,11 @@ export function lerSede(jogador: Player): number {
   return typeof v === "number" ? v : SEDE.max;
 }
 
-function mostrar(jogador: Player, valor: number): void {
-  const cheios = Math.ceil(valor / 2);
-  const cor = valor <= SEDE.lentidaoAbaixoDe ? "§c" : "§b";
-  jogador.onScreenDisplay.setActionBar({
-    rawtext: [{ translate: "cl.sede.rotulo" }, { text: ` ${cor}${"|".repeat(cheios)}§8${"|".repeat(10 - cheios)} §f${valor}/${SEDE.max}` }],
-  });
-}
-
 export function mudarSede(jogador: Player, delta: number): void {
   const antes = lerSede(jogador);
   const depois = Math.max(0, Math.min(SEDE.max, antes + delta));
   if (depois === antes) return;
   jogador.setDynamicProperty(PROPS.sede, depois);
-  mostrar(jogador, depois);
 }
 
 function ehDia(): boolean {
@@ -42,8 +35,9 @@ function ehDia(): boolean {
 export function registrarSede(): void {
   system.runInterval(() => {
     if (world.getDifficulty() === Difficulty.Peaceful) return;
-    const intervalo = ehDia() ? SEDE.segundosDia : SEDE.segundosNoite;
+    const base = ehDia() ? SEDE.segundosDia : SEDE.segundosNoite;
     for (const jogador of world.getPlayers({ excludeGameModes: [GameMode.Creative, GameMode.Spectator] })) {
+      const intervalo = Math.round(base / multiplicadorSede(jogador));
       const s = (contador.get(jogador.id) ?? 0) + 1;
       contador.set(jogador.id, s);
       let valor = lerSede(jogador);
@@ -54,7 +48,6 @@ export function registrarSede(): void {
       }
       if (valor < SEDE.lentidaoAbaixoDe) {
         jogador.addEffect("slowness", 40, { amplifier: 0, showParticles: false });
-        if (s % 4 === 0) mostrar(jogador, valor);
       }
       if (valor === 0 && s % SEDE.danoACadaSegundos === 0) {
         jogador.applyDamage(1, { cause: EntityDamageCause.starve });

@@ -3,7 +3,7 @@ tile.cl:condensador_agua.name=Condensador de Água
 
 ## Condensador
 cl.condensador.condensando=O condensador ainda está juntando umidade. Volte daqui a pouco.
-cl.condensador.sem_balde=O condensador está cheio. Traga um balde vazio ou garrafas de vidro na mão.
+cl.condensador.sem_balde=O condensador está cheio. Toque com a mão vazia para beber, ou traga tigelas, garrafas ou um balde vazio.
 cl.condensador.coletado=Você coletou a água condensada.
 
 ## Boas-vindas
@@ -101,7 +101,7 @@ cl.capsula.encontrada=Você achou uma cápsula de carga. Abra o barril e cuide d
 cl.missao.capsula.titulo=Carga perdida
 cl.missao.capsula.desc=Uma cápsula da nave cai todo dia de manhã. Vá até o lugar do impacto.
 cl.missao.garrafa.titulo=Cantil
-cl.missao.garrafa.desc=Toque no condensador cheio com garrafas de vidro na mão e tenha 3 garrafas de água. Beber mata a sede.
+cl.missao.garrafa.desc=Faça tigelas (3 tábuas), toque no condensador cheio com elas na mão e tenha 3 Águas Boas. Beber mata a sede.
 cl.missao.fruta.titulo=Fruta do deserto
 cl.missao.fruta.desc=Quebre cactos e junte 3 frutas do cacto. Matam a fome e a sede.
 cl.missao.rebanho.titulo=Rebanho
@@ -114,3 +114,18 @@ cl.missao.criador.titulo=Criador
 cl.missao.criador.desc=Faça nascer mais 5 filhotes.
 cl.missao.sinais.titulo=Sinais da nave
 cl.missao.sinais.desc=Encontre mais 3 cápsulas de carga.
+
+## Temperatura e águas
+cl.temp.rotulo=§6Corpo§r
+cl.temp.quente=§c(calor)
+cl.temp.frio=§9(frio)
+cl.temp.insolacao=§cInsolação! Procure sombra, ponha um capacete ou beba água.
+cl.temp.hipotermia=§9Hipotermia! Faça uma fogueira, entre num abrigo ou vista couro.
+item.cl:agua_excelente.name=Água Excelente
+item.cl:agua_boa.name=Água Boa
+item.cl:agua_suja.name=Água Suja
+item.cl:agua_muito_suja.name=Água Muito Suja
+item.cl:agua_impropria.name=Água Imprópria
+cl.agua.gosto_ruim=Essa água tinha um gosto ruim...
+cl.agua.sem_sede=Você não está com sede.
+cl.agua.impropria=Essa água não dá para beber. Ferva na fornalha ou na fogueira.

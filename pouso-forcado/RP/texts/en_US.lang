@@ -3,7 +3,7 @@ tile.cl:condensador_agua.name=Water Condenser
 
 ## Condenser
 cl.condensador.condensando=The condenser is still collecting moisture. Come back in a while.
-cl.condensador.sem_balde=The condenser is full. Bring an empty bucket or glass bottles in hand.
+cl.condensador.sem_balde=The condenser is full. Tap with an empty hand to drink, or bring bowls, bottles or an empty bucket.
 cl.condensador.coletado=You collected the condensed water.
 
 ## Welcome
@@ -101,7 +101,7 @@ cl.capsula.encontrada=You found a cargo pod. Open the barrel and look after the 
 cl.missao.capsula.titulo=Lost cargo
 cl.missao.capsula.desc=A pod from the ship falls every morning. Go to the impact site.
 cl.missao.garrafa.titulo=Canteen
-cl.missao.garrafa.desc=Tap a full condenser holding glass bottles and have 3 water bottles. Drinking quenches thirst.
+cl.missao.garrafa.desc=Craft bowls (3 planks), tap a full condenser holding them and have 3 Good Water. Drinking quenches thirst.
 cl.missao.fruta.titulo=Desert fruit
 cl.missao.fruta.desc=Break cacti and collect 3 cactus fruits. They ease hunger and thirst.
 cl.missao.rebanho.titulo=Herd
@@ -114,3 +114,18 @@ cl.missao.criador.titulo=Breeder
 cl.missao.criador.desc=Breed 5 more babies.
 cl.missao.sinais.titulo=Signals from the ship
 cl.missao.sinais.desc=Find 3 more cargo pods.
+
+## Temperature and water
+cl.temp.rotulo=§6Body§r
+cl.temp.quente=§c(hot)
+cl.temp.frio=§9(cold)
+cl.temp.insolacao=§cHeatstroke! Find shade, wear a helmet or drink water.
+cl.temp.hipotermia=§9Hypothermia! Build a campfire, get under a roof or wear leather.
+item.cl:agua_excelente.name=Excellent Water
+item.cl:agua_boa.name=Good Water
+item.cl:agua_suja.name=Dirty Water
+item.cl:agua_muito_suja.name=Very Dirty Water
+item.cl:agua_impropria.name=Undrinkable Water
+cl.agua.gosto_ruim=That water tasted awful...
+cl.agua.sem_sede=You are not thirsty.
+cl.agua.impropria=You can't drink this. Boil it in a furnace or on a campfire.

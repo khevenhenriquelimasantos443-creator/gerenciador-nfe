@@ -1,5 +1,6 @@
 import { BlockComponentPlayerInteractEvent, BlockCustomComponent } from "@minecraft/server";
 import { COMPOSTOR_CHEIO, COMPOSTOR_PONTOS } from "../config.js";
+import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gastarDaMao, itemNaMao, soltarEmCima } from "../util/inventario.js";
@@ -35,13 +36,13 @@ export const compostor: BlockCustomComponent = {
 
     const nivel = lerEstado<number>(bloco, NIVEL);
     if (nivel >= COMPOSTOR_CHEIO) {
-      jogador.onScreenDisplay.setActionBar({ translate: "cl.compostor.decompondo" });
+      aviso(jogador, "cl.compostor.decompondo");
       return;
     }
     const mao = itemNaMao(jogador);
     const pontos = mao ? COMPOSTOR_PONTOS[mao.typeId] : undefined;
     if (!pontos) {
-      jogador.onScreenDisplay.setActionBar({ translate: "cl.compostor.como" });
+      aviso(jogador, "cl.compostor.como");
       return;
     }
     gastarDaMao(jogador);

@@ -1,5 +1,6 @@
 import { BlockComponentPlayerInteractEvent, BlockCustomComponent, system } from "@minecraft/server";
 import { PENEIRA } from "../config.js";
+import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { gastarDaMao, itemNaMao, soltarEmCima } from "../util/inventario.js";
 
@@ -21,7 +22,7 @@ export const peneira: BlockCustomComponent = {
     const mao = itemNaMao(jogador);
     const tabela = mao ? PENEIRA[mao.typeId] : undefined;
     if (!tabela) {
-      jogador.onScreenDisplay.setActionBar({ translate: "cl.peneira.como" });
+      aviso(jogador, "cl.peneira.como");
       return;
     }
     gastarDaMao(jogador);
@@ -32,7 +33,7 @@ export const peneira: BlockCustomComponent = {
       soltarEmCima(e.dimension, e.block.location, item, 1 + Math.floor(Math.random() * max));
       achou = true;
     }
-    if (!achou) jogador.onScreenDisplay.setActionBar({ translate: "cl.peneira.nada" });
+    if (!achou) aviso(jogador, "cl.peneira.nada");
     registrarAcao(jogador, "peneirar");
   },
 };

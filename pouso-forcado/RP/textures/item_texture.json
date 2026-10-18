@@ -7,6 +7,21 @@
     },
     "cl_fruta_cacto": {
       "textures": "textures/items/cl/fruta_cacto"
+    },
+    "cl_agua_excelente": {
+      "textures": "textures/items/cl/agua_excelente"
+    },
+    "cl_agua_boa": {
+      "textures": "textures/items/cl/agua_boa"
+    },
+    "cl_agua_suja": {
+      "textures": "textures/items/cl/agua_suja"
+    },
+    "cl_agua_muito_suja": {
+      "textures": "textures/items/cl/agua_muito_suja"
+    },
+    "cl_agua_impropria": {
+      "textures": "textures/items/cl/agua_impropria"
     }
   }
 }
