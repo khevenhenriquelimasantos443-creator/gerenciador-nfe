@@ -39,6 +39,17 @@ function validarJson(pasta) {
   }
 }
 
+// O jogo descarta (sem avisar no celular) um bloco com estado de mais de 16 valores.
+function validarEstadosDeBlocos(pasta) {
+  for (const arq of listar(pasta).filter((a) => a.endsWith(".json"))) {
+    const estados = JSON.parse(readFileSync(arq, "utf8"))["minecraft:block"]?.description?.states ?? {};
+    for (const [nome, v] of Object.entries(estados)) {
+      const n = Array.isArray(v) ? v.length : Array.isArray(v.values) ? v.values.length : v.values.max - v.values.min + 1;
+      if (n > 16) throw new Error(`${relative(RAIZ, arq)}: o estado ${nome} tem ${n} valores (máximo 16)`);
+    }
+  }
+}
+
 const node = process.execPath;
 console.log("> compilando TypeScript");
 rmSync(join(RAIZ, "BP/scripts"), { recursive: true, force: true });
@@ -52,6 +63,7 @@ execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" })
 console.log("> validando JSON");
 validarJson(join(RAIZ, "BP"));
 validarJson(join(RAIZ, "RP"));
+validarEstadosDeBlocos(join(RAIZ, "BP/blocks"));
 
 console.log("> empacotando");
 rmSync(DIST, { recursive: true, force: true });

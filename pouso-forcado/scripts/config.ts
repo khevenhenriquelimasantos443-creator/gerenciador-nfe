@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.12.0";
+export const VERSAO = "0.12.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -351,7 +351,7 @@ export const AGUA_DOS_MONSTROS: ReadonlyArray<{ item: string; chance: number }> 
 // mais próxima que tenha espaço; máquinas puxam da mais próxima que tenha carga.
 // "Próxima" = encostada ou ligada por cabos (até rede.maxBlocos blocos de cabo).
 export const ENERGIA = {
-  bateriaMax: 20, // E por bateria
+  bateriaMax: 15, // E por bateria (o jogo aceita no máximo 16 valores por estado de bloco: 0 a 15)
   painelPorCiclo: 1, // E a cada 5 s, de dia, com céu aberto em cima do painel
   geradorPorCiclo: 2, // E a cada 5 s, gastando 1 de combustível
   // Moinho de vento: dia e noite, se os 4 lados estiverem livres (ar). Mais alto = mais vento.
@@ -360,11 +360,11 @@ export const ENERGIA = {
     { yMin: 60, porCiclo: 2 },
     { yMin: 50, porCiclo: 1 },
   ],
-  geradorMax: 16, // combustível guardado no gerador
+  geradorMax: 15, // combustível guardado no gerador (mesmo limite de 16 valores: 0 a 15)
   combustivel: {
     "minecraft:coal": 4,
     "minecraft:charcoal": 4,
-    "minecraft:coal_block": 36,
+    "minecraft:coal_block": 15,
     "minecraft:oak_log": 2,
     "minecraft:birch_log": 2,
     "minecraft:acacia_log": 2,

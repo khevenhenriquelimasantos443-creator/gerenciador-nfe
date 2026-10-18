@@ -116,7 +116,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.12.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.12.1] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -184,14 +184,14 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 
 ## Energia (Fase 5)
 
-A energia fica guardada nas **baterias** (20 cada). Geradores mandam energia para a bateria mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" = encostada ou ligada por **cabos** (até 64 cabos). Painéis, moinhos, geradores e baterias também passam energia, como os cabos. Toque em qualquer bloco de energia com a mão vazia para ver o estado.
+A energia fica guardada nas **baterias** (15 cada). Geradores mandam energia para a bateria mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" = encostada ou ligada por **cabos** (até 64 cabos). Painéis, moinhos, geradores e baterias também passam energia, como os cabos. Toque em qualquer bloco de energia com a mão vazia para ver o estado.
 
 | Bloco | Receita (mesa de trabalho) | O que faz |
 |---|---|---|
 | **Painel Solar** | `V V V` / `L R L` / `C C C` (V = vidro, L = lápis, R = redstone, C = cobre) | 1 de energia a cada 5 s, **de dia** e com **céu aberto** em cima dele. |
 | **Moinho de Vento** | `G T G` / `T F T` / `G R G` (G = graveto, T = tábua, F = ferro) | Dia e noite, se os **4 lados estiverem livres**. A partir de y = 50: 1 a cada 5 s; y = 60: 2; y = 75: 3. Ponha em cima de uma duna ou de uma torre (de cabos, para a energia descer). |
-| **Gerador a Carvão** | `F F F` / `F N F` / `C R C` (N = fornalha) | Toque com **carvão, carvão vegetal, bloco de carvão, toras, tábuas ou gravetos** para abastecer (guarda 16). Gasta 1 a cada 5 s e gera 2, só quando há bateria com espaço. Funciona à noite. |
-| **Bateria** | `C R C` / `C F C` / `C R C` | Guarda 20. O topo muda de cor: vermelho (vazia), amarelo, verde (cheia). |
+| **Gerador a Carvão** | `F F F` / `F N F` / `C R C` (N = fornalha) | Toque com **carvão, carvão vegetal, bloco de carvão, toras, tábuas ou gravetos** para abastecer (guarda 15). Gasta 1 a cada 5 s e gera 2, só quando há bateria com espaço. Funciona à noite. |
+| **Bateria** | `C R C` / `C F C` / `C R C` | Guarda 15. O topo muda de cor: vermelho (vazia), amarelo, verde (cheia). |
 | **Cabo de Cobre** | `C` / `R` / `C` → 4 cabos | Liga tudo. |
 | **Peneira Automática** | `F H F` / `R P R` / `F C F` (H = funil, P = Peneira) | A cada 5 s gasta 1 de energia e peneira **2 blocos** de areia/cascalho de um **baú ou funil em cima**; o resultado vai para um **baú ou funil embaixo** (ou cai do lado). |
 
@@ -258,7 +258,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.12.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.12.1] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
