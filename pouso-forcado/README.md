@@ -83,8 +83,9 @@ npm run build
 ```
 
 Sai em `dist/`:
-- `pouso-forcado.mcaddon` → **é este que você usa**: instala os dois packs e coloca o mundo plano "Pouso Forçado" direto na sua lista de mundos;
-- `pouso-forcado.mcworld` → só o mundo (plano B, se o `.mcaddon` não trouxer o mundo);
+- `pouso-forcado.mcaddon` → **1ª instalação**: instala os dois packs e coloca o mundo plano "Pouso Forçado" direto na sua lista de mundos;
+- `pouso-forcado-atualizar.mcaddon` → **atualização**: só os dois packs. Atualiza o mundo que você já tem, sem perder nada;
+- `pouso-forcado.mcworld` → só o mundo, sem os packs (plano B: importe antes o `-atualizar.mcaddon`);
 - `pouso-forcado_BP.mcpack` e `pouso-forcado_RP.mcpack` → só os packs, para usar num mundo infinito normal.
 
 Outros comandos:
@@ -92,7 +93,7 @@ Outros comandos:
 - `npm run compilar`: só compila o TypeScript.
 - `node tools/gerar-nave.mjs --force` / `node tools/gerar-relevo.mjs --force`: regeram a nave / as dunas, morros e o templo a partir do modelo em código.
 
-> Os arquivos `dist/pouso-forcado.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
+> Os arquivos `dist/pouso-forcado.mcaddon`, `dist/pouso-forcado-atualizar.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
 
 ## Como instalar no celular
 
@@ -110,7 +111,13 @@ Outros comandos:
 
 1. **Jogar** → aba **Mundos**: aparece o mundo **Pouso Forçado**, já com os packs ativados. Não precisa ligar experimentos nem ativar nada.
 2. Antes de entrar, você pode mudar dificuldade, trapaças etc. em **Editar**.
-3. Cada vez que você importa o `.mcaddon` de novo, entra mais uma cópia nova do mundo, útil para recomeçar do zero.
+3. Cada vez que você importa o `pouso-forcado.mcaddon` de novo, entra mais uma cópia nova do mundo, útil para recomeçar do zero.
+
+### Atualizar sem perder o mundo
+
+- Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.7.0] ...`.
+- Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
 
@@ -148,14 +155,14 @@ Missões de "ter" não gastam os itens. Tudo fica em `scripts/missoes/lista.ts`;
   - Cada chunk decorado ganha um bloco de **deepslate reforçado** na primeira camada de ardósia (y = -63), no canto do chunk. É a marca de "já feito", para nada ser refeito ao reabrir o mundo. Ele não quebra no modo sobrevivência.
 - **Sem cavernas e sem água.** Mundo plano não tem cavernas, aquíferos, rios nem mares. Também não chove (bioma de deserto).
 - **Sem animais:** em `BP/spawn_rules/` as regras de spawn de todos os animais do Overworld estão vazias: vaca, porco, ovelha, galinha, coelho, cavalo, burro, lhama, camelo, lobo, raposa, abelha, sapo, cabra, panda, papagaio, jaguatirica, urso-polar, tatu, tartaruga, morcego, peixes, lula, golfinho, axolote e náutilo.
-- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, a cada 10 s nascem 3 monstros extras a 18–32 blocos de cada jogador, se houver menos de 30 por perto.
-- **A horda:** uma vez por noite, à meia-noite, aparece "A horda chegou!", toca uma corneta e uma onda de monstros nasce a 12–22 blocos de cada jogador: 8 na primeira noite, +2 a cada dia (até 24). Nada disso acontece no Pacífico, no criativo nem fora do Overworld. Ajuste em `HORDA` no `scripts/config.ts`.
+- **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, a cada 5 s nascem 4 monstros extras a 12–28 blocos de cada jogador, até ter 60 por perto.
+- **A horda:** três ondas por noite (horas 14000, 17000 e 20000 do jogo). Em cada uma aparece "A horda chegou! Onda N de 3", toca uma corneta e nascem monstros a 8–20 blocos de cada jogador: 12 por onda na primeira noite, +3 a cada dia (até 40). Nada disso acontece no Pacífico, no criativo nem fora do Overworld. Se algo der erro, aparece uma linha vermelha no chat. Ajuste em `HORDA` no `scripts/config.ts`.
 - **O sol queima tudo:** de dia, todo monstro exposto ao céu pega fogo, inclusive husks, aranhas e creepers, que no jogo normal não queimam. Quem estiver na sombra (dentro de um templo, embaixo de um teto) ou no subsolo escapa.
 - **Nada nasce de dia ao ar livre:** se o jogo fizer um monstro nascer de dia sob o céu aberto, o script remove na hora. No subsolo e na sombra o spawn continua normal. (Ovos de spawn usados de dia ao ar livre também são removidos.)
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Nenhum relevo é gerado a menos de 3 chunks da nave.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.6.1] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** ao entrar, aparece uma linha cinza `[Pouso Forçado 0.7.0] biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano, "bioma aqui" deve ser `minecraft:desert`; ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
@@ -178,7 +185,7 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 6. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
 7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
 8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
-9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal. À meia-noite (pode usar `/time set 17900` com trapaças ligadas) aparece "A horda chegou!" e chega a onda.
+9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal. Nas horas 14000, 17000 e 20000 (pode usar `/time set 13900` com trapaças ligadas) aparece "A horda chegou!" e chega uma onda.
    De manhã (`/time set 1000`), os monstros no descampado pegam fogo. Pelo caminho devem aparecer cactos.
 10. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
 11. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".

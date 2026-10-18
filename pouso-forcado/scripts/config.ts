@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.6.1";
+export const VERSAO = "0.7.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -21,7 +21,7 @@ export const PROPS = {
   sementeRelevo: `${NS}:semente_relevo`, // mundo
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
-  ondaDia: `${NS}:onda_dia`, // mundo: dia da última onda da horda
+  ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
 } as const;
 
 // Nave caída: estrutura em BP/structures/cl/nave_caida.mcstructure.
@@ -44,15 +44,19 @@ export const SUPRIMENTOS: ReadonlyArray<{ item: string; quantidade: number }> = 
 
 // Noite e dia (scripts/mundo/horda_noturna.ts).
 export const HORDA = {
-  intervaloTicks: 200, // a cada 10 s, à noite
-  porVez: 3, // monstros extras por jogador por ciclo
-  limitePerto: 30, // não reforça se já houver tantos monstros por perto
+  intervaloTicks: 100, // a cada 5 s, à noite
+  porVez: 4, // monstros extras por jogador por ciclo
+  limitePerto: 60, // não reforça se já houver tantos monstros por perto
   raioContagem: 48,
-  distanciaMin: 18, // longe o bastante para não nascer na cara do jogador
-  distanciaMax: 32,
-  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider", "minecraft:creeper"],
-  // A horda: uma onda por noite, à meia-noite. Tamanho = base + porDia × dia do mundo (até max).
-  onda: { hora: 18000, base: 8, porDia: 2, max: 24, distanciaMin: 12, distanciaMax: 22 },
+  distanciaMin: 12, // longe o bastante para não nascer na cara do jogador
+  distanciaMax: 28,
+  mobs: [
+    "minecraft:husk", "minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton",
+    "minecraft:skeleton", "minecraft:spider", "minecraft:spider", "minecraft:creeper",
+  ],
+  // As ondas da horda: em cada uma dessas horas da noite, uma onda em volta de cada jogador.
+  // Tamanho = base + porDia × dia do mundo (até max).
+  onda: { horas: [14000, 17000, 20000], base: 12, porDia: 3, max: 40, distanciaMin: 8, distanciaMax: 20 },
   // De dia, monstros expostos ao céu pegam fogo.
   sol: { intervaloTicks: 100, segundosFogo: 8 },
 } as const;

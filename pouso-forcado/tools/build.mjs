@@ -1,6 +1,7 @@
 // Build: compila o TypeScript, gera texturas/estruturas que faltarem e empacota:
-// - dist/pouso-forcado.mcaddon: os dois packs + o mundo plano de deserto pronto (é este que se usa);
-// - dist/pouso-forcado.mcworld: só o mundo (plano B);
+// - dist/pouso-forcado.mcaddon: os dois packs + o mundo plano de deserto pronto (1ª instalação);
+// - dist/pouso-forcado-atualizar.mcaddon: só os dois packs (atualiza os mundos que já existem);
+// - dist/pouso-forcado.mcworld: só o mundo (plano B, precisa dos packs já importados);
 // - dist/pouso-forcado_BP.mcpack / _RP.mcpack: só os packs, para outros mundos.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
@@ -61,7 +62,9 @@ const rp = gerarZip(empacotar(join(RAIZ, "RP")));
 writeFileSync(join(DIST, `${NOME}_BP.mcpack`), bp);
 writeFileSync(join(DIST, `${NOME}_RP.mcpack`), rp);
 
-// .mcworld: mundo plano de deserto com os dois packs embutidos e já ativados.
+// .mcworld: mundo plano de deserto com os dois packs ativados. Os packs NÃO vão dentro do mundo:
+// ele usa os packs importados no jogo, então importar uma versão nova dos packs atualiza o mundo
+// (uma cópia embutida ficaria presa na versão de quando o mundo foi criado).
 const cabecalho = (pasta) => JSON.parse(readFileSync(join(RAIZ, pasta, "manifest.json"), "utf8")).header;
 const bpHeader = cabecalho("BP"), rpHeader = cabecalho("RP");
 const texto = (s) => Buffer.from(s, "utf8");
@@ -71,8 +74,6 @@ const mundo = gerarZip([
   { nome: "world_behavior_packs.json", dados: texto(JSON.stringify([{ pack_id: bpHeader.uuid, version: bpHeader.version }], null, 2)) },
   { nome: "world_resource_packs.json", dados: texto(JSON.stringify([{ pack_id: rpHeader.uuid, version: rpHeader.version }], null, 2)) },
   ...dbVazio(),
-  ...empacotar(join(RAIZ, "BP"), `behavior_packs/${NOME}_BP/`),
-  ...empacotar(join(RAIZ, "RP"), `resource_packs/${NOME}_RP/`),
 ]);
 writeFileSync(join(DIST, `${NOME}.mcworld`), mundo);
 
@@ -84,6 +85,13 @@ const addon = gerarZip([
   { nome: `${NOME}.mcworld`, dados: mundo },
 ]);
 writeFileSync(join(DIST, `${NOME}.mcaddon`), addon);
+
+// Atualização: só os packs. Mantém o progresso dos mundos que já existem.
+const atualizar = gerarZip([
+  { nome: `${NOME}_BP.mcpack`, dados: bp },
+  { nome: `${NOME}_RP.mcpack`, dados: rp },
+]);
+writeFileSync(join(DIST, `${NOME}-atualizar.mcaddon`), atualizar);
 
 for (const arq of readdirSync(DIST)) {
   console.log(`  dist/${arq}  (${(statSync(join(DIST, arq)).size / 1024).toFixed(1)} KB)`);

@@ -5,8 +5,8 @@ import { HORDA, PROPS } from "../config.js";
  * Noite e dia no deserto:
  * - À noite, a cada HORDA.intervaloTicks nascem monstros extras perto de cada jogador
  *   (se houver menos de HORDA.limitePerto em volta).
- * - Uma vez por noite, à meia-noite, chega a HORDA: aviso na tela, corneta e uma onda
- *   de monstros em volta de cada jogador, maior a cada dia que passa.
+ * - Em cada hora de HORDA.onda.horas chega uma onda da HORDA: aviso na tela, corneta e
+ *   monstros em volta de cada jogador, mais a cada dia que passa.
  * - De dia, o sol do planeta incendeia todo monstro exposto ao céu (até husks, aranhas
  *   e creepers, que no jogo normal não queimam). Quem está na sombra ou no subsolo escapa.
  * - De dia, nenhum monstro nasce sob o céu aberto: se o jogo fizer um nascer (spawn natural),
@@ -18,11 +18,13 @@ const NOITE_INICIO = 13000;
 const NOITE_FIM = 23000;
 const SOL_FIM = 12000; // de 0 a 12000 o sol está alto o bastante para queimar
 
-let avisouErro = false;
+// Erros aparecem uma vez por sessão no chat (no celular não dá para ver o log de conteúdo).
+const errosAvisados = new Set<string>();
 function registrarErro(onde: string, erro: unknown): void {
-  if (avisouErro) return;
-  avisouErro = true;
+  if (errosAvisados.has(onde)) return;
+  errosAvisados.add(onde);
   console.warn(`[Pouso Forçado] horda (${onde}): ${erro}`);
+  world.sendMessage(`§c[Pouso Forçado] erro na horda (${onde}): ${erro}`);
 }
 
 const hora = (): number => world.getTimeOfDay();
@@ -35,22 +37,27 @@ function jogadoresNoDeserto(): Player[] {
     .filter((j) => j.dimension.id === "minecraft:overworld");
 }
 
-/** Tenta pôr um monstro no chão, entre min e max blocos do jogador. */
+/** Tenta pôr um monstro no chão, entre min e max blocos do jogador (algumas tentativas). */
 function nascerPerto(jogador: Player, min: number, max: number): void {
+  for (let tentativa = 0; tentativa < 4; tentativa++) if (tentarNascer(jogador, min, max)) return;
+}
+
+function tentarNascer(jogador: Player, min: number, max: number): boolean {
   const dimensao = jogador.dimension;
   const angulo = Math.random() * Math.PI * 2;
   const distancia = min + Math.random() * (max - min);
   const x = Math.floor(jogador.location.x + Math.cos(angulo) * distancia);
   const z = Math.floor(jogador.location.z + Math.sin(angulo) * distancia);
-  if (!dimensao.isChunkLoaded({ x, y: jogador.location.y, z })) return;
+  if (!dimensao.isChunkLoaded({ x, y: jogador.location.y, z })) return false;
 
   const chao = dimensao.getTopmostBlock({ x, z });
-  if (!chao || chao.isLiquid || chao.isAir) return;
+  if (!chao || chao.isLiquid || chao.isAir) return false;
   const acima = chao.above();
-  if (!acima?.isAir || !acima.above()?.isAir) return;
+  if (!acima?.isAir || !acima.above()?.isAir) return false;
 
   const mob = HORDA.mobs[Math.floor(Math.random() * HORDA.mobs.length)];
   dimensao.spawnEntity(mob, { x: x + 0.5, y: acima.y, z: z + 0.5 });
+  return true;
 }
 
 function reforcoNoturno(): void {
@@ -71,18 +78,18 @@ function reforcoNoturno(): void {
   }
 }
 
-function talvezOnda(): void {
+function soltarOnda(numero: number, dia: number): void {
   const { onda } = HORDA;
-  if (hora() < onda.hora || hora() > NOITE_FIM) return;
-  const dia = world.getDay();
-  if (world.getDynamicProperty(PROPS.ondaDia) === dia) return; // já veio nesta noite
-  world.setDynamicProperty(PROPS.ondaDia, dia);
-
   const tamanho = Math.min(onda.max, onda.base + onda.porDia * dia);
   for (const jogador of jogadoresNoDeserto()) {
     jogador.onScreenDisplay.setTitle(
       { translate: "cl.horda.titulo" },
-      { subtitle: { translate: "cl.horda.subtitulo" }, fadeInDuration: 10, stayDuration: 60, fadeOutDuration: 20 },
+      {
+        subtitle: { translate: "cl.horda.subtitulo", with: [String(numero), String(onda.horas.length), String(tamanho)] },
+        fadeInDuration: 10,
+        stayDuration: 60,
+        fadeOutDuration: 20,
+      },
     );
     jogador.playSound("raid.horn");
     // Espalha a onda em alguns segundos para não pesar num tick só.
@@ -93,9 +100,23 @@ function talvezOnda(): void {
         } catch (erro) {
           registrarErro("onda", erro);
         }
-      }, 20 + i * 5);
+      }, 20 + i * 3);
     }
   }
+}
+
+function talvezOnda(): void {
+  const dia = world.getDay();
+  const feita = world.getDynamicProperty(PROPS.ondaFeita);
+  const [diaFeito, kFeito] = typeof feita === "string" ? feita.split(":").map(Number) : [-1, -1];
+  // A onda mais recente cuja hora já passou nesta noite.
+  let k = -1;
+  HORDA.onda.horas.forEach((h, idx) => {
+    if (hora() >= h) k = idx;
+  });
+  if (k < 0 || (diaFeito === dia && kFeito >= k)) return;
+  world.setDynamicProperty(PROPS.ondaFeita, `${dia}:${k}`);
+  soltarOnda(k + 1, dia);
 }
 
 // Exposto ao céu: nada acima da cabeça (o bloco mais alto da coluna está embaixo do mob).
@@ -118,8 +139,16 @@ function solQueima(): void {
 export function registrarHordaNoturna(): void {
   system.runInterval(() => {
     if (!ehNoite() || world.getDifficulty() === Difficulty.Peaceful) return;
-    reforcoNoturno();
-    talvezOnda();
+    try {
+      talvezOnda();
+    } catch (erro) {
+      registrarErro("ondas", erro);
+    }
+    try {
+      reforcoNoturno();
+    } catch (erro) {
+      registrarErro("reforço", erro);
+    }
   }, HORDA.intervaloTicks);
 
   system.runInterval(() => {

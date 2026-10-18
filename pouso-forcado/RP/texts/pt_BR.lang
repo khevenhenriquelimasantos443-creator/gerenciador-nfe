@@ -59,4 +59,4 @@ cl.missao.papel.desc=Plante cana-de-açúcar ao lado da água e faça 3 papéis.
 
 ## Horda
 cl.horda.titulo=§cA horda chegou!
-cl.horda.subtitulo=Aguente até o amanhecer.
+cl.horda.subtitulo=Onda %s de %s: %s monstros. Aguente até o amanhecer.

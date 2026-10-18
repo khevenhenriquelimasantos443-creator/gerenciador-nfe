@@ -59,4 +59,4 @@ cl.missao.papel.desc=Plant sugar cane next to water and craft 3 paper.
 
 ## Horde
 cl.horda.titulo=§cThe horde is here!
-cl.horda.subtitulo=Hold out until sunrise.
+cl.horda.subtitulo=Wave %s of %s: %s monsters. Hold out until sunrise.
