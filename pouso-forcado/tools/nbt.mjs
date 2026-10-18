@@ -1,8 +1,10 @@
-// Escritor NBT little-endian (formato do Bedrock), só o necessário para .mcstructure.
+// Escritor NBT little-endian (formato do Bedrock), só o necessário para .mcstructure e level.dat.
 const TIPO = { byte: 1, int: 3, long: 4, float: 5, string: 8, list: 9, compound: 10 };
 
 export const byte = (v) => ({ t: TIPO.byte, v });
 export const int = (v) => ({ t: TIPO.int, v });
+export const long = (v) => ({ t: TIPO.long, v });
+export const float = (v) => ({ t: TIPO.float, v });
 export const str = (v) => ({ t: TIPO.string, v });
 /** Lista homogênea. tipoItem: "int" | "compound" | "list" ... ; itens já como tags. */
 export const list = (tipoItem, itens) => ({ t: TIPO.list, tipoItem: TIPO[tipoItem], v: itens });

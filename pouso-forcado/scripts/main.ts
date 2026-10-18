@@ -3,6 +3,7 @@ import { system } from "@minecraft/server";
 import { ID_COMPONENTE_CONDENSADOR, condensadorAgua } from "./blocos/condensador.js";
 import { registrarBoasVindas } from "./jogador/boas_vindas.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
+import { registrarRelevo } from "./mundo/relevo.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
   blockComponentRegistry.registerCustomComponent(ID_COMPONENTE_CONDENSADOR, condensadorAgua);
@@ -10,3 +11,4 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
 
 registrarBoasVindas();
 registrarHordaNoturna();
+registrarRelevo();

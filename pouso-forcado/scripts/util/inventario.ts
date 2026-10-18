@@ -1,4 +1,4 @@
-import { Container, ItemStack } from "@minecraft/server";
+import { Container, Dimension, ItemStack, Vector3 } from "@minecraft/server";
 
 const BALDE = "minecraft:bucket";
 const BALDE_AGUA = "minecraft:water_bucket";
@@ -36,4 +36,16 @@ function acharBalde(container: Container, slotPreferido?: number): number | unde
     if (container.getItem(i)?.typeId === BALDE) return i;
   }
   return undefined;
+}
+
+export type Pilha = { item: string; quantidade: number };
+
+/** Coloca um baú na posição e guarda os itens. Lança erro se não conseguir. */
+export function criarBauCom(dimensao: Dimension, posicao: Vector3, itens: ReadonlyArray<Pilha>): void {
+  const bloco = dimensao.getBlock(posicao);
+  if (!bloco) throw new Error("bloco do baú fora do mundo carregado");
+  bloco.setType("minecraft:chest");
+  const container = bloco.getComponent("minecraft:inventory")?.container;
+  if (!container) throw new Error("baú sem inventário");
+  for (const { item, quantidade } of itens) container.addItem(new ItemStack(item, quantidade));
 }

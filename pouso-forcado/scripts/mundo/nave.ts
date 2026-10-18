@@ -1,16 +1,8 @@
-import { Dimension, ItemStack, Player, Vector3, world } from "@minecraft/server";
+import { ItemStack, Player, Vector3, world } from "@minecraft/server";
 import { NAVE, PROPS, SUPRIMENTOS } from "../config.js";
+import { criarBauCom } from "../util/inventario.js";
 
 const somar = (a: Vector3, b: Vector3): Vector3 => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z });
-
-function encherBau(dimensao: Dimension, posicao: Vector3): void {
-  const bloco = dimensao.getBlock(posicao);
-  if (!bloco) throw new Error("bloco do baú fora do mundo");
-  bloco.setType("minecraft:chest");
-  const container = bloco.getComponent("minecraft:inventory")?.container;
-  if (!container) throw new Error("baú sem inventário");
-  for (const { item, quantidade } of SUPRIMENTOS) container.addItem(new ItemStack(item, quantidade));
-}
 
 function darSuprimentos(jogador: Player): void {
   const container = jogador.getComponent("minecraft:inventory")?.container;
@@ -30,9 +22,11 @@ export function garantirNave(jogador: Player): void {
 
   const base = { x: Math.floor(jogador.location.x), y: Math.floor(jogador.location.y), z: Math.floor(jogador.location.z) };
   const origem = somar(base, NAVE.deslocamento);
+  // Guardado antes de tentar: o relevo só começa depois disto e evita a área da nave.
+  world.setDynamicProperty(PROPS.naveChunk, `${Math.floor(origem.x / 16)},${Math.floor(origem.z / 16)}`);
   try {
     world.structureManager.place(NAVE.estrutura, jogador.dimension, origem);
-    encherBau(jogador.dimension, somar(origem, NAVE.bau));
+    criarBauCom(jogador.dimension, somar(origem, NAVE.bau), SUPRIMENTOS);
   } catch (erro) {
     console.warn(`[Pouso Forçado] não foi possível colocar a nave: ${erro}`);
     darSuprimentos(jogador);
