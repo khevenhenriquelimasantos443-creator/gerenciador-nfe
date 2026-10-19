@@ -192,6 +192,57 @@
     },
     "clv_forja": {
       "textures": "textures/blocks/cl/v/forja"
+    },
+    "clv_barril_madeira": {
+      "textures": "textures/blocks/cl/v/barril_madeira"
+    },
+    "clv_barril_pedra": {
+      "textures": "textures/blocks/cl/v/barril_pedra"
+    },
+    "clv_porcelana": {
+      "textures": "textures/blocks/cl/v/porcelana"
+    },
+    "clv_lava": {
+      "textures": "textures/blocks/cl/v/lava"
+    },
+    "clv_leite": {
+      "textures": "textures/blocks/cl/v/leite"
+    },
+    "clv_poeira": {
+      "textures": "textures/blocks/cl/v/poeira"
+    },
+    "clv_folha_infestada": {
+      "textures": "textures/blocks/cl/v/folha_infestada"
+    },
+    "clv_folha_infestada_cheia": {
+      "textures": "textures/blocks/cl/v/folha_infestada_cheia"
+    },
+    "clv_vx_terra": {
+      "textures": "textures/blocks/dirt"
+    },
+    "clv_vx_cascalho": {
+      "textures": "textures/blocks/gravel"
+    },
+    "clv_vx_areia": {
+      "textures": "textures/blocks/sand"
+    },
+    "clv_vx_obsidiana": {
+      "textures": "textures/blocks/obsidian"
+    },
+    "clv_vx_pedregulho": {
+      "textures": "textures/blocks/cobblestone"
+    },
+    "clv_vx_argila": {
+      "textures": "textures/blocks/clay"
+    },
+    "clv_vx_netherrack": {
+      "textures": "textures/blocks/netherrack"
+    },
+    "clv_vx_end": {
+      "textures": "textures/blocks/end_stone"
+    },
+    "clv_vx_slime": {
+      "textures": "textures/blocks/slime"
     }
   }
 }

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:pedregulho_de_pedrinhas"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PP",
+      "PP"
+    ],
+    "key": {
+      "P": {
+        "item": "cl:pedrinha"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:pedrinha"
+      }
+    ],
+    "result": {
+      "item": "minecraft:cobblestone"
+    }
+  }
+}

@@ -171,6 +171,19 @@ const APELIDOS = {
   light_gray_carpet: { lang: "tile.carpet.silver.name" },
   red_carpet: { lang: "tile.carpet.red.name" },
   white_carpet: { lang: "tile.carpet.white.name" },
+  oak_slab: { lang: "tile.wooden_slab.oak.name", icone: "textures/blocks/planks_oak" },
+  birch_slab: { lang: "tile.wooden_slab.birch.name", icone: "textures/blocks/planks_birch" },
+  acacia_slab: { lang: "tile.wooden_slab.acacia.name", icone: "textures/blocks/planks_acacia" },
+  jungle_slab: { lang: "tile.wooden_slab.jungle.name", icone: "textures/blocks/planks_jungle" },
+  spruce_slab: { lang: "tile.wooden_slab.spruce.name", icone: "textures/blocks/planks_spruce" },
+  smooth_stone_slab: { lang: "tile.stone_slab.stone.name", icone: "textures/blocks/stone_slab_top" },
+  cocoa_beans: { lang: "item.dye.brown.name", icone: "textures/items/dye_powder_brown" },
+  jungle_leaves: { lang: "tile.leaves.jungle.name", icone: "textures/blocks/leaves_jungle_carried" },
+  spruce_leaves: { lang: "tile.leaves.spruce.name", icone: "textures/blocks/leaves_spruce_carried" },
+  jungle_sapling: { lang: "tile.sapling.jungle.name", icone: "textures/blocks/sapling_jungle" },
+  spruce_sapling: { lang: "tile.sapling.spruce.name", icone: "textures/blocks/sapling_spruce" },
+  red_sand: { lang: "tile.sand.red.name", icone: "textures/blocks/red_sand" },
+  short_grass: { lang: "tile.tallgrass.grass.name", icone: "textures/blocks/tallgrass_carried" },
 };
 
 function vanilla() {

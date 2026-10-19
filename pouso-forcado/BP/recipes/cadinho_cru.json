@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:cadinho_cru"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P P",
+      "P P",
+      "PPP"
+    ],
+    "key": {
+      "P": {
+        "item": "cl:porcelana"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:porcelana"
+      }
+    ],
+    "result": {
+      "item": "cl:cadinho_cru"
+    }
+  }
+}

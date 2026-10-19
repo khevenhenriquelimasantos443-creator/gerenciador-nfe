@@ -19,6 +19,11 @@
   "en": "Acacia Sapling",
   "icone": "textures/blocks/sapling_acacia"
  },
+ "minecraft:acacia_slab": {
+  "pt": "Laje de Acácia",
+  "en": "Acacia Slab",
+  "icone": "textures/blocks/planks_acacia"
+ },
  "minecraft:andesite": {
   "pt": "Andesito",
   "en": "Andesite",
@@ -64,6 +69,16 @@
   "en": "Birch Sapling",
   "icone": "textures/blocks/sapling_birch"
  },
+ "minecraft:birch_slab": {
+  "pt": "Laje de Bétula",
+  "en": "Birch Slab",
+  "icone": "textures/blocks/planks_birch"
+ },
+ "minecraft:blaze_powder": {
+  "pt": "Pó de Chamas",
+  "en": "Blaze Powder",
+  "icone": "textures/items/blaze_powder"
+ },
  "minecraft:bone": {
   "pt": "Osso",
   "en": "Bone",
@@ -94,6 +109,11 @@
   "en": "Brown Carpet",
   "icone": "textures/blocks/wool_colored_brown"
  },
+ "minecraft:brown_mushroom": {
+  "pt": "Cogumelo Marrom",
+  "en": "Brown Mushroom",
+  "icone": "textures/blocks/mushroom_brown"
+ },
  "minecraft:bucket": {
   "pt": "Balde",
   "en": "Bucket",
@@ -103,6 +123,11 @@
   "pt": "Cacto",
   "en": "Cactus",
   "icone": "textures/blocks/cactus_side"
+ },
+ "minecraft:campfire": {
+  "pt": "Fogueira",
+  "en": "Campfire",
+  "icone": "textures/items/campfire"
  },
  "minecraft:carrot": {
   "pt": "Cenoura",
@@ -129,6 +154,11 @@
   "en": "Chiseled Sandstone",
   "icone": "textures/blocks/sandstone_carved"
  },
+ "minecraft:clay": {
+  "pt": "Argila",
+  "en": "Clay",
+  "icone": "textures/blocks/clay"
+ },
  "minecraft:clay_ball": {
   "pt": "Bola de Barro",
   "en": "Clay Ball",
@@ -148,6 +178,11 @@
   "pt": "Pedregulho",
   "en": "Cobblestone",
   "icone": "textures/blocks/cobblestone"
+ },
+ "minecraft:cocoa_beans": {
+  "pt": "Sementes de Cacau",
+  "en": "Cocoa Beans",
+  "icone": "textures/items/dye_powder_brown"
  },
  "minecraft:copper_ingot": {
   "pt": "Barra de Cobre",
@@ -209,10 +244,30 @@
   "en": "Enchanted Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:end_stone": {
+  "pt": "Pedra do End",
+  "en": "End Stone",
+  "icone": "textures/blocks/end_stone"
+ },
+ "minecraft:fire": {
+  "pt": "Fogo",
+  "en": "Fire",
+  "icone": "textures/blocks/fire_0"
+ },
  "minecraft:flint": {
   "pt": "Sílex",
   "en": "Flint",
   "icone": "textures/items/flint"
+ },
+ "minecraft:flowing_lava": {
+  "pt": "Lava",
+  "en": "Lava",
+  "icone": "textures/blocks/lava_flow"
+ },
+ "minecraft:flowing_water": {
+  "pt": "Água",
+  "en": "Water",
+  "icone": "textures/blocks/water_flow_grey"
  },
  "minecraft:furnace": {
   "pt": "Fornalha",
@@ -228,6 +283,11 @@
   "pt": "Frasco de Vidro",
   "en": "Glass Bottle",
   "icone": "textures/items/potion_bottle_empty"
+ },
+ "minecraft:glowstone_dust": {
+  "pt": "Pó de Pedra Luminosa",
+  "en": "Glowstone Dust",
+  "icone": "textures/items/glowstone_dust"
  },
  "minecraft:gold_ingot": {
   "pt": "Barra de Ouro",
@@ -254,6 +314,11 @@
   "en": "Gray Carpet",
   "icone": "textures/blocks/wool_colored_gray"
  },
+ "minecraft:gunpowder": {
+  "pt": "Pólvora",
+  "en": "Gunpowder",
+  "icone": "textures/items/gunpowder"
+ },
  "minecraft:honey_bottle": {
   "pt": "Frasco de Mel",
   "en": "Honey Bottle",
@@ -263,6 +328,11 @@
   "pt": "Funil",
   "en": "Hopper",
   "icone": "textures/items/hopper"
+ },
+ "minecraft:ice": {
+  "pt": "Gelo",
+  "en": "Ice",
+  "icone": "textures/blocks/ice"
  },
  "minecraft:iron_block": {
   "pt": "Bloco de Ferro",
@@ -284,10 +354,30 @@
   "en": "Iron Pickaxe",
   "icone": "textures/items/iron_pickaxe"
  },
+ "minecraft:jungle_leaves": {
+  "pt": "Folhas da Selva",
+  "en": "Jungle Leaves",
+  "icone": "textures/blocks/leaves_jungle_carried"
+ },
+ "minecraft:jungle_sapling": {
+  "pt": "Muda de Árvore da Selva",
+  "en": "Jungle Sapling",
+  "icone": "textures/blocks/sapling_jungle"
+ },
+ "minecraft:jungle_slab": {
+  "pt": "Laje da Selva",
+  "en": "Jungle Slab",
+  "icone": "textures/blocks/planks_jungle"
+ },
  "minecraft:lapis_lazuli": {
   "pt": "Lápis-Lazúli",
   "en": "Lapis Lazuli",
   "icone": "textures/items/dye_powder_blue_new"
+ },
+ "minecraft:lava": {
+  "pt": "Lava",
+  "en": "Lava",
+  "icone": "textures/blocks/lava_flow"
  },
  "minecraft:lead": {
   "pt": "Laço",
@@ -308,6 +398,16 @@
   "pt": "Carpete Cinza-claro",
   "en": "Light Gray Carpet",
   "icone": "textures/blocks/wool_colored_silver"
+ },
+ "minecraft:lit_furnace": {
+  "pt": "Fornalha Acesa",
+  "en": "Lit Furnace",
+  "icone": "textures/blocks/furnace_side"
+ },
+ "minecraft:magma": {
+  "pt": "Bloco de Magma",
+  "en": "Magma Block",
+  "icone": "textures/blocks/magma"
  },
  "minecraft:melon_seeds": {
   "pt": "Sementes de Melancia",
@@ -334,6 +434,11 @@
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
  },
+ "minecraft:netherrack": {
+  "pt": "Netherrack",
+  "en": "Netherrack",
+  "icone": "textures/blocks/netherrack"
+ },
  "minecraft:oak_leaves": {
   "pt": "Folhas de Carvalho",
   "en": "Oak Leaves",
@@ -353,6 +458,16 @@
   "pt": "Muda de Carvalho",
   "en": "Oak Sapling",
   "icone": "textures/blocks/sapling_oak"
+ },
+ "minecraft:oak_slab": {
+  "pt": "Laje de Carvalho",
+  "en": "Oak Slab",
+  "icone": "textures/blocks/planks_oak"
+ },
+ "minecraft:obsidian": {
+  "pt": "Obsidiana",
+  "en": "Obsidian",
+  "icone": "textures/blocks/obsidian"
  },
  "minecraft:paper": {
   "pt": "Papel",
@@ -394,10 +509,25 @@
   "en": "Raw Copper",
   "icone": "textures/items/raw_copper"
  },
+ "minecraft:raw_gold": {
+  "pt": "Ouro Bruto",
+  "en": "Raw Gold",
+  "icone": "textures/items/raw_gold"
+ },
+ "minecraft:raw_iron": {
+  "pt": "Ferro Bruto",
+  "en": "Raw Iron",
+  "icone": "textures/items/raw_iron"
+ },
  "minecraft:red_carpet": {
   "pt": "Carpete Vermelho",
   "en": "Red Carpet",
   "icone": "textures/blocks/wool_colored_red"
+ },
+ "minecraft:red_sand": {
+  "pt": "Areia Vermelha",
+  "en": "Red Sand",
+  "icone": "textures/blocks/red_sand"
  },
  "minecraft:redstone": {
   "pt": "Pó de Redstone",
@@ -429,15 +559,50 @@
   "en": "Sandstone",
   "icone": "textures/blocks/sandstone_normal"
  },
+ "minecraft:short_grass": {
+  "pt": "Grama Baixa",
+  "en": "Short Grass",
+  "icone": "textures/blocks/tallgrass_carried"
+ },
  "minecraft:smooth_sandstone": {
   "pt": "Arenito Liso",
   "en": "Smooth Sandstone",
   "icone": "textures/blocks/sandstone_top"
  },
+ "minecraft:smooth_stone_slab": {
+  "pt": "Laje de Pedra Lisa",
+  "en": "Smooth Stone Slab",
+  "icone": "textures/blocks/stone_slab_top"
+ },
+ "minecraft:snow": {
+  "pt": "Bloco de Neve",
+  "en": "Snow Block",
+  "icone": "textures/blocks/snow"
+ },
+ "minecraft:soul_fire": {
+  "pt": "Fogo das Almas",
+  "en": "Soul Fire",
+  "icone": "textures/blocks/soul_fire_0"
+ },
  "minecraft:spider_eye": {
   "pt": "Olho de Aranha",
   "en": "Spider Eye",
   "icone": "textures/items/spider_eye"
+ },
+ "minecraft:spruce_leaves": {
+  "pt": "Folhas de Pinheiro",
+  "en": "Spruce Leaves",
+  "icone": "textures/blocks/leaves_spruce_carried"
+ },
+ "minecraft:spruce_sapling": {
+  "pt": "Muda de Pinheiro",
+  "en": "Spruce Sapling",
+  "icone": "textures/blocks/sapling_spruce"
+ },
+ "minecraft:spruce_slab": {
+  "pt": "Laje de Pinheiro",
+  "en": "Spruce Slab",
+  "icone": "textures/blocks/planks_spruce"
  },
  "minecraft:stick": {
   "pt": "Graveto",
@@ -488,6 +653,11 @@
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",
   "icone": "textures/blocks/chest_front"
+ },
+ "minecraft:water": {
+  "pt": "Água",
+  "en": "Water",
+  "icone": "textures/blocks/water_flow_grey"
  },
  "minecraft:water_bucket": {
   "pt": "Balde de Água",

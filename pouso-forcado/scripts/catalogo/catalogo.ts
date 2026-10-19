@@ -1,7 +1,7 @@
 import { ItemStack, Player, RawMessage, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import {
-  AGUAS, CAPSULA, CATALOGO, CIDADE_SAQUE, COMPOSTOR_CHEIO, COMPOSTOR_PONTOS, CONDENSADOR_AVANCADO, CONDENSADOR_SEGUNDOS,
+  AGUAS, BARRIL, BARRIL_COMPOSTO, CADINHO, CAPSULA, CATALOGO, FOLHAS, MARTELO, MARTELOS, SEDA, CIDADE_SAQUE, COMPOSTOR_CHEIO, COMPOSTOR_PONTOS, CONDENSADOR_AVANCADO, CONDENSADOR_SEGUNDOS,
   DESTROCOS_SAQUE, ENERGIA, GERADOR_MONSTROS, IDS, LinhaSaque, MASMORRA_FUNDA_SAQUE, MASMORRA_SAQUE, MONTADORA, ORIGEM_MOD,
   PENEIRA, SACOLAS, SEDE, SISTEMAS_NAVE, TEMPLO_SAQUE, TORRE_SAQUE,
 } from "../config.js";
@@ -52,6 +52,7 @@ export const origemDe = (id: string): string => ORIGEM_MOD[id] ?? (id.startsWith
 
 // ---------- índice ----------
 let todas: Receita[] | undefined;
+const usosExtras: Array<[string, string]> = []; // [item, máquina]: o item também mostra os usos da máquina (todos os martelos)
 const comoFazer = new Map<string, Receita[]>();
 const usos = new Map<string, Receita[]>();
 
@@ -135,6 +136,46 @@ function montar(): Receita[] {
   r.push(saque("cl.catalogo.saque_masmorra", MASMORRA_SAQUE), saque("cl.catalogo.saque_masmorra_funda", MASMORRA_FUNDA_SAQUE));
   r.push(saque("cl.catalogo.saque_destrocos", DESTROCOS_SAQUE), saque("cl.catalogo.saque_templo", TEMPLO_SAQUE));
   r.push(saque("cl.catalogo.saque_capsula", CAPSULA.saque), saque("cl.catalogo.saque_gerador", GERADOR_MONSTROS.saque));
+  // Ex Nihilo: martelo, barril, cadinho, cajado e seda.
+  for (const [bloco, tabela] of Object.entries(MARTELO)) {
+    r.push({
+      maquina: { translate: "cl.catalogo.martelo" }, maquinaId: "cl:martelo_madeira",
+      entradas: [{ item: bloco, qtd: 1 }], saidas: tabela.map((a) => ({ item: a.item, qtd: 1, chance: a.chance })),
+      nota: { translate: "cl.catalogo.martelo_nota" },
+    });
+  }
+  for (const m of Object.keys(MARTELOS)) usosExtras.push([m, "cl:martelo_madeira"]);
+  for (const [item, valor] of Object.entries(BARRIL_COMPOSTO)) {
+    r.push({
+      maquina: nomeDe(IDS.barrilMadeira), maquinaId: IDS.barrilMadeira, entradas: [{ item, qtd: 1 }], saidas: [{ item: "minecraft:dirt", qtd: 1 }],
+      nota: { translate: "cl.catalogo.barril_composto", with: [`${String(Math.round(valor * 1000) / 10).replace(".", ",")}%`, String(BARRIL.compostoTicks / 20)] },
+    });
+  }
+  const balde = { agua: "minecraft:water_bucket", lava: "minecraft:lava_bucket" } as const;
+  for (const x of BARRIL.receitas) {
+    r.push({ maquina: nomeDe(x.fluido === "lava" ? IDS.barrilPedra : IDS.barrilMadeira), maquinaId: IDS.barrilMadeira, entradas: [{ item: balde[x.fluido], qtd: 1 }, { item: x.item, qtd: 1 }], saidas: [{ item: x.vira, qtd: 1 }], nota: { translate: "cl.catalogo.barril_receita" } });
+  }
+  for (const x of BARRIL.encontro) {
+    r.push({ maquina: nomeDe(IDS.barrilPedra), maquinaId: IDS.barrilPedra, entradas: [{ item: balde[x.fluido], qtd: 1 }], saidas: [{ item: x.vira, qtd: 1 }], nota: { translate: `cl.catalogo.barril_encontro_${x.fluido}` } });
+  }
+  r.push({
+    maquina: nomeDe(IDS.barrilMadeira), maquinaId: IDS.barrilMadeira, entradas: [{ item: "minecraft:water_bucket", qtd: 1 }, { item: "minecraft:milk_bucket", qtd: 1 }],
+    saidas: [{ item: "minecraft:slime_ball", qtd: 1, max: 4 }], nota: { translate: "cl.catalogo.barril_slime", with: [String(BARRIL.leiteTicks / 20)] },
+  });
+  for (const [item, x] of Object.entries(CADINHO.entradas)) {
+    r.push({
+      maquina: nomeDe(IDS.cadinho), maquinaId: IDS.cadinho, entradas: [{ item, qtd: 1 }], saidas: [{ item: balde[x.fluido], qtd: 1 }],
+      nota: { translate: "cl.catalogo.cadinho", with: [String(x.rende), x.fluido === "lava" ? "lava" : "água", String(x.ocupa)] },
+    });
+  }
+  for (const folha of FOLHAS.slice(0, 5)) {
+    r.push({ maquina: nomeDe(IDS.cajado), maquinaId: IDS.cajado, entradas: [{ item: folha, qtd: 1 }], saidas: [{ item: IDS.bichoSeda, qtd: 1, chance: SEDA.chanceFolha }], nota: { translate: "cl.catalogo.cajado" } });
+  }
+  r.push({
+    maquina: nomeDe(IDS.folhaInfestada), maquinaId: IDS.bichoSeda, entradas: [{ item: IDS.bichoSeda, qtd: 1 }],
+    saidas: [{ item: "minecraft:string", qtd: 1, max: 2, chance: SEDA.linha1 }, { item: IDS.bichoSeda, qtd: 1, chance: SEDA.chanceInfestada }],
+    nota: { translate: "cl.catalogo.seda" },
+  });
   const bebidas: Record<string, number> = { ...SEDE.bebidas };
   for (const [item, a] of Object.entries(AGUAS)) bebidas[item] = a.agua;
   for (const [item, agua] of Object.entries(bebidas)) {
@@ -162,6 +203,7 @@ function indice(): Receita[] {
     for (const e of r.entradas) add(usos, real(e.item), r);
     if (r.maquinaId) add(usos, r.maquinaId, r);
   }
+  for (const [item, maquina] of usosExtras) for (const r of usos.get(maquina) ?? []) if (r.maquinaId === maquina) add(usos, item, r);
   return todas;
 }
 

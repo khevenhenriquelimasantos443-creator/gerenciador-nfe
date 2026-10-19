@@ -6,7 +6,10 @@ import { condensadorAgua, condensadorAvancado } from "./blocos/condensador.js";
 import { bateria, gerador, moinho, painelSolar, peneiraAutomatica } from "./blocos/energia.js";
 import { estufa } from "./blocos/estufa.js";
 import { geradorMonstros, registrarGeradorMonstros } from "./blocos/gerador_monstros.js";
+import { barril } from "./blocos/barril.js";
+import { cadinho } from "./blocos/cadinho.js";
 import { montadora } from "./blocos/montadora.js";
+import { folhaInfestada, registrarNihilo } from "./blocos/nihilo.js";
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
 import { registrarCatalogo } from "./catalogo/catalogo.js";
@@ -48,6 +51,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent(IDS.montadora, comPerfil(IDS.montadora, montadora));
   blockComponentRegistry.registerCustomComponent(IDS.painelNave, comPerfil(IDS.painelNave, painelNave));
   blockComponentRegistry.registerCustomComponent(IDS.terminal, comPerfil(IDS.terminal, terminal));
+  blockComponentRegistry.registerCustomComponent(IDS.barrilMadeira, comPerfil(IDS.barrilMadeira, barril));
+  blockComponentRegistry.registerCustomComponent(IDS.barrilPedra, comPerfil(IDS.barrilPedra, barril));
+  blockComponentRegistry.registerCustomComponent(IDS.cadinho, comPerfil(IDS.cadinho, cadinho));
+  blockComponentRegistry.registerCustomComponent(IDS.folhaInfestada, comPerfil(IDS.folhaInfestada, folhaInfestada));
 });
 
 registrarPerfil();
@@ -68,3 +75,4 @@ registrarMonstros();
 registrarFarao();
 registrarCatalogo();
 registrarOrganizador();
+registrarNihilo();

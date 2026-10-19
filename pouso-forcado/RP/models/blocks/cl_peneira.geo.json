@@ -780,6 +780,85 @@
               }
             }
           ]
+        },
+        {
+          "name": "carga",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                13.5,
+                -6
+              ],
+              "size": [
+                12,
+                2,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    0.5
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "carga"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    0.5
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "carga"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    0.5
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "carga"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    0.5
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "carga"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "carga"
+                }
+              }
+            }
+          ]
         }
       ]
     }

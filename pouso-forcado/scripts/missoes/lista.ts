@@ -37,7 +37,12 @@ export type Acao =
   | "reparo_combustivel"
   | "reparo_motor"
   | "organizar"
-  | "sacola";
+  | "sacola"
+  | "martelar"
+  | "barril_terra"
+  | "barril_argila"
+  | "barril_obsidiana"
+  | "cadinho_lava";
 
 type MissaoBase = {
   id: string;
@@ -108,6 +113,32 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }],
         escolha: [{ item: IDS.sacolaBoa, quantidade: 1 }, { item: "minecraft:copper_ingot", quantidade: 8 }, { item: "minecraft:bone_meal", quantidade: 16 }],
       },
+    ],
+  },
+  {
+    id: "nihilo", // Fase 12: Ex Nihilo + Ex Aliquo
+    icone: "cl:martelo_madeira",
+    requer: ["bancada"],
+    missoes: [
+      { id: "en_martelo", objetivo: { tipo: "acao", acao: "martelar", qtd: 16 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 4 }] },
+      { id: "en_poeira", requer: ["en_martelo"], objetivo: { tipo: "ter", item: IDS.poeira, qtd: 8 }, recompensa: [{ item: "minecraft:string", quantidade: 4 }] },
+      { id: "en_pedrinhas", requer: ["en_martelo"], objetivo: { tipo: "ter", item: IDS.pedrinha, qtd: 8 }, recompensa: [{ item: "minecraft:dirt", quantidade: 4 }] },
+      { id: "en_minerio", requer: ["en_poeira"], objetivo: { tipo: "ter", item: "minecraft:raw_iron", qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
+      { id: "en_barril", requer: ["en_martelo"], objetivo: { tipo: "colocar", bloco: IDS.barrilMadeira, qtd: 1 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
+      { id: "en_composto", requer: ["en_barril"], objetivo: { tipo: "acao", acao: "barril_terra", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 6 }] },
+      { id: "en_argila", requer: ["en_barril", "en_poeira"], objetivo: { tipo: "acao", acao: "barril_argila", qtd: 1 }, recompensa: [{ item: "minecraft:clay_ball", quantidade: 4 }] },
+      { id: "en_cadinho", requer: ["en_argila"], objetivo: { tipo: "colocar", bloco: IDS.cadinho, qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 8 }] },
+      {
+        id: "en_lava",
+        requer: ["en_cadinho"],
+        objetivo: { tipo: "acao", acao: "cadinho_lava", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }],
+        escolha: [{ item: "minecraft:iron_ingot", quantidade: 4 }, { item: "minecraft:smooth_stone_slab", quantidade: 6 }],
+      },
+      { id: "en_obsidiana", requer: ["en_lava"], objetivo: { tipo: "acao", acao: "barril_obsidiana", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+      { id: "en_cajado", requer: ["en_barril"], objetivo: { tipo: "ter", item: IDS.cajado, qtd: 1 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
+      { id: "en_bicho", requer: ["en_cajado"], objetivo: { tipo: "ter", item: IDS.bichoSeda, qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
+      { id: "en_linha", requer: ["en_bicho"], objetivo: { tipo: "entregar", item: "minecraft:string", qtd: 16 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
   {

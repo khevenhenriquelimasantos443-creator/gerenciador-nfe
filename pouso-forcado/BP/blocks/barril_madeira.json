@@ -1,0 +1,311 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:barril_madeira",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:conteudo": {
+          "values": {
+            "min": 0,
+            "max": 11
+          }
+        },
+        "cl:nivel": {
+          "values": {
+            "min": 0,
+            "max": 8
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#8a6535",
+      "minecraft:tick": {
+        "interval_range": [
+          20,
+          20
+        ],
+        "looping": true
+      },
+      "cl:barril_madeira": {},
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.barril_madeira",
+        "bone_visibility": {
+          "n1": "q.block_state('cl:nivel') == 1",
+          "n2": "q.block_state('cl:nivel') == 2",
+          "n3": "q.block_state('cl:nivel') == 3",
+          "n4": "q.block_state('cl:nivel') == 4",
+          "n5": "q.block_state('cl:nivel') == 5",
+          "n6": "q.block_state('cl:nivel') == 6",
+          "n7": "q.block_state('cl:nivel') == 7",
+          "n8": "q.block_state('cl:nivel') == 8"
+        }
+      },
+      "minecraft:material_instances": {
+        "barril_madeira": {
+          "texture": "clv_barril_madeira",
+          "render_method": "opaque"
+        },
+        "conteudo": {
+          "texture": "clv_composto_cheio",
+          "render_method": "opaque"
+        },
+        "corpo": {
+          "texture": "clv_barril_madeira",
+          "render_method": "opaque"
+        },
+        "*": {
+          "texture": "clv_barril_madeira",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:conteudo') == 4",
+        "components": {
+          "minecraft:light_emission": 15,
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_lava",
+              "render_method": "opaque",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_terra",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_agua",
+              "render_method": "opaque",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_leite",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_slime",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_obsidiana",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_pedregulho",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_argila",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_netherrack",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:conteudo') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "barril_madeira": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "conteudo": {
+              "texture": "clv_vx_end",
+              "render_method": "opaque"
+            },
+            "corpo": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_barril_madeira",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:cadinho"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:cadinho_cru",
+    "output": "cl:cadinho"
+  }
+}

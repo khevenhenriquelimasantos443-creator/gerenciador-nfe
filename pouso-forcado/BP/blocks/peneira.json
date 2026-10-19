@@ -5,10 +5,29 @@
       "identifier": "cl:peneira",
       "menu_category": {
         "category": "items"
+      },
+      "states": {
+        "cl:carga": {
+          "values": {
+            "min": 0,
+            "max": 4
+          }
+        },
+        "cl:progresso": {
+          "values": {
+            "min": 0,
+            "max": 14
+          }
+        }
       }
     },
     "components": {
-      "minecraft:geometry": "geometry.cl.peneira",
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.peneira",
+        "bone_visibility": {
+          "carga": "q.block_state('cl:carga') >= 1"
+        }
+      },
       "minecraft:material_instances": {
         "corpo": {
           "texture": "clv_corpo",
@@ -28,6 +47,10 @@
           "texture": "clv_malha",
           "render_method": "alpha_test"
         },
+        "carga": {
+          "texture": "clv_vx_terra",
+          "render_method": "alpha_test"
+        },
         "*": {
           "texture": "clv_corpo",
           "render_method": "alpha_test"
@@ -42,6 +65,107 @@
       "minecraft:map_color": "#b58b52",
       "cl:peneira": {},
       "minecraft:light_dampening": 0
-    }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:carga') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "corpo": {
+              "texture": "clv_corpo",
+              "render_method": "alpha_test"
+            },
+            "grafite": {
+              "texture": "clv_grafite",
+              "render_method": "alpha_test"
+            },
+            "luz_laranja": {
+              "texture": "clv_luz_laranja",
+              "render_method": "alpha_test",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "malha": {
+              "texture": "clv_malha",
+              "render_method": "alpha_test"
+            },
+            "carga": {
+              "texture": "clv_vx_cascalho",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "clv_corpo",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:carga') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "corpo": {
+              "texture": "clv_corpo",
+              "render_method": "alpha_test"
+            },
+            "grafite": {
+              "texture": "clv_grafite",
+              "render_method": "alpha_test"
+            },
+            "luz_laranja": {
+              "texture": "clv_luz_laranja",
+              "render_method": "alpha_test",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "malha": {
+              "texture": "clv_malha",
+              "render_method": "alpha_test"
+            },
+            "carga": {
+              "texture": "clv_vx_areia",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "clv_corpo",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:carga') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "corpo": {
+              "texture": "clv_corpo",
+              "render_method": "alpha_test"
+            },
+            "grafite": {
+              "texture": "clv_grafite",
+              "render_method": "alpha_test"
+            },
+            "luz_laranja": {
+              "texture": "clv_luz_laranja",
+              "render_method": "alpha_test",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "malha": {
+              "texture": "clv_malha",
+              "render_method": "alpha_test"
+            },
+            "carga": {
+              "texture": "clv_poeira",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "clv_corpo",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      }
+    ]
   }
 }

@@ -1,0 +1,142 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:cadinho",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:nivel": {
+          "values": {
+            "min": 0,
+            "max": 4
+          }
+        },
+        "cl:fluido": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        },
+        "cl:solido": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#e8e2d6",
+      "minecraft:tick": {
+        "interval_range": [
+          20,
+          20
+        ],
+        "looping": true
+      },
+      "cl:cadinho": {},
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.cadinho",
+        "bone_visibility": {
+          "solido": "q.block_state('cl:solido')",
+          "l1": "q.block_state('cl:nivel') == 1",
+          "l2": "q.block_state('cl:nivel') == 2",
+          "l3": "q.block_state('cl:nivel') == 3",
+          "l4": "q.block_state('cl:nivel') == 4"
+        }
+      },
+      "minecraft:material_instances": {
+        "porcelana": {
+          "texture": "clv_porcelana",
+          "render_method": "opaque"
+        },
+        "solido": {
+          "texture": "clv_vx_pedregulho",
+          "render_method": "opaque"
+        },
+        "liquido": {
+          "texture": "clv_lava",
+          "render_method": "opaque",
+          "face_dimming": false,
+          "ambient_occlusion": 0
+        },
+        "corpo": {
+          "texture": "clv_porcelana",
+          "render_method": "opaque"
+        },
+        "*": {
+          "texture": "clv_porcelana",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:fluido') == 1",
+        "components": {
+          "minecraft:light_emission": 12,
+          "minecraft:material_instances": {
+            "porcelana": {
+              "texture": "clv_porcelana",
+              "render_method": "opaque"
+            },
+            "solido": {
+              "texture": "clv_vx_pedregulho",
+              "render_method": "opaque"
+            },
+            "liquido": {
+              "texture": "clv_lava",
+              "render_method": "opaque",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "corpo": {
+              "texture": "clv_porcelana",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_porcelana",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:fluido') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "porcelana": {
+              "texture": "clv_porcelana",
+              "render_method": "opaque"
+            },
+            "solido": {
+              "texture": "clv_vx_pedregulho",
+              "render_method": "opaque"
+            },
+            "liquido": {
+              "texture": "clv_agua",
+              "render_method": "opaque",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "corpo": {
+              "texture": "clv_porcelana",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_porcelana",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

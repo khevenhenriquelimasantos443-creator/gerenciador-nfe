@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 11** (Diário 2.0 em capítulos, Catálogo estilo JEI, "o que estou olhando", Organizador, energia em RF). Fases 0 a 9 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 12** (Ex Nihilo + Ex Aliquo: peneira por toques, martelos, poeira, pedaços de minério, barril, cadinho, cajado e bicho-da-seda). Fases 0 a 11 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -21,8 +21,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 7 | Perigos do deserto: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | pronta |
 | 8 | Consertar a nave: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | pronta |
 | 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | pronta |
-| 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | **esta versão** |
-| 12–23 | Os mods do Crash Landing, um bloco por fase: Ex Nihilo, EnviroMine + Hunger Overhaul, HarvestCraft, Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | pronta |
+| 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | **esta versão** |
+| 13–23 | Os mods do Crash Landing, um bloco por fase: Ex Nihilo, EnviroMine + Hunger Overhaul, HarvestCraft, Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -123,6 +124,29 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Ex Nihilo (Fase 12)
+
+Como no Crash Landing, tudo começa na areia. Números do Ex Nihilo (ver `docs/pesquisa-mods.md`).
+
+- **Martelo** (madeira, pedra, cobre, ferro, ouro, diamante; receita `_M_ / _GM / G__`): quebrar com ele dá o próximo da cadeia: **pedregulho → cascalho → areia → poeira**; pedra dá pedrinhas. Durabilidade igual à das ferramentas do mesmo material.
+- **Peneira**: toque com **terra, cascalho, areia ou poeira** para carregar e depois **14 toques** (ou segure o dedo) para peneirar. Cada linha é sorteada à parte:
+  - terra: pedrinhas (2 certas + 4 com 50/50/33/33%), sementes, mudas;
+  - cascalho: sílex 25%, carvão 12,5%, lápis 5%, diamante 0,8%, esmeralda 0,7% e **pedaços quebrados** de minério;
+  - areia: cacau, cacto, muda da selva, cogumelo e **pedaços triturados**;
+  - poeira: farinha de osso 20%, redstone 12,5%, pólvora, pó de glowstone, pó de blaze e **pó de minério**.
+  - Pedaços de minério: ferro 1/5, ouro 1/32, cobre 1/18. **4 pedaços (quadrado) = 1 minério bruto** → fornalha = 1 barra.
+  - A Peneira Automática usa as mesmas tabelas.
+- **Pedrinhas**: 4 em quadrado = 1 pedregulho.
+- **Barril** de madeira (`T_T / T_T / TLT`, L = laje de madeira) ou de pedra (pedra e laje de pedra lisa):
+  - compostagem com os valores do Ex Nihilo (muda/folha 12,5%, carne podre 10%, carne 20%...); cheio, vira **terra** em 50 s;
+  - balde de água ou de lava (lava só no de pedra); balde vazio tira de volta;
+  - água + poeira = **argila**; água + leite = **slime** (bolas; depois nasce um Slime); lava + redstone = netherrack; lava + pó de glowstone = pedra do End;
+  - lava com **água em cima** = **obsidiana**; água com **lava em cima** = pedregulho.
+- **Cadinho**: porcelana (argila + farinha de osso) → 7 porcelanas = Cadinho Cru → fornalha. Coloque em cima de uma fonte de calor (tocha 0,1 mB/t, fornalha acesa 0,15, lava 0,2, fogueira 0,2, fogo 0,3, Gerador a Carvão aceso 0,15). Pedregulho/pedra/cascalho = 250 mB de lava (4 = 1 balde), netherrack 1.000; neve 500 e gelo 1.000 de água; **folhas 125 mB de água** (como o pack fazia). Balde vazio tira 1.000 mB.
+- **Cajado** (gravetos em forma de bengala): folhas soltam **bicho-da-seda** (1/100). Use o bicho numa folha: ela fica **infestada**, chega a 100% em ~100 s e passa para as vizinhas. Quebrada, dá **linha**.
+- **Garrafa cercada de 8 cactos** = Água Boa (Ex Aliquo).
+- Capítulo novo no Diário: **Do Nada (Ex Nihilo)**, com 13 missões.
 
 ## Diário 2.0, Catálogo, o que estou olhando, Organizador (Fase 11)
 

@@ -87,3 +87,40 @@ export function trocarDaMao(jogador: Player, de: string, para: string, max = 3):
   }
   return true;
 }
+
+/** Troca o item da mão por outro (ex.: balde de água -> balde vazio). No criativo não troca. */
+export function trocarMao(jogador: Player, para: string): void {
+  if (jogador.getGameMode() === GameMode.Creative) return;
+  const inv = jogador.getComponent("minecraft:inventory")?.container;
+  const pilha = inv?.getItem(jogador.selectedSlotIndex);
+  if (!inv || !pilha) return;
+  if (pilha.amount === 1) inv.setItem(jogador.selectedSlotIndex, new ItemStack(para, 1));
+  else {
+    pilha.amount--;
+    inv.setItem(jogador.selectedSlotIndex, pilha);
+    const sobra = inv.addItem(new ItemStack(para, 1));
+    if (sobra) jogador.dimension.spawnItem(sobra, jogador.location);
+  }
+}
+
+/** Gasta durabilidade da ferramenta na mão; quebra se acabar. No criativo não gasta. */
+export function gastarFerramenta(jogador: Player, pontos = 1): void {
+  if (jogador.getGameMode() === GameMode.Creative) return;
+  const inv = jogador.getComponent("minecraft:inventory")?.container;
+  const pilha = inv?.getItem(jogador.selectedSlotIndex);
+  const dur = pilha?.getComponent("minecraft:durability");
+  if (!inv || !pilha || !dur) return;
+  if (dur.damage + pontos >= dur.maxDurability) {
+    inv.setItem(jogador.selectedSlotIndex, undefined);
+    jogador.playSound("random.break");
+    return;
+  }
+  dur.damage += pontos;
+  inv.setItem(jogador.selectedSlotIndex, pilha);
+}
+
+/** Dá um item ao jogador (ou solta aos pés, se a mochila estiver cheia). */
+export function darAoJogador(jogador: Player, item: string, quantidade = 1): void {
+  const sobra = jogador.getComponent("minecraft:inventory")?.container?.addItem(new ItemStack(item, quantidade)) ?? new ItemStack(item, quantidade);
+  if (sobra) jogador.dimension.spawnItem(sobra, jogador.location);
+}

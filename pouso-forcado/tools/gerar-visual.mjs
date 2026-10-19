@@ -190,6 +190,47 @@ const forja = () =>
     return mix(C.grafite2, C.laranja, Math.max(0, 0.75 - d) * (0.4 + 0.6 * pulso));
   }, 8);
 
+// ---------- Fase 12: Ex Nihilo (estilo dos mods, mesma paleta terrosa do deserto) ----------
+// Tábuas verticais do barril com dois aros escuros.
+const barrilMadeira = () =>
+  textura((x, y) => {
+    if (y >= 5 && y <= 7 || y >= 24 && y <= 26) return mul(hex("#3d3d42"), 0.9 + ruido(x, y, 11) * 0.2);
+    const tabua = Math.floor(x / 6);
+    const base = [hex("#9a6b3c"), hex("#8a5e33"), hex("#a5763f"), hex("#8f6236"), hex("#996a3a"), hex("#86592f")][tabua % 6];
+    if (x % 6 === 0) return mul(base, 0.7);
+    return mul(base, 0.9 + ruido(x >> 1, y, 12) * 0.2);
+  });
+const barrilPedra = () =>
+  textura((x, y) => {
+    if (y >= 5 && y <= 7 || y >= 24 && y <= 26) return mul(hex("#3d3d42"), 0.9 + ruido(x, y, 13) * 0.2);
+    if ((y % 10 === 0) || ((x + (Math.floor(y / 10) % 2) * 8) % 16 === 0)) return hex("#5e5e5e");
+    return mul(hex("#8a8a8a"), 0.88 + ruido(x >> 1, y >> 1, 14) * 0.24);
+  });
+// Porcelana do cadinho: branco-creme com uma faixa azul fina (como a louça).
+const porcelana = () =>
+  textura((x, y) => {
+    if (y === 3 || y === 28) return hex("#5b7fb8");
+    return mul(mix(hex("#f2ede2"), hex("#d9d2c2"), y / T), 0.97 + ruido(x, y, 15) * 0.06);
+  });
+// Lava (8 quadros), leite e poeira.
+const lava = () =>
+  textura((x, y, q) => {
+    const o = Math.sin((x + q * 3) / 5) + Math.cos((y + q * 2) / 4) + ruido(x >> 2, y >> 2, q) * 1.5;
+    return mix(hex("#c4381a"), hex("#ffb13b"), Math.max(0, Math.min(1, 0.35 + o * 0.22)));
+  }, 8);
+const leite = () => textura((x, y) => mix(hex("#f4f4ef"), hex("#e6e6dc"), ruido(x, y, 16)));
+const poeira = () => textura((x, y) => mul(mix(hex("#f1e6c8"), hex("#e2d3ad"), ruido(x, y, 17)), 0.96 + ruido(x >> 2, y >> 2, 18) * 0.08));
+// Folha infestada: folha acinzentada com teia branca; cheia = quase toda branca.
+const folhaInfestada = (cheia) =>
+  textura((x, y) => {
+    const r = ruido(x, y, 19);
+    if (r < 0.18) return [0, 0, 0, 0];
+    const teia = (x + y) % 7 === 0 || (x - y + 64) % 9 === 0;
+    const folha = mix(hex("#5d7a52"), hex("#8fa886"), ruido(x >> 1, y >> 1, 20));
+    if (cheia) return [...mix(hex("#e9ece6"), folha, teia ? 0.1 : 0.3), 255];
+    return [...(teia ? hex("#eef0ea") : folha), 255];
+  });
+
 const TEXTURAS = {
   corpo, corpo_friso: corpoFriso, grafite,
   luz_ciano: () => luz(C.ciano, C.cianoEsc), luz_laranja: () => luz(C.laranja, C.laranjaEsc),
@@ -200,10 +241,18 @@ const TEXTURAS = {
   malha, vidro, planta,
   composto_vazio: () => composto("vazio"), composto_cheio: () => composto("cheio"), composto_pronto: () => composto("pronto"),
   forja,
+  barril_madeira: barrilMadeira, barril_pedra: barrilPedra, porcelana, lava, leite, poeira,
+  folha_infestada: () => folhaInfestada(false), folha_infestada_cheia: () => folhaInfestada(true),
+};
+// Texturas do próprio jogo usadas nos modelos (conteúdo do barril, carga da peneira...).
+const DO_JOGO = {
+  vx_terra: "textures/blocks/dirt", vx_cascalho: "textures/blocks/gravel", vx_areia: "textures/blocks/sand",
+  vx_obsidiana: "textures/blocks/obsidian", vx_pedregulho: "textures/blocks/cobblestone", vx_argila: "textures/blocks/clay",
+  vx_netherrack: "textures/blocks/netherrack", vx_end: "textures/blocks/end_stone", vx_slime: "textures/blocks/slime",
 };
 // Animadas: [quadros, ticks por quadro]
-const ANIMADAS = { agua: 4, tela_terminal: 6, tela_nave: 3, solar: 5, rotor: 2, brasa_on: 3, forja: 3 };
-const ACESAS = new Set(["luz_ciano", "luz_laranja", "luz_azul", "luz_verde", "luz_violeta", "agua", "tela_terminal", "tela_nave", "brasa_on", "forja", "carga_0", "carga_1", "carga_2", "solar"]);
+const ANIMADAS = { agua: 4, tela_terminal: 6, tela_nave: 3, solar: 5, rotor: 2, brasa_on: 3, forja: 3, lava: 4 };
+const ACESAS = new Set(["luz_ciano", "luz_laranja", "luz_azul", "luz_verde", "luz_violeta", "agua", "tela_terminal", "tela_nave", "brasa_on", "forja", "carga_0", "carga_1", "carga_2", "solar", "lava"]);
 
 // ---------- modelos ----------
 // Cubos em pixels de 0 a 16 (como no editor); f = material de todas as faces ou { up, down, north, south, east, west, lados }.
@@ -280,8 +329,15 @@ const MODELOS = {
       corpo: [cubo(0, 0, 0, 2, 12, 2, "grafite"), cubo(14, 0, 0, 16, 12, 2, "grafite"), cubo(0, 0, 14, 2, 12, 16, "grafite"), cubo(14, 0, 14, 16, 12, 16, "grafite"),
         cubo(0, 12, 0, 16, 16, 2, "corpo"), cubo(0, 12, 14, 16, 16, 16, "corpo"), cubo(0, 12, 2, 2, 16, 14, "corpo"), cubo(14, 12, 2, 16, 16, 14, "corpo"),
         faixa(11, "luz_laranja", 2.5), cubo(2, 13, 2, 14, 13.5, 14, { up: "malha!", down: "malha!" })],
+      carga: [cubo(2, 13.5, 2, 14, 15.5, 14, { up: "carga", lados: "carga" })],
     },
-    texturas: { corpo: "corpo", grafite: "grafite", luz_laranja: "luz_laranja", malha: "malha" },
+    visibilidade: { carga: "q.block_state('cl:carga') >= 1" },
+    texturas: { corpo: "corpo", grafite: "grafite", luz_laranja: "luz_laranja", malha: "malha", carga: "vx_terra" },
+    estados: [
+      { cond: "q.block_state('cl:carga') == 2", troca: { carga: "vx_cascalho" } },
+      { cond: "q.block_state('cl:carga') == 3", troca: { carga: "vx_areia" } },
+      { cond: "q.block_state('cl:carga') == 4", troca: { carga: "poeira" } },
+    ],
   },
   peneira_automatica: {
     render: "alpha_test",
@@ -401,6 +457,58 @@ const MODELOS = {
   },
 };
 
+// Barril do Ex Nihilo: paredes de 1 px; o conteúdo sobe em 8 níveis (cl:nivel) e muda de material
+// conforme cl:conteudo (ver CONTEUDOS em scripts/blocos/barril.ts).
+const CONTEUDO_BARRIL = ["", "composto_cheio", "vx_terra", "agua", "lava", "leite", "vx_slime", "vx_obsidiana", "vx_pedregulho", "vx_argila", "vx_netherrack", "vx_end"];
+function barril(parede) {
+  const ossos = {
+    corpo: [cubo(1, 0, 1, 15, 1, 15, parede), cubo(1, 1, 1, 15, 16, 2, parede), cubo(1, 1, 14, 15, 16, 15, parede), cubo(1, 1, 2, 2, 16, 14, parede), cubo(14, 1, 2, 15, 16, 14, parede)],
+  };
+  const vis = {};
+  for (let k = 1; k <= 8; k++) {
+    ossos[`n${k}`] = [cubo(2, 1, 2, 14, 1 + (14 * k) / 8, 14, { up: "conteudo", lados: "conteudo", down: "conteudo" })];
+    vis[`n${k}`] = `q.block_state('cl:nivel') == ${k}`;
+  }
+  return {
+    render: "opaque", solido: false, ossos, visibilidade: vis,
+    texturas: { [parede]: parede, conteudo: "composto_cheio", corpo: parede },
+    estados: CONTEUDO_BARRIL.map((tex, k) => (k > 1 ? { cond: `q.block_state('cl:conteudo') == ${k}`, troca: { conteudo: tex }, ...(tex === "lava" ? { extra: { "minecraft:light_emission": 15 } } : {}) } : null)).filter(Boolean),
+  };
+}
+MODELOS.barril_madeira = barril("barril_madeira");
+MODELOS.barril_pedra = barril("barril_pedra");
+// Cadinho de porcelana: o sólido esperando derreter no fundo e o líquido em 4 níveis.
+MODELOS.cadinho = {
+  render: "opaque",
+  ossos: {
+    corpo: [cubo(2, 0, 2, 4, 1, 4, "porcelana"), cubo(12, 0, 2, 14, 1, 4, "porcelana"), cubo(2, 0, 12, 4, 1, 14, "porcelana"), cubo(12, 0, 12, 14, 1, 14, "porcelana"),
+      cubo(2, 1, 2, 14, 2, 14, "porcelana"), cubo(2, 2, 2, 14, 14, 3, "porcelana"), cubo(2, 2, 13, 14, 14, 14, "porcelana"), cubo(2, 2, 3, 3, 14, 13, "porcelana"), cubo(13, 2, 3, 14, 14, 13, "porcelana"),
+      cubo(1, 14, 1, 15, 15, 3, "porcelana"), cubo(1, 14, 13, 15, 15, 15, "porcelana"), cubo(1, 14, 3, 3, 15, 13, "porcelana"), cubo(13, 14, 3, 15, 15, 13, "porcelana")],
+    solido: [cubo(3, 2, 3, 13, 5, 13, { up: "solido", lados: "solido" })],
+    l1: [cubo(3, 2, 3, 13, 5, 13, { up: "liquido", lados: "liquido" })],
+    l2: [cubo(3, 2, 3, 13, 8, 13, { up: "liquido", lados: "liquido" })],
+    l3: [cubo(3, 2, 3, 13, 11, 13, { up: "liquido", lados: "liquido" })],
+    l4: [cubo(3, 2, 3, 13, 13.5, 13, { up: "liquido", lados: "liquido" })],
+  },
+  visibilidade: { solido: "q.block_state('cl:solido')", l1: "q.block_state('cl:nivel') == 1", l2: "q.block_state('cl:nivel') == 2", l3: "q.block_state('cl:nivel') == 3", l4: "q.block_state('cl:nivel') == 4" },
+  texturas: { porcelana: "porcelana", solido: "vx_pedregulho", liquido: "lava", corpo: "porcelana" },
+  estados: [
+    { cond: "q.block_state('cl:fluido') == 1", troca: {}, extra: { "minecraft:light_emission": 12 } },
+    { cond: "q.block_state('cl:fluido') == 2", troca: { liquido: "agua" } },
+  ],
+};
+MODELOS.folha_infestada = {
+  render: "alpha_test", solido: true,
+  ossos: { corpo: [cubo(0, 0, 0, 16, 16, 16, "folha")] },
+  texturas: { folha: "folha_infestada", corpo: "folha_infestada" },
+  estados: [{ cond: "q.block_state('cl:infest') >= 6", troca: { folha: "folha_infestada_cheia" } }],
+};
+MODELOS.poeira = {
+  render: "opaque", solido: true,
+  ossos: { corpo: [cubo(0, 0, 0, 16, 16, 16, "poeira")] },
+  texturas: { poeira: "poeira", corpo: "poeira" },
+};
+
 // ---------- saída ----------
 const pasta = (...p) => {
   const d = join(RAIZ, ...p);
@@ -415,6 +523,7 @@ for (const [nome, gerar] of Object.entries(TEXTURAS)) writeFileSync(join(dirTex,
 
 const terreno = lerJson("RP/textures/terrain_texture.json");
 for (const nome of Object.keys(TEXTURAS)) terreno.texture_data[`clv_${nome}`] = { textures: `textures/blocks/cl/v/${nome}` };
+for (const [nome, caminho] of Object.entries(DO_JOGO)) terreno.texture_data[`clv_${nome}`] = { textures: caminho };
 jsonEm("RP/textures/terrain_texture.json", terreno);
 
 jsonEm(
@@ -443,13 +552,15 @@ for (const [id, mod] of Object.entries(MODELOS)) {
   c["minecraft:material_instances"] = instancias(mod);
   if (mod.colisao) c["minecraft:collision_box"] = mod.colisao;
   if (mod.selecao ?? mod.colisao) c["minecraft:selection_box"] = mod.selecao ?? mod.colisao;
-  c["minecraft:light_dampening"] = 0;
+  if (mod.solido) delete c["minecraft:light_dampening"];
+  else c["minecraft:light_dampening"] = 0;
   const perms = (bloco["minecraft:block"].permutations ?? []).filter((p) => !p.components["minecraft:material_instances"] || Object.keys(p.components).length > 1);
   for (const p of perms) delete p.components["minecraft:material_instances"];
   for (const e of mod.estados ?? []) {
     const p = perms.find((q) => q.condition === e.cond);
-    if (p) p.components["minecraft:material_instances"] = instancias(mod, e.troca);
-    else perms.push({ condition: e.cond, components: { "minecraft:material_instances": instancias(mod, e.troca) } });
+    const comps = { "minecraft:material_instances": instancias(mod, e.troca), ...(e.extra ?? {}) };
+    if (p) Object.assign(p.components, comps);
+    else perms.push({ condition: e.cond, components: comps });
   }
   // Virado para quem coloca: a frente do modelo é o norte; o jogo gira conforme cardinal_direction.
   const desc = bloco["minecraft:block"].description;
@@ -486,6 +597,86 @@ const icone = (pintar) => gerarPng(T, T, (x, y) => {
   const p = pintar(x, y);
   return !p ? V : p.length === 4 ? p : [...p, 255];
 });
+// Fase 12: ícones no estilo do Ex Nihilo (martelos, pedrinha, pedaços de minério, cajado...).
+function iconesNihilo() {
+  const segmento = (x, y, x0, y0, x1, y1) => {
+    const dx = x1 - x0, dy = y1 - y0;
+    const t = Math.max(0, Math.min(1, ((x - x0) * dx + (y - y0) * dy) / (dx * dx + dy * dy)));
+    return Math.hypot(x - (x0 + t * dx), y - (y0 + t * dy));
+  };
+  const madeira = (x, y) => mix(hex("#6b4a2b"), hex("#9a6b3c"), ruido(x, y, 30) * 0.6);
+  const martelo = (cor) => () => icone((x, y) => {
+    const u = (x - 20 + (y - 11)) / Math.SQRT2, v = (x - 20 - (y - 11)) / Math.SQRT2;
+    if (Math.abs(u) < 8 && Math.abs(v) < 3.8) {
+      const c = hex(cor);
+      const borda = Math.abs(u) > 7 || Math.abs(v) > 2.8;
+      return borda ? mul(c, 0.55) : mix(c, mul(c, 0.75), (u + 8) / 16);
+    }
+    const d = segmento(x, y, 5, 27, 20, 12);
+    if (d < 1.6) return d > 1 ? hex("#3e2a17") : madeira(x, y);
+    return null;
+  });
+  const metais = { ferro: "#d8af93", ouro: "#f5d33b", cobre: "#e07a4f" };
+  const pedaco = (estagio, cor) => () => icone((x, y) => {
+    const c = hex(cor);
+    if (estagio === "quebrado") {
+      // Pedaços angulosos de cascalho com veios do metal.
+      const pedras = [[11, 17, 6], [20, 14, 5.5], [17, 22, 5]];
+      for (const [cx, cy, r] of pedras) {
+        const d = Math.max(Math.abs(x - cx), Math.abs(y - cy)) * 0.7 + Math.hypot(x - cx, y - cy) * 0.3;
+        if (d < r) return d > r - 1 ? hex("#4a4a4a") : ruido(x, y, 31) < 0.35 ? c : mix(hex("#7a7a7a"), hex("#a0a0a0"), ruido(x, y, 32));
+      }
+      return null;
+    }
+    // Monte de areia (triturado) ou de pó (mais fino e claro), com grãos do metal.
+    const alto = estagio === "triturado" ? 10 : 8;
+    const h = 26 - alto * Math.max(0, 1 - ((x - 15.5) / 12) ** 2);
+    if (y < h || y > 26 || x < 3 || x > 28) return null;
+    if (y < h + 1) return estagio === "triturado" ? hex("#c9b27a") : hex("#efe3c4");
+    const fundo = estagio === "triturado" ? mix(hex("#d8c08a"), hex("#b9a06a"), ruido(x, y, 33)) : mix(hex("#f1e6c8"), hex("#ddd0ad"), ruido(x, y, 34));
+    return ruido(x, y, 35) < (estagio === "triturado" ? 0.3 : 0.22) ? c : fundo;
+  });
+  const lista = {
+    martelo_madeira: martelo("#9a6b3c"), martelo_pedra: martelo("#8a8a8a"), martelo_cobre: martelo("#d27a4a"),
+    martelo_ferro: martelo("#d8d8d8"), martelo_ouro: martelo("#f2d03b"), martelo_diamante: martelo("#5fe0d0"),
+    pedrinha: () => icone((x, y) => {
+      const d = Math.hypot((x - 15.5) / 9, (y - 17) / 7);
+      if (d > 1) return null;
+      if (d > 0.86) return hex("#4f4f4f");
+      return mix(hex("#9a9a9a"), hex("#6f6f6f"), (y - 10) / 14 + ruido(x, y, 36) * 0.2);
+    }),
+    porcelana: () => icone((x, y) => {
+      const d = Math.hypot(x - 15.5, y - 16.5) / 9;
+      if (d > 1) return null;
+      return d > 0.88 ? hex("#b9b2a2") : mix(hex("#fbf7ee"), hex("#ddd5c4"), (x + y) / 48);
+    }),
+    cadinho_cru: () => icone((x, y) => {
+      const meia = 7 + (y - 8) * 0.25;
+      if (y < 8 || y > 26 || Math.abs(x - 15.5) > meia) return null;
+      if (y > 9 && y < 24 && Math.abs(x - 15.5) < meia - 2.5 && y < 12) return hex("#6f6a62");
+      return Math.abs(x - 15.5) > meia - 1 || y > 25 ? hex("#8e877b") : mix(hex("#c9c2b4"), hex("#aba496"), ruido(x, y, 37));
+    }),
+    cajado: () => icone((x, y) => {
+      const gancho = Math.abs(Math.hypot(x - 17, y - 9) - 5) < 1.3 && (y < 9 || x < 17);
+      const cabo = segmento(x, y, 12, 9, 12, 28) < 1.3;
+      if (gancho || cabo) return madeira(x, y);
+      return null;
+    }),
+    ...Object.fromEntries(["", "_cozido"].map((suf) => [`bicho_seda${suf}`, () => icone((x, y) => {
+      // Larva em arco, com gomos.
+      const ang = Math.atan2(y - 22, x - 15.5);
+      const r = Math.hypot(x - 15.5, y - 22);
+      if (ang > -0.1 || ang < -Math.PI + 0.1 || Math.abs(r - 9) > 3.2) return null;
+      const gomo = Math.floor((ang + Math.PI) / 0.45) % 2 === 0;
+      const base = suf ? hex("#a8743f") : hex("#f1eee4");
+      if (Math.abs(r - 9) > 2.4) return mul(base, 0.6);
+      return gomo ? base : mul(base, 0.85);
+    })])),
+  };
+  for (const [metal, cor] of Object.entries(metais)) for (const e of ["quebrado", "triturado", "po"]) lista[`${metal}_${e}`] = pedaco(e, cor);
+  return lista;
+}
+
 const ICONES = {
   placa_casco: () => icone((x, y) => {
     const d = (a, b) => dentroRet(a, b, 3, 5, 28, 26, 3);
@@ -585,6 +776,7 @@ const ICONES = {
       }),
     ]),
   ),
+  ...iconesNihilo(),
 };
 const dirIcones = pasta("RP/textures/items/cl/v");
 const itens = lerJson("RP/textures/item_texture.json");

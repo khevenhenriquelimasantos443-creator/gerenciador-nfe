@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:cobre_bruto_de_quebrado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PP",
+      "PP"
+    ],
+    "key": {
+      "P": {
+        "item": "cl:cobre_quebrado"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:cobre_quebrado"
+      }
+    ],
+    "result": {
+      "item": "minecraft:raw_copper"
+    }
+  }
+}

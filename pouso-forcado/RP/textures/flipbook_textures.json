@@ -33,5 +33,10 @@
     "flipbook_texture": "textures/blocks/cl/v/forja",
     "atlas_tile": "clv_forja",
     "ticks_per_frame": 3
+  },
+  {
+    "flipbook_texture": "textures/blocks/cl/v/lava",
+    "atlas_tile": "clv_lava",
+    "ticks_per_frame": 4
   }
 ]

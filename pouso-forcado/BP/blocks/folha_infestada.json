@@ -1,0 +1,73 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:folha_infestada",
+      "menu_category": {
+        "category": "nature"
+      },
+      "states": {
+        "cl:infest": {
+          "values": {
+            "min": 0,
+            "max": 10
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#c9d6c0",
+      "minecraft:loot": "loot_tables/cl/vazio.json",
+      "minecraft:tick": {
+        "interval_range": [
+          20,
+          20
+        ],
+        "looping": true
+      },
+      "cl:folha_infestada": {},
+      "minecraft:geometry": "geometry.cl.folha_infestada",
+      "minecraft:material_instances": {
+        "folha": {
+          "texture": "clv_folha_infestada",
+          "render_method": "alpha_test"
+        },
+        "corpo": {
+          "texture": "clv_folha_infestada",
+          "render_method": "alpha_test"
+        },
+        "*": {
+          "texture": "clv_folha_infestada",
+          "render_method": "alpha_test"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:infest') >= 6",
+        "components": {
+          "minecraft:material_instances": {
+            "folha": {
+              "texture": "clv_folha_infestada_cheia",
+              "render_method": "alpha_test"
+            },
+            "corpo": {
+              "texture": "clv_folha_infestada",
+              "render_method": "alpha_test"
+            },
+            "*": {
+              "texture": "clv_folha_infestada",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

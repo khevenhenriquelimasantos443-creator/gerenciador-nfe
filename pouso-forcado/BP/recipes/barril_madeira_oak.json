@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:barril_madeira_oak"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "T T",
+      "T T",
+      "TLT"
+    ],
+    "key": {
+      "T": {
+        "tag": "minecraft:planks"
+      },
+      "L": {
+        "item": "minecraft:oak_slab"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:oak_slab"
+      }
+    ],
+    "result": {
+      "item": "cl:barril_madeira"
+    }
+  }
+}

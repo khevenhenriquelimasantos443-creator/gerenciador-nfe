@@ -64,6 +64,69 @@
     },
     "cl_sacola_lendaria": {
       "textures": "textures/items/cl/v/sacola_lendaria"
+    },
+    "cl_martelo_madeira": {
+      "textures": "textures/items/cl/v/martelo_madeira"
+    },
+    "cl_martelo_pedra": {
+      "textures": "textures/items/cl/v/martelo_pedra"
+    },
+    "cl_martelo_cobre": {
+      "textures": "textures/items/cl/v/martelo_cobre"
+    },
+    "cl_martelo_ferro": {
+      "textures": "textures/items/cl/v/martelo_ferro"
+    },
+    "cl_martelo_ouro": {
+      "textures": "textures/items/cl/v/martelo_ouro"
+    },
+    "cl_martelo_diamante": {
+      "textures": "textures/items/cl/v/martelo_diamante"
+    },
+    "cl_pedrinha": {
+      "textures": "textures/items/cl/v/pedrinha"
+    },
+    "cl_porcelana": {
+      "textures": "textures/items/cl/v/porcelana"
+    },
+    "cl_cadinho_cru": {
+      "textures": "textures/items/cl/v/cadinho_cru"
+    },
+    "cl_cajado": {
+      "textures": "textures/items/cl/v/cajado"
+    },
+    "cl_bicho_seda": {
+      "textures": "textures/items/cl/v/bicho_seda"
+    },
+    "cl_bicho_seda_cozido": {
+      "textures": "textures/items/cl/v/bicho_seda_cozido"
+    },
+    "cl_ferro_quebrado": {
+      "textures": "textures/items/cl/v/ferro_quebrado"
+    },
+    "cl_ferro_triturado": {
+      "textures": "textures/items/cl/v/ferro_triturado"
+    },
+    "cl_ferro_po": {
+      "textures": "textures/items/cl/v/ferro_po"
+    },
+    "cl_ouro_quebrado": {
+      "textures": "textures/items/cl/v/ouro_quebrado"
+    },
+    "cl_ouro_triturado": {
+      "textures": "textures/items/cl/v/ouro_triturado"
+    },
+    "cl_ouro_po": {
+      "textures": "textures/items/cl/v/ouro_po"
+    },
+    "cl_cobre_quebrado": {
+      "textures": "textures/items/cl/v/cobre_quebrado"
+    },
+    "cl_cobre_triturado": {
+      "textures": "textures/items/cl/v/cobre_triturado"
+    },
+    "cl_cobre_po": {
+      "textures": "textures/items/cl/v/cobre_po"
     }
   }
 }

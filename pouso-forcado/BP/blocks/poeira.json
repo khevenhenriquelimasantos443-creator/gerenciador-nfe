@@ -1,0 +1,35 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:poeira",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:map_color": "#efe3c4",
+      "minecraft:geometry": "geometry.cl.poeira",
+      "minecraft:material_instances": {
+        "poeira": {
+          "texture": "clv_poeira",
+          "render_method": "opaque"
+        },
+        "corpo": {
+          "texture": "clv_poeira",
+          "render_method": "opaque"
+        },
+        "*": {
+          "texture": "clv_poeira",
+          "render_method": "opaque"
+        }
+      }
+    }
+  }
+}

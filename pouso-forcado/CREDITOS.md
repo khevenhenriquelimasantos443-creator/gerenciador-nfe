@@ -14,6 +14,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 - **Crash Landing**, modpack de Iskandar (Minecraft 1.6.4): a ideia de cair num planeta seco,
   a sede, a água que precisa ser tratada e a progressão por quests. Nenhum texto do pack foi copiado.
+- **Ex Nihilo** (Erasmus_Crowley) e **Ex Aliquo** (Zerokyuuni, MIT): peneira, martelo, barril, cadinho,
+  cajado e bicho-da-seda, com as tabelas e tempos do mod. Texturas e modelos próprios (as do Ex Nihilo
+  não têm licença encontrada).
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,
   recompensas "escolha 1" e as sacolas de recompensa com os pesos do HQM. Ícones próprios.
 - **Just Enough Items** (mezz) / NEI (ChickenBones): o Catálogo de receitas e usos.

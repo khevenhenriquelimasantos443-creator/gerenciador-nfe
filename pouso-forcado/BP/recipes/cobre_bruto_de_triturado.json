@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:cobre_bruto_de_triturado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PP",
+      "PP"
+    ],
+    "key": {
+      "P": {
+        "item": "cl:cobre_triturado"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:cobre_triturado"
+      }
+    ],
+    "result": {
+      "item": "minecraft:raw_copper"
+    }
+  }
+}

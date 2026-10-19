@@ -17,7 +17,10 @@ def tex(nome):
     if nome not in cache:
         p = terreno[nome]["textures"]
         p = p if isinstance(p, str) else p[0] if isinstance(p, list) else p["path"]
-        im = Image.open(f"{R}/RP/{p}.png").convert("RGBA")
+        arq = f"{R}/RP/{p}.png"
+        if not os.path.exists(arq):  # textura do próprio jogo: cópia local em referencias/vanilla (fora do git)
+            arq = f"{R}/referencias/vanilla/{p}.png"
+        im = Image.open(arq).convert("RGBA")
         cache[nome] = im.crop((0, 0, im.width, im.width))  # 1º quadro das animadas
     return cache[nome]
 
@@ -40,8 +43,13 @@ def cubos(nome, bloco):
     arq = f"{R}/RP/models/blocks/cl_{nome}.geo.json"
     if os.path.exists(arq):
         geo = json.load(open(arq))["minecraft:geometry"][0]
+        g = bloco["components"]["minecraft:geometry"]
+        escondidos = set(g.get("bone_visibility", {})) if isinstance(g, dict) else set()
         for bone in geo["bones"]:
-            if nome == "cabo" and bone["name"] in ("leste", "oeste"):
+            if nome == "cabo":
+                if bone["name"] in ("leste", "oeste"):
+                    continue
+            elif bone["name"] in escondidos:  # partes que só aparecem em algum estado (conteúdo, níveis)
                 continue
             yield from bone.get("cubes", [])
         return

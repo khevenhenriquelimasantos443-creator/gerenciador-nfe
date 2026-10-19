@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:barril_pedra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P P",
+      "P P",
+      "PLP"
+    ],
+    "key": {
+      "P": {
+        "item": "minecraft:stone"
+      },
+      "L": {
+        "item": "minecraft:smooth_stone_slab"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stone"
+      }
+    ],
+    "result": {
+      "item": "cl:barril_pedra"
+    }
+  }
+}

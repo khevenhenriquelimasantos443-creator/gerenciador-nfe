@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.17.0";
+export const VERSAO = "0.18.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -46,6 +46,18 @@ export const IDS = {
   sacolaOtima: `${NS}:sacola_otima`,
   sacolaEpica: `${NS}:sacola_epica`,
   sacolaLendaria: `${NS}:sacola_lendaria`,
+  // Fase 12: Ex Nihilo + Ex Aliquo
+  poeira: `${NS}:poeira`,
+  pedrinha: `${NS}:pedrinha`,
+  barrilMadeira: `${NS}:barril_madeira`,
+  barrilPedra: `${NS}:barril_pedra`,
+  cadinho: `${NS}:cadinho`,
+  cadinhoCru: `${NS}:cadinho_cru`,
+  porcelana: `${NS}:porcelana`,
+  cajado: `${NS}:cajado`,
+  bichoSeda: `${NS}:bicho_seda`,
+  bichoSedaCozido: `${NS}:bicho_seda_cozido`,
+  folhaInfestada: `${NS}:folha_infestada`,
 } as const;
 
 // Monstros do deserto (Fase 7). Os comportamentos estão em BP/entities/*.json.
@@ -232,36 +244,63 @@ export const CONDENSADOR_SEGUNDOS = 30;
 
 // ---- Fase 3: máquinas (scripts/blocos/) ----
 
-// Peneira: cada toque com areia/cascalho na mão gasta 1 bloco e sorteia cada linha da tabela.
+// Peneira (scripts/blocos/peneira.ts): carrega 1 bloco e, depois de PENEIRA_TOQUES toques, sorteia cada linha da tabela.
 export type Achado = { item: string; chance: number; max?: number };
+// Fase 12: as tabelas do Ex Nihilo (chance = 1/raridade; cada linha é sorteada à parte e solta 1 item).
+// Terra, cascalho, areia e poeira, como no Ex Nihilo 1.29 (Crash Landing). Os pedaços de minério
+// (quebrado/triturado/em pó) têm a mesma raridade nos três: ferro 1/5, ouro 1/32, cobre 1/18.
+const pedacos = (estagio: string): Achado[] => [
+  { item: `${NS}:ferro_${estagio}`, chance: 1 / 5 },
+  { item: `${NS}:ouro_${estagio}`, chance: 1 / 32 },
+  { item: `${NS}:cobre_${estagio}`, chance: 1 / 18 },
+];
 export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
-  "minecraft:sand": [
-    { item: "minecraft:clay_ball", chance: 0.14, max: 2 },
-    { item: "minecraft:wheat_seeds", chance: 0.08 },
-    { item: "minecraft:beetroot_seeds", chance: 0.05 },
-    { item: "minecraft:pumpkin_seeds", chance: 0.03 },
-    { item: "minecraft:melon_seeds", chance: 0.03 },
-    { item: "minecraft:bone_meal", chance: 0.06 },
-    { item: "minecraft:iron_nugget", chance: 0.06, max: 2 },
-    { item: "minecraft:gold_nugget", chance: 0.03 },
-    { item: "minecraft:flint", chance: 0.03 },
-    { item: "minecraft:cactus", chance: 0.02 },
-    { item: "minecraft:sugar_cane", chance: 0.015 },
-    { item: "minecraft:oak_sapling", chance: 0.015 },
-    { item: "minecraft:birch_sapling", chance: 0.01 },
-    { item: "minecraft:acacia_sapling", chance: 0.01 },
+  "minecraft:dirt": [
+    { item: `${NS}:pedrinha`, chance: 1 },
+    { item: `${NS}:pedrinha`, chance: 1 },
+    { item: `${NS}:pedrinha`, chance: 1 / 2 },
+    { item: `${NS}:pedrinha`, chance: 1 / 2 },
+    { item: `${NS}:pedrinha`, chance: 1 / 3 },
+    { item: `${NS}:pedrinha`, chance: 1 / 3 },
+    { item: "minecraft:wheat_seeds", chance: 1 / 15 },
+    { item: "minecraft:short_grass", chance: 1 / 15 },
+    { item: "minecraft:melon_seeds", chance: 1 / 32 },
+    { item: "minecraft:pumpkin_seeds", chance: 1 / 32 },
+    { item: "minecraft:sugar_cane", chance: 1 / 32 },
+    { item: "minecraft:carrot", chance: 1 / 64 },
+    { item: "minecraft:potato", chance: 1 / 64 },
+    { item: "minecraft:oak_sapling", chance: 1 / 64 },
+    { item: "minecraft:spruce_sapling", chance: 1 / 90 },
+    { item: "minecraft:birch_sapling", chance: 1 / 90 },
+    { item: "minecraft:acacia_sapling", chance: 1 / 90 },
   ],
   "minecraft:gravel": [
-    { item: "minecraft:flint", chance: 0.25 },
-    { item: "minecraft:iron_nugget", chance: 0.15, max: 3 },
-    { item: "minecraft:gold_nugget", chance: 0.06, max: 2 },
-    { item: "minecraft:raw_copper", chance: 0.05 },
-    { item: "minecraft:coal", chance: 0.06 },
-    { item: "minecraft:redstone", chance: 0.04, max: 2 },
-    { item: "minecraft:lapis_lazuli", chance: 0.03 },
-    { item: "minecraft:diamond", chance: 0.003 },
+    { item: "minecraft:flint", chance: 1 / 4 },
+    { item: "minecraft:coal", chance: 1 / 8 },
+    { item: "minecraft:lapis_lazuli", chance: 1 / 20 },
+    { item: "minecraft:diamond", chance: 1 / 128 },
+    { item: "minecraft:emerald", chance: 1 / 150 },
+    ...pedacos("quebrado"),
+  ],
+  "minecraft:sand": [
+    { item: "minecraft:cocoa_beans", chance: 1 / 32 },
+    { item: "minecraft:cactus", chance: 1 / 32 },
+    { item: "minecraft:jungle_sapling", chance: 1 / 64 },
+    { item: "minecraft:brown_mushroom", chance: 1 / 128 }, // no Ex Nihilo: esporos
+    ...pedacos("triturado"),
+  ],
+  [`${NS}:poeira`]: [
+    { item: "minecraft:bone_meal", chance: 1 / 5 },
+    { item: "minecraft:redstone", chance: 1 / 8 },
+    { item: "minecraft:gunpowder", chance: 1 / 15 },
+    { item: "minecraft:glowstone_dust", chance: 1 / 16 },
+    { item: "minecraft:blaze_powder", chance: 1 / 20 },
+    ...pedacos("po"),
   ],
 };
+// Toques para peneirar um bloco: no Ex Nihilo cada clique soma 0,075 (14 cliques), no máximo
+// 1 a cada 4 ticks. Segurar o dedo na peneira conta como vários toques.
+export const PENEIRA_TOQUES = 14;
 
 // Compostor de terra: restos valem pontos; com 8 pontos ele decompõe por COMPOSTOR_SEGUNDOS
 // (minecraft:tick no JSON) e vira 1 terra.
@@ -685,8 +724,107 @@ export const SACOLA_GRUPOS: ReadonlyArray<{ nivel: keyof typeof SACOLA_PESOS; it
 // Catálogo (estilo JEI): de que "mod" vem cada item, para o filtro "@" da busca.
 // Os itens do add-on sem entrada aqui são "Pouso Forçado"; os "minecraft:" são "Minecraft".
 // As próximas fases (Ex Nihilo, Tinkers...) põem os seus itens aqui.
-export const ORIGEM_MOD: Readonly<Record<string, string>> = {};
+export const ORIGEM_MOD: Record<string, string> = {};
 export const CATALOGO = { porPagina: 24 } as const;
 
 // "O que estou olhando" (estilo WAILA), na barra de ação, junto com o painel de água e temperatura.
 export const OLHAR = { distanciaBloco: 6, distanciaEntidade: 8 } as const;
+
+// ---- Fase 12: Ex Nihilo + Ex Aliquo (scripts/blocos/barril.ts, cadinho.ts, nihilo.ts) ----
+
+export const METAIS_NIHILO = ["ferro", "ouro", "cobre"] as const;
+export const ESTAGIOS_NIHILO = ["quebrado", "triturado", "po"] as const;
+export const BRUTO_DO_METAL: Readonly<Record<string, string>> = { ferro: "minecraft:raw_iron", ouro: "minecraft:raw_gold", cobre: "minecraft:raw_copper" };
+
+// Martelo: quebra o bloco e dá o próximo da cadeia pedra -> cascalho -> areia -> poeira.
+// Durabilidade igual à das ferramentas do mesmo material (cobre: Ex Aliquo).
+export const MARTELOS: Readonly<Record<string, number>> = {
+  [`${NS}:martelo_madeira`]: 59,
+  [`${NS}:martelo_pedra`]: 131,
+  [`${NS}:martelo_cobre`]: 190,
+  [`${NS}:martelo_ferro`]: 250,
+  [`${NS}:martelo_ouro`]: 32,
+  [`${NS}:martelo_diamante`]: 1561,
+};
+export const MARTELO: Readonly<Record<string, ReadonlyArray<Achado>>> = {
+  "minecraft:cobblestone": [{ item: "minecraft:gravel", chance: 1 }],
+  "minecraft:gravel": [{ item: "minecraft:sand", chance: 1 }],
+  "minecraft:sand": [{ item: `${NS}:poeira`, chance: 1 }],
+  "minecraft:red_sand": [{ item: `${NS}:poeira`, chance: 1 }],
+  "minecraft:sandstone": [{ item: "minecraft:sand", chance: 1 }],
+  "minecraft:stone": [1, 0.75, 0.75, 0.5, 0.25, 0.05].map((chance) => ({ item: `${NS}:pedrinha`, chance })),
+};
+
+// Barril (madeira ou pedra): compostagem e "receitas" com 1.000 mB de água ou lava.
+// Valores de compostagem do Ex Nihilo: o barril enche de 0 a 1; cheio, vira terra em 1.000 ticks.
+const valores = (v: number, ids: string[]) => Object.fromEntries(ids.map((id) => [id.includes(":") ? id : `minecraft:${id}`, v]));
+export const BARRIL_COMPOSTO: Readonly<Record<string, number>> = {
+  ...valores(0.125, ["oak_sapling", "spruce_sapling", "birch_sapling", "jungle_sapling", "acacia_sapling", "dark_oak_sapling", "cherry_sapling",
+    "oak_leaves", "spruce_leaves", "birch_leaves", "jungle_leaves", "acacia_leaves", "dark_oak_leaves"]),
+  ...valores(0.1, ["rotten_flesh", "dandelion", "poppy", "brown_mushroom", "red_mushroom", "apple", "cactus", "waterlily", "vine", `${NS}:fruta_cacto`, "deadbush"]),
+  ...valores(0.08, ["spider_eye", "wheat", "carrot", "potato", "baked_potato", "poisonous_potato", "short_grass", "egg", "sugar_cane"]),
+  ...valores(0.16, ["bread", "pumpkin_pie"]),
+  ...valores(0.2, ["porkchop", "cooked_porkchop", "beef", "cooked_beef", "chicken", "cooked_chicken", "mutton", "cooked_mutton"]),
+  ...valores(0.15, ["cod", "salmon", "cooked_cod", "cooked_salmon"]),
+  ...valores(1 / 6, ["melon_block", "pumpkin", "lit_pumpkin"]),
+  ...valores(0.04, ["melon_slice", "string", `${NS}:bicho_seda`, `${NS}:bicho_seda_cozido`]),
+};
+export const BARRIL = {
+  compostoTicks: 1000, // cheio -> terra
+  leiteTicks: 1000, // água + leite -> slime pronto; mais 1000 e nasce um slime
+  // Item na mão com o barril cheio de água/lava: vira o bloco na hora.
+  receitas: [
+    { fluido: "agua", item: `${NS}:poeira`, vira: "minecraft:clay" },
+    { fluido: "lava", item: "minecraft:redstone", vira: "minecraft:netherrack" },
+    { fluido: "lava", item: "minecraft:glowstone_dust", vira: "minecraft:end_stone" },
+  ],
+  // Barril cheio com um bloco de fluido em cima.
+  encontro: [
+    { fluido: "lava", acima: ["minecraft:water", "minecraft:flowing_water"], vira: "minecraft:obsidian" },
+    { fluido: "agua", acima: ["minecraft:lava", "minecraft:flowing_lava"], vira: "minecraft:cobblestone" },
+  ],
+} as const;
+
+// Cadinho (porcelana): derrete pedra em lava e gelo/neve/folhas em água. Capacidade 10.000 entre
+// o sólido na fila e o líquido; não mistura fluidos. Calor = bloco logo abaixo, em mB por tick.
+export const CADINHO = {
+  capacidade: 10000,
+  entradas: {
+    "minecraft:cobblestone": { fluido: "lava", rende: 250, ocupa: 2000 },
+    "minecraft:stone": { fluido: "lava", rende: 250, ocupa: 2000 },
+    "minecraft:gravel": { fluido: "lava", rende: 250, ocupa: 2000 },
+    "minecraft:netherrack": { fluido: "lava", rende: 1000, ocupa: 2000 },
+    "minecraft:snow": { fluido: "agua", rende: 500, ocupa: 2000 },
+    "minecraft:ice": { fluido: "agua", rende: 1000, ocupa: 2000 },
+    // Crash Landing: folhas viram água (valor do pack não encontrado; 8 folhas = 1 balde).
+    "minecraft:oak_leaves": { fluido: "agua", rende: 125, ocupa: 1000 },
+    "minecraft:birch_leaves": { fluido: "agua", rende: 125, ocupa: 1000 },
+    "minecraft:acacia_leaves": { fluido: "agua", rende: 125, ocupa: 1000 },
+    "minecraft:spruce_leaves": { fluido: "agua", rende: 125, ocupa: 1000 },
+    "minecraft:jungle_leaves": { fluido: "agua", rende: 125, ocupa: 1000 },
+  } as Readonly<Record<string, { fluido: "lava" | "agua"; rende: number; ocupa: number }>>,
+  calor: {
+    "minecraft:torch": 0.1,
+    "minecraft:lava": 0.2,
+    "minecraft:flowing_lava": 0.1,
+    "minecraft:lit_furnace": 0.15,
+    "minecraft:fire": 0.3,
+    "minecraft:soul_fire": 0.3,
+    "minecraft:campfire": 0.2, // não existia no 1.6.4: entre a lava e o fogo
+    "minecraft:magma": 0.1,
+    [`${NS}:gerador`]: 0.15, // como as fontes de calor do Ex Aliquo: o gerador aceso
+  } as Readonly<Record<string, number>>,
+} as const;
+
+// Cajado e bicho-da-seda: folhas com o cajado soltam bicho 1/100 (folha infestada: 1/15). O bicho
+// infesta a folha em 2.000 ticks; passou de 60%, espalha para uma folha vizinha a cada ~100 ticks.
+// Quebrar a folha infestada dá linha (chance = infestação × 0,4, e mais uma com × 0,1).
+export const SEDA = { chanceFolha: 1 / 100, chanceInfestada: 1 / 15, linha1: 0.4, linha2: 0.1, espalhaAPartir: 6, durabilidadeCajado: 64 } as const;
+export const FOLHAS: ReadonlyArray<string> = ["oak_leaves", "spruce_leaves", "birch_leaves", "jungle_leaves", "acacia_leaves", "dark_oak_leaves", "cherry_leaves", "azalea_leaves"].map((n) => `minecraft:${n}`);
+
+for (const id of [
+  IDS.poeira, IDS.pedrinha, IDS.barrilMadeira, IDS.barrilPedra, IDS.cadinho, IDS.cadinhoCru, IDS.porcelana, IDS.cajado, IDS.bichoSeda,
+  IDS.bichoSedaCozido, IDS.folhaInfestada, ...Object.keys(MARTELOS).filter((m) => !m.endsWith("cobre")),
+  ...METAIS_NIHILO.flatMap((m) => ESTAGIOS_NIHILO.map((e) => `${NS}:${m}_${e}`)),
+]) ORIGEM_MOD[id] = "Ex Nihilo";
+ORIGEM_MOD[`${NS}:martelo_cobre`] = "Ex Aliquo";

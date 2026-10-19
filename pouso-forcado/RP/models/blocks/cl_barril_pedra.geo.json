@@ -1,0 +1,1151 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.barril_pedra",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "corpo",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7,
+                0,
+                -7
+              ],
+              "size": [
+                14,
+                1,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1,
+                    15
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "south": {
+                  "uv": [
+                    1,
+                    15
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "east": {
+                  "uv": [
+                    1,
+                    15
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "west": {
+                  "uv": [
+                    1,
+                    15
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "up": {
+                  "uv": [
+                    1,
+                    1
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "down": {
+                  "uv": [
+                    1,
+                    1
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "barril_pedra"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7,
+                1,
+                -7
+              ],
+              "size": [
+                14,
+                15,
+                1
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "south": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "east": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "west": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "up": {
+                  "uv": [
+                    1,
+                    1
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "down": {
+                  "uv": [
+                    1,
+                    14
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7,
+                1,
+                6
+              ],
+              "size": [
+                14,
+                15,
+                1
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "south": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "east": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "west": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "up": {
+                  "uv": [
+                    1,
+                    14
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "down": {
+                  "uv": [
+                    1,
+                    1
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "barril_pedra"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7,
+                1,
+                -6
+              ],
+              "size": [
+                1,
+                15,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "south": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "up": {
+                  "uv": [
+                    1,
+                    2
+                  ],
+                  "uv_size": [
+                    1,
+                    12
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "down": {
+                  "uv": [
+                    1,
+                    2
+                  ],
+                  "uv_size": [
+                    1,
+                    12
+                  ],
+                  "material_instance": "barril_pedra"
+                }
+              }
+            },
+            {
+              "origin": [
+                6,
+                1,
+                -6
+              ],
+              "size": [
+                1,
+                15,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "south": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    1,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    15
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "up": {
+                  "uv": [
+                    14,
+                    2
+                  ],
+                  "uv_size": [
+                    1,
+                    12
+                  ],
+                  "material_instance": "barril_pedra"
+                },
+                "down": {
+                  "uv": [
+                    14,
+                    2
+                  ],
+                  "uv_size": [
+                    1,
+                    12
+                  ],
+                  "material_instance": "barril_pedra"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n1",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                1.75,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    13.25
+                  ],
+                  "uv_size": [
+                    12,
+                    1.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    13.25
+                  ],
+                  "uv_size": [
+                    12,
+                    1.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    13.25
+                  ],
+                  "uv_size": [
+                    12,
+                    1.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    13.25
+                  ],
+                  "uv_size": [
+                    12,
+                    1.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n2",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                3.5,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    11.5
+                  ],
+                  "uv_size": [
+                    12,
+                    3.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    11.5
+                  ],
+                  "uv_size": [
+                    12,
+                    3.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    11.5
+                  ],
+                  "uv_size": [
+                    12,
+                    3.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    11.5
+                  ],
+                  "uv_size": [
+                    12,
+                    3.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n3",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                5.25,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    9.75
+                  ],
+                  "uv_size": [
+                    12,
+                    5.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    9.75
+                  ],
+                  "uv_size": [
+                    12,
+                    5.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    9.75
+                  ],
+                  "uv_size": [
+                    12,
+                    5.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    9.75
+                  ],
+                  "uv_size": [
+                    12,
+                    5.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n4",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                7,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    8
+                  ],
+                  "uv_size": [
+                    12,
+                    7
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    8
+                  ],
+                  "uv_size": [
+                    12,
+                    7
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    8
+                  ],
+                  "uv_size": [
+                    12,
+                    7
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    8
+                  ],
+                  "uv_size": [
+                    12,
+                    7
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n5",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                8.75,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    6.25
+                  ],
+                  "uv_size": [
+                    12,
+                    8.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    6.25
+                  ],
+                  "uv_size": [
+                    12,
+                    8.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    6.25
+                  ],
+                  "uv_size": [
+                    12,
+                    8.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    6.25
+                  ],
+                  "uv_size": [
+                    12,
+                    8.75
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n6",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                10.5,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    4.5
+                  ],
+                  "uv_size": [
+                    12,
+                    10.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    4.5
+                  ],
+                  "uv_size": [
+                    12,
+                    10.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    4.5
+                  ],
+                  "uv_size": [
+                    12,
+                    10.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    4.5
+                  ],
+                  "uv_size": [
+                    12,
+                    10.5
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n7",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                12.25,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    2.75
+                  ],
+                  "uv_size": [
+                    12,
+                    12.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    2.75
+                  ],
+                  "uv_size": [
+                    12,
+                    12.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    2.75
+                  ],
+                  "uv_size": [
+                    12,
+                    12.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    2.75
+                  ],
+                  "uv_size": [
+                    12,
+                    12.25
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "n8",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                1,
+                -6
+              ],
+              "size": [
+                12,
+                14,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    2,
+                    1
+                  ],
+                  "uv_size": [
+                    12,
+                    14
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "south": {
+                  "uv": [
+                    2,
+                    1
+                  ],
+                  "uv_size": [
+                    12,
+                    14
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    1
+                  ],
+                  "uv_size": [
+                    12,
+                    14
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    1
+                  ],
+                  "uv_size": [
+                    12,
+                    14
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "up": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                },
+                "down": {
+                  "uv": [
+                    2,
+                    2
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

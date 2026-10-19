@@ -1,5 +1,7 @@
 import { Block, Entity, Player, RawMessage } from "@minecraft/server";
-import { COMPOSTOR_CHEIO, CONDENSADOR_AVANCADO, ENERGIA, IDS, OLHAR } from "../config.js";
+import { COMPOSTOR_CHEIO, CONDENSADOR_AVANCADO, ENERGIA, IDS, OLHAR, PENEIRA_TOQUES } from "../config.js";
+import { CONTEUDOS } from "../blocos/barril.js";
+import { resumoCadinho } from "../blocos/cadinho.js";
 import { origemDe } from "../catalogo/catalogo.js";
 import { rf } from "../util/energia.js";
 import { olharLigado } from "./opcoes.js";
@@ -33,6 +35,20 @@ function detalheBloco(b: Block): RawMessage | undefined {
         : { translate: "cl.olhar.compostor", with: [String(estado<number>(b, "cl:nivel") ?? 0), String(COMPOSTOR_CHEIO)] };
     case IDS.condensadorAgua:
       return { translate: estado<boolean>(b, "cl:cheio") ? "cl.olhar.cheio" : "cl.olhar.condensando" };
+    case IDS.peneira: {
+      const t = estado<number>(b, "cl:progresso") ?? 0;
+      return (estado<number>(b, "cl:carga") ?? 0) > 0 ? { translate: "cl.olhar.peneirando", with: [String(t), String(PENEIRA_TOQUES)] } : undefined;
+    }
+    case IDS.barrilMadeira:
+    case IDS.barrilPedra: {
+      const c = CONTEUDOS[estado<number>(b, "cl:conteudo") ?? 0];
+      if (c === "composto") return { translate: "cl.olhar.compostando", with: [`${Math.round(((estado<number>(b, "cl:nivel") ?? 0) / 8) * 100)}%`] };
+      return { translate: `cl.olhar.barril_${c}` };
+    }
+    case IDS.cadinho:
+      return resumoCadinho(b);
+    case IDS.folhaInfestada:
+      return { translate: "cl.olhar.infestada", with: [`${(estado<number>(b, "cl:infest") ?? 0) * 10}%`] };
     case IDS.condensadorAvancado:
       return { translate: "cl.olhar.baldes", with: [String(estado<number>(b, "cl:nivel") ?? 0), String(CONDENSADOR_AVANCADO.capacidade)] };
   }
