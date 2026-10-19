@@ -5,7 +5,9 @@ import { condensadorAgua, condensadorAvancado } from "./blocos/condensador.js";
 import { bateria, gerador, moinho, painelSolar, peneiraAutomatica } from "./blocos/energia.js";
 import { estufa } from "./blocos/estufa.js";
 import { geradorMonstros, registrarGeradorMonstros } from "./blocos/gerador_monstros.js";
+import { montadora } from "./blocos/montadora.js";
 import { peneira } from "./blocos/peneira.js";
+import { terminal } from "./blocos/terminal.js";
 import { IDS } from "./config.js";
 import { registrarBoasVindas } from "./jogador/boas_vindas.js";
 import { registrarAguas } from "./jogador/aguas.js";
@@ -17,6 +19,7 @@ import { registrarCapsulas } from "./mundo/capsulas.js";
 import { idoloAmaldicoado, registrarFarao } from "./mundo/farao.js";
 import { registrarMonstros } from "./mundo/monstros.js";
 import { registrarPontos } from "./mundo/pontos.js";
+import { painelNave } from "./mundo/reparo.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
@@ -37,6 +40,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent(IDS.moinho, moinho);
   blockComponentRegistry.registerCustomComponent(IDS.geradorMonstros, geradorMonstros);
   blockComponentRegistry.registerCustomComponent(IDS.idolo, idoloAmaldicoado);
+  blockComponentRegistry.registerCustomComponent(IDS.montadora, montadora);
+  blockComponentRegistry.registerCustomComponent(IDS.painelNave, painelNave);
+  blockComponentRegistry.registerCustomComponent(IDS.terminal, terminal);
 });
 
 registrarBoasVindas();

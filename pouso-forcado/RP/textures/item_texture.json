@@ -28,6 +28,21 @@
     },
     "cl_coracao_farao": {
       "textures": "textures/items/cl/coracao_farao"
+    },
+    "cl_placa_casco": {
+      "textures": "textures/items/cl/placa_casco"
+    },
+    "cl_circuito": {
+      "textures": "textures/items/cl/circuito"
+    },
+    "cl_celula_combustivel": {
+      "textures": "textures/items/cl/celula_combustivel"
+    },
+    "cl_motor_nave": {
+      "textures": "textures/items/cl/motor_nave"
+    },
+    "cl_computador_bordo": {
+      "textures": "textures/items/cl/computador_bordo"
     }
   }
 }

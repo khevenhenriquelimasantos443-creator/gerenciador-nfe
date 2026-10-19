@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:motor_nave",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "cl_motor_nave",
+      "minecraft:display_name": {
+        "value": "item.cl:motor_nave.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

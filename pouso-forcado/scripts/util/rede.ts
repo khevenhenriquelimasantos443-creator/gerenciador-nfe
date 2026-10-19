@@ -32,6 +32,27 @@ export function procurarNaRede(origem: Block, quer: (b: Block) => boolean): Bloc
   return undefined;
 }
 
+/** Todos os blocos da rede que satisfazem `quer` (até `max`), andando por até `maxBlocos` condutores. */
+export function coletarNaRede(origem: Block, quer: (b: Block) => boolean, max: number, maxBlocos: number): Block[] {
+  const achados: Block[] = [];
+  const vistos = new Set<string>([chave(origem)]);
+  const fila = [...vizinhos(origem)];
+  let condutores = 0;
+  while (fila.length > 0 && achados.length < max) {
+    const b = fila.shift()!;
+    if (vistos.has(chave(b))) continue;
+    vistos.add(chave(b));
+    if (quer(b)) {
+      achados.push(b);
+      continue;
+    }
+    if (!CONDUTORES.has(b.typeId)) continue;
+    if (++condutores > maxBlocos) break;
+    fila.push(...vizinhos(b));
+  }
+  return achados;
+}
+
 export const cargaDe = (bateria: Block): number => lerEstado<number>(bateria, CARGA);
 
 /** Manda até `unidades` para baterias com espaço. Retorna quantas foram guardadas. */

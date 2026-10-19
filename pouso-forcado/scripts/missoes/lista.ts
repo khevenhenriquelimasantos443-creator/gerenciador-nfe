@@ -27,7 +27,11 @@ export type Acao =
   | "masmorra"
   | "masmorra_funda"
   | "destrocos"
-  | "tempestade";
+  | "tempestade"
+  | "reparo_casco"
+  | "reparo_computador"
+  | "reparo_combustivel"
+  | "reparo_motor";
 
 export type Missao = { id: string; objetivo: Objetivo; recompensa: ReadonlyArray<Pilha> };
 
@@ -116,4 +120,14 @@ export const MISSOES: ReadonlyArray<Missao> = [
   { id: "faixas", objetivo: { tipo: "ter", item: IDS.faixaMumia, qtd: 4 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
   { id: "idolo", objetivo: { tipo: "colocar", bloco: IDS.idolo, qtd: 1 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 2 }] },
   { id: "farao", objetivo: { tipo: "matar", familia: "farao", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 3 }] },
+
+  // Fase 8: consertar a nave
+  { id: "montadora", objetivo: { tipo: "colocar", bloco: IDS.montadora, qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
+  { id: "terminal", objetivo: { tipo: "colocar", bloco: IDS.terminal, qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 4 }] },
+  { id: "placas", objetivo: { tipo: "ter", item: IDS.placaCasco, qtd: 4 }, recompensa: [{ item: "minecraft:copper_ingot", quantidade: 6 }] },
+  { id: "casco", objetivo: { tipo: "acao", acao: "reparo_casco", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+  { id: "circuitos", objetivo: { tipo: "ter", item: IDS.circuito, qtd: 4 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 3 }] },
+  { id: "computador", objetivo: { tipo: "acao", acao: "reparo_computador", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+  { id: "combustivel", objetivo: { tipo: "acao", acao: "reparo_combustivel", qtd: 1 }, recompensa: [{ item: IDS.aguaExcelente, quantidade: 4 }] },
+  { id: "motor", objetivo: { tipo: "acao", acao: "reparo_motor", qtd: 1 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 2 }] },
 ];

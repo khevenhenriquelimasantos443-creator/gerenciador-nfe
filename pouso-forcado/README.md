@@ -16,8 +16,8 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 4 | Comida e vida: sede, temperatura do corpo, 5 qualidades de água, fruta do cacto, cápsulas de carga com animais; +8 missões | pronta |
 | 5 | Energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | pronta |
 | 6 | Exploração: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | pronta |
-| 7 | **Perigos do deserto**: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | **esta versão** |
-| 8 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
+| 7 | Perigos do deserto: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | pronta |
+| 8 | **Consertar a nave**: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | **esta versão** |
 | 9 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
 
@@ -118,7 +118,7 @@ Outros comandos:
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.14.1] mundo: plano | ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.15.0] mundo: plano | ...`.
 
 ## Diário de Bordo (Fase 2)
 
@@ -212,6 +212,32 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
   - (Se nenhum outro add-on tiver um comando com o mesmo nome, dá para digitar sem o `cl:`, por exemplo `/cidade`.)
 - Números em `CIDADE`, `RARAS`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
+## Consertar a nave (Fase 8)
+
+- **Painel da Nave** (`cl:painel_nave`): já vem dentro da nave caída, ao lado do baú de suprimentos (se sumir, tem receita: ferro, vidro e redstone). Toque nele: mostra os 4 sistemas e o que falta. Com as peças na mochila, **Instalar** conserta o sistema (vale para o mundo todo).
+  | Sistema | Peças |
+  |---|---|
+  | Casco | 12 Placas de Casco + 8 vidros |
+  | Computador de Bordo | 1 Computador de Bordo |
+  | Combustível | 8 Células de Combustível |
+  | Motor | 1 Motor da Nave (leva o **Coração do Faraó**) |
+  Com os 4 prontos, a nave está pronta para decolar (a decolagem é a Fase 10).
+- **Montadora** (`cl:montadora`; bancada: ferro, pistão, redstone e bancada de trabalho): máquina de energia que faz as peças. Ingredientes num baú/funil **em cima**, peça no baú/funil **embaixo** (ou cai do lado). Gasta 1 E a cada 5 s de uma bateria ligada por cabos; a primeira receita completa no baú é a que ela faz. Toque nela para ver as receitas e o andamento:
+  | Peça | Ingredientes | Energia |
+  |---|---|---|
+  | Placa de Casco | 3 ferro + 2 cobre | 2 E |
+  | Circuito | 2 redstone + 1 ouro + 1 cobre | 2 E |
+  | Célula de Combustível | 4 carvão + 1 Água Boa + 1 ferro | 3 E |
+  | Computador de Bordo | 6 circuitos + 1 diamante + 4 vidros + 4 ouro | 12 E |
+  | Motor da Nave | Coração do Faraó + 4 blocos de ferro + 4 circuitos + 1 Bateria | 15 E |
+  Os destroços de outras naves agora também têm circuitos e placas; as cidades, às vezes, um circuito.
+- **Terminal de Armazenamento** (`cl:terminal`; bancada: ferro, vidro, redstone e baú), uma rede de baús no estilo **Applied Energistics**:
+  - todo baú, baú com armadilha ou barril **encostado num cabo** ligado ao terminal (ou no próprio terminal) entra na rede, até 48 (baú duplo conta como um);
+  - tocar no terminal gasta 1 E de uma bateria da rede e abre um menu com **tudo o que está guardado, somado**;
+  - **tirar** 1, 16, 64 ou tudo de um item; **procurar** pelo nome em inglês (ex.: `iron`, `sand`); **guardar a mochila** inteira de uma vez (a barra rápida e o Diário ficam com você);
+  - ajuste em `ARMAZENAMENTO` no `scripts/config.ts`.
+- Missões novas: Montadora, Terminal, 4 placas, casco, 4 circuitos, computador, combustível e motor.
+
 ## Perigos do deserto (Fase 7)
 
 - **Múmia** (`cl:mumia`): um pouco maior que um zumbi, 30 de vida; o golpe dá **fome**. Deixa carne podre, às vezes **Faixa de Múmia**, osso e pepitas de ouro.
@@ -304,7 +330,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.14.1] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.15.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

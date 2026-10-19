@@ -42,5 +42,14 @@
   },
   "cl:idolo_amaldicoado": {
     "sound": "stone"
+  },
+  "cl:montadora": {
+    "sound": "metal"
+  },
+  "cl:painel_nave": {
+    "sound": "metal"
+  },
+  "cl:terminal": {
+    "sound": "metal"
   }
 }

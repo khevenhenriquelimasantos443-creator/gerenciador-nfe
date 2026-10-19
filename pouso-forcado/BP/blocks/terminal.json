@@ -1,0 +1,37 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:terminal",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_terminal_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_terminal_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cl_condensador_base",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#2b3f5c",
+      "cl:terminal": {},
+      "minecraft:light_emission": 5
+    }
+  }
+}

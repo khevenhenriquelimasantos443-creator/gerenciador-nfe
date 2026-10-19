@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.14.1";
+export const VERSAO = "0.15.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -31,6 +31,14 @@ export const IDS = {
   idolo: `${NS}:idolo_amaldicoado`,
   faixaMumia: `${NS}:faixa_mumia`,
   coracaoFarao: `${NS}:coracao_farao`,
+  montadora: `${NS}:montadora`,
+  painelNave: `${NS}:painel_nave`,
+  terminal: `${NS}:terminal`,
+  placaCasco: `${NS}:placa_casco`,
+  circuito: `${NS}:circuito`,
+  celulaCombustivel: `${NS}:celula_combustivel`,
+  motorNave: `${NS}:motor_nave`,
+  computadorBordo: `${NS}:computador_bordo`,
 } as const;
 
 // Monstros do deserto (Fase 7). Os comportamentos estão em BP/entities/*.json.
@@ -55,6 +63,7 @@ export const PROPS = {
   visitados: `${NS}:visitados`, // jogador: JSON com os lugares que ele já achou
   tempestadeAte: `${NS}:tempestade_ate`, // mundo: tempo absoluto em que a tempestade acaba
   tempestadeFim: `${NS}:tempestade_fim`, // mundo: tempo absoluto em que a última tempestade acabou
+  reparos: `${NS}:reparos`, // mundo: sistemas da nave já consertados, separados por vírgula
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
@@ -477,6 +486,7 @@ export const CIDADE_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "cl:agua_suja", min: 1, max: 3, chance: 0.3 },
   { item: "minecraft:bread", min: 1, max: 3, chance: 0.35 },
   { item: "minecraft:paper", min: 2, max: 6, chance: 0.3 },
+  { item: "cl:circuito", min: 1, max: 1, chance: 0.12 },
   { item: "minecraft:book", min: 1, max: 2, chance: 0.15 },
   { item: "minecraft:torch", min: 4, max: 10, chance: 0.35 },
   { item: "minecraft:leather_helmet", min: 1, max: 1, chance: 0.1 },
@@ -530,6 +540,8 @@ export const DESTROCOS_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "cl:agua_boa", min: 1, max: 3, chance: 0.6 },
   { item: "minecraft:bucket", min: 1, max: 1, chance: 0.25 },
   { item: "minecraft:gold_ingot", min: 1, max: 2, chance: 0.2 },
+  { item: "cl:circuito", min: 1, max: 2, chance: 0.5 }, // placas de outra nave
+  { item: "cl:placa_casco", min: 1, max: 3, chance: 0.4 },
 ];
 
 // Gerador de Monstros (scripts/blocos/gerador_monstros.ts): bloco das cidades e masmorras.
@@ -567,6 +579,50 @@ export const FARAO = {
   tempestadeAbaixoDe: 0.5, // fração da vida: abaixo disso ele chama uma tempestade de areia (uma vez)
   noiteInicio: 13000,
   noiteFim: 23000,
+} as const;
+
+// Montadora (scripts/blocos/montadora.ts): máquina de energia que faz as peças da nave.
+// Puxa os ingredientes do baú/funil EM CIMA e põe a peça no baú/funil EMBAIXO (ou solta do lado).
+// Gasta 1 E a cada 5 s até juntar "energia" E; a primeira receita completa da lista é a que sai.
+export type ReceitaMontadora = { resultado: string; quantidade: number; energia: number; ingredientes: ReadonlyArray<{ item: string; qtd: number }> };
+export const MONTADORA: ReadonlyArray<ReceitaMontadora> = [
+  {
+    resultado: IDS.motorNave, quantidade: 1, energia: 15,
+    ingredientes: [{ item: IDS.coracaoFarao, qtd: 1 }, { item: "minecraft:iron_block", qtd: 4 }, { item: IDS.circuito, qtd: 4 }, { item: IDS.bateria, qtd: 1 }],
+  },
+  {
+    resultado: IDS.computadorBordo, quantidade: 1, energia: 12,
+    ingredientes: [{ item: IDS.circuito, qtd: 6 }, { item: "minecraft:diamond", qtd: 1 }, { item: "minecraft:glass", qtd: 4 }, { item: "minecraft:gold_ingot", qtd: 4 }],
+  },
+  {
+    resultado: IDS.celulaCombustivel, quantidade: 1, energia: 3,
+    ingredientes: [{ item: "minecraft:coal", qtd: 4 }, { item: IDS.aguaBoa, qtd: 1 }, { item: "minecraft:iron_ingot", qtd: 1 }],
+  },
+  {
+    resultado: IDS.circuito, quantidade: 1, energia: 2,
+    ingredientes: [{ item: "minecraft:redstone", qtd: 2 }, { item: "minecraft:gold_ingot", qtd: 1 }, { item: "minecraft:copper_ingot", qtd: 1 }],
+  },
+  {
+    resultado: IDS.placaCasco, quantidade: 1, energia: 2,
+    ingredientes: [{ item: "minecraft:iron_ingot", qtd: 3 }, { item: "minecraft:copper_ingot", qtd: 2 }],
+  },
+];
+
+// Os 4 sistemas da nave (scripts/mundo/reparo.ts), consertados no Painel da Nave.
+export const SISTEMAS_NAVE: ReadonlyArray<{ id: string; pecas: ReadonlyArray<{ item: string; qtd: number }> }> = [
+  { id: "casco", pecas: [{ item: IDS.placaCasco, qtd: 12 }, { item: "minecraft:glass", qtd: 8 }] },
+  { id: "computador", pecas: [{ item: IDS.computadorBordo, qtd: 1 }] },
+  { id: "combustivel", pecas: [{ item: IDS.celulaCombustivel, qtd: 8 }] },
+  { id: "motor", pecas: [{ item: IDS.motorNave, qtd: 1 }] },
+];
+
+// Terminal de Armazenamento (scripts/blocos/terminal.ts): rede de baús tipo Applied Energistics.
+export const ARMAZENAMENTO = {
+  conteineres: ["minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel"], // o que entra na rede
+  maxConteineres: 48,
+  maxBlocos: 160, // cabos/blocos de energia percorridos na busca
+  energiaPorUso: 1, // E gasto ao abrir o terminal
+  porPagina: 40, // itens por página na lista
 } as const;
 
 // Tempestade de areia (scripts/mundo/tempestade.ts).

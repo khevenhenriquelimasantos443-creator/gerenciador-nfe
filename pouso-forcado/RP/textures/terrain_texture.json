@@ -96,6 +96,24 @@
     },
     "cl_idolo_topo": {
       "textures": "textures/blocks/cl/idolo_topo"
+    },
+    "cl_montadora_lado": {
+      "textures": "textures/blocks/cl/montadora_lado"
+    },
+    "cl_montadora_topo": {
+      "textures": "textures/blocks/cl/montadora_topo"
+    },
+    "cl_painel_nave_lado": {
+      "textures": "textures/blocks/cl/painel_nave_lado"
+    },
+    "cl_painel_nave_topo": {
+      "textures": "textures/blocks/cl/painel_nave_topo"
+    },
+    "cl_terminal_lado": {
+      "textures": "textures/blocks/cl/terminal_lado"
+    },
+    "cl_terminal_topo": {
+      "textures": "textures/blocks/cl/terminal_topo"
     }
   }
 }

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:painel_nave",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_painel_nave_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_painel_nave_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cl_condensador_base",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c0c8d0",
+      "cl:painel_nave": {},
+      "minecraft:light_emission": 7
+    }
+  }
+}
