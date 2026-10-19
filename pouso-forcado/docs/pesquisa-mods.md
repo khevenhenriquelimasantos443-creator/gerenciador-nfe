@@ -469,5 +469,5 @@ O JEI do Java (lista lateral dentro do inventário, teclas R/U, botão "+") **n�
 | **Livres se o pack for gratuito e sob a mesma licença** (CC BY-NC-SA) | EnviroMine, JABBA, AE2 (as texturas do AE1 são fechadas, mas as do AE2 são parecidas e liberadas) | Originais, **se** você aceitar que o resource pack seja publicado como **CC BY-NC-SA 4.0** (grátis, com crédito, sem venda) |
 | **Proibidas ou sem licença** | Ex Nihilo, HQM (arte do 1.6.4), Hunger Overhaul, HarvestCraft, Iguana, Thermal Expansion, MFR, AE1, Chisel (Painterly), PneumaticCraft (GPL), Sync (LGPL) | **Redesenhadas** em 16×16, imitando forma e paleta das originais, sem copiar pixel a pixel |
 
-- Os arquivos originais ficam em `referencias/`, que **não vai para o git**. O `tools/` copia só os liberados para o RP durante o build.
+- As texturas liberadas entram no RP (no git), com crédito no CREDITOS.md. A pasta `referencias/` continua só para consulta e fora do git.
 - Os blocos que já existem (Fase 9) mantêm o visual atual.
