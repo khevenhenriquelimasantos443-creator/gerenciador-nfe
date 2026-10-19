@@ -1,5 +1,5 @@
 import { Difficulty, Dimension, EntityInitializationCause, GameMode, Player, Vector3, system, world } from "@minecraft/server";
-import { HORDA, PROPS } from "../config.js";
+import { FAMILIA_RESISTE_SOL, HORDA, PROPS } from "../config.js";
 
 /*
  * Noite e dia no deserto:
@@ -9,6 +9,7 @@ import { HORDA, PROPS } from "../config.js";
  *   monstros em volta de cada jogador, mais a cada dia que passa.
  * - De dia, o sol do planeta incendeia todo monstro exposto ao céu (até husks, aranhas
  *   e creepers, que no jogo normal não queimam). Quem está na sombra ou no subsolo escapa.
+ *   O Golem de Areia e o Faraó (família cl_resiste_sol) não queimam nem são apagados.
  * - De dia, nenhum monstro nasce sob o céu aberto: se o jogo fizer um nascer (spawn natural),
  *   ele é removido no mesmo instante. No subsolo e na sombra o spawn segue normal.
  * Custo: uma busca de entidades por jogador a cada 10 s à noite; de dia, uma busca de
@@ -127,7 +128,7 @@ function soloCeu(dimensao: Dimension, { x, y, z }: Vector3): boolean {
 
 function solQueima(): void {
   const dimensao = world.getDimension("minecraft:overworld");
-  for (const mob of dimensao.getEntities({ families: ["monster"] })) {
+  for (const mob of dimensao.getEntities({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] })) {
     try {
       if (soloCeu(dimensao, mob.location)) mob.setOnFire(HORDA.sol.segundosFogo, true);
     } catch {
@@ -159,7 +160,7 @@ export function registrarHordaNoturna(): void {
     if (cause !== EntityInitializationCause.Spawned || !solAlto()) return;
     if (entity.typeId === "minecraft:item" || entity.dimension.id !== "minecraft:overworld") return;
     try {
-      if (entity.matches({ families: ["monster"] }) && soloCeu(entity.dimension, entity.location)) entity.remove();
+      if (entity.matches({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] }) && soloCeu(entity.dimension, entity.location)) entity.remove();
     } catch {
       // entidade já saiu do mundo
     }

@@ -90,6 +90,12 @@
     },
     "cl_gerador_monstros": {
       "textures": "textures/blocks/cl/gerador_monstros"
+    },
+    "cl_idolo_lado": {
+      "textures": "textures/blocks/cl/idolo_lado"
+    },
+    "cl_idolo_topo": {
+      "textures": "textures/blocks/cl/idolo_topo"
     }
   }
 }

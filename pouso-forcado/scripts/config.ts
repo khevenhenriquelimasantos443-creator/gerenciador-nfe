@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.13.8";
+export const VERSAO = "0.14.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -28,7 +28,21 @@ export const IDS = {
   aguaSuja: `${NS}:agua_suja`,
   aguaMuitoSuja: `${NS}:agua_muito_suja`,
   aguaImpropria: `${NS}:agua_impropria`,
+  idolo: `${NS}:idolo_amaldicoado`,
+  faixaMumia: `${NS}:faixa_mumia`,
+  coracaoFarao: `${NS}:coracao_farao`,
 } as const;
+
+// Monstros do deserto (Fase 7). Os comportamentos estão em BP/entities/*.json.
+export const MONSTROS_CL = {
+  mumia: `${NS}:mumia`,
+  escorpiao: `${NS}:escorpiao`,
+  golem: `${NS}:golem_areia`,
+  farao: `${NS}:farao`,
+} as const;
+
+// Família dos monstros que o sol não queima nem apaga (golem da tempestade e o faraó).
+export const FAMILIA_RESISTE_SOL = "cl_resiste_sol";
 
 // Chaves de dynamic properties (salvas no mundo/jogador).
 export const PROPS = {
@@ -77,8 +91,8 @@ export const HORDA = {
   distanciaMin: 12, // longe o bastante para não nascer na cara do jogador
   distanciaMax: 28,
   mobs: [
-    "minecraft:husk", "minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton",
-    "minecraft:skeleton", "minecraft:spider", "minecraft:spider", "minecraft:creeper",
+    "minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:skeleton",
+    "minecraft:spider", "minecraft:creeper", "cl:mumia", "cl:mumia", "cl:escorpiao", "cl:escorpiao",
   ],
   // As ondas da horda: em cada uma dessas horas da noite, uma onda em volta de cada jogador.
   // Tamanho = base + porDia × dia do mundo (até max).
@@ -523,13 +537,36 @@ export const GERADOR_MONSTROS = {
   raioJogador: 20, // só funciona com jogador a até tantos blocos
   limitePerto: 5, // não põe mais se já houver tantos monstros a até 10 blocos
   porVez: [1, 2],
-  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:spider"],
-  mobsFundo: ["minecraft:skeleton", "minecraft:stray", "minecraft:cave_spider", "minecraft:creeper", "minecraft:zombie"], // abaixo de y = 0
+  mobs: ["minecraft:husk", "cl:mumia", "cl:mumia", "minecraft:skeleton", "cl:escorpiao", "minecraft:spider"],
+  mobsFundo: ["minecraft:skeleton", "minecraft:stray", "minecraft:cave_spider", "minecraft:creeper", "cl:escorpiao", "cl:mumia"], // abaixo de y = 0
   saque: [
     { item: "minecraft:iron_ingot", min: 1, max: 3, chance: 1 },
     { item: "minecraft:gold_nugget", min: 2, max: 6, chance: 0.8 },
     { item: "minecraft:redstone", min: 2, max: 4, chance: 0.6 },
   ] as ReadonlyArray<LinhaSaque>,
+} as const;
+
+// Golem de Areia (scripts/mundo/monstros.ts): só existe durante a tempestade de areia.
+export const GOLEM_AREIA = {
+  chancePorCiclo: 0.12, // a cada 2 s, por jogador ao ar livre na tempestade
+  maxPerto: 2, // golens a até 48 blocos do jogador
+  distanciaMin: 14,
+  distanciaMax: 26,
+  areiaAoDesmoronar: [2, 5], // blocos de areia que caem quando ele desmorona no fim da tempestade
+} as const;
+
+// Faraó Amaldiçoado, o chefe (scripts/mundo/farao.ts). Acorda ao tocar no Ídolo Amaldiçoado à noite.
+export const FARAO = {
+  raioAlvo: 28, // só age com jogador a até tantos blocos
+  invocarCadaTicks: 240, // chama múmias e escorpiões
+  invocarQtd: 3,
+  maxServos: 8, // não chama mais se já houver tantos servos a até 20 blocos
+  rajadaCadaTicks: 140, // rajada de areia: empurra, cega e fere quem está perto
+  rajadaRaio: 7,
+  rajadaDano: 5,
+  tempestadeAbaixoDe: 0.5, // fração da vida: abaixo disso ele chama uma tempestade de areia (uma vez)
+  noiteInicio: 13000,
+  noiteFim: 23000,
 } as const;
 
 // Tempestade de areia (scripts/mundo/tempestade.ts).

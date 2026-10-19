@@ -207,3 +207,36 @@ cl.direcao.norte_oeste=northwest
 cl.direcao.sul_leste=southeast
 cl.direcao.sul_oeste=southwest
 cl.direcao.aqui=right around you
+
+## Desert dangers (Phase 7)
+entity.cl:mumia.name=Mummy
+entity.cl:escorpiao.name=Desert Scorpion
+entity.cl:golem_areia.name=Sand Golem
+entity.cl:farao.name=Cursed Pharaoh
+item.spawn_egg.entity.cl:mumia.name=Spawn Mummy
+item.spawn_egg.entity.cl:escorpiao.name=Spawn Desert Scorpion
+item.spawn_egg.entity.cl:golem_areia.name=Spawn Sand Golem
+item.spawn_egg.entity.cl:farao.name=Spawn Cursed Pharaoh
+item.cl:faixa_mumia.name=Mummy Wrap
+item.cl:coracao_farao.name=Pharaoh's Heart
+tile.cl:idolo_amaldicoado.name=Cursed Idol
+cl.farao.titulo=§6The Pharaoh has awakened!
+cl.farao.subtitulo=The sand trembles beneath your feet...
+cl.farao.so_noite=The idol is cold. It only awakens at night.
+cl.farao.ja_acordado=The Pharaoh is already awake nearby!
+cl.farao.tempestade=The Pharaoh raises his arms and calls the storm!
+cl.farao.derrotado=The Cursed Pharaoh has fallen! Take the Pharaoh's Heart: it will help repair the ship.
+
+## Missions (Phase 7)
+cl.missao.mumias.titulo=The dead walk
+cl.missao.mumias.desc=Defeat 5 mummies. They come out at night and their touch makes you hungry.
+cl.missao.escorpioes.titulo=Venomous sting
+cl.missao.escorpioes.desc=Defeat 5 desert scorpions. Watch out for the poison: they climb walls.
+cl.missao.golem.titulo=Made of sand
+cl.missao.golem.desc=Defeat a Sand Golem. They only appear during sandstorms.
+cl.missao.faixas.titulo=Ancient wraps
+cl.missao.faixas.desc=Collect 4 Mummy Wraps (mummies drop them).
+cl.missao.idolo.titulo=The idol
+cl.missao.idolo.desc=Craft and place a Cursed Idol: 4 gold ingots in the corners, 4 mummy wraps on the sides and chiseled sandstone in the middle. Touch it at night... if you dare.
+cl.missao.farao.titulo=The Cursed Pharaoh
+cl.missao.farao.desc=Defeat the Cursed Pharaoh. He summons servants, blasts sand and, when hurt, calls the storm.

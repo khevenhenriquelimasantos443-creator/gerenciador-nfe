@@ -14,6 +14,8 @@ import { registrarHud } from "./jogador/hud.js";
 import { registrarSede } from "./jogador/sede.js";
 import { registrarTemperatura } from "./jogador/temperatura.js";
 import { registrarCapsulas } from "./mundo/capsulas.js";
+import { idoloAmaldicoado, registrarFarao } from "./mundo/farao.js";
+import { registrarMonstros } from "./mundo/monstros.js";
 import { registrarPontos } from "./mundo/pontos.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
@@ -34,6 +36,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent(IDS.peneiraAutomatica, peneiraAutomatica);
   blockComponentRegistry.registerCustomComponent(IDS.moinho, moinho);
   blockComponentRegistry.registerCustomComponent(IDS.geradorMonstros, geradorMonstros);
+  blockComponentRegistry.registerCustomComponent(IDS.idolo, idoloAmaldicoado);
 });
 
 registrarBoasVindas();
@@ -48,3 +51,5 @@ registrarGeradorMonstros();
 registrarPontos();
 registrarTempestade();
 registrarCapsulas();
+registrarMonstros();
+registrarFarao();

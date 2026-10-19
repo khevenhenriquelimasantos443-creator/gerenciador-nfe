@@ -1,0 +1,36 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "cl:escorpiao",
+      "min_engine_version": "1.8.0",
+      "materials": {
+        "default": "spider",
+        "invisible": "spider_invisible"
+      },
+      "textures": {
+        "default": "textures/entity/cl/escorpiao"
+      },
+      "geometry": {
+        "default": "geometry.spider.v1.8"
+      },
+      "animations": {
+        "default_leg_pose": "animation.spider.default_leg_pose",
+        "look_at_target": "animation.spider.look_at_target",
+        "walk": "animation.spider.walk"
+      },
+      "animation_controllers": [
+        {
+          "move": "controller.animation.spider.move"
+        }
+      ],
+      "render_controllers": [
+        "controller.render.spider"
+      ],
+      "spawn_egg": {
+        "base_color": "#a0522d",
+        "overlay_color": "#2b1a0e"
+      }
+    }
+  }
+}

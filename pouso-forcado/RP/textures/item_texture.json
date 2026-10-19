@@ -22,6 +22,12 @@
     },
     "cl_agua_impropria": {
       "textures": "textures/items/cl/agua_impropria"
+    },
+    "cl_faixa_mumia": {
+      "textures": "textures/items/cl/faixa_mumia"
+    },
+    "cl_coracao_farao": {
+      "textures": "textures/items/cl/coracao_farao"
     }
   }
 }

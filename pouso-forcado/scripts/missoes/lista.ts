@@ -108,4 +108,12 @@ export const MISSOES: ReadonlyArray<Missao> = [
     objetivo: { tipo: "acao", acao: "masmorra_funda", qtd: 1 },
     recompensa: [{ item: "minecraft:golden_apple", quantidade: 1 }],
   },
+
+  // Fase 7: perigos do deserto
+  { id: "mumias", objetivo: { tipo: "matar", familia: "mumia", qtd: 5 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
+  { id: "escorpioes", objetivo: { tipo: "matar", familia: "escorpiao", qtd: 5 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 3 }] },
+  { id: "golem", objetivo: { tipo: "matar", familia: "golem_areia", qtd: 1 }, recompensa: [{ item: "minecraft:glass", quantidade: 8 }] },
+  { id: "faixas", objetivo: { tipo: "ter", item: IDS.faixaMumia, qtd: 4 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
+  { id: "idolo", objetivo: { tipo: "colocar", bloco: IDS.idolo, qtd: 1 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 2 }] },
+  { id: "farao", objetivo: { tipo: "matar", familia: "farao", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 3 }] },
 ];

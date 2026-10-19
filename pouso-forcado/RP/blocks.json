@@ -39,5 +39,8 @@
   },
   "cl:gerador_monstros": {
     "sound": "metal"
+  },
+  "cl:idolo_amaldicoado": {
+    "sound": "stone"
   }
 }

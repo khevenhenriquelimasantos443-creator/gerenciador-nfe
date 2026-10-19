@@ -15,8 +15,8 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 3 | Máquinas de sobrevivência: Peneira, Compostor de Terra, Condensador Avançado, Estufa; +8 missões | pronta |
 | 4 | Comida e vida: sede, temperatura do corpo, 5 qualidades de água, fruta do cacto, cápsulas de carga com animais; +8 missões | pronta |
 | 5 | Energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | pronta |
-| 6 | **Exploração**: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | **esta versão** |
-| 7 | (próxima) Perigos: monstros novos do deserto e um chefe | |
+| 6 | Exploração: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | pronta |
+| 7 | **Perigos do deserto**: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | **esta versão** |
 | 8 | Consertar a nave: peças (casco, motor, computador de bordo, combustível) feitas com as máquinas, cada uma uma missão grande | |
 | 9 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
@@ -118,7 +118,7 @@ Outros comandos:
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.8] mundo: plano | ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.14.0] mundo: plano | ...`.
 
 ## Diário de Bordo (Fase 2)
 
@@ -212,6 +212,21 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
   - (Se nenhum outro add-on tiver um comando com o mesmo nome, dá para digitar sem o `cl:`, por exemplo `/cidade`.)
 - Números em `CIDADE`, `RARAS`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
+## Perigos do deserto (Fase 7)
+
+- **Múmia** (`cl:mumia`): um pouco maior que um zumbi, 30 de vida; o golpe dá **fome**. Deixa carne podre, às vezes **Faixa de Múmia**, osso e pepitas de ouro.
+- **Escorpião do Deserto** (`cl:escorpiao`): pequeno e rápido, sobe paredes, pula no alvo e **envenena**. Deixa linha e às vezes olho de aranha.
+- As duas nascem sozinhas à noite no deserto (e no subsolo escuro), entram nas **ondas da horda** e saem dos **Geradores de Monstros**. De dia, como os outros, queimam no sol.
+- **Golem de Areia** (`cl:golem_areia`): só aparece **durante a tempestade de areia**, perto de quem está ao ar livre (no máximo 2 por perto). Grande, lento, 60 de vida, bate forte e quase não é empurrado. O sol não o queima. Quando a tempestade acaba, ele **desmorona** e vira areia. Morto, deixa areia, arenito e às vezes vidro.
+- **Faraó Amaldiçoado** (`cl:farao`), o chefe: faça o **Ídolo Amaldiçoado** (bancada: 4 barras de ouro nos cantos, 4 Faixas de Múmia nos lados, arenito talhado no meio), coloque e **toque nele à noite**. Ele sobe da areia com barra de chefe e 300 de vida:
+  - chama múmias e escorpiões a cada 12 s;
+  - solta uma **rajada de areia** a cada 7 s: fere, empurra e cega quem está a até 7 blocos (fique longe e use arco);
+  - com metade da vida, **chama uma tempestade de areia** (e com ela os golens);
+  - não queima no sol nem é empurrado. Só um por vez.
+  - Derrotado, deixa o **Coração do Faraó** (vai ser usado para consertar a nave, na Fase 8), 8 a 16 barras de ouro, diamantes, maçãs douradas e faixas.
+- Missões novas: 5 múmias, 5 escorpiões, um golem, 4 faixas, colocar o ídolo e derrotar o Faraó.
+- Para testar no criativo: ovos de cada monstro no inventário, ou `/summon cl:farao`. Ajuste vida e dano em `BP/entities/*.json`; habilidades do Faraó e do golem em `FARAO` e `GOLEM_AREIA` no `scripts/config.ts`.
+
 ## Energia (Fase 5)
 
 A energia fica guardada nas **baterias** (15 cada). Geradores mandam energia para a bateria mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" = encostada ou ligada por **cabos** (até 64 cabos). Painéis, moinhos, geradores e baterias também passam energia, como os cabos. Toque em qualquer bloco de energia com a mão vazia para ver o estado.
@@ -289,7 +304,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.8] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.14.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

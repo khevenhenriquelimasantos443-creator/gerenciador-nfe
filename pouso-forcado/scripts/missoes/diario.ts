@@ -19,6 +19,7 @@ const MONSTROS = new Set([
   "minecraft:zombie", "minecraft:husk", "minecraft:zombie_villager_v2", "minecraft:drowned", "minecraft:skeleton",
   "minecraft:stray", "minecraft:bogged", "minecraft:spider", "minecraft:cave_spider", "minecraft:creeper",
   "minecraft:slime", "minecraft:witch", "minecraft:enderman", "minecraft:phantom", "minecraft:silverfish",
+  "cl:mumia", "cl:escorpiao", "cl:golem_areia", "cl:farao",
 ]);
 
 export function entregarDiario(jogador: Player): void {

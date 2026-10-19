@@ -208,3 +208,36 @@ cl.direcao.sul_leste=sudeste
 cl.direcao.sul_oeste=sudoeste
 cl.direcao.aqui=lado de onde você está
 
+
+## Perigos do deserto (Fase 7)
+entity.cl:mumia.name=Múmia
+entity.cl:escorpiao.name=Escorpião do Deserto
+entity.cl:golem_areia.name=Golem de Areia
+entity.cl:farao.name=Faraó Amaldiçoado
+item.spawn_egg.entity.cl:mumia.name=Gerar Múmia
+item.spawn_egg.entity.cl:escorpiao.name=Gerar Escorpião do Deserto
+item.spawn_egg.entity.cl:golem_areia.name=Gerar Golem de Areia
+item.spawn_egg.entity.cl:farao.name=Gerar Faraó Amaldiçoado
+item.cl:faixa_mumia.name=Faixa de Múmia
+item.cl:coracao_farao.name=Coração do Faraó
+tile.cl:idolo_amaldicoado.name=Ídolo Amaldiçoado
+cl.farao.titulo=§6O Faraó despertou!
+cl.farao.subtitulo=A areia treme sob seus pés...
+cl.farao.so_noite=O ídolo está frio. Ele só desperta à noite.
+cl.farao.ja_acordado=O Faraó já está acordado por perto!
+cl.farao.tempestade=O Faraó ergue os braços e chama a tempestade!
+cl.farao.derrotado=O Faraó Amaldiçoado caiu! Pegue o Coração do Faraó: ele vai ser útil para consertar a nave.
+
+## Missões (Fase 7)
+cl.missao.mumias.titulo=Os mortos andam
+cl.missao.mumias.desc=Derrote 5 múmias. Elas aparecem à noite e dão fome com o toque.
+cl.missao.escorpioes.titulo=Picada venenosa
+cl.missao.escorpioes.desc=Derrote 5 escorpiões do deserto. Cuidado com o veneno: eles sobem paredes.
+cl.missao.golem.titulo=Feito de areia
+cl.missao.golem.desc=Derrote um Golem de Areia. Eles só aparecem durante a tempestade de areia.
+cl.missao.faixas.titulo=Faixas antigas
+cl.missao.faixas.desc=Junte 4 Faixas de Múmia (as múmias deixam cair).
+cl.missao.idolo.titulo=O ídolo
+cl.missao.idolo.desc=Faça e coloque um Ídolo Amaldiçoado: 4 barras de ouro nos cantos, 4 faixas de múmia nos lados e arenito talhado no meio. Toque nele à noite... se tiver coragem.
+cl.missao.farao.titulo=O Faraó Amaldiçoado
+cl.missao.farao.desc=Derrote o Faraó Amaldiçoado. Ele chama servos, solta rajadas de areia e, ferido, chama a tempestade.

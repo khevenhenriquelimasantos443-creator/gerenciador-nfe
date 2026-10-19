@@ -59,6 +59,10 @@ const TEXTURAS = {
   "RP/textures/blocks/cl/cabo.png": { fundo: "#c46a2b", borda: "#6a3010", centro: "#e08a4a", margemCentro: 6 },
   "RP/textures/blocks/cl/peneira_auto_lado.png": { fundo: "#8a7a5a", borda: "#3a4148", centro: "#b87333", margemCentro: 5 },
   "RP/textures/items/cl/diario_bordo.png": { fundo: "#8b5a2b", borda: "#3e2410", centro: "#e8d9a8", margemCentro: 6 },
+  "RP/textures/items/cl/faixa_mumia.png": { fundo: "#d9cfae", borda: "#8a7a5a", centro: "#bfb288", margemCentro: 6 },
+  "RP/textures/items/cl/coracao_farao.png": { fundo: "#d4af37", borda: "#6b4a10", centro: "#c0392b", margemCentro: 4 },
+  "RP/textures/blocks/cl/idolo_lado.png": { fundo: "#d4af37", borda: "#5a4310", centro: "#1f3a93", margemCentro: 5 },
+  "RP/textures/blocks/cl/idolo_topo.png": { fundo: "#d4af37", borda: "#5a4310", centro: "#c0392b", margemCentro: 4 },
   "RP/pack_icon.png": { tamanho: 64, fundo: "#d9a066", borda: "#6b3f1d", centro: "#3f8ce0", margemCentro: 6 },
   "BP/pack_icon.png": { tamanho: 64, fundo: "#d9a066", borda: "#6b3f1d", centro: "#c0392b", margemCentro: 6 },
 };
@@ -74,3 +78,92 @@ for (const [rel, opcoes] of Object.entries(TEXTURAS)) {
   console.log(`gerado   ${rel}`);
 }
 
+// Texturas dos monstros (Fase 7), desenhadas por regiões do mapa UV dos modelos do jogo:
+// humanoide 64x64 (geometry.zombie.husk.v1.8) e aranha 64x32 (geometry.spider.v1.8).
+// Também não sobrescreve: troque os PNGs à vontade.
+const hash = (x, y, s = 0) => {
+  let h = (x * 374761393 + y * 668265263 + s * 2147483647) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+};
+const tom = (c, f) => [...hex(c).slice(0, 3).map((v) => Math.max(0, Math.min(255, Math.round(v * f)))), 255];
+
+// Caixas da pele: [nome, u, v, largura, altura, profundidade]
+const CAIXAS = [
+  ["cabeca", 0, 0, 8, 8, 8], ["corpo", 16, 16, 8, 12, 4], ["braco", 40, 16, 4, 12, 4],
+  ["perna", 0, 16, 4, 12, 4], ["perna", 16, 48, 4, 12, 4], ["braco", 32, 48, 4, 12, 4],
+];
+function pele(pintar) {
+  const px = new Map();
+  for (const [parte, u, v, w, h, d] of CAIXAS) {
+    const faces = [
+      ["topo", u + d, v, w, d], ["baixo", u + d + w, v, w, d], ["direita", u, v + d, d, h],
+      ["frente", u + d, v + d, w, h], ["esquerda", u + d + w, v + d, d, h], ["tras", u + 2 * d + w, v + d, w, h],
+    ];
+    for (const [face, fu, fv, fw, fh] of faces)
+      for (let y = 0; y < fh; y++) for (let x = 0; x < fw; x++) px.set(`${fu + x},${fv + y}`, pintar(parte, face, x, y, fw, fh, fu + x, fv + y));
+  }
+  return gerarPng(64, 64, (x, y) => px.get(`${x},${y}`) ?? [0, 0, 0, 0]);
+}
+
+const olhos = (face, x, y, w) => face === "frente" && y === 3 && (x === 1 || x === 2 || x === w - 3 || x === w - 2);
+
+const MONSTROS = {
+  "RP/textures/entity/cl/mumia.png": () =>
+    pele((parte, face, x, y, w, h, gx, gy) => {
+      if (parte === "cabeca" && olhos(face, x, y, w)) return x === 2 || x === w - 3 ? tom("#9cff57", 1) : tom("#1a120a", 1);
+      if (hash(gx, gy, 1) < 0.06) return tom("#4a3b2a", 1);
+      const faixa = (gy + Math.floor(hash(Math.floor(gx / 3), Math.floor(gy / 2), 2) * 2)) % 3;
+      return tom(["#d9cfae", "#c7ba94", "#e5dcc0"][faixa], 0.94 + hash(gx, gy, 3) * 0.1);
+    }),
+  "RP/textures/entity/cl/golem_areia.png": () =>
+    pele((parte, face, x, y, w, h, gx, gy) => {
+      if (parte === "cabeca" && olhos(face, x, y, w)) return tom(x === 2 || x === w - 3 ? "#ffd27a" : "#ff9a1a", 1);
+      if (parte === "cabeca" && face === "frente" && y === 6 && x >= 2 && x <= w - 3) return tom("#5a4a2a", 1);
+      if (hash(gx, gy, 4) < 0.07) return tom("#8f7a48", 1);
+      const camada = y % 4 === 3 ? 0.88 : 1;
+      return tom("#d8c48a", camada * (0.93 + hash(gx, gy, 5) * 0.12));
+    }),
+  "RP/textures/entity/cl/farao.png": () =>
+    pele((parte, face, x, y, w, h) => {
+      const OURO = "#d4af37", AZUL = "#1f3a93", PELE = "#9a7440", LINHO = "#ece4cc";
+      if (parte === "cabeca") {
+        if (face !== "frente" || x === 0 || x === w - 1) return tom(x % 2 === 0 ? OURO : AZUL, 1); // toucado listrado
+        if (y === 0) return tom(OURO, 1);
+        if (y === 3 && (x === 1 || x === 2 || x === w - 3 || x === w - 2)) return x === 2 || x === w - 3 ? tom("#111111", 1) : tom("#f2efe6", 1);
+        if (y === 7 && (x === 3 || x === 4)) return tom(OURO, 1); // barba
+        return tom(PELE, 1);
+      }
+      if (parte === "corpo") {
+        if (y < 3) return tom((x + y) % 2 === 0 ? OURO : AZUL, 1); // colar
+        if (y < 7) return tom(PELE, 1);
+        if (y === 7) return tom(OURO, 1); // cinto
+        return tom(face === "frente" && (x === 3 || x === 4) ? OURO : LINHO, 1);
+      }
+      if (parte === "braco") {
+        if (y < 2) return tom(x % 2 === 0 ? OURO : AZUL, 1);
+        if (y === 8 || y === 9) return tom(OURO, 1); // braceletes
+        return tom(PELE, 1);
+      }
+      if (y < 6) return tom(LINHO, 1);
+      return tom(y === h - 1 ? "#6b4a2a" : PELE, 1);
+    }),
+  "RP/textures/entity/cl/escorpiao.png": () =>
+    gerarPng(64, 32, (x, y) => {
+      // Cabeça da aranha: caixa em (32, 4), 8x8x8; a frente vai de (40, 12) a (48, 20).
+      const fx = x - 40, fy = y - 12;
+      if (fx >= 0 && fx < 8 && fy >= 0 && fy < 8 && fy === 3 && [1, 2, 5, 6].includes(fx)) return tom("#ff3b1f", 1);
+      if (y % 3 === 2) return tom("#6b3418", 1);
+      return tom("#a0522d", 0.9 + hash(x, y, 6) * 0.2);
+    }),
+};
+for (const [rel, gerar] of Object.entries(MONSTROS)) {
+  const destino = join(RAIZ, rel);
+  if (existsSync(destino) && !FORCAR) {
+    console.log(`mantido  ${rel}`);
+    continue;
+  }
+  mkdirSync(dirname(destino), { recursive: true });
+  writeFileSync(destino, gerar());
+  console.log(`gerado   ${rel}`);
+}

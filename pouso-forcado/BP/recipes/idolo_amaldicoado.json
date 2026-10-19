@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:idolo_amaldicoado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GFG",
+      "FCF",
+      "GFG"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:gold_ingot"
+      },
+      "F": {
+        "item": "cl:faixa_mumia"
+      },
+      "C": {
+        "item": "minecraft:chiseled_sandstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:faixa_mumia"
+      }
+    ],
+    "result": {
+      "item": "cl:idolo_amaldicoado"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:idolo_amaldicoado",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cl_idolo_lado",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cl_idolo_topo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 30
+      },
+      "minecraft:light_emission": 6,
+      "minecraft:map_color": "#d4af37",
+      "cl:idolo_amaldicoado": {}
+    }
+  }
+}
