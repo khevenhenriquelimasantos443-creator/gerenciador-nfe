@@ -39,11 +39,19 @@ Este documento resume o que foi pesquisado sobre cada mod e como trazer cada mec
 7. **Sem GUI de contêiner custom.** A entrada e a saída usam baú ou funil adjacentes, item na mão, menus server-ui e actionbar (regra do projeto).
 8. **Máximo de 10 ticking areas** por mundo. Isso limita o ChickenChunks e os corpos do Sync.
 
-**Escala de energia proposta:**
-- **1 E = 4.000 RF.** Âncora: o Steam Dynamo (80 RF/t) equivale ao gerador atual (2 E/ciclo de 5 s), e o carvão de 32.000 RF vale 8 E.
-- Bate exato com o Pulverizer: 1 minério = 1 E.
-- **Subunidade interna: 1 cE = 1/100 E = 40 RF.** É inteira e guardada em dynamic property; a interface mostra "E" com uma casa decimal.
-- Compatibilidade: a bateria atual (estado `cl:carga` 0–15) continua igual. Novos armazenamentos guardam o valor exato em dynamic property.
+**Energia — decidido: a unidade passa a ser RF, com os números originais.**
+- A energia é guardada e mostrada em **RF**: HUD, menus, Diário e o painel de "o que estou olhando".
+- O ciclo das máquinas continua de **100 ticks (5 s)**. Uma máquina de X RF/t gasta **X × 100 RF por ciclo**.
+- Exemplos com os números originais:
+  - Gerador a carvão (Steam Dynamo): 80 RF/t, ou seja, 8.000 RF por ciclo; o carvão vale 32.000 RF.
+  - Pulverizer: 4.000 RF por minério.
+- **Conversão dos sistemas que já existem:** 1 E antigo = 4.000 RF.
+  - Gerador: 2 E viram 8.000 RF por ciclo.
+  - Painel solar: 1 E vira 4.000 RF por ciclo.
+  - Máquinas que gastavam 1 E passam a gastar 4.000 RF.
+- **Saves antigos:** o estado `cl:carga` (0–15) da bateria continua igual e passa a valer 4.000 RF por ponto (bateria cheia = 60.000 RF), então nada quebra.
+  - Os armazenamentos novos (Energy Cells) guardam o valor exato em RF numa dynamic property.
+- Nas tabelas abaixo ainda aparecem "E" e "cE", que eram a proposta anterior. Basta ler 1 E = 4.000 RF e 1 cE = 40 RF.
 
 ---
 
@@ -369,6 +377,31 @@ Este documento resume o que foi pesquisado sobre cada mod e como trazer cada mec
 | Hotbar travada / regras | arquivo de regras | Formulário: slots travados | Média | Baixo | Só "não ordenar a hotbar" |
 | Atalhos Ctrl/Shift | — | **Inviável** (a UI não é interceptável) | Inviável | — | "Despejar tudo no baú" |
 
+
+### 2.22 Catálogo (estilo JEI)
+
+O JEI do Java (lista lateral dentro do inventário, teclas R/U, botão "+") **não pode ser copiado como é**:
+- o Bedrock não deixa um add-on colocar painéis na tela do inventário (só com JSON UI frágil, como o minimapa que foi removido);
+- a Script API não tem lista de receitas.
+
+**Como fica no Pouso Forçado:**
+
+| Função do JEI | Como fazer no Bedrock | Viabilidade | Custo no celular |
+|---|---|---|---|
+| Lista de itens | Item **Catálogo** (ou aba no Diário) abre um `ActionFormData` com **ícone** e nome de cada item, 30 por página | Alta | Baixo (só ao abrir) |
+| Busca por nome | Campo de texto (`ModalFormData`) que busca no nome em português e no ID | Alta | Baixo |
+| Filtro `@mod` | Digitar `@tinkers`, `@ex nihilo`, `@thermal`… filtra pelo "mod de origem" de cada item | Alta | Baixo |
+| Ver receitas (R) | Tela do item: bancada (grade 3×3 em texto + ingredientes como botões com ícone), fornalha, **máquinas do add-on** (peneira com as chances, montadora, pulverizador, smeltery, câmara…) | Alta | Baixo |
+| Ver usos (U) | Lista invertida: "onde este item entra" | Alta | Baixo |
+| Navegar | Tocar num ingrediente abre a receita dele; botão Voltar | Alta | Baixo |
+| Atalho para o que está na mão | Usar o Catálogo agachado abre direto o item da mão secundária ou o último item segurado | Alta | Baixo |
+| Atalho pelo bloco olhado | Agachar + usar olhando para uma máquina abre as receitas daquela máquina | Alta | Baixo |
+| Preencher a bancada ("+") | O **livro de receitas nativo** do Bedrock já preenche a bancada sozinho para receitas de crafting (vanilla e do add-on) | Já existe | — |
+
+- **De onde vêm as receitas:** o build lê `BP/recipes/*.json` e as tabelas das máquinas (`config.ts`) e gera um índice. Nada é calculado durante o jogo.
+- **Vanilla:** entram os itens vanilla usados nas receitas do add-on. A lista completa de receitas vanilla já está no livro de receitas do jogo.
+- **Limite:** o desenho da receita é em texto e botões, não uma grade gráfica igual à do JEI.
+
 ---
 
 ## 3. Integração com o que já existe
@@ -395,7 +428,7 @@ Este documento resume o que foi pesquisado sobre cada mod e como trazer cada mec
 
 | Fase | Versão | Conteúdo | Por quê nessa ordem |
 |---|---|---|---|
-| **11** | 0.17.0 | **Diário 2.0 (HQM)**: capítulos, dependências, tipos de tarefa, "escolha 1", sacolas + migração. **WAILA** na actionbar. **Inventory Tweaks** (organizador e auto-reabastecer). `/cl:diagnostico` expandido | É a base: toda fase seguinte pendura missões aqui; WAILA ajuda a testar o resto |
+| **11** | 0.17.0 | **Diário 2.0 (HQM)**: capítulos, dependências, tipos de tarefa, "escolha 1", sacolas + migração. **Catálogo (estilo JEI)**, ver 2.22. **WAILA** na actionbar. **Inventory Tweaks** (organizador e auto-reabastecer). **Energia em RF**. `/cl:diagnostico` expandido | É a base: toda fase seguinte pendura missões aqui; WAILA ajuda a testar o resto |
 | **12** | 0.18.0 | **Ex Nihilo + Ex Aliquo**: peneira por toques, poeira, martelos, pedrinhas, pedaços de minério, cadinho (lava/água), barril (obsidiana, argila, slime), cajado e bicho-da-seda, seiva de cacto | Primeiro dia do Crash Landing: peneirar poeira |
 | **13** | 0.19.0 | **EnviroMine + Hunger Overhaul**: taxas da sede, água salgada/suja, Camel Pack, temperatura com âncoras e armaduras, ar no subsolo e na tempestade + máscara, regen própria, efeitos de status baixo, animais ×4 | Sobrevivência: o desafio central do pack |
 | **14** | 0.20.0 | **HarvestCraft**: ~10 culturas do deserto (com o crescimento do HO), estações-utensílio, ~40 receitas, sucos que hidratam, sal, Spice of Life | Fecha o ciclo comida + água |
@@ -405,7 +438,7 @@ Este documento resume o que foi pesquisado sobre cada mod e como trazer cada mec
 | **18** | 0.24.0 | **Armazenamento**: JABBA (barril + dolly), AutoPackager, AE1 (drive, células 1k–64k, controlador, certus, processadores, célula de água, terminal sem fio) | Organização depois da produção |
 | **19** | 0.25.0 | **MFR**: planter, harvester, fertilizer, rancher, grinder + essência, sewer/composter, upgrades de alcance, esteira lógica, breaker/placer, plástico | Automação de fazenda |
 | **20** | 0.26.0 | **PneumaticCraft leve**: compressor, tubos, pressão, câmara de pressão, ferro comprimido, explosões, manômetro | Etapa intermediária de tecnologia |
-| **21** | 0.27.0 | **Sync**: core, constructor, storage, esteira, corpos com inventário, ressincronizar ao morrer, **modo "vidas" do add-on** | Vidas viram objetivo de meio de jogo |
+| **21** | 0.27.0 | **Sync**: core, constructor, storage, esteira, corpos com inventário próprio, troca de corpo, acordar no clone ao morrer. **Sem sistema de vidas** (decidido) | Corpos reserva e "viagem" entre bases |
 | **22** | 0.28.0 | **Big Reactors**: multibloco até 7×7×7, fórmula fechada, yellorium pela peneira, controller como loot da cidade, reprocessador | Fim de jogo energético |
 | **23** | 0.29.0 | **Chisel + BiblioCraft + ChickenChunks**: cinzel e famílias, mármore/calcário, estantes, prateleiras, luminárias, chunk loaders (limite 3×3) | Decoração e qualidade de vida no fim |
 | **10** | 1.0.0 | **Final** (decolagem) — quando você quiser | — |
@@ -417,13 +450,24 @@ Este documento resume o que foi pesquisado sobre cada mod e como trazer cada mec
 
 ---
 
-## 5. Decisões que preciso que você aprove
+## 5. Decisões
 
-1. **AE1 em vez de AE2** (sem canais, mesmos limites de célula).
-2. **Vidas:**
-   - No mundo sobrevivência, com "vidas do add-on" = **clones do Sync** (Fase 21). Até lá, o jogo segue normal.
-   - Ligar ou não a **regra "sem clone = espectador"**. Proposta: ligada, mas desativável no menu.
-3. **Sementes vanilla saem da peneira** quando as culturas custom chegarem (Fase 14), como no Crash Landing. As plantações vanilla já plantadas continuam funcionando.
-4. **Texturas próprias para tudo** (nada reaproveitado), mantendo o estilo futurista/minimalista da Fase 9.
-5. **Escala 1 E = 4.000 RF** com cE interno.
-6. **Ordem das fases** acima, começando pela **11 (Diário 2.0 + WAILA + InvTweaks)**.
+| # | Assunto | Decisão |
+|---|---|---|
+| 1 | AE1 ou AE2 | **AE1** (sem canais, mesmos limites de célula) |
+| 2 | Vidas | **Sem sistema de vidas.** O Sync fica só com os corpos reserva |
+| 3 | Sementes vanilla | **Saem da peneira** quando chegarem as culturas custom (Fase 14) |
+| 4 | Texturas | **Usar as dos mods** sempre que a licença deixar; ver 5.1 |
+| 5 | Energia | **RF**, com os números originais |
+| 6 | Ordem das fases | **Aprovada.** A 11 ganhou o Catálogo (JEI) |
+
+### 5.1 Texturas originais: o que a licença deixa
+
+| Grupo | Mods | Como fica |
+|---|---|---|
+| **Livres, com crédito** | Tinkers' Construct (CC BY 3.0), Big Reactors (MIT), AutoPackager (Apache 2.0), ExtraCells 1 (MIT), Ex Aliquo (MIT), BiblioCraft (MIT, arte da 1.12) | **Texturas originais**, com crédito no CREDITOS.md |
+| **Livres se o pack for gratuito e sob a mesma licença** (CC BY-NC-SA) | EnviroMine, JABBA, AE2 (as texturas do AE1 são fechadas, mas as do AE2 são parecidas e liberadas) | Originais, **se** você aceitar que o resource pack seja publicado como **CC BY-NC-SA 4.0** (grátis, com crédito, sem venda) |
+| **Proibidas ou sem licença** | Ex Nihilo, HQM (arte do 1.6.4), Hunger Overhaul, HarvestCraft, Iguana, Thermal Expansion, MFR, AE1, Chisel (Painterly), PneumaticCraft (GPL), Sync (LGPL) | **Redesenhadas** em 16×16, imitando forma e paleta das originais, sem copiar pixel a pixel |
+
+- Os arquivos originais ficam em `referencias/`, que **não vai para o git**. O `tools/` copia só os liberados para o RP durante o build.
+- Os blocos que já existem (Fase 9) mantêm o visual atual.
