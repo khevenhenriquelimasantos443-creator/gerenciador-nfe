@@ -1,8 +1,10 @@
 import { BlockComponentPlayerInteractEvent, BlockComponentTickEvent, BlockCustomComponent, Player } from "@minecraft/server";
-import { CONDENSADOR_AVANCADO } from "../config.js";
+import { CAMEL, CONDENSADOR_AVANCADO } from "../config.js";
 import { aviso } from "../jogador/hud.js";
 import { definirEstado, lerEstado, vizinhos } from "../util/blocos.js";
 import { aguaDoCondensador, beberDireto } from "../jogador/aguas.js";
+import { acharCamel, aguaDoCamel } from "../jogador/ambiente.js";
+import { registrarAcao } from "../missoes/progresso.js";
 import { consumir } from "../util/rede.js";
 import { creditar } from "./energia.js";
 import { encherUmBalde, itemNaMao, trocarDaMao } from "../util/inventario.js";
@@ -13,6 +15,8 @@ import { encherUmBalde, itemNaMao, trocarDaMao } from "../util/inventario.js";
  * - Se houver baú/barril/funil adjacente com balde vazio, entrega lá automaticamente.
  * - Senão, guarda (máx. 1, estado cl:cheio) até o jogador interagir com um balde vazio no inventário.
  * - Para beber (sede): mão vazia bebe direto; tigelas ou garrafas na mão levam até 3 doses.
+ * - Agachado com a mão vazia e o Camel Pack em uso: a água guardada (1 balde = 3 garrafas = 75)
+ *   vai para o pack. Só o condensador comum (água limpa); o avançado dá água fria, que o pack não aceita.
  *   O condensador dá água boa; o avançado, excelente (aguas.ts).
  * O tick só roda em chunks carregados, então o custo é 1 checagem a cada 30 s por condensador.
  */
@@ -35,6 +39,21 @@ function avisar(jogador: Player, chave: string): void {
  * senão enche um balde vazio do inventário. Avisa se não der.
  */
 function retirarAgua(jogador: Player, qualidade: string): boolean {
+  if (!itemNaMao(jogador) && jogador.isSneaking && qualidade === aguaDoCondensador.comum) {
+    const camel = acharCamel(jogador);
+    if (camel) {
+      const agua = aguaDoCamel(camel.pack);
+      if (agua >= CAMEL.capacidade) {
+        avisar(jogador, "cl.camel.cheio");
+        return false;
+      }
+      const nova = Math.min(CAMEL.capacidade, agua + 3 * CAMEL.porGarrafa);
+      camel.gravar(nova);
+      jogador.sendMessage({ translate: "cl.camel.encheu", with: [String(nova), String(CAMEL.capacidade)] });
+      registrarAcao(jogador, "camel_encher");
+      return true;
+    }
+  }
   if (!itemNaMao(jogador)) return beberDireto(jogador, qualidade);
   if (trocarDaMao(jogador, "minecraft:bowl", qualidade)) return true;
   if (trocarDaMao(jogador, "minecraft:glass_bottle", "minecraft:potion")) return true;

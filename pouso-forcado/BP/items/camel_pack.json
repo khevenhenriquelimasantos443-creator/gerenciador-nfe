@@ -16,7 +16,8 @@
       "minecraft:wearable": {
         "slot": "slot.armor.chest",
         "protection": 0
-      }
+      },
+      "minecraft:allow_off_hand": true
     }
   }
 }

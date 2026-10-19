@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:hc_frigideira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B  ",
+      " B ",
+      "  S"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:brick"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:brick"
+      }
+    ],
+    "result": {
+      "item": "cl:frigideira"
+    }
+  }
+}

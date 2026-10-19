@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_suco_cacto"
+    },
+    "tags": [
+      "cl_espremedor"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:fruta_cacto"
+      },
+      {
+        "item": "cl:fruta_cacto"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:fruta_cacto"
+      }
+    ],
+    "result": {
+      "item": "cl:suco_cacto"
+    }
+  }
+}

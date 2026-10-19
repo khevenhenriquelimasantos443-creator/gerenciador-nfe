@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_ovo_frito"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:egg"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:egg"
+      }
+    ],
+    "result": {
+      "item": "cl:ovo_frito"
+    }
+  }
+}

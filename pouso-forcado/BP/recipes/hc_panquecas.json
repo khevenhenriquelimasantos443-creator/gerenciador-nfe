@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_panquecas"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:massa_liquida"
+      },
+      {
+        "item": "minecraft:milk_bucket"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:massa_liquida"
+      }
+    ],
+    "result": {
+      "item": "cl:panquecas"
+    }
+  }
+}

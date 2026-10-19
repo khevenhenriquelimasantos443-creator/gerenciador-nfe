@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_manteiga"
+    },
+    "tags": [
+      "cl_cacarola"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:milk_bucket"
+      },
+      {
+        "item": "cl:sal"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:milk_bucket"
+      }
+    ],
+    "result": {
+      "item": "cl:manteiga"
+    }
+  }
+}

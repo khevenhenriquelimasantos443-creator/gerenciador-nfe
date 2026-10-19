@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_semente_arroz"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:arroz"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:arroz"
+      }
+    ],
+    "result": {
+      "item": "cl:semente_arroz"
+    }
+  }
+}

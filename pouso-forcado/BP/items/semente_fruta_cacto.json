@@ -1,0 +1,24 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:semente_fruta_cacto",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_semente_fruta_cacto",
+      "minecraft:display_name": {
+        "value": "item.cl:semente_fruta_cacto.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:block_placer": {
+        "block": "cl:planta_fruta_cacto",
+        "use_on": [
+          "minecraft:farmland"
+        ]
+      }
+    }
+  }
+}

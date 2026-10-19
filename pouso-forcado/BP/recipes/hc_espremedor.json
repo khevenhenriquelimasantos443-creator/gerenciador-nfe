@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:hc_espremedor"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "L",
+      "P"
+    ],
+    "key": {
+      "L": {
+        "item": "minecraft:stone_pressure_plate"
+      },
+      "P": {
+        "item": "minecraft:stone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:brick"
+      }
+    ],
+    "result": {
+      "item": "cl:espremedor"
+    }
+  }
+}

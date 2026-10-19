@@ -52,6 +52,7 @@ function validarEstadosDeBlocos(pasta) {
 
 const node = process.execPath;
 console.log("> dados do Catálogo");
+execFileSync(node, [join(RAIZ, "tools/gerar-harvestcraft.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-catalogo.mjs")], { stdio: "inherit" });
 
 console.log("> compilando TypeScript");

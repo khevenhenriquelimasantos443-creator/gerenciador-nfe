@@ -1,0 +1,24 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:semente_pimentao",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_semente_pimentao",
+      "minecraft:display_name": {
+        "value": "item.cl:semente_pimentao.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:block_placer": {
+        "block": "cl:planta_pimentao",
+        "use_on": [
+          "minecraft:farmland"
+        ]
+      }
+    }
+  }
+}

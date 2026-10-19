@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:charque",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_charque",
+      "minecraft:display_name": {
+        "value": "item.cl:charque.name"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 0.8,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 1,
+        "saturation_modifier": 0.1
+      }
+    }
+  }
+}

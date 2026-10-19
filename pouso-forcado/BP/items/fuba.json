@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:fuba",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clhc_fuba",
+      "minecraft:display_name": {
+        "value": "item.cl:fuba.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

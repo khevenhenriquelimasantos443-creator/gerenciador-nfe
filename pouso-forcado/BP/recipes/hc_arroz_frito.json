@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_arroz_frito"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:arroz"
+      },
+      {
+        "item": "minecraft:carrot"
+      },
+      {
+        "item": "minecraft:egg"
+      },
+      {
+        "item": "cl:cebola"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:arroz"
+      }
+    ],
+    "result": {
+      "item": "cl:arroz_frito"
+    }
+  }
+}

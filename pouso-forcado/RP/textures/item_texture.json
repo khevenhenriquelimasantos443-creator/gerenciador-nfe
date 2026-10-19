@@ -136,6 +136,162 @@
     },
     "cl_filtro": {
       "textures": "textures/items/cl/v/filtro"
+    },
+    "clhc_semente_milho": {
+      "textures": "textures/items/cl/hc/semente_milho"
+    },
+    "clhc_milho": {
+      "textures": "textures/items/cl/hc/milho"
+    },
+    "clhc_semente_tomate": {
+      "textures": "textures/items/cl/hc/semente_tomate"
+    },
+    "clhc_tomate": {
+      "textures": "textures/items/cl/hc/tomate"
+    },
+    "clhc_semente_cebola": {
+      "textures": "textures/items/cl/hc/semente_cebola"
+    },
+    "clhc_cebola": {
+      "textures": "textures/items/cl/hc/cebola"
+    },
+    "clhc_semente_alho": {
+      "textures": "textures/items/cl/hc/semente_alho"
+    },
+    "clhc_alho": {
+      "textures": "textures/items/cl/hc/alho"
+    },
+    "clhc_semente_feijao": {
+      "textures": "textures/items/cl/hc/semente_feijao"
+    },
+    "clhc_feijao": {
+      "textures": "textures/items/cl/hc/feijao"
+    },
+    "clhc_semente_pimenta": {
+      "textures": "textures/items/cl/hc/semente_pimenta"
+    },
+    "clhc_pimenta": {
+      "textures": "textures/items/cl/hc/pimenta"
+    },
+    "clhc_semente_pimentao": {
+      "textures": "textures/items/cl/hc/semente_pimentao"
+    },
+    "clhc_pimentao": {
+      "textures": "textures/items/cl/hc/pimentao"
+    },
+    "clhc_semente_arroz": {
+      "textures": "textures/items/cl/hc/semente_arroz"
+    },
+    "clhc_arroz": {
+      "textures": "textures/items/cl/hc/arroz"
+    },
+    "clhc_semente_amendoim": {
+      "textures": "textures/items/cl/hc/semente_amendoim"
+    },
+    "clhc_amendoim": {
+      "textures": "textures/items/cl/hc/amendoim"
+    },
+    "clhc_semente_fruta_cacto": {
+      "textures": "textures/items/cl/hc/semente_fruta_cacto"
+    },
+    "clhc_sal": {
+      "textures": "textures/items/cl/hc/sal"
+    },
+    "clhc_farinha": {
+      "textures": "textures/items/cl/hc/farinha"
+    },
+    "clhc_fuba": {
+      "textures": "textures/items/cl/hc/fuba"
+    },
+    "clhc_massa": {
+      "textures": "textures/items/cl/hc/massa"
+    },
+    "clhc_massa_liquida": {
+      "textures": "textures/items/cl/hc/massa_liquida"
+    },
+    "clhc_manteiga": {
+      "textures": "textures/items/cl/hc/manteiga"
+    },
+    "clhc_queijo": {
+      "textures": "textures/items/cl/hc/queijo"
+    },
+    "clhc_maionese": {
+      "textures": "textures/items/cl/hc/maionese"
+    },
+    "clhc_caldo": {
+      "textures": "textures/items/cl/hc/caldo"
+    },
+    "clhc_ovo_frito": {
+      "textures": "textures/items/cl/hc/ovo_frito"
+    },
+    "clhc_ovo_cozido": {
+      "textures": "textures/items/cl/hc/ovo_cozido"
+    },
+    "clhc_torrada": {
+      "textures": "textures/items/cl/hc/torrada"
+    },
+    "clhc_hamburguer": {
+      "textures": "textures/items/cl/hc/hamburguer"
+    },
+    "clhc_tortilha": {
+      "textures": "textures/items/cl/hc/tortilha"
+    },
+    "clhc_taco": {
+      "textures": "textures/items/cl/hc/taco"
+    },
+    "clhc_burrito": {
+      "textures": "textures/items/cl/hc/burrito"
+    },
+    "clhc_feijao_assado": {
+      "textures": "textures/items/cl/hc/feijao_assado"
+    },
+    "clhc_arroz_frito": {
+      "textures": "textures/items/cl/hc/arroz_frito"
+    },
+    "clhc_sopa_legumes": {
+      "textures": "textures/items/cl/hc/sopa_legumes"
+    },
+    "clhc_suco_cacto": {
+      "textures": "textures/items/cl/hc/suco_cacto"
+    },
+    "clhc_sopa_cacto": {
+      "textures": "textures/items/cl/hc/sopa_cacto"
+    },
+    "clhc_sopa_tomate": {
+      "textures": "textures/items/cl/hc/sopa_tomate"
+    },
+    "clhc_sopa_arroz": {
+      "textures": "textures/items/cl/hc/sopa_arroz"
+    },
+    "clhc_charque": {
+      "textures": "textures/items/cl/hc/charque"
+    },
+    "clhc_pipoca": {
+      "textures": "textures/items/cl/hc/pipoca"
+    },
+    "clhc_milho_espiga": {
+      "textures": "textures/items/cl/hc/milho_espiga"
+    },
+    "clhc_pimentao_recheado": {
+      "textures": "textures/items/cl/hc/pimentao_recheado"
+    },
+    "clhc_chili_poppers": {
+      "textures": "textures/items/cl/hc/chili_poppers"
+    },
+    "clhc_omelete": {
+      "textures": "textures/items/cl/hc/omelete"
+    },
+    "clhc_bolinho_arroz": {
+      "textures": "textures/items/cl/hc/bolinho_arroz"
+    },
+    "clhc_pemmican": {
+      "textures": "textures/items/cl/hc/pemmican"
+    },
+    "clhc_panquecas": {
+      "textures": "textures/items/cl/hc/panquecas"
+    },
+    "clhc_broa_milho": {
+      "textures": "textures/items/cl/hc/broa_milho"
     }
   }
 }

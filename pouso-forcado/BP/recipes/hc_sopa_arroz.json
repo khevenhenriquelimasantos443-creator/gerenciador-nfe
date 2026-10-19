@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_sopa_arroz"
+    },
+    "tags": [
+      "cl_panela"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:arroz"
+      },
+      {
+        "item": "cl:caldo"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:arroz"
+      }
+    ],
+    "result": {
+      "item": "cl:sopa_arroz"
+    }
+  }
+}

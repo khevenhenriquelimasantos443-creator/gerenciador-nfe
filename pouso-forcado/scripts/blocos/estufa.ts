@@ -1,13 +1,14 @@
 import { Block, BlockCustomComponent } from "@minecraft/server";
 import { ESTUFA } from "../config.js";
 import { consumir } from "../util/rede.js";
+import { crescerPlantacao } from "./plantacao.js";
 import { creditar } from "./energia.js";
 
 /*
  * Estufa: a cada minecraft:tick (10 s) olha a área em volta (ESTUFA.raio, de yAbaixo a yAcima):
  * - terra arada fica sempre molhada (dá para plantar longe da água);
  * - plantações (trigo, cenoura, batata, beterraba, caules de abóbora e melancia) crescem um
- *   estágio, com chance ESTUFA.chanceCrescer;
+ *   estágio, com chance ESTUFA.chanceCrescer (também as plantações do HarvestCraft, Fase 14);
  * - mudas ficam prontas para virar árvore no próximo tick aleatório do jogo.
  * Com energia (bateria ligada, Fase 5): gasta 1 E por ciclo e tudo cresce sempre (chance 100%).
  * Custo: até 9×9×4 = 324 blocos lidos a cada 10 s por estufa, só em chunks carregados.
@@ -34,6 +35,7 @@ function cuidar(bloco: Block, chance: number): void {
     if (g < maximo && Math.random() < chance) bloco.setPermutation(p.withState("growth", g + 1));
     return;
   }
+  if (crescerPlantacao(bloco, chance)) return;
   if (id.endsWith("_sapling") && p.getState("age_bit") === false) {
     if (Math.random() < chance) bloco.setPermutation(p.withState("age_bit", true));
   }

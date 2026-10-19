@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_tortilha"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:fuba"
+      },
+      {
+        "item": "cl:agua_boa"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:fuba"
+      }
+    ],
+    "result": {
+      "item": "cl:tortilha"
+    }
+  }
+}

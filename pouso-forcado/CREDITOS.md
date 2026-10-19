@@ -20,6 +20,8 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 - **EnviroMine** (Funwayguy, TimbuckTato, GenDeathrow; CC BY-NC-SA 4.0): hidratação, temperatura do corpo,
   qualidade do ar, Camel Pack e máscara de gás, com os números do mod. Código e texturas próprios.
 - **Hunger Overhaul** (iguanaman): valores de comida, regeneração, efeitos de status baixo e animais.
+- **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
+  (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,
   recompensas "escolha 1" e as sacolas de recompensa com os pesos do HQM. Ícones próprios.
 - **Just Enough Items** (mezz) / NEI (ChickenBones): o Catálogo de receitas e usos.

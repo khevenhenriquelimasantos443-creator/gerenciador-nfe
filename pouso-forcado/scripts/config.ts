@@ -1,9 +1,11 @@
 // Configuração central do add-on. Tudo que for "número de balanceamento" fica aqui.
 
+import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gerado.js";
+
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.19.1";
+export const VERSAO = "0.20.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -273,13 +275,18 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
     { item: `${NS}:pedrinha`, chance: 1 / 2 },
     { item: `${NS}:pedrinha`, chance: 1 / 3 },
     { item: `${NS}:pedrinha`, chance: 1 / 3 },
-    { item: "minecraft:wheat_seeds", chance: 1 / 15 },
+    // Fase 14: sementes do HarvestCraft no lugar das do jogo (como no Crash Landing).
+    { item: `${NS}:semente_milho`, chance: 1 / 15 },
+    { item: `${NS}:semente_tomate`, chance: 1 / 15 },
     { item: "minecraft:short_grass", chance: 1 / 15 },
-    { item: "minecraft:melon_seeds", chance: 1 / 32 },
-    { item: "minecraft:pumpkin_seeds", chance: 1 / 32 },
+    { item: `${NS}:semente_cebola`, chance: 1 / 32 },
+    { item: `${NS}:semente_alho`, chance: 1 / 32 },
+    { item: `${NS}:semente_feijao`, chance: 1 / 32 },
     { item: "minecraft:sugar_cane", chance: 1 / 32 },
-    { item: "minecraft:carrot", chance: 1 / 64 },
-    { item: "minecraft:potato", chance: 1 / 64 },
+    { item: `${NS}:semente_pimenta`, chance: 1 / 64 },
+    { item: `${NS}:semente_pimentao`, chance: 1 / 64 },
+    { item: `${NS}:semente_arroz`, chance: 1 / 64 },
+    { item: `${NS}:semente_amendoim`, chance: 1 / 64 },
     { item: "minecraft:oak_sapling", chance: 1 / 64 },
     { item: "minecraft:spruce_sapling", chance: 1 / 90 },
     { item: "minecraft:birch_sapling", chance: 1 / 90 },
@@ -296,6 +303,7 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
   "minecraft:sand": [
     { item: "minecraft:cocoa_beans", chance: 1 / 32 },
     { item: "minecraft:cactus", chance: 1 / 32 },
+    { item: `${NS}:semente_fruta_cacto`, chance: 1 / 32 },
     { item: "minecraft:jungle_sapling", chance: 1 / 64 },
     { item: "minecraft:brown_mushroom", chance: 1 / 128 }, // no Ex Nihilo: esporos
     ...pedacos("triturado"),
@@ -354,6 +362,18 @@ export const ESTUFA = {
   chanceCrescer: 0.5, // por planta, por ciclo
 } as const;
 
+// Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)
+// a planta sobe 1 estágio (0 → 2) com chance = base × HO × bioma × água; com luz menor que luzMin não cresce.
+export const PLANTACAO = {
+  chance: 0.5,
+  hungerOverhaul: 0.25, // HO: plantações crescem 4× mais devagar
+  biomaErrado: 0.5, // fora do deserto para a fruta do cacto; no deserto para as outras
+  terraSeca: 0.5, // terra arada sem água
+  luzMin: 9,
+  colheita: [1, 3], // HO: colheita menor (na colheita com a mão e ao quebrar madura)
+  farinhaOsso: 1 / 3, // chance de subir 1 estágio (no Difícil não funciona, como no HO)
+} as const;
+
 // ---- Fase 4: comida e vida ----
 
 // Sede = hidratação do EnviroMine (scripts/jogador/sede.ts): 0 a 100, conferida a cada 30 ticks.
@@ -370,6 +390,7 @@ export const SEDE = {
     [`${NS}:fruta_cacto`]: 10, // fruta suculenta do deserto (valor de projeto, entre a maçã e o leite)
     "minecraft:melon_slice": 5,
     "minecraft:sweet_berries": 5,
+    ...BEBIDAS_HC, // sopas e sucos do HarvestCraft
     "minecraft:apple": 5,
     "minecraft:carrot": 5,
     "minecraft:golden_carrot": 5,
@@ -455,6 +476,7 @@ export const TEMPERATURA = {
     "minecraft:mushroom_stew": 0.05, "minecraft:beetroot_soup": 0.05, "minecraft:rabbit_stew": 0.05, "minecraft:pumpkin_pie": 0.05,
     "minecraft:cooked_beef": 0.05, "minecraft:cooked_porkchop": 0.05, "minecraft:cooked_chicken": 0.05, "minecraft:cooked_mutton": 0.05,
     "minecraft:baked_potato": 0.05, "minecraft:melon_slice": -0.01, "minecraft:carrot": -0.01, "minecraft:apple": -0.01, "minecraft:golden_carrot": -0.01,
+    ...TEMPERATURA_HC,
   } as Readonly<Record<string, number>>,
   comidaTeto: 40,
 } as const;
@@ -893,6 +915,7 @@ export const FOME = {
     "minecraft:potato": [1, 0.05], "minecraft:mutton": [1, 0.05], "minecraft:cooked_mutton": [2, 0.15], "minecraft:rabbit": [1, 0.05],
     "minecraft:cooked_rabbit": [2, 0.15], "minecraft:beetroot": [1, 0.05], "minecraft:beetroot_soup": [2, 0.1], "minecraft:rabbit_stew": [3, 0.15],
     "minecraft:sweet_berries": [1, 0.05],
+    ...COMIDAS_HC, // HarvestCraft: max(fome da 1.12 / 4, 1), saturação 0,1
   } as Readonly<Record<string, readonly [number, number]>>,
   efeitos: {
     "minecraft:chicken": { id: "hunger", segundos: 30, chance: 0.15 },
@@ -922,3 +945,4 @@ export const FOME = {
 } as const;
 
 for (const id of [IDS.camelPack, IDS.mascara, IDS.filtro]) ORIGEM_MOD[id] = "EnviroMine";
+for (const id of ITENS_HC) ORIGEM_MOD[id] = "Pam's HarvestCraft";

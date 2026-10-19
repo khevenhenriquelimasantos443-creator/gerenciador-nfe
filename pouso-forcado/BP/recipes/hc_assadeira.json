@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:hc_assadeira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BBB",
+      "B B",
+      "BBB"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:brick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:brick"
+      }
+    ],
+    "result": {
+      "item": "cl:assadeira"
+    }
+  }
+}

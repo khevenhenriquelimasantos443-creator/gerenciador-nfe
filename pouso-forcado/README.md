@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 13** (EnviroMine + Hunger Overhaul: hidratação 0–100, corpo em °C, água salgada, Camel Pack, ar e máscara de gás, comida que rende pouco, regeneração lenta). Fases 0 a 12 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 14** (Pam's HarvestCraft: 10 plantações com sementes da peneira, 8 utensílios de cozinha e 35 receitas com os valores do Hunger Overhaul). Fases 0 a 13 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -23,8 +23,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | pronta |
 | 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | pronta |
 | 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | pronta |
-| 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | **esta versão** |
-| 14–23 | Os mods do Crash Landing, um bloco por fase: Ex Nihilo, EnviroMine + Hunger Overhaul, HarvestCraft, Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | pronta |
+| 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | **esta versão** |
+| 15–23 | Os mods do Crash Landing, um bloco por fase: Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -126,6 +127,16 @@ Outros comandos:
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Cozinha (Fase 14: Pam's HarvestCraft)
+
+- **Sementes**: na peneira, a terra dá sementes do HarvestCraft no lugar das do jogo: milho e tomate 1/15; cebola, alho e feijão 1/32; pimenta, pimentão, arroz e amendoim 1/64. A areia dá semente de fruta do cacto 1/32. Qualquer colheita na bancada vira 1 semente.
+- **Plantações** (só em terra arada): 3 estágios. A cada 30–60 s sobem 1 estágio com chance 50% × ¼ (HO) × ½ fora do bioma certo (deserto para a fruta do cacto; fora do deserto para as outras) × ½ com a terra seca; precisa de luz ≥ 9. Média: ~12 min no bioma certo com terra molhada, ~24 min no deserto, ~48 min no deserto com terra seca. A **Estufa** também faz elas crescerem.
+  - Toque na planta madura para colher 1–3 (ela volta ao broto). Quebrar dá 1 semente (e a colheita, se madura). Farinha de osso: 1/3 de chance de subir 1 estágio; no Difícil não funciona (HO).
+- **Utensílios** (blocos; toque para abrir a grade de receitas daquele utensílio): Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor. No HarvestCraft eles ficam dentro da grade; no Bedrock cada um vira uma "bancada" própria (o livro de receitas preenche a grade).
+- **35 receitas**: sal (Água Salgada na Panela), farinha, fubá, massa, massa líquida, manteiga, queijo, maionese, caldo, ovos, torrada, pão, hambúrguer, tortilha, taco, burrito, feijão assado, arroz frito, sopas (legumes, cacto, tomate, arroz), suco de fruta do cacto, charque, pipoca, milho na espiga, pimentão recheado, pimentas empanadas, omelete, bolinho de arroz, pemmican, panquecas, broa de milho.
+- **Valores (HO)**: comida de mod rende max(fome da 1.12 ÷ 4, 1) e saturação 0,1; pilha de 16 (até 2 de fome); tempo de comer = fome × 8 + 8 ticks. Sopas e caldo dão +5 de água e esquentam 0,05 °C; o suco dá +10 de água e refresca.
+- Catálogo mostra cada receita no seu utensílio. Capítulo novo no Diário: **Cozinha do Deserto (HarvestCraft)**, 10 missões.
+
 ## Clima e fome (Fase 13: EnviroMine + Hunger Overhaul)
 
 Os números são os do EnviroMine 1.1.63 e do Hunger Overhaul (ver `docs/pesquisa-mods.md`). Atualiza a cada 1,5 s.
@@ -136,7 +147,7 @@ Os números são os do EnviroMine 1.1.63 e do Hunger Overhaul (ver `docs/pesquis
 - **Temperatura do corpo em °C** (normal 37). Ar: **65 °C de dia**, **÷ 9 à noite** (≈ 7 °C), sombra −2,5, água −5, dormindo +5, correndo +2, calor da terra no subsolo; a fonte de calor mais forte por perto (lava 200, fogo/fogueira 100, tocha/fornalha 75, gerador aceso 75) puxa o ar para cima. Armadura: couro +1 por peça; ferro esquenta ao sol; diamante refresca.
   - O corpo anda devagar até o ar (sobe 0,005 por atualização no deserto, cai 0,001; dentro da água cai 10× mais rápido). **Suar** (≥ 38 °C) gasta água e, com hidratação ≥ 75, segura o corpo.
   - **Insolação** I (≥ 39 °C, lentidão), II (≥ 41, fraqueza/fadiga/fome/náusea), III (≥ 43, 4 de dano). **Hipotermia** I (≤ 35), II (≤ 32), III (≤ 30). **Congelamento** depois de 3 e 6 min no frio (deixa cair o item da mão, quase não anda): só sai com **maçã dourada**.
-- **Camel Pack** (8 couros em volta de uma garrafa): vista no peito; agachado, use uma Água Boa para encher (4 garrafas = 100). Ele dá +1 de água por 1,5 s quando você precisa.
+- **Camel Pack** (8 couros em volta de uma garrafa): vista no peito **ou ponha na mão secundária** (deixa o peito livre para a armadura); agachado, use uma Água Boa para encher (4 garrafas = 100), ou agache e toque num **Condensador de Água** com a mão vazia (+75). Ele dá +1 de água por 1,5 s quando você precisa.
 - **Qualidade do ar 0–100**: com céu, volta +2; no subsolo, cai perto de lava (−1), fogo (−0,5) e tochas (−0,25); folhas ajudam. **Na tempestade de areia, ao ar livre, o ar também cai.** ≤ 25 lentidão, ≤ 10 pior, 0 = 4 de dano.
 - **Máscara de Gás** (5 ferros, vidro e 2 filtros) e **Filtro de Ar** (ferro + papel ou lã + carvão vegetal → 4): com a máscara o ar fica em 100 gastando a carga (1.000). Use um filtro com a máscara vestida: +500.
 - **Hunger Overhaul**:

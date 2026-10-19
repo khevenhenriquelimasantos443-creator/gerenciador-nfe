@@ -1,0 +1,191 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.pilao",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2,
+        "visible_bounds_offset": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "corpo",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5,
+                0,
+                -5
+              ],
+              "size": [
+                10,
+                5,
+                10
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    3,
+                    11
+                  ],
+                  "uv_size": [
+                    10,
+                    5
+                  ],
+                  "material_instance": "pedra"
+                },
+                "south": {
+                  "uv": [
+                    3,
+                    11
+                  ],
+                  "uv_size": [
+                    10,
+                    5
+                  ],
+                  "material_instance": "pedra"
+                },
+                "east": {
+                  "uv": [
+                    3,
+                    11
+                  ],
+                  "uv_size": [
+                    10,
+                    5
+                  ],
+                  "material_instance": "pedra"
+                },
+                "west": {
+                  "uv": [
+                    3,
+                    11
+                  ],
+                  "uv_size": [
+                    10,
+                    5
+                  ],
+                  "material_instance": "pedra"
+                },
+                "up": {
+                  "uv": [
+                    3,
+                    3
+                  ],
+                  "uv_size": [
+                    10,
+                    10
+                  ],
+                  "material_instance": "pedra"
+                },
+                "down": {
+                  "uv": [
+                    3,
+                    3
+                  ],
+                  "uv_size": [
+                    10,
+                    10
+                  ],
+                  "material_instance": "pedra"
+                }
+              }
+            },
+            {
+              "origin": [
+                0,
+                3,
+                0
+              ],
+              "size": [
+                2,
+                8,
+                2
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    6,
+                    5
+                  ],
+                  "uv_size": [
+                    2,
+                    8
+                  ],
+                  "material_instance": "madeira"
+                },
+                "south": {
+                  "uv": [
+                    8,
+                    5
+                  ],
+                  "uv_size": [
+                    2,
+                    8
+                  ],
+                  "material_instance": "madeira"
+                },
+                "east": {
+                  "uv": [
+                    6,
+                    5
+                  ],
+                  "uv_size": [
+                    2,
+                    8
+                  ],
+                  "material_instance": "madeira"
+                },
+                "west": {
+                  "uv": [
+                    8,
+                    5
+                  ],
+                  "uv_size": [
+                    2,
+                    8
+                  ],
+                  "material_instance": "madeira"
+                },
+                "up": {
+                  "uv": [
+                    8,
+                    8
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ],
+                  "material_instance": "madeira"
+                },
+                "down": {
+                  "uv": [
+                    8,
+                    6
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ],
+                  "material_instance": "madeira"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

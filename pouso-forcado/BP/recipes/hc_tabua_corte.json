@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:hc_tabua_corte"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B  ",
+      " S ",
+      "  P"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:brick"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "P": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:brick"
+      }
+    ],
+    "result": {
+      "item": "cl:tabua_corte"
+    }
+  }
+}

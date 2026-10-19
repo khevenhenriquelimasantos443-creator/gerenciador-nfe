@@ -1,0 +1,62 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:espremedor",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.espremedor",
+      "minecraft:material_instances": {
+        "pedra": {
+          "texture": "clhc_u_pedra",
+          "render_method": "opaque"
+        },
+        "*": {
+          "texture": "clhc_u_pedra",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:crafting_table": {
+        "crafting_tags": [
+          "cl_espremedor"
+        ],
+        "table_name": "tile.cl:espremedor.name"
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.6
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9a9a9a"
+    }
+  }
+}

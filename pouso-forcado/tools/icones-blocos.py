@@ -3,7 +3,7 @@
 # Lê os modelos (RP/models/blocks) e as texturas; grava RP/textures/items/cl/blocos/<bloco>.png.
 # Não roda no build (precisa de Python + Pillow): rode de novo quando mudar um modelo ou textura.
 #   python3 tools/icones-blocos.py
-import json, math, os
+import json, math, os, sys
 from PIL import Image, ImageDraw
 
 R = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
@@ -137,7 +137,8 @@ def render(nome):
 
 
 os.makedirs(SAIDA, exist_ok=True)
-nomes = sorted(n[:-5] for n in os.listdir(f"{R}/BP/blocks") if n.endswith(".json"))
+# Plantações (planos cruzados) usam a textura plana no Catálogo. Com nomes na linha de comando, só esses.
+nomes = sys.argv[1:] or sorted(n[:-5] for n in os.listdir(f"{R}/BP/blocks") if n.endswith(".json") and not n.startswith("planta_"))
 for nome in nomes:
     render(nome).save(f"{SAIDA}/{nome}.png")
 print(f"ícones de bloco: {len(nomes)}")

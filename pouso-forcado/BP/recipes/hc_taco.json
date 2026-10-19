@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_taco"
+    },
+    "tags": [
+      "cl_tabua_corte"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:cooked_beef"
+      },
+      {
+        "item": "cl:tomate"
+      },
+      {
+        "item": "cl:queijo"
+      },
+      {
+        "item": "cl:tortilha"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:cooked_beef"
+      }
+    ],
+    "result": {
+      "item": "cl:taco"
+    }
+  }
+}

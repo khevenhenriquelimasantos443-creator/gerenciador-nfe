@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_milho_espiga"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:milho"
+      },
+      {
+        "item": "cl:manteiga"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:milho"
+      }
+    ],
+    "result": {
+      "item": "cl:milho_espiga"
+    }
+  }
+}

@@ -44,7 +44,8 @@ export type Acao =
   | "barril_obsidiana"
   | "cadinho_lava"
   | "camel_encher"
-  | "bem_alimentado";
+  | "bem_alimentado"
+  | "colher";
 
 type MissaoBase = {
   id: string;
@@ -157,6 +158,29 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         objetivo: { tipo: "ter", item: IDS.mascara, qtd: 1 },
         recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }],
         escolha: [{ item: IDS.filtro, quantidade: 4 }, { item: IDS.aguaExcelente, quantidade: 2 }],
+      },
+    ],
+  },
+  {
+    id: "harvestcraft", // Fase 14: Pam's HarvestCraft
+    icone: "cl:milho",
+    requer: ["peneira"],
+    missoes: [
+      { id: "hc_colher", objetivo: { tipo: "acao", acao: "colher", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 4 }] },
+      { id: "hc_colheita", requer: ["hc_colher"], objetivo: { tipo: "acao", acao: "colher", qtd: 10 }, recompensa: [{ item: "cl:semente_tomate", quantidade: 2 }, { item: "cl:semente_cebola", quantidade: 2 }] },
+      { id: "hc_panela", objetivo: { tipo: "colocar", bloco: "cl:panela", qtd: 1 }, recompensa: [{ item: "minecraft:brick", quantidade: 4 }] },
+      { id: "hc_sal", requer: ["hc_panela"], objetivo: { tipo: "ter", item: "cl:sal", qtd: 4 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 2 }] },
+      { id: "hc_caldo", requer: ["hc_panela"], objetivo: { tipo: "ter", item: "cl:caldo", qtd: 1 }, recompensa: [{ item: "minecraft:bone", quantidade: 4 }] },
+      { id: "hc_pilao", requer: ["hc_colher"], objetivo: { tipo: "ter", item: "cl:fuba", qtd: 2 }, recompensa: [{ item: "cl:semente_milho", quantidade: 2 }] },
+      { id: "hc_tortilha", requer: ["hc_pilao"], objetivo: { tipo: "ter", item: "cl:tortilha", qtd: 2 }, recompensa: [{ item: "cl:semente_feijao", quantidade: 2 }] },
+      { id: "hc_suco", objetivo: { tipo: "consumir", item: "cl:suco_cacto", qtd: 1 }, recompensa: [{ item: "cl:semente_fruta_cacto", quantidade: 2 }] },
+      { id: "hc_sopa", requer: ["hc_caldo"], objetivo: { tipo: "consumir", item: "cl:sopa_tomate", qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
+      {
+        id: "hc_burrito",
+        requer: ["hc_tortilha", "hc_sal"],
+        objetivo: { tipo: "consumir", item: "cl:burrito", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }],
+        escolha: [{ item: "cl:semente_arroz", quantidade: 3 }, { item: "cl:semente_pimenta", quantidade: 3 }, { item: "cl:semente_amendoim", quantidade: 3 }],
       },
     ],
   },

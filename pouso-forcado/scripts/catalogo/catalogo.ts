@@ -65,6 +65,9 @@ function montar(): Receita[] {
   const BANCADA = "minecraft:crafting_table";
   for (const j of RECEITAS_JSON) {
     const saidas = [{ item: j.resultado, qtd: j.qtd }];
+    // Utensílios do HarvestCraft: a receita com a tag "cl_panela" sai na Panela (bloco cl:panela).
+    const tagCl = j.estacoes.find((t) => t.startsWith("cl_"));
+    const estacao = tagCl ? `cl:${tagCl.slice(3)}` : BANCADA;
     if (j.tipo === "fornalha") {
       r.push({
         maquina: { rawtext: j.estacoes.map((t, k) => ({ rawtext: [{ text: k ? " / " : "" }, nomeDe(`minecraft:${t}`)] })) },
@@ -75,9 +78,9 @@ function montar(): Receita[] {
     } else if (j.grade && j.chaves) {
       const conta = new Map<string, number>();
       for (const linha of j.grade) for (const ch of linha) if (ch !== " ") conta.set(j.chaves[ch], (conta.get(j.chaves[ch]) ?? 0) + 1);
-      r.push({ maquina: nomeDe(BANCADA), maquinaId: BANCADA, entradas: [...conta].map(([item, qtd]) => ({ item, qtd })), saidas, grade: { linhas: j.grade, chaves: j.chaves } });
+      r.push({ maquina: nomeDe(estacao), maquinaId: estacao, entradas: [...conta].map(([item, qtd]) => ({ item, qtd })), saidas, grade: { linhas: j.grade, chaves: j.chaves } });
     } else {
-      r.push({ maquina: nomeDe(BANCADA), maquinaId: BANCADA, entradas: [...(j.ingredientes ?? [])], saidas, nota: { translate: "cl.catalogo.sem_forma" } });
+      r.push({ maquina: nomeDe(estacao), maquinaId: estacao, entradas: [...(j.ingredientes ?? [])], saidas, nota: { translate: "cl.catalogo.sem_forma" } });
     }
   }
   for (const [bloco, tabela] of Object.entries(PENEIRA)) {

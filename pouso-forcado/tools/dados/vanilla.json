@@ -119,6 +119,11 @@
   "en": "Bread",
   "icone": "textures/items/bread"
  },
+ "minecraft:brick": {
+  "pt": "Tijolo",
+  "en": "Brick",
+  "icone": "textures/items/brick"
+ },
  "minecraft:brown_carpet": {
   "pt": "Carpete Marrom",
   "en": "Brown Carpet",
@@ -749,10 +754,20 @@
   "en": "Stone Pickaxe",
   "icone": "textures/items/stone_pickaxe"
  },
+ "minecraft:stone_pressure_plate": {
+  "pt": "Placa de Pressão de Pedra",
+  "en": "Stone Pressure Plate",
+  "icone": "textures/blocks/stone"
+ },
  "minecraft:string": {
   "pt": "Linha",
   "en": "String",
   "icone": "textures/items/string"
+ },
+ "minecraft:sugar": {
+  "pt": "Açúcar",
+  "en": "Sugar",
+  "icone": "textures/items/sugar"
  },
  "minecraft:sugar_cane": {
   "pt": "Cana-de-açúcar",

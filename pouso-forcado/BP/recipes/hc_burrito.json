@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_burrito"
+    },
+    "tags": [
+      "cl_frigideira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:feijao"
+      },
+      {
+        "item": "cl:tortilha"
+      },
+      {
+        "item": "cl:arroz"
+      },
+      {
+        "item": "cl:queijo"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:feijao"
+      }
+    ],
+    "result": {
+      "item": "cl:burrito"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_pimentao_recheado"
+    },
+    "tags": [
+      "cl_assadeira"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:pimentao"
+      },
+      {
+        "item": "cl:tomate"
+      },
+      {
+        "item": "cl:arroz"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:pimentao"
+      }
+    ],
+    "result": {
+      "item": "cl:pimentao_recheado"
+    }
+  }
+}

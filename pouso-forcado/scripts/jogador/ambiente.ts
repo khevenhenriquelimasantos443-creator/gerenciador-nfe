@@ -123,16 +123,35 @@ export function gravarMascara(item: ItemStack, carga: number): void {
   item.setLore([`§7Filtro: ${Math.round(carga)}/${AR.mascaraCarga}`]);
 }
 
-function beberDoCamel(j: Player): void {
+/**
+ * O Camel Pack em uso: na mão secundária (o "espaço só dele", deixando o peitoral livre) ou vestido
+ * no peito. Devolve o item e uma função que grava a mudança de volta no mesmo lugar.
+ */
+export function acharCamel(j: Player): { pack: ItemStack; gravar: (agua: number) => void } | undefined {
   const roupa = j.getComponent("minecraft:equippable");
-  const pack = roupa?.getEquipment(EquipmentSlot.Chest);
-  if (!roupa || pack?.typeId !== IDS.camelPack) return;
-  const agua = aguaDoCamel(pack);
+  if (!roupa) return undefined;
+  for (const slot of [EquipmentSlot.Offhand, EquipmentSlot.Chest]) {
+    const pack = roupa.getEquipment(slot);
+    if (pack?.typeId !== IDS.camelPack) continue;
+    return {
+      pack,
+      gravar: (agua) => {
+        gravarCamel(pack, Math.max(0, Math.min(CAMEL.capacidade, agua)));
+        roupa.setEquipment(slot, pack);
+      },
+    };
+  }
+  return undefined;
+}
+
+function beberDoCamel(j: Player): void {
+  const camel = acharCamel(j);
+  if (!camel) return;
+  const agua = aguaDoCamel(camel.pack);
   if (agua <= 0 || lerSede(j) > SEDE.max - 1 - CAMEL.porAtualizacao) return;
   mudarSede(j, CAMEL.porAtualizacao);
   if (lerTemperatura(j) >= 37.1) mudarTemperatura(j, -CAMEL.esfria);
-  gravarCamel(pack, agua - CAMEL.porAtualizacao);
-  roupa.setEquipment(EquipmentSlot.Chest, pack);
+  camel.gravar(agua - CAMEL.porAtualizacao);
 }
 
 // ---------- ar ----------
@@ -291,14 +310,13 @@ export function registrarAmbiente(): void {
   world.beforeEvents.itemUse.subscribe((ev) => {
     const { source: j, itemStack } = ev;
     if (itemStack.typeId !== IDS.aguaBoa || !j.isSneaking) return;
-    const vestido = j.getComponent("minecraft:equippable")?.getEquipment(EquipmentSlot.Chest);
-    if (vestido?.typeId !== IDS.camelPack || aguaDoCamel(vestido) > CAMEL.capacidade - CAMEL.porGarrafa) return; // bebe normalmente
+    const antes = acharCamel(j);
+    if (!antes || aguaDoCamel(antes.pack) > CAMEL.capacidade - CAMEL.porGarrafa) return; // bebe normalmente
     ev.cancel = true;
     system.run(() => {
-      const roupa = j.getComponent("minecraft:equippable");
-      const pack = roupa?.getEquipment(EquipmentSlot.Chest);
-      if (!roupa || pack?.typeId !== IDS.camelPack) return;
-      const agua = aguaDoCamel(pack);
+      const camel = acharCamel(j);
+      if (!camel) return;
+      const agua = aguaDoCamel(camel.pack);
       const inv = j.getComponent("minecraft:inventory")?.container;
       const mao = inv?.getItem(j.selectedSlotIndex);
       if (!inv || mao?.typeId !== IDS.aguaBoa) return;
@@ -308,8 +326,7 @@ export function registrarAmbiente(): void {
         inv.setItem(j.selectedSlotIndex, mao);
         inv.addItem(new ItemStack("minecraft:bowl", 1));
       }
-      gravarCamel(pack, agua + CAMEL.porGarrafa);
-      roupa.setEquipment(EquipmentSlot.Chest, pack);
+      camel.gravar(agua + CAMEL.porGarrafa);
       j.playSound("bucket.fill_water");
       j.sendMessage({ translate: "cl.camel.encheu", with: [String(agua + CAMEL.porGarrafa), String(CAMEL.capacidade)] });
       registrarAcaoAmbiente(j, "camel_encher");

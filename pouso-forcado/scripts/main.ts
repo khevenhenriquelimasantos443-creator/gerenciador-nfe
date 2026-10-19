@@ -10,6 +10,7 @@ import { barril } from "./blocos/barril.js";
 import { cadinho } from "./blocos/cadinho.js";
 import { montadora } from "./blocos/montadora.js";
 import { folhaInfestada, registrarNihilo } from "./blocos/nihilo.js";
+import { planta, registrarPlantacao } from "./blocos/plantacao.js";
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
 import { registrarCatalogo } from "./catalogo/catalogo.js";
@@ -57,6 +58,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent(IDS.barrilPedra, comPerfil(IDS.barrilPedra, barril));
   blockComponentRegistry.registerCustomComponent(IDS.cadinho, comPerfil(IDS.cadinho, cadinho));
   blockComponentRegistry.registerCustomComponent(IDS.folhaInfestada, comPerfil(IDS.folhaInfestada, folhaInfestada));
+  blockComponentRegistry.registerCustomComponent("cl:planta", comPerfil("plantação", planta));
 });
 
 registrarPerfil();
@@ -78,5 +80,6 @@ registrarFarao();
 registrarCatalogo();
 registrarOrganizador();
 registrarNihilo();
+registrarPlantacao();
 registrarAmbiente();
 registrarFome();

@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:hc_semente_fruta_cacto"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:fruta_cacto"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:fruta_cacto"
+      }
+    ],
+    "result": {
+      "item": "cl:semente_fruta_cacto"
+    }
+  }
+}
