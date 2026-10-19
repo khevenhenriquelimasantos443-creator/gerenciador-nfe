@@ -2,7 +2,6 @@ import { Dimension, EntityInitializationCause, GameMode, Player, Vector3, system
 import { CAPSULA, PROPS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { criarBauCom } from "../util/inventario.js";
-import { mostrarTitulo } from "../jogador/minimapa.js";
 
 /*
  * Cápsulas de carga: pedaços da nave que ainda estavam em órbita.
@@ -87,7 +86,7 @@ export function derrubarCapsula(jogador: Player): boolean {
   if (!pouso) return false;
   const dimensao = jogador.dimension;
   for (const j of world.getPlayers()) {
-    mostrarTitulo(j,
+    j.onScreenDisplay.setTitle(
       { translate: "cl.capsula.titulo" },
       {
         subtitle: { translate: "cl.capsula.subtitulo", with: [String(pouso.x), String(pouso.y), String(pouso.z)] },

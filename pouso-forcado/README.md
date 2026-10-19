@@ -118,7 +118,7 @@ Outros comandos:
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.7] mundo: plano | ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.8] mundo: plano | ...`.
 
 ## Diário de Bordo (Fase 2)
 
@@ -205,12 +205,10 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 - **Gerador de Monstros.** Com um jogador a até 20 blocos, põe 1 ou 2 monstros em volta a cada 10 s (até 5 por perto). Abaixo de y = 0 vêm esqueletos, errantes, aranhas das cavernas e creepers. Leva uns 5 s para quebrar, não cai como item e dá ferro, ouro, redstone e experiência. Não explode com creeper.
 - **Destroços de outras naves.** Raros e espalhados pelo mapa (um a cada ~3.900×3.900 blocos; `/cl:destrocos` mostra o mais perto): uma nave igual à sua, meio enterrada, com um baú de ferro, cobre, redstone, vidro e água.
 - **Tempestade de areia.** Começa **ao acaso, a qualquer hora** (em média uma a cada ~45 min de jogo, com pelo menos 15 min de pausa depois de cada uma) e dura **25 minutos**: aviso na tela, **névoa amarela** que fecha a visão, e quem estiver ao ar livre fica lento. A sede cai 1,5× mais rápido. O painel mostra o tempo que falta (`Tempestade 24:10`). Com trapaças: `/scriptevent cl:tempestade` começa uma na hora e `/scriptevent cl:tempestade_fim` acaba.
-- **Minimapa na tela.** No canto de cima, à direita, um mapa **redondo** com o **norte para cima** (N, L, S, O no anel azul): cada quadradinho tem 8×8 blocos, uns 200 blocos de diâmetro, e linhas finas marcam as bordas dos chunks. Mostra só o que já foi carregado: areia (mais escura nas dunas altas, com sombra), cinza (cidade, com a torre mais escura), laranja (templo), azul-claro (destroços), branco com ponto vermelho (a sua nave); cinza-escuro = ainda não carregado. A **seta branca** no meio é você, apontando para onde olha. Embaixo: a hora do jogo (dia/noite) e as suas coordenadas x, z. Quando aparece um aviso grande (horda, tempestade, cápsula), o mapa some por alguns segundos e volta. `/cl:mapa` esconde e mostra de novo.
 - **Comandos para achar lugares** (funcionam **sem trapaças**; mostram coordenadas, distância e direção no chat):
   - `/cl:cidade`: cidade abandonada mais perto;
   - `/cl:templo`: templo soterrado mais perto;
   - `/cl:destrocos`: destroços de nave mais perto;
-  - `/cl:mapa`: esconde ou mostra o minimapa da tela.
   - (Se nenhum outro add-on tiver um comando com o mesmo nome, dá para digitar sem o `cl:`, por exemplo `/cidade`.)
 - Números em `CIDADE`, `RARAS`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
@@ -291,7 +289,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.7] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.8] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

@@ -3,7 +3,6 @@ import { PROPS } from "../config.js";
 import { entregarDiario } from "../missoes/diario.js";
 import { mostrarDiagnostico } from "../mundo/diagnostico.js";
 import { garantirNave } from "../mundo/nave.js";
-import { mostrarTitulo } from "./minimapa.js";
 
 function darBoasVindas(jogador: Player): void {
   if (!jogador.isValid) return;
@@ -13,7 +12,7 @@ function darBoasVindas(jogador: Player): void {
 
   if (jogador.getDynamicProperty(PROPS.boasVindasVista)) return;
   jogador.setDynamicProperty(PROPS.boasVindasVista, true);
-  mostrarTitulo(jogador,
+  jogador.onScreenDisplay.setTitle(
     { translate: "cl.boas_vindas.titulo" },
     { subtitle: { translate: "cl.boas_vindas.subtitulo" }, fadeInDuration: 10, stayDuration: 80, fadeOutDuration: 20 },
   );

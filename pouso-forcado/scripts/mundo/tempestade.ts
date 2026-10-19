@@ -1,7 +1,6 @@
 import { GameMode, Player, system, world } from "@minecraft/server";
 import { PROPS, TEMPESTADE } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { mostrarTitulo } from "../jogador/minimapa.js";
 
 /*
  * Tempestade de areia: começa a qualquer hora, ao acaso (TEMPESTADE.chancePorMinuto), com
@@ -52,7 +51,7 @@ function terminar(): void {
 export function comecarTempestade(): void {
   world.setDynamicProperty(PROPS.tempestadeAte, world.getAbsoluteTime() + TEMPESTADE.duracaoTicks);
   for (const jogador of world.getPlayers()) {
-    mostrarTitulo(jogador, { translate: "cl.tempestade.titulo" }, {
+    jogador.onScreenDisplay.setTitle({ translate: "cl.tempestade.titulo" }, {
       subtitle: { translate: "cl.tempestade.subtitulo" },
       fadeInDuration: 10,
       stayDuration: 60,
