@@ -20,14 +20,28 @@
       }
     },
     "components": {
-      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:geometry": "geometry.cl.compostor",
       "minecraft:material_instances": {
-        "*": {
-          "texture": "cl_compostor_lado",
+        "corpo_friso": {
+          "texture": "clv_corpo_friso",
           "render_method": "opaque"
         },
-        "up": {
-          "texture": "cl_compostor_topo",
+        "grafite": {
+          "texture": "clv_grafite",
+          "render_method": "opaque"
+        },
+        "luz_verde": {
+          "texture": "clv_luz_verde",
+          "render_method": "opaque",
+          "face_dimming": false,
+          "ambient_occlusion": 0
+        },
+        "conteudo": {
+          "texture": "clv_composto_vazio",
+          "render_method": "opaque"
+        },
+        "*": {
+          "texture": "clv_grafite",
           "render_method": "opaque"
         }
       },
@@ -45,19 +59,34 @@
         ],
         "looping": true
       },
-      "cl:compostor": {}
+      "cl:compostor": {},
+      "minecraft:light_dampening": 0
     },
     "permutations": [
       {
         "condition": "q.block_state('cl:nivel') >= 1 && !q.block_state('cl:pronto')",
         "components": {
           "minecraft:material_instances": {
-            "*": {
-              "texture": "cl_compostor_lado",
+            "corpo_friso": {
+              "texture": "clv_corpo_friso",
               "render_method": "opaque"
             },
-            "up": {
-              "texture": "cl_compostor_topo_cheio",
+            "grafite": {
+              "texture": "clv_grafite",
+              "render_method": "opaque"
+            },
+            "luz_verde": {
+              "texture": "clv_luz_verde",
+              "render_method": "opaque",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "conteudo": {
+              "texture": "clv_composto_cheio",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_grafite",
               "render_method": "opaque"
             }
           }
@@ -67,12 +96,26 @@
         "condition": "q.block_state('cl:pronto')",
         "components": {
           "minecraft:material_instances": {
-            "*": {
-              "texture": "cl_compostor_lado",
+            "corpo_friso": {
+              "texture": "clv_corpo_friso",
               "render_method": "opaque"
             },
-            "up": {
-              "texture": "cl_compostor_topo_pronto",
+            "grafite": {
+              "texture": "clv_grafite",
+              "render_method": "opaque"
+            },
+            "luz_verde": {
+              "texture": "clv_luz_verde",
+              "render_method": "opaque",
+              "face_dimming": false,
+              "ambient_occlusion": 0
+            },
+            "conteudo": {
+              "texture": "clv_composto_pronto",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "clv_grafite",
               "render_method": "opaque"
             }
           }

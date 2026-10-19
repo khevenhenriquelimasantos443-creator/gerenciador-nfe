@@ -5,17 +5,59 @@
       "identifier": "cl:cabo",
       "menu_category": {
         "category": "items"
+      },
+      "states": {
+        "cl:n": [
+          false,
+          true
+        ],
+        "cl:s": [
+          false,
+          true
+        ],
+        "cl:l": [
+          false,
+          true
+        ],
+        "cl:o": [
+          false,
+          true
+        ],
+        "cl:cima": [
+          false,
+          true
+        ],
+        "cl:baixo": [
+          false,
+          true
+        ]
       }
     },
     "components": {
-      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.cabo",
+        "bone_visibility": {
+          "norte": "q.block_state('cl:n')",
+          "sul": "q.block_state('cl:s')",
+          "leste": "q.block_state('cl:l')",
+          "oeste": "q.block_state('cl:o')",
+          "cima": "q.block_state('cl:cima')",
+          "baixo": "q.block_state('cl:baixo')"
+        }
+      },
       "minecraft:material_instances": {
-        "*": {
-          "texture": "cl_cabo",
+        "grafite": {
+          "texture": "clv_grafite",
           "render_method": "opaque"
         },
-        "up": {
-          "texture": "cl_cabo",
+        "luz_ciano": {
+          "texture": "clv_luz_ciano",
+          "render_method": "opaque",
+          "face_dimming": false,
+          "ambient_occlusion": 0
+        },
+        "*": {
+          "texture": "clv_grafite",
           "render_method": "opaque"
         }
       },
@@ -25,7 +67,32 @@
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 6
       },
-      "minecraft:map_color": "#c46a2b"
+      "minecraft:map_color": "#c46a2b",
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:light_dampening": 0
     }
   }
 }

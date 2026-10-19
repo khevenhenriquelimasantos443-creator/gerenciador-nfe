@@ -8,23 +8,37 @@
       }
     },
     "components": {
-      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:geometry": "geometry.cl.estufa",
       "minecraft:material_instances": {
+        "grafite": {
+          "texture": "clv_grafite",
+          "render_method": "alpha_test"
+        },
+        "luz_verde": {
+          "texture": "clv_luz_verde",
+          "render_method": "alpha_test",
+          "face_dimming": false,
+          "ambient_occlusion": 0
+        },
+        "vidro": {
+          "texture": "clv_vidro",
+          "render_method": "alpha_test"
+        },
+        "planta": {
+          "texture": "clv_planta",
+          "render_method": "alpha_test"
+        },
+        "conteudo": {
+          "texture": "clv_composto_cheio",
+          "render_method": "alpha_test"
+        },
         "*": {
-          "texture": "cl_estufa_lado",
-          "render_method": "opaque"
-        },
-        "up": {
-          "texture": "cl_estufa_topo",
-          "render_method": "opaque"
-        },
-        "down": {
-          "texture": "cl_condensador_base",
-          "render_method": "opaque"
+          "texture": "clv_grafite",
+          "render_method": "alpha_test"
         }
       },
       "minecraft:destructible_by_mining": {
-        "seconds_to_destroy": 1.0
+        "seconds_to_destroy": 1
       },
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 3
@@ -37,7 +51,8 @@
         ],
         "looping": true
       },
-      "cl:estufa": {}
+      "cl:estufa": {},
+      "minecraft:light_dampening": 0
     }
   }
 }

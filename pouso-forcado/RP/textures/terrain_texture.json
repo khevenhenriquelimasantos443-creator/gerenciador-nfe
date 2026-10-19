@@ -114,6 +114,84 @@
     },
     "cl_terminal_topo": {
       "textures": "textures/blocks/cl/terminal_topo"
+    },
+    "clv_corpo": {
+      "textures": "textures/blocks/cl/v/corpo"
+    },
+    "clv_corpo_friso": {
+      "textures": "textures/blocks/cl/v/corpo_friso"
+    },
+    "clv_grafite": {
+      "textures": "textures/blocks/cl/v/grafite"
+    },
+    "clv_luz_ciano": {
+      "textures": "textures/blocks/cl/v/luz_ciano"
+    },
+    "clv_luz_laranja": {
+      "textures": "textures/blocks/cl/v/luz_laranja"
+    },
+    "clv_luz_azul": {
+      "textures": "textures/blocks/cl/v/luz_azul"
+    },
+    "clv_luz_verde": {
+      "textures": "textures/blocks/cl/v/luz_verde"
+    },
+    "clv_luz_violeta": {
+      "textures": "textures/blocks/cl/v/luz_violeta"
+    },
+    "clv_agua": {
+      "textures": "textures/blocks/cl/v/agua"
+    },
+    "clv_vazio": {
+      "textures": "textures/blocks/cl/v/vazio"
+    },
+    "clv_tela_terminal": {
+      "textures": "textures/blocks/cl/v/tela_terminal"
+    },
+    "clv_tela_nave": {
+      "textures": "textures/blocks/cl/v/tela_nave"
+    },
+    "clv_solar": {
+      "textures": "textures/blocks/cl/v/solar"
+    },
+    "clv_rotor": {
+      "textures": "textures/blocks/cl/v/rotor"
+    },
+    "clv_brasa_on": {
+      "textures": "textures/blocks/cl/v/brasa_on"
+    },
+    "clv_brasa_off": {
+      "textures": "textures/blocks/cl/v/brasa_off"
+    },
+    "clv_carga_0": {
+      "textures": "textures/blocks/cl/v/carga_0"
+    },
+    "clv_carga_1": {
+      "textures": "textures/blocks/cl/v/carga_1"
+    },
+    "clv_carga_2": {
+      "textures": "textures/blocks/cl/v/carga_2"
+    },
+    "clv_malha": {
+      "textures": "textures/blocks/cl/v/malha"
+    },
+    "clv_vidro": {
+      "textures": "textures/blocks/cl/v/vidro"
+    },
+    "clv_planta": {
+      "textures": "textures/blocks/cl/v/planta"
+    },
+    "clv_composto_vazio": {
+      "textures": "textures/blocks/cl/v/composto_vazio"
+    },
+    "clv_composto_cheio": {
+      "textures": "textures/blocks/cl/v/composto_cheio"
+    },
+    "clv_composto_pronto": {
+      "textures": "textures/blocks/cl/v/composto_pronto"
+    },
+    "clv_forja": {
+      "textures": "textures/blocks/cl/v/forja"
     }
   }
 }

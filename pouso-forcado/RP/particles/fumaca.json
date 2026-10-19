@@ -1,0 +1,77 @@
+{
+  "format_version": "1.10.0",
+  "particle_effect": {
+    "description": {
+      "identifier": "cl:fumaca",
+      "basic_render_parameters": {
+        "material": "particles_alpha",
+        "texture": "textures/particle/particles"
+      }
+    },
+    "components": {
+      "minecraft:emitter_rate_instant": {
+        "num_particles": 4
+      },
+      "minecraft:emitter_lifetime_once": {
+        "active_time": 0.2
+      },
+      "minecraft:particle_lifetime_expression": {
+        "max_lifetime": "math.random(1.2, 2.0)"
+      },
+      "minecraft:particle_initial_speed": 0.4,
+      "minecraft:particle_motion_dynamic": {
+        "linear_acceleration": [
+          0,
+          0.8,
+          0
+        ],
+        "linear_drag_coefficient": 1.0
+      },
+      "minecraft:particle_appearance_billboard": {
+        "size": [
+          "0.12 + v.particle_age * 0.12",
+          "0.12 + v.particle_age * 0.12"
+        ],
+        "facing_camera_mode": "rotate_xyz",
+        "uv": {
+          "texture_width": 128,
+          "texture_height": 128,
+          "uv": [
+            0,
+            0
+          ],
+          "uv_size": [
+            8,
+            8
+          ]
+        }
+      },
+      "minecraft:particle_appearance_tinting": {
+        "color": [
+          0.55,
+          0.58,
+          0.62,
+          0.6
+        ]
+      },
+      "minecraft:emitter_shape_disc": {
+        "offset": [
+          0,
+          0,
+          0
+        ],
+        "radius": 0.12,
+        "plane_normal": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  }
+}

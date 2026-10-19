@@ -3,7 +3,7 @@
   "texture_name": "atlas.items",
   "texture_data": {
     "cl_diario_bordo": {
-      "textures": "textures/items/cl/diario_bordo"
+      "textures": "textures/items/cl/v/diario_bordo"
     },
     "cl_fruta_cacto": {
       "textures": "textures/items/cl/fruta_cacto"
@@ -27,22 +27,22 @@
       "textures": "textures/items/cl/faixa_mumia"
     },
     "cl_coracao_farao": {
-      "textures": "textures/items/cl/coracao_farao"
+      "textures": "textures/items/cl/v/coracao_farao"
     },
     "cl_placa_casco": {
-      "textures": "textures/items/cl/placa_casco"
+      "textures": "textures/items/cl/v/placa_casco"
     },
     "cl_circuito": {
-      "textures": "textures/items/cl/circuito"
+      "textures": "textures/items/cl/v/circuito"
     },
     "cl_celula_combustivel": {
-      "textures": "textures/items/cl/celula_combustivel"
+      "textures": "textures/items/cl/v/celula_combustivel"
     },
     "cl_motor_nave": {
-      "textures": "textures/items/cl/motor_nave"
+      "textures": "textures/items/cl/v/motor_nave"
     },
     "cl_computador_bordo": {
-      "textures": "textures/items/cl/computador_bordo"
+      "textures": "textures/items/cl/v/computador_bordo"
     }
   }
 }

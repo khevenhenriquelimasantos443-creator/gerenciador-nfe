@@ -1,0 +1,627 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.peneira_automatica",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "corpo",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                2,
+                16
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "grafite"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "grafite"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7,
+                2,
+                -7
+              ],
+              "size": [
+                14,
+                9,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1,
+                    5
+                  ],
+                  "uv_size": [
+                    14,
+                    9
+                  ],
+                  "material_instance": "corpo_friso"
+                },
+                "south": {
+                  "uv": [
+                    1,
+                    5
+                  ],
+                  "uv_size": [
+                    14,
+                    9
+                  ],
+                  "material_instance": "corpo_friso"
+                },
+                "east": {
+                  "uv": [
+                    1,
+                    5
+                  ],
+                  "uv_size": [
+                    14,
+                    9
+                  ],
+                  "material_instance": "corpo_friso"
+                },
+                "west": {
+                  "uv": [
+                    1,
+                    5
+                  ],
+                  "uv_size": [
+                    14,
+                    9
+                  ],
+                  "material_instance": "corpo_friso"
+                },
+                "up": {
+                  "uv": [
+                    1,
+                    1
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "corpo"
+                },
+                "down": {
+                  "uv": [
+                    1,
+                    1
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "grafite"
+                }
+              }
+            },
+            {
+              "origin": [
+                -6.5,
+                11,
+                -6.5
+              ],
+              "size": [
+                13,
+                1,
+                13
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    1.5,
+                    4
+                  ],
+                  "uv_size": [
+                    13,
+                    1
+                  ],
+                  "material_instance": "luz_ciano"
+                },
+                "south": {
+                  "uv": [
+                    1.5,
+                    4
+                  ],
+                  "uv_size": [
+                    13,
+                    1
+                  ],
+                  "material_instance": "luz_ciano"
+                },
+                "east": {
+                  "uv": [
+                    1.5,
+                    4
+                  ],
+                  "uv_size": [
+                    13,
+                    1
+                  ],
+                  "material_instance": "luz_ciano"
+                },
+                "west": {
+                  "uv": [
+                    1.5,
+                    4
+                  ],
+                  "uv_size": [
+                    13,
+                    1
+                  ],
+                  "material_instance": "luz_ciano"
+                },
+                "up": {
+                  "uv": [
+                    1.5,
+                    1.5
+                  ],
+                  "uv_size": [
+                    13,
+                    13
+                  ],
+                  "material_instance": "luz_ciano"
+                },
+                "down": {
+                  "uv": [
+                    1.5,
+                    1.5
+                  ],
+                  "uv_size": [
+                    13,
+                    13
+                  ],
+                  "material_instance": "luz_ciano"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                12,
+                -8
+              ],
+              "size": [
+                16,
+                4,
+                2
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "east": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "corpo"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "corpo"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                12,
+                6
+              ],
+              "size": [
+                16,
+                4,
+                2
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "west": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "corpo"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "corpo"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                12,
+                -6
+              ],
+              "size": [
+                2,
+                4,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    2
+                  ],
+                  "uv_size": [
+                    2,
+                    12
+                  ],
+                  "material_instance": "corpo"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    2
+                  ],
+                  "uv_size": [
+                    2,
+                    12
+                  ],
+                  "material_instance": "corpo"
+                }
+              }
+            },
+            {
+              "origin": [
+                6,
+                12,
+                -6
+              ],
+              "size": [
+                2,
+                4,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "south": {
+                  "uv": [
+                    14,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "east": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "west": {
+                  "uv": [
+                    2,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    4
+                  ],
+                  "material_instance": "corpo"
+                },
+                "up": {
+                  "uv": [
+                    14,
+                    2
+                  ],
+                  "uv_size": [
+                    2,
+                    12
+                  ],
+                  "material_instance": "corpo"
+                },
+                "down": {
+                  "uv": [
+                    14,
+                    2
+                  ],
+                  "uv_size": [
+                    2,
+                    12
+                  ],
+                  "material_instance": "corpo"
+                }
+              }
+            },
+            {
+              "origin": [
+                -6,
+                14,
+                -6
+              ],
+              "size": [
+                12,
+                0.5,
+                12
+              ],
+              "uv": {
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "malha"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "malha"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

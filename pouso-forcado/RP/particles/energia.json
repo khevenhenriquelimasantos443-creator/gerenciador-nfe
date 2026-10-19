@@ -1,0 +1,77 @@
+{
+  "format_version": "1.10.0",
+  "particle_effect": {
+    "description": {
+      "identifier": "cl:energia",
+      "basic_render_parameters": {
+        "material": "particles_add",
+        "texture": "textures/particle/particles"
+      }
+    },
+    "components": {
+      "minecraft:emitter_rate_instant": {
+        "num_particles": 6
+      },
+      "minecraft:emitter_lifetime_once": {
+        "active_time": 0.2
+      },
+      "minecraft:particle_lifetime_expression": {
+        "max_lifetime": "math.random(0.8, 1.4)"
+      },
+      "minecraft:particle_initial_speed": 0.6,
+      "minecraft:particle_motion_dynamic": {
+        "linear_acceleration": [
+          0,
+          1.2,
+          0
+        ],
+        "linear_drag_coefficient": 2.0
+      },
+      "minecraft:particle_appearance_billboard": {
+        "size": [
+          "0.05 + 0.04 * math.sin(v.particle_age * 600)",
+          "0.05 + 0.04 * math.sin(v.particle_age * 600)"
+        ],
+        "facing_camera_mode": "rotate_xyz",
+        "uv": {
+          "texture_width": 128,
+          "texture_height": 128,
+          "uv": [
+            0,
+            0
+          ],
+          "uv_size": [
+            8,
+            8
+          ]
+        }
+      },
+      "minecraft:particle_appearance_tinting": {
+        "color": [
+          0.37,
+          0.95,
+          1.0,
+          0.9
+        ]
+      },
+      "minecraft:emitter_shape_disc": {
+        "offset": [
+          0,
+          0,
+          0
+        ],
+        "radius": 0.4,
+        "plane_normal": [
+          0,
+          1,
+          0
+        ],
+        "direction": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  }
+}

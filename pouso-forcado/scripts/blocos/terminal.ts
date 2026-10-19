@@ -2,6 +2,7 @@ import { Block, BlockCustomComponent, Container, GameMode, ItemStack, Player, Ra
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { ARMAZENAMENTO, IDS } from "../config.js";
 import { aviso } from "../jogador/hud.js";
+import { particula } from "../util/efeitos.js";
 import { coletarNaRede, consumir } from "../util/rede.js";
 
 /*
@@ -137,6 +138,10 @@ async function abrir(jogador: Player, terminal: Block, filtro: string, pagina: n
         return;
       }
     }
+  }
+  if (cobrar) {
+    particula(terminal.dimension, "cl:energia", { x: terminal.x + 0.5, y: terminal.y + 1, z: terminal.z + 0.5 });
+    jogador.playSound("beacon.activate", { volume: 0.4, pitch: 1.6 });
   }
   const todas = estoque(lista);
   const linhas = filtro ? todas.filter((l) => l.id.replace("minecraft:", "").replace("cl:", "").includes(filtro)) : todas;

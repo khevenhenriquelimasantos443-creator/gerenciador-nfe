@@ -1,0 +1,401 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.estufa",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "corpo",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                2,
+                16
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    14
+                  ],
+                  "uv_size": [
+                    16,
+                    2
+                  ],
+                  "material_instance": "grafite"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "grafite"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "grafite"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7.5,
+                2,
+                -7.5
+              ],
+              "size": [
+                15,
+                1,
+                15
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0.5,
+                    13
+                  ],
+                  "uv_size": [
+                    15,
+                    1
+                  ],
+                  "material_instance": "luz_verde"
+                },
+                "south": {
+                  "uv": [
+                    0.5,
+                    13
+                  ],
+                  "uv_size": [
+                    15,
+                    1
+                  ],
+                  "material_instance": "luz_verde"
+                },
+                "east": {
+                  "uv": [
+                    0.5,
+                    13
+                  ],
+                  "uv_size": [
+                    15,
+                    1
+                  ],
+                  "material_instance": "luz_verde"
+                },
+                "west": {
+                  "uv": [
+                    0.5,
+                    13
+                  ],
+                  "uv_size": [
+                    15,
+                    1
+                  ],
+                  "material_instance": "luz_verde"
+                },
+                "up": {
+                  "uv": [
+                    0.5,
+                    0.5
+                  ],
+                  "uv_size": [
+                    15,
+                    15
+                  ],
+                  "material_instance": "luz_verde"
+                },
+                "down": {
+                  "uv": [
+                    0.5,
+                    0.5
+                  ],
+                  "uv_size": [
+                    15,
+                    15
+                  ],
+                  "material_instance": "luz_verde"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                3,
+                -8
+              ],
+              "size": [
+                16,
+                13,
+                16
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "vidro"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "vidro"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "vidro"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "vidro"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "vidro"
+                }
+              }
+            },
+            {
+              "origin": [
+                -5,
+                3,
+                -5
+              ],
+              "size": [
+                10,
+                1,
+                10
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    3,
+                    12
+                  ],
+                  "uv_size": [
+                    10,
+                    1
+                  ],
+                  "material_instance": "grafite"
+                },
+                "south": {
+                  "uv": [
+                    3,
+                    12
+                  ],
+                  "uv_size": [
+                    10,
+                    1
+                  ],
+                  "material_instance": "grafite"
+                },
+                "east": {
+                  "uv": [
+                    3,
+                    12
+                  ],
+                  "uv_size": [
+                    10,
+                    1
+                  ],
+                  "material_instance": "grafite"
+                },
+                "west": {
+                  "uv": [
+                    3,
+                    12
+                  ],
+                  "uv_size": [
+                    10,
+                    1
+                  ],
+                  "material_instance": "grafite"
+                },
+                "up": {
+                  "uv": [
+                    3,
+                    3
+                  ],
+                  "uv_size": [
+                    10,
+                    10
+                  ],
+                  "material_instance": "conteudo"
+                }
+              }
+            },
+            {
+              "origin": [
+                -5,
+                4,
+                0
+              ],
+              "size": [
+                10,
+                10,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "planta"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "planta"
+                }
+              }
+            },
+            {
+              "origin": [
+                0,
+                4,
+                -5
+              ],
+              "size": [
+                0,
+                10,
+                10
+              ],
+              "uv": {
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "planta"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "planta"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

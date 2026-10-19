@@ -2,6 +2,7 @@ import { BlockCustomComponent, Container, ItemStack, Player, RawMessage, system 
 import { ActionFormData } from "@minecraft/server-ui";
 import { MONTADORA, ReceitaMontadora } from "../config.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
+import { particula } from "../util/efeitos.js";
 import { consumir } from "../util/rede.js";
 
 /*
@@ -87,6 +88,7 @@ export const montadora: BlockCustomComponent = {
     if (progresso < r.energia) {
       definirEstado(e.block, PROGRESSO, progresso);
       e.dimension.playSound("random.click", e.block.center(), { volume: 0.3 });
+      particula(e.dimension, "cl:energia", { x: e.block.x + 0.5, y: e.block.y + 0.9, z: e.block.z + 0.5 });
       return;
     }
     for (const { item, qtd } of r.ingredientes) tirar(cima, item, qtd);
@@ -96,11 +98,7 @@ export const montadora: BlockCustomComponent = {
     const sobra = baixo ? baixo.addItem(peca) : peca;
     if (sobra) e.dimension.spawnItem(sobra, { x: e.block.x + 0.5, y: e.block.y + 0.5, z: e.block.z - 0.6 });
     e.dimension.playSound("random.anvil_use", e.block.center(), { volume: 0.6 });
-    try {
-      e.dimension.spawnParticle("minecraft:basic_flame_particle", { x: e.block.x + 0.5, y: e.block.y + 1.1, z: e.block.z + 0.5 });
-    } catch {
-      // enfeite
-    }
+    particula(e.dimension, "cl:faisca_laranja", { x: e.block.x + 0.5, y: e.block.y + 0.9, z: e.block.z + 0.5 });
   },
   onPlayerInteract(e) {
     const jogador = e.player;

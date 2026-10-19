@@ -57,6 +57,7 @@ execFileSync(node, [join(RAIZ, "node_modules/typescript/bin/tsc"), "-p", join(RA
 
 console.log("> texturas placeholder e estrutura da nave");
 execFileSync(node, [join(RAIZ, "tools/gerar-texturas.mjs")], { stdio: "inherit" });
+execFileSync(node, [join(RAIZ, "tools/gerar-visual.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-nave.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" });
 

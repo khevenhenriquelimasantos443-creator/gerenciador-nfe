@@ -4,6 +4,7 @@ import { PROPS, SISTEMAS_NAVE } from "../config.js";
 import { nomeItem, receitasDaMontadora } from "../blocos/montadora.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { Acao } from "../missoes/lista.js";
+import { particula } from "../util/efeitos.js";
 
 /*
  * Conserto da nave (Fase 8): o Painel da Nave fica dentro da nave caída (posto junto com o baú
@@ -59,6 +60,8 @@ function instalar(jogador: Player, sis: Sistema): void {
   world.setDynamicProperty(PROPS.reparos, [...feitos].join(","));
   registrarAcao(jogador, `reparo_${sis.id}` as Acao);
   jogador.playSound("random.anvil_use");
+  jogador.playSound("beacon.power", { volume: 0.6 });
+  particula(jogador.dimension, "cl:faisca", { x: jogador.location.x, y: jogador.location.y + 1.2, z: jogador.location.z });
   jogador.dimension.playSound("random.levelup", jogador.location);
   const pronta = naveConsertada();
   for (const j of world.getPlayers()) {

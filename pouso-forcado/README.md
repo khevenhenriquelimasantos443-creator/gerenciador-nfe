@@ -17,8 +17,8 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 5 | Energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | pronta |
 | 6 | Exploração: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | pronta |
 | 7 | Perigos do deserto: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | pronta |
-| 8 | **Consertar a nave**: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | **esta versão** |
-| 9 | Visual das máquinas: modelos 3D próprios (no lugar dos cubos), texturas finais, animações (peneira balançando, compostor borbulhando, condensador pingando, estufa com plantas), partículas e sons próprios | |
+| 8 | Consertar a nave: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | pronta |
+| 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | **esta versão** |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -118,7 +118,7 @@ Outros comandos:
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.15.0] mundo: plano | ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
 ## Diário de Bordo (Fase 2)
 
@@ -211,6 +211,18 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
   - `/cl:destrocos`: destroços de nave mais perto;
   - (Se nenhum outro add-on tiver um comando com o mesmo nome, dá para digitar sem o `cl:`, por exemplo `/cidade`.)
 - Números em `CIDADE`, `RARAS`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
+
+## Visual das máquinas (Fase 9)
+
+Estilo futurista e minimalista: corpo branco-gelo, base grafite e uma faixa de luz da cor da função (**ciano** = energia, **laranja** = calor/montagem, **azul** = água, **verde** = vida, **violeta** = armazenamento). Tudo é gerado por `tools/gerar-visual.mjs` (texturas 32x32, modelos e ícones), rodado pelo build.
+- **Modelos 3D próprios** (`RP/models/blocks/cl_*.geo.json`) para condensadores, peneiras, compostor, estufa (vidro com uma muda dentro), painel solar (placa inclinada num pé), gerador (com chaminé), bateria (janela de carga), cabo, moinho (torre com rotor), Montadora (com braço), Terminal e Painel da Nave (telas inclinadas).
+- **Virados para você**: gerador, moinho, Montadora, Terminal e Painel da Nave ficam de frente para quem coloca.
+- **Animações** (texturas animadas): água do condensador ondulando, tela do Terminal rolando a lista, radar girando no Painel da Nave, brilho passando no painel solar, rotor do moinho girando, brasa do gerador aceso tremulando, mesa da Montadora pulsando.
+- **Luzes que não escurecem**: faixas, telas e janelas de carga usam material sem sombra, então "acendem" mesmo no escuro.
+- **Cabos que se conectam**: o cabo é fino e liga um braço para cada vizinho da rede (outro cabo, bateria, gerador, máquina, Terminal, baú da rede), ao pôr ou quebrar blocos do lado.
+- **Partículas próprias** (`RP/particles/`): faíscas ciano ao instalar peças na nave, faíscas laranja quando a Montadora termina uma peça, pontinhos de energia quando ela trabalha, quando o painel solar carrega e ao abrir o Terminal, e fumaça no gerador.
+- **Ícones novos** das peças da nave, do Coração do Faraó e do Diário de Bordo.
+- Sons: usam sons do próprio jogo (bigorna, farol); sons gravados próprios ficam para depois.
 
 ## Consertar a nave (Fase 8)
 
@@ -330,7 +342,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.15.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.16.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

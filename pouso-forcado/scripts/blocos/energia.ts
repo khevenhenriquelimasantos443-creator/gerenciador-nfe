@@ -5,6 +5,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { Acao } from "../missoes/lista.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gastarDaMao, itemNaMao } from "../util/inventario.js";
+import { particula } from "../util/efeitos.js";
 import { cargaDe, consumir, gerar } from "../util/rede.js";
 
 /*
@@ -44,7 +45,8 @@ function mostrar(jogador: Player | undefined, chave: string, valores: string[] =
 
 export const painelSolar: BlockCustomComponent = {
   onTick(e) {
-    if (solAlto() && ceuAberto(e.block)) gerar(e.block, ENERGIA.painelPorCiclo);
+    if (solAlto() && ceuAberto(e.block) && gerar(e.block, ENERGIA.painelPorCiclo) > 0)
+      particula(e.dimension, "cl:energia", { x: e.block.x + 0.5, y: e.block.y + 0.6, z: e.block.z + 0.5 });
   },
   onPlayerInteract(e: BlockComponentPlayerInteractEvent) {
     const chave = !solAlto() ? "cl.energia.painel_noite" : ceuAberto(e.block) ? "cl.energia.painel_ok" : "cl.energia.painel_coberto";
@@ -56,7 +58,10 @@ export const gerador: BlockCustomComponent = {
   onTick(e) {
     const c = lerEstado<number>(e.block, COMBUSTIVEL);
     if (c <= 0) return;
-    if (gerar(e.block, ENERGIA.geradorPorCiclo) > 0) definirEstado(e.block, COMBUSTIVEL, c - 1);
+    if (gerar(e.block, ENERGIA.geradorPorCiclo) > 0) {
+      definirEstado(e.block, COMBUSTIVEL, c - 1);
+      particula(e.dimension, "cl:fumaca", { x: e.block.x + 0.5, y: e.block.y + 1.4, z: e.block.z + 0.5 });
+    }
   },
   onPlayerInteract(e: BlockComponentPlayerInteractEvent) {
     const jogador = e.player;
