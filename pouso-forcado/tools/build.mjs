@@ -64,8 +64,17 @@ execFileSync(node, [join(RAIZ, "tools/gerar-visual.mjs")], { stdio: "inherit" })
 execFileSync(node, [join(RAIZ, "tools/gerar-nave.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" });
 
+// O jogo descarta parte de um item (até o ícone) se a velocidade do "minecraft:digger" não for inteira.
+function validarItens(pasta) {
+  for (const arq of listar(pasta).filter((a) => a.endsWith(".json"))) {
+    const velocidades = JSON.parse(readFileSync(arq, "utf8"))["minecraft:item"]?.components?.["minecraft:digger"]?.destroy_speeds ?? [];
+    for (const { speed } of velocidades) if (!Number.isInteger(speed)) throw new Error(`${relative(RAIZ, arq)}: velocidade do digger ${speed} não é inteira`);
+  }
+}
+
 console.log("> validando JSON");
 validarJson(join(RAIZ, "BP"));
+validarItens(join(RAIZ, "BP/items"));
 validarJson(join(RAIZ, "RP"));
 validarEstadosDeBlocos(join(RAIZ, "BP/blocks"));
 

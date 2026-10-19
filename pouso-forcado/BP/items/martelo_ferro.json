@@ -23,27 +23,27 @@
         "destroy_speeds": [
           {
             "block": "minecraft:cobblestone",
-            "speed": 4.5
+            "speed": 5
           },
           {
             "block": "minecraft:gravel",
-            "speed": 4.5
+            "speed": 5
           },
           {
             "block": "minecraft:sand",
-            "speed": 4.5
+            "speed": 5
           },
           {
             "block": "minecraft:red_sand",
-            "speed": 4.5
+            "speed": 5
           },
           {
             "block": "minecraft:sandstone",
-            "speed": 4.5
+            "speed": 5
           },
           {
             "block": "minecraft:stone",
-            "speed": 4.5
+            "speed": 5
           }
         ]
       },
