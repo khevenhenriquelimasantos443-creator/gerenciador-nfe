@@ -1,5 +1,6 @@
 import { CommandPermissionLevel, CustomCommandRegistry, CustomCommandStatus, Player, system } from "@minecraft/server";
 import { cidadeMaisProxima } from "../mundo/cidade.js";
+import { darMapa } from "./mapa.js";
 import { raraMaisProxima } from "../mundo/raras.js";
 import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
 
@@ -9,6 +10,7 @@ import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
  *   /cl:templo     templo soterrado mais perto
  *   /cl:destrocos  destroços de nave mais perto
  * (o jogo também aceita sem o "cl:", se nenhum outro comando tiver o mesmo nome)
+ *   /cl:mapa       um Mapa Localizador novo (minimapa na mão secundária)
  * Mostra no chat as coordenadas, a distância e a direção (norte = z menor, leste = x maior).
  * O comando roda em modo restrito, então a resposta vai no próximo tick (system.run).
  */
@@ -57,6 +59,15 @@ export function registrarComandos(registro: CustomCommandRegistry): void {
       },
     );
   }
+  registro.registerCommand(
+    { name: "cl:mapa", description: "Pouso Forçado: dá um Mapa Localizador novo (minimapa)", permissionLevel: CommandPermissionLevel.Any, cheatsRequired: false },
+    (origem) => {
+      const jogador = origem.sourceEntity;
+      if (!(jogador instanceof Player)) return { status: CustomCommandStatus.Failure, message: "Use como jogador." };
+      system.run(() => darMapa(jogador));
+      return { status: CustomCommandStatus.Success };
+    },
+  );
 }
 
 function perto(tipo: "templo" | "destrocos", j: Player): Alvo {

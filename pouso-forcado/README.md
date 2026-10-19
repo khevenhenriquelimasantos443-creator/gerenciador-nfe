@@ -117,7 +117,7 @@ Outros comandos:
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.4] mundo: plano | ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.5] mundo: plano | ...`.
 
 ## Diário de Bordo (Fase 2)
 
@@ -193,9 +193,10 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 ## Exploração (Fase 6)
 
 - **Cidades abandonadas.** O mapa é dividido em quadrados de 640×640 blocos; cada um tem uma cidade (menos o da nave), então a mais perto fica a algumas centenas de blocos. Na missão "Sinal de rádio" o **Diário de Bordo mostra as coordenadas** da cidade mais próxima. Cada cidade tem 112×112 blocos, numa planície sem dunas:
-  - **prédios ocos** de 2 a 9 andares (mais altos no centro), de concreto, tijolo de pedra, arenito ou terracota, com janelas quebradas, topo desmoronado, areia acumulada e um **andaime** para subir até o telhado;
-  - por dentro: **escuro** (monstros nascem sozinhos), **baús** em vários andares e **Geradores de Monstros**;
-  - alguns quarteirões são só escombros; ruas de andesito cobertas de areia;
+  - **prédios** de 2 a 9 andares (mais altos no centro) de **tijolos de pedra rachados** (com remendos de tijolo inteiro, musgo e pedregulho), **bem quebrados**: buracos nas paredes e nos pisos, cantos desabados, janelas sem vidro ou com grade e **barras de ferro tortas** saindo das partes quebradas e do telhado;
+  - **escadas de tijolo de pedra** entre os andares, até o telhado;
+  - por dentro: **escuro** (monstros nascem sozinhos), **móveis largados** (carpete gasto, mesas com cadeiras, estantes, vasos, teias de aranha), **baús** em vários andares e **Geradores de Monstros**;
+  - alguns quarteirões são só escombros; o **chão é quase todo areia e arenito**, com pedaços de calçada aparecendo e entulho encostado nos prédios;
   - no **centro**, uma praça com a **torre de rádio** (34 blocos, andaime por dentro). Lá em cima: um baú com diamantes, ferro, redstone, Água Excelente e às vezes maçã dourada… guardado por um gerador.
 - **Masmorras.** Salas escondidas no subsolo (~1 a cada 25 chunks), escuras, com um Gerador de Monstros no meio e 1 ou 2 baús:
   - **comuns** na pedra (y 12 a 26), de pedregulho com musgo. Metade tem um **poço** até a superfície, marcado por um **anel de arenito entalhado** na areia (com feno no fundo para amortecer a queda; para sair, cave ou faça uma escada);
@@ -203,10 +204,12 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
 - **Gerador de Monstros.** Com um jogador a até 20 blocos, põe 1 ou 2 monstros em volta a cada 10 s (até 5 por perto). Abaixo de y = 0 vêm esqueletos, errantes, aranhas das cavernas e creepers. Leva uns 5 s para quebrar, não cai como item e dá ferro, ouro, redstone e experiência. Não explode com creeper.
 - **Destroços de outras naves.** Raros e espalhados pelo mapa (um a cada ~3.900×3.900 blocos; `/cl:destrocos` mostra o mais perto): uma nave igual à sua, meio enterrada, com um baú de ferro, cobre, redstone, vidro e água.
 - **Tempestade de areia.** Começa **ao acaso, a qualquer hora** (em média uma a cada ~45 min de jogo, com pelo menos 15 min de pausa depois de cada uma) e dura **25 minutos**: aviso na tela, **névoa amarela** que fecha a visão, e quem estiver ao ar livre fica lento. A sede cai 1,5× mais rápido. O painel mostra o tempo que falta (`Tempestade 24:10`). Com trapaças: `/scriptevent cl:tempestade` começa uma na hora e `/scriptevent cl:tempestade_fim` acaba.
+- **Minimapa.** Ao entrar, você ganha um **Mapa Localizador**. Use-o (toque e segure): ele vai sozinho para a **mão secundária** e fica como minimapa no canto da tela, desenhando o que já foi carregado e mostrando onde você está. O mapa cobre uma área fixa; ao sair dela, digite `/cl:mapa` para pegar outro.
 - **Comandos para achar lugares** (funcionam **sem trapaças**; mostram coordenadas, distância e direção no chat):
   - `/cl:cidade`: cidade abandonada mais perto;
   - `/cl:templo`: templo soterrado mais perto;
-  - `/cl:destrocos`: destroços de nave mais perto.
+  - `/cl:destrocos`: destroços de nave mais perto;
+  - `/cl:mapa`: um Mapa Localizador novo.
   - (Se nenhum outro add-on tiver um comando com o mesmo nome, dá para digitar sem o `cl:`, por exemplo `/cidade`.)
 - Números em `CIDADE`, `RARAS`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
@@ -287,7 +290,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.4] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.5] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

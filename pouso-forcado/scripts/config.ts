@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.13.4";
+export const VERSAO = "0.13.5";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -42,6 +42,7 @@ export const PROPS = {
   tempestadeAte: `${NS}:tempestade_ate`, // mundo: tempo absoluto em que a tempestade acaba
   tempestadeFim: `${NS}:tempestade_fim`, // mundo: tempo absoluto em que a última tempestade acabou
   diarioRecebido: `${NS}:diario_recebido`, // jogador
+  mapaRecebido: `${NS}:mapa_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
   sede: `${NS}:sede`, // jogador: água no corpo (0 a SEDE.max)
@@ -439,16 +440,19 @@ export const CIDADE = {
   andaresMax: 9, // perto do centro; diminui para as bordas
   chanceRuina: 0.2, // quarteirão só com escombros
   chanceBauPorAndar: 0.4,
-  materiais: [
-    "minecraft:light_gray_concrete",
-    "minecraft:white_concrete",
-    "minecraft:gray_concrete",
-    "minecraft:stone_bricks",
-    "minecraft:cut_sandstone",
-    "minecraft:smooth_sandstone",
-    "minecraft:white_terracotta",
-  ],
-  rua: "minecraft:polished_andesite",
+  chanceMoveis: 0.6, // andar com móveis largados
+  parede: "minecraft:cracked_stone_bricks",
+  piso: "minecraft:stone_bricks",
+  remendos: ["minecraft:stone_bricks", "minecraft:mossy_stone_bricks", "minecraft:cobblestone", "minecraft:andesite"],
+  entulho: ["minecraft:cobblestone", "minecraft:gravel", "minecraft:cracked_stone_bricks", "minecraft:stone_brick_slab"],
+  carpetes: ["minecraft:brown_carpet", "minecraft:gray_carpet", "minecraft:light_gray_carpet", "minecraft:red_carpet", "minecraft:white_carpet"],
+  // Chão: o resto é areia.
+  chao: {
+    arenito: 0.35,
+    pedra: 0.1,
+    blocosArenito: ["minecraft:sandstone", "minecraft:smooth_sandstone", "minecraft:cut_sandstone"],
+    blocosPedra: ["minecraft:polished_andesite", "minecraft:cracked_stone_bricks", "minecraft:cobblestone"],
+  },
 } as const;
 
 export const CIDADE_SAQUE: ReadonlyArray<LinhaSaque> = [

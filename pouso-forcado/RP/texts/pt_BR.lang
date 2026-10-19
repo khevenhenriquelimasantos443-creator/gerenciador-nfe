@@ -207,3 +207,7 @@ cl.direcao.norte_oeste=noroeste
 cl.direcao.sul_leste=sudeste
 cl.direcao.sul_oeste=sudoeste
 cl.direcao.aqui=lado de onde você está
+
+## Minimapa
+cl.mapa.recebido=Você ganhou um Mapa Localizador. Use-o (toque e segure) e ele vai para a mão secundária: fica como minimapa no canto da tela. Saiu da área do mapa? Digite /cl:mapa para pegar outro.
+cl.mapa.na_mao=O mapa foi para a mão secundária: agora é o seu minimapa.
