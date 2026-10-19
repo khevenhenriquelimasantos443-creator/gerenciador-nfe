@@ -117,7 +117,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.0] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.1] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -203,7 +203,7 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
   - **fundas** na ardósia (y -45 a -25), com 2 geradores e saque muito melhor (diamantes, ouro, esmeraldas, maçã dourada).
 - **Gerador de Monstros.** Com um jogador a até 20 blocos, põe 1 ou 2 monstros em volta a cada 10 s (até 5 por perto). Abaixo de y = 0 vêm esqueletos, errantes, aranhas das cavernas e creepers. Leva uns 5 s para quebrar, não cai como item e dá ferro, ouro, redstone e experiência. Não explode com creeper.
 - **Destroços de outras naves.** Nas planícies, às vezes, uma nave igual à sua, meio enterrada, com um baú de ferro, cobre, redstone, vidro e água.
-- **Tempestade de areia.** No máximo uma por dia (35% de chance), de dia, por 2 minutos: aviso na tela, **névoa amarela** que fecha a visão, e quem estiver ao ar livre fica lento. A sede cai 1,5× mais rápido. Com trapaças, `/scriptevent cl:tempestade` começa uma na hora.
+- **Tempestade de areia.** Começa **ao acaso, a qualquer hora** (em média uma a cada ~45 min de jogo, com pelo menos 15 min de pausa depois de cada uma) e dura **25 minutos**: aviso na tela, **névoa amarela** que fecha a visão, e quem estiver ao ar livre fica lento. A sede cai 1,5× mais rápido. O painel mostra o tempo que falta (`Tempestade 24:10`). Com trapaças: `/scriptevent cl:tempestade` começa uma na hora e `/scriptevent cl:tempestade_fim` acaba.
 - Números em `CIDADE`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
 ## Energia (Fase 5)
@@ -282,7 +282,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.1] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

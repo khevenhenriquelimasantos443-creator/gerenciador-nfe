@@ -65,6 +65,9 @@ validarJson(join(RAIZ, "BP"));
 validarJson(join(RAIZ, "RP"));
 validarEstadosDeBlocos(join(RAIZ, "BP/blocks"));
 
+console.log("> testando o carregamento dos scripts");
+execFileSync(node, [join(RAIZ, "tools/testar-carga.mjs")], { stdio: "inherit" });
+
 console.log("> empacotando");
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });

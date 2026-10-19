@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.13.0";
+export const VERSAO = "0.13.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -40,7 +40,7 @@ export const PROPS = {
   pontos: `${NS}:pontos`, // mundo: JSON com masmorras e destroços já gerados (para as missões)
   visitados: `${NS}:visitados`, // jogador: JSON com os lugares que ele já achou
   tempestadeAte: `${NS}:tempestade_ate`, // mundo: tempo absoluto em que a tempestade acaba
-  tempestadeDia: `${NS}:tempestade_dia`, // mundo: último dia em que se sorteou tempestade
+  tempestadeFim: `${NS}:tempestade_fim`, // mundo: tempo absoluto em que a última tempestade acabou
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
@@ -513,9 +513,8 @@ export const GERADOR_MONSTROS = {
 
 // Tempestade de areia (scripts/mundo/tempestade.ts).
 export const TEMPESTADE = {
-  chancePorDia: 0.35,
-  horaMin: 2000, // começa entre estas horas do dia
-  horaMax: 9000,
-  duracaoTicks: 2400, // 2 minutos
+  chancePorMinuto: 1 / 45, // a qualquer hora (dia ou noite): em média uma a cada ~45 min de jogo
+  pausaMinutos: 15, // depois de uma tempestade, pelo menos tanto tempo sem outra
+  duracaoTicks: 25 * 60 * 20, // 25 minutos
   sedeMultiplicador: 1.5, // a água do corpo cai mais rápido durante a tempestade
 } as const;

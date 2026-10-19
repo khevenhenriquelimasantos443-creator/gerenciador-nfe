@@ -1,5 +1,6 @@
 import { GameMode, Player, RawMessage, system, world } from "@minecraft/server";
 import { SEDE } from "../config.js";
+import { tempestadeRestante } from "../mundo/tempestade.js";
 import { lerSede } from "./sede.js";
 import { celsius, lerTemperatura } from "./temperatura.js";
 
@@ -42,6 +43,11 @@ function painel(jogador: Player): RawMessage {
     { text: ` ${corTemperatura(temp)}${celsius(temp).toFixed(1)}°C` },
   ];
   if (estado) linha.push({ text: " " }, { translate: estado });
+  const resta = tempestadeRestante();
+  if (resta > 0) {
+    const s = Math.ceil(resta / 20);
+    linha.push({ text: "   " }, { translate: "cl.tempestade.rotulo" }, { text: ` §6${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}` });
+  }
   return { rawtext: linha };
 }
 
