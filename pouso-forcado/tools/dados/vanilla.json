@@ -1,0 +1,512 @@
+{
+ "minecraft:acacia_leaves": {
+  "pt": "Folhas de Acácia",
+  "en": "Acacia Leaves",
+  "icone": "textures/blocks/leaves_acacia_carried"
+ },
+ "minecraft:acacia_log": {
+  "pt": "Tronco de Acácia",
+  "en": "Acacia Log",
+  "icone": "textures/blocks/log_acacia"
+ },
+ "minecraft:acacia_planks": {
+  "pt": "Tábuas de Acácia",
+  "en": "Acacia Planks",
+  "icone": "textures/blocks/planks_acacia"
+ },
+ "minecraft:acacia_sapling": {
+  "pt": "Muda de Acácia",
+  "en": "Acacia Sapling",
+  "icone": "textures/blocks/sapling_acacia"
+ },
+ "minecraft:andesite": {
+  "pt": "Andesito",
+  "en": "Andesite",
+  "icone": "textures/blocks/stone_andesite"
+ },
+ "minecraft:apple": {
+  "pt": "Maçã",
+  "en": "Apple",
+  "icone": "textures/items/apple"
+ },
+ "minecraft:barrel": {
+  "pt": "Barril",
+  "en": "Barrel",
+  "icone": "textures/blocks/barrel_side"
+ },
+ "minecraft:beetroot": {
+  "pt": "Beterraba",
+  "en": "Beetroot",
+  "icone": "textures/items/beetroot"
+ },
+ "minecraft:beetroot_seeds": {
+  "pt": "Sementes de Beterraba",
+  "en": "Beetroot Seeds",
+  "icone": "textures/items/seeds_beetroot"
+ },
+ "minecraft:birch_leaves": {
+  "pt": "Folhas de Bétula",
+  "en": "Birch Leaves",
+  "icone": "textures/blocks/leaves_birch_carried"
+ },
+ "minecraft:birch_log": {
+  "pt": "Tronco de Bétula",
+  "en": "Birch Log",
+  "icone": "textures/blocks/log_birch"
+ },
+ "minecraft:birch_planks": {
+  "pt": "Tábuas de Bétula",
+  "en": "Birch Planks",
+  "icone": "textures/blocks/planks_birch"
+ },
+ "minecraft:birch_sapling": {
+  "pt": "Muda de Bétula",
+  "en": "Birch Sapling",
+  "icone": "textures/blocks/sapling_birch"
+ },
+ "minecraft:bone": {
+  "pt": "Osso",
+  "en": "Bone",
+  "icone": "textures/items/bone"
+ },
+ "minecraft:bone_meal": {
+  "pt": "Farinha de Osso",
+  "en": "Bone Meal",
+  "icone": "textures/items/dye_powder_white"
+ },
+ "minecraft:book": {
+  "pt": "Livro",
+  "en": "Book",
+  "icone": "textures/items/book_normal"
+ },
+ "minecraft:bowl": {
+  "pt": "Tigela",
+  "en": "Bowl",
+  "icone": "textures/items/bowl"
+ },
+ "minecraft:bread": {
+  "pt": "Pão",
+  "en": "Bread",
+  "icone": "textures/items/bread"
+ },
+ "minecraft:brown_carpet": {
+  "pt": "Carpete Marrom",
+  "en": "Brown Carpet",
+  "icone": "textures/blocks/wool_colored_brown"
+ },
+ "minecraft:bucket": {
+  "pt": "Balde",
+  "en": "Bucket",
+  "icone": "textures/items/bucket_empty"
+ },
+ "minecraft:cactus": {
+  "pt": "Cacto",
+  "en": "Cactus",
+  "icone": "textures/blocks/cactus_side"
+ },
+ "minecraft:carrot": {
+  "pt": "Cenoura",
+  "en": "Carrot",
+  "icone": "textures/items/carrot"
+ },
+ "minecraft:charcoal": {
+  "pt": "Carvão Vegetal",
+  "en": "Charcoal",
+  "icone": "textures/items/charcoal"
+ },
+ "minecraft:chest": {
+  "pt": "Baú",
+  "en": "Chest",
+  "icone": "textures/blocks/chest_front"
+ },
+ "minecraft:chicken": {
+  "pt": "Frango Cru",
+  "en": "Raw Chicken",
+  "icone": "textures/items/chicken_raw"
+ },
+ "minecraft:chiseled_sandstone": {
+  "pt": "Arenito Cinzelado",
+  "en": "Chiseled Sandstone",
+  "icone": "textures/blocks/sandstone_carved"
+ },
+ "minecraft:clay_ball": {
+  "pt": "Bola de Barro",
+  "en": "Clay Ball",
+  "icone": "textures/items/clay_ball"
+ },
+ "minecraft:coal": {
+  "pt": "Carvão",
+  "en": "Coal",
+  "icone": "textures/items/coal"
+ },
+ "minecraft:coal_block": {
+  "pt": "Bloco de Carvão",
+  "en": "Block of Coal",
+  "icone": "textures/blocks/coal_block"
+ },
+ "minecraft:cobblestone": {
+  "pt": "Pedregulho",
+  "en": "Cobblestone",
+  "icone": "textures/blocks/cobblestone"
+ },
+ "minecraft:copper_ingot": {
+  "pt": "Barra de Cobre",
+  "en": "Copper Ingot",
+  "icone": "textures/items/copper_ingot"
+ },
+ "minecraft:cracked_stone_bricks": {
+  "pt": "Tijolos de Pedra Rachados",
+  "en": "Cracked Stone Bricks",
+  "icone": "textures/blocks/stonebrick_cracked"
+ },
+ "minecraft:crafting_table": {
+  "pt": "Bancada de Trabalho",
+  "en": "Crafting Table",
+  "icone": "textures/blocks/crafting_table_front"
+ },
+ "minecraft:cut_sandstone": {
+  "pt": "Arenito Lapidado",
+  "en": "Cut Sandstone",
+  "icone": "textures/blocks/sandstone_smooth"
+ },
+ "minecraft:deadbush": {
+  "pt": "Arbusto Morto",
+  "en": "Dead Bush",
+  "icone": "textures/blocks/deadbush"
+ },
+ "minecraft:deepslate": {
+  "pt": "Ardosiabissal",
+  "en": "Deepslate",
+  "icone": "textures/blocks/deepslate/deepslate"
+ },
+ "minecraft:diamond": {
+  "pt": "Diamante",
+  "en": "Diamond",
+  "icone": "textures/items/diamond"
+ },
+ "minecraft:dirt": {
+  "pt": "Terra",
+  "en": "Dirt",
+  "icone": "textures/blocks/dirt"
+ },
+ "minecraft:dried_kelp_block": {
+  "pt": "Bloco de Algas Secas",
+  "en": "Dried Kelp Block",
+  "icone": "textures/blocks/dried_kelp_side_a"
+ },
+ "minecraft:egg": {
+  "pt": "Ovo",
+  "en": "Egg",
+  "icone": "textures/items/egg"
+ },
+ "minecraft:emerald": {
+  "pt": "Esmeralda",
+  "en": "Emerald",
+  "icone": "textures/items/emerald"
+ },
+ "minecraft:enchanted_golden_apple": {
+  "pt": "Maçã Dourada Encantada",
+  "en": "Enchanted Golden Apple",
+  "icone": "textures/items/apple_golden"
+ },
+ "minecraft:flint": {
+  "pt": "Sílex",
+  "en": "Flint",
+  "icone": "textures/items/flint"
+ },
+ "minecraft:furnace": {
+  "pt": "Fornalha",
+  "en": "Furnace",
+  "icone": "textures/blocks/furnace_front_off"
+ },
+ "minecraft:glass": {
+  "pt": "Vidro",
+  "en": "Glass",
+  "icone": "textures/blocks/glass"
+ },
+ "minecraft:glass_bottle": {
+  "pt": "Frasco de Vidro",
+  "en": "Glass Bottle",
+  "icone": "textures/items/potion_bottle_empty"
+ },
+ "minecraft:gold_ingot": {
+  "pt": "Barra de Ouro",
+  "en": "Gold Ingot",
+  "icone": "textures/items/gold_ingot"
+ },
+ "minecraft:gold_nugget": {
+  "pt": "Pepita de Ouro",
+  "en": "Gold Nugget",
+  "icone": "textures/items/gold_nugget"
+ },
+ "minecraft:golden_apple": {
+  "pt": "Maçã Dourada",
+  "en": "Golden Apple",
+  "icone": "textures/items/apple_golden"
+ },
+ "minecraft:gravel": {
+  "pt": "Cascalho",
+  "en": "Gravel",
+  "icone": "textures/blocks/gravel"
+ },
+ "minecraft:gray_carpet": {
+  "pt": "Carpete Cinza",
+  "en": "Gray Carpet",
+  "icone": "textures/blocks/wool_colored_gray"
+ },
+ "minecraft:honey_bottle": {
+  "pt": "Frasco de Mel",
+  "en": "Honey Bottle",
+  "icone": "textures/items/honey_bottle"
+ },
+ "minecraft:hopper": {
+  "pt": "Funil",
+  "en": "Hopper",
+  "icone": "textures/items/hopper"
+ },
+ "minecraft:iron_block": {
+  "pt": "Bloco de Ferro",
+  "en": "Block of Iron",
+  "icone": "textures/blocks/iron_block"
+ },
+ "minecraft:iron_ingot": {
+  "pt": "Barra de Ferro",
+  "en": "Iron Ingot",
+  "icone": "textures/items/iron_ingot"
+ },
+ "minecraft:iron_nugget": {
+  "pt": "Pepita de Ferro",
+  "en": "Iron Nugget",
+  "icone": "textures/items/iron_nugget"
+ },
+ "minecraft:iron_pickaxe": {
+  "pt": "Picareta de Ferro",
+  "en": "Iron Pickaxe",
+  "icone": "textures/items/iron_pickaxe"
+ },
+ "minecraft:lapis_lazuli": {
+  "pt": "Lápis-Lazúli",
+  "en": "Lapis Lazuli",
+  "icone": "textures/items/dye_powder_blue_new"
+ },
+ "minecraft:lead": {
+  "pt": "Laço",
+  "en": "Lead",
+  "icone": "textures/items/lead"
+ },
+ "minecraft:leather": {
+  "pt": "Couro",
+  "en": "Leather",
+  "icone": "textures/items/leather"
+ },
+ "minecraft:leather_helmet": {
+  "pt": "Capuz de Couro",
+  "en": "Leather Cap",
+  "icone": "textures/items/leather_helmet"
+ },
+ "minecraft:light_gray_carpet": {
+  "pt": "Carpete Cinza-claro",
+  "en": "Light Gray Carpet",
+  "icone": "textures/blocks/wool_colored_silver"
+ },
+ "minecraft:melon_seeds": {
+  "pt": "Sementes de Melancia",
+  "en": "Melon Seeds",
+  "icone": "textures/items/seeds_melon"
+ },
+ "minecraft:melon_slice": {
+  "pt": "Fatia de Melancia",
+  "en": "Melon Slice",
+  "icone": "textures/items/melon"
+ },
+ "minecraft:milk_bucket": {
+  "pt": "Balde de Leite",
+  "en": "Milk Bucket",
+  "icone": "textures/items/bucket_milk"
+ },
+ "minecraft:mossy_stone_bricks": {
+  "pt": "Tijolos de Pedra com Musgo",
+  "en": "Mossy Stone Bricks",
+  "icone": "textures/blocks/stonebrick_mossy"
+ },
+ "minecraft:name_tag": {
+  "pt": "Etiqueta",
+  "en": "Name Tag",
+  "icone": "textures/items/name_tag"
+ },
+ "minecraft:oak_leaves": {
+  "pt": "Folhas de Carvalho",
+  "en": "Oak Leaves",
+  "icone": "textures/blocks/leaves_oak_carried"
+ },
+ "minecraft:oak_log": {
+  "pt": "Tora de Carvalho",
+  "en": "Oak Log",
+  "icone": "textures/blocks/log_oak"
+ },
+ "minecraft:oak_planks": {
+  "pt": "Tábuas de Carvalho",
+  "en": "Oak Planks",
+  "icone": "textures/blocks/planks_oak"
+ },
+ "minecraft:oak_sapling": {
+  "pt": "Muda de Carvalho",
+  "en": "Oak Sapling",
+  "icone": "textures/blocks/sapling_oak"
+ },
+ "minecraft:paper": {
+  "pt": "Papel",
+  "en": "Paper",
+  "icone": "textures/items/paper"
+ },
+ "minecraft:piston": {
+  "pt": "Pistão",
+  "en": "Piston",
+  "icone": "textures/blocks/piston_side"
+ },
+ "minecraft:polished_andesite": {
+  "pt": "Andesito Polido",
+  "en": "Polished Andesite",
+  "icone": "textures/blocks/stone_andesite_smooth"
+ },
+ "minecraft:potato": {
+  "pt": "Batata",
+  "en": "Potato",
+  "icone": "textures/items/potato"
+ },
+ "minecraft:potion": {
+  "pt": "Frasco de Água",
+  "en": "Water Bottle",
+  "icone": "textures/items/potion_bottle_drinkable"
+ },
+ "minecraft:pumpkin": {
+  "pt": "Abóbora",
+  "en": "Pumpkin",
+  "icone": "textures/blocks/pumpkin_side"
+ },
+ "minecraft:pumpkin_seeds": {
+  "pt": "Sementes de Abóbora",
+  "en": "Pumpkin Seeds",
+  "icone": "textures/items/seeds_pumpkin"
+ },
+ "minecraft:raw_copper": {
+  "pt": "Cobre Bruto",
+  "en": "Raw Copper",
+  "icone": "textures/items/raw_copper"
+ },
+ "minecraft:red_carpet": {
+  "pt": "Carpete Vermelho",
+  "en": "Red Carpet",
+  "icone": "textures/blocks/wool_colored_red"
+ },
+ "minecraft:redstone": {
+  "pt": "Pó de Redstone",
+  "en": "Redstone Dust",
+  "icone": "textures/items/redstone_dust"
+ },
+ "minecraft:reinforced_deepslate": {
+  "pt": "Ardosiabissal Reforçada",
+  "en": "Reinforced Deepslate",
+  "icone": "textures/blocks/reinforced_deepslate_side"
+ },
+ "minecraft:rotten_flesh": {
+  "pt": "Carne Podre",
+  "en": "Rotten Flesh",
+  "icone": "textures/items/rotten_flesh"
+ },
+ "minecraft:saddle": {
+  "pt": "Sela",
+  "en": "Saddle",
+  "icone": "textures/items/saddle"
+ },
+ "minecraft:sand": {
+  "pt": "Areia",
+  "en": "Sand",
+  "icone": "textures/blocks/sand"
+ },
+ "minecraft:sandstone": {
+  "pt": "Arenito",
+  "en": "Sandstone",
+  "icone": "textures/blocks/sandstone_normal"
+ },
+ "minecraft:smooth_sandstone": {
+  "pt": "Arenito Liso",
+  "en": "Smooth Sandstone",
+  "icone": "textures/blocks/sandstone_top"
+ },
+ "minecraft:spider_eye": {
+  "pt": "Olho de Aranha",
+  "en": "Spider Eye",
+  "icone": "textures/items/spider_eye"
+ },
+ "minecraft:stick": {
+  "pt": "Graveto",
+  "en": "Stick",
+  "icone": "textures/items/stick"
+ },
+ "minecraft:stone": {
+  "pt": "Pedra",
+  "en": "Stone",
+  "icone": "textures/blocks/stone"
+ },
+ "minecraft:stone_brick_slab": {
+  "pt": "Laje de Tijolos",
+  "en": "Brick Slab",
+  "icone": "textures/blocks/stonebrick"
+ },
+ "minecraft:stone_bricks": {
+  "pt": "Tijolos de Pedra",
+  "en": "Stone Bricks",
+  "icone": "textures/blocks/stonebrick"
+ },
+ "minecraft:stone_pickaxe": {
+  "pt": "Picareta de Pedra",
+  "en": "Stone Pickaxe",
+  "icone": "textures/items/stone_pickaxe"
+ },
+ "minecraft:string": {
+  "pt": "Linha",
+  "en": "String",
+  "icone": "textures/items/string"
+ },
+ "minecraft:sugar_cane": {
+  "pt": "Cana-de-açúcar",
+  "en": "Sugar Cane",
+  "icone": "textures/items/reeds"
+ },
+ "minecraft:sweet_berries": {
+  "pt": "Bagas Doces",
+  "en": "Sweet Berries",
+  "icone": "textures/items/sweet_berries"
+ },
+ "minecraft:torch": {
+  "pt": "Tocha",
+  "en": "Torch",
+  "icone": "textures/blocks/torch_on"
+ },
+ "minecraft:trapped_chest": {
+  "pt": "Baú com Armadilha",
+  "en": "Trapped Chest",
+  "icone": "textures/blocks/chest_front"
+ },
+ "minecraft:water_bucket": {
+  "pt": "Balde de Água",
+  "en": "Water Bucket",
+  "icone": "textures/items/bucket_water"
+ },
+ "minecraft:wheat": {
+  "pt": "Trigo",
+  "en": "Wheat",
+  "icone": "textures/items/wheat"
+ },
+ "minecraft:wheat_seeds": {
+  "pt": "Sementes de Trigo",
+  "en": "Wheat Seeds",
+  "icone": "textures/items/seeds_wheat"
+ },
+ "minecraft:white_carpet": {
+  "pt": "Carpete Branco",
+  "en": "White Carpet",
+  "icone": "textures/blocks/wool_colored_white"
+ }
+}

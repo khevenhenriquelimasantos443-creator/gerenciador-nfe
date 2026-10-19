@@ -549,6 +549,42 @@ const ICONES = {
     if ((y === 12 || y === 15 || y === 18) && x < 13 + ((y * 3) % 8)) return C.ciano;
     return C.tela;
   }),
+  catalogo: () => icone((x, y) => {
+    // Tablet com grade de ícones: o "JEI" de bolso.
+    const d = (a, b) => dentroRet(a, b, 5, 3, 26, 28, 3);
+    if (!d(x, y)) return null;
+    if (contorno(d, x, y)) return C.branco;
+    if (!dentroRet(x, y, 8, 6, 23, 22)) return y > 24 && Math.abs(x - 15.5) < 1.5 ? C.cianoEsc : C.branco2;
+    const cx = (x - 8) % 5, cy = (y - 6) % 5;
+    if (cx < 3 && cy < 3 && x < 22 && y < 21) return [C.ciano, C.laranja, C.verde, C.violeta][(Math.floor((x - 8) / 5) + Math.floor((y - 6) / 5)) % 4];
+    return C.tela;
+  }),
+  organizador: () => icone((x, y) => {
+    // Caixa com 3 gavetas e setas de ordenar.
+    const d = (a, b) => dentroRet(a, b, 4, 5, 27, 27, 2);
+    if (!d(x, y)) return null;
+    if (contorno(d, x, y)) return C.grafite2;
+    if (y === 12 || y === 19) return C.grafite;
+    if (Math.abs(x - 15.5) < 2.5 && [8, 15, 23].includes(y)) return C.laranja;
+    return mix(C.branco, C.branco2, (y % 7) / 7);
+  }),
+  ...Object.fromEntries(
+    [["sacola_comum", "#9aa3ad"], ["sacola_boa", "#4fd17a"], ["sacola_otima", "#58b4ff"], ["sacola_epica", "#ffa142"], ["sacola_lendaria", "#c08cff"]].map(([nome, cor]) => [
+      nome,
+      () => icone((x, y) => {
+        // Sacola com a cor do nível (como no Hardcore Questing Mode) e um selo claro.
+        const corpoS = (a, b) => Math.hypot((a - 15.5) / 11, (b - 19) / 9.5) <= 1;
+        const boca = (a, b) => dentroRet(a, b, 11, 5, 20, 10, 1);
+        const c = hex(cor);
+        if (boca(x, y)) return contorno(boca, x, y) ? mul(c, 0.5) : mul(c, 0.8);
+        if (!corpoS(x, y)) return null;
+        if (contorno(corpoS, x, y)) return mul(c, 0.45);
+        if (y === 11 || y === 12) return C.grafite;
+        if (Math.hypot(x - 15.5, y - 19) < 3) return mix(C.branco, c, 0.25);
+        return mix(c, mul(c, 0.7), (x + y) / 60);
+      }),
+    ]),
+  ),
 };
 const dirIcones = pasta("RP/textures/items/cl/v");
 const itens = lerJson("RP/textures/item_texture.json");

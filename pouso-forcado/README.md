@@ -1,9 +1,11 @@
 # Pouso Forçado — add-on para Minecraft Bedrock 26.30+
 
 Sua nave caiu num deserto sem água. Recursos são escassos e a progressão vem por missões.
-Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escassez. Nenhum asset, nome ou código foi copiado.
+Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos mods dele. As mecânicas e os números
+seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
+A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 6** (exploração: cidades abandonadas, masmorras, geradores de monstros, tempestade de areia, destroços de naves). Fases prontas: 0 (estrutura, Condensador de Água, boas-vindas), 1 (mundo plano de deserto, dunas, nave caída, horda), 2 (Diário de Bordo e missões), 3 (máquinas), 4 (sede, temperatura, águas, cápsulas de carga) e 5 (energia).
+**Fase atual: 11** (Diário 2.0 em capítulos, Catálogo estilo JEI, "o que estou olhando", Organizador, energia em RF). Fases 0 a 9 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -18,8 +20,10 @@ Projeto próprio, inspirado na *ideia* de modpacks de sobrevivência com escasse
 | 6 | Exploração: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | pronta |
 | 7 | Perigos do deserto: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | pronta |
 | 8 | Consertar a nave: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | pronta |
-| 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | **esta versão** |
-| 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | |
+| 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | pronta |
+| 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | **esta versão** |
+| 12–23 | Os mods do Crash Landing, um bloco por fase: Ex Nihilo, EnviroMine + Hunger Overhaul, HarvestCraft, Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
 
@@ -119,6 +123,35 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Diário 2.0, Catálogo, o que estou olhando, Organizador (Fase 11)
+
+**Diário 2.0** (no estilo do Hardcore Questing Mode):
+- O Diário abre numa lista de **8 capítulos** (A Queda, Máquinas, Comida e Vida, Energia, Exploração, Perigos do Deserto, Consertar a Nave, Equipamento). Cada capítulo lista as missões: `!` aberta, `+` feita, `*` falta escolher a recompensa, `-` bloqueada, `~` pulada.
+- Agora **várias missões ficam abertas ao mesmo tempo**. Uma missão bloqueada mostra o que falta fazer antes.
+- Tipos novos: **entregar** (botão "Entregar os itens" tira da mochila) e **consumir** (comer/beber).
+- Algumas missões dão uma recompensa **"escolha 1"**: o Diário mostra "Escolher recompensas" até você escolher.
+- **Sacolas de recompensa** (comum, boa, ótima, épica, lendária): usar a sacola sorteia um grupo de itens com os pesos do HQM. As chances aparecem no Catálogo.
+- **Seu progresso antigo é mantido**: na primeira vez que o Diário 0.17 lê o progresso da 0.16, as missões feitas continuam feitas.
+
+**Catálogo** (no estilo do JEI). Receita: graveto + areia + papel (sem formato). Também abre pelo botão "Catálogo" no Diário.
+- Lista com ícone de todos os itens do add-on e dos itens do jogo que ele usa, em páginas. **Procurar** busca pelo nome (com ou sem acento), em português ou inglês; `@pouso` ou `@minecraft` filtra pelo "mod".
+- Em cada item: **Como fazer** e **Onde usar**, com bancada (grade 3×3), fornalha, peneira (com as chances), compostor, montadora, gerador (quanto RF rende), condensadores, Painel da Nave, drops de monstros, saques (cidade, torre, masmorras, destroços, templo, cápsula) e sacolas. Tocar num ingrediente abre o dele.
+- **Agachado**, usar o Catálogo abre o bloco que você está olhando (ou o último item que você segurou). "Sua barra rápida" mostra os itens da barra.
+- O botão "+" do JEI não é preciso: o livro de receitas da bancada do Bedrock já preenche a grade.
+
+**O que estou olhando** (no estilo do WAILA): na barra de ação, acima do painel de água e temperatura, aparece o nome do bloco ou do bicho na mira, o "mod" dele e um detalhe: energia da bateria, combustível do gerador, pontos do compostor, baldes do condensador, crescimento de plantas, vida dos bichos.
+
+**Organizador** (no estilo do Inventory Tweaks). Receita: baú + 2 gravetos (sem formato).
+- Usar no ar arruma a mochila (junta pilhas e ordena; a barra rápida fica como está). Usar num baú/barril arruma o baú.
+- **Reabastecer**: quando a pilha da mão acaba (colocando blocos, comendo ou bebendo) ou a ferramenta quebra, outra igual vem da mochila para a mão.
+- **Opções** (no Diário): ligar/desligar o "o que estou olhando" e o reabastecer.
+
+**Energia em RF**: a energia agora aparece em RF, com a escala do Thermal Expansion: painel solar 40 RF/t, gerador 80 RF/t (igual ao Steam Dynamo), carvão = 32.000 RF, bateria = 60.000 RF. Por dentro nada mudou (mundos antigos continuam iguais).
+
+**`/cl:diagnostico`**: versão, conteúdo que o jogo não carregou, e o **tempo de script por sistema** e os **blocos ativos** de cada máquina no último minuto.
+
+Missões novas: Bem hidratado (beber 5 Águas Boas), O Catálogo, Tudo no lugar, Surpresa! (abrir 3 sacolas) e Sucata útil (entregar 18 pepitas de ferro).
 
 ## Diário de Bordo (Fase 2)
 
@@ -267,7 +300,7 @@ Estilo futurista e minimalista: corpo branco-gelo, base grafite e uma faixa de l
 
 ## Energia (Fase 5)
 
-A energia fica guardada nas **baterias** (15 cada). Geradores mandam energia para a bateria mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" = encostada ou ligada por **cabos** (até 64 cabos). Painéis, moinhos, geradores e baterias também passam energia, como os cabos. Toque em qualquer bloco de energia com a mão vazia para ver o estado.
+A energia fica guardada nas **baterias** (60.000 RF cada; na tela tudo aparece em RF desde a Fase 11). Geradores mandam energia para a bateria mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" = encostada ou ligada por **cabos** (até 64 cabos). Painéis, moinhos, geradores e baterias também passam energia, como os cabos. Toque em qualquer bloco de energia com a mão vazia para ver o estado.
 
 | Bloco | Receita (mesa de trabalho) | O que faz |
 |---|---|---|

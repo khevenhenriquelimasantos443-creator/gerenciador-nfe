@@ -1,5 +1,6 @@
-import { BlockVolume, Difficulty, EntityDamageCause, EquipmentSlot, GameMode, Player, system, world } from "@minecraft/server";
+import { BlockVolume, Difficulty, EntityDamageCause, EquipmentSlot, GameMode, Player, world } from "@minecraft/server";
 import { MUNDO_PLANO, PROPS, TEMPERATURA } from "../config.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Temperatura do corpo: deserto é forno de dia e geladeira à noite.
@@ -67,7 +68,7 @@ function alvo(jogador: Player): number {
 }
 
 export function registrarTemperatura(): void {
-  system.runInterval(() => {
+  intervalo("temperatura", () => {
     if (world.getDifficulty() === Difficulty.Peaceful) return;
     for (const jogador of world.getPlayers({ excludeGameModes: [GameMode.Creative, GameMode.Spectator] })) {
       if (jogador.dimension.id !== "minecraft:overworld") continue;

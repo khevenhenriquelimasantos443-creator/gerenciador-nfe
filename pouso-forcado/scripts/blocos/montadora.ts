@@ -3,13 +3,14 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { MONTADORA, ReceitaMontadora } from "../config.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { particula } from "../util/efeitos.js";
+import { rf } from "../util/energia.js";
 import { consumir } from "../util/rede.js";
 
 /*
  * Montadora: máquina de energia que faz as peças da nave (receitas em MONTADORA, config.ts).
  * - Ponha os ingredientes num baú ou funil EM CIMA dela; a peça sai no baú/funil EMBAIXO
  *   (ou cai do lado, se não houver).
- * - A cada 5 s (minecraft:tick de 100 no JSON) gasta 1 E de uma bateria da rede e avança 1 no
+ * - A cada 5 s (minecraft:tick de 100 no JSON) gasta 4.000 RF (1 unidade) de uma bateria da rede e avança 1 no
  *   estado cl:progresso; quando chega na energia da receita, tira os ingredientes e solta a peça.
  * - A primeira receita da lista que estiver completa no baú é a que ela faz.
  * Toque nela para ver as receitas e o andamento.
@@ -46,13 +47,13 @@ function tirar(inv: Container, item: string, qtd: number): void {
   }
 }
 
-/** Texto de uma receita: "Placa de Casco: 3x Barra de Ferro, 2x Barra de Cobre (2 E)". */
+/** Texto de uma receita: "Placa de Casco: 3x Barra de Ferro, 2x Barra de Cobre (8.000 RF)". */
 function textoReceita(r: ReceitaMontadora): RawMessage[] {
   const partes: RawMessage[] = [{ text: "§e" }, { translate: nomeItem(r.resultado) }, { text: "§r: " }];
   r.ingredientes.forEach(({ item, qtd }, i) => {
     partes.push({ text: `${i > 0 ? ", " : ""}${qtd}x ` }, { translate: nomeItem(item) });
   });
-  partes.push({ text: ` §7(${r.energia} E)§r\n` });
+  partes.push({ text: ` §7(${rf(r.energia)})§r\n` });
   return partes;
 }
 
@@ -109,7 +110,7 @@ export const montadora: BlockCustomComponent = {
       ? { translate: "cl.montadora.sem_bau" }
       : !r
         ? { translate: "cl.montadora.falta" }
-        : { rawtext: [{ translate: "cl.montadora.fazendo" }, { text: " " }, { translate: nomeItem(r.resultado) }, { text: ` (${lerEstado<number>(e.block, PROGRESSO)}/${r.energia} E)` }] };
+        : { rawtext: [{ translate: "cl.montadora.fazendo" }, { text: " " }, { translate: nomeItem(r.resultado) }, { text: ` (${rf(lerEstado<number>(e.block, PROGRESSO))} / ${rf(r.energia)})` }] };
     system.run(() => {
       mostrar(jogador, andamento).catch(() => {
         // menu fechado no meio

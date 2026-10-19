@@ -2,6 +2,7 @@ import { Difficulty, EntityDamageCause, GameMode, ItemStack, Player, system, wor
 import { FRUTA_CACTO_CHANCE, IDS, PROPS, SEDE, TEMPESTADE } from "../config.js";
 import { tempestadeAtiva } from "../mundo/tempestade.js";
 import { multiplicadorSede } from "./temperatura.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Sede: cada jogador tem SEDE.max pontos de água (dynamic property PROPS.sede).
@@ -34,7 +35,7 @@ function ehDia(): boolean {
 }
 
 export function registrarSede(): void {
-  system.runInterval(() => {
+  intervalo("sede", () => {
     if (world.getDifficulty() === Difficulty.Peaceful) return;
     const base = ehDia() ? SEDE.segundosDia : SEDE.segundosNoite;
     for (const jogador of world.getPlayers({ excludeGameModes: [GameMode.Creative, GameMode.Spectator] })) {

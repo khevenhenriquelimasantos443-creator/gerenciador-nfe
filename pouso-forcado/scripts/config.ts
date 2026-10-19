@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.16.0";
+export const VERSAO = "0.17.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -39,6 +39,13 @@ export const IDS = {
   celulaCombustivel: `${NS}:celula_combustivel`,
   motorNave: `${NS}:motor_nave`,
   computadorBordo: `${NS}:computador_bordo`,
+  catalogo: `${NS}:catalogo`,
+  organizador: `${NS}:organizador`,
+  sacolaComum: `${NS}:sacola_comum`,
+  sacolaBoa: `${NS}:sacola_boa`,
+  sacolaOtima: `${NS}:sacola_otima`,
+  sacolaEpica: `${NS}:sacola_epica`,
+  sacolaLendaria: `${NS}:sacola_lendaria`,
 } as const;
 
 // Monstros do deserto (Fase 7). Os comportamentos estão em BP/entities/*.json.
@@ -71,6 +78,8 @@ export const PROPS = {
   temperatura: `${NS}:temperatura`, // jogador: temperatura do corpo (TEMPERATURA.min a max; 0 = normal)
   capsulaDia: `${NS}:capsula_dia`, // mundo: dia da última cápsula de carga
   capsulas: `${NS}:capsulas`, // mundo: JSON com as cápsulas ainda não encontradas
+  olharDesligado: `${NS}:olhar_desligado`, // jogador: esconde o "o que estou olhando" da barra de ação
+  reabastecerDesligado: `${NS}:reabastecer_desligado`, // jogador: não repõe o item da mão sozinho
 } as const;
 
 // Nave caída: estrutura em BP/structures/cl/nave_caida.mcstructure.
@@ -417,6 +426,12 @@ export const AGUA_DOS_MONSTROS: ReadonlyArray<{ item: string; chance: number }> 
 // mais próxima que tenha espaço; máquinas puxam da mais próxima que tenha carga.
 // "Próxima" = encostada ou ligada por cabos (até rede.maxBlocos blocos de cabo).
 export const ENERGIA = {
+  // Na tela a energia aparece em RF (Redstone Flux, como no Thermal Expansion). Por dentro, a bateria
+  // guarda "unidades" de 4.000 RF: o ciclo das máquinas é de 100 ticks, então 1 unidade por ciclo
+  // = 40 RF/t (um painel solar), 2 = 80 RF/t (o gerador, igual ao Steam Dynamo), e o carvão (4 ciclos
+  // de 2) dá 32.000 RF, como no Thermal Expansion 3.
+  rfPorUnidade: 4000,
+  ticksPorCiclo: 100,
   bateriaMax: 15, // E por bateria (o jogo aceita no máximo 16 valores por estado de bloco: 0 a 15)
   painelPorCiclo: 1, // E a cada 5 s, de dia, com céu aberto em cima do painel
   geradorPorCiclo: 2, // E a cada 5 s, gastando 1 de combustível
@@ -632,3 +647,46 @@ export const TEMPESTADE = {
   duracaoTicks: 25 * 60 * 20, // 25 minutos
   sedeMultiplicador: 1.5, // a água do corpo cai mais rápido durante a tempestade
 } as const;
+
+// ---- Fase 11: Diário 2.0, Catálogo, organizador ----
+
+// Sacolas de recompensa (como no Hardcore Questing Mode): ao abrir, sorteia um grupo pelo peso do
+// nível do grupo naquele tipo de sacola e entrega todos os itens do grupo.
+// Pesos por nível de grupo (colunas: comum, boa, ótima, épica, lendária), iguais aos do HQM.
+export const SACOLAS = [IDS.sacolaComum, IDS.sacolaBoa, IDS.sacolaOtima, IDS.sacolaEpica, IDS.sacolaLendaria] as const;
+export const SACOLA_PESOS: Readonly<Record<string, readonly [number, number, number, number, number]>> = {
+  lixo: [50, 50, 50, 5, 0],
+  simples: [50, 50, 50, 30, 10],
+  comum: [20, 30, 40, 30, 20],
+  incomum: [5, 10, 15, 20, 25],
+  raro: [3, 6, 12, 18, 21],
+  unico: [1, 2, 3, 4, 30],
+};
+export const SACOLA_GRUPOS: ReadonlyArray<{ nivel: keyof typeof SACOLA_PESOS; itens: ReadonlyArray<{ item: string; quantidade: number }> }> = [
+  { nivel: "lixo", itens: [{ item: "minecraft:rotten_flesh", quantidade: 4 }, { item: "minecraft:stick", quantidade: 8 }] },
+  { nivel: "lixo", itens: [{ item: "minecraft:deadbush", quantidade: 2 }, { item: "minecraft:sand", quantidade: 16 }] },
+  { nivel: "lixo", itens: [{ item: "minecraft:bone", quantidade: 3 }, { item: "minecraft:string", quantidade: 2 }] },
+  { nivel: "simples", itens: [{ item: "minecraft:bread", quantidade: 4 }, { item: IDS.aguaSuja, quantidade: 3 }] },
+  { nivel: "simples", itens: [{ item: "minecraft:torch", quantidade: 16 }, { item: "minecraft:coal", quantidade: 4 }] },
+  { nivel: "simples", itens: [{ item: "minecraft:glass_bottle", quantidade: 4 }, { item: IDS.aguaBoa, quantidade: 2 }] },
+  { nivel: "comum", itens: [{ item: "minecraft:iron_ingot", quantidade: 4 }, { item: "minecraft:copper_ingot", quantidade: 6 }] },
+  { nivel: "comum", itens: [{ item: IDS.aguaBoa, quantidade: 4 }, { item: "minecraft:bread", quantidade: 6 }] },
+  { nivel: "comum", itens: [{ item: "minecraft:redstone", quantidade: 8 }, { item: "minecraft:gold_nugget", quantidade: 6 }] },
+  { nivel: "incomum", itens: [{ item: "minecraft:gold_ingot", quantidade: 4 }, { item: "minecraft:redstone", quantidade: 12 }] },
+  { nivel: "incomum", itens: [{ item: IDS.circuito, quantidade: 2 }, { item: IDS.placaCasco, quantidade: 2 }] },
+  { nivel: "incomum", itens: [{ item: IDS.aguaExcelente, quantidade: 2 }, { item: "minecraft:golden_apple", quantidade: 1 }] },
+  { nivel: "raro", itens: [{ item: "minecraft:diamond", quantidade: 2 }, { item: "minecraft:iron_block", quantidade: 1 }] },
+  { nivel: "raro", itens: [{ item: IDS.circuito, quantidade: 4 }, { item: IDS.celulaCombustivel, quantidade: 1 }] },
+  { nivel: "raro", itens: [{ item: "minecraft:emerald", quantidade: 3 }, { item: "minecraft:name_tag", quantidade: 1 }] },
+  { nivel: "unico", itens: [{ item: "minecraft:diamond", quantidade: 5 }, { item: "minecraft:enchanted_golden_apple", quantidade: 1 }] },
+  { nivel: "unico", itens: [{ item: "minecraft:iron_block", quantidade: 4 }, { item: IDS.computadorBordo, quantidade: 1 }] },
+];
+
+// Catálogo (estilo JEI): de que "mod" vem cada item, para o filtro "@" da busca.
+// Os itens do add-on sem entrada aqui são "Pouso Forçado"; os "minecraft:" são "Minecraft".
+// As próximas fases (Ex Nihilo, Tinkers...) põem os seus itens aqui.
+export const ORIGEM_MOD: Readonly<Record<string, string>> = {};
+export const CATALOGO = { porPagina: 24 } as const;
+
+// "O que estou olhando" (estilo WAILA), na barra de ação, junto com o painel de água e temperatura.
+export const OLHAR = { distanciaBloco: 6, distanciaEntidade: 8 } as const;

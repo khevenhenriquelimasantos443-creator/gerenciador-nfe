@@ -4,6 +4,7 @@ import { aviso } from "../jogador/hud.js";
 import { escolher } from "../util/aleatorio.js";
 import { avisarErro } from "../util/erros.js";
 import { comecarTempestade, tempestadeAtiva } from "./tempestade.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Faraó Amaldiçoado, o chefe do deserto.
@@ -135,7 +136,7 @@ function agir(farao: Entity, agora: number): void {
 }
 
 export function registrarFarao(): void {
-  system.runInterval(() => {
+  intervalo("faraó", () => {
     const agora = system.currentTick;
     for (const farao of world.getDimension("minecraft:overworld").getEntities({ type: MONSTROS_CL.farao })) {
       try {

@@ -6,10 +6,12 @@ import { Acao } from "../missoes/lista.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { particula } from "../util/efeitos.js";
+import { rf, rfPorTick } from "../util/energia.js";
 import { cargaDe, consumir, gerar } from "../util/rede.js";
 
 /*
  * Blocos de energia (Fase 5). Todos têm minecraft:tick de 100 ticks (5 s) no JSON.
+ * A energia aparece em RF (util/energia.ts); a bateria guarda unidades de 4.000 RF.
  * - Painel Solar: de dia, com céu aberto em cima dele, gera ENERGIA.painelPorCiclo.
  * - Gerador a Carvão: toque com carvão, madeira etc. (ENERGIA.combustivel) para abastecer; gasta 1
  *   de combustível por ciclo e gera ENERGIA.geradorPorCiclo, só se houver bateria com espaço.
@@ -50,7 +52,7 @@ export const painelSolar: BlockCustomComponent = {
   },
   onPlayerInteract(e: BlockComponentPlayerInteractEvent) {
     const chave = !solAlto() ? "cl.energia.painel_noite" : ceuAberto(e.block) ? "cl.energia.painel_ok" : "cl.energia.painel_coberto";
-    mostrar(e.player, chave);
+    mostrar(e.player, chave, [rfPorTick(ENERGIA.painelPorCiclo)]);
   },
 };
 
@@ -74,7 +76,8 @@ export const gerador: BlockCustomComponent = {
       definirEstado(e.block, COMBUSTIVEL, Math.min(ENERGIA.geradorMax, c + valor));
       e.dimension.playSound("fire.ignite", e.block.center());
     }
-    mostrar(jogador, "cl.energia.gerador", [String(lerEstado<number>(e.block, COMBUSTIVEL)), String(ENERGIA.geradorMax)]);
+    const g = ENERGIA.geradorPorCiclo;
+    mostrar(jogador, "cl.energia.gerador", [rf(lerEstado<number>(e.block, COMBUSTIVEL) * g), rf(ENERGIA.geradorMax * g), rfPorTick(g)]);
   },
 };
 
@@ -91,14 +94,14 @@ export const moinho: BlockCustomComponent = {
   },
   onPlayerInteract(e: BlockComponentPlayerInteractEvent) {
     const vento = ventoDoMoinho(e.block);
-    if (vento > 0) mostrar(e.player, "cl.energia.moinho_ok", [String(vento)]);
+    if (vento > 0) mostrar(e.player, "cl.energia.moinho_ok", [rfPorTick(vento)]);
     else mostrar(e.player, "cl.energia.moinho_parado", [String(ENERGIA.moinho[ENERGIA.moinho.length - 1].yMin)]);
   },
 };
 
 export const bateria: BlockCustomComponent = {
   onPlayerInteract(e: BlockComponentPlayerInteractEvent) {
-    mostrar(e.player, "cl.energia.bateria", [String(cargaDe(e.block)), String(ENERGIA.bateriaMax)]);
+    mostrar(e.player, "cl.energia.bateria", [rf(cargaDe(e.block)), rf(ENERGIA.bateriaMax)]);
   },
 };
 

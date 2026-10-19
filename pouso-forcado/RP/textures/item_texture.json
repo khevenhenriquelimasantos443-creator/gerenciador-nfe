@@ -43,6 +43,27 @@
     },
     "cl_computador_bordo": {
       "textures": "textures/items/cl/v/computador_bordo"
+    },
+    "cl_catalogo": {
+      "textures": "textures/items/cl/v/catalogo"
+    },
+    "cl_organizador": {
+      "textures": "textures/items/cl/v/organizador"
+    },
+    "cl_sacola_comum": {
+      "textures": "textures/items/cl/v/sacola_comum"
+    },
+    "cl_sacola_boa": {
+      "textures": "textures/items/cl/v/sacola_boa"
+    },
+    "cl_sacola_otima": {
+      "textures": "textures/items/cl/v/sacola_otima"
+    },
+    "cl_sacola_epica": {
+      "textures": "textures/items/cl/v/sacola_epica"
+    },
+    "cl_sacola_lendaria": {
+      "textures": "textures/items/cl/v/sacola_lendaria"
     }
   }
 }

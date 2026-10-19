@@ -2,13 +2,16 @@ import { GameMode, Player, RawMessage, system, world } from "@minecraft/server";
 import { SEDE } from "../config.js";
 import { tempestadeRestante } from "../mundo/tempestade.js";
 import { lerSede } from "./sede.js";
+import { linhaOlhar } from "./olhar.js";
 import { celsius, lerTemperatura } from "./temperatura.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Painel fixo na barra de ação: água e temperatura do corpo, redesenhado a cada segundo
  * (o jogo apaga a barra de ação depois de uns 3 s, então ela precisa ser renovada).
  * Avisos curtos (máquinas, missões) entram numa linha acima do painel por alguns segundos,
  * em vez de apagar o painel: use aviso() em vez de onScreenDisplay.setActionBar().
+ * Também mostra o "o que estou olhando" (olhar.ts) numa linha entre o aviso e o painel.
  * Custo: 1 setActionBar por jogador por segundo.
  */
 const avisos = new Map<string, { msg: RawMessage; ate: number }>();
@@ -51,20 +54,28 @@ function painel(jogador: Player): RawMessage {
   return { rawtext: linha };
 }
 
-function desenhar(jogador: Player): void {
+const ultimoOlhar = new Map<string, RawMessage | undefined>();
+
+function desenhar(jogador: Player, olhar = ultimoOlhar.get(jogador.id)): void {
   const a = avisos.get(jogador.id);
   const ativo = a && a.ate > system.currentTick;
   if (a && !ativo) avisos.delete(jogador.id);
   const sobrevivendo = ![GameMode.Creative, GameMode.Spectator].includes(jogador.getGameMode());
-  if (!sobrevivendo) {
-    if (ativo) jogador.onScreenDisplay.setActionBar(a.msg);
-    return;
-  }
-  jogador.onScreenDisplay.setActionBar(ativo ? { rawtext: [a.msg, { text: "§r\n" }, painel(jogador)] } : painel(jogador));
+  // Linhas de cima para baixo: aviso, o que estou olhando, painel de água e temperatura.
+  const linhas: RawMessage[] = [];
+  if (ativo) linhas.push(a.msg);
+  if (olhar) linhas.push(olhar);
+  if (sobrevivendo) linhas.push(painel(jogador));
+  if (linhas.length === 0) return;
+  jogador.onScreenDisplay.setActionBar({ rawtext: linhas.flatMap((l, k) => (k ? [{ text: "§r\n" }, l] : [l])) });
 }
 
 export function registrarHud(): void {
-  system.runInterval(() => {
-    for (const jogador of world.getPlayers()) desenhar(jogador);
+  intervalo("painel", () => {
+    for (const jogador of world.getPlayers()) {
+      const olhar = linhaOlhar(jogador);
+      ultimoOlhar.set(jogador.id, olhar);
+      desenhar(jogador, olhar);
+    }
   }, 20);
 }

@@ -1,6 +1,7 @@
 import { GameMode, Player, system, world } from "@minecraft/server";
 import { PROPS, TEMPESTADE } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Tempestade de areia: começa a qualquer hora, ao acaso (TEMPESTADE.chancePorMinuto), com
@@ -71,7 +72,7 @@ function sortearInicio(): boolean {
 export function registrarTempestade(): void {
   // undefined até a primeira volta: o mundo não pode ser lido enquanto o script carrega.
   let estavaAtiva: boolean | undefined;
-  system.runInterval(() => {
+  intervalo("tempestade", () => {
     const ativa = tempestadeAtiva();
     if (estavaAtiva && !ativa) terminar();
     estavaAtiva = ativa;

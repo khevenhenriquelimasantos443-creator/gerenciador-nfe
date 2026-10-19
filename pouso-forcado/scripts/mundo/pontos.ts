@@ -1,8 +1,9 @@
-import { Player, system, world } from "@minecraft/server";
+import { Player, world } from "@minecraft/server";
 import { PROPS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { Acao } from "../missoes/lista.js";
 import { cidadeMaisProxima } from "./cidade.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Lugares para achar (missões de exploração): masmorras e destroços ficam guardados em
@@ -55,7 +56,7 @@ function entrou(jogador: Player, chave: string, tipos: Acao[]): void {
 }
 
 export function registrarPontos(): void {
-  system.runInterval(() => {
+  intervalo("pontos", () => {
     const pontos = lerPontos();
     for (const jogador of world.getPlayers()) {
       if (jogador.dimension.id !== "minecraft:overworld") continue;

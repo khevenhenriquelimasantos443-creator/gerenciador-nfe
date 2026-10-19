@@ -8,6 +8,7 @@ import { talvezMasmorra } from "./masmorra.js";
 import { porMinerios } from "./minerios.js";
 import { registrarPonto } from "./pontos.js";
 import { raraDoChunk } from "./raras.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Relevo do mundo plano: o mundo gera só camadas planas de areia, pedra e ardósia. Este módulo
@@ -237,7 +238,7 @@ function abrirArea(dimensao: Dimension, cx: number, cz: number): void {
 }
 
 export function registrarRelevo(): void {
-  system.runInterval(() => {
+  intervalo("relevo", () => {
     // Só depois que a nave já foi posta, para nada nascer em cima dela.
     const nave = chunkDaNave();
     if (!nave) return;

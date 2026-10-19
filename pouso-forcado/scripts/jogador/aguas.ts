@@ -1,8 +1,9 @@
-import { ItemStack, Player, system, world } from "@minecraft/server";
+import { ItemStack, Player, world } from "@minecraft/server";
 import { AGUA_DOS_MONSTROS, AGUAS, IDS, POCA, SEDE } from "../config.js";
 import { aviso } from "./hud.js";
 import { lerSede, mudarSede } from "./sede.js";
 import { lerTemperatura, mudarTemperatura } from "./temperatura.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Águas e jeitos de beber.
@@ -51,7 +52,7 @@ export function registrarAguas(): void {
   });
 
   // Goles da poça: agachado com os pés na água.
-  system.runInterval(() => {
+  intervalo("águas", () => {
     for (const jogador of world.getPlayers()) {
       if (!jogador.isSneaking || !jogador.isInWater || lerSede(jogador) >= SEDE.max) continue;
       mudarSede(jogador, POCA.aguaPorGole);

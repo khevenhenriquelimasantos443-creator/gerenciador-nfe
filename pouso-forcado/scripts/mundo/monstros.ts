@@ -1,7 +1,8 @@
-import { GameMode, ItemStack, Player, system, world } from "@minecraft/server";
+import { GameMode, ItemStack, Player, world } from "@minecraft/server";
 import { GOLEM_AREIA, MONSTROS_CL } from "../config.js";
 import { avisarErro } from "../util/erros.js";
 import { tempestadeAtiva } from "./tempestade.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Golem de Areia: nasce perto de quem está ao ar livre durante a tempestade de areia
@@ -57,7 +58,7 @@ function desmoronarGolens(): void {
 }
 
 export function registrarMonstros(): void {
-  system.runInterval(() => {
+  intervalo("monstros", () => {
     if (!tempestadeAtiva()) {
       desmoronarGolens();
       return;

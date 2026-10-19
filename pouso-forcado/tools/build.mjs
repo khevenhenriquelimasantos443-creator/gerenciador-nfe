@@ -51,6 +51,9 @@ function validarEstadosDeBlocos(pasta) {
 }
 
 const node = process.execPath;
+console.log("> dados do Catálogo");
+execFileSync(node, [join(RAIZ, "tools/gerar-catalogo.mjs")], { stdio: "inherit" });
+
 console.log("> compilando TypeScript");
 rmSync(join(RAIZ, "BP/scripts"), { recursive: true, force: true });
 execFileSync(node, [join(RAIZ, "node_modules/typescript/bin/tsc"), "-p", join(RAIZ, "tsconfig.json")], { stdio: "inherit" });
@@ -73,8 +76,11 @@ console.log("> empacotando");
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 
-const bp = gerarZip(empacotar(join(RAIZ, "BP")));
-const rp = gerarZip(empacotar(join(RAIZ, "RP")));
+// Os créditos e licenças vão dentro de cada pack.
+const creditos = { nome: "CREDITOS.md", dados: readFileSync(join(RAIZ, "CREDITOS.md")) };
+const comCreditos = (arquivos, prefixo = "") => [...arquivos, { ...creditos, nome: prefixo + creditos.nome }];
+const bp = gerarZip(comCreditos(empacotar(join(RAIZ, "BP"))));
+const rp = gerarZip(comCreditos(empacotar(join(RAIZ, "RP"))));
 writeFileSync(join(DIST, `${NOME}_BP.mcpack`), bp);
 writeFileSync(join(DIST, `${NOME}_RP.mcpack`), rp);
 
@@ -89,8 +95,8 @@ const mundo = gerarZip([
   { nome: "world_behavior_packs.json", dados: texto(JSON.stringify([{ pack_id: bpHeader.uuid, version: bpHeader.version }], null, 2)) },
   { nome: "world_resource_packs.json", dados: texto(JSON.stringify([{ pack_id: rpHeader.uuid, version: rpHeader.version }], null, 2)) },
   ...dbVazio(),
-  ...empacotar(join(RAIZ, "BP"), `behavior_packs/${NOME}_BP/`),
-  ...empacotar(join(RAIZ, "RP"), `resource_packs/${NOME}_RP/`),
+  ...comCreditos(empacotar(join(RAIZ, "BP"), `behavior_packs/${NOME}_BP/`), `behavior_packs/${NOME}_BP/`),
+  ...comCreditos(empacotar(join(RAIZ, "RP"), `resource_packs/${NOME}_RP/`), `resource_packs/${NOME}_RP/`),
 ]);
 writeFileSync(join(DIST, `${NOME}.mcworld`), mundo);
 

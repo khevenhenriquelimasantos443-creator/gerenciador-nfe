@@ -1,5 +1,7 @@
 import { CommandPermissionLevel, CustomCommandRegistry, CustomCommandStatus, Player, system } from "@minecraft/server";
 import { cidadeMaisProxima } from "../mundo/cidade.js";
+import { mostrarDiagnostico } from "../mundo/diagnostico.js";
+import { relatorio } from "../util/perfil.js";
 import { raraMaisProxima } from "../mundo/raras.js";
 import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
 
@@ -8,6 +10,7 @@ import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
  *   /cl:cidade     cidade abandonada mais perto
  *   /cl:templo     templo soterrado mais perto
  *   /cl:destrocos  destroços de nave mais perto
+ *   /cl:diagnostico  versão, conteúdo carregado, blocos ativos e tempo de script por sistema
  * (o jogo também aceita sem o "cl:", se nenhum outro comando tiver o mesmo nome)
  * Mostra no chat as coordenadas, a distância e a direção (norte = z menor, leste = x maior).
  * O comando roda em modo restrito, então a resposta vai no próximo tick (system.run).
@@ -41,6 +44,18 @@ function responder(jogador: Player, nome: string, alvo: Alvo): void {
 }
 
 export function registrarComandos(registro: CustomCommandRegistry): void {
+  registro.registerCommand(
+    { name: "cl:diagnostico", description: "Pouso Forçado: versão, blocos ativos e tempo de script", permissionLevel: CommandPermissionLevel.Any, cheatsRequired: false },
+    (origem) => {
+      const jogador = origem.sourceEntity;
+      if (!(jogador instanceof Player)) return { status: CustomCommandStatus.Failure, message: "Use como jogador." };
+      system.run(() => {
+        mostrarDiagnostico(jogador);
+        for (const linha of relatorio()) jogador.sendMessage(linha);
+      });
+      return { status: CustomCommandStatus.Success };
+    },
+  );
   const comandos: Array<[string, string, (j: Player) => Alvo]> = [
     ["cl:cidade", "cl.comando.cidade", (j) => cidadeMaisProxima(j.location.x, j.location.z)],
     ["cl:templo", "cl.comando.templo", (j) => perto("templo", j)],

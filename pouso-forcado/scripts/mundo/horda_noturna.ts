@@ -1,5 +1,6 @@
 import { Difficulty, Dimension, EntityInitializationCause, GameMode, Player, Vector3, system, world } from "@minecraft/server";
 import { FAMILIA_RESISTE_SOL, HORDA, PROPS } from "../config.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Noite e dia no deserto:
@@ -138,7 +139,7 @@ function solQueima(): void {
 }
 
 export function registrarHordaNoturna(): void {
-  system.runInterval(() => {
+  intervalo("horda", () => {
     if (!ehNoite() || world.getDifficulty() === Difficulty.Peaceful) return;
     try {
       talvezOnda();
@@ -152,7 +153,7 @@ export function registrarHordaNoturna(): void {
     }
   }, HORDA.intervaloTicks);
 
-  system.runInterval(() => {
+  intervalo("horda", () => {
     if (solAlto()) solQueima();
   }, HORDA.sol.intervaloTicks);
 

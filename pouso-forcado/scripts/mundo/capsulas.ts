@@ -2,6 +2,7 @@ import { Dimension, EntityInitializationCause, GameMode, Player, Vector3, system
 import { CAPSULA, PROPS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { criarBauCom } from "../util/inventario.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Cápsulas de carga: pedaços da nave que ainda estavam em órbita.
@@ -100,7 +101,7 @@ export function derrubarCapsula(jogador: Player): boolean {
   // Rastro de fogo descendo do céu em ~3 s; depois o impacto.
   const altura = 60;
   let passo = 0;
-  const id = system.runInterval(() => {
+  const id = intervalo("cápsulas", () => {
     const y = pouso.y + altura - passo * 3;
     particula(dimensao, "minecraft:large_explosion", { x: pouso.x + 0.5, y, z: pouso.z + 0.5 });
     particula(dimensao, "minecraft:campfire_smoke_particle", { x: pouso.x + 0.5, y: y + 2, z: pouso.z + 0.5 });
@@ -136,7 +137,7 @@ function procurarEncontradas(): void {
 }
 
 export function registrarCapsulas(): void {
-  system.runInterval(() => {
+  intervalo("cápsulas", () => {
     procurarEncontradas();
     const t = world.getTimeOfDay();
     const dia = world.getDay();
