@@ -24,9 +24,16 @@ Os blocos com modelo 3D aparecem no inventário pelo próprio modelo. O ícone d
 | Fases | Itens | Blocos | Sem ícone próprio |
 |---|---|---|---|
 | 0–14 (prontas) | 97 | 29 | 10 plantações (não vão para o inventário) e 4 ovos de monstro (cor) |
-| 15–23 (planejadas) | ver abaixo | ver abaixo | — |
+| 15–23 (planejadas) | ~330 ícones novos ao todo | (contagem por fase no fim) | — |
+| 10 (final) | nada definido ainda | | |
 
-Todos os itens e blocos das Fases 0–14 já têm ícone. Os únicos trocáveis pela arte original do mod estão marcados com **sim**.
+Todos os itens e blocos das Fases 0–14 já têm ícone. Podem trocar o ícone próprio pela arte original do mod:
+
+- as 5 águas, o Camel Pack, a Máscara e o Filtro (EnviroMine);
+- o Martelo de Cobre e os 3 pedaços de cobre (Ex Aliquo);
+- o Terminal (arte do AE2).
+
+**Pendente da Fase 12:** a **Seiva de Cacto** (Ex Aliquo: cacto → água) foi planejada, mas não existe ainda. Ela vai precisar de ícone.
 
 ---
 
@@ -169,3 +176,223 @@ Todos os itens e blocos das Fases 0–14 já têm ícone. Os únicos trocáveis 
 | Broa de Milho | Comida |
 
 O Pão do HarvestCraft sai como o Pão do jogo, por isso não tem ícone próprio.
+
+---
+
+## Fases planejadas (15–23)
+
+Lista tirada da pesquisa (`docs/pesquisa-mods.md` e `docs/pesquisa/C` a `F`). Os nomes ainda podem mudar na hora de fazer.
+
+### Fase 15: Tinkers' Construct + Iguana Tweaks (parte 1)
+
+Arte do Tinkers: **sim** (CC BY 3.0); o Tinkers 1.6.4 já tem um PNG por peça × material. Arte do Iguana: **não**.
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Padrão em Branco | Blank Pattern | Base dos padrões (2 tábuas + 2 gravetos) |
+| Padrões de peça (~8) | Wooden Patterns | Dizem qual peça o Construtor de Peças faz |
+| Mesa de Moldes (bloco) | Stencil Table | Transforma o padrão em branco num padrão |
+| Construtor de Peças (bloco) | Part Builder | Padrão + material → peça |
+| Estação de Ferramentas (bloco) | Tool Station | Monta, conserta e põe modificadores |
+| Forja de Ferramentas (bloco, opcional) | Tool Forge | Ferramentas grandes (marreta, escavadeira) |
+| **Peças** | Tool Parts | Cabo, Ligação, Cabeça de Picareta, Cabeça de Pá, Cabeça de Machado, Lâmina de Espada, Guarda Larga e Travessa × materiais. Nesta fase entram só as não metálicas, ~21 ícones (madeira, sílex, osso, cacto, obsidiana) |
+| **Ferramentas** | Tools | Picareta, Pá, Machadinha e Espada Larga, um ícone por material da cabeça: ~26 ícones com as regras do Iguana (a primeira picareta é de sílex; sem ferramenta de pedra) |
+| Cabeça de Enderman (opcional) | Enderman Head | Aumenta o nível de mineração |
+| Balde de Argila (opcional) | Clay Bucket | Balde barato de água, lava ou leite |
+
+Os 10 materiais são madeira, pedra, sílex, cacto, osso, obsidiana, ferro, cobre, bronze e aço. Sem Nether, ficam fora cobalto, ardite e manyullyn.
+
+O martelo do Tinkers colide com os martelos do Ex Nihilo; sugestão: chamar de **Marreta**.
+
+### Fase 16: Tinkers' Construct (parte 2, fundição)
+
+Arte: **sim** (Tinkers).
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Argamassa | Grout | Argila + areia + cascalho; vai ao forno |
+| Tijolo Refratário | Seared Brick | Material da fundição |
+| Tijolos Refratários (bloco) | Seared Bricks | Paredes e piso da fundição |
+| Controlador da Fundição (bloco) | Smeltery Controller | Liga o multibloco e guarda o metal derretido |
+| Tanque Refratário (bloco) | Seared Tank | Lava que aquece a fundição |
+| Dreno (bloco) | Smeltery Drain | Saída do metal |
+| Vidro Refratário (bloco, opcional) | Seared Glass | Parede com visor |
+| Torneira (bloco) | Faucet | Derrama o metal |
+| Mesa de Fundição (bloco) | Casting Table | Faz lingote, peça ou molde |
+| Bacia de Fundição (bloco) | Casting Basin | Faz bloco de metal |
+| Molde de Lingote / de Pepita | Ingot / Nugget Cast | Moldes da mesa |
+| Moldes de peça (~8) | Part Casts | Fazem as peças de metal |
+| Lingote e Bloco de Bronze | Bronze | Liga de 3 cobre + 1 estanho |
+| Lingote e Bloco de Aço | Steel | Liga de aço |
+| Lingote de Estanho | Tin Ingot | Necessário para o bronze (**fonte ainda não definida**) |
+| Bola de Musgo | Ball of Moss | Modificador de auto-reparo |
+| Peças de metal (~32) | Tool Parts | Ferro, cobre, bronze e aço × 8 peças |
+
+O metal derretido é só um número (mB), sem ícone.
+
+### Fase 17: Thermal Expansion
+
+Arte: **não** (redesenhar).
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Estrutura de Máquina (bloco) | Machine Frame | Base das máquinas |
+| Pulverizador (bloco) | Pulverizer | Minério → 2 pós (+ extra) |
+| Fornalha de Redstone (bloco) | Redstone Furnace | Fornalha elétrica |
+| Fundidora de Indução (bloco) | Induction Smelter | Pós e minério → lingotes; ligas |
+| Serraria (bloco) | Sawmill | Tora → tábuas + serragem |
+| Extrusora Ígnea (bloco) | Igneous Extruder | Lava + água → pedregulho |
+| Precipitador Glacial (bloco) | Glacial Precipitator | Água → neve ou gelo |
+| Dínamo de Redstone (bloco) | Enervation Dynamo | Redstone vira energia |
+| Células de Energia (4 blocos) | Energy Cells | Básica, Reforçada, Redstone e Ressonante |
+| Conduítes de Energia (3 blocos) | Energy Conduits | Básico (o Cabo de Cobre atual), Reforçado e Redstone |
+| Serragem | Sawdust | Sobra da serraria |
+| Pós novos (estanho, bronze, aço) | Dusts | Saídas do pulverizador |
+| Lingote de Invar (+ níquel) | Invar | Liga (**fonte de níquel ainda não definida**) |
+| Tesseract (bloco, opcional) | Tesseract | Energia por frequência |
+
+O Dínamo a Vapor já é o Gerador a Carvão: sem ícone novo.
+
+### Fase 18: armazenamento (JABBA, AutoPackager, Applied Energistics 1 + ExtraCells)
+
+Arte: JABBA **sim (NC-SA)**; AutoPackager **sim**; AE **sim (NC-SA, arte do AE2)**; ExtraCells **sim**.
+
+| Item ou bloco | Mod | Descrição |
+|---|---|---|
+| Barril de Armazenamento (bloco) | JABBA | 1 tipo de item, 64 pilhas |
+| Upgrade de Armazenamento | JABBA | +64 pilhas |
+| Upgrades Estruturais MK I a VII (7, ou 4 até MK IV) | JABBA | Mais espaço para upgrades |
+| Núcleo de Funil | JABBA | Entrada e saída automáticas |
+| Martelo do Barril | JABBA | Tira os upgrades |
+| Carrinho / Carrinho de Diamante | JABBA (Dolly) | Move baú (e spawner) com o conteúdo |
+| Empacotador Automático (bloco) | AutoPackager | Compacta 4→1 e 9→1 |
+| Controlador ME (bloco) | AE1 | Aumenta o tamanho da rede |
+| Drive ME (bloco) | AE1 | Guarda 10 células |
+| Baú ME (bloco) | AE1 | Guarda 1 célula |
+| Células ME 1k, 4k, 16k, 64k (4) | AE1 | Guardam itens |
+| Componentes de célula 1k a 64k (4) | AE1 | Ingredientes das células |
+| Cristal e Pó de Certus | AE1 | Da peneira de cascalho e dos destroços |
+| Silício | AE1 | Pó de certus na fornalha |
+| Cristal e Pó Fluix | AE1 | Precisa de quartzo (**sem fonte: não há Nether**) |
+| Faca de Corte | AE1 | Ingrediente dos processadores |
+| Processadores básico e avançado | AE1 | Feitos na Montadora |
+| Matriz de Conversão | AE1 | Ingrediente do Baú ME |
+| Célula de Água | ExtraCells | Guarda água em baldes |
+| Terminal sem Fio / Ponto de Acesso (bloco) | AE1 | Abre o Terminal de longe |
+
+O Terminal e o Cabo atuais viram a rede ME (mesmos IDs).
+
+### Fase 19: MineFactory Reloaded
+
+Arte: **não**.
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Bloco de Máquina | Machine Block | Base das máquinas |
+| Plantadeira (bloco) | Planter | Planta numa área 3×3 |
+| Colheitadeira (bloco) | Harvester | Colhe plantas e árvores |
+| Fertilizadora (bloco) | Fertilizer | Faz as plantas crescerem |
+| Rancheiro (bloco) | Rancher | Tira leite dos animais |
+| Triturador de Monstros (bloco) | Mob Grinder | Mata monstros e dá XP |
+| Esgoto (bloco) | Sewer | Junta esgoto e XP |
+| Compostadora (bloco) | Composter | Esgoto → fertilizante |
+| Quebrador e Colocador de Blocos (blocos) | Block Breaker / Placer | Quebram ou colocam o bloco da frente |
+| Esteira (bloco) | Conveyor Belt | Passa itens de baú para baú |
+| Upgrades de Alcance (5 úteis, até 11) | Range Upgrades | Aumentam a área |
+| Resina | Sap / Raw Rubber | Do cacto ou da árvore |
+| Barra de Borracha | Rubber Bar | Resina na fornalha |
+| Plástico Cru / Folha de Plástico | Raw Plastic / Plastic Sheet | Receitas das máquinas |
+| Fertilizante | Fertilizer | Igual farinha de osso |
+
+### Fase 20: PneumaticCraft (versão leve)
+
+Arte: **não**.
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Lingote e Bloco de Ferro Comprimido | Compressed Iron | Ferro na câmara de pressão ou na explosão |
+| Compressor de Ar (bloco) | Air Compressor | Queima combustível e faz pressão |
+| Tubo de Pressão / Tubo Avançado (blocos) | Pressure Tubes | Rede de ar; explode se passar do limite |
+| Parede, Vidro, Válvula e Interface da Câmara (blocos) | Pressure Chamber | Multibloco da câmara |
+| Manômetro | Pressure Gauge | Mostra a pressão |
+| Pá de Turbina, Placa de Circuito, Transistor, Capacitor, Ácido (opcionais) | PCB chain | Cadeia de eletrônicos |
+
+### Fase 21: Sync
+
+Arte: **não**.
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Núcleo Sync | Sync Core | Ingrediente (leva o Coração do Faraó) |
+| Construtor de Corpos (bloco) | Shell Constructor | Cria o corpo reserva |
+| Armazém de Corpos (bloco) | Shell Storage | Guarda o corpo; troca e volta nele ao morrer |
+| Esteira de Animal (bloco) | Treadmill | Porco ou lobo geram energia |
+
+### Fase 22: Big Reactors
+
+Arte: **sim** (MIT).
+
+| Item ou bloco | Original | Descrição |
+|---|---|---|
+| Lingote de Yellorium (+ bloco) | Yellorium | Combustível; só vem da peneira de poeira |
+| Lingote de Cianita | Cyanite | Resto do reator |
+| Lingote de Blutônio | Blutonium | Combustível reprocessado |
+| Barra e Bloco de Grafite | Graphite | Melhor moderador |
+| Carcaça e Vidro do Reator (blocos) | Reactor Casing / Glass | Paredes do reator |
+| Controlador do Reator (bloco) | Reactor Controller | Liga e mostra o reator (só no saque da cidade) |
+| Barra de Combustível (bloco) | Fuel Rod | Coluna de dentro |
+| Barra de Controle (bloco) | Control Rod | Regula a potência |
+| Porta de Acesso (bloco) | Access Port | Entrada do combustível, saída da cianita |
+| Tomada de Energia (bloco) | Power Tap | Liga o reator aos cabos (saque da cidade) |
+| Porta de Refrigeração (bloco) | Coolant Port | Água aumenta a potência |
+| Reprocessador de Cianita (bloco) | Cyanite Reprocessor | Cianita → blutônio |
+
+### Fase 23: Chisel, BiblioCraft e ChickenChunks
+
+| Item ou bloco | Mod | Descrição | Arte do mod |
+|---|---|---|---|
+| Cinzel | Chisel | Troca o bloco pela próxima variante | não |
+| Mármore e Calcário (blocos) | Chisel | Pedra decorativa do subsolo | não |
+| **Variantes**: 1 ícone por variante | Chisel | 6 famílias × 16 = ~96 (ou 8 × 8 = 64): arenito, pedra, mármore, calcário, casco da nave, vidro | não |
+| Estante (bloco) | BiblioCraft | Guarda 16 livros | sim (MIT) |
+| Prateleira (bloco) | BiblioCraft | Mostra itens | sim (MIT) |
+| Suporte de Ferramentas (bloco) | BiblioCraft | Pendura 4 ferramentas | sim (MIT) |
+| Expositor (bloco) | BiblioCraft | Vitrine de 1 item | sim (MIT) |
+| Cabide de Armadura (bloco) | BiblioCraft | Troca a armadura inteira | sim (MIT) |
+| Lanterna e Lâmpada (blocos) | BiblioCraft | 16 cores (2 ícones, ou 32 se cada cor for um item) | sim (MIT) |
+| Carregador de Chunks (bloco) | ChickenChunks | Mantém uma área 3×3 carregada | não |
+| Carregador Pontual (bloco) | ChickenChunks | Mantém 1 chunk carregado | não |
+
+### Fase 10: final (decolagem)
+
+Ainda sem itens definidos.
+
+---
+
+## Contagem aproximada (Fases 15–23)
+
+| Fase | Ícones novos |
+|---|---|
+| 15 | ~57 (mesas e padrões ~10, peças ~21, ferramentas ~26) |
+| 16 | ~60 (fundição ~11, moldes ~10, ligas ~6, peças de metal ~32) |
+| 17 | ~20 |
+| 18 | ~38 |
+| 19 | ~25 |
+| 20 | ~10 (+4 opcionais) |
+| 21 | 4 |
+| 22 | ~15 |
+| 23 | ~75 a 110 (a maior parte é variante do Chisel) |
+| **Total** | **~305 a 340** |
+
+## Materiais que as fases pedem e ainda não têm de onde vir
+
+| Material | Precisa dele |
+|---|---|
+| Estanho | Bronze e upgrade de alcance |
+| Aço | Receita da liga ainda não definida |
+| Níquel | Invar |
+| Quartzo (sem Nether) | Fluix do AE, modificador de afiação, upgrade de alcance |
+| Prata e platina | Upgrades de alcance |
+| Pó de blaze, cristal de lava, osso necrótico | Modificadores do Tinkers |
+
+Cada um precisa de uma fonte (peneira, destroços ou cidade) e de ícone próprio, ou sai do plano.
