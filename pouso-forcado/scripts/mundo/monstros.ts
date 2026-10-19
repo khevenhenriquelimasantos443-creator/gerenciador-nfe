@@ -1,5 +1,6 @@
 import { GameMode, ItemStack, Player, system, world } from "@minecraft/server";
 import { GOLEM_AREIA, MONSTROS_CL } from "../config.js";
+import { avisarErro } from "../util/erros.js";
 import { tempestadeAtiva } from "./tempestade.js";
 
 /*
@@ -65,7 +66,11 @@ export function registrarMonstros(): void {
       if (jogador.dimension.id !== "minecraft:overworld" || !aoCeu(jogador)) continue;
       if (Math.random() >= GOLEM_AREIA.chancePorCiclo) continue;
       const perto = jogador.dimension.getEntities({ type: MONSTROS_CL.golem, location: jogador.location, maxDistance: 48 }).length;
-      if (perto < GOLEM_AREIA.maxPerto) nascerGolem(jogador);
+      try {
+        if (perto < GOLEM_AREIA.maxPerto) nascerGolem(jogador);
+      } catch (erro) {
+        avisarErro("golem não nasceu", erro);
+      }
     }
   }, 40);
 }

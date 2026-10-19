@@ -2,6 +2,7 @@ import { BlockCustomComponent, Dimension, Entity, EntityDamageCause, GameMode, V
 import { FARAO, MONSTROS_CL } from "../config.js";
 import { aviso } from "../jogador/hud.js";
 import { escolher } from "../util/aleatorio.js";
+import { avisarErro } from "../util/erros.js";
 import { comecarTempestade, tempestadeAtiva } from "./tempestade.js";
 
 /*
@@ -45,8 +46,8 @@ function despertar(dimensao: Dimension, local: Vector3): void {
     try {
       dimensao.spawnEntity(MONSTROS_CL.farao, local);
       efeito(dimensao, "minecraft:large_explosion", { x: local.x, y: local.y + 1, z: local.z });
-    } catch {
-      // chunk descarregou no meio
+    } catch (erro) {
+      avisarErro("faraó não nasceu", erro);
     }
   }, 40);
 }
@@ -139,8 +140,8 @@ export function registrarFarao(): void {
     for (const farao of world.getDimension("minecraft:overworld").getEntities({ type: MONSTROS_CL.farao })) {
       try {
         agir(farao, agora);
-      } catch {
-        // faraó saiu do mundo carregado no meio
+      } catch (erro) {
+        avisarErro("faraó", erro);
       }
     }
   }, 20);
