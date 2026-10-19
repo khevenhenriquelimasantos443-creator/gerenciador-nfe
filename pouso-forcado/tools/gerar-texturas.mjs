@@ -73,3 +73,59 @@ for (const [rel, opcoes] of Object.entries(TEXTURAS)) {
   writeFileSync(destino, placeholder(opcoes));
   console.log(`gerado   ${rel}`);
 }
+
+// Fonte do minimapa (scripts/jogador/minimapa.ts): RP/font/glyph_E8.png = caracteres U+E800 a U+E8FF,
+// 16x16 células de 16 px. Cada caractere é um quadradinho do mapa (um chunk). Sempre regerada.
+function glifosMinimapa() {
+  const cor = (c, a = 255) => [...hex(c).slice(0, 3), a];
+  const vazio = [0, 0, 0, 0];
+  const lisos = ["#2a2620", "#e3d29b", "#c9b273", "#a68c4c"];
+  const AREIA = "#e3d29b";
+  const desenhos = [];
+  // 0 desconhecido, 1 areia, 2 duna baixa, 3 duna alta
+  lisos.forEach((c, i) => desenhos.push(() => cor(c, i === 0 ? 170 : 255)));
+  // 4 quarteirão: prédios cinza com ruas mais escuras
+  desenhos.push((x, y) => cor(x % 8 < 2 || y % 8 < 2 ? "#6e6a62" : "#a3a3a3"));
+  // 5 torre (centro da cidade)
+  desenhos.push((x, y) => cor(x < 2 || y < 2 || x > 13 || y > 13 ? "#3a3a3a" : x > 4 && x < 11 && y > 4 && y < 11 ? "#222222" : "#6e6e6e"));
+  // 6 templo: pirâmide laranja
+  desenhos.push((x, y) => cor(y >= 3 && y <= 13 && Math.abs(x - 7.5) <= (y - 2) * 0.7 ? (y % 3 === 0 ? "#a8642a" : "#e0a040") : AREIA));
+  // 7 destroços: X de metal
+  desenhos.push((x, y) => cor(Math.abs(x - y) <= 1.5 || Math.abs(x + y - 15) <= 1.5 ? (x < 3 || x > 12 ? "#2f6f7a" : "#4fb3c4") : AREIA));
+  // 8 a sua nave: losango branco e vermelho
+  desenhos.push((x, y) => {
+    const d = Math.abs(x - 7.5) + Math.abs(y - 7.5);
+    return cor(d <= 3 ? "#e03030" : d <= 7 ? "#f2f2f2" : "#3a3a3a");
+  });
+  // 9 a 16: você, uma seta para cada uma das 8 direções (0 = norte, no sentido horário)
+  const seta = [[0, -7], [5, 6], [-5, 6]];
+  const dentro = (px, py) => {
+    let d = false;
+    for (let i = 0, j = seta.length - 1; i < seta.length; j = i++) {
+      const [xi, yi] = seta[i], [xj, yj] = seta[j];
+      if (yi > py !== yj > py && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) d = !d;
+    }
+    return d;
+  };
+  for (let k = 0; k < 8; k++) {
+    const t = (k * Math.PI) / 4, c = Math.cos(t), s = Math.sin(t);
+    const na = (x, y) => {
+      const rx = x - 7.5, ry = y - 7.5;
+      return dentro(rx * c + ry * s, -rx * s + ry * c);
+    };
+    desenhos.push((x, y) => {
+      if (!na(x, y)) return cor("#3a3a3a");
+      const borda = !na(x - 1, y) || !na(x + 1, y) || !na(x, y - 1) || !na(x, y + 1);
+      return cor(borda ? "#111111" : "#ff3030");
+    });
+  }
+  const png = gerarPng(256, 256, (x, y) => {
+    const i = Math.floor(y / 16) * 16 + Math.floor(x / 16);
+    return desenhos[i] ? desenhos[i](x % 16, y % 16) : vazio;
+  });
+  const destino = join(RAIZ, "RP/font/glyph_E8.png");
+  mkdirSync(dirname(destino), { recursive: true });
+  writeFileSync(destino, png);
+  console.log("gerado   RP/font/glyph_E8.png");
+}
+glifosMinimapa();

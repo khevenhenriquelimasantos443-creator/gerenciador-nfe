@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.13.5";
+export const VERSAO = "0.13.6";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -42,7 +42,7 @@ export const PROPS = {
   tempestadeAte: `${NS}:tempestade_ate`, // mundo: tempo absoluto em que a tempestade acaba
   tempestadeFim: `${NS}:tempestade_fim`, // mundo: tempo absoluto em que a última tempestade acabou
   diarioRecebido: `${NS}:diario_recebido`, // jogador
-  mapaRecebido: `${NS}:mapa_recebido`, // jogador
+  minimapaDesligado: `${NS}:minimapa_desligado`, // jogador: escondeu o minimapa com /cl:mapa
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
   sede: `${NS}:sede`, // jogador: água no corpo (0 a SEDE.max)
@@ -171,6 +171,14 @@ export const RARAS = [
 export const RARAS_BORDA_PLANA = 20; // blocos sem duna em volta de cada estrutura rara
 
 // Dunas por ruído contínuo (scripts/mundo/dunas.ts). Escalas em blocos.
+// Minimapa na tela (scripts/jogador/minimapa.ts): cada quadradinho é um chunk (16x16 blocos).
+export const MINIMAPA = {
+  raio: 7, // chunks para cada lado: 15x15 quadradinhos = 240x240 blocos
+  intervaloTicks: 5, // de quanto em quanto tempo o mapa é redesenhado
+  reenviarTicks: 30, // reenvia mesmo sem mudança (o título some sozinho depois de 3 s)
+  pausaPorTitulo: 20, // ticks extras de pausa depois de um título de verdade (horda, tempestade...)
+} as const;
+
 export const DUNAS = {
   escalaCampo: 260, // tamanho dos campos de dunas e das planícies entre eles
   campoMin: -0.15, // abaixo disso: planície lisa

@@ -1,5 +1,6 @@
 import { Difficulty, Dimension, EntityInitializationCause, GameMode, Player, Vector3, system, world } from "@minecraft/server";
 import { HORDA, PROPS } from "../config.js";
+import { mostrarTitulo } from "../jogador/minimapa.js";
 
 /*
  * Noite e dia no deserto:
@@ -82,7 +83,7 @@ function soltarOnda(numero: number, dia: number): void {
   const { onda } = HORDA;
   const tamanho = Math.min(onda.max, onda.base + onda.porDia * dia);
   for (const jogador of jogadoresNoDeserto()) {
-    jogador.onScreenDisplay.setTitle(
+    mostrarTitulo(jogador,
       { translate: "cl.horda.titulo" },
       {
         subtitle: { translate: "cl.horda.subtitulo", with: [String(numero), String(onda.horas.length), String(tamanho)] },

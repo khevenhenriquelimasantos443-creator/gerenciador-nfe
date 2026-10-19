@@ -209,5 +209,5 @@ cl.direcao.sul_oeste=southwest
 cl.direcao.aqui=right around you
 
 ## Minimap
-cl.mapa.recebido=You got a Locator Map. Use it (tap and hold) and it moves to your off-hand: it becomes a minimap in the corner of the screen. Left the map area? Type /cl:mapa to get another.
-cl.mapa.na_mao=The map moved to your off-hand: it is your minimap now.
+cl.mapa.ligado=Minimap on: it sits in the top corner of the screen, north up. Type /cl:mapa to hide it.
+cl.mapa.desligado=Minimap hidden. Type /cl:mapa to show it again.
