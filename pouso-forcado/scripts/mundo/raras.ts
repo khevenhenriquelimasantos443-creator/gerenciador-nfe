@@ -53,3 +53,21 @@ export function foraDasRaras(x: number, z: number, semente: number, nave: [numbe
   });
   return menor;
 }
+
+/** A estrutura rara do tipo mais perto da posição (olha o quadrado da posição e os 8 em volta). */
+export function raraMaisProxima(tipo: Rara["tipo"], x: number, z: number, semente: number, nave: [number, number]) {
+  const i = RARAS.findIndex((r) => r.tipo === tipo);
+  const r = RARAS[i];
+  const celX = Math.floor(Math.floor(x / 16) / r.celula), celZ = Math.floor(Math.floor(z / 16) / r.celula);
+  let melhor: { x: number; z: number; distancia: number } | undefined;
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dz = -1; dz <= 1; dz++) {
+      const e = escolhido(i, celX + dx, celZ + dz, semente, nave);
+      if (!e) continue;
+      const ex = e[0] * 16 + Math.floor(r.tamanho / 2), ez = e[1] * 16 + Math.floor(r.tamanho / 2);
+      const d = Math.hypot(x - ex, z - ez);
+      if (!melhor || d < melhor.distancia) melhor = { x: ex, z: ez, distancia: d };
+    }
+  }
+  return melhor;
+}

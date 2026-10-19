@@ -191,3 +191,19 @@ cl.missao.exterminador.desc=Quebre mais 5 Geradores de Monstros.
 cl.missao.profundezas.titulo=Profundezas
 cl.missao.profundezas.desc=Ache uma masmorra funda, na camada de ardósia.
 cl.tempestade.rotulo=§6Tempestade§r
+
+## Comandos de localização
+cl.comando.cidade=A cidade abandonada
+cl.comando.templo=O templo soterrado
+cl.comando.destrocos=Os destroços de nave
+cl.comando.achou=§6[Pouso Forçado]§r %s mais perto fica em §ex %s, z %s§r: %s blocos para o %s.
+cl.comando.nada=§6[Pouso Forçado]§r Nenhum(a) por perto: %s. Explore mais longe e tente de novo.
+cl.direcao.norte=norte
+cl.direcao.sul=sul
+cl.direcao.leste=leste
+cl.direcao.oeste=oeste
+cl.direcao.norte_leste=nordeste
+cl.direcao.norte_oeste=noroeste
+cl.direcao.sul_leste=sudeste
+cl.direcao.sul_oeste=sudoeste
+cl.direcao.aqui=lado de onde você está

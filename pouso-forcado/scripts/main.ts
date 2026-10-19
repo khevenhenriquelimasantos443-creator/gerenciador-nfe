@@ -9,6 +9,7 @@ import { peneira } from "./blocos/peneira.js";
 import { IDS } from "./config.js";
 import { registrarBoasVindas } from "./jogador/boas_vindas.js";
 import { registrarAguas } from "./jogador/aguas.js";
+import { registrarComandos } from "./jogador/comandos.js";
 import { registrarHud } from "./jogador/hud.js";
 import { registrarSede } from "./jogador/sede.js";
 import { registrarTemperatura } from "./jogador/temperatura.js";
@@ -19,7 +20,8 @@ import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
 import { registrarRelevo } from "./mundo/relevo.js";
 
-system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {
+system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry }) => {
+  registrarComandos(customCommandRegistry);
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, condensadorAgua);
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAvancado, condensadorAvancado);

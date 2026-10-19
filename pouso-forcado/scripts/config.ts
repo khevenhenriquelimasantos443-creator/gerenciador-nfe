@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.13.2";
+export const VERSAO = "0.13.3";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -142,12 +142,14 @@ export const RELEVO = {
 // Estruturas raras (scripts/mundo/raras.ts): o mapa é dividido em quadrados de "celula" chunks
 // e cada quadrado tem no máximo UMA, num chunk sorteado lá dentro (com "chance" de existir).
 // Assim ficam espalhadas ao acaso, sem amontoar. O chão em volta fica plano (sem dunas).
+// 242 chunks = 3.872 blocos: 15 de cada tipo a cada 15.000 × 15.000 blocos.
+// Para achar: /cl:templo e /cl:destrocos (scripts/jogador/comandos.ts).
 export const RARAS = [
   {
     tipo: "templo",
     estrutura: `${NS}:templo_soterrado`,
-    celula: 24, // 384×384 blocos
-    chance: 0.6,
+    celula: 242,
+    chance: 1,
     tamanho: 15,
     deslocY: -3,
     bau: { x: 7, y: 1, z: 7 },
@@ -156,8 +158,8 @@ export const RARAS = [
   {
     tipo: "destrocos",
     estrutura: `${NS}:nave_caida`, // a mesma estrutura da sua nave, com outro saque
-    celula: 28, // 448×448 blocos
-    chance: 0.6,
+    celula: 242,
+    chance: 1,
     tamanho: 17, // a nave tem 13×17
     deslocY: -2,
     bau: { x: 6, y: 2, z: 8 },

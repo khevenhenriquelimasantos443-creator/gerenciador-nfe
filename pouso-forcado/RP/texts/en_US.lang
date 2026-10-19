@@ -191,3 +191,19 @@ cl.missao.exterminador.desc=Break 5 more Monster Generators.
 cl.missao.profundezas.titulo=The depths
 cl.missao.profundezas.desc=Find a deep dungeon, in the deepslate layer.
 cl.tempestade.rotulo=§6Sandstorm§r
+
+## Locate commands
+cl.comando.cidade=The abandoned city
+cl.comando.templo=The buried temple
+cl.comando.destrocos=The ship wreckage
+cl.comando.achou=§6[Forced Landing]§r %s closest to you is at §ex %s, z %s§r: %s blocks to the %s.
+cl.comando.nada=§6[Forced Landing]§r None nearby: %s. Explore farther and try again.
+cl.direcao.norte=north
+cl.direcao.sul=south
+cl.direcao.leste=east
+cl.direcao.oeste=west
+cl.direcao.norte_leste=northeast
+cl.direcao.norte_oeste=northwest
+cl.direcao.sul_leste=southeast
+cl.direcao.sul_oeste=southwest
+cl.direcao.aqui=right around you

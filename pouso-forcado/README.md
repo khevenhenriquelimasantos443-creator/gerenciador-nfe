@@ -117,7 +117,7 @@ Outros comandos:
 ### Atualizar sem perder o mundo
 
 - Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.2] ...`.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.3] ...`.
 - Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
 
 ## Diário de Bordo (Fase 2)
@@ -202,9 +202,14 @@ Tabelas de sorteio, pontos do compostor e números da estufa ficam no fim do `sc
   - **comuns** na pedra (y 12 a 26), de pedregulho com musgo. Metade tem um **poço** até a superfície, marcado por um **anel de arenito entalhado** na areia (com feno no fundo para amortecer a queda; para sair, cave ou faça uma escada);
   - **fundas** na ardósia (y -45 a -25), com 2 geradores e saque muito melhor (diamantes, ouro, esmeraldas, maçã dourada).
 - **Gerador de Monstros.** Com um jogador a até 20 blocos, põe 1 ou 2 monstros em volta a cada 10 s (até 5 por perto). Abaixo de y = 0 vêm esqueletos, errantes, aranhas das cavernas e creepers. Leva uns 5 s para quebrar, não cai como item e dá ferro, ouro, redstone e experiência. Não explode com creeper.
-- **Destroços de outras naves.** Raros e espalhados pelo mapa (no máximo um a cada 448×448 blocos): uma nave igual à sua, meio enterrada, com um baú de ferro, cobre, redstone, vidro e água.
+- **Destroços de outras naves.** Raros e espalhados pelo mapa (um a cada ~3.900×3.900 blocos; `/cl:destrocos` mostra o mais perto): uma nave igual à sua, meio enterrada, com um baú de ferro, cobre, redstone, vidro e água.
 - **Tempestade de areia.** Começa **ao acaso, a qualquer hora** (em média uma a cada ~45 min de jogo, com pelo menos 15 min de pausa depois de cada uma) e dura **25 minutos**: aviso na tela, **névoa amarela** que fecha a visão, e quem estiver ao ar livre fica lento. A sede cai 1,5× mais rápido. O painel mostra o tempo que falta (`Tempestade 24:10`). Com trapaças: `/scriptevent cl:tempestade` começa uma na hora e `/scriptevent cl:tempestade_fim` acaba.
-- Números em `CIDADE`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
+- **Comandos para achar lugares** (funcionam **sem trapaças**; mostram coordenadas, distância e direção no chat):
+  - `/cl:cidade`: cidade abandonada mais perto;
+  - `/cl:templo`: templo soterrado mais perto;
+  - `/cl:destrocos`: destroços de nave mais perto.
+  - (Se nenhum outro add-on tiver um comando com o mesmo nome, dá para digitar sem o `cl:`, por exemplo `/cidade`.)
+- Números em `CIDADE`, `RARAS`, `MASMORRA`, `GERADOR_MONSTROS` e `TEMPESTADE` no `scripts/config.ts`.
 
 ## Energia (Fase 5)
 
@@ -269,7 +274,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
   - **dunas por ruído contínuo** (`scripts/mundo/dunas.ts`): campos de dunas em cristas compridas, de 3 a ~10 blocos, que atravessam os chunks sem emenda, separados por planícies lisas. A direção do vento muda de mundo para mundo. Em volta da nave fica plano (raio de ~40 blocos). Ajuste em `DUNAS` no `scripts/config.ts`;
   - **prontas antes de você chegar:** o script prepara os chunks até 12 chunks de distância. Os que o jogo ainda não carregou ele carrega por conta própria (uma *ticking area* de 4×4 chunks por vez), decora e solta. Assim as dunas já estão lá quando aparecem no horizonte. No começo do mundo leva cerca de 1 a 2 minutos para preparar tudo em volta;
   - nas **planícies**: morros de até 7 blocos, mesas (platôs com faixa de terracota) e grupos de rochas;
-  - **raros e espalhados ao acaso** pelo mapa (cada quadrado de 384×384 blocos tem no máximo um templo, e cada quadrado de 448×448 no máximo uns destroços; cerca de 1 de cada a cada 300 a 600 blocos), com chão plano em volta: o **templo soterrado** (pirâmide de arenito própria do add-on, com baú de saque: ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde) e os **destroços de outra nave** (Fase 6). Ajuste em `RARAS` no `scripts/config.ts`;
+  - **raros e espalhados ao acaso** pelo mapa (15 templos e 15 destroços a cada 15.000×15.000 blocos: um de cada por quadrado de ~3.900×3.900 blocos, num lugar sorteado; use `/cl:templo` e `/cl:destrocos` para achar), com chão plano em volta: o **templo soterrado** (pirâmide de arenito própria do add-on, com baú de saque: ossos, gravetos, linha, carne podre, às vezes pepitas de ferro, pão, terra, muda e, bem raramente, balde) e os **destroços de outra nave** (Fase 6). Ajuste em `RARAS` no `scripts/config.ts`;
   - em todo lugar: arbustos secos (dão gravetos) e **cactos** de 1 a 3 blocos (`RELEVO.cacto`);
   - **minérios:** cada chunk recebe veios de carvão, cobre, ferro, ouro, redstone, lápis-lazúli e diamante, em alturas parecidas com as do mundo normal (abaixo de y = 0 saem as versões de ardósia). Quantidades em `MINERIOS` no `scripts/config.ts`;
   - chances, tamanhos e o saque ficam em `RELEVO` e `TEMPLO_SAQUE` no `scripts/config.ts`;
@@ -283,7 +288,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.2] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.3] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 
@@ -303,7 +308,7 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 3. **Minérios:** cave um poço até y = 0 ou menos. Deve haver carvão e ferro na pedra, e ouro, redstone, lápis e (raro) diamante na ardósia.
 4. **Boas-vindas e nave:** aparece o título "Pouso Forçado", a mensagem no chat e, em ~2 s, a nave ao seu lado. Entre pela abertura lateral e abra o baú.
 5. **Relevo:** espere 1 a 2 minutos perto da nave e olhe o horizonte: devem aparecer campos de dunas compridas, separados por planícies com morros, mesas e rochas. Ande: as dunas já devem estar prontas antes de você chegar.
-6. **Templo:** é raro (no máximo um a cada 384×384 blocos). No criativo, voe uns 500–1000 blocos procurando uma pirâmide de arenito com faixas laranja, num pedaço plano. Entre pela abertura no nível do chão e abra o baú.
+6. **Templo:** é raro (um a cada ~3.900×3.900 blocos). Digite `/cl:templo` para ver onde fica o mais perto e vá até lá: uma pirâmide de arenito com faixas laranja, num pedaço plano. Entre pela abertura no nível do chão e abra o baú.
 7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
 8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
 9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal. Nas horas 14000, 17000 e 20000 (pode usar `/time set 13900` com trapaças ligadas) aparece "A horda chegou!" e chega uma onda.
