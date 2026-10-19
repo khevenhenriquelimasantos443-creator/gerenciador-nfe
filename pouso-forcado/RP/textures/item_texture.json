@@ -127,6 +127,15 @@
     },
     "cl_cobre_po": {
       "textures": "textures/items/cl/v/cobre_po"
+    },
+    "cl_camel_pack": {
+      "textures": "textures/items/cl/v/camel_pack"
+    },
+    "cl_mascara": {
+      "textures": "textures/items/cl/v/mascara"
+    },
+    "cl_filtro": {
+      "textures": "textures/items/cl/v/filtro"
     }
   }
 }

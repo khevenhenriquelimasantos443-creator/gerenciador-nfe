@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:agua_salgada_de_areia"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:agua_boa"
+      },
+      {
+        "item": "minecraft:sand"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:agua_boa"
+      }
+    ],
+    "result": {
+      "item": "cl:agua_impropria"
+    }
+  }
+}

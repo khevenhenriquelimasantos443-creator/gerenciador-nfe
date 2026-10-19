@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 12** (Ex Nihilo + Ex Aliquo: peneira por toques, martelos, poeira, pedaços de minério, barril, cadinho, cajado e bicho-da-seda). Fases 0 a 11 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 13** (EnviroMine + Hunger Overhaul: hidratação 0–100, corpo em °C, água salgada, Camel Pack, ar e máscara de gás, comida que rende pouco, regeneração lenta). Fases 0 a 12 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -22,8 +22,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 8 | Consertar a nave: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | pronta |
 | 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | pronta |
 | 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | pronta |
-| 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | **esta versão** |
-| 13–23 | Os mods do Crash Landing, um bloco por fase: Ex Nihilo, EnviroMine + Hunger Overhaul, HarvestCraft, Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | pronta |
+| 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | **esta versão** |
+| 14–23 | Os mods do Crash Landing, um bloco por fase: Ex Nihilo, EnviroMine + Hunger Overhaul, HarvestCraft, Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -124,6 +125,29 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Clima e fome (Fase 13: EnviroMine + Hunger Overhaul)
+
+Os números são os do EnviroMine 1.1.63 e do Hunger Overhaul (ver `docs/pesquisa-mods.md`). Atualiza a cada 1,5 s.
+
+- **Hidratação 0–100** (o progresso antigo de 0 a 20 vira 0 a 100). Perde 0,05 + 0,05 (deserto) + 0,05 (deserto de dia) por atualização; suando (corpo ≥ 38 °C) +0,1; correndo +0,05; com o efeito Fome +0,1. Abaixo de 10: fraqueza, fadiga e lentidão. Em 0: 4 de dano a cada 1,5 s.
+- **Águas**: Boa (limpa) +25 e esfria 0,05 °C; Excelente (fria) +25 e esfria 0,1 °C; Suja +25 com Fome/Veneno 25%; **Água Salgada** (antes "Imprópria") +10 e depois **desidrata** (−1 por 1,5 s por 30 s). A **garrafa de água do jogo** e a **poça** são salgadas (no Crash Landing toda fonte é salgada). Direto do condensador: +10.
+  - Fornalha/fogueira: toda água ruim (e a garrafa de água) vira **Água Boa**. Água Boa + terra = suja; + areia = salgada; + bola de neve = fria. Garrafa + terra = suja. 8 folhas = 1 terra.
+- **Temperatura do corpo em °C** (normal 37). Ar: **65 °C de dia**, **÷ 9 à noite** (≈ 7 °C), sombra −2,5, água −5, dormindo +5, correndo +2, calor da terra no subsolo; a fonte de calor mais forte por perto (lava 200, fogo/fogueira 100, tocha/fornalha 75, gerador aceso 75) puxa o ar para cima. Armadura: couro +1 por peça; ferro esquenta ao sol; diamante refresca.
+  - O corpo anda devagar até o ar (sobe 0,005 por atualização no deserto, cai 0,001; dentro da água cai 10× mais rápido). **Suar** (≥ 38 °C) gasta água e, com hidratação ≥ 75, segura o corpo.
+  - **Insolação** I (≥ 39 °C, lentidão), II (≥ 41, fraqueza/fadiga/fome/náusea), III (≥ 43, 4 de dano). **Hipotermia** I (≤ 35), II (≤ 32), III (≤ 30). **Congelamento** depois de 3 e 6 min no frio (deixa cair o item da mão, quase não anda): só sai com **maçã dourada**.
+- **Camel Pack** (8 couros em volta de uma garrafa): vista no peito; agachado, use uma Água Boa para encher (4 garrafas = 100). Ele dá +1 de água por 1,5 s quando você precisa.
+- **Qualidade do ar 0–100**: com céu, volta +2; no subsolo, cai perto de lava (−1), fogo (−0,5) e tochas (−0,25); folhas ajudam. **Na tempestade de areia, ao ar livre, o ar também cai.** ≤ 25 lentidão, ≤ 10 pior, 0 = 4 de dano.
+- **Máscara de Gás** (5 ferros, vidro e 2 filtros) e **Filtro de Ar** (ferro + papel ou lã + carvão vegetal → 4): com a máscara o ar fica em 100 gastando a carga (1.000). Use um filtro com a máscara vestida: +500.
+- **Hunger Overhaul**:
+  - comida do jogo rende como no HO: crua 1 de fome, cozida 2, pão 3, torta 3 (saturação bem menor);
+  - não dá para comer com o efeito Fome; **Bem Alimentado** ao comer (a vida volta 25% mais rápido);
+  - a **regeneração do jogo é desligada**: a vida só volta com fome ≥ 7, sem gastar fome, mais devagar quanto mais ferido (e 1,5× mais lento no Difícil); levar dano zera o contador;
+  - fome cai um pouco o tempo todo; renascer com fome 16 (Normal) ou 12 (Difícil);
+  - fome ≤ 5 ou vida ≤ 25%: lentidão, fadiga, fraqueza e náusea, mais fortes quanto pior;
+  - animais: cruzar a cada 20 min, ovos 4× mais raros, vaca dá leite a cada 20 min.
+- O painel mostra água, corpo em °C (e o ar entre parênteses), ar quando < 100% e o estado (Insolação II, Faminto...).
+- Capítulo novo no Diário: **Clima e Fome (EnviroMine)**, 5 missões.
 
 ## Ex Nihilo (Fase 12)
 

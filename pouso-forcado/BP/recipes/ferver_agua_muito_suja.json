@@ -10,6 +10,6 @@
       "soul_campfire"
     ],
     "input": "cl:agua_muito_suja",
-    "output": "cl:agua_suja"
+    "output": "cl:agua_boa"
   }
 }

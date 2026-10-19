@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:agua_fria"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:agua_boa"
+      },
+      {
+        "item": "minecraft:snowball"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:snowball"
+      }
+    ],
+    "result": {
+      "item": "cl:agua_excelente"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { ItemStack, Player, RawMessage, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import {
-  AGUAS, BARRIL, BARRIL_COMPOSTO, CADINHO, CAPSULA, CATALOGO, FOLHAS, MARTELO, MARTELOS, SEDA, CIDADE_SAQUE, COMPOSTOR_CHEIO, COMPOSTOR_PONTOS, CONDENSADOR_AVANCADO, CONDENSADOR_SEGUNDOS,
+  AGUAS, BARRIL, BARRIL_COMPOSTO, CADINHO, CAPSULA, CATALOGO, FOLHAS, FOME, MARTELO, MARTELOS, SEDA, CIDADE_SAQUE, COMPOSTOR_CHEIO, COMPOSTOR_PONTOS, CONDENSADOR_AVANCADO, CONDENSADOR_SEGUNDOS,
   DESTROCOS_SAQUE, ENERGIA, GERADOR_MONSTROS, IDS, LinhaSaque, MASMORRA_FUNDA_SAQUE, MASMORRA_SAQUE, MONTADORA, ORIGEM_MOD,
   PENEIRA, SACOLAS, SEDE, SISTEMAS_NAVE, TEMPLO_SAQUE, TORRE_SAQUE,
 } from "../config.js";
@@ -178,6 +178,9 @@ function montar(): Receita[] {
   });
   const bebidas: Record<string, number> = { ...SEDE.bebidas };
   for (const [item, a] of Object.entries(AGUAS)) bebidas[item] = a.agua;
+  for (const [item, [fome, mod]] of Object.entries(FOME.comidas)) {
+    r.push({ maquina: { translate: "cl.catalogo.comer" }, entradas: [{ item, qtd: 1 }], saidas: [], nota: { translate: "cl.catalogo.fome", with: [String(fome), String(Math.round(fome * mod * 20) / 10).replace(".", ",")] } });
+  }
   for (const [item, agua] of Object.entries(bebidas)) {
     r.push({ maquina: { translate: "cl.catalogo.beber" }, entradas: [{ item, qtd: 1 }], saidas: [], nota: { translate: "cl.catalogo.agua", with: [String(agua)] } });
   }

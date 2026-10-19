@@ -1,0 +1,15 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:ferver_garrafa_de_agua"
+    },
+    "tags": [
+      "furnace",
+      "campfire",
+      "soul_campfire"
+    ],
+    "input": "minecraft:potion",
+    "output": "cl:agua_boa"
+  }
+}

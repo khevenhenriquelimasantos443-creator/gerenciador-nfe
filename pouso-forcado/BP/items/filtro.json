@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:filtro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "cl_filtro",
+      "minecraft:display_name": {
+        "value": "item.cl:filtro.name"
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

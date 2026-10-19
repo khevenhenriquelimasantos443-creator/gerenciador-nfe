@@ -677,6 +677,37 @@ function iconesNihilo() {
   return lista;
 }
 
+// Fase 13: equipamento do EnviroMine (Camel Pack, máscara de gás, filtro).
+function iconesEnviro() {
+  const couro = (x, y) => mix(hex("#8a5a32"), hex("#a9713f"), ruido(x, y, 40) * 0.6);
+  return {
+    camel_pack: () => icone((x, y) => {
+      const bolsa = (a, b) => dentroRet(a, b, 8, 7, 23, 27, 4);
+      if (dentroRet(x, y, 13, 3, 18, 8, 1)) return x === 13 || x === 18 || y === 3 ? hex("#3e2a17") : hex("#5ff3ff");
+      if (!bolsa(x, y)) return (Math.abs(x - 6.5) < 1.2 || Math.abs(x - 24.5) < 1.2) && y > 8 && y < 24 ? hex("#5e3d20") : null;
+      if (contorno(bolsa, x, y)) return hex("#4a2f18");
+      if (y === 15 || y === 16) return hex("#5e3d20");
+      return couro(x, y);
+    }),
+    mascara: () => icone((x, y) => {
+      const rosto = (a, b) => Math.hypot((a - 15.5) / 11, (b - 13) / 10) <= 1;
+      const filtro = (cx) => Math.hypot(x - cx, y - 23) < 4.2;
+      if (filtro(9) || filtro(22)) return Math.hypot(x - (x < 16 ? 9 : 22), y - 23) > 3 ? C.grafite2 : (x + y) % 2 ? C.grafite : C.grafiteLuz;
+      if (!rosto(x, y)) return null;
+      if (contorno(rosto, x, y)) return C.grafite2;
+      if (Math.hypot(x - 10.5, y - 11) < 3.6 || Math.hypot(x - 20.5, y - 11) < 3.6) return mix(C.vidro, C.ciano, 0.25 + (y < 10 ? 0.3 : 0));
+      return mix(hex("#5d6b52"), hex("#7a8a6b"), ruido(x, y, 41) * 0.5);
+    }),
+    filtro: () => icone((x, y) => {
+      const d = Math.hypot(x - 15.5, y - 15.5);
+      if (d > 11) return null;
+      if (d > 9.8) return C.cinza;
+      if (d > 8.5) return C.grafite2;
+      return (Math.floor(x / 3) + Math.floor(y / 3)) % 2 ? hex("#2b2b2b") : hex("#3a3a3a");
+    }),
+  };
+}
+
 const ICONES = {
   placa_casco: () => icone((x, y) => {
     const d = (a, b) => dentroRet(a, b, 3, 5, 28, 26, 3);
@@ -777,6 +808,7 @@ const ICONES = {
     ]),
   ),
   ...iconesNihilo(),
+  ...iconesEnviro(),
 };
 const dirIcones = pasta("RP/textures/items/cl/v");
 const itens = lerJson("RP/textures/item_texture.json");

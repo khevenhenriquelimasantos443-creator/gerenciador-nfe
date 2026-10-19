@@ -22,8 +22,8 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/agua_excelente"
  },
  "cl:agua_impropria": {
-  "pt": "Água Imprópria",
-  "en": "Undrinkable Water",
+  "pt": "Água Salgada",
+  "en": "Salt Water",
   "icone": "textures/items/cl/agua_impropria"
  },
  "cl:agua_muito_suja": {
@@ -80,6 +80,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cajado",
   "en": "Crook",
   "icone": "textures/items/cl/v/cajado"
+ },
+ "cl:camel_pack": {
+  "pt": "Camel Pack",
+  "en": "Camel Pack",
+  "icone": "textures/items/cl/v/camel_pack"
  },
  "cl:catalogo": {
   "pt": "Catálogo",
@@ -166,6 +171,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Iron Ore",
   "icone": "textures/items/cl/v/ferro_triturado"
  },
+ "cl:filtro": {
+  "pt": "Filtro de Ar",
+  "en": "Air Filter",
+  "icone": "textures/items/cl/v/filtro"
+ },
  "cl:folha_infestada": {
   "pt": "Folha Infestada",
   "en": "Infested Leaves",
@@ -220,6 +230,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Martelo de Pedra",
   "en": "Stone Hammer",
   "icone": "textures/items/cl/v/martelo_pedra"
+ },
+ "cl:mascara": {
+  "pt": "Máscara de Gás",
+  "en": "Gas Mask",
+  "icone": "textures/items/cl/v/mascara"
  },
  "cl:moinho": {
   "pt": "Moinho de Vento",
@@ -361,10 +376,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Apple",
   "icone": "textures/items/apple"
  },
+ "minecraft:baked_potato": {
+  "pt": "Batata Assada",
+  "en": "Baked Potato",
+  "icone": "textures/items/potato_baked"
+ },
  "minecraft:barrel": {
   "pt": "Barril",
   "en": "Barrel",
   "icone": "textures/blocks/barrel_side"
+ },
+ "minecraft:beef": {
+  "pt": "Bife Cru",
+  "en": "Raw Beef",
+  "icone": "textures/items/beef_raw"
  },
  "minecraft:beetroot": {
   "pt": "Beterraba",
@@ -375,6 +400,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sementes de Beterraba",
   "en": "Beetroot Seeds",
   "icone": "textures/items/seeds_beetroot"
+ },
+ "minecraft:beetroot_soup": {
+  "pt": "Sopa de Beterraba",
+  "en": "Beetroot Soup",
+  "icone": "textures/items/beetroot_soup"
  },
  "minecraft:birch_leaves": {
   "pt": "Folhas de Bétula",
@@ -511,6 +541,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
  },
+ "minecraft:cooked_beef": {
+  "pt": "Bife",
+  "en": "Steak",
+  "icone": "textures/items/beef_cooked"
+ },
+ "minecraft:cooked_chicken": {
+  "pt": "Frango Assado",
+  "en": "Cooked Chicken",
+  "icone": "textures/items/chicken_cooked"
+ },
+ "minecraft:cooked_cod": {
+  "pt": "Bacalhau Assado",
+  "en": "Cooked Cod",
+  "icone": "textures/items/fish_cooked"
+ },
+ "minecraft:cooked_mutton": {
+  "pt": "Carneiro Assado",
+  "en": "Cooked Mutton",
+  "icone": "textures/items/mutton_cooked"
+ },
+ "minecraft:cooked_porkchop": {
+  "pt": "Costeleta de Porco Assada",
+  "en": "Cooked Porkchop",
+  "icone": "textures/items/porkchop_cooked"
+ },
+ "minecraft:cooked_rabbit": {
+  "pt": "Coelho Assado",
+  "en": "Cooked Rabbit",
+  "icone": "textures/items/rabbit_cooked"
+ },
+ "minecraft:cooked_salmon": {
+  "pt": "Salmão Assado",
+  "en": "Cooked Salmon",
+  "icone": "textures/items/fish_salmon_cooked"
+ },
+ "minecraft:cookie": {
+  "pt": "Biscoito",
+  "en": "Cookie",
+  "icone": "textures/items/cookie"
+ },
  "minecraft:copper_ingot": {
   "pt": "Barra de Cobre",
   "en": "Copper Ingot",
@@ -631,6 +701,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:golden_carrot": {
+  "pt": "Cenoura Dourada",
+  "en": "Golden Carrot",
+  "icone": "textures/items/carrot_golden"
+ },
  "minecraft:gravel": {
   "pt": "Cascalho",
   "en": "Gravel",
@@ -726,10 +801,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Light Gray Carpet",
   "icone": "textures/blocks/wool_colored_silver"
  },
+ "minecraft:lit_blast_furnace": {
+  "pt": "Fornalha Potente Acesa",
+  "en": "Lit Blast Furnace",
+  "icone": "textures/blocks/blast_furnace_side"
+ },
  "minecraft:lit_furnace": {
   "pt": "Fornalha Acesa",
   "en": "Lit Furnace",
   "icone": "textures/blocks/furnace_side"
+ },
+ "minecraft:lit_smoker": {
+  "pt": "Defumador Aceso",
+  "en": "Lit Smoker",
+  "icone": "textures/blocks/smoker_side"
  },
  "minecraft:magma": {
   "pt": "Bloco de Magma",
@@ -755,6 +840,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tijolos de Pedra com Musgo",
   "en": "Mossy Stone Bricks",
   "icone": "textures/blocks/stonebrick_mossy"
+ },
+ "minecraft:mushroom_stew": {
+  "pt": "Ensopado de Cogumelos",
+  "en": "Mushroom Stew",
+  "icone": "textures/items/mushroom_stew"
+ },
+ "minecraft:mutton": {
+  "pt": "Carneiro Cru",
+  "en": "Raw Mutton",
+  "icone": "textures/items/mutton_raw"
  },
  "minecraft:name_tag": {
   "pt": "Etiqueta",
@@ -806,10 +901,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Piston",
   "icone": "textures/blocks/piston_side"
  },
+ "minecraft:poisonous_potato": {
+  "pt": "Batata Venenosa",
+  "en": "Poisonous Potato",
+  "icone": "textures/items/potato_poisonous"
+ },
  "minecraft:polished_andesite": {
   "pt": "Andesito Polido",
   "en": "Polished Andesite",
   "icone": "textures/blocks/stone_andesite_smooth"
+ },
+ "minecraft:porkchop": {
+  "pt": "Carne de Porco Crua",
+  "en": "Raw Porkchop",
+  "icone": "textures/items/porkchop_raw"
  },
  "minecraft:potato": {
   "pt": "Batata",
@@ -826,10 +931,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pumpkin",
   "icone": "textures/blocks/pumpkin_side"
  },
+ "minecraft:pumpkin_pie": {
+  "pt": "Torta de Abóbora",
+  "en": "Pumpkin Pie",
+  "icone": "textures/items/pumpkin_pie"
+ },
  "minecraft:pumpkin_seeds": {
   "pt": "Sementes de Abóbora",
   "en": "Pumpkin Seeds",
   "icone": "textures/items/seeds_pumpkin"
+ },
+ "minecraft:rabbit": {
+  "pt": "Coelho Cru",
+  "en": "Raw Rabbit",
+  "icone": "textures/items/rabbit_raw"
+ },
+ "minecraft:rabbit_stew": {
+  "pt": "Ensopado de Coelho",
+  "en": "Rabbit Stew",
+  "icone": "textures/items/rabbit_stew"
  },
  "minecraft:raw_copper": {
   "pt": "Cobre Bruto",
@@ -876,6 +996,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Saddle",
   "icone": "textures/items/saddle"
  },
+ "minecraft:salmon": {
+  "pt": "Salmão Cru",
+  "en": "Raw Salmon",
+  "icone": "textures/items/fish_salmon_raw"
+ },
  "minecraft:sand": {
   "pt": "Areia",
   "en": "Sand",
@@ -905,6 +1030,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Neve",
   "en": "Snow Block",
   "icone": "textures/blocks/snow"
+ },
+ "minecraft:snowball": {
+  "pt": "Bola de Neve",
+  "en": "Snowball",
+  "icone": "textures/items/snowball"
+ },
+ "minecraft:soul_campfire": {
+  "pt": "Fogueira das Almas",
+  "en": "Soul Campfire",
+  "icone": "textures/items/soul_campfire"
  },
  "minecraft:soul_fire": {
   "pt": "Fogo das Almas",
@@ -1005,6 +1140,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Carpete Branco",
   "en": "White Carpet",
   "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:white_wool": {
+  "pt": "Lã Branca",
+  "en": "White Wool",
+  "icone": "textures/blocks/wool_colored_white"
  }
 };
 export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
@@ -1057,6 +1197,82 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    },
    {
     "item": "minecraft:charcoal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:agua_fria",
+  "resultado": "cl:agua_excelente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:agua_boa",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:snowball",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:agua_salgada_de_areia",
+  "resultado": "cl:agua_impropria",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:agua_boa",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:sand",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:agua_suja_de_garrafa",
+  "resultado": "cl:agua_suja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:glass_bottle",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:dirt",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:agua_suja_de_terra",
+  "resultado": "cl:agua_suja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:agua_boa",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:dirt",
     "qtd": 1
    }
   ],
@@ -1268,6 +1484,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:camel_pack",
+  "resultado": "cl:camel_pack",
+  "qtd": 1,
+  "grade": [
+   "LLL",
+   "LBL",
+   "LLL"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "B": "minecraft:glass_bottle"
   },
   "estacoes": [
    "crafting_table"
@@ -1490,7 +1724,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "fornalha",
   "id": "cl:ferver_agua_impropria",
-  "resultado": "cl:agua_muito_suja",
+  "resultado": "cl:agua_boa",
   "qtd": 1,
   "ingredientes": [
    {
@@ -1507,7 +1741,7 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  {
   "tipo": "fornalha",
   "id": "cl:ferver_agua_muito_suja",
-  "resultado": "cl:agua_suja",
+  "resultado": "cl:agua_boa",
   "qtd": 1,
   "ingredientes": [
    {
@@ -1536,6 +1770,69 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "furnace",
    "campfire",
    "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:ferver_garrafa_de_agua",
+  "resultado": "cl:agua_boa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:potion",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace",
+   "campfire",
+   "soul_campfire"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:filtro_la",
+  "resultado": "cl:filtro",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "minecraft:iron_ingot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:white_wool",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:charcoal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:filtro_papel",
+  "resultado": "cl:filtro",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "minecraft:iron_ingot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:paper",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:charcoal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -1680,6 +1977,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "M": "#minecraft:stone_crafting_materials",
    "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:mascara",
+  "resultado": "cl:mascara",
+  "qtd": 1,
+  "grade": [
+   "IVI",
+   "FIF",
+   "I I"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "V": "minecraft:glass",
+   "F": "cl:filtro"
   },
   "estacoes": [
    "crafting_table"
@@ -1921,6 +2237,91 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "G": "minecraft:glass",
    "R": "minecraft:redstone",
    "C": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:terra_de_folhas_acacia",
+  "resultado": "minecraft:dirt",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "F F",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:acacia_leaves"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:terra_de_folhas_birch",
+  "resultado": "minecraft:dirt",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "F F",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:birch_leaves"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:terra_de_folhas_jungle",
+  "resultado": "minecraft:dirt",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "F F",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:jungle_leaves"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:terra_de_folhas_oak",
+  "resultado": "minecraft:dirt",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "F F",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:oak_leaves"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:terra_de_folhas_spruce",
+  "resultado": "minecraft:dirt",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "F F",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:spruce_leaves"
   },
   "estacoes": [
    "crafting_table"

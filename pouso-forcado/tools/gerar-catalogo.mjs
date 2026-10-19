@@ -184,6 +184,19 @@ const APELIDOS = {
   spruce_sapling: { lang: "tile.sapling.spruce.name", icone: "textures/blocks/sapling_spruce" },
   red_sand: { lang: "tile.sand.red.name", icone: "textures/blocks/red_sand" },
   short_grass: { lang: "tile.tallgrass.grass.name", icone: "textures/blocks/tallgrass_carried" },
+  baked_potato: { icone: "textures/items/potato_baked" },
+  beef: { icone: "textures/items/beef_raw" },
+  cooked_beef: { icone: "textures/items/beef_cooked" },
+  cooked_chicken: { icone: "textures/items/chicken_cooked" },
+  cooked_cod: { lang: "item.cooked_fish.name", icone: "textures/items/fish_cooked" },
+  cooked_mutton: { lang: "item.muttonCooked.name", icone: "textures/items/mutton_cooked" },
+  mutton: { lang: "item.muttonRaw.name", icone: "textures/items/mutton_raw" },
+  cooked_porkchop: { icone: "textures/items/porkchop_cooked" },
+  porkchop: { icone: "textures/items/porkchop_raw" },
+  cooked_rabbit: { icone: "textures/items/rabbit_cooked" },
+  golden_carrot: { icone: "textures/items/carrot_golden" },
+  poisonous_potato: { icone: "textures/items/potato_poisonous" },
+  white_wool: { lang: "tile.wool.white.name", icone: "textures/blocks/wool_colored_white" },
 };
 
 function vanilla() {

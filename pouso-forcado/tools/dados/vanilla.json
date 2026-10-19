@@ -34,10 +34,20 @@
   "en": "Apple",
   "icone": "textures/items/apple"
  },
+ "minecraft:baked_potato": {
+  "pt": "Batata Assada",
+  "en": "Baked Potato",
+  "icone": "textures/items/potato_baked"
+ },
  "minecraft:barrel": {
   "pt": "Barril",
   "en": "Barrel",
   "icone": "textures/blocks/barrel_side"
+ },
+ "minecraft:beef": {
+  "pt": "Bife Cru",
+  "en": "Raw Beef",
+  "icone": "textures/items/beef_raw"
  },
  "minecraft:beetroot": {
   "pt": "Beterraba",
@@ -48,6 +58,11 @@
   "pt": "Sementes de Beterraba",
   "en": "Beetroot Seeds",
   "icone": "textures/items/seeds_beetroot"
+ },
+ "minecraft:beetroot_soup": {
+  "pt": "Sopa de Beterraba",
+  "en": "Beetroot Soup",
+  "icone": "textures/items/beetroot_soup"
  },
  "minecraft:birch_leaves": {
   "pt": "Folhas de Bétula",
@@ -184,6 +199,46 @@
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
  },
+ "minecraft:cooked_beef": {
+  "pt": "Bife",
+  "en": "Steak",
+  "icone": "textures/items/beef_cooked"
+ },
+ "minecraft:cooked_chicken": {
+  "pt": "Frango Assado",
+  "en": "Cooked Chicken",
+  "icone": "textures/items/chicken_cooked"
+ },
+ "minecraft:cooked_cod": {
+  "pt": "Bacalhau Assado",
+  "en": "Cooked Cod",
+  "icone": "textures/items/fish_cooked"
+ },
+ "minecraft:cooked_mutton": {
+  "pt": "Carneiro Assado",
+  "en": "Cooked Mutton",
+  "icone": "textures/items/mutton_cooked"
+ },
+ "minecraft:cooked_porkchop": {
+  "pt": "Costeleta de Porco Assada",
+  "en": "Cooked Porkchop",
+  "icone": "textures/items/porkchop_cooked"
+ },
+ "minecraft:cooked_rabbit": {
+  "pt": "Coelho Assado",
+  "en": "Cooked Rabbit",
+  "icone": "textures/items/rabbit_cooked"
+ },
+ "minecraft:cooked_salmon": {
+  "pt": "Salmão Assado",
+  "en": "Cooked Salmon",
+  "icone": "textures/items/fish_salmon_cooked"
+ },
+ "minecraft:cookie": {
+  "pt": "Biscoito",
+  "en": "Cookie",
+  "icone": "textures/items/cookie"
+ },
  "minecraft:copper_ingot": {
   "pt": "Barra de Cobre",
   "en": "Copper Ingot",
@@ -304,6 +359,11 @@
   "en": "Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:golden_carrot": {
+  "pt": "Cenoura Dourada",
+  "en": "Golden Carrot",
+  "icone": "textures/items/carrot_golden"
+ },
  "minecraft:gravel": {
   "pt": "Cascalho",
   "en": "Gravel",
@@ -399,10 +459,20 @@
   "en": "Light Gray Carpet",
   "icone": "textures/blocks/wool_colored_silver"
  },
+ "minecraft:lit_blast_furnace": {
+  "pt": "Fornalha Potente Acesa",
+  "en": "Lit Blast Furnace",
+  "icone": "textures/blocks/blast_furnace_side"
+ },
  "minecraft:lit_furnace": {
   "pt": "Fornalha Acesa",
   "en": "Lit Furnace",
   "icone": "textures/blocks/furnace_side"
+ },
+ "minecraft:lit_smoker": {
+  "pt": "Defumador Aceso",
+  "en": "Lit Smoker",
+  "icone": "textures/blocks/smoker_side"
  },
  "minecraft:magma": {
   "pt": "Bloco de Magma",
@@ -428,6 +498,16 @@
   "pt": "Tijolos de Pedra com Musgo",
   "en": "Mossy Stone Bricks",
   "icone": "textures/blocks/stonebrick_mossy"
+ },
+ "minecraft:mushroom_stew": {
+  "pt": "Ensopado de Cogumelos",
+  "en": "Mushroom Stew",
+  "icone": "textures/items/mushroom_stew"
+ },
+ "minecraft:mutton": {
+  "pt": "Carneiro Cru",
+  "en": "Raw Mutton",
+  "icone": "textures/items/mutton_raw"
  },
  "minecraft:name_tag": {
   "pt": "Etiqueta",
@@ -479,10 +559,20 @@
   "en": "Piston",
   "icone": "textures/blocks/piston_side"
  },
+ "minecraft:poisonous_potato": {
+  "pt": "Batata Venenosa",
+  "en": "Poisonous Potato",
+  "icone": "textures/items/potato_poisonous"
+ },
  "minecraft:polished_andesite": {
   "pt": "Andesito Polido",
   "en": "Polished Andesite",
   "icone": "textures/blocks/stone_andesite_smooth"
+ },
+ "minecraft:porkchop": {
+  "pt": "Carne de Porco Crua",
+  "en": "Raw Porkchop",
+  "icone": "textures/items/porkchop_raw"
  },
  "minecraft:potato": {
   "pt": "Batata",
@@ -499,10 +589,25 @@
   "en": "Pumpkin",
   "icone": "textures/blocks/pumpkin_side"
  },
+ "minecraft:pumpkin_pie": {
+  "pt": "Torta de Abóbora",
+  "en": "Pumpkin Pie",
+  "icone": "textures/items/pumpkin_pie"
+ },
  "minecraft:pumpkin_seeds": {
   "pt": "Sementes de Abóbora",
   "en": "Pumpkin Seeds",
   "icone": "textures/items/seeds_pumpkin"
+ },
+ "minecraft:rabbit": {
+  "pt": "Coelho Cru",
+  "en": "Raw Rabbit",
+  "icone": "textures/items/rabbit_raw"
+ },
+ "minecraft:rabbit_stew": {
+  "pt": "Ensopado de Coelho",
+  "en": "Rabbit Stew",
+  "icone": "textures/items/rabbit_stew"
  },
  "minecraft:raw_copper": {
   "pt": "Cobre Bruto",
@@ -549,6 +654,11 @@
   "en": "Saddle",
   "icone": "textures/items/saddle"
  },
+ "minecraft:salmon": {
+  "pt": "Salmão Cru",
+  "en": "Raw Salmon",
+  "icone": "textures/items/fish_salmon_raw"
+ },
  "minecraft:sand": {
   "pt": "Areia",
   "en": "Sand",
@@ -578,6 +688,16 @@
   "pt": "Bloco de Neve",
   "en": "Snow Block",
   "icone": "textures/blocks/snow"
+ },
+ "minecraft:snowball": {
+  "pt": "Bola de Neve",
+  "en": "Snowball",
+  "icone": "textures/items/snowball"
+ },
+ "minecraft:soul_campfire": {
+  "pt": "Fogueira das Almas",
+  "en": "Soul Campfire",
+  "icone": "textures/items/soul_campfire"
  },
  "minecraft:soul_fire": {
   "pt": "Fogo das Almas",
@@ -677,6 +797,11 @@
  "minecraft:white_carpet": {
   "pt": "Carpete Branco",
   "en": "White Carpet",
+  "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:white_wool": {
+  "pt": "Lã Branca",
+  "en": "White Wool",
   "icone": "textures/blocks/wool_colored_white"
  }
 }

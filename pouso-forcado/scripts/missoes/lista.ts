@@ -42,7 +42,9 @@ export type Acao =
   | "barril_terra"
   | "barril_argila"
   | "barril_obsidiana"
-  | "cadinho_lava";
+  | "cadinho_lava"
+  | "camel_encher"
+  | "bem_alimentado";
 
 type MissaoBase = {
   id: string;
@@ -139,6 +141,23 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "en_cajado", requer: ["en_barril"], objetivo: { tipo: "ter", item: IDS.cajado, qtd: 1 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
       { id: "en_bicho", requer: ["en_cajado"], objetivo: { tipo: "ter", item: IDS.bichoSeda, qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
       { id: "en_linha", requer: ["en_bicho"], objetivo: { tipo: "entregar", item: "minecraft:string", qtd: 16 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "enviromine", // Fase 13: EnviroMine + Hunger Overhaul
+    icone: IDS.camelPack,
+    requer: ["agua"],
+    missoes: [
+      { id: "em_camel", objetivo: { tipo: "ter", item: IDS.camelPack, qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
+      { id: "em_encher", objetivo: { tipo: "acao", acao: "camel_encher", qtd: 1 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 2 }] },
+      { id: "ho_comer", requer: ["agua"], objetivo: { tipo: "acao", acao: "bem_alimentado", qtd: 5 }, recompensa: [{ item: "minecraft:bread", quantidade: 3 }] },
+      { id: "em_filtros", requer: ["ferro"], objetivo: { tipo: "ter", item: IDS.filtro, qtd: 4 }, recompensa: [{ item: "minecraft:charcoal", quantidade: 4 }] },
+      {
+        id: "em_mascara",
+        objetivo: { tipo: "ter", item: IDS.mascara, qtd: 1 },
+        recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }],
+        escolha: [{ item: IDS.filtro, quantidade: 4 }, { item: IDS.aguaExcelente, quantidade: 2 }],
+      },
     ],
   },
   {

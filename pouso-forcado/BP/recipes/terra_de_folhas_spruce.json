@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:terra_de_folhas_spruce"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "F F",
+      "FFF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:spruce_leaves"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:spruce_leaves"
+      }
+    ],
+    "result": {
+      "item": "minecraft:dirt"
+    }
+  }
+}

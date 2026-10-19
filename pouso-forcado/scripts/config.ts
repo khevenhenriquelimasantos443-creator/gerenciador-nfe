@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.18.0";
+export const VERSAO = "0.19.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -58,6 +58,10 @@ export const IDS = {
   bichoSeda: `${NS}:bicho_seda`,
   bichoSedaCozido: `${NS}:bicho_seda_cozido`,
   folhaInfestada: `${NS}:folha_infestada`,
+  // Fase 13: EnviroMine
+  camelPack: `${NS}:camel_pack`,
+  mascara: `${NS}:mascara`,
+  filtro: `${NS}:filtro`,
 } as const;
 
 // Monstros do deserto (Fase 7). Os comportamentos estão em BP/entities/*.json.
@@ -86,8 +90,15 @@ export const PROPS = {
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
-  sede: `${NS}:sede`, // jogador: água no corpo (0 a SEDE.max)
-  temperatura: `${NS}:temperatura`, // jogador: temperatura do corpo (TEMPERATURA.min a max; 0 = normal)
+  sede: `${NS}:sede`, // jogador (até a 0.18): água de 0 a 20; migrada para "hidratacao"
+  temperatura: `${NS}:temperatura`, // jogador (até a 0.18): -20 a 20; migrada para "corpo"
+  hidratacao: `${NS}:hidratacao`, // jogador: hidratação do EnviroMine (0 a 100)
+  corpo: `${NS}:corpo`, // jogador: temperatura do corpo em °C
+  ar: `${NS}:ar`, // jogador: qualidade do ar (0 a 100)
+  desidrata: `${NS}:desidrata`, // jogador: atualizações que faltam do efeito Desidratação (água salgada)
+  congelamento: `${NS}:congelamento`, // jogador: nível de congelamento (0, 1, 2) e tempo no frio "nivel:tempo"
+  bemAlimentado: `${NS}:bem_alimentado`, // jogador: tick absoluto até quando dura o Bem Alimentado
+  regraRegen: `${NS}:regra_regen`, // mundo: regeneração natural já desligada (Hunger Overhaul)
   capsulaDia: `${NS}:capsula_dia`, // mundo: dia da última cápsula de carga
   capsulas: `${NS}:capsulas`, // mundo: JSON com as cápsulas ainda não encontradas
   olharDesligado: `${NS}:olhar_desligado`, // jogador: esconde o "o que estou olhando" da barra de ação
@@ -345,21 +356,31 @@ export const ESTUFA = {
 
 // ---- Fase 4: comida e vida ----
 
-// Sede (scripts/jogador/sede.ts). A água cai 1 ponto a cada "segundosDia" de dia (sol) e
-// "segundosNoite" à noite. Com pouca água, lentidão; com zero, dano.
+// Sede = hidratação do EnviroMine (scripts/jogador/sede.ts): 0 a 100, conferida a cada 30 ticks.
+// O mundo todo é deserto: conta sempre como bioma seco (e "seco de dia").
 export const SEDE = {
-  max: 20,
-  segundosDia: 30,
-  segundosNoite: 50,
-  lentidaoAbaixoDe: 5,
-  danoACadaSegundos: 4,
-  // Comidas que também matam a sede ao terminar de comer/beber. As águas ficam em AGUAS.
+  max: 100,
+  porAtualizacao: { base: 0.05, seco: 0.05, secoDia: 0.05, suor: 0.1, correndo: 0.05, efeitoFome: 0.1 },
+  fracaAbaixoDe: 10, // fraqueza, fadiga e lentidão
+  danoEmZero: 4, // por atualização (1,5 s)
+  // Comidas que também mexem na hidratação (EnviroMine): as águas ficam em AGUAS.
   bebidas: {
-    "minecraft:milk_bucket": 6,
-    "minecraft:honey_bottle": 4,
-    "cl:fruta_cacto": 4,
-    "minecraft:melon_slice": 2,
-    "minecraft:sweet_berries": 1,
+    "minecraft:milk_bucket": 10,
+    "minecraft:honey_bottle": 10,
+    [`${NS}:fruta_cacto`]: 10, // fruta suculenta do deserto (valor de projeto, entre a maçã e o leite)
+    "minecraft:melon_slice": 5,
+    "minecraft:sweet_berries": 5,
+    "minecraft:apple": 5,
+    "minecraft:carrot": 5,
+    "minecraft:golden_carrot": 5,
+    "minecraft:mushroom_stew": 5,
+    "minecraft:beetroot_soup": 5,
+    "minecraft:rabbit_stew": 5,
+    "minecraft:pumpkin_pie": 5,
+    "minecraft:golden_apple": 10,
+    "minecraft:rotten_flesh": -5,
+    "minecraft:spider_eye": -5,
+    "minecraft:poisonous_potato": -5,
   } as Readonly<Record<string, number>>,
 } as const;
 
@@ -399,60 +420,68 @@ export const CAPSULA = {
   ],
 } as const;
 
-// Temperatura do corpo (scripts/jogador/temperatura.ts). Escala de -20 (congelando) a +20
-// (insolação), 0 = normal; na tela aparece em °C (36,5 + 0,3 por ponto).
-// A cada segundo o script calcula a temperatura "do ambiente" (alvo) e o corpo anda
-// 1 ponto na direção dela a cada "segundosPorPonto".
+// Temperatura do corpo do EnviroMine (scripts/jogador/temperatura.ts), em °C. A cada 30 ticks o corpo
+// anda em direção à temperatura do ar com passo velocidade × (|corpo − ar| / 10, se a diferença > 10).
 export const TEMPERATURA = {
-  min: -20,
-  max: 20,
-  segundosPorPonto: 4,
-  // Alvos (somados): sol aberto ao meio-dia / noite ao relento / na sombra / sombra à noite.
-  solAberto: 17,
-  noiteAberta: -17,
-  solSombra: 6,
-  noiteAbrigo: -7,
-  subsolo: 0, // abaixo de y = superfície - 4 e sem céu: fresco e estável
-  fogo: 14, // fogueira, fogo, lava, magma ou fornalha acesa a até 3 blocos
-  agua: -8, // dentro da água
-  correndo: 3,
-  capacete: -4, // qualquer capacete protege do sol (só quando está quente)
-  couroPorPeca: 0.15, // cada peça de couro corta 15% do frio
-  // Efeitos
-  quente: 12, // a partir daqui: sede cai 2× mais rápido
-  frio: -12, // a partir daqui: lentidão
-  danoAcima: 16, // insolação: 1 de dano a cada "danoACadaSegundos"
-  danoAbaixo: -16, // hipotermia: idem
-  danoACadaSegundos: 3,
+  normal: 37,
+  ar: { dia: 65, noiteDivisor: 9, sombra: -2.5, agua: -5, dormindo: 5, correndo: 2, chamasMin: 75 },
+  velocidade: { subida: 0.001, subidaSeco: 0.005, descida: 0.001, descidaAgua: 0.01, correndoMin: 0.01, chamas: 0.1, fonteForte: 5 },
+  suor: { aPartirDe: 38.02, hidratacaoMin: 75, esfria: 0.01 },
+  // Fontes de calor (pega a maior; cai com a distância: t × (1 − d²/75)). Fonte mais quente que o ar:
+  // ar = (ar + fonte)/2; passando de ar + 5, o corpo esquenta 5× mais rápido.
+  fontes: {
+    "minecraft:lava": 200, "minecraft:flowing_lava": 200, "minecraft:fire": 100, "minecraft:soul_fire": 100,
+    "minecraft:campfire": 100, "minecraft:soul_campfire": 100, "minecraft:torch": 75, "minecraft:lit_furnace": 75,
+    "minecraft:lit_blast_furnace": 75, "minecraft:lit_smoker": 75, "minecraft:netherrack": 50, "minecraft:magma": 75,
+    [`${NS}:gerador`]: 75,
+  } as Readonly<Record<string, number>>,
+  raioFontes: { h: 4, v: 2 },
+  quedaDistancia: 75,
+  // Calor da terra (abaixo de 16 blocos da superfície): o EnviroMine soma 20 × (1 − Y/48) em biomas quentes.
+  geotermico: 20,
+  // Armadura por peça: soma (°C) e multiplicador; ferro esquenta ao sol, diamante refresca.
+  armadura: {
+    leather: { soma: [1, 1, 1], mult: [1, 1, 1] },
+    iron: { soma: [-0.5, 0, 2.5], mult: [1, 1, 1.1] },
+    golden: { soma: [0, 0, 0], mult: [1, 1, 1.2] },
+    diamond: { soma: [0, 0, 0], mult: [1.1, 1, 0.9] },
+  } as Readonly<Record<string, { soma: readonly [number, number, number]; mult: readonly [number, number, number] }>>, // [noite, sombra, sol]
+  insolacao: [39, 41, 43],
+  hipotermia: [35, 32, 30],
+  danoExtremo: 4, // no nível III, com 50% de chance por atualização
+  congelamento: { arMax: 10, corpoMax: 35, corpoSempre: 30, nivel1: 120, nivel2: 240, chanceSoltar: 1 / 20 },
+  // Comida e bebida (°C): sopa/torta/carne cozida/batata assada esquentam; frutas refrescam.
+  comida: {
+    "minecraft:mushroom_stew": 0.05, "minecraft:beetroot_soup": 0.05, "minecraft:rabbit_stew": 0.05, "minecraft:pumpkin_pie": 0.05,
+    "minecraft:cooked_beef": 0.05, "minecraft:cooked_porkchop": 0.05, "minecraft:cooked_chicken": 0.05, "minecraft:cooked_mutton": 0.05,
+    "minecraft:baked_potato": 0.05, "minecraft:melon_slice": -0.01, "minecraft:carrot": -0.01, "minecraft:apple": -0.01, "minecraft:golden_carrot": -0.01,
+  } as Readonly<Record<string, number>>,
+  comidaTeto: 40,
 } as const;
 
-// Qualidades de água (scripts/jogador/aguas.ts). agua = pontos de sede; esfria = pontos de
-// temperatura a menos (se estiver quente); efeitos sorteados ao beber.
-// A garrafa de água do jogo (minecraft:potion) conta como água boa.
-// "Água imprópria" não se bebe: ferva na fornalha ou fogueira.
+// Qualidades de água (scripts/jogador/aguas.ts), com os números do EnviroMine (hidratação 0 a 100):
+//   excelente = água fria (+25, esfria 0,1 °C até 30,1); boa = limpa (+25, esfria 0,05 até 37,05);
+//   suja = suja (+25, Fome e Veneno 25%); muito suja = pior que a suja (valor de projeto);
+//   imprópria = SALGADA (+10 e depois Desidratação: −1 por atualização por 30 s, ≈ −20).
+// "direto" = beber direto do condensador ou da poça (EnviroMine: +10, salgada +5).
+// A garrafa de água do jogo (minecraft:potion) vem de fonte de água: no Crash Landing toda fonte é salgada.
 export type Efeito = { id: string; segundos: number; chance: number; nivel?: number };
-export const AGUAS: Readonly<Record<string, { agua: number; esfria: number; efeitos: ReadonlyArray<Efeito> }>> = {
-  "cl:agua_excelente": { agua: 10, esfria: 5, efeitos: [{ id: "regeneration", segundos: 5, chance: 1 }] },
-  "cl:agua_boa": { agua: 7, esfria: 3, efeitos: [] },
-  "minecraft:potion": { agua: 7, esfria: 3, efeitos: [] },
-  "cl:agua_suja": {
-    agua: 5,
-    esfria: 2,
-    efeitos: [{ id: "nausea", segundos: 8, chance: 0.4 }, { id: "hunger", segundos: 15, chance: 0.25 }],
+export type Agua = { agua: number; direto: number; esfria: number; piso: number; efeitos: ReadonlyArray<Efeito>; desidrata?: number };
+const SALGADA: Agua = { agua: 10, direto: 5, esfria: 0, piso: 37, efeitos: [], desidrata: 20 };
+export const AGUAS: Readonly<Record<string, Agua>> = {
+  [`${NS}:agua_excelente`]: { agua: 25, direto: 10, esfria: 0.1, piso: 30.1, efeitos: [{ id: "regeneration", segundos: 5, chance: 1 }] },
+  [`${NS}:agua_boa`]: { agua: 25, direto: 10, esfria: 0.05, piso: 37.05, efeitos: [] },
+  [`${NS}:agua_suja`]: { agua: 25, direto: 10, esfria: 0, piso: 37, efeitos: [{ id: "hunger", segundos: 30, chance: 0.25 }, { id: "poison", segundos: 10, chance: 0.25 }] },
+  [`${NS}:agua_muito_suja`]: {
+    agua: 15, direto: 5, esfria: 0, piso: 37,
+    efeitos: [{ id: "nausea", segundos: 10, chance: 0.8 }, { id: "poison", segundos: 10, chance: 0.5 }, { id: "hunger", segundos: 30, chance: 0.5 }],
   },
-  "cl:agua_muito_suja": {
-    agua: 3,
-    esfria: 1,
-    efeitos: [
-      { id: "nausea", segundos: 10, chance: 0.8 },
-      { id: "poison", segundos: 4, chance: 0.5 },
-      { id: "hunger", segundos: 20, chance: 0.4 },
-    ],
-  },
+  [`${NS}:agua_impropria`]: SALGADA,
+  "minecraft:potion": SALGADA,
 };
 
-// Beber direto de uma poça/fonte de água: agachado dentro da água, 1 gole a cada 2 s.
-export const POCA = { aguaPorGole: 1, chanceEnjoo: 0.15 } as const;
+// Beber direto de uma poça/fonte de água (agachado dentro da água, 1 gole a cada 2 s): é salgada.
+export const POCA = SALGADA;
 
 // Husks e zumbis carregam cantis velhos: chance de soltar água ruim ao morrer.
 export const AGUA_DOS_MONSTROS: ReadonlyArray<{ item: string; chance: number }> = [
@@ -828,3 +857,68 @@ for (const id of [
   ...METAIS_NIHILO.flatMap((m) => ESTAGIOS_NIHILO.map((e) => `${NS}:${m}_${e}`)),
 ]) ORIGEM_MOD[id] = "Ex Nihilo";
 ORIGEM_MOD[`${NS}:martelo_cobre`] = "Ex Aliquo";
+
+// ---- Fase 13: EnviroMine + Hunger Overhaul ----
+
+// Qualidade do ar (scripts/jogador/ar.ts), 0 a 100. Com céu, perto da superfície: +2 por atualização.
+// No subsolo sem céu: o pior entre lava −1, fogo −0,5, tocha/fornalha acesa −0,25 (num raio pequeno);
+// folhas por perto +0,1 cada. Durante a tempestade de areia, ao ar livre, o ar também cai (extensão).
+export const AR = {
+  regen: 2,
+  fontes: { "minecraft:lava": -1, "minecraft:flowing_lava": -1, "minecraft:fire": -0.5, "minecraft:soul_fire": -0.5, "minecraft:campfire": -0.5, "minecraft:torch": -0.25, "minecraft:lit_furnace": -0.25 } as Readonly<Record<string, number>>,
+  folha: 0.1,
+  fracaoSolida: 0.8, // o EnviroMine multiplica a perda pela fração de blocos sólidos em volta
+  tempestade: -0.5, // valor de projeto: areia no ar (≈ 5 min ao ar livre até zerar; abrigado, volta)
+  lento: 25,
+  muitoLento: 10,
+  danoEmZero: 4,
+  // Máscara de gás e filtros (EnviroMine 1.7): carga 1000; cada filtro +500; gasta 100 − ar.
+  mascaraCarga: 1000,
+  filtroCarga: 500,
+} as const;
+
+// Camel Pack (EnviroMine): vestido no peito, guarda 100 de água limpa (4 garrafas de 25) e dá +1 de
+// hidratação por atualização quando ela passa de 1 abaixo do máximo (e −0,1 °C se o corpo ≥ 37,1).
+export const CAMEL = { capacidade: 100, porGarrafa: 25, porAtualizacao: 1, esfria: 0.1 } as const;
+
+// Hunger Overhaul (scripts/jogador/fome.ts).
+export const FOME = {
+  // Comida do jogo com os valores do HO (fome / modificador de saturação; saturação = fome × mod × 2).
+  comidas: {
+    "minecraft:apple": [1, 0.05], "minecraft:bread": [3, 0.2], "minecraft:porkchop": [1, 0.05], "minecraft:cooked_porkchop": [2, 0.15],
+    "minecraft:cod": [1, 0.05], "minecraft:salmon": [1, 0.05], "minecraft:cooked_cod": [2, 0.1], "minecraft:cooked_salmon": [2, 0.1],
+    "minecraft:cookie": [1, 0.05], "minecraft:melon_slice": [1, 0.05], "minecraft:beef": [1, 0.05], "minecraft:cooked_beef": [2, 0.15],
+    "minecraft:chicken": [1, 0.05], "minecraft:cooked_chicken": [2, 0.15], "minecraft:rotten_flesh": [1, 0.05], "minecraft:baked_potato": [2, 0.15],
+    "minecraft:poisonous_potato": [1, 0.05], "minecraft:pumpkin_pie": [3, 0.15], "minecraft:mushroom_stew": [2, 0.1], "minecraft:carrot": [1, 0.05],
+    "minecraft:potato": [1, 0.05], "minecraft:mutton": [1, 0.05], "minecraft:cooked_mutton": [2, 0.15], "minecraft:rabbit": [1, 0.05],
+    "minecraft:cooked_rabbit": [2, 0.15], "minecraft:beetroot": [1, 0.05], "minecraft:beetroot_soup": [2, 0.1], "minecraft:rabbit_stew": [3, 0.15],
+    "minecraft:sweet_berries": [1, 0.05],
+  } as Readonly<Record<string, readonly [number, number]>>,
+  efeitos: {
+    "minecraft:chicken": { id: "hunger", segundos: 30, chance: 0.15 },
+    "minecraft:poisonous_potato": { id: "poison", segundos: 5, chance: 0.3 },
+  } as Readonly<Record<string, Efeito>>,
+  // Regeneração: só com fome ≥ 7, sem gastar fome; 1 de vida a cada
+  // 80 × dif × bemAlimentado × (1 + vidaFaltando × 0,05 × dif)^1,5 ticks. Levar dano zera o contador.
+  regenFomeMin: 7,
+  regenBase: 80,
+  dificuldade: { facil: 0.75, normal: 1, dificil: 1.5 },
+  bemAlimentadoMult: 0.75,
+  // Gasto constante: +0,01 de exaustão a cada 10 ticks.
+  exaustaoPorSegundo: 0.02,
+  // Fome ao renascer: 20 − (dif − 1) × 4 (Normal 16, Difícil 12).
+  renascer: { facil: 20, normal: 16, dificil: 12 },
+  // Efeitos de status baixo (modificador m: Fácil 1, Normal 2, Difícil 3).
+  modificador: { facil: 1, normal: 2, dificil: 3 },
+  // Animais: cruzar e ovos 4× mais lentos; a vaca só dá leite de novo depois de 20 min.
+  cruzaTicks: 4 * 5 * 60 * 20,
+  leiteTicks: 20 * 60 * 20,
+  chanceOvo: 0.25,
+  comidaDeCruza: {
+    "minecraft:cow": ["minecraft:wheat"], "minecraft:sheep": ["minecraft:wheat"], "minecraft:mooshroom": ["minecraft:wheat"],
+    "minecraft:pig": ["minecraft:carrot", "minecraft:potato", "minecraft:beetroot"],
+    "minecraft:chicken": ["minecraft:wheat_seeds", "minecraft:pumpkin_seeds", "minecraft:melon_seeds", "minecraft:beetroot_seeds"],
+  } as Readonly<Record<string, ReadonlyArray<string>>>,
+} as const;
+
+for (const id of [IDS.camelPack, IDS.mascara, IDS.filtro]) ORIGEM_MOD[id] = "EnviroMine";

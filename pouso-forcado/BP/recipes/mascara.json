@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:mascara"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IVI",
+      "FIF",
+      "I I"
+    ],
+    "key": {
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "F": {
+        "item": "cl:filtro"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:filtro"
+      }
+    ],
+    "result": {
+      "item": "cl:mascara"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:terra_de_folhas_oak"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "F F",
+      "FFF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:oak_leaves"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:oak_leaves"
+      }
+    ],
+    "result": {
+      "item": "minecraft:dirt"
+    }
+  }
+}

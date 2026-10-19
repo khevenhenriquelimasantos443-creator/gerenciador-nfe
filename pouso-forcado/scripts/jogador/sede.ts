@@ -1,71 +1,44 @@
-import { Difficulty, EntityDamageCause, GameMode, ItemStack, Player, system, world } from "@minecraft/server";
-import { FRUTA_CACTO_CHANCE, IDS, PROPS, SEDE, TEMPESTADE } from "../config.js";
-import { tempestadeAtiva } from "../mundo/tempestade.js";
-import { multiplicadorSede } from "./temperatura.js";
-import { intervalo } from "../util/perfil.js";
+import { ItemStack, Player, system, world } from "@minecraft/server";
+import { FRUTA_CACTO_CHANCE, IDS, PROPS, SEDE } from "../config.js";
 
 /*
- * Sede: cada jogador tem SEDE.max pontos de água (dynamic property PROPS.sede).
- * - Cai 1 ponto a cada SEDE.segundosDia (de dia) ou SEDE.segundosNoite (à noite).
- * - Comer/beber o que está em SEDE.bebidas devolve pontos (leite, mel, fruta do cacto...).
- *   As águas e seus jeitos de beber ficam em aguas.ts.
- * - Com menos de SEDE.lentidaoAbaixoDe: lentidão. Com zero: 1 de dano a cada SEDE.danoACadaSegundos.
- * - A barra fica fixa no painel da barra de ação (hud.ts). Com calor (temperatura.ts) a água cai 2× mais rápido.
- * - Não roda no criativo, no espectador nem no Pacífico. Ao renascer, volta cheia.
- * Aqui também fica a fruta do cacto (FRUTA_CACTO_CHANCE ao quebrar um cacto), que mata a sede.
- * Custo: 1 leitura de propriedade por jogador por segundo.
+ * Sede = hidratação do EnviroMine: 0 a 100 por jogador (dynamic property PROPS.hidratacao).
+ * A perda e os efeitos são calculados a cada 30 ticks em ambiente.ts (que junta sede, temperatura
+ * e ar, como o tracker do EnviroMine). Aqui ficam o valor, as comidas que mexem na sede
+ * (SEDE.bebidas) e a fruta do cacto (FRUTA_CACTO_CHANCE ao quebrar um cacto).
+ * Até a 0.18 a sede ia de 0 a 20 (PROPS.sede): é convertida (×5) na primeira leitura.
  */
-const contador = new Map<string, number>(); // segundos desde o último ponto perdido
-
 export function lerSede(jogador: Player): number {
-  const v = jogador.getDynamicProperty(PROPS.sede);
-  return typeof v === "number" ? v : SEDE.max;
+  const v = jogador.getDynamicProperty(PROPS.hidratacao);
+  if (typeof v === "number") return v;
+  const velha = jogador.getDynamicProperty(PROPS.sede);
+  const nova = typeof velha === "number" ? Math.min(SEDE.max, velha * 5) : SEDE.max;
+  jogador.setDynamicProperty(PROPS.hidratacao, nova);
+  jogador.setDynamicProperty(PROPS.sede, undefined);
+  return nova;
 }
 
 export function mudarSede(jogador: Player, delta: number): void {
-  const antes = lerSede(jogador);
-  const depois = Math.max(0, Math.min(SEDE.max, antes + delta));
-  if (depois === antes) return;
-  jogador.setDynamicProperty(PROPS.sede, depois);
+  const depois = Math.max(0, Math.min(SEDE.max, lerSede(jogador) + delta));
+  jogador.setDynamicProperty(PROPS.hidratacao, Math.round(depois * 1000) / 1000);
 }
 
-function ehDia(): boolean {
-  const t = world.getTimeOfDay();
-  return t < 12500 || t > 23500;
+/** Desidratação (água salgada): atualizações que faltam; cada uma tira 1 de hidratação. */
+export const desidratacao = (j: Player): number => (j.getDynamicProperty(PROPS.desidrata) as number | undefined) ?? 0;
+export function desidratar(j: Player, atualizacoes: number): void {
+  j.setDynamicProperty(PROPS.desidrata, Math.max(desidratacao(j), atualizacoes));
 }
 
 export function registrarSede(): void {
-  intervalo("sede", () => {
-    if (world.getDifficulty() === Difficulty.Peaceful) return;
-    const base = ehDia() ? SEDE.segundosDia : SEDE.segundosNoite;
-    for (const jogador of world.getPlayers({ excludeGameModes: [GameMode.Creative, GameMode.Spectator] })) {
-      const tempestade = tempestadeAtiva() ? TEMPESTADE.sedeMultiplicador : 1;
-      const intervalo = Math.max(1, Math.round(base / (multiplicadorSede(jogador) * tempestade)));
-      const s = (contador.get(jogador.id) ?? 0) + 1;
-      contador.set(jogador.id, s);
-      let valor = lerSede(jogador);
-      if (s >= intervalo) {
-        contador.set(jogador.id, 0);
-        mudarSede(jogador, -1);
-        valor = lerSede(jogador);
-      }
-      if (valor < SEDE.lentidaoAbaixoDe) {
-        jogador.addEffect("slowness", 40, { amplifier: 0, showParticles: false });
-      }
-      if (valor === 0 && s % SEDE.danoACadaSegundos === 0) {
-        jogador.applyDamage(1, { cause: EntityDamageCause.starve });
-        jogador.sendMessage({ translate: "cl.sede.morrendo" });
-      }
-    }
-  }, 20);
-
   world.afterEvents.itemCompleteUse.subscribe(({ itemStack, source }) => {
     const pontos = SEDE.bebidas[itemStack.typeId];
     if (pontos) mudarSede(source, pontos);
   });
 
   world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-    if (!initialSpawn) player.setDynamicProperty(PROPS.sede, SEDE.max);
+    if (initialSpawn) return;
+    player.setDynamicProperty(PROPS.hidratacao, SEDE.max);
+    player.setDynamicProperty(PROPS.desidrata, undefined);
   });
 
   // Fruta do cacto: às vezes cai ao quebrar um cacto.
