@@ -1,15 +1,23 @@
 {
   "namespace": "hud",
-
   "cl_minimapa": {
     "type": "panel",
     "anchor_from": "top_right",
     "anchor_to": "top_right",
-    "offset": [ -2, 2 ],
-    "size": [ "100%cm", "100%cm" ],
+    "offset": [
+      -4,
+      4
+    ],
+    "size": [
+      "100%cm",
+      "100%cm"
+    ],
     "layer": 20,
     "bindings": [
-      { "binding_name": "#hud_title_text_string", "binding_type": "global" },
+      {
+        "binding_name": "#hud_title_text_string",
+        "binding_type": "global"
+      },
       {
         "binding_type": "view",
         "source_property_name": "(not ((#hud_title_text_string - 'clmapa:') = #hud_title_text_string))",
@@ -18,27 +26,26 @@
     ],
     "controls": [
       {
-        "fundo": {
-          "type": "image",
-          "texture": "textures/ui/hud_tip_text_background",
-          "size": [ "100%sm + 4px", "100%sm + 4px" ],
-          "alpha": 0.7
-        }
-      },
-      {
-        "texto": {
+        "mapa": {
           "type": "label",
-          "anchor_from": "center",
-          "anchor_to": "center",
+          "anchor_from": "top_middle",
+          "anchor_to": "top_middle",
           "text": "#texto",
           "localize": false,
           "layer": 1,
-          "color": [ 1, 1, 1 ],
+          "color": [
+            1,
+            1,
+            1
+          ],
           "shadow": false,
           "text_alignment": "center",
-          "font_scale_factor": 0.6,
+          "font_scale_factor": 0.4,
           "bindings": [
-            { "binding_name": "#hud_title_text_string", "binding_type": "global" },
+            {
+              "binding_name": "#hud_title_text_string",
+              "binding_type": "global"
+            },
             {
               "binding_type": "view",
               "source_property_name": "(#hud_title_text_string - 'clmapa:')",
@@ -46,23 +53,57 @@
             }
           ]
         }
+      },
+      {
+        "info": {
+          "type": "label",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "offset": [
+            0,
+            2
+          ],
+          "text": "#info",
+          "localize": false,
+          "layer": 2,
+          "color": [
+            1,
+            1,
+            1
+          ],
+          "shadow": true,
+          "text_alignment": "center",
+          "font_scale_factor": 0.7,
+          "bindings": [
+            {
+              "binding_name": "#hud_subtitle_text_string",
+              "binding_name_override": "#info",
+              "binding_type": "global"
+            }
+          ]
+        }
       }
     ]
   },
-
   "root_panel": {
     "modifications": [
       {
         "array_name": "controls",
         "operation": "insert_back",
-        "value": [ { "cl_minimapa@hud.cl_minimapa": {} } ]
+        "value": [
+          {
+            "cl_minimapa@hud.cl_minimapa": {}
+          }
+        ]
       }
     ]
   },
-
   "hud_title_text": {
     "bindings": [
-      { "binding_name": "#hud_title_text_string", "binding_type": "global" },
+      {
+        "binding_name": "#hud_title_text_string",
+        "binding_type": "global"
+      },
       {
         "binding_type": "view",
         "source_property_name": "((#hud_title_text_string - 'clmapa:') = #hud_title_text_string)",

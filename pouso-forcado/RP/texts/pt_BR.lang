@@ -211,3 +211,5 @@ cl.direcao.aqui=lado de onde você está
 ## Minimapa
 cl.mapa.ligado=Minimapa ligado: ele fica no canto de cima da tela, com o norte para cima. Digite /cl:mapa para esconder.
 cl.mapa.desligado=Minimapa escondido. Digite /cl:mapa para mostrar de novo.
+cl.mapa.dia=Dia
+cl.mapa.noite=Noite

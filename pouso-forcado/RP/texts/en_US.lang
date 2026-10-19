@@ -211,3 +211,5 @@ cl.direcao.aqui=right around you
 ## Minimap
 cl.mapa.ligado=Minimap on: it sits in the top corner of the screen, north up. Type /cl:mapa to hide it.
 cl.mapa.desligado=Minimap hidden. Type /cl:mapa to show it again.
+cl.mapa.dia=Day
+cl.mapa.noite=Night

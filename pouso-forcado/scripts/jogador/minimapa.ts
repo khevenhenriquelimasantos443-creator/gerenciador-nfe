@@ -1,27 +1,31 @@
 import { Player, RawMessage, TitleDisplayOptions, system, world } from "@minecraft/server";
-import { MINIMAPA, MUNDO_PLANO, PROPS } from "../config.js";
+import { MINIMAPA, PROPS } from "../config.js";
 import { cidadeDoChunk } from "../mundo/cidade.js";
 import { alturaDuna } from "../mundo/dunas.js";
 import { raraDoChunk } from "../mundo/raras.js";
 import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
 
 /*
- * Minimapa na tela, no canto superior direito: cada quadradinho é um chunk, com o norte para cima.
- * O Bedrock não deixa o script desenhar na tela, então o mapa vai como TÍTULO, começando com a
- * marca MARCA. O RP/ui/hud_screen.json mostra todo título com a marca num painel pequeno no
- * canto (sem a marca) e esconde o título grande normal. Os quadradinhos são caracteres de uma
- * fonte própria (RP/font/glyph_E8.png, gerada por tools/gerar-texturas.mjs).
- * - Chunk que o jogo já carregou: areia, duna baixa/alta, cidade, torre, templo, destroços, nave.
- * - Chunk nunca carregado nesta sessão: escuro.
- * - Você: a seta no meio, apontando para onde olha.
+ * Minimapa na tela, no canto superior direito: redondo, norte para cima, cada quadradinho com
+ * MINIMAPA.celula blocos de lado. O Bedrock não deixa o script desenhar na tela, então o mapa vai
+ * como TÍTULO (começando com a marca MARCA) e a hora e as coordenadas como SUBTÍTULO. O
+ * RP/ui/hud_screen.json mostra esse título num painel pequeno no canto e esconde o título grande.
+ * Os quadradinhos são caracteres de uma fonte própria (RP/font/glyph_E8.png, gerada por
+ * tools/gerar-texturas.mjs; os índices estão explicados lá).
+ * - Já carregado: areia (mais escura nas dunas mais altas, com sombra no lado sul/leste delas),
+ *   cidade, torre, templo, destroços, nave. Linhas finas marcam as bordas dos chunks.
+ * - Nunca carregado nesta sessão: escuro.
+ * - Você: a seta no meio, apontando para onde olha. N, L, S, O no anel.
  * Títulos de verdade (horda, tempestade...) vão por mostrarTitulo(), que pausa o mapa enquanto aparecem.
- * /cl:mapa liga e desliga. Custo: até 225 consultas "chunk carregado?" por jogador a cada 5 ticks.
+ * /cl:mapa liga e desliga. Custo: ~170 consultas "chunk carregado?" por jogador a cada 5 ticks.
  */
 export const MARCA = "clmapa:";
 const G = (i: number) => String.fromCharCode(0xe800 + i);
-const DESCONHECIDO = 0, AREIA = 1, DUNA_BAIXA = 2, DUNA_ALTA = 3, CIDADE = 4, TORRE = 5, TEMPLO = 6, DESTROCOS = 7, NAVE = 8, SETA = 9;
+// Bases da fonte (cada uma com 3 luzes x 4 linhas de grade = 12 caracteres).
+const DESCONHECIDO = 0, AREIA = 1, CIDADE = 7, TORRE = 8, TEMPLO = 9, DESTROCOS = 10, NAVE = 11;
+const VAZIO = 144, ANEL = 145, LETRA = { N: 146, L: 147, S: 148, O: 149 }, SETA = 150;
 
-const tipos = new Map<string, number>(); // chunk -> tipo do terreno (não muda; depende só da semente)
+const tipos = new Map<string, number>(); // quadradinho -> base * 3 + luz (não muda; depende só da semente)
 const conhecidos = new Set<string>(); // chunks já vistos carregados nesta sessão
 const ultimo = new Map<string, { texto: string; tick: number }>();
 const pausaAte = new Map<string, number>();
@@ -34,24 +38,32 @@ export function mostrarTitulo(jogador: Player, titulo: RawMessage | string, opco
   jogador.onScreenDisplay.setTitle(titulo, opcoes);
 }
 
-function tipoDoChunk(cx: number, cz: number, semente: number, nave: [number, number], plano: boolean): number {
-  const chave = `${cx},${cz}`;
+// Altura da duna -> 0 (planície) a 5 (crista alta).
+const nivel = (h: number) => (h <= 0 ? 0 : Math.min(5, Math.ceil(h / 2)));
+
+/** Base e luz do quadradinho que começa em (x0, z0). */
+function tipoDaCelula(x0: number, z0: number, semente: number, nave: [number, number], plano: boolean): number {
+  const chave = `${x0},${z0}`;
   const salvo = tipos.get(chave);
   if (salvo !== undefined) return salvo;
-  let tipo = AREIA; // mundo normal (add-on fora do mundo plano): o relevo e as estruturas não existem
-  if (plano && cx === nave[0] && cz === nave[1]) tipo = NAVE;
+  const cx = Math.floor(x0 / 16), cz = Math.floor(z0 / 16);
+  let base = AREIA, luz = 0; // mundo normal (add-on fora do mundo plano): o relevo e as estruturas não existem
+  if (plano && cx === nave[0] && cz === nave[1]) base = NAVE;
   else if (plano) {
     const cidade = cidadeDoChunk(cx, cz, semente, nave);
     const rara = cidade ? undefined : raraDoChunk(cx, cz, semente, nave);
-    if (cidade) tipo = cidade.dist === 0 ? TORRE : CIDADE;
-    else if (rara) tipo = rara.tipo === "templo" ? TEMPLO : DESTROCOS;
+    if (cidade) base = cidade.dist === 0 ? TORRE : CIDADE;
+    else if (rara) base = rara.tipo === "templo" ? TEMPLO : DESTROCOS;
     else {
       const centro = { x: nave[0] * 16 + 8, z: nave[1] * 16 + 8 };
-      let alta = 0;
-      for (const [dx, dz] of [[4, 4], [12, 4], [4, 12], [12, 12], [8, 8]]) alta = Math.max(alta, alturaDuna(cx * 16 + dx, cz * 16 + dz, semente, centro));
-      tipo = alta === 0 ? AREIA : alta <= 4 ? DUNA_BAIXA : DUNA_ALTA;
+      const c = MINIMAPA.celula, m = c / 2;
+      const h = alturaDuna(x0 + m, z0 + m, semente, centro);
+      const noroeste = alturaDuna(x0 + m - c, z0 + m - c, semente, centro);
+      base = AREIA + nivel(h);
+      luz = h - noroeste >= 1 ? 1 : noroeste - h >= 1 ? 2 : 0; // luz vinda do noroeste
     }
   }
+  const tipo = base * 3 + luz;
   if (tipos.size > 50000) tipos.clear();
   tipos.set(chave, tipo);
   return tipo;
@@ -63,33 +75,53 @@ function seta(jogador: Player): number {
   return Math.round(rumo / 45) % 8;
 }
 
-export function desenharMinimapa(jogador: Player): string {
+/** Hora do jogo (0 = 6:00) e se é dia. */
+function relogio(): { texto: string; dia: boolean } {
+  const t = world.getTimeOfDay();
+  const minutos = Math.floor(((t / 1000 + 6) % 24) * 60);
+  const texto = `${String(Math.floor(minutos / 60)).padStart(2, "0")}:${String(minutos % 60).padStart(2, "0")}`;
+  return { texto, dia: t < 12542 || t > 23460 };
+}
+
+/** O mapa (título) e a linha de baixo (subtítulo) do jogador. */
+export function desenharMinimapa(jogador: Player): { mapa: string; info: RawMessage; chave: string } {
   const semente = sementeDoMundo();
   const nave = chunkDaNave() ?? [0, 0];
   const plano = world.getDynamicProperty(PROPS.tipoMundo) === "plano";
   const { x, z } = jogador.location;
-  const pcx = Math.floor(x / 16), pcz = Math.floor(z / 16);
-  const r = MINIMAPA.raio;
-  const linhas: string[] = ["§7N§r"];
-  for (let cz = pcz - r; cz <= pcz + r; cz++) {
+  const c = MINIMAPA.celula, r = MINIMAPA.raio, borda = r + 1;
+  const pix = Math.floor(x / c), piz = Math.floor(z / c);
+  const linhas: string[] = [];
+  for (let dz = -borda; dz <= borda; dz++) {
     let linha = "";
-    for (let cx = pcx - r; cx <= pcx + r; cx++) {
-      if (cx === pcx && cz === pcz) {
-        linha += G(SETA + seta(jogador));
-        continue;
+    for (let dx = -borda; dx <= borda; dx++) {
+      const d = Math.hypot(dx, dz);
+      if (d > r + 1.5) linha += G(VAZIO);
+      else if (d > r + 0.5) {
+        const letra = dx === 0 && dz === -borda ? "N" : dx === borda && dz === 0 ? "L" : dx === 0 && dz === borda ? "S" : dx === -borda && dz === 0 ? "O" : undefined;
+        linha += G(letra ? LETRA[letra] : ANEL);
+      } else if (dx === 0 && dz === 0) linha += G(SETA + seta(jogador));
+      else {
+        const ix = pix + dx, iz = piz + dz;
+        const x0 = ix * c, z0 = iz * c;
+        const chunk = `${Math.floor(x0 / 16)},${Math.floor(z0 / 16)}`;
+        let visto = conhecidos.has(chunk);
+        if (!visto && jogador.dimension.isChunkLoaded({ x: x0, y: 0, z: z0 })) {
+          conhecidos.add(chunk);
+          visto = true;
+        }
+        const grade = (z0 % 16 === 0 ? 1 : 0) + (x0 % 16 === 0 ? 2 : 0); // borda de chunk em cima / à esquerda
+        const tipo = visto ? tipoDaCelula(x0, z0, semente, nave, plano) : DESCONHECIDO * 3;
+        linha += G(Math.floor(tipo / 3) * 12 + (tipo % 3) * 4 + grade);
       }
-      const chave = `${cx},${cz}`;
-      let visto = conhecidos.has(chave);
-      if (!visto && jogador.dimension.isChunkLoaded({ x: cx * 16 + 8, y: MUNDO_PLANO.superficieY, z: cz * 16 + 8 })) {
-        conhecidos.add(chave);
-        visto = true;
-      }
-      linha += G(visto ? tipoDoChunk(cx, cz, semente, nave, plano) : DESCONHECIDO);
     }
     linhas.push(linha);
   }
-  linhas.push(`§7${Math.floor(x)}, ${Math.floor(z)}§r`);
-  return MARCA + linhas.join("\n");
+  const hora = relogio();
+  const coords = `x: ${Math.floor(x)}, z: ${Math.floor(z)}`;
+  const info: RawMessage = { rawtext: [{ text: `${hora.texto} ` }, { translate: hora.dia ? "cl.mapa.dia" : "cl.mapa.noite" }, { text: `\n${coords}` }] };
+  const mapa = MARCA + linhas.join("\n");
+  return { mapa, info, chave: `${mapa}|${hora.texto}|${coords}` };
 }
 
 function atualizar(jogador: Player): void {
@@ -109,11 +141,11 @@ function atualizar(jogador: Player): void {
     return;
   }
   if ((pausaAte.get(id) ?? 0) > agora) return;
-  const texto = desenharMinimapa(jogador);
+  const { mapa, info, chave } = desenharMinimapa(jogador);
   const antes = ultimo.get(id);
-  if (antes && antes.texto === texto && agora - antes.tick < MINIMAPA.reenviarTicks) return;
-  jogador.onScreenDisplay.setTitle(texto, { fadeInDuration: 0, stayDuration: 60, fadeOutDuration: 0 });
-  ultimo.set(id, { texto, tick: agora });
+  if (antes && antes.texto === chave && agora - antes.tick < MINIMAPA.reenviarTicks) return;
+  jogador.onScreenDisplay.setTitle(mapa, { subtitle: info, fadeInDuration: 0, stayDuration: 60, fadeOutDuration: 0 });
+  ultimo.set(id, { texto: chave, tick: agora });
 }
 
 /** Liga ou desliga o minimapa do jogador (comando /cl:mapa). */
