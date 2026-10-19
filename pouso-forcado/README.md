@@ -101,6 +101,7 @@ Outros comandos:
 1. Baixe o `pouso-forcado.mcaddon` (pelo navegador ou pelo app do GitHub).
 2. Abra a pasta **Downloads** no gerenciador de arquivos e toque no arquivo.
 3. Escolha **Minecraft** em "Abrir com". O jogo importa os dois packs e o mundo.
+4. Se aparecer **"nenhum app pode abrir"**: mande o arquivo pelo **Telegram** (pode ser para você mesmo, em "Mensagens salvas") e toque nele dentro do Telegram → **Minecraft**. Funcionou num Android em que o gerenciador de arquivos, o ZArchiver e o botão Importar não funcionaram.
 
 ### iOS (iPhone/iPad)
 1. Baixe o `pouso-forcado.mcaddon` pelo Safari. Ele vai para o app **Arquivos** (pasta Downloads).
