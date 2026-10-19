@@ -303,7 +303,7 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 3. **Minérios:** cave um poço até y = 0 ou menos. Deve haver carvão e ferro na pedra, e ouro, redstone, lápis e (raro) diamante na ardósia.
 4. **Boas-vindas e nave:** aparece o título "Pouso Forçado", a mensagem no chat e, em ~2 s, a nave ao seu lado. Entre pela abertura lateral e abra o baú.
 5. **Relevo:** espere 1 a 2 minutos perto da nave e olhe o horizonte: devem aparecer campos de dunas compridas, separados por planícies com morros, mesas e rochas. Ande: as dunas já devem estar prontas antes de você chegar.
-6. **Templo:** é raro (~1 a cada 80 chunks). No criativo, voe uns 1000–2000 blocos procurando uma pirâmide de arenito com faixas laranja. Entre pela abertura no nível do chão e abra o baú.
+6. **Templo:** é raro (no máximo um a cada 384×384 blocos). No criativo, voe uns 500–1000 blocos procurando uma pirâmide de arenito com faixas laranja, num pedaço plano. Entre pela abertura no nível do chão e abra o baú.
 7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
 8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
 9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal. Nas horas 14000, 17000 e 20000 (pode usar `/time set 13900` com trapaças ligadas) aparece "A horda chegou!" e chega uma onda.
