@@ -84,9 +84,8 @@ npm run build
 ```
 
 Sai em `dist/`:
-- `pouso-forcado.mcaddon` → **1ª instalação**: instala os dois packs e coloca o mundo plano "Pouso Forçado" direto na sua lista de mundos;
-- `pouso-forcado-atualizar.mcaddon` → **atualização**: só os dois packs. Atualiza o mundo que você já tem, sem perder nada;
-- `pouso-forcado.mcworld` → só o mundo, sem os packs (plano B: importe antes o `-atualizar.mcaddon`);
+- `pouso-forcado.mcaddon` → **é este que você usa**: instala os dois packs e coloca um mundo plano "Pouso Forçado" novo na sua lista de mundos (com os packs dentro dele);
+- `pouso-forcado.mcworld` → só o mundo, já com os packs dentro (plano B, se o `.mcaddon` não trouxer o mundo);
 - `pouso-forcado_BP.mcpack` e `pouso-forcado_RP.mcpack` → só os packs, para usar num mundo infinito normal.
 
 Outros comandos:
@@ -94,7 +93,7 @@ Outros comandos:
 - `npm run compilar`: só compila o TypeScript.
 - `node tools/gerar-nave.mjs --force` / `node tools/gerar-relevo.mjs --force`: regeram a nave / as dunas, morros e o templo a partir do modelo em código.
 
-> Os arquivos `dist/pouso-forcado.mcaddon`, `dist/pouso-forcado-atualizar.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
+> Os arquivos `dist/pouso-forcado.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
 
 ## Como instalar no celular
 
@@ -114,11 +113,11 @@ Outros comandos:
 2. Antes de entrar, você pode mudar dificuldade, trapaças etc. em **Editar**.
 3. Cada vez que você importa o `pouso-forcado.mcaddon` de novo, entra mais uma cópia nova do mundo, útil para recomeçar do zero.
 
-### Atualizar sem perder o mundo
+### Versões novas
 
-- Importe o **`pouso-forcado-atualizar.mcaddon`** (só os packs). O mundo que você já tem passa a usar a versão nova na próxima vez que abrir.
-- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.3] ...`.
-- Isso vale para mundos criados a partir da **0.7.0**. Mundos de antes levam uma cópia dos packs dentro deles e ficam presos na versão em que foram criados.
+- Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
+- O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
+- Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.13.4] mundo: plano | ...`.
 
 ## Diário de Bordo (Fase 2)
 
@@ -288,7 +287,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
 - **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
-- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.3] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
+- **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.13.4] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
 ### Usando só o `.mcaddon` num mundo infinito normal
 

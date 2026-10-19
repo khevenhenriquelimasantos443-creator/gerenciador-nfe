@@ -3,4 +3,3 @@ BP/scripts/
 dist/*
 !dist/pouso-forcado.mcaddon
 !dist/pouso-forcado.mcworld
-!dist/pouso-forcado-atualizar.mcaddon
