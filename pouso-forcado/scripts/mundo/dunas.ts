@@ -1,6 +1,7 @@
 import { BlockVolume, Dimension } from "@minecraft/server";
-import { CIDADE, DUNAS, MUNDO_PLANO } from "../config.js";
+import { CIDADE, DUNAS, MUNDO_PLANO, RARAS_BORDA_PLANA } from "../config.js";
 import { foraDaCidade } from "./cidade.js";
+import { foraDasRaras } from "./raras.js";
 
 /*
  * Dunas por ruído contínuo: a altura de cada coluna vem de uma função do mundo inteiro
@@ -9,7 +10,7 @@ import { foraDaCidade } from "./cidade.js";
  * - "crista": ruído esticado na direção do vento, com o valor absoluto invertido, que
  *   forma cristas compridas (dunas transversais);
  * - "altura máxima": outro ruído largo, para dunas de 3 a 10 blocos variarem pelo mapa.
- * Em volta da nave e das cidades o chão fica plano.
+ * Em volta da nave, das cidades e das estruturas raras (templos, destroços) o chão fica plano.
  * Custo: 1 fillBlocks por coluna com duna (no máximo 256 por chunk).
  */
 
@@ -96,7 +97,9 @@ export function alturaDuna(x: number, z: number, semente: number, nave: { x: num
   // Cidades ficam numa planície: as dunas só começam CIDADE.bordaPlana blocos depois da borda.
   const chunkNave: [number, number] = [Math.floor(nave.x / 16), Math.floor(nave.z / 16)];
   const urbano = degrau(0, CIDADE.bordaPlana, foraDaCidade(x, z, semente, chunkNave));
-  return Math.round(limitar(campo * pouso * urbano * (hMax * crista + ondulacao), 0, d.alturaMax + 2));
+  // Templos e destroços também ficam num pedaço plano.
+  const raras = degrau(2, RARAS_BORDA_PLANA, foraDasRaras(x, z, semente, chunkNave));
+  return Math.round(limitar(campo * pouso * urbano * raras * (hMax * crista + ondulacao), 0, d.alturaMax + 2));
 }
 
 /** Enche as colunas do chunk com areia até a altura da duna. Devolve a maior altura posta. */

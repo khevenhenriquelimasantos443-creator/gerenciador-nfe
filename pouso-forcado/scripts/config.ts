@@ -3,7 +3,7 @@
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.13.1";
+export const VERSAO = "0.13.2";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -132,24 +132,40 @@ export const RELEVO = {
   arbustoSeco: 0.3, // chance de 1 a 3 arbustos secos (gravetos) no chunk
   cacto: { chance: 0.35, maxPorChunk: 3 }, // chance de ter cactos no chunk; até quantos
   pecas: [
-    // Só nas planícies (onde não há duna). Templo mais comum que antes porque metade do mapa é duna.
-    { estrutura: `${NS}:templo_soterrado`, chance: 0.025, tamanho: 15, deslocY: -3, girar: false, bau: { x: 7, y: 1, z: 7 } },
+    // Peças pequenas, sorteadas chunk a chunk, só nas planícies (onde não há duna).
     { estrutura: `${NS}:morro`, chance: 0.06, tamanho: 17, deslocY: 0, girar: true },
     { estrutura: `${NS}:mesa`, chance: 0.04, tamanho: 13, deslocY: 0, girar: true },
     { estrutura: `${NS}:rochas`, chance: 0.1, tamanho: 9, deslocY: 0, girar: true },
-    // Destroços de outra nave (a mesma estrutura da sua, com outro saque). Fase 6.
-    {
-      estrutura: `${NS}:nave_caida`,
-      chance: 0.02,
-      tamanho: 17, // a nave tem 13×17
-      deslocY: -2,
-      girar: false,
-      bau: { x: 6, y: 2, z: 8 },
-      saque: "destrocos",
-      ponto: "destrocos",
-    },
   ],
 } as const;
+
+// Estruturas raras (scripts/mundo/raras.ts): o mapa é dividido em quadrados de "celula" chunks
+// e cada quadrado tem no máximo UMA, num chunk sorteado lá dentro (com "chance" de existir).
+// Assim ficam espalhadas ao acaso, sem amontoar. O chão em volta fica plano (sem dunas).
+export const RARAS = [
+  {
+    tipo: "templo",
+    estrutura: `${NS}:templo_soterrado`,
+    celula: 24, // 384×384 blocos
+    chance: 0.6,
+    tamanho: 15,
+    deslocY: -3,
+    bau: { x: 7, y: 1, z: 7 },
+    saque: "templo",
+  },
+  {
+    tipo: "destrocos",
+    estrutura: `${NS}:nave_caida`, // a mesma estrutura da sua nave, com outro saque
+    celula: 28, // 448×448 blocos
+    chance: 0.6,
+    tamanho: 17, // a nave tem 13×17
+    deslocY: -2,
+    bau: { x: 6, y: 2, z: 8 },
+    saque: "destrocos",
+    ponto: "destrocos",
+  },
+] as const;
+export const RARAS_BORDA_PLANA = 20; // blocos sem duna em volta de cada estrutura rara
 
 // Dunas por ruído contínuo (scripts/mundo/dunas.ts). Escalas em blocos.
 export const DUNAS = {

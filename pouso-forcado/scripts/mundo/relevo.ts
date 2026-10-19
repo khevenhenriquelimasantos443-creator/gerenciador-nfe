@@ -7,6 +7,7 @@ import { alturaDuna, porDunas } from "./dunas.js";
 import { talvezMasmorra } from "./masmorra.js";
 import { porMinerios } from "./minerios.js";
 import { registrarPonto } from "./pontos.js";
+import { raraDoChunk } from "./raras.js";
 
 /*
  * Relevo do mundo plano: o mundo gera só camadas planas de areia, pedra e ardósia. Este módulo
@@ -156,8 +157,10 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   const ox = x0 + Math.floor(sorte() * 16) - Math.floor((peca?.tamanho ?? 0) / 2);
   const oz = z0 + Math.floor(sorte() * 16) - Math.floor((peca?.tamanho ?? 0) / 2);
   const girar = Math.floor(sorte() * 4);
-  const colocaPeca = !!peca && areaPlana(ox, oz, peca.tamanho, semente, nave);
+  const rara = raraDoChunk(cx, cz, semente, naveChunk); // templo ou destroços (no máximo um por região)
+  const colocaPeca = !rara && !!peca && areaPlana(ox, oz, peca.tamanho, semente, nave);
   if (colocaPeca && !areaCarregada(dimensao, ox, oz, peca.tamanho)) return "esperar";
+  if (rara && !areaCarregada(dimensao, x0, z0, rara.tamanho)) return "esperar";
 
   porDunas(dimensao, x0, z0, semente, nave);
   desenterrarJogadores(dimensao, x0, z0);
@@ -168,12 +171,13 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
     const origem: Vector3 = { x: ox, y: MUNDO_PLANO.superficieY + peca.deslocY, z: oz };
     const rotation = peca.girar ? GIROS[girar] : StructureRotation.None;
     world.structureManager.place(peca.estrutura, dimensao, origem, { rotation });
-    if ("bau" in peca) {
-      const b = peca.bau;
-      const tabela = SAQUES["saque" in peca ? peca.saque : "templo"];
-      criarBauCom(dimensao, { x: ox + b.x, y: origem.y + b.y, z: oz + b.z }, sortearSaque(tabela, sorte));
-      if ("ponto" in peca) registrarPonto(peca.ponto, ox + b.x, origem.y + b.y, oz + b.z, 7);
-    }
+  }
+  if (rara) {
+    const origem: Vector3 = { x: x0, y: MUNDO_PLANO.superficieY + rara.deslocY, z: z0 };
+    world.structureManager.place(rara.estrutura, dimensao, origem);
+    const b = { x: x0 + rara.bau.x, y: origem.y + rara.bau.y, z: z0 + rara.bau.z };
+    criarBauCom(dimensao, b, sortearSaque(SAQUES[rara.saque], sorte));
+    if ("ponto" in rara) registrarPonto(rara.ponto, b.x, b.y, b.z, 7);
   }
   if (!pertoDaNave) {
     porArbustosSecos(dimensao, x0, z0, sorte);
