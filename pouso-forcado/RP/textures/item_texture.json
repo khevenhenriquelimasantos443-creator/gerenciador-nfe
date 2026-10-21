@@ -42,7 +42,7 @@
       "textures": "textures/items/cl/arte/motor_nave"
     },
     "cl_computador_bordo": {
-      "textures": "textures/items/cl/v/computador_bordo"
+      "textures": "textures/items/cl/arte/computador_bordo"
     },
     "cl_catalogo": {
       "textures": "textures/items/cl/arte/catalogo"
@@ -66,7 +66,7 @@
       "textures": "textures/items/cl/arte/sacola_lendaria"
     },
     "cl_martelo_madeira": {
-      "textures": "textures/items/cl/v/martelo_madeira"
+      "textures": "textures/items/cl/arte/martelo_madeira"
     },
     "cl_martelo_pedra": {
       "textures": "textures/items/cl/arte/martelo_pedra"
@@ -84,10 +84,10 @@
       "textures": "textures/items/cl/arte/martelo_diamante"
     },
     "cl_pedrinha": {
-      "textures": "textures/items/cl/v/pedrinha"
+      "textures": "textures/items/cl/arte/pedrinha"
     },
     "cl_porcelana": {
-      "textures": "textures/items/cl/v/porcelana"
+      "textures": "textures/items/cl/arte/porcelana"
     },
     "cl_cadinho_cru": {
       "textures": "textures/items/cl/arte/cadinho_cru"
@@ -102,19 +102,19 @@
       "textures": "textures/items/cl/arte/bicho_seda_cozido"
     },
     "cl_ferro_quebrado": {
-      "textures": "textures/items/cl/v/ferro_quebrado"
+      "textures": "textures/items/cl/arte/ferro_quebrado"
     },
     "cl_ferro_triturado": {
-      "textures": "textures/items/cl/v/ferro_triturado"
+      "textures": "textures/items/cl/arte/ferro_triturado"
     },
     "cl_ferro_po": {
       "textures": "textures/items/cl/arte/ferro_po"
     },
     "cl_ouro_quebrado": {
-      "textures": "textures/items/cl/v/ouro_quebrado"
+      "textures": "textures/items/cl/arte/ouro_quebrado"
     },
     "cl_ouro_triturado": {
-      "textures": "textures/items/cl/v/ouro_triturado"
+      "textures": "textures/items/cl/arte/ouro_triturado"
     },
     "cl_ouro_po": {
       "textures": "textures/items/cl/arte/ouro_po"
@@ -144,10 +144,10 @@
       "textures": "textures/items/cl/arte/milho"
     },
     "clhc_semente_tomate": {
-      "textures": "textures/items/cl/hc/semente_tomate"
+      "textures": "textures/items/cl/arte/semente_tomate"
     },
     "clhc_tomate": {
-      "textures": "textures/items/cl/hc/tomate"
+      "textures": "textures/items/cl/arte/tomate"
     },
     "clhc_semente_cebola": {
       "textures": "textures/items/cl/arte/semente_cebola"
@@ -162,10 +162,10 @@
       "textures": "textures/items/cl/arte/alho"
     },
     "clhc_semente_feijao": {
-      "textures": "textures/items/cl/hc/semente_feijao"
+      "textures": "textures/items/cl/arte/semente_feijao"
     },
     "clhc_feijao": {
-      "textures": "textures/items/cl/hc/feijao"
+      "textures": "textures/items/cl/arte/feijao"
     },
     "clhc_semente_pimenta": {
       "textures": "textures/items/cl/arte/semente_pimenta"
@@ -174,7 +174,7 @@
       "textures": "textures/items/cl/arte/pimenta"
     },
     "clhc_semente_pimentao": {
-      "textures": "textures/items/cl/hc/semente_pimentao"
+      "textures": "textures/items/cl/arte/semente_pimentao"
     },
     "clhc_pimentao": {
       "textures": "textures/items/cl/arte/pimentao"
@@ -201,13 +201,13 @@
       "textures": "textures/items/cl/arte/farinha"
     },
     "clhc_fuba": {
-      "textures": "textures/items/cl/hc/fuba"
+      "textures": "textures/items/cl/arte/fuba"
     },
     "clhc_massa": {
-      "textures": "textures/items/cl/hc/massa"
+      "textures": "textures/items/cl/arte/massa"
     },
     "clhc_massa_liquida": {
-      "textures": "textures/items/cl/hc/massa_liquida"
+      "textures": "textures/items/cl/arte/massa_liquida"
     },
     "clhc_manteiga": {
       "textures": "textures/items/cl/arte/manteiga"
@@ -216,79 +216,79 @@
       "textures": "textures/items/cl/arte/queijo"
     },
     "clhc_maionese": {
-      "textures": "textures/items/cl/hc/maionese"
+      "textures": "textures/items/cl/arte/maionese"
     },
     "clhc_caldo": {
       "textures": "textures/items/cl/arte/caldo"
     },
     "clhc_ovo_frito": {
-      "textures": "textures/items/cl/hc/ovo_frito"
+      "textures": "textures/items/cl/arte/ovo_frito"
     },
     "clhc_ovo_cozido": {
-      "textures": "textures/items/cl/hc/ovo_cozido"
+      "textures": "textures/items/cl/arte/ovo_cozido"
     },
     "clhc_torrada": {
-      "textures": "textures/items/cl/hc/torrada"
+      "textures": "textures/items/cl/arte/torrada"
     },
     "clhc_hamburguer": {
-      "textures": "textures/items/cl/hc/hamburguer"
+      "textures": "textures/items/cl/arte/hamburguer"
     },
     "clhc_tortilha": {
-      "textures": "textures/items/cl/hc/tortilha"
+      "textures": "textures/items/cl/arte/tortilha"
     },
     "clhc_taco": {
-      "textures": "textures/items/cl/hc/taco"
+      "textures": "textures/items/cl/arte/taco"
     },
     "clhc_burrito": {
       "textures": "textures/items/cl/arte/burrito"
     },
     "clhc_feijao_assado": {
-      "textures": "textures/items/cl/hc/feijao_assado"
+      "textures": "textures/items/cl/arte/feijao_assado"
     },
     "clhc_arroz_frito": {
       "textures": "textures/items/cl/arte/arroz_frito"
     },
     "clhc_sopa_legumes": {
-      "textures": "textures/items/cl/hc/sopa_legumes"
+      "textures": "textures/items/cl/arte/sopa_legumes"
     },
     "clhc_suco_cacto": {
-      "textures": "textures/items/cl/hc/suco_cacto"
+      "textures": "textures/items/cl/arte/suco_cacto"
     },
     "clhc_sopa_cacto": {
-      "textures": "textures/items/cl/hc/sopa_cacto"
+      "textures": "textures/items/cl/arte/sopa_cacto"
     },
     "clhc_sopa_tomate": {
-      "textures": "textures/items/cl/hc/sopa_tomate"
+      "textures": "textures/items/cl/arte/sopa_tomate"
     },
     "clhc_sopa_arroz": {
-      "textures": "textures/items/cl/hc/sopa_arroz"
+      "textures": "textures/items/cl/arte/sopa_arroz"
     },
     "clhc_charque": {
       "textures": "textures/items/cl/arte/charque"
     },
     "clhc_pipoca": {
-      "textures": "textures/items/cl/hc/pipoca"
+      "textures": "textures/items/cl/arte/pipoca"
     },
     "clhc_milho_espiga": {
-      "textures": "textures/items/cl/hc/milho_espiga"
+      "textures": "textures/items/cl/arte/milho_espiga"
     },
     "clhc_pimentao_recheado": {
-      "textures": "textures/items/cl/hc/pimentao_recheado"
+      "textures": "textures/items/cl/arte/pimentao_recheado"
     },
     "clhc_chili_poppers": {
       "textures": "textures/items/cl/arte/chili_poppers"
     },
     "clhc_omelete": {
-      "textures": "textures/items/cl/hc/omelete"
+      "textures": "textures/items/cl/arte/omelete"
     },
     "clhc_bolinho_arroz": {
       "textures": "textures/items/cl/arte/bolinho_arroz"
     },
     "clhc_pemmican": {
-      "textures": "textures/items/cl/hc/pemmican"
+      "textures": "textures/items/cl/arte/pemmican"
     },
     "clhc_panquecas": {
-      "textures": "textures/items/cl/hc/panquecas"
+      "textures": "textures/items/cl/arte/panquecas"
     },
     "clhc_broa_milho": {
       "textures": "textures/items/cl/arte/broa_milho"

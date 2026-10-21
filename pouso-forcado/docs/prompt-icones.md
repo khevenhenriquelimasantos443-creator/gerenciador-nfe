@@ -245,11 +245,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | padrao_lamina_espada.png | Padrão de Lâmina de Espada | placa de madeira clara com o recorte/silhueta de lâmina larga sem cabo |
 | padrao_guarda_larga.png | Padrão de Guarda Larga | placa de madeira clara com o recorte/silhueta de guarda de espada larga |
 | padrao_travessa.png | Padrão de Travessa | placa de madeira clara com o recorte/silhueta de barra curta de guarda |
-| cabeca_enderman.png | Cabeça de Enderman | cabeça preta cúbica com olhos roxos |
-| balde_argila.png | Balde de Argila | balde de cerâmica terracota vazio |
-| balde_argila_agua.png | Balde de Argila com Água | balde terracota com água azul |
-| balde_argila_lava.png | Balde de Argila com Lava | balde terracota com lava laranja |
-| balde_argila_leite.png | Balde de Argila com Leite | balde terracota com leite branco |
 
 **Peças: 80 arquivos `peca_<peça>_<material>.png`.** São as 8 peças abaixo × os 10 materiais. A mesma forma muda só o material (cor e textura do material).
 
@@ -270,7 +265,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | mesa_moldes | Mesa de Moldes | mesa de madeira com moldes e padrões espalhados |
 | construtor_pecas | Construtor de Peças | mesa de madeira com tampo de pedra e ferramentas de entalhe |
 | estacao_ferramentas | Estação de Ferramentas | bancada de madeira com martelo, ferramentas e torno |
-| forja_ferramentas | Forja de Ferramentas | bancada pesada de ferro sobre bloco de metal |
 
 ### Fase 16: Tinkers' Construct (fundição)
 
@@ -321,11 +315,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | serragem.png | Serragem | montinho de pó de madeira |
-| po_estanho.png | Pó de Estanho | montinho de pó prata-claro |
-| po_bronze.png | Pó de Bronze | montinho de pó bronze |
-| po_aco.png | Pó de Aço | montinho de pó cinza-escuro |
-| lingote_niquel.png | Lingote de Níquel | lingote prata-amarelado |
-| lingote_invar.png | Lingote de Invar | lingote cinza-esverdeado claro |
 
 **Blocos (todos máquinas):**
 
@@ -343,9 +332,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | celula_energia_reforcada | Célula de Energia Reforçada | cubo de energia com moldura de aço |
 | celula_energia_redstone | Célula de Energia Redstone | cubo de energia com vidro vermelho |
 | celula_energia_ressonante | Célula de Energia Ressonante | cubo de energia roxo brilhante |
-| conduite_reforcado | Conduíte Reforçado | cabo de energia grosso de aço |
-| conduite_redstone | Conduíte de Redstone | cabo de energia com núcleo vermelho |
-| tesseract | Tesseract | cubo de metal com núcleo flutuante ciano |
 
 ### Fase 18: armazenamento (JABBA, AutoPackager, AE1 + ExtraCells)
 
@@ -373,7 +359,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | componente_me_4k.png | Componente ME 4k | chip de memória com núcleo verde |
 | componente_me_16k.png | Componente ME 16k | chip de memória com núcleo azul |
 | componente_me_64k.png | Componente ME 64k | chip de memória com núcleo roxo |
-| carcaca_celula.png | Carcaça de Célula | cartucho cinza vazio |
 | cristal_certus.png | Cristal de Certus | cristal azul-claro pontudo |
 | po_certus.png | Pó de Certus | montinho de pó azul-claro |
 | silicio.png | Silício | placa cinza-escura brilhante |
@@ -438,11 +423,9 @@ Os blocos sem coluna "Tipo" são todos máquina.
 |---|---|---|
 | lingote_ferro_comprimido.png | Lingote de Ferro Comprimido | lingote de ferro escuro e denso |
 | manometro.png | Manômetro | relógio de pressão com ponteiro |
-| pa_turbina.png | Pá de Turbina | pá curva de metal |
 | placa_circuito_vazia.png | Placa de Circuito Vazia | placa verde sem componentes |
 | transistor.png | Transistor | componente preto com 3 pernas |
 | capacitor.png | Capacitor | cilindro azul com 2 pernas |
-| acido_gravacao.png | Ácido de Gravação | garrafa com líquido verde-ácido |
 
 **Blocos:**
 

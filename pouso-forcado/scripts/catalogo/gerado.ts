@@ -189,7 +189,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:computador_bordo": {
   "pt": "Computador de Bordo",
   "en": "Flight Computer",
-  "icone": "textures/items/cl/v/computador_bordo"
+  "icone": "textures/items/cl/arte/computador_bordo"
  },
  "cl:condensador_agua": {
   "pt": "Condensador de Água",
@@ -234,12 +234,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:feijao": {
   "pt": "Feijão",
   "en": "Beans",
-  "icone": "textures/items/cl/hc/feijao"
+  "icone": "textures/items/cl/arte/feijao"
  },
  "cl:feijao_assado": {
   "pt": "Feijão Assado",
   "en": "Baked Beans",
-  "icone": "textures/items/cl/hc/feijao_assado"
+  "icone": "textures/items/cl/arte/feijao_assado"
  },
  "cl:ferro_po": {
   "pt": "Pó de Minério de Ferro",
@@ -249,12 +249,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:ferro_quebrado": {
   "pt": "Pedaço Quebrado de Ferro",
   "en": "Broken Iron Ore",
-  "icone": "textures/items/cl/v/ferro_quebrado"
+  "icone": "textures/items/cl/arte/ferro_quebrado"
  },
  "cl:ferro_triturado": {
   "pt": "Pedaço Triturado de Ferro",
   "en": "Crushed Iron Ore",
-  "icone": "textures/items/cl/v/ferro_triturado"
+  "icone": "textures/items/cl/arte/ferro_triturado"
  },
  "cl:filtro": {
   "pt": "Filtro de Ar",
@@ -279,7 +279,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fuba": {
   "pt": "Fubá",
   "en": "Cornmeal",
-  "icone": "textures/items/cl/hc/fuba"
+  "icone": "textures/items/cl/arte/fuba"
  },
  "cl:gerador": {
   "pt": "Gerador a Carvão",
@@ -294,7 +294,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:hamburguer": {
   "pt": "Hambúrguer",
   "en": "Hamburger",
-  "icone": "textures/items/cl/hc/hamburguer"
+  "icone": "textures/items/cl/arte/hamburguer"
  },
  "cl:idolo_amaldicoado": {
   "pt": "Ídolo Amaldiçoado",
@@ -304,7 +304,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:maionese": {
   "pt": "Maionese",
   "en": "Mayonnaise",
-  "icone": "textures/items/cl/hc/maionese"
+  "icone": "textures/items/cl/arte/maionese"
  },
  "cl:manteiga": {
   "pt": "Manteiga",
@@ -329,7 +329,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:martelo_madeira": {
   "pt": "Martelo de Madeira",
   "en": "Wooden Hammer",
-  "icone": "textures/items/cl/v/martelo_madeira"
+  "icone": "textures/items/cl/arte/martelo_madeira"
  },
  "cl:martelo_ouro": {
   "pt": "Martelo de Ouro",
@@ -349,12 +349,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:massa": {
   "pt": "Massa",
   "en": "Dough",
-  "icone": "textures/items/cl/hc/massa"
+  "icone": "textures/items/cl/arte/massa"
  },
  "cl:massa_liquida": {
   "pt": "Massa Líquida",
   "en": "Batter",
-  "icone": "textures/items/cl/hc/massa_liquida"
+  "icone": "textures/items/cl/arte/massa_liquida"
  },
  "cl:milho": {
   "pt": "Milho",
@@ -364,7 +364,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:milho_espiga": {
   "pt": "Milho na Espiga",
   "en": "Corn on the Cob",
-  "icone": "textures/items/cl/hc/milho_espiga"
+  "icone": "textures/items/cl/arte/milho_espiga"
  },
  "cl:moinho": {
   "pt": "Moinho de Vento",
@@ -384,7 +384,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:omelete": {
   "pt": "Omelete",
   "en": "Omelet",
-  "icone": "textures/items/cl/hc/omelete"
+  "icone": "textures/items/cl/arte/omelete"
  },
  "cl:organizador": {
   "pt": "Organizador",
@@ -399,22 +399,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:ouro_quebrado": {
   "pt": "Pedaço Quebrado de Ouro",
   "en": "Broken Gold Ore",
-  "icone": "textures/items/cl/v/ouro_quebrado"
+  "icone": "textures/items/cl/arte/ouro_quebrado"
  },
  "cl:ouro_triturado": {
   "pt": "Pedaço Triturado de Ouro",
   "en": "Crushed Gold Ore",
-  "icone": "textures/items/cl/v/ouro_triturado"
+  "icone": "textures/items/cl/arte/ouro_triturado"
  },
  "cl:ovo_cozido": {
   "pt": "Ovo Cozido",
   "en": "Boiled Egg",
-  "icone": "textures/items/cl/hc/ovo_cozido"
+  "icone": "textures/items/cl/arte/ovo_cozido"
  },
  "cl:ovo_frito": {
   "pt": "Ovo Frito",
   "en": "Fried Egg",
-  "icone": "textures/items/cl/hc/ovo_frito"
+  "icone": "textures/items/cl/arte/ovo_frito"
  },
  "cl:painel_nave": {
   "pt": "Painel da Nave",
@@ -434,17 +434,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:panquecas": {
   "pt": "Panquecas",
   "en": "Pancakes",
-  "icone": "textures/items/cl/hc/panquecas"
+  "icone": "textures/items/cl/arte/panquecas"
  },
  "cl:pedrinha": {
   "pt": "Pedrinha",
   "en": "Pebble",
-  "icone": "textures/items/cl/v/pedrinha"
+  "icone": "textures/items/cl/arte/pedrinha"
  },
  "cl:pemmican": {
   "pt": "Pemmican",
   "en": "Pemmican",
-  "icone": "textures/items/cl/hc/pemmican"
+  "icone": "textures/items/cl/arte/pemmican"
  },
  "cl:peneira": {
   "pt": "Peneira",
@@ -474,12 +474,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pimentao_recheado": {
   "pt": "Pimentão Recheado",
   "en": "Stuffed Pepper",
-  "icone": "textures/items/cl/hc/pimentao_recheado"
+  "icone": "textures/items/cl/arte/pimentao_recheado"
  },
  "cl:pipoca": {
   "pt": "Pipoca",
   "en": "Popcorn",
-  "icone": "textures/items/cl/hc/pipoca"
+  "icone": "textures/items/cl/arte/pipoca"
  },
  "cl:placa_casco": {
   "pt": "Placa de Casco",
@@ -544,7 +544,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:porcelana": {
   "pt": "Porcelana",
   "en": "Porcelain",
-  "icone": "textures/items/cl/v/porcelana"
+  "icone": "textures/items/cl/arte/porcelana"
  },
  "cl:queijo": {
   "pt": "Queijo",
@@ -604,7 +604,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:semente_feijao": {
   "pt": "Sementes de Feijão",
   "en": "Beans Seeds",
-  "icone": "textures/items/cl/hc/semente_feijao"
+  "icone": "textures/items/cl/arte/semente_feijao"
  },
  "cl:semente_fruta_cacto": {
   "pt": "Sementes de Fruta do Cacto",
@@ -624,37 +624,37 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:semente_pimentao": {
   "pt": "Sementes de Pimentão",
   "en": "Bell Pepper Seeds",
-  "icone": "textures/items/cl/hc/semente_pimentao"
+  "icone": "textures/items/cl/arte/semente_pimentao"
  },
  "cl:semente_tomate": {
   "pt": "Sementes de Tomate",
   "en": "Tomato Seeds",
-  "icone": "textures/items/cl/hc/semente_tomate"
+  "icone": "textures/items/cl/arte/semente_tomate"
  },
  "cl:sopa_arroz": {
   "pt": "Sopa de Arroz",
   "en": "Rice Soup",
-  "icone": "textures/items/cl/hc/sopa_arroz"
+  "icone": "textures/items/cl/arte/sopa_arroz"
  },
  "cl:sopa_cacto": {
   "pt": "Sopa de Cacto",
   "en": "Cactus Soup",
-  "icone": "textures/items/cl/hc/sopa_cacto"
+  "icone": "textures/items/cl/arte/sopa_cacto"
  },
  "cl:sopa_legumes": {
   "pt": "Sopa de Legumes",
   "en": "Vegetable Soup",
-  "icone": "textures/items/cl/hc/sopa_legumes"
+  "icone": "textures/items/cl/arte/sopa_legumes"
  },
  "cl:sopa_tomate": {
   "pt": "Sopa de Tomate",
   "en": "Tomato Soup",
-  "icone": "textures/items/cl/hc/sopa_tomate"
+  "icone": "textures/items/cl/arte/sopa_tomate"
  },
  "cl:suco_cacto": {
   "pt": "Suco de Fruta do Cacto",
   "en": "Cactus Fruit Juice",
-  "icone": "textures/items/cl/hc/suco_cacto"
+  "icone": "textures/items/cl/arte/suco_cacto"
  },
  "cl:tabua_corte": {
   "pt": "Tábua de Corte",
@@ -664,7 +664,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:taco": {
   "pt": "Taco",
   "en": "Taco",
-  "icone": "textures/items/cl/hc/taco"
+  "icone": "textures/items/cl/arte/taco"
  },
  "cl:terminal": {
   "pt": "Terminal de Armazenamento",
@@ -679,17 +679,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tomate": {
   "pt": "Tomate",
   "en": "Tomato",
-  "icone": "textures/items/cl/hc/tomate"
+  "icone": "textures/items/cl/arte/tomate"
  },
  "cl:torrada": {
   "pt": "Torrada",
   "en": "Toast",
-  "icone": "textures/items/cl/hc/torrada"
+  "icone": "textures/items/cl/arte/torrada"
  },
  "cl:tortilha": {
   "pt": "Tortilha",
   "en": "Tortilla",
-  "icone": "textures/items/cl/hc/tortilha"
+  "icone": "textures/items/cl/arte/tortilha"
  },
  "minecraft:acacia_leaves": {
   "pt": "Folhas de Acácia",
