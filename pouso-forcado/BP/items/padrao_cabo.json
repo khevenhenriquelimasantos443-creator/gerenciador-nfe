@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:padrao_cabo",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_padrao_cabo",
+      "minecraft:display_name": {
+        "value": "item.cl:padrao_cabo.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

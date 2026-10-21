@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:peca_lamina_espada_madeira",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_peca_lamina_espada_madeira",
+      "minecraft:display_name": {
+        "value": "item.cl:peca_lamina_espada_madeira.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

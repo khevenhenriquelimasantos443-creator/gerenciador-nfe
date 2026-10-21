@@ -1,11 +1,12 @@
 // Configuração central do add-on. Tudo que for "número de balanceamento" fica aqui.
 
+import { ORIGEM_CONTEUDO } from "./conteudo/gerado.js";
 import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gerado.js";
 
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.20.2";
+export const VERSAO = "0.21.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -360,6 +361,41 @@ export const ESTUFA = {
   yAbaixo: 1, // da camada abaixo da estufa...
   yAcima: 2, // ...até 2 acima
   chanceCrescer: 0.5, // por planta, por ciclo
+} as const;
+
+// Fases 15 e 16: Tinkers' Construct + Iguana Tweaks (scripts/tinkers/). Materiais, peças e ferramentas
+// ficam em tools/dados/conteudo/tinkers.mjs (gerados para DADOS_F15).
+export const TINKERS = {
+  iguanaDurabilidade: 0.5, // Iguana: metade da durabilidade do TC
+  xpBase: 100, // XP para o nível 2; cada nível pede ×1,35
+  xpFator: 1.35,
+  nivelMax: 6,
+  espacosIniciais: 1,
+  niveisComEspaco: [2, 4, 6], // +1 espaço para modificador
+  consertoPorItem: 0.25, // cada item do material conserta 25% da durabilidade
+  metais: ["ferro", "cobre", "bronze", "aco"],
+  // Item -> material (Construtor de Peças e conserto). Tábuas de qualquer madeira = madeira.
+  materialDeItem: {
+    "minecraft:cobblestone": "pedra", "minecraft:stone": "pedra", "minecraft:cobbled_deepslate": "pedra", "minecraft:mossy_cobblestone": "pedra",
+    "minecraft:flint": "silex", "minecraft:cactus": "cacto", "minecraft:bone": "osso", "minecraft:obsidian": "obsidiana",
+    "minecraft:iron_ingot": "ferro", "minecraft:copper_ingot": "cobre", "cl:lingote_bronze": "bronze", "cl:lingote_aco": "aco",
+  } as Readonly<Record<string, string>>,
+  consertoCom: {
+    pedra: "minecraft:cobblestone", silex: "minecraft:flint", cacto: "minecraft:cactus", osso: "minecraft:bone", obsidiana: "minecraft:obsidian",
+    ferro: "minecraft:iron_ingot", cobre: "minecraft:copper_ingot", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco",
+  } as Readonly<Record<string, string>>,
+  // Iguana: nível de mineração que cada bloco pede (os outros: 0).
+  nivelBloco: {
+    ...Object.fromEntries(["iron_ore", "deepslate_iron_ore", "copper_ore", "deepslate_copper_ore", "lapis_ore", "deepslate_lapis_ore", "raw_iron_block", "raw_copper_block"].map((b) => [`minecraft:${b}`, 1])),
+    ...Object.fromEntries(["gold_ore", "deepslate_gold_ore", "redstone_ore", "lit_redstone_ore", "deepslate_redstone_ore", "lit_deepslate_redstone_ore", "diamond_ore", "deepslate_diamond_ore", "emerald_ore", "deepslate_emerald_ore", "raw_gold_block"].map((b) => [`minecraft:${b}`, 2])),
+    ...Object.fromEntries(["obsidian", "crying_obsidian", "ancient_debris", "respawn_anchor"].map((b) => [`minecraft:${b}`, 3])),
+  } as Readonly<Record<string, number>>,
+  modificadores: {
+    pressa: { item: "minecraft:redstone", qtd: 16, max: 2 }, // Pressa I/II com a ferramenta na mão
+    reforco: { item: "minecraft:diamond", qtd: 1, max: 1, durabilidade: 500 },
+    esmeralda: { item: "minecraft:emerald", qtd: 1, max: 1, fator: 0.5 },
+    musgo: { item: "cl:bola_musgo", qtd: 3, max: 1, segundos: 15 }, // +1 de durabilidade a cada 15 s
+  },
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)
@@ -946,3 +982,4 @@ export const FOME = {
 
 for (const id of [IDS.camelPack, IDS.mascara, IDS.filtro]) ORIGEM_MOD[id] = "EnviroMine";
 for (const id of ITENS_HC) ORIGEM_MOD[id] = "Pam's HarvestCraft";
+Object.assign(ORIGEM_MOD, ORIGEM_CONTEUDO); // Fases 15+

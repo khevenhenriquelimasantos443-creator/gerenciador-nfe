@@ -11,6 +11,8 @@ import { cadinho } from "./blocos/cadinho.js";
 import { montadora } from "./blocos/montadora.js";
 import { folhaInfestada, registrarNihilo } from "./blocos/nihilo.js";
 import { planta, registrarPlantacao } from "./blocos/plantacao.js";
+import { registrarFerramentas } from "./tinkers/ferramenta.js";
+import { construtorPecasComp, estacaoFerramentasComp, mesaMoldesComp } from "./tinkers/mesas.js";
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
 import { registrarCatalogo } from "./catalogo/catalogo.js";
@@ -59,6 +61,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent(IDS.cadinho, comPerfil(IDS.cadinho, cadinho));
   blockComponentRegistry.registerCustomComponent(IDS.folhaInfestada, comPerfil(IDS.folhaInfestada, folhaInfestada));
   blockComponentRegistry.registerCustomComponent("cl:planta", comPerfil("plantação", planta));
+  blockComponentRegistry.registerCustomComponent("cl:mesa_moldes", mesaMoldesComp);
+  blockComponentRegistry.registerCustomComponent("cl:construtor_pecas", construtorPecasComp);
+  blockComponentRegistry.registerCustomComponent("cl:estacao_ferramentas", estacaoFerramentasComp);
 });
 
 registrarPerfil();
@@ -81,5 +86,6 @@ registrarCatalogo();
 registrarOrganizador();
 registrarNihilo();
 registrarPlantacao();
+registrarFerramentas();
 registrarAmbiente();
 registrarFome();

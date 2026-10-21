@@ -45,7 +45,13 @@ export type Acao =
   | "cadinho_lava"
   | "camel_encher"
   | "bem_alimentado"
-  | "colher";
+  | "colher"
+  | "padrao"
+  | "peca"
+  | "montar_ferramenta"
+  | "consertar"
+  | "ferramenta_nivel"
+  | "modificar";
 
 type MissaoBase = {
   id: string;
@@ -158,6 +164,26 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         objetivo: { tipo: "ter", item: IDS.mascara, qtd: 1 },
         recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }],
         escolha: [{ item: IDS.filtro, quantidade: 4 }, { item: IDS.aguaExcelente, quantidade: 2 }],
+      },
+    ],
+  },
+  {
+    id: "tinkers", // Fase 15: Tinkers' Construct + Iguana Tweaks
+    icone: "cl:picareta_silex",
+    requer: ["peneira"],
+    missoes: [
+      { id: "tc_padrao", objetivo: { tipo: "acao", acao: "padrao", qtd: 1 }, recompensa: [{ item: "minecraft:flint", quantidade: 4 }] },
+      { id: "tc_peca", requer: ["tc_padrao"], objetivo: { tipo: "acao", acao: "peca", qtd: 3 }, recompensa: [{ item: "minecraft:bone", quantidade: 4 }] },
+      { id: "tc_picareta", requer: ["tc_peca"], objetivo: { tipo: "ter", item: "cl:picareta_silex", qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
+      { id: "tc_montar", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "montar_ferramenta", qtd: 3 }, recompensa: [{ item: "minecraft:flint", quantidade: 8 }] },
+      { id: "tc_nivel", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "ferramenta_nivel", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "tc_consertar", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "consertar", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },
+      {
+        id: "tc_obsidiana",
+        requer: ["tc_nivel"],
+        objetivo: { tipo: "ter", item: "cl:picareta_obsidiana", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }],
+        escolha: [{ item: "minecraft:diamond", quantidade: 1 }, { item: "minecraft:obsidian", quantidade: 6 }],
       },
     ],
   },

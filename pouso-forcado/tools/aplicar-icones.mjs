@@ -32,4 +32,17 @@ for (const arq of existsSync(ARTE) ? readdirSync(ARTE).filter((a) => a.endsWith(
   n++;
 }
 writeFileSync(arqTex, JSON.stringify(tex, null, 2) + "\n");
-console.log(`ícones desenhados: ${n} itens`);
+
+// Texturas de face desenhadas (RP/textures/blocks/cl/arte/<bloco>_<face>.png) no lugar das geradas (clc_*).
+const FACES = join(RAIZ, "RP/textures/blocks/cl/arte");
+const arqTer = join(RAIZ, "RP/textures/terrain_texture.json");
+const ter = JSON.parse(readFileSync(arqTer, "utf8"));
+let f = 0;
+for (const arq of existsSync(FACES) ? readdirSync(FACES).filter((a) => a.endsWith(".png")) : []) {
+  const nome = arq.slice(0, -4);
+  if (!ter.texture_data[`clc_${nome}`]) continue;
+  ter.texture_data[`clc_${nome}`] = { textures: `textures/blocks/cl/arte/${nome}` };
+  f++;
+}
+writeFileSync(arqTer, JSON.stringify(ter, null, 2) + "\n");
+console.log(`ícones desenhados: ${n} itens, ${f} faces de bloco`);

@@ -120,7 +120,8 @@ export function gastarFerramenta(jogador: Player, pontos = 1): void {
 }
 
 /** Dá um item ao jogador (ou solta aos pés, se a mochila estiver cheia). */
-export function darAoJogador(jogador: Player, item: string, quantidade = 1): void {
-  const sobra = jogador.getComponent("minecraft:inventory")?.container?.addItem(new ItemStack(item, quantidade)) ?? new ItemStack(item, quantidade);
+export function darAoJogador(jogador: Player, item: string | ItemStack, quantidade = 1): void {
+  const pilha = typeof item === "string" ? new ItemStack(item, quantidade) : item;
+  const sobra = jogador.getComponent("minecraft:inventory")?.container?.addItem(pilha) ?? pilha;
   if (sobra) jogador.dimension.spawnItem(sobra, jogador.location);
 }

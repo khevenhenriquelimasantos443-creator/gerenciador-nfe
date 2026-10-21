@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mesa_moldes"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B",
+      "P"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:padrao_branco"
+      },
+      "P": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:padrao_branco"
+      }
+    ],
+    "result": {
+      "item": "cl:mesa_moldes"
+    }
+  }
+}

@@ -345,6 +345,24 @@
     },
     "clhc_u_tampa": {
       "textures": "textures/blocks/iron_block"
+    },
+    "clc_mesa_moldes": {
+      "textures": "textures/blocks/cl/c/mesa_moldes"
+    },
+    "clc_mesa_moldes_topo": {
+      "textures": "textures/blocks/cl/c/mesa_moldes_topo"
+    },
+    "clc_construtor_pecas": {
+      "textures": "textures/blocks/cl/c/construtor_pecas"
+    },
+    "clc_construtor_pecas_topo": {
+      "textures": "textures/blocks/cl/c/construtor_pecas_topo"
+    },
+    "clc_estacao_ferramentas": {
+      "textures": "textures/blocks/cl/c/estacao_ferramentas"
+    },
+    "clc_estacao_ferramentas_topo": {
+      "textures": "textures/blocks/cl/c/estacao_ferramentas_topo"
     }
   }
 }

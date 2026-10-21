@@ -1,0 +1,38 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:machadinha_cacto",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_machadinha_cacto",
+      "minecraft:display_name": {
+        "value": "item.cl:machadinha_cacto.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 1000
+      },
+      "minecraft:damage": 5,
+      "minecraft:enchantable": {
+        "slot": "axe",
+        "value": 10
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "q.any_tag('minecraft:is_axe_item_destructible')"
+            },
+            "speed": 5
+          }
+        ]
+      }
+    }
+  }
+}

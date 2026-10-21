@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 14** (Pam's HarvestCraft: 10 plantações com sementes da peneira, 8 utensílios de cozinha e 35 receitas com os valores do Hunger Overhaul). Fases 0 a 13 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 15** (Tinkers' Construct + Iguana: ferramentas montadas com peças, que sobem de nível). Fases 0 a 14 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -24,8 +24,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | pronta |
 | 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | pronta |
 | 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | pronta |
-| 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | **esta versão** |
-| 15–23 | Os mods do Crash Landing, um bloco por fase: Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | pronta |
+| 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | **esta versão** |
+| 16–23 | Os mods do Crash Landing, um bloco por fase: fundição do Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -126,6 +127,20 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Ferramentas (Fase 15: Tinkers' Construct + Iguana Tweaks)
+
+- **Padrão em Branco** (2 tábuas + 2 gravetos = 4). **Mesa de Moldes** (padrão sobre tábua), **Construtor de Peças** (padrão sobre tora) e **Estação de Ferramentas** (padrão sobre bancada).
+- **Mesa de Moldes**: toque com um Padrão em Branco na mão e escolha a peça (cabo, ligação, cabeças de picareta/pá/machado, lâmina, guarda larga, travessa).
+- **Construtor de Peças**: toque com o padrão na mão e escolha o material da mochila. Cabeças e lâmina custam 2, o resto 1. Materiais: madeira (tábuas), pedra (pedregulho), sílex, cacto, osso, obsidiana. Metal só pela fundição (Fase 16).
+- **Estação de Ferramentas**: mão vazia = montar (Picareta = cabeça + ligação + cabo; Pá e Machadinha = cabeça + cabo; Espada Larga = lâmina + guarda larga + cabo). Com a ferramenta na mão = consertar (cada item do material da cabeça devolve 25%) ou modificar.
+- **Números do TC 1.6.4 com o Iguana**: a cabeça dá velocidade, dano e nível de mineração; durabilidade = cabeça × multiplicador do cabo × 0,5 (na picareta, média de cabeça e ligação). Ex.: sílex 171 e nível 1; obsidiana 89 e nível 3; ferro 250 e nível 2; aço 750 e nível 3.
+- **Nível de mineração (Iguana)**: ferro, cobre e lápis pedem nível 1; ouro, redstone, diamante e esmeralda pedem 2; obsidiana pede 3. Com ferramenta fraca o bloco não quebra.
+- **Ferramenta não some**: em 0 de durabilidade fica "quebrada" até ser consertada.
+- **XP da ferramenta**: 1 por bloco ou golpe; nível 2 com 100 XP e cada nível seguinte ×1,35; 6 níveis (Desajeitada → Mestra). 1 espaço de modificador no começo, +1 nos níveis 2, 4 e 6.
+- **Modificadores**: Pressa (16 redstones, até II: efeito Pressa com a ferramenta na mão), Reforço (diamante: +500), Esmeralda (+50%), Musgo (3 bolas de musgo: conserta 1 a cada 15 s).
+- **Sílex**: 4 cascalhos = 1 sílex.
+- Capítulo novo no Diário: **Ferramentas (Tinkers' Construct)**, 7 missões.
 
 ## Cozinha (Fase 14: Pam's HarvestCraft)
 

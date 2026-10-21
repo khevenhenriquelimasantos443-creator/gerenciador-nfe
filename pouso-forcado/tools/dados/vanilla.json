@@ -194,6 +194,11 @@
   "en": "Block of Coal",
   "icone": "textures/blocks/coal_block"
  },
+ "minecraft:cobbled_deepslate": {
+  "pt": "Pedregulho de Ardosiabissal",
+  "en": "Cobbled Deepslate",
+  "icone": "textures/blocks/deepslate/cobbled_deepslate"
+ },
  "minecraft:cobblestone": {
   "pt": "Pedregulho",
   "en": "Cobblestone",
@@ -498,6 +503,11 @@
   "pt": "Balde de Leite",
   "en": "Milk Bucket",
   "icone": "textures/items/bucket_milk"
+ },
+ "minecraft:mossy_cobblestone": {
+  "pt": "Pedregulho com Musgo",
+  "en": "Mossy Cobblestone",
+  "icone": "textures/blocks/cobblestone_mossy"
  },
  "minecraft:mossy_stone_bricks": {
   "pt": "Tijolos de Pedra com Musgo",
