@@ -35,8 +35,8 @@
         "controller.render.default"
       ],
       "spawn_egg": {
-        "base_color": "#d8c48a",
-        "overlay_color": "#ff9a1a"
+        "texture": "cl_ovo_golem_areia",
+        "texture_index": 0
       }
     }
   }

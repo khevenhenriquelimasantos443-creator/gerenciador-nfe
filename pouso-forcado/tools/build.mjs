@@ -22,8 +22,21 @@ function listar(pasta) {
   });
 }
 
+// Ícones de item que ninguém usa (os gerados que perderam para os desenhados à mão) ficam fora
+// do pack: só entra o PNG de textures/items/cl/ citado no RP (item_texture.json) ou nos scripts (Catálogo).
+let citados;
+function iconeUsado(arq) {
+  const rel = relative(join(RAIZ, "RP"), arq).split(sep).join("/");
+  if (!rel.startsWith("textures/items/cl/") || !rel.endsWith(".png")) return true;
+  citados ??= [...listar(join(RAIZ, "RP")), ...listar(join(RAIZ, "BP/scripts"))]
+    .filter((a) => a.endsWith(".json") || a.endsWith(".js"))
+    .map((a) => readFileSync(a, "utf8"))
+    .join("\n");
+  return citados.includes(`"${rel.slice(0, -4)}"`);
+}
+
 function empacotar(pasta, prefixo = "") {
-  return listar(pasta).map((arq) => ({
+  return listar(pasta).filter(iconeUsado).map((arq) => ({
     nome: prefixo + relative(pasta, arq).split(sep).join("/"),
     dados: readFileSync(arq),
   }));
@@ -53,6 +66,7 @@ function validarEstadosDeBlocos(pasta) {
 const node = process.execPath;
 console.log("> dados do Catálogo");
 execFileSync(node, [join(RAIZ, "tools/gerar-harvestcraft.mjs")], { stdio: "inherit" });
+execFileSync(node, [join(RAIZ, "tools/aplicar-icones.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-catalogo.mjs")], { stdio: "inherit" });
 
 console.log("> compilando TypeScript");
@@ -64,6 +78,8 @@ execFileSync(node, [join(RAIZ, "tools/gerar-texturas.mjs")], { stdio: "inherit" 
 execFileSync(node, [join(RAIZ, "tools/gerar-visual.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-nave.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" });
+// Os geradores reescrevem item_texture.json: os ícones desenhados voltam a valer.
+execFileSync(node, [join(RAIZ, "tools/aplicar-icones.mjs")], { stdio: "inherit" });
 
 // O jogo descarta parte de um item (até o ícone) se a velocidade do "minecraft:digger" não for inteira.
 function validarItens(pasta) {

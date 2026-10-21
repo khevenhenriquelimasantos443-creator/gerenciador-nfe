@@ -72,11 +72,13 @@ for (const rel of arquivos("BP/items")) {
   const chave = typeof ic === "string" ? ic : ic?.texture ?? ic?.textures?.default;
   itens[id] = { pt: ptCl[`item.${id}.name`] ?? id, en: enCl[`item.${id}.name`] ?? id, icone: caminho(iconesItens[chave]?.textures) };
 }
-// Ícone de bloco: o desenho 3D feito por tools/icones-blocos.py; sem ele, a textura de cima.
+// Ícone de bloco: o desenhado à mão (arte/blocos, ver tools/importar-icones.py); senão o desenho 3D
+// feito por tools/icones-blocos.py; sem ele, a textura de cima.
 for (const rel of arquivos("BP/blocks")) {
   const d = lerJson(rel)["minecraft:block"];
   const id = d.description.identifier;
-  const desenho = `textures/items/cl/blocos/${id.slice(3)}`;
+  const arte = `textures/items/cl/arte/blocos/${id.slice(3)}`;
+  const desenho = existsSync(join(RAIZ, `RP/${arte}.png`)) ? arte : `textures/items/cl/blocos/${id.slice(3)}`;
   const mats = d.components["minecraft:material_instances"] ?? {};
   const icone = existsSync(join(RAIZ, `RP/${desenho}.png`)) ? desenho : caminho(terreno[(mats.up ?? mats["*"])?.texture]?.textures);
   itens[id] = { pt: ptCl[`tile.${id}.name`] ?? id, en: enCl[`tile.${id}.name`] ?? id, icone };

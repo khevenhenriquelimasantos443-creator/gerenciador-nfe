@@ -14,47 +14,47 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:agua_boa": {
   "pt": "Água Boa",
   "en": "Good Water",
-  "icone": "textures/items/cl/agua_boa"
+  "icone": "textures/items/cl/arte/agua_boa"
  },
  "cl:agua_excelente": {
   "pt": "Água Excelente",
   "en": "Excellent Water",
-  "icone": "textures/items/cl/agua_excelente"
+  "icone": "textures/items/cl/arte/agua_excelente"
  },
  "cl:agua_impropria": {
   "pt": "Água Salgada",
   "en": "Salt Water",
-  "icone": "textures/items/cl/agua_impropria"
+  "icone": "textures/items/cl/arte/agua_impropria"
  },
  "cl:agua_muito_suja": {
   "pt": "Água Muito Suja",
   "en": "Very Dirty Water",
-  "icone": "textures/items/cl/agua_muito_suja"
+  "icone": "textures/items/cl/arte/agua_muito_suja"
  },
  "cl:agua_suja": {
   "pt": "Água Suja",
   "en": "Dirty Water",
-  "icone": "textures/items/cl/agua_suja"
+  "icone": "textures/items/cl/arte/agua_suja"
  },
  "cl:alho": {
   "pt": "Alho",
   "en": "Garlic",
-  "icone": "textures/items/cl/hc/alho"
+  "icone": "textures/items/cl/arte/alho"
  },
  "cl:amendoim": {
   "pt": "Amendoim",
   "en": "Peanut",
-  "icone": "textures/items/cl/hc/amendoim"
+  "icone": "textures/items/cl/arte/amendoim"
  },
  "cl:arroz": {
   "pt": "Arroz",
   "en": "Rice",
-  "icone": "textures/items/cl/hc/arroz"
+  "icone": "textures/items/cl/arte/arroz"
  },
  "cl:arroz_frito": {
   "pt": "Arroz Frito",
   "en": "Fried Rice",
-  "icone": "textures/items/cl/hc/arroz_frito"
+  "icone": "textures/items/cl/arte/arroz_frito"
  },
  "cl:assadeira": {
   "pt": "Assadeira",
@@ -74,37 +74,37 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bateria": {
   "pt": "Bateria",
   "en": "Battery",
-  "icone": "textures/items/cl/blocos/bateria"
+  "icone": "textures/items/cl/arte/blocos/bateria"
  },
  "cl:bicho_seda": {
   "pt": "Bicho-da-seda",
   "en": "Silkworm",
-  "icone": "textures/items/cl/v/bicho_seda"
+  "icone": "textures/items/cl/arte/bicho_seda"
  },
  "cl:bicho_seda_cozido": {
   "pt": "Bicho-da-seda Cozido",
   "en": "Cooked Silkworm",
-  "icone": "textures/items/cl/v/bicho_seda_cozido"
+  "icone": "textures/items/cl/arte/bicho_seda_cozido"
  },
  "cl:bolinho_arroz": {
   "pt": "Bolinho de Arroz",
   "en": "Rice Cake",
-  "icone": "textures/items/cl/hc/bolinho_arroz"
+  "icone": "textures/items/cl/arte/bolinho_arroz"
  },
  "cl:broa_milho": {
   "pt": "Broa de Milho",
   "en": "Cornbread",
-  "icone": "textures/items/cl/hc/broa_milho"
+  "icone": "textures/items/cl/arte/broa_milho"
  },
  "cl:burrito": {
   "pt": "Burrito de Feijão",
   "en": "Bean Burrito",
-  "icone": "textures/items/cl/hc/burrito"
+  "icone": "textures/items/cl/arte/burrito"
  },
  "cl:cabo": {
   "pt": "Cabo de Cobre",
   "en": "Copper Cable",
-  "icone": "textures/items/cl/blocos/cabo"
+  "icone": "textures/items/cl/arte/blocos/cabo"
  },
  "cl:cacarola": {
   "pt": "Caçarola",
@@ -119,72 +119,72 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cadinho_cru": {
   "pt": "Cadinho Cru",
   "en": "Unfired Crucible",
-  "icone": "textures/items/cl/v/cadinho_cru"
+  "icone": "textures/items/cl/arte/cadinho_cru"
  },
  "cl:cajado": {
   "pt": "Cajado",
   "en": "Crook",
-  "icone": "textures/items/cl/v/cajado"
+  "icone": "textures/items/cl/arte/cajado"
  },
  "cl:caldo": {
   "pt": "Caldo",
   "en": "Stock",
-  "icone": "textures/items/cl/hc/caldo"
+  "icone": "textures/items/cl/arte/caldo"
  },
  "cl:camel_pack": {
   "pt": "Camel Pack",
   "en": "Camel Pack",
-  "icone": "textures/items/cl/v/camel_pack"
+  "icone": "textures/items/cl/arte/camel_pack"
  },
  "cl:catalogo": {
   "pt": "Catálogo",
   "en": "Catalog",
-  "icone": "textures/items/cl/v/catalogo"
+  "icone": "textures/items/cl/arte/catalogo"
  },
  "cl:cebola": {
   "pt": "Cebola",
   "en": "Onion",
-  "icone": "textures/items/cl/hc/cebola"
+  "icone": "textures/items/cl/arte/cebola"
  },
  "cl:celula_combustivel": {
   "pt": "Célula de Combustível",
   "en": "Fuel Cell",
-  "icone": "textures/items/cl/v/celula_combustivel"
+  "icone": "textures/items/cl/arte/celula_combustivel"
  },
  "cl:charque": {
   "pt": "Charque",
   "en": "Beef Jerky",
-  "icone": "textures/items/cl/hc/charque"
+  "icone": "textures/items/cl/arte/charque"
  },
  "cl:chili_poppers": {
   "pt": "Pimentas Empanadas",
   "en": "Chili Poppers",
-  "icone": "textures/items/cl/hc/chili_poppers"
+  "icone": "textures/items/cl/arte/chili_poppers"
  },
  "cl:circuito": {
   "pt": "Circuito",
   "en": "Circuit",
-  "icone": "textures/items/cl/v/circuito"
+  "icone": "textures/items/cl/arte/circuito"
  },
  "cl:cobre_po": {
   "pt": "Pó de Minério de Cobre",
   "en": "Powdered Copper Ore",
-  "icone": "textures/items/cl/v/cobre_po"
+  "icone": "textures/items/cl/arte/cobre_po"
  },
  "cl:cobre_quebrado": {
   "pt": "Pedaço Quebrado de Cobre",
   "en": "Broken Copper Ore",
-  "icone": "textures/items/cl/v/cobre_quebrado"
+  "icone": "textures/items/cl/arte/cobre_quebrado"
  },
  "cl:cobre_triturado": {
   "pt": "Pedaço Triturado de Cobre",
   "en": "Crushed Copper Ore",
-  "icone": "textures/items/cl/v/cobre_triturado"
+  "icone": "textures/items/cl/arte/cobre_triturado"
  },
  "cl:compostor": {
   "pt": "Compostor de Terra",
   "en": "Dirt Composter",
-  "icone": "textures/items/cl/blocos/compostor"
+  "icone": "textures/items/cl/arte/blocos/compostor"
  },
  "cl:computador_bordo": {
   "pt": "Computador de Bordo",
@@ -194,22 +194,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:condensador_agua": {
   "pt": "Condensador de Água",
   "en": "Water Condenser",
-  "icone": "textures/items/cl/blocos/condensador_agua"
+  "icone": "textures/items/cl/arte/blocos/condensador_agua"
  },
  "cl:condensador_avancado": {
   "pt": "Condensador Avançado",
   "en": "Advanced Condenser",
-  "icone": "textures/items/cl/blocos/condensador_avancado"
+  "icone": "textures/items/cl/arte/blocos/condensador_avancado"
  },
  "cl:coracao_farao": {
   "pt": "Coração do Faraó",
   "en": "Pharaoh's Heart",
-  "icone": "textures/items/cl/v/coracao_farao"
+  "icone": "textures/items/cl/arte/coracao_farao"
  },
  "cl:diario_bordo": {
   "pt": "Diário de Bordo",
   "en": "Logbook",
-  "icone": "textures/items/cl/v/diario_bordo"
+  "icone": "textures/items/cl/arte/diario_bordo"
  },
  "cl:espremedor": {
   "pt": "Espremedor",
@@ -219,17 +219,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:estufa": {
   "pt": "Estufa",
   "en": "Greenhouse",
-  "icone": "textures/items/cl/blocos/estufa"
+  "icone": "textures/items/cl/arte/blocos/estufa"
  },
  "cl:faixa_mumia": {
   "pt": "Faixa de Múmia",
   "en": "Mummy Wrap",
-  "icone": "textures/items/cl/faixa_mumia"
+  "icone": "textures/items/cl/arte/faixa_mumia"
  },
  "cl:farinha": {
   "pt": "Farinha",
   "en": "Flour",
-  "icone": "textures/items/cl/hc/farinha"
+  "icone": "textures/items/cl/arte/farinha"
  },
  "cl:feijao": {
   "pt": "Feijão",
@@ -244,7 +244,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:ferro_po": {
   "pt": "Pó de Minério de Ferro",
   "en": "Powdered Iron Ore",
-  "icone": "textures/items/cl/v/ferro_po"
+  "icone": "textures/items/cl/arte/ferro_po"
  },
  "cl:ferro_quebrado": {
   "pt": "Pedaço Quebrado de Ferro",
@@ -259,7 +259,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:filtro": {
   "pt": "Filtro de Ar",
   "en": "Air Filter",
-  "icone": "textures/items/cl/v/filtro"
+  "icone": "textures/items/cl/arte/filtro"
  },
  "cl:folha_infestada": {
   "pt": "Folha Infestada",
@@ -269,12 +269,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:frigideira": {
   "pt": "Frigideira",
   "en": "Skillet",
-  "icone": "textures/items/cl/blocos/frigideira"
+  "icone": "textures/items/cl/arte/blocos/frigideira"
  },
  "cl:fruta_cacto": {
   "pt": "Fruta do Cacto",
   "en": "Cactus Fruit",
-  "icone": "textures/items/cl/fruta_cacto"
+  "icone": "textures/items/cl/arte/fruta_cacto"
  },
  "cl:fuba": {
   "pt": "Fubá",
@@ -284,12 +284,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:gerador": {
   "pt": "Gerador a Carvão",
   "en": "Coal Generator",
-  "icone": "textures/items/cl/blocos/gerador"
+  "icone": "textures/items/cl/arte/blocos/gerador"
  },
  "cl:gerador_monstros": {
   "pt": "Gerador de Monstros",
   "en": "Monster Generator",
-  "icone": "textures/items/cl/blocos/gerador_monstros"
+  "icone": "textures/items/cl/arte/blocos/gerador_monstros"
  },
  "cl:hamburguer": {
   "pt": "Hambúrguer",
@@ -299,7 +299,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:idolo_amaldicoado": {
   "pt": "Ídolo Amaldiçoado",
   "en": "Cursed Idol",
-  "icone": "textures/items/cl/blocos/idolo_amaldicoado"
+  "icone": "textures/items/cl/arte/blocos/idolo_amaldicoado"
  },
  "cl:maionese": {
   "pt": "Maionese",
@@ -309,22 +309,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:manteiga": {
   "pt": "Manteiga",
   "en": "Butter",
-  "icone": "textures/items/cl/hc/manteiga"
+  "icone": "textures/items/cl/arte/manteiga"
  },
  "cl:martelo_cobre": {
   "pt": "Martelo de Cobre",
   "en": "Copper Hammer",
-  "icone": "textures/items/cl/v/martelo_cobre"
+  "icone": "textures/items/cl/arte/martelo_cobre"
  },
  "cl:martelo_diamante": {
   "pt": "Martelo de Diamante",
   "en": "Diamond Hammer",
-  "icone": "textures/items/cl/v/martelo_diamante"
+  "icone": "textures/items/cl/arte/martelo_diamante"
  },
  "cl:martelo_ferro": {
   "pt": "Martelo de Ferro",
   "en": "Iron Hammer",
-  "icone": "textures/items/cl/v/martelo_ferro"
+  "icone": "textures/items/cl/arte/martelo_ferro"
  },
  "cl:martelo_madeira": {
   "pt": "Martelo de Madeira",
@@ -334,17 +334,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:martelo_ouro": {
   "pt": "Martelo de Ouro",
   "en": "Golden Hammer",
-  "icone": "textures/items/cl/v/martelo_ouro"
+  "icone": "textures/items/cl/arte/martelo_ouro"
  },
  "cl:martelo_pedra": {
   "pt": "Martelo de Pedra",
   "en": "Stone Hammer",
-  "icone": "textures/items/cl/v/martelo_pedra"
+  "icone": "textures/items/cl/arte/martelo_pedra"
  },
  "cl:mascara": {
   "pt": "Máscara de Gás",
   "en": "Gas Mask",
-  "icone": "textures/items/cl/v/mascara"
+  "icone": "textures/items/cl/arte/mascara"
  },
  "cl:massa": {
   "pt": "Massa",
@@ -359,7 +359,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:milho": {
   "pt": "Milho",
   "en": "Corn",
-  "icone": "textures/items/cl/hc/milho"
+  "icone": "textures/items/cl/arte/milho"
  },
  "cl:milho_espiga": {
   "pt": "Milho na Espiga",
@@ -369,17 +369,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:moinho": {
   "pt": "Moinho de Vento",
   "en": "Windmill",
-  "icone": "textures/items/cl/blocos/moinho"
+  "icone": "textures/items/cl/arte/blocos/moinho"
  },
  "cl:montadora": {
   "pt": "Montadora",
   "en": "Assembler",
-  "icone": "textures/items/cl/blocos/montadora"
+  "icone": "textures/items/cl/arte/blocos/montadora"
  },
  "cl:motor_nave": {
   "pt": "Motor da Nave",
   "en": "Ship Engine",
-  "icone": "textures/items/cl/v/motor_nave"
+  "icone": "textures/items/cl/arte/motor_nave"
  },
  "cl:omelete": {
   "pt": "Omelete",
@@ -389,12 +389,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:organizador": {
   "pt": "Organizador",
   "en": "Organizer",
-  "icone": "textures/items/cl/v/organizador"
+  "icone": "textures/items/cl/arte/organizador"
  },
  "cl:ouro_po": {
   "pt": "Pó de Minério de Ouro",
   "en": "Powdered Gold Ore",
-  "icone": "textures/items/cl/v/ouro_po"
+  "icone": "textures/items/cl/arte/ouro_po"
  },
  "cl:ouro_quebrado": {
   "pt": "Pedaço Quebrado de Ouro",
@@ -419,17 +419,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:painel_nave": {
   "pt": "Painel da Nave",
   "en": "Ship Console",
-  "icone": "textures/items/cl/blocos/painel_nave"
+  "icone": "textures/items/cl/arte/blocos/painel_nave"
  },
  "cl:painel_solar": {
   "pt": "Painel Solar",
   "en": "Solar Panel",
-  "icone": "textures/items/cl/blocos/painel_solar"
+  "icone": "textures/items/cl/arte/blocos/painel_solar"
  },
  "cl:panela": {
   "pt": "Panela",
   "en": "Pot",
-  "icone": "textures/items/cl/blocos/panela"
+  "icone": "textures/items/cl/arte/blocos/panela"
  },
  "cl:panquecas": {
   "pt": "Panquecas",
@@ -449,12 +449,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:peneira": {
   "pt": "Peneira",
   "en": "Sieve",
-  "icone": "textures/items/cl/blocos/peneira"
+  "icone": "textures/items/cl/arte/blocos/peneira"
  },
  "cl:peneira_automatica": {
   "pt": "Peneira Automática",
   "en": "Automatic Sieve",
-  "icone": "textures/items/cl/blocos/peneira_automatica"
+  "icone": "textures/items/cl/arte/blocos/peneira_automatica"
  },
  "cl:pilao": {
   "pt": "Pilão",
@@ -464,12 +464,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pimenta": {
   "pt": "Pimenta",
   "en": "Chili Pepper",
-  "icone": "textures/items/cl/hc/pimenta"
+  "icone": "textures/items/cl/arte/pimenta"
  },
  "cl:pimentao": {
   "pt": "Pimentão",
   "en": "Bell Pepper",
-  "icone": "textures/items/cl/hc/pimentao"
+  "icone": "textures/items/cl/arte/pimentao"
  },
  "cl:pimentao_recheado": {
   "pt": "Pimentão Recheado",
@@ -484,7 +484,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:placa_casco": {
   "pt": "Placa de Casco",
   "en": "Hull Plate",
-  "icone": "textures/items/cl/v/placa_casco"
+  "icone": "textures/items/cl/arte/placa_casco"
  },
  "cl:planta_alho": {
   "pt": "Plantação de Alho",
@@ -549,57 +549,57 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:queijo": {
   "pt": "Queijo",
   "en": "Cheese",
-  "icone": "textures/items/cl/hc/queijo"
+  "icone": "textures/items/cl/arte/queijo"
  },
  "cl:sacola_boa": {
   "pt": "Sacola Boa",
   "en": "Good Bag",
-  "icone": "textures/items/cl/v/sacola_boa"
+  "icone": "textures/items/cl/arte/sacola_boa"
  },
  "cl:sacola_comum": {
   "pt": "Sacola Comum",
   "en": "Basic Bag",
-  "icone": "textures/items/cl/v/sacola_comum"
+  "icone": "textures/items/cl/arte/sacola_comum"
  },
  "cl:sacola_epica": {
   "pt": "Sacola Épica",
   "en": "Epic Bag",
-  "icone": "textures/items/cl/v/sacola_epica"
+  "icone": "textures/items/cl/arte/sacola_epica"
  },
  "cl:sacola_lendaria": {
   "pt": "Sacola Lendária",
   "en": "Legendary Bag",
-  "icone": "textures/items/cl/v/sacola_lendaria"
+  "icone": "textures/items/cl/arte/sacola_lendaria"
  },
  "cl:sacola_otima": {
   "pt": "Sacola Ótima",
   "en": "Greater Bag",
-  "icone": "textures/items/cl/v/sacola_otima"
+  "icone": "textures/items/cl/arte/sacola_otima"
  },
  "cl:sal": {
   "pt": "Sal",
   "en": "Salt",
-  "icone": "textures/items/cl/hc/sal"
+  "icone": "textures/items/cl/arte/sal"
  },
  "cl:semente_alho": {
   "pt": "Sementes de Alho",
   "en": "Garlic Seeds",
-  "icone": "textures/items/cl/hc/semente_alho"
+  "icone": "textures/items/cl/arte/semente_alho"
  },
  "cl:semente_amendoim": {
   "pt": "Sementes de Amendoim",
   "en": "Peanut Seeds",
-  "icone": "textures/items/cl/hc/semente_amendoim"
+  "icone": "textures/items/cl/arte/semente_amendoim"
  },
  "cl:semente_arroz": {
   "pt": "Sementes de Arroz",
   "en": "Rice Seeds",
-  "icone": "textures/items/cl/hc/semente_arroz"
+  "icone": "textures/items/cl/arte/semente_arroz"
  },
  "cl:semente_cebola": {
   "pt": "Sementes de Cebola",
   "en": "Onion Seeds",
-  "icone": "textures/items/cl/hc/semente_cebola"
+  "icone": "textures/items/cl/arte/semente_cebola"
  },
  "cl:semente_feijao": {
   "pt": "Sementes de Feijão",
@@ -609,17 +609,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:semente_fruta_cacto": {
   "pt": "Sementes de Fruta do Cacto",
   "en": "Cactus Fruit Seeds",
-  "icone": "textures/items/cl/hc/semente_fruta_cacto"
+  "icone": "textures/items/cl/arte/semente_fruta_cacto"
  },
  "cl:semente_milho": {
   "pt": "Sementes de Milho",
   "en": "Corn Seeds",
-  "icone": "textures/items/cl/hc/semente_milho"
+  "icone": "textures/items/cl/arte/semente_milho"
  },
  "cl:semente_pimenta": {
   "pt": "Sementes de Pimenta",
   "en": "Chili Pepper Seeds",
-  "icone": "textures/items/cl/hc/semente_pimenta"
+  "icone": "textures/items/cl/arte/semente_pimenta"
  },
  "cl:semente_pimentao": {
   "pt": "Sementes de Pimentão",
@@ -669,12 +669,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:terminal": {
   "pt": "Terminal de Armazenamento",
   "en": "Storage Terminal",
-  "icone": "textures/items/cl/blocos/terminal"
+  "icone": "textures/items/cl/arte/blocos/terminal"
  },
  "cl:tigela_mistura": {
   "pt": "Tigela de Mistura",
   "en": "Mixing Bowl",
-  "icone": "textures/items/cl/blocos/tigela_mistura"
+  "icone": "textures/items/cl/arte/blocos/tigela_mistura"
  },
  "cl:tomate": {
   "pt": "Tomate",

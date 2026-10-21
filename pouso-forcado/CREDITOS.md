@@ -31,6 +31,12 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
   32.000 RF por carvão). Só os números; nenhuma arte.
 - **Applied Energistics** (AlgorithmX2): o Terminal de Armazenamento.
 
+## Ícones
+
+Os ícones desenhados (itens, ovos dos monstros e os ícones de menu das máquinas) foram feitos pelo
+autor do projeto com ajuda de IA. Ficam em `RP/textures/items/cl/arte/` e são importados por
+`tools/importar-icones.py`; onde ainda não há desenho, vale o ícone gerado pelos scripts.
+
 ## Texturas de terceiros
 
 Nenhuma até esta versão. As próximas fases listam aqui cada textura reaproveitada, com autor,

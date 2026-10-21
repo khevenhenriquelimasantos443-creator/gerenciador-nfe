@@ -28,8 +28,8 @@
         "controller.render.spider"
       ],
       "spawn_egg": {
-        "base_color": "#a0522d",
-        "overlay_color": "#2b1a0e"
+        "texture": "cl_ovo_escorpiao",
+        "texture_index": 0
       }
     }
   }
