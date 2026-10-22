@@ -464,7 +464,7 @@ Estilo futurista e minimalista: corpo branco-gelo, base grafite e uma faixa de l
 
 ## Consertar a nave (Fase 8)
 
-- **Painel da Nave** (`cl:painel_nave`): já vem dentro da nave caída, ao lado do baú de suprimentos (se sumir, tem receita: ferro, vidro e redstone). Toque nele: mostra os 4 sistemas e o que falta. Com as peças na mochila, **Instalar** conserta o sistema (vale para o mundo todo).
+- **Painel da Nave** (`cl:painel_nave`): já vem no painel de controle da cabine do avião caído (se sumir, tem receita: ferro, vidro e redstone). Toque nele: mostra os 4 sistemas e o que falta. Com as peças na mochila, **Instalar** conserta o sistema (vale para o mundo todo).
   | Sistema | Peças |
   |---|---|
   | Casco | 12 Placas de Casco + 8 vidros |
@@ -578,7 +578,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **O sol queima tudo:** de dia, todo monstro exposto ao céu pega fogo, inclusive husks, aranhas e creepers, que no jogo normal não queimam. Quem estiver na sombra (dentro de um templo, embaixo de um teto) ou no subsolo escapa.
 - **Nada nasce de dia ao ar livre:** se o jogo fizer um monstro nascer de dia sob o céu aberto, o script remove na hora. No subsolo e na sombra o spawn continua normal. (Ovos de spawn usados de dia ao ar livre também são removidos.)
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
-- **Nave caída.** Ao entrar no mundo pela primeira vez, uma nave quebrada aparece ao lado do jogador, meio enterrada na areia. Dentro há um baú com o que sobrou da carga: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
+- **Avião caído.** Ao entrar no mundo pela primeira vez, o avião da queda aparece ao lado do jogador (uns 44 x 35 blocos, mais o rastro da queda): sem as turbinas das asas, com um buraco grande e rasgado na traseira, cratera e destroços em volta. A área é carregada antes de montar (pode levar alguns segundos). No porão de carga há um baú com o que sobrou: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
 - **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.16.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 

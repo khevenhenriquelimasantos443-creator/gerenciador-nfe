@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.0.0";
+export const VERSAO = "1.0.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -109,12 +109,16 @@ export const PROPS = {
   reabastecerDesligado: `${NS}:reabastecer_desligado`, // jogador: não repõe o item da mão sozinho
 } as const;
 
-// Nave caída: estrutura em BP/structures/cl/nave_caida.mcstructure.
-// A origem fica 2 blocos abaixo do chão, ao lado do primeiro jogador que entrar.
+// Nave caída do começo: o avião de BP/structures/cl/aviao_caido_<n>.mcstructure (tools/gerar-aviao.mjs, que
+// confere estas posições). Os destroços pelo mapa continuam usando a nave pequena (cl:nave_caida).
 export const NAVE = {
-  estrutura: `${NS}:nave_caida`,
-  deslocamento: { x: -6, y: -2, z: 3 }, // em relação ao jogador
-  bau: { x: 6, y: 2, z: 8 }, // dentro da estrutura (igual ao BAU de tools/gerar-nave.mjs)
+  estrutura: `${NS}:aviao_caido`, // pedaços _0, _1... lado a lado em x
+  partes: 2, larguraParte: 48,
+  tamanho: { x: 95, y: 22, z: 59 },
+  deslocamento: { x: -88, y: -4, z: -2 }, // origem da estrutura em relação ao jogador (ele fica ao lado do avião)
+  bau: { x: 64, y: 7, z: 34 }, // baú de suprimentos, dentro da estrutura (no porão de carga)
+  painel: { x: 77, y: 7, z: 32 }, // Painel da Nave, no painel de controle da cabine
+  centro: { x: 50, z: 32 }, // meio do avião, para o relevo não pôr nada em cima
 } as const;
 
 // O que sobrou da carga. Vai no baú da nave (ou direto para o jogador, se a nave falhar).
@@ -190,7 +194,7 @@ export const RELEVO = {
   maxPorCiclo: 3, // chunks decorados por ciclo (6 por segundo): limita o peso
   areaLado: 4, // ticking area de 4×4 chunks para carregar os chunks distantes
   areaEsperaTicks: 200, // desiste de uma ticking area que não carregou em 10 s
-  distanciaNave: 3, // chunks sem estruturas em volta da nave
+  distanciaNave: 5, // chunks sem estruturas em volta do avião caído (ele tem uns 95 blocos com o rastro)
   arbustoSeco: 0.3, // chance de 1 a 3 arbustos secos (gravetos) no chunk
   cacto: { chance: 0.35, maxPorChunk: 3 }, // chance de ter cactos no chunk; até quantos
   pecas: [

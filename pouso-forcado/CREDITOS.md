@@ -10,6 +10,11 @@ O pacote de recursos é distribuído sob **CC BY-NC-SA 4.0**
 sem vender, e mantendo a mesma licença. Isso permite usar texturas de mods com licenças
 CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
+## Avião caído
+
+- Modelo do avião "Nativo 3.1 — Asas Recuadas", feito pelo dono do projeto (`tools/dados/nave/aviao.json`), com as
+  turbinas tiradas e a traseira rasgada por `tools/gerar-aviao.mjs`.
+
 ## Inspiração
 
 - **Crash Landing**, modpack de Iskandar (Minecraft 1.6.4): a ideia de cair num planeta seco,

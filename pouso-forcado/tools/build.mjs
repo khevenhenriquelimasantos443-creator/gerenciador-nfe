@@ -78,6 +78,7 @@ console.log("> texturas placeholder e estrutura da nave");
 execFileSync(node, [join(RAIZ, "tools/gerar-texturas.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-visual.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-nave.mjs")], { stdio: "inherit" });
+execFileSync(node, [join(RAIZ, "tools/gerar-aviao.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" });
 // Os geradores reescrevem item_texture.json: os ícones desenhados voltam a valer.
 execFileSync(node, [join(RAIZ, "tools/aplicar-icones.mjs")], { stdio: "inherit" });
