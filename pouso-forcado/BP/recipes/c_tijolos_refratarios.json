@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tijolos_refratarios"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "TT",
+      "TT"
+    ],
+    "key": {
+      "T": {
+        "item": "cl:tijolo_refratario"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:tijolo_refratario"
+      }
+    ],
+    "result": {
+      "item": "cl:tijolos_refratarios"
+    }
+  }
+}

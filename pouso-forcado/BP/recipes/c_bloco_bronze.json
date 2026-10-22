@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bloco_bronze"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "LLL",
+      "LLL",
+      "LLL"
+    ],
+    "key": {
+      "L": {
+        "item": "cl:lingote_bronze"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_bronze"
+      }
+    ],
+    "result": {
+      "item": "cl:bloco_bronze"
+    }
+  }
+}

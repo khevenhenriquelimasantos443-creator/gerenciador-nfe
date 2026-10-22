@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_lingotes_bronze"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:bloco_bronze"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:bloco_bronze"
+      }
+    ],
+    "result": {
+      "item": "cl:lingote_bronze",
+      "count": 9
+    }
+  }
+}

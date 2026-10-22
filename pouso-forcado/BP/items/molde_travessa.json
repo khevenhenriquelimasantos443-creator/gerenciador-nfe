@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:molde_travessa",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_molde_travessa",
+      "minecraft:display_name": {
+        "value": "item.cl:molde_travessa.name"
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

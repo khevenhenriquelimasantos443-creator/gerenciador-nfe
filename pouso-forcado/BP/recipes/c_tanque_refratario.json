@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tanque_refratario"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "TTT",
+      "TVT",
+      "TTT"
+    ],
+    "key": {
+      "T": {
+        "item": "cl:tijolo_refratario"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:tijolo_refratario"
+      }
+    ],
+    "result": {
+      "item": "cl:tanque_refratario"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { COMPOSTOR_CHEIO, CONDENSADOR_AVANCADO, ENERGIA, IDS, OLHAR, PENEIRA_TOQ
 import { CONTEUDOS } from "../blocos/barril.js";
 import { resumoCadinho } from "../blocos/cadinho.js";
 import { origemDe } from "../catalogo/catalogo.js";
+import { detalheRegistrado } from "../util/dados.js";
 import { rf } from "../util/energia.js";
 import { olharLigado } from "./opcoes.js";
 
@@ -22,6 +23,8 @@ function estado<T extends string | number | boolean>(b: Block, nome: string): T 
 }
 
 function detalheBloco(b: Block): RawMessage | undefined {
+  const registrado = detalheRegistrado(b); // blocos das Fases 15+
+  if (registrado) return registrado;
   switch (b.typeId) {
     case IDS.bateria:
       return { translate: "cl.olhar.energia", with: [rf(estado<number>(b, "cl:carga") ?? 0), rf(ENERGIA.bateriaMax)] };

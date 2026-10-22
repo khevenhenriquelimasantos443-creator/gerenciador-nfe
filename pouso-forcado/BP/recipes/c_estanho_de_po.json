@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_estanho_de_po"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:estanho_po"
+      },
+      {
+        "item": "cl:estanho_po"
+      },
+      {
+        "item": "cl:estanho_po"
+      },
+      {
+        "item": "cl:estanho_po"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:estanho_po"
+      }
+    ],
+    "result": {
+      "item": "cl:lingote_estanho"
+    }
+  }
+}

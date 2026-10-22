@@ -363,6 +363,54 @@
     },
     "clc_estacao_ferramentas_topo": {
       "textures": "textures/blocks/cl/c/estacao_ferramentas_topo"
+    },
+    "clc_tijolos_refratarios": {
+      "textures": "textures/blocks/cl/c/tijolos_refratarios"
+    },
+    "clc_controlador_fundicao_frente": {
+      "textures": "textures/blocks/cl/c/controlador_fundicao_frente"
+    },
+    "clc_controlador_fundicao_lado": {
+      "textures": "textures/blocks/cl/c/controlador_fundicao_lado"
+    },
+    "clc_controlador_fundicao_topo": {
+      "textures": "textures/blocks/cl/c/controlador_fundicao_topo"
+    },
+    "clc_controlador_fundicao_baixo": {
+      "textures": "textures/blocks/cl/c/controlador_fundicao_baixo"
+    },
+    "clc_tanque_refratario": {
+      "textures": "textures/blocks/cl/c/tanque_refratario"
+    },
+    "clc_dreno_fundicao": {
+      "textures": "textures/blocks/cl/c/dreno_fundicao"
+    },
+    "clc_vidro_refratario": {
+      "textures": "textures/blocks/cl/c/vidro_refratario"
+    },
+    "clc_torneira": {
+      "textures": "textures/blocks/cl/c/torneira"
+    },
+    "clc_mesa_fundicao": {
+      "textures": "textures/blocks/cl/c/mesa_fundicao"
+    },
+    "clc_mesa_fundicao_topo": {
+      "textures": "textures/blocks/cl/c/mesa_fundicao_topo"
+    },
+    "clc_bacia_fundicao": {
+      "textures": "textures/blocks/cl/c/bacia_fundicao"
+    },
+    "clc_bacia_fundicao_topo": {
+      "textures": "textures/blocks/cl/c/bacia_fundicao_topo"
+    },
+    "clc_bloco_bronze": {
+      "textures": "textures/blocks/cl/c/bloco_bronze"
+    },
+    "clc_bloco_aco": {
+      "textures": "textures/blocks/cl/c/bloco_aco"
+    },
+    "clc_bloco_estanho": {
+      "textures": "textures/blocks/cl/c/bloco_estanho"
     }
   }
 }

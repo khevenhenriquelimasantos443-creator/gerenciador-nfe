@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_dreno_fundicao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "T T",
+      "T T",
+      "T T"
+    ],
+    "key": {
+      "T": {
+        "item": "cl:tijolo_refratario"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:tijolo_refratario"
+      }
+    ],
+    "result": {
+      "item": "cl:dreno_fundicao"
+    }
+  }
+}

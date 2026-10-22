@@ -249,10 +249,20 @@
   "en": "Cookie",
   "icone": "textures/items/cookie"
  },
+ "minecraft:copper_block": {
+  "pt": "Bloco de Cobre",
+  "en": "Block of Copper",
+  "icone": "textures/blocks/copper_block"
+ },
  "minecraft:copper_ingot": {
   "pt": "Barra de Cobre",
   "en": "Copper Ingot",
   "icone": "textures/items/copper_ingot"
+ },
+ "minecraft:copper_ore": {
+  "pt": "Minério de Cobre",
+  "en": "Copper Ore",
+  "icone": "textures/blocks/copper_ore"
  },
  "minecraft:cracked_stone_bricks": {
   "pt": "Tijolos de Pedra Rachados",
@@ -278,6 +288,21 @@
   "pt": "Ardosiabissal",
   "en": "Deepslate",
   "icone": "textures/blocks/deepslate/deepslate"
+ },
+ "minecraft:deepslate_copper_ore": {
+  "pt": "Minério de Cobre de Ardosiabissal",
+  "en": "Deepslate Copper Ore",
+  "icone": "textures/blocks/deepslate/deepslate_copper_ore"
+ },
+ "minecraft:deepslate_gold_ore": {
+  "pt": "Minério de Ouro de Ardosiabissal",
+  "en": "Deepslate Gold Ore",
+  "icone": "textures/blocks/deepslate/deepslate_gold_ore"
+ },
+ "minecraft:deepslate_iron_ore": {
+  "pt": "Minério de Ferro de Ardosiabissal",
+  "en": "Deepslate Iron Ore",
+  "icone": "textures/blocks/deepslate/deepslate_iron_ore"
  },
  "minecraft:diamond": {
   "pt": "Diamante",
@@ -354,6 +379,11 @@
   "en": "Glowstone Dust",
   "icone": "textures/items/glowstone_dust"
  },
+ "minecraft:gold_block": {
+  "pt": "Bloco de Ouro",
+  "en": "Block of Gold",
+  "icone": "textures/blocks/gold_block"
+ },
  "minecraft:gold_ingot": {
   "pt": "Barra de Ouro",
   "en": "Gold Ingot",
@@ -363,6 +393,11 @@
   "pt": "Pepita de Ouro",
   "en": "Gold Nugget",
   "icone": "textures/items/gold_nugget"
+ },
+ "minecraft:gold_ore": {
+  "pt": "Minério de Ouro",
+  "en": "Gold Ore",
+  "icone": "textures/blocks/gold_ore"
  },
  "minecraft:golden_apple": {
   "pt": "Maçã Dourada",
@@ -419,6 +454,11 @@
   "en": "Iron Nugget",
   "icone": "textures/items/iron_nugget"
  },
+ "minecraft:iron_ore": {
+  "pt": "Minério de Ferro",
+  "en": "Iron Ore",
+  "icone": "textures/blocks/iron_ore"
+ },
  "minecraft:iron_pickaxe": {
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
@@ -448,6 +488,11 @@
   "pt": "Lava",
   "en": "Lava",
   "icone": "textures/blocks/lava_flow"
+ },
+ "minecraft:lava_bucket": {
+  "pt": "Balde de Lava",
+  "en": "Lava Bucket",
+  "icone": "textures/items/bucket_lava"
  },
  "minecraft:lead": {
   "pt": "Laço",
@@ -629,15 +674,30 @@
   "en": "Raw Copper",
   "icone": "textures/items/raw_copper"
  },
+ "minecraft:raw_copper_block": {
+  "pt": "Bloco de Cobre Bruto",
+  "en": "Block of Raw Copper",
+  "icone": "textures/blocks/raw_copper_block"
+ },
  "minecraft:raw_gold": {
   "pt": "Ouro Bruto",
   "en": "Raw Gold",
   "icone": "textures/items/raw_gold"
  },
+ "minecraft:raw_gold_block": {
+  "pt": "Bloco de Ouro Bruto",
+  "en": "Block of Raw Gold",
+  "icone": "textures/blocks/raw_gold_block"
+ },
  "minecraft:raw_iron": {
   "pt": "Ferro Bruto",
   "en": "Raw Iron",
   "icone": "textures/items/raw_iron"
+ },
+ "minecraft:raw_iron_block": {
+  "pt": "Bloco de Ferro Bruto",
+  "en": "Block of Raw Iron",
+  "icone": "textures/blocks/raw_iron_block"
  },
  "minecraft:red_carpet": {
   "pt": "Carpete Vermelho",

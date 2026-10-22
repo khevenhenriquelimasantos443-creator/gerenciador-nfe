@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_argamassa"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:clay_ball"
+      },
+      {
+        "item": "minecraft:sand"
+      },
+      {
+        "item": "minecraft:gravel"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:clay_ball"
+      }
+    ],
+    "result": {
+      "item": "cl:argamassa",
+      "count": 2
+    }
+  }
+}

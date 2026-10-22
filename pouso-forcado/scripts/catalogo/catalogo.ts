@@ -21,7 +21,7 @@ import { DROPS, ITENS, RECEITAS_JSON } from "./gerado.js";
  */
 
 type Linha = { item: string; qtd: number; chance?: number; max?: number };
-type Receita = {
+export type Receita = {
   maquina: RawMessage;
   maquinaId?: string; // item/bloco que faz a receita (o "uso" dele)
   entradas: Linha[];
@@ -196,9 +196,15 @@ function receitaSacola(sacola: string, tipo: number): Receita {
   return { maquina: nomeDe(sacola), maquinaId: sacola, entradas: [{ item: sacola, qtd: 1 }], saidas, nota: { translate: "cl.catalogo.sacola" } };
 }
 
+// Receitas das máquinas das Fases 15+ (cada módulo registra as suas ao carregar).
+const extras: (() => Receita[])[] = [];
+export function registrarNoCatalogo(fn: () => Receita[]): void {
+  extras.push(fn);
+}
+
 function indice(): Receita[] {
   if (todas) return todas;
-  todas = montar();
+  todas = [...montar(), ...extras.flatMap((f) => f())];
   const add = (mapa: Map<string, Receita[]>, id: string, r: Receita) => {
     const lista = mapa.get(id) ?? [];
     if (!lista.includes(r)) lista.push(r);

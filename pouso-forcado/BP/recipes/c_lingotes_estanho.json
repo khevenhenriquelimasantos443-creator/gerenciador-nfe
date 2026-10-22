@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_lingotes_estanho"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:bloco_estanho"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:bloco_estanho"
+      }
+    ],
+    "result": {
+      "item": "cl:lingote_estanho",
+      "count": 9
+    }
+  }
+}

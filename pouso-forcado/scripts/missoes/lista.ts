@@ -51,7 +51,11 @@ export type Acao =
   | "montar_ferramenta"
   | "consertar"
   | "ferramenta_nivel"
-  | "modificar";
+  | "modificar"
+  | "derreter"
+  | "fundicao"
+  | "molde"
+  | "bronze";
 
 type MissaoBase = {
   id: string;
@@ -185,6 +189,26 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }],
         escolha: [{ item: "minecraft:diamond", quantidade: 1 }, { item: "minecraft:obsidian", quantidade: 6 }],
       },
+    ],
+  },
+  {
+    id: "fundicao", // Fase 16: fundição do Tinkers' Construct
+    icone: "cl:controlador_fundicao",
+    requer: ["tinkers"],
+    missoes: [
+      { id: "fu_tijolos", objetivo: { tipo: "ter", item: "cl:tijolo_refratario", qtd: 32 }, recompensa: [{ item: "minecraft:lava_bucket", quantidade: 1 }] },
+      { id: "fu_controlador", requer: ["fu_tijolos"], objetivo: { tipo: "acao", acao: "fundicao", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "fu_derreter", requer: ["fu_controlador"], objetivo: { tipo: "acao", acao: "derreter", qtd: 16 }, recompensa: [{ item: "minecraft:raw_copper", quantidade: 4 }] },
+      { id: "fu_molde", requer: ["fu_controlador"], objetivo: { tipo: "acao", acao: "molde", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
+      { id: "fu_bronze", requer: ["fu_derreter"], objetivo: { tipo: "acao", acao: "bronze", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 4 }] },
+      {
+        id: "fu_picareta",
+        requer: ["fu_bronze", "fu_molde"],
+        objetivo: { tipo: "ter", item: "cl:picareta_bronze", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }],
+        escolha: [{ item: "minecraft:diamond", quantidade: 1 }, { item: "minecraft:emerald", quantidade: 2 }],
+      },
+      { id: "fu_modificar", requer: ["fu_controlador"], objetivo: { tipo: "acao", acao: "modificar", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
     ],
   },
   {

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_estanho_de_triturado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:estanho_triturado"
+      },
+      {
+        "item": "cl:estanho_triturado"
+      },
+      {
+        "item": "cl:estanho_triturado"
+      },
+      {
+        "item": "cl:estanho_triturado"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:estanho_triturado"
+      }
+    ],
+    "result": {
+      "item": "cl:lingote_estanho"
+    }
+  }
+}

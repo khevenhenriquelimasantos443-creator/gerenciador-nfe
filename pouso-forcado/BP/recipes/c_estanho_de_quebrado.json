@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_estanho_de_quebrado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:estanho_quebrado"
+      },
+      {
+        "item": "cl:estanho_quebrado"
+      },
+      {
+        "item": "cl:estanho_quebrado"
+      },
+      {
+        "item": "cl:estanho_quebrado"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:estanho_quebrado"
+      }
+    ],
+    "result": {
+      "item": "cl:lingote_estanho"
+    }
+  }
+}

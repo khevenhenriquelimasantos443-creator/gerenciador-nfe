@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 15** (Tinkers' Construct + Iguana: ferramentas montadas com peças, que sobem de nível). Fases 0 a 14 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 16** (fundição do Tinkers: metal derretido, ligas, moldes e ferramentas de metal). Fases 0 a 15 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -25,8 +25,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | pronta |
 | 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | pronta |
 | 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | pronta |
-| 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | **esta versão** |
-| 16–23 | Os mods do Crash Landing, um bloco por fase: fundição do Tinkers, Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | pronta |
+| 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | **esta versão** |
+| 17–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -127,6 +128,18 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Fundição (Fase 16: Tinkers' Construct)
+
+- **Argamassa** (argila + areia + cascalho = 2) assada vira **Tijolo Refratário**; 4 tijolos = **Tijolos Refratários**. Com tijolos: Controlador (anel de 8), Tanque (anel com vidro no meio), Dreno, Vidro Refratário, Torneira, Mesa e Bacia de Fundição.
+- **Montagem**: piso 3x3 de Tijolos Refratários; em cima, o interior 3x3 vazio; em volta do interior, uma parede de 12 blocos refratários (tijolos, vidro, tanque, dreno, o controlador no meio de um lado, virado para fora). Até 4 camadas (cada uma guarda 2.592 mB = 18 lingotes). Toque no controlador para conferir: ele diz o que falta.
+- **Lava**: toque no Tanque com balde de lava (+1.000 mB, até 4.000). Cada item derretido gasta 10 mB.
+- **Derreter**: jogue os itens dentro (até 4 por segundo). 144 mB = 1 lingote; pepita 16; bloco 1.296; **minério e pedaços rendem o dobro** (288 por minério). Peças de metal voltam ao que custaram.
+- **Ligas**: cobre + estanho viram bronze sozinhos (3 + 1 = 4); jogue carvão com ferro derretido para fazer aço (144 mB por carvão).
+- **Saída**: Torneira encostada no Dreno, em cima de uma Mesa (molde de lingote, pepita ou peça) ou de uma Bacia (bloco). Sai primeiro o metal que está embaixo; no menu do controlador dá para escolher qual sai primeiro.
+- **Moldes**: ponha uma peça (de qualquer material), um lingote ou uma pepita na mesa e derrame 288 mB de ouro. O molde não gasta.
+- **Ferramentas de metal**: ferro, cobre, bronze e aço só saem em peças da fundição. Estanho: pedaços na peneira (cascalho, areia e poeira, como o cobre); 4 pedaços = 1 lingote na bancada (ou o dobro na fundição).
+- Capítulo novo no Diário: **Fundição (Tinkers' Construct)**, 7 missões.
 
 ## Ferramentas (Fase 15: Tinkers' Construct + Iguana Tweaks)
 

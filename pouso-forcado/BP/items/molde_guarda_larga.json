@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:molde_guarda_larga",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_molde_guarda_larga",
+      "minecraft:display_name": {
+        "value": "item.cl:molde_guarda_larga.name"
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

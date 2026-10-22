@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.21.0";
+export const VERSAO = "0.22.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -267,6 +267,7 @@ const pedacos = (estagio: string): Achado[] => [
   { item: `${NS}:ferro_${estagio}`, chance: 1 / 5 },
   { item: `${NS}:ouro_${estagio}`, chance: 1 / 32 },
   { item: `${NS}:cobre_${estagio}`, chance: 1 / 18 },
+  { item: `${NS}:estanho_${estagio}`, chance: 1 / 18 }, // Fase 16 (Ex Aliquo: estanho, como o cobre)
 ];
 export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
   "minecraft:dirt": [
@@ -396,6 +397,64 @@ export const TINKERS = {
     esmeralda: { item: "minecraft:emerald", qtd: 1, max: 1, fator: 0.5 },
     musgo: { item: "cl:bola_musgo", qtd: 3, max: 1, segundos: 15 }, // +1 de durabilidade a cada 15 s
   },
+} as const;
+
+// Fase 16: fundição do Tinkers' Construct (scripts/tinkers/fundicao.ts). Metal em mB: 144 = 1 lingote.
+export const FUNDICAO = {
+  maxCamadas: 4,
+  capacidadePorCamada: 2592, // 18 lingotes por camada (interior 3x3)
+  derretePorSegundo: 4, // itens por segundo
+  lavaPorItem: 10, // mB de lava por item derretido
+  tanqueMax: 4000, // mB por tanque (4 baldes)
+  ouroParaMolde: 288,
+  bacia: 1296,
+  // Item -> [metal, mB]. Minério e pedaços dobram (288 por minério), como no TC. Peças de metal: custo × 144.
+  valores: {
+    "minecraft:iron_ingot": ["ferro", 144],
+    "minecraft:iron_nugget": ["ferro", 16],
+    "minecraft:iron_block": ["ferro", 1296],
+    "minecraft:raw_iron": ["ferro", 288],
+    "minecraft:raw_iron_block": ["ferro", 2592],
+    "minecraft:iron_ore": ["ferro", 288],
+    "minecraft:deepslate_iron_ore": ["ferro", 288],
+    "cl:ferro_quebrado": ["ferro", 72],
+    "cl:ferro_triturado": ["ferro", 72],
+    "cl:ferro_po": ["ferro", 72],
+    "minecraft:gold_ingot": ["ouro", 144],
+    "minecraft:gold_nugget": ["ouro", 16],
+    "minecraft:gold_block": ["ouro", 1296],
+    "minecraft:raw_gold": ["ouro", 288],
+    "minecraft:raw_gold_block": ["ouro", 2592],
+    "minecraft:gold_ore": ["ouro", 288],
+    "minecraft:deepslate_gold_ore": ["ouro", 288],
+    "cl:ouro_quebrado": ["ouro", 72],
+    "cl:ouro_triturado": ["ouro", 72],
+    "cl:ouro_po": ["ouro", 72],
+    "minecraft:copper_ingot": ["cobre", 144],
+    "minecraft:copper_block": ["cobre", 1296],
+    "minecraft:raw_copper": ["cobre", 288],
+    "minecraft:raw_copper_block": ["cobre", 2592],
+    "minecraft:copper_ore": ["cobre", 288],
+    "minecraft:deepslate_copper_ore": ["cobre", 288],
+    "cl:cobre_quebrado": ["cobre", 72],
+    "cl:cobre_triturado": ["cobre", 72],
+    "cl:cobre_po": ["cobre", 72],
+    "cl:lingote_estanho": ["estanho", 144],
+    "cl:bloco_estanho": ["estanho", 1296],
+    "cl:estanho_quebrado": ["estanho", 72],
+    "cl:estanho_triturado": ["estanho", 72],
+    "cl:estanho_po": ["estanho", 72],
+    "cl:lingote_bronze": ["bronze", 144],
+    "cl:bloco_bronze": ["bronze", 1296],
+    "cl:lingote_aco": ["aco", 144],
+    "cl:bloco_aco": ["aco", 1296],
+  } as Readonly<Record<string, readonly [string, number]>>,
+  lingote: { ferro: "minecraft:iron_ingot", ouro: "minecraft:gold_ingot", cobre: "minecraft:copper_ingot", estanho: "cl:lingote_estanho", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco" } as Readonly<Record<string, string>>,
+  pepita: { ferro: "minecraft:iron_nugget", ouro: "minecraft:gold_nugget" } as Readonly<Record<string, string>>,
+  bloco: { ferro: "minecraft:iron_block", ouro: "minecraft:gold_block", cobre: "minecraft:copper_block", estanho: "cl:bloco_estanho", bronze: "cl:bloco_bronze", aco: "cl:bloco_aco" } as Readonly<Record<string, string>>,
+  // Ligas: bronze = 3 cobre + 1 estanho -> 4 (em passos de 48 mB); aço = 144 mB de ferro + 1 carvão jogado dentro.
+  bronze: { cobre: 36, estanho: 12, sai: 48 },
+  acoCom: ["minecraft:coal", "minecraft:charcoal"],
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)
