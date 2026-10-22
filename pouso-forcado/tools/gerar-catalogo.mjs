@@ -92,7 +92,7 @@ const procurar = (texto) => {
 for (const r of receitas) procurar(JSON.stringify(r));
 for (const d of drops) citados.add(d.item);
 for (const rel of ["scripts/config.ts", "scripts/missoes/lista.ts"]) procurar(readFileSync(join(RAIZ, rel), "utf8"));
-for (const id of [...citados]) if (!id.startsWith("minecraft:")) citados.delete(id);
+for (const id of [...citados]) if (!id.startsWith("minecraft:") || /^minecraft:(air|water|flowing_water|lava|flowing_lava)$/.test(id)) citados.delete(id); // líquidos e ar não são itens
 
 // Nomes e ícones que não seguem o padrão do ID.
 const APELIDOS = {

@@ -2066,10 +2066,6 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Acacia Slab",
   "icone": "textures/blocks/planks_acacia"
  },
- "minecraft:air": {
-  "pt": "Ar",
-  "en": "Air"
- },
  "minecraft:andesite": {
   "pt": "Andesito",
   "en": "Andesite",
@@ -2475,16 +2471,6 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flower Pot",
   "icone": "textures/items/flower_pot"
  },
- "minecraft:flowing_lava": {
-  "pt": "Lava",
-  "en": "Lava",
-  "icone": "textures/blocks/lava_flow"
- },
- "minecraft:flowing_water": {
-  "pt": "Água",
-  "en": "Water",
-  "icone": "textures/blocks/water_flow_grey"
- },
  "minecraft:furnace": {
   "pt": "Fornalha",
   "en": "Furnace",
@@ -2664,11 +2650,6 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lápis-Lazúli",
   "en": "Lapis Lazuli",
   "icone": "textures/items/dye_powder_blue_new"
- },
- "minecraft:lava": {
-  "pt": "Lava",
-  "en": "Lava",
-  "icone": "textures/blocks/lava_flow"
  },
  "minecraft:lava_bucket": {
   "pt": "Balde de Lava",
@@ -3159,11 +3140,6 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",
   "icone": "textures/blocks/chest_front"
- },
- "minecraft:water": {
-  "pt": "Água",
-  "en": "Water",
-  "icone": "textures/blocks/water_flow_grey"
  },
  "minecraft:water_bucket": {
   "pt": "Balde de Água",
