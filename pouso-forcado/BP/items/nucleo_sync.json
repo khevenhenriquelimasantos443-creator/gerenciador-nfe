@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:nucleo_sync",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_nucleo_sync",
+      "minecraft:display_name": {
+        "value": "item.cl:nucleo_sync.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

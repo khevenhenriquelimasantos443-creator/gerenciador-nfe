@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_armazem_corpos"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VNV",
+      "V V",
+      "FCF"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "N": {
+        "item": "cl:nucleo_sync"
+      },
+      "F": {
+        "item": "cl:lingote_ferro_comprimido"
+      },
+      "C": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:armazem_corpos"
+    }
+  }
+}

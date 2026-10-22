@@ -409,6 +409,11 @@
   "en": "End Stone",
   "icone": "textures/blocks/end_stone"
  },
+ "minecraft:ender_pearl": {
+  "pt": "Pérola de Ender",
+  "en": "Ender Pearl",
+  "icone": "textures/items/ender_pearl"
+ },
  "minecraft:fire": {
   "pt": "Fogo",
   "en": "Fire",

@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_esteira_animal"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  E",
+      "RRR",
+      "FFF"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:esteira"
+      },
+      "R": {
+        "item": "cl:barra_borracha"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:esteira"
+      }
+    ],
+    "result": {
+      "item": "cl:esteira_animal"
+    }
+  }
+}

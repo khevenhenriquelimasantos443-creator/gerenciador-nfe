@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.26.0";
+export const VERSAO = "0.27.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -652,6 +652,13 @@ export const PNEUMATIC = {
     { entra: [["minecraft:redstone", 1], ["cl:lingote_ferro_comprimido", 1]], sai: ["cl:transistor", 1], bar: 1 },
     { entra: [["minecraft:redstone", 1], ["minecraft:clay_ball", 1], ["cl:lingote_ferro_comprimido", 1]], sai: ["cl:capacitor", 1], bar: 1 },
   ] as ReadonlyArray<{ entra: ReadonlyArray<readonly [string, number]>; sai: readonly [string, number]; bar: number }>,
+} as const;
+
+// Fase 21: Sync (scripts/maquinas/sync.ts).
+export const SYNC = {
+  custoCE: 600, // 6 E = 24.000 RF (48.000 PW no Sync)
+  amostraSangue: 4, // 2 corações
+  esteira: { "minecraft:pig": 25, "minecraft:wolf": 50 } as Readonly<Record<string, number>>, // cE por ciclo de 5 s
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)

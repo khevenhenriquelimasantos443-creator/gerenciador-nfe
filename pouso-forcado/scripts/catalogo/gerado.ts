@@ -51,6 +51,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Grout",
   "icone": "textures/items/cl/c/argamassa"
  },
+ "cl:armazem_corpos": {
+  "pt": "Armazém de Corpos",
+  "en": "Shell Storage",
+  "icone": "textures/blocks/cl/c/armazem_corpos_topo"
+ },
  "cl:arroz": {
   "pt": "Arroz",
   "en": "Rice",
@@ -361,6 +366,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Advanced Condenser",
   "icone": "textures/items/cl/arte/blocos/condensador_avancado"
  },
+ "cl:construtor_corpos": {
+  "pt": "Construtor de Corpos",
+  "en": "Shell Constructor",
+  "icone": "textures/blocks/cl/c/construtor_corpos_topo"
+ },
  "cl:construtor_pecas": {
   "pt": "Construtor de Peças",
   "en": "Part Builder",
@@ -500,6 +510,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Esteira",
   "en": "Conveyor Belt",
   "icone": "textures/blocks/cl/c/esteira_topo"
+ },
+ "cl:esteira_animal": {
+  "pt": "Esteira de Animal",
+  "en": "Treadmill",
+  "icone": "textures/blocks/cl/c/esteira_animal_topo"
  },
  "cl:estrutura_maquina": {
   "pt": "Estrutura de Máquina",
@@ -855,6 +870,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Núcleo de Funil",
   "en": "Hopper Core",
   "icone": "textures/items/cl/c/nucleo_funil"
+ },
+ "cl:nucleo_sync": {
+  "pt": "Núcleo Sync",
+  "en": "Sync Core",
+  "icone": "textures/items/cl/c/nucleo_sync"
  },
  "cl:omelete": {
   "pt": "Omelete",
@@ -2351,6 +2371,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "End Stone",
   "icone": "textures/blocks/end_stone"
  },
+ "minecraft:ender_pearl": {
+  "pt": "Pérola de Ender",
+  "en": "Ender Pearl",
+  "icone": "textures/items/ender_pearl"
+ },
  "minecraft:fire": {
   "pt": "Fogo",
   "en": "Fire",
@@ -3382,6 +3407,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_armazem_corpos",
+  "resultado": "cl:armazem_corpos",
+  "qtd": 1,
+  "grade": [
+   "VNV",
+   "V V",
+   "FCF"
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "N": "cl:nucleo_sync",
+   "F": "cl:lingote_ferro_comprimido",
+   "C": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bacia_fundicao",
   "resultado": "cl:bacia_fundicao",
   "qtd": 1,
@@ -3942,6 +3987,28 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_construtor_corpos",
+  "resultado": "cl:construtor_corpos",
+  "qtd": 1,
+  "grade": [
+   "VNV",
+   "TBT",
+   "FCF"
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "N": "cl:nucleo_sync",
+   "T": "cl:transistor",
+   "B": "cl:bloco_maquina",
+   "F": "cl:lingote_ferro_comprimido",
+   "C": "cl:capacitor"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_construtor_pecas",
   "resultado": "cl:construtor_pecas",
   "qtd": 1,
@@ -4188,6 +4255,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "R": "cl:barra_borracha",
    "F": "minecraft:iron_ingot",
    "D": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_esteira_animal",
+  "resultado": "cl:esteira_animal",
+  "qtd": 1,
+  "grade": [
+   "  E",
+   "RRR",
+   "FFF"
+  ],
+  "chaves": {
+   "E": "cl:esteira",
+   "R": "cl:barra_borracha",
+   "F": "minecraft:iron_ingot"
   },
   "estacoes": [
    "crafting_table"
@@ -4502,6 +4588,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_nucleo_sync",
+  "resultado": "cl:nucleo_sync",
+  "qtd": 1,
+  "grade": [
+   "GDG",
+   "DCD",
+   "GDG"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "D": "minecraft:diamond",
+   "C": "cl:coracao_farao"
+  },
   "estacoes": [
    "crafting_table"
   ]

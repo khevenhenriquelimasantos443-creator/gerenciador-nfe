@@ -74,7 +74,10 @@ export type Acao =
   | "camara"
   | "ferro_comprimido"
   | "diamante_carvao"
-  | "eletronica";
+  | "eletronica"
+  | "corpo_criado"
+  | "trocar_corpo"
+  | "reviver_corpo";
 
 type MissaoBase = {
   id: string;
@@ -299,6 +302,17 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
         escolha: [{ item: "minecraft:coal_block", quantidade: 8 }, { item: "cl:tubo_pressao_avancado", quantidade: 8 }],
       },
+    ],
+  },
+  {
+    id: "sync", // Fase 21: Sync
+    icone: "cl:armazem_corpos",
+    requer: ["pneumatic"],
+    missoes: [
+      { id: "sy_nucleo", objetivo: { tipo: "ter", item: "cl:nucleo_sync", qtd: 1 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 1 }] },
+      { id: "sy_corpo", requer: ["sy_nucleo"], objetivo: { tipo: "acao", acao: "corpo_criado", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "sy_trocar", requer: ["sy_corpo"], objetivo: { tipo: "acao", acao: "trocar_corpo", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 2 }] },
+      { id: "sy_reviver", requer: ["sy_corpo"], objetivo: { tipo: "acao", acao: "reviver_corpo", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

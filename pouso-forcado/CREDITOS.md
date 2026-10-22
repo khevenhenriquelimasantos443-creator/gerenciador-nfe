@@ -30,6 +30,7 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
   desenhos próprios.
 - **PneumaticCraft** (MineMaarten): ar comprimido, tubos, pressão e câmara de pressão com os números do mod.
   Código e desenhos próprios.
+- **Sync** (iChun): corpos reserva, construtor, armazém, esteira e acordar no clone. Código e desenhos próprios.
 - **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
   (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,

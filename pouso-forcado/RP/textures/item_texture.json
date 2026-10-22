@@ -901,6 +901,9 @@
     },
     "clc_capacitor": {
       "textures": "textures/items/cl/c/capacitor"
+    },
+    "clc_nucleo_sync": {
+      "textures": "textures/items/cl/c/nucleo_sync"
     }
   }
 }

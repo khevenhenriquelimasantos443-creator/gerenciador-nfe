@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 20** (PneumaticCraft: ar comprimido e câmara de pressão). Fases 0 a 19 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 21** (Sync: corpos reserva). Fases 0 a 20 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -30,8 +30,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 17 | **Thermal Expansion**: Estrutura de Máquina, Pulverizador (minério → 2 pós), Fornalha de Redstone, Fundidora de Indução (ligas e minério + areia), Serraria, Extrusora Ígnea, Precipitador Glacial, Dínamo de Redstone e 4 Células de Energia (de 400 mil a 50 milhões de RF); +6 missões | pronta |
 | 18 | **Armazenamento**: Barril de Armazenamento do JABBA (upgrades estrutural, de armazenamento e núcleo de funil, chave), Carrinho e Carrinho de Diamante; Empacotador Automático; rede ME do Applied Energistics 1 (células 1k a 64k, Drive, Baú ME, Controlador, Ponto de Acesso, Terminal sem Fio, processadores na Montadora, certus na peneira) e Célula de Água do ExtraCells; o Terminal enxerga barris e células; +7 missões | pronta |
 | 19 | **MineFactory Reloaded**: resina → borracha → plástico; Bloco de Máquina; Plantadeira, Colheitadeira (plantas, cana, cacto e árvores), Fertilizadora, Rancheiro, Triturador de Monstros, Esgoto + Compostadora (fertilizante), Quebrador e Colocador de Blocos, Esteira e Upgrades de Alcance; +7 missões | pronta |
-| 20 | **PneumaticCraft (leve)**: Compressor de Ar, Tubos de Pressão (comum e avançado), pressão em bar igual na rede, tubos que estouram acima do perigo, Câmara de Pressão 3x3x3 a 5x5x5 com válvula e interface, ferro comprimido, diamante de carvão, placa de circuito, transistor e capacitor, manômetro; +5 missões | **esta versão** |
-| 21–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 20 | **PneumaticCraft (leve)**: Compressor de Ar, Tubos de Pressão (comum e avançado), pressão em bar igual na rede, tubos que estouram acima do perigo, Câmara de Pressão 3x3x3 a 5x5x5 com válvula e interface, ferro comprimido, diamante de carvão, placa de circuito, transistor e capacitor, manômetro; +5 missões | pronta |
+| 21 | **Sync**: Núcleo Sync (leva o Coração do Faraó), Construtor de Corpos (amostra de sangue + 24.000 RF ou esteira com porco/lobo), Armazém de Corpos, troca de corpo com inventário próprio e acordar no corpo reserva ao morrer (casa ou o mais perto); sem sistema de vidas; +4 missões | **esta versão** |
+| 22–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -132,6 +133,16 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Corpos reserva (Fase 21: Sync)
+
+- **Núcleo Sync**: coração do faraó + 4 diamantes + 4 ouros. Vai no **Construtor** e no **Armazém de Corpos** (que também levam transistor, capacitor, ferro comprimido e Bloco de Máquina: precisa das Fases 19 e 20).
+- **Construtor de Corpos**: toque com a mão vazia para dar uma amostra de sangue (2 corações) e começar um corpo. Leva 24.000 RF (6 E) da rede, ou energia de uma **Esteira de Animal** encostada com um porco (0,25 E por ciclo) ou lobo (0,5 E) em cima. O corpo pronto fica no construtor.
+- **Armazém de Corpos**: toque num armazém **vazio** para escolher para qual corpo ir. O corpo de agora fica guardado nele com tudo o que você carrega (mochila e armadura); no corpo novo você pega o que ele tinha (um clone novo vem vazio).
+- **Ao morrer**, você acorda no corpo marcado como **casa** (no menu) ou no mais perto da mesma dimensão, com o inventário dele (os itens do corpo que morreu caem onde ele morreu). Sem corpo reserva, renasce normalmente. **Não há sistema de vidas** (como combinado).
+- Quebrar um construtor ou armazém com um corpo dentro: o corpo se perde, mas o que ele carregava cai no chão.
+- Os corpos ficam guardados no mundo (não são bichos): não somem se o lugar estiver longe.
+- Capítulo novo no Diário: **Corpos reserva (Sync)**, 4 missões.
 
 ## Ar comprimido (Fase 20: PneumaticCraft)
 

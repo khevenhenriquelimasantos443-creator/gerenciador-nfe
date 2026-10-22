@@ -786,6 +786,42 @@
     },
     "clc_bloco_ferro_comprimido": {
       "textures": "textures/blocks/cl/c/bloco_ferro_comprimido"
+    },
+    "clc_construtor_corpos_frente": {
+      "textures": "textures/blocks/cl/c/construtor_corpos_frente"
+    },
+    "clc_construtor_corpos_lado": {
+      "textures": "textures/blocks/cl/c/construtor_corpos_lado"
+    },
+    "clc_construtor_corpos_topo": {
+      "textures": "textures/blocks/cl/c/construtor_corpos_topo"
+    },
+    "clc_construtor_corpos_baixo": {
+      "textures": "textures/blocks/cl/c/construtor_corpos_baixo"
+    },
+    "clc_armazem_corpos_frente": {
+      "textures": "textures/blocks/cl/c/armazem_corpos_frente"
+    },
+    "clc_armazem_corpos_lado": {
+      "textures": "textures/blocks/cl/c/armazem_corpos_lado"
+    },
+    "clc_armazem_corpos_topo": {
+      "textures": "textures/blocks/cl/c/armazem_corpos_topo"
+    },
+    "clc_armazem_corpos_baixo": {
+      "textures": "textures/blocks/cl/c/armazem_corpos_baixo"
+    },
+    "clc_esteira_animal_frente": {
+      "textures": "textures/blocks/cl/c/esteira_animal_frente"
+    },
+    "clc_esteira_animal_lado": {
+      "textures": "textures/blocks/cl/c/esteira_animal_lado"
+    },
+    "clc_esteira_animal_topo": {
+      "textures": "textures/blocks/cl/c/esteira_animal_topo"
+    },
+    "clc_esteira_animal_baixo": {
+      "textures": "textures/blocks/cl/c/esteira_animal_baixo"
     }
   }
 }
