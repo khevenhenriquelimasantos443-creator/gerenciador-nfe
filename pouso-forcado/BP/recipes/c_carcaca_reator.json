@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_carcaca_reator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FGF",
+      "GYG",
+      "FGF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "G": {
+        "item": "cl:barra_grafite"
+      },
+      "Y": {
+        "item": "cl:lingote_yellorium"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:carcaca_reator",
+      "count": 4
+    }
+  }
+}

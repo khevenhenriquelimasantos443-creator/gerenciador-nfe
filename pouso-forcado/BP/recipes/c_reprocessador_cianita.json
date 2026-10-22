@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_reprocessador_cianita"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " B ",
+      "KEK",
+      " R "
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "K": {
+        "item": "cl:capacitor"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      },
+      "R": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:bucket"
+      }
+    ],
+    "result": {
+      "item": "cl:reprocessador_cianita"
+    }
+  }
+}

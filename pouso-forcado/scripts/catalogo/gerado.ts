@@ -81,6 +81,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Rubber Bar",
   "icone": "textures/items/cl/c/barra_borracha"
  },
+ "cl:barra_combustivel": {
+  "pt": "Barra de Combustível",
+  "en": "Yellorium Fuel Rod",
+  "icone": "textures/blocks/cl/c/barra_combustivel"
+ },
+ "cl:barra_controle": {
+  "pt": "Barra de Controle",
+  "en": "Reactor Control Rod",
+  "icone": "textures/blocks/cl/c/barra_controle"
+ },
+ "cl:barra_grafite": {
+  "pt": "Barra de Grafite",
+  "en": "Graphite Bar",
+  "icone": "textures/items/cl/c/barra_grafite"
+ },
  "cl:barril_armazenamento": {
   "pt": "Barril de Armazenamento",
   "en": "Storage Barrel",
@@ -136,10 +151,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Compressed Iron Block",
   "icone": "textures/blocks/cl/c/bloco_ferro_comprimido"
  },
+ "cl:bloco_grafite": {
+  "pt": "Bloco de Grafite",
+  "en": "Graphite Block",
+  "icone": "textures/blocks/cl/c/bloco_grafite"
+ },
  "cl:bloco_maquina": {
   "pt": "Bloco de Máquina",
   "en": "Machine Block",
   "icone": "textures/blocks/cl/c/bloco_maquina_topo"
+ },
+ "cl:bloco_yellorium": {
+  "pt": "Bloco de Yellorium",
+  "en": "Yellorium Block",
+  "icone": "textures/blocks/cl/c/bloco_yellorium"
  },
  "cl:bola_musgo": {
   "pt": "Bola de Musgo",
@@ -200,6 +225,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Capacitor",
   "en": "Capacitor",
   "icone": "textures/items/cl/c/capacitor"
+ },
+ "cl:carcaca_reator": {
+  "pt": "Carcaça do Reator",
+  "en": "Reactor Casing",
+  "icone": "textures/blocks/cl/c/carcaca_reator"
  },
  "cl:carrinho": {
   "pt": "Carrinho",
@@ -385,6 +415,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Controlador ME",
   "en": "ME Controller",
   "icone": "textures/blocks/cl/c/controlador_me_topo"
+ },
+ "cl:controlador_reator": {
+  "pt": "Controlador do Reator",
+  "en": "Reactor Controller",
+  "icone": "textures/blocks/cl/c/controlador_reator_topo"
  },
  "cl:coracao_farao": {
   "pt": "Coração do Faraó",
@@ -651,10 +686,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steel Ingot",
   "icone": "textures/items/cl/c/lingote_aco"
  },
+ "cl:lingote_blutonio": {
+  "pt": "Lingote de Blutônio",
+  "en": "Blutonium Ingot",
+  "icone": "textures/items/cl/c/lingote_blutonio"
+ },
  "cl:lingote_bronze": {
   "pt": "Lingote de Bronze",
   "en": "Bronze Ingot",
   "icone": "textures/items/cl/c/lingote_bronze"
+ },
+ "cl:lingote_cianita": {
+  "pt": "Lingote de Cianita",
+  "en": "Cyanite Ingot",
+  "icone": "textures/items/cl/c/lingote_cianita"
  },
  "cl:lingote_estanho": {
   "pt": "Lingote de Estanho",
@@ -665,6 +710,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Ferro Comprimido",
   "en": "Compressed Iron Ingot",
   "icone": "textures/items/cl/c/lingote_ferro_comprimido"
+ },
+ "cl:lingote_yellorium": {
+  "pt": "Lingote de Yellorium",
+  "en": "Yellorium Ingot",
+  "icone": "textures/items/cl/c/lingote_yellorium"
  },
  "cl:machadinha_aco": {
   "pt": "Machadinha de Aço",
@@ -1626,6 +1676,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pulverized Gold",
   "icone": "textures/items/cl/c/po_ouro"
  },
+ "cl:po_yellorium": {
+  "pt": "Pó de Yellorium",
+  "en": "Yellorium Dust",
+  "icone": "textures/items/cl/c/po_yellorium"
+ },
  "cl:poeira": {
   "pt": "Poeira",
   "en": "Dust",
@@ -1640,6 +1695,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Porcelana",
   "en": "Porcelain",
   "icone": "textures/items/cl/arte/porcelana"
+ },
+ "cl:porta_acesso_reator": {
+  "pt": "Porta de Acesso",
+  "en": "Reactor Access Port",
+  "icone": "textures/blocks/cl/c/porta_acesso_reator_topo"
+ },
+ "cl:porta_refrigeracao": {
+  "pt": "Porta de Refrigeração",
+  "en": "Reactor Coolant Port",
+  "icone": "textures/blocks/cl/c/porta_refrigeracao_topo"
  },
  "cl:precipitador_glacial": {
   "pt": "Precipitador Glacial",
@@ -1675,6 +1740,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Rancheiro",
   "en": "Rancher",
   "icone": "textures/blocks/cl/c/rancheiro_topo"
+ },
+ "cl:reprocessador_cianita": {
+  "pt": "Reprocessador de Cianita",
+  "en": "Cyanite Reprocessor",
+  "icone": "textures/blocks/cl/c/reprocessador_cianita_topo"
  },
  "cl:resina": {
   "pt": "Resina",
@@ -1841,6 +1911,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Bricks",
   "icone": "textures/blocks/cl/c/tijolos_refratarios"
  },
+ "cl:tomada_energia": {
+  "pt": "Tomada de Energia",
+  "en": "Reactor Power Tap",
+  "icone": "textures/blocks/cl/c/tomada_energia_topo"
+ },
  "cl:tomate": {
   "pt": "Tomate",
   "en": "Tomato",
@@ -1956,6 +2031,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pressure Chamber Glass",
   "icone": "textures/blocks/cl/c/vidro_camara"
  },
+ "cl:vidro_reator": {
+  "pt": "Vidro do Reator",
+  "en": "Reactor Glass",
+  "icone": "textures/blocks/cl/c/vidro_reator"
+ },
  "cl:vidro_refratario": {
   "pt": "Vidro Refratário",
   "en": "Seared Glass",
@@ -1985,6 +2065,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Laje de Acácia",
   "en": "Acacia Slab",
   "icone": "textures/blocks/planks_acacia"
+ },
+ "minecraft:air": {
+  "pt": "Ar",
+  "en": "Air"
  },
  "minecraft:andesite": {
   "pt": "Andesito",
@@ -3459,6 +3543,93 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_barra_combustivel",
+  "resultado": "cl:barra_combustivel",
+  "qtd": 1,
+  "grade": [
+   "FGF",
+   "FYF",
+   "FGF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "G": "cl:barra_grafite",
+   "Y": "cl:lingote_yellorium"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_barra_controle",
+  "resultado": "cl:barra_controle",
+  "qtd": 1,
+  "grade": [
+   "CRC",
+   "CGC",
+   "CRC"
+  ],
+  "chaves": {
+   "C": "cl:carcaca_reator",
+   "R": "minecraft:redstone",
+   "G": "cl:barra_grafite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_barra_grafite",
+  "resultado": "cl:barra_grafite",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:coal",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:gravel",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_barra_grafite_carvao_vegetal",
+  "resultado": "cl:barra_grafite",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:charcoal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_barra_grafite_de_bloco",
+  "resultado": "cl:barra_grafite",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_grafite",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_barril_armazenamento",
   "resultado": "cl:barril_armazenamento",
   "qtd": 1,
@@ -3566,6 +3737,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bloco_grafite",
+  "resultado": "cl:bloco_grafite",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "III",
+   "III"
+  ],
+  "chaves": {
+   "I": "cl:barra_grafite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bloco_maquina",
   "resultado": "cl:bloco_maquina",
   "qtd": 1,
@@ -3584,6 +3772,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bloco_yellorium",
+  "resultado": "cl:bloco_yellorium",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "III",
+   "III"
+  ],
+  "chaves": {
+   "I": "cl:lingote_yellorium"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bola_musgo",
   "resultado": "cl:bola_musgo",
   "qtd": 1,
@@ -3594,6 +3799,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "M": "minecraft:mossy_cobblestone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_carcaca_reator",
+  "resultado": "cl:carcaca_reator",
+  "qtd": 4,
+  "grade": [
+   "FGF",
+   "GYG",
+   "FGF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "G": "cl:barra_grafite",
+   "Y": "cl:lingote_yellorium"
   },
   "estacoes": [
    "crafting_table"
@@ -4434,6 +4658,36 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:c_lingote_yellorium",
+  "resultado": "cl:lingote_yellorium",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:po_yellorium",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_yellorium_de_bloco",
+  "resultado": "cl:lingote_yellorium",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_yellorium",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_lingotes_aco",
   "resultado": "cl:lingote_aco",
@@ -4783,6 +5037,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_porta_acesso_reator",
+  "resultado": "cl:porta_acesso_reator",
+  "qtd": 1,
+  "grade": [
+   "C",
+   "H",
+   "C"
+  ],
+  "chaves": {
+   "C": "cl:carcaca_reator",
+   "H": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_porta_refrigeracao",
+  "resultado": "cl:porta_refrigeracao",
+  "qtd": 1,
+  "grade": [
+   "C",
+   "B",
+   "C"
+  ],
+  "chaves": {
+   "C": "cl:carcaca_reator",
+   "B": "minecraft:bucket"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_precipitador_glacial",
   "resultado": "cl:precipitador_glacial",
   "qtd": 1,
@@ -4855,6 +5145,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "S": "minecraft:shears",
    "C": "minecraft:copper_ingot",
    "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_reprocessador_cianita",
+  "resultado": "cl:reprocessador_cianita",
+  "qtd": 1,
+  "grade": [
+   " B ",
+   "KEK",
+   " R "
+  ],
+  "chaves": {
+   "B": "minecraft:bucket",
+   "K": "cl:capacitor",
+   "E": "cl:estrutura_maquina",
    "R": "cl:circuito"
   },
   "estacoes": [
@@ -5313,6 +5623,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "ingredientes": [
    {
     "item": "cl:parede_camara",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glass",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_vidro_reator",
+  "resultado": "cl:vidro_reator",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:carcaca_reator",
     "qtd": 1
    },
    {

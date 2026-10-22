@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bloco_yellorium"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "III",
+      "III",
+      "III"
+    ],
+    "key": {
+      "I": {
+        "item": "cl:lingote_yellorium"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_yellorium"
+      }
+    ],
+    "result": {
+      "item": "cl:bloco_yellorium"
+    }
+  }
+}

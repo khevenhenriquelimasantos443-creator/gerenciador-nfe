@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 21** (Sync: corpos reserva). Fases 0 a 20 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 22** (Big Reactors: reator de yellorium). Fases 0 a 21 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -31,8 +31,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 18 | **Armazenamento**: Barril de Armazenamento do JABBA (upgrades estrutural, de armazenamento e núcleo de funil, chave), Carrinho e Carrinho de Diamante; Empacotador Automático; rede ME do Applied Energistics 1 (células 1k a 64k, Drive, Baú ME, Controlador, Ponto de Acesso, Terminal sem Fio, processadores na Montadora, certus na peneira) e Célula de Água do ExtraCells; o Terminal enxerga barris e células; +7 missões | pronta |
 | 19 | **MineFactory Reloaded**: resina → borracha → plástico; Bloco de Máquina; Plantadeira, Colheitadeira (plantas, cana, cacto e árvores), Fertilizadora, Rancheiro, Triturador de Monstros, Esgoto + Compostadora (fertilizante), Quebrador e Colocador de Blocos, Esteira e Upgrades de Alcance; +7 missões | pronta |
 | 20 | **PneumaticCraft (leve)**: Compressor de Ar, Tubos de Pressão (comum e avançado), pressão em bar igual na rede, tubos que estouram acima do perigo, Câmara de Pressão 3x3x3 a 5x5x5 com válvula e interface, ferro comprimido, diamante de carvão, placa de circuito, transistor e capacitor, manômetro; +5 missões | pronta |
-| 21 | **Sync**: Núcleo Sync (leva o Coração do Faraó), Construtor de Corpos (amostra de sangue + 24.000 RF ou esteira com porco/lobo), Armazém de Corpos, troca de corpo com inventário próprio e acordar no corpo reserva ao morrer (casa ou o mais perto); sem sistema de vidas; +4 missões | **esta versão** |
-| 22–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 21 | **Sync**: Núcleo Sync (leva o Coração do Faraó), Construtor de Corpos (amostra de sangue + 24.000 RF ou esteira com porco/lobo), Armazém de Corpos, troca de corpo com inventário próprio e acordar no corpo reserva ao morrer (casa ou o mais perto); sem sistema de vidas; +4 missões | pronta |
+| 22 | **Big Reactors**: yellorium só pela peneira de poeira, grafite, reator multibloco de 3x3x3 a 7x7x7 (carcaça, vidro, barras de combustível e de controle, portas de acesso e de refrigeração, tomadas), fórmula fechada com moderador e inserção, cianita e Reprocessador (blutônio); Controlador e Tomada só no saque das cidades; +5 missões | **esta versão** |
+| 23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -133,6 +134,18 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Reator (Fase 22: Big Reactors)
+
+- **Yellorium**: só pela peneira de poeira (1/40, Pó de Yellorium, assado vira lingote), como no Crash Landing. **Grafite**: carvão vegetal na fornalha, ou carvão + 2 cascalhos.
+- **Controlador do Reator** e **Tomada de Energia** não têm receita: ficam nos baús das cidades abandonadas (e com mais chance na torre de rádio).
+- **Montagem**: caixa de 3x3x3 a 7x7x7. Arestas e cantos de **Carcaça**; nas faces, carcaça, **Vidro**, o Controlador, **Portas de Acesso**, **Tomadas**, **Portas de Refrigeração** e, no teto, **Barras de Controle**. Dentro: colunas de **Barras de Combustível** do chão ao teto (cada uma com uma Barra de Controle em cima) e o resto ar, água ou blocos de grafite. Toque no controlador para conferir: ele diz o que está errado.
+- **Energia** a cada 5 s = barras × 6,75 E × moderador × (1 − inserção). Moderador: ar 1, água 1,2, grafite 1,8 (média do que não é barra). 3x3x3 com 1 barra ≈ 270 RF/t. **Refrigeração**: baldes de água num baú encostado na porta dobram a energia (1 balde a cada 10 ciclos).
+- **Barras de Controle**: toque = mais 10% de inserção; agachado = menos 10%. Mais inserção gasta menos combustível e gera menos.
+- **Combustível**: Lingotes de Yellorium ou Blutônio (cabem 4 por barra) por um baú encostado na Porta de Acesso, ou tocando nela com o lingote. Cada barra gasta 10 mB a cada 5 s (1 lingote dura uns 8 minutos por barra) e o gasto vira **Cianita**, que sai em lingotes no baú da porta.
+- **Reprocessador de Cianita**: 2 cianitas + 1 balde de água (baú em cima) = 1 Lingote de Blutônio, outro combustível.
+- O reator guarda o combustível e a cianita no controlador; quebrar uma peça desmonta o reator até tocar no controlador de novo.
+- Capítulo novo no Diário: **Reator (Big Reactors)**, 5 missões.
 
 ## Corpos reserva (Fase 21: Sync)
 

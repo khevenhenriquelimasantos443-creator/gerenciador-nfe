@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_vidro_reator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:carcaca_reator"
+      },
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:carcaca_reator"
+      }
+    ],
+    "result": {
+      "item": "cl:vidro_reator"
+    }
+  }
+}

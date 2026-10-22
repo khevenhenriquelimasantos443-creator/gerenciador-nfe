@@ -904,6 +904,21 @@
     },
     "clc_nucleo_sync": {
       "textures": "textures/items/cl/c/nucleo_sync"
+    },
+    "clc_lingote_yellorium": {
+      "textures": "textures/items/cl/c/lingote_yellorium"
+    },
+    "clc_po_yellorium": {
+      "textures": "textures/items/cl/c/po_yellorium"
+    },
+    "clc_lingote_cianita": {
+      "textures": "textures/items/cl/c/lingote_cianita"
+    },
+    "clc_lingote_blutonio": {
+      "textures": "textures/items/cl/c/lingote_blutonio"
+    },
+    "clc_barra_grafite": {
+      "textures": "textures/items/cl/c/barra_grafite"
     }
   }
 }

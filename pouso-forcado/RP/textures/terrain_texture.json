@@ -822,6 +822,84 @@
     },
     "clc_esteira_animal_baixo": {
       "textures": "textures/blocks/cl/c/esteira_animal_baixo"
+    },
+    "clc_bloco_yellorium": {
+      "textures": "textures/blocks/cl/c/bloco_yellorium"
+    },
+    "clc_bloco_grafite": {
+      "textures": "textures/blocks/cl/c/bloco_grafite"
+    },
+    "clc_carcaca_reator": {
+      "textures": "textures/blocks/cl/c/carcaca_reator"
+    },
+    "clc_vidro_reator": {
+      "textures": "textures/blocks/cl/c/vidro_reator"
+    },
+    "clc_controlador_reator_frente": {
+      "textures": "textures/blocks/cl/c/controlador_reator_frente"
+    },
+    "clc_controlador_reator_lado": {
+      "textures": "textures/blocks/cl/c/controlador_reator_lado"
+    },
+    "clc_controlador_reator_topo": {
+      "textures": "textures/blocks/cl/c/controlador_reator_topo"
+    },
+    "clc_controlador_reator_baixo": {
+      "textures": "textures/blocks/cl/c/controlador_reator_baixo"
+    },
+    "clc_barra_combustivel": {
+      "textures": "textures/blocks/cl/c/barra_combustivel"
+    },
+    "clc_barra_controle": {
+      "textures": "textures/blocks/cl/c/barra_controle"
+    },
+    "clc_porta_acesso_reator_frente": {
+      "textures": "textures/blocks/cl/c/porta_acesso_reator_frente"
+    },
+    "clc_porta_acesso_reator_lado": {
+      "textures": "textures/blocks/cl/c/porta_acesso_reator_lado"
+    },
+    "clc_porta_acesso_reator_topo": {
+      "textures": "textures/blocks/cl/c/porta_acesso_reator_topo"
+    },
+    "clc_porta_acesso_reator_baixo": {
+      "textures": "textures/blocks/cl/c/porta_acesso_reator_baixo"
+    },
+    "clc_tomada_energia_frente": {
+      "textures": "textures/blocks/cl/c/tomada_energia_frente"
+    },
+    "clc_tomada_energia_lado": {
+      "textures": "textures/blocks/cl/c/tomada_energia_lado"
+    },
+    "clc_tomada_energia_topo": {
+      "textures": "textures/blocks/cl/c/tomada_energia_topo"
+    },
+    "clc_tomada_energia_baixo": {
+      "textures": "textures/blocks/cl/c/tomada_energia_baixo"
+    },
+    "clc_porta_refrigeracao_frente": {
+      "textures": "textures/blocks/cl/c/porta_refrigeracao_frente"
+    },
+    "clc_porta_refrigeracao_lado": {
+      "textures": "textures/blocks/cl/c/porta_refrigeracao_lado"
+    },
+    "clc_porta_refrigeracao_topo": {
+      "textures": "textures/blocks/cl/c/porta_refrigeracao_topo"
+    },
+    "clc_porta_refrigeracao_baixo": {
+      "textures": "textures/blocks/cl/c/porta_refrigeracao_baixo"
+    },
+    "clc_reprocessador_cianita_frente": {
+      "textures": "textures/blocks/cl/c/reprocessador_cianita_frente"
+    },
+    "clc_reprocessador_cianita_lado": {
+      "textures": "textures/blocks/cl/c/reprocessador_cianita_lado"
+    },
+    "clc_reprocessador_cianita_topo": {
+      "textures": "textures/blocks/cl/c/reprocessador_cianita_topo"
+    },
+    "clc_reprocessador_cianita_baixo": {
+      "textures": "textures/blocks/cl/c/reprocessador_cianita_baixo"
     }
   }
 }

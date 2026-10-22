@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_porta_acesso_reator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "H",
+      "C"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:carcaca_reator"
+      },
+      "H": {
+        "item": "minecraft:chest"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:carcaca_reator"
+      }
+    ],
+    "result": {
+      "item": "cl:porta_acesso_reator"
+    }
+  }
+}

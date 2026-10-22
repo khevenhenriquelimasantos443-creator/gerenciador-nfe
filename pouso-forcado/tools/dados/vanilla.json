@@ -24,6 +24,10 @@
   "en": "Acacia Slab",
   "icone": "textures/blocks/planks_acacia"
  },
+ "minecraft:air": {
+  "pt": "Ar",
+  "en": "Air"
+ },
  "minecraft:andesite": {
   "pt": "Andesito",
   "en": "Andesite",

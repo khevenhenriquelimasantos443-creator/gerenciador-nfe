@@ -77,7 +77,10 @@ export type Acao =
   | "eletronica"
   | "corpo_criado"
   | "trocar_corpo"
-  | "reviver_corpo";
+  | "reviver_corpo"
+  | "reator"
+  | "reator_10e"
+  | "blutonio";
 
 type MissaoBase = {
   id: string;
@@ -313,6 +316,24 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "sy_corpo", requer: ["sy_nucleo"], objetivo: { tipo: "acao", acao: "corpo_criado", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "sy_trocar", requer: ["sy_corpo"], objetivo: { tipo: "acao", acao: "trocar_corpo", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 2 }] },
       { id: "sy_reviver", requer: ["sy_corpo"], objetivo: { tipo: "acao", acao: "reviver_corpo", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "reator", // Fase 22: Big Reactors
+    icone: "cl:controlador_reator",
+    requer: ["thermal"],
+    missoes: [
+      { id: "br_yellorium", objetivo: { tipo: "ter", item: "cl:lingote_yellorium", qtd: 16 }, recompensa: [{ item: "cl:barra_grafite", quantidade: 8 }] },
+      { id: "br_controlador", objetivo: { tipo: "ter", item: "cl:controlador_reator", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "br_reator", requer: ["br_yellorium", "br_controlador"], objetivo: { tipo: "acao", acao: "reator", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "br_energia", requer: ["br_reator"], objetivo: { tipo: "acao", acao: "reator_10e", qtd: 100 }, recompensa: [{ item: "cl:celula_energia_redstone", quantidade: 1 }] },
+      {
+        id: "br_blutonio",
+        requer: ["br_reator"],
+        objetivo: { tipo: "acao", acao: "blutonio", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }],
+        escolha: [{ item: "cl:bloco_grafite", quantidade: 8 }, { item: "cl:lingote_yellorium", quantidade: 8 }],
+      },
     ],
   },
   {

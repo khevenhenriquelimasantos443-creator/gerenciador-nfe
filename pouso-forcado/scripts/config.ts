@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.27.0";
+export const VERSAO = "0.28.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -317,6 +317,7 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
     { item: "minecraft:gunpowder", chance: 1 / 15 },
     { item: "minecraft:glowstone_dust", chance: 1 / 16 },
     { item: "minecraft:blaze_powder", chance: 1 / 20 },
+    { item: `${NS}:po_yellorium`, chance: 1 / 40 }, // Fase 22 (Big Reactors: só pela peneira de poeira)
     ...pedacos("po"),
   ],
 };
@@ -593,6 +594,8 @@ export const EMPACOTADOR = {
     ["cl:lingote_bronze", 9, "cl:bloco_bronze"],
     ["cl:lingote_aco", 9, "cl:bloco_aco"],
     ["cl:lingote_estanho", 9, "cl:bloco_estanho"],
+    ["cl:lingote_yellorium", 9, "cl:bloco_yellorium"],
+    ["cl:barra_grafite", 9, "cl:bloco_grafite"],
     ["minecraft:snowball", 4, "minecraft:snow"],
     ["minecraft:sand", 4, "minecraft:sandstone"],
     ["minecraft:clay_ball", 4, "minecraft:clay"],
@@ -659,6 +662,21 @@ export const SYNC = {
   custoCE: 600, // 6 E = 24.000 RF (48.000 PW no Sync)
   amostraSangue: 4, // 2 corações
   esteira: { "minecraft:pig": 25, "minecraft:wolf": 50 } as Readonly<Record<string, number>>, // cE por ciclo de 5 s
+} as const;
+
+// Fase 22: Big Reactors (scripts/maquinas/reator.ts). Ciclo de 5 s; fórmula fechada no lugar da simulação de calor.
+// Energia por ciclo = barras × base × moderador × (1 − inserção), com combustível; ×2 com refrigeração.
+export const REATOR = {
+  ladoMin: 3,
+  ladoMax: 7,
+  base: 6.75, // E por barra de combustível por ciclo (3x3x3 com 1 barra ≈ 270 RF/t)
+  consumo: 10, // mB de combustível por barra por ciclo (1 lingote = 1.000 mB)
+  porBarra: 4000, // mB de combustível que cabem por barra
+  moderador: { "minecraft:air": 1.1, "minecraft:water": 1.33, "cl:bloco_grafite": 2.0 } as Readonly<Record<string, number>>,
+  combustivel: { "cl:lingote_yellorium": 1000, "cl:lingote_blutonio": 1000 } as Readonly<Record<string, number>>,
+  refrigeracaoCiclos: 10, // 1 balde de água a cada 10 ciclos dobra a energia
+  bufferMax: 200, // E guardados no reator sem tomada
+  reprocessadorCE: 50,
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)
@@ -897,6 +915,9 @@ export const CIDADE_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:iron_pickaxe", min: 1, max: 1, chance: 0.05 },
   { item: "minecraft:gold_ingot", min: 1, max: 2, chance: 0.1 },
   { item: "minecraft:diamond", min: 1, max: 1, chance: 0.03 },
+  // Fase 22 (Big Reactors): controlador e tomada só se acham nas ruínas, não têm receita.
+  { item: "cl:controlador_reator", min: 1, max: 1, chance: 0.04 },
+  { item: "cl:tomada_energia", min: 1, max: 1, chance: 0.05 },
 ];
 export const TORRE_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:diamond", min: 1, max: 3, chance: 1 },
@@ -904,6 +925,8 @@ export const TORRE_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:redstone", min: 8, max: 16, chance: 1 },
   { item: "minecraft:golden_apple", min: 1, max: 1, chance: 0.5 },
   { item: "cl:agua_excelente", min: 2, max: 3, chance: 1 },
+  { item: "cl:controlador_reator", min: 1, max: 1, chance: 0.5 },
+  { item: "cl:tomada_energia", min: 1, max: 2, chance: 0.5 },
 ];
 
 // Masmorras (scripts/mundo/masmorra.ts): salas escondidas no subsolo com gerador de monstros.

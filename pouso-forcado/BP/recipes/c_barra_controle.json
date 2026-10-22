@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_barra_controle"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CRC",
+      "CGC",
+      "CRC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:carcaca_reator"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "G": {
+        "item": "cl:barra_grafite"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:carcaca_reator"
+      }
+    ],
+    "result": {
+      "item": "cl:barra_controle"
+    }
+  }
+}
