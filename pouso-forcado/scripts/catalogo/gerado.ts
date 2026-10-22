@@ -2358,7 +2358,8 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "minecraft:golden_hoe": {
   "pt": "Enxada de Ouro",
-  "en": "Golden Hoe"
+  "en": "Golden Hoe",
+  "icone": "textures/items/gold_hoe"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",

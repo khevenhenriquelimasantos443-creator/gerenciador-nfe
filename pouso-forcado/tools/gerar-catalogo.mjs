@@ -130,6 +130,7 @@ const APELIDOS = {
   dark_oak_planks: { lang: "tile.planks.big_oak.name", icone: "textures/blocks/planks_big_oak" },
   green_dye: { lang: "item.dye.green.name", icone: "textures/items/dye_powder_green_new" },
   slime_ball: { lang: "item.slime_ball.name", icone: "textures/items/slimeball" },
+  golden_hoe: { lang: "item.golden_hoe.name", icone: "textures/items/gold_hoe" },
   birch_planks: { lang: "tile.planks.birch.name", icone: "textures/blocks/planks_birch" },
   acacia_planks: { lang: "tile.planks.acacia.name", icone: "textures/blocks/planks_acacia" },
   oak_sapling: { lang: "tile.sapling.oak.name", icone: "textures/blocks/sapling_oak" },
