@@ -14,6 +14,9 @@ import { planta, registrarPlantacao } from "./blocos/plantacao.js";
 import { registrarFerramentas } from "./tinkers/ferramenta.js";
 import { construtorPecasComp, estacaoFerramentasComp, mesaMoldesComp } from "./tinkers/mesas.js";
 import { celulaEnergia, dinamo, extrusora, fornalhaRedstone, fundidoraInducao, precipitador, pulverizador, registrarThermal, serraria } from "./maquinas/thermal.js";
+import { barrilArmazenamento, registrarJabba } from "./armazenamento/jabba.js";
+import { bauMe, driveMe, pontoAcesso, registrarAE } from "./armazenamento/ae.js";
+import { empacotador, registrarEmpacotador } from "./maquinas/empacotador.js";
 import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
@@ -76,6 +79,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     "cl:extrusora_ignea": extrusora, "cl:precipitador_glacial": precipitador, "cl:dinamo_redstone": dinamo,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
   blockComponentRegistry.registerCustomComponent("cl:celula_energia", celulaEnergia);
+  blockComponentRegistry.registerCustomComponent("cl:barril_armazenamento", comPerfil("cl:barril_armazenamento", barrilArmazenamento));
+  blockComponentRegistry.registerCustomComponent("cl:empacotador", comPerfil("cl:empacotador", empacotador));
+  blockComponentRegistry.registerCustomComponent("cl:drive_me", driveMe);
+  blockComponentRegistry.registerCustomComponent("cl:bau_me", bauMe);
+  blockComponentRegistry.registerCustomComponent("cl:ponto_acesso", pontoAcesso);
 });
 
 registrarPerfil();
@@ -101,5 +109,8 @@ registrarPlantacao();
 registrarFerramentas();
 registrarFundicao();
 registrarThermal();
+registrarJabba();
+registrarAE();
+registrarEmpacotador();
 registrarAmbiente();
 registrarFome();

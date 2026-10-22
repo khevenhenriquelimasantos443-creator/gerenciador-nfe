@@ -23,6 +23,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 - **Tinkers' Construct** (mDiyo e SlimeKnights; texturas CC BY 3.0) e **Iguana Tweaks** (iguanaman): peças,
   ferramentas montadas, materiais, níveis de mineração e XP com os números do mod. Código e desenhos próprios.
 - **Thermal Expansion** (Team CoFH): as máquinas da Fase 17 e os custos em RF. Código e desenhos próprios.
+- **JABBA** (ProfMobius), **AutoPackager** (Wolf_IV), **Applied Energistics** (AlgorithmX2) e **ExtraCells** (M3gaFr3ak):
+  barril e upgrades, carrinho, empacotador, células ME com os bytes do AE1, drive, baú ME e terminal sem fio.
+  Código e desenhos próprios.
 - **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
   (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,

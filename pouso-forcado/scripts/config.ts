@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.23.0";
+export const VERSAO = "0.24.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -299,6 +299,7 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
     { item: "minecraft:coal", chance: 1 / 8 },
     { item: "minecraft:lapis_lazuli", chance: 1 / 20 },
     { item: "minecraft:diamond", chance: 1 / 128 },
+    { item: `${NS}:cristal_certus`, chance: 1 / 40 }, // Fase 18 (Applied Energistics)
     { item: "minecraft:emerald", chance: 1 / 150 },
     ...pedacos("quebrado"),
   ],
@@ -482,6 +483,8 @@ export const THERMAL = {
     "minecraft:bone": [["minecraft:bone_meal", 6, 1]],
     "minecraft:white_wool": [["minecraft:string", 4, 1]],
     "minecraft:glowstone": [["minecraft:glowstone_dust", 4, 1]],
+    "cl:cristal_certus": [["cl:po_certus", 1, 1]],
+    "cl:cristal_fluix": [["cl:po_fluix", 1, 1]],
   } as Readonly<Record<string, ReadonlyArray<readonly [string, number, number]>>>,
   pulverizadorCE: 100,
   // Fornalha de Redstone: 1.600 RF por item (40 cE), 2 itens por ciclo. 4 pedaços/pós de minério = 1 lingote.
@@ -556,6 +559,50 @@ export const THERMAL = {
   precipitadorBolas: 4, // bolas de neve por ciclo
   precipitadorCE: 50,
   dinamo: { porCiclo: 2, max: 400, combustivel: { "minecraft:redstone": 16, "minecraft:redstone_block": 144 } as Readonly<Record<string, number>> },
+} as const;
+
+// Fase 18: Applied Energistics 1 + ExtraCells (scripts/armazenamento/ae.ts) e AutoPackager (scripts/maquinas/empacotador.ts).
+export const AE = {
+  maxTipos: 63,
+  alcanceSemFio: 32, // blocos do Ponto de Acesso
+  aguaMax: 768, // garrafas na Célula de Água (256 baldes)
+} as const;
+// AutoPackager: compacta 2x2 e 3x3 (primeiro 2x2... aqui pela tabela). 1.000 RF (25 cE) por compactação.
+export const EMPACOTADOR = {
+  ce: 25,
+  porCiclo: 8,
+  receitas: [
+    ["minecraft:iron_ingot", 9, "minecraft:iron_block"],
+    ["minecraft:gold_ingot", 9, "minecraft:gold_block"],
+    ["minecraft:copper_ingot", 9, "minecraft:copper_block"],
+    ["minecraft:diamond", 9, "minecraft:diamond_block"],
+    ["minecraft:emerald", 9, "minecraft:emerald_block"],
+    ["minecraft:lapis_lazuli", 9, "minecraft:lapis_block"],
+    ["minecraft:redstone", 9, "minecraft:redstone_block"],
+    ["minecraft:coal", 9, "minecraft:coal_block"],
+    ["minecraft:iron_nugget", 9, "minecraft:iron_ingot"],
+    ["minecraft:gold_nugget", 9, "minecraft:gold_ingot"],
+    ["minecraft:wheat", 9, "minecraft:hay_block"],
+    ["minecraft:bone_meal", 9, "minecraft:bone_block"],
+    ["minecraft:slime_ball", 9, "minecraft:slime"],
+    ["minecraft:dried_kelp", 9, "minecraft:dried_kelp_block"],
+    ["minecraft:melon_slice", 9, "minecraft:melon_block"],
+    ["minecraft:raw_iron", 9, "minecraft:raw_iron_block"],
+    ["minecraft:raw_gold", 9, "minecraft:raw_gold_block"],
+    ["minecraft:raw_copper", 9, "minecraft:raw_copper_block"],
+    ["cl:lingote_bronze", 9, "cl:bloco_bronze"],
+    ["cl:lingote_aco", 9, "cl:bloco_aco"],
+    ["cl:lingote_estanho", 9, "cl:bloco_estanho"],
+    ["minecraft:snowball", 4, "minecraft:snow"],
+    ["minecraft:sand", 4, "minecraft:sandstone"],
+    ["minecraft:clay_ball", 4, "minecraft:clay"],
+    ["minecraft:glowstone_dust", 4, "minecraft:glowstone"],
+    ["minecraft:quartz", 4, "minecraft:quartz_block"],
+    ["minecraft:string", 4, "minecraft:white_wool"],
+    ["cl:pedrinha", 4, "minecraft:cobblestone"],
+    ["minecraft:brick", 4, "minecraft:brick_block"],
+    ["cl:tijolo_refratario", 4, "cl:tijolos_refratarios"],
+  ] as ReadonlyArray<readonly [string, number, string]>,
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)
@@ -843,6 +890,7 @@ export const DESTROCOS_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:gold_ingot", min: 1, max: 2, chance: 0.2 },
   { item: "cl:circuito", min: 1, max: 2, chance: 0.5 }, // placas de outra nave
   { item: "cl:placa_casco", min: 1, max: 3, chance: 0.4 },
+  { item: "cl:cristal_certus", min: 1, max: 3, chance: 0.35 }, // Fase 18 (Applied Energistics)
 ];
 
 // Gerador de Monstros (scripts/blocos/gerador_monstros.ts): bloco das cidades e masmorras.
@@ -906,6 +954,15 @@ export const MONTADORA: ReadonlyArray<ReceitaMontadora> = [
   {
     resultado: IDS.placaCasco, quantidade: 1, energia: 2,
     ingredientes: [{ item: "minecraft:iron_ingot", qtd: 3 }, { item: "minecraft:copper_ingot", qtd: 2 }],
+  },
+  // Fase 18 (Applied Energistics): os processadores saem da Montadora (no AE1, da fornalha).
+  {
+    resultado: "cl:processador_basico", quantidade: 1, energia: 2,
+    ingredientes: [{ item: "cl:silicio", qtd: 1 }, { item: "minecraft:gold_ingot", qtd: 1 }, { item: "minecraft:redstone", qtd: 2 }],
+  },
+  {
+    resultado: "cl:processador_avancado", quantidade: 1, energia: 4,
+    ingredientes: [{ item: "cl:silicio", qtd: 1 }, { item: "minecraft:diamond", qtd: 1 }, { item: "cl:cristal_fluix", qtd: 1 }, { item: "minecraft:redstone", qtd: 2 }],
   },
 ];
 

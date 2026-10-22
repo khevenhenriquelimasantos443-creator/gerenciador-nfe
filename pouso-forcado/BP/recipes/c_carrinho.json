@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_carrinho"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S  ",
+      "S  ",
+      "FFF"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stick"
+      }
+    ],
+    "result": {
+      "item": "cl:carrinho"
+    }
+  }
+}

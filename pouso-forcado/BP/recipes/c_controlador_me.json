@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_controlador_me"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FCF",
+      "CPC",
+      "FCF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "C": {
+        "item": "cl:cristal_fluix"
+      },
+      "P": {
+        "item": "cl:processador_avancado"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:controlador_me"
+    }
+  }
+}

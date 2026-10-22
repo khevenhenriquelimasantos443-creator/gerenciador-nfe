@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_celula_me_4k"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VRV",
+      "RCR",
+      "FFF"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "C": {
+        "item": "cl:componente_me_4k"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:celula_me_4k"
+    }
+  }
+}

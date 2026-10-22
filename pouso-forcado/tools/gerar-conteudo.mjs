@@ -67,7 +67,7 @@ function item(f, it) {
   });
   nomes.pt.push(`item.cl:${it.id}.name=${it.pt}`);
   nomes.en.push(`item.cl:${it.id}.name=${it.en}`);
-  origem[`cl:${it.id}`] = f.mod;
+  origem[`cl:${it.id}`] = it.mod ?? f.mod;
 }
 
 function textura(nome, pintor) {
@@ -125,7 +125,7 @@ function bloco(f, b) {
   });
   nomes.pt.push(`tile.cl:${b.id}.name=${b.pt}`);
   nomes.en.push(`tile.cl:${b.id}.name=${b.en}`);
-  origem[`cl:${b.id}`] = f.mod;
+  origem[`cl:${b.id}`] = b.mod ?? f.mod;
 }
 
 const dadosTs = [];

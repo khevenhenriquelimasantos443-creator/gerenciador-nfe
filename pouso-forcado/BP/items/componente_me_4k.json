@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:componente_me_4k",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_componente_me_4k",
+      "minecraft:display_name": {
+        "value": "item.cl:componente_me_4k.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

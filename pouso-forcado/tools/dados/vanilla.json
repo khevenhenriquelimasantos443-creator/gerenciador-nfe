@@ -99,6 +99,11 @@
   "en": "Bone",
   "icone": "textures/items/bone"
  },
+ "minecraft:bone_block": {
+  "pt": "Bloco de Ossos",
+  "en": "Bone Block",
+  "icone": "textures/blocks/bone_block_side"
+ },
  "minecraft:bone_meal": {
   "pt": "Farinha de Osso",
   "en": "Bone Meal",
@@ -123,6 +128,11 @@
   "pt": "Tijolo",
   "en": "Brick",
   "icone": "textures/items/brick"
+ },
+ "minecraft:brick_block": {
+  "pt": "Tijolos",
+  "en": "Bricks",
+  "icone": "textures/blocks/brick"
  },
  "minecraft:brown_carpet": {
   "pt": "Carpete Marrom",
@@ -329,6 +339,11 @@
   "en": "Diamond",
   "icone": "textures/items/diamond"
  },
+ "minecraft:diamond_block": {
+  "pt": "Bloco de Diamante",
+  "en": "Block of Diamond",
+  "icone": "textures/blocks/diamond_block"
+ },
  "minecraft:dirt": {
   "pt": "Terra",
   "en": "Dirt",
@@ -353,6 +368,11 @@
   "pt": "Esmeralda",
   "en": "Emerald",
   "icone": "textures/items/emerald"
+ },
+ "minecraft:emerald_block": {
+  "pt": "Bloco de Esmeraldas",
+  "en": "Block of Emerald",
+  "icone": "textures/blocks/emerald_block"
  },
  "minecraft:enchanted_golden_apple": {
   "pt": "Maçã Dourada Encantada",
@@ -464,6 +484,11 @@
   "en": "Terracotta",
   "icone": "textures/blocks/hardened_clay"
  },
+ "minecraft:hay_block": {
+  "pt": "Fardo de Feno",
+  "en": "Hay Bale",
+  "icone": "textures/blocks/hay_block_side"
+ },
  "minecraft:honey_bottle": {
   "pt": "Frasco de Mel",
   "en": "Honey Bottle",
@@ -539,6 +564,11 @@
   "en": "Kelp",
   "icone": "textures/items/kelp"
  },
+ "minecraft:lapis_block": {
+  "pt": "Bloco de Lápis-Lazúli",
+  "en": "Block of Lapis Lazuli",
+  "icone": "textures/blocks/lapis_block"
+ },
  "minecraft:lapis_lazuli": {
   "pt": "Lápis-Lazúli",
   "en": "Lapis Lazuli",
@@ -603,6 +633,11 @@
   "pt": "Tábuas de Mangue",
   "en": "Mangrove Planks",
   "icone": "textures/blocks/mangrove_planks"
+ },
+ "minecraft:melon_block": {
+  "pt": "Melancia",
+  "en": "Melon",
+  "icone": "textures/blocks/melon_side"
  },
  "minecraft:melon_seeds": {
   "pt": "Sementes de Melancia",
@@ -734,6 +769,16 @@
   "en": "Pumpkin Seeds",
   "icone": "textures/items/seeds_pumpkin"
  },
+ "minecraft:quartz": {
+  "pt": "Quartzo do Nether",
+  "en": "Nether Quartz",
+  "icone": "textures/items/quartz"
+ },
+ "minecraft:quartz_block": {
+  "pt": "Bloco de Quartzo",
+  "en": "Block of Quartz",
+  "icone": "textures/blocks/quartz_block_side"
+ },
  "minecraft:rabbit": {
   "pt": "Coelho Cru",
   "en": "Raw Rabbit",
@@ -828,6 +873,15 @@
   "pt": "Grama Baixa",
   "en": "Short Grass",
   "icone": "textures/blocks/tallgrass_carried"
+ },
+ "minecraft:slime": {
+  "pt": "Bloco de Slime",
+  "en": "Slime Block",
+  "icone": "textures/blocks/slime"
+ },
+ "minecraft:slime_ball": {
+  "pt": "Gosma de Slime",
+  "en": "Slimeball"
  },
  "minecraft:smooth_sandstone": {
   "pt": "Arenito Liso",

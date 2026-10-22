@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_componente_me_16k"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RPR",
+      "CFC",
+      "RCR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "P": {
+        "item": "cl:processador_avancado"
+      },
+      "C": {
+        "item": "cl:componente_me_4k"
+      },
+      "F": {
+        "item": "cl:cristal_fluix"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "cl:componente_me_16k"
+    }
+  }
+}

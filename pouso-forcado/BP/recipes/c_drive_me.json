@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_drive_me"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FPF",
+      "CBC",
+      "FPF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "item": "cl:processador_basico"
+      },
+      "C": {
+        "item": "cl:cristal_fluix"
+      },
+      "B": {
+        "item": "minecraft:chest"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:drive_me"
+    }
+  }
+}

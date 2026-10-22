@@ -555,6 +555,72 @@
     },
     "clc_celula_energia_ressonante_baixo": {
       "textures": "textures/blocks/cl/c/celula_energia_ressonante_baixo"
+    },
+    "clc_barril_armazenamento": {
+      "textures": "textures/blocks/cl/c/barril_armazenamento"
+    },
+    "clc_barril_armazenamento_topo": {
+      "textures": "textures/blocks/cl/c/barril_armazenamento_topo"
+    },
+    "clc_empacotador_frente": {
+      "textures": "textures/blocks/cl/c/empacotador_frente"
+    },
+    "clc_empacotador_lado": {
+      "textures": "textures/blocks/cl/c/empacotador_lado"
+    },
+    "clc_empacotador_topo": {
+      "textures": "textures/blocks/cl/c/empacotador_topo"
+    },
+    "clc_empacotador_baixo": {
+      "textures": "textures/blocks/cl/c/empacotador_baixo"
+    },
+    "clc_controlador_me_frente": {
+      "textures": "textures/blocks/cl/c/controlador_me_frente"
+    },
+    "clc_controlador_me_lado": {
+      "textures": "textures/blocks/cl/c/controlador_me_lado"
+    },
+    "clc_controlador_me_topo": {
+      "textures": "textures/blocks/cl/c/controlador_me_topo"
+    },
+    "clc_controlador_me_baixo": {
+      "textures": "textures/blocks/cl/c/controlador_me_baixo"
+    },
+    "clc_drive_me_frente": {
+      "textures": "textures/blocks/cl/c/drive_me_frente"
+    },
+    "clc_drive_me_lado": {
+      "textures": "textures/blocks/cl/c/drive_me_lado"
+    },
+    "clc_drive_me_topo": {
+      "textures": "textures/blocks/cl/c/drive_me_topo"
+    },
+    "clc_drive_me_baixo": {
+      "textures": "textures/blocks/cl/c/drive_me_baixo"
+    },
+    "clc_bau_me_frente": {
+      "textures": "textures/blocks/cl/c/bau_me_frente"
+    },
+    "clc_bau_me_lado": {
+      "textures": "textures/blocks/cl/c/bau_me_lado"
+    },
+    "clc_bau_me_topo": {
+      "textures": "textures/blocks/cl/c/bau_me_topo"
+    },
+    "clc_bau_me_baixo": {
+      "textures": "textures/blocks/cl/c/bau_me_baixo"
+    },
+    "clc_ponto_acesso_frente": {
+      "textures": "textures/blocks/cl/c/ponto_acesso_frente"
+    },
+    "clc_ponto_acesso_lado": {
+      "textures": "textures/blocks/cl/c/ponto_acesso_lado"
+    },
+    "clc_ponto_acesso_topo": {
+      "textures": "textures/blocks/cl/c/ponto_acesso_topo"
+    },
+    "clc_ponto_acesso_baixo": {
+      "textures": "textures/blocks/cl/c/ponto_acesso_baixo"
     }
   }
 }

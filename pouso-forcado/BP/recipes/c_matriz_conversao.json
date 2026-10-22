@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_matriz_conversao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:faca_corte"
+      },
+      {
+        "item": "cl:cristal_fluix"
+      },
+      {
+        "item": "minecraft:glass"
+      },
+      {
+        "item": "cl:processador_basico"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:faca_corte"
+      }
+    ],
+    "result": {
+      "item": "cl:matriz_conversao"
+    }
+  }
+}

@@ -763,6 +763,99 @@
     },
     "clc_po_estanho": {
       "textures": "textures/items/cl/c/po_estanho"
+    },
+    "clc_upgrade_armazenamento": {
+      "textures": "textures/items/cl/c/upgrade_armazenamento"
+    },
+    "clc_upgrade_estrutural_1": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_1"
+    },
+    "clc_upgrade_estrutural_2": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_2"
+    },
+    "clc_upgrade_estrutural_3": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_3"
+    },
+    "clc_upgrade_estrutural_4": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_4"
+    },
+    "clc_upgrade_estrutural_5": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_5"
+    },
+    "clc_upgrade_estrutural_6": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_6"
+    },
+    "clc_upgrade_estrutural_7": {
+      "textures": "textures/items/cl/c/upgrade_estrutural_7"
+    },
+    "clc_nucleo_funil": {
+      "textures": "textures/items/cl/c/nucleo_funil"
+    },
+    "clc_chave_barril": {
+      "textures": "textures/items/cl/c/chave_barril"
+    },
+    "clc_carrinho": {
+      "textures": "textures/items/cl/c/carrinho"
+    },
+    "clc_carrinho_diamante": {
+      "textures": "textures/items/cl/c/carrinho_diamante"
+    },
+    "clc_celula_me_1k": {
+      "textures": "textures/items/cl/c/celula_me_1k"
+    },
+    "clc_celula_me_4k": {
+      "textures": "textures/items/cl/c/celula_me_4k"
+    },
+    "clc_celula_me_16k": {
+      "textures": "textures/items/cl/c/celula_me_16k"
+    },
+    "clc_celula_me_64k": {
+      "textures": "textures/items/cl/c/celula_me_64k"
+    },
+    "clc_componente_me_1k": {
+      "textures": "textures/items/cl/c/componente_me_1k"
+    },
+    "clc_componente_me_4k": {
+      "textures": "textures/items/cl/c/componente_me_4k"
+    },
+    "clc_componente_me_16k": {
+      "textures": "textures/items/cl/c/componente_me_16k"
+    },
+    "clc_componente_me_64k": {
+      "textures": "textures/items/cl/c/componente_me_64k"
+    },
+    "clc_cristal_certus": {
+      "textures": "textures/items/cl/c/cristal_certus"
+    },
+    "clc_po_certus": {
+      "textures": "textures/items/cl/c/po_certus"
+    },
+    "clc_silicio": {
+      "textures": "textures/items/cl/c/silicio"
+    },
+    "clc_cristal_fluix": {
+      "textures": "textures/items/cl/c/cristal_fluix"
+    },
+    "clc_po_fluix": {
+      "textures": "textures/items/cl/c/po_fluix"
+    },
+    "clc_faca_corte": {
+      "textures": "textures/items/cl/c/faca_corte"
+    },
+    "clc_processador_basico": {
+      "textures": "textures/items/cl/c/processador_basico"
+    },
+    "clc_processador_avancado": {
+      "textures": "textures/items/cl/c/processador_avancado"
+    },
+    "clc_matriz_conversao": {
+      "textures": "textures/items/cl/c/matriz_conversao"
+    },
+    "clc_celula_agua": {
+      "textures": "textures/items/cl/c/celula_agua"
+    },
+    "clc_terminal_sem_fio": {
+      "textures": "textures/items/cl/c/terminal_sem_fio"
     }
   }
 }

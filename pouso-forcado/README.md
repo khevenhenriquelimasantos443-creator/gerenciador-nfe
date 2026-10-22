@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 17** (Thermal Expansion: máquinas elétricas e células de energia). Fases 0 a 16 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 18** (armazenamento: JABBA, AutoPackager e Applied Energistics). Fases 0 a 17 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -27,8 +27,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | pronta |
 | 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | pronta |
 | 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | pronta |
-| 17 | **Thermal Expansion**: Estrutura de Máquina, Pulverizador (minério → 2 pós), Fornalha de Redstone, Fundidora de Indução (ligas e minério + areia), Serraria, Extrusora Ígnea, Precipitador Glacial, Dínamo de Redstone e 4 Células de Energia (de 400 mil a 50 milhões de RF); +6 missões | **esta versão** |
-| 18–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 17 | **Thermal Expansion**: Estrutura de Máquina, Pulverizador (minério → 2 pós), Fornalha de Redstone, Fundidora de Indução (ligas e minério + areia), Serraria, Extrusora Ígnea, Precipitador Glacial, Dínamo de Redstone e 4 Células de Energia (de 400 mil a 50 milhões de RF); +6 missões | pronta |
+| 18 | **Armazenamento**: Barril de Armazenamento do JABBA (upgrades estrutural, de armazenamento e núcleo de funil, chave), Carrinho e Carrinho de Diamante; Empacotador Automático; rede ME do Applied Energistics 1 (células 1k a 64k, Drive, Baú ME, Controlador, Ponto de Acesso, Terminal sem Fio, processadores na Montadora, certus na peneira) e Célula de Água do ExtraCells; o Terminal enxerga barris e células; +7 missões | **esta versão** |
+| 19–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -129,6 +130,19 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Armazenamento (Fase 18: JABBA, AutoPackager, Applied Energistics)
+
+- **Barril de Armazenamento** (JABBA): 1 tipo de item, 64 pilhas. Toque com o item na mão para guardar; dois toques rápidos guardam todos iguais da mochila; bata para tirar 1 pilha (agachado: 1 item). Quebrar solta tudo.
+  - **Upgrade Estrutural MK I a VII** (tábuas, ferro, ouro, diamante, obsidiana, aço, esmeralda) abre 1, 3, 7, 15, 31, 63 ou 127 espaços. Cada **Upgrade de Armazenamento** usa 1 espaço e soma +64 pilhas. O **Núcleo de Funil** usa 1 espaço: puxa do baú em cima e manda para o de baixo. A **Chave de Barril** tira o último upgrade.
+- **Carrinho**: toque num baú, baú com armadilha, barril ou barril de armazenamento para levar com tudo dentro; toque num bloco para pôr. O **de Diamante** também leva gerador de monstros (6 usos).
+- **Empacotador Automático** (AutoPackager): compacta o que está no baú de cima (9 lingotes = bloco, 9 pepitas = lingote, 4 areias = arenito, 4 pedrinhas = pedregulho...) até 8 vezes a cada 5 s, 1.000 RF cada.
+- **Rede ME** (Applied Energistics 1): o Terminal (Fase 8) agora vê também os Barris de Armazenamento e as células ME dos **Drives** (10 células) e **Baús ME** (1 célula) ligados por cabo. Com um **Controlador ME** na rede, o limite de inventários dobra (48 → 96).
+  - **Células ME** 1k, 4k, 16k e 64k: 1.024 a 65.536 bytes, até 63 tipos; cada tipo ocupa 8/32/128/512 bytes e cada 8 itens, 1 byte (números do AE1). Guardam só itens simples (sem nome, texto ou dados). O conteúdo vai junto com a célula.
+  - **Certus**: peneira de cascalho (1/40) e destroços; pulverizado vira Pó de Certus, que assado vira **Silício**. **Cristal Fluix** = certus + redstone + lápis (no AE1 levava quartzo do Nether, que não existe aqui). **Processadores** na Montadora.
+  - **Ponto de Acesso** + **Terminal sem Fio**: abre o Terminal de qualquer lugar a até 32 blocos de um ponto ligado à rede.
+- **Célula de Água** (ExtraCells): guarda até 768 garrafas; toque num condensador ou em água para encher; use com garrafas vazias na mochila para tirar Água Boa.
+- Capítulo novo no Diário: **Armazenamento (JABBA e AE)**, 7 missões.
 
 ## Máquinas (Fase 17: Thermal Expansion)
 

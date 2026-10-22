@@ -58,7 +58,13 @@ export type Acao =
   | "bronze"
   | "te_operacao"
   | "pulverizar"
-  | "dinamo";
+  | "dinamo"
+  | "barril_mil"
+  | "barril_upgrade"
+  | "carrinho"
+  | "empacotar"
+  | "celula_me"
+  | "sem_fio";
 
 type MissaoBase = {
   id: string;
@@ -230,6 +236,26 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         objetivo: { tipo: "ter", item: "cl:celula_energia_ressonante", qtd: 1 },
         recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
         escolha: [{ item: "minecraft:diamond", quantidade: 3 }, { item: "minecraft:emerald", quantidade: 4 }],
+      },
+    ],
+  },
+  {
+    id: "armazenamento", // Fase 18: JABBA, AutoPackager, Applied Energistics
+    icone: "cl:barril_armazenamento",
+    requer: ["thermal"],
+    missoes: [
+      { id: "ar_barril", objetivo: { tipo: "acao", acao: "barril_mil", qtd: 1 }, recompensa: [{ item: "cl:upgrade_armazenamento", quantidade: 1 }] },
+      { id: "ar_upgrade", requer: ["ar_barril"], objetivo: { tipo: "acao", acao: "barril_upgrade", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "ar_carrinho", requer: ["ar_barril"], objetivo: { tipo: "acao", acao: "carrinho", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "ar_empacotar", requer: ["ar_barril"], objetivo: { tipo: "acao", acao: "empacotar", qtd: 64 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+      { id: "ar_certus", objetivo: { tipo: "ter", item: "cl:cristal_certus", qtd: 4 }, recompensa: [{ item: "minecraft:lapis_lazuli", quantidade: 8 }] },
+      { id: "ar_celula", requer: ["ar_certus"], objetivo: { tipo: "acao", acao: "celula_me", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      {
+        id: "ar_sem_fio",
+        requer: ["ar_celula"],
+        objetivo: { tipo: "acao", acao: "sem_fio", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
+        escolha: [{ item: "cl:celula_me_4k", quantidade: 1 }, { item: "minecraft:diamond", quantidade: 3 }],
       },
     ],
   },

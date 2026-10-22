@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:processador_avancado",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_processador_avancado",
+      "minecraft:display_name": {
+        "value": "item.cl:processador_avancado.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

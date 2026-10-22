@@ -1,0 +1,41 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bau_me"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VMV",
+      "FBF",
+      "FPF"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "M": {
+        "item": "cl:matriz_conversao"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "B": {
+        "item": "minecraft:chest"
+      },
+      "P": {
+        "item": "cl:processador_basico"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:bau_me"
+    }
+  }
+}

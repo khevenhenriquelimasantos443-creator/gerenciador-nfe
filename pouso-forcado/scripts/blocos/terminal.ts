@@ -1,9 +1,10 @@
-import { Block, BlockCustomComponent, Container, GameMode, ItemStack, Player, RawMessage, system } from "@minecraft/server";
+import { Block, BlockCustomComponent, GameMode, ItemStack, Player, RawMessage, system } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { ARMAZENAMENTO, IDS } from "../config.js";
 import { aviso } from "../jogador/hud.js";
 import { particula } from "../util/efeitos.js";
-import { coletarNaRede, consumir } from "../util/rede.js";
+import { Inventario, inventariosDe, tiposVirtuais } from "../armazenamento/virtual.js";
+import { coletarNaRede, consumir, procurarNaRede } from "../util/rede.js";
 
 /*
  * Terminal de Armazenamento: uma rede de baús no estilo Applied Energistics.
@@ -12,6 +13,8 @@ import { coletarNaRede, consumir } from "../util/rede.js";
  * - Tocar no terminal gasta ARMAZENAMENTO.energiaPorUso E de uma bateria da rede e abre um menu:
  *   tudo o que está guardado, somado; procurar pelo nome em inglês (ex.: "iron"); tirar 1, 16,
  *   64 ou tudo de um item; guardar a mochila inteira (menos a barra rápida e o Diário).
+ * Fase 18: entram também os Barris de Armazenamento (JABBA) e as células ME dos Drives e Baús ME
+ * (Applied Energistics); com um Controlador ME na rede, o limite de inventários dobra.
  * Custo: só quando alguém usa o terminal (uma busca na rede e uma leitura dos baús).
  */
 type Linha = { id: string; total: number; nome: RawMessage };
@@ -19,12 +22,19 @@ type Linha = { id: string; total: number; nome: RawMessage };
 const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
 
 /** Os inventários da rede. Baú duplo conta uma vez só (as duas metades dão o mesmo inventário). */
-function conteineres(terminal: Block): Container[] {
-  const tipos: ReadonlyArray<string> = ARMAZENAMENTO.conteineres;
-  const blocos = coletarNaRede(terminal, (b) => tipos.includes(b.typeId), ARMAZENAMENTO.maxConteineres, ARMAZENAMENTO.maxBlocos);
+function conteineres(terminal: Block): Inventario[] {
+  const tipos: ReadonlyArray<string> = [...ARMAZENAMENTO.conteineres, ...tiposVirtuais()];
+  const controlador = procurarNaRede(terminal, (b) => b.typeId === "cl:controlador_me");
+  const max = ARMAZENAMENTO.maxConteineres * (controlador ? 2 : 1);
+  const blocos = coletarNaRede(terminal, (b) => tipos.includes(b.typeId), max, ARMAZENAMENTO.maxBlocos);
   const vistos = new Set(blocos.map(chave));
-  const lista: Container[] = [];
+  const lista: Inventario[] = [];
   for (const b of blocos) {
+    const virtuais = inventariosDe(b);
+    if (virtuais.length) {
+      lista.push(...virtuais);
+      continue;
+    }
     const inv = b.getComponent("minecraft:inventory")?.container;
     if (!inv) continue;
     if (inv.size > 27) {
@@ -39,7 +49,7 @@ function conteineres(terminal: Block): Container[] {
   return lista;
 }
 
-function estoque(lista: Container[]): Linha[] {
+function estoque(lista: Inventario[]): Linha[] {
   const porId = new Map<string, Linha>();
   for (const inv of lista) {
     for (let s = 0; s < inv.size; s++) {
@@ -54,7 +64,7 @@ function estoque(lista: Container[]): Linha[] {
 }
 
 /** Tira até `qtd` do item da rede para o jogador. Retorna quantos passou. */
-function retirar(jogador: Player, lista: Container[], id: string, qtd: number): number {
+function retirar(jogador: Player, lista: Inventario[], id: string, qtd: number): number {
   const mochila = jogador.getComponent("minecraft:inventory")?.container;
   if (!mochila) return 0;
   let falta = qtd;
@@ -79,7 +89,7 @@ function retirar(jogador: Player, lista: Container[], id: string, qtd: number): 
 }
 
 /** Guarda a mochila (espaços 9 a 35) na rede. Retorna quantos itens guardou. */
-function guardarMochila(jogador: Player, lista: Container[]): number {
+function guardarMochila(jogador: Player, lista: Inventario[]): number {
   const mochila = jogador.getComponent("minecraft:inventory")?.container;
   if (!mochila) return 0;
   let guardados = 0;
@@ -109,7 +119,7 @@ async function escolherQuantidade(jogador: Player, terminal: Block, linha: Linha
   if (r.canceled || r.selection === undefined) return;
   if (r.selection > opcoes.length) return abrir(jogador, terminal, "", 0, false);
   const qtd = r.selection < opcoes.length ? opcoes[r.selection] : linha.total;
-  const passou = retirar(jogador, conteineres(terminal), linha.id, qtd);
+  const passou = retirar(jogador, listar(jogador, terminal), linha.id, qtd);
   aviso(jogador, { translate: passou < qtd ? "cl.terminal.mochila_cheia" : "cl.terminal.retirado", with: { rawtext: [{ text: String(passou) }, linha.nome] } });
   return abrir(jogador, terminal, "", 0, false);
 }
@@ -124,9 +134,14 @@ async function procurar(jogador: Player, terminal: Block): Promise<void> {
   return abrir(jogador, terminal, texto, 0, false);
 }
 
+// Quem abre por outro bloco (Baú ME) vê só os inventários dele.
+const fonteDe = new Map<string, () => Inventario[]>();
+const listar = (jogador: Player, terminal: Block) => fonteDe.get(jogador.id)?.() ?? conteineres(terminal);
+
 async function abrir(jogador: Player, terminal: Block, filtro: string, pagina: number, cobrar: boolean): Promise<void> {
-  if (!terminal.isValid || terminal.typeId !== IDS.terminal) return;
-  const lista = conteineres(terminal);
+  const proprio = fonteDe.has(jogador.id);
+  if (!proprio && (!terminal.isValid || terminal.typeId !== IDS.terminal)) return;
+  const lista = listar(jogador, terminal);
   if (lista.length === 0) {
     aviso(jogador, "cl.terminal.sem_baus", 5);
     return;
@@ -188,3 +203,18 @@ export const terminal: BlockCustomComponent = {
     });
   },
 };
+
+/** Abre o Terminal (o Terminal sem Fio usa isto, com o terminal achado pelo Ponto de Acesso). */
+export async function abrirTerminal(jogador: Player, terminal: Block): Promise<void> {
+  return abrir(jogador, terminal, "", 0, true);
+}
+
+/** Abre a mesma lista do Terminal só com estes inventários (Baú ME). */
+export async function abrirInventarios(jogador: Player, bloco: Block, inventarios: () => Inventario[]): Promise<void> {
+  fonteDe.set(jogador.id, inventarios);
+  try {
+    await abrir(jogador, bloco, "", 0, false);
+  } finally {
+    fonteDe.delete(jogador.id);
+  }
+}
