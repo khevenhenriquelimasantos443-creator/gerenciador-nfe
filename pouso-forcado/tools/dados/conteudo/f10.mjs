@@ -1,0 +1,43 @@
+// Fase 10: a decolagem, os créditos e o modo infinito (scripts/mundo/decolagem.ts). Só textos.
+const CREDITOS = [
+  ["§6Pouso Forçado", "Pouso Forçado", "Uma homenagem ao Crash Landing (Iskandar, Minecraft 1.6.4)", "A tribute to Crash Landing (Iskandar, Minecraft 1.6.4)"],
+  ["Ex Nihilo · Ex Aliquo", null, "A peneira, o martelo, o barril e o cadinho", "The sieve, the hammer, the barrel and the crucible"],
+  ["EnviroMine · Hunger Overhaul", null, "A sede, o calor, o ar e a fome", "Thirst, heat, air and hunger"],
+  ["Pam's HarvestCraft", null, "As plantações e a cozinha", "Crops and cooking"],
+  ["Tinkers' Construct · Iguana Tweaks", null, "As ferramentas e a fundição", "Tools and the smeltery"],
+  ["Thermal Expansion", null, "As máquinas e a energia", "Machines and power"],
+  ["JABBA · AutoPackager · Applied Energistics", null, "Barris, empacotador e a rede ME", "Barrels, packager and the ME network"],
+  ["MineFactory Reloaded · PneumaticCraft", null, "Fazendas automáticas e ar comprimido", "Automatic farms and compressed air"],
+  ["Sync · Big Reactors", null, "Corpos reserva e o reator", "Spare bodies and the reactor"],
+  ["Chisel · BiblioCraft · ChickenChunks", null, "Decoração e chunks carregados", "Decoration and loaded chunks"],
+  ["Hardcore Questing Mode · Just Enough Items", null, "O Diário de Bordo e o Catálogo", "The Logbook and the Catalog"],
+  ["§6Obrigado por jogar!", "§6Thanks for playing!", "Créditos completos em CREDITOS.md", "Full credits in CREDITOS.md"],
+];
+
+export default {
+  fase: 10,
+  mod: "Pouso Forçado",
+  textos: {
+    "cl.fim.titulo": ["Decolagem", "Liftoff"],
+    "cl.fim.botao": ["§6§lDECOLAR", "§6§lLIFT OFF"],
+    "cl.fim.botao_rever": ["Ver a decolagem de novo", "Watch the liftoff again"],
+    "cl.fim.confirmar": ["Todos os sistemas estão prontos. Decolar agora? Todos os jogadores nesta dimensão veem a cena e os créditos (cerca de 1 minuto). Depois o mundo continua: é o modo infinito, com um capítulo novo no Diário.", "All systems are ready. Lift off now? Every player in this dimension sees the scene and the credits (about a minute). Afterwards the world goes on: it's the endless mode, with a new chapter in the Logbook."],
+    "cl.fim.rever": ["A nave já decolou uma vez. Ver a cena e os créditos de novo? (Sem recompensa.)", "The ship already lifted off once. Watch the scene and the credits again? (No reward.)"],
+    "cl.fim.sim": ["§aDecolar", "§aLift off"],
+    "cl.fim.contagem": ["Motores ligando...", "Engines starting..."],
+    "cl.fim.decolando": ["§6Decolando!", "§6Lifting off!"],
+    "cl.fim.infinito": ["§6Modo infinito", "§6Endless mode"],
+    "cl.fim.infinito_sub": ["O sinal de resgate foi enviado. O planeta continua aqui.", "The rescue signal is out. The planet is still here."],
+    "cl.fim.mensagem": ["A nave subiu, deixou o sinal de resgate em órbita e voltou para o acampamento: você terminou o Pouso Forçado! O mundo continua; veja o capítulo §6Final§r no Diário.", "The ship went up, left the rescue beacon in orbit and came back to camp: you finished Pouso Forçado! The world goes on; see the §6Final§r chapter in the Logbook."],
+    "cl.fim.de_novo": ["Fim da cena. A nave está pronta para outra volta quando quiser.", "End of the scene. The ship is ready for another lap whenever you want."],
+    "cl.fim.painel_depois": ["§7A nave já decolou uma vez: modo infinito.", "§7The ship has already lifted off: endless mode."],
+    ...Object.fromEntries(CREDITOS.flatMap(([t, ten, s, sen], i) => [[`cl.fim.c${i + 1}.t`, [t, ten ?? t]], [`cl.fim.c${i + 1}.s`, [s, sen]]])),
+    "cl.capitulo.final.nome": ["Final: a decolagem", "Final: liftoff"],
+    "cl.capitulo.final.desc": ["Com a nave consertada, decole pelo Painel da Nave. Depois, o modo infinito.", "With the ship repaired, lift off from the Ship Panel. Then, endless mode."],
+    "cl.missao.fn_decolar.titulo": ["Decolagem", "Liftoff"], "cl.missao.fn_decolar.desc": ["Toque no Painel da Nave com os 4 sistemas consertados e decole.", "Tap the Ship Panel with all 4 systems repaired and lift off."],
+    "cl.missao.fn_noites.titulo": ["Colono", "Settler"], "cl.missao.fn_noites.desc": ["Sobreviva a mais 30 noites no planeta depois da decolagem.", "Survive 30 more nights on the planet after liftoff."],
+    "cl.missao.fn_reator.titulo": ["Usina", "Power plant"], "cl.missao.fn_reator.desc": ["Gere 10.000 E (40 milhões de RF) com reatores.", "Generate 10,000 E (40 million RF) with reactors."],
+    "cl.missao.fn_me.titulo": ["Arquivo completo", "Full archive"], "cl.missao.fn_me.desc": ["Tenha uma Célula ME de 64k.", "Have a 64k ME Cell."],
+    "cl.missao.fn_corpos.titulo": ["Tripulação", "Crew"], "cl.missao.fn_corpos.desc": ["Construa mais 3 corpos reserva.", "Build 3 more spare bodies."],
+  },
+};

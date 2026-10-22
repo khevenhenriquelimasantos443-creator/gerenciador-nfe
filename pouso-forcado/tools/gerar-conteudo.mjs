@@ -144,7 +144,7 @@ json("RP/textures/item_texture.json", itemTex);
 json("RP/textures/terrain_texture.json", terreno);
 
 for (const [arq, lingua] of [["RP/texts/pt_BR.lang", "pt"], ["RP/texts/en_US.lang", "en"]]) {
-  const INI = "## Conteúdo das Fases 15+ (gerado por tools/gerar-conteudo.mjs)", FIM = "## fim Conteúdo";
+  const INI = "## Conteúdo das Fases 10 e 15+ (gerado por tools/gerar-conteudo.mjs)", FIM = "## fim Conteúdo";
   let texto = readFileSync(join(RAIZ, arq), "utf8");
   const i = texto.indexOf(INI);
   if (i >= 0) texto = texto.slice(0, i) + texto.slice(texto.indexOf(FIM) + FIM.length + 1);

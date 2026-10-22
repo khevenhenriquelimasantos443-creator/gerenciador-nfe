@@ -365,7 +365,7 @@ Arte: **sim** (MIT).
 
 ### Fase 10: final (decolagem)
 
-Ainda sem itens definidos.
+Sem itens nem blocos novos: usa o Painel da Nave e a câmera do jogo.
 
 ---
 

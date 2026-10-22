@@ -84,7 +84,8 @@ export type Acao =
   | "cinzelar"
   | "estante"
   | "cabide"
-  | "carregador";
+  | "carregador"
+  | "decolar";
 
 type MissaoBase = {
   id: string;
@@ -475,6 +476,23 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: "minecraft:golden_apple", quantidade: 2 }],
         escolha: [{ item: IDS.sacolaLendaria, quantidade: 1 }, { item: "minecraft:diamond", quantidade: 8 }],
       },
+    ],
+  },
+  {
+    id: "final", // Fase 10: a decolagem e o modo infinito
+    icone: IDS.painelNave,
+    requer: ["nave"],
+    missoes: [
+      {
+        id: "fn_decolar",
+        objetivo: { tipo: "acao", acao: "decolar", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }],
+        escolha: [{ item: "minecraft:diamond_block", quantidade: 2 }, { item: "minecraft:enchanted_golden_apple", quantidade: 1 }],
+      },
+      { id: "fn_noites", requer: ["fn_decolar"], objetivo: { tipo: "noites", qtd: 30 }, recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }] },
+      { id: "fn_reator", requer: ["fn_decolar"], objetivo: { tipo: "acao", acao: "reator_10e", qtd: 1000 }, recompensa: [{ item: "cl:bloco_yellorium", quantidade: 4 }] },
+      { id: "fn_me", requer: ["fn_decolar"], objetivo: { tipo: "ter", item: "cl:celula_me_64k", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 2 }] },
+      { id: "fn_corpos", requer: ["fn_decolar"], objetivo: { tipo: "acao", acao: "corpo_criado", qtd: 3 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

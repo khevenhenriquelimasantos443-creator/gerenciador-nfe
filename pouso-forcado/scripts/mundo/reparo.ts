@@ -1,10 +1,11 @@
-import { BlockCustomComponent, GameMode, Player, RawMessage, system, world } from "@minecraft/server";
+import { Block, BlockCustomComponent, GameMode, Player, RawMessage, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { PROPS, SISTEMAS_NAVE } from "../config.js";
 import { nomeItem, receitasDaMontadora } from "../blocos/montadora.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { Acao } from "../missoes/lista.js";
 import { particula } from "../util/efeitos.js";
+import { confirmarDecolagem, jaDecolou } from "./decolagem.js";
 
 /*
  * Conserto da nave (Fase 8): o Painel da Nave fica dentro da nave caída (posto junto com o baú
@@ -102,21 +103,30 @@ async function telaReceitas(jogador: Player): Promise<void> {
   return abrirPainel(jogador);
 }
 
-async function abrirPainel(jogador: Player): Promise<void> {
+async function abrirPainel(jogador: Player, painel?: Block): Promise<void> {
   const feitos = consertados();
   const corpo: RawMessage[] = [{ translate: naveConsertada() ? "cl.nave.status_pronta" : "cl.nave.status" }, { text: "\n\n" }];
   for (const sis of SISTEMAS_NAVE) {
     corpo.push({ text: feitos.has(sis.id) ? "§a[OK] §r" : "§c[--] §r" }, { translate: `cl.nave.sistema.${sis.id}` }, { text: "\n" });
   }
   const pendentes = SISTEMAS_NAVE.filter((s) => !feitos.has(s.id));
+  if (jaDecolou()) corpo.push({ text: "\n" }, { translate: "cl.fim.painel_depois" });
   const form = new ActionFormData().title({ translate: "cl.nave.titulo" }).body({ rawtext: corpo });
+  // Fase 10: com tudo consertado, o primeiro botão é a decolagem.
+  const podeDecolar = !pendentes.length && painel !== undefined;
+  if (podeDecolar) form.button({ translate: jaDecolou() ? "cl.fim.botao_rever" : "cl.fim.botao" });
   for (const sis of pendentes) form.button({ rawtext: [{ translate: "cl.nave.consertar" }, { text: " " }, { translate: `cl.nave.sistema.${sis.id}` }] });
   form.button({ translate: "cl.nave.receitas" });
   form.button({ translate: "cl.diario.fechar" });
   const r = await form.show(jogador);
   if (r.canceled || r.selection === undefined) return;
-  if (r.selection < pendentes.length) return telaSistema(jogador, pendentes[r.selection]);
-  if (r.selection === pendentes.length) return telaReceitas(jogador);
+  let sel = r.selection;
+  if (podeDecolar) {
+    if (sel === 0) return confirmarDecolagem(jogador, painel);
+    sel--;
+  }
+  if (sel < pendentes.length) return telaSistema(jogador, pendentes[sel]);
+  if (sel === pendentes.length) return telaReceitas(jogador);
 }
 
 export const painelNave: BlockCustomComponent = {
@@ -124,7 +134,7 @@ export const painelNave: BlockCustomComponent = {
     const jogador = e.player;
     if (!jogador) return;
     system.run(() => {
-      abrirPainel(jogador).catch(() => {
+      abrirPainel(jogador, e.block).catch(() => {
         // menu fechado no meio
       });
     });

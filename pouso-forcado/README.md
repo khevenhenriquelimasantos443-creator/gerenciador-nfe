@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 23** (Chisel, BiblioCraft e ChickenChunks). Fases 0 a 22 prontas; a 10 (final) ficou para o fim.
+**Versão 1.0.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último).
 
 ## Fases até o fim
 
@@ -33,8 +33,8 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 20 | **PneumaticCraft (leve)**: Compressor de Ar, Tubos de Pressão (comum e avançado), pressão em bar igual na rede, tubos que estouram acima do perigo, Câmara de Pressão 3x3x3 a 5x5x5 com válvula e interface, ferro comprimido, diamante de carvão, placa de circuito, transistor e capacitor, manômetro; +5 missões | pronta |
 | 21 | **Sync**: Núcleo Sync (leva o Coração do Faraó), Construtor de Corpos (amostra de sangue + 24.000 RF ou esteira com porco/lobo), Armazém de Corpos, troca de corpo com inventário próprio e acordar no corpo reserva ao morrer (casa ou o mais perto); sem sistema de vidas; +4 missões | pronta |
 | 22 | **Big Reactors**: yellorium só pela peneira de poeira, grafite, reator multibloco de 3x3x3 a 7x7x7 (carcaça, vidro, barras de combustível e de controle, portas de acesso e de refrigeração, tomadas), fórmula fechada com moderador e inserção, cianita e Reprocessador (blutônio); Controlador e Tomada só no saque das cidades; +5 missões | pronta |
-| 23 | **Chisel + BiblioCraft + ChickenChunks**: Cinzel (500 usos) e 48 variantes de arenito, pedra, mármore, calcário, casco da nave e vidro; veios de Mármore e Calcário; Estante, Prateleira, Suporte de Ferramentas, Expositor, Cabide de Armadura, Lanterna e Lâmpada; Carregador de Chunks (3x3) e Pontual; +5 missões | **esta versão** |
-| 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
+| 23 | **Chisel + BiblioCraft + ChickenChunks**: Cinzel (500 usos) e 48 variantes de arenito, pedra, mármore, calcário, casco da nave e vidro; veios de Mármore e Calcário; Estante, Prateleira, Suporte de Ferramentas, Expositor, Cabide de Armadura, Lanterna e Lâmpada; Carregador de Chunks (3x3) e Pontual; +5 missões | pronta |
+| 10 | **Final**: botão Decolar no Painel da Nave com os 4 sistemas consertados, cena com a câmera do jogo (contagem, a nave subindo em fogo e fumaça), créditos, recompensa e modo infinito (capítulo Final com 5 missões); versão 1.0.0 | **esta versão** |
 
 ## Versões usadas (conferidas na documentação oficial)
 
@@ -134,6 +134,13 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Final (Fase 10: a decolagem)
+
+- Com os 4 sistemas consertados, o **Painel da Nave** mostra o botão **DECOLAR** (pede confirmação).
+- Todos os jogadores na mesma dimensão veem a cena (cerca de 1 minuto, com a câmera livre do próprio jogo, sem nada no pacote de recursos): contagem de 5 s com a tela tremendo, a nave subindo num rastro de fogo e fumaça, tela preta e 12 telas de créditos. Durante a cena ninguém se mexe nem toma dano.
+- No fim a câmera volta, cada um ganha uma **Sacola Lendária** e o mundo segue no **modo infinito**: capítulo novo **Final: a decolagem** no Diário (decolar, mais 30 noites, 10.000 E de reator, célula ME de 64k, 3 corpos reserva).
+- Tocar no painel depois deixa ver a cena de novo (sem recompensa). Se o jogo fechar no meio da cena, a câmera e os controles voltam ao entrar.
 
 ## Decoração (Fase 23: Chisel, BiblioCraft e ChickenChunks)
 
@@ -464,7 +471,7 @@ Estilo futurista e minimalista: corpo branco-gelo, base grafite e uma faixa de l
   | Computador de Bordo | 1 Computador de Bordo |
   | Combustível | 8 Células de Combustível |
   | Motor | 1 Motor da Nave (leva o **Coração do Faraó**) |
-  Com os 4 prontos, a nave está pronta para decolar (a decolagem é a Fase 10).
+  Com os 4 prontos, o painel ganha o botão Decolar (Fase 10).
 - **Montadora** (`cl:montadora`; bancada: ferro, pistão, redstone e bancada de trabalho): máquina de energia que faz as peças. Ingredientes num baú/funil **em cima**, peça no baú/funil **embaixo** (ou cai do lado). Gasta 1 E a cada 5 s de uma bateria ligada por cabos; a primeira receita completa no baú é a que ela faz. Toque nela para ver as receitas e o andamento:
   | Peça | Ingredientes | Energia |
   |---|---|---|
