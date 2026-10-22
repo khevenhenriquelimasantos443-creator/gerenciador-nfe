@@ -1877,13 +1877,13 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/blocks/sandstone_smooth"
  },
  "minecraft:dark_oak_log": {
-  "pt": "dark_oak_log",
-  "en": "dark_oak_log",
+  "pt": "Tora de Carvalho Escuro",
+  "en": "Dark Oak Log",
   "icone": "textures/blocks/log_big_oak"
  },
  "minecraft:dark_oak_planks": {
-  "pt": "dark_oak_planks",
-  "en": "dark_oak_planks",
+  "pt": "Tábuas de Carvalho Escuro",
+  "en": "Dark Oak Planks",
   "icone": "textures/blocks/planks_big_oak"
  },
  "minecraft:deadbush": {
@@ -2037,8 +2037,9 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/blocks/wool_colored_gray"
  },
  "minecraft:green_dye": {
-  "pt": "green_dye",
-  "en": "green_dye"
+  "pt": "Corante Verde",
+  "en": "Green Dye",
+  "icone": "textures/items/dye_powder_green_new"
  },
  "minecraft:gunpowder": {
   "pt": "Pólvora",
@@ -2101,13 +2102,13 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/blocks/leaves_jungle_carried"
  },
  "minecraft:jungle_log": {
-  "pt": "jungle_log",
-  "en": "jungle_log",
+  "pt": "Tora da Selva",
+  "en": "Jungle Log",
   "icone": "textures/blocks/log_jungle"
  },
  "minecraft:jungle_planks": {
-  "pt": "jungle_planks",
-  "en": "jungle_planks",
+  "pt": "Tábuas da Selva",
+  "en": "Jungle Planks",
   "icone": "textures/blocks/planks_jungle"
  },
  "minecraft:jungle_sapling": {
@@ -2461,13 +2462,13 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/blocks/leaves_spruce_carried"
  },
  "minecraft:spruce_log": {
-  "pt": "spruce_log",
-  "en": "spruce_log",
+  "pt": "Tora de Pinheiro",
+  "en": "Spruce Log",
   "icone": "textures/blocks/log_spruce"
  },
  "minecraft:spruce_planks": {
-  "pt": "spruce_planks",
-  "en": "spruce_planks",
+  "pt": "Tábuas de Pinheiro",
+  "en": "Spruce Planks",
   "icone": "textures/blocks/planks_spruce"
  },
  "minecraft:spruce_sapling": {
