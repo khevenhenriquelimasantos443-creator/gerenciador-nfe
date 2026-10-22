@@ -919,6 +919,9 @@
     },
     "clc_barra_grafite": {
       "textures": "textures/items/cl/c/barra_grafite"
+    },
+    "clc_cinzel": {
+      "textures": "textures/items/cl/c/cinzel"
     }
   }
 }

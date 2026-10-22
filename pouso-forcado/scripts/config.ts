@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.28.0";
+export const VERSAO = "0.29.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -168,7 +168,7 @@ export const MUNDO_PLANO = {
 // Minérios espalhados por script em cada chunk do mundo plano (scripts/mundo/minerios.ts).
 // veios = quantos por chunk; tamanho = blocos por veio (aprox.); y = faixa de altura.
 // Só substituem pedra e ardósia; abaixo de y = 0 sai a versão de ardósia do minério.
-export const MINERIOS: ReadonlyArray<{ minerio: string; veios: number; tamanho: number; yMin: number; yMax: number }> = [
+export const MINERIOS: ReadonlyArray<{ minerio: string; bloco?: string; veios: number; tamanho: number; yMin: number; yMax: number }> = [
   { minerio: "coal", veios: 10, tamanho: 9, yMin: 0, yMax: 32 },
   { minerio: "copper", veios: 5, tamanho: 8, yMin: -16, yMax: 32 },
   { minerio: "iron", veios: 9, tamanho: 7, yMin: -60, yMax: 32 },
@@ -176,6 +176,9 @@ export const MINERIOS: ReadonlyArray<{ minerio: string; veios: number; tamanho: 
   { minerio: "redstone", veios: 4, tamanho: 6, yMin: -60, yMax: -40 },
   { minerio: "lapis", veios: 2, tamanho: 5, yMin: -60, yMax: 0 },
   { minerio: "diamond", veios: 1, tamanho: 4, yMin: -60, yMax: -50 },
+  // Fase 23 (Chisel): mármore e calcário em veios grandes na pedra (no Chisel, veio de 32).
+  { minerio: "marmore", bloco: "cl:marmore", veios: 2, tamanho: 32, yMin: 4, yMax: 40 },
+  { minerio: "calcario", bloco: "cl:calcario", veios: 1, tamanho: 32, yMin: 4, yMax: 40 },
 ];
 
 // Relevo espalhado por script conforme o jogador explora (scripts/mundo/relevo.ts).

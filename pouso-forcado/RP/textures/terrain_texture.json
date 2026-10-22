@@ -900,6 +900,216 @@
     },
     "clc_reprocessador_cianita_baixo": {
       "textures": "textures/blocks/cl/c/reprocessador_cianita_baixo"
+    },
+    "clc_marmore": {
+      "textures": "textures/blocks/cl/c/marmore"
+    },
+    "clc_calcario": {
+      "textures": "textures/blocks/cl/c/calcario"
+    },
+    "clc_arenito_liso": {
+      "textures": "textures/blocks/cl/c/arenito_liso"
+    },
+    "clc_arenito_polido": {
+      "textures": "textures/blocks/cl/c/arenito_polido"
+    },
+    "clc_arenito_tijolos": {
+      "textures": "textures/blocks/cl/c/arenito_tijolos"
+    },
+    "clc_arenito_tijolos_pequenos": {
+      "textures": "textures/blocks/cl/c/arenito_tijolos_pequenos"
+    },
+    "clc_arenito_ladrilho": {
+      "textures": "textures/blocks/cl/c/arenito_ladrilho"
+    },
+    "clc_arenito_pilar": {
+      "textures": "textures/blocks/cl/c/arenito_pilar"
+    },
+    "clc_arenito_entalhado": {
+      "textures": "textures/blocks/cl/c/arenito_entalhado"
+    },
+    "clc_arenito_mosaico": {
+      "textures": "textures/blocks/cl/c/arenito_mosaico"
+    },
+    "clc_pedra_liso": {
+      "textures": "textures/blocks/cl/c/pedra_liso"
+    },
+    "clc_pedra_polido": {
+      "textures": "textures/blocks/cl/c/pedra_polido"
+    },
+    "clc_pedra_tijolos": {
+      "textures": "textures/blocks/cl/c/pedra_tijolos"
+    },
+    "clc_pedra_tijolos_pequenos": {
+      "textures": "textures/blocks/cl/c/pedra_tijolos_pequenos"
+    },
+    "clc_pedra_ladrilho": {
+      "textures": "textures/blocks/cl/c/pedra_ladrilho"
+    },
+    "clc_pedra_pilar": {
+      "textures": "textures/blocks/cl/c/pedra_pilar"
+    },
+    "clc_pedra_entalhado": {
+      "textures": "textures/blocks/cl/c/pedra_entalhado"
+    },
+    "clc_pedra_mosaico": {
+      "textures": "textures/blocks/cl/c/pedra_mosaico"
+    },
+    "clc_marmore_liso": {
+      "textures": "textures/blocks/cl/c/marmore_liso"
+    },
+    "clc_marmore_polido": {
+      "textures": "textures/blocks/cl/c/marmore_polido"
+    },
+    "clc_marmore_tijolos": {
+      "textures": "textures/blocks/cl/c/marmore_tijolos"
+    },
+    "clc_marmore_tijolos_pequenos": {
+      "textures": "textures/blocks/cl/c/marmore_tijolos_pequenos"
+    },
+    "clc_marmore_ladrilho": {
+      "textures": "textures/blocks/cl/c/marmore_ladrilho"
+    },
+    "clc_marmore_pilar": {
+      "textures": "textures/blocks/cl/c/marmore_pilar"
+    },
+    "clc_marmore_entalhado": {
+      "textures": "textures/blocks/cl/c/marmore_entalhado"
+    },
+    "clc_marmore_mosaico": {
+      "textures": "textures/blocks/cl/c/marmore_mosaico"
+    },
+    "clc_calcario_liso": {
+      "textures": "textures/blocks/cl/c/calcario_liso"
+    },
+    "clc_calcario_polido": {
+      "textures": "textures/blocks/cl/c/calcario_polido"
+    },
+    "clc_calcario_tijolos": {
+      "textures": "textures/blocks/cl/c/calcario_tijolos"
+    },
+    "clc_calcario_tijolos_pequenos": {
+      "textures": "textures/blocks/cl/c/calcario_tijolos_pequenos"
+    },
+    "clc_calcario_ladrilho": {
+      "textures": "textures/blocks/cl/c/calcario_ladrilho"
+    },
+    "clc_calcario_pilar": {
+      "textures": "textures/blocks/cl/c/calcario_pilar"
+    },
+    "clc_calcario_entalhado": {
+      "textures": "textures/blocks/cl/c/calcario_entalhado"
+    },
+    "clc_calcario_mosaico": {
+      "textures": "textures/blocks/cl/c/calcario_mosaico"
+    },
+    "clc_casco_nave_liso": {
+      "textures": "textures/blocks/cl/c/casco_nave_liso"
+    },
+    "clc_casco_nave_polido": {
+      "textures": "textures/blocks/cl/c/casco_nave_polido"
+    },
+    "clc_casco_nave_tijolos": {
+      "textures": "textures/blocks/cl/c/casco_nave_tijolos"
+    },
+    "clc_casco_nave_tijolos_pequenos": {
+      "textures": "textures/blocks/cl/c/casco_nave_tijolos_pequenos"
+    },
+    "clc_casco_nave_ladrilho": {
+      "textures": "textures/blocks/cl/c/casco_nave_ladrilho"
+    },
+    "clc_casco_nave_pilar": {
+      "textures": "textures/blocks/cl/c/casco_nave_pilar"
+    },
+    "clc_casco_nave_entalhado": {
+      "textures": "textures/blocks/cl/c/casco_nave_entalhado"
+    },
+    "clc_casco_nave_mosaico": {
+      "textures": "textures/blocks/cl/c/casco_nave_mosaico"
+    },
+    "clc_vidro_liso": {
+      "textures": "textures/blocks/cl/c/vidro_liso"
+    },
+    "clc_vidro_polido": {
+      "textures": "textures/blocks/cl/c/vidro_polido"
+    },
+    "clc_vidro_tijolos": {
+      "textures": "textures/blocks/cl/c/vidro_tijolos"
+    },
+    "clc_vidro_tijolos_pequenos": {
+      "textures": "textures/blocks/cl/c/vidro_tijolos_pequenos"
+    },
+    "clc_vidro_ladrilho": {
+      "textures": "textures/blocks/cl/c/vidro_ladrilho"
+    },
+    "clc_vidro_pilar": {
+      "textures": "textures/blocks/cl/c/vidro_pilar"
+    },
+    "clc_vidro_entalhado": {
+      "textures": "textures/blocks/cl/c/vidro_entalhado"
+    },
+    "clc_vidro_mosaico": {
+      "textures": "textures/blocks/cl/c/vidro_mosaico"
+    },
+    "clc_estante": {
+      "textures": "textures/blocks/cl/c/estante"
+    },
+    "clc_estante_topo": {
+      "textures": "textures/blocks/cl/c/estante_topo"
+    },
+    "clc_prateleira": {
+      "textures": "textures/blocks/cl/c/prateleira"
+    },
+    "clc_prateleira_topo": {
+      "textures": "textures/blocks/cl/c/prateleira_topo"
+    },
+    "clc_suporte_ferramentas": {
+      "textures": "textures/blocks/cl/c/suporte_ferramentas"
+    },
+    "clc_suporte_ferramentas_topo": {
+      "textures": "textures/blocks/cl/c/suporte_ferramentas_topo"
+    },
+    "clc_expositor": {
+      "textures": "textures/blocks/cl/c/expositor"
+    },
+    "clc_expositor_topo": {
+      "textures": "textures/blocks/cl/c/expositor_topo"
+    },
+    "clc_cabide_armadura": {
+      "textures": "textures/blocks/cl/c/cabide_armadura"
+    },
+    "clc_cabide_armadura_topo": {
+      "textures": "textures/blocks/cl/c/cabide_armadura_topo"
+    },
+    "clc_lanterna": {
+      "textures": "textures/blocks/cl/c/lanterna"
+    },
+    "clc_lampada": {
+      "textures": "textures/blocks/cl/c/lampada"
+    },
+    "clc_carregador_chunks_frente": {
+      "textures": "textures/blocks/cl/c/carregador_chunks_frente"
+    },
+    "clc_carregador_chunks_lado": {
+      "textures": "textures/blocks/cl/c/carregador_chunks_lado"
+    },
+    "clc_carregador_chunks_topo": {
+      "textures": "textures/blocks/cl/c/carregador_chunks_topo"
+    },
+    "clc_carregador_chunks_baixo": {
+      "textures": "textures/blocks/cl/c/carregador_chunks_baixo"
+    },
+    "clc_carregador_pontual_frente": {
+      "textures": "textures/blocks/cl/c/carregador_pontual_frente"
+    },
+    "clc_carregador_pontual_lado": {
+      "textures": "textures/blocks/cl/c/carregador_pontual_lado"
+    },
+    "clc_carregador_pontual_topo": {
+      "textures": "textures/blocks/cl/c/carregador_pontual_topo"
+    },
+    "clc_carregador_pontual_baixo": {
+      "textures": "textures/blocks/cl/c/carregador_pontual_baixo"
     }
   }
 }

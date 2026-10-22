@@ -80,7 +80,11 @@ export type Acao =
   | "reviver_corpo"
   | "reator"
   | "reator_10e"
-  | "blutonio";
+  | "blutonio"
+  | "cinzelar"
+  | "estante"
+  | "cabide"
+  | "carregador";
 
 type MissaoBase = {
   id: string;
@@ -334,6 +338,18 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }],
         escolha: [{ item: "cl:bloco_grafite", quantidade: 8 }, { item: "cl:lingote_yellorium", quantidade: 8 }],
       },
+    ],
+  },
+  {
+    id: "decoracao", // Fase 23: Chisel, BiblioCraft e ChickenChunks
+    icone: "cl:cinzel",
+    requer: ["tinkers"],
+    missoes: [
+      { id: "dc_cinzel", objetivo: { tipo: "acao", acao: "cinzelar", qtd: 32 }, recompensa: [{ item: "cl:marmore_liso", quantidade: 16 }] },
+      { id: "dc_marmore", objetivo: { tipo: "ter", item: "cl:marmore", qtd: 32 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "dc_estante", objetivo: { tipo: "acao", acao: "estante", qtd: 1 }, recompensa: [{ item: "minecraft:book", quantidade: 4 }, { item: "minecraft:experience_bottle", quantidade: 8 }] },
+      { id: "dc_cabide", objetivo: { tipo: "acao", acao: "cabide", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "dc_carregador", requer: ["dc_cinzel"], objetivo: { tipo: "acao", acao: "carregador", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
   {

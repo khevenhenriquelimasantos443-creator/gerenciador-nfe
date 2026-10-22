@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_marmore_liso"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BB",
+      "BB"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:marmore"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:marmore"
+      }
+    ],
+    "result": {
+      "item": "cl:marmore_liso",
+      "count": 4
+    }
+  }
+}

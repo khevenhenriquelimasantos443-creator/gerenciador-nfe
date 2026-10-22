@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_casco_nave_liso"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BB",
+      "BB"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:placa_casco"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:placa_casco"
+      }
+    ],
+    "result": {
+      "item": "cl:casco_nave_liso",
+      "count": 4
+    }
+  }
+}

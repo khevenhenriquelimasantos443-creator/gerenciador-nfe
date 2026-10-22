@@ -46,6 +46,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Peanut",
   "icone": "textures/items/cl/arte/amendoim"
  },
+ "cl:arenito_entalhado": {
+  "pt": "Arenito Entalhado",
+  "en": "Carved Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_entalhado"
+ },
+ "cl:arenito_ladrilho": {
+  "pt": "Arenito Ladrilho",
+  "en": "Tiles Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_ladrilho"
+ },
+ "cl:arenito_liso": {
+  "pt": "Arenito Liso",
+  "en": "Smooth Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_liso"
+ },
+ "cl:arenito_mosaico": {
+  "pt": "Arenito Mosaico",
+  "en": "Mosaic Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_mosaico"
+ },
+ "cl:arenito_pilar": {
+  "pt": "Arenito Pilar",
+  "en": "Pillar Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_pilar"
+ },
+ "cl:arenito_polido": {
+  "pt": "Arenito Polido",
+  "en": "Polished Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_polido"
+ },
+ "cl:arenito_tijolos": {
+  "pt": "Arenito Tijolos",
+  "en": "Bricks Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_tijolos"
+ },
+ "cl:arenito_tijolos_pequenos": {
+  "pt": "Arenito Tijolinhos",
+  "en": "Small Bricks Sandstone",
+  "icone": "textures/blocks/cl/c/arenito_tijolos_pequenos"
+ },
  "cl:argamassa": {
   "pt": "Argamassa",
   "en": "Grout",
@@ -186,6 +226,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bean Burrito",
   "icone": "textures/items/cl/arte/burrito"
  },
+ "cl:cabide_armadura": {
+  "pt": "Cabide de Armadura",
+  "en": "Armor Stand",
+  "icone": "textures/blocks/cl/c/cabide_armadura_topo"
+ },
  "cl:cabo": {
   "pt": "Cabo de Cobre",
   "en": "Copper Cable",
@@ -211,6 +256,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crook",
   "icone": "textures/items/cl/arte/cajado"
  },
+ "cl:calcario": {
+  "pt": "Calcário",
+  "en": "Limestone",
+  "icone": "textures/blocks/cl/c/calcario"
+ },
+ "cl:calcario_entalhado": {
+  "pt": "Calcário Entalhado",
+  "en": "Carved Limestone",
+  "icone": "textures/blocks/cl/c/calcario_entalhado"
+ },
+ "cl:calcario_ladrilho": {
+  "pt": "Calcário Ladrilho",
+  "en": "Tiles Limestone",
+  "icone": "textures/blocks/cl/c/calcario_ladrilho"
+ },
+ "cl:calcario_liso": {
+  "pt": "Calcário Liso",
+  "en": "Smooth Limestone",
+  "icone": "textures/blocks/cl/c/calcario_liso"
+ },
+ "cl:calcario_mosaico": {
+  "pt": "Calcário Mosaico",
+  "en": "Mosaic Limestone",
+  "icone": "textures/blocks/cl/c/calcario_mosaico"
+ },
+ "cl:calcario_pilar": {
+  "pt": "Calcário Pilar",
+  "en": "Pillar Limestone",
+  "icone": "textures/blocks/cl/c/calcario_pilar"
+ },
+ "cl:calcario_polido": {
+  "pt": "Calcário Polido",
+  "en": "Polished Limestone",
+  "icone": "textures/blocks/cl/c/calcario_polido"
+ },
+ "cl:calcario_tijolos": {
+  "pt": "Calcário Tijolos",
+  "en": "Bricks Limestone",
+  "icone": "textures/blocks/cl/c/calcario_tijolos"
+ },
+ "cl:calcario_tijolos_pequenos": {
+  "pt": "Calcário Tijolinhos",
+  "en": "Small Bricks Limestone",
+  "icone": "textures/blocks/cl/c/calcario_tijolos_pequenos"
+ },
  "cl:caldo": {
   "pt": "Caldo",
   "en": "Stock",
@@ -231,6 +321,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Casing",
   "icone": "textures/blocks/cl/c/carcaca_reator"
  },
+ "cl:carregador_chunks": {
+  "pt": "Carregador de Chunks",
+  "en": "Chunk Loader",
+  "icone": "textures/blocks/cl/c/carregador_chunks_topo"
+ },
+ "cl:carregador_pontual": {
+  "pt": "Carregador Pontual",
+  "en": "Spot Loader",
+  "icone": "textures/blocks/cl/c/carregador_pontual_topo"
+ },
  "cl:carrinho": {
   "pt": "Carrinho",
   "en": "Dolly",
@@ -240,6 +340,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Carrinho de Diamante",
   "en": "Diamond Dolly",
   "icone": "textures/items/cl/c/carrinho_diamante"
+ },
+ "cl:casco_nave_entalhado": {
+  "pt": "Casco da Nave Entalhado",
+  "en": "Carved Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_entalhado"
+ },
+ "cl:casco_nave_ladrilho": {
+  "pt": "Casco da Nave Ladrilho",
+  "en": "Tiles Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_ladrilho"
+ },
+ "cl:casco_nave_liso": {
+  "pt": "Casco da Nave Liso",
+  "en": "Smooth Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_liso"
+ },
+ "cl:casco_nave_mosaico": {
+  "pt": "Casco da Nave Mosaico",
+  "en": "Mosaic Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_mosaico"
+ },
+ "cl:casco_nave_pilar": {
+  "pt": "Casco da Nave Pilar",
+  "en": "Pillar Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_pilar"
+ },
+ "cl:casco_nave_polido": {
+  "pt": "Casco da Nave Polido",
+  "en": "Polished Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_polido"
+ },
+ "cl:casco_nave_tijolos": {
+  "pt": "Casco da Nave Tijolos",
+  "en": "Bricks Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_tijolos"
+ },
+ "cl:casco_nave_tijolos_pequenos": {
+  "pt": "Casco da Nave Tijolinhos",
+  "en": "Small Bricks Hull",
+  "icone": "textures/blocks/cl/c/casco_nave_tijolos_pequenos"
  },
  "cl:catalogo": {
   "pt": "Catálogo",
@@ -315,6 +455,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pimentas Empanadas",
   "en": "Chili Poppers",
   "icone": "textures/items/cl/arte/chili_poppers"
+ },
+ "cl:cinzel": {
+  "pt": "Cinzel",
+  "en": "Chisel",
+  "icone": "textures/items/cl/c/cinzel"
  },
  "cl:circuito": {
   "pt": "Circuito",
@@ -541,6 +686,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Tin Ore",
   "icone": "textures/items/cl/c/estanho_triturado"
  },
+ "cl:estante": {
+  "pt": "Estante",
+  "en": "Bookcase",
+  "icone": "textures/blocks/cl/c/estante_topo"
+ },
  "cl:esteira": {
   "pt": "Esteira",
   "en": "Conveyor Belt",
@@ -560,6 +710,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Estufa",
   "en": "Greenhouse",
   "icone": "textures/items/cl/arte/blocos/estufa"
+ },
+ "cl:expositor": {
+  "pt": "Expositor",
+  "en": "Display Case",
+  "icone": "textures/blocks/cl/c/expositor_topo"
  },
  "cl:extrusora_ignea": {
   "pt": "Extrusora Ígnea",
@@ -681,6 +836,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pressure Chamber Interface",
   "icone": "textures/blocks/cl/c/interface_camara"
  },
+ "cl:lampada": {
+  "pt": "Lâmpada",
+  "en": "Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada"
+ },
+ "cl:lanterna": {
+  "pt": "Lanterna",
+  "en": "Fancy Lantern",
+  "icone": "textures/blocks/cl/c/lanterna"
+ },
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
   "en": "Steel Ingot",
@@ -780,6 +945,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Manteiga",
   "en": "Butter",
   "icone": "textures/items/cl/arte/manteiga"
+ },
+ "cl:marmore": {
+  "pt": "Mármore",
+  "en": "Marble",
+  "icone": "textures/blocks/cl/c/marmore"
+ },
+ "cl:marmore_entalhado": {
+  "pt": "Mármore Entalhado",
+  "en": "Carved Marble",
+  "icone": "textures/blocks/cl/c/marmore_entalhado"
+ },
+ "cl:marmore_ladrilho": {
+  "pt": "Mármore Ladrilho",
+  "en": "Tiles Marble",
+  "icone": "textures/blocks/cl/c/marmore_ladrilho"
+ },
+ "cl:marmore_liso": {
+  "pt": "Mármore Liso",
+  "en": "Smooth Marble",
+  "icone": "textures/blocks/cl/c/marmore_liso"
+ },
+ "cl:marmore_mosaico": {
+  "pt": "Mármore Mosaico",
+  "en": "Mosaic Marble",
+  "icone": "textures/blocks/cl/c/marmore_mosaico"
+ },
+ "cl:marmore_pilar": {
+  "pt": "Mármore Pilar",
+  "en": "Pillar Marble",
+  "icone": "textures/blocks/cl/c/marmore_pilar"
+ },
+ "cl:marmore_polido": {
+  "pt": "Mármore Polido",
+  "en": "Polished Marble",
+  "icone": "textures/blocks/cl/c/marmore_polido"
+ },
+ "cl:marmore_tijolos": {
+  "pt": "Mármore Tijolos",
+  "en": "Bricks Marble",
+  "icone": "textures/blocks/cl/c/marmore_tijolos"
+ },
+ "cl:marmore_tijolos_pequenos": {
+  "pt": "Mármore Tijolinhos",
+  "en": "Small Bricks Marble",
+  "icone": "textures/blocks/cl/c/marmore_tijolos_pequenos"
  },
  "cl:martelo_cobre": {
   "pt": "Martelo de Cobre",
@@ -1481,6 +1691,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Crossbar",
   "icone": "textures/items/cl/c/peca_travessa_silex"
  },
+ "cl:pedra_entalhado": {
+  "pt": "Pedra Entalhado",
+  "en": "Carved Stone",
+  "icone": "textures/blocks/cl/c/pedra_entalhado"
+ },
+ "cl:pedra_ladrilho": {
+  "pt": "Pedra Ladrilho",
+  "en": "Tiles Stone",
+  "icone": "textures/blocks/cl/c/pedra_ladrilho"
+ },
+ "cl:pedra_liso": {
+  "pt": "Pedra Liso",
+  "en": "Smooth Stone",
+  "icone": "textures/blocks/cl/c/pedra_liso"
+ },
+ "cl:pedra_mosaico": {
+  "pt": "Pedra Mosaico",
+  "en": "Mosaic Stone",
+  "icone": "textures/blocks/cl/c/pedra_mosaico"
+ },
+ "cl:pedra_pilar": {
+  "pt": "Pedra Pilar",
+  "en": "Pillar Stone",
+  "icone": "textures/blocks/cl/c/pedra_pilar"
+ },
+ "cl:pedra_polido": {
+  "pt": "Pedra Polido",
+  "en": "Polished Stone",
+  "icone": "textures/blocks/cl/c/pedra_polido"
+ },
+ "cl:pedra_tijolos": {
+  "pt": "Pedra Tijolos",
+  "en": "Bricks Stone",
+  "icone": "textures/blocks/cl/c/pedra_tijolos"
+ },
+ "cl:pedra_tijolos_pequenos": {
+  "pt": "Pedra Tijolinhos",
+  "en": "Small Bricks Stone",
+  "icone": "textures/blocks/cl/c/pedra_tijolos_pequenos"
+ },
  "cl:pedrinha": {
   "pt": "Pedrinha",
   "en": "Pebble",
@@ -1706,6 +1956,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Coolant Port",
   "icone": "textures/blocks/cl/c/porta_refrigeracao_topo"
  },
+ "cl:prateleira": {
+  "pt": "Prateleira",
+  "en": "Shelf",
+  "icone": "textures/blocks/cl/c/prateleira_topo"
+ },
  "cl:precipitador_glacial": {
   "pt": "Precipitador Glacial",
   "en": "Glacial Precipitator",
@@ -1871,6 +2126,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Fruit Juice",
   "icone": "textures/items/cl/arte/suco_cacto"
  },
+ "cl:suporte_ferramentas": {
+  "pt": "Suporte de Ferramentas",
+  "en": "Tool Rack",
+  "icone": "textures/blocks/cl/c/suporte_ferramentas_topo"
+ },
  "cl:tabua_corte": {
   "pt": "Tábua de Corte",
   "en": "Cutting Board",
@@ -2031,6 +2291,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pressure Chamber Glass",
   "icone": "textures/blocks/cl/c/vidro_camara"
  },
+ "cl:vidro_entalhado": {
+  "pt": "Vidro Entalhado",
+  "en": "Carved Glass",
+  "icone": "textures/blocks/cl/c/vidro_entalhado"
+ },
+ "cl:vidro_ladrilho": {
+  "pt": "Vidro Ladrilho",
+  "en": "Tiles Glass",
+  "icone": "textures/blocks/cl/c/vidro_ladrilho"
+ },
+ "cl:vidro_liso": {
+  "pt": "Vidro Liso",
+  "en": "Smooth Glass",
+  "icone": "textures/blocks/cl/c/vidro_liso"
+ },
+ "cl:vidro_mosaico": {
+  "pt": "Vidro Mosaico",
+  "en": "Mosaic Glass",
+  "icone": "textures/blocks/cl/c/vidro_mosaico"
+ },
+ "cl:vidro_pilar": {
+  "pt": "Vidro Pilar",
+  "en": "Pillar Glass",
+  "icone": "textures/blocks/cl/c/vidro_pilar"
+ },
+ "cl:vidro_polido": {
+  "pt": "Vidro Polido",
+  "en": "Polished Glass",
+  "icone": "textures/blocks/cl/c/vidro_polido"
+ },
  "cl:vidro_reator": {
   "pt": "Vidro do Reator",
   "en": "Reactor Glass",
@@ -2040,6 +2330,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Vidro Refratário",
   "en": "Seared Glass",
   "icone": "textures/blocks/cl/c/vidro_refratario"
+ },
+ "cl:vidro_tijolos": {
+  "pt": "Vidro Tijolos",
+  "en": "Bricks Glass",
+  "icone": "textures/blocks/cl/c/vidro_tijolos"
+ },
+ "cl:vidro_tijolos_pequenos": {
+  "pt": "Vidro Tijolinhos",
+  "en": "Small Bricks Glass",
+  "icone": "textures/blocks/cl/c/vidro_tijolos_pequenos"
  },
  "minecraft:acacia_leaves": {
   "pt": "Folhas de Acácia",
@@ -2446,6 +2746,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Enchanted Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:enchanting_table": {
+  "pt": "Mesa de Encantamentos",
+  "en": "Enchanting Table",
+  "icone": "textures/blocks/enchanting_table_side"
+ },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
   "en": "End Stone",
@@ -2455,6 +2760,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pérola de Ender",
   "en": "Ender Pearl",
   "icone": "textures/items/ender_pearl"
+ },
+ "minecraft:experience_bottle": {
+  "pt": "Frasco de Experiência",
+  "en": "Bottle o' Enchanting",
+  "icone": "textures/items/experience_bottle"
  },
  "minecraft:fire": {
   "pt": "Fogo",
@@ -3443,6 +3753,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_arenito_liso",
+  "resultado": "cl:arenito_liso",
+  "qtd": 4,
+  "grade": [
+   "BB",
+   "BB"
+  ],
+  "chaves": {
+   "B": "minecraft:sandstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_argamassa",
   "resultado": "cl:argamassa",
@@ -3782,6 +4108,40 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_cabide_armadura",
+  "resultado": "cl:cabide_armadura",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   " S ",
+   "PPP"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "P": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcario_liso",
+  "resultado": "cl:calcario_liso",
+  "qtd": 4,
+  "grade": [
+   "BB",
+   "BB"
+  ],
+  "chaves": {
+   "B": "cl:calcario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_carcaca_reator",
   "resultado": "cl:carcaca_reator",
   "qtd": 4,
@@ -3794,6 +4154,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "F": "minecraft:iron_ingot",
    "G": "cl:barra_grafite",
    "Y": "cl:lingote_yellorium"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_carregador_chunks",
+  "resultado": "cl:carregador_chunks",
+  "qtd": 1,
+  "grade": [
+   " P ",
+   "OEO",
+   "OCO"
+  ],
+  "chaves": {
+   "P": "minecraft:ender_pearl",
+   "O": "minecraft:gold_ingot",
+   "E": "minecraft:enchanting_table",
+   "C": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_carregador_pontual",
+  "resultado": "cl:carregador_pontual",
+  "qtd": 10,
+  "grade": [
+   "PPP",
+   "PCP",
+   "PPP"
+  ],
+  "chaves": {
+   "P": "minecraft:ender_pearl",
+   "C": "cl:carregador_chunks"
   },
   "estacoes": [
    "crafting_table"
@@ -3828,6 +4226,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "D": "minecraft:diamond",
    "C": "cl:carrinho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_casco_nave_liso",
+  "resultado": "cl:casco_nave_liso",
+  "qtd": 4,
+  "grade": [
+   "BB",
+   "BB"
+  ],
+  "chaves": {
+   "B": "cl:placa_casco"
   },
   "estacoes": [
    "crafting_table"
@@ -4018,6 +4432,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "FF",
    "FS",
    " S"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cinzel",
+  "resultado": "cl:cinzel",
+  "qtd": 1,
+  "grade": [
+   " F",
+   "S "
   ],
   "chaves": {
    "F": "minecraft:iron_ingot",
@@ -4444,6 +4875,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_estante",
+  "resultado": "cl:estante",
+  "qtd": 1,
+  "grade": [
+   "PSP",
+   "P P",
+   "PSP"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "S": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_esteira",
   "resultado": "cl:esteira",
   "qtd": 16,
@@ -4493,6 +4942,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "F": "minecraft:iron_ingot",
    "V": "minecraft:glass",
    "O": "minecraft:gold_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_expositor",
+  "resultado": "cl:expositor",
+  "qtd": 1,
+  "grade": [
+   "VVV",
+   "V V",
+   "PPP"
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "P": "#minecraft:planks"
   },
   "estacoes": [
    "crafting_table"
@@ -4634,6 +5101,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_lampada",
+  "resultado": "cl:lampada",
+  "qtd": 1,
+  "grade": [
+   "VVV",
+   "VGV",
+   " F "
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "G": "minecraft:glowstone",
+   "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lanterna",
+  "resultado": "cl:lanterna",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "VTV",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_nugget",
+   "V": "minecraft:glass",
+   "T": "minecraft:torch"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_lingote_yellorium",
   "resultado": "cl:lingote_yellorium",
@@ -4738,6 +5243,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_marmore_liso",
+  "resultado": "cl:marmore_liso",
+  "qtd": 4,
+  "grade": [
+   "BB",
+   "BB"
+  ],
+  "chaves": {
+   "B": "cl:marmore"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -4870,6 +5391,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_liso",
+  "resultado": "cl:pedra_liso",
+  "qtd": 4,
+  "grade": [
+   "BB",
+   "BB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone"
   },
   "estacoes": [
    "crafting_table"
@@ -5049,6 +5586,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_prateleira",
+  "resultado": "cl:prateleira",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "P P",
+   "SSS"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "S": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_precipitador_glacial",
   "resultado": "cl:precipitador_glacial",
   "qtd": 1,
@@ -5195,6 +5750,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_suporte_ferramentas",
+  "resultado": "cl:suporte_ferramentas",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SFS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:oak_slab",
+   "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -5606,6 +6179,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_vidro_liso",
+  "resultado": "cl:vidro_liso",
+  "qtd": 4,
+  "grade": [
+   "BB",
+   "BB"
+  ],
+  "chaves": {
+   "B": "minecraft:glass"
+  },
   "estacoes": [
    "crafting_table"
   ]

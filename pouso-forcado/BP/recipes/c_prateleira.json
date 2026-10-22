@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_prateleira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "P P",
+      "SSS"
+    ],
+    "key": {
+      "P": {
+        "tag": "minecraft:planks"
+      },
+      "S": {
+        "item": "minecraft:oak_slab"
+      }
+    },
+    "unlock": [
+      {
+        "tag": "minecraft:planks"
+      }
+    ],
+    "result": {
+      "item": "cl:prateleira"
+    }
+  }
+}

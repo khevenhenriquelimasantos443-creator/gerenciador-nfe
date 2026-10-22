@@ -15,14 +15,16 @@ const PASSOS = [
 ] as const;
 
 export function porMinerios(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
-  for (const { minerio, veios, tamanho, yMin, yMax } of MINERIOS) {
+  for (const { minerio, bloco: proprio, veios, tamanho, yMin, yMax } of MINERIOS) {
     for (let v = 0; v < veios; v++) {
       let x = Math.floor(sorte() * 16);
       let y = yMin + Math.floor(sorte() * (yMax - yMin + 1));
       let z = Math.floor(sorte() * 16);
       for (let i = 0; i < tamanho; i++) {
         const bloco = dimensao.getBlock({ x: x0 + x, y, z: z0 + z });
-        if (bloco?.typeId === PEDRA) bloco.setType(`minecraft:${minerio}_ore`);
+        if (proprio) {
+          if (bloco?.typeId === PEDRA) bloco.setType(proprio); // mármore e calcário só na pedra
+        } else if (bloco?.typeId === PEDRA) bloco.setType(`minecraft:${minerio}_ore`);
         else if (bloco?.typeId === ARDOSIA) bloco.setType(`minecraft:deepslate_${minerio}_ore`);
         const [dx, dy, dz] = PASSOS[Math.floor(sorte() * PASSOS.length)];
         // Fica dentro do chunk e da faixa de altura.

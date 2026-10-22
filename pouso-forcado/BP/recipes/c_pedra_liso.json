@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pedra_liso"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BB",
+      "BB"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:stone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stone"
+      }
+    ],
+    "result": {
+      "item": "cl:pedra_liso",
+      "count": 4
+    }
+  }
+}

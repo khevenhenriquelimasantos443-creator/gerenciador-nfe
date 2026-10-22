@@ -19,6 +19,7 @@ import { bauMe, driveMe, pontoAcesso, registrarAE } from "./armazenamento/ae.js"
 import { empacotador, registrarEmpacotador } from "./maquinas/empacotador.js";
 import { compressor, interfaceCamara, registrarPneumatic, valvula } from "./maquinas/pneumatic.js";
 import { armazemCorpos, construtorCorpos, registrarSync } from "./maquinas/sync.js";
+import { cabide, carregador, estante, guardaItens, luminaria, registrarDecoracao } from "./maquinas/decoracao.js";
 import { barraControle, controladorReator, portaAcesso, portaRefrigeracao, registrarReator, reprocessador } from "./maquinas/reator.js";
 import { colheitadeira, colocador, compostadora, esgoto, esteira, fertilizadora, plantadeira, quebrador, rancheiro, registrarMFR, triturador } from "./maquinas/mfr.js";
 import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
@@ -98,6 +99,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:porta_acesso_reator", portaAcesso);
   blockComponentRegistry.registerCustomComponent("cl:porta_refrigeracao", portaRefrigeracao);
   blockComponentRegistry.registerCustomComponent("cl:reprocessador_cianita", comPerfil("cl:reprocessador_cianita", reprocessador));
+  blockComponentRegistry.registerCustomComponent("cl:estante", estante);
+  blockComponentRegistry.registerCustomComponent("cl:guarda_itens", guardaItens);
+  blockComponentRegistry.registerCustomComponent("cl:cabide", cabide);
+  blockComponentRegistry.registerCustomComponent("cl:luminaria", luminaria);
+  blockComponentRegistry.registerCustomComponent("cl:carregador_chunks", carregador);
   for (const [id, comp] of Object.entries({
     "cl:plantadeira": plantadeira, "cl:colheitadeira": colheitadeira, "cl:fertilizadora": fertilizadora, "cl:rancheiro": rancheiro,
     "cl:triturador_monstros": triturador, "cl:esgoto": esgoto, "cl:compostadora": compostadora, "cl:quebrador_blocos": quebrador,
@@ -135,5 +141,6 @@ registrarMFR();
 registrarPneumatic();
 registrarSync();
 registrarReator();
+registrarDecoracao();
 registrarAmbiente();
 registrarFome();

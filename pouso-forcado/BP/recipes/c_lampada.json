@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_lampada"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VVV",
+      "VGV",
+      " F "
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "G": {
+        "item": "minecraft:glowstone"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:lampada"
+    }
+  }
+}

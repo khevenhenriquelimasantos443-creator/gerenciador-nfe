@@ -408,6 +408,11 @@
   "en": "Enchanted Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:enchanting_table": {
+  "pt": "Mesa de Encantamentos",
+  "en": "Enchanting Table",
+  "icone": "textures/blocks/enchanting_table_side"
+ },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
   "en": "End Stone",
@@ -417,6 +422,11 @@
   "pt": "Pérola de Ender",
   "en": "Ender Pearl",
   "icone": "textures/items/ender_pearl"
+ },
+ "minecraft:experience_bottle": {
+  "pt": "Frasco de Experiência",
+  "en": "Bottle o' Enchanting",
+  "icone": "textures/items/experience_bottle"
  },
  "minecraft:fire": {
   "pt": "Fogo",

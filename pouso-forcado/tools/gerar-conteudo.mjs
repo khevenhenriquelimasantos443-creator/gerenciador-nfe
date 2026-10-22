@@ -10,7 +10,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { FACE, PADRAO, hex, icone, png } from "./pintura.mjs";
+import { FACE, PADRAO, hex, icone, png, vidroCom } from "./pintura.mjs";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DADOS = join(RAIZ, "tools/dados/conteudo");
@@ -92,7 +92,8 @@ function bloco(f, b) {
   } else {
     const c = hex(b.cor ?? "#999999");
     const vidro = b.tipo === "vidro";
-    const lado = textura(b.id, PADRAO[vidro ? "vidro" : b.padrao ?? "liso"](c));
+    const pintor = vidro && b.padrao ? vidroCom(PADRAO[b.padrao](c), c) : PADRAO[vidro ? "vidro" : b.padrao ?? "liso"](c);
+    const lado = textura(b.id, pintor);
     const rm = vidro ? "blend" : "opaque";
     mats = { "*": { texture: lado, render_method: rm } };
     if (b.topo) mats.up = mats.down = { texture: textura(`${b.id}_topo`, PADRAO[b.topo](c)), render_method: rm };

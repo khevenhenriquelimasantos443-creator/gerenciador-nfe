@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_lanterna"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "VTV",
+      "FFF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_nugget"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "T": {
+        "item": "minecraft:torch"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_nugget"
+      }
+    ],
+    "result": {
+      "item": "cl:lanterna"
+    }
+  }
+}

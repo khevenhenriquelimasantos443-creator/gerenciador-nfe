@@ -244,6 +244,13 @@ export const FACE = {
   },
 };
 
+// Vidro com o desenho de um padrão: as linhas escuras do padrão ficam opacas, o resto translúcido.
+export const vidroCom = (pintor, c) => (x, y) => {
+  const p = pintor(x, y);
+  const escuro = p[0] + p[1] + p[2] < (c[0] + c[1] + c[2]) * 0.8;
+  return escuro ? [...p.slice(0, 3), 255] : [...mix(c, [255, 255, 255], 0.3), 80];
+};
+
 // Blocos "cubo" (decorativos, metais, tijolos, vidro): cor base + padrão.
 export const PADRAO = {
   liso: (c) => (x, y) => mul(c, 0.94 + ruido(x, y, 11) * 0.1),

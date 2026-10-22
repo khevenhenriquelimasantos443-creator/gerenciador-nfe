@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_calcario_liso"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BB",
+      "BB"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:calcario"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:calcario"
+      }
+    ],
+    "result": {
+      "item": "cl:calcario_liso",
+      "count": 4
+    }
+  }
+}

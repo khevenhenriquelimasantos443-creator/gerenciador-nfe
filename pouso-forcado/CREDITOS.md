@@ -33,6 +33,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 - **Sync** (iChun): corpos reserva, construtor, armazém, esteira e acordar no clone. Código e desenhos próprios.
 - **Big Reactors** (Erogenous Beef; MIT): o reator de yellorium, moderadores, barras de controle e cianita, com
   uma fórmula fechada no lugar da simulação. Código e desenhos próprios.
+- **Chisel** (Cricket, AUTOMATIC_MAIDEN, Drullkus): o cinzel e as variantes de bloco. Texturas próprias.
+- **BiblioCraft** (Nuchaz): estante, prateleira, suporte de ferramentas, expositor, cabide e luminárias. Código e
+  desenhos próprios.
+- **ChickenChunks** (ChickenBones): carregadores de chunk, feitos com as áreas carregadas do Bedrock.
 - **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
   (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,

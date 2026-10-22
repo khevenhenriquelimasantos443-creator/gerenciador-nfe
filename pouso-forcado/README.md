@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 22** (Big Reactors: reator de yellorium). Fases 0 a 21 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 23** (Chisel, BiblioCraft e ChickenChunks). Fases 0 a 22 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -32,8 +32,8 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 19 | **MineFactory Reloaded**: resina → borracha → plástico; Bloco de Máquina; Plantadeira, Colheitadeira (plantas, cana, cacto e árvores), Fertilizadora, Rancheiro, Triturador de Monstros, Esgoto + Compostadora (fertilizante), Quebrador e Colocador de Blocos, Esteira e Upgrades de Alcance; +7 missões | pronta |
 | 20 | **PneumaticCraft (leve)**: Compressor de Ar, Tubos de Pressão (comum e avançado), pressão em bar igual na rede, tubos que estouram acima do perigo, Câmara de Pressão 3x3x3 a 5x5x5 com válvula e interface, ferro comprimido, diamante de carvão, placa de circuito, transistor e capacitor, manômetro; +5 missões | pronta |
 | 21 | **Sync**: Núcleo Sync (leva o Coração do Faraó), Construtor de Corpos (amostra de sangue + 24.000 RF ou esteira com porco/lobo), Armazém de Corpos, troca de corpo com inventário próprio e acordar no corpo reserva ao morrer (casa ou o mais perto); sem sistema de vidas; +4 missões | pronta |
-| 22 | **Big Reactors**: yellorium só pela peneira de poeira, grafite, reator multibloco de 3x3x3 a 7x7x7 (carcaça, vidro, barras de combustível e de controle, portas de acesso e de refrigeração, tomadas), fórmula fechada com moderador e inserção, cianita e Reprocessador (blutônio); Controlador e Tomada só no saque das cidades; +5 missões | **esta versão** |
-| 23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 22 | **Big Reactors**: yellorium só pela peneira de poeira, grafite, reator multibloco de 3x3x3 a 7x7x7 (carcaça, vidro, barras de combustível e de controle, portas de acesso e de refrigeração, tomadas), fórmula fechada com moderador e inserção, cianita e Reprocessador (blutônio); Controlador e Tomada só no saque das cidades; +5 missões | pronta |
+| 23 | **Chisel + BiblioCraft + ChickenChunks**: Cinzel (500 usos) e 48 variantes de arenito, pedra, mármore, calcário, casco da nave e vidro; veios de Mármore e Calcário; Estante, Prateleira, Suporte de Ferramentas, Expositor, Cabide de Armadura, Lanterna e Lâmpada; Carregador de Chunks (3x3) e Pontual; +5 missões | **esta versão** |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -134,6 +134,17 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Decoração (Fase 23: Chisel, BiblioCraft e ChickenChunks)
+
+- **Cinzel** (ferro + graveto, 500 usos): toque num bloco de uma família para trocar pela próxima variante (gasta 1 uso). Agachado e usando no ar: escolhe uma pilha da mochila e a variante, e a pilha inteira muda sem gastar o cinzel.
+- **Famílias** (liso, polido, tijolos, tijolinhos, ladrilho, pilar, entalhado, mosaico): arenito, pedra, **Mármore**, **Calcário**, casco da nave (a partir da Placa do Casco) e vidro. A bancada faz só a variante "liso" (4 blocos base = 4); as outras saem do cinzel.
+- **Mármore** e **Calcário**: veios novos dentro da pedra (mármore entre y 4 e 40).
+- **Estante** (16 livros), **Prateleira** (4 pilhas), **Suporte de Ferramentas** (4 ferramentas ou armas), **Expositor** (1 pilha): toque com o item para pôr, com a mão vazia para tirar o último. Quebrar solta tudo. Olhando para eles, a linha de cima mostra o que guardam.
+- **Cabide de Armadura**: toque para trocar a sua armadura inteira pela que está nele.
+- **Lanterna** e **Lâmpada**: toque liga e desliga a luz (nível 15).
+- **Carregador de Chunks** (3x3 chunks) e **Carregador Pontual** (1 chunk): toque liga/desliga. Usa as áreas carregadas do próprio jogo ("tickingarea"), que são no máximo 10 por mundo; quebrar o bloco desliga.
+- Capítulo novo no Diário: **Decoração (Chisel e BiblioCraft)**, 5 missões.
 
 ## Reator (Fase 22: Big Reactors)
 
