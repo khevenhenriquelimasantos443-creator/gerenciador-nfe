@@ -55,7 +55,10 @@ export type Acao =
   | "derreter"
   | "fundicao"
   | "molde"
-  | "bronze";
+  | "bronze"
+  | "te_operacao"
+  | "pulverizar"
+  | "dinamo";
 
 type MissaoBase = {
   id: string;
@@ -209,6 +212,25 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         escolha: [{ item: "minecraft:diamond", quantidade: 1 }, { item: "minecraft:emerald", quantidade: 2 }],
       },
       { id: "fu_modificar", requer: ["fu_controlador"], objetivo: { tipo: "acao", acao: "modificar", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+    ],
+  },
+  {
+    id: "thermal", // Fase 17: Thermal Expansion
+    icone: "cl:pulverizador",
+    requer: ["fundicao"],
+    missoes: [
+      { id: "te_estrutura", objetivo: { tipo: "ter", item: "cl:estrutura_maquina", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
+      { id: "te_celula", requer: ["te_estrutura"], objetivo: { tipo: "colocar", bloco: "cl:celula_energia_basica", qtd: 1 }, recompensa: [{ item: "minecraft:copper_ingot", quantidade: 8 }] },
+      { id: "te_pulverizar", requer: ["te_estrutura"], objetivo: { tipo: "acao", acao: "pulverizar", qtd: 8 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "te_dinamo", requer: ["te_estrutura"], objetivo: { tipo: "acao", acao: "dinamo", qtd: 1 }, recompensa: [{ item: "minecraft:redstone_block", quantidade: 2 }] },
+      { id: "te_maquinas", requer: ["te_pulverizar"], objetivo: { tipo: "acao", acao: "te_operacao", qtd: 64 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      {
+        id: "te_ressonante",
+        requer: ["te_celula", "te_maquinas"],
+        objetivo: { tipo: "ter", item: "cl:celula_energia_ressonante", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
+        escolha: [{ item: "minecraft:diamond", quantidade: 3 }, { item: "minecraft:emerald", quantidade: 4 }],
+      },
     ],
   },
   {

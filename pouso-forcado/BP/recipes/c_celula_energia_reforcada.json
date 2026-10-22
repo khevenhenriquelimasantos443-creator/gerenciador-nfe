@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_celula_energia_reforcada"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RAR",
+      "ACA",
+      "RAR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "C": {
+        "item": "cl:celula_energia_basica"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "cl:celula_energia_reforcada"
+    }
+  }
+}

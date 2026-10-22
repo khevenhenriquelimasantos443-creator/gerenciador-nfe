@@ -411,6 +411,150 @@
     },
     "clc_bloco_estanho": {
       "textures": "textures/blocks/cl/c/bloco_estanho"
+    },
+    "clc_estrutura_maquina_frente": {
+      "textures": "textures/blocks/cl/c/estrutura_maquina_frente"
+    },
+    "clc_estrutura_maquina_lado": {
+      "textures": "textures/blocks/cl/c/estrutura_maquina_lado"
+    },
+    "clc_estrutura_maquina_topo": {
+      "textures": "textures/blocks/cl/c/estrutura_maquina_topo"
+    },
+    "clc_estrutura_maquina_baixo": {
+      "textures": "textures/blocks/cl/c/estrutura_maquina_baixo"
+    },
+    "clc_pulverizador_frente": {
+      "textures": "textures/blocks/cl/c/pulverizador_frente"
+    },
+    "clc_pulverizador_lado": {
+      "textures": "textures/blocks/cl/c/pulverizador_lado"
+    },
+    "clc_pulverizador_topo": {
+      "textures": "textures/blocks/cl/c/pulverizador_topo"
+    },
+    "clc_pulverizador_baixo": {
+      "textures": "textures/blocks/cl/c/pulverizador_baixo"
+    },
+    "clc_fornalha_redstone_frente": {
+      "textures": "textures/blocks/cl/c/fornalha_redstone_frente"
+    },
+    "clc_fornalha_redstone_lado": {
+      "textures": "textures/blocks/cl/c/fornalha_redstone_lado"
+    },
+    "clc_fornalha_redstone_topo": {
+      "textures": "textures/blocks/cl/c/fornalha_redstone_topo"
+    },
+    "clc_fornalha_redstone_baixo": {
+      "textures": "textures/blocks/cl/c/fornalha_redstone_baixo"
+    },
+    "clc_fundidora_inducao_frente": {
+      "textures": "textures/blocks/cl/c/fundidora_inducao_frente"
+    },
+    "clc_fundidora_inducao_lado": {
+      "textures": "textures/blocks/cl/c/fundidora_inducao_lado"
+    },
+    "clc_fundidora_inducao_topo": {
+      "textures": "textures/blocks/cl/c/fundidora_inducao_topo"
+    },
+    "clc_fundidora_inducao_baixo": {
+      "textures": "textures/blocks/cl/c/fundidora_inducao_baixo"
+    },
+    "clc_serraria_frente": {
+      "textures": "textures/blocks/cl/c/serraria_frente"
+    },
+    "clc_serraria_lado": {
+      "textures": "textures/blocks/cl/c/serraria_lado"
+    },
+    "clc_serraria_topo": {
+      "textures": "textures/blocks/cl/c/serraria_topo"
+    },
+    "clc_serraria_baixo": {
+      "textures": "textures/blocks/cl/c/serraria_baixo"
+    },
+    "clc_extrusora_ignea_frente": {
+      "textures": "textures/blocks/cl/c/extrusora_ignea_frente"
+    },
+    "clc_extrusora_ignea_lado": {
+      "textures": "textures/blocks/cl/c/extrusora_ignea_lado"
+    },
+    "clc_extrusora_ignea_topo": {
+      "textures": "textures/blocks/cl/c/extrusora_ignea_topo"
+    },
+    "clc_extrusora_ignea_baixo": {
+      "textures": "textures/blocks/cl/c/extrusora_ignea_baixo"
+    },
+    "clc_precipitador_glacial_frente": {
+      "textures": "textures/blocks/cl/c/precipitador_glacial_frente"
+    },
+    "clc_precipitador_glacial_lado": {
+      "textures": "textures/blocks/cl/c/precipitador_glacial_lado"
+    },
+    "clc_precipitador_glacial_topo": {
+      "textures": "textures/blocks/cl/c/precipitador_glacial_topo"
+    },
+    "clc_precipitador_glacial_baixo": {
+      "textures": "textures/blocks/cl/c/precipitador_glacial_baixo"
+    },
+    "clc_dinamo_redstone_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_redstone_frente"
+    },
+    "clc_dinamo_redstone_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_redstone_lado"
+    },
+    "clc_dinamo_redstone_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_redstone_topo"
+    },
+    "clc_dinamo_redstone_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_redstone_baixo"
+    },
+    "clc_celula_energia_basica_frente": {
+      "textures": "textures/blocks/cl/c/celula_energia_basica_frente"
+    },
+    "clc_celula_energia_basica_lado": {
+      "textures": "textures/blocks/cl/c/celula_energia_basica_lado"
+    },
+    "clc_celula_energia_basica_topo": {
+      "textures": "textures/blocks/cl/c/celula_energia_basica_topo"
+    },
+    "clc_celula_energia_basica_baixo": {
+      "textures": "textures/blocks/cl/c/celula_energia_basica_baixo"
+    },
+    "clc_celula_energia_reforcada_frente": {
+      "textures": "textures/blocks/cl/c/celula_energia_reforcada_frente"
+    },
+    "clc_celula_energia_reforcada_lado": {
+      "textures": "textures/blocks/cl/c/celula_energia_reforcada_lado"
+    },
+    "clc_celula_energia_reforcada_topo": {
+      "textures": "textures/blocks/cl/c/celula_energia_reforcada_topo"
+    },
+    "clc_celula_energia_reforcada_baixo": {
+      "textures": "textures/blocks/cl/c/celula_energia_reforcada_baixo"
+    },
+    "clc_celula_energia_redstone_frente": {
+      "textures": "textures/blocks/cl/c/celula_energia_redstone_frente"
+    },
+    "clc_celula_energia_redstone_lado": {
+      "textures": "textures/blocks/cl/c/celula_energia_redstone_lado"
+    },
+    "clc_celula_energia_redstone_topo": {
+      "textures": "textures/blocks/cl/c/celula_energia_redstone_topo"
+    },
+    "clc_celula_energia_redstone_baixo": {
+      "textures": "textures/blocks/cl/c/celula_energia_redstone_baixo"
+    },
+    "clc_celula_energia_ressonante_frente": {
+      "textures": "textures/blocks/cl/c/celula_energia_ressonante_frente"
+    },
+    "clc_celula_energia_ressonante_lado": {
+      "textures": "textures/blocks/cl/c/celula_energia_ressonante_lado"
+    },
+    "clc_celula_energia_ressonante_topo": {
+      "textures": "textures/blocks/cl/c/celula_energia_ressonante_topo"
+    },
+    "clc_celula_energia_ressonante_baixo": {
+      "textures": "textures/blocks/cl/c/celula_energia_ressonante_baixo"
     }
   }
 }

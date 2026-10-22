@@ -13,6 +13,7 @@ import { folhaInfestada, registrarNihilo } from "./blocos/nihilo.js";
 import { planta, registrarPlantacao } from "./blocos/plantacao.js";
 import { registrarFerramentas } from "./tinkers/ferramenta.js";
 import { construtorPecasComp, estacaoFerramentasComp, mesaMoldesComp } from "./tinkers/mesas.js";
+import { celulaEnergia, dinamo, extrusora, fornalhaRedstone, fundidoraInducao, precipitador, pulverizador, registrarThermal, serraria } from "./maquinas/thermal.js";
 import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
@@ -70,6 +71,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:torneira", torneiraComp);
   blockComponentRegistry.registerCustomComponent("cl:mesa_fundicao", mesaComp);
   blockComponentRegistry.registerCustomComponent("cl:bacia_fundicao", baciaComp);
+  for (const [id, comp] of Object.entries({
+    "cl:pulverizador": pulverizador, "cl:fornalha_redstone": fornalhaRedstone, "cl:fundidora_inducao": fundidoraInducao, "cl:serraria": serraria,
+    "cl:extrusora_ignea": extrusora, "cl:precipitador_glacial": precipitador, "cl:dinamo_redstone": dinamo,
+  })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  blockComponentRegistry.registerCustomComponent("cl:celula_energia", celulaEnergia);
 });
 
 registrarPerfil();
@@ -94,5 +100,6 @@ registrarNihilo();
 registrarPlantacao();
 registrarFerramentas();
 registrarFundicao();
+registrarThermal();
 registrarAmbiente();
 registrarFome();

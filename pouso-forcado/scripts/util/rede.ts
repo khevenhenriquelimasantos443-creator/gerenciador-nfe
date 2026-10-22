@@ -1,17 +1,21 @@
 import { Block } from "@minecraft/server";
 import { ENERGIA, IDS } from "../config.js";
+import { DADOS_F17 } from "../conteudo/gerado.js";
 import { definirEstado, lerEstado, vizinhos } from "./blocos.js";
+import { gravar, ler } from "./dados.js";
 
 /*
  * Rede de energia sem estado guardado: quem precisa (gerador ou máquina) faz uma busca em
  * largura a partir de si, andando pelos cabos e blocos de energia, até achar uma bateria que sirva.
- * A carga fica no estado cl:carga de cada bateria.
+ * A carga fica no estado cl:carga de cada bateria; nas Células de Energia (Fase 17, Thermal Expansion),
+ * que guardam muito mais, fica numa propriedade do mundo (util/dados.ts) e se perde se a célula for quebrada.
  * Custo: no máximo ENERGIA.rede.maxBlocos cabos/blocos de energia (×6 vizinhos) por busca; cada máquina busca uma vez
  * por ciclo (5 s).
  */
 const CARGA = "cl:carga";
 // Por onde a energia passa: cabos e os próprios blocos de energia (máquinas não conduzem).
-const CONDUTORES = new Set<string>([IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho]);
+const CELULAS = DADOS_F17.celulas as Readonly<Record<string, number>>;
+const CONDUTORES = new Set<string>([IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", ...Object.keys(CELULAS)]);
 
 const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
 
@@ -53,24 +57,36 @@ export function coletarNaRede(origem: Block, quer: (b: Block) => boolean, max: n
   return achados;
 }
 
-export const cargaDe = (bateria: Block): number => lerEstado<number>(bateria, CARGA);
+export const capacidadeDe = (b: Block): number => (b.typeId === IDS.bateria ? ENERGIA.bateriaMax : CELULAS[b.typeId] ?? 0);
+export const cargaDe = (b: Block): number => (b.typeId === IDS.bateria ? lerEstado<number>(b, CARGA) : CELULAS[b.typeId] ? ler<number>("celula", b, 0) : 0);
+function mudarCarga(b: Block, delta: number): void {
+  if (b.typeId === IDS.bateria) definirEstado(b, CARGA, cargaDe(b) + delta);
+  else gravar("celula", b, cargaDe(b) + delta);
+}
+const guarda = (b: Block) => b.typeId === IDS.bateria || CELULAS[b.typeId] !== undefined;
 
-/** Manda até `unidades` para baterias com espaço. Retorna quantas foram guardadas. */
+/** Manda até `unidades` para baterias/células com espaço. Retorna quantas foram guardadas. */
 export function gerar(origem: Block, unidades: number): number {
   let guardadas = 0;
-  for (let u = 0; u < unidades; u++) {
-    const bat = procurarNaRede(origem, (b) => b.typeId === IDS.bateria && cargaDe(b) < ENERGIA.bateriaMax);
-    if (!bat) break;
-    definirEstado(bat, CARGA, cargaDe(bat) + 1);
-    guardadas++;
+  while (guardadas < unidades) {
+    const alvo = procurarNaRede(origem, (b) => guarda(b) && cargaDe(b) < capacidadeDe(b));
+    if (!alvo) break;
+    const n = Math.min(unidades - guardadas, capacidadeDe(alvo) - cargaDe(alvo));
+    mudarCarga(alvo, n);
+    guardadas += n;
   }
   return guardadas;
 }
 
-/** Tira 1 unidade de uma bateria com carga. Retorna true se conseguiu. */
-export function consumir(origem: Block): boolean {
-  const bat = procurarNaRede(origem, (b) => b.typeId === IDS.bateria && cargaDe(b) > 0);
-  if (!bat) return false;
-  definirEstado(bat, CARGA, cargaDe(bat) - 1);
+/** Tira `unidades` (1 por padrão) de baterias/células com carga. Retorna true se conseguiu tudo. */
+export function consumir(origem: Block, unidades = 1): boolean {
+  let falta = unidades;
+  while (falta > 0) {
+    const fonte = procurarNaRede(origem, (b) => guarda(b) && cargaDe(b) > 0);
+    if (!fonte) return false;
+    const n = Math.min(falta, cargaDe(fonte));
+    mudarCarga(fonte, -n);
+    falta -= n;
+  }
   return true;
 }

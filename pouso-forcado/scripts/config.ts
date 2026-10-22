@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.22.0";
+export const VERSAO = "0.23.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -420,6 +420,7 @@ export const FUNDICAO = {
     "cl:ferro_quebrado": ["ferro", 72],
     "cl:ferro_triturado": ["ferro", 72],
     "cl:ferro_po": ["ferro", 72],
+    "cl:po_ferro": ["ferro", 144],
     "minecraft:gold_ingot": ["ouro", 144],
     "minecraft:gold_nugget": ["ouro", 16],
     "minecraft:gold_block": ["ouro", 1296],
@@ -430,6 +431,7 @@ export const FUNDICAO = {
     "cl:ouro_quebrado": ["ouro", 72],
     "cl:ouro_triturado": ["ouro", 72],
     "cl:ouro_po": ["ouro", 72],
+    "cl:po_ouro": ["ouro", 144],
     "minecraft:copper_ingot": ["cobre", 144],
     "minecraft:copper_block": ["cobre", 1296],
     "minecraft:raw_copper": ["cobre", 288],
@@ -439,11 +441,13 @@ export const FUNDICAO = {
     "cl:cobre_quebrado": ["cobre", 72],
     "cl:cobre_triturado": ["cobre", 72],
     "cl:cobre_po": ["cobre", 72],
+    "cl:po_cobre": ["cobre", 144],
     "cl:lingote_estanho": ["estanho", 144],
     "cl:bloco_estanho": ["estanho", 1296],
     "cl:estanho_quebrado": ["estanho", 72],
     "cl:estanho_triturado": ["estanho", 72],
     "cl:estanho_po": ["estanho", 72],
+    "cl:po_estanho": ["estanho", 144],
     "cl:lingote_bronze": ["bronze", 144],
     "cl:bloco_bronze": ["bronze", 1296],
     "cl:lingote_aco": ["aco", 144],
@@ -455,6 +459,103 @@ export const FUNDICAO = {
   // Ligas: bronze = 3 cobre + 1 estanho -> 4 (em passos de 48 mB); aço = 144 mB de ferro + 1 carvão jogado dentro.
   bronze: { cobre: 36, estanho: 12, sai: 48 },
   acoCom: ["minecraft:coal", "minecraft:charcoal"],
+} as const;
+
+// Fase 17: Thermal Expansion (scripts/maquinas/thermal.ts). Ciclo de 5 s; custo em cE (100 cE = 1 E = 4.000 RF).
+export const THERMAL = {
+  // Pulverizador: 4.000 RF por minério (1 E). Minério -> 2 pós de metal (cada um = 1 lingote), com chance de secundário.
+  pulverizador: {
+    "minecraft:raw_iron": [["cl:po_ferro", 2, 1], ["cl:po_ouro", 1, 0.1]],
+    "minecraft:iron_ore": [["cl:po_ferro", 2, 1], ["cl:po_ouro", 1, 0.1]],
+    "minecraft:deepslate_iron_ore": [["cl:po_ferro", 2, 1], ["cl:po_ouro", 1, 0.1]],
+    "minecraft:raw_gold": [["cl:po_ouro", 2, 1], ["cl:po_cobre", 1, 0.1]],
+    "minecraft:gold_ore": [["cl:po_ouro", 2, 1], ["cl:po_cobre", 1, 0.1]],
+    "minecraft:deepslate_gold_ore": [["cl:po_ouro", 2, 1], ["cl:po_cobre", 1, 0.1]],
+    "minecraft:raw_copper": [["cl:po_cobre", 2, 1], ["cl:po_estanho", 1, 0.1]],
+    "minecraft:copper_ore": [["cl:po_cobre", 2, 1], ["cl:po_estanho", 1, 0.1]],
+    "minecraft:deepslate_copper_ore": [["cl:po_cobre", 2, 1], ["cl:po_estanho", 1, 0.1]],
+    "minecraft:cobblestone": [["minecraft:gravel", 1, 1]],
+    "minecraft:stone": [["minecraft:gravel", 1, 1]],
+    "minecraft:gravel": [["minecraft:sand", 1, 1], ["minecraft:flint", 1, 0.1]],
+    "minecraft:sand": [["cl:poeira", 1, 1]],
+    "minecraft:sandstone": [["minecraft:sand", 2, 1]],
+    "minecraft:bone": [["minecraft:bone_meal", 6, 1]],
+    "minecraft:white_wool": [["minecraft:string", 4, 1]],
+    "minecraft:glowstone": [["minecraft:glowstone_dust", 4, 1]],
+  } as Readonly<Record<string, ReadonlyArray<readonly [string, number, number]>>>,
+  pulverizadorCE: 100,
+  // Fornalha de Redstone: 1.600 RF por item (40 cE), 2 itens por ciclo. 4 pedaços/pós de minério = 1 lingote.
+  fornalha: {
+    "minecraft:raw_iron": "minecraft:iron_ingot",
+    "minecraft:raw_gold": "minecraft:gold_ingot",
+    "minecraft:raw_copper": "minecraft:copper_ingot",
+    "minecraft:iron_ore": "minecraft:iron_ingot",
+    "minecraft:deepslate_iron_ore": "minecraft:iron_ingot",
+    "minecraft:gold_ore": "minecraft:gold_ingot",
+    "minecraft:deepslate_gold_ore": "minecraft:gold_ingot",
+    "minecraft:copper_ore": "minecraft:copper_ingot",
+    "minecraft:deepslate_copper_ore": "minecraft:copper_ingot",
+    "minecraft:sand": "minecraft:glass",
+    "minecraft:red_sand": "minecraft:glass",
+    "minecraft:cobblestone": "minecraft:stone",
+    "minecraft:stone": "minecraft:smooth_stone",
+    "minecraft:clay_ball": "minecraft:brick",
+    "minecraft:clay": "minecraft:hardened_clay",
+    "minecraft:cactus": "minecraft:green_dye",
+    "minecraft:potato": "minecraft:baked_potato",
+    "minecraft:beef": "minecraft:cooked_beef",
+    "minecraft:porkchop": "minecraft:cooked_porkchop",
+    "minecraft:chicken": "minecraft:cooked_chicken",
+    "minecraft:mutton": "minecraft:cooked_mutton",
+    "minecraft:rabbit": "minecraft:cooked_rabbit",
+    "minecraft:cod": "minecraft:cooked_cod",
+    "minecraft:salmon": "minecraft:cooked_salmon",
+    "minecraft:kelp": "minecraft:dried_kelp",
+    "cl:po_ferro": "minecraft:iron_ingot", "cl:po_ouro": "minecraft:gold_ingot", "cl:po_cobre": "minecraft:copper_ingot", "cl:po_estanho": "cl:lingote_estanho",
+    "cl:argamassa": "cl:tijolo_refratario",
+    "cl:cadinho_cru": "cl:cadinho",
+    "cl:bicho_seda": "cl:bicho_seda_cozido",
+    "cl:agua_impropria": "cl:agua_boa",
+    "cl:agua_muito_suja": "cl:agua_boa",
+    "cl:agua_suja": "cl:agua_boa",
+    "minecraft:potion": "cl:agua_boa",
+    "minecraft:oak_log": "minecraft:charcoal",
+    "minecraft:spruce_log": "minecraft:charcoal",
+    "minecraft:birch_log": "minecraft:charcoal",
+    "minecraft:jungle_log": "minecraft:charcoal",
+    "minecraft:acacia_log": "minecraft:charcoal",
+    "minecraft:dark_oak_log": "minecraft:charcoal",
+    "minecraft:mangrove_log": "minecraft:charcoal",
+    "minecraft:cherry_log": "minecraft:charcoal",
+  } as Readonly<Record<string, string>>,
+  fornalhaCE: 40,
+  fornalhaPorCiclo: 2,
+  // Fundidora de Indução: duas entradas -> lingotes. Minério + areia rende o dobro (3.200 RF).
+  fundidora: [
+    { entra: [["minecraft:copper_ingot", 3], ["cl:lingote_estanho", 1]], sai: ["cl:lingote_bronze", 4], ce: 40 },
+    { entra: [["minecraft:iron_ingot", 1], ["minecraft:coal", 1]], sai: ["cl:lingote_aco", 1], ce: 40 },
+    { entra: [["minecraft:iron_ingot", 1], ["minecraft:charcoal", 1]], sai: ["cl:lingote_aco", 1], ce: 40 },
+    { entra: [["minecraft:raw_iron", 1], ["minecraft:sand", 1]], sai: ["minecraft:iron_ingot", 2], ce: 80 },
+    { entra: [["minecraft:raw_gold", 1], ["minecraft:sand", 1]], sai: ["minecraft:gold_ingot", 2], ce: 80 },
+    { entra: [["minecraft:raw_copper", 1], ["minecraft:sand", 1]], sai: ["minecraft:copper_ingot", 2], ce: 80 },
+  ] as ReadonlyArray<{ entra: ReadonlyArray<readonly [string, number]>; sai: readonly [string, number]; ce: number }>,
+  // Serraria: tora -> 6 tábuas + serragem (800 RF = 20 cE).
+  serraria: {
+    "minecraft:oak_log": "minecraft:oak_planks", "minecraft:stripped_oak_log": "minecraft:oak_planks",
+    "minecraft:spruce_log": "minecraft:spruce_planks", "minecraft:stripped_spruce_log": "minecraft:spruce_planks",
+    "minecraft:birch_log": "minecraft:birch_planks", "minecraft:stripped_birch_log": "minecraft:birch_planks",
+    "minecraft:jungle_log": "minecraft:jungle_planks", "minecraft:stripped_jungle_log": "minecraft:jungle_planks",
+    "minecraft:acacia_log": "minecraft:acacia_planks", "minecraft:stripped_acacia_log": "minecraft:acacia_planks",
+    "minecraft:dark_oak_log": "minecraft:dark_oak_planks", "minecraft:stripped_dark_oak_log": "minecraft:dark_oak_planks",
+    "minecraft:mangrove_log": "minecraft:mangrove_planks", "minecraft:stripped_mangrove_log": "minecraft:mangrove_planks",
+    "minecraft:cherry_log": "minecraft:cherry_planks", "minecraft:stripped_cherry_log": "minecraft:cherry_planks",
+  } as Readonly<Record<string, string>>,
+  serrariaCE: 20,
+  serragemChance: 0.25,
+  extrusoraPorCiclo: 1, // pedregulho por ciclo, sem energia
+  precipitadorBolas: 4, // bolas de neve por ciclo
+  precipitadorCE: 50,
+  dinamo: { porCiclo: 2, max: 400, combustivel: { "minecraft:redstone": 16, "minecraft:redstone_block": 144 } as Readonly<Record<string, number>> },
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)

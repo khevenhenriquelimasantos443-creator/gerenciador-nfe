@@ -159,6 +159,16 @@
   "en": "Charcoal",
   "icone": "textures/items/charcoal"
  },
+ "minecraft:cherry_log": {
+  "pt": "Tora de Cerejeira",
+  "en": "Cherry Log",
+  "icone": "textures/blocks/cherry_log_side"
+ },
+ "minecraft:cherry_planks": {
+  "pt": "Tábuas de Cerejeira",
+  "en": "Cherry Planks",
+  "icone": "textures/blocks/cherry_planks"
+ },
  "minecraft:chest": {
   "pt": "Baú",
   "en": "Chest",
@@ -279,6 +289,16 @@
   "en": "Cut Sandstone",
   "icone": "textures/blocks/sandstone_smooth"
  },
+ "minecraft:dark_oak_log": {
+  "pt": "dark_oak_log",
+  "en": "dark_oak_log",
+  "icone": "textures/blocks/log_big_oak"
+ },
+ "minecraft:dark_oak_planks": {
+  "pt": "dark_oak_planks",
+  "en": "dark_oak_planks",
+  "icone": "textures/blocks/planks_big_oak"
+ },
  "minecraft:deadbush": {
   "pt": "Arbusto Morto",
   "en": "Dead Bush",
@@ -313,6 +333,11 @@
   "pt": "Terra",
   "en": "Dirt",
   "icone": "textures/blocks/dirt"
+ },
+ "minecraft:dried_kelp": {
+  "pt": "Algas Secas",
+  "en": "Dried Kelp",
+  "icone": "textures/items/dried_kelp"
  },
  "minecraft:dried_kelp_block": {
   "pt": "Bloco de Algas Secas",
@@ -374,6 +399,11 @@
   "en": "Glass Bottle",
   "icone": "textures/items/potion_bottle_empty"
  },
+ "minecraft:glowstone": {
+  "pt": "Pedra Luminosa",
+  "en": "Glowstone",
+  "icone": "textures/blocks/glowstone"
+ },
  "minecraft:glowstone_dust": {
   "pt": "Pó de Pedra Luminosa",
   "en": "Glowstone Dust",
@@ -419,10 +449,19 @@
   "en": "Gray Carpet",
   "icone": "textures/blocks/wool_colored_gray"
  },
+ "minecraft:green_dye": {
+  "pt": "green_dye",
+  "en": "green_dye"
+ },
  "minecraft:gunpowder": {
   "pt": "Pólvora",
   "en": "Gunpowder",
   "icone": "textures/items/gunpowder"
+ },
+ "minecraft:hardened_clay": {
+  "pt": "Terracota",
+  "en": "Terracotta",
+  "icone": "textures/blocks/hardened_clay"
  },
  "minecraft:honey_bottle": {
   "pt": "Frasco de Mel",
@@ -438,6 +477,11 @@
   "pt": "Gelo",
   "en": "Ice",
   "icone": "textures/blocks/ice"
+ },
+ "minecraft:iron_axe": {
+  "pt": "Machado de Ferro",
+  "en": "Iron Axe",
+  "icone": "textures/items/iron_axe"
  },
  "minecraft:iron_block": {
   "pt": "Bloco de Ferro",
@@ -469,6 +513,16 @@
   "en": "Jungle Leaves",
   "icone": "textures/blocks/leaves_jungle_carried"
  },
+ "minecraft:jungle_log": {
+  "pt": "jungle_log",
+  "en": "jungle_log",
+  "icone": "textures/blocks/log_jungle"
+ },
+ "minecraft:jungle_planks": {
+  "pt": "jungle_planks",
+  "en": "jungle_planks",
+  "icone": "textures/blocks/planks_jungle"
+ },
  "minecraft:jungle_sapling": {
   "pt": "Muda de Árvore da Selva",
   "en": "Jungle Sapling",
@@ -478,6 +532,11 @@
   "pt": "Laje da Selva",
   "en": "Jungle Slab",
   "icone": "textures/blocks/planks_jungle"
+ },
+ "minecraft:kelp": {
+  "pt": "Alga",
+  "en": "Kelp",
+  "icone": "textures/items/kelp"
  },
  "minecraft:lapis_lazuli": {
   "pt": "Lápis-Lazúli",
@@ -533,6 +592,16 @@
   "pt": "Bloco de Magma",
   "en": "Magma Block",
   "icone": "textures/blocks/magma"
+ },
+ "minecraft:mangrove_log": {
+  "pt": "Tora de Mangue",
+  "en": "Mangrove Log",
+  "icone": "textures/blocks/mangrove_log_side"
+ },
+ "minecraft:mangrove_planks": {
+  "pt": "Tábuas de Mangue",
+  "en": "Mangrove Planks",
+  "icone": "textures/blocks/mangrove_planks"
  },
  "minecraft:melon_seeds": {
   "pt": "Sementes de Melancia",
@@ -608,6 +677,11 @@
   "pt": "Obsidiana",
   "en": "Obsidian",
   "icone": "textures/blocks/obsidian"
+ },
+ "minecraft:packed_ice": {
+  "pt": "Gelo Compactado",
+  "en": "Packed Ice",
+  "icone": "textures/blocks/ice_packed"
  },
  "minecraft:paper": {
   "pt": "Papel",
@@ -714,6 +788,11 @@
   "en": "Redstone Dust",
   "icone": "textures/items/redstone_dust"
  },
+ "minecraft:redstone_block": {
+  "pt": "Bloco de Redstone",
+  "en": "Block of Redstone",
+  "icone": "textures/blocks/redstone_block"
+ },
  "minecraft:reinforced_deepslate": {
   "pt": "Ardosiabissal Reforçada",
   "en": "Reinforced Deepslate",
@@ -754,6 +833,11 @@
   "en": "Smooth Sandstone",
   "icone": "textures/blocks/sandstone_top"
  },
+ "minecraft:smooth_stone": {
+  "pt": "Pedra Lisa",
+  "en": "Smooth Stone",
+  "icone": "textures/blocks/stone_slab_top"
+ },
  "minecraft:smooth_stone_slab": {
   "pt": "Laje de Pedra Lisa",
   "en": "Smooth Stone Slab",
@@ -788,6 +872,16 @@
   "pt": "Folhas de Pinheiro",
   "en": "Spruce Leaves",
   "icone": "textures/blocks/leaves_spruce_carried"
+ },
+ "minecraft:spruce_log": {
+  "pt": "spruce_log",
+  "en": "spruce_log",
+  "icone": "textures/blocks/log_spruce"
+ },
+ "minecraft:spruce_planks": {
+  "pt": "spruce_planks",
+  "en": "spruce_planks",
+  "icone": "textures/blocks/planks_spruce"
  },
  "minecraft:spruce_sapling": {
   "pt": "Muda de Pinheiro",
@@ -833,6 +927,46 @@
   "pt": "Linha",
   "en": "String",
   "icone": "textures/items/string"
+ },
+ "minecraft:stripped_acacia_log": {
+  "pt": "Tronco de Acácia Descascado",
+  "en": "Stripped Acacia Log",
+  "icone": "textures/blocks/stripped_acacia_log"
+ },
+ "minecraft:stripped_birch_log": {
+  "pt": "Tronco de Bétula Descascado",
+  "en": "Stripped Birch Log",
+  "icone": "textures/blocks/stripped_birch_log"
+ },
+ "minecraft:stripped_cherry_log": {
+  "pt": "Tora de Cerejeira Descascada",
+  "en": "Stripped Cherry Log",
+  "icone": "textures/blocks/stripped_cherry_log_side"
+ },
+ "minecraft:stripped_dark_oak_log": {
+  "pt": "Tora de Carvalho Escuro Descascada",
+  "en": "Stripped Dark Oak Log",
+  "icone": "textures/blocks/stripped_dark_oak_log"
+ },
+ "minecraft:stripped_jungle_log": {
+  "pt": "Tora da Selva Descascada",
+  "en": "Stripped Jungle Log",
+  "icone": "textures/blocks/stripped_jungle_log"
+ },
+ "minecraft:stripped_mangrove_log": {
+  "pt": "Tora de Mangue Descascada",
+  "en": "Stripped Mangrove Log",
+  "icone": "textures/blocks/stripped_mangrove_log_side"
+ },
+ "minecraft:stripped_oak_log": {
+  "pt": "Tora de Carvalho Descascada",
+  "en": "Stripped Oak Log",
+  "icone": "textures/blocks/stripped_oak_log"
+ },
+ "minecraft:stripped_spruce_log": {
+  "pt": "Tora de Pinheiro Descascada",
+  "en": "Stripped Spruce Log",
+  "icone": "textures/blocks/stripped_spruce_log"
  },
  "minecraft:sugar": {
   "pt": "Açúcar",

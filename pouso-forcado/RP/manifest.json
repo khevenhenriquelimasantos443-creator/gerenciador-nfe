@@ -4,7 +4,7 @@
     "name": "Pouso Forçado (Recursos)",
     "description": "Texturas e textos do Pouso Forçado. Fase 6.",
     "uuid": "3b16a1a8-8620-4d50-b02b-6528c756a7c0",
-    "version": [0, 22, 0],
+    "version": [0, 23, 0],
     "min_engine_version": [1, 26, 30]
   },
   "modules": [
@@ -12,13 +12,13 @@
       "description": "Recursos",
       "type": "resources",
       "uuid": "d946bad2-c11a-4206-914f-bb84dd77b986",
-      "version": [0, 22, 0]
+      "version": [0, 23, 0]
     }
   ],
   "dependencies": [
     {
       "uuid": "4d9569a2-3c1b-4044-b3f4-74bd75dab9dd",
-      "version": [0, 22, 0]
+      "version": [0, 23, 0]
     }
   ]
 }

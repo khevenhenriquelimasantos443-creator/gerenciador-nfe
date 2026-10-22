@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 16** (fundição do Tinkers: metal derretido, ligas, moldes e ferramentas de metal). Fases 0 a 15 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 17** (Thermal Expansion: máquinas elétricas e células de energia). Fases 0 a 16 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -26,8 +26,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | pronta |
 | 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | pronta |
 | 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | pronta |
-| 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | **esta versão** |
-| 17–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | pronta |
+| 17 | **Thermal Expansion**: Estrutura de Máquina, Pulverizador (minério → 2 pós), Fornalha de Redstone, Fundidora de Indução (ligas e minério + areia), Serraria, Extrusora Ígnea, Precipitador Glacial, Dínamo de Redstone e 4 Células de Energia (de 400 mil a 50 milhões de RF); +6 missões | **esta versão** |
+| 18–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -128,6 +129,24 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Máquinas (Fase 17: Thermal Expansion)
+
+Todas trabalham a cada 5 s: puxam do baú (ou funil) **em cima**, põem no baú **embaixo** (sem baú, soltam ao lado) e gastam energia da rede (cabos + baterias/células). Toque com a mão vazia para ver o estado.
+
+| Máquina | Faz | Custo |
+|---|---|---|
+| Pulverizador | minério → 2 pós de metal (+10% de outro pó); pedregulho → cascalho → areia → poeira; osso → 6 farinhas de osso | 4.000 RF |
+| Fornalha de Redstone | funde 2 itens por vez (minério, pó, areia, comida, águas...); 4 pedaços do Ex Nihilo = 1 lingote | 1.600 RF por item |
+| Fundidora de Indução | 3 cobre + 1 estanho = 4 bronze; ferro + carvão = aço; minério bruto + areia = 2 lingotes | 1.600 a 3.200 RF |
+| Serraria | tora → 6 tábuas (+25% serragem) | 800 RF |
+| Extrusora Ígnea | pedregulho com lava e água encostadas | grátis |
+| Precipitador Glacial | 4 bolas de neve com água encostada | 2.000 RF |
+| Dínamo de Redstone | gera 80 RF/t; redstone = 64.000 RF, bloco = 576.000 RF (toque ou baú em cima) | — |
+
+- **Células de Energia** (entram na rede como as baterias): Básica 400 mil RF, Reforçada 2 milhões, Redstone 10 milhões, Ressonante 50 milhões. A carga se perde se a célula for quebrada.
+- **Pós de metal** também vão na fornalha comum e na fundição (1 pó = 1 lingote).
+- Capítulo novo no Diário: **Máquinas (Thermal Expansion)**, 6 missões.
 
 ## Fundição (Fase 16: Tinkers' Construct)
 

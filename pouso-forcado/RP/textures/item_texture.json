@@ -748,6 +748,21 @@
     },
     "clc_espada_larga_aco": {
       "textures": "textures/items/cl/c/espada_larga_aco"
+    },
+    "clc_serragem": {
+      "textures": "textures/items/cl/c/serragem"
+    },
+    "clc_po_ferro": {
+      "textures": "textures/items/cl/c/po_ferro"
+    },
+    "clc_po_ouro": {
+      "textures": "textures/items/cl/c/po_ouro"
+    },
+    "clc_po_cobre": {
+      "textures": "textures/items/cl/c/po_cobre"
+    },
+    "clc_po_estanho": {
+      "textures": "textures/items/cl/c/po_estanho"
     }
   }
 }

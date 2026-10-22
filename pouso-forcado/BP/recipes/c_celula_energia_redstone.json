@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_celula_energia_redstone"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RVR",
+      "VCV",
+      "RVR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone_block"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "C": {
+        "item": "cl:celula_energia_reforcada"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone_block"
+      }
+    ],
+    "result": {
+      "item": "cl:celula_energia_redstone"
+    }
+  }
+}

@@ -315,6 +315,10 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | serragem.png | Serragem | montinho de pó de madeira |
+| po_ferro.png | Pó de Ferro | montinho de pó metálico cinza-claro |
+| po_ouro.png | Pó de Ouro | montinho de pó dourado |
+| po_cobre.png | Pó de Cobre | montinho de pó laranja-cobre |
+| po_estanho.png | Pó de Estanho | montinho de pó prata-claro |
 
 **Blocos (todos máquinas):**
 

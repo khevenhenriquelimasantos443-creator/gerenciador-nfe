@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_estrutura_maquina"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FVF",
+      "VOV",
+      "FVF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "O": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:estrutura_maquina"
+    }
+  }
+}

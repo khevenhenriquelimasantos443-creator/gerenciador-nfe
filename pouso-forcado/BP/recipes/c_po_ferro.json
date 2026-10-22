@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_po_ferro"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:po_ferro",
+    "output": "minecraft:iron_ingot"
+  }
+}

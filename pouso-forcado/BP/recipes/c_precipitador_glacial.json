@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_precipitador_glacial"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "CEC",
+      " R "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:packed_ice"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      },
+      "R": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:packed_ice"
+      }
+    ],
+    "result": {
+      "item": "cl:precipitador_glacial"
+    }
+  }
+}

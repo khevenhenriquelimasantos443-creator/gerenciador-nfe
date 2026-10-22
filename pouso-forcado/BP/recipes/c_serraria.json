@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_serraria"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "CEC",
+      " R "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:iron_axe"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      },
+      "R": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_axe"
+      }
+    ],
+    "result": {
+      "item": "cl:serraria"
+    }
+  }
+}
