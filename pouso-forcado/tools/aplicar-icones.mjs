@@ -40,8 +40,10 @@ const ter = JSON.parse(readFileSync(arqTer, "utf8"));
 let f = 0;
 for (const arq of existsSync(FACES) ? readdirSync(FACES).filter((a) => a.endsWith(".png")) : []) {
   const nome = arq.slice(0, -4);
-  if (!ter.texture_data[`clc_${nome}`]) continue;
-  ter.texture_data[`clc_${nome}`] = { textures: `textures/blocks/cl/arte/${nome}` };
+  // planta_<id>_<estágio> substitui a plantação do HarvestCraft (clhc_<id>_<estágio>).
+  const chave = nome.startsWith("planta_") ? `clhc_${nome.slice(7)}` : `clc_${nome}`;
+  if (!ter.texture_data[chave]) continue;
+  ter.texture_data[chave] = { textures: `textures/blocks/cl/arte/${nome}` };
   f++;
 }
 writeFileSync(arqTer, JSON.stringify(ter, null, 2) + "\n");

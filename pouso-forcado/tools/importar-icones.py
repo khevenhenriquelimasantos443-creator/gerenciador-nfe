@@ -4,7 +4,7 @@
 #   blocos_menu/<id>.png  128x128 isométrico        -> arte/blocos/<id>.png (64x64; Catálogo e menus)
 #   itens/ovo_<monstro>   ovo do monstro            -> arte/ovo_<monstro>.png (ovo de criar do jogo)
 #   blocos_faces/<bloco>[_frente|_lado|_topo|_baixo].png -> RP/textures/blocks/cl/arte/ (só blocos das Fases 15+,
-#                         que são cubos; as máquinas antigas têm modelo próprio)
+#                         que são cubos; as máquinas antigas têm modelo próprio) e planta_<id>_<0|1|2>.png das plantações
 # Nomes que vieram diferentes dos IDs do jogo são trocados por SINONIMOS; o resto é listado no fim.
 # Não roda no build (precisa de Python + Pillow):
 #   python3 tools/importar-icones.py <pasta do pacote>
@@ -82,7 +82,9 @@ def main(pacote):
         for arq in sorted(os.listdir(faces)):
             nome = arq[:-4]
             bloco = nome.rsplit("_", 1)[0] if nome.rsplit("_", 1)[-1] in ("frente", "lado", "topo", "baixo") else nome
-            if os.path.exists(f"{R}/RP/textures/blocks/cl/c/{nome}.png"):
+            # Plantações: planta_<id>_<estágio> substitui a textura do HarvestCraft (RP/textures/blocks/cl/hc/<id>_<estágio>).
+            planta = nome.startswith("planta_") and os.path.exists(f"{R}/RP/textures/blocks/cl/hc/{nome[7:]}.png")
+            if planta or os.path.exists(f"{R}/RP/textures/blocks/cl/c/{nome}.png"):
                 im = Image.open(f"{faces}/{arq}").convert("RGBA")
                 if im.width > 32:
                     im = im.resize((32, 32), Image.NEAREST if im.width % 32 == 0 else Image.LANCZOS)
