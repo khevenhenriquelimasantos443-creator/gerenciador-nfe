@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_plastico_cru_carvao_vegetal"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:barra_borracha"
+      },
+      {
+        "item": "cl:barra_borracha"
+      },
+      {
+        "item": "minecraft:charcoal"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:barra_borracha"
+      }
+    ],
+    "result": {
+      "item": "cl:plastico_cru",
+      "count": 2
+    }
+  }
+}

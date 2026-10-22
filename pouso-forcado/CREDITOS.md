@@ -26,6 +26,8 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 - **JABBA** (ProfMobius), **AutoPackager** (Wolf_IV), **Applied Energistics** (AlgorithmX2) e **ExtraCells** (M3gaFr3ak):
   barril e upgrades, carrinho, empacotador, células ME com os bytes do AE1, drive, baú ME e terminal sem fio.
   Código e desenhos próprios.
+- **MineFactory Reloaded** (PowerCrystals, skyboy): máquinas de fazenda e de blocos com os custos em RF. Código e
+  desenhos próprios.
 - **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
   (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).
 - **Hardcore Questing Mode** (Vswe, lorddusk): o Diário de Bordo em capítulos, dependências,

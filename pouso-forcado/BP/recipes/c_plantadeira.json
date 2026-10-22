@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_plantadeira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "CBC",
+      " R "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:flower_pot"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "B": {
+        "item": "cl:bloco_maquina"
+      },
+      "R": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:flower_pot"
+      }
+    ],
+    "result": {
+      "item": "cl:plantadeira"
+    }
+  }
+}

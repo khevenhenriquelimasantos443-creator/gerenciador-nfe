@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_esteira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RRR",
+      "FDF"
+    ],
+    "key": {
+      "R": {
+        "item": "cl:barra_borracha"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "D": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:barra_borracha"
+      }
+    ],
+    "result": {
+      "item": "cl:esteira",
+      "count": 16
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_upgrade_alcance_3"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MMM",
+      "PRP",
+      "MMM"
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_estanho"
+      },
+      "P": {
+        "item": "cl:plastico_cru"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_estanho"
+      }
+    ],
+    "result": {
+      "item": "cl:upgrade_alcance_3"
+    }
+  }
+}

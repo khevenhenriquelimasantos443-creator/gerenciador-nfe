@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_barra_borracha"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:resina",
+    "output": "cl:barra_borracha"
+  }
+}

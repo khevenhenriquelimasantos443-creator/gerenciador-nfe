@@ -856,6 +856,36 @@
     },
     "clc_terminal_sem_fio": {
       "textures": "textures/items/cl/c/terminal_sem_fio"
+    },
+    "clc_upgrade_alcance_1": {
+      "textures": "textures/items/cl/c/upgrade_alcance_1"
+    },
+    "clc_upgrade_alcance_2": {
+      "textures": "textures/items/cl/c/upgrade_alcance_2"
+    },
+    "clc_upgrade_alcance_3": {
+      "textures": "textures/items/cl/c/upgrade_alcance_3"
+    },
+    "clc_upgrade_alcance_4": {
+      "textures": "textures/items/cl/c/upgrade_alcance_4"
+    },
+    "clc_upgrade_alcance_5": {
+      "textures": "textures/items/cl/c/upgrade_alcance_5"
+    },
+    "clc_resina": {
+      "textures": "textures/items/cl/c/resina"
+    },
+    "clc_barra_borracha": {
+      "textures": "textures/items/cl/c/barra_borracha"
+    },
+    "clc_plastico_cru": {
+      "textures": "textures/items/cl/c/plastico_cru"
+    },
+    "clc_folha_plastico": {
+      "textures": "textures/items/cl/c/folha_plastico"
+    },
+    "clc_fertilizante": {
+      "textures": "textures/items/cl/c/fertilizante"
     }
   }
 }

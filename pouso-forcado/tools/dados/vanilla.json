@@ -164,6 +164,11 @@
   "en": "Carrot",
   "icone": "textures/items/carrot"
  },
+ "minecraft:carrots": {
+  "pt": "Cenouras",
+  "en": "Carrots",
+  "icone": "textures/blocks/carrots_stage_0"
+ },
  "minecraft:charcoal": {
   "pt": "Carvão Vegetal",
   "en": "Charcoal",
@@ -228,6 +233,11 @@
   "pt": "Sementes de Cacau",
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
+ },
+ "minecraft:composter": {
+  "pt": "Composteira",
+  "en": "Composter",
+  "icone": "textures/blocks/composter_side"
  },
  "minecraft:cooked_beef": {
   "pt": "Bife",
@@ -349,6 +359,11 @@
   "en": "Dirt",
   "icone": "textures/blocks/dirt"
  },
+ "minecraft:dispenser": {
+  "pt": "Ejetor",
+  "en": "Dispenser",
+  "icone": "textures/blocks/furnace_side"
+ },
  "minecraft:dried_kelp": {
   "pt": "Algas Secas",
   "en": "Dried Kelp",
@@ -393,6 +408,11 @@
   "pt": "Sílex",
   "en": "Flint",
   "icone": "textures/items/flint"
+ },
+ "minecraft:flower_pot": {
+  "pt": "Vaso de Flor",
+  "en": "Flower Pot",
+  "icone": "textures/items/flower_pot"
  },
  "minecraft:flowing_lava": {
   "pt": "Lava",
@@ -458,6 +478,10 @@
   "pt": "Cenoura Dourada",
   "en": "Golden Carrot",
   "icone": "textures/items/carrot_golden"
+ },
+ "minecraft:golden_hoe": {
+  "pt": "Enxada de Ouro",
+  "en": "Golden Hoe"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",
@@ -533,6 +557,11 @@
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
   "icone": "textures/items/iron_pickaxe"
+ },
+ "minecraft:iron_sword": {
+  "pt": "Espada de Ferro",
+  "en": "Iron Sword",
+  "icone": "textures/items/iron_sword"
  },
  "minecraft:jungle_leaves": {
   "pt": "Folhas da Selva",
@@ -649,6 +678,11 @@
   "en": "Melon Slice",
   "icone": "textures/items/melon"
  },
+ "minecraft:melon_stem": {
+  "pt": "Caule de Melancia",
+  "en": "Melon Stem",
+  "icone": "textures/blocks/melon_stem_disconnected"
+ },
  "minecraft:milk_bucket": {
   "pt": "Balde de Leite",
   "en": "Milk Bucket",
@@ -749,6 +783,11 @@
   "en": "Potato",
   "icone": "textures/items/potato"
  },
+ "minecraft:potatoes": {
+  "pt": "Batatas",
+  "en": "Potatoes",
+  "icone": "textures/blocks/potatoes_stage_0"
+ },
  "minecraft:potion": {
   "pt": "Frasco de Água",
   "en": "Water Bottle",
@@ -768,6 +807,11 @@
   "pt": "Sementes de Abóbora",
   "en": "Pumpkin Seeds",
   "icone": "textures/items/seeds_pumpkin"
+ },
+ "minecraft:pumpkin_stem": {
+  "pt": "Broto de Abóbora",
+  "en": "Pumpkin Stem",
+  "icone": "textures/blocks/pumpkin_stem_disconnected"
  },
  "minecraft:quartz": {
   "pt": "Quartzo do Nether",
@@ -869,6 +913,11 @@
   "en": "Sandstone",
   "icone": "textures/blocks/sandstone_normal"
  },
+ "minecraft:shears": {
+  "pt": "Tesoura",
+  "en": "Shears",
+  "icone": "textures/items/shears"
+ },
  "minecraft:short_grass": {
   "pt": "Grama Baixa",
   "en": "Short Grass",
@@ -881,7 +930,8 @@
  },
  "minecraft:slime_ball": {
   "pt": "Gosma de Slime",
-  "en": "Slimeball"
+  "en": "Slimeball",
+  "icone": "textures/items/slimeball"
  },
  "minecraft:smooth_sandstone": {
   "pt": "Arenito Liso",

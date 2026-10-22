@@ -64,7 +64,12 @@ export type Acao =
   | "carrinho"
   | "empacotar"
   | "celula_me"
-  | "sem_fio";
+  | "sem_fio"
+  | "mf_plantar"
+  | "mf_colher"
+  | "mf_triturar"
+  | "mf_fertilizante"
+  | "alcance";
 
 type MissaoBase = {
   id: string;
@@ -257,6 +262,20 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
         escolha: [{ item: "cl:celula_me_4k", quantidade: 1 }, { item: "minecraft:diamond", quantidade: 3 }],
       },
+    ],
+  },
+  {
+    id: "mfr", // Fase 19: MineFactory Reloaded
+    icone: "cl:colheitadeira",
+    requer: ["thermal"],
+    missoes: [
+      { id: "mf_resina", objetivo: { tipo: "ter", item: "cl:resina", qtd: 8 }, recompensa: [{ item: "minecraft:coal", quantidade: 8 }] },
+      { id: "mf_plastico", requer: ["mf_resina"], objetivo: { tipo: "ter", item: "cl:folha_plastico", qtd: 8 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "mf_plantar", requer: ["mf_plastico"], objetivo: { tipo: "acao", acao: "mf_plantar", qtd: 32 }, recompensa: [{ item: "cl:fertilizante", quantidade: 8 }] },
+      { id: "mf_colher", requer: ["mf_plastico"], objetivo: { tipo: "acao", acao: "mf_colher", qtd: 64 }, recompensa: [{ item: "cl:semente_arroz", quantidade: 4 }] },
+      { id: "mf_triturar", requer: ["mf_plastico"], objetivo: { tipo: "acao", acao: "mf_triturar", qtd: 10 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "mf_fertilizante", requer: ["mf_plastico"], objetivo: { tipo: "acao", acao: "mf_fertilizante", qtd: 8 }, recompensa: [{ item: "minecraft:bone_block", quantidade: 4 }] },
+      { id: "mf_alcance", requer: ["mf_plantar"], objetivo: { tipo: "acao", acao: "alcance", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
   {

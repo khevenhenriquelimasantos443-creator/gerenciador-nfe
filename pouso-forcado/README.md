@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 18** (armazenamento: JABBA, AutoPackager e Applied Energistics). Fases 0 a 17 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 19** (MineFactory Reloaded: fazenda automática). Fases 0 a 18 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -28,8 +28,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | pronta |
 | 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | pronta |
 | 17 | **Thermal Expansion**: Estrutura de Máquina, Pulverizador (minério → 2 pós), Fornalha de Redstone, Fundidora de Indução (ligas e minério + areia), Serraria, Extrusora Ígnea, Precipitador Glacial, Dínamo de Redstone e 4 Células de Energia (de 400 mil a 50 milhões de RF); +6 missões | pronta |
-| 18 | **Armazenamento**: Barril de Armazenamento do JABBA (upgrades estrutural, de armazenamento e núcleo de funil, chave), Carrinho e Carrinho de Diamante; Empacotador Automático; rede ME do Applied Energistics 1 (células 1k a 64k, Drive, Baú ME, Controlador, Ponto de Acesso, Terminal sem Fio, processadores na Montadora, certus na peneira) e Célula de Água do ExtraCells; o Terminal enxerga barris e células; +7 missões | **esta versão** |
-| 19–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 18 | **Armazenamento**: Barril de Armazenamento do JABBA (upgrades estrutural, de armazenamento e núcleo de funil, chave), Carrinho e Carrinho de Diamante; Empacotador Automático; rede ME do Applied Energistics 1 (células 1k a 64k, Drive, Baú ME, Controlador, Ponto de Acesso, Terminal sem Fio, processadores na Montadora, certus na peneira) e Célula de Água do ExtraCells; o Terminal enxerga barris e células; +7 missões | pronta |
+| 19 | **MineFactory Reloaded**: resina → borracha → plástico; Bloco de Máquina; Plantadeira, Colheitadeira (plantas, cana, cacto e árvores), Fertilizadora, Rancheiro, Triturador de Monstros, Esgoto + Compostadora (fertilizante), Quebrador e Colocador de Blocos, Esteira e Upgrades de Alcance; +7 missões | **esta versão** |
+| 20–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -130,6 +131,27 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Fazenda automática (Fase 19: MineFactory Reloaded)
+
+- **Plástico**: Resina (quebrando toras ou cactos: 10% à mão, 25% na Colheitadeira) → fornalha → **Barra de Borracha**; 2 barras + carvão = 2 **Plástico Cru** → fornalha → **Folha de Plástico**. Com folhas: **Bloco de Máquina**, base de todas as máquinas.
+- As máquinas trabalham a cada 5 s com energia da rede: entrada no baú **em cima**, saída no baú **embaixo**. A área de trabalho é um quadrado **na frente** da máquina (o lado da tela), 3x3; com **Upgrades de Alcance** +1 a +5 (lápis, ferro, estanho, cobre, bronze) vai até 11x11 (toque na máquina com o upgrade).
+
+| Máquina | Faz | Custo |
+|---|---|---|
+| Plantadeira | planta sementes (do jogo e do HarvestCraft) em terra arada e mudas em terra/grama | 160 RF por planta |
+| Colheitadeira | colhe plantas maduras (as do HarvestCraft voltam ao broto), melancia, abóbora, cana, cacto e árvores inteiras (até 64 toras) | 240 RF por bloco |
+| Fertilizadora | gasta fertilizante ou farinha de osso para fazer 1 planta crescer | 960 RF |
+| Rancheiro | tira leite das vacas da área (respeita os 20 min do Hunger Overhaul) | 320 RF |
+| Triturador de Monstros | 8 de dano em até 3 monstros (não mexe com filhotes nem com bichos com nome); drops e 1 garrafa de experiência a cada 3 mortes | 3.200 RF por golpe |
+| Esgoto | junta 25 mB de esgoto por animal na área (no meio dele) a cada 5 s | — |
+| Compostadora | encostada no Esgoto: 100 mB = 1 Fertilizante | 800 RF |
+| Quebrador de Blocos | quebra o bloco da frente | 400 RF |
+| Colocador de Blocos | põe na frente o primeiro bloco do baú de cima | 400 RF |
+| Esteira | passa 1 pilha por segundo do inventário de trás para o da frente (16 por receita) | — |
+
+- **Fertilizante** na mão funciona como farinha de osso (também nas plantações do HarvestCraft).
+- Capítulo novo no Diário: **Fazenda automática (MineFactory)**, 7 missões.
 
 ## Armazenamento (Fase 18: JABBA, AutoPackager, Applied Energistics)
 

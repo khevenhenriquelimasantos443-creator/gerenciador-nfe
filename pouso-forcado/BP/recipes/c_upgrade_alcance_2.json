@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_upgrade_alcance_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MMM",
+      "PRP",
+      "MMM"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "item": "cl:plastico_cru"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:upgrade_alcance_2"
+    }
+  }
+}

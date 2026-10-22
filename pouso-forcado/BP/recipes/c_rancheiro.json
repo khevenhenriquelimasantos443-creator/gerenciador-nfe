@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_rancheiro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "CBC",
+      " R "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:shears"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "B": {
+        "item": "cl:bloco_maquina"
+      },
+      "R": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:shears"
+      }
+    ],
+    "result": {
+      "item": "cl:rancheiro"
+    }
+  }
+}

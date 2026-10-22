@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_quebrador_blocos"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "CBC",
+      " R "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:iron_pickaxe"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "B": {
+        "item": "cl:bloco_maquina"
+      },
+      "R": {
+        "item": "cl:circuito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_pickaxe"
+      }
+    ],
+    "result": {
+      "item": "cl:quebrador_blocos"
+    }
+  }
+}

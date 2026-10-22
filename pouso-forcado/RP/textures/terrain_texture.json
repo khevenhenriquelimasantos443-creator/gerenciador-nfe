@@ -621,6 +621,138 @@
     },
     "clc_ponto_acesso_baixo": {
       "textures": "textures/blocks/cl/c/ponto_acesso_baixo"
+    },
+    "clc_bloco_maquina_frente": {
+      "textures": "textures/blocks/cl/c/bloco_maquina_frente"
+    },
+    "clc_bloco_maquina_lado": {
+      "textures": "textures/blocks/cl/c/bloco_maquina_lado"
+    },
+    "clc_bloco_maquina_topo": {
+      "textures": "textures/blocks/cl/c/bloco_maquina_topo"
+    },
+    "clc_bloco_maquina_baixo": {
+      "textures": "textures/blocks/cl/c/bloco_maquina_baixo"
+    },
+    "clc_plantadeira_frente": {
+      "textures": "textures/blocks/cl/c/plantadeira_frente"
+    },
+    "clc_plantadeira_lado": {
+      "textures": "textures/blocks/cl/c/plantadeira_lado"
+    },
+    "clc_plantadeira_topo": {
+      "textures": "textures/blocks/cl/c/plantadeira_topo"
+    },
+    "clc_plantadeira_baixo": {
+      "textures": "textures/blocks/cl/c/plantadeira_baixo"
+    },
+    "clc_colheitadeira_frente": {
+      "textures": "textures/blocks/cl/c/colheitadeira_frente"
+    },
+    "clc_colheitadeira_lado": {
+      "textures": "textures/blocks/cl/c/colheitadeira_lado"
+    },
+    "clc_colheitadeira_topo": {
+      "textures": "textures/blocks/cl/c/colheitadeira_topo"
+    },
+    "clc_colheitadeira_baixo": {
+      "textures": "textures/blocks/cl/c/colheitadeira_baixo"
+    },
+    "clc_fertilizadora_frente": {
+      "textures": "textures/blocks/cl/c/fertilizadora_frente"
+    },
+    "clc_fertilizadora_lado": {
+      "textures": "textures/blocks/cl/c/fertilizadora_lado"
+    },
+    "clc_fertilizadora_topo": {
+      "textures": "textures/blocks/cl/c/fertilizadora_topo"
+    },
+    "clc_fertilizadora_baixo": {
+      "textures": "textures/blocks/cl/c/fertilizadora_baixo"
+    },
+    "clc_rancheiro_frente": {
+      "textures": "textures/blocks/cl/c/rancheiro_frente"
+    },
+    "clc_rancheiro_lado": {
+      "textures": "textures/blocks/cl/c/rancheiro_lado"
+    },
+    "clc_rancheiro_topo": {
+      "textures": "textures/blocks/cl/c/rancheiro_topo"
+    },
+    "clc_rancheiro_baixo": {
+      "textures": "textures/blocks/cl/c/rancheiro_baixo"
+    },
+    "clc_triturador_monstros_frente": {
+      "textures": "textures/blocks/cl/c/triturador_monstros_frente"
+    },
+    "clc_triturador_monstros_lado": {
+      "textures": "textures/blocks/cl/c/triturador_monstros_lado"
+    },
+    "clc_triturador_monstros_topo": {
+      "textures": "textures/blocks/cl/c/triturador_monstros_topo"
+    },
+    "clc_triturador_monstros_baixo": {
+      "textures": "textures/blocks/cl/c/triturador_monstros_baixo"
+    },
+    "clc_esgoto_frente": {
+      "textures": "textures/blocks/cl/c/esgoto_frente"
+    },
+    "clc_esgoto_lado": {
+      "textures": "textures/blocks/cl/c/esgoto_lado"
+    },
+    "clc_esgoto_topo": {
+      "textures": "textures/blocks/cl/c/esgoto_topo"
+    },
+    "clc_esgoto_baixo": {
+      "textures": "textures/blocks/cl/c/esgoto_baixo"
+    },
+    "clc_compostadora_frente": {
+      "textures": "textures/blocks/cl/c/compostadora_frente"
+    },
+    "clc_compostadora_lado": {
+      "textures": "textures/blocks/cl/c/compostadora_lado"
+    },
+    "clc_compostadora_topo": {
+      "textures": "textures/blocks/cl/c/compostadora_topo"
+    },
+    "clc_compostadora_baixo": {
+      "textures": "textures/blocks/cl/c/compostadora_baixo"
+    },
+    "clc_quebrador_blocos_frente": {
+      "textures": "textures/blocks/cl/c/quebrador_blocos_frente"
+    },
+    "clc_quebrador_blocos_lado": {
+      "textures": "textures/blocks/cl/c/quebrador_blocos_lado"
+    },
+    "clc_quebrador_blocos_topo": {
+      "textures": "textures/blocks/cl/c/quebrador_blocos_topo"
+    },
+    "clc_quebrador_blocos_baixo": {
+      "textures": "textures/blocks/cl/c/quebrador_blocos_baixo"
+    },
+    "clc_colocador_blocos_frente": {
+      "textures": "textures/blocks/cl/c/colocador_blocos_frente"
+    },
+    "clc_colocador_blocos_lado": {
+      "textures": "textures/blocks/cl/c/colocador_blocos_lado"
+    },
+    "clc_colocador_blocos_topo": {
+      "textures": "textures/blocks/cl/c/colocador_blocos_topo"
+    },
+    "clc_colocador_blocos_baixo": {
+      "textures": "textures/blocks/cl/c/colocador_blocos_baixo"
+    },
+    "clc_esteira_frente": {
+      "textures": "textures/blocks/cl/c/esteira_frente"
+    },
+    "clc_esteira_lado": {
+      "textures": "textures/blocks/cl/c/esteira_lado"
+    },
+    "clc_esteira_topo": {
+      "textures": "textures/blocks/cl/c/esteira_topo"
+    },
+    "clc_esteira_baixo": {
+      "textures": "textures/blocks/cl/c/esteira_baixo"
     }
   }
 }

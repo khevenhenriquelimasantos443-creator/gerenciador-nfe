@@ -71,6 +71,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Casting Basin",
   "icone": "textures/blocks/cl/c/bacia_fundicao_topo"
  },
+ "cl:barra_borracha": {
+  "pt": "Barra de Borracha",
+  "en": "Rubber Bar",
+  "icone": "textures/items/cl/c/barra_borracha"
+ },
  "cl:barril_armazenamento": {
   "pt": "Barril de Armazenamento",
   "en": "Storage Barrel",
@@ -120,6 +125,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Estanho",
   "en": "Block of Tin",
   "icone": "textures/blocks/cl/c/bloco_estanho"
+ },
+ "cl:bloco_maquina": {
+  "pt": "Bloco de Máquina",
+  "en": "Machine Block",
+  "icone": "textures/blocks/cl/c/bloco_maquina_topo"
  },
  "cl:bola_musgo": {
   "pt": "Bola de Musgo",
@@ -281,6 +291,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Copper Ore",
   "icone": "textures/items/cl/arte/cobre_triturado"
  },
+ "cl:colheitadeira": {
+  "pt": "Colheitadeira",
+  "en": "Harvester",
+  "icone": "textures/blocks/cl/c/colheitadeira_topo"
+ },
+ "cl:colocador_blocos": {
+  "pt": "Colocador de Blocos",
+  "en": "Block Placer",
+  "icone": "textures/blocks/cl/c/colocador_blocos_topo"
+ },
  "cl:componente_me_16k": {
   "pt": "Componente ME 16k",
   "en": "16k ME Storage Component",
@@ -300,6 +320,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Componente ME 64k",
   "en": "64k ME Storage Component",
   "icone": "textures/items/cl/c/componente_me_64k"
+ },
+ "cl:compostadora": {
+  "pt": "Compostadora",
+  "en": "Composter",
+  "icone": "textures/blocks/cl/c/compostadora_topo"
  },
  "cl:compostor": {
   "pt": "Compostor de Terra",
@@ -376,6 +401,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "AutoPackager",
   "icone": "textures/blocks/cl/c/empacotador_topo"
  },
+ "cl:esgoto": {
+  "pt": "Esgoto",
+  "en": "Sewer",
+  "icone": "textures/blocks/cl/c/esgoto_topo"
+ },
  "cl:espada_larga_aco": {
   "pt": "Espada Larga de Aço",
   "en": "Steel Broadsword",
@@ -451,6 +481,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Tin Ore",
   "icone": "textures/items/cl/c/estanho_triturado"
  },
+ "cl:esteira": {
+  "pt": "Esteira",
+  "en": "Conveyor Belt",
+  "icone": "textures/blocks/cl/c/esteira_topo"
+ },
  "cl:estrutura_maquina": {
   "pt": "Estrutura de Máquina",
   "en": "Machine Frame",
@@ -506,6 +541,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Iron Ore",
   "icone": "textures/items/cl/arte/ferro_triturado"
  },
+ "cl:fertilizadora": {
+  "pt": "Fertilizadora",
+  "en": "Fertilizer",
+  "icone": "textures/blocks/cl/c/fertilizadora_topo"
+ },
+ "cl:fertilizante": {
+  "pt": "Fertilizante",
+  "en": "Fertilizer",
+  "icone": "textures/items/cl/c/fertilizante"
+ },
  "cl:filtro": {
   "pt": "Filtro de Ar",
   "en": "Air Filter",
@@ -515,6 +560,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Folha Infestada",
   "en": "Infested Leaves",
   "icone": "textures/items/cl/blocos/folha_infestada"
+ },
+ "cl:folha_plastico": {
+  "pt": "Folha de Plástico",
+  "en": "Plastic Sheet",
+  "icone": "textures/items/cl/c/folha_plastico"
  },
  "cl:fornalha_redstone": {
   "pt": "Fornalha de Redstone",
@@ -1476,6 +1526,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tomato Crop",
   "icone": "textures/blocks/cl/hc/tomate_0"
  },
+ "cl:plantadeira": {
+  "pt": "Plantadeira",
+  "en": "Planter",
+  "icone": "textures/blocks/cl/c/plantadeira_topo"
+ },
+ "cl:plastico_cru": {
+  "pt": "Plástico Cru",
+  "en": "Raw Plastic",
+  "icone": "textures/items/cl/c/plastico_cru"
+ },
  "cl:po_certus": {
   "pt": "Pó de Certus",
   "en": "Certus Quartz Dust",
@@ -1541,10 +1601,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pulverizer",
   "icone": "textures/blocks/cl/c/pulverizador_topo"
  },
+ "cl:quebrador_blocos": {
+  "pt": "Quebrador de Blocos",
+  "en": "Block Breaker",
+  "icone": "textures/blocks/cl/c/quebrador_blocos_topo"
+ },
  "cl:queijo": {
   "pt": "Queijo",
   "en": "Cheese",
   "icone": "textures/items/cl/arte/queijo"
+ },
+ "cl:rancheiro": {
+  "pt": "Rancheiro",
+  "en": "Rancher",
+  "icone": "textures/blocks/cl/c/rancheiro_topo"
+ },
+ "cl:resina": {
+  "pt": "Resina",
+  "en": "Sap",
+  "icone": "textures/items/cl/c/resina"
  },
  "cl:sacola_boa": {
   "pt": "Sacola Boa",
@@ -1725,6 +1800,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tortilha",
   "en": "Tortilla",
   "icone": "textures/items/cl/arte/tortilha"
+ },
+ "cl:triturador_monstros": {
+  "pt": "Triturador de Monstros",
+  "en": "Mob Grinder",
+  "icone": "textures/blocks/cl/c/triturador_monstros_topo"
+ },
+ "cl:upgrade_alcance_1": {
+  "pt": "Upgrade de Alcance +1",
+  "en": "Range Upgrade +1",
+  "icone": "textures/items/cl/c/upgrade_alcance_1"
+ },
+ "cl:upgrade_alcance_2": {
+  "pt": "Upgrade de Alcance +2",
+  "en": "Range Upgrade +2",
+  "icone": "textures/items/cl/c/upgrade_alcance_2"
+ },
+ "cl:upgrade_alcance_3": {
+  "pt": "Upgrade de Alcance +3",
+  "en": "Range Upgrade +3",
+  "icone": "textures/items/cl/c/upgrade_alcance_3"
+ },
+ "cl:upgrade_alcance_4": {
+  "pt": "Upgrade de Alcance +4",
+  "en": "Range Upgrade +4",
+  "icone": "textures/items/cl/c/upgrade_alcance_4"
+ },
+ "cl:upgrade_alcance_5": {
+  "pt": "Upgrade de Alcance +5",
+  "en": "Range Upgrade +5",
+  "icone": "textures/items/cl/c/upgrade_alcance_5"
  },
  "cl:upgrade_armazenamento": {
   "pt": "Upgrade de Armazenamento",
@@ -1936,6 +2041,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Carrot",
   "icone": "textures/items/carrot"
  },
+ "minecraft:carrots": {
+  "pt": "Cenouras",
+  "en": "Carrots",
+  "icone": "textures/blocks/carrots_stage_0"
+ },
  "minecraft:charcoal": {
   "pt": "Carvão Vegetal",
   "en": "Charcoal",
@@ -2000,6 +2110,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sementes de Cacau",
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
+ },
+ "minecraft:composter": {
+  "pt": "Composteira",
+  "en": "Composter",
+  "icone": "textures/blocks/composter_side"
  },
  "minecraft:cooked_beef": {
   "pt": "Bife",
@@ -2121,6 +2236,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dirt",
   "icone": "textures/blocks/dirt"
  },
+ "minecraft:dispenser": {
+  "pt": "Ejetor",
+  "en": "Dispenser",
+  "icone": "textures/blocks/furnace_side"
+ },
  "minecraft:dried_kelp": {
   "pt": "Algas Secas",
   "en": "Dried Kelp",
@@ -2165,6 +2285,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sílex",
   "en": "Flint",
   "icone": "textures/items/flint"
+ },
+ "minecraft:flower_pot": {
+  "pt": "Vaso de Flor",
+  "en": "Flower Pot",
+  "icone": "textures/items/flower_pot"
  },
  "minecraft:flowing_lava": {
   "pt": "Lava",
@@ -2230,6 +2355,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cenoura Dourada",
   "en": "Golden Carrot",
   "icone": "textures/items/carrot_golden"
+ },
+ "minecraft:golden_hoe": {
+  "pt": "Enxada de Ouro",
+  "en": "Golden Hoe"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",
@@ -2305,6 +2434,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
   "icone": "textures/items/iron_pickaxe"
+ },
+ "minecraft:iron_sword": {
+  "pt": "Espada de Ferro",
+  "en": "Iron Sword",
+  "icone": "textures/items/iron_sword"
  },
  "minecraft:jungle_leaves": {
   "pt": "Folhas da Selva",
@@ -2421,6 +2555,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Melon Slice",
   "icone": "textures/items/melon"
  },
+ "minecraft:melon_stem": {
+  "pt": "Caule de Melancia",
+  "en": "Melon Stem",
+  "icone": "textures/blocks/melon_stem_disconnected"
+ },
  "minecraft:milk_bucket": {
   "pt": "Balde de Leite",
   "en": "Milk Bucket",
@@ -2521,6 +2660,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Potato",
   "icone": "textures/items/potato"
  },
+ "minecraft:potatoes": {
+  "pt": "Batatas",
+  "en": "Potatoes",
+  "icone": "textures/blocks/potatoes_stage_0"
+ },
  "minecraft:potion": {
   "pt": "Frasco de Água",
   "en": "Water Bottle",
@@ -2540,6 +2684,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sementes de Abóbora",
   "en": "Pumpkin Seeds",
   "icone": "textures/items/seeds_pumpkin"
+ },
+ "minecraft:pumpkin_stem": {
+  "pt": "Broto de Abóbora",
+  "en": "Pumpkin Stem",
+  "icone": "textures/blocks/pumpkin_stem_disconnected"
  },
  "minecraft:quartz": {
   "pt": "Quartzo do Nether",
@@ -2641,6 +2790,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sandstone",
   "icone": "textures/blocks/sandstone_normal"
  },
+ "minecraft:shears": {
+  "pt": "Tesoura",
+  "en": "Shears",
+  "icone": "textures/items/shears"
+ },
  "minecraft:short_grass": {
   "pt": "Grama Baixa",
   "en": "Short Grass",
@@ -2653,7 +2807,8 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "minecraft:slime_ball": {
   "pt": "Gosma de Slime",
-  "en": "Slimeball"
+  "en": "Slimeball",
+  "icone": "textures/items/slimeball"
  },
  "minecraft:smooth_sandstone": {
   "pt": "Arenito Liso",
@@ -3167,6 +3322,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:c_barra_borracha",
+  "resultado": "cl:barra_borracha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:resina",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_barril_armazenamento",
   "resultado": "cl:barril_armazenamento",
@@ -3251,6 +3421,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "L": "cl:lingote_estanho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_maquina",
+  "resultado": "cl:bloco_maquina",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "GSG"
+  ],
+  "chaves": {
+   "F": "cl:folha_plastico",
+   "G": "minecraft:glass",
+   "S": "minecraft:smooth_stone"
   },
   "estacoes": [
    "crafting_table"
@@ -3503,6 +3691,46 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_colheitadeira",
+  "resultado": "cl:colheitadeira",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:golden_hoe",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_colocador_blocos",
+  "resultado": "cl:colocador_blocos",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:dispenser",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_componente_me_16k",
   "resultado": "cl:componente_me_16k",
   "qtd": 1,
@@ -3575,6 +3803,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "P": "cl:processador_avancado",
    "C": "cl:componente_me_16k",
    "F": "cl:cristal_fluix"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_compostadora",
+  "resultado": "cl:compostadora",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:composter",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
   },
   "estacoes": [
    "crafting_table"
@@ -3735,6 +3983,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_esgoto",
+  "resultado": "cl:esgoto",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:bucket",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_estacao_ferramentas",
   "resultado": "cl:estacao_ferramentas",
   "qtd": 1,
@@ -3791,6 +4059,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 4
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_esteira",
+  "resultado": "cl:esteira",
+  "qtd": 16,
+  "grade": [
+   "RRR",
+   "FDF"
+  ],
+  "chaves": {
+   "R": "cl:barra_borracha",
+   "F": "minecraft:iron_ingot",
+   "D": "minecraft:redstone"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -3855,6 +4141,41 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_fertilizadora",
+  "resultado": "cl:fertilizadora",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:bone_block",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_folha_plastico",
+  "resultado": "cl:folha_plastico",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_cru",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
   ]
  },
  {
@@ -4040,6 +4361,64 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_plantadeira",
+  "resultado": "cl:plantadeira",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:flower_pot",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_cru",
+  "resultado": "cl:plastico_cru",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:barra_borracha",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:coal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_cru_carvao_vegetal",
+  "resultado": "cl:plastico_cru",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:barra_borracha",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:charcoal",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_po_cobre",
   "resultado": "minecraft:copper_ingot",
@@ -4151,6 +4530,46 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "S": "minecraft:piston",
    "C": "minecraft:copper_ingot",
    "E": "cl:estrutura_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_quebrador_blocos",
+  "resultado": "cl:quebrador_blocos",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:iron_pickaxe",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_rancheiro",
+  "resultado": "cl:rancheiro",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:shears",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
    "R": "cl:circuito"
   },
   "estacoes": [
@@ -4286,6 +4705,121 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_triturador_monstros",
+  "resultado": "cl:triturador_monstros",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "CBC",
+   " R "
+  ],
+  "chaves": {
+   "S": "minecraft:iron_sword",
+   "C": "minecraft:copper_ingot",
+   "B": "cl:bloco_maquina",
+   "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_upgrade_alcance_1",
+  "resultado": "cl:upgrade_alcance_1",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "PRP",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:lapis_lazuli",
+   "P": "cl:plastico_cru",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_upgrade_alcance_2",
+  "resultado": "cl:upgrade_alcance_2",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "PRP",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "P": "cl:plastico_cru",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_upgrade_alcance_3",
+  "resultado": "cl:upgrade_alcance_3",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "PRP",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_estanho",
+   "P": "cl:plastico_cru",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_upgrade_alcance_4",
+  "resultado": "cl:upgrade_alcance_4",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "PRP",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "P": "cl:plastico_cru",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_upgrade_alcance_5",
+  "resultado": "cl:upgrade_alcance_5",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "PRP",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "P": "cl:plastico_cru",
+   "R": "minecraft:redstone"
   },
   "estacoes": [
    "crafting_table"

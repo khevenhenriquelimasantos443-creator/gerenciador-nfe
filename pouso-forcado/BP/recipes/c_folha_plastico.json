@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_folha_plastico"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:plastico_cru",
+    "output": "cl:folha_plastico"
+  }
+}

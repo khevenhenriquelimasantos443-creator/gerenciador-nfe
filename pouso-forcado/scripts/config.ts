@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.24.0";
+export const VERSAO = "0.25.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -603,6 +603,29 @@ export const EMPACOTADOR = {
     ["minecraft:brick", 4, "minecraft:brick_block"],
     ["cl:tijolo_refratario", 4, "cl:tijolos_refratarios"],
   ] as ReadonlyArray<readonly [string, number, string]>,
+} as const;
+
+// Fase 19: MineFactory Reloaded (scripts/maquinas/mfr.ts). Ciclo de 5 s; custos em cE (100 cE = 1 E = 4.000 RF).
+// Área: quadrado de lado 2 × alcance + 1 na frente da máquina (o Esgoto fica no meio da área dele).
+export const MFR = {
+  alcanceBase: 1,
+  alcanceMax: 5, // com o Upgrade de Alcance +4 ou +5 (limite do celular)
+  plantarCE: 4, plantarPorCiclo: 9,
+  colherCE: 6, colherPorCiclo: 16, arvoreMax: 64,
+  adubarCE: 24,
+  ordenharCE: 8,
+  triturarCE: 80, triturarDano: 8, triturarMax: 3, xpACada: 3,
+  quebrarCE: 10, colocarCE: 10,
+  esgotoPorAnimal: 25, esgotoMax: 4000, esgotoPorFertilizante: 100, compostarCE: 20,
+  resinaColheita: 0.25, // colheitadeira em tora ou cacto
+  resinaMao: 0.1, // quebrando tora ou cacto à mão
+  sementes: {
+    "minecraft:wheat_seeds": "minecraft:wheat", "minecraft:carrot": "minecraft:carrots", "minecraft:potato": "minecraft:potatoes",
+    "minecraft:beetroot_seeds": "minecraft:beetroot", "minecraft:melon_seeds": "minecraft:melon_stem", "minecraft:pumpkin_seeds": "minecraft:pumpkin_stem",
+  } as Readonly<Record<string, string>>,
+  mudas: ["oak_sapling", "spruce_sapling", "birch_sapling", "jungle_sapling", "acacia_sapling", "dark_oak_sapling", "cherry_sapling"].map((m) => `minecraft:${m}`),
+  maduras: ["minecraft:wheat", "minecraft:carrots", "minecraft:potatoes", "minecraft:beetroot"],
+  inteiras: ["minecraft:melon_block", "minecraft:pumpkin"], // colhe o bloco todo (o caule fica)
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)
