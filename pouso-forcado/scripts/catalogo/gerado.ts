@@ -2158,7 +2158,8 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "minecraft:clock": {
   "pt": "Relógio",
-  "en": "Clock"
+  "en": "Clock",
+  "icone": "textures/items/clock_item"
  },
  "minecraft:coal": {
   "pt": "Carvão",
