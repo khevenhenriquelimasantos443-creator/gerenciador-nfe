@@ -753,6 +753,39 @@
     },
     "clc_esteira_baixo": {
       "textures": "textures/blocks/cl/c/esteira_baixo"
+    },
+    "clc_compressor_ar_frente": {
+      "textures": "textures/blocks/cl/c/compressor_ar_frente"
+    },
+    "clc_compressor_ar_lado": {
+      "textures": "textures/blocks/cl/c/compressor_ar_lado"
+    },
+    "clc_compressor_ar_topo": {
+      "textures": "textures/blocks/cl/c/compressor_ar_topo"
+    },
+    "clc_compressor_ar_baixo": {
+      "textures": "textures/blocks/cl/c/compressor_ar_baixo"
+    },
+    "clc_tubo_pressao": {
+      "textures": "textures/blocks/cl/c/tubo_pressao"
+    },
+    "clc_tubo_pressao_avancado": {
+      "textures": "textures/blocks/cl/c/tubo_pressao_avancado"
+    },
+    "clc_parede_camara": {
+      "textures": "textures/blocks/cl/c/parede_camara"
+    },
+    "clc_vidro_camara": {
+      "textures": "textures/blocks/cl/c/vidro_camara"
+    },
+    "clc_valvula_camara": {
+      "textures": "textures/blocks/cl/c/valvula_camara"
+    },
+    "clc_interface_camara": {
+      "textures": "textures/blocks/cl/c/interface_camara"
+    },
+    "clc_bloco_ferro_comprimido": {
+      "textures": "textures/blocks/cl/c/bloco_ferro_comprimido"
     }
   }
 }

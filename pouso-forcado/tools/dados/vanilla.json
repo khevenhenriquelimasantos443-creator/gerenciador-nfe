@@ -94,6 +94,11 @@
   "en": "Blaze Powder",
   "icone": "textures/items/blaze_powder"
  },
+ "minecraft:blaze_rod": {
+  "pt": "Vara Incandescente",
+  "en": "Blaze Rod",
+  "icone": "textures/items/blaze_rod"
+ },
  "minecraft:bone": {
   "pt": "Osso",
   "en": "Bone",
@@ -208,6 +213,10 @@
   "pt": "Bola de Barro",
   "en": "Clay Ball",
   "icone": "textures/items/clay_ball"
+ },
+ "minecraft:clock": {
+  "pt": "Relógio",
+  "en": "Clock"
  },
  "minecraft:coal": {
   "pt": "Carvão",

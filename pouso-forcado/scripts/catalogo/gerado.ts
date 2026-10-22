@@ -126,6 +126,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Tin",
   "icone": "textures/blocks/cl/c/bloco_estanho"
  },
+ "cl:bloco_ferro_comprimido": {
+  "pt": "Bloco de Ferro Comprimido",
+  "en": "Compressed Iron Block",
+  "icone": "textures/blocks/cl/c/bloco_ferro_comprimido"
+ },
  "cl:bloco_maquina": {
   "pt": "Bloco de Máquina",
   "en": "Machine Block",
@@ -185,6 +190,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Camel Pack",
   "en": "Camel Pack",
   "icone": "textures/items/cl/arte/camel_pack"
+ },
+ "cl:capacitor": {
+  "pt": "Capacitor",
+  "en": "Capacitor",
+  "icone": "textures/items/cl/c/capacitor"
  },
  "cl:carrinho": {
   "pt": "Carrinho",
@@ -330,6 +340,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Compostor de Terra",
   "en": "Dirt Composter",
   "icone": "textures/items/cl/arte/blocos/compostor"
+ },
+ "cl:compressor_ar": {
+  "pt": "Compressor de Ar",
+  "en": "Air Compressor",
+  "icone": "textures/blocks/cl/c/compressor_ar_topo"
  },
  "cl:computador_bordo": {
   "pt": "Computador de Bordo",
@@ -611,6 +626,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cursed Idol",
   "icone": "textures/items/cl/arte/blocos/idolo_amaldicoado"
  },
+ "cl:interface_camara": {
+  "pt": "Interface da Câmara",
+  "en": "Pressure Chamber Interface",
+  "icone": "textures/blocks/cl/c/interface_camara"
+ },
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
   "en": "Steel Ingot",
@@ -625,6 +645,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Estanho",
   "en": "Tin Ingot",
   "icone": "textures/items/cl/c/lingote_estanho"
+ },
+ "cl:lingote_ferro_comprimido": {
+  "pt": "Lingote de Ferro Comprimido",
+  "en": "Compressed Iron Ingot",
+  "icone": "textures/items/cl/c/lingote_ferro_comprimido"
  },
  "cl:machadinha_aco": {
   "pt": "Machadinha de Aço",
@@ -680,6 +705,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Maionese",
   "en": "Mayonnaise",
   "icone": "textures/items/cl/arte/maionese"
+ },
+ "cl:manometro": {
+  "pt": "Manômetro",
+  "en": "Pressure Gauge",
+  "icone": "textures/items/cl/c/manometro"
  },
  "cl:manteiga": {
   "pt": "Manteiga",
@@ -975,6 +1005,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Panquecas",
   "en": "Pancakes",
   "icone": "textures/items/cl/arte/panquecas"
+ },
+ "cl:parede_camara": {
+  "pt": "Parede da Câmara de Pressão",
+  "en": "Pressure Chamber Wall",
+  "icone": "textures/blocks/cl/c/parede_camara"
  },
  "cl:peca_cabeca_machado_aco": {
   "pt": "Cabeça de Machado de Aço",
@@ -1476,6 +1511,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hull Plate",
   "icone": "textures/items/cl/arte/placa_casco"
  },
+ "cl:placa_circuito_vazia": {
+  "pt": "Placa de Circuito Vazia",
+  "en": "Empty PCB",
+  "icone": "textures/items/cl/c/placa_circuito_vazia"
+ },
  "cl:planta_alho": {
   "pt": "Plantação de Alho",
   "en": "Garlic Crop",
@@ -1801,10 +1841,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tortilla",
   "icone": "textures/items/cl/arte/tortilha"
  },
+ "cl:transistor": {
+  "pt": "Transistor",
+  "en": "Transistor",
+  "icone": "textures/items/cl/c/transistor"
+ },
  "cl:triturador_monstros": {
   "pt": "Triturador de Monstros",
   "en": "Mob Grinder",
   "icone": "textures/blocks/cl/c/triturador_monstros_topo"
+ },
+ "cl:tubo_pressao": {
+  "pt": "Tubo de Pressão",
+  "en": "Pressure Tube",
+  "icone": "textures/blocks/cl/c/tubo_pressao"
+ },
+ "cl:tubo_pressao_avancado": {
+  "pt": "Tubo de Pressão Avançado",
+  "en": "Advanced Pressure Tube",
+  "icone": "textures/blocks/cl/c/tubo_pressao_avancado"
  },
  "cl:upgrade_alcance_1": {
   "pt": "Upgrade de Alcance +1",
@@ -1870,6 +1925,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Upgrade Estrutural MK VII",
   "en": "Structural Upgrade MK VII",
   "icone": "textures/items/cl/c/upgrade_estrutural_7"
+ },
+ "cl:valvula_camara": {
+  "pt": "Válvula da Câmara",
+  "en": "Pressure Chamber Valve",
+  "icone": "textures/blocks/cl/c/valvula_camara"
+ },
+ "cl:vidro_camara": {
+  "pt": "Vidro da Câmara de Pressão",
+  "en": "Pressure Chamber Glass",
+  "icone": "textures/blocks/cl/c/vidro_camara"
  },
  "cl:vidro_refratario": {
   "pt": "Vidro Refratário",
@@ -1970,6 +2035,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pó de Chamas",
   "en": "Blaze Powder",
   "icone": "textures/items/blaze_powder"
+ },
+ "minecraft:blaze_rod": {
+  "pt": "Vara Incandescente",
+  "en": "Blaze Rod",
+  "icone": "textures/items/blaze_rod"
  },
  "minecraft:bone": {
   "pt": "Osso",
@@ -2085,6 +2155,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bola de Barro",
   "en": "Clay Ball",
   "icone": "textures/items/clay_ball"
+ },
+ "minecraft:clock": {
+  "pt": "Relógio",
+  "en": "Clock"
  },
  "minecraft:coal": {
   "pt": "Carvão",
@@ -3429,6 +3503,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bloco_ferro_comprimido",
+  "resultado": "cl:bloco_ferro_comprimido",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "FFF",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "cl:lingote_ferro_comprimido"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bloco_maquina",
   "resultado": "cl:bloco_maquina",
   "qtd": 1,
@@ -3831,6 +3922,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_compressor_ar",
+  "resultado": "cl:compressor_ar",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "FCF",
+   "FTF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "C": "minecraft:furnace",
+   "T": "cl:tubo_pressao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_construtor_pecas",
   "resultado": "cl:construtor_pecas",
   "qtd": 1,
@@ -4220,6 +4330,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_interface_camara",
+  "resultado": "cl:interface_camara",
+  "qtd": 1,
+  "grade": [
+   "P",
+   "H"
+  ],
+  "chaves": {
+   "P": "cl:parede_camara",
+   "H": "minecraft:hopper"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_lingotes_aco",
   "resultado": "cl:lingote_aco",
@@ -4257,6 +4384,40 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "ingredientes": [
    {
     "item": "cl:bloco_estanho",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingotes_ferro_comprimido",
+  "resultado": "cl:lingote_ferro_comprimido",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_ferro_comprimido",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_manometro",
+  "resultado": "cl:manometro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_ferro_comprimido",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:clock",
     "qtd": 1
    }
   ],
@@ -4356,6 +4517,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "P": "#minecraft:planks",
    "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_parede_camara",
+  "resultado": "cl:parede_camara",
+  "qtd": 4,
+  "grade": [
+   "FFF",
+   "F F",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot"
   },
   "estacoes": [
    "crafting_table"
@@ -4733,6 +4911,40 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_tubo_pressao",
+  "resultado": "cl:tubo_pressao",
+  "qtd": 8,
+  "grade": [
+   "FVF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "V": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tubo_pressao_avancado",
+  "resultado": "cl:tubo_pressao_avancado",
+  "qtd": 1,
+  "grade": [
+   "C",
+   "T",
+   "C"
+  ],
+  "chaves": {
+   "C": "cl:lingote_ferro_comprimido",
+   "T": "cl:tubo_pressao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_upgrade_alcance_1",
   "resultado": "cl:upgrade_alcance_1",
   "qtd": 1,
@@ -4966,6 +5178,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "M": "minecraft:emerald",
    "S": "minecraft:stick"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_valvula_camara",
+  "resultado": "cl:valvula_camara",
+  "qtd": 1,
+  "grade": [
+   "P",
+   "T"
+  ],
+  "chaves": {
+   "P": "cl:parede_camara",
+   "T": "cl:tubo_pressao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_vidro_camara",
+  "resultado": "cl:vidro_camara",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:parede_camara",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glass",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]

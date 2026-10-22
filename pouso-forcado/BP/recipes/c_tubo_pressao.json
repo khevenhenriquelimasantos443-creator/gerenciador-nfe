@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tubo_pressao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FVF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:tubo_pressao",
+      "count": 8
+    }
+  }
+}

@@ -17,6 +17,7 @@ import { celulaEnergia, dinamo, extrusora, fornalhaRedstone, fundidoraInducao, p
 import { barrilArmazenamento, registrarJabba } from "./armazenamento/jabba.js";
 import { bauMe, driveMe, pontoAcesso, registrarAE } from "./armazenamento/ae.js";
 import { empacotador, registrarEmpacotador } from "./maquinas/empacotador.js";
+import { compressor, interfaceCamara, registrarPneumatic, valvula } from "./maquinas/pneumatic.js";
 import { colheitadeira, colocador, compostadora, esgoto, esteira, fertilizadora, plantadeira, quebrador, rancheiro, registrarMFR, triturador } from "./maquinas/mfr.js";
 import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
 import { peneira } from "./blocos/peneira.js";
@@ -85,6 +86,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:drive_me", driveMe);
   blockComponentRegistry.registerCustomComponent("cl:bau_me", bauMe);
   blockComponentRegistry.registerCustomComponent("cl:ponto_acesso", pontoAcesso);
+  blockComponentRegistry.registerCustomComponent("cl:compressor_ar", comPerfil("cl:compressor_ar", compressor));
+  blockComponentRegistry.registerCustomComponent("cl:valvula_camara", comPerfil("cl:valvula_camara", valvula));
+  blockComponentRegistry.registerCustomComponent("cl:interface_camara", comPerfil("cl:interface_camara", interfaceCamara));
   for (const [id, comp] of Object.entries({
     "cl:plantadeira": plantadeira, "cl:colheitadeira": colheitadeira, "cl:fertilizadora": fertilizadora, "cl:rancheiro": rancheiro,
     "cl:triturador_monstros": triturador, "cl:esgoto": esgoto, "cl:compostadora": compostadora, "cl:quebrador_blocos": quebrador,
@@ -119,5 +123,6 @@ registrarJabba();
 registrarAE();
 registrarEmpacotador();
 registrarMFR();
+registrarPneumatic();
 registrarAmbiente();
 registrarFome();

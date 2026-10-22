@@ -69,7 +69,12 @@ export type Acao =
   | "mf_colher"
   | "mf_triturar"
   | "mf_fertilizante"
-  | "alcance";
+  | "alcance"
+  | "pressao2"
+  | "camara"
+  | "ferro_comprimido"
+  | "diamante_carvao"
+  | "eletronica";
 
 type MissaoBase = {
   id: string;
@@ -276,6 +281,24 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "mf_triturar", requer: ["mf_plastico"], objetivo: { tipo: "acao", acao: "mf_triturar", qtd: 10 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "mf_fertilizante", requer: ["mf_plastico"], objetivo: { tipo: "acao", acao: "mf_fertilizante", qtd: 8 }, recompensa: [{ item: "minecraft:bone_block", quantidade: 4 }] },
       { id: "mf_alcance", requer: ["mf_plantar"], objetivo: { tipo: "acao", acao: "alcance", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "pneumatic", // Fase 20: PneumaticCraft
+    icone: "cl:compressor_ar",
+    requer: ["thermal"],
+    missoes: [
+      { id: "pn_compressor", objetivo: { tipo: "acao", acao: "pressao2", qtd: 1 }, recompensa: [{ item: "minecraft:coal_block", quantidade: 2 }] },
+      { id: "pn_camara", requer: ["pn_compressor"], objetivo: { tipo: "acao", acao: "camara", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "pn_ferro", requer: ["pn_camara"], objetivo: { tipo: "acao", acao: "ferro_comprimido", qtd: 8 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "pn_eletronica", requer: ["pn_ferro"], objetivo: { tipo: "acao", acao: "eletronica", qtd: 2 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      {
+        id: "pn_diamante",
+        requer: ["pn_camara"],
+        objetivo: { tipo: "acao", acao: "diamante_carvao", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
+        escolha: [{ item: "minecraft:coal_block", quantidade: 8 }, { item: "cl:tubo_pressao_avancado", quantidade: 8 }],
+      },
     ],
   },
   {

@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Fase atual: 19** (MineFactory Reloaded: fazenda automática). Fases 0 a 18 prontas; a 10 (final) ficou para o fim.
+**Fase atual: 20** (PneumaticCraft: ar comprimido e câmara de pressão). Fases 0 a 19 prontas; a 10 (final) ficou para o fim.
 
 ## Fases até o fim
 
@@ -29,8 +29,9 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | pronta |
 | 17 | **Thermal Expansion**: Estrutura de Máquina, Pulverizador (minério → 2 pós), Fornalha de Redstone, Fundidora de Indução (ligas e minério + areia), Serraria, Extrusora Ígnea, Precipitador Glacial, Dínamo de Redstone e 4 Células de Energia (de 400 mil a 50 milhões de RF); +6 missões | pronta |
 | 18 | **Armazenamento**: Barril de Armazenamento do JABBA (upgrades estrutural, de armazenamento e núcleo de funil, chave), Carrinho e Carrinho de Diamante; Empacotador Automático; rede ME do Applied Energistics 1 (células 1k a 64k, Drive, Baú ME, Controlador, Ponto de Acesso, Terminal sem Fio, processadores na Montadora, certus na peneira) e Célula de Água do ExtraCells; o Terminal enxerga barris e células; +7 missões | pronta |
-| 19 | **MineFactory Reloaded**: resina → borracha → plástico; Bloco de Máquina; Plantadeira, Colheitadeira (plantas, cana, cacto e árvores), Fertilizadora, Rancheiro, Triturador de Monstros, Esgoto + Compostadora (fertilizante), Quebrador e Colocador de Blocos, Esteira e Upgrades de Alcance; +7 missões | **esta versão** |
-| 20–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
+| 19 | **MineFactory Reloaded**: resina → borracha → plástico; Bloco de Máquina; Plantadeira, Colheitadeira (plantas, cana, cacto e árvores), Fertilizadora, Rancheiro, Triturador de Monstros, Esgoto + Compostadora (fertilizante), Quebrador e Colocador de Blocos, Esteira e Upgrades de Alcance; +7 missões | pronta |
+| 20 | **PneumaticCraft (leve)**: Compressor de Ar, Tubos de Pressão (comum e avançado), pressão em bar igual na rede, tubos que estouram acima do perigo, Câmara de Pressão 3x3x3 a 5x5x5 com válvula e interface, ferro comprimido, diamante de carvão, placa de circuito, transistor e capacitor, manômetro; +5 missões | **esta versão** |
+| 21–23 | Os mods do Crash Landing, um bloco por fase: Thermal Expansion, armazenamento (JABBA, AutoPackager, AE1), MFR, PneumaticCraft, Sync, Big Reactors, Chisel + BiblioCraft + ChickenChunks (ver `docs/pesquisa-mods.md`) | planejadas |
 | 10 | Final: decolagem, cena de saída do planeta, créditos e "modo infinito" depois do fim; balanceamento e versão 1.0 | adiada (por último) |
 
 ## Versões usadas (conferidas na documentação oficial)
@@ -131,6 +132,26 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Ar comprimido (Fase 20: PneumaticCraft)
+
+- **Compressor de Ar**: queima combustível (toque com ele na mão ou baú em cima; carvão = 80 s) e põe 200 mL/s de ar na rede. Toque com a mão vazia para ligar/desligar.
+- **Rede**: o compressor (5.000 mL), os **Tubos de Pressão** (1.000 mL; avançados 4.000 mL) e as câmaras ligadas por uma válvula. A pressão é igual na rede toda: bar = ar ÷ volume.
+  - Tubos comuns: perigo acima de 5 bar e o compressor não passa de 7. Só tubos avançados: perigo acima de 20, máximo 25. **No perigo, a cada segundo há 5% de chance de um tubo estourar** (explosão).
+- **Câmara de Pressão**: cubo oco de 3x3x3 a 5x5x5 feito de Paredes, Vidros, Válvulas e Interfaces, vazio por dentro (16.000 mL por bloco interno). Toque na **Válvula** para conferir; ligue um tubo nela.
+  - Jogue os itens dentro (ou use a **Interface**, que puxa de um baú encostado e devolve os produtos para ele).
+
+| Receita | Pressão |
+|---|---|
+| Lingote de ferro → Lingote de Ferro Comprimido (bloco → bloco) | 2 bar |
+| 8 blocos de carvão → diamante | 4 bar |
+| Folha de plástico + lingote de cobre → Placa de Circuito Vazia | 1,5 bar |
+| Redstone + ferro comprimido → Transistor | 1 bar |
+| Redstone + argila + ferro comprimido → Capacitor | 1 bar |
+
+- **Manômetro**: toque num compressor, tubo, válvula ou interface para ver a pressão.
+- Explodir ferro (o outro jeito do PneumaticCraft) ficou de fora: o jogo não diz ao script onde foi a explosão.
+- Capítulo novo no Diário: **Ar comprimido (PneumaticCraft)**, 5 missões.
 
 ## Fazenda automática (Fase 19: MineFactory Reloaded)
 

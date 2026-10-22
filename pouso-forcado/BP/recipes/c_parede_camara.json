@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_parede_camara"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "F F",
+      "FFF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:parede_camara",
+      "count": 4
+    }
+  }
+}

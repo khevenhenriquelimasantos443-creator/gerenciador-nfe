@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "0.25.0";
+export const VERSAO = "0.26.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -626,6 +626,32 @@ export const MFR = {
   mudas: ["oak_sapling", "spruce_sapling", "birch_sapling", "jungle_sapling", "acacia_sapling", "dark_oak_sapling", "cherry_sapling"].map((m) => `minecraft:${m}`),
   maduras: ["minecraft:wheat", "minecraft:carrots", "minecraft:potatoes", "minecraft:beetroot"],
   inteiras: ["minecraft:melon_block", "minecraft:pumpkin"], // colhe o bloco todo (o caule fica)
+} as const;
+
+// Fase 20: PneumaticCraft (scripts/maquinas/pneumatic.ts). Ar em mL; pressão (bar) = ar ÷ volume.
+export const PNEUMATIC = {
+  mlPorSegundo: 200, // compressor queimando (10 mL/t no PneumaticCraft)
+  volumeCompressor: 5000,
+  volumeTubo: 1000,
+  volumeTuboAvancado: 4000,
+  volumePorBlocoInterno: 16000, // câmara de pressão
+  perigo: { comum: 5, avancado: 20 }, // acima disso os tubos podem estourar
+  critico: { comum: 7, avancado: 25 }, // o compressor não passa disso
+  chanceExplosao: 0.05, // por segundo, acima do perigo
+  maxBlocosRede: 128,
+  combustivel: {
+    "minecraft:coal": 80, "minecraft:charcoal": 80, "minecraft:coal_block": 800, "minecraft:blaze_rod": 120, "minecraft:lava_bucket": 1000,
+    "minecraft:oak_log": 15, "minecraft:birch_log": 15, "minecraft:acacia_log": 15, "minecraft:spruce_log": 15, "minecraft:oak_planks": 15, "minecraft:stick": 5, "minecraft:dried_kelp_block": 200,
+  } as Readonly<Record<string, number>>, // segundos de queima
+  // Receitas da câmara: tudo jogado dentro (ou pela interface); "bar" é a pressão mínima.
+  receitas: [
+    { entra: [["minecraft:iron_ingot", 1]], sai: ["cl:lingote_ferro_comprimido", 1], bar: 2 },
+    { entra: [["minecraft:iron_block", 1]], sai: ["cl:bloco_ferro_comprimido", 1], bar: 2 },
+    { entra: [["minecraft:coal_block", 8]], sai: ["minecraft:diamond", 1], bar: 4 },
+    { entra: [["cl:folha_plastico", 1], ["minecraft:copper_ingot", 1]], sai: ["cl:placa_circuito_vazia", 1], bar: 1.5 },
+    { entra: [["minecraft:redstone", 1], ["cl:lingote_ferro_comprimido", 1]], sai: ["cl:transistor", 1], bar: 1 },
+    { entra: [["minecraft:redstone", 1], ["minecraft:clay_ball", 1], ["cl:lingote_ferro_comprimido", 1]], sai: ["cl:capacitor", 1], bar: 1 },
+  ] as ReadonlyArray<{ entra: ReadonlyArray<readonly [string, number]>; sai: readonly [string, number]; bar: number }>,
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)

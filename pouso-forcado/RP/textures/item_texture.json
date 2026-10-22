@@ -886,6 +886,21 @@
     },
     "clc_fertilizante": {
       "textures": "textures/items/cl/c/fertilizante"
+    },
+    "clc_lingote_ferro_comprimido": {
+      "textures": "textures/items/cl/c/lingote_ferro_comprimido"
+    },
+    "clc_manometro": {
+      "textures": "textures/items/cl/c/manometro"
+    },
+    "clc_placa_circuito_vazia": {
+      "textures": "textures/items/cl/c/placa_circuito_vazia"
+    },
+    "clc_transistor": {
+      "textures": "textures/items/cl/c/transistor"
+    },
+    "clc_capacitor": {
+      "textures": "textures/items/cl/c/capacitor"
     }
   }
 }

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tubo_pressao_avancado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "T",
+      "C"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:lingote_ferro_comprimido"
+      },
+      "T": {
+        "item": "cl:tubo_pressao"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_ferro_comprimido"
+      }
+    ],
+    "result": {
+      "item": "cl:tubo_pressao_avancado"
+    }
+  }
+}

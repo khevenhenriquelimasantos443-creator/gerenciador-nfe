@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bloco_ferro_comprimido"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ],
+    "key": {
+      "F": {
+        "item": "cl:lingote_ferro_comprimido"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_ferro_comprimido"
+      }
+    ],
+    "result": {
+      "item": "cl:bloco_ferro_comprimido"
+    }
+  }
+}

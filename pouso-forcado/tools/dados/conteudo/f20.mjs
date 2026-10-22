@@ -1,0 +1,52 @@
+// Fase 20: PneumaticCraft (versão leve: ar comprimido, tubos e câmara de pressão).
+const parede = (id, pt, en, extra = {}) => ({ id, pt, en, tipo: "cubo", cor: "#8a8f98", padrao: "rebitado", dureza: 2.5, resistencia: 12, ...extra });
+
+export default {
+  fase: 20,
+  mod: "PneumaticCraft",
+  itens: [
+    { id: "lingote_ferro_comprimido", pt: "Lingote de Ferro Comprimido", en: "Compressed Iron Ingot", icone: "lingote:#6d737c" },
+    { id: "manometro", pt: "Manômetro", en: "Pressure Gauge", icone: "manometro", pilha: 1 },
+    { id: "placa_circuito_vazia", pt: "Placa de Circuito Vazia", en: "Empty PCB", icone: "chip:#2f8a4a" },
+    { id: "transistor", pt: "Transistor", en: "Transistor", icone: "chip:#2b2b2b" },
+    { id: "capacitor", pt: "Capacitor", en: "Capacitor", icone: "barra:#3a6bd5" },
+  ],
+  blocos: [
+    { id: "compressor_ar", pt: "Compressor de Ar", en: "Air Compressor", tipo: "maquina", luz: "laranja", glifo: "chama", comp: "cl:compressor_ar", tick: 20 },
+    { id: "tubo_pressao", pt: "Tubo de Pressão", en: "Pressure Tube", tipo: "cubo", cor: "#c9b44a", padrao: "pilar", dureza: 1 },
+    { id: "tubo_pressao_avancado", pt: "Tubo de Pressão Avançado", en: "Advanced Pressure Tube", tipo: "cubo", cor: "#c95a4a", padrao: "pilar", dureza: 1.5 },
+    parede("parede_camara", "Parede da Câmara de Pressão", "Pressure Chamber Wall"),
+    { id: "vidro_camara", pt: "Vidro da Câmara de Pressão", en: "Pressure Chamber Glass", tipo: "vidro", cor: "#8a8f98", dureza: 2.5, resistencia: 12 },
+    parede("valvula_camara", "Válvula da Câmara", "Pressure Chamber Valve", { padrao: "entalhado", comp: "cl:valvula_camara", tick: 20 }),
+    parede("interface_camara", "Interface da Câmara", "Pressure Chamber Interface", { padrao: "ladrilho", comp: "cl:interface_camara", tick: 20 }),
+    { id: "bloco_ferro_comprimido", pt: "Bloco de Ferro Comprimido", en: "Compressed Iron Block", tipo: "cubo", cor: "#6d737c", padrao: "rebitado", dureza: 3, resistencia: 12 },
+  ],
+  receitas: [
+    { id: "tubo_pressao", tipo: "shaped", padrao: ["FVF"], chave: { F: "minecraft:iron_ingot", V: "minecraft:glass" }, resultado: "cl:tubo_pressao", qtd: 8 },
+    { id: "tubo_pressao_avancado", tipo: "shaped", padrao: ["C", "T", "C"], chave: { C: "cl:lingote_ferro_comprimido", T: "cl:tubo_pressao" }, resultado: "cl:tubo_pressao_avancado" },
+    { id: "compressor_ar", tipo: "shaped", padrao: ["FFF", "FCF", "FTF"], chave: { F: "minecraft:iron_ingot", C: "minecraft:furnace", T: "cl:tubo_pressao" }, resultado: "cl:compressor_ar" },
+    { id: "parede_camara", tipo: "shaped", padrao: ["FFF", "F F", "FFF"], chave: { F: "minecraft:iron_ingot" }, resultado: "cl:parede_camara", qtd: 4 },
+    { id: "vidro_camara", tipo: "shapeless", ingredientes: ["cl:parede_camara", "minecraft:glass"], resultado: "cl:vidro_camara" },
+    { id: "valvula_camara", tipo: "shaped", padrao: ["P", "T"], chave: { P: "cl:parede_camara", T: "cl:tubo_pressao" }, resultado: "cl:valvula_camara" },
+    { id: "interface_camara", tipo: "shaped", padrao: ["P", "H"], chave: { P: "cl:parede_camara", H: "minecraft:hopper" }, resultado: "cl:interface_camara" },
+    { id: "manometro", tipo: "shapeless", ingredientes: ["cl:lingote_ferro_comprimido", "minecraft:clock"], resultado: "cl:manometro" },
+    { id: "bloco_ferro_comprimido", tipo: "shaped", padrao: ["FFF", "FFF", "FFF"], chave: { F: "cl:lingote_ferro_comprimido" }, resultado: "cl:bloco_ferro_comprimido" },
+    { id: "lingotes_ferro_comprimido", tipo: "shapeless", ingredientes: ["cl:bloco_ferro_comprimido"], resultado: "cl:lingote_ferro_comprimido", qtd: 9 },
+  ],
+  textos: {
+    "cl.pn.compressor": ["Compressor: %s bar  ·  combustível %s s  ·  %s", "Compressor: %s bar  ·  fuel %s s  ·  %s"],
+    "cl.pn.ligado": ["ligado (toque com a mão vazia para desligar)", "on (tap with an empty hand to turn off)"],
+    "cl.pn.desligado": ["desligado (toque com a mão vazia para ligar)", "off (tap with an empty hand to turn on)"],
+    "cl.pn.perigo": ["§cPerigo: %s bar! Os tubos comuns aguentam até 5 (avançados, 20) e explodem perto de 7 (25).", "§cDanger: %s bar! Regular tubes hold up to 5 (advanced 20) and explode near 7 (25)."],
+    "cl.pn.camara": ["Câmara %sx%sx%s: %s bar (%s mL de %s mL)", "Chamber %sx%sx%s: %s bar (%s mL of %s mL)"],
+    "cl.pn.camara_invalida": ["Câmara incompleta: precisa ser um cubo oco de 3x3x3 a 5x5x5 de paredes, vidros, válvulas e interfaces, vazio por dentro.", "Incomplete chamber: it must be a hollow 3x3x3 to 5x5x5 cube of walls, glass, valves and interfaces, empty inside."],
+    "cl.pn.pressao": ["Pressão: %s bar", "Pressure: %s bar"],
+    "cl.capitulo.pneumatic.nome": ["Ar comprimido (PneumaticCraft)", "Compressed air (PneumaticCraft)"],
+    "cl.capitulo.pneumatic.desc": ["Compressor, tubos e a câmara de pressão: ferro comprimido, diamante de carvão e eletrônica.", "Compressor, tubes and the pressure chamber: compressed iron, coal diamonds and electronics."],
+    "cl.missao.pn_compressor.titulo": ["Compressor", "Compressor"], "cl.missao.pn_compressor.desc": ["Coloque um Compressor de Ar e encha a rede até 2 bar.", "Place an Air Compressor and fill the network up to 2 bar."],
+    "cl.missao.pn_camara.titulo": ["Câmara de pressão", "Pressure chamber"], "cl.missao.pn_camara.desc": ["Monte uma câmara de pressão (3x3x3 oca) e toque na válvula.", "Build a pressure chamber (hollow 3x3x3) and tap the valve."],
+    "cl.missao.pn_ferro.titulo": ["Ferro comprimido", "Compressed iron"], "cl.missao.pn_ferro.desc": ["Faça 8 Lingotes de Ferro Comprimido na câmara (2 bar).", "Make 8 Compressed Iron Ingots in the chamber (2 bar)."],
+    "cl.missao.pn_diamante.titulo": ["Diamante de carvão", "Coal diamond"], "cl.missao.pn_diamante.desc": ["Faça um diamante com 8 blocos de carvão a 4 bar.", "Make a diamond from 8 coal blocks at 4 bar."],
+    "cl.missao.pn_eletronica.titulo": ["Eletrônica", "Electronics"], "cl.missao.pn_eletronica.desc": ["Faça um Transistor e um Capacitor na câmara.", "Make a Transistor and a Capacitor in the chamber."],
+  },
+};

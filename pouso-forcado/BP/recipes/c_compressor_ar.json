@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_compressor_ar"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "FCF",
+      "FTF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "C": {
+        "item": "minecraft:furnace"
+      },
+      "T": {
+        "item": "cl:tubo_pressao"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:compressor_ar"
+    }
+  }
+}

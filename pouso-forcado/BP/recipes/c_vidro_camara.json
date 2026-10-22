@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_vidro_camara"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:parede_camara"
+      },
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:parede_camara"
+      }
+    ],
+    "result": {
+      "item": "cl:vidro_camara"
+    }
+  }
+}
