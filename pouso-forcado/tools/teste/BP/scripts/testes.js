@@ -1,0 +1,212 @@
+// Testes com jogador simulado (GameTest) para o servidor Bedrock. Não vão no add-on.
+// Rodar no console do servidor (tools/testar-servidor.mjs explica):
+//   execute positioned <x> 46 <z> run gametest run pouso:<nome>
+// Cada teste usa a estrutura pouso:vazio (8x6x8, chão de pedra em y 0). Coordenadas relativas a ela.
+import { BlockPermutation, Direction, GameMode, ItemStack, system, world } from "@minecraft/server";
+import { register } from "@minecraft/server-gametest";
+
+const log = (m) => console.warn(`[TESTE] ${m}`);
+const quantos = (j, id) => {
+  const inv = j.getComponent("minecraft:inventory").container;
+  let n = 0;
+  for (let s = 0; s < inv.size; s++) if (inv.getItem(s)?.typeId === id) n += inv.getItem(s).amount;
+  return n;
+};
+function teste(nome, ticks, fn) {
+  register("pouso", nome, (t) => {
+    try {
+      fn(t);
+    } catch (e) {
+      t.fail(`${e}`);
+    }
+  })
+    .structureName("pouso:vazio")
+    .maxTicks(ticks);
+}
+const robo = (t, pos = { x: 1, y: 1, z: 1 }) => t.spawnSimulatedPlayer(pos, "Robo", GameMode.Survival);
+
+// O avião aparece com o primeiro jogador: procura o painel, o baú e as portas em volta.
+teste("aviao", 1200, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  const p0 = { x: Math.floor(j.location.x), y: Math.floor(j.location.y), z: Math.floor(j.location.z) };
+  t.runAfterDelay(400, () => {
+    const dim = world.getDimension("overworld");
+    const achados = { painel: [], bau: [], portas: 0, lanternas: 0 };
+    for (let x = p0.x - 95; x <= p0.x + 10; x++)
+      for (let z = p0.z - 5; z <= p0.z + 60; z++)
+        for (let y = p0.y + 2; y <= p0.y + 6; y++) {
+          const b = dim.getBlock({ x, y, z });
+          if (!b) continue;
+          if (b.typeId === "cl:painel_nave") achados.painel.push(`${x - p0.x},${y - p0.y},${z - p0.z} ${b.permutation.getState("minecraft:cardinal_direction")}`);
+          if (b.typeId === "minecraft:chest") achados.bau.push(`${x - p0.x},${y - p0.y},${z - p0.z} vazios=${b.getComponent("inventory").container.emptySlotsCount}`);
+          if (b.typeId === "minecraft:spruce_door") achados.portas++;
+        }
+    log(`avião: ${JSON.stringify(achados)}`);
+    t.assert(achados.painel.length === 1, "painel da nave");
+    t.assert(achados.bau.length === 1, "baú de suprimentos");
+    t.assert(achados.portas === 6, `portas: ${achados.portas} metades (esperava 6)`);
+    t.succeed();
+  });
+});
+
+teste("varal", 200, (t) => {
+  const j = robo(t);
+  t.setBlockType("cl:varal", { x: 3, y: 1, z: 1 });
+  j.giveItem(new ItemStack("minecraft:rotten_flesh", 3), true);
+  t.runAfterDelay(10, () => {
+    j.lookAtBlock({ x: 3, y: 1, z: 1 });
+    j.interactWithBlock({ x: 3, y: 1, z: 1 }, Direction.North);
+    j.interactWithBlock({ x: 3, y: 1, z: 1 }, Direction.North);
+    t.runAfterDelay(10, () => {
+      const n = t.getBlock({ x: 3, y: 1, z: 1 }).permutation.getState("cl:pendurado");
+      log(`varal: pendurado=${n}, carne na mão=${quantos(j, "minecraft:rotten_flesh")}`);
+      t.assert(n === 2, `esperava 2 pendurados, veio ${n}`);
+      t.succeed();
+    });
+  });
+});
+
+teste("cinzel", 200, (t) => {
+  const j = robo(t);
+  t.setBlockType("cl:marmore", { x: 3, y: 1, z: 1 });
+  j.giveItem(new ItemStack("cl:cinzel", 1), true);
+  t.runAfterDelay(10, () => {
+    j.useItemInSlotOnBlock(j.selectedSlotIndex, { x: 3, y: 1, z: 1 }, Direction.North);
+    t.runAfterDelay(10, () => {
+      const id = t.getBlock({ x: 3, y: 1, z: 1 }).typeId;
+      log(`cinzel: ${id}`);
+      t.assert(id === "cl:marmore_liso", `virou ${id}`);
+      t.succeed();
+    });
+  });
+});
+
+teste("caldeirao", 200, (t) => {
+  const j = robo(t);
+  t.setBlockType("minecraft:magma", { x: 3, y: 1, z: 1 });
+  t.setBlockPermutation(BlockPermutation.resolve("minecraft:cauldron", { fill_level: 6, cauldron_liquid: "water" }), { x: 3, y: 2, z: 1 });
+  j.giveItem(new ItemStack("minecraft:glass_bottle", 2), true);
+  t.runAfterDelay(10, () => {
+    j.useItemInSlotOnBlock(j.selectedSlotIndex, { x: 3, y: 2, z: 1 }, Direction.Up);
+    t.runAfterDelay(10, () => {
+      const boa = quantos(j, "cl:agua_boa"), salgada = quantos(j, "minecraft:potion");
+      log(`caldeirão: água boa=${boa}, garrafa do jogo=${salgada}, nível=${t.getBlock({ x: 3, y: 2, z: 1 }).permutation.getState("fill_level")}`);
+      t.assert(boa === 1, "não deu água boa");
+      t.succeed();
+    });
+  });
+});
+
+teste("nether", 200, (t) => {
+  const j = robo(t);
+  t.setBlockType("minecraft:obsidian", { x: 3, y: 1, z: 1 });
+  j.giveItem(new ItemStack("minecraft:flint_and_steel", 1), true);
+  t.runAfterDelay(10, () => {
+    j.useItemInSlotOnBlock(j.selectedSlotIndex, { x: 3, y: 1, z: 1 }, Direction.Up);
+    t.runAfterDelay(10, () => {
+      const cima = t.getBlock({ x: 3, y: 2, z: 1 }).typeId;
+      log(`nether: em cima da obsidiana = ${cima}`);
+      t.assert(cima === "minecraft:air", `acendeu: ${cima}`);
+      t.succeed();
+    });
+  });
+});
+
+teste("estante", 200, (t) => {
+  const j = robo(t);
+  t.setBlockType("cl:estante", { x: 3, y: 1, z: 1 });
+  j.giveItem(new ItemStack("minecraft:book", 3), true);
+  t.runAfterDelay(10, () => {
+    j.interactWithBlock({ x: 3, y: 1, z: 1 }, Direction.North);
+    t.runAfterDelay(10, () => {
+      const n = quantos(j, "minecraft:book");
+      log(`estante: livros na mão = ${n}`);
+      t.assert(n === 2, `esperava 2 livros, ficou ${n}`);
+      t.succeed();
+    });
+  });
+});
+
+teste("lampada", 200, (t) => {
+  const j = robo(t);
+  t.setBlockType("cl:lampada_azul", { x: 3, y: 1, z: 1 });
+  t.runAfterDelay(10, () => {
+    j.interactWithBlock({ x: 3, y: 1, z: 1 }, Direction.North);
+    t.runAfterDelay(10, () => {
+      const aceso = t.getBlock({ x: 3, y: 1, z: 1 }).permutation.getState("cl:aceso");
+      log(`lâmpada azul: aceso=${aceso}`);
+      t.assert(aceso === true, "não acendeu");
+      t.succeed();
+    });
+  });
+});
+
+teste("torre", 400, (t) => {
+  world.setTimeOfDay(18000);
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x: 1, y: 1, z: 1 });
+  t.setBlockType("cl:torre_defesa", { x: 2, y: 1, z: 1 });
+  const z = t.spawn("minecraft:husk", { x: 6, y: 1, z: 6 });
+  const vida0 = z.getComponent("health").currentValue;
+  t.runAfterDelay(100, () => {
+    const viva = z.isValid;
+    const vida = viva ? z.getComponent("health").currentValue : 0;
+    log(`torre: husk ${vida0} -> ${vida} (vivo: ${viva}); carga da bateria = ${t.getBlock({ x: 1, y: 1, z: 1 }).permutation.getState("cl:carga")}`);
+    world.setTimeOfDay(6000);
+    t.assert(vida < vida0, "a torre não atirou");
+    t.succeed();
+  });
+});
+
+teste("saco", 300, (t) => {
+  world.setTimeOfDay(15000);
+  for (const m of world.getDimension("overworld").getEntities({ families: ["monster"] })) m.remove();
+  const j = robo(t);
+  t.runAfterDelay(10, () => {
+    j.useItem(new ItemStack("cl:saco_dormir", 1));
+    t.runAfterDelay(60, () => {
+      const hora = world.getTimeOfDay();
+      log(`saco de dormir: hora = ${hora}`);
+      t.assert(hora < 2000, `não pulou a noite (${hora})`);
+      t.succeed();
+    });
+  });
+});
+
+teste("celula", 400, (t) => {
+  const j = robo(t);
+  t.setBlockType("cl:celula_energia_basica", { x: 3, y: 1, z: 1 });
+  t.runAfterDelay(10, () => {
+    j.breakBlock({ x: 3, y: 1, z: 1 }, Direction.North);
+    t.runAfterDelay(240, () => {
+      log(`célula: o bloco agora é ${t.getBlock({ x: 3, y: 1, z: 1 }).typeId}`);
+      const n = world.getDimension("overworld").getEntities({ type: "minecraft:item", location: t.worldBlockLocation({ x: 3, y: 1, z: 1 }), maxDistance: 4 })
+        .filter((e) => e.getComponent("item").itemStack.typeId === "cl:celula_energia_basica").length;
+      const mochila = quantos(j, "cl:celula_energia_basica");
+      log(`célula quebrada: ${n} no chão, ${mochila} na mochila do robô`);
+      t.assert(n + mochila === 1, `esperava 1 célula, veio ${n + mochila}`);
+      t.succeed();
+    });
+  });
+});
+
+teste("ferro_comprimido", 300, (t) => {
+  t.spawnItem(new ItemStack("minecraft:iron_ingot", 10), { x: 4, y: 1.5, z: 4 });
+  t.runAfterDelay(20, () => {
+    t.spawn("minecraft:tnt", { x: 4, y: 1, z: 4 });
+    t.runAfterDelay(120, () => {
+      const itens = world.getDimension("overworld").getEntities({ type: "minecraft:item", location: t.worldBlockLocation({ x: 4, y: 1, z: 4 }), maxDistance: 10 }).map((e) => e.getComponent("item").itemStack);
+      log(`depois da explosão: ${itens.map((i) => `${i.typeId} x${i.amount}`).join(", ") || "nada"}`);
+      t.assert(itens.some((i) => i.typeId === "cl:lingote_ferro_comprimido"), "não virou ferro comprimido");
+      t.succeed();
+    });
+  });
+});
+
+// Depuração: o que chega dos eventos de interação e de quebra.
+world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
+  if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);
+});
+world.afterEvents.playerBreakBlock.subscribe((ev) => {
+  if (ev.player.name === "Robo") log(`quebrou: ${ev.brokenBlockPermutation.type.id} modo=${ev.player.getGameMode()}`);
+});
+system.run(() => log("pacote de testes carregado"));

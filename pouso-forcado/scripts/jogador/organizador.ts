@@ -2,6 +2,7 @@ import { BlockTypes, Container, ItemStack, Player, system, world } from "@minecr
 import { AGUAS, IDS, SEDE } from "../config.js";
 import { aviso } from "./hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
+import { toqueNovo } from "../util/toque.js";
 import { reabastecerLigado } from "./opcoes.js";
 
 /*
@@ -101,11 +102,11 @@ export function registrarOrganizador(): void {
   });
 
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    const { player, block, itemStack, isFirstEvent } = ev;
+    const { player, block, itemStack } = ev;
     if (itemStack?.typeId === IDS.organizador) {
       if (!block.getComponent("minecraft:inventory")) return;
       ev.cancel = true; // arruma em vez de abrir
-      if (!isFirstEvent) return;
+      if (!toqueNovo(ev)) return;
       recemOrdenado.set(player.id, system.currentTick);
       system.run(() => {
         const c = block.getComponent("minecraft:inventory")?.container;

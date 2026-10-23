@@ -10,6 +10,7 @@ import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js
 import { darAoJogador, gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { abrirUmMenu } from "../util/menus.js";
 import { procurarNaRede } from "../util/rede.js";
+import { toqueNovo } from "../util/toque.js";
 import { InventarioMapa, Mapa, registrarInventario } from "./virtual.js";
 
 /*
@@ -217,7 +218,7 @@ export function registrarAE(): void {
     if (itemStack.typeId === "cl:celula_agua") system.run(() => usarCelulaAgua(source));
   });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (ev.itemStack?.typeId !== "cl:celula_agua" || !ev.isFirstEvent) return;
+    if (ev.itemStack?.typeId !== "cl:celula_agua" || !toqueNovo(ev)) return;
     const alvo = ["cl:condensador_agua", "cl:condensador_avancado", "minecraft:water"];
     if (!alvo.includes(ev.block.typeId)) return;
     ev.cancel = true;

@@ -5,6 +5,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador, gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { entrada, saida } from "../util/maquina.js";
+import { toqueNovo } from "../util/toque.js";
 import { InventarioMapa, Mapa, registrarInventario, simples } from "./virtual.js";
 
 /*
@@ -251,7 +252,7 @@ export function registrarJabba(): void {
     if (hitBlock.typeId === ID && damagingEntity instanceof Player) tirar(damagingEntity, hitBlock, damagingEntity.isSneaking);
   });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (!ev.itemStack?.typeId.startsWith("cl:carrinho") || !ev.isFirstEvent) return;
+    if (!ev.itemStack?.typeId.startsWith("cl:carrinho") || !toqueNovo(ev)) return;
     ev.cancel = true;
     const { player, block, blockFace } = ev;
     system.run(() => usarCarrinho(player, block, blockFace));

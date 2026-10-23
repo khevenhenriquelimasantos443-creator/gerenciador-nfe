@@ -7,6 +7,7 @@ import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador } from "../util/inventario.js";
 import { ItemSalvo, carregarItem, salvarItem } from "../util/itens.js";
+import { toqueNovo } from "../util/toque.js";
 import { abrirUmMenu } from "../util/menus.js";
 
 /*
@@ -180,7 +181,7 @@ export const carregador: BlockCustomComponent = {
 
 export function registrarDecoracao(): void {
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (ev.itemStack?.typeId !== "cl:cinzel" || !ev.isFirstEvent || !FAMILIA_DE.has(ev.block.typeId)) return;
+    if (ev.itemStack?.typeId !== "cl:cinzel" || !toqueNovo(ev) || !FAMILIA_DE.has(ev.block.typeId)) return;
     ev.cancel = true;
     const { player, block } = ev;
     system.run(() => cinzelarBloco(player, block));

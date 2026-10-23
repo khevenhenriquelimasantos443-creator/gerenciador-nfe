@@ -19,7 +19,8 @@ const BIOMA_DESERTO = 2;
 const versao = (v) => list("int", v.map(int));
 const b = (v) => byte(v ? 1 : 0);
 
-export function gerarLevelDat(nome) {
+// `testes`: liga o experimento "Beta APIs" (GameTest), só para o mundo de testes do servidor (tools/testar-servidor).
+export function gerarLevelDat(nome, testes = false) {
   const camadas = JSON.stringify({
     biome_id: BIOMA_DESERTO,
     block_layers: CAMADAS,
@@ -52,12 +53,14 @@ export function gerarLevelDat(nome) {
     GameType: int(0), // sobrevivência
     Difficulty: int(2), // normal
     ForceGameType: b(false),
-    commandsEnabled: b(false), cheatsEnabled: b(false), hasBeenLoadedInCreative: b(false),
+    commandsEnabled: b(testes), cheatsEnabled: b(testes), hasBeenLoadedInCreative: b(false),
     spawnMobs: b(true),
     bonusChestEnabled: b(false), bonusChestSpawned: b(false), startWithMapEnabled: b(false),
     eduOffer: int(0), eduLevel: b(false), educationFeaturesEnabled: b(false),
     IsHardcore: b(false),
-    experiments: comp({ experiments_ever_used: b(false), saved_with_toggled_experiments: b(false) }),
+    experiments: testes
+      ? comp({ gametest: b(true), experiments_ever_used: b(true), saved_with_toggled_experiments: b(true) })
+      : comp({ experiments_ever_used: b(false), saved_with_toggled_experiments: b(false) }),
     world_policies: comp({}),
     // Multijogador
     MultiplayerGame: b(true), MultiplayerGameIntent: b(true),

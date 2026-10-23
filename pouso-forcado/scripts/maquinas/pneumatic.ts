@@ -6,6 +6,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { vizinhos } from "../util/blocos.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { gastarDaMao, itemNaMao } from "../util/inventario.js";
+import { toqueNovo } from "../util/toque.js";
 import { entrada, inv, primeiro, tirar } from "../util/maquina.js";
 
 /*
@@ -284,7 +285,7 @@ function mostrarPressao(j: Player, b: Block): void {
 
 export function registrarPneumatic(): void {
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (ev.itemStack?.typeId !== "cl:manometro" || !ev.isFirstEvent) return;
+    if (ev.itemStack?.typeId !== "cl:manometro" || !toqueNovo(ev)) return;
     ev.cancel = true;
     const { player, block } = ev;
     system.run(() => mostrarPressao(player, block));

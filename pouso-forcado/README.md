@@ -657,6 +657,12 @@ Os PNGs 16×16 em `RP/textures/blocks/cl/` são placeholders (cor sólida + bord
 - A pasta `db/` vai vazia (um LevelDB vazio, gerado por `tools/leveldb-vazio.mjs` e testado abrindo-o com um LevelDB de verdade). O jogo gera o terreno na primeira vez que o mundo abre.
 - Se mudar as camadas, mude também `MUNDO_PLANO.superficieY` no `scripts/config.ts`.
 
+## Testes no servidor Bedrock (com jogador simulado)
+
+- `tools/testar-servidor.mjs <pasta do servidor>` monta um mundo de testes no Bedrock Dedicated Server (baixado de minecraft.net, não vem no repositório) com o add-on e o pacote `tools/teste/BP`, que usa o jogador simulado do GameTest. No mundo de testes o add-on passa a usar as APIs beta (só lá).
+- No console do servidor: `tickingarea add 400 0 60 560 0 100 testes true`, depois `execute positioned 500 46 0 run gametest run pouso:aviao` (tem que ser o primeiro) e `execute positioned <x> 46 75 run gametest run pouso:<teste>` para `varal`, `cinzel`, `caldeirao`, `nether`, `estante`, `lampada`, `celula`, `torre`, `saco` e `ferro_comprimido`.
+- O que não dá para testar assim: menus (o jogador simulado não responde formulários), o visual e o tempo real de crescer plantas.
+
 ## Limitações do Bedrock (e o que fiz no lugar)
 
 - **Relevo do mundo plano:** o jogo não gera relevo em mundo plano, então as dunas e os morros são colocados por script. Para não aparecerem "brotando" perto de você, o script carrega e decora os chunks até 12 chunks de distância com ticking areas. Se a sua distância de renderização for maior que 12 chunks, o que estiver mais longe ainda aparece plano até você se aproximar (dá para aumentar `RELEVO.raioChunks`, mas pesa mais). Custo: no máximo 6 chunks decorados por segundo e uma ticking area aberta por vez.

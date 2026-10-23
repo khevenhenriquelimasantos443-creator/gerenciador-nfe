@@ -9,6 +9,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado, lerEstado, vizinhos } from "../util/blocos.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { gastarDaMao, itemNaMao } from "../util/inventario.js";
+import { toqueNovo } from "../util/toque.js";
 import { cabe, contar, entrada, entregar, gastarCE, inv, primeiro, saida, tirar } from "../util/maquina.js";
 
 /*
@@ -344,7 +345,7 @@ function mover(de: Container, para: Container): boolean {
 export function registrarMFR(): void {
   // Fertilizante na mão funciona como farinha de osso (também nas plantações do HarvestCraft).
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (ev.itemStack?.typeId !== "cl:fertilizante" || !ev.isFirstEvent) return;
+    if (ev.itemStack?.typeId !== "cl:fertilizante" || !toqueNovo(ev)) return;
     ev.cancel = true;
     const { player, block } = ev;
     system.run(() => {

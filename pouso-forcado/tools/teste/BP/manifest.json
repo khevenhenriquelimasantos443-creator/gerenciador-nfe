@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Pouso Forçado (testes)",
+    "description": "Só para o servidor de testes (tools/testar-servidor.mjs). Não vai no add-on.",
+    "uuid": "9b1f3a52-6c1e-4b8e-9d0a-5e2b7c41a001",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 30]
+  },
+  "modules": [
+    { "type": "script", "language": "javascript", "uuid": "9b1f3a52-6c1e-4b8e-9d0a-5e2b7c41a002", "version": [1, 0, 0], "entry": "scripts/testes.js" }
+  ],
+  "dependencies": [
+    { "module_name": "@minecraft/server", "version": "2.11.0-beta" },
+    { "module_name": "@minecraft/server-gametest", "version": "1.0.0-beta" }
+  ]
+}

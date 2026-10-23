@@ -4,6 +4,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gastarDaMao, gastarFerramenta } from "../util/inventario.js";
 import { esquecerBarril } from "./barril.js";
+import { toqueNovo } from "../util/toque.js";
 import { esquecerCadinho } from "./cadinho.js";
 
 /*
@@ -75,7 +76,7 @@ export function registrarNihilo(): void {
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     if (ev.itemStack?.typeId !== IDS.bichoSeda || !FOLHAS.includes(ev.block.typeId)) return;
     ev.cancel = true;
-    if (!ev.isFirstEvent) return;
+    if (!toqueNovo(ev)) return;
     const { player, block } = ev;
     system.run(() => {
       if (!FOLHAS.includes(block.typeId)) return;

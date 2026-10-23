@@ -1,6 +1,7 @@
 import { BlockPermutation, system, world } from "@minecraft/server";
 import { IDS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
+import { toqueNovo } from "../util/toque.js";
 import { darAoJogador, gastarDaMao } from "../util/inventario.js";
 
 /*
@@ -12,7 +13,7 @@ const CALOR = new Set(["minecraft:fire", "minecraft:soul_fire", "minecraft:lava"
 
 export function registrarCaldeirao(): void {
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (ev.itemStack?.typeId !== "minecraft:glass_bottle" || ev.block.typeId !== "minecraft:cauldron" || !ev.isFirstEvent) return;
+    if (ev.itemStack?.typeId !== "minecraft:glass_bottle" || ev.block.typeId !== "minecraft:cauldron" || !toqueNovo(ev)) return;
     const p = ev.block.permutation;
     const nivel = p.getState("fill_level" as never) as unknown as number;
     const liquido = p.getState("cauldron_liquid" as never) as unknown as string;
