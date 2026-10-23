@@ -16,17 +16,40 @@ export default {
     mesa("mesa_moldes", "Mesa de Moldes", "Stencil Table", "cl:mesa_moldes", "pilar", "ladrilho"),
     mesa("construtor_pecas", "Construtor de Peças", "Part Builder", "cl:construtor_pecas", "pilar", "polido"),
     mesa("estacao_ferramentas", "Estação de Ferramentas", "Tool Station", "cl:estacao_ferramentas", "tijolos", "ladrilho"),
+    // Varal (o Drying Rack do Tinkers): carne podre pendurada vira couro com o tempo (scripts/tinkers/varal.ts).
+    {
+      id: "varal", pt: "Varal", en: "Drying Rack", tipo: "cubo", cor: "#8a6a3e", padrao: "liso", comp: "cl:varal", dureza: 1,
+      materiais: { carne: { cor: "#7a4a2e", padrao: "rachado" } },
+      estados: { "cl:pendurado": [0, 1, 2, 3, 4] },
+      geometria: {
+        ossos: {
+          varal: [[[-8, 0, -1], [2, 15, 2]], [[6, 0, -1], [2, 15, 2]], [[-8, 13, -1.5], [16, 2, 3]]],
+          ...Object.fromEntries([-5.5, -2.25, 1, 4.25].map((x, i) => [`carne${i + 1}`, [[[x, 6, -0.5], [2.5, 7, 1], "carne"]]])),
+        },
+        visivel: Object.fromEntries([1, 2, 3, 4].map((n) => [`carne${n}`, `q.block_state('cl:pendurado') >= ${n}`])),
+      },
+      extra: {
+        "minecraft:collision_box": { origin: [-8, 0, -2], size: [16, 15, 4] },
+        "minecraft:selection_box": { origin: [-8, 0, -2], size: [16, 15, 4] },
+      },
+    },
   ],
   receitas: [
     { id: "padrao_branco", tipo: "shaped", padrao: ["PS", "SP"], chave: { P: "#minecraft:planks", S: "minecraft:stick" }, resultado: "cl:padrao_branco", qtd: 4 },
     { id: "mesa_moldes", tipo: "shaped", padrao: ["B", "P"], chave: { B: "cl:padrao_branco", P: "#minecraft:planks" }, resultado: "cl:mesa_moldes" },
     { id: "construtor_pecas", tipo: "shaped", padrao: ["B", "L"], chave: { B: "cl:padrao_branco", L: "#minecraft:logs" }, resultado: "cl:construtor_pecas" },
     { id: "estacao_ferramentas", tipo: "shaped", padrao: ["B", "C"], chave: { B: "cl:padrao_branco", C: "minecraft:crafting_table" }, resultado: "cl:estacao_ferramentas" },
+    { id: "varal", tipo: "shaped", padrao: ["SSS"], chave: { S: "minecraft:oak_slab" }, resultado: "cl:varal" },
     // Iguana: o cascalho não solta sílex; 4 cascalhos viram 1 sílex.
     { id: "silex_de_cascalho", tipo: "shapeless", ingredientes: Array(4).fill("minecraft:gravel"), resultado: "minecraft:flint" },
   ],
   textos: {
     "cl.tc.cabeca": ["§7Cabeça: %s", "§7Head: %s"],
+    "cl.tc.varal_como": ["Varal: toque com Carne Podre para pendurar (até 4). Em 5 minutos ela vira Couro; toque de novo para pegar.", "Drying Rack: tap with Rotten Flesh to hang it (up to 4). In 5 minutes it turns into Leather; tap again to collect."],
+    "cl.tc.varal_estado": ["Varal: %s secando, %s pronto(s). Próximo em %s min.", "Drying Rack: %s drying, %s ready. Next in %s min."],
+    "cl.tc.varal_cheio": ["O varal está cheio (4).", "The rack is full (4)."],
+    "cl.tc.varal_pegou": ["Pegou %s Couro do varal.", "Took %s Leather from the rack."],
+    "cl.missao.tc_varal.titulo": ["Couro de carne podre", "Leather from rotten flesh"], "cl.missao.tc_varal.desc": ["Faça um Varal (3 lajes de carvalho) e tire 8 Couros secando Carne Podre nele.", "Craft a Drying Rack (3 oak slabs) and get 8 Leather by drying Rotten Flesh on it."],
     "cl.tc.cabo": ["§7Cabo: %s", "§7Handle: %s"],
     "cl.tc.ligacao": ["§7Ligação: %s", "§7Binding: %s"],
     "cl.tc.durabilidade": ["§7Durabilidade: §f%s/%s", "§7Durability: §f%s/%s"],

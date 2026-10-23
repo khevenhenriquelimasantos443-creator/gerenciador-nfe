@@ -76,6 +76,27 @@ function textura(nome, pintor) {
   return `clc_${nome}`;
 }
 
+// Modelo de bloco: ossos = { nome: [[origem, tamanho, material], ...] } (pixels, de -8 a 8 em x e z).
+function geometria(id, ossos) {
+  const face = (w, h, mat) => ({ uv: [0, 0], uv_size: [Math.max(1, Math.min(16, w)), Math.max(1, Math.min(16, h))], material_instance: mat });
+  const bones = Object.entries(ossos).map(([name, cubos]) => ({
+    name,
+    pivot: [0, 0, 0],
+    cubes: cubos.map(([origin, size, mat = "*"]) => ({
+      origin,
+      size,
+      uv: {
+        north: face(size[0], size[1], mat), south: face(size[0], size[1], mat), east: face(size[2], size[1], mat),
+        west: face(size[2], size[1], mat), up: face(size[0], size[2], mat), down: face(size[0], size[2], mat),
+      },
+    })),
+  }));
+  json(`RP/models/blocks/cl_${id}.geo.json`, {
+    format_version: "1.12.0",
+    "minecraft:geometry": [{ description: { identifier: `geometry.cl.${id}`, texture_width: 16, texture_height: 16, visible_bounds_width: 2, visible_bounds_height: 2, visible_bounds_offset: [0, 0.5, 0] }, bones }],
+  });
+}
+
 function bloco(f, b) {
   const comps = {};
   let mats;
@@ -110,6 +131,15 @@ function bloco(f, b) {
   if (b.loot) comps["minecraft:loot"] = b.loot;
   if (b.tick) comps["minecraft:tick"] = { interval_range: Array.isArray(b.tick) ? b.tick : [b.tick, b.tick], looping: true };
   if (b.comp) comps[b.comp] = {};
+  // Materiais a mais (b.materiais: { nome: { cor, padrao } }) e modelo próprio (b.geometria: { ossos, visivel }),
+  // com ossos que aparecem conforme um estado do bloco (bone_visibility).
+  for (const [nome, m] of Object.entries(b.materiais ?? {}))
+    mats[nome] = { texture: textura(`${b.id}_${nome}`, PADRAO[m.padrao ?? "liso"](hex(m.cor))), render_method: "opaque" };
+  if (b.geometria) {
+    comps["minecraft:geometry"] = { identifier: `geometry.cl.${b.id}`, ...(b.geometria.visivel ? { bone_visibility: b.geometria.visivel } : {}) };
+    comps["minecraft:light_dampening"] = 0;
+    geometria(b.id, b.geometria.ossos);
+  }
   Object.assign(comps, b.extra ?? {});
   const girar = b.girar ?? b.tipo === "maquina";
   const description = { identifier: `cl:${b.id}`, menu_category: { category: b.menu ?? "items" } };

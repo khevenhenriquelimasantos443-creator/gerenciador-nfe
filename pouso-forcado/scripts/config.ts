@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.0.1";
+export const VERSAO = "1.1.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -119,6 +119,9 @@ export const NAVE = {
   bau: { x: 64, y: 7, z: 34 }, // baú de suprimentos, dentro da estrutura (no porão de carga)
   painel: { x: 77, y: 7, z: 32 }, // Painel da Nave, no painel de controle da cabine
   centro: { x: 50, z: 32 }, // meio do avião, para o relevo não pôr nada em cima
+  // Portas (metade de baixo): a dupla do lado esquerdo (norte) e a do lado direito (sul).
+  portas: [{ x: 67, y: 7, z: 28 }, { x: 68, y: 7, z: 28 }, { x: 72, y: 7, z: 36 }],
+  ladoDasPortas: ["north", "north", "south"],
 } as const;
 
 // O que sobrou da carga. Vai no baú da nave (ou direto para o jogador, se a nave falhar).
@@ -133,21 +136,18 @@ export const SUPRIMENTOS: ReadonlyArray<{ item: string; quantidade: number }> = 
 
 // Noite e dia (scripts/mundo/horda_noturna.ts).
 export const HORDA = {
-  intervaloTicks: 100, // a cada 5 s, à noite
-  porVez: 4, // monstros extras por jogador por ciclo
-  limitePerto: 60, // não reforça se já houver tantos monstros por perto
+  intervaloTicks: 200, // a cada 10 s, à noite (noite mais leve: era a cada 5 s)
+  porVez: 2, // monstros extras por jogador por ciclo
+  limitePerto: 25, // não reforça se já houver tantos monstros por perto
   raioContagem: 48,
   distanciaMin: 12, // longe o bastante para não nascer na cara do jogador
   distanciaMax: 28,
-  mobs: [
-    "minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:skeleton",
-    "minecraft:spider", "minecraft:creeper", "cl:mumia", "cl:mumia", "cl:escorpiao", "cl:escorpiao",
-  ],
-  // As ondas da horda: em cada uma dessas horas da noite, uma onda em volta de cada jogador.
-  // Tamanho = base + porDia × dia do mundo (até max).
-  onda: { horas: [14000, 17000, 20000], base: 12, porDia: 3, max: 40, distanciaMin: 8, distanciaMax: 20 },
-  // De dia, monstros expostos ao céu pegam fogo.
-  sol: { intervaloTicks: 100, segundosFogo: 8 },
+  mobs: ["minecraft:husk", "minecraft:husk", "minecraft:zombie", "minecraft:skeleton", "minecraft:skeleton", "minecraft:spider", "minecraft:creeper", "cl:mumia", "cl:mumia"],
+  // A horda vem só a cada `aCadaDias` noites (a 10ª, a 20ª...), com um aviso no fim da tarde. Nessa noite,
+  // em cada uma das horas, uma onda em volta de cada jogador. Tamanho = base + porDia × dia (até max).
+  onda: { aCadaDias: 10, avisoHora: 12000, horas: [14000, 17000, 20000], base: 8, porDia: 1, max: 30, distanciaMin: 8, distanciaMax: 20 },
+  // De dia, monstros expostos ao céu pegam fogo, menos os que não queimam no jogo normal.
+  sol: { intervaloTicks: 100, segundosFogo: 8, naoQueimam: ["minecraft:husk", "minecraft:spider", "minecraft:cave_spider", "minecraft:creeper"] },
 } as const;
 
 // Mundo plano do .mcworld. Tem que bater com tools/gerar-mundo.mjs.
@@ -376,6 +376,12 @@ export const ESTUFA = {
 
 // Fases 15 e 16: Tinkers' Construct + Iguana Tweaks (scripts/tinkers/). Materiais, peças e ferramentas
 // ficam em tools/dados/conteudo/tinkers.mjs (gerados para DADOS_F15).
+// Varal (Drying Rack do Tinkers, scripts/tinkers/varal.ts): o que pendura, no que vira e em quanto tempo.
+export const VARAL = {
+  ganchos: 4,
+  receitas: { "minecraft:rotten_flesh": { resultado: "minecraft:leather", ticks: 6000 } } as Readonly<Record<string, { resultado: string; ticks: number }>>, // 5 min
+} as const;
+
 export const TINKERS = {
   iguanaDurabilidade: 0.5, // Iguana: metade da durabilidade do TC
   xpBase: 100, // XP para o nível 2; cada nível pede ×1,35
@@ -705,7 +711,8 @@ export const PLANTACAO = {
 // O mundo todo é deserto: conta sempre como bioma seco (e "seco de dia").
 export const SEDE = {
   max: 100,
-  porAtualizacao: { base: 0.05, seco: 0.05, secoDia: 0.05, suor: 0.1, correndo: 0.05, efeitoFome: 0.1 },
+  // 1.1.0: a água do corpo cai mais devagar (uns 30 min de jogo de 100 a 0 parado; ~19 min suando ao sol).
+  porAtualizacao: { base: 0.03, seco: 0.02, secoDia: 0.03, suor: 0.05, correndo: 0.03, efeitoFome: 0.1 },
   fracaAbaixoDe: 10, // fraqueza, fadiga e lentidão
   danoEmZero: 4, // por atualização (1,5 s)
   // Comidas que também mexem na hidratação (EnviroMine): as águas ficam em AGUAS.
@@ -770,8 +777,10 @@ export const CAPSULA = {
 // anda em direção à temperatura do ar com passo velocidade × (|corpo − ar| / 10, se a diferença > 10).
 export const TEMPERATURA = {
   normal: 37,
-  ar: { dia: 65, noiteDivisor: 9, sombra: -2.5, agua: -5, dormindo: 5, correndo: 2, chamasMin: 75 },
-  velocidade: { subida: 0.001, subidaSeco: 0.005, descida: 0.001, descidaAgua: 0.01, correndoMin: 0.01, chamas: 0.1, fonteForte: 5 },
+  // 1.1.0: mais leve que o EnviroMine. O sol esquenta menos (50 °C) e a sombra refresca de verdade (36 °C);
+  // um corpo acima de 37 °C esfria rápido fora do sol (descidaQuente), a água esfria bem mais.
+  ar: { dia: 50, noiteDivisor: 9, sombra: -14, agua: -5, dormindo: 5, correndo: 2, chamasMin: 75 },
+  velocidade: { subida: 0.001, subidaSeco: 0.004, descida: 0.001, descidaQuente: 0.01, descidaAgua: 0.05, correndoMin: 0.01, chamas: 0.1, fonteForte: 5 },
   suor: { aPartirDe: 38.02, hidratacaoMin: 75, esfria: 0.01 },
   // Fontes de calor (pega a maior; cai com a distância: t × (1 − d²/75)). Fonte mais quente que o ar:
   // ar = (ar + fonte)/2; passando de ar + 5, o corpo esquenta 5× mais rápido.
@@ -816,9 +825,9 @@ export type Efeito = { id: string; segundos: number; chance: number; nivel?: num
 export type Agua = { agua: number; direto: number; esfria: number; piso: number; efeitos: ReadonlyArray<Efeito>; desidrata?: number };
 const SALGADA: Agua = { agua: 10, direto: 5, esfria: 0, piso: 37, efeitos: [], desidrata: 20 };
 export const AGUAS: Readonly<Record<string, Agua>> = {
-  [`${NS}:agua_excelente`]: { agua: 25, direto: 10, esfria: 0.1, piso: 30.1, efeitos: [{ id: "regeneration", segundos: 5, chance: 1 }] },
-  [`${NS}:agua_boa`]: { agua: 25, direto: 10, esfria: 0.05, piso: 37.05, efeitos: [] },
-  [`${NS}:agua_suja`]: { agua: 25, direto: 10, esfria: 0, piso: 37, efeitos: [{ id: "hunger", segundos: 30, chance: 0.25 }, { id: "poison", segundos: 10, chance: 0.25 }] },
+  [`${NS}:agua_excelente`]: { agua: 25, direto: 10, esfria: 1, piso: 30.1, efeitos: [{ id: "regeneration", segundos: 5, chance: 1 }] },
+  [`${NS}:agua_boa`]: { agua: 25, direto: 10, esfria: 0.5, piso: 37.05, efeitos: [] },
+  [`${NS}:agua_suja`]: { agua: 25, direto: 10, esfria: 0.2, piso: 37, efeitos: [{ id: "hunger", segundos: 30, chance: 0.25 }, { id: "poison", segundos: 10, chance: 0.25 }] },
   [`${NS}:agua_muito_suja`]: {
     agua: 15, direto: 5, esfria: 0, piso: 37,
     efeitos: [{ id: "nausea", segundos: 10, chance: 0.8 }, { id: "poison", segundos: 10, chance: 0.5 }, { id: "hunger", segundos: 30, chance: 0.5 }],
@@ -985,8 +994,8 @@ export const GERADOR_MONSTROS = {
   raioJogador: 20, // só funciona com jogador a até tantos blocos
   limitePerto: 5, // não põe mais se já houver tantos monstros a até 10 blocos
   porVez: [1, 2],
-  mobs: ["minecraft:husk", "cl:mumia", "cl:mumia", "minecraft:skeleton", "cl:escorpiao", "minecraft:spider"],
-  mobsFundo: ["minecraft:skeleton", "minecraft:stray", "minecraft:cave_spider", "minecraft:creeper", "cl:escorpiao", "cl:mumia"], // abaixo de y = 0
+  mobs: ["minecraft:husk", "cl:mumia", "cl:mumia", "minecraft:skeleton", "minecraft:spider"],
+  mobsFundo: ["minecraft:skeleton", "minecraft:stray", "minecraft:cave_spider", "minecraft:creeper", "cl:mumia"], // abaixo de y = 0
   saque: [
     { item: "minecraft:iron_ingot", min: 1, max: 3, chance: 1 },
     { item: "minecraft:gold_nugget", min: 2, max: 6, chance: 0.8 },

@@ -1110,6 +1110,12 @@
     },
     "clc_carregador_pontual_baixo": {
       "textures": "textures/blocks/cl/c/carregador_pontual_baixo"
+    },
+    "clc_varal": {
+      "textures": "textures/blocks/cl/c/varal"
+    },
+    "clc_varal_carne": {
+      "textures": "textures/blocks/cl/c/varal_carne"
     }
   }
 }

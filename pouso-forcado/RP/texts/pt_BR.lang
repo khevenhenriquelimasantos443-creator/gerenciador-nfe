@@ -60,6 +60,8 @@ cl.missao.papel.desc=Plante cana-de-açúcar ao lado da água e faça 3 papéis.
 ## Horda
 cl.horda.titulo=§cA horda chegou!
 cl.horda.subtitulo=Onda %s de %s: %s monstros. Aguente até o amanhecer.
+cl.horda.aviso=§6Noite de horda
+cl.horda.aviso_sub=Hoje à noite a horda vem. Abrigue-se (o avião tem portas).
 
 ## Máquinas (Fase 3)
 tile.cl:peneira.name=Peneira
@@ -231,8 +233,8 @@ cl.farao.derrotado=O Faraó Amaldiçoado caiu! Pegue o Coração do Faraó: ele 
 ## Missões (Fase 7)
 cl.missao.mumias.titulo=Os mortos andam
 cl.missao.mumias.desc=Derrote 5 múmias. Elas aparecem à noite e dão fome com o toque.
-cl.missao.escorpioes.titulo=Picada venenosa
-cl.missao.escorpioes.desc=Derrote 5 escorpiões do deserto. Cuidado com o veneno: eles sobem paredes.
+cl.missao.escorpioes.titulo=Cascas secas
+cl.missao.escorpioes.desc=Derrote 5 husks, os zumbis secos do deserto. Eles não queimam no sol.
 cl.missao.golem.titulo=Feito de areia
 cl.missao.golem.desc=Derrote um Golem de Areia. Eles só aparecem durante a tempestade de areia.
 cl.missao.faixas.titulo=Faixas antigas
@@ -340,7 +342,7 @@ cl.capitulo.energia.desc=Painéis, gerador, moinho, baterias e cabos. Tudo em RF
 cl.capitulo.exploracao.nome=Exploração
 cl.capitulo.exploracao.desc=Cidades abandonadas, masmorras, destroços e a tempestade de areia.
 cl.capitulo.deserto.nome=Perigos do Deserto
-cl.capitulo.deserto.desc=Múmias, escorpiões, o golem da tempestade e o Faraó Amaldiçoado.
+cl.capitulo.deserto.desc=Múmias, husks, o golem da tempestade e o Faraó Amaldiçoado.
 cl.capitulo.nave.nome=Consertar a Nave
 cl.capitulo.nave.desc=Montadora, terminal e as peças dos 4 sistemas da nave.
 cl.capitulo.equipamento.nome=Equipamento
@@ -768,7 +770,14 @@ item.cl:espada_larga_obsidiana.name=Espada Larga de Obsidiana
 tile.cl:mesa_moldes.name=Mesa de Moldes
 tile.cl:construtor_pecas.name=Construtor de Peças
 tile.cl:estacao_ferramentas.name=Estação de Ferramentas
+tile.cl:varal.name=Varal
 cl.tc.cabeca=§7Cabeça: %s
+cl.tc.varal_como=Varal: toque com Carne Podre para pendurar (até 4). Em 5 minutos ela vira Couro; toque de novo para pegar.
+cl.tc.varal_estado=Varal: %s secando, %s pronto(s). Próximo em %s min.
+cl.tc.varal_cheio=O varal está cheio (4).
+cl.tc.varal_pegou=Pegou %s Couro do varal.
+cl.missao.tc_varal.titulo=Couro de carne podre
+cl.missao.tc_varal.desc=Faça um Varal (3 lajes de carvalho) e tire 8 Couros secando Carne Podre nele.
 cl.tc.cabo=§7Cabo: %s
 cl.tc.ligacao=§7Ligação: %s
 cl.tc.durabilidade=§7Durabilidade: §f%s/%s

@@ -85,7 +85,8 @@ export type Acao =
   | "estante"
   | "cabide"
   | "carregador"
-  | "decolar";
+  | "decolar"
+  | "varal";
 
 type MissaoBase = {
   id: string;
@@ -212,6 +213,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "tc_montar", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "montar_ferramenta", qtd: 3 }, recompensa: [{ item: "minecraft:flint", quantidade: 8 }] },
       { id: "tc_nivel", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "ferramenta_nivel", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "tc_consertar", requer: ["tc_picareta"], objetivo: { tipo: "acao", acao: "consertar", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },
+      { id: "tc_varal", objetivo: { tipo: "acao", acao: "varal", qtd: 8 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       {
         id: "tc_obsidiana",
         requer: ["tc_nivel"],
@@ -446,7 +448,8 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     requer: ["cacador"],
     missoes: [
       { id: "mumias", objetivo: { tipo: "matar", familia: "mumia", qtd: 5 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
-      { id: "escorpioes", objetivo: { tipo: "matar", familia: "escorpiao", qtd: 5 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 3 }] },
+      // O id ficou do escorpião (tirado na 1.1.0); agora são husks.
+      { id: "escorpioes", objetivo: { tipo: "matar", familia: "husk", qtd: 5 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 3 }] },
       { id: "golem", objetivo: { tipo: "matar", familia: "golem_areia", qtd: 1 }, recompensa: [{ item: "minecraft:glass", quantidade: 8 }] },
       { id: "faixas", objetivo: { tipo: "ter", item: IDS.faixaMumia, qtd: 4 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 2 }] },
       { id: "idolo", objetivo: { tipo: "colocar", bloco: IDS.idolo, qtd: 1 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 2 }] },

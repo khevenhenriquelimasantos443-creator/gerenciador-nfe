@@ -3,7 +3,7 @@
   "minecraft:entity": {
     "description": {
       "identifier": "cl:escorpiao",
-      "is_spawnable": true,
+      "is_spawnable": false,
       "is_summonable": true
     },
     "components": {

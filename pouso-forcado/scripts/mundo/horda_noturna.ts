@@ -6,11 +6,11 @@ import { intervalo } from "../util/perfil.js";
  * Noite e dia no deserto:
  * - À noite, a cada HORDA.intervaloTicks nascem monstros extras perto de cada jogador
  *   (se houver menos de HORDA.limitePerto em volta).
- * - Em cada hora de HORDA.onda.horas chega uma onda da HORDA: aviso na tela, corneta e
+ * - A horda vem só a cada HORDA.onda.aCadaDias noites (a 10ª, a 20ª...), com aviso no fim da tarde.
+ *   Nessa noite, em cada hora de HORDA.onda.horas chega uma onda: aviso na tela, corneta e
  *   monstros em volta de cada jogador, mais a cada dia que passa.
- * - De dia, o sol do planeta incendeia todo monstro exposto ao céu (até husks, aranhas
- *   e creepers, que no jogo normal não queimam). Quem está na sombra ou no subsolo escapa.
- *   O Golem de Areia e o Faraó (família cl_resiste_sol) não queimam nem são apagados.
+ * - De dia, o sol do planeta incendeia os monstros expostos ao céu. Husks, aranhas e creepers
+ *   não queimam (como no jogo normal), nem o Golem de Areia e o Faraó (família cl_resiste_sol).
  * - De dia, nenhum monstro nasce sob o céu aberto: se o jogo fizer um nascer (spawn natural),
  *   ele é removido no mesmo instante. No subsolo e na sombra o spawn segue normal.
  * Custo: uma busca de entidades por jogador a cada 10 s à noite; de dia, uma busca de
@@ -19,6 +19,7 @@ import { intervalo } from "../util/perfil.js";
 const NOITE_INICIO = 13000;
 const NOITE_FIM = 23000;
 const SOL_FIM = 12000; // de 0 a 12000 o sol está alto o bastante para queimar
+const NAO_QUEIMAM: ReadonlySet<string> = new Set(HORDA.sol.naoQueimam);
 
 // Erros aparecem uma vez por sessão no chat (no celular não dá para ver o log de conteúdo).
 const errosAvisados = new Set<string>();
@@ -107,8 +108,23 @@ function soltarOnda(numero: number, dia: number): void {
   }
 }
 
+/** A noite deste dia é noite de horda? (a 10ª, a 20ª... contando a primeira noite como 1) */
+export const noiteDeHorda = (dia: number = world.getDay()): boolean => (dia + 1) % HORDA.onda.aCadaDias === 0;
+
+let avisadoNoDia = -1;
+function avisoDeHorda(): void {
+  const dia = world.getDay();
+  if (avisadoNoDia === dia || !noiteDeHorda(dia) || hora() < HORDA.onda.avisoHora || hora() >= NOITE_INICIO) return;
+  avisadoNoDia = dia;
+  for (const j of jogadoresNoDeserto()) {
+    j.onScreenDisplay.setTitle({ translate: "cl.horda.aviso" }, { subtitle: { translate: "cl.horda.aviso_sub" }, fadeInDuration: 10, stayDuration: 80, fadeOutDuration: 20 });
+    j.playSound("raid.horn", { volume: 0.5, pitch: 0.8 });
+  }
+}
+
 function talvezOnda(): void {
   const dia = world.getDay();
+  if (!noiteDeHorda(dia)) return;
   const feita = world.getDynamicProperty(PROPS.ondaFeita);
   const [diaFeito, kFeito] = typeof feita === "string" ? feita.split(":").map(Number) : [-1, -1];
   // A onda mais recente cuja hora já passou nesta noite.
@@ -130,6 +146,7 @@ function soloCeu(dimensao: Dimension, { x, y, z }: Vector3): boolean {
 function solQueima(): void {
   const dimensao = world.getDimension("minecraft:overworld");
   for (const mob of dimensao.getEntities({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] })) {
+    if (NAO_QUEIMAM.has(mob.typeId)) continue;
     try {
       if (soloCeu(dimensao, mob.location)) mob.setOnFire(HORDA.sol.segundosFogo, true);
     } catch {
@@ -140,7 +157,9 @@ function solQueima(): void {
 
 export function registrarHordaNoturna(): void {
   intervalo("horda", () => {
-    if (!ehNoite() || world.getDifficulty() === Difficulty.Peaceful) return;
+    if (world.getDifficulty() === Difficulty.Peaceful) return;
+    avisoDeHorda();
+    if (!ehNoite()) return;
     try {
       talvezOnda();
     } catch (erro) {

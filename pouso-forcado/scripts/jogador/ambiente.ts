@@ -8,11 +8,11 @@ import { lerTemperatura, mudarTemperatura } from "./temperatura.js";
 
 /*
  * O "tracker" do EnviroMine: a cada 30 ticks (1,5 s), para cada jogador no sobrevivência,
- * 1) temperatura do ar: dia 65 °C, noite ÷ 9 (deserto), sombra −2,5, água −5, dormindo +5, correndo +2,
+ * 1) temperatura do ar: dia 50 °C, noite ÷ 9 (deserto), sombra −14, água −5, dormindo +5, correndo +2,
  *    calor da terra no subsolo, armadura, e a maior fonte de calor por perto (lava, fogo, tocha...);
  * 2) o corpo anda em direção ao ar (TEMPERATURA.velocidade); suar (≥ 38,02 °C) gasta água e, com a
- *    hidratação ≥ 75, esfria;
- * 3) hidratação: perde 0,05 + 0,05 (seco) + 0,05 (seco de dia) + suor + correr + efeito Fome;
+ *    hidratação ≥ 75, esfria; acima de 37 °C e fora do sol o corpo esfria rápido (TEMPERATURA.velocidade.descidaQuente);
+ * 3) hidratação: perde SEDE.porAtualizacao (base + seco + seco de dia + suor + correr + efeito Fome);
  *    a água salgada desidrata (−1 por atualização); o Camel Pack devolve +1 por atualização;
  * 4) qualidade do ar: regenera com céu; no subsolo cai perto de lava, fogo e tochas; cai também ao ar
  *    livre na tempestade de areia; a máscara de gás gasta carga para manter o ar em 100;
@@ -101,7 +101,7 @@ function passoDoCorpo(j: Player, ar: number, rapido: boolean): void {
     vel = T.velocidade.subidaSeco * (rapido ? T.velocidade.fonteForte : 1); // o deserto todo é "bioma seco"
     if (j.isSprinting) vel = Math.max(vel, T.velocidade.correndoMin);
     if (j.getComponent("minecraft:onfire")) vel = T.velocidade.chamas;
-  } else vel = j.isInWater ? T.velocidade.descidaAgua : T.velocidade.descida;
+  } else vel = j.isInWater ? T.velocidade.descidaAgua : corpo > T.normal ? T.velocidade.descidaQuente : T.velocidade.descida;
   const amp = Math.abs(delta) > 10 ? Math.abs(delta) / 10 : 1;
   mudarTemperatura(j, Math.sign(delta) * Math.min(Math.abs(delta), vel * amp));
 }

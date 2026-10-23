@@ -60,6 +60,8 @@ cl.missao.papel.desc=Plant sugar cane next to water and craft 3 paper.
 ## Horde
 cl.horda.titulo=§cThe horde is here!
 cl.horda.subtitulo=Wave %s of %s: %s monsters. Hold out until sunrise.
+cl.horda.aviso=§6Horde night
+cl.horda.aviso_sub=The horde comes tonight. Take shelter (the plane has doors).
 
 ## Machines (Phase 3)
 tile.cl:peneira.name=Sieve
@@ -230,8 +232,8 @@ cl.farao.derrotado=The Cursed Pharaoh has fallen! Take the Pharaoh's Heart: it w
 ## Missions (Phase 7)
 cl.missao.mumias.titulo=The dead walk
 cl.missao.mumias.desc=Defeat 5 mummies. They come out at night and their touch makes you hungry.
-cl.missao.escorpioes.titulo=Venomous sting
-cl.missao.escorpioes.desc=Defeat 5 desert scorpions. Watch out for the poison: they climb walls.
+cl.missao.escorpioes.titulo=Dry husks
+cl.missao.escorpioes.desc=Defeat 5 husks, the dry desert zombies. They don't burn in the sun.
 cl.missao.golem.titulo=Made of sand
 cl.missao.golem.desc=Defeat a Sand Golem. They only appear during sandstorms.
 cl.missao.faixas.titulo=Ancient wraps
@@ -339,7 +341,7 @@ cl.capitulo.energia.desc=Panels, generator, windmill, batteries and cables. All 
 cl.capitulo.exploracao.nome=Exploration
 cl.capitulo.exploracao.desc=Abandoned cities, dungeons, wrecks and the sandstorm.
 cl.capitulo.deserto.nome=Desert Dangers
-cl.capitulo.deserto.desc=Mummies, scorpions, the storm golem and the Cursed Pharaoh.
+cl.capitulo.deserto.desc=Mummies, husks, the storm golem and the Cursed Pharaoh.
 cl.capitulo.nave.nome=Fix the Ship
 cl.capitulo.nave.desc=Assembler, terminal and the parts for the ship's 4 systems.
 cl.capitulo.equipamento.nome=Gear
@@ -767,7 +769,14 @@ item.cl:espada_larga_obsidiana.name=Obsidian Broadsword
 tile.cl:mesa_moldes.name=Stencil Table
 tile.cl:construtor_pecas.name=Part Builder
 tile.cl:estacao_ferramentas.name=Tool Station
+tile.cl:varal.name=Drying Rack
 cl.tc.cabeca=§7Head: %s
+cl.tc.varal_como=Drying Rack: tap with Rotten Flesh to hang it (up to 4). In 5 minutes it turns into Leather; tap again to collect.
+cl.tc.varal_estado=Drying Rack: %s drying, %s ready. Next in %s min.
+cl.tc.varal_cheio=The rack is full (4).
+cl.tc.varal_pegou=Took %s Leather from the rack.
+cl.missao.tc_varal.titulo=Leather from rotten flesh
+cl.missao.tc_varal.desc=Craft a Drying Rack (3 oak slabs) and get 8 Leather by drying Rotten Flesh on it.
 cl.tc.cabo=§7Handle: %s
 cl.tc.ligacao=§7Binding: %s
 cl.tc.durabilidade=§7Durability: §f%s/%s

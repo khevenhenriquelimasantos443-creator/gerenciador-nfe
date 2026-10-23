@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.0.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último).
+**Versão 1.1.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último).
 
 ## Fases até o fim
 
@@ -18,12 +18,12 @@ A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 | 4 | Comida e vida: sede, temperatura do corpo, 5 qualidades de água, fruta do cacto, cápsulas de carga com animais; +8 missões | pronta |
 | 5 | Energia: painel solar, moinho de vento, gerador a carvão, bateria, cabos, peneira automática; estufa e condensador avançado turbinados; +8 missões | pronta |
 | 6 | Exploração: cidades abandonadas (prédios de até 9 andares, torre de rádio), masmorras comuns e fundas, Gerador de Monstros, tempestade de areia, destroços de outras naves; +7 missões | pronta |
-| 7 | Perigos do deserto: Múmia, Escorpião do Deserto, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | pronta |
+| 7 | Perigos do deserto: Múmia, Golem de Areia (só na tempestade) e o chefe Faraó Amaldiçoado, acordado com o Ídolo Amaldiçoado; +6 missões | pronta |
 | 8 | Consertar a nave: Painel da Nave com 4 sistemas (casco, computador de bordo, combustível, motor), Montadora (máquina de energia que faz as peças) e Terminal de Armazenamento (rede de baús tipo Applied Energistics); +8 missões | pronta |
 | 9 | **Visual futurista e minimalista**: modelos 3D próprios para as 14 máquinas, texturas novas, telas e peças animadas, cabos que se conectam, partículas próprias e ícones novos das peças | pronta |
 | 11 | **Diário 2.0** (capítulos e dependências como no Hardcore Questing Mode, entregar itens, recompensa "escolha 1", 5 sacolas de recompensa), **Catálogo** estilo JEI, **o que estou olhando** estilo WAILA, **Organizador** e reabastecimento estilo Inventory Tweaks, energia mostrada em **RF**, `/cl:diagnostico`; +5 missões | pronta |
 | 12 | **Ex Nihilo + Ex Aliquo**: peneira por toques com as tabelas do Ex Nihilo (terra, cascalho, areia e poeira), 6 martelos, poeira, pedrinhas, pedaços de minério de ferro/ouro/cobre, barril de madeira e de pedra (compostagem, argila, obsidiana, slime...), cadinho (pedra vira lava, folhas viram água), cajado e bicho-da-seda; +13 missões | pronta |
-| 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 65 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | pronta |
+| 13 | **EnviroMine + Hunger Overhaul**: hidratação de 0 a 100 e temperatura do corpo em °C com os números do EnviroMine (sol 50 °C, noite ÷ 9, suor, insolação/hipotermia I-III, congelamento), água salgada, Camel Pack, qualidade do ar e Máscara de Gás com filtros; comida do jogo com os valores do HO, regeneração só com fome ≥ 7, efeitos de fome/vida baixa, Bem Alimentado, animais mais lentos; +5 missões | pronta |
 | 14 | **Pam's HarvestCraft**: 10 plantações (milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz, amendoim, fruta do cacto) com sementes na peneira no lugar das do jogo, crescimento lento do HO, colheita com a mão; 8 utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) e 35 receitas; Camel Pack na mão secundária e enchido pelo condensador; +10 missões | pronta |
 | 15 | **Tinkers' Construct + Iguana Tweaks**: Padrão em Branco, Mesa de Moldes, Construtor de Peças e Estação de Ferramentas; 8 peças × 10 materiais; Picareta, Pá, Machadinha e Espada Larga montadas, com durabilidade, XP e nível da ferramenta, conserto, modificadores e nível de mineração do Iguana; +7 missões | pronta |
 | 16 | **Fundição do Tinkers**: argamassa e tijolos refratários, fundição multibloco (até 4 camadas) com tanque de lava, dreno, torneira, mesa e bacia; metal em mB com minério rendendo o dobro; bronze (3 cobre + 1 estanho) e aço (ferro + carvão); moldes de ouro; peças e ferramentas de ferro, cobre, bronze e aço; estanho na peneira; +7 missões | pronta |
@@ -265,6 +265,7 @@ Todas trabalham a cada 5 s: puxam do baú (ou funil) **em cima**, põem no baú 
 - **Mesa de Moldes**: toque com um Padrão em Branco na mão e escolha a peça (cabo, ligação, cabeças de picareta/pá/machado, lâmina, guarda larga, travessa).
 - **Construtor de Peças**: toque com o padrão na mão e escolha o material da mochila. Cabeças e lâmina custam 2, o resto 1. Materiais: madeira (tábuas), pedra (pedregulho), sílex, cacto, osso, obsidiana. Metal só pela fundição (Fase 16).
 - **Estação de Ferramentas**: mão vazia = montar (Picareta = cabeça + ligação + cabo; Pá e Machadinha = cabeça + cabo; Espada Larga = lâmina + guarda larga + cabo). Com a ferramenta na mão = consertar (cada item do material da cabeça devolve 25%) ou modificar.
+- **Varal** (o Drying Rack do TC; 3 lajes de carvalho em linha): toque com **Carne Podre** para pendurar (até 4, aparecem no varal). Em 5 minutos cada uma vira **Couro**; toque de novo para pegar. Olhando para ele, a linha de cima mostra quantas secam e quanto falta. Missão: tirar 8 couros.
 - **Números do TC 1.6.4 com o Iguana**: a cabeça dá velocidade, dano e nível de mineração; durabilidade = cabeça × multiplicador do cabo × 0,5 (na picareta, média de cabeça e ligação). Ex.: sílex 171 e nível 1; obsidiana 89 e nível 3; ferro 250 e nível 2; aço 750 e nível 3.
 - **Nível de mineração (Iguana)**: ferro, cobre e lápis pedem nível 1; ouro, redstone, diamante e esmeralda pedem 2; obsidiana pede 3. Com ferramenta fraca o bloco não quebra.
 - **Ferramenta não some**: em 0 de durabilidade fica "quebrada" até ser consertada.
@@ -287,10 +288,10 @@ Todas trabalham a cada 5 s: puxam do baú (ou funil) **em cima**, põem no baú 
 
 Os números são os do EnviroMine 1.1.63 e do Hunger Overhaul (ver `docs/pesquisa-mods.md`). Atualiza a cada 1,5 s.
 
-- **Hidratação 0–100** (o progresso antigo de 0 a 20 vira 0 a 100). Perde 0,05 + 0,05 (deserto) + 0,05 (deserto de dia) por atualização; suando (corpo ≥ 38 °C) +0,1; correndo +0,05; com o efeito Fome +0,1. Abaixo de 10: fraqueza, fadiga e lentidão. Em 0: 4 de dano a cada 1,5 s.
-- **Águas**: Boa (limpa) +25 e esfria 0,05 °C; Excelente (fria) +25 e esfria 0,1 °C; Suja +25 com Fome/Veneno 25%; **Água Salgada** (antes "Imprópria") +10 e depois **desidrata** (−1 por 1,5 s por 30 s). A **garrafa de água do jogo** e a **poça** são salgadas (no Crash Landing toda fonte é salgada). Direto do condensador: +10.
+- **Hidratação 0–100** (o progresso antigo de 0 a 20 vira 0 a 100). Mais leve desde a 1.1.0: perde 0,03 + 0,02 (deserto) + 0,03 (deserto de dia) por atualização; suando (corpo ≥ 38 °C) +0,05; correndo +0,03; com o efeito Fome +0,1. Abaixo de 10: fraqueza, fadiga e lentidão. Em 0: 4 de dano a cada 1,5 s.
+- **Águas**: Boa (limpa) +25 e esfria 0,5 °C; Excelente (fria) +25 e esfria 1 °C; Suja +25, esfria 0,2 °C, com Fome/Veneno 25%; **Água Salgada** (antes "Imprópria") +10 e depois **desidrata** (−1 por 1,5 s por 30 s). A **garrafa de água do jogo** e a **poça** são salgadas (no Crash Landing toda fonte é salgada). Direto do condensador: +10.
   - Fornalha/fogueira: toda água ruim (e a garrafa de água) vira **Água Boa**. Água Boa + terra = suja; + areia = salgada; + bola de neve = fria. Garrafa + terra = suja. 8 folhas = 1 terra.
-- **Temperatura do corpo em °C** (normal 37). Ar: **65 °C de dia**, **÷ 9 à noite** (≈ 7 °C), sombra −2,5, água −5, dormindo +5, correndo +2, calor da terra no subsolo; a fonte de calor mais forte por perto (lava 200, fogo/fogueira 100, tocha/fornalha 75, gerador aceso 75) puxa o ar para cima. Armadura: couro +1 por peça; ferro esquenta ao sol; diamante refresca.
+- **Temperatura do corpo em °C** (normal 37). Ar: **50 °C de dia**, **÷ 9 à noite** (≈ 6 °C), sombra −14 (a sombra refresca: 36 °C), um corpo acima de 37 °C esfria rápido fora do sol, água −5, dormindo +5, correndo +2, calor da terra no subsolo; a fonte de calor mais forte por perto (lava 200, fogo/fogueira 100, tocha/fornalha 75, gerador aceso 75) puxa o ar para cima. Armadura: couro +1 por peça; ferro esquenta ao sol; diamante refresca.
   - O corpo anda devagar até o ar (sobe 0,005 por atualização no deserto, cai 0,001; dentro da água cai 10× mais rápido). **Suar** (≥ 38 °C) gasta água e, com hidratação ≥ 75, segura o corpo.
   - **Insolação** I (≥ 39 °C, lentidão), II (≥ 41, fraqueza/fadiga/fome/náusea), III (≥ 43, 4 de dano). **Hipotermia** I (≤ 35), II (≤ 32), III (≤ 30). **Congelamento** depois de 3 e 6 min no frio (deixa cair o item da mão, quase não anda): só sai com **maçã dourada**.
 - **Camel Pack** (8 couros em volta de uma garrafa): vista no peito **ou ponha na mão secundária** (deixa o peito livre para a armadura); agachado, use uma Água Boa para encher (4 garrafas = 100), ou agache e toque num **Condensador de Água** com a mão vazia (+75). Ele dá +1 de água por 1,5 s quando você precisa.
@@ -491,16 +492,16 @@ Estilo futurista e minimalista: corpo branco-gelo, base grafite e uma faixa de l
 ## Perigos do deserto (Fase 7)
 
 - **Múmia** (`cl:mumia`): um pouco maior que um zumbi, 30 de vida; o golpe dá **fome**. Deixa carne podre, às vezes **Faixa de Múmia**, osso e pepitas de ouro.
-- **Escorpião do Deserto** (`cl:escorpiao`): pequeno e rápido, sobe paredes, pula no alvo e **envenena**. Deixa linha e às vezes olho de aranha.
-- As duas nascem sozinhas à noite no deserto (e no subsolo escuro), entram nas **ondas da horda** e saem dos **Geradores de Monstros**. De dia, como os outros, queimam no sol.
+- A múmia nasce sozinha à noite no deserto (e no subsolo escuro), entra nas **ondas da horda** e sai dos **Geradores de Monstros**. De dia, como os zumbis, queima no sol.
+- O **Escorpião do Deserto** saiu do jogo na 1.1.0: não nasce mais e os que existiam num mundo antigo somem (a missão dele virou "derrote 5 husks").
 - **Golem de Areia** (`cl:golem_areia`): só aparece **durante a tempestade de areia**, perto de quem está ao ar livre (no máximo 2 por perto). Grande, lento, 60 de vida, bate forte e quase não é empurrado. O sol não o queima. Quando a tempestade acaba, ele **desmorona** e vira areia. Morto, deixa areia, arenito e às vezes vidro.
 - **Faraó Amaldiçoado** (`cl:farao`), o chefe: faça o **Ídolo Amaldiçoado** (bancada: 4 barras de ouro nos cantos, 4 Faixas de Múmia nos lados, arenito talhado no meio), coloque e **toque nele à noite**. Ele sobe da areia com barra de chefe e 300 de vida:
-  - chama múmias e escorpiões a cada 12 s;
+  - chama múmias a cada 12 s;
   - solta uma **rajada de areia** a cada 7 s: fere, empurra e cega quem está a até 7 blocos (fique longe e use arco);
   - com metade da vida, **chama uma tempestade de areia** (e com ela os golens);
   - não queima no sol nem é empurrado. Só um por vez.
   - Derrotado, deixa o **Coração do Faraó** (vai ser usado para consertar a nave, na Fase 8), 8 a 16 barras de ouro, diamantes, maçãs douradas e faixas.
-- Missões novas: 5 múmias, 5 escorpiões, um golem, 4 faixas, colocar o ídolo e derrotar o Faraó.
+- Missões novas: 5 múmias, 5 husks, um golem, 4 faixas, colocar o ídolo e derrotar o Faraó.
 - Para testar no criativo: ovos de cada monstro no inventário, ou `/summon cl:farao`. Ajuste vida e dano em `BP/entities/*.json`; habilidades do Faraó e do golem em `FARAO` e `GOLEM_AREIA` no `scripts/config.ts`.
 
 ## Energia (Fase 5)
@@ -574,11 +575,12 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **Sem cavernas e sem água.** Mundo plano não tem cavernas, aquíferos, rios nem mares. Também não chove (bioma de deserto).
 - **Sem animais:** em `BP/spawn_rules/` as regras de spawn de todos os animais do Overworld estão vazias: vaca, porco, ovelha, galinha, coelho, cavalo, burro, lhama, camelo, lobo, raposa, abelha, sapo, cabra, panda, papagaio, jaguatirica, urso-polar, tatu, tartaruga, morcego, peixes, lula, golfinho, axolote e náutilo.
 - **Mais monstros à noite:** zumbi, husk, esqueleto, aranha e creeper nascem em grupos maiores e com mais frequência (regras de spawn reforçadas). Além disso, a cada 5 s nascem 4 monstros extras a 12–28 blocos de cada jogador, até ter 60 por perto.
-- **A horda:** três ondas por noite (horas 14000, 17000 e 20000 do jogo). Em cada uma aparece "A horda chegou! Onda N de 3", toca uma corneta e nascem monstros a 8–20 blocos de cada jogador: 12 por onda na primeira noite, +3 a cada dia (até 40). Nada disso acontece no Pacífico, no criativo nem fora do Overworld. Se algo der erro, aparece uma linha vermelha no chat. Ajuste em `HORDA` no `scripts/config.ts`.
-- **O sol queima tudo:** de dia, todo monstro exposto ao céu pega fogo, inclusive husks, aranhas e creepers, que no jogo normal não queimam. Quem estiver na sombra (dentro de um templo, embaixo de um teto) ou no subsolo escapa.
+- **A noite** (mais leve desde a 1.1.0): a cada 10 s nascem até 2 monstros extras perto de cada jogador, se houver menos de 25 por perto.
+- **A horda:** só a cada 10 noites (a 10ª, a 20ª...). No fim da tarde aparece "Noite de horda"; à noite vêm três ondas (horas 14000, 17000 e 20000 do jogo). Em cada uma aparece "A horda chegou! Onda N de 3", toca uma corneta e nascem monstros a 8–20 blocos de cada jogador: 8 + 1 por dia do mundo (até 30). Nada disso acontece no Pacífico, no criativo nem fora do Overworld. Se algo der erro, aparece uma linha vermelha no chat. Ajuste em `HORDA` no `scripts/config.ts`.
+- **O sol:** de dia, monstros expostos ao céu pegam fogo, menos husks, aranhas e creepers (como no jogo normal). Quem estiver na sombra ou no subsolo escapa.
 - **Nada nasce de dia ao ar livre:** se o jogo fizer um monstro nascer de dia sob o céu aberto, o script remove na hora. No subsolo e na sombra o spawn continua normal. (Ovos de spawn usados de dia ao ar livre também são removidos.)
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
-- **Avião caído.** Ao entrar no mundo pela primeira vez, o avião da queda aparece ao lado do jogador (uns 44 x 35 blocos, mais o rastro da queda): sem as turbinas das asas, com um buraco grande e rasgado na traseira, cratera e destroços em volta. A área é carregada antes de montar (pode levar alguns segundos). No porão de carga há um baú com o que sobrou: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
+- **Avião caído.** Ao entrar no mundo pela primeira vez, o avião da queda aparece ao lado do jogador (uns 44 x 35 blocos, mais o rastro da queda): inteiro (é o seu abrigo para a noite), sem as turbinas das asas. Tem **portas** dos dois lados, em cima das asas (suba pelos degraus na frente de cada asa), luz dentro e o Painel da Nave na cabine. A área é carregada antes de montar (pode levar alguns segundos). No porão de carga há um baú com o que sobrou: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
 - **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.16.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 
@@ -603,8 +605,8 @@ Dica: ative o log de erros em **Configurações → Criador → Ativar GUI do lo
 6. **Templo:** é raro (um a cada ~3.900×3.900 blocos). Digite `/cl:templo` para ver onde fica o mais perto e vá até lá: uma pirâmide de arenito com faixas laranja, num pedaço plano. Entre pela abertura no nível do chão e abra o baú.
 7. **Só uma vez:** saia e entre de novo. Nada deve ser recolocado (nem nave, nem dunas em cima das antigas).
 8. **Sem animais e sem água:** de dia, nenhum animal; nenhuma água em lugar nenhum.
-9. **Noite:** no sobrevivência, deve vir bem mais monstro que o normal. Nas horas 14000, 17000 e 20000 (pode usar `/time set 13900` com trapaças ligadas) aparece "A horda chegou!" e chega uma onda.
-   De manhã (`/time set 1000`), os monstros no descampado pegam fogo. Pelo caminho devem aparecer cactos.
+9. **Noite:** no sobrevivência, vem um pouco mais de monstro que o normal. Na noite de horda, nas horas 14000, 17000 e 20000 (pode usar `/time set 13900` com trapaças ligadas) aparece "A horda chegou!" e chega uma onda.
+   A horda só vem na 10ª noite (`/time set 9` dias à frente, ou `/time add`). De manhã (`/time set 1000`), zumbis, esqueletos e múmias no descampado pegam fogo; husks, aranhas e creepers não. Pelo caminho devem aparecer cactos.
 10. **Condensador, à mão:** coloque o condensador e toque nele logo em seguida. Deve aparecer "ainda está juntando umidade". Espere ~30 s: o centro do topo fica **azul claro**. Toque com um balde vazio no inventário: você recebe um balde de água e ouve o som, e o topo volta a escuro.
 11. **Sem balde:** com o condensador cheio e sem balde vazio, aparece "Traga um balde vazio".
 12. **Baú adjacente:** coloque um baú (ou barril/funil) encostado no condensador com baldes vazios dentro. A cada ~30 s um balde do baú vira balde de água.

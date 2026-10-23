@@ -1,0 +1,74 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:varal",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:pendurado": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.varal",
+        "bone_visibility": {
+          "carne1": "q.block_state('cl:pendurado') >= 1",
+          "carne2": "q.block_state('cl:pendurado') >= 2",
+          "carne3": "q.block_state('cl:pendurado') >= 3",
+          "carne4": "q.block_state('cl:pendurado') >= 4"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_varal",
+          "render_method": "opaque"
+        },
+        "carne": {
+          "texture": "clc_varal_carne",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#8a6a3e",
+      "cl:varal": {},
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -2
+        ],
+        "size": [
+          16,
+          15,
+          4
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -2
+        ],
+        "size": [
+          16,
+          15,
+          4
+        ]
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 // Gera BP/structures/cl/aviao_caido_<n>.mcstructure (em pedaços), o avião caído do começo do jogo, a partir de
 // tools/dados/nave/aviao.json (os comandos do pacote "Nativo 3.1 — Asas Recuadas" feito pelo jogador).
-// Mudanças em cima do modelo: sem as 4 turbinas das asas, um buraco grande e rasgado na traseira da
-// fuselagem (com cratera e destroços em volta), o baú de suprimentos e o lugar do Painel da Nave.
+// Mudanças em cima do modelo: sem as 4 turbinas das asas, casco fechado (abrigo), o baú de suprimentos,
+// o lugar do Painel da Nave e das portas.
 // As posições de NAVE (scripts/config.ts) saem daqui: o script confere e para se não baterem.
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -62,44 +62,64 @@ for (const t of TURBINAS) {
       }
 }
 
-// 3) Buraco grande na traseira: elipsoide rasgado (borda irregular) no lado esquerdo de cima da
-// fuselagem, perto da cauda, atravessando o piso até uma cratera no chão.
-const BURACO = { x: -31, y: 5, z: -2, rx: 8.5, ry: 5, rz: 6 };
-const dentroBuraco = (x, y, z, folga = 0) => {
-  const d = ((x - BURACO.x) / BURACO.rx) ** 2 + ((y - BURACO.y) / BURACO.ry) ** 2 + ((z - BURACO.z) / BURACO.rz) ** 2;
-  return d < 1 + folga + (sorte(x, y, z) - 50) / 160;
+// 3) O avião fica inteiro (abrigo para a noite). Os dois vãos do modelo viram portas: a dupla do lado
+// esquerdo e a simples do lado direito. A verga em cima da porta é fechada (a porta tem 2 de altura) e as
+// portas são postas pelo script (scripts/mundo/nave.ts), porque a estrutura não guarda estados de bloco.
+const PORTAS_MODELO = [{ x: -13, y: 4, z: -4 }, { x: -12, y: 4, z: -4 }, { x: -8, y: 4, z: 4 }];
+const vizinhoComum = (x, y, z) => {
+  const conta = new Map();
+  for (const [dx, dy, dz] of [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
+    const b = ler(x + dx, y + dy, z + dz);
+    if (!vazio(b) && b !== "minecraft:fire") conta.set(b, (conta.get(b) ?? 0) + 1);
+  }
+  return [...conta].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "minecraft:light_gray_concrete";
 };
-const QUEIMADO = ["minecraft:black_concrete", "minecraft:blackstone", "minecraft:coal_block"];
-for (let x = BURACO.x - 9; x <= BURACO.x + 9; x++)
-  for (let y = 1; y <= 12; y++)
-    for (let z = BURACO.z - 8; z <= BURACO.z + 8; z++) {
-      const b = ler(x, y, z);
-      if (vazio(b)) continue;
-      if (dentroBuraco(x, y, z)) g.set(k(x, y, z), AR);
-      else if (dentroBuraco(x, y, z, 0.35) && sorte(x, y, z) < 35) g.set(k(x, y, z), QUEIMADO[sorte(z, x, y) % 3]); // borda chamuscada
+for (const p of PORTAS_MODELO) {
+  g.set(k(p.x, p.y, p.z), AR);
+  g.set(k(p.x, p.y + 1, p.z), AR);
+  g.set(k(p.x, p.y + 2, p.z), vizinhoComum(p.x, p.y + 2, p.z));
+}
+// Fecha os furos que sobrarem no casco: procura um caminho de dentro do porão até fora e tapa o vão de
+// parede mais de fora do caminho, até não haver mais caminho (com as portas contadas como fechadas).
+const ehPorta = (x, y, z) => PORTAS_MODELO.some((p) => p.x === x && p.z === z && (y === p.y || y === p.y + 1));
+const solido = (x, y, z) => (!vazio(ler(x, y, z)) && ler(x, y, z) !== "minecraft:fire") || ehPorta(x, y, z);
+const LADOS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
+const CAIXA = { x: [-45, 8], y: [2, 14], z: [-9, 9] };
+let selados = 0;
+for (;;) {
+  const ini = k(-20, 5, 0), pai = new Map([[ini, null]]), fila = [ini];
+  let fora = null;
+  while (fila.length && !fora) {
+    const [x, y, z] = fila.shift().split(",").map(Number);
+    for (const [dx, dy, dz] of LADOS) {
+      const n = [x + dx, y + dy, z + dz], kn = k(...n);
+      if (pai.has(kn) || solido(...n)) continue;
+      pai.set(kn, k(x, y, z));
+      if (n[0] < CAIXA.x[0] || n[0] > CAIXA.x[1] || n[1] < CAIXA.y[0] || n[1] > CAIXA.y[1] || n[2] < CAIXA.z[0] || n[2] > CAIXA.z[1]) { fora = kn; break; }
+      fila.push(kn);
     }
-// Cratera embaixo do buraco (chão afundado e queimado).
-for (let x = BURACO.x - 7; x <= BURACO.x + 7; x++)
-  for (let z = BURACO.z - 6; z <= BURACO.z + 6; z++) {
-    const d = ((x - BURACO.x) / 7) ** 2 + ((z - BURACO.z) / 6) ** 2;
-    if (d >= 1) continue;
-    const fundo = d < 0.35 ? -2 : d < 0.7 ? -1 : 0;
-    for (let y = fundo; y <= 0; y++) g.set(k(x, y, z), AR);
-    g.set(k(x, fundo - 1, z), sorte(x, fundo, z) < 45 ? "minecraft:coarse_dirt" : sorte(x, 0, z) < 70 ? "minecraft:blackstone" : "minecraft:magma");
   }
-// Destroços jogados para trás e para a esquerda do buraco.
-const SUCATA = ["minecraft:light_gray_concrete", "minecraft:white_concrete", "minecraft:iron_block", "minecraft:smooth_quartz", "minecraft:gray_concrete", "minecraft:black_concrete"];
-for (let x = BURACO.x - 16; x <= BURACO.x + 6; x++)
-  for (let z = BURACO.z - 18; z <= BURACO.z + 4; z++) {
-    if (sorte(x, 7, z) >= 9) continue;
-    const d = ((x - BURACO.x) / 7) ** 2 + ((z - BURACO.z) / 6) ** 2;
-    if (d < 1.1) continue; // não dentro da cratera
-    let y = 1;
-    while (!vazio(ler(x, y, z)) && y < 4) y++;
-    if (y > 1 && sorte(x, y, z) < 60) continue; // em cima do avião só às vezes
-    if (vazio(ler(x, y - 1, z)) && y - 1 > 0) continue;
-    g.set(k(x, y, z), SUCATA[sorte(z, y, x) % SUCATA.length]);
+  if (!fora) break;
+  if (++selados > 60) throw new Error("o casco do avião tem furos demais para fechar");
+  const caminho = [];
+  for (let c = fora; c; c = pai.get(c)) caminho.push(c.split(",").map(Number));
+  let alvo = caminho[1];
+  for (const c of [...caminho].reverse()) {
+    if ([[1, 0, 0], [0, 1, 0], [0, 0, 1]].some(([a, b, d]) => solido(c[0] + a, c[1] + b, c[2] + d) && solido(c[0] - a, c[1] - b, c[2] - d))) alvo = c;
   }
+  g.set(k(...alvo), vizinhoComum(...alvo));
+}
+// Degraus para subir na asa pela frente (as portas abrem em cima das asas, 3 blocos acima do chão).
+for (const z of [-9, 9]) {
+  for (const [x, y] of [[-6, 1], [-7, 1], [-7, 2]]) g.set(k(x, y, z), "minecraft:gray_concrete");
+  for (const [x, y] of [[-6, 2], [-6, 3], [-7, 3], [-7, 4]]) if (!vazio(ler(x, y, z))) throw new Error(`degrau do avião sem espaço em ${x},${y},${z}`);
+}
+// Luz no fundo da cauda: o teto ganha lanternas do mar, para não nascer monstro lá dentro.
+for (const x of [-37, -32, -29]) {
+  let y = 5;
+  while (y < 12 && !solido(x, y, 0)) y++;
+  if (y < 12) g.set(k(x, y, 0), "minecraft:sea_lantern");
+}
 
 // 4) Carga: o baú de suprimentos (o script põe os itens) e os outros baús viram barris vazios.
 const BAU_MODELO = { x: -16, y: 4, z: 2 };
@@ -139,6 +159,8 @@ const esperado = {
 };
 const partes = Math.ceil(nave.X / LARGURA_PARTE);
 const config = readFileSync(join(RAIZ, "scripts/config.ts"), "utf8");
+const portasTxt = `portas: [${PORTAS_MODELO.map((p) => { const r = rel(p); return `{ x: ${r.x}, y: ${r.y}, z: ${r.z} }`; }).join(", ")}]`;
+if (!config.includes(portasTxt)) throw new Error(`scripts/config.ts (NAVE) precisa de "${portasTxt}"`);
 for (const [nome, v] of Object.entries(esperado)) {
   const txt = `${nome}: { x: ${v.x}, y: ${v.y}, z: ${v.z} }`;
   if (!config.includes(txt)) throw new Error(`scripts/config.ts (NAVE) precisa de "${txt}"`);

@@ -1,4 +1,4 @@
-import { GameMode, ItemStack, Player, world } from "@minecraft/server";
+import { Entity, GameMode, ItemStack, Player, system, world } from "@minecraft/server";
 import { GOLEM_AREIA, MONSTROS_CL } from "../config.js";
 import { avisarErro } from "../util/erros.js";
 import { tempestadeAtiva } from "./tempestade.js";
@@ -57,7 +57,28 @@ function desmoronarGolens(): void {
   }
 }
 
+// O Escorpião do Deserto saiu do jogo na 1.1.0: a entidade continua registrada (mundos antigos não
+// quebram), mas não nasce mais e os que já existiam somem quando o chunk carrega.
+function semEscorpiao(entidade: Entity): void {
+  try {
+    if (entidade.typeId === MONSTROS_CL.escorpiao) entidade.remove();
+  } catch {
+    // já saiu do mundo
+  }
+}
+
 export function registrarMonstros(): void {
+  world.afterEvents.entityLoad.subscribe(({ entity }) => semEscorpiao(entity));
+  world.afterEvents.entitySpawn.subscribe(({ entity }) => semEscorpiao(entity));
+  system.runTimeout(() => {
+    for (const d of ["overworld", "nether", "the_end"]) {
+      try {
+        for (const e of world.getDimension(d).getEntities({ type: MONSTROS_CL.escorpiao })) semEscorpiao(e);
+      } catch {
+        // dimensão sem nada carregado
+      }
+    }
+  }, 40);
   intervalo("monstros", () => {
     if (!tempestadeAtiva()) {
       desmoronarGolens();

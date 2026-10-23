@@ -1,7 +1,6 @@
 import { BlockCustomComponent, Dimension, Entity, EntityDamageCause, GameMode, Vector3, system, world } from "@minecraft/server";
 import { FARAO, MONSTROS_CL } from "../config.js";
 import { aviso } from "../jogador/hud.js";
-import { escolher } from "../util/aleatorio.js";
 import { avisarErro } from "../util/erros.js";
 import { comecarTempestade, tempestadeAtiva } from "./tempestade.js";
 import { intervalo } from "../util/perfil.js";
@@ -74,11 +73,7 @@ export const idoloAmaldicoado: BlockCustomComponent = {
 
 function invocar(farao: Entity, agora: number): void {
   const dimensao = farao.dimension;
-  // families exige TODAS as famílias da lista, então uma busca para cada tipo de servo.
-  const servos = ["mumia", "escorpiao"].reduce(
-    (soma, familia) => soma + dimensao.getEntities({ location: farao.location, maxDistance: 20, families: [familia] }).length,
-    0,
-  );
+  const servos = dimensao.getEntities({ location: farao.location, maxDistance: 20, families: ["mumia"] }).length;
   if (servos >= FARAO.maxServos) return;
   for (let i = 0; i < FARAO.invocarQtd; i++) {
     const angulo = Math.random() * Math.PI * 2;
@@ -88,7 +83,7 @@ function invocar(farao: Entity, agora: number): void {
     const chao = dimensao.getTopmostBlock({ x, z });
     if (!chao || Math.abs(chao.y - farao.location.y) > 4) continue;
     const local = { x: x + 0.5, y: chao.y + 1, z: z + 0.5 };
-    dimensao.spawnEntity(escolher([MONSTROS_CL.mumia, MONSTROS_CL.mumia, MONSTROS_CL.escorpiao]), local);
+    dimensao.spawnEntity(MONSTROS_CL.mumia, local);
     efeito(dimensao, "minecraft:large_explosion", local);
   }
   dimensao.playSound("mob.evocation_illager.prepare_summon", farao.location);

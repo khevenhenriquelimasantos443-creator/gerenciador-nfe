@@ -2286,6 +2286,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pressure Chamber Valve",
   "icone": "textures/blocks/cl/c/valvula_camara"
  },
+ "cl:varal": {
+  "pt": "Varal",
+  "en": "Drying Rack",
+  "icone": "textures/blocks/cl/c/varal"
+ },
  "cl:vidro_camara": {
   "pt": "Vidro da Câmara de Pressão",
   "en": "Pressure Chamber Glass",
@@ -6159,6 +6164,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "P": "cl:parede_camara",
    "T": "cl:tubo_pressao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_varal",
+  "resultado": "cl:varal",
+  "qtd": 1,
+  "grade": [
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:oak_slab"
   },
   "estacoes": [
    "crafting_table"
