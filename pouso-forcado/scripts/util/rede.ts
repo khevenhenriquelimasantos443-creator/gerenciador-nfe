@@ -15,9 +15,16 @@ import { gravar, ler } from "./dados.js";
 const CARGA = "cl:carga";
 // Por onde a energia passa: cabos e os próprios blocos de energia (máquinas não conduzem).
 const CELULAS = DADOS_F17.celulas as Readonly<Record<string, number>>;
-const CONDUTORES = new Set<string>([IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", ...Object.keys(CELULAS)]);
+const CONDUTORES = new Set<string>([IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
 
-const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
+// Tesseract (1.2.0): a busca também pula para os outros Tesseracts da mesma frequência (scripts/maquinas/energia_extra.ts).
+let paresDe: (b: Block) => Block[] = () => [];
+export function definirPares(fn: (b: Block) => Block[]): void {
+  paresDe = fn;
+}
+const proximos = (b: Block): Block[] => (b.typeId === "cl:tesseract" ? [...vizinhos(b), ...paresDe(b)] : vizinhos(b));
+
+const chave = (b: Block) => `${b.dimension.id}|${b.x},${b.y},${b.z}`;
 
 /** Primeiro bloco da rede (vizinhos e o que estiver ligado por cabos) que satisfaz `quer`. */
 export function procurarNaRede(origem: Block, quer: (b: Block) => boolean): Block | undefined {
@@ -31,7 +38,7 @@ export function procurarNaRede(origem: Block, quer: (b: Block) => boolean): Bloc
     if (quer(b)) return b;
     if (!CONDUTORES.has(b.typeId)) continue;
     if (++condutores > ENERGIA.rede.maxBlocos) break;
-    fila.push(...vizinhos(b));
+    fila.push(...proximos(b));
   }
   return undefined;
 }
@@ -52,7 +59,7 @@ export function coletarNaRede(origem: Block, quer: (b: Block) => boolean, max: n
     }
     if (!CONDUTORES.has(b.typeId)) continue;
     if (++condutores > maxBlocos) break;
-    fila.push(...vizinhos(b));
+    fila.push(...proximos(b));
   }
   return achados;
 }

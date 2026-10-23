@@ -86,7 +86,14 @@ export type Acao =
   | "cabide"
   | "carregador"
   | "decolar"
-  | "varal";
+  | "varal"
+  | "tesseract"
+  | "autocraft"
+  | "tamara"
+  | "comida_nova"
+  | "caldeirao"
+  | "saco_dormir"
+  | "lampada_cor";
 
 type MissaoBase = {
   id: string;
@@ -181,6 +188,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       },
       { id: "en_obsidiana", requer: ["en_lava"], objetivo: { tipo: "acao", acao: "barril_obsidiana", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
       { id: "en_cajado", requer: ["en_barril"], objetivo: { tipo: "ter", item: IDS.cajado, qtd: 1 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
+      { id: "en_cajado_osso", requer: ["en_cajado"], objetivo: { tipo: "ter", item: "cl:cajado_osso", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
       { id: "en_bicho", requer: ["en_cajado"], objetivo: { tipo: "ter", item: IDS.bichoSeda, qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
       { id: "en_linha", requer: ["en_bicho"], objetivo: { tipo: "entregar", item: "minecraft:string", qtd: 16 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
@@ -190,6 +198,8 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     icone: IDS.camelPack,
     requer: ["agua"],
     missoes: [
+      { id: "em_caldeirao", objetivo: { tipo: "acao", acao: "caldeirao", qtd: 4 }, recompensa: [{ item: "minecraft:glass_bottle", quantidade: 4 }] },
+      { id: "em_variedade", objetivo: { tipo: "acao", acao: "comida_nova", qtd: 10 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "em_camel", objetivo: { tipo: "ter", item: IDS.camelPack, qtd: 1 }, recompensa: [{ item: IDS.sacolaComum, quantidade: 1 }] },
       { id: "em_encher", objetivo: { tipo: "acao", acao: "camel_encher", qtd: 1 }, recompensa: [{ item: IDS.aguaBoa, quantidade: 2 }] },
       { id: "ho_comer", requer: ["agua"], objetivo: { tipo: "acao", acao: "bem_alimentado", qtd: 5 }, recompensa: [{ item: "minecraft:bread", quantidade: 3 }] },
@@ -251,6 +261,8 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "te_estrutura", objetivo: { tipo: "ter", item: "cl:estrutura_maquina", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
       { id: "te_celula", requer: ["te_estrutura"], objetivo: { tipo: "colocar", bloco: "cl:celula_energia_basica", qtd: 1 }, recompensa: [{ item: "minecraft:copper_ingot", quantidade: 8 }] },
       { id: "te_pulverizar", requer: ["te_estrutura"], objetivo: { tipo: "acao", acao: "pulverizar", qtd: 8 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "te_tesseract", requer: ["te_celula"], objetivo: { tipo: "acao", acao: "tesseract", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
+      { id: "te_torre", requer: ["te_celula"], objetivo: { tipo: "colocar", bloco: "cl:torre_defesa", qtd: 1 }, recompensa: [{ item: "minecraft:arrow", quantidade: 16 }] },
       { id: "te_dinamo", requer: ["te_estrutura"], objetivo: { tipo: "acao", acao: "dinamo", qtd: 1 }, recompensa: [{ item: "minecraft:redstone_block", quantidade: 2 }] },
       { id: "te_maquinas", requer: ["te_pulverizar"], objetivo: { tipo: "acao", acao: "te_operacao", qtd: 64 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       {
@@ -272,6 +284,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ar_carrinho", requer: ["ar_barril"], objetivo: { tipo: "acao", acao: "carrinho", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "ar_empacotar", requer: ["ar_barril"], objetivo: { tipo: "acao", acao: "empacotar", qtd: 64 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
       { id: "ar_certus", objetivo: { tipo: "ter", item: "cl:cristal_certus", qtd: 4 }, recompensa: [{ item: "minecraft:lapis_lazuli", quantidade: 8 }] },
+      { id: "ar_autocraft", requer: ["ar_certus"], objetivo: { tipo: "acao", acao: "autocraft", qtd: 1 }, recompensa: [{ item: "cl:padrao_me_vazio", quantidade: 4 }] },
       { id: "ar_celula", requer: ["ar_certus"], objetivo: { tipo: "acao", acao: "celula_me", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       {
         id: "ar_sem_fio",
@@ -352,6 +365,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "dc_marmore", objetivo: { tipo: "ter", item: "cl:marmore", qtd: 32 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "dc_estante", objetivo: { tipo: "acao", acao: "estante", qtd: 1 }, recompensa: [{ item: "minecraft:book", quantidade: 4 }, { item: "minecraft:experience_bottle", quantidade: 8 }] },
       { id: "dc_cabide", objetivo: { tipo: "acao", acao: "cabide", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "dc_lampada", objetivo: { tipo: "acao", acao: "lampada_cor", qtd: 1 }, recompensa: [{ item: "minecraft:glowstone_dust", quantidade: 4 }] },
       { id: "dc_carregador", requer: ["dc_cinzel"], objetivo: { tipo: "acao", acao: "carregador", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
@@ -360,6 +374,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     icone: "cl:milho",
     requer: ["peneira"],
     missoes: [
+      { id: "hc_tamara", objetivo: { tipo: "acao", acao: "tamara", qtd: 8 }, recompensa: [{ item: "cl:muda_tamareira", quantidade: 1 }, { item: "minecraft:bone_meal", quantidade: 6 }] },
       { id: "hc_colher", objetivo: { tipo: "acao", acao: "colher", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 4 }] },
       { id: "hc_colheita", requer: ["hc_colher"], objetivo: { tipo: "acao", acao: "colher", qtd: 10 }, recompensa: [{ item: "cl:semente_tomate", quantidade: 2 }, { item: "cl:semente_cebola", quantidade: 2 }] },
       { id: "hc_panela", objetivo: { tipo: "colocar", bloco: "cl:panela", qtd: 1 }, recompensa: [{ item: "minecraft:brick", quantidade: 4 }] },
@@ -496,6 +511,17 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "fn_reator", requer: ["fn_decolar"], objetivo: { tipo: "acao", acao: "reator_10e", qtd: 1000 }, recompensa: [{ item: "cl:bloco_yellorium", quantidade: 4 }] },
       { id: "fn_me", requer: ["fn_decolar"], objetivo: { tipo: "ter", item: "cl:celula_me_64k", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 2 }] },
       { id: "fn_corpos", requer: ["fn_decolar"], objetivo: { tipo: "acao", acao: "corpo_criado", qtd: 3 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "extras", // 1.2.0: ideias do projeto (bússola do avião, saco de dormir, meteoritos) e a Caixa de Entrega
+    icone: "cl:bussola_aviao",
+    requer: ["nave"],
+    missoes: [
+      { id: "ex_bussola", objetivo: { tipo: "ter", item: "cl:bussola_aviao", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 8 }] },
+      { id: "ex_saco", objetivo: { tipo: "acao", acao: "saco_dormir", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 6 }] },
+      { id: "ex_meteorito", objetivo: { tipo: "quebrar", bloco: "cl:meteorito", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "ex_entrega", objetivo: { tipo: "colocar", bloco: "cl:caixa_entrega", qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 2 }] },
     ],
   },
   {

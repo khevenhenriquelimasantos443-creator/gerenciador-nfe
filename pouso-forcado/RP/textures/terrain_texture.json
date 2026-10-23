@@ -1116,6 +1116,93 @@
     },
     "clc_varal_carne": {
       "textures": "textures/blocks/cl/c/varal_carne"
+    },
+    "clc_tesseract_frente": {
+      "textures": "textures/blocks/cl/c/tesseract_frente"
+    },
+    "clc_tesseract_lado": {
+      "textures": "textures/blocks/cl/c/tesseract_lado"
+    },
+    "clc_tesseract_topo": {
+      "textures": "textures/blocks/cl/c/tesseract_topo"
+    },
+    "clc_tesseract_baixo": {
+      "textures": "textures/blocks/cl/c/tesseract_baixo"
+    },
+    "clc_torre_defesa_frente": {
+      "textures": "textures/blocks/cl/c/torre_defesa_frente"
+    },
+    "clc_torre_defesa_lado": {
+      "textures": "textures/blocks/cl/c/torre_defesa_lado"
+    },
+    "clc_torre_defesa_topo": {
+      "textures": "textures/blocks/cl/c/torre_defesa_topo"
+    },
+    "clc_torre_defesa_baixo": {
+      "textures": "textures/blocks/cl/c/torre_defesa_baixo"
+    },
+    "clc_montador_molecular_frente": {
+      "textures": "textures/blocks/cl/c/montador_molecular_frente"
+    },
+    "clc_montador_molecular_lado": {
+      "textures": "textures/blocks/cl/c/montador_molecular_lado"
+    },
+    "clc_montador_molecular_topo": {
+      "textures": "textures/blocks/cl/c/montador_molecular_topo"
+    },
+    "clc_montador_molecular_baixo": {
+      "textures": "textures/blocks/cl/c/montador_molecular_baixo"
+    },
+    "clc_lampada_vermelha": {
+      "textures": "textures/blocks/cl/c/lampada_vermelha"
+    },
+    "clc_lampada_laranja": {
+      "textures": "textures/blocks/cl/c/lampada_laranja"
+    },
+    "clc_lampada_amarela": {
+      "textures": "textures/blocks/cl/c/lampada_amarela"
+    },
+    "clc_lampada_verde": {
+      "textures": "textures/blocks/cl/c/lampada_verde"
+    },
+    "clc_lampada_ciano": {
+      "textures": "textures/blocks/cl/c/lampada_ciano"
+    },
+    "clc_lampada_azul": {
+      "textures": "textures/blocks/cl/c/lampada_azul"
+    },
+    "clc_lampada_roxa": {
+      "textures": "textures/blocks/cl/c/lampada_roxa"
+    },
+    "clc_lampada_rosa": {
+      "textures": "textures/blocks/cl/c/lampada_rosa"
+    },
+    "clc_meteorito": {
+      "textures": "textures/blocks/cl/c/meteorito"
+    },
+    "clc_caixa_entrega_frente": {
+      "textures": "textures/blocks/cl/c/caixa_entrega_frente"
+    },
+    "clc_caixa_entrega_lado": {
+      "textures": "textures/blocks/cl/c/caixa_entrega_lado"
+    },
+    "clc_caixa_entrega_topo": {
+      "textures": "textures/blocks/cl/c/caixa_entrega_topo"
+    },
+    "clc_caixa_entrega_baixo": {
+      "textures": "textures/blocks/cl/c/caixa_entrega_baixo"
+    },
+    "clc_muda_tamareira": {
+      "textures": "textures/blocks/cl/c/muda_tamareira"
+    },
+    "clc_muda_tamareira_tronco": {
+      "textures": "textures/blocks/cl/c/muda_tamareira_tronco"
+    },
+    "clc_cacho_tamaras": {
+      "textures": "textures/blocks/cl/c/cacho_tamaras"
+    },
+    "clc_cacho_tamaras_madura": {
+      "textures": "textures/blocks/cl/c/cacho_tamaras_madura"
     }
   }
 }

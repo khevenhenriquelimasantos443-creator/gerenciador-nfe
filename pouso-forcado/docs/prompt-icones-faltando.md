@@ -63,7 +63,7 @@ Você vai desenhar os ícones e as texturas de um add-on de Minecraft Bedrock ch
 
 ### Como salvar e mandar
 
-- **Um .zip por parte**: `pendentes.zip` (parte 1) e depois `fase_15.zip`, `fase_16.zip` ... `fase_23.zip`.
+- **Um .zip por parte**: `pendentes.zip` (parte 1), depois `fase_15.zip`, `fase_16.zip` ... `fase_23.zip` e `novidades_1_2.zip` (parte 3).
 - Dentro de cada zip, só estas pastas, com os arquivos soltos nelas (sem subpastas):
   - `itens/` com os ícones de item (A), PNG 128×128;
   - `blocos_menu/` com os ícones de menu (B), PNG 128×128;
@@ -398,3 +398,44 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | lampada | Lâmpada | abajur de mesa aceso |
 | carregador_chunks | Carregador de Chunks | bloco com pedestal e cristal verde-água girando |
 | carregador_pontual | Carregador Pontual | versão menor do carregador, laje com cristal |
+
+## LISTA, parte 3: novidades das versões 1.1 e 1.2 (zip `novidades_1_2`)
+
+**Itens (A):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| padrao_me_vazio.png | Padrão ME em Branco | placa fina azul-escura com circuito ciano apagado |
+| cajado_osso.png | Cajado de Osso | cajado de pastor feito de ossos, ponta curva, na diagonal |
+| cajado_ouro.png | Cajado de Ouro | cajado de pastor de ouro, ponta curva, na diagonal |
+| tamara.png | Tâmara | três tâmaras marrom-escuras brilhantes |
+| bussola_aviao.png | Bússola do Avião | bússola de casco branco-gelo com ponteiro laranja em forma de avião |
+| saco_dormir.png | Saco de Dormir | saco de dormir de couro enrolado, com tira de linha |
+| fragmento_meteorito.png | Fragmento de Meteorito | pedaço de rocha escura com veios roxos brilhantes |
+
+**Blocos "máquina" (B + C, 4 faces):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| tesseract | Tesseract | moldura de metal com um cubo roxo flutuando no meio |
+| torre_defesa | Torre de Defesa | base de aço com cano de disparo e luz vermelha |
+| montador_molecular | Montador Molecular | caixa de vidro com braços mecânicos e luz violeta |
+| caixa_entrega | Caixa de Entrega | caixa de metal com fenda de entrega e luz amarela |
+
+**Blocos "cubo" (só C):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| meteorito | Rocha de Meteorito | rocha quase preta, rachada, com veios roxos que brilham |
+| lampada_vermelha … lampada_rosa (8 arquivos: `lampada_vermelha`, `lampada_laranja`, `lampada_amarela`, `lampada_verde`, `lampada_ciano`, `lampada_azul`, `lampada_roxa`, `lampada_rosa`) | Lâmpadas coloridas | o mesmo abajur da Lâmpada, com o vidro da cor do nome |
+
+**Texturas de modelo (só C, 32×32; são pintadas em modelos 3D próprios):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| varal | Varal (madeira) | madeira clara lisa |
+| varal_carne | Varal (o que fica pendurado) | carne seca marrom-avermelhada |
+| muda_tamareira | Muda de Tamareira (folhas) | folhas de palmeira verde-vivo |
+| muda_tamareira_tronco | Muda de Tamareira (caule) | caule fino marrom com anéis |
+| cacho_tamaras | Cacho de Tâmaras (verde) | cacho de tâmaras verde-amareladas |
+| cacho_tamaras_madura | Cacho de Tâmaras (maduro) | cacho de tâmaras marrom-escuras |

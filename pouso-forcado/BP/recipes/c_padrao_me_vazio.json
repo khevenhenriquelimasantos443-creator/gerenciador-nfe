@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_padrao_me_vazio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VCV",
+      "CRC",
+      "FFF"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "C": {
+        "item": "cl:cristal_certus"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:padrao_me_vazio",
+      "count": 2
+    }
+  }
+}

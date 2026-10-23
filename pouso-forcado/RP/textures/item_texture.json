@@ -922,6 +922,27 @@
     },
     "clc_cinzel": {
       "textures": "textures/items/cl/c/cinzel"
+    },
+    "clc_padrao_me_vazio": {
+      "textures": "textures/items/cl/c/padrao_me_vazio"
+    },
+    "clc_bussola_aviao": {
+      "textures": "textures/items/cl/c/bussola_aviao"
+    },
+    "clc_saco_dormir": {
+      "textures": "textures/items/cl/c/saco_dormir"
+    },
+    "clc_fragmento_meteorito": {
+      "textures": "textures/items/cl/c/fragmento_meteorito"
+    },
+    "clc_cajado_osso": {
+      "textures": "textures/items/cl/c/cajado_osso"
+    },
+    "clc_cajado_ouro": {
+      "textures": "textures/items/cl/c/cajado_ouro"
+    },
+    "clc_tamara": {
+      "textures": "textures/items/cl/c/tamara"
     }
   }
 }

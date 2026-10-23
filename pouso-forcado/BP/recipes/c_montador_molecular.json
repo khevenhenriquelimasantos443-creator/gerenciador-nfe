@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_montador_molecular"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FVF",
+      "AMA",
+      "FVF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "A": {
+        "item": "cl:processador_avancado"
+      },
+      "M": {
+        "item": "minecraft:crafting_table"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:montador_molecular"
+    }
+  }
+}

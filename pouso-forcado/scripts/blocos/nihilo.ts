@@ -1,5 +1,5 @@
 import { BlockCustomComponent, BlockPermutation, GameMode, ItemStack, system, world } from "@minecraft/server";
-import { FOLHAS, IDS, MARTELO, MARTELOS, SEDA } from "../config.js";
+import { CAJADOS, FOLHAS, IDS, MARTELO, MARTELOS, SEDA } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { gastarDaMao, gastarFerramenta } from "../util/inventario.js";
@@ -58,15 +58,16 @@ export function registrarNihilo(): void {
     const tipo = brokenBlockPermutation.type.id;
     if (tipo === IDS.barrilMadeira || tipo === IDS.barrilPedra) return esquecerBarril(block);
     if (tipo === IDS.cadinho) return esquecerCadinho(block);
-    const cajado = itemStackBeforeBreak?.typeId === IDS.cajado;
+    const multCajado = CAJADOS[itemStackBeforeBreak?.typeId ?? ""] ?? 0;
+    const cajado = multCajado > 0;
     const loc = block.location;
     if (tipo === IDS.folhaInfestada) {
       const p = (brokenBlockPermutation.getState("cl:infest" as never) as unknown as number) / 10;
       if (Math.random() < p * SEDA.linha1) solta(block.dimension, loc, "minecraft:string");
       if (Math.random() < p * SEDA.linha2) solta(block.dimension, loc, "minecraft:string");
-      if (cajado && Math.random() < SEDA.chanceInfestada) solta(block.dimension, loc, IDS.bichoSeda);
+      if (cajado && Math.random() < SEDA.chanceInfestada * multCajado) solta(block.dimension, loc, IDS.bichoSeda);
     } else if (cajado && FOLHAS.includes(tipo)) {
-      if (Math.random() < SEDA.chanceFolha) solta(block.dimension, loc, IDS.bichoSeda);
+      if (Math.random() < SEDA.chanceFolha * multCajado) solta(block.dimension, loc, IDS.bichoSeda);
     } else return;
     if (cajado) gastarFerramenta(player);
   });

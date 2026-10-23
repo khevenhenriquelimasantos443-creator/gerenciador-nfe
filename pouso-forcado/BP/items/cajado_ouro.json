@@ -1,0 +1,22 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cajado_ouro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cajado_ouro",
+      "minecraft:display_name": {
+        "value": "item.cl:cajado_ouro.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 32
+      },
+      "minecraft:hand_equipped": true
+    }
+  }
+}

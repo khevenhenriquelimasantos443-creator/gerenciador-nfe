@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.1.0";
+export const VERSAO = "1.2.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -90,6 +90,7 @@ export const PROPS = {
   tempestadeAte: `${NS}:tempestade_ate`, // mundo: tempo absoluto em que a tempestade acaba
   tempestadeFim: `${NS}:tempestade_fim`, // mundo: tempo absoluto em que a última tempestade acabou
   reparos: `${NS}:reparos`, // mundo: sistemas da nave já consertados, separados por vírgula
+  naveLocal: `${NS}:nave_local`, // mundo: JSON { dim, x, y, z } do Painel da Nave (para a Bússola do Avião)
   final: `${NS}:final`, // mundo: dia em que a nave decolou (Fase 10); daí em diante é o modo infinito
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
@@ -316,6 +317,7 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
     { item: "minecraft:cactus", chance: 1 / 32 },
     { item: `${NS}:semente_fruta_cacto`, chance: 1 / 32 },
     { item: "minecraft:jungle_sapling", chance: 1 / 64 },
+    { item: `${NS}:muda_tamareira`, chance: 1 / 64 }, // 1.2.0: tamareira do HarvestCraft
     { item: "minecraft:brown_mushroom", chance: 1 / 128 }, // no Ex Nihilo: esporos
     ...pedacos("triturado"),
   ],
@@ -379,7 +381,13 @@ export const ESTUFA = {
 // Varal (Drying Rack do Tinkers, scripts/tinkers/varal.ts): o que pendura, no que vira e em quanto tempo.
 export const VARAL = {
   ganchos: 4,
-  receitas: { "minecraft:rotten_flesh": { resultado: "minecraft:leather", ticks: 6000 } } as Readonly<Record<string, { resultado: string; ticks: number }>>, // 5 min
+  // 5 min cada. Carne podre vira couro; as carnes cruas viram charque (o "jerky" do Tinkers), que não estraga.
+  receitas: {
+    "minecraft:rotten_flesh": { resultado: "minecraft:leather", ticks: 6000 },
+    ...Object.fromEntries(
+      ["beef", "porkchop", "chicken", "mutton", "rabbit", "cod", "salmon"].map((c) => [`minecraft:${c}`, { resultado: `${NS}:charque`, ticks: 6000 }]),
+    ),
+  } as Readonly<Record<string, { resultado: string; ticks: number }>>,
 } as const;
 
 export const TINKERS = {
@@ -406,13 +414,33 @@ export const TINKERS = {
     ...Object.fromEntries(["iron_ore", "deepslate_iron_ore", "copper_ore", "deepslate_copper_ore", "lapis_ore", "deepslate_lapis_ore", "raw_iron_block", "raw_copper_block"].map((b) => [`minecraft:${b}`, 1])),
     ...Object.fromEntries(["gold_ore", "deepslate_gold_ore", "redstone_ore", "lit_redstone_ore", "deepslate_redstone_ore", "lit_deepslate_redstone_ore", "diamond_ore", "deepslate_diamond_ore", "emerald_ore", "deepslate_emerald_ore", "raw_gold_block"].map((b) => [`minecraft:${b}`, 2])),
     ...Object.fromEntries(["obsidian", "crying_obsidian", "ancient_debris", "respawn_anchor"].map((b) => [`minecraft:${b}`, 3])),
+    [`${NS}:meteorito`]: 2, // 1.2.0
   } as Readonly<Record<string, number>>,
   modificadores: {
     pressa: { item: "minecraft:redstone", qtd: 16, max: 2 }, // Pressa I/II com a ferramenta na mão
     reforco: { item: "minecraft:diamond", qtd: 1, max: 1, durabilidade: 500 },
     esmeralda: { item: "minecraft:emerald", qtd: 1, max: 1, fator: 0.5 },
     musgo: { item: "cl:bola_musgo", qtd: 3, max: 1, segundos: 15 }, // +1 de durabilidade a cada 15 s
+    // 1.2.0. Os do TC que pedem Nether (quartzo = afiado, pó de blaze = fogo) ficam de fora.
+    sorte: { item: "minecraft:lapis_lazuli", qtd: 32, max: 3, chance: 1 / 3 }, // Fortuna: cada nível, 1/3 de chance de um drop a mais
+    repulsao: { item: "minecraft:piston", qtd: 1, max: 2, forca: 0.8 }, // empurra o alvo
+    artropodes: { item: "minecraft:fermented_spider_eye", qtd: 2, max: 3, dano: 2.5 }, // + dano em aranhas, e lentidão
+    obsidiana: { item: "minecraft:obsidian", qtd: 4, max: 3, chance: 0.1 }, // 10% por nível de não gastar durabilidade
   },
+  // Fortuna (lápis): o que cada minério solta a mais.
+  fortuna: {
+    "minecraft:coal_ore": "minecraft:coal", "minecraft:deepslate_coal_ore": "minecraft:coal",
+    "minecraft:diamond_ore": "minecraft:diamond", "minecraft:deepslate_diamond_ore": "minecraft:diamond",
+    "minecraft:emerald_ore": "minecraft:emerald", "minecraft:deepslate_emerald_ore": "minecraft:emerald",
+    "minecraft:redstone_ore": "minecraft:redstone", "minecraft:lit_redstone_ore": "minecraft:redstone", "minecraft:deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lapis_ore": "minecraft:lapis_lazuli", "minecraft:deepslate_lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:copper_ore": "minecraft:raw_copper", "minecraft:deepslate_copper_ore": "minecraft:raw_copper",
+    "minecraft:iron_ore": "minecraft:raw_iron", "minecraft:deepslate_iron_ore": "minecraft:raw_iron",
+    "minecraft:gold_ore": "minecraft:raw_gold", "minecraft:deepslate_gold_ore": "minecraft:raw_gold",
+  } as Readonly<Record<string, string>>,
+  aranhas: ["minecraft:spider", "minecraft:cave_spider"],
+  // Ferramenta montada caída no chão não some: renasce a cada tantos ticks (o jogo apaga item com 5 min).
+  renascerTicks: 4 * 60 * 20,
 } as const;
 
 // Fase 16: fundição do Tinkers' Construct (scripts/tinkers/fundicao.ts). Metal em mB: 144 = 1 lingote.
@@ -1220,6 +1248,8 @@ export const CADINHO = {
 // infesta a folha em 2.000 ticks; passou de 60%, espalha para uma folha vizinha a cada ~100 ticks.
 // Quebrar a folha infestada dá linha (chance = infestação × 0,4, e mais uma com × 0,1).
 export const SEDA = { chanceFolha: 1 / 100, chanceInfestada: 1 / 15, linha1: 0.4, linha2: 0.1, espalhaAPartir: 6, durabilidadeCajado: 64 } as const;
+// Cajados (1.2.0): multiplicador da chance do bicho-da-seda. Osso dura 256 usos; ouro dura 32 e acha o dobro.
+export const CAJADOS: Readonly<Record<string, number>> = { [`${NS}:cajado`]: 1, [`${NS}:cajado_osso`]: 1, [`${NS}:cajado_ouro`]: 2 };
 export const FOLHAS: ReadonlyArray<string> = ["oak_leaves", "spruce_leaves", "birch_leaves", "jungle_leaves", "acacia_leaves", "dark_oak_leaves", "cherry_leaves", "azalea_leaves"].map((n) => `minecraft:${n}`);
 
 for (const id of [

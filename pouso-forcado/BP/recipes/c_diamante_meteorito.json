@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_diamante_meteorito"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "FFF",
+      "FFF"
+    ],
+    "key": {
+      "F": {
+        "item": "cl:fragmento_meteorito"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:fragmento_meteorito"
+      }
+    ],
+    "result": {
+      "item": "minecraft:diamond"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bussola_aviao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " P ",
+      "PBP",
+      " P "
+    ],
+    "key": {
+      "P": {
+        "item": "cl:placa_casco"
+      },
+      "B": {
+        "item": "minecraft:compass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:placa_casco"
+      }
+    ],
+    "result": {
+      "item": "cl:bussola_aviao"
+    }
+  }
+}

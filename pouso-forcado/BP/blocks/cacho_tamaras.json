@@ -1,0 +1,67 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:cacho_tamaras",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "cl:maduro": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.cacho_tamaras",
+        "bone_visibility": {
+          "verde": "q.block_state('cl:maduro') < 2",
+          "madura": "q.block_state('cl:maduro') == 2"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_cacho_tamaras",
+          "render_method": "opaque"
+        },
+        "madura": {
+          "texture": "clc_cacho_tamaras_madura",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c9a046",
+      "minecraft:loot": "loot_tables/cl/vazio.json",
+      "minecraft:tick": {
+        "interval_range": [
+          2400,
+          3600
+        ],
+        "looping": true
+      },
+      "cl:cacho_tamaras": {},
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          7,
+          -3
+        ],
+        "size": [
+          6,
+          9,
+          6
+        ]
+      }
+    }
+  }
+}

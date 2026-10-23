@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_lampada_roxa"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:lampada"
+      },
+      {
+        "item": "minecraft:purple_dye"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:lampada"
+      }
+    ],
+    "result": {
+      "item": "cl:lampada_roxa"
+    }
+  }
+}

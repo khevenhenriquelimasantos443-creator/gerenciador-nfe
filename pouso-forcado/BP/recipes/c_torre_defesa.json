@@ -1,0 +1,41 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_torre_defesa"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ADA",
+      "CEC",
+      "AKA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "D": {
+        "item": "minecraft:dispenser"
+      },
+      "C": {
+        "item": "cl:circuito"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      },
+      "K": {
+        "item": "cl:capacitor"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_aco"
+      }
+    ],
+    "result": {
+      "item": "cl:torre_defesa"
+    }
+  }
+}

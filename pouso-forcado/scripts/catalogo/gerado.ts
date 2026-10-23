@@ -226,6 +226,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bean Burrito",
   "icone": "textures/items/cl/arte/burrito"
  },
+ "cl:bussola_aviao": {
+  "pt": "Bússola do Avião",
+  "en": "Plane Compass",
+  "icone": "textures/items/cl/c/bussola_aviao"
+ },
  "cl:cabide_armadura": {
   "pt": "Cabide de Armadura",
   "en": "Armor Stand",
@@ -241,6 +246,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Saucepan",
   "icone": "textures/items/cl/blocos/cacarola"
  },
+ "cl:cacho_tamaras": {
+  "pt": "Cacho de Tâmaras",
+  "en": "Date Bunch",
+  "icone": "textures/blocks/cl/c/cacho_tamaras"
+ },
  "cl:cadinho": {
   "pt": "Cadinho",
   "en": "Crucible",
@@ -251,10 +261,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Unfired Crucible",
   "icone": "textures/items/cl/arte/cadinho_cru"
  },
+ "cl:caixa_entrega": {
+  "pt": "Caixa de Entrega",
+  "en": "Quest Delivery System",
+  "icone": "textures/blocks/cl/c/caixa_entrega_topo"
+ },
  "cl:cajado": {
   "pt": "Cajado",
   "en": "Crook",
   "icone": "textures/items/cl/arte/cajado"
+ },
+ "cl:cajado_osso": {
+  "pt": "Cajado de Osso",
+  "en": "Bone Crook",
+  "icone": "textures/items/cl/c/cajado_osso"
+ },
+ "cl:cajado_ouro": {
+  "pt": "Cajado de Ouro",
+  "en": "Golden Crook",
+  "icone": "textures/items/cl/c/cajado_ouro"
  },
  "cl:calcario": {
   "pt": "Calcário",
@@ -791,6 +816,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Redstone Furnace",
   "icone": "textures/blocks/cl/c/fornalha_redstone_topo"
  },
+ "cl:fragmento_meteorito": {
+  "pt": "Fragmento de Meteorito",
+  "en": "Meteorite Fragment",
+  "icone": "textures/items/cl/c/fragmento_meteorito"
+ },
  "cl:frigideira": {
   "pt": "Frigideira",
   "en": "Skillet",
@@ -840,6 +870,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lâmpada",
   "en": "Fancy Lamp",
   "icone": "textures/blocks/cl/c/lampada"
+ },
+ "cl:lampada_amarela": {
+  "pt": "Lâmpada Amarela",
+  "en": "Yellow Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_amarela"
+ },
+ "cl:lampada_azul": {
+  "pt": "Lâmpada Azul",
+  "en": "Blue Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_azul"
+ },
+ "cl:lampada_ciano": {
+  "pt": "Lâmpada Ciano",
+  "en": "Cyan Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_ciano"
+ },
+ "cl:lampada_laranja": {
+  "pt": "Lâmpada Laranja",
+  "en": "Orange Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_laranja"
+ },
+ "cl:lampada_rosa": {
+  "pt": "Lâmpada Rosa",
+  "en": "Pink Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_rosa"
+ },
+ "cl:lampada_roxa": {
+  "pt": "Lâmpada Roxa",
+  "en": "Purple Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_roxa"
+ },
+ "cl:lampada_verde": {
+  "pt": "Lâmpada Verde",
+  "en": "Green Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_verde"
+ },
+ "cl:lampada_vermelha": {
+  "pt": "Lâmpada Vermelha",
+  "en": "Red Fancy Lamp",
+  "icone": "textures/blocks/cl/c/lampada_vermelha"
  },
  "cl:lanterna": {
   "pt": "Lanterna",
@@ -1051,6 +1121,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stencil Table",
   "icone": "textures/blocks/cl/c/mesa_moldes_topo"
  },
+ "cl:meteorito": {
+  "pt": "Rocha de Meteorito",
+  "en": "Meteorite Rock",
+  "icone": "textures/blocks/cl/c/meteorito"
+ },
  "cl:milho": {
   "pt": "Milho",
   "en": "Corn",
@@ -1116,6 +1191,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crossbar Cast",
   "icone": "textures/items/cl/c/molde_travessa"
  },
+ "cl:montador_molecular": {
+  "pt": "Montador Molecular",
+  "en": "Molecular Assembler",
+  "icone": "textures/blocks/cl/c/montador_molecular_topo"
+ },
  "cl:montadora": {
   "pt": "Montadora",
   "en": "Assembler",
@@ -1125,6 +1205,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Motor da Nave",
   "en": "Ship Engine",
   "icone": "textures/items/cl/arte/motor_nave"
+ },
+ "cl:muda_tamareira": {
+  "pt": "Muda de Tamareira",
+  "en": "Date Palm Sapling",
+  "icone": "textures/blocks/cl/c/muda_tamareira"
  },
  "cl:nucleo_funil": {
   "pt": "Núcleo de Funil",
@@ -1260,6 +1345,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Padrão: Ligação",
   "en": "Binding Pattern",
   "icone": "textures/items/cl/c/padrao_ligacao"
+ },
+ "cl:padrao_me_vazio": {
+  "pt": "Padrão ME em Branco",
+  "en": "Blank Pattern",
+  "icone": "textures/items/cl/c/padrao_me_vazio"
  },
  "cl:padrao_travessa": {
   "pt": "Padrão: Travessa",
@@ -2006,6 +2096,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sap",
   "icone": "textures/items/cl/c/resina"
  },
+ "cl:saco_dormir": {
+  "pt": "Saco de Dormir",
+  "en": "Sleeping Bag",
+  "icone": "textures/items/cl/c/saco_dormir"
+ },
  "cl:sacola_boa": {
   "pt": "Sacola Boa",
   "en": "Good Bag",
@@ -2141,6 +2236,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Taco",
   "icone": "textures/items/cl/arte/taco"
  },
+ "cl:tamara": {
+  "pt": "Tâmara",
+  "en": "Date",
+  "icone": "textures/items/cl/c/tamara"
+ },
  "cl:tanque_refratario": {
   "pt": "Tanque Refratário",
   "en": "Seared Tank",
@@ -2155,6 +2255,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Terminal sem Fio",
   "en": "Wireless Terminal",
   "icone": "textures/items/cl/c/terminal_sem_fio"
+ },
+ "cl:tesseract": {
+  "pt": "Tesseract",
+  "en": "Tesseract",
+  "icone": "textures/blocks/cl/c/tesseract_topo"
  },
  "cl:tigela_mistura": {
   "pt": "Tigela de Mistura",
@@ -2190,6 +2295,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Torrada",
   "en": "Toast",
   "icone": "textures/items/cl/arte/torrada"
+ },
+ "cl:torre_defesa": {
+  "pt": "Torre de Defesa",
+  "en": "Defense Turret",
+  "icone": "textures/blocks/cl/c/torre_defesa_topo"
  },
  "cl:tortilha": {
   "pt": "Tortilha",
@@ -2381,6 +2491,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Apple",
   "icone": "textures/items/apple"
  },
+ "minecraft:arrow": {
+  "pt": "Flecha",
+  "en": "Arrow",
+  "icone": "textures/items/arrow"
+ },
  "minecraft:baked_potato": {
   "pt": "Batata Assada",
   "en": "Baked Potato",
@@ -2445,6 +2560,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Vara Incandescente",
   "en": "Blaze Rod",
   "icone": "textures/items/blaze_rod"
+ },
+ "minecraft:blue_dye": {
+  "pt": "Corante Azul",
+  "en": "Blue Dye",
+  "icone": "textures/items/dye_powder_blue_new"
  },
  "minecraft:bone": {
   "pt": "Osso",
@@ -2576,6 +2696,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Coal",
   "icone": "textures/blocks/coal_block"
  },
+ "minecraft:coal_ore": {
+  "pt": "Minério de Carvão",
+  "en": "Coal Ore",
+  "icone": "textures/blocks/coal_ore"
+ },
  "minecraft:cobbled_deepslate": {
   "pt": "Pedregulho de Ardosiabissal",
   "en": "Cobbled Deepslate",
@@ -2590,6 +2715,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sementes de Cacau",
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
+ },
+ "minecraft:compass": {
+  "pt": "Bússola",
+  "en": "Compass",
+  "icone": "textures/items/compass_item"
  },
  "minecraft:composter": {
   "pt": "Composteira",
@@ -2666,6 +2796,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cut Sandstone",
   "icone": "textures/blocks/sandstone_smooth"
  },
+ "minecraft:cyan_dye": {
+  "pt": "Corante Ciano",
+  "en": "Cyan Dye",
+  "icone": "textures/items/dye_powder_cyan"
+ },
  "minecraft:dark_oak_log": {
   "pt": "Tora de Carvalho Escuro",
   "en": "Dark Oak Log",
@@ -2686,10 +2821,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Deepslate",
   "icone": "textures/blocks/deepslate/deepslate"
  },
+ "minecraft:deepslate_coal_ore": {
+  "pt": "Minério de Carvão de Ardosiabissal",
+  "en": "Deepslate Coal Ore",
+  "icone": "textures/blocks/deepslate/deepslate_coal_ore"
+ },
  "minecraft:deepslate_copper_ore": {
   "pt": "Minério de Cobre de Ardosiabissal",
   "en": "Deepslate Copper Ore",
   "icone": "textures/blocks/deepslate/deepslate_copper_ore"
+ },
+ "minecraft:deepslate_diamond_ore": {
+  "pt": "Minério de Diamante de Ardosiabissal",
+  "en": "Deepslate Diamond Ore",
+  "icone": "textures/blocks/deepslate/deepslate_diamond_ore"
+ },
+ "minecraft:deepslate_emerald_ore": {
+  "pt": "Minério de Esmeralda de Ardosiabissal",
+  "en": "Deepslate Emerald Ore",
+  "icone": "textures/blocks/deepslate/deepslate_emerald_ore"
  },
  "minecraft:deepslate_gold_ore": {
   "pt": "Minério de Ouro de Ardosiabissal",
@@ -2701,6 +2851,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Deepslate Iron Ore",
   "icone": "textures/blocks/deepslate/deepslate_iron_ore"
  },
+ "minecraft:deepslate_lapis_ore": {
+  "pt": "Minério de Lápis-Lazúli de Ardosiabissal",
+  "en": "Deepslate Lapis Lazuli Ore",
+  "icone": "textures/blocks/deepslate/deepslate_lapis_ore"
+ },
+ "minecraft:deepslate_redstone_ore": {
+  "pt": "Minério de Redstone de Ardosiabissal",
+  "en": "Deepslate Redstone Ore",
+  "icone": "textures/blocks/deepslate/deepslate_redstone_ore"
+ },
  "minecraft:diamond": {
   "pt": "Diamante",
   "en": "Diamond",
@@ -2710,6 +2870,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Diamante",
   "en": "Block of Diamond",
   "icone": "textures/blocks/diamond_block"
+ },
+ "minecraft:diamond_ore": {
+  "pt": "Minério de Diamante",
+  "en": "Diamond Ore",
+  "icone": "textures/blocks/diamond_ore"
  },
  "minecraft:dirt": {
   "pt": "Terra",
@@ -2746,6 +2911,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Emerald",
   "icone": "textures/blocks/emerald_block"
  },
+ "minecraft:emerald_ore": {
+  "pt": "Minério de Esmeralda",
+  "en": "Emerald Ore",
+  "icone": "textures/blocks/emerald_ore"
+ },
  "minecraft:enchanted_golden_apple": {
   "pt": "Maçã Dourada Encantada",
   "en": "Enchanted Golden Apple",
@@ -2770,6 +2940,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Frasco de Experiência",
   "en": "Bottle o' Enchanting",
   "icone": "textures/items/experience_bottle"
+ },
+ "minecraft:fermented_spider_eye": {
+  "pt": "Olho de Aranha Fermentado",
+  "en": "Fermented Spider Eye",
+  "icone": "textures/items/spider_eye_fermented"
  },
  "minecraft:fire": {
   "pt": "Fogo",
@@ -2966,6 +3141,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Lapis Lazuli",
   "icone": "textures/items/dye_powder_blue_new"
  },
+ "minecraft:lapis_ore": {
+  "pt": "Minério de Lápis-Lazúli",
+  "en": "Lapis Lazuli Ore",
+  "icone": "textures/blocks/lapis_ore"
+ },
  "minecraft:lava_bucket": {
   "pt": "Balde de Lava",
   "en": "Lava Bucket",
@@ -2991,6 +3171,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Light Gray Carpet",
   "icone": "textures/blocks/wool_colored_silver"
  },
+ "minecraft:lime_dye": {
+  "pt": "Corante Verde Limão",
+  "en": "Lime Dye",
+  "icone": "textures/items/dye_powder_lime"
+ },
  "minecraft:lit_blast_furnace": {
   "pt": "Fornalha Potente Acesa",
   "en": "Lit Blast Furnace",
@@ -3000,6 +3185,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Fornalha Acesa",
   "en": "Lit Furnace",
   "icone": "textures/blocks/furnace_side"
+ },
+ "minecraft:lit_redstone_ore": {
+  "pt": "Minério de Redstone Aceso",
+  "en": "Lit Redstone Ore",
+  "icone": "textures/blocks/redstone_ore"
  },
  "minecraft:lit_smoker": {
   "pt": "Defumador Aceso",
@@ -3106,6 +3296,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Obsidian",
   "icone": "textures/blocks/obsidian"
  },
+ "minecraft:orange_dye": {
+  "pt": "Corante Laranja",
+  "en": "Orange Dye",
+  "icone": "textures/items/dye_powder_orange"
+ },
  "minecraft:packed_ice": {
   "pt": "Gelo Compactado",
   "en": "Packed Ice",
@@ -3115,6 +3310,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Papel",
   "en": "Paper",
   "icone": "textures/items/paper"
+ },
+ "minecraft:pink_dye": {
+  "pt": "Corante Rosa",
+  "en": "Pink Dye",
+  "icone": "textures/items/dye_powder_pink"
  },
  "minecraft:piston": {
   "pt": "Pistão",
@@ -3171,6 +3371,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pumpkin Stem",
   "icone": "textures/blocks/pumpkin_stem_disconnected"
  },
+ "minecraft:purple_dye": {
+  "pt": "Corante Roxo",
+  "en": "Purple Dye",
+  "icone": "textures/items/dye_powder_purple"
+ },
  "minecraft:quartz": {
   "pt": "Quartzo do Nether",
   "en": "Nether Quartz",
@@ -3226,6 +3431,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Red Carpet",
   "icone": "textures/blocks/wool_colored_red"
  },
+ "minecraft:red_dye": {
+  "pt": "Corante Vermelho",
+  "en": "Red Dye",
+  "icone": "textures/items/dye_powder_red"
+ },
  "minecraft:red_sand": {
   "pt": "Areia Vermelha",
   "en": "Red Sand",
@@ -3240,6 +3450,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Redstone",
   "en": "Block of Redstone",
   "icone": "textures/blocks/redstone_block"
+ },
+ "minecraft:redstone_ore": {
+  "pt": "Minério de Redstone",
+  "en": "Redstone Ore",
+  "icone": "textures/blocks/redstone_ore"
  },
  "minecraft:reinforced_deepslate": {
   "pt": "Ardosiabissal Reforçada",
@@ -3480,6 +3695,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lã Branca",
   "en": "White Wool",
   "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:yellow_dye": {
+  "pt": "Corante Amarelo",
+  "en": "Yellow Dye",
+  "icone": "textures/items/dye_powder_yellow"
  }
 };
 export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
@@ -4113,6 +4333,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bussola_aviao",
+  "resultado": "cl:bussola_aviao",
+  "qtd": 1,
+  "grade": [
+   " P ",
+   "PBP",
+   " P "
+  ],
+  "chaves": {
+   "P": "cl:placa_casco",
+   "B": "minecraft:compass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_cabide_armadura",
   "resultado": "cl:cabide_armadura",
   "qtd": 1,
@@ -4124,6 +4362,60 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "S": "minecraft:stick",
    "P": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_caixa_entrega",
+  "resultado": "cl:caixa_entrega",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "ICI",
+   "IRI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "C": "minecraft:chest",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cajado_osso",
+  "resultado": "cl:cajado_osso",
+  "qtd": 1,
+  "grade": [
+   "OO",
+   " O",
+   " O"
+  ],
+  "chaves": {
+   "O": "minecraft:bone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cajado_ouro",
+  "resultado": "cl:cajado_ouro",
+  "qtd": 1,
+  "grade": [
+   "GG",
+   " S",
+   " S"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "S": "minecraft:stick"
   },
   "estacoes": [
    "crafting_table"
@@ -4721,6 +5013,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_diamante_meteorito",
+  "resultado": "minecraft:diamond",
+  "qtd": 1,
+  "grade": [
+   "FFF",
+   "FFF",
+   "FFF"
+  ],
+  "chaves": {
+   "F": "cl:fragmento_meteorito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_dinamo_redstone",
   "resultado": "cl:dinamo_redstone",
   "qtd": 1,
@@ -5125,6 +5434,158 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_amarela",
+  "resultado": "cl:lampada_amarela",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:yellow_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_azul",
+  "resultado": "cl:lampada_azul",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:blue_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_ciano",
+  "resultado": "cl:lampada_ciano",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cyan_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_laranja",
+  "resultado": "cl:lampada_laranja",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:orange_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_rosa",
+  "resultado": "cl:lampada_rosa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:pink_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_roxa",
+  "resultado": "cl:lampada_roxa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:purple_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_verde",
+  "resultado": "cl:lampada_verde",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:lime_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lampada_vermelha",
+  "resultado": "cl:lampada_vermelha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lampada",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:red_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_lanterna",
   "resultado": "cl:lanterna",
@@ -5330,6 +5791,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_montador_molecular",
+  "resultado": "cl:montador_molecular",
+  "qtd": 1,
+  "grade": [
+   "FVF",
+   "AMA",
+   "FVF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "V": "minecraft:glass",
+   "A": "cl:processador_avancado",
+   "M": "minecraft:crafting_table"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_nucleo_funil",
   "resultado": "cl:nucleo_funil",
@@ -5379,6 +5860,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "P": "#minecraft:planks",
    "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_padrao_me_vazio",
+  "resultado": "cl:padrao_me_vazio",
+  "qtd": 2,
+  "grade": [
+   "VCV",
+   "CRC",
+   "FFF"
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "C": "cl:cristal_certus",
+   "R": "minecraft:redstone",
+   "F": "minecraft:iron_ingot"
   },
   "estacoes": [
    "crafting_table"
@@ -5709,6 +6210,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_saco_dormir",
+  "resultado": "cl:saco_dormir",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "LLL"
+  ],
+  "chaves": {
+   "C": "minecraft:leather",
+   "L": "minecraft:string"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_serraria",
   "resultado": "cl:serraria",
   "qtd": 1,
@@ -5813,6 +6331,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_tesseract",
+  "resultado": "cl:tesseract",
+  "qtd": 1,
+  "grade": [
+   "OPO",
+   "PEP",
+   "ODO"
+  ],
+  "chaves": {
+   "O": "minecraft:gold_ingot",
+   "P": "minecraft:ender_pearl",
+   "E": "cl:estrutura_maquina",
+   "D": "minecraft:diamond"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_tijolo_refratario",
   "resultado": "cl:tijolo_refratario",
@@ -5854,6 +6392,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_torre_defesa",
+  "resultado": "cl:torre_defesa",
+  "qtd": 1,
+  "grade": [
+   "ADA",
+   "CEC",
+   "AKA"
+  ],
+  "chaves": {
+   "A": "cl:lingote_aco",
+   "D": "minecraft:dispenser",
+   "C": "cl:circuito",
+   "E": "cl:estrutura_maquina",
+   "K": "cl:capacitor"
   },
   "estacoes": [
    "crafting_table"

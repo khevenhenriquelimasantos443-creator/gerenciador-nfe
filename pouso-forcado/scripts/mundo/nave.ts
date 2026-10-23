@@ -83,6 +83,7 @@ export function garantirNave(jogador: Player): void {
       porPortas(dimensao, origem);
       criarBauCom(dimensao, somar(origem, NAVE.bau), SUPRIMENTOS);
       porPainel(dimensao, somar(origem, NAVE.painel));
+      world.setDynamicProperty(PROPS.naveLocal, JSON.stringify({ dim: dimensao.id, ...somar(origem, NAVE.painel) }));
     } catch (erro) {
       console.warn(`[Pouso Forçado] não foi possível colocar a nave: ${erro}`);
       if (jogador.isValid) darSuprimentos(jogador);

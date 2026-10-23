@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cajado_osso"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "OO",
+      " O",
+      " O"
+    ],
+    "key": {
+      "O": {
+        "item": "minecraft:bone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:bone"
+      }
+    ],
+    "result": {
+      "item": "cl:cajado_osso"
+    }
+  }
+}

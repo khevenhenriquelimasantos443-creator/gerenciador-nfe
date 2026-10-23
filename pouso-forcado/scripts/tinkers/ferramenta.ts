@@ -1,4 +1,4 @@
-import { EquipmentSlot, GameMode, ItemStack, Player, RawMessage, system, world } from "@minecraft/server";
+import { Entity, EntityDamageCause, EquipmentSlot, GameMode, ItemStack, Player, RawMessage, system, world } from "@minecraft/server";
 import { TINKERS } from "../config.js";
 import { DADOS_F15 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
@@ -16,6 +16,9 @@ import { intervalo } from "../util/perfil.js";
  *   níveis TINKERS.niveisComEspaco;
  * - tc:esp, tc:mods: espaços livres e modificadores (Fase 16).
  * Nível de mineração (Iguana): minério que pede nível maior que o da cabeça não quebra.
+ * Modificadores (1.2.0): Sorte (lápis) dá drop a mais de minério, Repulsão (pistão) empurra, Ruína dos
+ * Artrópodes (olho fermentado) fere mais as aranhas, Obsidiana às vezes não gasta durabilidade.
+ * Ferramenta montada caída no chão não some: a cada TINKERS.renascerTicks o item renasce no lugar.
  * Custo: só eventos (quebrar bloco, bater) e um laço de 1 s para o modificador Pressa.
  */
 export type Mat = keyof typeof DADOS_F15.materiais;
@@ -142,7 +145,9 @@ function usar(j: Player, gasto: number): void {
   garantir(i);
   const dur = num(i, "tc:dur");
   if (dur <= 0) return;
-  i.setDynamicProperty("tc:dur", Math.max(0, dur - gasto));
+  const obsidiana = modsDe(i).obsidiana ?? 0;
+  if (!(obsidiana && Math.random() < obsidiana * TINKERS.modificadores.obsidiana.chance)) i.setDynamicProperty("tc:dur", Math.max(0, dur - gasto));
+  else gasto = 0;
   let nivel = num(i, "tc:nivel", 1), xp = num(i, "tc:xp") + 1;
   if (nivel < TINKERS.nivelMax && xp >= xpPara(nivel)) {
     xp = 0;
@@ -163,6 +168,54 @@ function usar(j: Player, gasto: number): void {
 
 const criativo = (j: Player) => j.getGameMode() === GameMode.Creative;
 
+/** Repulsão e Ruína dos Artrópodes no golpe. */
+function golpe(j: Player, alvo: Entity, mods: Mods): void {
+  try {
+    if (!alvo.isValid) return;
+    if (mods.repulsao) {
+      const dx = alvo.location.x - j.location.x, dz = alvo.location.z - j.location.z;
+      const d = Math.hypot(dx, dz) || 1;
+      const forca = mods.repulsao * TINKERS.modificadores.repulsao.forca;
+      alvo.applyKnockback({ x: (dx / d) * forca, z: (dz / d) * forca }, 0.3);
+    }
+    if (mods.artropodes && (TINKERS.aranhas as readonly string[]).includes(alvo.typeId)) {
+      alvo.applyDamage(mods.artropodes * TINKERS.modificadores.artropodes.dano, { cause: EntityDamageCause.entityAttack, damagingEntity: j });
+      alvo.addEffect("slowness", 60 * mods.artropodes, { amplifier: 3 });
+    }
+  } catch {
+    // o alvo morreu no golpe
+  }
+}
+
+/** Ferramenta montada no chão: renasce antes de o jogo apagar o item (5 min). */
+const caidas = new Map<string, number>();
+function talvezGuardar(e: Entity): void {
+  try {
+    if (e.typeId !== "minecraft:item") return;
+    const item = e.getComponent("minecraft:item")?.itemStack;
+    if (ferramentaDe(item?.typeId)) caidas.set(e.id, system.currentTick);
+  } catch {
+    // já sumiu
+  }
+}
+function registrarRenascer(): void {
+  world.afterEvents.entitySpawn.subscribe(({ entity }) => talvezGuardar(entity));
+  world.afterEvents.entityLoad.subscribe(({ entity }) => talvezGuardar(entity));
+  intervalo("tinkers", () => {
+    for (const [id, desde] of caidas) {
+      if (system.currentTick - desde < TINKERS.renascerTicks) continue;
+      caidas.delete(id);
+      const e = world.getEntity(id);
+      if (!e?.isValid) continue;
+      const item = e.getComponent("minecraft:item")?.itemStack;
+      if (!item) continue;
+      const novo = e.dimension.spawnItem(item, e.location);
+      e.remove();
+      caidas.set(novo.id, system.currentTick);
+    }
+  }, 600);
+}
+
 export function registrarFerramentas(): void {
   world.beforeEvents.playerBreakBlock.subscribe((ev) => {
     const f = ferramentaDe(ev.itemStack?.typeId);
@@ -179,16 +232,28 @@ export function registrarFerramentas(): void {
       system.run(() => aviso(ev.player, { translate: "cl.tc.nivel_baixo", with: [String(precisa), String(nivelMat(f.mat))] }));
     }
   });
-  world.afterEvents.playerBreakBlock.subscribe(({ player, itemStackBeforeBreak }) => {
+  world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation, itemStackBeforeBreak }) => {
     const f = ferramentaDe(itemStackBeforeBreak?.typeId);
-    if (f && !criativo(player)) usar(player, f.tipo === "espada_larga" ? 2 : 1);
+    if (!f) return;
+    // Sorte (lápis): cada nível tem uma chance de soltar mais um do que o minério dá.
+    const sorte = modsDe(itemStackBeforeBreak!).sorte ?? 0;
+    const extra = TINKERS.fortuna[brokenBlockPermutation.type.id];
+    if (sorte && extra) {
+      let n = 0;
+      for (let k = 0; k < sorte; k++) if (Math.random() < TINKERS.modificadores.sorte.chance) n++;
+      if (n) block.dimension.spawnItem(new ItemStack(extra, n), block.center());
+    }
+    if (!criativo(player)) usar(player, f.tipo === "espada_larga" ? 2 : 1);
   });
-  world.afterEvents.entityHitEntity.subscribe(({ damagingEntity }) => {
-    if (!(damagingEntity instanceof Player) || criativo(damagingEntity)) return;
+  world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
+    if (!(damagingEntity instanceof Player)) return;
     const mao = damagingEntity.getComponent("minecraft:equippable")?.getEquipment(EquipmentSlot.Mainhand);
     const f = ferramentaDe(mao?.typeId);
-    if (f) usar(damagingEntity, f.tipo === "espada_larga" ? 1 : 2);
+    if (!f || !mao) return;
+    golpe(damagingEntity, hitEntity, modsDe(mao));
+    if (!criativo(damagingEntity)) usar(damagingEntity, f.tipo === "espada_larga" ? 1 : 2);
   });
+  registrarRenascer();
   // Pressa (redstone) e Musgo (conserto sozinho) valem com a ferramenta na mão.
   let volta = 0;
   intervalo("tinkers", () => {

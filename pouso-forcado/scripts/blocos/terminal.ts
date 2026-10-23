@@ -5,6 +5,7 @@ import { aviso } from "../jogador/hud.js";
 import { particula } from "../util/efeitos.js";
 import { Inventario, inventariosDe, tiposVirtuais } from "../armazenamento/virtual.js";
 import { coletarNaRede, consumir, procurarNaRede } from "../util/rede.js";
+import { menuFabricar, temMontador } from "../armazenamento/autocraft.js";
 
 /*
  * Terminal de Armazenamento: uma rede de baús no estilo Applied Energistics.
@@ -175,6 +176,9 @@ async function abrir(jogador: Player, terminal: Block, filtro: string, pagina: n
     })
     .button({ translate: "cl.terminal.guardar" })
     .button({ translate: filtro ? "cl.terminal.limpar" : "cl.terminal.procurar" });
+  // Fabricar (1.2.0): só no Terminal de verdade, com um Montador Molecular na rede.
+  const fabrica = !proprio && temMontador(terminal);
+  if (fabrica) form.button({ translate: "cl.ac.fabricar" });
   for (const l of nestaPagina) form.button({ rawtext: [l.nome, { text: ` §8x${l.total}` }] });
   if (temMais) form.button({ translate: "cl.terminal.mais" });
 
@@ -186,7 +190,8 @@ async function abrir(jogador: Player, terminal: Block, filtro: string, pagina: n
     return abrir(jogador, terminal, filtro, 0, false);
   }
   if (r.selection === 1) return filtro ? abrir(jogador, terminal, "", 0, false) : procurar(jogador, terminal);
-  const k = r.selection - 2;
+  if (fabrica && r.selection === 2) return menuFabricar(jogador, terminal, () => conteineres(terminal));
+  const k = r.selection - (fabrica ? 3 : 2);
   if (k < nestaPagina.length) return escolherQuantidade(jogador, terminal, nestaPagina[k]);
   return abrir(jogador, terminal, filtro, pagina + 1, false);
 }

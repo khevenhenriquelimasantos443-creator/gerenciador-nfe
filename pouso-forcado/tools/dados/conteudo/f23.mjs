@@ -18,6 +18,12 @@ const VARIANTES = [
   ["mosaico", "Mosaico", "Mosaic"],
 ];
 const madeira = (id, pt, en, comp, padrao, topo, extra = {}) => ({ id, pt, en, tipo: "cubo", cor: "#8a6a3e", padrao, topo, comp, dureza: 1.5, mod: "BiblioCraft", ...extra });
+const CORES = [
+  ["vermelha", "Vermelha", "Red", "#e04848", "red"], ["laranja", "Laranja", "Orange", "#f08a2a", "orange"],
+  ["amarela", "Amarela", "Yellow", "#f2d03a", "yellow"], ["verde", "Verde", "Green", "#5bbf4a", "lime"],
+  ["ciano", "Ciano", "Cyan", "#3ac9d6", "cyan"], ["azul", "Azul", "Blue", "#3a6bd5", "blue"],
+  ["roxa", "Roxa", "Purple", "#9a4ad6", "purple"], ["rosa", "Rosa", "Pink", "#f08ab8", "pink"],
+];
 const luz = (id, pt, en, cor) => ({
   id, pt, en, tipo: "cubo", cor, padrao: "polido", comp: "cl:luminaria", dureza: 0.5, mod: "BiblioCraft",
   estados: { "cl:aceso": [false, true] },
@@ -43,6 +49,8 @@ export default {
     madeira("cabide_armadura", "Cabide de Armadura", "Armor Stand", "cl:cabide", "pilar", "entalhado"),
     luz("lanterna", "Lanterna", "Fancy Lantern", "#f2c94c"),
     luz("lampada", "Lâmpada", "Fancy Lamp", "#f7e3a0"),
+    // 1.2.0: luminárias coloridas do BiblioCraft (a luz do jogo é sempre branca; a cor fica no vidro).
+    ...CORES.map(([c, pt, en, cor]) => ({ ...luz(`lampada_${c}`, `Lâmpada ${pt}`, `${en} Fancy Lamp`, cor), menu: "construction" })),
     { id: "carregador_chunks", pt: "Carregador de Chunks", en: "Chunk Loader", tipo: "maquina", luz: "verde", glifo: "cristal", comp: "cl:carregador_chunks", girar: false, mod: "ChickenChunks", estados: { "cl:ligado": [false, true] } },
     { id: "carregador_pontual", pt: "Carregador Pontual", en: "Spot Loader", tipo: "maquina", luz: "verde", glifo: "circulo", comp: "cl:carregador_chunks", girar: false, mod: "ChickenChunks", estados: { "cl:ligado": [false, true] } },
   ],
@@ -57,6 +65,7 @@ export default {
     { id: "cabide_armadura", tipo: "shaped", padrao: [" S ", " S ", "PPP"], chave: { S: "minecraft:stick", P: "minecraft:oak_slab" }, resultado: "cl:cabide_armadura" },
     { id: "lanterna", tipo: "shaped", padrao: ["FFF", "VTV", "FFF"], chave: { F: "minecraft:iron_nugget", V: "minecraft:glass", T: "minecraft:torch" }, resultado: "cl:lanterna" },
     { id: "lampada", tipo: "shaped", padrao: ["VVV", "VGV", " F "], chave: { V: "minecraft:glass", G: "minecraft:glowstone", F: "minecraft:iron_ingot" }, resultado: "cl:lampada" },
+    ...CORES.map(([c, , , , corante]) => ({ id: `lampada_${c}`, tipo: "shapeless", ingredientes: ["cl:lampada", `minecraft:${corante}_dye`], resultado: `cl:lampada_${c}` })),
     { id: "carregador_chunks", tipo: "shaped", padrao: [" P ", "OEO", "OCO"], chave: { P: "minecraft:ender_pearl", O: "minecraft:gold_ingot", E: "minecraft:enchanting_table", C: "cl:circuito" }, resultado: "cl:carregador_chunks" },
     { id: "carregador_pontual", tipo: "shaped", padrao: ["PPP", "PCP", "PPP"], chave: { P: "minecraft:ender_pearl", C: "cl:carregador_chunks" }, resultado: "cl:carregador_pontual", qtd: 10 },
   ],
@@ -83,6 +92,7 @@ export default {
     "cl.missao.dc_marmore.titulo": ["Mármore", "Marble"], "cl.missao.dc_marmore.desc": ["Junte 32 Mármores (veios na pedra, entre y 4 e 40).", "Gather 32 Marble (veins in stone, between y 4 and 40)."],
     "cl.missao.dc_estante.titulo": ["Biblioteca", "Library"], "cl.missao.dc_estante.desc": ["Guarde 8 livros numa Estante.", "Store 8 books in a Bookcase."],
     "cl.missao.dc_cabide.titulo": ["Cabide", "Armor stand"], "cl.missao.dc_cabide.desc": ["Troque de armadura num Cabide de Armadura.", "Swap armor on an Armor Stand."],
+    "cl.missao.dc_lampada.titulo": ["Cores", "Colors"], "cl.missao.dc_lampada.desc": ["Faça uma Lâmpada colorida (lâmpada + corante) e coloque.", "Craft a colored Fancy Lamp (lamp + dye) and place it."],
     "cl.missao.dc_carregador.titulo": ["Sempre ligado", "Always on"], "cl.missao.dc_carregador.desc": ["Ligue um Carregador de Chunks perto das suas máquinas.", "Turn on a Chunk Loader near your machines."],
   },
   dados: {

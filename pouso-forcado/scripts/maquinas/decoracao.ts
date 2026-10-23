@@ -188,6 +188,9 @@ export function registrarDecoracao(): void {
   world.afterEvents.itemUse.subscribe(({ itemStack, source }) => {
     if (itemStack.typeId === "cl:cinzel" && source.isSneaking) system.run(() => abrirUmMenu(source, () => cinzelarPilha(source)));
   });
+  world.afterEvents.playerPlaceBlock.subscribe(({ player, block }) => {
+    if (block.typeId.startsWith("cl:lampada_")) registrarAcao(player, "lampada_cor");
+  });
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     const dim = block.dimension, p = block.location;

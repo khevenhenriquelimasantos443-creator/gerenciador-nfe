@@ -36,6 +36,7 @@
         "explosion_resistance": 6
       },
       "minecraft:map_color": "#c9ced3",
+      "minecraft:loot": "loot_tables/cl/vazio.json",
       "cl:celula_energia": {}
     }
   }

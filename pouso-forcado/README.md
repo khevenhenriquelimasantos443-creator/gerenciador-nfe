@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.1.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último).
+**Versão 1.2.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último).
 
 ## Fases até o fim
 
@@ -134,6 +134,25 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.2.0
+
+- **Sem Nether** (como no Crash Landing): o portal não acende; se acender de outro jeito, quem atravessa volta e o portal some.
+- **Tinkers:** o **Varal** também seca carne crua e vira **Charque**. Modificadores novos na Estação de Ferramentas: **Sorte** (32 lápis: minérios soltam mais), **Repulsão** (pistão), **Ruína dos Artrópodes** (2 olhos fermentados: mais dano e lentidão em aranhas) e **Obsidiana** (4 obsidianas: 10% por nível de não gastar). Afiado (quartzo) e Fogo (pó de blaze) ficam de fora porque pedem Nether. Ferramenta montada caída no chão **não some**.
+- **Thermal:** **Células de Energia** quebradas soltam o item com a carga escrita ("Carga: N E") e voltam com ela ao colocar. **Tesseract** (ouro, pérolas do fim, Estrutura de Máquina, diamante): toque e escolha uma frequência; Tesseracts na mesma frequência ligam as redes de energia sem cabo.
+- **Torre de Defesa** (ideia do projeto): atira no monstro mais perto até 12 blocos, gastando 0,25 E da rede por tiro.
+- **PneumaticCraft:** lingotes e blocos de ferro jogados no chão perto de uma explosão (TNT, creeper) viram **ferro comprimido**, com 20% de perda.
+- **Applied Energistics:** **Montador Molecular** ligado à rede do Terminal. Grave até 9 padrões nele (gasta um **Padrão ME em Branco**; só receitas de bancada do add-on). O Terminal ganha **Fabricar**: tira os ingredientes da rede, faz antes os que faltarem e têm padrão (até 4 níveis), gasta 1 E por fabricação e guarda o resultado na rede.
+- **BiblioCraft:** **Lâmpadas coloridas** em 8 cores (lâmpada + corante). A luz do jogo é sempre branca; a cor fica no vidro.
+- **EnviroMine:** **caldeirão** com água e calor embaixo (fogo, fogueira acesa, lava, magma): a garrafa tira **Água Boa** fervida no lugar da água salgada.
+- **Variedade na comida** (Spice of Life, que o Crash Landing usava): o jogo lembra as últimas 12 comidas; repetir rende 75%, 50% e depois 25%.
+- **Tamareira** (HarvestCraft): a muda vem da peneira de areia (1/64) e vira uma palmeira com 2 **cachos de tâmara** que amadurecem e dão 2–4 tâmaras.
+- **Cajados** (Ex Nihilo/Ex Aliquo): de **Osso** (dura 256) e de **Ouro** (acha o dobro de bichos-da-seda, dura 32).
+- **Caixa de Entrega** (o Quest Delivery System do HQM): os baús encostados nela entregam as missões "entregar" e contam para as "ter".
+- **Bússola do Avião:** na mão, mostra para que lado e a quantos metros está o Painel da Nave.
+- **Saco de Dormir** (3 couros + 3 linhas): à noite, sem monstro perto e fora da noite de horda, pula para o amanhecer.
+- **Meteoritos:** uns 2 por dia de jogo caem a 40–90 blocos de alguém, com aviso no chat e as coordenadas. As **Rochas de Meteorito** (picareta nível 2) soltam fragmentos, minérios, certus, yellorium e às vezes diamante; 9 fragmentos = 1 diamante.
+- Missões novas em vários capítulos e o capítulo **Sobrevivente**.
 
 ## Final (Fase 10: a decolagem)
 
