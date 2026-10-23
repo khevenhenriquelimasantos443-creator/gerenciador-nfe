@@ -1352,6 +1352,7 @@ cl.br.desligado=§7(desligado)
 cl.br.sem_tomada=§eSem Tomada de Energia: a energia se perde.
 cl.br.insercao=Barra de Controle: %s inserida (toque: mais 10; agachado: menos 10)
 cl.br.porta=Porta de Acesso: ponha Lingotes de Yellorium ou Blutônio num baú encostado (ou toque com eles); a cianita sai no baú.
+cl.br.tomada=Tomada de Energia: leva a energia do reator para os cabos, baterias e células encostados nela.
 cl.br.refrigeracao=Porta de Refrigeração: baldes de água num baú encostado dobram a energia (1 balde a cada 10 ciclos).
 cl.br.reprocessador=Reprocessador: 2 Lingotes de Cianita + 1 balde de água no baú de cima = 1 Lingote de Blutônio.
 cl.capitulo.reator.nome=Reator (Big Reactors)

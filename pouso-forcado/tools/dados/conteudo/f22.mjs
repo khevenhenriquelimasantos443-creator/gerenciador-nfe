@@ -61,6 +61,7 @@ export default {
     "cl.br.sem_tomada": ["§eSem Tomada de Energia: a energia se perde.", "§eNo Power Tap: the energy is wasted."],
     "cl.br.insercao": ["Barra de Controle: %s inserida (toque: mais 10; agachado: menos 10)", "Control Rod: %s inserted (tap: 10 more; sneak: 10 less)"],
     "cl.br.porta": ["Porta de Acesso: ponha Lingotes de Yellorium ou Blutônio num baú encostado (ou toque com eles); a cianita sai no baú.", "Access Port: put Yellorium or Blutonium Ingots in an adjacent chest (or tap with them); cyanite comes out into the chest."],
+    "cl.br.tomada": ["Tomada de Energia: leva a energia do reator para os cabos, baterias e células encostados nela.", "Power Tap: sends the reactor's power to the cables, batteries and cells touching it."],
     "cl.br.refrigeracao": ["Porta de Refrigeração: baldes de água num baú encostado dobram a energia (1 balde a cada 10 ciclos).", "Coolant Port: water buckets in an adjacent chest double the output (1 bucket every 10 cycles)."],
     "cl.br.reprocessador": ["Reprocessador: 2 Lingotes de Cianita + 1 balde de água no baú de cima = 1 Lingote de Blutônio.", "Reprocessor: 2 Cyanite Ingots + 1 water bucket in the chest above = 1 Blutonium Ingot."],
     "cl.capitulo.reator.nome": ["Reator (Big Reactors)", "Reactor (Big Reactors)"],

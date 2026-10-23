@@ -253,7 +253,7 @@ export const portaAcesso: BlockCustomComponent = {
 const indice = () => JSON.parse((world.getDynamicProperty("cl:reatores") as string | undefined) ?? "[]") as string[];
 
 export const portaRefrigeracao: BlockCustomComponent = { onPlayerInteract: (e) => e.player && aviso(e.player, "cl.br.refrigeracao", 6) };
-export const tomada: BlockCustomComponent = {};
+export const tomada: BlockCustomComponent = { onPlayerInteract: (e) => e.player && aviso(e.player, "cl.br.tomada", 6) };
 
 export const reprocessador: BlockCustomComponent = {
   onTick(e) {

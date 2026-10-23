@@ -1351,6 +1351,7 @@ cl.br.desligado=§7(off)
 cl.br.sem_tomada=§eNo Power Tap: the energy is wasted.
 cl.br.insercao=Control Rod: %s inserted (tap: 10 more; sneak: 10 less)
 cl.br.porta=Access Port: put Yellorium or Blutonium Ingots in an adjacent chest (or tap with them); cyanite comes out into the chest.
+cl.br.tomada=Power Tap: sends the reactor's power to the cables, batteries and cells touching it.
 cl.br.refrigeracao=Coolant Port: water buckets in an adjacent chest double the output (1 bucket every 10 cycles).
 cl.br.reprocessador=Reprocessor: 2 Cyanite Ingots + 1 water bucket in the chest above = 1 Blutonium Ingot.
 cl.capitulo.reator.nome=Reactor (Big Reactors)

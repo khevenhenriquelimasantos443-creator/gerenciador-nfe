@@ -8,7 +8,7 @@ export default {
   ],
   receitas: [
     { id: "cajado_osso", tipo: "shaped", padrao: ["OO", " O", " O"], chave: { O: "minecraft:bone" }, resultado: "cl:cajado_osso" },
-    { id: "cajado_ouro", tipo: "shaped", padrao: ["GG", " S", " S"], chave: { G: "minecraft:gold_ingot", S: "minecraft:stick" }, resultado: "cl:cajado_ouro" },
+    { id: "cajado_ouro", tipo: "shaped", padrao: ["GG", " G", " G"], chave: { G: "minecraft:gold_ingot" }, resultado: "cl:cajado_ouro" },
   ],
   textos: {
     "cl.missao.en_cajado_osso.titulo": ["Cajado de osso", "Bone crook"], "cl.missao.en_cajado_osso.desc": ["Faça um Cajado de Osso (dura 4 vezes mais). O de Ouro acha o dobro de bichos-da-seda, mas quebra rápido.", "Craft a Bone Crook (lasts 4 times longer). The Golden one finds twice the silkworms but breaks fast."],

@@ -4410,12 +4410,11 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "qtd": 1,
   "grade": [
    "GG",
-   " S",
-   " S"
+   " G",
+   " G"
   ],
   "chaves": {
-   "G": "minecraft:gold_ingot",
-   "S": "minecraft:stick"
+   "G": "minecraft:gold_ingot"
   },
   "estacoes": [
    "crafting_table"
@@ -4726,9 +4725,9 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "resultado": "cl:chave_barril",
   "qtd": 1,
   "grade": [
-   "FF",
-   "FS",
-   " S"
+   "F F",
+   " S ",
+   " S "
   ],
   "chaves": {
    "F": "minecraft:iron_ingot",

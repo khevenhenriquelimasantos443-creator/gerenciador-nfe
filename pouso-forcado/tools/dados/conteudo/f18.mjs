@@ -52,7 +52,7 @@ export default {
     { id: "upgrade_armazenamento", tipo: "shaped", padrao: ["PPP", "PCP", "PPP"], chave: { P: "#minecraft:planks", C: "minecraft:chest" }, resultado: "cl:upgrade_armazenamento" },
     ...ESTRUTURAIS.map(([, m], i) => ({ id: `upgrade_estrutural_${i + 1}`, tipo: "shaped", padrao: ["MMM", "MSM", "MMM"], chave: { M: m, S: "minecraft:stick" }, resultado: `cl:upgrade_estrutural_${i + 1}` })),
     { id: "nucleo_funil", tipo: "shapeless", ingredientes: ["minecraft:hopper", "minecraft:redstone"], resultado: "cl:nucleo_funil" },
-    { id: "chave_barril", tipo: "shaped", padrao: ["FF", "FS", " S"], chave: { F: "minecraft:iron_ingot", S: "minecraft:stick" }, resultado: "cl:chave_barril" },
+    { id: "chave_barril", tipo: "shaped", padrao: ["F F", " S ", " S "], chave: { F: "minecraft:iron_ingot", S: "minecraft:stick" }, resultado: "cl:chave_barril" },
     { id: "carrinho", tipo: "shaped", padrao: ["S  ", "S  ", "FFF"], chave: { S: "minecraft:stick", F: "minecraft:iron_ingot" }, resultado: "cl:carrinho" },
     { id: "carrinho_diamante", tipo: "shaped", padrao: ["DCD"], chave: { D: "minecraft:diamond", C: "cl:carrinho" }, resultado: "cl:carrinho_diamante" },
     { id: "empacotador", tipo: "shaped", padrao: ["FPF", "PBP", "FCF"], chave: { F: "minecraft:iron_ingot", P: "minecraft:piston", B: "minecraft:crafting_table", C: "cl:circuito" }, resultado: "cl:empacotador" },

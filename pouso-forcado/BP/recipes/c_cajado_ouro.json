@@ -9,15 +9,12 @@
     ],
     "pattern": [
       "GG",
-      " S",
-      " S"
+      " G",
+      " G"
     ],
     "key": {
       "G": {
         "item": "minecraft:gold_ingot"
-      },
-      "S": {
-        "item": "minecraft:stick"
       }
     },
     "unlock": [

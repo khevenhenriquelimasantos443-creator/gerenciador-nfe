@@ -21,7 +21,7 @@ import { empacotador, registrarEmpacotador } from "./maquinas/empacotador.js";
 import { compressor, interfaceCamara, registrarPneumatic, valvula } from "./maquinas/pneumatic.js";
 import { armazemCorpos, construtorCorpos, registrarSync } from "./maquinas/sync.js";
 import { cabide, carregador, estante, guardaItens, luminaria, registrarDecoracao } from "./maquinas/decoracao.js";
-import { barraControle, controladorReator, portaAcesso, portaRefrigeracao, registrarReator, reprocessador } from "./maquinas/reator.js";
+import { barraControle, controladorReator, portaAcesso, portaRefrigeracao, registrarReator, reprocessador, tomada } from "./maquinas/reator.js";
 import { colheitadeira, colocador, compostadora, esgoto, esteira, fertilizadora, plantadeira, quebrador, rancheiro, registrarMFR, triturador } from "./maquinas/mfr.js";
 import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
 import { peneira } from "./blocos/peneira.js";
@@ -115,6 +115,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:barra_controle", barraControle);
   blockComponentRegistry.registerCustomComponent("cl:porta_acesso_reator", portaAcesso);
   blockComponentRegistry.registerCustomComponent("cl:porta_refrigeracao", portaRefrigeracao);
+  blockComponentRegistry.registerCustomComponent("cl:tomada_energia", tomada);
   blockComponentRegistry.registerCustomComponent("cl:reprocessador_cianita", comPerfil("cl:reprocessador_cianita", reprocessador));
   blockComponentRegistry.registerCustomComponent("cl:estante", estante);
   blockComponentRegistry.registerCustomComponent("cl:guarda_itens", guardaItens);
