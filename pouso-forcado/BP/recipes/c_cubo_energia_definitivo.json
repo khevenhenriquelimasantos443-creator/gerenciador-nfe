@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cubo_energia_definitivo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "LAL",
+      "ACA",
+      "LAL"
+    ],
+    "key": {
+      "L": {
+        "item": "cl:liga_atomica"
+      },
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "C": {
+        "item": "cl:cubo_energia_elite"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:liga_atomica"
+      }
+    ],
+    "result": {
+      "item": "cl:cubo_energia_definitivo"
+    }
+  }
+}

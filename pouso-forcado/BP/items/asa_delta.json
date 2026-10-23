@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:asa_delta",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_asa_delta",
+      "minecraft:display_name": {
+        "value": "item.cl:asa_delta.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

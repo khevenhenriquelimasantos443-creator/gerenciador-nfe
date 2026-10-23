@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_engrenagem_ouro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "MGM",
+      " M "
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:gold_ingot"
+      },
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:gold_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:engrenagem_ouro"
+    }
+  }
+}

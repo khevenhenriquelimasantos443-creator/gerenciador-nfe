@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_asa_delta"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SLS",
+      "LLL",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "L": {
+        "item": "minecraft:leather"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stick"
+      }
+    ],
+    "result": {
+      "item": "cl:asa_delta"
+    }
+  }
+}

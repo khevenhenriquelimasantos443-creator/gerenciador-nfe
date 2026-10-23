@@ -9,7 +9,7 @@ import { particula } from "../util/efeitos.js";
 import { rf, rfPorTick } from "../util/energia.js";
 import { gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { cabe, contar, entrada, entregar, gastarCE, primeiro, saida, tirar } from "../util/maquina.js";
-import { capacidadeDe, cargaDe, gerar } from "../util/rede.js";
+import { CELULAS, capacidadeDe, cargaDe, gerar } from "../util/rede.js";
 
 /*
  * Máquinas do Thermal Expansion (Fase 17). Todas com minecraft:tick de 100 ticks (5 s):
@@ -21,14 +21,14 @@ const nome = (b: Block): RawMessage => ({ translate: b.localizationKey });
 const ultimo = new Map<string, string>(); // estado mais recente de cada máquina (para o toque)
 const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
 
-function feito(b: Block, som = "random.click"): void {
+export function feito(b: Block, som = "random.click"): void {
   ultimo.set(chave(b), "ok");
   b.dimension.playSound(som, b.center(), { volume: 0.3 });
   particula(b.dimension, "cl:energia", { x: b.x + 0.5, y: b.y + 1, z: b.z + 0.5 });
   creditar(b, "te_operacao");
 }
 
-function maquina(processar: (b: Block) => "ok" | "parada" | "sem_energia", dica?: string): BlockCustomComponent {
+export function maquina(processar: (b: Block) => "ok" | "parada" | "sem_energia", dica?: string): BlockCustomComponent {
   return {
     onTick(e) {
       ultimo.set(chave(e.block), processar(e.block));
@@ -176,7 +176,7 @@ export const celulaEnergia: BlockCustomComponent = {
 };
 
 export function registrarThermal(): void {
-  registrarDetalhe(["cl:celula_energia_basica", "cl:celula_energia_reforcada", "cl:celula_energia_redstone", "cl:celula_energia_ressonante"], (b) => ({
+  registrarDetalhe(Object.keys(CELULAS), (b) => ({
     translate: "cl.olhar.energia",
     with: [rf(cargaDe(b)), rf(capacidadeDe(b))],
   }));

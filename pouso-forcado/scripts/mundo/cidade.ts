@@ -135,7 +135,8 @@ function torre(dim: Dimension, x0: number, z0: number, sorte: () => number): voi
   encher(dim, ax + 2, topo + 1, az + 2, ax + 2, topo + 7, az + 2, "minecraft:iron_bars");
   por(dim, ax + 2, topo + 8, az + 2, "minecraft:lightning_rod");
   criarBauCom(dim, { x: ax - 1, y: topo + 1, z: az - 1 }, sortearSaque(TORRE_SAQUE, sorte));
-  por(dim, ax + 3, topo + 1, az + 3, IDS.geradorMonstros);
+  // 1.3.0: no alto da torre, um Gerador de Blazes (vara de blaze → pó de blaze, sem o Nether).
+  por(dim, ax + 3, topo + 1, az + 3, "cl:gerador_blaze");
   ferragem(dim, ax - 1, topo + 1, az + 3, sorte);
 }
 

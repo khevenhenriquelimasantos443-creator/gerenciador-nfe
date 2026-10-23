@@ -202,6 +202,81 @@ teste("ferro_comprimido", 300, (t) => {
   });
 });
 
+// 1.3.0 ---------------------------------------------------------------
+const bau = (t, pos) => t.getBlock(pos).getComponent("inventory").container;
+const noBau = (c, id) => {
+  let n = 0;
+  for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === id) n += c.getItem(s).amount;
+  return n;
+};
+
+teste("refinaria", 400, (t) => {
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x: 1, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 2, y: 1, z: 1 });
+  t.setBlockType("cl:refinaria", { x: 2, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 2, y: 3, z: 1 });
+  bau(t, { x: 2, y: 3, z: 1 }).addItem(new ItemStack("cl:balde_petroleo", 1));
+  t.runAfterDelay(250, () => {
+    const n = noBau(bau(t, { x: 2, y: 1, z: 1 }), "cl:balde_combustivel");
+    log(`refinaria: combustível no baú de baixo = ${n}`);
+    t.assert(n === 1, "não refinou");
+    t.succeed();
+  });
+});
+
+teste("pedreira", 400, (t) => {
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x: 2, y: 1, z: 0 });
+  t.setBlockPermutation(BlockPermutation.resolve("cl:pedreira", { "minecraft:cardinal_direction": "north" }), { x: 3, y: 1, z: 0 });
+  t.setBlockType("minecraft:chest", { x: 3, y: 2, z: 0 });
+  t.setBlockType("minecraft:cobblestone", { x: 3, y: 1, z: 2 });
+  t.setBlockType("minecraft:iron_ore", { x: 4, y: 1, z: 3 });
+  t.runAfterDelay(250, () => {
+    const c = bau(t, { x: 3, y: 2, z: 0 });
+    const pedra = noBau(c, "minecraft:cobblestone"), ferro = noBau(c, "minecraft:raw_iron");
+    const pb = t.getBlock({ x: 3, y: 1, z: 0 });
+    log(`pedreira: pedra=${pedra} ferro bruto=${ferro}; bloco em (3,1,2) = ${t.getBlock({ x: 3, y: 1, z: 2 }).typeId}; virada=${pb.permutation.getState("minecraft:cardinal_direction")} em ${pb.x},${pb.y},${pb.z}; (3,1,2) mundo=${JSON.stringify(t.worldBlockLocation({ x: 3, y: 1, z: 2 }))}`);
+    t.assert(pedra + ferro >= 4, "a pedreira não cavou");
+    t.succeed();
+  });
+});
+
+teste("elevador", 200, (t) => {
+  t.setBlockType("cl:elevador", { x: 2, y: 1, z: 2 });
+  t.setBlockType("cl:elevador", { x: 2, y: 4, z: 2 });
+  const j = robo(t, { x: 2.5, y: 2, z: 2.5 });
+  t.runAfterDelay(20, () => {
+    const y0 = j.location.y;
+    const em = world.getDimension("overworld").getBlock({ x: Math.floor(j.location.x), y: Math.floor(j.location.y - 0.1), z: Math.floor(j.location.z) });
+    log(`elevador: em cima de ${em?.typeId}, no chão=${j.isOnGround}`);
+    let pulou = 0;
+    const id = system.runInterval(() => { if (j.isJumping) pulou++; }, 1);
+    t.runAfterDelay(15, () => system.clearRun(id));
+    j.jump();
+    t.runAfterDelay(16, () => log(`elevador: isJumping visto em ${pulou} ticks`));
+    t.runAfterDelay(20, () => {
+      log(`elevador: y ${y0.toFixed(1)} -> ${j.location.y.toFixed(1)}`);
+      t.assert(j.location.y - y0 > 2.5, "não subiu");
+      t.succeed();
+    });
+  });
+});
+
+teste("tumulo", 200, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  t.runAfterDelay(10, () => {
+    j.giveItem(new ItemStack("minecraft:diamond", 5), false);
+    j.giveItem(new ItemStack("minecraft:iron_ingot", 7), false);
+    const onde = { x: Math.floor(j.location.x), y: Math.floor(j.location.y), z: Math.floor(j.location.z) };
+    j.kill();
+    t.runAfterDelay(20, () => {
+      const b = world.getDimension("overworld").getBlock(onde);
+      log(`túmulo: bloco onde morreu = ${b?.typeId}`);
+      t.assert(b?.typeId === "cl:tumulo", "não fez túmulo");
+      t.succeed();
+    });
+  });
+});
+
 // Depuração: o que chega dos eventos de interação e de quebra.
 world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);

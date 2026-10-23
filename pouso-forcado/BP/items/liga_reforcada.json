@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:liga_reforcada",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_liga_reforcada",
+      "minecraft:display_name": {
+        "value": "item.cl:liga_reforcada.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

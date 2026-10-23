@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.2.3";
+export const VERSAO = "1.3.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -187,6 +187,10 @@ export const MINERIOS: ReadonlyArray<{ minerio: string; bloco?: string; veios: n
   { minerio: "calcario", bloco: "cl:calcario", veios: 1, tamanho: 32, yMin: 4, yMax: 40 },
 ];
 
+// Fase 25 (BuildCraft): poços de petróleo no deserto. chance = por chunk; bolsão enterrado de raio ~3
+// entre yMin e yMax, ligado à superfície por uma coluna que termina numa mancha 3x3 no chão.
+export const PETROLEO = { chance: 1 / 30, raio: 3, yMin: 12, yMax: 28 } as const;
+
 // Relevo espalhado por script conforme o jogador explora (scripts/mundo/relevo.ts).
 // chance = probabilidade por chunk; tamanho = área no chão; deslocY = quanto fica enterrado.
 export const RELEVO = {
@@ -279,6 +283,15 @@ const pedacos = (estagio: string): Achado[] => [
   { item: `${NS}:estanho_${estagio}`, chance: 1 / 18 }, // Fase 16 (Ex Aliquo: estanho, como o cobre)
 ];
 export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
+  // 1.3.0: sem Nether, o que é do Nether sai do cascalho do Nether (netherrack martelado).
+  [`${NS}:cascalho_nether`]: [
+    { item: "minecraft:quartz", chance: 1 / 4 },
+    { item: "minecraft:quartz", chance: 1 / 8 },
+    { item: "minecraft:glowstone_dust", chance: 1 / 12 },
+    { item: "minecraft:gunpowder", chance: 1 / 16 },
+    { item: "minecraft:nether_wart", chance: 1 / 50 },
+    { item: "minecraft:netherite_scrap", chance: 1 / 500 }, // bem raro
+  ],
   "minecraft:dirt": [
     { item: `${NS}:pedrinha`, chance: 1 },
     { item: `${NS}:pedrinha`, chance: 1 },
@@ -421,11 +434,14 @@ export const TINKERS = {
     reforco: { item: "minecraft:diamond", qtd: 1, max: 1, durabilidade: 500 },
     esmeralda: { item: "minecraft:emerald", qtd: 1, max: 1, fator: 0.5 },
     musgo: { item: "cl:bola_musgo", qtd: 3, max: 1, segundos: 15 }, // +1 de durabilidade a cada 15 s
-    // 1.2.0. Os do TC que pedem Nether (quartzo = afiado, pó de blaze = fogo) ficam de fora.
+    // 1.2.0 (sorte, repulsão, artrópodes, obsidiana) e 1.3.0 (afiado e fogo: quartzo e pó de blaze vêm da peneira e das cidades).
     sorte: { item: "minecraft:lapis_lazuli", qtd: 32, max: 3, chance: 1 / 3 }, // Fortuna: cada nível, 1/3 de chance de um drop a mais
     repulsao: { item: "minecraft:piston", qtd: 1, max: 2, forca: 0.8 }, // empurra o alvo
     artropodes: { item: "minecraft:fermented_spider_eye", qtd: 2, max: 3, dano: 2.5 }, // + dano em aranhas, e lentidão
     obsidiana: { item: "minecraft:obsidian", qtd: 4, max: 3, chance: 0.1 }, // 10% por nível de não gastar durabilidade
+    // 1.3.0: quartzo e pó de blaze já existem sem o Nether (peneira e gerador de blaze nas cidades).
+    afiado: { item: "minecraft:quartz", qtd: 16, max: 3, dano: 1 }, // +1 de dano por nível
+    fogo: { item: "minecraft:blaze_powder", qtd: 8, max: 2, segundos: 3 }, // põe fogo no alvo (3 s por nível)
   },
   // Fortuna (lápis): o que cada minério solta a mais.
   fortuna: {
@@ -1024,6 +1040,7 @@ export const GERADOR_MONSTROS = {
   porVez: [1, 2],
   mobs: ["minecraft:husk", "cl:mumia", "cl:mumia", "minecraft:skeleton", "minecraft:spider"],
   mobsFundo: ["minecraft:skeleton", "minecraft:stray", "minecraft:cave_spider", "minecraft:creeper", "cl:mumia"], // abaixo de y = 0
+  blazes: ["minecraft:blaze"], // Gerador de Blazes (1.3.0)
   saque: [
     { item: "minecraft:iron_ingot", min: 1, max: 3, chance: 1 },
     { item: "minecraft:gold_nugget", min: 2, max: 6, chance: 0.8 },
@@ -1181,6 +1198,8 @@ export const MARTELO: Readonly<Record<string, ReadonlyArray<Achado>>> = {
   "minecraft:red_sand": [{ item: `${NS}:poeira`, chance: 1 }],
   "minecraft:sandstone": [{ item: "minecraft:sand", chance: 1 }],
   "minecraft:stone": [1, 0.75, 0.75, 0.5, 0.25, 0.05].map((chance) => ({ item: `${NS}:pedrinha`, chance })),
+  // 1.3.0: o netherrack (barril com lava + redstone) vira cascalho do Nether, como no Ex Nihilo.
+  "minecraft:netherrack": [{ item: `${NS}:cascalho_nether`, chance: 1 }],
 };
 
 // Barril (madeira ou pedra): compostagem e "receitas" com 1.000 mB de água ou lava.

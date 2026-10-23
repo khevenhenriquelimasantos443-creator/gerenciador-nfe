@@ -1,12 +1,11 @@
 import { Block, BlockCustomComponent, Dimension, EntityDamageCause, GameMode, ItemStack, Player, Vector3, system, world } from "@minecraft/server";
 import { ModalFormData } from "@minecraft/server-ui";
-import { DADOS_F17 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { gastarCE } from "../util/maquina.js";
 import { abrirUmMenu } from "../util/menus.js";
-import { definirPares } from "../util/rede.js";
+import { CELULAS, definirPares } from "../util/rede.js";
 
 /*
  * 1.2.0, energia e PneumaticCraft:
@@ -20,7 +19,6 @@ import { definirPares } from "../util/rede.js";
  * - Ferro comprimido por explosão (PneumaticCraft): lingotes e blocos de ferro jogados no chão perto de
  *   uma explosão viram ferro comprimido, com 20% de perda.
  */
-const CELULAS = DADOS_F17.celulas as Readonly<Record<string, number>>;
 const LORE_CARGA = /Carga: (\d+) E|Charge: (\d+) E/;
 const TORRE = { alcance: 12, dano: 4, custoCE: 25 };
 const COMPRIME: Readonly<Record<string, string>> = { "minecraft:iron_ingot": "cl:lingote_ferro_comprimido", "minecraft:iron_block": "cl:bloco_ferro_comprimido" };

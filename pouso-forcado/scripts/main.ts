@@ -51,6 +51,9 @@ import { caixaEntrega, registrarEntrega } from "./missoes/entrega.js";
 import { registrarVariedade } from "./jogador/variedade.js";
 import { registrarCaldeirao } from "./jogador/caldeirao.js";
 import { registrarExtras } from "./mundo/extras.js";
+import { bomba, motor, pedreira, refinaria, registrarBuildcraft } from "./maquinas/buildcraft.js";
+import { registrarOpenBlocks, tumulo } from "./jogador/openblocks.js";
+import { camaraInjecao, camaraPurificacao, evaporador, infusorMetalurgico, infusorQuimico, registrarMekanism, separador } from "./maquinas/mekanism.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
@@ -90,6 +93,12 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:muda_tamareira", mudaTamareira);
   blockComponentRegistry.registerCustomComponent("cl:cacho_tamaras", cachoTamaras);
   blockComponentRegistry.registerCustomComponent("cl:caixa_entrega", caixaEntrega);
+  for (const [id, comp] of Object.entries({
+    "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador, "cl:infusor_quimico": infusorQuimico,
+    "cl:camara_purificacao": camaraPurificacao, "cl:camara_injecao": camaraInjecao, "cl:infusor_metalurgico": infusorMetalurgico,
+    "cl:bomba": bomba, "cl:refinaria": refinaria, "cl:motor_combustao": motor, "cl:pedreira": pedreira,
+  })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  blockComponentRegistry.registerCustomComponent("cl:tumulo", tumulo);
   blockComponentRegistry.registerCustomComponent("cl:torre_defesa", comPerfil("cl:torre_defesa", torreDefesa));
   blockComponentRegistry.registerCustomComponent("cl:fundicao", comPerfil("cl:fundicao", fundicaoComp));
   blockComponentRegistry.registerCustomComponent("cl:tanque_refratario", tanqueComp);
@@ -170,5 +179,8 @@ registrarEntrega();
 registrarVariedade();
 registrarCaldeirao();
 registrarExtras();
+registrarMekanism();
+registrarBuildcraft();
+registrarOpenBlocks();
 registrarAmbiente();
 registrarFome();

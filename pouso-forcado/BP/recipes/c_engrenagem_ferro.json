@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_engrenagem_ferro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "MGM",
+      " M "
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:iron_ingot"
+      },
+      "G": {
+        "item": "cl:engrenagem_pedra"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:engrenagem_ferro"
+    }
+  }
+}

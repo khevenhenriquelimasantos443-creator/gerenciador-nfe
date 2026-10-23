@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_evaporador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VVV",
+      "CEC",
+      "AAA"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      },
+      "A": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:evaporador"
+    }
+  }
+}

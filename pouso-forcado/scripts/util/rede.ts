@@ -1,6 +1,6 @@
 import { Block } from "@minecraft/server";
 import { ENERGIA, IDS } from "../config.js";
-import { DADOS_F17 } from "../conteudo/gerado.js";
+import { DADOS_F17, DADOS_F24 } from "../conteudo/gerado.js";
 import { definirEstado, lerEstado, vizinhos } from "./blocos.js";
 import { gravar, ler } from "./dados.js";
 
@@ -14,7 +14,8 @@ import { gravar, ler } from "./dados.js";
  */
 const CARGA = "cl:carga";
 // Por onde a energia passa: cabos e os próprios blocos de energia (máquinas não conduzem).
-const CELULAS = DADOS_F17.celulas as Readonly<Record<string, number>>;
+// Células de Energia (Thermal, Fase 17) e Cubos de Energia (Mekanism, 1.3.0): capacidade em E.
+export const CELULAS: Readonly<Record<string, number>> = { ...DADOS_F17.celulas, ...DADOS_F24.cubos };
 const CONDUTORES = new Set<string>([IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
 
 // Tesseract (1.2.0): a busca também pula para os outros Tesseracts da mesma frequência (scripts/maquinas/energia_extra.ts).

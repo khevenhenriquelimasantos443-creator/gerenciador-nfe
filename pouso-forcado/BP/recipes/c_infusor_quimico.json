@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_infusor_quimico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CLC",
+      "AEA",
+      "CLC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:cilindro_vazio"
+      },
+      "L": {
+        "item": "cl:liga_enriquecida"
+      },
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:cilindro_vazio"
+      }
+    ],
+    "result": {
+      "item": "cl:infusor_quimico"
+    }
+  }
+}

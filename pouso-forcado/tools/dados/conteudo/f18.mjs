@@ -58,6 +58,8 @@ export default {
     { id: "empacotador", tipo: "shaped", padrao: ["FPF", "PBP", "FCF"], chave: { F: "minecraft:iron_ingot", P: "minecraft:piston", B: "minecraft:crafting_table", C: "cl:circuito" }, resultado: "cl:empacotador" },
     { id: "silicio", tipo: "furnace", entrada: "cl:po_certus", resultado: "cl:silicio" },
     { id: "cristal_fluix", tipo: "shapeless", ingredientes: ["cl:cristal_certus", "minecraft:redstone", "minecraft:lapis_lazuli"], resultado: "cl:cristal_fluix", qtd: 2 },
+    // A receita original do AE1 (certus + quartzo + redstone), agora que o quartzo sai da peneira.
+    { id: "cristal_fluix_quartzo", tipo: "shapeless", ingredientes: ["cl:cristal_certus", "minecraft:redstone", "minecraft:quartz"], resultado: "cl:cristal_fluix", qtd: 2 },
     { id: "faca_corte", tipo: "shapeless", ingredientes: ["minecraft:stick", "minecraft:iron_ingot", "cl:cristal_certus"], resultado: "cl:faca_corte" },
     { id: "matriz_conversao", tipo: "shapeless", ingredientes: ["cl:faca_corte", "cl:cristal_fluix", "minecraft:glass", "cl:processador_basico"], resultado: "cl:matriz_conversao" },
     { id: "componente_me_1k", tipo: "shaped", padrao: ["RCR", "CPC", "RCR"], chave: { R: "minecraft:redstone", C: "cl:cristal_certus", P: "cl:processador_basico" }, resultado: "cl:componente_me_1k" },

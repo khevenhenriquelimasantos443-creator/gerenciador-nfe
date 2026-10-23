@@ -47,7 +47,27 @@ export function criarBauCom(dimensao: Dimension, posicao: Vector3, itens: Readon
   bloco.setType(tipo);
   const container = bloco.getComponent("minecraft:inventory")?.container;
   if (!container) throw new Error("baú sem inventário");
-  for (const { item, quantidade } of itens) container.addItem(new ItemStack(item, quantidade));
+  // Como o saque do Minecraft (1.3.0): cada pilha vai para um espaço sorteado e às vezes se divide em
+  // 2 ou 3 montinhos espalhados.
+  const livres = Array.from({ length: container.size }, (_, i) => i).sort(() => Math.random() - 0.5);
+  for (const { item, quantidade } of itens) {
+    const max = new ItemStack(item, 1).maxAmount;
+    const partes: number[] = [];
+    let resto = quantidade;
+    while (resto > max) {
+      partes.push(max);
+      resto -= max;
+    }
+    const divide = resto > 1 && Math.random() < 0.5 ? Math.min(resto, 2 + Math.floor(Math.random() * 2)) : 1;
+    const base = Math.floor(resto / divide);
+    for (let k = 0; k < divide; k++) partes.push(k === divide - 1 ? resto - base * (divide - 1) : base);
+    for (const n of partes) {
+      if (n <= 0) continue;
+      const slot = livres.pop();
+      if (slot === undefined) container.addItem(new ItemStack(item, n));
+      else container.setItem(slot, new ItemStack(item, n));
+    }
+  }
 }
 
 /** Gasta `quantidade` do item na mão do jogador (no criativo não gasta). */

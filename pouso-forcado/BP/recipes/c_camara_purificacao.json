@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_camara_purificacao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "LCL",
+      "OEO",
+      "LCL"
+    ],
+    "key": {
+      "L": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:cilindro_vazio"
+      },
+      "O": {
+        "item": "minecraft:gold_ingot"
+      },
+      "E": {
+        "item": "cl:pulverizador"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:liga_enriquecida"
+      }
+    ],
+    "result": {
+      "item": "cl:camara_purificacao"
+    }
+  }
+}

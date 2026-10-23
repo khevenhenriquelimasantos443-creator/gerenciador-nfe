@@ -42,6 +42,11 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 - **BiblioCraft** (Nuchaz): estante, prateleira, suporte de ferramentas, expositor, cabide e luminárias. Código e
   desenhos próprios.
 - **ChickenChunks** (ChickenBones): carregadores de chunk, feitos com as áreas carregadas do Bedrock.
+- **Mekanism** (aidancbrady; MIT): separador eletrolítico, evaporador, infusores, câmaras de purificação e injeção,
+  cubos de energia e jetpack, em versão leve (sem reatores nem rede de gás). Código e desenhos próprios.
+- **BuildCraft** (SpaceToad e equipe): petróleo, bomba, refinaria, motor a combustão, pedreira e engrenagens.
+  Código e desenhos próprios.
+- **OpenBlocks** (Mikee, NeverCast, boq; MIT): asa-delta, túmulo e elevador. Código e desenhos próprios.
 - **The Spice of Life** (squeek502): comida repetida rende menos (usado no Crash Landing). Código próprio.
 - **Pam's HarvestCraft** (MatrexsVigil / pamharvestcraft): plantações, utensílios de cozinha e receitas
   (nomes traduzidos, ingredientes do mod). Texturas, ícones e modelos próprios (as do mod não podem ser usadas).

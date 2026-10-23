@@ -178,7 +178,7 @@ export function registrarHordaNoturna(): void {
 
   world.afterEvents.entitySpawn.subscribe(({ entity, cause }) => {
     if (cause !== EntityInitializationCause.Spawned || !solAlto()) return;
-    if (entity.typeId === "minecraft:item" || entity.dimension.id !== "minecraft:overworld") return;
+    if (entity.typeId === "minecraft:item" || entity.typeId === "minecraft:blaze" || entity.dimension.id !== "minecraft:overworld") return;
     try {
       if (entity.matches({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] }) && soloCeu(entity.dimension, entity.location)) entity.remove();
     } catch {

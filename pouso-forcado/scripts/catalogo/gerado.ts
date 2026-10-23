@@ -106,6 +106,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Fried Rice",
   "icone": "textures/items/cl/arte/arroz_frito"
  },
+ "cl:asa_delta": {
+  "pt": "Asa-Delta",
+  "en": "Hang Glider",
+  "icone": "textures/items/cl/c/asa_delta"
+ },
  "cl:assadeira": {
   "pt": "Assadeira",
   "en": "Bakeware",
@@ -115,6 +120,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bacia de Fundição",
   "en": "Casting Basin",
   "icone": "textures/blocks/cl/c/bacia_fundicao_topo"
+ },
+ "cl:balde_combustivel": {
+  "pt": "Balde de Combustível",
+  "en": "Fuel Bucket",
+  "icone": "textures/items/cl/c/balde_combustivel"
+ },
+ "cl:balde_petroleo": {
+  "pt": "Balde de Petróleo",
+  "en": "Oil Bucket",
+  "icone": "textures/items/cl/c/balde_petroleo"
+ },
+ "cl:balde_salmoura": {
+  "pt": "Balde de Salmoura",
+  "en": "Brine Bucket",
+  "icone": "textures/items/cl/c/balde_salmoura"
  },
  "cl:barra_borracha": {
   "pt": "Barra de Borracha",
@@ -215,6 +235,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bolinho de Arroz",
   "en": "Rice Cake",
   "icone": "textures/items/cl/arte/bolinho_arroz"
+ },
+ "cl:bomba": {
+  "pt": "Bomba",
+  "en": "Pump",
+  "icone": "textures/blocks/cl/c/bomba_topo"
  },
  "cl:broa_milho": {
   "pt": "Broa de Milho",
@@ -331,6 +356,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stock",
   "icone": "textures/items/cl/arte/caldo"
  },
+ "cl:camara_injecao": {
+  "pt": "Câmara de Injeção Química",
+  "en": "Chemical Injection Chamber",
+  "icone": "textures/blocks/cl/c/camara_injecao_topo"
+ },
+ "cl:camara_purificacao": {
+  "pt": "Câmara de Purificação",
+  "en": "Purification Chamber",
+  "icone": "textures/blocks/cl/c/camara_purificacao_topo"
+ },
  "cl:camel_pack": {
   "pt": "Camel Pack",
   "en": "Camel Pack",
@@ -365,6 +400,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Carrinho de Diamante",
   "en": "Diamond Dolly",
   "icone": "textures/items/cl/c/carrinho_diamante"
+ },
+ "cl:cascalho_nether": {
+  "pt": "Cascalho do Nether",
+  "en": "Nether Gravel",
+  "icone": "textures/blocks/cl/c/cascalho_nether"
  },
  "cl:casco_nave_entalhado": {
   "pt": "Casco da Nave Entalhado",
@@ -480,6 +520,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pimentas Empanadas",
   "en": "Chili Poppers",
   "icone": "textures/items/cl/arte/chili_poppers"
+ },
+ "cl:cilindro_acido": {
+  "pt": "Cilindro de Ácido Clorídrico",
+  "en": "Hydrogen Chloride Tank",
+  "icone": "textures/items/cl/c/cilindro_acido"
+ },
+ "cl:cilindro_cloro": {
+  "pt": "Cilindro de Cloro",
+  "en": "Chlorine Tank",
+  "icone": "textures/items/cl/c/cilindro_cloro"
+ },
+ "cl:cilindro_hidrogenio": {
+  "pt": "Cilindro de Hidrogênio",
+  "en": "Hydrogen Tank",
+  "icone": "textures/items/cl/c/cilindro_hidrogenio"
+ },
+ "cl:cilindro_oxigenio": {
+  "pt": "Cilindro de Oxigênio",
+  "en": "Oxygen Tank",
+  "icone": "textures/items/cl/c/cilindro_oxigenio"
+ },
+ "cl:cilindro_vazio": {
+  "pt": "Cilindro de Gás Vazio",
+  "en": "Empty Gas Tank",
+  "icone": "textures/items/cl/c/cilindro_vazio"
  },
  "cl:cinzel": {
   "pt": "Cinzel",
@@ -606,6 +671,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Fluix Crystal",
   "icone": "textures/items/cl/c/cristal_fluix"
  },
+ "cl:cubo_energia_avancado": {
+  "pt": "Cubo de Energia Avançado",
+  "en": "Advanced Energy Cube",
+  "icone": "textures/blocks/cl/c/cubo_energia_avancado_topo"
+ },
+ "cl:cubo_energia_basico": {
+  "pt": "Cubo de Energia Básico",
+  "en": "Basic Energy Cube",
+  "icone": "textures/blocks/cl/c/cubo_energia_basico_topo"
+ },
+ "cl:cubo_energia_definitivo": {
+  "pt": "Cubo de Energia Definitivo",
+  "en": "Ultimate Energy Cube",
+  "icone": "textures/blocks/cl/c/cubo_energia_definitivo_topo"
+ },
+ "cl:cubo_energia_elite": {
+  "pt": "Cubo de Energia de Elite",
+  "en": "Elite Energy Cube",
+  "icone": "textures/blocks/cl/c/cubo_energia_elite_topo"
+ },
  "cl:diario_bordo": {
   "pt": "Diário de Bordo",
   "en": "Logbook",
@@ -626,10 +711,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "ME Drive",
   "icone": "textures/blocks/cl/c/drive_me_topo"
  },
+ "cl:elevador": {
+  "pt": "Elevador",
+  "en": "Elevator",
+  "icone": "textures/blocks/cl/c/elevador_topo"
+ },
  "cl:empacotador": {
   "pt": "Empacotador Automático",
   "en": "AutoPackager",
   "icone": "textures/blocks/cl/c/empacotador_topo"
+ },
+ "cl:engrenagem_diamante": {
+  "pt": "Engrenagem de Diamante",
+  "en": "Diamond Gear",
+  "icone": "textures/items/cl/c/engrenagem_diamante"
+ },
+ "cl:engrenagem_ferro": {
+  "pt": "Engrenagem de Ferro",
+  "en": "Iron Gear",
+  "icone": "textures/items/cl/c/engrenagem_ferro"
+ },
+ "cl:engrenagem_madeira": {
+  "pt": "Engrenagem de Madeira",
+  "en": "Wooden Gear",
+  "icone": "textures/items/cl/c/engrenagem_madeira"
+ },
+ "cl:engrenagem_ouro": {
+  "pt": "Engrenagem de Ouro",
+  "en": "Gold Gear",
+  "icone": "textures/items/cl/c/engrenagem_ouro"
+ },
+ "cl:engrenagem_pedra": {
+  "pt": "Engrenagem de Pedra",
+  "en": "Stone Gear",
+  "icone": "textures/items/cl/c/engrenagem_pedra"
  },
  "cl:esgoto": {
   "pt": "Esgoto",
@@ -735,6 +850,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Estufa",
   "en": "Greenhouse",
   "icone": "textures/items/cl/arte/blocos/estufa"
+ },
+ "cl:evaporador": {
+  "pt": "Evaporador Térmico",
+  "en": "Thermal Evaporation Controller",
+  "icone": "textures/blocks/cl/c/evaporador_topo"
  },
  "cl:expositor": {
   "pt": "Expositor",
@@ -846,6 +966,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Coal Generator",
   "icone": "textures/items/cl/arte/blocos/gerador"
  },
+ "cl:gerador_blaze": {
+  "pt": "Gerador de Blazes",
+  "en": "Blaze Spawner",
+  "icone": "textures/blocks/cl/c/gerador_blaze_topo"
+ },
  "cl:gerador_monstros": {
   "pt": "Gerador de Monstros",
   "en": "Monster Generator",
@@ -861,10 +986,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cursed Idol",
   "icone": "textures/items/cl/arte/blocos/idolo_amaldicoado"
  },
+ "cl:infusor_metalurgico": {
+  "pt": "Infusor Metalúrgico",
+  "en": "Metallurgic Infuser",
+  "icone": "textures/blocks/cl/c/infusor_metalurgico_topo"
+ },
+ "cl:infusor_quimico": {
+  "pt": "Infusor Químico",
+  "en": "Chemical Infuser",
+  "icone": "textures/blocks/cl/c/infusor_quimico_topo"
+ },
  "cl:interface_camara": {
   "pt": "Interface da Câmara",
   "en": "Pressure Chamber Interface",
   "icone": "textures/blocks/cl/c/interface_camara"
+ },
+ "cl:jetpack": {
+  "pt": "Jetpack",
+  "en": "Jetpack",
+  "icone": "textures/items/cl/c/jetpack"
  },
  "cl:lampada": {
   "pt": "Lâmpada",
@@ -915,6 +1055,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lanterna",
   "en": "Fancy Lantern",
   "icone": "textures/blocks/cl/c/lanterna"
+ },
+ "cl:liga_atomica": {
+  "pt": "Liga Atômica",
+  "en": "Atomic Alloy",
+  "icone": "textures/items/cl/c/liga_atomica"
+ },
+ "cl:liga_enriquecida": {
+  "pt": "Liga Enriquecida",
+  "en": "Enriched Alloy",
+  "icone": "textures/items/cl/c/liga_enriquecida"
+ },
+ "cl:liga_reforcada": {
+  "pt": "Liga Reforçada",
+  "en": "Reinforced Alloy",
+  "icone": "textures/items/cl/c/liga_reforcada"
  },
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
@@ -1200,6 +1355,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Montadora",
   "en": "Assembler",
   "icone": "textures/items/cl/arte/blocos/montadora"
+ },
+ "cl:motor_combustao": {
+  "pt": "Motor a Combustão",
+  "en": "Combustion Engine",
+  "icone": "textures/blocks/cl/c/motor_combustao_topo"
  },
  "cl:motor_nave": {
   "pt": "Motor da Nave",
@@ -1821,6 +1981,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Small Bricks Stone",
   "icone": "textures/blocks/cl/c/pedra_tijolos_pequenos"
  },
+ "cl:pedreira": {
+  "pt": "Pedreira",
+  "en": "Quarry",
+  "icone": "textures/blocks/cl/c/pedreira_topo"
+ },
  "cl:pedrinha": {
   "pt": "Pedrinha",
   "en": "Pebble",
@@ -1840,6 +2005,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Peneira Automática",
   "en": "Automatic Sieve",
   "icone": "textures/items/cl/arte/blocos/peneira_automatica"
+ },
+ "cl:petroleo": {
+  "pt": "Petróleo",
+  "en": "Oil",
+  "icone": "textures/blocks/cl/c/petroleo"
  },
  "cl:picareta_aco": {
   "pt": "Picareta de Aço",
@@ -2011,6 +2181,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Fluix Dust",
   "icone": "textures/items/cl/c/po_fluix"
  },
+ "cl:po_litio": {
+  "pt": "Pó de Lítio",
+  "en": "Lithium Dust",
+  "icone": "textures/items/cl/c/po_litio"
+ },
  "cl:po_ouro": {
   "pt": "Pó de Ouro",
   "en": "Pulverized Gold",
@@ -2085,6 +2260,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Rancheiro",
   "en": "Rancher",
   "icone": "textures/blocks/cl/c/rancheiro_topo"
+ },
+ "cl:refinaria": {
+  "pt": "Refinaria",
+  "en": "Refinery",
+  "icone": "textures/blocks/cl/c/refinaria_topo"
  },
  "cl:reprocessador_cianita": {
   "pt": "Reprocessador de Cianita",
@@ -2180,6 +2360,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Sementes de Tomate",
   "en": "Tomato Seeds",
   "icone": "textures/items/cl/arte/semente_tomate"
+ },
+ "cl:separador_eletrolitico": {
+  "pt": "Separador Eletrolítico",
+  "en": "Electrolytic Separator",
+  "icone": "textures/blocks/cl/c/separador_eletrolitico_topo"
  },
  "cl:serragem": {
   "pt": "Serragem",
@@ -2325,6 +2510,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tubo de Pressão Avançado",
   "en": "Advanced Pressure Tube",
   "icone": "textures/blocks/cl/c/tubo_pressao_avancado"
+ },
+ "cl:tumulo": {
+  "pt": "Túmulo",
+  "en": "Grave",
+  "icone": "textures/blocks/cl/c/tumulo"
  },
  "cl:upgrade_alcance_1": {
   "pt": "Upgrade de Alcance +1",
@@ -2876,6 +3066,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Diamond Ore",
   "icone": "textures/blocks/diamond_ore"
  },
+ "minecraft:diamond_pickaxe": {
+  "pt": "Picareta de Diamante",
+  "en": "Diamond Pickaxe",
+  "icone": "textures/items/diamond_pickaxe"
+ },
  "minecraft:dirt": {
   "pt": "Terra",
   "en": "Dirt",
@@ -3076,6 +3271,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Iron",
   "icone": "textures/blocks/iron_block"
  },
+ "minecraft:iron_chestplate": {
+  "pt": "Peitoral de Ferro",
+  "en": "Iron Chestplate",
+  "icone": "textures/items/iron_chestplate"
+ },
  "minecraft:iron_ingot": {
   "pt": "Barra de Ferro",
   "en": "Iron Ingot",
@@ -3260,6 +3460,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Etiqueta",
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
+ },
+ "minecraft:nether_wart": {
+  "pt": "Fungo do Nether",
+  "en": "Nether Wart",
+  "icone": "textures/items/nether_wart"
+ },
+ "minecraft:netherite_scrap": {
+  "pt": "Fragmentos de Netherita",
+  "en": "Netherite Scrap",
+  "icone": "textures/items/netherite_scrap"
  },
  "minecraft:netherrack": {
   "pt": "Netherrack",
@@ -4038,6 +4248,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_asa_delta",
+  "resultado": "cl:asa_delta",
+  "qtd": 1,
+  "grade": [
+   "SLS",
+   "LLL",
+   " S "
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "L": "minecraft:leather"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bacia_fundicao",
   "resultado": "cl:bacia_fundicao",
   "qtd": 1,
@@ -4333,6 +4561,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bomba",
+  "resultado": "cl:bomba",
+  "qtd": 1,
+  "grade": [
+   "FGF",
+   "FEF",
+   "FBF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "G": "cl:engrenagem_ferro",
+   "E": "cl:estrutura_maquina",
+   "B": "minecraft:bucket"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bussola_aviao",
   "resultado": "cl:bussola_aviao",
   "qtd": 1,
@@ -4431,6 +4679,46 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "B": "cl:calcario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_camara_injecao",
+  "resultado": "cl:camara_injecao",
+  "qtd": 1,
+  "grade": [
+   "RCR",
+   "OEO",
+   "RCR"
+  ],
+  "chaves": {
+   "R": "cl:liga_reforcada",
+   "C": "cl:cilindro_vazio",
+   "O": "minecraft:gold_ingot",
+   "E": "cl:camara_purificacao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_camara_purificacao",
+  "resultado": "cl:camara_purificacao",
+  "qtd": 1,
+  "grade": [
+   "LCL",
+   "OEO",
+   "LCL"
+  ],
+  "chaves": {
+   "L": "cl:liga_enriquecida",
+   "C": "cl:cilindro_vazio",
+   "O": "minecraft:gold_ingot",
+   "E": "cl:pulverizador"
   },
   "estacoes": [
    "crafting_table"
@@ -4739,6 +5027,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_cilindro_vazio",
+  "resultado": "cl:cilindro_vazio",
+  "qtd": 4,
+  "grade": [
+   " F ",
+   "FVF",
+   " F "
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "V": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_cinzel",
   "resultado": "cl:cinzel",
   "qtd": 1,
@@ -5011,6 +5317,106 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_cristal_fluix_quartzo",
+  "resultado": "cl:cristal_fluix",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:cristal_certus",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:redstone",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:quartz",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cubo_energia_avancado",
+  "resultado": "cl:cubo_energia_avancado",
+  "qtd": 1,
+  "grade": [
+   "LAL",
+   "ACA",
+   "LAL"
+  ],
+  "chaves": {
+   "L": "cl:liga_enriquecida",
+   "A": "cl:lingote_aco",
+   "C": "cl:cubo_energia_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cubo_energia_basico",
+  "resultado": "cl:cubo_energia_basico",
+  "qtd": 1,
+  "grade": [
+   "RAR",
+   "CEC",
+   "RAR"
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "A": "cl:lingote_aco",
+   "C": "cl:bateria",
+   "E": "cl:estrutura_maquina"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cubo_energia_definitivo",
+  "resultado": "cl:cubo_energia_definitivo",
+  "qtd": 1,
+  "grade": [
+   "LAL",
+   "ACA",
+   "LAL"
+  ],
+  "chaves": {
+   "L": "cl:liga_atomica",
+   "A": "cl:lingote_aco",
+   "C": "cl:cubo_energia_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cubo_energia_elite",
+  "resultado": "cl:cubo_energia_elite",
+  "qtd": 1,
+  "grade": [
+   "LAL",
+   "ACA",
+   "LAL"
+  ],
+  "chaves": {
+   "L": "cl:liga_reforcada",
+   "A": "cl:lingote_aco",
+   "C": "cl:cubo_energia_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_diamante_meteorito",
   "resultado": "minecraft:diamond",
@@ -5086,6 +5492,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_elevador",
+  "resultado": "cl:elevador",
+  "qtd": 2,
+  "grade": [
+   "CCC",
+   "CPC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "minecraft:smooth_sandstone",
+   "P": "minecraft:ender_pearl"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_empacotador",
   "resultado": "cl:empacotador",
   "qtd": 1,
@@ -5099,6 +5523,95 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "P": "minecraft:piston",
    "B": "minecraft:crafting_table",
    "C": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_engrenagem_diamante",
+  "resultado": "cl:engrenagem_diamante",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MGM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:diamond",
+   "G": "cl:engrenagem_ouro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_engrenagem_ferro",
+  "resultado": "cl:engrenagem_ferro",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MGM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "G": "cl:engrenagem_pedra"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_engrenagem_madeira",
+  "resultado": "cl:engrenagem_madeira",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "S S",
+   " S "
+  ],
+  "chaves": {
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_engrenagem_ouro",
+  "resultado": "cl:engrenagem_ouro",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MGM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "G": "cl:engrenagem_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_engrenagem_pedra",
+  "resultado": "cl:engrenagem_pedra",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MGM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:cobblestone",
+   "G": "cl:engrenagem_madeira"
   },
   "estacoes": [
    "crafting_table"
@@ -5262,6 +5775,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_evaporador",
+  "resultado": "cl:evaporador",
+  "qtd": 1,
+  "grade": [
+   "VVV",
+   "CEC",
+   "AAA"
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "C": "minecraft:copper_ingot",
+   "E": "cl:estrutura_maquina",
+   "A": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_expositor",
   "resultado": "cl:expositor",
   "qtd": 1,
@@ -5398,6 +5931,46 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_infusor_metalurgico",
+  "resultado": "cl:infusor_metalurgico",
+  "qtd": 1,
+  "grade": [
+   "AFA",
+   "RER",
+   "AFA"
+  ],
+  "chaves": {
+   "A": "cl:lingote_aco",
+   "F": "minecraft:furnace",
+   "R": "minecraft:redstone",
+   "E": "cl:estrutura_maquina"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_infusor_quimico",
+  "resultado": "cl:infusor_quimico",
+  "qtd": 1,
+  "grade": [
+   "CLC",
+   "AEA",
+   "CLC"
+  ],
+  "chaves": {
+   "C": "cl:cilindro_vazio",
+   "L": "cl:liga_enriquecida",
+   "A": "cl:lingote_aco",
+   "E": "cl:estrutura_maquina"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_interface_camara",
   "resultado": "cl:interface_camara",
   "qtd": 1,
@@ -5408,6 +5981,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "P": "cl:parede_camara",
    "H": "minecraft:hopper"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack",
+  "resultado": "cl:jetpack",
+  "qtd": 1,
+  "grade": [
+   "AHA",
+   "LCL",
+   "A A"
+  ],
+  "chaves": {
+   "A": "cl:lingote_aco",
+   "H": "cl:cilindro_hidrogenio",
+   "L": "cl:liga_enriquecida",
+   "C": "minecraft:iron_chestplate"
   },
   "estacoes": [
    "crafting_table"
@@ -5810,6 +6403,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_motor_combustao",
+  "resultado": "cl:motor_combustao",
+  "qtd": 1,
+  "grade": [
+   "AAA",
+   " V ",
+   "GPG"
+  ],
+  "chaves": {
+   "A": "cl:lingote_aco",
+   "V": "minecraft:glass",
+   "G": "cl:engrenagem_ferro",
+   "P": "minecraft:piston"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_nucleo_funil",
   "resultado": "cl:nucleo_funil",
@@ -5912,6 +6525,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "B": "minecraft:stone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedreira",
+  "resultado": "cl:pedreira",
+  "qtd": 1,
+  "grade": [
+   "FRF",
+   "GDG",
+   "DPD"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "R": "minecraft:redstone",
+   "G": "cl:engrenagem_ouro",
+   "D": "cl:engrenagem_diamante",
+   "P": "minecraft:diamond_pickaxe"
   },
   "estacoes": [
    "crafting_table"
@@ -6189,6 +6823,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_refinaria",
+  "resultado": "cl:refinaria",
+  "qtd": 1,
+  "grade": [
+   "VGV",
+   "CEC",
+   "VGV"
+  ],
+  "chaves": {
+   "V": "minecraft:glass",
+   "G": "cl:engrenagem_ouro",
+   "C": "minecraft:copper_ingot",
+   "E": "cl:estrutura_maquina"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_reprocessador_cianita",
   "resultado": "cl:reprocessador_cianita",
   "qtd": 1,
@@ -6219,6 +6873,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "C": "minecraft:leather",
    "L": "minecraft:string"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_separador_eletrolitico",
+  "resultado": "cl:separador_eletrolitico",
+  "qtd": 1,
+  "grade": [
+   "RFR",
+   "CEC",
+   "RFR"
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "F": "minecraft:iron_ingot",
+   "C": "cl:cilindro_vazio",
+   "E": "cl:estrutura_maquina"
   },
   "estacoes": [
    "crafting_table"

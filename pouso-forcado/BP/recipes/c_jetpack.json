@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AHA",
+      "LCL",
+      "A A"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "H": {
+        "item": "cl:cilindro_hidrogenio"
+      },
+      "L": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "minecraft:iron_chestplate"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_aco"
+      }
+    ],
+    "result": {
+      "item": "cl:jetpack"
+    }
+  }
+}

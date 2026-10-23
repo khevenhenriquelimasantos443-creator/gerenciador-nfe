@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.2.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último).
+**Versão 1.3.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,28 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.0
+
+- **Nether sem portal:** o martelo transforma netherrack em **Cascalho do Nether**; peneirado dá **quartzo** (1/4 e 1/8), pó de pedra luminosa, pólvora, fungo do Nether e, muito raro (1/500), **sucata de netherite**.
+- **Cidades:** no alto da torre de rádio fica um **Gerador de Blazes**. Os baús de saque agora vêm bagunçados, como no jogo: espaços aleatórios e pilhas divididas.
+- **Tinkers:** voltam os modificadores **Afiado** (16 quartzos: +1 de dano por nível, até 3) e **Fogo** (8 pós de blaze: 3 s de fogo por nível, até 2).
+- **Mekanism (leve, sem reatores e sem rede de gás):** o gás anda em **Cilindros**. Máquinas com baú em cima (entrada), baú embaixo (saída) e energia da rede:
+  - **Separador Eletrolítico**: água (balde ou garrafa) + 2 cilindros vazios = hidrogênio + oxigênio; salmoura = hidrogênio + cloro. 1 E.
+  - **Evaporador Térmico**: sem energia, só de dia e com céu aberto. Água vira **Salmoura**; salmoura vira **Pó de Lítio**.
+  - **Infusor Químico**: hidrogênio + cloro = ácido clorídrico. 0,5 E.
+  - **Câmara de Purificação**: minério + oxigênio = **3 pós** (1 E). **Câmara de Injeção**: minério + ácido = **4 pós** (2 E). Cada cilindro rende 4 minérios.
+  - **Infusor Metalúrgico**: ligas **Enriquecida** (ferro + redstone), **Reforçada** (+ diamante) e **Atômica** (+ obsidiana); ferro + 2 carvões = aço. 0,5 E.
+  - **Cubos de Energia**: Básico 200 E, Avançado 800, Elite 3.200 e Definitivo 12.800. Guardam a carga quando quebrados, como as células.
+  - **Jetpack** (no peito): segure pular para subir, gastando hidrogênio (200 no tanque, 50 por cilindro; com ele vestido, use o cilindro para abastecer). No ar sem pular, cai devagar.
+- **BuildCraft:** **poços de petróleo** no deserto (manchas pretas no chão, uns 1 a cada 30 chunks), pegos com balde.
+  - **Bomba**: em cima do poço, esvazia o petróleo para os baldes vazios de um baú encostado. 1 E por balde.
+  - **Refinaria**: petróleo = **combustível**. 1 E.
+  - **Motor a Combustão**: queima combustível (60 E por balde) ou petróleo (20 E) do baú de cima, 2 E a cada 5 s na rede.
+  - **Pedreira**: cava 9x9 atrás dela, camada por camada até o fundo, 1 bloco a cada 2 s (0,25 E cada). O que sai vai para o baú de cima.
+  - **Engrenagens** de madeira, pedra, ferro, ouro e diamante para as receitas.
+- **OpenBlocks:** **Asa-Delta** (na mão, caindo: plana para a frente; agachar fecha), **Elevador** (dois, um acima do outro, até 20 blocos: pule para subir, agache para descer) e **Túmulo** (ao morrer, o que caiu vai para um túmulo no lugar, com as coordenadas no chat; toque para pegar tudo).
+- Capítulos novos no Diário: **Mekanism** e **BuildCraft**; missões novas em Ex Nihilo e Sobrevivente.
 
 ## Novidades da 1.2.0
 

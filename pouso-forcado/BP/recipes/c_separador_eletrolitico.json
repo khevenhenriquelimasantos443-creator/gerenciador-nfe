@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_separador_eletrolitico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RFR",
+      "CEC",
+      "RFR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "C": {
+        "item": "cl:cilindro_vazio"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "cl:separador_eletrolitico"
+    }
+  }
+}

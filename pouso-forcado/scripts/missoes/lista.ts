@@ -93,7 +93,16 @@ export type Acao =
   | "comida_nova"
   | "caldeirao"
   | "saco_dormir"
-  | "lampada_cor";
+  | "lampada_cor"
+  | "eletrolise"
+  | "purificar"
+  | "injetar"
+  | "jetpack"
+  | "motor"
+  | "pedreira"
+  | "asa_delta"
+  | "elevador"
+  | "tumulo";
 
 type MissaoBase = {
   id: string;
@@ -188,6 +197,7 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       },
       { id: "en_obsidiana", requer: ["en_lava"], objetivo: { tipo: "acao", acao: "barril_obsidiana", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
       { id: "en_cajado", requer: ["en_barril"], objetivo: { tipo: "ter", item: IDS.cajado, qtd: 1 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
+      { id: "en_quartzo", requer: ["en_lava"], objetivo: { tipo: "ter", item: "minecraft:quartz", qtd: 8 }, recompensa: [{ item: "minecraft:glowstone_dust", quantidade: 4 }] },
       { id: "en_cajado_osso", requer: ["en_cajado"], objetivo: { tipo: "ter", item: "cl:cajado_osso", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
       { id: "en_bicho", requer: ["en_cajado"], objetivo: { tipo: "ter", item: IDS.bichoSeda, qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 8 }] },
       { id: "en_linha", requer: ["en_bicho"], objetivo: { tipo: "entregar", item: "minecraft:string", qtd: 16 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
@@ -272,6 +282,30 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
         escolha: [{ item: "minecraft:diamond", quantidade: 3 }, { item: "minecraft:emerald", quantidade: 4 }],
       },
+    ],
+  },
+  {
+    id: "mekanism", // 1.3.0: Mekanism leve
+    icone: "cl:camara_purificacao",
+    requer: ["thermal"],
+    missoes: [
+      { id: "me_separador", objetivo: { tipo: "acao", acao: "eletrolise", qtd: 4 }, recompensa: [{ item: "cl:cilindro_vazio", quantidade: 8 }] },
+      { id: "me_salmoura", objetivo: { tipo: "ter", item: "cl:balde_salmoura", qtd: 1 }, recompensa: [{ item: "minecraft:bucket", quantidade: 2 }] },
+      { id: "me_cubo", objetivo: { tipo: "colocar", bloco: "cl:cubo_energia_basico", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+      { id: "me_purificar", requer: ["me_separador"], objetivo: { tipo: "acao", acao: "purificar", qtd: 8 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "me_injetar", requer: ["me_purificar", "me_salmoura"], objetivo: { tipo: "acao", acao: "injetar", qtd: 8 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "me_jetpack", requer: ["me_separador"], objetivo: { tipo: "acao", acao: "jetpack", qtd: 1 }, recompensa: [{ item: "cl:cilindro_hidrogenio", quantidade: 4 }] },
+    ],
+  },
+  {
+    id: "buildcraft", // 1.3.0: BuildCraft (petróleo, refinaria, motor e pedreira)
+    icone: "cl:pedreira",
+    requer: ["thermal"],
+    missoes: [
+      { id: "bc_petroleo", objetivo: { tipo: "ter", item: "cl:balde_petroleo", qtd: 1 }, recompensa: [{ item: "minecraft:bucket", quantidade: 3 }] },
+      { id: "bc_combustivel", requer: ["bc_petroleo"], objetivo: { tipo: "ter", item: "cl:balde_combustivel", qtd: 1 }, recompensa: [{ item: "cl:engrenagem_ferro", quantidade: 2 }] },
+      { id: "bc_motor", requer: ["bc_combustivel"], objetivo: { tipo: "acao", acao: "motor", qtd: 10 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "bc_pedreira", requer: ["bc_motor"], objetivo: { tipo: "acao", acao: "pedreira", qtd: 256 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {
@@ -521,7 +555,11 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ex_bussola", objetivo: { tipo: "ter", item: "cl:bussola_aviao", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 8 }] },
       { id: "ex_saco", objetivo: { tipo: "acao", acao: "saco_dormir", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 6 }] },
       { id: "ex_meteorito", objetivo: { tipo: "quebrar", bloco: "cl:meteorito", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "ex_blaze", objetivo: { tipo: "matar", familia: "blaze", qtd: 4 }, recompensa: [{ item: "minecraft:blaze_rod", quantidade: 2 }] },
       { id: "ex_entrega", objetivo: { tipo: "colocar", bloco: "cl:caixa_entrega", qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 2 }] },
+      { id: "ob_asa", objetivo: { tipo: "acao", acao: "asa_delta", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 4 }] },
+      { id: "ob_elevador", objetivo: { tipo: "acao", acao: "elevador", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 1 }] },
+      { id: "ob_tumulo", objetivo: { tipo: "acao", acao: "tumulo", qtd: 1 }, recompensa: [{ item: "minecraft:bone", quantidade: 4 }] },
     ],
   },
   {

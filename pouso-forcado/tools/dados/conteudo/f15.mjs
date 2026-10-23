@@ -111,6 +111,8 @@ export default {
     "cl.tc.mod.repulsao": ["Repulsão (empurra)", "Knockback"],
     "cl.tc.mod.artropodes": ["Ruína dos Artrópodes", "Bane of Arthropods"],
     "cl.tc.mod.obsidiana": ["Obsidiana (às vezes não gasta)", "Reinforced (sometimes no wear)"],
+    "cl.tc.mod.afiado": ["Afiado (mais dano)", "Sharpness"],
+    "cl.tc.mod.fogo": ["Fogo (incendeia)", "Fiery"],
     "cl.tc.mod_corpo": ["Cada modificador usa 1 espaço. Espaços livres: %s (ganha mais subindo de nível).", "Each modifier uses 1 slot. Free slots: %s (level up for more)."],
     "cl.tc.mod_max": ["Esse modificador já está no máximo.", "That modifier is already maxed."],
     "cl.tc.mod_sem_espaco": ["Sem espaço: suba a ferramenta de nível para ganhar mais.", "No free slots: level the tool up to get more."],

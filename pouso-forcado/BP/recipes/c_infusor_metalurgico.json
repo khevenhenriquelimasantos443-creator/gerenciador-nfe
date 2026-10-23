@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_infusor_metalurgico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AFA",
+      "RER",
+      "AFA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_aco"
+      }
+    ],
+    "result": {
+      "item": "cl:infusor_metalurgico"
+    }
+  }
+}

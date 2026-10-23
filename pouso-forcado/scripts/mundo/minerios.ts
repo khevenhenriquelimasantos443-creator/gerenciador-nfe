@@ -1,5 +1,5 @@
 import { Dimension } from "@minecraft/server";
-import { MINERIOS } from "../config.js";
+import { MINERIOS, PETROLEO } from "../config.js";
 
 /*
  * Minérios do mundo plano: o jogo não gera minérios em mundo plano, então cada chunk
@@ -34,4 +34,26 @@ export function porMinerios(dimensao: Dimension, x0: number, z0: number, sorte: 
       }
     }
   }
+  porPetroleo(dimensao, x0, z0, sorte);
+}
+
+// Poço de petróleo (BuildCraft): bolsão redondo no subsolo, coluna até a superfície e mancha no chão.
+const OLEO = "cl:petroleo";
+const TROCA = new Set([PEDRA, ARDOSIA, "minecraft:sandstone", "minecraft:sand", "minecraft:red_sand", "minecraft:dirt", "minecraft:gravel"]);
+function porPetroleo(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
+  if (sorte() >= PETROLEO.chance) return;
+  const r = PETROLEO.raio;
+  const cx = x0 + r + Math.floor(sorte() * (16 - 2 * r)), cz = z0 + r + Math.floor(sorte() * (16 - 2 * r));
+  const cy = PETROLEO.yMin + Math.floor(sorte() * (PETROLEO.yMax - PETROLEO.yMin + 1));
+  const trocar = (x: number, y: number, z: number) => {
+    const b = dimensao.getBlock({ x, y, z });
+    if (b && TROCA.has(b.typeId)) b.setType(OLEO);
+  };
+  for (let dx = -r; dx <= r; dx++)
+    for (let dy = -r; dy <= r; dy++)
+      for (let dz = -r; dz <= r; dz++) if (dx * dx + dy * dy + dz * dz <= r * r + 1) trocar(cx + dx, cy + dy, cz + dz);
+  const topo = dimensao.getTopmostBlock({ x: cx, z: cz });
+  if (!topo) return;
+  for (let y = cy + r; y <= topo.y; y++) trocar(cx, y, cz);
+  for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) trocar(cx + dx, topo.y, cz + dz);
 }

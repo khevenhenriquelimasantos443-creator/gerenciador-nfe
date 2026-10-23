@@ -24,6 +24,7 @@ export default {
     { id: "fragmento_meteorito", pt: "Fragmento de Meteorito", en: "Meteorite Fragment", icone: "cristal:#6b5a8a" },
   ],
   blocos: [
+    { id: "gerador_blaze", pt: "Gerador de Blazes", en: "Blaze Spawner", tipo: "maquina", luz: "laranja", glifo: "chama", comp: "cl:gerador_monstros", tick: 200, girar: false, dureza: 5, resistencia: 20, loot: "loot_tables/cl/vazio.json" },
     { id: "meteorito", pt: "Rocha de Meteorito", en: "Meteorite Rock", tipo: "cubo", cor: "#3a3540", padrao: "rachado", dureza: 4, resistencia: 20, luzEmite: 3, loot: "loot_tables/cl/vazio.json" },
   ],
   receitas: [
@@ -51,6 +52,7 @@ export default {
     "cl.missao.ex_meteorito.titulo": ["Estrela cadente", "Shooting star"], "cl.missao.ex_meteorito.desc": ["Ache um meteorito caído e quebre 4 rochas dele.", "Find a fallen meteorite and break 4 of its rocks."],
     "cl.capitulo.extras.nome": ["Sobrevivente", "Survivor"],
     "cl.capitulo.extras.desc": ["Bússola do avião, saco de dormir, meteoritos e a Caixa de Entrega.", "Plane compass, sleeping bag, meteorites and the Delivery System."],
+    "cl.missao.ex_blaze.titulo": ["Fogo no deserto", "Desert fire"], "cl.missao.ex_blaze.desc": ["Suba na torre de rádio de uma cidade e derrote 4 blazes do Gerador de Blazes.", "Climb a city's radio tower and defeat 4 blazes from the Blaze Spawner."],
     "cl.missao.ex_entrega.titulo": ["Entregas", "Deliveries"], "cl.missao.ex_entrega.desc": ["Coloque uma Caixa de Entrega com baús encostados: ela entrega as missões sozinha.", "Place a Quest Delivery System with chests touching it: it delivers quests by itself."],
     "cl.nether.bloqueado": ["O portal não acende neste planeta: não há Nether aqui.", "The portal won't light on this planet: there is no Nether here."],
     "cl.fim.titulo": ["Decolagem", "Liftoff"],

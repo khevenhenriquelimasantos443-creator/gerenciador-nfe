@@ -17,7 +17,8 @@ import { intervalo } from "../util/perfil.js";
  * - tc:esp, tc:mods: espaços livres e modificadores (Fase 16).
  * Nível de mineração (Iguana): minério que pede nível maior que o da cabeça não quebra.
  * Modificadores (1.2.0): Sorte (lápis) dá drop a mais de minério, Repulsão (pistão) empurra, Ruína dos
- * Artrópodes (olho fermentado) fere mais as aranhas, Obsidiana às vezes não gasta durabilidade.
+ * Artrópodes (olho fermentado) fere mais as aranhas, Obsidiana às vezes não gasta durabilidade;
+ * 1.3.0: Afiado (quartzo) dá mais dano e Fogo (pó de blaze) incendeia o alvo.
  * Ferramenta montada caída no chão não some: a cada TINKERS.renascerTicks o item renasce no lugar.
  * Custo: só eventos (quebrar bloco, bater) e um laço de 1 s para o modificador Pressa.
  */
@@ -178,7 +179,9 @@ function golpe(j: Player, alvo: Entity, mods: Mods): void {
       const forca = mods.repulsao * TINKERS.modificadores.repulsao.forca;
       alvo.applyKnockback({ x: (dx / d) * forca, z: (dz / d) * forca }, 0.3);
     }
-    if (mods.artropodes && (TINKERS.aranhas as readonly string[]).includes(alvo.typeId)) {
+    if (mods.afiado) alvo.applyDamage(mods.afiado * TINKERS.modificadores.afiado.dano, { cause: EntityDamageCause.entityAttack, damagingEntity: j });
+    if (mods.fogo && alvo.isValid) alvo.setOnFire(mods.fogo * TINKERS.modificadores.fogo.segundos, true);
+    if (mods.artropodes && alvo.isValid && (TINKERS.aranhas as readonly string[]).includes(alvo.typeId)) {
       alvo.applyDamage(mods.artropodes * TINKERS.modificadores.artropodes.dano, { cause: EntityDamageCause.entityAttack, damagingEntity: j });
       alvo.addEffect("slowness", 60 * mods.artropodes, { amplifier: 3 });
     }

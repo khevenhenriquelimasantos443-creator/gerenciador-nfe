@@ -1,0 +1,43 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:cubo_energia_definitivo",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_cubo_energia_definitivo_lado",
+          "render_method": "opaque"
+        },
+        "north": {
+          "texture": "clc_cubo_energia_definitivo_frente",
+          "render_method": "opaque",
+          "face_dimming": false,
+          "ambient_occlusion": 0
+        },
+        "up": {
+          "texture": "clc_cubo_energia_definitivo_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_cubo_energia_definitivo_baixo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c9ced3",
+      "minecraft:loot": "loot_tables/cl/vazio.json",
+      "cl:celula_energia": {}
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.tumulo",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2,
+        "visible_bounds_offset": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "tumulo",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6,
+                0,
+                -6
+              ],
+              "size": [
+                12,
+                2,
+                12
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "*"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "*"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "*"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    2
+                  ],
+                  "material_instance": "*"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "*"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    12,
+                    12
+                  ],
+                  "material_instance": "*"
+                }
+              }
+            },
+            {
+              "origin": [
+                -4,
+                2,
+                2
+              ],
+              "size": [
+                8,
+                10,
+                2
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    8,
+                    10
+                  ],
+                  "material_instance": "*"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    8,
+                    10
+                  ],
+                  "material_instance": "*"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    10
+                  ],
+                  "material_instance": "*"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    2,
+                    10
+                  ],
+                  "material_instance": "*"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    8,
+                    2
+                  ],
+                  "material_instance": "*"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    8,
+                    2
+                  ],
+                  "material_instance": "*"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

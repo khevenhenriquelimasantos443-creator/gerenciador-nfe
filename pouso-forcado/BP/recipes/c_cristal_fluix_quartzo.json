@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_cristal_fluix_quartzo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:cristal_certus"
+      },
+      {
+        "item": "minecraft:redstone"
+      },
+      {
+        "item": "minecraft:quartz"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "cl:cristal_certus"
+      }
+    ],
+    "result": {
+      "item": "cl:cristal_fluix",
+      "count": 2
+    }
+  }
+}

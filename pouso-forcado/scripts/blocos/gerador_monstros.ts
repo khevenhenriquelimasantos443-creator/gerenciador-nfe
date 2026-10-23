@@ -18,7 +18,8 @@ export const geradorMonstros: BlockCustomComponent = {
     if (e.dimension.getEntities({ location: centro, maxDistance: 10, families: ["monster"] }).length >= GERADOR_MONSTROS.limitePerto) return;
     const [min, max] = GERADOR_MONSTROS.porVez;
     const quantos = min + Math.floor(Math.random() * (max - min + 1));
-    const lista = e.block.y < 0 ? GERADOR_MONSTROS.mobsFundo : GERADOR_MONSTROS.mobs;
+    // 1.3.0: o Gerador de Blazes (topo da torre de rádio das cidades) só põe blazes.
+    const lista = e.block.typeId === "cl:gerador_blaze" ? GERADOR_MONSTROS.blazes : e.block.y < 0 ? GERADOR_MONSTROS.mobsFundo : GERADOR_MONSTROS.mobs;
     for (let i = 0, tentativas = 0; i < quantos && tentativas < 10; tentativas++) {
       const x = e.block.x + Math.floor(Math.random() * 7) - 3;
       const z = e.block.z + Math.floor(Math.random() * 7) - 3;

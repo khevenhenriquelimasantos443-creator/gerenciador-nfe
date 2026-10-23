@@ -423,6 +423,11 @@
   "en": "Diamond Ore",
   "icone": "textures/blocks/diamond_ore"
  },
+ "minecraft:diamond_pickaxe": {
+  "pt": "Picareta de Diamante",
+  "en": "Diamond Pickaxe",
+  "icone": "textures/items/diamond_pickaxe"
+ },
  "minecraft:dirt": {
   "pt": "Terra",
   "en": "Dirt",
@@ -633,6 +638,11 @@
   "en": "Block of Iron",
   "icone": "textures/blocks/iron_block"
  },
+ "minecraft:iron_chestplate": {
+  "pt": "Peitoral de Ferro",
+  "en": "Iron Chestplate",
+  "icone": "textures/items/iron_chestplate"
+ },
  "minecraft:iron_ingot": {
   "pt": "Barra de Ferro",
   "en": "Iron Ingot",
@@ -822,6 +832,16 @@
   "pt": "Etiqueta",
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
+ },
+ "minecraft:nether_wart": {
+  "pt": "Fungo do Nether",
+  "en": "Nether Wart",
+  "icone": "textures/items/nether_wart"
+ },
+ "minecraft:netherite_scrap": {
+  "pt": "Fragmentos de Netherita",
+  "en": "Netherite Scrap",
+  "icone": "textures/items/netherite_scrap"
  },
  "minecraft:netherrack": {
   "pt": "Netherrack",

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cilindro_vazio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " F ",
+      "FVF",
+      " F "
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "cl:cilindro_vazio",
+      "count": 4
+    }
+  }
+}

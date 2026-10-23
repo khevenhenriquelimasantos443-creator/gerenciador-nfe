@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_refinaria"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VGV",
+      "CEC",
+      "VGV"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "G": {
+        "item": "cl:engrenagem_ouro"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glass"
+      }
+    ],
+    "result": {
+      "item": "cl:refinaria"
+    }
+  }
+}

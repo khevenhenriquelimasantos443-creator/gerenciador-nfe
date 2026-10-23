@@ -1,0 +1,50 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:gerador_blaze",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_gerador_blaze_lado",
+          "render_method": "opaque"
+        },
+        "north": {
+          "texture": "clc_gerador_blaze_frente",
+          "render_method": "opaque",
+          "face_dimming": false,
+          "ambient_occlusion": 0
+        },
+        "up": {
+          "texture": "clc_gerador_blaze_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_gerador_blaze_baixo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 20
+      },
+      "minecraft:map_color": "#c9ced3",
+      "minecraft:loot": "loot_tables/cl/vazio.json",
+      "minecraft:tick": {
+        "interval_range": [
+          200,
+          200
+        ],
+        "looping": true
+      },
+      "cl:gerador_monstros": {}
+    }
+  }
+}

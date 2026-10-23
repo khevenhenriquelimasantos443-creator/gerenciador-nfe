@@ -441,3 +441,60 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | muda_tamareira_tronco | Muda de Tamareira (caule) | caule fino marrom com anéis |
 | cacho_tamaras | Cacho de Tâmaras (verde) | cacho de tâmaras verde-amareladas |
 | cacho_tamaras_madura | Cacho de Tâmaras (maduro) | cacho de tâmaras marrom-escuras |
+
+## LISTA, parte 4: novidades da versão 1.3.0 (zip `novidades_1_3`)
+
+Mekanism (gás em cilindros, ligas, cubos de energia, jetpack), BuildCraft (petróleo, engrenagens, máquinas) e
+OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
+
+**Itens (A):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| cilindro_vazio.png | Cilindro de Gás Vazio | cilindro de metal cinza em pé, com válvula no topo |
+| cilindro_hidrogenio.png | Cilindro de Hidrogênio | o mesmo cilindro, faixa branca-azulada |
+| cilindro_oxigenio.png | Cilindro de Oxigênio | o mesmo cilindro, faixa azul-clara |
+| cilindro_cloro.png | Cilindro de Cloro | o mesmo cilindro, faixa verde-amarelada |
+| cilindro_acido.png | Cilindro de Ácido Clorídrico | o mesmo cilindro, faixa verde-clara com símbolo de perigo |
+| balde_salmoura.png | Balde de Salmoura | balde de ferro com água esbranquiçada e cristais de sal |
+| po_litio.png | Pó de Lítio | montinho de pó branco-prateado |
+| liga_enriquecida.png | Liga Enriquecida | placa de metal vermelha brilhante |
+| liga_reforcada.png | Liga Reforçada | placa de metal azul-ciano brilhante |
+| liga_atomica.png | Liga Atômica | placa de metal roxa brilhante |
+| jetpack.png | Jetpack | mochila de metal cinza com dois propulsores embaixo |
+| engrenagem_madeira.png | Engrenagem de Madeira | engrenagem de madeira clara |
+| engrenagem_pedra.png | Engrenagem de Pedra | engrenagem de pedra cinza |
+| engrenagem_ferro.png | Engrenagem de Ferro | engrenagem de ferro branco-acinzentado |
+| engrenagem_ouro.png | Engrenagem de Ouro | engrenagem de ouro |
+| engrenagem_diamante.png | Engrenagem de Diamante | engrenagem azul-diamante |
+| balde_petroleo.png | Balde de Petróleo | balde de ferro com líquido preto brilhante |
+| balde_combustivel.png | Balde de Combustível | balde de ferro com líquido amarelo |
+| asa_delta.png | Asa-Delta | asa triangular de couro marrom com varetas de madeira |
+
+**Blocos "máquina" (B + C, 4 faces):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| separador_eletrolitico | Separador Eletrolítico | caixa de metal com dois tanques de vidro (branco e azul) |
+| evaporador | Evaporador Térmico | caixa de cobre com tampa de vidro e água por dentro |
+| infusor_quimico | Infusor Químico | caixa de metal com tubos verdes |
+| camara_purificacao | Câmara de Purificação | caixa de metal com janela azul e bolhas |
+| camara_injecao | Câmara de Injeção Química | caixa de metal com janela verde e seringa |
+| infusor_metalurgico | Infusor Metalúrgico | caixa de metal com fenda vermelha brilhando |
+| cubo_energia_basico | Cubo de Energia Básico | cubo de metal com moldura cinza e faixa de carga |
+| cubo_energia_avancado | Cubo de Energia Avançado | o mesmo cubo com moldura vermelha |
+| cubo_energia_elite | Cubo de Energia de Elite | o mesmo cubo com moldura azul |
+| cubo_energia_definitivo | Cubo de Energia Definitivo | o mesmo cubo com moldura roxa |
+| bomba | Bomba | caixa de metal com cano descendo e gota preta |
+| refinaria | Refinaria | caixa de vidro com tanques e chama amarela |
+| motor_combustao | Motor a Combustão | motor de aço com pistão e engrenagem |
+| pedreira | Pedreira | caixa de metal amarela e preta com broca |
+
+**Blocos "cubo" (só C):**
+
+| Arquivo | Nome | Como deve parecer |
+|---|---|---|
+| cascalho_nether | Cascalho do Nether | cascalho vermelho-escuro, pedrinhas de netherrack |
+| petroleo | Petróleo | líquido preto quase parado, com reflexo marrom |
+| elevador | Elevador | bloco de arenito liso branco com seta para cima e para baixo no topo |
+| tumulo | Túmulo (textura do modelo 32×32) | pedra cinza rachada com musgo |

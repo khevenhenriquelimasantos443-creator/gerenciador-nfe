@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_motor_combustao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AAA",
+      " V ",
+      "GPG"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "V": {
+        "item": "minecraft:glass"
+      },
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      },
+      "P": {
+        "item": "minecraft:piston"
+      }
+    },
+    "unlock": [
+      {
+        "item": "cl:lingote_aco"
+      }
+    ],
+    "result": {
+      "item": "cl:motor_combustao"
+    }
+  }
+}

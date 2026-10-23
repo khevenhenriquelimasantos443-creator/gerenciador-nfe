@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cubo_energia_basico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RAR",
+      "CEC",
+      "RAR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "A": {
+        "item": "cl:lingote_aco"
+      },
+      "C": {
+        "item": "cl:bateria"
+      },
+      "E": {
+        "item": "cl:estrutura_maquina"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "cl:cubo_energia_basico"
+    }
+  }
+}
