@@ -9,6 +9,8 @@ A Fase 10 (final) não tem item nem bloco novo.
 
 ## Parte 1: pendentes das Fases 12 e 14
 
+> ✅ Recebida e importada na 1.2.3 (10 ícones de menu e 30 texturas de plantação).
+
 ### Blocos: só o ícone de menu (B)
 
 | Arquivo | Nome | Como deve parecer |

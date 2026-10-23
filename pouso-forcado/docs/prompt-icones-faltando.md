@@ -78,6 +78,8 @@ Você vai desenhar os ícones e as texturas de um add-on de Minecraft Bedrock ch
 
 ## LISTA, parte 1: pendentes das Fases 12 e 14 (zip `pendentes`)
 
+> ✅ Recebida e importada na 1.2.3 (10 ícones de menu e 30 texturas de plantação).
+
 ### Blocos: só o ícone de menu (B)
 
 | Arquivo | Nome | Como deve parecer |

@@ -109,7 +109,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:assadeira": {
   "pt": "Assadeira",
   "en": "Bakeware",
-  "icone": "textures/items/cl/blocos/assadeira"
+  "icone": "textures/items/cl/arte/blocos/assadeira"
  },
  "cl:bacia_fundicao": {
   "pt": "Bacia de Fundição",
@@ -144,12 +144,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:barril_madeira": {
   "pt": "Barril de Madeira",
   "en": "Wooden Barrel",
-  "icone": "textures/items/cl/blocos/barril_madeira"
+  "icone": "textures/items/cl/arte/blocos/barril_madeira"
  },
  "cl:barril_pedra": {
   "pt": "Barril de Pedra",
   "en": "Stone Barrel",
-  "icone": "textures/items/cl/blocos/barril_pedra"
+  "icone": "textures/items/cl/arte/blocos/barril_pedra"
  },
  "cl:bateria": {
   "pt": "Bateria",
@@ -244,7 +244,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cacarola": {
   "pt": "Caçarola",
   "en": "Saucepan",
-  "icone": "textures/items/cl/blocos/cacarola"
+  "icone": "textures/items/cl/arte/blocos/cacarola"
  },
  "cl:cacho_tamaras": {
   "pt": "Cacho de Tâmaras",
@@ -254,7 +254,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cadinho": {
   "pt": "Cadinho",
   "en": "Crucible",
-  "icone": "textures/items/cl/blocos/cadinho"
+  "icone": "textures/items/cl/arte/blocos/cadinho"
  },
  "cl:cadinho_cru": {
   "pt": "Cadinho Cru",
@@ -689,7 +689,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:espremedor": {
   "pt": "Espremedor",
   "en": "Juicer",
-  "icone": "textures/items/cl/blocos/espremedor"
+  "icone": "textures/items/cl/arte/blocos/espremedor"
  },
  "cl:estacao_ferramentas": {
   "pt": "Estação de Ferramentas",
@@ -804,7 +804,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:folha_infestada": {
   "pt": "Folha Infestada",
   "en": "Infested Leaves",
-  "icone": "textures/items/cl/blocos/folha_infestada"
+  "icone": "textures/items/cl/arte/blocos/folha_infestada"
  },
  "cl:folha_plastico": {
   "pt": "Folha de Plástico",
@@ -1894,7 +1894,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pilao": {
   "pt": "Pilão",
   "en": "Mortar and Pestle",
-  "icone": "textures/items/cl/blocos/pilao"
+  "icone": "textures/items/cl/arte/blocos/pilao"
  },
  "cl:pimenta": {
   "pt": "Pimenta",
@@ -1929,52 +1929,52 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:planta_alho": {
   "pt": "Plantação de Alho",
   "en": "Garlic Crop",
-  "icone": "textures/blocks/cl/hc/alho_0"
+  "icone": "textures/blocks/cl/arte/planta_alho_0"
  },
  "cl:planta_amendoim": {
   "pt": "Plantação de Amendoim",
   "en": "Peanut Crop",
-  "icone": "textures/blocks/cl/hc/amendoim_0"
+  "icone": "textures/blocks/cl/arte/planta_amendoim_0"
  },
  "cl:planta_arroz": {
   "pt": "Plantação de Arroz",
   "en": "Rice Crop",
-  "icone": "textures/blocks/cl/hc/arroz_0"
+  "icone": "textures/blocks/cl/arte/planta_arroz_0"
  },
  "cl:planta_cebola": {
   "pt": "Plantação de Cebola",
   "en": "Onion Crop",
-  "icone": "textures/blocks/cl/hc/cebola_0"
+  "icone": "textures/blocks/cl/arte/planta_cebola_0"
  },
  "cl:planta_feijao": {
   "pt": "Plantação de Feijão",
   "en": "Beans Crop",
-  "icone": "textures/blocks/cl/hc/feijao_0"
+  "icone": "textures/blocks/cl/arte/planta_feijao_0"
  },
  "cl:planta_fruta_cacto": {
   "pt": "Plantação de Fruta do Cacto",
   "en": "Cactus Fruit Crop",
-  "icone": "textures/blocks/cl/hc/fruta_cacto_0"
+  "icone": "textures/blocks/cl/arte/planta_fruta_cacto_0"
  },
  "cl:planta_milho": {
   "pt": "Plantação de Milho",
   "en": "Corn Crop",
-  "icone": "textures/blocks/cl/hc/milho_0"
+  "icone": "textures/blocks/cl/arte/planta_milho_0"
  },
  "cl:planta_pimenta": {
   "pt": "Plantação de Pimenta",
   "en": "Chili Pepper Crop",
-  "icone": "textures/blocks/cl/hc/pimenta_0"
+  "icone": "textures/blocks/cl/arte/planta_pimenta_0"
  },
  "cl:planta_pimentao": {
   "pt": "Plantação de Pimentão",
   "en": "Bell Pepper Crop",
-  "icone": "textures/blocks/cl/hc/pimentao_0"
+  "icone": "textures/blocks/cl/arte/planta_pimentao_0"
  },
  "cl:planta_tomate": {
   "pt": "Plantação de Tomate",
   "en": "Tomato Crop",
-  "icone": "textures/blocks/cl/hc/tomate_0"
+  "icone": "textures/blocks/cl/arte/planta_tomate_0"
  },
  "cl:plantadeira": {
   "pt": "Plantadeira",
@@ -2024,7 +2024,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:poeira": {
   "pt": "Poeira",
   "en": "Dust",
-  "icone": "textures/items/cl/blocos/poeira"
+  "icone": "textures/items/cl/arte/blocos/poeira"
  },
  "cl:ponto_acesso": {
   "pt": "Ponto de Acesso sem Fio",
@@ -2229,7 +2229,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tabua_corte": {
   "pt": "Tábua de Corte",
   "en": "Cutting Board",
-  "icone": "textures/items/cl/blocos/tabua_corte"
+  "icone": "textures/items/cl/arte/blocos/tabua_corte"
  },
  "cl:taco": {
   "pt": "Taco",
