@@ -15,11 +15,9 @@
         "item": "cl:manteiga"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:milho"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:milho_espiga"
     }

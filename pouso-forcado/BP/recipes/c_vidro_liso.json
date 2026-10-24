@@ -16,11 +16,9 @@
         "item": "minecraft:glass"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:glass"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:vidro_liso",
       "count": 4

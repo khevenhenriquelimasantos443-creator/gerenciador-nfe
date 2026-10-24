@@ -20,11 +20,9 @@
         "item": "minecraft:bucket"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:carcaca_reator"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:porta_refrigeracao"
     }

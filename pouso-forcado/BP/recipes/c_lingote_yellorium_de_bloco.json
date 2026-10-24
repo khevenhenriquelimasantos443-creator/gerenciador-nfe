@@ -12,11 +12,9 @@
         "item": "cl:bloco_yellorium"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:bloco_yellorium"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:lingote_yellorium",
       "count": 9

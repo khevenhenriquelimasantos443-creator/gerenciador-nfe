@@ -12,6 +12,9 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { FACE, PADRAO, hex, icone, png, vidroCom } from "./pintura.mjs";
 
+// Toda receita aparece no livro de receitas desde o começo (1.3.2): o livro vira o "JEI" do inventário.
+const SEMPRE = { context: "AlwaysUnlocked" };
+
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DADOS = join(RAIZ, "tools/dados/conteudo");
 const pasta = (rel) => (mkdirSync(join(RAIZ, rel), { recursive: true }), join(RAIZ, rel));
@@ -40,10 +43,10 @@ function receita(r) {
   let corpo;
   if (r.tipo === "shaped") {
     corpo = { "minecraft:recipe_shaped": { description: desc, tags: r.tags ?? ["crafting_table"], pattern: r.padrao,
-      key: Object.fromEntries(Object.entries(r.chave).map(([k, v]) => [k, ingrediente(v)])), unlock: [ingrediente(Object.values(r.chave)[0])], result: resultado(r) } };
+      key: Object.fromEntries(Object.entries(r.chave).map(([k, v]) => [k, ingrediente(v)])), unlock: SEMPRE, result: resultado(r) } };
   } else if (r.tipo === "shapeless") {
     corpo = { "minecraft:recipe_shapeless": { description: desc, tags: r.tags ?? ["crafting_table"], ingredients: r.ingredientes.map(ingrediente),
-      unlock: [ingrediente(r.ingredientes[0])], result: resultado(r) } };
+      unlock: SEMPRE, result: resultado(r) } };
   } else if (r.tipo === "furnace") {
     corpo = { "minecraft:recipe_furnace": { description: desc, tags: r.tags ?? ["furnace"], input: r.entrada, output: r.resultado } };
   } else throw new Error(`receita ${r.id}: tipo ${r.tipo}`);

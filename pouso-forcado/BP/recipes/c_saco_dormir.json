@@ -19,11 +19,9 @@
         "item": "minecraft:string"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:leather"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:saco_dormir"
     }

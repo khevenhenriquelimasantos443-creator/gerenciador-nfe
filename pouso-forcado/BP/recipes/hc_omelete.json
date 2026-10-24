@@ -18,11 +18,9 @@
         "item": "cl:cebola"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:egg"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:omelete"
     }

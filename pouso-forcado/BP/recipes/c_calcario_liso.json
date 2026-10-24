@@ -16,11 +16,9 @@
         "item": "cl:calcario"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:calcario"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:calcario_liso",
       "count": 4

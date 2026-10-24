@@ -12,11 +12,9 @@
         "item": "cl:feijao"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:feijao"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_feijao"
     }

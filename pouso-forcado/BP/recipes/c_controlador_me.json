@@ -23,11 +23,9 @@
         "item": "cl:processador_avancado"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:controlador_me"
     }

@@ -26,11 +26,9 @@
         "item": "cl:lingote_aco"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:glass"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:evaporador"
     }

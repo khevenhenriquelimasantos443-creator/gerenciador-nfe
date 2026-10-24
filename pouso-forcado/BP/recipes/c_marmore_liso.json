@@ -16,11 +16,9 @@
         "item": "cl:marmore"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:marmore"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:marmore_liso",
       "count": 4

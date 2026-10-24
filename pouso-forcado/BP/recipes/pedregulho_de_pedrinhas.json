@@ -16,11 +16,9 @@
         "item": "cl:pedrinha"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:pedrinha"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:cobblestone"
     }

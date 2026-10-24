@@ -26,11 +26,9 @@
         "item": "cl:circuito"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:shears"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:rancheiro"
     }

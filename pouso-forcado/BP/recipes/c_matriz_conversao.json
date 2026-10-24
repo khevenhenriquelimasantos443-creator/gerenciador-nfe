@@ -21,11 +21,9 @@
         "item": "cl:processador_basico"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:faca_corte"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:matriz_conversao"
     }

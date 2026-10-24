@@ -17,11 +17,9 @@
         "item": "minecraft:bone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:bone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cajado_osso"
     }

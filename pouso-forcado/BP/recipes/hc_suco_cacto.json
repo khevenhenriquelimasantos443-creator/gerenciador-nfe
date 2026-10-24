@@ -15,11 +15,9 @@
         "item": "cl:fruta_cacto"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:fruta_cacto"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:suco_cacto"
     }

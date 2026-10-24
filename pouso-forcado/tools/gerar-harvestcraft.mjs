@@ -9,6 +9,9 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gerarPng } from "./png.mjs";
 
+// Toda receita aparece no livro de receitas desde o começo (1.3.2): o livro vira o "JEI" do inventário.
+const SEMPRE = { context: "AlwaysUnlocked" };
+
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const D = JSON.parse(readFileSync(join(RAIZ, "tools/dados/harvestcraft.json"), "utf8"));
 const T = 32;
@@ -335,7 +338,7 @@ for (const c of D.culturas) {
   // Quebrar: sempre 1 semente (a colheita da planta madura sai pelo script).
   json(`BP/loot_tables/cl/hc/${planta}.json`, { pools: [{ rolls: 1, entries: [{ type: "item", name: `cl:${semente}`, weight: 1 }] }] });
   receita(`semente_${c.id}`, {
-    "minecraft:recipe_shapeless": { description: { identifier: `cl:hc_semente_${c.id}` }, tags: ["crafting_table"], ingredients: [{ item: produto }], unlock: [{ item: produto }], result: { item: `cl:${semente}` } },
+    "minecraft:recipe_shapeless": { description: { identifier: `cl:hc_semente_${c.id}` }, tags: ["crafting_table"], ingredients: [{ item: produto }], unlock: SEMPRE, result: { item: `cl:${semente}` } },
   });
   nomes.pt[`item.cl:${semente}.name`] = `Sementes de ${c.pt}`;
   nomes.en[`item.cl:${semente}.name`] = `${c.en} Seeds`;
@@ -378,7 +381,7 @@ for (const u of D.utensilios) {
     "minecraft:recipe_shaped": {
       description: { identifier: `cl:hc_${u.id}` }, tags: ["crafting_table"], pattern: u.padrao,
       key: Object.fromEntries(Object.entries(u.chave).map(([k, v]) => [k, ingrediente(v)])),
-      unlock: [{ item: "minecraft:brick" }], result: { item: `cl:${u.id}` },
+      unlock: SEMPRE, result: { item: `cl:${u.id}` },
     },
   });
   nomes.pt[`tile.cl:${u.id}.name`] = u.pt;
@@ -404,7 +407,7 @@ for (const f of D.comidas) {
   receita(f.id, {
     "minecraft:recipe_shapeless": {
       description: { identifier: `cl:hc_${f.id}` }, tags: [f.em ? `cl_${f.em}` : "crafting_table"],
-      ingredients: f.ingredientes.map(ingrediente), unlock: [{ item: f.ingredientes[0] }],
+      ingredients: f.ingredientes.map(ingrediente), unlock: SEMPRE,
       result: f.qtd ? { item: resultado, count: f.qtd } : { item: resultado },
     },
   });

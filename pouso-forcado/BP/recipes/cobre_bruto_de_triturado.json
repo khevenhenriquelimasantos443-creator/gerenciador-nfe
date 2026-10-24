@@ -16,11 +16,9 @@
         "item": "cl:cobre_triturado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:cobre_triturado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_copper"
     }

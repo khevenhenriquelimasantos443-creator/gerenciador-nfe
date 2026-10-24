@@ -16,11 +16,9 @@
         "item": "minecraft:stone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:stone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:pedra_liso",
       "count": 4

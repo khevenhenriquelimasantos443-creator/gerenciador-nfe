@@ -16,11 +16,9 @@
         "item": "cl:ferro_triturado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:ferro_triturado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_iron"
     }

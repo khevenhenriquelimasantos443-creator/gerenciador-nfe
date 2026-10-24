@@ -17,11 +17,9 @@
         "item": "minecraft:iron_ingot"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:parede_camara",
       "count": 4

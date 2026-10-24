@@ -18,11 +18,9 @@
         "item": "cl:queijo"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:pimenta"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:chili_poppers"
     }

@@ -12,11 +12,9 @@
         "item": "minecraft:egg"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:egg"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:maionese"
     }

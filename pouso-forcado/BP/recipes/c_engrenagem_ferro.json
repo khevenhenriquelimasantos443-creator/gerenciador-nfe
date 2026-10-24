@@ -20,11 +20,9 @@
         "item": "cl:engrenagem_pedra"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:engrenagem_ferro"
     }

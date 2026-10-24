@@ -20,11 +20,9 @@
         "item": "minecraft:glass"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cilindro_vazio",
       "count": 4

@@ -26,11 +26,9 @@
         "item": "cl:circuito"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:ender_pearl"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:carregador_chunks"
     }

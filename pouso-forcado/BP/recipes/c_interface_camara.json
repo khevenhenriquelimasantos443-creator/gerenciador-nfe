@@ -19,11 +19,9 @@
         "item": "minecraft:hopper"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:parede_camara"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:interface_camara"
     }

@@ -109,11 +109,6 @@ for (;;) {
   }
   g.set(k(...alvo), vizinhoComum(...alvo));
 }
-// Degraus para subir na asa pela frente (as portas abrem em cima das asas, 3 blocos acima do chão).
-for (const z of [-9, 9]) {
-  for (const [x, y] of [[-6, 1], [-7, 1], [-7, 2]]) g.set(k(x, y, z), "minecraft:gray_concrete");
-  for (const [x, y] of [[-6, 2], [-6, 3], [-7, 3], [-7, 4]]) if (!vazio(ler(x, y, z))) throw new Error(`degrau do avião sem espaço em ${x},${y},${z}`);
-}
 // Luz no fundo da cauda: o teto ganha lanternas do mar, para não nascer monstro lá dentro.
 for (const x of [-37, -32, -29]) {
   let y = 5;
@@ -129,27 +124,109 @@ g.set(k(BAU_MODELO.x, BAU_MODELO.y, BAU_MODELO.z), AR); // o script põe o baú 
 const PAINEL_MODELO = { x: -3, y: 4, z: 0 };
 g.set(k(PAINEL_MODELO.x, PAINEL_MODELO.y, PAINEL_MODELO.z), AR);
 
-// 5) Recorte e conversão. O chão liso do modelo (areia e arenito) não entra: fica o terreno do mundo.
-// Dentro do contorno do avião, do chão até o teto, o vazio vira ar (limpa morro e areia de dentro).
-const X0 = -80, X1 = 14, Z0 = -32, Z1 = 26, Y0 = -3, Y1 = 18;
-const nave = new Estrutura(X1 - X0 + 1, Y1 - Y0 + 1, Z1 - Z0 + 1);
+// 5) O avião afunda AFUNDA blocos na areia (1.3.2): a asa fica rente ao chão e as portas abrem no nível do
+// chão, sem vão escuro embaixo onde nascem monstros. O que sobra de vão embaixo (cauda) vira areia. Os
+// destroços da queda (o que não está preso ao avião) ficam no chão, onde estavam.
+// Coordenadas finais: h = altura em relação ao chão do mundo (h = 0 é o bloco de cima do chão).
+const AFUNDA = 3;
+const solidoModelo = (c) => !vazio(g.get(c)) && g.get(c) !== "minecraft:fire";
+const aviao = new Set();
+{
+  const ini = k(-20, 3, 0);
+  if (!solidoModelo(ini)) throw new Error("piso do avião não encontrado em -20,3,0");
+  const fila = [ini];
+  aviao.add(ini);
+  while (fila.length) {
+    const [x, y, z] = fila.pop().split(",").map(Number);
+    for (const [dx, dy, dz] of LADOS) {
+      const n = k(x + dx, y + dy, z + dz);
+      if (y + dy >= 1 && !aviao.has(n) && solidoModelo(n)) {
+        aviao.add(n);
+        fila.push(n);
+      }
+    }
+  }
+  // Peças que só encostam pela quina (lanternas do teto, peças do painel) também são do avião. Só acima da
+  // asa (y >= 3): os destroços do chão, encostados na asa pela quina, ficam fora.
+  for (let novos = true; novos; ) {
+    novos = false;
+    for (const [c, b] of g) {
+      const [x, y, z] = c.split(",").map(Number);
+      if (y < 3 || aviao.has(c) || vazio(b) || b === "minecraft:fire") continue;
+      let encosta = false;
+      for (let dx = -1; dx <= 1 && !encosta; dx++)
+        for (let dy = -1; dy <= 1 && !encosta; dy++) for (let dz = -1; dz <= 1 && !encosta; dz++) encosta = aviao.has(k(x + dx, y + dy, z + dz));
+      if (encosta) {
+        aviao.add(c);
+        novos = true;
+      }
+    }
+  }
+}
+// Interior (o ar de dentro do casco, com as portas fechadas): vira ar mesmo abaixo do nível do chão.
+const interior = new Set();
+{
+  const ini = k(-20, 5, 0), fila = [ini];
+  interior.add(ini);
+  while (fila.length) {
+    const [x, y, z] = fila.pop().split(",").map(Number);
+    for (const [dx, dy, dz] of LADOS) {
+      const n = [x + dx, y + dy, z + dz], kn = k(...n);
+      if (interior.has(kn) || solido(...n)) continue;
+      interior.add(kn);
+      fila.push(kn);
+    }
+  }
+}
+const w = new Map(); // "x,h,z" -> bloco
 const CHAO = new Set(["minecraft:sand", "minecraft:sandstone"]);
+const X0 = -80, X1 = 14, Z0 = -32, Z1 = 26;
 for (const [chave, b] of g) {
   const [x, y, z] = chave.split(",").map(Number);
-  if (x < X0 || x > X1 || z < Z0 || z > Z1 || y < Y0 || y > Y1) continue;
-  if (y <= 0 && CHAO.has(b)) continue;
-  nave.por(x - X0, y - Y0, z - Z0, b);
+  if (x < X0 || x > X1 || z < Z0 || z > Z1) continue;
+  if (aviao.has(chave)) w.set(k(x, y - AFUNDA, z), b);
+  else if (!vazio(b) && !(y <= 0 && CHAO.has(b))) w.set(chave, b); // destroço: fica onde está
 }
-for (let x = X0; x <= X1; x++)
-  for (let z = Z0; z <= Z1; z++) {
-    let topo = 0;
-    for (let y = 1; y <= Y1; y++) if (!vazio(ler(x, y, z)) && x >= -45) topo = y;
-    for (let y = 1; y <= topo; y++) if (nave.obter(x - X0, y - Y0, z - Z0) === null) nave.por(x - X0, y - Y0, z - Z0, AR);
+for (const c of interior) {
+  const [x, y, z] = c.split(",").map(Number);
+  w.set(k(x, y - AFUNDA, z), AR);
+}
+for (const p of PORTAS_MODELO) for (const dy of [0, 1]) w.set(k(p.x, p.y + dy - AFUNDA, p.z), AR);
+// Em cada coluna do avião: embaixo dele, até o chão, areia; do lado de fora acima do chão, ar (limpa morro).
+const colunas = new Map();
+for (const c of aviao) {
+  const [x, y, z] = c.split(",").map(Number);
+  const h = y - AFUNDA, col = `${x},${z}`, v = colunas.get(col) ?? { baixo: h, topo: h };
+  colunas.set(col, { baixo: Math.min(v.baixo, h), topo: Math.max(v.topo, h) });
+}
+let areia = 0;
+for (const [col, { baixo, topo }] of colunas) {
+  const [x, z] = col.split(",").map(Number);
+  for (let h = 1; h <= topo; h++) {
+    if (w.has(k(x, h, z))) continue;
+    if (h < baixo) {
+      w.set(k(x, h, z), "minecraft:sand");
+      areia++;
+    } else w.set(k(x, h, z), AR);
   }
+}
+let Y0 = Infinity, Y1 = -Infinity;
+for (const c of w.keys()) {
+  const h = Number(c.split(",")[1]);
+  Y0 = Math.min(Y0, h);
+  Y1 = Math.max(Y1, h);
+}
+const nave = new Estrutura(X1 - X0 + 1, Y1 - Y0 + 1, Z1 - Z0 + 1);
+for (const [c, b] of w) {
+  const [x, h, z] = c.split(",").map(Number);
+  nave.por(x - X0, h - Y0, z - Z0, b);
+}
+console.log(`avião: ${aviao.size} blocos afundados ${AFUNDA}, ${interior.size} de interior, ${areia} de areia embaixo`);
 
 // 6) Posições para o script (relativas à origem da estrutura) e o lugar do jogador.
 // No pacote original o jogador fica 8 blocos à frente da âncora e 30 ao lado, olhando o avião.
-const rel = (p) => ({ x: p.x - X0, y: p.y - Y0, z: p.z - Z0 });
+// Peças do avião: a altura já descontando o afundamento.
+const rel = (p) => ({ x: p.x - X0, y: p.y - AFUNDA - Y0, z: p.z - Z0 });
 const JOGADOR = { x: 8, y: 1, z: -30 };
 const esperado = {
   tamanho: { x: nave.X, y: nave.Y, z: nave.Z },

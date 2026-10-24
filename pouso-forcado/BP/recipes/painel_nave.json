@@ -23,11 +23,9 @@
         "item": "minecraft:redstone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:painel_nave"
     }

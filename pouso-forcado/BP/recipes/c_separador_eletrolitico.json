@@ -26,11 +26,9 @@
         "item": "cl:estrutura_maquina"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:separador_eletrolitico"
     }

@@ -23,11 +23,9 @@
         "item": "minecraft:iron_ingot"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:bateria"
     }

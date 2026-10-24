@@ -15,11 +15,9 @@
         "item": "minecraft:egg"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:farinha"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:massa_liquida"
     }

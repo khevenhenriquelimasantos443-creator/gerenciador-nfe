@@ -23,11 +23,9 @@
         "item": "cl:filtro"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:filtro"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:mascara"
     }

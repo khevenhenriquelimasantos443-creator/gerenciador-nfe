@@ -26,11 +26,9 @@
         "item": "cl:circuito"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:packed_ice"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:precipitador_glacial"
     }

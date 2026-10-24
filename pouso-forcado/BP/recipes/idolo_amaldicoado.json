@@ -23,11 +23,9 @@
         "item": "minecraft:chiseled_sandstone"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:faixa_mumia"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:idolo_amaldicoado"
     }

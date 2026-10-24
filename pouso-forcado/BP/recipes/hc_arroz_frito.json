@@ -21,11 +21,9 @@
         "item": "cl:cebola"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:arroz"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:arroz_frito"
     }

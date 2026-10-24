@@ -15,11 +15,9 @@
         "item": "cl:manteiga"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:bread"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:torrada"
     }

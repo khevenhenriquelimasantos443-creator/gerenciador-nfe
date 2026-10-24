@@ -26,11 +26,9 @@
         "item": "cl:cristal_fluix"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:componente_me_4k"
     }

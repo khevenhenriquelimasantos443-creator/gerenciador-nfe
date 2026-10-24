@@ -20,11 +20,9 @@
         "item": "minecraft:compass"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:placa_casco"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:bussola_aviao"
     }

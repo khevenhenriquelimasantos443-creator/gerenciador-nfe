@@ -12,11 +12,9 @@
         "item": "cl:agua_impropria"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:agua_impropria"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:sal"
     }

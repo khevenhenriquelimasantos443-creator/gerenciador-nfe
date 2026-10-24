@@ -23,11 +23,9 @@
         "item": "cl:barra_grafite"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:carcaca_reator"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barra_controle"
     }

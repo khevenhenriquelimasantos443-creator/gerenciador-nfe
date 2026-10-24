@@ -26,11 +26,9 @@
         "item": "cl:circuito"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_axe"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:serraria"
     }

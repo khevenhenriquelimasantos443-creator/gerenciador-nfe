@@ -18,11 +18,9 @@
         "item": "cl:sal"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:agua_boa"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:massa"
     }

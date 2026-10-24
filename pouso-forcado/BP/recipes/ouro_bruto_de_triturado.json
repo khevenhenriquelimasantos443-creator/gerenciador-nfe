@@ -16,11 +16,9 @@
         "item": "cl:ouro_triturado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:ouro_triturado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_gold"
     }

@@ -18,11 +18,9 @@
         "item": "cl:arroz"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:pimentao"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:pimentao_recheado"
     }

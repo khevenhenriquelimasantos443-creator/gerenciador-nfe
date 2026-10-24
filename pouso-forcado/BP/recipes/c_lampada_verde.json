@@ -15,11 +15,9 @@
         "item": "minecraft:lime_dye"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:lampada"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:lampada_verde"
     }

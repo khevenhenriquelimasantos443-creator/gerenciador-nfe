@@ -20,11 +20,9 @@
         "item": "cl:carregador_chunks"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:ender_pearl"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:carregador_pontual",
       "count": 10

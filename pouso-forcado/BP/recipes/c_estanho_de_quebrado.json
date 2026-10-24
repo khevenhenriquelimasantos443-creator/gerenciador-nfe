@@ -21,11 +21,9 @@
         "item": "cl:estanho_quebrado"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:estanho_quebrado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:lingote_estanho"
     }

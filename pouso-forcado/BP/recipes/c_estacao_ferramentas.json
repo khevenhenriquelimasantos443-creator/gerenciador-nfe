@@ -19,11 +19,9 @@
         "item": "minecraft:crafting_table"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:padrao_branco"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:estacao_ferramentas"
     }

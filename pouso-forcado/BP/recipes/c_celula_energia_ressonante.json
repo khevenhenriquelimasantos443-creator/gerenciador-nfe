@@ -23,11 +23,9 @@
         "item": "cl:celula_energia_redstone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:diamond"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:celula_energia_ressonante"
     }

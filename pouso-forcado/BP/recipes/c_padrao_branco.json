@@ -19,11 +19,9 @@
         "item": "minecraft:stick"
       }
     },
-    "unlock": [
-      {
-        "tag": "minecraft:planks"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:padrao_branco",
       "count": 4

@@ -21,11 +21,9 @@
         "item": "cl:tortilha"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:cooked_beef"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:taco"
     }

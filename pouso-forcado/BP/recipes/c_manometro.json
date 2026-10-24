@@ -15,11 +15,9 @@
         "item": "minecraft:clock"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:lingote_ferro_comprimido"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:manometro"
     }

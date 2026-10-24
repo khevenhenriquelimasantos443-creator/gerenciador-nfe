@@ -12,11 +12,9 @@
         "item": "cl:massa"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:massa"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:bread"
     }

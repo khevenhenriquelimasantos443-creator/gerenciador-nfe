@@ -15,11 +15,9 @@
         "item": "cl:caldo"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:arroz"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:sopa_arroz"
     }

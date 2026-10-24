@@ -23,11 +23,9 @@
         "item": "minecraft:redstone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:copper_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:upgrade_alcance_4"
     }

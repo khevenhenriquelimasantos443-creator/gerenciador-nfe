@@ -29,11 +29,9 @@
         "item": "cl:capacitor"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:lingote_aco"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:torre_defesa"
     }

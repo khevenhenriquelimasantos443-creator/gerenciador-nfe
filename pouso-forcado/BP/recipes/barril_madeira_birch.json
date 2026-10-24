@@ -20,11 +20,9 @@
         "item": "minecraft:birch_slab"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:birch_slab"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barril_madeira"
     }

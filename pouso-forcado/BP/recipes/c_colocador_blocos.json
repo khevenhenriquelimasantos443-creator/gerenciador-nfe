@@ -26,11 +26,9 @@
         "item": "cl:circuito"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:dispenser"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:colocador_blocos"
     }

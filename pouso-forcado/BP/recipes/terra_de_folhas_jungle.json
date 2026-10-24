@@ -17,11 +17,9 @@
         "item": "minecraft:jungle_leaves"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:jungle_leaves"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:dirt"
     }

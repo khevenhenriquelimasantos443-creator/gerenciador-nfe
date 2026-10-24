@@ -18,11 +18,9 @@
         "item": "cl:cristal_certus"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:stick"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:faca_corte"
     }

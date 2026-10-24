@@ -20,11 +20,9 @@
         "item": "cl:engrenagem_ouro"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:diamond"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:engrenagem_diamante"
     }

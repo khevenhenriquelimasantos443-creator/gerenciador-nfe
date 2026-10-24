@@ -12,11 +12,9 @@
         "item": "cl:bloco_grafite"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:bloco_grafite"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barra_grafite",
       "count": 9

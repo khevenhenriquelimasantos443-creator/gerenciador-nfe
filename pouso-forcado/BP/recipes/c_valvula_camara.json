@@ -19,11 +19,9 @@
         "item": "cl:tubo_pressao"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:parede_camara"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:valvula_camara"
     }

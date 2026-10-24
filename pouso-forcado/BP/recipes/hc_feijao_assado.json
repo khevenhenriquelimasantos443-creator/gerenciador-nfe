@@ -18,11 +18,9 @@
         "item": "minecraft:sugar"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:feijao"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:feijao_assado"
     }

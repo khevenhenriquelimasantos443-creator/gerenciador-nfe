@@ -22,11 +22,9 @@
         "item": "cl:processador_basico"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:cristal_fluix"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:ponto_acesso"
     }

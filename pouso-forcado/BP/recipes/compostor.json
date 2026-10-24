@@ -20,11 +20,9 @@
         "item": "minecraft:dirt"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:dirt"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:compostor"
     }

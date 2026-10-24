@@ -15,11 +15,9 @@
         "item": "cl:caldo"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:tomate"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:sopa_tomate"
     }

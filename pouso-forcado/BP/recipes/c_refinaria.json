@@ -26,11 +26,9 @@
         "item": "cl:estrutura_maquina"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:glass"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:refinaria"
     }

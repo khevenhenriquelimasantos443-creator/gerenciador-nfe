@@ -16,11 +16,9 @@
         "item": "cl:ferro_quebrado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:ferro_quebrado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_iron"
     }

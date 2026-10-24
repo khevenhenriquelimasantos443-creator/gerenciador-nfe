@@ -15,11 +15,9 @@
         "item": "cl:torrada"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:beef"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:hamburguer"
     }

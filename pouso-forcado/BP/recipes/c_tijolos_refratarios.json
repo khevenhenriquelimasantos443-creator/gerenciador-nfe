@@ -16,11 +16,9 @@
         "item": "cl:tijolo_refratario"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:tijolo_refratario"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:tijolos_refratarios"
     }

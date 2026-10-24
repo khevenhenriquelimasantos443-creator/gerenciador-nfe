@@ -15,11 +15,9 @@
         "item": "cl:sal"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:milk_bucket"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:queijo"
     }

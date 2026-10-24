@@ -22,11 +22,9 @@
         "item": "minecraft:smooth_stone"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:folha_plastico"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:bloco_maquina"
     }

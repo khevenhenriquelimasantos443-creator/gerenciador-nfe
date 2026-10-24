@@ -15,11 +15,9 @@
         "item": "minecraft:sand"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:agua_boa"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:agua_impropria"
     }

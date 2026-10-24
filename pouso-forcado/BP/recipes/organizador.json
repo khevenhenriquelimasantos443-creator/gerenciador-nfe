@@ -18,11 +18,9 @@
         "item": "minecraft:stick"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:chest"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:organizador"
     }

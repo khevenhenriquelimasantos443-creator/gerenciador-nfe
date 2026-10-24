@@ -23,11 +23,9 @@
         "item": "cl:cubo_energia_elite"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:liga_atomica"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cubo_energia_definitivo"
     }

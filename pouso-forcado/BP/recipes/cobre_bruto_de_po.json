@@ -16,11 +16,9 @@
         "item": "cl:cobre_po"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:cobre_po"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_copper"
     }

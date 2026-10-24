@@ -12,11 +12,9 @@
         "item": "cl:arroz"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:arroz"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:farinha"
     }

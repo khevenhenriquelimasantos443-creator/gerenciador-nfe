@@ -12,11 +12,9 @@
         "item": "cl:fruta_cacto"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:fruta_cacto"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_fruta_cacto"
     }

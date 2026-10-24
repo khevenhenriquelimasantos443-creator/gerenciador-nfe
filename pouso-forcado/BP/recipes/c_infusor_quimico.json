@@ -26,11 +26,9 @@
         "item": "cl:estrutura_maquina"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:cilindro_vazio"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:infusor_quimico"
     }

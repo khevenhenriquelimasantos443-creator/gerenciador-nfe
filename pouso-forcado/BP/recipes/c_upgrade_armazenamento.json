@@ -20,11 +20,9 @@
         "item": "minecraft:chest"
       }
     },
-    "unlock": [
-      {
-        "tag": "minecraft:planks"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:upgrade_armazenamento"
     }

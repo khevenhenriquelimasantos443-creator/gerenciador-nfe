@@ -15,11 +15,9 @@
         "item": "cl:agua_boa"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:fuba"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:tortilha"
     }

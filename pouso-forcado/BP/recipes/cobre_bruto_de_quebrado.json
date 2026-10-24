@@ -16,11 +16,9 @@
         "item": "cl:cobre_quebrado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:cobre_quebrado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_copper"
     }

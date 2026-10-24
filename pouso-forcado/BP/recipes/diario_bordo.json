@@ -9,9 +9,7 @@
       { "item": "minecraft:stick" },
       { "item": "minecraft:sand" }
     ],
-    "unlock": [
-      { "item": "minecraft:stick" }
-    ],
+    "unlock": { "context": "AlwaysUnlocked" },
     "result": {
       "item": "cl:diario_bordo"
     }

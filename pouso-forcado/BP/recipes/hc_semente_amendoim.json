@@ -12,11 +12,9 @@
         "item": "cl:amendoim"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:amendoim"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_amendoim"
     }

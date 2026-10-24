@@ -23,11 +23,9 @@
         "item": "cl:cubo_energia_avancado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:liga_reforcada"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cubo_energia_elite"
     }

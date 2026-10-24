@@ -23,11 +23,9 @@
         "item": "cl:celula_energia_reforcada"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone_block"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:celula_energia_redstone"
     }

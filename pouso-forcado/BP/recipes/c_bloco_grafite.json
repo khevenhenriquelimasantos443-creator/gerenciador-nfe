@@ -17,11 +17,9 @@
         "item": "cl:barra_grafite"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:barra_grafite"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:bloco_grafite"
     }

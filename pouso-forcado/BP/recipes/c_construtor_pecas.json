@@ -19,11 +19,9 @@
         "tag": "minecraft:logs"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:padrao_branco"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:construtor_pecas"
     }

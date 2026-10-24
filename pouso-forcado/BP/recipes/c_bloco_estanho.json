@@ -17,11 +17,9 @@
         "item": "cl:lingote_estanho"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:lingote_estanho"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:bloco_estanho"
     }

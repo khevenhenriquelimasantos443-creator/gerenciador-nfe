@@ -26,11 +26,9 @@
         "item": "minecraft:crafting_table"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:montador_molecular"
     }

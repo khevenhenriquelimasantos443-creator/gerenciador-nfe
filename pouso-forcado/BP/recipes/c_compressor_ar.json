@@ -23,11 +23,9 @@
         "item": "cl:tubo_pressao"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:compressor_ar"
     }

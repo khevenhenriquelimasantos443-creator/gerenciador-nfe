@@ -16,11 +16,9 @@
         "item": "minecraft:sandstone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:sandstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:arenito_liso",
       "count": 4

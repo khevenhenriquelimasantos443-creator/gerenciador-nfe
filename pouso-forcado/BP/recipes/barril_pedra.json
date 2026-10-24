@@ -20,11 +20,9 @@
         "item": "minecraft:smooth_stone_slab"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:stone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barril_pedra"
     }

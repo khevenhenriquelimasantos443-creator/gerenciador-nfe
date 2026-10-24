@@ -12,11 +12,9 @@
         "item": "cl:tomate"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:tomate"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_tomate"
     }

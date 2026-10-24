@@ -17,11 +17,9 @@
         "item": "minecraft:oak_leaves"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:oak_leaves"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:dirt"
     }

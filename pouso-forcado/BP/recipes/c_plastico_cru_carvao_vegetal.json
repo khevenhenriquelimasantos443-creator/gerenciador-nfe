@@ -18,11 +18,9 @@
         "item": "minecraft:charcoal"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:barra_borracha"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:plastico_cru",
       "count": 2

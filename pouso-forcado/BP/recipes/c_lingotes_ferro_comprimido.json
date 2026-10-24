@@ -12,11 +12,9 @@
         "item": "cl:bloco_ferro_comprimido"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:bloco_ferro_comprimido"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:lingote_ferro_comprimido",
       "count": 9

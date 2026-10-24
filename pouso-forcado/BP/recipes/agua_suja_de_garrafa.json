@@ -15,11 +15,9 @@
         "item": "minecraft:dirt"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:glass_bottle"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:agua_suja"
     }

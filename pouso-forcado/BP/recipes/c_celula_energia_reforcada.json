@@ -23,11 +23,9 @@
         "item": "cl:celula_energia_basica"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:celula_energia_reforcada"
     }

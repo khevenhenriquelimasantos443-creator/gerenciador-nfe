@@ -20,11 +20,9 @@
         "item": "minecraft:jungle_slab"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:jungle_slab"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barril_madeira"
     }

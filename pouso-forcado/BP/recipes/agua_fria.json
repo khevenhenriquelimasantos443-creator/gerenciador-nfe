@@ -15,11 +15,9 @@
         "item": "minecraft:snowball"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:snowball"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:agua_excelente"
     }

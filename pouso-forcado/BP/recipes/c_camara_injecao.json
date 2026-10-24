@@ -26,11 +26,9 @@
         "item": "cl:camara_purificacao"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:liga_reforcada"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:camara_injecao"
     }

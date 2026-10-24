@@ -23,11 +23,9 @@
         "item": "cl:bateria"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:cristal_fluix"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:terminal_sem_fio"
     }

@@ -12,11 +12,9 @@
         "item": "cl:alho"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:alho"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_alho"
     }

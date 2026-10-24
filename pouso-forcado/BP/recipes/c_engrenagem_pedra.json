@@ -20,11 +20,9 @@
         "item": "cl:engrenagem_madeira"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:cobblestone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:engrenagem_pedra"
     }

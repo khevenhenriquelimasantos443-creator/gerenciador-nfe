@@ -34,7 +34,7 @@ teste("aviao", 1200, (t) => {
     const achados = { painel: [], bau: [], portas: 0, lanternas: 0 };
     for (let x = p0.x - 95; x <= p0.x + 10; x++)
       for (let z = p0.z - 5; z <= p0.z + 60; z++)
-        for (let y = p0.y + 2; y <= p0.y + 6; y++) {
+        for (let y = p0.y - 2; y <= p0.y + 6; y++) {
           const b = dim.getBlock({ x, y, z });
           if (!b) continue;
           if (b.typeId === "cl:painel_nave") achados.painel.push(`${x - p0.x},${y - p0.y},${z - p0.z} ${b.permutation.getState("minecraft:cardinal_direction")}`);

@@ -21,11 +21,9 @@
         "item": "cl:estanho_triturado"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:estanho_triturado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:lingote_estanho"
     }

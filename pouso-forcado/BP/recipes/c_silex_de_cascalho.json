@@ -21,11 +21,9 @@
         "item": "minecraft:gravel"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:gravel"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:flint"
     }

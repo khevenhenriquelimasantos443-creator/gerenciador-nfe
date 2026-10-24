@@ -15,11 +15,9 @@
         "item": "minecraft:glass"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:parede_camara"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:vidro_camara"
     }

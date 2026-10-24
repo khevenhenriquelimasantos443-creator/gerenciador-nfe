@@ -29,11 +29,9 @@
         "item": "minecraft:copper_ingot"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:peneira"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:peneira_automatica"
     }

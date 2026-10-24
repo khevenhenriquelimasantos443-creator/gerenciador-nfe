@@ -18,11 +18,9 @@
         "item": "minecraft:lapis_lazuli"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:cristal_certus"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cristal_fluix",
       "count": 2

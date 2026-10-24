@@ -20,11 +20,9 @@
         "item": "minecraft:acacia_slab"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:acacia_slab"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barril_madeira"
     }

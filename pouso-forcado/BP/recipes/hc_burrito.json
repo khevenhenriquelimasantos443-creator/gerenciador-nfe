@@ -21,11 +21,9 @@
         "item": "cl:queijo"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:feijao"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:burrito"
     }

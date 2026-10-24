@@ -20,11 +20,9 @@
         "item": "cl:tubo_pressao"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:lingote_ferro_comprimido"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:tubo_pressao_avancado"
     }

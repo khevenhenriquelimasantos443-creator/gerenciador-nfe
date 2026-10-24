@@ -18,11 +18,9 @@
         "item": "minecraft:gravel"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:coal"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barra_grafite"
     }

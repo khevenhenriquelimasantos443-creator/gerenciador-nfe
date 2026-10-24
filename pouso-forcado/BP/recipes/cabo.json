@@ -20,11 +20,9 @@
         "item": "minecraft:redstone"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:copper_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cabo",
       "count": 4

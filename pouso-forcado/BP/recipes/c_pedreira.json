@@ -29,11 +29,9 @@
         "item": "minecraft:diamond_pickaxe"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:pedreira"
     }

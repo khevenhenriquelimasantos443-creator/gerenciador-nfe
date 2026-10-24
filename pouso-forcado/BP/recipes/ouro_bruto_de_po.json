@@ -16,11 +16,9 @@
         "item": "cl:ouro_po"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:ouro_po"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_gold"
     }

@@ -23,11 +23,9 @@
         "item": "cl:lingote_yellorium"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:barra_combustivel"
     }

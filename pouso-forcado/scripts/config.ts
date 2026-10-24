@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.3.1";
+export const VERSAO = "1.3.2";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -115,13 +115,14 @@ export const PROPS = {
 export const NAVE = {
   estrutura: `${NS}:aviao_caido`, // pedaços _0, _1... lado a lado em x
   partes: 2, larguraParte: 48,
-  tamanho: { x: 95, y: 22, z: 59 },
-  deslocamento: { x: -88, y: -4, z: -2 }, // origem da estrutura em relação ao jogador (ele fica ao lado do avião)
-  bau: { x: 64, y: 7, z: 34 }, // baú de suprimentos, dentro da estrutura (no porão de carga)
-  painel: { x: 77, y: 7, z: 32 }, // Painel da Nave, no painel de controle da cabine
+  tamanho: { x: 95, y: 18, z: 59 },
+  deslocamento: { x: -88, y: -3, z: -2 }, // origem da estrutura em relação ao jogador (ele fica ao lado do avião)
+  bau: { x: 64, y: 3, z: 34 }, // baú de suprimentos, dentro da estrutura (no porão de carga)
+  painel: { x: 77, y: 3, z: 32 }, // Painel da Nave, no painel de controle da cabine
   centro: { x: 50, z: 32 }, // meio do avião, para o relevo não pôr nada em cima
+  // 1.3.2: o avião está afundado 3 blocos na areia (tools/gerar-aviao.mjs): portas e asas no nível do chão.
   // Portas (metade de baixo): a dupla do lado esquerdo (norte) e a do lado direito (sul).
-  portas: [{ x: 67, y: 7, z: 28 }, { x: 68, y: 7, z: 28 }, { x: 72, y: 7, z: 36 }],
+  portas: [{ x: 67, y: 3, z: 28 }, { x: 68, y: 3, z: 28 }, { x: 72, y: 3, z: 36 }],
   ladoDasPortas: ["north", "north", "south"],
 } as const;
 

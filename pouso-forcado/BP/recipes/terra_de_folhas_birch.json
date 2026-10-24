@@ -17,11 +17,9 @@
         "item": "minecraft:birch_leaves"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:birch_leaves"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:dirt"
     }

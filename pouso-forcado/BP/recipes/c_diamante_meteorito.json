@@ -17,11 +17,9 @@
         "item": "cl:fragmento_meteorito"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:fragmento_meteorito"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:diamond"
     }

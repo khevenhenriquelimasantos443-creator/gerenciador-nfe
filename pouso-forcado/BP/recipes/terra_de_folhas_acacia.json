@@ -17,11 +17,9 @@
         "item": "minecraft:acacia_leaves"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:acacia_leaves"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:dirt"
     }

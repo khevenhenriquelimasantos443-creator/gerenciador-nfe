@@ -15,11 +15,9 @@
         "item": "cl:sal"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:beef"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:charque"
     }

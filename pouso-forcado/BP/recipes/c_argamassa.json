@@ -18,11 +18,9 @@
         "item": "minecraft:gravel"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:clay_ball"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:argamassa",
       "count": 2

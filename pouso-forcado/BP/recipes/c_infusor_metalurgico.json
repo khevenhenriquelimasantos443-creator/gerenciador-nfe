@@ -26,11 +26,9 @@
         "item": "cl:estrutura_maquina"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:lingote_aco"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:infusor_metalurgico"
     }

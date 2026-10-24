@@ -20,11 +20,9 @@
         "item": "minecraft:glass_bottle"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:leather"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:camel_pack"
     }

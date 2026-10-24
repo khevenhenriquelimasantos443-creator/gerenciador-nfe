@@ -26,11 +26,9 @@
         "item": "minecraft:crafting_table"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:piston"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:montadora"
     }

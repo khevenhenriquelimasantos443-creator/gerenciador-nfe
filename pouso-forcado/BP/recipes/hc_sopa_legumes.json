@@ -21,11 +21,9 @@
         "item": "cl:caldo"
       }
     ],
-    "unlock": [
-      {
-        "item": "minecraft:potato"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:sopa_legumes"
     }

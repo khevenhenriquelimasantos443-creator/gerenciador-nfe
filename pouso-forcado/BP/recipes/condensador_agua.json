@@ -16,9 +16,7 @@
       "B": { "item": "minecraft:bucket" },
       "S": { "tag": "minecraft:stone_crafting_materials" }
     },
-    "unlock": [
-      { "item": "minecraft:bucket" }
-    ],
+    "unlock": { "context": "AlwaysUnlocked" },
     "result": {
       "item": "cl:condensador_agua"
     }

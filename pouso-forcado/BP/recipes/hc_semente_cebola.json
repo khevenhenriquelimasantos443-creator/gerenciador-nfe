@@ -12,11 +12,9 @@
         "item": "cl:cebola"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:cebola"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_cebola"
     }

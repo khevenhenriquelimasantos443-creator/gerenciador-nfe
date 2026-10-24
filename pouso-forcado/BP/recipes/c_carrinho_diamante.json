@@ -18,11 +18,9 @@
         "item": "cl:carrinho"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:diamond"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:carrinho_diamante"
     }

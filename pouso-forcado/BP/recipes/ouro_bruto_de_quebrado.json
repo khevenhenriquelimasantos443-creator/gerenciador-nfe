@@ -16,11 +16,9 @@
         "item": "cl:ouro_quebrado"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:ouro_quebrado"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "minecraft:raw_gold"
     }

@@ -23,11 +23,9 @@
         "item": "cl:processador_basico"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:redstone"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:componente_me_1k"
     }

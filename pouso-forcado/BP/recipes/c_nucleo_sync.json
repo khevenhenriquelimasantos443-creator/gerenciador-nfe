@@ -23,11 +23,9 @@
         "item": "cl:coracao_farao"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:gold_ingot"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:nucleo_sync"
     }

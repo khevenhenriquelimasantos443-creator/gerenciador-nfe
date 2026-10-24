@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,11 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.2
+
+- **Livro de receitas como o JEI:** todas as receitas de bancada do add-on aparecem no livro de receitas do inventário desde o começo (antes só apareciam depois de pegar o primeiro ingrediente), separadas por mod, com a busca da lupa. Tocar numa receita monta a grade sozinho, como o "+" do JEI. Receitas de máquinas e "onde usar" continuam no Catálogo.
+- **Avião afundado** 3 blocos na areia: asas rente ao chão, portas no nível do chão e areia no vão que sobrava embaixo da cauda. Sem vão escuro embaixo, não nasce bicho ali. Vale para mundos novos (o avião é montado uma vez, na criação do mundo).
 
 ## Novidades da 1.3.1 (visual mais limpo)
 
@@ -626,7 +631,7 @@ Números em `ENERGIA` no `scripts/config.ts`.
 - **O sol:** de dia, monstros expostos ao céu pegam fogo, menos husks, aranhas e creepers (como no jogo normal). Quem estiver na sombra ou no subsolo escapa.
 - **Nada nasce de dia ao ar livre:** se o jogo fizer um monstro nascer de dia sob o céu aberto, o script remove na hora. No subsolo e na sombra o spawn continua normal. (Ovos de spawn usados de dia ao ar livre também são removidos.)
 - **Slimes:** no Bedrock eles nascem em qualquer luz em "slime chunks" abaixo de y = 40. Com o chão em y = 45 eles não nascem na superfície (as regras do slime também ganharam filtro de escuridão).
-- **Avião caído.** Ao entrar no mundo pela primeira vez, o avião da queda aparece ao lado do jogador (uns 44 x 35 blocos, mais o rastro da queda): inteiro (é o seu abrigo para a noite), sem as turbinas das asas. Tem **portas** dos dois lados, em cima das asas (suba pelos degraus na frente de cada asa), luz dentro e o Painel da Nave na cabine. A área é carregada antes de montar (pode levar alguns segundos). No porão de carga há um baú com o que sobrou: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
+- **Avião caído.** Ao entrar no mundo pela primeira vez, o avião da queda aparece ao lado do jogador (uns 44 x 35 blocos, mais o rastro da queda): inteiro (é o seu abrigo para a noite), sem as turbinas das asas. Ele está **afundado 3 blocos na areia** (1.3.2): as asas ficam rente ao chão e não sobra vão embaixo onde nasçam monstros. Tem **portas** dos dois lados, no nível do chão, luz dentro e o Painel da Nave na cabine. A área é carregada antes de montar (pode levar alguns segundos). No porão de carga há um baú com o que sobrou: Condensador de Água, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho. Se a nave não puder ser colocada, os itens vão direto para o inventário. Em volta da nave o chão fica plano.
 - **Trocar a nave ou as estruturas.** Construa no jogo, salve com o **Bloco de Estrutura** e substitua o arquivo em `BP/structures/cl/` (mesmo nome). Para a nave, ajuste `NAVE.bau` no `scripts/config.ts` para a posição do baú.
 - **Diagnóstico no chat:** se algum bloco ou item do add-on não carregar, aparece uma linha vermelha `o jogo não carregou: ...`. Ao entrar, aparece também uma linha cinza `[Pouso Forçado 0.16.0] mundo: plano | biomas: ... | bioma aqui: ... | luz: céu N, total N | hora: N`. No mundo plano do add-on, "mundo" é `plano` e "bioma aqui" é `minecraft:desert` (num mundo infinito: `normal` e `cl:deserto_seco`); ao ar livre, "céu" deve ser 15.
 

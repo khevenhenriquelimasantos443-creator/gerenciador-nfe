@@ -17,11 +17,9 @@
         "item": "cl:porcelana"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:porcelana"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:cadinho_cru"
     }

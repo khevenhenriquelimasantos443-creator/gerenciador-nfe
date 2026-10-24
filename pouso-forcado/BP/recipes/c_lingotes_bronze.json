@@ -12,11 +12,9 @@
         "item": "cl:bloco_bronze"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:bloco_bronze"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:lingote_bronze",
       "count": 9

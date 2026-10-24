@@ -32,11 +32,9 @@
         "item": "cl:capacitor"
       }
     },
-    "unlock": [
-      {
-        "item": "minecraft:glass"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:construtor_corpos"
     }

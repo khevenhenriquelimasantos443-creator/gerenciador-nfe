@@ -17,11 +17,9 @@
         "item": "cl:lingote_yellorium"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:lingote_yellorium"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:bloco_yellorium"
     }

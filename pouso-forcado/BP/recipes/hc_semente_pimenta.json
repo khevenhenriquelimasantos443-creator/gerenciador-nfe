@@ -12,11 +12,9 @@
         "item": "cl:pimenta"
       }
     ],
-    "unlock": [
-      {
-        "item": "cl:pimenta"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:semente_pimenta"
     }

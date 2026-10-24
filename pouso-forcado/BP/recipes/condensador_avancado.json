@@ -23,11 +23,9 @@
         "item": "cl:condensador_agua"
       }
     },
-    "unlock": [
-      {
-        "item": "cl:condensador_agua"
-      }
-    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
     "result": {
       "item": "cl:condensador_avancado"
     }
