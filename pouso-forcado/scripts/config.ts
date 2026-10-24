@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.3.0";
+export const VERSAO = "1.3.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1171,6 +1171,30 @@ export const SACOLA_GRUPOS: ReadonlyArray<{ nivel: keyof typeof SACOLA_PESOS; it
 // As próximas fases (Ex Nihilo, Tinkers...) põem os seus itens aqui.
 export const ORIGEM_MOD: Record<string, string> = {};
 export const CATALOGO = { porPagina: 24 } as const;
+// Mods na ordem em que o jogo os apresenta: tela inicial do Catálogo e grupos do inventário criativo
+// (tools/gerar-grupos.mjs lê daqui). Mods pequenos entram no mod que eles completam.
+export const JUNTA_MODS: Readonly<Record<string, string>> = { "Ex Aliquo": "Ex Nihilo", ExtraCells: "Applied Energistics", AutoPackager: "JABBA" };
+export const MODS: ReadonlyArray<{ mod: string; icones: ReadonlyArray<string> }> = [
+  { mod: "Pouso Forçado", icones: [`${NS}:painel_nave`, `${NS}:sacola_comum`] },
+  { mod: "Ex Nihilo", icones: [`${NS}:peneira`, `${NS}:martelo_madeira`, `${NS}:bicho_seda`] },
+  { mod: "EnviroMine", icones: [`${NS}:camel_pack`, `${NS}:filtro`] },
+  { mod: "Pam's HarvestCraft", icones: [`${NS}:panela`, `${NS}:alho`, `${NS}:semente_alho`] },
+  { mod: "Hardcore Questing Mode", icones: [`${NS}:caixa_entrega`] },
+  { mod: "Tinkers' Construct", icones: [`${NS}:estacao_ferramentas`, `${NS}:picareta_bronze`] },
+  { mod: "Thermal Expansion", icones: [`${NS}:pulverizador`] },
+  { mod: "Mekanism", icones: [`${NS}:camara_purificacao`] },
+  { mod: "BuildCraft", icones: [`${NS}:pedreira`] },
+  { mod: "JABBA", icones: [`${NS}:barril_armazenamento`] },
+  { mod: "Applied Energistics", icones: [`${NS}:controlador_me`] },
+  { mod: "MineFactory Reloaded", icones: [`${NS}:colheitadeira`] },
+  { mod: "PneumaticCraft", icones: [`${NS}:compressor_ar`] },
+  { mod: "Sync", icones: [`${NS}:construtor_corpos`] },
+  { mod: "Big Reactors", icones: [`${NS}:controlador_reator`] },
+  { mod: "Chisel", icones: [`${NS}:cinzel`, `${NS}:marmore_entalhado`] },
+  { mod: "BiblioCraft", icones: [`${NS}:estante`, `${NS}:lampada_amarela`] },
+  { mod: "ChickenChunks", icones: [`${NS}:carregador_chunks`] },
+  { mod: "OpenBlocks", icones: [`${NS}:elevador`] },
+];
 
 // "O que estou olhando" (estilo WAILA), na barra de ação, junto com o painel de água e temperatura.
 export const OLHAR = { distanciaBloco: 6, distanciaEntidade: 8 } as const;

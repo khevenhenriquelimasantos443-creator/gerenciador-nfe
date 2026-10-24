@@ -73,6 +73,8 @@ execFileSync(node, [join(RAIZ, "tools/gerar-catalogo.mjs")], { stdio: "inherit" 
 console.log("> compilando TypeScript");
 rmSync(join(RAIZ, "BP/scripts"), { recursive: true, force: true });
 execFileSync(node, [join(RAIZ, "node_modules/typescript/bin/tsc"), "-p", join(RAIZ, "tsconfig.json")], { stdio: "inherit" });
+console.log("> grupos do inventário criativo");
+execFileSync(node, [join(RAIZ, "tools/gerar-grupos.mjs")], { stdio: "inherit" });
 
 console.log("> texturas placeholder e estrutura da nave");
 execFileSync(node, [join(RAIZ, "tools/gerar-texturas.mjs")], { stdio: "inherit" });

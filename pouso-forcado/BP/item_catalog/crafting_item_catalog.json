@@ -1,0 +1,829 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "construction",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "cl:arenito_entalhado",
+              "name": "cl:itemGroup.name.construction_chisel_arenito"
+            },
+            "items": [
+              "cl:arenito_entalhado",
+              "cl:arenito_ladrilho",
+              "cl:arenito_liso",
+              "cl:arenito_mosaico",
+              "cl:arenito_pilar",
+              "cl:arenito_polido",
+              "cl:arenito_tijolos",
+              "cl:arenito_tijolos_pequenos"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:calcario_entalhado",
+              "name": "cl:itemGroup.name.construction_chisel_calcario"
+            },
+            "items": [
+              "cl:calcario_entalhado",
+              "cl:calcario_ladrilho",
+              "cl:calcario_liso",
+              "cl:calcario_mosaico",
+              "cl:calcario_pilar",
+              "cl:calcario_polido",
+              "cl:calcario_tijolos",
+              "cl:calcario_tijolos_pequenos"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:casco_nave_entalhado",
+              "name": "cl:itemGroup.name.construction_chisel_casco_da_nave"
+            },
+            "items": [
+              "cl:casco_nave_entalhado",
+              "cl:casco_nave_ladrilho",
+              "cl:casco_nave_liso",
+              "cl:casco_nave_mosaico",
+              "cl:casco_nave_pilar",
+              "cl:casco_nave_polido",
+              "cl:casco_nave_tijolos",
+              "cl:casco_nave_tijolos_pequenos"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:marmore_entalhado",
+              "name": "cl:itemGroup.name.construction_chisel_marmore"
+            },
+            "items": [
+              "cl:marmore_entalhado",
+              "cl:marmore_ladrilho",
+              "cl:marmore_liso",
+              "cl:marmore_mosaico",
+              "cl:marmore_pilar",
+              "cl:marmore_polido",
+              "cl:marmore_tijolos",
+              "cl:marmore_tijolos_pequenos"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:pedra_entalhado",
+              "name": "cl:itemGroup.name.construction_chisel_pedra"
+            },
+            "items": [
+              "cl:pedra_entalhado",
+              "cl:pedra_ladrilho",
+              "cl:pedra_liso",
+              "cl:pedra_mosaico",
+              "cl:pedra_pilar",
+              "cl:pedra_polido",
+              "cl:pedra_tijolos",
+              "cl:pedra_tijolos_pequenos"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:vidro_entalhado",
+              "name": "cl:itemGroup.name.construction_chisel_vidro"
+            },
+            "items": [
+              "cl:vidro_entalhado",
+              "cl:vidro_ladrilho",
+              "cl:vidro_liso",
+              "cl:vidro_mosaico",
+              "cl:vidro_pilar",
+              "cl:vidro_polido",
+              "cl:vidro_tijolos",
+              "cl:vidro_tijolos_pequenos"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:lampada_amarela",
+              "name": "cl:itemGroup.name.construction_bibliocraft"
+            },
+            "items": [
+              "cl:lampada_amarela",
+              "cl:lampada_azul",
+              "cl:lampada_ciano",
+              "cl:lampada_laranja",
+              "cl:lampada_rosa",
+              "cl:lampada_roxa",
+              "cl:lampada_verde",
+              "cl:lampada_vermelha"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "cl:martelo_madeira",
+              "name": "cl:itemGroup.name.equipment_ex_nihilo"
+            },
+            "items": [
+              "cl:cajado",
+              "cl:martelo_cobre",
+              "cl:martelo_diamante",
+              "cl:martelo_ferro",
+              "cl:martelo_madeira",
+              "cl:martelo_ouro",
+              "cl:martelo_pedra"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:camel_pack",
+              "name": "cl:itemGroup.name.equipment_enviromine"
+            },
+            "items": [
+              "cl:camel_pack",
+              "cl:mascara"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:picareta_bronze",
+              "name": "cl:itemGroup.name.equipment_tinkers_ferramentas"
+            },
+            "items": [
+              "cl:espada_larga_aco",
+              "cl:espada_larga_bronze",
+              "cl:espada_larga_cacto",
+              "cl:espada_larga_cobre",
+              "cl:espada_larga_ferro",
+              "cl:espada_larga_madeira",
+              "cl:espada_larga_obsidiana",
+              "cl:espada_larga_osso",
+              "cl:espada_larga_pedra",
+              "cl:espada_larga_silex",
+              "cl:machadinha_aco",
+              "cl:machadinha_bronze",
+              "cl:machadinha_cacto",
+              "cl:machadinha_cobre",
+              "cl:machadinha_ferro",
+              "cl:machadinha_madeira",
+              "cl:machadinha_obsidiana",
+              "cl:machadinha_osso",
+              "cl:machadinha_pedra",
+              "cl:machadinha_silex",
+              "cl:pa_aco",
+              "cl:pa_bronze",
+              "cl:pa_cacto",
+              "cl:pa_cobre",
+              "cl:pa_ferro",
+              "cl:pa_madeira",
+              "cl:pa_obsidiana",
+              "cl:pa_osso",
+              "cl:pa_pedra",
+              "cl:pa_silex",
+              "cl:picareta_aco",
+              "cl:picareta_bronze",
+              "cl:picareta_cacto",
+              "cl:picareta_cobre",
+              "cl:picareta_ferro",
+              "cl:picareta_madeira",
+              "cl:picareta_obsidiana",
+              "cl:picareta_osso",
+              "cl:picareta_pedra",
+              "cl:picareta_silex"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "items",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "cl:painel_nave",
+              "name": "cl:itemGroup.name.items_pouso_forcado"
+            },
+            "items": [
+              "cl:agua_boa",
+              "cl:agua_excelente",
+              "cl:agua_impropria",
+              "cl:agua_muito_suja",
+              "cl:agua_suja",
+              "cl:bussola_aviao",
+              "cl:catalogo",
+              "cl:celula_combustivel",
+              "cl:circuito",
+              "cl:computador_bordo",
+              "cl:coracao_farao",
+              "cl:diario_bordo",
+              "cl:faixa_mumia",
+              "cl:fragmento_meteorito",
+              "cl:motor_nave",
+              "cl:organizador",
+              "cl:placa_casco",
+              "cl:saco_dormir",
+              "cl:sacola_boa",
+              "cl:sacola_comum",
+              "cl:sacola_epica",
+              "cl:sacola_lendaria",
+              "cl:sacola_otima",
+              "cl:bateria",
+              "cl:cabo",
+              "cl:compostor",
+              "cl:condensador_agua",
+              "cl:condensador_avancado",
+              "cl:estufa",
+              "cl:gerador",
+              "cl:gerador_blaze",
+              "cl:gerador_monstros",
+              "cl:idolo_amaldicoado",
+              "cl:meteorito",
+              "cl:moinho",
+              "cl:montadora",
+              "cl:painel_nave",
+              "cl:painel_solar",
+              "cl:peneira",
+              "cl:peneira_automatica",
+              "cl:terminal",
+              "cl:torre_defesa"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:cadinho_cru",
+              "name": "cl:itemGroup.name.items_ex_nihilo"
+            },
+            "items": [
+              "cl:cadinho_cru",
+              "cl:cajado_osso",
+              "cl:cajado_ouro",
+              "cl:cobre_po",
+              "cl:cobre_quebrado",
+              "cl:cobre_triturado",
+              "cl:ferro_po",
+              "cl:ferro_quebrado",
+              "cl:ferro_triturado",
+              "cl:ouro_po",
+              "cl:ouro_quebrado",
+              "cl:ouro_triturado",
+              "cl:pedrinha",
+              "cl:porcelana",
+              "cl:barril_madeira",
+              "cl:barril_pedra",
+              "cl:cadinho"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:filtro",
+              "name": "cl:itemGroup.name.items_enviromine"
+            },
+            "items": [
+              "cl:filtro"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:panela",
+              "name": "cl:itemGroup.name.items_pam_s_harvestcraft"
+            },
+            "items": [
+              "cl:farinha",
+              "cl:fuba",
+              "cl:maionese",
+              "cl:manteiga",
+              "cl:massa",
+              "cl:massa_liquida",
+              "cl:sal",
+              "cl:tamara",
+              "cl:assadeira",
+              "cl:cacarola",
+              "cl:espremedor",
+              "cl:frigideira",
+              "cl:panela",
+              "cl:pilao",
+              "cl:tabua_corte",
+              "cl:tigela_mistura"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:caixa_entrega",
+              "name": "cl:itemGroup.name.items_hardcore_questing_mode"
+            },
+            "items": [
+              "cl:caixa_entrega"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:estacao_ferramentas",
+              "name": "cl:itemGroup.name.items_tinkers_construct"
+            },
+            "items": [
+              "cl:argamassa",
+              "cl:bola_musgo",
+              "cl:estanho_po",
+              "cl:estanho_quebrado",
+              "cl:estanho_triturado",
+              "cl:lingote_aco",
+              "cl:lingote_bronze",
+              "cl:lingote_estanho",
+              "cl:tijolo_refratario",
+              "cl:bacia_fundicao",
+              "cl:bloco_aco",
+              "cl:bloco_bronze",
+              "cl:bloco_estanho",
+              "cl:construtor_pecas",
+              "cl:controlador_fundicao",
+              "cl:dreno_fundicao",
+              "cl:estacao_ferramentas",
+              "cl:mesa_fundicao",
+              "cl:mesa_moldes",
+              "cl:tanque_refratario",
+              "cl:tijolos_refratarios",
+              "cl:torneira",
+              "cl:varal",
+              "cl:vidro_refratario"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:molde_cabeca_machado",
+              "name": "cl:itemGroup.name.items_tinkers_moldes"
+            },
+            "items": [
+              "cl:molde_cabeca_machado",
+              "cl:molde_cabeca_pa",
+              "cl:molde_cabeca_picareta",
+              "cl:molde_cabo",
+              "cl:molde_guarda_larga",
+              "cl:molde_lamina_espada",
+              "cl:molde_ligacao",
+              "cl:molde_lingote",
+              "cl:molde_pepita",
+              "cl:molde_travessa"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:padrao_branco",
+              "name": "cl:itemGroup.name.items_tinkers_padroes"
+            },
+            "items": [
+              "cl:padrao_branco",
+              "cl:padrao_cabeca_machado",
+              "cl:padrao_cabeca_pa",
+              "cl:padrao_cabeca_picareta",
+              "cl:padrao_cabo",
+              "cl:padrao_guarda_larga",
+              "cl:padrao_lamina_espada",
+              "cl:padrao_ligacao",
+              "cl:padrao_travessa"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:peca_cabeca_machado_aco",
+              "name": "cl:itemGroup.name.items_tinkers_pecas"
+            },
+            "items": [
+              "cl:peca_cabeca_machado_aco",
+              "cl:peca_cabeca_machado_bronze",
+              "cl:peca_cabeca_machado_cacto",
+              "cl:peca_cabeca_machado_cobre",
+              "cl:peca_cabeca_machado_ferro",
+              "cl:peca_cabeca_machado_madeira",
+              "cl:peca_cabeca_machado_obsidiana",
+              "cl:peca_cabeca_machado_osso",
+              "cl:peca_cabeca_machado_pedra",
+              "cl:peca_cabeca_machado_silex",
+              "cl:peca_cabeca_pa_aco",
+              "cl:peca_cabeca_pa_bronze",
+              "cl:peca_cabeca_pa_cacto",
+              "cl:peca_cabeca_pa_cobre",
+              "cl:peca_cabeca_pa_ferro",
+              "cl:peca_cabeca_pa_madeira",
+              "cl:peca_cabeca_pa_obsidiana",
+              "cl:peca_cabeca_pa_osso",
+              "cl:peca_cabeca_pa_pedra",
+              "cl:peca_cabeca_pa_silex",
+              "cl:peca_cabeca_picareta_aco",
+              "cl:peca_cabeca_picareta_bronze",
+              "cl:peca_cabeca_picareta_cacto",
+              "cl:peca_cabeca_picareta_cobre",
+              "cl:peca_cabeca_picareta_ferro",
+              "cl:peca_cabeca_picareta_madeira",
+              "cl:peca_cabeca_picareta_obsidiana",
+              "cl:peca_cabeca_picareta_osso",
+              "cl:peca_cabeca_picareta_pedra",
+              "cl:peca_cabeca_picareta_silex",
+              "cl:peca_cabo_aco",
+              "cl:peca_cabo_bronze",
+              "cl:peca_cabo_cacto",
+              "cl:peca_cabo_cobre",
+              "cl:peca_cabo_ferro",
+              "cl:peca_cabo_madeira",
+              "cl:peca_cabo_obsidiana",
+              "cl:peca_cabo_osso",
+              "cl:peca_cabo_pedra",
+              "cl:peca_cabo_silex",
+              "cl:peca_guarda_larga_aco",
+              "cl:peca_guarda_larga_bronze",
+              "cl:peca_guarda_larga_cacto",
+              "cl:peca_guarda_larga_cobre",
+              "cl:peca_guarda_larga_ferro",
+              "cl:peca_guarda_larga_madeira",
+              "cl:peca_guarda_larga_obsidiana",
+              "cl:peca_guarda_larga_osso",
+              "cl:peca_guarda_larga_pedra",
+              "cl:peca_guarda_larga_silex",
+              "cl:peca_lamina_espada_aco",
+              "cl:peca_lamina_espada_bronze",
+              "cl:peca_lamina_espada_cacto",
+              "cl:peca_lamina_espada_cobre",
+              "cl:peca_lamina_espada_ferro",
+              "cl:peca_lamina_espada_madeira",
+              "cl:peca_lamina_espada_obsidiana",
+              "cl:peca_lamina_espada_osso",
+              "cl:peca_lamina_espada_pedra",
+              "cl:peca_lamina_espada_silex",
+              "cl:peca_ligacao_aco",
+              "cl:peca_ligacao_bronze",
+              "cl:peca_ligacao_cacto",
+              "cl:peca_ligacao_cobre",
+              "cl:peca_ligacao_ferro",
+              "cl:peca_ligacao_madeira",
+              "cl:peca_ligacao_obsidiana",
+              "cl:peca_ligacao_osso",
+              "cl:peca_ligacao_pedra",
+              "cl:peca_ligacao_silex",
+              "cl:peca_travessa_aco",
+              "cl:peca_travessa_bronze",
+              "cl:peca_travessa_cacto",
+              "cl:peca_travessa_cobre",
+              "cl:peca_travessa_ferro",
+              "cl:peca_travessa_madeira",
+              "cl:peca_travessa_obsidiana",
+              "cl:peca_travessa_osso",
+              "cl:peca_travessa_pedra",
+              "cl:peca_travessa_silex"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:pulverizador",
+              "name": "cl:itemGroup.name.items_thermal_expansion"
+            },
+            "items": [
+              "cl:po_cobre",
+              "cl:po_estanho",
+              "cl:po_ferro",
+              "cl:po_ouro",
+              "cl:serragem",
+              "cl:celula_energia_basica",
+              "cl:celula_energia_redstone",
+              "cl:celula_energia_reforcada",
+              "cl:celula_energia_ressonante",
+              "cl:dinamo_redstone",
+              "cl:estrutura_maquina",
+              "cl:extrusora_ignea",
+              "cl:fornalha_redstone",
+              "cl:fundidora_inducao",
+              "cl:precipitador_glacial",
+              "cl:pulverizador",
+              "cl:serraria",
+              "cl:tesseract"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:camara_purificacao",
+              "name": "cl:itemGroup.name.items_mekanism"
+            },
+            "items": [
+              "cl:balde_salmoura",
+              "cl:cilindro_acido",
+              "cl:cilindro_cloro",
+              "cl:cilindro_hidrogenio",
+              "cl:cilindro_oxigenio",
+              "cl:cilindro_vazio",
+              "cl:jetpack",
+              "cl:liga_atomica",
+              "cl:liga_enriquecida",
+              "cl:liga_reforcada",
+              "cl:po_litio",
+              "cl:camara_injecao",
+              "cl:camara_purificacao",
+              "cl:cubo_energia_avancado",
+              "cl:cubo_energia_basico",
+              "cl:cubo_energia_definitivo",
+              "cl:cubo_energia_elite",
+              "cl:evaporador",
+              "cl:infusor_metalurgico",
+              "cl:infusor_quimico",
+              "cl:separador_eletrolitico"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:pedreira",
+              "name": "cl:itemGroup.name.items_buildcraft"
+            },
+            "items": [
+              "cl:balde_combustivel",
+              "cl:balde_petroleo",
+              "cl:engrenagem_diamante",
+              "cl:engrenagem_ferro",
+              "cl:engrenagem_madeira",
+              "cl:engrenagem_ouro",
+              "cl:engrenagem_pedra",
+              "cl:bomba",
+              "cl:motor_combustao",
+              "cl:pedreira",
+              "cl:refinaria"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:barril_armazenamento",
+              "name": "cl:itemGroup.name.items_jabba"
+            },
+            "items": [
+              "cl:carrinho",
+              "cl:carrinho_diamante",
+              "cl:chave_barril",
+              "cl:nucleo_funil",
+              "cl:upgrade_armazenamento",
+              "cl:upgrade_estrutural_1",
+              "cl:upgrade_estrutural_2",
+              "cl:upgrade_estrutural_3",
+              "cl:upgrade_estrutural_4",
+              "cl:upgrade_estrutural_5",
+              "cl:upgrade_estrutural_6",
+              "cl:upgrade_estrutural_7",
+              "cl:barril_armazenamento",
+              "cl:empacotador"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:controlador_me",
+              "name": "cl:itemGroup.name.items_applied_energistics"
+            },
+            "items": [
+              "cl:celula_agua",
+              "cl:celula_me_16k",
+              "cl:celula_me_1k",
+              "cl:celula_me_4k",
+              "cl:celula_me_64k",
+              "cl:componente_me_16k",
+              "cl:componente_me_1k",
+              "cl:componente_me_4k",
+              "cl:componente_me_64k",
+              "cl:cristal_certus",
+              "cl:cristal_fluix",
+              "cl:faca_corte",
+              "cl:matriz_conversao",
+              "cl:padrao_me_vazio",
+              "cl:po_certus",
+              "cl:po_fluix",
+              "cl:processador_avancado",
+              "cl:processador_basico",
+              "cl:silicio",
+              "cl:terminal_sem_fio",
+              "cl:bau_me",
+              "cl:controlador_me",
+              "cl:drive_me",
+              "cl:montador_molecular",
+              "cl:ponto_acesso"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:colheitadeira",
+              "name": "cl:itemGroup.name.items_minefactory_reloaded"
+            },
+            "items": [
+              "cl:barra_borracha",
+              "cl:fertilizante",
+              "cl:folha_plastico",
+              "cl:plastico_cru",
+              "cl:resina",
+              "cl:upgrade_alcance_1",
+              "cl:upgrade_alcance_2",
+              "cl:upgrade_alcance_3",
+              "cl:upgrade_alcance_4",
+              "cl:upgrade_alcance_5",
+              "cl:bloco_maquina",
+              "cl:colheitadeira",
+              "cl:colocador_blocos",
+              "cl:compostadora",
+              "cl:esgoto",
+              "cl:esteira",
+              "cl:fertilizadora",
+              "cl:plantadeira",
+              "cl:quebrador_blocos",
+              "cl:rancheiro",
+              "cl:triturador_monstros"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:compressor_ar",
+              "name": "cl:itemGroup.name.items_pneumaticcraft"
+            },
+            "items": [
+              "cl:capacitor",
+              "cl:lingote_ferro_comprimido",
+              "cl:manometro",
+              "cl:placa_circuito_vazia",
+              "cl:transistor",
+              "cl:bloco_ferro_comprimido",
+              "cl:compressor_ar",
+              "cl:interface_camara",
+              "cl:parede_camara",
+              "cl:tubo_pressao",
+              "cl:tubo_pressao_avancado",
+              "cl:valvula_camara",
+              "cl:vidro_camara"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:construtor_corpos",
+              "name": "cl:itemGroup.name.items_sync"
+            },
+            "items": [
+              "cl:nucleo_sync",
+              "cl:armazem_corpos",
+              "cl:construtor_corpos",
+              "cl:esteira_animal"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:controlador_reator",
+              "name": "cl:itemGroup.name.items_big_reactors"
+            },
+            "items": [
+              "cl:barra_grafite",
+              "cl:lingote_blutonio",
+              "cl:lingote_cianita",
+              "cl:lingote_yellorium",
+              "cl:po_yellorium",
+              "cl:barra_combustivel",
+              "cl:barra_controle",
+              "cl:bloco_grafite",
+              "cl:bloco_yellorium",
+              "cl:carcaca_reator",
+              "cl:controlador_reator",
+              "cl:porta_acesso_reator",
+              "cl:porta_refrigeracao",
+              "cl:reprocessador_cianita",
+              "cl:tomada_energia",
+              "cl:vidro_reator"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:cinzel",
+              "name": "cl:itemGroup.name.items_chisel"
+            },
+            "items": [
+              "cl:cinzel",
+              "cl:calcario",
+              "cl:marmore"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:estante",
+              "name": "cl:itemGroup.name.items_bibliocraft"
+            },
+            "items": [
+              "cl:cabide_armadura",
+              "cl:estante",
+              "cl:expositor",
+              "cl:lampada",
+              "cl:lanterna",
+              "cl:prateleira",
+              "cl:suporte_ferramentas"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:carregador_chunks",
+              "name": "cl:itemGroup.name.items_chickenchunks"
+            },
+            "items": [
+              "cl:carregador_chunks",
+              "cl:carregador_pontual"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:elevador",
+              "name": "cl:itemGroup.name.items_openblocks"
+            },
+            "items": [
+              "cl:asa_delta",
+              "cl:elevador"
+            ]
+          }
+        ]
+      },
+      {
+        "category_name": "nature",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "cl:fruta_cacto",
+              "name": "cl:itemGroup.name.nature_pouso_forcado"
+            },
+            "items": [
+              "cl:fruta_cacto"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:bicho_seda",
+              "name": "cl:itemGroup.name.nature_ex_nihilo"
+            },
+            "items": [
+              "cl:bicho_seda",
+              "cl:bicho_seda_cozido",
+              "cl:cascalho_nether",
+              "cl:folha_infestada",
+              "cl:poeira"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:alho",
+              "name": "cl:itemGroup.name.nature_harvestcraft_comidas"
+            },
+            "items": [
+              "cl:alho",
+              "cl:amendoim",
+              "cl:arroz",
+              "cl:arroz_frito",
+              "cl:bolinho_arroz",
+              "cl:broa_milho",
+              "cl:burrito",
+              "cl:caldo",
+              "cl:cebola",
+              "cl:charque",
+              "cl:chili_poppers",
+              "cl:feijao",
+              "cl:feijao_assado",
+              "cl:hamburguer",
+              "cl:milho",
+              "cl:milho_espiga",
+              "cl:omelete",
+              "cl:ovo_cozido",
+              "cl:ovo_frito",
+              "cl:panquecas",
+              "cl:pemmican",
+              "cl:pimenta",
+              "cl:pimentao",
+              "cl:pimentao_recheado",
+              "cl:pipoca",
+              "cl:queijo",
+              "cl:sopa_arroz",
+              "cl:sopa_cacto",
+              "cl:sopa_legumes",
+              "cl:sopa_tomate",
+              "cl:suco_cacto",
+              "cl:taco",
+              "cl:tomate",
+              "cl:torrada",
+              "cl:tortilha"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:semente_alho",
+              "name": "cl:itemGroup.name.nature_harvestcraft_sementes"
+            },
+            "items": [
+              "cl:semente_alho",
+              "cl:semente_amendoim",
+              "cl:semente_arroz",
+              "cl:semente_cebola",
+              "cl:semente_feijao",
+              "cl:semente_fruta_cacto",
+              "cl:semente_milho",
+              "cl:semente_pimenta",
+              "cl:semente_pimentao",
+              "cl:semente_tomate",
+              "cl:muda_tamareira"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,11 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.1 (visual mais limpo)
+
+- **Inventário criativo e livro de receitas** organizados em **grupos recolhíveis por mod** (como os grupos do próprio jogo: toque no grupo para abrir). Os mods grandes têm subgrupos: Tinkers (ferramentas, peças, padrões, moldes), Chisel (uma família por grupo) e HarvestCraft (comidas, sementes). Blocos técnicos (petróleo, túmulo, plantas no chão) não aparecem. Gerado no build por `tools/gerar-grupos.mjs` em `BP/item_catalog/crafting_item_catalog.json`.
+- **Catálogo** começa pelos mods, como as abas do JEI: cada botão mostra o ícone do mod e quantos itens ele tem; Procurar e "O que está na barra" continuam no topo.
 
 ## Novidades da 1.3.0
 

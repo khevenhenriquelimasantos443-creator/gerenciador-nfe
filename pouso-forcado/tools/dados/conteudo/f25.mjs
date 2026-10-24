@@ -20,7 +20,7 @@ export default {
     { id: "asa_delta", pt: "Asa-Delta", en: "Hang Glider", icone: "folha:#c08a50", pilha: 1, ...OB },
   ],
   blocos: [
-    { id: "petroleo", pt: "Petróleo", en: "Oil", tipo: "cubo", cor: "#16110d", padrao: "polido", dureza: 1, loot: "loot_tables/cl/vazio.json", menu: "nature" },
+    { id: "petroleo", pt: "Petróleo", en: "Oil", tipo: "cubo", cor: "#16110d", padrao: "polido", dureza: 1, loot: "loot_tables/cl/vazio.json", menu: "none" },
     maq("bomba", "Bomba", "Pump", "laranja", "gota"),
     maq("refinaria", "Refinaria", "Refinery", "amarelo", "chama"),
     maq("motor_combustao", "Motor a Combustão", "Combustion Engine", "laranja", "engrenagem"),

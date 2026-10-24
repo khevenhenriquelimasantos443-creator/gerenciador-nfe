@@ -2,7 +2,7 @@ import { ItemStack, Player, RawMessage, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import {
   AGUAS, BARRIL, BARRIL_COMPOSTO, CADINHO, CAPSULA, CATALOGO, FOLHAS, FOME, MARTELO, MARTELOS, SEDA, CIDADE_SAQUE, COMPOSTOR_CHEIO, COMPOSTOR_PONTOS, CONDENSADOR_AVANCADO, CONDENSADOR_SEGUNDOS,
-  DESTROCOS_SAQUE, ENERGIA, GERADOR_MONSTROS, IDS, LinhaSaque, MASMORRA_FUNDA_SAQUE, MASMORRA_SAQUE, MONTADORA, ORIGEM_MOD,
+  DESTROCOS_SAQUE, ENERGIA, GERADOR_MONSTROS, IDS, JUNTA_MODS, LinhaSaque, MASMORRA_FUNDA_SAQUE, MASMORRA_SAQUE, MODS, MONTADORA, ORIGEM_MOD,
   PENEIRA, SACOLAS, SEDE, SISTEMAS_NAVE, TEMPLO_SAQUE, TORRE_SAQUE,
 } from "../config.js";
 import { chancesDaSacola } from "../missoes/sacolas.js";
@@ -11,7 +11,8 @@ import { abrirUmMenu } from "../util/menus.js";
 import { DROPS, ITENS, RECEITAS_JSON } from "./gerado.js";
 
 /*
- * Catálogo (no estilo do JEI): lista de itens com ícone, busca por nome (ou "@mod"), e para cada
+ * Catálogo (no estilo do JEI): começa pelos mods (como as abas do JEI), cada um com a lista dos seus itens;
+ * busca por nome (ou "@mod") em todos. Para cada
  * item as receitas ("como fazer") e os usos ("onde usar"). Tocar num ingrediente abre o dele.
  * Fontes: receitas de bancada e fornalha e drops dos monstros (gerado.ts, feito no build) e as
  * tabelas das máquinas do config.ts (peneira, compostor, montadora, gerador, saques, sacolas...).
@@ -49,6 +50,8 @@ export function nomeDe(id: string): RawMessage {
 
 export const iconeDe = (id: string): string | undefined => ITENS[real(id)]?.icone;
 export const origemDe = (id: string): string => ORIGEM_MOD[id] ?? (id.startsWith("minecraft:") ? "Minecraft" : "Pouso Forçado");
+/** O mod em que o item aparece no Catálogo e no inventário criativo (os pequenos entram no maior). */
+const modDe = (id: string): string => JUNTA_MODS[origemDe(id)] ?? origemDe(id);
 
 // ---------- índice ----------
 let todas: Receita[] | undefined;
@@ -304,9 +307,10 @@ export async function verItem(jogador: Player, id: string): Promise<void> {
 // ---------- lista e busca ----------
 const semAcento = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-function listaOrdenada(filtro = ""): string[] {
+function listaOrdenada(filtro = "", mod?: string): string[] {
   const f = semAcento(filtro.trim());
   const ids = Object.keys(ITENS).filter((id) => {
+    if (mod && modDe(id) !== mod) return false;
     if (!f) return true;
     if (f.startsWith("@")) return semAcento(origemDe(id)).startsWith(f.slice(1).trim());
     const i = ITENS[id];
@@ -342,8 +346,8 @@ async function barraRapida(jogador: Player): Promise<void> {
   return barraRapida(jogador);
 }
 
-async function listar(jogador: Player, filtro: string, pagina: number): Promise<void> {
-  const ids = listaOrdenada(filtro);
+async function listar(jogador: Player, filtro: string, pagina: number, mod?: string): Promise<void> {
+  const ids = listaOrdenada(filtro, mod);
   const por = CATALOGO.porPagina;
   const paginas = Math.max(1, Math.ceil(ids.length / por));
   const p = Math.min(pagina, paginas - 1);
@@ -351,21 +355,16 @@ async function listar(jogador: Player, filtro: string, pagina: number): Promise<
   const acoes: Array<() => Promise<void>> = [];
   const corpo: RawMessage = filtro
     ? { translate: "cl.catalogo.resultado", with: [filtro, String(ids.length)] }
-    : { rawtext: [{ translate: "cl.catalogo.corpo", with: [String(ids.length)] }, { text: "\n" }, { translate: "cl.catalogo.corpo2" }] };
-  const form = new ActionFormData().title({ rawtext: [{ translate: "cl.catalogo.titulo" }, { text: ` ${p + 1}/${paginas}` }] }).body(corpo);
-  form.button({ translate: "cl.catalogo.procurar" }, "textures/ui/magnifyingGlass");
-  acoes.push(() => procurar(jogador));
-  if (!filtro) {
-    form.button({ translate: "cl.catalogo.barra" }, iconeDe(IDS.organizador));
-    acoes.push(() => barraRapida(jogador));
-  }
+    : { translate: "cl.catalogo.do_mod", with: [String(ids.length)] };
+  const titulo = mod ? { text: `${mod}${paginas > 1 ? ` ${p + 1}/${paginas}` : ""}` } : { rawtext: [{ translate: "cl.catalogo.titulo" }, { text: ` ${p + 1}/${paginas}` }] };
+  const form = new ActionFormData().title(titulo).body(corpo);
   if (p > 0) {
-    form.button({ translate: "cl.catalogo.anterior" });
-    acoes.push(() => listar(jogador, filtro, p - 1));
+    form.button({ translate: "cl.catalogo.anterior" }, "textures/ui/arrow_dark_left_stretch");
+    acoes.push(() => listar(jogador, filtro, p - 1, mod));
   }
   if (p + 1 < paginas) {
-    form.button({ translate: "cl.catalogo.proxima" });
-    acoes.push(() => listar(jogador, filtro, p + 1));
+    form.button({ translate: "cl.catalogo.proxima" }, "textures/ui/arrow_dark_right_stretch");
+    acoes.push(() => listar(jogador, filtro, p + 1, mod));
   }
   const fixos = acoes.length;
   for (const id of daPagina) {
@@ -380,7 +379,31 @@ async function listar(jogador: Player, filtro: string, pagina: number): Promise<
   if (r.selection >= fixos) return listar(jogador, filtro, p);
 }
 
-export const abrirCatalogo = (jogador: Player): Promise<void> => listar(jogador, "", 0);
+// Tela inicial: procurar, o que está na barra e um botão por mod (com quantos itens ele tem).
+let contagem: Map<string, number> | undefined;
+function itensPorMod(): Map<string, number> {
+  if (contagem) return contagem;
+  contagem = new Map();
+  for (const id of Object.keys(ITENS)) contagem.set(modDe(id), (contagem.get(modDe(id)) ?? 0) + 1);
+  return contagem;
+}
+export async function abrirCatalogo(jogador: Player): Promise<void> {
+  const n = itensPorMod();
+  const mods = [...MODS.map((m) => m.mod).filter((m) => n.has(m)), "Minecraft"];
+  const form = new ActionFormData().title({ translate: "cl.catalogo.titulo" }).body({ translate: "cl.catalogo.inicio" });
+  form.button({ translate: "cl.catalogo.procurar" }, "textures/ui/magnifyingGlass");
+  form.button({ translate: "cl.catalogo.barra" }, iconeDe(IDS.organizador));
+  for (const m of mods) {
+    const icone = m === "Minecraft" ? iconeDe("minecraft:crafting_table") : MODS.find((x) => x.mod === m)?.icones.map(iconeDe).find(Boolean);
+    form.button({ rawtext: [{ text: `${m}\n§8` }, { translate: "cl.catalogo.n_itens", with: [String(n.get(m) ?? 0)] }] }, icone);
+  }
+  const r = await form.show(jogador);
+  if (r.selection === undefined || r.selection > mods.length + 1) return;
+  if (r.selection === 0) await procurar(jogador);
+  else if (r.selection === 1) await barraRapida(jogador);
+  else await listar(jogador, "", 0, mods[r.selection - 2]);
+  return abrirCatalogo(jogador);
+}
 
 const ultimoSegurado = new Map<string, string>();
 
