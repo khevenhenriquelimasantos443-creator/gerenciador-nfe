@@ -1541,13 +1541,13 @@ cl.bc2.refinaria=Refinaria: Balde de Petróleo no baú de cima = Balde de Combus
 cl.bc2.motor=Motor a Combustão: queima combustível (60 E por balde) ou petróleo (20 E) do baú de cima, 2 E a cada 5 s. Guardado: %s
 cl.bc2.pedreira=Pedreira: cava uma área de 9x9 atrás dela, camada por camada, até o fundo. Os blocos vão para o baú de cima. 0,25 E por bloco. Camada atual: y %s
 cl.bc2.pedreira_fim=Pedreira: terminou de cavar.
-cl.bc2.petroleo=Petróleo: pegue com um balde vazio ou use uma Bomba em cima.
+cl.bc2.petroleo=Petróleo: pegue com um balde vazio, ou ponha uma Bomba lá em cima, na superfície, bem em cima do bolsão.
 cl.ob.tumulo=Túmulo de %s: %s itens. Toque para pegar tudo.
 cl.ob.tumulo_criado=§7Seus itens ficaram num túmulo em X %s, Y %s, Z %s.
 cl.capitulo.buildcraft.nome=BuildCraft
 cl.capitulo.buildcraft.desc=Petróleo do deserto, refinaria, motor a combustão e a pedreira.
 cl.missao.bc_petroleo.titulo=Ouro negro
-cl.missao.bc_petroleo.desc=Ache um poço de petróleo (manchas pretas no chão do deserto) e encha um balde.
+cl.missao.bc_petroleo.desc=Cave fundo no deserto (bolsões de petróleo ficam entre y -24 e 8, na ardósia) e encha um balde.
 cl.missao.bc_combustivel.titulo=Refino
 cl.missao.bc_combustivel.desc=Faça um Balde de Combustível na Refinaria.
 cl.missao.bc_motor.titulo=Motor

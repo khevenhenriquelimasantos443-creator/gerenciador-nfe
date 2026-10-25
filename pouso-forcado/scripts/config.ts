@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.3.2";
+export const VERSAO = "1.3.3";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -188,9 +188,9 @@ export const MINERIOS: ReadonlyArray<{ minerio: string; bloco?: string; veios: n
   { minerio: "calcario", bloco: "cl:calcario", veios: 1, tamanho: 32, yMin: 4, yMax: 40 },
 ];
 
-// Fase 25 (BuildCraft): poços de petróleo no deserto. chance = por chunk; bolsão enterrado de raio ~3
-// entre yMin e yMax, ligado à superfície por uma coluna que termina numa mancha 3x3 no chão.
-export const PETROLEO = { chance: 1 / 30, raio: 3, yMin: 12, yMax: 28 } as const;
+// Fase 25 (BuildCraft): bolsões de petróleo bem fundo, na ardósia e na pedra de baixo (1.3.2: nada na
+// superfície). chance = por chunk; bolsão redondo de raio ~4 com o centro entre yMin e yMax.
+export const PETROLEO = { chance: 1 / 30, raio: 4, yMin: -24, yMax: 8 } as const;
 
 // Relevo espalhado por script conforme o jogador explora (scripts/mundo/relevo.ts).
 // chance = probabilidade por chunk; tamanho = área no chão; deslocY = quanto fica enterrado.

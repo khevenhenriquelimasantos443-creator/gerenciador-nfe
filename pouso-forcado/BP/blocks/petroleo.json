@@ -11,18 +11,19 @@
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "clc_petroleo",
-          "render_method": "opaque"
+          "texture": "clv_petroleo",
+          "render_method": "blend"
         }
       },
-      "minecraft:destructible_by_mining": {
-        "seconds_to_destroy": 1
-      },
+      "minecraft:destructible_by_mining": false,
       "minecraft:destructible_by_explosion": {
-        "explosion_resistance": 6
+        "explosion_resistance": 100
       },
       "minecraft:map_color": "#16110d",
-      "minecraft:loot": "loot_tables/cl/vazio.json"
+      "minecraft:loot": "loot_tables/cl/vazio.json",
+      "minecraft:collision_box": false,
+      "minecraft:replaceable": {},
+      "minecraft:light_dampening": 6
     }
   }
 }

@@ -495,6 +495,5 @@ OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | cascalho_nether | Cascalho do Nether | cascalho vermelho-escuro, pedrinhas de netherrack |
-| petroleo | Petróleo | líquido preto quase parado, com reflexo marrom |
 | elevador | Elevador | bloco de arenito liso branco com seta para cima e para baixo no topo |
 | tumulo | Túmulo (textura do modelo 32×32) | pedra cinza rachada com musgo |

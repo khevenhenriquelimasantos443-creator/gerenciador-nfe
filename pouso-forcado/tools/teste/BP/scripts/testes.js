@@ -277,6 +277,37 @@ teste("tumulo", 200, (t) => {
   });
 });
 
+// 1.3.2: o petróleo é "líquido": sem colisão, pega com balde e despeja com o balde cheio.
+teste("petroleo", 300, (t) => {
+  t.setBlockType("cl:petroleo", { x: 3, y: 1, z: 3 });
+  t.setBlockType("cl:petroleo", { x: 3, y: 2, z: 3 });
+  t.setBlockType("cl:petroleo", { x: 5, y: 1, z: 1 });
+  const caiu = robo(t, { x: 3, y: 4, z: 3 });
+  const j = robo(t, { x: 1, y: 1, z: 1 });
+  j.giveItem(new ItemStack("minecraft:bucket", 1), true);
+  t.runAfterDelay(40, () => {
+    const y = caiu.location.y - t.worldBlockLocation({ x: 0, y: 0, z: 0 }).y;
+    log(`petróleo: robô que caiu em cima está em y ${y.toFixed(2)} (em cima do petróleo ficaria em 3)`);
+    j.lookAtBlock({ x: 5, y: 1, z: 1 });
+    j.useItemInSlotOnBlock(j.selectedSlotIndex, { x: 5, y: 1, z: 1 }, Direction.West);
+    t.runAfterDelay(10, () => {
+      const pegou = quantos(j, "cl:balde_petroleo"), bloco = t.getBlock({ x: 5, y: 1, z: 1 }).typeId;
+      log(`petróleo: balde cheio=${pegou}, bloco agora=${bloco}`);
+      // Nesta área de teste a altura 1 é o chão de pedra: despeja em cima dele, na altura 2.
+      j.lookAtBlock({ x: 5, y: 1, z: 2 });
+      j.useItemInSlotOnBlock(j.selectedSlotIndex, { x: 5, y: 1, z: 2 }, Direction.Up);
+      t.runAfterDelay(10, () => {
+        const despejou = t.getBlock({ x: 5, y: 2, z: 2 }).typeId;
+        log(`petróleo: despejou=${despejou}, balde vazio=${quantos(j, "minecraft:bucket")}`);
+        t.assert(y < 2.5, `não afundou no petróleo (y ${y})`);
+        t.assert(pegou === 1 && bloco === "minecraft:air", "o balde não pegou o petróleo");
+        t.assert(despejou === "cl:petroleo", "o balde não despejou");
+        t.succeed();
+      });
+    });
+  });
+});
+
 // Depuração: o que chega dos eventos de interação e de quebra.
 world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);

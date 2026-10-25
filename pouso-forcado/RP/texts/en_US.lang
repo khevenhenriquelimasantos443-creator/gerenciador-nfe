@@ -1540,13 +1540,13 @@ cl.bc2.refinaria=Refinery: Oil Bucket in the chest above = Fuel Bucket in the on
 cl.bc2.motor=Combustion Engine: burns fuel (60 E per bucket) or oil (20 E) from the chest above, 2 E every 5 s. Stored: %s
 cl.bc2.pedreira=Quarry: digs a 9x9 area behind it, layer by layer, down to the bottom. Blocks go to the chest above. 0.25 E per block. Current layer: y %s
 cl.bc2.pedreira_fim=Quarry: finished digging.
-cl.bc2.petroleo=Oil: take it with an empty bucket or put a Pump on top.
+cl.bc2.petroleo=Oil: take it with an empty bucket, or put a Pump up on the surface right above the pocket.
 cl.ob.tumulo=%s's grave: %s items. Tap to take everything.
 cl.ob.tumulo_criado=§7Your items were left in a grave at X %s, Y %s, Z %s.
 cl.capitulo.buildcraft.nome=BuildCraft
 cl.capitulo.buildcraft.desc=Desert oil, refinery, combustion engine and the quarry.
 cl.missao.bc_petroleo.titulo=Black gold
-cl.missao.bc_petroleo.desc=Find an oil well (black patches on the desert floor) and fill a bucket.
+cl.missao.bc_petroleo.desc=Dig deep in the desert (oil pockets sit between y -24 and 8, in the deepslate) and fill a bucket.
 cl.missao.bc_combustivel.titulo=Refining
 cl.missao.bc_combustivel.desc=Make a Fuel Bucket in the Refinery.
 cl.missao.bc_motor.titulo=Engine

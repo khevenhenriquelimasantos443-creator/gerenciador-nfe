@@ -1398,6 +1398,9 @@
     },
     "clc_elevador_topo": {
       "textures": "textures/blocks/cl/c/elevador_topo"
+    },
+    "clv_petroleo": {
+      "textures": "textures/blocks/cl/v/petroleo"
     }
   }
 }

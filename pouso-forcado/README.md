@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.3: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -135,6 +135,11 @@ Outros comandos:
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.3.3
+
+- **Petróleo líquido:** o Bedrock não deixa add-on criar fluido de verdade, então o petróleo imita um: dá para atravessar, é meio transparente e com brilho oleoso animado, não quebra com picareta e aceita bloco posto em cima (como a água). Dentro dele você anda devagar, afunda devagar (sem dano de queda) e pula para nadar para cima; com a cabeça dentro, a vista escurece. Balde vazio pega, **Balde de Petróleo despeja**. Ele não escorre (fica parado onde está).
+- **Bolsões só lá embaixo:** raio 4, centro entre y −24 e 8. Sem coluna nem mancha na superfície. A Bomba alcança até 96 blocos para baixo. Mundos já criados mantêm o que já foi gerado.
+
 ## Novidades da 1.3.2
 
 - **Livro de receitas como o JEI:** todas as receitas de bancada do add-on aparecem no livro de receitas do inventário desde o começo (antes só apareciam depois de pegar o primeiro ingrediente), separadas por mod, com a busca da lupa. Tocar numa receita monta a grade sozinho, como o "+" do JEI. Receitas de máquinas e "onde usar" continuam no Catálogo.
@@ -158,7 +163,7 @@ Outros comandos:
   - **Infusor Metalúrgico**: ligas **Enriquecida** (ferro + redstone), **Reforçada** (+ diamante) e **Atômica** (+ obsidiana); ferro + 2 carvões = aço. 0,5 E.
   - **Cubos de Energia**: Básico 200 E, Avançado 800, Elite 3.200 e Definitivo 12.800. Guardam a carga quando quebrados, como as células.
   - **Jetpack** (no peito): segure pular para subir, gastando hidrogênio (200 no tanque, 50 por cilindro; com ele vestido, use o cilindro para abastecer). No ar sem pular, cai devagar.
-- **BuildCraft:** **poços de petróleo** no deserto (manchas pretas no chão, uns 1 a cada 30 chunks), pegos com balde.
+- **BuildCraft:** **bolsões de petróleo** bem fundo (1.3.3: entre y −24 e 8, na ardósia; nada aparece na superfície; uns 1 a cada 30 chunks), pegos com balde.
   - **Bomba**: em cima do poço, esvazia o petróleo para os baldes vazios de um baú encostado. 1 E por balde.
   - **Refinaria**: petróleo = **combustível**. 1 E.
   - **Motor a Combustão**: queima combustível (60 E por balde) ou petróleo (20 E) do baú de cima, 2 E a cada 5 s na rede.

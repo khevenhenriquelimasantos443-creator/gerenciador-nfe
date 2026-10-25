@@ -2009,7 +2009,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:petroleo": {
   "pt": "Petróleo",
   "en": "Oil",
-  "icone": "textures/blocks/cl/c/petroleo"
+  "icone": "textures/blocks/cl/v/petroleo"
  },
  "cl:picareta_aco": {
   "pt": "Picareta de Aço",

@@ -1,4 +1,4 @@
-import { Block, ItemStack, system, world } from "@minecraft/server";
+import { Block, Direction, ItemStack, Player, system, world } from "@minecraft/server";
 import { registrarNoCatalogo } from "../catalogo/catalogo.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
@@ -7,14 +7,16 @@ import { gravar, ler, registrarDetalhe } from "../util/dados.js";
 import { rf } from "../util/energia.js";
 import { darAoJogador, gastarDaMao } from "../util/inventario.js";
 import { cabe, entrada, entregar, gastarCE, inventarioVizinho, tirar } from "../util/maquina.js";
+import { intervalo } from "../util/perfil.js";
 import { gerar } from "../util/rede.js";
 import { toqueNovo } from "../util/toque.js";
 import { feito, maquina } from "./thermal.js";
 
 /*
- * BuildCraft (1.3.0). O petróleo é um bloco (o Bedrock não tem líquido próprio): poços no deserto
- * (scripts/mundo/minerios.ts), pegos com balde ou pela Bomba.
- * - Bomba: procura petróleo embaixo dela (até 64 blocos) e esvazia o poço bloco a bloco, enchendo os
+ * BuildCraft (1.3.0). O petróleo imita um líquido (o Bedrock não tem fluido de add-on): bloco sem colisão,
+ * meio transparente e animado; dentro dele o jogador afunda devagar e nada para cima pulando (1.3.2).
+ * Bolsões bem fundo, sem nada na superfície (scripts/mundo/minerios.ts). Balde pega e despeja.
+ * - Bomba: procura petróleo embaixo dela (até 96 blocos) e esvazia o bolsão bloco a bloco, enchendo os
  *   baldes vazios de um baú encostado. 1 E por balde.
  * - Refinaria: petróleo → combustível. 1 E.
  * - Motor a Combustão: queima combustível (60 E) ou petróleo (20 E) do baú de cima, 2 E a cada 5 s na rede.
@@ -26,7 +28,26 @@ const MOTOR = { combustivel: 60, petroleo: 20, porCiclo: 2 };
 const LADO = 9;
 
 // ---------- Petróleo e balde ----------
+const AO_LADO: Readonly<Record<string, (b: Block) => Block | undefined>> = {
+  [Direction.Up]: (b) => b.above(), [Direction.Down]: (b) => b.below(), [Direction.North]: (b) => b.north(),
+  [Direction.South]: (b) => b.south(), [Direction.East]: (b) => b.east(), [Direction.West]: (b) => b.west(),
+};
 function registrarBalde(): void {
+  // Despejar: Balde de Petróleo num bloco põe o petróleo no espaço vazio daquele lado.
+  world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
+    if (ev.itemStack?.typeId !== "cl:balde_petroleo" || !toqueNovo(ev)) return;
+    const alvo = ev.block.typeId === PETROLEO ? undefined : AO_LADO[ev.blockFace]?.(ev.block);
+    if (!alvo) return;
+    ev.cancel = true;
+    const j = ev.player;
+    system.run(() => {
+      if (!alvo.isAir) return;
+      alvo.setType(PETROLEO);
+      gastarDaMao(j);
+      darAoJogador(j, "minecraft:bucket", 1);
+      j.playSound("bucket.empty_lava");
+    });
+  });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     if (ev.itemStack?.typeId !== "minecraft:bucket" || ev.block.typeId !== PETROLEO || !toqueNovo(ev)) return;
     ev.cancel = true;
@@ -44,7 +65,7 @@ function registrarBalde(): void {
 // ---------- Bomba ----------
 function acharPetroleo(b: Block): Block | undefined {
   let p: Block | undefined = b.below();
-  for (let k = 0; k < 64 && p; k++, p = p.below()) {
+  for (let k = 0; k < 96 && p; k++, p = p.below()) {
     if (p.typeId !== PETROLEO) continue;
     // Esvazia o poço do fundo para cima: anda pelos vizinhos de petróleo e pega o último achado.
     const vistos = new Set<string>();
@@ -200,8 +221,32 @@ function avancar(cur: Cursor, fundo: number): void {
   }
 }
 
+// ---------- Dentro do petróleo ----------
+// Como num líquido grosso: anda devagar, afunda devagar (sem dano de queda), pular nada para cima e,
+// com a cabeça dentro, não se enxerga quase nada.
+const emOleo = (j: Player, dy: number): boolean => {
+  try {
+    return j.dimension.getBlock({ x: Math.floor(j.location.x), y: Math.floor(j.location.y + dy), z: Math.floor(j.location.z) })?.typeId === PETROLEO;
+  } catch {
+    return false;
+  }
+};
+function cuidarNado(j: Player): void {
+  const pes = emOleo(j, 0.1), cabeca = emOleo(j, 1.6);
+  if (!pes && !cabeca) return;
+  j.addEffect("slowness", 10, { amplifier: 1, showParticles: false });
+  if (cabeca) j.addEffect("blindness", 30, { showParticles: false });
+  if (j.isJumping) {
+    const v = j.getVelocity();
+    j.applyKnockback({ x: v.x, z: v.z }, 0.22);
+  } else if (!j.isOnGround) j.addEffect("slow_falling", 10, { showParticles: false });
+}
+
 export function registrarBuildcraft(): void {
   registrarBalde();
+  intervalo("petroleo", () => {
+    for (const j of world.getPlayers()) cuidarNado(j);
+  }, 4);
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     if (id === "cl:pedreira" || id === "cl:motor_combustao") gravar(id === "cl:pedreira" ? "pedreira" : "motor", block, undefined);

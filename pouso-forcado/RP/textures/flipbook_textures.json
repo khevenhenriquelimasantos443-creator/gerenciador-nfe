@@ -38,5 +38,10 @@
     "flipbook_texture": "textures/blocks/cl/v/lava",
     "atlas_tile": "clv_lava",
     "ticks_per_frame": 4
+  },
+  {
+    "flipbook_texture": "textures/blocks/cl/v/petroleo",
+    "atlas_tile": "clv_petroleo",
+    "ticks_per_frame": 5
   }
 ]

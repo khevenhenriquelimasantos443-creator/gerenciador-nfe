@@ -218,6 +218,16 @@ const lava = () =>
     const o = Math.sin((x + q * 3) / 5) + Math.cos((y + q * 2) / 4) + ruido(x >> 2, y >> 2, q) * 1.5;
     return mix(hex("#c4381a"), hex("#ffb13b"), Math.max(0, Math.min(1, 0.35 + o * 0.22)));
   }, 8);
+// Petróleo (1.3.2): preto-marrom quase parado, meio transparente, com um brilho oleoso que desliza devagar.
+// As ondas têm período de T, então emenda sem costura de um bloco para o outro e o laço de 8 quadros fecha.
+const petroleo = () =>
+  textura((x, y, q) => {
+    const onda = (n, v) => Math.sin((2 * Math.PI * n * v) / T);
+    const o = onda(1, x + q * 4) + onda(2, y - q * 2) * 0.6;
+    const base = mix(hex("#0b0806"), hex("#2b1e15"), Math.max(0, Math.min(1, 0.35 + o * 0.15 + ruido(x >> 1, y >> 1, 31) * 0.12)));
+    const brilho = Math.max(0, onda(1, x - y + q * 4)) ** 10;
+    return [...mix(base, hex("#6a5a80"), brilho * 0.4), 230];
+  }, 8);
 const leite = () => textura((x, y) => mix(hex("#f4f4ef"), hex("#e6e6dc"), ruido(x, y, 16)));
 const poeira = () => textura((x, y) => mul(mix(hex("#f1e6c8"), hex("#e2d3ad"), ruido(x, y, 17)), 0.96 + ruido(x >> 2, y >> 2, 18) * 0.08));
 // Folha infestada: folha acinzentada com teia branca; cheia = quase toda branca.
@@ -241,7 +251,7 @@ const TEXTURAS = {
   malha, vidro, planta,
   composto_vazio: () => composto("vazio"), composto_cheio: () => composto("cheio"), composto_pronto: () => composto("pronto"),
   forja,
-  barril_madeira: barrilMadeira, barril_pedra: barrilPedra, porcelana, lava, leite, poeira,
+  barril_madeira: barrilMadeira, barril_pedra: barrilPedra, porcelana, lava, leite, poeira, petroleo,
   folha_infestada: () => folhaInfestada(false), folha_infestada_cheia: () => folhaInfestada(true),
 };
 // Texturas do próprio jogo usadas nos modelos (conteúdo do barril, carga da peneira...).
@@ -251,7 +261,7 @@ const DO_JOGO = {
   vx_netherrack: "textures/blocks/netherrack", vx_end: "textures/blocks/end_stone", vx_slime: "textures/blocks/slime",
 };
 // Animadas: [quadros, ticks por quadro]
-const ANIMADAS = { agua: 4, tela_terminal: 6, tela_nave: 3, solar: 5, rotor: 2, brasa_on: 3, forja: 3, lava: 4 };
+const ANIMADAS = { agua: 4, tela_terminal: 6, tela_nave: 3, solar: 5, rotor: 2, brasa_on: 3, forja: 3, lava: 4, petroleo: 5 };
 const ACESAS = new Set(["luz_ciano", "luz_laranja", "luz_azul", "luz_verde", "luz_violeta", "agua", "tela_terminal", "tela_nave", "brasa_on", "forja", "carga_0", "carga_1", "carga_2", "solar", "lava"]);
 
 // ---------- modelos ----------

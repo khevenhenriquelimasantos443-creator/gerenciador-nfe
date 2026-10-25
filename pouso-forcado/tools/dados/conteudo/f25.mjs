@@ -20,7 +20,20 @@ export default {
     { id: "asa_delta", pt: "Asa-Delta", en: "Hang Glider", icone: "folha:#c08a50", pilha: 1, ...OB },
   ],
   blocos: [
-    { id: "petroleo", pt: "Petróleo", en: "Oil", tipo: "cubo", cor: "#16110d", padrao: "polido", dureza: 1, loot: "loot_tables/cl/vazio.json", menu: "none" },
+    // Líquido (1.3.2): o Bedrock não tem fluido de add-on, então o petróleo imita um. Sem colisão (atravessa e o
+    // script faz afundar devagar e nadar), meio transparente e animado (clv_petroleo, de tools/gerar-visual.mjs),
+    // não quebra com picareta, aceita bloco posto em cima dele e se pega com balde.
+    {
+      id: "petroleo", pt: "Petróleo", en: "Oil", tipo: "cubo", cor: "#16110d", padrao: "polido", loot: "loot_tables/cl/vazio.json", menu: "none",
+      extra: {
+        "minecraft:material_instances": { "*": { texture: "clv_petroleo", render_method: "blend" } },
+        "minecraft:collision_box": false,
+        "minecraft:destructible_by_mining": false,
+        "minecraft:destructible_by_explosion": { explosion_resistance: 100 },
+        "minecraft:replaceable": {},
+        "minecraft:light_dampening": 6,
+      },
+    },
     maq("bomba", "Bomba", "Pump", "laranja", "gota"),
     maq("refinaria", "Refinaria", "Refinery", "amarelo", "chama"),
     maq("motor_combustao", "Motor a Combustão", "Combustion Engine", "laranja", "engrenagem"),
@@ -50,12 +63,12 @@ export default {
     "cl.bc2.motor": ["Motor a Combustão: queima combustível (60 E por balde) ou petróleo (20 E) do baú de cima, 2 E a cada 5 s. Guardado: %s", "Combustion Engine: burns fuel (60 E per bucket) or oil (20 E) from the chest above, 2 E every 5 s. Stored: %s"],
     "cl.bc2.pedreira": ["Pedreira: cava uma área de 9x9 atrás dela, camada por camada, até o fundo. Os blocos vão para o baú de cima. 0,25 E por bloco. Camada atual: y %s", "Quarry: digs a 9x9 area behind it, layer by layer, down to the bottom. Blocks go to the chest above. 0.25 E per block. Current layer: y %s"],
     "cl.bc2.pedreira_fim": ["Pedreira: terminou de cavar.", "Quarry: finished digging."],
-    "cl.bc2.petroleo": ["Petróleo: pegue com um balde vazio ou use uma Bomba em cima.", "Oil: take it with an empty bucket or put a Pump on top."],
+    "cl.bc2.petroleo": ["Petróleo: pegue com um balde vazio, ou ponha uma Bomba lá em cima, na superfície, bem em cima do bolsão.", "Oil: take it with an empty bucket, or put a Pump up on the surface right above the pocket."],
     "cl.ob.tumulo": ["Túmulo de %s: %s itens. Toque para pegar tudo.", "%s's grave: %s items. Tap to take everything."],
     "cl.ob.tumulo_criado": ["§7Seus itens ficaram num túmulo em X %s, Y %s, Z %s.", "§7Your items were left in a grave at X %s, Y %s, Z %s."],
     "cl.capitulo.buildcraft.nome": ["BuildCraft", "BuildCraft"],
     "cl.capitulo.buildcraft.desc": ["Petróleo do deserto, refinaria, motor a combustão e a pedreira.", "Desert oil, refinery, combustion engine and the quarry."],
-    "cl.missao.bc_petroleo.titulo": ["Ouro negro", "Black gold"], "cl.missao.bc_petroleo.desc": ["Ache um poço de petróleo (manchas pretas no chão do deserto) e encha um balde.", "Find an oil well (black patches on the desert floor) and fill a bucket."],
+    "cl.missao.bc_petroleo.titulo": ["Ouro negro", "Black gold"], "cl.missao.bc_petroleo.desc": ["Cave fundo no deserto (bolsões de petróleo ficam entre y -24 e 8, na ardósia) e encha um balde.", "Dig deep in the desert (oil pockets sit between y -24 and 8, in the deepslate) and fill a bucket."],
     "cl.missao.bc_combustivel.titulo": ["Refino", "Refining"], "cl.missao.bc_combustivel.desc": ["Faça um Balde de Combustível na Refinaria.", "Make a Fuel Bucket in the Refinery."],
     "cl.missao.bc_motor.titulo": ["Motor", "Engine"], "cl.missao.bc_motor.desc": ["Gere energia com o Motor a Combustão.", "Make power with the Combustion Engine."],
     "cl.missao.bc_pedreira.titulo": ["Pedreira", "Quarry"], "cl.missao.bc_pedreira.desc": ["Deixe a Pedreira cavar 256 blocos.", "Let the Quarry dig 256 blocks."],
