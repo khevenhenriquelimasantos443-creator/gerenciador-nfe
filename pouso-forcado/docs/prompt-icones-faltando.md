@@ -1,7 +1,7 @@
 # Prompt para gerar os ícones que faltam (Pouso Forçado 1.3.4)
 
 Copie tudo a partir de "PROMPT" e mande junto a **prancha anterior** como referência de estilo.
-**Já recebidas: partes 1 e 2.** Peça agora só a **parte 3** (zip `novidades_1_2`) e a **parte 4** (zip `novidades_1_3`), um zip por vez.
+**Já recebidas: partes 1 e 2** (e as 8 lâmpadas coloridas saíram da arte da Lâmpada). Dá também para gerar pela API: `python3 tools/gerar-icones-ia.py 3 <pasta>` com `OPENAI_API_KEY` no ambiente. Peça agora só a **parte 3** (zip `novidades_1_2`) e a **parte 4** (zip `novidades_1_3`), um zip por vez.
 Os nomes de arquivo já são os IDs do jogo e não podem mudar.
 
 ---
@@ -63,7 +63,7 @@ Você vai desenhar os ícones e as texturas de um add-on de Minecraft Bedrock ch
 
 ### Como salvar e mandar
 
-- **Um .zip por parte**: `pendentes.zip` (parte 1), depois `fase_15.zip`, `fase_16.zip` ... `fase_23.zip` e `novidades_1_2.zip` (parte 3).
+- **Um .zip por parte**: `pendentes.zip` (parte 1), depois `fase_15.zip`, `fase_16.zip` ... `fase_23.zip`, `novidades_1_2.zip` (parte 3) e `novidades_1_3.zip` (parte 4).
 - Dentro de cada zip, só estas pastas, com os arquivos soltos nelas (sem subpastas):
   - `itens/` com os ícones de item (A), PNG 128×128;
   - `blocos_menu/` com os ícones de menu (B), PNG 128×128;
@@ -431,7 +431,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | meteorito | Rocha de Meteorito | rocha quase preta, rachada, com veios roxos que brilham |
-| lampada_vermelha … lampada_rosa (8 arquivos: `lampada_vermelha`, `lampada_laranja`, `lampada_amarela`, `lampada_verde`, `lampada_ciano`, `lampada_azul`, `lampada_roxa`, `lampada_rosa`) | Lâmpadas coloridas | o mesmo abajur da Lâmpada, com o vidro da cor do nome |
 
 **Texturas de modelo (só C, 32×32; são pintadas em modelos 3D próprios):**
 
@@ -498,5 +497,6 @@ OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | cascalho_nether | Cascalho do Nether | cascalho vermelho-escuro, pedrinhas de netherrack |
-| elevador | Elevador | bloco de arenito liso branco com seta para cima e para baixo no topo |
+| elevador | Elevador (lados) | arenito liso branco-gelo com uma faixa fina cinza nas bordas |
+| elevador_topo | Elevador (topo e base) | o mesmo arenito branco com duas setas cinza-escuro, uma para cima e uma para baixo |
 | tumulo | Túmulo (textura do modelo 32×32) | pedra cinza rachada com musgo |

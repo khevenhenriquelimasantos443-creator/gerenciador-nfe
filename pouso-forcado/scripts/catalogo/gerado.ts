@@ -1014,42 +1014,42 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lampada_amarela": {
   "pt": "Lâmpada Amarela",
   "en": "Yellow Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_amarela"
+  "icone": "textures/items/cl/arte/blocos/lampada_amarela"
  },
  "cl:lampada_azul": {
   "pt": "Lâmpada Azul",
   "en": "Blue Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_azul"
+  "icone": "textures/items/cl/arte/blocos/lampada_azul"
  },
  "cl:lampada_ciano": {
   "pt": "Lâmpada Ciano",
   "en": "Cyan Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_ciano"
+  "icone": "textures/items/cl/arte/blocos/lampada_ciano"
  },
  "cl:lampada_laranja": {
   "pt": "Lâmpada Laranja",
   "en": "Orange Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_laranja"
+  "icone": "textures/items/cl/arte/blocos/lampada_laranja"
  },
  "cl:lampada_rosa": {
   "pt": "Lâmpada Rosa",
   "en": "Pink Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_rosa"
+  "icone": "textures/items/cl/arte/blocos/lampada_rosa"
  },
  "cl:lampada_roxa": {
   "pt": "Lâmpada Roxa",
   "en": "Purple Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_roxa"
+  "icone": "textures/items/cl/arte/blocos/lampada_roxa"
  },
  "cl:lampada_verde": {
   "pt": "Lâmpada Verde",
   "en": "Green Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_verde"
+  "icone": "textures/items/cl/arte/blocos/lampada_verde"
  },
  "cl:lampada_vermelha": {
   "pt": "Lâmpada Vermelha",
   "en": "Red Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada_vermelha"
+  "icone": "textures/items/cl/arte/blocos/lampada_vermelha"
  },
  "cl:lanterna": {
   "pt": "Lanterna",

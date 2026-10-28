@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.4: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.5: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,11 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.5
+
+- **Lâmpadas coloridas** com a arte da Lâmpada: o mesmo abajur, com o vidro tingido em cada cor (`tools/tingir-lampadas.py`), 4 faces e virando para quem coloca.
+- **Gerador de ícones pela API da OpenAI** (`tools/gerar-icones-ia.py`): lê a parte da lista em `docs/prompt-icones-faltando.md`, pede as imagens e monta o mesmo pacote que o ChatGPT entregava (itens, ícones de menu e faces), pronto para `tools/importar-icones.py`. Precisa da chave em `OPENAI_API_KEY` nas configurações do ambiente.
 
 ## Novidades da 1.3.4
 

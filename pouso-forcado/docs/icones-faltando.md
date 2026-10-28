@@ -363,7 +363,6 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | meteorito | Rocha de Meteorito | rocha quase preta, rachada, com veios roxos que brilham |
-| lampada_vermelha … lampada_rosa (8 arquivos: `lampada_vermelha`, `lampada_laranja`, `lampada_amarela`, `lampada_verde`, `lampada_ciano`, `lampada_azul`, `lampada_roxa`, `lampada_rosa`) | Lâmpadas coloridas | o mesmo abajur da Lâmpada, com o vidro da cor do nome |
 
 **Texturas de modelo (só C, 32×32; são pintadas em modelos 3D próprios):**
 
@@ -430,5 +429,6 @@ OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
 | Arquivo | Nome | Como deve parecer |
 |---|---|---|
 | cascalho_nether | Cascalho do Nether | cascalho vermelho-escuro, pedrinhas de netherrack |
-| elevador | Elevador | bloco de arenito liso branco com seta para cima e para baixo no topo |
+| elevador | Elevador (lados) | arenito liso branco-gelo com uma faixa fina cinza nas bordas |
+| elevador_topo | Elevador (topo e base) | o mesmo arenito branco com duas setas cinza-escuro, uma para cima e uma para baixo |
 | tumulo | Túmulo (textura do modelo 32×32) | pedra cinza rachada com musgo |
