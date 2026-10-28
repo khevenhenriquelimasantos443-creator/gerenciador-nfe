@@ -12,6 +12,7 @@
 # <saída>/cru/: rodar de novo não paga de novo o que já veio. Precisa de Python + Pillow.
 #   python3 tools/gerar-icones-ia.py 3 <saída>          (parte 3)
 #   python3 tools/gerar-icones-ia.py 4 <saída> --seco   (só mostra o que pediria e quantas imagens)
+#   python3 tools/gerar-icones-ia.py 3 <saída> --so=tamara,tesseract   (só esses)
 import base64, csv, json, os, re, ssl, sys, time, urllib.error, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageDraw
@@ -145,6 +146,9 @@ def main():
     seco = "--seco" in sys.argv
     linhas = lista(parte)
     pedidos = [(t, n, *p) for t, n, rot, desc in linhas for p in pedido(parte, t, n, rot, desc)]
+    so = next((a.split("=", 1)[1].split(",") for a in sys.argv if a.startswith("--so=")), None)
+    if so:  # --so=id1,id2: só esses (para testar antes de pedir tudo)
+        pedidos = [p for p in pedidos if p[1] in so]
     print(f"parte {parte}: {len(linhas)} da lista, {len(pedidos)} imagens a pedir ({MODELO}, {QUALIDADE})")
     if seco:
         for t, n, arq, prompt, fundo in pedidos:
@@ -159,7 +163,8 @@ def main():
         t, n, arq, prompt, fundo = p
         cru = os.path.join(destino, "cru", arq)
         if not os.path.exists(cru):
-            open(cru, "wb").write(chamar(prompt, fundo, chave))
+            dados = chamar(prompt, fundo, chave)  # só grava depois que a imagem chegou
+            open(cru, "wb").write(dados)
             print(f"  ok {arq}", flush=True)
         return p
 
@@ -170,10 +175,11 @@ def main():
                 f.result()
             except Exception as e:  # segue com os outros; o que falhou sai no fim
                 erros.append(str(e))
+                print(f"  ERRO: {e}", flush=True)
     feitos = []
     for t, n, arq, prompt, fundo in pedidos:
         cru = os.path.join(destino, "cru", arq)
-        if not os.path.exists(cru):
+        if not os.path.exists(cru) or os.path.getsize(cru) == 0:
             continue
         if t == "item":
             item(cru).save(os.path.join(destino, "itens", f"{n}.png"))
