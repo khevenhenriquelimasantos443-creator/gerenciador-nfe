@@ -6,7 +6,8 @@
 #   <saída>/manifesto.csv e prancha.png (revisão)
 # Depois é só importar como os outros: python3 tools/importar-icones.py <saída>
 #
-# Precisa da chave em OPENAI_API_KEY (configurada no ambiente, nunca no código). Modelo e qualidade:
+# A chave da OpenAI fica num segredo de rede do ambiente (Bearer para api.openai.com, caminho /v1/images/): o proxy
+# a põe no pedido e o script nunca a vê. Se houver OPENAI_API_KEY no ambiente, ela é usada no lugar. Modelo e qualidade:
 # OPENAI_IMAGE_MODEL (padrão gpt-image-1) e OPENAI_IMAGE_QUALITY (padrão medium). As respostas cruas ficam em
 # <saída>/cru/: rodar de novo não paga de novo o que já veio. Precisa de Python + Pillow.
 #   python3 tools/gerar-icones-ia.py 3 <saída>          (parte 3)
@@ -68,11 +69,11 @@ def pedido(parte, tipo, nome, rotulo, desc):
              "opaca e emendável (a borda da esquerda continua na da direita, a de cima na de baixo). " + proibido, "opaque")]
 
 
-def chamar(prompt, fundo, chave):
+def chamar(prompt, fundo, chave=None):
     corpo = json.dumps({"model": MODELO, "prompt": prompt, "size": "1024x1024", "quality": QUALIDADE,
                         "background": fundo, "output_format": "png", "n": 1}).encode()
     req = urllib.request.Request("https://api.openai.com/v1/images/generations", data=corpo,
-                                 headers={"Authorization": f"Bearer {chave}", "Content-Type": "application/json"})
+                                 headers={"Content-Type": "application/json", **({"Authorization": f"Bearer {chave}"} if chave else {})})
     ctx = ssl.create_default_context(cafile=os.environ.get("SSL_CERT_FILE") or None)
     for tentativa in range(4):
         try:
@@ -83,6 +84,8 @@ def chamar(prompt, fundo, chave):
             if e.code in (429, 500, 502, 503) and tentativa < 3:
                 time.sleep(10 * (tentativa + 1))
                 continue
+            if e.code == 401:
+                raise RuntimeError("API 401: a chave não chegou ou é inválida (segredo de rede Bearer para api.openai.com, caminho /v1/images/)")
             raise RuntimeError(f"API {e.code}: {msg}")
     raise RuntimeError("API sem resposta")
 
@@ -148,9 +151,7 @@ def main():
             print(f"  {t:8s} {arq}")
         print(f"\nexemplo de prompt ({pedidos[0][2]}):\n{pedidos[0][3]}")
         return
-    chave = os.environ.get("OPENAI_API_KEY")
-    if not chave:
-        sys.exit("falta OPENAI_API_KEY no ambiente")
+    chave = os.environ.get("OPENAI_API_KEY")  # sem ela, vale o segredo de rede do ambiente
     for pasta in ("cru", "itens", "blocos_menu", "blocos_faces"):
         os.makedirs(os.path.join(destino, pasta), exist_ok=True)
 
