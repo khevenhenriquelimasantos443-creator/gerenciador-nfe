@@ -49,52 +49,52 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:arenito_entalhado": {
   "pt": "Arenito Entalhado",
   "en": "Carved Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_entalhado"
+  "icone": "textures/blocks/cl/arte/arenito_entalhado"
  },
  "cl:arenito_ladrilho": {
   "pt": "Arenito Ladrilho",
   "en": "Tiles Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_ladrilho"
+  "icone": "textures/blocks/cl/arte/arenito_ladrilho"
  },
  "cl:arenito_liso": {
   "pt": "Arenito Liso",
   "en": "Smooth Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_liso"
+  "icone": "textures/blocks/cl/arte/arenito_liso"
  },
  "cl:arenito_mosaico": {
   "pt": "Arenito Mosaico",
   "en": "Mosaic Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_mosaico"
+  "icone": "textures/blocks/cl/arte/arenito_mosaico"
  },
  "cl:arenito_pilar": {
   "pt": "Arenito Pilar",
   "en": "Pillar Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_pilar"
+  "icone": "textures/blocks/cl/arte/arenito_pilar"
  },
  "cl:arenito_polido": {
   "pt": "Arenito Polido",
   "en": "Polished Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_polido"
+  "icone": "textures/blocks/cl/arte/arenito_polido"
  },
  "cl:arenito_tijolos": {
   "pt": "Arenito Tijolos",
   "en": "Bricks Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_tijolos"
+  "icone": "textures/blocks/cl/arte/arenito_tijolos"
  },
  "cl:arenito_tijolos_pequenos": {
   "pt": "Arenito Tijolinhos",
   "en": "Small Bricks Sandstone",
-  "icone": "textures/blocks/cl/c/arenito_tijolos_pequenos"
+  "icone": "textures/blocks/cl/arte/arenito_tijolos_pequenos"
  },
  "cl:argamassa": {
   "pt": "Argamassa",
   "en": "Grout",
-  "icone": "textures/items/cl/c/argamassa"
+  "icone": "textures/items/cl/arte/argamassa"
  },
  "cl:armazem_corpos": {
   "pt": "Armazém de Corpos",
   "en": "Shell Storage",
-  "icone": "textures/blocks/cl/c/armazem_corpos_topo"
+  "icone": "textures/items/cl/arte/blocos/armazem_corpos"
  },
  "cl:arroz": {
   "pt": "Arroz",
@@ -119,7 +119,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bacia_fundicao": {
   "pt": "Bacia de Fundição",
   "en": "Casting Basin",
-  "icone": "textures/blocks/cl/c/bacia_fundicao_topo"
+  "icone": "textures/items/cl/arte/blocos/bacia_fundicao"
  },
  "cl:balde_combustivel": {
   "pt": "Balde de Combustível",
@@ -139,27 +139,27 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:barra_borracha": {
   "pt": "Barra de Borracha",
   "en": "Rubber Bar",
-  "icone": "textures/items/cl/c/barra_borracha"
+  "icone": "textures/items/cl/arte/barra_borracha"
  },
  "cl:barra_combustivel": {
   "pt": "Barra de Combustível",
   "en": "Yellorium Fuel Rod",
-  "icone": "textures/blocks/cl/c/barra_combustivel"
+  "icone": "textures/items/cl/arte/blocos/barra_combustivel"
  },
  "cl:barra_controle": {
   "pt": "Barra de Controle",
   "en": "Reactor Control Rod",
-  "icone": "textures/blocks/cl/c/barra_controle"
+  "icone": "textures/items/cl/arte/blocos/barra_controle"
  },
  "cl:barra_grafite": {
   "pt": "Barra de Grafite",
   "en": "Graphite Bar",
-  "icone": "textures/items/cl/c/barra_grafite"
+  "icone": "textures/items/cl/arte/barra_grafite"
  },
  "cl:barril_armazenamento": {
   "pt": "Barril de Armazenamento",
   "en": "Storage Barrel",
-  "icone": "textures/blocks/cl/c/barril_armazenamento_topo"
+  "icone": "textures/items/cl/arte/blocos/barril_armazenamento"
  },
  "cl:barril_madeira": {
   "pt": "Barril de Madeira",
@@ -179,7 +179,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bau_me": {
   "pt": "Baú ME",
   "en": "ME Chest",
-  "icone": "textures/blocks/cl/c/bau_me_topo"
+  "icone": "textures/items/cl/arte/blocos/bau_me"
  },
  "cl:bicho_seda": {
   "pt": "Bicho-da-seda",
@@ -194,42 +194,42 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bloco_aco": {
   "pt": "Bloco de Aço",
   "en": "Block of Steel",
-  "icone": "textures/blocks/cl/c/bloco_aco"
+  "icone": "textures/blocks/cl/arte/bloco_aco"
  },
  "cl:bloco_bronze": {
   "pt": "Bloco de Bronze",
   "en": "Block of Bronze",
-  "icone": "textures/blocks/cl/c/bloco_bronze"
+  "icone": "textures/blocks/cl/arte/bloco_bronze"
  },
  "cl:bloco_estanho": {
   "pt": "Bloco de Estanho",
   "en": "Block of Tin",
-  "icone": "textures/blocks/cl/c/bloco_estanho"
+  "icone": "textures/blocks/cl/arte/bloco_estanho"
  },
  "cl:bloco_ferro_comprimido": {
   "pt": "Bloco de Ferro Comprimido",
   "en": "Compressed Iron Block",
-  "icone": "textures/blocks/cl/c/bloco_ferro_comprimido"
+  "icone": "textures/blocks/cl/arte/bloco_ferro_comprimido"
  },
  "cl:bloco_grafite": {
   "pt": "Bloco de Grafite",
   "en": "Graphite Block",
-  "icone": "textures/blocks/cl/c/bloco_grafite"
+  "icone": "textures/blocks/cl/arte/bloco_grafite"
  },
  "cl:bloco_maquina": {
   "pt": "Bloco de Máquina",
   "en": "Machine Block",
-  "icone": "textures/blocks/cl/c/bloco_maquina_topo"
+  "icone": "textures/items/cl/arte/blocos/bloco_maquina"
  },
  "cl:bloco_yellorium": {
   "pt": "Bloco de Yellorium",
   "en": "Yellorium Block",
-  "icone": "textures/blocks/cl/c/bloco_yellorium"
+  "icone": "textures/blocks/cl/arte/bloco_yellorium"
  },
  "cl:bola_musgo": {
   "pt": "Bola de Musgo",
   "en": "Ball of Moss",
-  "icone": "textures/items/cl/c/bola_musgo"
+  "icone": "textures/items/cl/arte/bola_musgo"
  },
  "cl:bolinho_arroz": {
   "pt": "Bolinho de Arroz",
@@ -259,7 +259,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cabide_armadura": {
   "pt": "Cabide de Armadura",
   "en": "Armor Stand",
-  "icone": "textures/blocks/cl/c/cabide_armadura_topo"
+  "icone": "textures/items/cl/arte/blocos/cabide_armadura"
  },
  "cl:cabo": {
   "pt": "Cabo de Cobre",
@@ -309,47 +309,47 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:calcario": {
   "pt": "Calcário",
   "en": "Limestone",
-  "icone": "textures/blocks/cl/c/calcario"
+  "icone": "textures/blocks/cl/arte/calcario"
  },
  "cl:calcario_entalhado": {
   "pt": "Calcário Entalhado",
   "en": "Carved Limestone",
-  "icone": "textures/blocks/cl/c/calcario_entalhado"
+  "icone": "textures/blocks/cl/arte/calcario_entalhado"
  },
  "cl:calcario_ladrilho": {
   "pt": "Calcário Ladrilho",
   "en": "Tiles Limestone",
-  "icone": "textures/blocks/cl/c/calcario_ladrilho"
+  "icone": "textures/blocks/cl/arte/calcario_ladrilho"
  },
  "cl:calcario_liso": {
   "pt": "Calcário Liso",
   "en": "Smooth Limestone",
-  "icone": "textures/blocks/cl/c/calcario_liso"
+  "icone": "textures/blocks/cl/arte/calcario_liso"
  },
  "cl:calcario_mosaico": {
   "pt": "Calcário Mosaico",
   "en": "Mosaic Limestone",
-  "icone": "textures/blocks/cl/c/calcario_mosaico"
+  "icone": "textures/blocks/cl/arte/calcario_mosaico"
  },
  "cl:calcario_pilar": {
   "pt": "Calcário Pilar",
   "en": "Pillar Limestone",
-  "icone": "textures/blocks/cl/c/calcario_pilar"
+  "icone": "textures/blocks/cl/arte/calcario_pilar"
  },
  "cl:calcario_polido": {
   "pt": "Calcário Polido",
   "en": "Polished Limestone",
-  "icone": "textures/blocks/cl/c/calcario_polido"
+  "icone": "textures/blocks/cl/arte/calcario_polido"
  },
  "cl:calcario_tijolos": {
   "pt": "Calcário Tijolos",
   "en": "Bricks Limestone",
-  "icone": "textures/blocks/cl/c/calcario_tijolos"
+  "icone": "textures/blocks/cl/arte/calcario_tijolos"
  },
  "cl:calcario_tijolos_pequenos": {
   "pt": "Calcário Tijolinhos",
   "en": "Small Bricks Limestone",
-  "icone": "textures/blocks/cl/c/calcario_tijolos_pequenos"
+  "icone": "textures/blocks/cl/arte/calcario_tijolos_pequenos"
  },
  "cl:caldo": {
   "pt": "Caldo",
@@ -374,32 +374,32 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:capacitor": {
   "pt": "Capacitor",
   "en": "Capacitor",
-  "icone": "textures/items/cl/c/capacitor"
+  "icone": "textures/items/cl/arte/capacitor"
  },
  "cl:carcaca_reator": {
   "pt": "Carcaça do Reator",
   "en": "Reactor Casing",
-  "icone": "textures/blocks/cl/c/carcaca_reator"
+  "icone": "textures/blocks/cl/arte/carcaca_reator"
  },
  "cl:carregador_chunks": {
   "pt": "Carregador de Chunks",
   "en": "Chunk Loader",
-  "icone": "textures/blocks/cl/c/carregador_chunks_topo"
+  "icone": "textures/items/cl/arte/blocos/carregador_chunks"
  },
  "cl:carregador_pontual": {
   "pt": "Carregador Pontual",
   "en": "Spot Loader",
-  "icone": "textures/blocks/cl/c/carregador_pontual_topo"
+  "icone": "textures/items/cl/arte/blocos/carregador_pontual"
  },
  "cl:carrinho": {
   "pt": "Carrinho",
   "en": "Dolly",
-  "icone": "textures/items/cl/c/carrinho"
+  "icone": "textures/items/cl/arte/carrinho"
  },
  "cl:carrinho_diamante": {
   "pt": "Carrinho de Diamante",
   "en": "Diamond Dolly",
-  "icone": "textures/items/cl/c/carrinho_diamante"
+  "icone": "textures/items/cl/arte/carrinho_diamante"
  },
  "cl:cascalho_nether": {
   "pt": "Cascalho do Nether",
@@ -409,42 +409,42 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:casco_nave_entalhado": {
   "pt": "Casco da Nave Entalhado",
   "en": "Carved Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_entalhado"
+  "icone": "textures/blocks/cl/arte/casco_nave_entalhado"
  },
  "cl:casco_nave_ladrilho": {
   "pt": "Casco da Nave Ladrilho",
   "en": "Tiles Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_ladrilho"
+  "icone": "textures/blocks/cl/arte/casco_nave_ladrilho"
  },
  "cl:casco_nave_liso": {
   "pt": "Casco da Nave Liso",
   "en": "Smooth Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_liso"
+  "icone": "textures/blocks/cl/arte/casco_nave_liso"
  },
  "cl:casco_nave_mosaico": {
   "pt": "Casco da Nave Mosaico",
   "en": "Mosaic Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_mosaico"
+  "icone": "textures/blocks/cl/arte/casco_nave_mosaico"
  },
  "cl:casco_nave_pilar": {
   "pt": "Casco da Nave Pilar",
   "en": "Pillar Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_pilar"
+  "icone": "textures/blocks/cl/arte/casco_nave_pilar"
  },
  "cl:casco_nave_polido": {
   "pt": "Casco da Nave Polido",
   "en": "Polished Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_polido"
+  "icone": "textures/blocks/cl/arte/casco_nave_polido"
  },
  "cl:casco_nave_tijolos": {
   "pt": "Casco da Nave Tijolos",
   "en": "Bricks Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_tijolos"
+  "icone": "textures/blocks/cl/arte/casco_nave_tijolos"
  },
  "cl:casco_nave_tijolos_pequenos": {
   "pt": "Casco da Nave Tijolinhos",
   "en": "Small Bricks Hull",
-  "icone": "textures/blocks/cl/c/casco_nave_tijolos_pequenos"
+  "icone": "textures/blocks/cl/arte/casco_nave_tijolos_pequenos"
  },
  "cl:catalogo": {
   "pt": "Catálogo",
@@ -459,7 +459,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:celula_agua": {
   "pt": "Célula de Água",
   "en": "Water Storage Cell",
-  "icone": "textures/items/cl/c/celula_agua"
+  "icone": "textures/items/cl/arte/celula_agua"
  },
  "cl:celula_combustivel": {
   "pt": "Célula de Combustível",
@@ -469,42 +469,42 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:celula_energia_basica": {
   "pt": "Célula de Energia Básica",
   "en": "Leadstone Energy Cell",
-  "icone": "textures/blocks/cl/c/celula_energia_basica_topo"
+  "icone": "textures/items/cl/arte/blocos/celula_energia_basica"
  },
  "cl:celula_energia_redstone": {
   "pt": "Célula de Energia Redstone",
   "en": "Redstone Energy Cell",
-  "icone": "textures/blocks/cl/c/celula_energia_redstone_topo"
+  "icone": "textures/items/cl/arte/blocos/celula_energia_redstone"
  },
  "cl:celula_energia_reforcada": {
   "pt": "Célula de Energia Reforçada",
   "en": "Hardened Energy Cell",
-  "icone": "textures/blocks/cl/c/celula_energia_reforcada_topo"
+  "icone": "textures/items/cl/arte/blocos/celula_energia_reforcada"
  },
  "cl:celula_energia_ressonante": {
   "pt": "Célula de Energia Ressonante",
   "en": "Resonant Energy Cell",
-  "icone": "textures/blocks/cl/c/celula_energia_ressonante_topo"
+  "icone": "textures/items/cl/arte/blocos/celula_energia_ressonante"
  },
  "cl:celula_me_16k": {
   "pt": "Célula ME 16k",
   "en": "16k ME Storage Cell",
-  "icone": "textures/items/cl/c/celula_me_16k"
+  "icone": "textures/items/cl/arte/celula_me_16k"
  },
  "cl:celula_me_1k": {
   "pt": "Célula ME 1k",
   "en": "1k ME Storage Cell",
-  "icone": "textures/items/cl/c/celula_me_1k"
+  "icone": "textures/items/cl/arte/celula_me_1k"
  },
  "cl:celula_me_4k": {
   "pt": "Célula ME 4k",
   "en": "4k ME Storage Cell",
-  "icone": "textures/items/cl/c/celula_me_4k"
+  "icone": "textures/items/cl/arte/celula_me_4k"
  },
  "cl:celula_me_64k": {
   "pt": "Célula ME 64k",
   "en": "64k ME Storage Cell",
-  "icone": "textures/items/cl/c/celula_me_64k"
+  "icone": "textures/items/cl/arte/celula_me_64k"
  },
  "cl:charque": {
   "pt": "Charque",
@@ -514,7 +514,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:chave_barril": {
   "pt": "Chave de Barril",
   "en": "Barrel Hammer",
-  "icone": "textures/items/cl/c/chave_barril"
+  "icone": "textures/items/cl/arte/chave_barril"
  },
  "cl:chili_poppers": {
   "pt": "Pimentas Empanadas",
@@ -549,7 +549,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cinzel": {
   "pt": "Cinzel",
   "en": "Chisel",
-  "icone": "textures/items/cl/c/cinzel"
+  "icone": "textures/items/cl/arte/cinzel"
  },
  "cl:circuito": {
   "pt": "Circuito",
@@ -574,37 +574,37 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:colheitadeira": {
   "pt": "Colheitadeira",
   "en": "Harvester",
-  "icone": "textures/blocks/cl/c/colheitadeira_topo"
+  "icone": "textures/items/cl/arte/blocos/colheitadeira"
  },
  "cl:colocador_blocos": {
   "pt": "Colocador de Blocos",
   "en": "Block Placer",
-  "icone": "textures/blocks/cl/c/colocador_blocos_topo"
+  "icone": "textures/items/cl/arte/blocos/colocador_blocos"
  },
  "cl:componente_me_16k": {
   "pt": "Componente ME 16k",
   "en": "16k ME Storage Component",
-  "icone": "textures/items/cl/c/componente_me_16k"
+  "icone": "textures/items/cl/arte/componente_me_16k"
  },
  "cl:componente_me_1k": {
   "pt": "Componente ME 1k",
   "en": "1k ME Storage Component",
-  "icone": "textures/items/cl/c/componente_me_1k"
+  "icone": "textures/items/cl/arte/componente_me_1k"
  },
  "cl:componente_me_4k": {
   "pt": "Componente ME 4k",
   "en": "4k ME Storage Component",
-  "icone": "textures/items/cl/c/componente_me_4k"
+  "icone": "textures/items/cl/arte/componente_me_4k"
  },
  "cl:componente_me_64k": {
   "pt": "Componente ME 64k",
   "en": "64k ME Storage Component",
-  "icone": "textures/items/cl/c/componente_me_64k"
+  "icone": "textures/items/cl/arte/componente_me_64k"
  },
  "cl:compostadora": {
   "pt": "Compostadora",
   "en": "Composter",
-  "icone": "textures/blocks/cl/c/compostadora_topo"
+  "icone": "textures/items/cl/arte/blocos/compostadora"
  },
  "cl:compostor": {
   "pt": "Compostor de Terra",
@@ -614,7 +614,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:compressor_ar": {
   "pt": "Compressor de Ar",
   "en": "Air Compressor",
-  "icone": "textures/blocks/cl/c/compressor_ar_topo"
+  "icone": "textures/items/cl/arte/blocos/compressor_ar"
  },
  "cl:computador_bordo": {
   "pt": "Computador de Bordo",
@@ -634,27 +634,27 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:construtor_corpos": {
   "pt": "Construtor de Corpos",
   "en": "Shell Constructor",
-  "icone": "textures/blocks/cl/c/construtor_corpos_topo"
+  "icone": "textures/items/cl/arte/blocos/construtor_corpos"
  },
  "cl:construtor_pecas": {
   "pt": "Construtor de Peças",
   "en": "Part Builder",
-  "icone": "textures/blocks/cl/c/construtor_pecas_topo"
+  "icone": "textures/items/cl/arte/blocos/construtor_pecas"
  },
  "cl:controlador_fundicao": {
   "pt": "Controlador da Fundição",
   "en": "Smeltery Controller",
-  "icone": "textures/blocks/cl/c/controlador_fundicao_topo"
+  "icone": "textures/items/cl/arte/blocos/controlador_fundicao"
  },
  "cl:controlador_me": {
   "pt": "Controlador ME",
   "en": "ME Controller",
-  "icone": "textures/blocks/cl/c/controlador_me_topo"
+  "icone": "textures/items/cl/arte/blocos/controlador_me"
  },
  "cl:controlador_reator": {
   "pt": "Controlador do Reator",
   "en": "Reactor Controller",
-  "icone": "textures/blocks/cl/c/controlador_reator_topo"
+  "icone": "textures/items/cl/arte/blocos/controlador_reator"
  },
  "cl:coracao_farao": {
   "pt": "Coração do Faraó",
@@ -664,12 +664,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cristal_certus": {
   "pt": "Cristal de Certus",
   "en": "Certus Quartz Crystal",
-  "icone": "textures/items/cl/c/cristal_certus"
+  "icone": "textures/items/cl/arte/cristal_certus"
  },
  "cl:cristal_fluix": {
   "pt": "Cristal Fluix",
   "en": "Fluix Crystal",
-  "icone": "textures/items/cl/c/cristal_fluix"
+  "icone": "textures/items/cl/arte/cristal_fluix"
  },
  "cl:cubo_energia_avancado": {
   "pt": "Cubo de Energia Avançado",
@@ -699,17 +699,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:dinamo_redstone": {
   "pt": "Dínamo de Redstone",
   "en": "Enervation Dynamo",
-  "icone": "textures/blocks/cl/c/dinamo_redstone_topo"
+  "icone": "textures/items/cl/arte/blocos/dinamo_redstone"
  },
  "cl:dreno_fundicao": {
   "pt": "Dreno",
   "en": "Smeltery Drain",
-  "icone": "textures/blocks/cl/c/dreno_fundicao"
+  "icone": "textures/items/cl/arte/blocos/dreno_fundicao"
  },
  "cl:drive_me": {
   "pt": "Drive ME",
   "en": "ME Drive",
-  "icone": "textures/blocks/cl/c/drive_me_topo"
+  "icone": "textures/items/cl/arte/blocos/drive_me"
  },
  "cl:elevador": {
   "pt": "Elevador",
@@ -719,7 +719,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:empacotador": {
   "pt": "Empacotador Automático",
   "en": "AutoPackager",
-  "icone": "textures/blocks/cl/c/empacotador_topo"
+  "icone": "textures/items/cl/arte/blocos/empacotador"
  },
  "cl:engrenagem_diamante": {
   "pt": "Engrenagem de Diamante",
@@ -749,57 +749,57 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:esgoto": {
   "pt": "Esgoto",
   "en": "Sewer",
-  "icone": "textures/blocks/cl/c/esgoto_topo"
+  "icone": "textures/items/cl/arte/blocos/esgoto"
  },
  "cl:espada_larga_aco": {
   "pt": "Espada Larga de Aço",
   "en": "Steel Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_aco"
+  "icone": "textures/items/cl/arte/espada_larga_aco"
  },
  "cl:espada_larga_bronze": {
   "pt": "Espada Larga de Bronze",
   "en": "Bronze Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_bronze"
+  "icone": "textures/items/cl/arte/espada_larga_bronze"
  },
  "cl:espada_larga_cacto": {
   "pt": "Espada Larga de Cacto",
   "en": "Cactus Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_cacto"
+  "icone": "textures/items/cl/arte/espada_larga_cacto"
  },
  "cl:espada_larga_cobre": {
   "pt": "Espada Larga de Cobre",
   "en": "Copper Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_cobre"
+  "icone": "textures/items/cl/arte/espada_larga_cobre"
  },
  "cl:espada_larga_ferro": {
   "pt": "Espada Larga de Ferro",
   "en": "Iron Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_ferro"
+  "icone": "textures/items/cl/arte/espada_larga_ferro"
  },
  "cl:espada_larga_madeira": {
   "pt": "Espada Larga de Madeira",
   "en": "Wood Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_madeira"
+  "icone": "textures/items/cl/arte/espada_larga_madeira"
  },
  "cl:espada_larga_obsidiana": {
   "pt": "Espada Larga de Obsidiana",
   "en": "Obsidian Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_obsidiana"
+  "icone": "textures/items/cl/arte/espada_larga_obsidiana"
  },
  "cl:espada_larga_osso": {
   "pt": "Espada Larga de Osso",
   "en": "Bone Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_osso"
+  "icone": "textures/items/cl/arte/espada_larga_osso"
  },
  "cl:espada_larga_pedra": {
   "pt": "Espada Larga de Pedra",
   "en": "Stone Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_pedra"
+  "icone": "textures/items/cl/arte/espada_larga_pedra"
  },
  "cl:espada_larga_silex": {
   "pt": "Espada Larga de Sílex",
   "en": "Flint Broadsword",
-  "icone": "textures/items/cl/c/espada_larga_silex"
+  "icone": "textures/items/cl/arte/espada_larga_silex"
  },
  "cl:espremedor": {
   "pt": "Espremedor",
@@ -809,42 +809,42 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:estacao_ferramentas": {
   "pt": "Estação de Ferramentas",
   "en": "Tool Station",
-  "icone": "textures/blocks/cl/c/estacao_ferramentas_topo"
+  "icone": "textures/items/cl/arte/blocos/estacao_ferramentas"
  },
  "cl:estanho_po": {
   "pt": "Pó de Minério de Estanho",
   "en": "Powdered Tin Ore",
-  "icone": "textures/items/cl/c/estanho_po"
+  "icone": "textures/items/cl/arte/estanho_po"
  },
  "cl:estanho_quebrado": {
   "pt": "Pedaço Quebrado de Estanho",
   "en": "Broken Tin Ore",
-  "icone": "textures/items/cl/c/estanho_quebrado"
+  "icone": "textures/items/cl/arte/estanho_quebrado"
  },
  "cl:estanho_triturado": {
   "pt": "Pedaço Triturado de Estanho",
   "en": "Crushed Tin Ore",
-  "icone": "textures/items/cl/c/estanho_triturado"
+  "icone": "textures/items/cl/arte/estanho_triturado"
  },
  "cl:estante": {
   "pt": "Estante",
   "en": "Bookcase",
-  "icone": "textures/blocks/cl/c/estante_topo"
+  "icone": "textures/items/cl/arte/blocos/estante"
  },
  "cl:esteira": {
   "pt": "Esteira",
   "en": "Conveyor Belt",
-  "icone": "textures/blocks/cl/c/esteira_topo"
+  "icone": "textures/items/cl/arte/blocos/esteira"
  },
  "cl:esteira_animal": {
   "pt": "Esteira de Animal",
   "en": "Treadmill",
-  "icone": "textures/blocks/cl/c/esteira_animal_topo"
+  "icone": "textures/items/cl/arte/blocos/esteira_animal"
  },
  "cl:estrutura_maquina": {
   "pt": "Estrutura de Máquina",
   "en": "Machine Frame",
-  "icone": "textures/blocks/cl/c/estrutura_maquina_topo"
+  "icone": "textures/items/cl/arte/blocos/estrutura_maquina"
  },
  "cl:estufa": {
   "pt": "Estufa",
@@ -859,17 +859,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:expositor": {
   "pt": "Expositor",
   "en": "Display Case",
-  "icone": "textures/blocks/cl/c/expositor_topo"
+  "icone": "textures/items/cl/arte/blocos/expositor"
  },
  "cl:extrusora_ignea": {
   "pt": "Extrusora Ígnea",
   "en": "Igneous Extruder",
-  "icone": "textures/blocks/cl/c/extrusora_ignea_topo"
+  "icone": "textures/items/cl/arte/blocos/extrusora_ignea"
  },
  "cl:faca_corte": {
   "pt": "Faca de Corte",
   "en": "Quartz Cutting Knife",
-  "icone": "textures/items/cl/c/faca_corte"
+  "icone": "textures/items/cl/arte/faca_corte"
  },
  "cl:faixa_mumia": {
   "pt": "Faixa de Múmia",
@@ -909,12 +909,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fertilizadora": {
   "pt": "Fertilizadora",
   "en": "Fertilizer",
-  "icone": "textures/blocks/cl/c/fertilizadora_topo"
+  "icone": "textures/items/cl/arte/blocos/fertilizadora"
  },
  "cl:fertilizante": {
   "pt": "Fertilizante",
   "en": "Fertilizer",
-  "icone": "textures/items/cl/c/fertilizante"
+  "icone": "textures/items/cl/arte/fertilizante"
  },
  "cl:filtro": {
   "pt": "Filtro de Ar",
@@ -929,12 +929,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:folha_plastico": {
   "pt": "Folha de Plástico",
   "en": "Plastic Sheet",
-  "icone": "textures/items/cl/c/folha_plastico"
+  "icone": "textures/items/cl/arte/folha_plastico"
  },
  "cl:fornalha_redstone": {
   "pt": "Fornalha de Redstone",
   "en": "Redstone Furnace",
-  "icone": "textures/blocks/cl/c/fornalha_redstone_topo"
+  "icone": "textures/items/cl/arte/blocos/fornalha_redstone"
  },
  "cl:fragmento_meteorito": {
   "pt": "Fragmento de Meteorito",
@@ -959,7 +959,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fundidora_inducao": {
   "pt": "Fundidora de Indução",
   "en": "Induction Smelter",
-  "icone": "textures/blocks/cl/c/fundidora_inducao_topo"
+  "icone": "textures/items/cl/arte/blocos/fundidora_inducao"
  },
  "cl:gerador": {
   "pt": "Gerador a Carvão",
@@ -999,7 +999,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:interface_camara": {
   "pt": "Interface da Câmara",
   "en": "Pressure Chamber Interface",
-  "icone": "textures/blocks/cl/c/interface_camara"
+  "icone": "textures/items/cl/arte/blocos/interface_camara"
  },
  "cl:jetpack": {
   "pt": "Jetpack",
@@ -1009,7 +1009,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lampada": {
   "pt": "Lâmpada",
   "en": "Fancy Lamp",
-  "icone": "textures/blocks/cl/c/lampada"
+  "icone": "textures/items/cl/arte/blocos/lampada"
  },
  "cl:lampada_amarela": {
   "pt": "Lâmpada Amarela",
@@ -1054,7 +1054,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lanterna": {
   "pt": "Lanterna",
   "en": "Fancy Lantern",
-  "icone": "textures/blocks/cl/c/lanterna"
+  "icone": "textures/items/cl/arte/blocos/lanterna"
  },
  "cl:liga_atomica": {
   "pt": "Liga Atômica",
@@ -1074,87 +1074,87 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
   "en": "Steel Ingot",
-  "icone": "textures/items/cl/c/lingote_aco"
+  "icone": "textures/items/cl/arte/lingote_aco"
  },
  "cl:lingote_blutonio": {
   "pt": "Lingote de Blutônio",
   "en": "Blutonium Ingot",
-  "icone": "textures/items/cl/c/lingote_blutonio"
+  "icone": "textures/items/cl/arte/lingote_blutonio"
  },
  "cl:lingote_bronze": {
   "pt": "Lingote de Bronze",
   "en": "Bronze Ingot",
-  "icone": "textures/items/cl/c/lingote_bronze"
+  "icone": "textures/items/cl/arte/lingote_bronze"
  },
  "cl:lingote_cianita": {
   "pt": "Lingote de Cianita",
   "en": "Cyanite Ingot",
-  "icone": "textures/items/cl/c/lingote_cianita"
+  "icone": "textures/items/cl/arte/lingote_cianita"
  },
  "cl:lingote_estanho": {
   "pt": "Lingote de Estanho",
   "en": "Tin Ingot",
-  "icone": "textures/items/cl/c/lingote_estanho"
+  "icone": "textures/items/cl/arte/lingote_estanho"
  },
  "cl:lingote_ferro_comprimido": {
   "pt": "Lingote de Ferro Comprimido",
   "en": "Compressed Iron Ingot",
-  "icone": "textures/items/cl/c/lingote_ferro_comprimido"
+  "icone": "textures/items/cl/arte/lingote_ferro_comprimido"
  },
  "cl:lingote_yellorium": {
   "pt": "Lingote de Yellorium",
   "en": "Yellorium Ingot",
-  "icone": "textures/items/cl/c/lingote_yellorium"
+  "icone": "textures/items/cl/arte/lingote_yellorium"
  },
  "cl:machadinha_aco": {
   "pt": "Machadinha de Aço",
   "en": "Steel Hatchet",
-  "icone": "textures/items/cl/c/machadinha_aco"
+  "icone": "textures/items/cl/arte/machadinha_aco"
  },
  "cl:machadinha_bronze": {
   "pt": "Machadinha de Bronze",
   "en": "Bronze Hatchet",
-  "icone": "textures/items/cl/c/machadinha_bronze"
+  "icone": "textures/items/cl/arte/machadinha_bronze"
  },
  "cl:machadinha_cacto": {
   "pt": "Machadinha de Cacto",
   "en": "Cactus Hatchet",
-  "icone": "textures/items/cl/c/machadinha_cacto"
+  "icone": "textures/items/cl/arte/machadinha_cacto"
  },
  "cl:machadinha_cobre": {
   "pt": "Machadinha de Cobre",
   "en": "Copper Hatchet",
-  "icone": "textures/items/cl/c/machadinha_cobre"
+  "icone": "textures/items/cl/arte/machadinha_cobre"
  },
  "cl:machadinha_ferro": {
   "pt": "Machadinha de Ferro",
   "en": "Iron Hatchet",
-  "icone": "textures/items/cl/c/machadinha_ferro"
+  "icone": "textures/items/cl/arte/machadinha_ferro"
  },
  "cl:machadinha_madeira": {
   "pt": "Machadinha de Madeira",
   "en": "Wood Hatchet",
-  "icone": "textures/items/cl/c/machadinha_madeira"
+  "icone": "textures/items/cl/arte/machadinha_madeira"
  },
  "cl:machadinha_obsidiana": {
   "pt": "Machadinha de Obsidiana",
   "en": "Obsidian Hatchet",
-  "icone": "textures/items/cl/c/machadinha_obsidiana"
+  "icone": "textures/items/cl/arte/machadinha_obsidiana"
  },
  "cl:machadinha_osso": {
   "pt": "Machadinha de Osso",
   "en": "Bone Hatchet",
-  "icone": "textures/items/cl/c/machadinha_osso"
+  "icone": "textures/items/cl/arte/machadinha_osso"
  },
  "cl:machadinha_pedra": {
   "pt": "Machadinha de Pedra",
   "en": "Stone Hatchet",
-  "icone": "textures/items/cl/c/machadinha_pedra"
+  "icone": "textures/items/cl/arte/machadinha_pedra"
  },
  "cl:machadinha_silex": {
   "pt": "Machadinha de Sílex",
   "en": "Flint Hatchet",
-  "icone": "textures/items/cl/c/machadinha_silex"
+  "icone": "textures/items/cl/arte/machadinha_silex"
  },
  "cl:maionese": {
   "pt": "Maionese",
@@ -1164,7 +1164,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:manometro": {
   "pt": "Manômetro",
   "en": "Pressure Gauge",
-  "icone": "textures/items/cl/c/manometro"
+  "icone": "textures/items/cl/arte/manometro"
  },
  "cl:manteiga": {
   "pt": "Manteiga",
@@ -1174,47 +1174,47 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:marmore": {
   "pt": "Mármore",
   "en": "Marble",
-  "icone": "textures/blocks/cl/c/marmore"
+  "icone": "textures/blocks/cl/arte/marmore"
  },
  "cl:marmore_entalhado": {
   "pt": "Mármore Entalhado",
   "en": "Carved Marble",
-  "icone": "textures/blocks/cl/c/marmore_entalhado"
+  "icone": "textures/blocks/cl/arte/marmore_entalhado"
  },
  "cl:marmore_ladrilho": {
   "pt": "Mármore Ladrilho",
   "en": "Tiles Marble",
-  "icone": "textures/blocks/cl/c/marmore_ladrilho"
+  "icone": "textures/blocks/cl/arte/marmore_ladrilho"
  },
  "cl:marmore_liso": {
   "pt": "Mármore Liso",
   "en": "Smooth Marble",
-  "icone": "textures/blocks/cl/c/marmore_liso"
+  "icone": "textures/blocks/cl/arte/marmore_liso"
  },
  "cl:marmore_mosaico": {
   "pt": "Mármore Mosaico",
   "en": "Mosaic Marble",
-  "icone": "textures/blocks/cl/c/marmore_mosaico"
+  "icone": "textures/blocks/cl/arte/marmore_mosaico"
  },
  "cl:marmore_pilar": {
   "pt": "Mármore Pilar",
   "en": "Pillar Marble",
-  "icone": "textures/blocks/cl/c/marmore_pilar"
+  "icone": "textures/blocks/cl/arte/marmore_pilar"
  },
  "cl:marmore_polido": {
   "pt": "Mármore Polido",
   "en": "Polished Marble",
-  "icone": "textures/blocks/cl/c/marmore_polido"
+  "icone": "textures/blocks/cl/arte/marmore_polido"
  },
  "cl:marmore_tijolos": {
   "pt": "Mármore Tijolos",
   "en": "Bricks Marble",
-  "icone": "textures/blocks/cl/c/marmore_tijolos"
+  "icone": "textures/blocks/cl/arte/marmore_tijolos"
  },
  "cl:marmore_tijolos_pequenos": {
   "pt": "Mármore Tijolinhos",
   "en": "Small Bricks Marble",
-  "icone": "textures/blocks/cl/c/marmore_tijolos_pequenos"
+  "icone": "textures/blocks/cl/arte/marmore_tijolos_pequenos"
  },
  "cl:martelo_cobre": {
   "pt": "Martelo de Cobre",
@@ -1264,17 +1264,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:matriz_conversao": {
   "pt": "Matriz de Conversão",
   "en": "Conversion Matrix",
-  "icone": "textures/items/cl/c/matriz_conversao"
+  "icone": "textures/items/cl/arte/matriz_conversao"
  },
  "cl:mesa_fundicao": {
   "pt": "Mesa de Fundição",
   "en": "Casting Table",
-  "icone": "textures/blocks/cl/c/mesa_fundicao_topo"
+  "icone": "textures/items/cl/arte/blocos/mesa_fundicao"
  },
  "cl:mesa_moldes": {
   "pt": "Mesa de Moldes",
   "en": "Stencil Table",
-  "icone": "textures/blocks/cl/c/mesa_moldes_topo"
+  "icone": "textures/items/cl/arte/blocos/mesa_moldes"
  },
  "cl:meteorito": {
   "pt": "Rocha de Meteorito",
@@ -1299,52 +1299,52 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:molde_cabeca_machado": {
   "pt": "Molde: Cabeça de Machado",
   "en": "Hatchet Head Cast",
-  "icone": "textures/items/cl/c/molde_cabeca_machado"
+  "icone": "textures/items/cl/arte/molde_cabeca_machado"
  },
  "cl:molde_cabeca_pa": {
   "pt": "Molde: Cabeça de Pá",
   "en": "Shovel Head Cast",
-  "icone": "textures/items/cl/c/molde_cabeca_pa"
+  "icone": "textures/items/cl/arte/molde_cabeca_pa"
  },
  "cl:molde_cabeca_picareta": {
   "pt": "Molde: Cabeça de Picareta",
   "en": "Pickaxe Head Cast",
-  "icone": "textures/items/cl/c/molde_cabeca_picareta"
+  "icone": "textures/items/cl/arte/molde_cabeca_picareta"
  },
  "cl:molde_cabo": {
   "pt": "Molde: Cabo",
   "en": "Tool Rod Cast",
-  "icone": "textures/items/cl/c/molde_cabo"
+  "icone": "textures/items/cl/arte/molde_cabo"
  },
  "cl:molde_guarda_larga": {
   "pt": "Molde: Guarda Larga",
   "en": "Wide Guard Cast",
-  "icone": "textures/items/cl/c/molde_guarda_larga"
+  "icone": "textures/items/cl/arte/molde_guarda_larga"
  },
  "cl:molde_lamina_espada": {
   "pt": "Molde: Lâmina de Espada",
   "en": "Sword Blade Cast",
-  "icone": "textures/items/cl/c/molde_lamina_espada"
+  "icone": "textures/items/cl/arte/molde_lamina_espada"
  },
  "cl:molde_ligacao": {
   "pt": "Molde: Ligação",
   "en": "Binding Cast",
-  "icone": "textures/items/cl/c/molde_ligacao"
+  "icone": "textures/items/cl/arte/molde_ligacao"
  },
  "cl:molde_lingote": {
   "pt": "Molde de Lingote",
   "en": "Ingot Cast",
-  "icone": "textures/items/cl/c/molde_lingote"
+  "icone": "textures/items/cl/arte/molde_lingote"
  },
  "cl:molde_pepita": {
   "pt": "Molde de Pepita",
   "en": "Nugget Cast",
-  "icone": "textures/items/cl/c/molde_pepita"
+  "icone": "textures/items/cl/arte/molde_pepita"
  },
  "cl:molde_travessa": {
   "pt": "Molde: Travessa",
   "en": "Crossbar Cast",
-  "icone": "textures/items/cl/c/molde_travessa"
+  "icone": "textures/items/cl/arte/molde_travessa"
  },
  "cl:montador_molecular": {
   "pt": "Montador Molecular",
@@ -1374,12 +1374,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:nucleo_funil": {
   "pt": "Núcleo de Funil",
   "en": "Hopper Core",
-  "icone": "textures/items/cl/c/nucleo_funil"
+  "icone": "textures/items/cl/arte/nucleo_funil"
  },
  "cl:nucleo_sync": {
   "pt": "Núcleo Sync",
   "en": "Sync Core",
-  "icone": "textures/items/cl/c/nucleo_sync"
+  "icone": "textures/items/cl/arte/nucleo_sync"
  },
  "cl:omelete": {
   "pt": "Omelete",
@@ -1419,92 +1419,92 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pa_aco": {
   "pt": "Pá de Aço",
   "en": "Steel Shovel",
-  "icone": "textures/items/cl/c/pa_aco"
+  "icone": "textures/items/cl/arte/pa_aco"
  },
  "cl:pa_bronze": {
   "pt": "Pá de Bronze",
   "en": "Bronze Shovel",
-  "icone": "textures/items/cl/c/pa_bronze"
+  "icone": "textures/items/cl/arte/pa_bronze"
  },
  "cl:pa_cacto": {
   "pt": "Pá de Cacto",
   "en": "Cactus Shovel",
-  "icone": "textures/items/cl/c/pa_cacto"
+  "icone": "textures/items/cl/arte/pa_cacto"
  },
  "cl:pa_cobre": {
   "pt": "Pá de Cobre",
   "en": "Copper Shovel",
-  "icone": "textures/items/cl/c/pa_cobre"
+  "icone": "textures/items/cl/arte/pa_cobre"
  },
  "cl:pa_ferro": {
   "pt": "Pá de Ferro",
   "en": "Iron Shovel",
-  "icone": "textures/items/cl/c/pa_ferro"
+  "icone": "textures/items/cl/arte/pa_ferro"
  },
  "cl:pa_madeira": {
   "pt": "Pá de Madeira",
   "en": "Wood Shovel",
-  "icone": "textures/items/cl/c/pa_madeira"
+  "icone": "textures/items/cl/arte/pa_madeira"
  },
  "cl:pa_obsidiana": {
   "pt": "Pá de Obsidiana",
   "en": "Obsidian Shovel",
-  "icone": "textures/items/cl/c/pa_obsidiana"
+  "icone": "textures/items/cl/arte/pa_obsidiana"
  },
  "cl:pa_osso": {
   "pt": "Pá de Osso",
   "en": "Bone Shovel",
-  "icone": "textures/items/cl/c/pa_osso"
+  "icone": "textures/items/cl/arte/pa_osso"
  },
  "cl:pa_pedra": {
   "pt": "Pá de Pedra",
   "en": "Stone Shovel",
-  "icone": "textures/items/cl/c/pa_pedra"
+  "icone": "textures/items/cl/arte/pa_pedra"
  },
  "cl:pa_silex": {
   "pt": "Pá de Sílex",
   "en": "Flint Shovel",
-  "icone": "textures/items/cl/c/pa_silex"
+  "icone": "textures/items/cl/arte/pa_silex"
  },
  "cl:padrao_branco": {
   "pt": "Padrão em Branco",
   "en": "Blank Pattern",
-  "icone": "textures/items/cl/c/padrao_branco"
+  "icone": "textures/items/cl/arte/padrao_branco"
  },
  "cl:padrao_cabeca_machado": {
   "pt": "Padrão: Cabeça de Machado",
   "en": "Hatchet Head Pattern",
-  "icone": "textures/items/cl/c/padrao_cabeca_machado"
+  "icone": "textures/items/cl/arte/padrao_cabeca_machado"
  },
  "cl:padrao_cabeca_pa": {
   "pt": "Padrão: Cabeça de Pá",
   "en": "Shovel Head Pattern",
-  "icone": "textures/items/cl/c/padrao_cabeca_pa"
+  "icone": "textures/items/cl/arte/padrao_cabeca_pa"
  },
  "cl:padrao_cabeca_picareta": {
   "pt": "Padrão: Cabeça de Picareta",
   "en": "Pickaxe Head Pattern",
-  "icone": "textures/items/cl/c/padrao_cabeca_picareta"
+  "icone": "textures/items/cl/arte/padrao_cabeca_picareta"
  },
  "cl:padrao_cabo": {
   "pt": "Padrão: Cabo",
   "en": "Tool Rod Pattern",
-  "icone": "textures/items/cl/c/padrao_cabo"
+  "icone": "textures/items/cl/arte/padrao_cabo"
  },
  "cl:padrao_guarda_larga": {
   "pt": "Padrão: Guarda Larga",
   "en": "Wide Guard Pattern",
-  "icone": "textures/items/cl/c/padrao_guarda_larga"
+  "icone": "textures/items/cl/arte/padrao_guarda_larga"
  },
  "cl:padrao_lamina_espada": {
   "pt": "Padrão: Lâmina de Espada",
   "en": "Sword Blade Pattern",
-  "icone": "textures/items/cl/c/padrao_lamina_espada"
+  "icone": "textures/items/cl/arte/padrao_lamina_espada"
  },
  "cl:padrao_ligacao": {
   "pt": "Padrão: Ligação",
   "en": "Binding Pattern",
-  "icone": "textures/items/cl/c/padrao_ligacao"
+  "icone": "textures/items/cl/arte/padrao_ligacao"
  },
  "cl:padrao_me_vazio": {
   "pt": "Padrão ME em Branco",
@@ -1514,7 +1514,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:padrao_travessa": {
   "pt": "Padrão: Travessa",
   "en": "Crossbar Pattern",
-  "icone": "textures/items/cl/c/padrao_travessa"
+  "icone": "textures/items/cl/arte/padrao_travessa"
  },
  "cl:painel_nave": {
   "pt": "Painel da Nave",
@@ -1539,447 +1539,447 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:parede_camara": {
   "pt": "Parede da Câmara de Pressão",
   "en": "Pressure Chamber Wall",
-  "icone": "textures/blocks/cl/c/parede_camara"
+  "icone": "textures/blocks/cl/arte/parede_camara"
  },
  "cl:peca_cabeca_machado_aco": {
   "pt": "Cabeça de Machado de Aço",
   "en": "Steel Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_aco"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_aco"
  },
  "cl:peca_cabeca_machado_bronze": {
   "pt": "Cabeça de Machado de Bronze",
   "en": "Bronze Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_bronze"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_bronze"
  },
  "cl:peca_cabeca_machado_cacto": {
   "pt": "Cabeça de Machado de Cacto",
   "en": "Cactus Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_cacto"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_cacto"
  },
  "cl:peca_cabeca_machado_cobre": {
   "pt": "Cabeça de Machado de Cobre",
   "en": "Copper Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_cobre"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_cobre"
  },
  "cl:peca_cabeca_machado_ferro": {
   "pt": "Cabeça de Machado de Ferro",
   "en": "Iron Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_ferro"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_ferro"
  },
  "cl:peca_cabeca_machado_madeira": {
   "pt": "Cabeça de Machado de Madeira",
   "en": "Wood Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_madeira"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_madeira"
  },
  "cl:peca_cabeca_machado_obsidiana": {
   "pt": "Cabeça de Machado de Obsidiana",
   "en": "Obsidian Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_obsidiana"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_obsidiana"
  },
  "cl:peca_cabeca_machado_osso": {
   "pt": "Cabeça de Machado de Osso",
   "en": "Bone Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_osso"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_osso"
  },
  "cl:peca_cabeca_machado_pedra": {
   "pt": "Cabeça de Machado de Pedra",
   "en": "Stone Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_pedra"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_pedra"
  },
  "cl:peca_cabeca_machado_silex": {
   "pt": "Cabeça de Machado de Sílex",
   "en": "Flint Hatchet Head",
-  "icone": "textures/items/cl/c/peca_cabeca_machado_silex"
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_silex"
  },
  "cl:peca_cabeca_pa_aco": {
   "pt": "Cabeça de Pá de Aço",
   "en": "Steel Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_aco"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_aco"
  },
  "cl:peca_cabeca_pa_bronze": {
   "pt": "Cabeça de Pá de Bronze",
   "en": "Bronze Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_bronze"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_bronze"
  },
  "cl:peca_cabeca_pa_cacto": {
   "pt": "Cabeça de Pá de Cacto",
   "en": "Cactus Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_cacto"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_cacto"
  },
  "cl:peca_cabeca_pa_cobre": {
   "pt": "Cabeça de Pá de Cobre",
   "en": "Copper Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_cobre"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_cobre"
  },
  "cl:peca_cabeca_pa_ferro": {
   "pt": "Cabeça de Pá de Ferro",
   "en": "Iron Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_ferro"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_ferro"
  },
  "cl:peca_cabeca_pa_madeira": {
   "pt": "Cabeça de Pá de Madeira",
   "en": "Wood Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_madeira"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_madeira"
  },
  "cl:peca_cabeca_pa_obsidiana": {
   "pt": "Cabeça de Pá de Obsidiana",
   "en": "Obsidian Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_obsidiana"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_obsidiana"
  },
  "cl:peca_cabeca_pa_osso": {
   "pt": "Cabeça de Pá de Osso",
   "en": "Bone Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_osso"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_osso"
  },
  "cl:peca_cabeca_pa_pedra": {
   "pt": "Cabeça de Pá de Pedra",
   "en": "Stone Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_pedra"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_pedra"
  },
  "cl:peca_cabeca_pa_silex": {
   "pt": "Cabeça de Pá de Sílex",
   "en": "Flint Shovel Head",
-  "icone": "textures/items/cl/c/peca_cabeca_pa_silex"
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_silex"
  },
  "cl:peca_cabeca_picareta_aco": {
   "pt": "Cabeça de Picareta de Aço",
   "en": "Steel Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_aco"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_aco"
  },
  "cl:peca_cabeca_picareta_bronze": {
   "pt": "Cabeça de Picareta de Bronze",
   "en": "Bronze Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_bronze"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_bronze"
  },
  "cl:peca_cabeca_picareta_cacto": {
   "pt": "Cabeça de Picareta de Cacto",
   "en": "Cactus Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_cacto"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_cacto"
  },
  "cl:peca_cabeca_picareta_cobre": {
   "pt": "Cabeça de Picareta de Cobre",
   "en": "Copper Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_cobre"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_cobre"
  },
  "cl:peca_cabeca_picareta_ferro": {
   "pt": "Cabeça de Picareta de Ferro",
   "en": "Iron Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_ferro"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_ferro"
  },
  "cl:peca_cabeca_picareta_madeira": {
   "pt": "Cabeça de Picareta de Madeira",
   "en": "Wood Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_madeira"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_madeira"
  },
  "cl:peca_cabeca_picareta_obsidiana": {
   "pt": "Cabeça de Picareta de Obsidiana",
   "en": "Obsidian Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_obsidiana"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_obsidiana"
  },
  "cl:peca_cabeca_picareta_osso": {
   "pt": "Cabeça de Picareta de Osso",
   "en": "Bone Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_osso"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_osso"
  },
  "cl:peca_cabeca_picareta_pedra": {
   "pt": "Cabeça de Picareta de Pedra",
   "en": "Stone Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_pedra"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_pedra"
  },
  "cl:peca_cabeca_picareta_silex": {
   "pt": "Cabeça de Picareta de Sílex",
   "en": "Flint Pickaxe Head",
-  "icone": "textures/items/cl/c/peca_cabeca_picareta_silex"
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_silex"
  },
  "cl:peca_cabo_aco": {
   "pt": "Cabo de Aço",
   "en": "Steel Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_aco"
+  "icone": "textures/items/cl/arte/peca_cabo_aco"
  },
  "cl:peca_cabo_bronze": {
   "pt": "Cabo de Bronze",
   "en": "Bronze Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_bronze"
+  "icone": "textures/items/cl/arte/peca_cabo_bronze"
  },
  "cl:peca_cabo_cacto": {
   "pt": "Cabo de Cacto",
   "en": "Cactus Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_cacto"
+  "icone": "textures/items/cl/arte/peca_cabo_cacto"
  },
  "cl:peca_cabo_cobre": {
   "pt": "Cabo de Cobre",
   "en": "Copper Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_cobre"
+  "icone": "textures/items/cl/arte/peca_cabo_cobre"
  },
  "cl:peca_cabo_ferro": {
   "pt": "Cabo de Ferro",
   "en": "Iron Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_ferro"
+  "icone": "textures/items/cl/arte/peca_cabo_ferro"
  },
  "cl:peca_cabo_madeira": {
   "pt": "Cabo de Madeira",
   "en": "Wood Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_madeira"
+  "icone": "textures/items/cl/arte/peca_cabo_madeira"
  },
  "cl:peca_cabo_obsidiana": {
   "pt": "Cabo de Obsidiana",
   "en": "Obsidian Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_obsidiana"
+  "icone": "textures/items/cl/arte/peca_cabo_obsidiana"
  },
  "cl:peca_cabo_osso": {
   "pt": "Cabo de Osso",
   "en": "Bone Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_osso"
+  "icone": "textures/items/cl/arte/peca_cabo_osso"
  },
  "cl:peca_cabo_pedra": {
   "pt": "Cabo de Pedra",
   "en": "Stone Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_pedra"
+  "icone": "textures/items/cl/arte/peca_cabo_pedra"
  },
  "cl:peca_cabo_silex": {
   "pt": "Cabo de Sílex",
   "en": "Flint Tool Rod",
-  "icone": "textures/items/cl/c/peca_cabo_silex"
+  "icone": "textures/items/cl/arte/peca_cabo_silex"
  },
  "cl:peca_guarda_larga_aco": {
   "pt": "Guarda Larga de Aço",
   "en": "Steel Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_aco"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_aco"
  },
  "cl:peca_guarda_larga_bronze": {
   "pt": "Guarda Larga de Bronze",
   "en": "Bronze Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_bronze"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_bronze"
  },
  "cl:peca_guarda_larga_cacto": {
   "pt": "Guarda Larga de Cacto",
   "en": "Cactus Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_cacto"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_cacto"
  },
  "cl:peca_guarda_larga_cobre": {
   "pt": "Guarda Larga de Cobre",
   "en": "Copper Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_cobre"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_cobre"
  },
  "cl:peca_guarda_larga_ferro": {
   "pt": "Guarda Larga de Ferro",
   "en": "Iron Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_ferro"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_ferro"
  },
  "cl:peca_guarda_larga_madeira": {
   "pt": "Guarda Larga de Madeira",
   "en": "Wood Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_madeira"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_madeira"
  },
  "cl:peca_guarda_larga_obsidiana": {
   "pt": "Guarda Larga de Obsidiana",
   "en": "Obsidian Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_obsidiana"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_obsidiana"
  },
  "cl:peca_guarda_larga_osso": {
   "pt": "Guarda Larga de Osso",
   "en": "Bone Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_osso"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_osso"
  },
  "cl:peca_guarda_larga_pedra": {
   "pt": "Guarda Larga de Pedra",
   "en": "Stone Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_pedra"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_pedra"
  },
  "cl:peca_guarda_larga_silex": {
   "pt": "Guarda Larga de Sílex",
   "en": "Flint Wide Guard",
-  "icone": "textures/items/cl/c/peca_guarda_larga_silex"
+  "icone": "textures/items/cl/arte/peca_guarda_larga_silex"
  },
  "cl:peca_lamina_espada_aco": {
   "pt": "Lâmina de Espada de Aço",
   "en": "Steel Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_aco"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_aco"
  },
  "cl:peca_lamina_espada_bronze": {
   "pt": "Lâmina de Espada de Bronze",
   "en": "Bronze Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_bronze"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_bronze"
  },
  "cl:peca_lamina_espada_cacto": {
   "pt": "Lâmina de Espada de Cacto",
   "en": "Cactus Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_cacto"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_cacto"
  },
  "cl:peca_lamina_espada_cobre": {
   "pt": "Lâmina de Espada de Cobre",
   "en": "Copper Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_cobre"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_cobre"
  },
  "cl:peca_lamina_espada_ferro": {
   "pt": "Lâmina de Espada de Ferro",
   "en": "Iron Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_ferro"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_ferro"
  },
  "cl:peca_lamina_espada_madeira": {
   "pt": "Lâmina de Espada de Madeira",
   "en": "Wood Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_madeira"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_madeira"
  },
  "cl:peca_lamina_espada_obsidiana": {
   "pt": "Lâmina de Espada de Obsidiana",
   "en": "Obsidian Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_obsidiana"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_obsidiana"
  },
  "cl:peca_lamina_espada_osso": {
   "pt": "Lâmina de Espada de Osso",
   "en": "Bone Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_osso"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_osso"
  },
  "cl:peca_lamina_espada_pedra": {
   "pt": "Lâmina de Espada de Pedra",
   "en": "Stone Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_pedra"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_pedra"
  },
  "cl:peca_lamina_espada_silex": {
   "pt": "Lâmina de Espada de Sílex",
   "en": "Flint Sword Blade",
-  "icone": "textures/items/cl/c/peca_lamina_espada_silex"
+  "icone": "textures/items/cl/arte/peca_lamina_espada_silex"
  },
  "cl:peca_ligacao_aco": {
   "pt": "Ligação de Aço",
   "en": "Steel Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_aco"
+  "icone": "textures/items/cl/arte/peca_ligacao_aco"
  },
  "cl:peca_ligacao_bronze": {
   "pt": "Ligação de Bronze",
   "en": "Bronze Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_bronze"
+  "icone": "textures/items/cl/arte/peca_ligacao_bronze"
  },
  "cl:peca_ligacao_cacto": {
   "pt": "Ligação de Cacto",
   "en": "Cactus Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_cacto"
+  "icone": "textures/items/cl/arte/peca_ligacao_cacto"
  },
  "cl:peca_ligacao_cobre": {
   "pt": "Ligação de Cobre",
   "en": "Copper Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_cobre"
+  "icone": "textures/items/cl/arte/peca_ligacao_cobre"
  },
  "cl:peca_ligacao_ferro": {
   "pt": "Ligação de Ferro",
   "en": "Iron Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_ferro"
+  "icone": "textures/items/cl/arte/peca_ligacao_ferro"
  },
  "cl:peca_ligacao_madeira": {
   "pt": "Ligação de Madeira",
   "en": "Wood Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_madeira"
+  "icone": "textures/items/cl/arte/peca_ligacao_madeira"
  },
  "cl:peca_ligacao_obsidiana": {
   "pt": "Ligação de Obsidiana",
   "en": "Obsidian Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_obsidiana"
+  "icone": "textures/items/cl/arte/peca_ligacao_obsidiana"
  },
  "cl:peca_ligacao_osso": {
   "pt": "Ligação de Osso",
   "en": "Bone Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_osso"
+  "icone": "textures/items/cl/arte/peca_ligacao_osso"
  },
  "cl:peca_ligacao_pedra": {
   "pt": "Ligação de Pedra",
   "en": "Stone Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_pedra"
+  "icone": "textures/items/cl/arte/peca_ligacao_pedra"
  },
  "cl:peca_ligacao_silex": {
   "pt": "Ligação de Sílex",
   "en": "Flint Binding",
-  "icone": "textures/items/cl/c/peca_ligacao_silex"
+  "icone": "textures/items/cl/arte/peca_ligacao_silex"
  },
  "cl:peca_travessa_aco": {
   "pt": "Travessa de Aço",
   "en": "Steel Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_aco"
+  "icone": "textures/items/cl/arte/peca_travessa_aco"
  },
  "cl:peca_travessa_bronze": {
   "pt": "Travessa de Bronze",
   "en": "Bronze Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_bronze"
+  "icone": "textures/items/cl/arte/peca_travessa_bronze"
  },
  "cl:peca_travessa_cacto": {
   "pt": "Travessa de Cacto",
   "en": "Cactus Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_cacto"
+  "icone": "textures/items/cl/arte/peca_travessa_cacto"
  },
  "cl:peca_travessa_cobre": {
   "pt": "Travessa de Cobre",
   "en": "Copper Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_cobre"
+  "icone": "textures/items/cl/arte/peca_travessa_cobre"
  },
  "cl:peca_travessa_ferro": {
   "pt": "Travessa de Ferro",
   "en": "Iron Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_ferro"
+  "icone": "textures/items/cl/arte/peca_travessa_ferro"
  },
  "cl:peca_travessa_madeira": {
   "pt": "Travessa de Madeira",
   "en": "Wood Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_madeira"
+  "icone": "textures/items/cl/arte/peca_travessa_madeira"
  },
  "cl:peca_travessa_obsidiana": {
   "pt": "Travessa de Obsidiana",
   "en": "Obsidian Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_obsidiana"
+  "icone": "textures/items/cl/arte/peca_travessa_obsidiana"
  },
  "cl:peca_travessa_osso": {
   "pt": "Travessa de Osso",
   "en": "Bone Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_osso"
+  "icone": "textures/items/cl/arte/peca_travessa_osso"
  },
  "cl:peca_travessa_pedra": {
   "pt": "Travessa de Pedra",
   "en": "Stone Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_pedra"
+  "icone": "textures/items/cl/arte/peca_travessa_pedra"
  },
  "cl:peca_travessa_silex": {
   "pt": "Travessa de Sílex",
   "en": "Flint Crossbar",
-  "icone": "textures/items/cl/c/peca_travessa_silex"
+  "icone": "textures/items/cl/arte/peca_travessa_silex"
  },
  "cl:pedra_entalhado": {
   "pt": "Pedra Entalhado",
   "en": "Carved Stone",
-  "icone": "textures/blocks/cl/c/pedra_entalhado"
+  "icone": "textures/blocks/cl/arte/pedra_entalhado"
  },
  "cl:pedra_ladrilho": {
   "pt": "Pedra Ladrilho",
   "en": "Tiles Stone",
-  "icone": "textures/blocks/cl/c/pedra_ladrilho"
+  "icone": "textures/blocks/cl/arte/pedra_ladrilho"
  },
  "cl:pedra_liso": {
   "pt": "Pedra Liso",
   "en": "Smooth Stone",
-  "icone": "textures/blocks/cl/c/pedra_liso"
+  "icone": "textures/blocks/cl/arte/pedra_liso"
  },
  "cl:pedra_mosaico": {
   "pt": "Pedra Mosaico",
   "en": "Mosaic Stone",
-  "icone": "textures/blocks/cl/c/pedra_mosaico"
+  "icone": "textures/blocks/cl/arte/pedra_mosaico"
  },
  "cl:pedra_pilar": {
   "pt": "Pedra Pilar",
   "en": "Pillar Stone",
-  "icone": "textures/blocks/cl/c/pedra_pilar"
+  "icone": "textures/blocks/cl/arte/pedra_pilar"
  },
  "cl:pedra_polido": {
   "pt": "Pedra Polido",
   "en": "Polished Stone",
-  "icone": "textures/blocks/cl/c/pedra_polido"
+  "icone": "textures/blocks/cl/arte/pedra_polido"
  },
  "cl:pedra_tijolos": {
   "pt": "Pedra Tijolos",
   "en": "Bricks Stone",
-  "icone": "textures/blocks/cl/c/pedra_tijolos"
+  "icone": "textures/blocks/cl/arte/pedra_tijolos"
  },
  "cl:pedra_tijolos_pequenos": {
   "pt": "Pedra Tijolinhos",
   "en": "Small Bricks Stone",
-  "icone": "textures/blocks/cl/c/pedra_tijolos_pequenos"
+  "icone": "textures/blocks/cl/arte/pedra_tijolos_pequenos"
  },
  "cl:pedreira": {
   "pt": "Pedreira",
@@ -2014,52 +2014,52 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:picareta_aco": {
   "pt": "Picareta de Aço",
   "en": "Steel Pickaxe",
-  "icone": "textures/items/cl/c/picareta_aco"
+  "icone": "textures/items/cl/arte/picareta_aco"
  },
  "cl:picareta_bronze": {
   "pt": "Picareta de Bronze",
   "en": "Bronze Pickaxe",
-  "icone": "textures/items/cl/c/picareta_bronze"
+  "icone": "textures/items/cl/arte/picareta_bronze"
  },
  "cl:picareta_cacto": {
   "pt": "Picareta de Cacto",
   "en": "Cactus Pickaxe",
-  "icone": "textures/items/cl/c/picareta_cacto"
+  "icone": "textures/items/cl/arte/picareta_cacto"
  },
  "cl:picareta_cobre": {
   "pt": "Picareta de Cobre",
   "en": "Copper Pickaxe",
-  "icone": "textures/items/cl/c/picareta_cobre"
+  "icone": "textures/items/cl/arte/picareta_cobre"
  },
  "cl:picareta_ferro": {
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
-  "icone": "textures/items/cl/c/picareta_ferro"
+  "icone": "textures/items/cl/arte/picareta_ferro"
  },
  "cl:picareta_madeira": {
   "pt": "Picareta de Madeira",
   "en": "Wood Pickaxe",
-  "icone": "textures/items/cl/c/picareta_madeira"
+  "icone": "textures/items/cl/arte/picareta_madeira"
  },
  "cl:picareta_obsidiana": {
   "pt": "Picareta de Obsidiana",
   "en": "Obsidian Pickaxe",
-  "icone": "textures/items/cl/c/picareta_obsidiana"
+  "icone": "textures/items/cl/arte/picareta_obsidiana"
  },
  "cl:picareta_osso": {
   "pt": "Picareta de Osso",
   "en": "Bone Pickaxe",
-  "icone": "textures/items/cl/c/picareta_osso"
+  "icone": "textures/items/cl/arte/picareta_osso"
  },
  "cl:picareta_pedra": {
   "pt": "Picareta de Pedra",
   "en": "Stone Pickaxe",
-  "icone": "textures/items/cl/c/picareta_pedra"
+  "icone": "textures/items/cl/arte/picareta_pedra"
  },
  "cl:picareta_silex": {
   "pt": "Picareta de Sílex",
   "en": "Flint Pickaxe",
-  "icone": "textures/items/cl/c/picareta_silex"
+  "icone": "textures/items/cl/arte/picareta_silex"
  },
  "cl:pilao": {
   "pt": "Pilão",
@@ -2094,7 +2094,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:placa_circuito_vazia": {
   "pt": "Placa de Circuito Vazia",
   "en": "Empty PCB",
-  "icone": "textures/items/cl/c/placa_circuito_vazia"
+  "icone": "textures/items/cl/arte/placa_circuito_vazia"
  },
  "cl:planta_alho": {
   "pt": "Plantação de Alho",
@@ -2149,37 +2149,37 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:plantadeira": {
   "pt": "Plantadeira",
   "en": "Planter",
-  "icone": "textures/blocks/cl/c/plantadeira_topo"
+  "icone": "textures/items/cl/arte/blocos/plantadeira"
  },
  "cl:plastico_cru": {
   "pt": "Plástico Cru",
   "en": "Raw Plastic",
-  "icone": "textures/items/cl/c/plastico_cru"
+  "icone": "textures/items/cl/arte/plastico_cru"
  },
  "cl:po_certus": {
   "pt": "Pó de Certus",
   "en": "Certus Quartz Dust",
-  "icone": "textures/items/cl/c/po_certus"
+  "icone": "textures/items/cl/arte/po_certus"
  },
  "cl:po_cobre": {
   "pt": "Pó de Cobre",
   "en": "Pulverized Copper",
-  "icone": "textures/items/cl/c/po_cobre"
+  "icone": "textures/items/cl/arte/po_cobre"
  },
  "cl:po_estanho": {
   "pt": "Pó de Estanho",
   "en": "Pulverized Tin",
-  "icone": "textures/items/cl/c/po_estanho"
+  "icone": "textures/items/cl/arte/po_estanho"
  },
  "cl:po_ferro": {
   "pt": "Pó de Ferro",
   "en": "Pulverized Iron",
-  "icone": "textures/items/cl/c/po_ferro"
+  "icone": "textures/items/cl/arte/po_ferro"
  },
  "cl:po_fluix": {
   "pt": "Pó Fluix",
   "en": "Fluix Dust",
-  "icone": "textures/items/cl/c/po_fluix"
+  "icone": "textures/items/cl/arte/po_fluix"
  },
  "cl:po_litio": {
   "pt": "Pó de Lítio",
@@ -2189,12 +2189,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:po_ouro": {
   "pt": "Pó de Ouro",
   "en": "Pulverized Gold",
-  "icone": "textures/items/cl/c/po_ouro"
+  "icone": "textures/items/cl/arte/po_ouro"
  },
  "cl:po_yellorium": {
   "pt": "Pó de Yellorium",
   "en": "Yellorium Dust",
-  "icone": "textures/items/cl/c/po_yellorium"
+  "icone": "textures/items/cl/arte/po_yellorium"
  },
  "cl:poeira": {
   "pt": "Poeira",
@@ -2204,7 +2204,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:ponto_acesso": {
   "pt": "Ponto de Acesso sem Fio",
   "en": "Wireless Access Point",
-  "icone": "textures/blocks/cl/c/ponto_acesso_topo"
+  "icone": "textures/items/cl/arte/blocos/ponto_acesso"
  },
  "cl:porcelana": {
   "pt": "Porcelana",
@@ -2214,42 +2214,42 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:porta_acesso_reator": {
   "pt": "Porta de Acesso",
   "en": "Reactor Access Port",
-  "icone": "textures/blocks/cl/c/porta_acesso_reator_topo"
+  "icone": "textures/items/cl/arte/blocos/porta_acesso_reator"
  },
  "cl:porta_refrigeracao": {
   "pt": "Porta de Refrigeração",
   "en": "Reactor Coolant Port",
-  "icone": "textures/blocks/cl/c/porta_refrigeracao_topo"
+  "icone": "textures/items/cl/arte/blocos/porta_refrigeracao"
  },
  "cl:prateleira": {
   "pt": "Prateleira",
   "en": "Shelf",
-  "icone": "textures/blocks/cl/c/prateleira_topo"
+  "icone": "textures/items/cl/arte/blocos/prateleira"
  },
  "cl:precipitador_glacial": {
   "pt": "Precipitador Glacial",
   "en": "Glacial Precipitator",
-  "icone": "textures/blocks/cl/c/precipitador_glacial_topo"
+  "icone": "textures/items/cl/arte/blocos/precipitador_glacial"
  },
  "cl:processador_avancado": {
   "pt": "Processador Avançado",
   "en": "Advanced Processor",
-  "icone": "textures/items/cl/c/processador_avancado"
+  "icone": "textures/items/cl/arte/processador_avancado"
  },
  "cl:processador_basico": {
   "pt": "Processador Básico",
   "en": "Basic Processor",
-  "icone": "textures/items/cl/c/processador_basico"
+  "icone": "textures/items/cl/arte/processador_basico"
  },
  "cl:pulverizador": {
   "pt": "Pulverizador",
   "en": "Pulverizer",
-  "icone": "textures/blocks/cl/c/pulverizador_topo"
+  "icone": "textures/items/cl/arte/blocos/pulverizador"
  },
  "cl:quebrador_blocos": {
   "pt": "Quebrador de Blocos",
   "en": "Block Breaker",
-  "icone": "textures/blocks/cl/c/quebrador_blocos_topo"
+  "icone": "textures/items/cl/arte/blocos/quebrador_blocos"
  },
  "cl:queijo": {
   "pt": "Queijo",
@@ -2259,7 +2259,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:rancheiro": {
   "pt": "Rancheiro",
   "en": "Rancher",
-  "icone": "textures/blocks/cl/c/rancheiro_topo"
+  "icone": "textures/items/cl/arte/blocos/rancheiro"
  },
  "cl:refinaria": {
   "pt": "Refinaria",
@@ -2269,12 +2269,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:reprocessador_cianita": {
   "pt": "Reprocessador de Cianita",
   "en": "Cyanite Reprocessor",
-  "icone": "textures/blocks/cl/c/reprocessador_cianita_topo"
+  "icone": "textures/items/cl/arte/blocos/reprocessador_cianita"
  },
  "cl:resina": {
   "pt": "Resina",
   "en": "Sap",
-  "icone": "textures/items/cl/c/resina"
+  "icone": "textures/items/cl/arte/resina"
  },
  "cl:saco_dormir": {
   "pt": "Saco de Dormir",
@@ -2369,17 +2369,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:serragem": {
   "pt": "Serragem",
   "en": "Sawdust",
-  "icone": "textures/items/cl/c/serragem"
+  "icone": "textures/items/cl/arte/serragem"
  },
  "cl:serraria": {
   "pt": "Serraria",
   "en": "Sawmill",
-  "icone": "textures/blocks/cl/c/serraria_topo"
+  "icone": "textures/items/cl/arte/blocos/serraria"
  },
  "cl:silicio": {
   "pt": "Silício",
   "en": "Silicon",
-  "icone": "textures/items/cl/c/silicio"
+  "icone": "textures/items/cl/arte/silicio"
  },
  "cl:sopa_arroz": {
   "pt": "Sopa de Arroz",
@@ -2409,7 +2409,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:suporte_ferramentas": {
   "pt": "Suporte de Ferramentas",
   "en": "Tool Rack",
-  "icone": "textures/blocks/cl/c/suporte_ferramentas_topo"
+  "icone": "textures/items/cl/arte/blocos/suporte_ferramentas"
  },
  "cl:tabua_corte": {
   "pt": "Tábua de Corte",
@@ -2429,7 +2429,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tanque_refratario": {
   "pt": "Tanque Refratário",
   "en": "Seared Tank",
-  "icone": "textures/blocks/cl/c/tanque_refratario"
+  "icone": "textures/items/cl/arte/blocos/tanque_refratario"
  },
  "cl:terminal": {
   "pt": "Terminal de Armazenamento",
@@ -2439,7 +2439,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:terminal_sem_fio": {
   "pt": "Terminal sem Fio",
   "en": "Wireless Terminal",
-  "icone": "textures/items/cl/c/terminal_sem_fio"
+  "icone": "textures/items/cl/arte/terminal_sem_fio"
  },
  "cl:tesseract": {
   "pt": "Tesseract",
@@ -2454,17 +2454,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tijolo_refratario": {
   "pt": "Tijolo Refratário",
   "en": "Seared Brick",
-  "icone": "textures/items/cl/c/tijolo_refratario"
+  "icone": "textures/items/cl/arte/tijolo_refratario"
  },
  "cl:tijolos_refratarios": {
   "pt": "Tijolos Refratários",
   "en": "Seared Bricks",
-  "icone": "textures/blocks/cl/c/tijolos_refratarios"
+  "icone": "textures/blocks/cl/arte/tijolos_refratarios"
  },
  "cl:tomada_energia": {
   "pt": "Tomada de Energia",
   "en": "Reactor Power Tap",
-  "icone": "textures/blocks/cl/c/tomada_energia_topo"
+  "icone": "textures/items/cl/arte/blocos/tomada_energia"
  },
  "cl:tomate": {
   "pt": "Tomate",
@@ -2474,7 +2474,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:torneira": {
   "pt": "Torneira",
   "en": "Faucet",
-  "icone": "textures/blocks/cl/c/torneira"
+  "icone": "textures/items/cl/arte/blocos/torneira"
  },
  "cl:torrada": {
   "pt": "Torrada",
@@ -2494,22 +2494,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:transistor": {
   "pt": "Transistor",
   "en": "Transistor",
-  "icone": "textures/items/cl/c/transistor"
+  "icone": "textures/items/cl/arte/transistor"
  },
  "cl:triturador_monstros": {
   "pt": "Triturador de Monstros",
   "en": "Mob Grinder",
-  "icone": "textures/blocks/cl/c/triturador_monstros_topo"
+  "icone": "textures/items/cl/arte/blocos/triturador_monstros"
  },
  "cl:tubo_pressao": {
   "pt": "Tubo de Pressão",
   "en": "Pressure Tube",
-  "icone": "textures/blocks/cl/c/tubo_pressao"
+  "icone": "textures/items/cl/arte/blocos/tubo_pressao"
  },
  "cl:tubo_pressao_avancado": {
   "pt": "Tubo de Pressão Avançado",
   "en": "Advanced Pressure Tube",
-  "icone": "textures/blocks/cl/c/tubo_pressao_avancado"
+  "icone": "textures/items/cl/arte/blocos/tubo_pressao_avancado"
  },
  "cl:tumulo": {
   "pt": "Túmulo",
@@ -2519,72 +2519,72 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:upgrade_alcance_1": {
   "pt": "Upgrade de Alcance +1",
   "en": "Range Upgrade +1",
-  "icone": "textures/items/cl/c/upgrade_alcance_1"
+  "icone": "textures/items/cl/arte/upgrade_alcance_1"
  },
  "cl:upgrade_alcance_2": {
   "pt": "Upgrade de Alcance +2",
   "en": "Range Upgrade +2",
-  "icone": "textures/items/cl/c/upgrade_alcance_2"
+  "icone": "textures/items/cl/arte/upgrade_alcance_2"
  },
  "cl:upgrade_alcance_3": {
   "pt": "Upgrade de Alcance +3",
   "en": "Range Upgrade +3",
-  "icone": "textures/items/cl/c/upgrade_alcance_3"
+  "icone": "textures/items/cl/arte/upgrade_alcance_3"
  },
  "cl:upgrade_alcance_4": {
   "pt": "Upgrade de Alcance +4",
   "en": "Range Upgrade +4",
-  "icone": "textures/items/cl/c/upgrade_alcance_4"
+  "icone": "textures/items/cl/arte/upgrade_alcance_4"
  },
  "cl:upgrade_alcance_5": {
   "pt": "Upgrade de Alcance +5",
   "en": "Range Upgrade +5",
-  "icone": "textures/items/cl/c/upgrade_alcance_5"
+  "icone": "textures/items/cl/arte/upgrade_alcance_5"
  },
  "cl:upgrade_armazenamento": {
   "pt": "Upgrade de Armazenamento",
   "en": "Storage Upgrade",
-  "icone": "textures/items/cl/c/upgrade_armazenamento"
+  "icone": "textures/items/cl/arte/upgrade_armazenamento"
  },
  "cl:upgrade_estrutural_1": {
   "pt": "Upgrade Estrutural MK I",
   "en": "Structural Upgrade MK I",
-  "icone": "textures/items/cl/c/upgrade_estrutural_1"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_1"
  },
  "cl:upgrade_estrutural_2": {
   "pt": "Upgrade Estrutural MK II",
   "en": "Structural Upgrade MK II",
-  "icone": "textures/items/cl/c/upgrade_estrutural_2"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_2"
  },
  "cl:upgrade_estrutural_3": {
   "pt": "Upgrade Estrutural MK III",
   "en": "Structural Upgrade MK III",
-  "icone": "textures/items/cl/c/upgrade_estrutural_3"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_3"
  },
  "cl:upgrade_estrutural_4": {
   "pt": "Upgrade Estrutural MK IV",
   "en": "Structural Upgrade MK IV",
-  "icone": "textures/items/cl/c/upgrade_estrutural_4"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_4"
  },
  "cl:upgrade_estrutural_5": {
   "pt": "Upgrade Estrutural MK V",
   "en": "Structural Upgrade MK V",
-  "icone": "textures/items/cl/c/upgrade_estrutural_5"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_5"
  },
  "cl:upgrade_estrutural_6": {
   "pt": "Upgrade Estrutural MK VI",
   "en": "Structural Upgrade MK VI",
-  "icone": "textures/items/cl/c/upgrade_estrutural_6"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_6"
  },
  "cl:upgrade_estrutural_7": {
   "pt": "Upgrade Estrutural MK VII",
   "en": "Structural Upgrade MK VII",
-  "icone": "textures/items/cl/c/upgrade_estrutural_7"
+  "icone": "textures/items/cl/arte/upgrade_estrutural_7"
  },
  "cl:valvula_camara": {
   "pt": "Válvula da Câmara",
   "en": "Pressure Chamber Valve",
-  "icone": "textures/blocks/cl/c/valvula_camara"
+  "icone": "textures/items/cl/arte/blocos/valvula_camara"
  },
  "cl:varal": {
   "pt": "Varal",
@@ -2594,57 +2594,57 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:vidro_camara": {
   "pt": "Vidro da Câmara de Pressão",
   "en": "Pressure Chamber Glass",
-  "icone": "textures/blocks/cl/c/vidro_camara"
+  "icone": "textures/blocks/cl/arte/vidro_camara"
  },
  "cl:vidro_entalhado": {
   "pt": "Vidro Entalhado",
   "en": "Carved Glass",
-  "icone": "textures/blocks/cl/c/vidro_entalhado"
+  "icone": "textures/blocks/cl/arte/vidro_entalhado"
  },
  "cl:vidro_ladrilho": {
   "pt": "Vidro Ladrilho",
   "en": "Tiles Glass",
-  "icone": "textures/blocks/cl/c/vidro_ladrilho"
+  "icone": "textures/blocks/cl/arte/vidro_ladrilho"
  },
  "cl:vidro_liso": {
   "pt": "Vidro Liso",
   "en": "Smooth Glass",
-  "icone": "textures/blocks/cl/c/vidro_liso"
+  "icone": "textures/blocks/cl/arte/vidro_liso"
  },
  "cl:vidro_mosaico": {
   "pt": "Vidro Mosaico",
   "en": "Mosaic Glass",
-  "icone": "textures/blocks/cl/c/vidro_mosaico"
+  "icone": "textures/blocks/cl/arte/vidro_mosaico"
  },
  "cl:vidro_pilar": {
   "pt": "Vidro Pilar",
   "en": "Pillar Glass",
-  "icone": "textures/blocks/cl/c/vidro_pilar"
+  "icone": "textures/blocks/cl/arte/vidro_pilar"
  },
  "cl:vidro_polido": {
   "pt": "Vidro Polido",
   "en": "Polished Glass",
-  "icone": "textures/blocks/cl/c/vidro_polido"
+  "icone": "textures/blocks/cl/arte/vidro_polido"
  },
  "cl:vidro_reator": {
   "pt": "Vidro do Reator",
   "en": "Reactor Glass",
-  "icone": "textures/blocks/cl/c/vidro_reator"
+  "icone": "textures/blocks/cl/arte/vidro_reator"
  },
  "cl:vidro_refratario": {
   "pt": "Vidro Refratário",
   "en": "Seared Glass",
-  "icone": "textures/blocks/cl/c/vidro_refratario"
+  "icone": "textures/blocks/cl/arte/vidro_refratario"
  },
  "cl:vidro_tijolos": {
   "pt": "Vidro Tijolos",
   "en": "Bricks Glass",
-  "icone": "textures/blocks/cl/c/vidro_tijolos"
+  "icone": "textures/blocks/cl/arte/vidro_tijolos"
  },
  "cl:vidro_tijolos_pequenos": {
   "pt": "Vidro Tijolinhos",
   "en": "Small Bricks Glass",
-  "icone": "textures/blocks/cl/c/vidro_tijolos_pequenos"
+  "icone": "textures/blocks/cl/arte/vidro_tijolos_pequenos"
  },
  "minecraft:acacia_leaves": {
   "pt": "Folhas de Acácia",

@@ -4,7 +4,8 @@
 #   blocos_menu/<id>.png  128x128 isométrico        -> arte/blocos/<id>.png (64x64; Catálogo e menus)
 #   itens/ovo_<monstro>   ovo do monstro            -> arte/ovo_<monstro>.png (ovo de criar do jogo)
 #   blocos_faces/<bloco>[_frente|_lado|_topo|_baixo].png -> RP/textures/blocks/cl/arte/ (só blocos das Fases 15+,
-#                         que são cubos; as máquinas antigas têm modelo próprio) e planta_<id>_<0|1|2>.png das plantações
+#                         que são cubos; as máquinas antigas têm modelo próprio) e planta_<id>_<0|1|2>.png das plantações.
+#                         Um cubo com as 4 faces passa a usar cada uma e vira de frente para quem coloca (gerar-conteudo).
 # Nomes que vieram diferentes dos IDs do jogo são trocados por SINONIMOS; o resto é listado no fim.
 # Não roda no build (precisa de Python + Pillow):
 #   python3 tools/importar-icones.py <pasta do pacote>
@@ -51,7 +52,8 @@ def main(pacote):
     pasta = f"{pacote}/itens"
     for arq in sorted(os.listdir(pasta)) if os.path.isdir(pasta) else []:
         nome = arq[:-4]
-        id = SINONIMOS.get(nome, nome)
+        # Sinônimo só vale se o nome não for um item do jogo: po_ferro (Thermal) e ferro_po (Ex Nihilo) são itens diferentes.
+        id = nome if nome in itens_jogo else SINONIMOS.get(nome, nome)
         if nome in ITEM_BLOCO:
             item(f"{pasta}/{arq}").resize((64, 64), Image.NEAREST).save(f"{SAIDA}/blocos/{ITEM_BLOCO[nome]}.png")
             continue
@@ -84,7 +86,9 @@ def main(pacote):
             bloco = nome.rsplit("_", 1)[0] if nome.rsplit("_", 1)[-1] in ("frente", "lado", "topo", "baixo") else nome
             # Plantações: planta_<id>_<estágio> substitui a textura do HarvestCraft (RP/textures/blocks/cl/hc/<id>_<estágio>).
             planta = nome.startswith("planta_") and os.path.exists(f"{R}/RP/textures/blocks/cl/hc/{nome[7:]}.png")
-            if planta or os.path.exists(f"{R}/RP/textures/blocks/cl/c/{nome}.png"):
+            # Cubo com as 4 faces desenhadas (frente, lado, topo, baixo): o gerar-conteudo passa a usar cada uma.
+            quatro = bloco != nome and bloco in blocos_jogo
+            if planta or quatro or os.path.exists(f"{R}/RP/textures/blocks/cl/c/{nome}.png"):
                 im = Image.open(f"{faces}/{arq}").convert("RGBA")
                 if im.width > 32:
                     im = im.resize((32, 32), Image.NEAREST if im.width % 32 == 0 else Image.LANCZOS)

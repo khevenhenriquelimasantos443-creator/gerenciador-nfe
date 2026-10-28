@@ -1,11 +1,11 @@
-# Ícones que ainda faltam (versão 1.0.0)
+# Ícones que ainda faltam (versão 1.3.4)
 
 Conferido no jogo: tudo o que ainda está sem a arte da outra IA. Mesmo formato, mesmas regras e mesma forma de
 salvar e mandar de `docs/prompt-icones.md` (A = ícone de item, B = ícone de menu de bloco, C = texturas de face).
 Os nomes de arquivo têm que ser exatamente estes, para eu encaixar direto.
 
-**Resumo:** 10 ícones de menu e 30 texturas de plantação das Fases 12 e 14, mais 206 itens e 124 blocos das Fases 15 a 23.
-A Fase 10 (final) não tem item nem bloco novo.
+**Resumo (1.3.4):** partes 1 e 2 recebidas e no jogo. **Falta só a parte 3 (`novidades_1_2`) e a parte 4 (`novidades_1_3`)**: 26 itens e os blocos listados nelas.
+Os cubos simples (tijolos do Chisel, vidros, blocos de metal) não precisam de ícone de menu: o jogo desenha o cubo com as faces.
 
 ## Parte 1: pendentes das Fases 12 e 14
 
@@ -42,6 +42,9 @@ A Fase 10 (final) não tem item nem bloco novo.
 | planta_fruta_cacto_0/1/2 | Plantação de Fruta do Cacto | 3 estágios: broto, planta média, planta madura com fruta do cacto (cacto baixo com frutas rosas) |
 
 ## Parte 2: Fases 15 a 23
+
+> ✅ Recebida e importada na 1.3.4 (578 arquivos: 206 itens, 62 ícones de menu e 310 faces). Os cubos que vieram com
+> 4 faces (estante, prateleira, tubos, tanque...) passaram a usar cada face e a virar de frente para quem coloca.
 
 Nos blocos, "máquina" = entregar **B + C (4 faces)**; "cubo" = entregar só **C**.
 Os blocos sem coluna "Tipo" são todos máquina.
@@ -420,6 +423,7 @@ OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
 | refinaria | Refinaria | caixa de vidro com tanques e chama amarela |
 | motor_combustao | Motor a Combustão | motor de aço com pistão e engrenagem |
 | pedreira | Pedreira | caixa de metal amarela e preta com broca |
+| gerador_blaze | Gerador de Blazes (no alto das torres das cidades) | gaiola de ferro escuro com chamas laranja e uma vara de blaze dourada no meio |
 
 **Blocos "cubo" (só C):**
 

@@ -100,9 +100,11 @@ function geometria(id, ossos) {
   });
 }
 
+const QUATRO_FACES = ["frente", "lado", "topo", "baixo"];
 function bloco(f, b) {
   const comps = {};
   let mats;
+  let quatroFaces = false;
   if (b.tipo === "maquina") {
     const luz = b.luz ?? "ciano";
     const t = {
@@ -122,6 +124,13 @@ function bloco(f, b) {
     mats = { "*": { texture: lado, render_method: rm } };
     if (b.topo) mats.up = mats.down = { texture: textura(`${b.id}_topo`, PADRAO[b.topo](c)), render_method: rm };
     if (vidro) comps["minecraft:light_dampening"] = 0;
+    // Arte importada com as 4 faces (frente, lado, topo, baixo): cada face no seu lado, e o bloco vira de
+    // frente para quem coloca, como as máquinas (tools/importar-icones.py; a arte entra no aplicar-icones).
+    if (QUATRO_FACES.every((f) => existsSync(join(RAIZ, `RP/textures/blocks/cl/arte/${b.id}_${f}.png`)))) {
+      const [fr, la, to, ba] = QUATRO_FACES.map((f) => textura(`${b.id}_${f}`, pintor));
+      mats = { "*": { texture: la, render_method: rm }, north: { texture: fr, render_method: rm }, up: { texture: to, render_method: rm }, down: { texture: ba, render_method: rm } };
+      quatroFaces = true;
+    }
   }
   Object.assign(comps, {
     "minecraft:geometry": "minecraft:geometry.full_block",
@@ -144,7 +153,7 @@ function bloco(f, b) {
     geometria(b.id, b.geometria.ossos);
   }
   Object.assign(comps, b.extra ?? {});
-  const girar = b.girar ?? b.tipo === "maquina";
+  const girar = b.girar ?? (b.tipo === "maquina" || quatroFaces);
   const description = { identifier: `cl:${b.id}`, menu_category: { category: b.menu ?? "items" } };
   if (b.estados) description.states = b.estados;
   const permutations = [...(b.permutacoes ?? [])];

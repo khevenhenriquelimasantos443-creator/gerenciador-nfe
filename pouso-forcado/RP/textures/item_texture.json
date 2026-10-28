@@ -306,622 +306,622 @@
       "textures": "textures/items/cl/arte/ovo_mumia"
     },
     "clc_padrao_branco": {
-      "textures": "textures/items/cl/c/padrao_branco"
+      "textures": "textures/items/cl/arte/padrao_branco"
     },
     "clc_padrao_cabo": {
-      "textures": "textures/items/cl/c/padrao_cabo"
+      "textures": "textures/items/cl/arte/padrao_cabo"
     },
     "clc_padrao_ligacao": {
-      "textures": "textures/items/cl/c/padrao_ligacao"
+      "textures": "textures/items/cl/arte/padrao_ligacao"
     },
     "clc_padrao_cabeca_picareta": {
-      "textures": "textures/items/cl/c/padrao_cabeca_picareta"
+      "textures": "textures/items/cl/arte/padrao_cabeca_picareta"
     },
     "clc_padrao_cabeca_pa": {
-      "textures": "textures/items/cl/c/padrao_cabeca_pa"
+      "textures": "textures/items/cl/arte/padrao_cabeca_pa"
     },
     "clc_padrao_cabeca_machado": {
-      "textures": "textures/items/cl/c/padrao_cabeca_machado"
+      "textures": "textures/items/cl/arte/padrao_cabeca_machado"
     },
     "clc_padrao_lamina_espada": {
-      "textures": "textures/items/cl/c/padrao_lamina_espada"
+      "textures": "textures/items/cl/arte/padrao_lamina_espada"
     },
     "clc_padrao_guarda_larga": {
-      "textures": "textures/items/cl/c/padrao_guarda_larga"
+      "textures": "textures/items/cl/arte/padrao_guarda_larga"
     },
     "clc_padrao_travessa": {
-      "textures": "textures/items/cl/c/padrao_travessa"
+      "textures": "textures/items/cl/arte/padrao_travessa"
     },
     "clc_peca_cabo_madeira": {
-      "textures": "textures/items/cl/c/peca_cabo_madeira"
+      "textures": "textures/items/cl/arte/peca_cabo_madeira"
     },
     "clc_peca_ligacao_madeira": {
-      "textures": "textures/items/cl/c/peca_ligacao_madeira"
+      "textures": "textures/items/cl/arte/peca_ligacao_madeira"
     },
     "clc_peca_cabeca_picareta_madeira": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_madeira"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_madeira"
     },
     "clc_peca_cabeca_pa_madeira": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_madeira"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_madeira"
     },
     "clc_peca_cabeca_machado_madeira": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_madeira"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_madeira"
     },
     "clc_peca_lamina_espada_madeira": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_madeira"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_madeira"
     },
     "clc_peca_guarda_larga_madeira": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_madeira"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_madeira"
     },
     "clc_peca_travessa_madeira": {
-      "textures": "textures/items/cl/c/peca_travessa_madeira"
+      "textures": "textures/items/cl/arte/peca_travessa_madeira"
     },
     "clc_picareta_madeira": {
-      "textures": "textures/items/cl/c/picareta_madeira"
+      "textures": "textures/items/cl/arte/picareta_madeira"
     },
     "clc_pa_madeira": {
-      "textures": "textures/items/cl/c/pa_madeira"
+      "textures": "textures/items/cl/arte/pa_madeira"
     },
     "clc_machadinha_madeira": {
-      "textures": "textures/items/cl/c/machadinha_madeira"
+      "textures": "textures/items/cl/arte/machadinha_madeira"
     },
     "clc_espada_larga_madeira": {
-      "textures": "textures/items/cl/c/espada_larga_madeira"
+      "textures": "textures/items/cl/arte/espada_larga_madeira"
     },
     "clc_peca_cabo_pedra": {
-      "textures": "textures/items/cl/c/peca_cabo_pedra"
+      "textures": "textures/items/cl/arte/peca_cabo_pedra"
     },
     "clc_peca_ligacao_pedra": {
-      "textures": "textures/items/cl/c/peca_ligacao_pedra"
+      "textures": "textures/items/cl/arte/peca_ligacao_pedra"
     },
     "clc_peca_cabeca_picareta_pedra": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_pedra"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_pedra"
     },
     "clc_peca_cabeca_pa_pedra": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_pedra"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_pedra"
     },
     "clc_peca_cabeca_machado_pedra": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_pedra"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_pedra"
     },
     "clc_peca_lamina_espada_pedra": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_pedra"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_pedra"
     },
     "clc_peca_guarda_larga_pedra": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_pedra"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_pedra"
     },
     "clc_peca_travessa_pedra": {
-      "textures": "textures/items/cl/c/peca_travessa_pedra"
+      "textures": "textures/items/cl/arte/peca_travessa_pedra"
     },
     "clc_picareta_pedra": {
-      "textures": "textures/items/cl/c/picareta_pedra"
+      "textures": "textures/items/cl/arte/picareta_pedra"
     },
     "clc_pa_pedra": {
-      "textures": "textures/items/cl/c/pa_pedra"
+      "textures": "textures/items/cl/arte/pa_pedra"
     },
     "clc_machadinha_pedra": {
-      "textures": "textures/items/cl/c/machadinha_pedra"
+      "textures": "textures/items/cl/arte/machadinha_pedra"
     },
     "clc_espada_larga_pedra": {
-      "textures": "textures/items/cl/c/espada_larga_pedra"
+      "textures": "textures/items/cl/arte/espada_larga_pedra"
     },
     "clc_peca_cabo_silex": {
-      "textures": "textures/items/cl/c/peca_cabo_silex"
+      "textures": "textures/items/cl/arte/peca_cabo_silex"
     },
     "clc_peca_ligacao_silex": {
-      "textures": "textures/items/cl/c/peca_ligacao_silex"
+      "textures": "textures/items/cl/arte/peca_ligacao_silex"
     },
     "clc_peca_cabeca_picareta_silex": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_silex"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_silex"
     },
     "clc_peca_cabeca_pa_silex": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_silex"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_silex"
     },
     "clc_peca_cabeca_machado_silex": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_silex"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_silex"
     },
     "clc_peca_lamina_espada_silex": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_silex"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_silex"
     },
     "clc_peca_guarda_larga_silex": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_silex"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_silex"
     },
     "clc_peca_travessa_silex": {
-      "textures": "textures/items/cl/c/peca_travessa_silex"
+      "textures": "textures/items/cl/arte/peca_travessa_silex"
     },
     "clc_picareta_silex": {
-      "textures": "textures/items/cl/c/picareta_silex"
+      "textures": "textures/items/cl/arte/picareta_silex"
     },
     "clc_pa_silex": {
-      "textures": "textures/items/cl/c/pa_silex"
+      "textures": "textures/items/cl/arte/pa_silex"
     },
     "clc_machadinha_silex": {
-      "textures": "textures/items/cl/c/machadinha_silex"
+      "textures": "textures/items/cl/arte/machadinha_silex"
     },
     "clc_espada_larga_silex": {
-      "textures": "textures/items/cl/c/espada_larga_silex"
+      "textures": "textures/items/cl/arte/espada_larga_silex"
     },
     "clc_peca_cabo_cacto": {
-      "textures": "textures/items/cl/c/peca_cabo_cacto"
+      "textures": "textures/items/cl/arte/peca_cabo_cacto"
     },
     "clc_peca_ligacao_cacto": {
-      "textures": "textures/items/cl/c/peca_ligacao_cacto"
+      "textures": "textures/items/cl/arte/peca_ligacao_cacto"
     },
     "clc_peca_cabeca_picareta_cacto": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_cacto"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_cacto"
     },
     "clc_peca_cabeca_pa_cacto": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_cacto"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_cacto"
     },
     "clc_peca_cabeca_machado_cacto": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_cacto"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_cacto"
     },
     "clc_peca_lamina_espada_cacto": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_cacto"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_cacto"
     },
     "clc_peca_guarda_larga_cacto": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_cacto"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_cacto"
     },
     "clc_peca_travessa_cacto": {
-      "textures": "textures/items/cl/c/peca_travessa_cacto"
+      "textures": "textures/items/cl/arte/peca_travessa_cacto"
     },
     "clc_picareta_cacto": {
-      "textures": "textures/items/cl/c/picareta_cacto"
+      "textures": "textures/items/cl/arte/picareta_cacto"
     },
     "clc_pa_cacto": {
-      "textures": "textures/items/cl/c/pa_cacto"
+      "textures": "textures/items/cl/arte/pa_cacto"
     },
     "clc_machadinha_cacto": {
-      "textures": "textures/items/cl/c/machadinha_cacto"
+      "textures": "textures/items/cl/arte/machadinha_cacto"
     },
     "clc_espada_larga_cacto": {
-      "textures": "textures/items/cl/c/espada_larga_cacto"
+      "textures": "textures/items/cl/arte/espada_larga_cacto"
     },
     "clc_peca_cabo_osso": {
-      "textures": "textures/items/cl/c/peca_cabo_osso"
+      "textures": "textures/items/cl/arte/peca_cabo_osso"
     },
     "clc_peca_ligacao_osso": {
-      "textures": "textures/items/cl/c/peca_ligacao_osso"
+      "textures": "textures/items/cl/arte/peca_ligacao_osso"
     },
     "clc_peca_cabeca_picareta_osso": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_osso"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_osso"
     },
     "clc_peca_cabeca_pa_osso": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_osso"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_osso"
     },
     "clc_peca_cabeca_machado_osso": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_osso"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_osso"
     },
     "clc_peca_lamina_espada_osso": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_osso"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_osso"
     },
     "clc_peca_guarda_larga_osso": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_osso"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_osso"
     },
     "clc_peca_travessa_osso": {
-      "textures": "textures/items/cl/c/peca_travessa_osso"
+      "textures": "textures/items/cl/arte/peca_travessa_osso"
     },
     "clc_picareta_osso": {
-      "textures": "textures/items/cl/c/picareta_osso"
+      "textures": "textures/items/cl/arte/picareta_osso"
     },
     "clc_pa_osso": {
-      "textures": "textures/items/cl/c/pa_osso"
+      "textures": "textures/items/cl/arte/pa_osso"
     },
     "clc_machadinha_osso": {
-      "textures": "textures/items/cl/c/machadinha_osso"
+      "textures": "textures/items/cl/arte/machadinha_osso"
     },
     "clc_espada_larga_osso": {
-      "textures": "textures/items/cl/c/espada_larga_osso"
+      "textures": "textures/items/cl/arte/espada_larga_osso"
     },
     "clc_peca_cabo_obsidiana": {
-      "textures": "textures/items/cl/c/peca_cabo_obsidiana"
+      "textures": "textures/items/cl/arte/peca_cabo_obsidiana"
     },
     "clc_peca_ligacao_obsidiana": {
-      "textures": "textures/items/cl/c/peca_ligacao_obsidiana"
+      "textures": "textures/items/cl/arte/peca_ligacao_obsidiana"
     },
     "clc_peca_cabeca_picareta_obsidiana": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_obsidiana"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_obsidiana"
     },
     "clc_peca_cabeca_pa_obsidiana": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_obsidiana"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_obsidiana"
     },
     "clc_peca_cabeca_machado_obsidiana": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_obsidiana"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_obsidiana"
     },
     "clc_peca_lamina_espada_obsidiana": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_obsidiana"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_obsidiana"
     },
     "clc_peca_guarda_larga_obsidiana": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_obsidiana"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_obsidiana"
     },
     "clc_peca_travessa_obsidiana": {
-      "textures": "textures/items/cl/c/peca_travessa_obsidiana"
+      "textures": "textures/items/cl/arte/peca_travessa_obsidiana"
     },
     "clc_picareta_obsidiana": {
-      "textures": "textures/items/cl/c/picareta_obsidiana"
+      "textures": "textures/items/cl/arte/picareta_obsidiana"
     },
     "clc_pa_obsidiana": {
-      "textures": "textures/items/cl/c/pa_obsidiana"
+      "textures": "textures/items/cl/arte/pa_obsidiana"
     },
     "clc_machadinha_obsidiana": {
-      "textures": "textures/items/cl/c/machadinha_obsidiana"
+      "textures": "textures/items/cl/arte/machadinha_obsidiana"
     },
     "clc_espada_larga_obsidiana": {
-      "textures": "textures/items/cl/c/espada_larga_obsidiana"
+      "textures": "textures/items/cl/arte/espada_larga_obsidiana"
     },
     "clc_argamassa": {
-      "textures": "textures/items/cl/c/argamassa"
+      "textures": "textures/items/cl/arte/argamassa"
     },
     "clc_tijolo_refratario": {
-      "textures": "textures/items/cl/c/tijolo_refratario"
+      "textures": "textures/items/cl/arte/tijolo_refratario"
     },
     "clc_molde_lingote": {
-      "textures": "textures/items/cl/c/molde_lingote"
+      "textures": "textures/items/cl/arte/molde_lingote"
     },
     "clc_molde_pepita": {
-      "textures": "textures/items/cl/c/molde_pepita"
+      "textures": "textures/items/cl/arte/molde_pepita"
     },
     "clc_molde_cabo": {
-      "textures": "textures/items/cl/c/molde_cabo"
+      "textures": "textures/items/cl/arte/molde_cabo"
     },
     "clc_molde_ligacao": {
-      "textures": "textures/items/cl/c/molde_ligacao"
+      "textures": "textures/items/cl/arte/molde_ligacao"
     },
     "clc_molde_cabeca_picareta": {
-      "textures": "textures/items/cl/c/molde_cabeca_picareta"
+      "textures": "textures/items/cl/arte/molde_cabeca_picareta"
     },
     "clc_molde_cabeca_pa": {
-      "textures": "textures/items/cl/c/molde_cabeca_pa"
+      "textures": "textures/items/cl/arte/molde_cabeca_pa"
     },
     "clc_molde_cabeca_machado": {
-      "textures": "textures/items/cl/c/molde_cabeca_machado"
+      "textures": "textures/items/cl/arte/molde_cabeca_machado"
     },
     "clc_molde_lamina_espada": {
-      "textures": "textures/items/cl/c/molde_lamina_espada"
+      "textures": "textures/items/cl/arte/molde_lamina_espada"
     },
     "clc_molde_guarda_larga": {
-      "textures": "textures/items/cl/c/molde_guarda_larga"
+      "textures": "textures/items/cl/arte/molde_guarda_larga"
     },
     "clc_molde_travessa": {
-      "textures": "textures/items/cl/c/molde_travessa"
+      "textures": "textures/items/cl/arte/molde_travessa"
     },
     "clc_lingote_bronze": {
-      "textures": "textures/items/cl/c/lingote_bronze"
+      "textures": "textures/items/cl/arte/lingote_bronze"
     },
     "clc_lingote_aco": {
-      "textures": "textures/items/cl/c/lingote_aco"
+      "textures": "textures/items/cl/arte/lingote_aco"
     },
     "clc_lingote_estanho": {
-      "textures": "textures/items/cl/c/lingote_estanho"
+      "textures": "textures/items/cl/arte/lingote_estanho"
     },
     "clc_estanho_quebrado": {
-      "textures": "textures/items/cl/c/estanho_quebrado"
+      "textures": "textures/items/cl/arte/estanho_quebrado"
     },
     "clc_estanho_triturado": {
-      "textures": "textures/items/cl/c/estanho_triturado"
+      "textures": "textures/items/cl/arte/estanho_triturado"
     },
     "clc_estanho_po": {
-      "textures": "textures/items/cl/c/estanho_po"
+      "textures": "textures/items/cl/arte/estanho_po"
     },
     "clc_bola_musgo": {
-      "textures": "textures/items/cl/c/bola_musgo"
+      "textures": "textures/items/cl/arte/bola_musgo"
     },
     "clc_peca_cabo_ferro": {
-      "textures": "textures/items/cl/c/peca_cabo_ferro"
+      "textures": "textures/items/cl/arte/peca_cabo_ferro"
     },
     "clc_peca_ligacao_ferro": {
-      "textures": "textures/items/cl/c/peca_ligacao_ferro"
+      "textures": "textures/items/cl/arte/peca_ligacao_ferro"
     },
     "clc_peca_cabeca_picareta_ferro": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_ferro"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_ferro"
     },
     "clc_peca_cabeca_pa_ferro": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_ferro"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_ferro"
     },
     "clc_peca_cabeca_machado_ferro": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_ferro"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_ferro"
     },
     "clc_peca_lamina_espada_ferro": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_ferro"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_ferro"
     },
     "clc_peca_guarda_larga_ferro": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_ferro"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_ferro"
     },
     "clc_peca_travessa_ferro": {
-      "textures": "textures/items/cl/c/peca_travessa_ferro"
+      "textures": "textures/items/cl/arte/peca_travessa_ferro"
     },
     "clc_picareta_ferro": {
-      "textures": "textures/items/cl/c/picareta_ferro"
+      "textures": "textures/items/cl/arte/picareta_ferro"
     },
     "clc_pa_ferro": {
-      "textures": "textures/items/cl/c/pa_ferro"
+      "textures": "textures/items/cl/arte/pa_ferro"
     },
     "clc_machadinha_ferro": {
-      "textures": "textures/items/cl/c/machadinha_ferro"
+      "textures": "textures/items/cl/arte/machadinha_ferro"
     },
     "clc_espada_larga_ferro": {
-      "textures": "textures/items/cl/c/espada_larga_ferro"
+      "textures": "textures/items/cl/arte/espada_larga_ferro"
     },
     "clc_peca_cabo_cobre": {
-      "textures": "textures/items/cl/c/peca_cabo_cobre"
+      "textures": "textures/items/cl/arte/peca_cabo_cobre"
     },
     "clc_peca_ligacao_cobre": {
-      "textures": "textures/items/cl/c/peca_ligacao_cobre"
+      "textures": "textures/items/cl/arte/peca_ligacao_cobre"
     },
     "clc_peca_cabeca_picareta_cobre": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_cobre"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_cobre"
     },
     "clc_peca_cabeca_pa_cobre": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_cobre"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_cobre"
     },
     "clc_peca_cabeca_machado_cobre": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_cobre"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_cobre"
     },
     "clc_peca_lamina_espada_cobre": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_cobre"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_cobre"
     },
     "clc_peca_guarda_larga_cobre": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_cobre"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_cobre"
     },
     "clc_peca_travessa_cobre": {
-      "textures": "textures/items/cl/c/peca_travessa_cobre"
+      "textures": "textures/items/cl/arte/peca_travessa_cobre"
     },
     "clc_picareta_cobre": {
-      "textures": "textures/items/cl/c/picareta_cobre"
+      "textures": "textures/items/cl/arte/picareta_cobre"
     },
     "clc_pa_cobre": {
-      "textures": "textures/items/cl/c/pa_cobre"
+      "textures": "textures/items/cl/arte/pa_cobre"
     },
     "clc_machadinha_cobre": {
-      "textures": "textures/items/cl/c/machadinha_cobre"
+      "textures": "textures/items/cl/arte/machadinha_cobre"
     },
     "clc_espada_larga_cobre": {
-      "textures": "textures/items/cl/c/espada_larga_cobre"
+      "textures": "textures/items/cl/arte/espada_larga_cobre"
     },
     "clc_peca_cabo_bronze": {
-      "textures": "textures/items/cl/c/peca_cabo_bronze"
+      "textures": "textures/items/cl/arte/peca_cabo_bronze"
     },
     "clc_peca_ligacao_bronze": {
-      "textures": "textures/items/cl/c/peca_ligacao_bronze"
+      "textures": "textures/items/cl/arte/peca_ligacao_bronze"
     },
     "clc_peca_cabeca_picareta_bronze": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_bronze"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_bronze"
     },
     "clc_peca_cabeca_pa_bronze": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_bronze"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_bronze"
     },
     "clc_peca_cabeca_machado_bronze": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_bronze"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_bronze"
     },
     "clc_peca_lamina_espada_bronze": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_bronze"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_bronze"
     },
     "clc_peca_guarda_larga_bronze": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_bronze"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_bronze"
     },
     "clc_peca_travessa_bronze": {
-      "textures": "textures/items/cl/c/peca_travessa_bronze"
+      "textures": "textures/items/cl/arte/peca_travessa_bronze"
     },
     "clc_picareta_bronze": {
-      "textures": "textures/items/cl/c/picareta_bronze"
+      "textures": "textures/items/cl/arte/picareta_bronze"
     },
     "clc_pa_bronze": {
-      "textures": "textures/items/cl/c/pa_bronze"
+      "textures": "textures/items/cl/arte/pa_bronze"
     },
     "clc_machadinha_bronze": {
-      "textures": "textures/items/cl/c/machadinha_bronze"
+      "textures": "textures/items/cl/arte/machadinha_bronze"
     },
     "clc_espada_larga_bronze": {
-      "textures": "textures/items/cl/c/espada_larga_bronze"
+      "textures": "textures/items/cl/arte/espada_larga_bronze"
     },
     "clc_peca_cabo_aco": {
-      "textures": "textures/items/cl/c/peca_cabo_aco"
+      "textures": "textures/items/cl/arte/peca_cabo_aco"
     },
     "clc_peca_ligacao_aco": {
-      "textures": "textures/items/cl/c/peca_ligacao_aco"
+      "textures": "textures/items/cl/arte/peca_ligacao_aco"
     },
     "clc_peca_cabeca_picareta_aco": {
-      "textures": "textures/items/cl/c/peca_cabeca_picareta_aco"
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_aco"
     },
     "clc_peca_cabeca_pa_aco": {
-      "textures": "textures/items/cl/c/peca_cabeca_pa_aco"
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_aco"
     },
     "clc_peca_cabeca_machado_aco": {
-      "textures": "textures/items/cl/c/peca_cabeca_machado_aco"
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_aco"
     },
     "clc_peca_lamina_espada_aco": {
-      "textures": "textures/items/cl/c/peca_lamina_espada_aco"
+      "textures": "textures/items/cl/arte/peca_lamina_espada_aco"
     },
     "clc_peca_guarda_larga_aco": {
-      "textures": "textures/items/cl/c/peca_guarda_larga_aco"
+      "textures": "textures/items/cl/arte/peca_guarda_larga_aco"
     },
     "clc_peca_travessa_aco": {
-      "textures": "textures/items/cl/c/peca_travessa_aco"
+      "textures": "textures/items/cl/arte/peca_travessa_aco"
     },
     "clc_picareta_aco": {
-      "textures": "textures/items/cl/c/picareta_aco"
+      "textures": "textures/items/cl/arte/picareta_aco"
     },
     "clc_pa_aco": {
-      "textures": "textures/items/cl/c/pa_aco"
+      "textures": "textures/items/cl/arte/pa_aco"
     },
     "clc_machadinha_aco": {
-      "textures": "textures/items/cl/c/machadinha_aco"
+      "textures": "textures/items/cl/arte/machadinha_aco"
     },
     "clc_espada_larga_aco": {
-      "textures": "textures/items/cl/c/espada_larga_aco"
+      "textures": "textures/items/cl/arte/espada_larga_aco"
     },
     "clc_serragem": {
-      "textures": "textures/items/cl/c/serragem"
+      "textures": "textures/items/cl/arte/serragem"
     },
     "clc_po_ferro": {
-      "textures": "textures/items/cl/c/po_ferro"
+      "textures": "textures/items/cl/arte/po_ferro"
     },
     "clc_po_ouro": {
-      "textures": "textures/items/cl/c/po_ouro"
+      "textures": "textures/items/cl/arte/po_ouro"
     },
     "clc_po_cobre": {
-      "textures": "textures/items/cl/c/po_cobre"
+      "textures": "textures/items/cl/arte/po_cobre"
     },
     "clc_po_estanho": {
-      "textures": "textures/items/cl/c/po_estanho"
+      "textures": "textures/items/cl/arte/po_estanho"
     },
     "clc_upgrade_armazenamento": {
-      "textures": "textures/items/cl/c/upgrade_armazenamento"
+      "textures": "textures/items/cl/arte/upgrade_armazenamento"
     },
     "clc_upgrade_estrutural_1": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_1"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_1"
     },
     "clc_upgrade_estrutural_2": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_2"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_2"
     },
     "clc_upgrade_estrutural_3": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_3"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_3"
     },
     "clc_upgrade_estrutural_4": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_4"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_4"
     },
     "clc_upgrade_estrutural_5": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_5"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_5"
     },
     "clc_upgrade_estrutural_6": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_6"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_6"
     },
     "clc_upgrade_estrutural_7": {
-      "textures": "textures/items/cl/c/upgrade_estrutural_7"
+      "textures": "textures/items/cl/arte/upgrade_estrutural_7"
     },
     "clc_nucleo_funil": {
-      "textures": "textures/items/cl/c/nucleo_funil"
+      "textures": "textures/items/cl/arte/nucleo_funil"
     },
     "clc_chave_barril": {
-      "textures": "textures/items/cl/c/chave_barril"
+      "textures": "textures/items/cl/arte/chave_barril"
     },
     "clc_carrinho": {
-      "textures": "textures/items/cl/c/carrinho"
+      "textures": "textures/items/cl/arte/carrinho"
     },
     "clc_carrinho_diamante": {
-      "textures": "textures/items/cl/c/carrinho_diamante"
+      "textures": "textures/items/cl/arte/carrinho_diamante"
     },
     "clc_celula_me_1k": {
-      "textures": "textures/items/cl/c/celula_me_1k"
+      "textures": "textures/items/cl/arte/celula_me_1k"
     },
     "clc_celula_me_4k": {
-      "textures": "textures/items/cl/c/celula_me_4k"
+      "textures": "textures/items/cl/arte/celula_me_4k"
     },
     "clc_celula_me_16k": {
-      "textures": "textures/items/cl/c/celula_me_16k"
+      "textures": "textures/items/cl/arte/celula_me_16k"
     },
     "clc_celula_me_64k": {
-      "textures": "textures/items/cl/c/celula_me_64k"
+      "textures": "textures/items/cl/arte/celula_me_64k"
     },
     "clc_componente_me_1k": {
-      "textures": "textures/items/cl/c/componente_me_1k"
+      "textures": "textures/items/cl/arte/componente_me_1k"
     },
     "clc_componente_me_4k": {
-      "textures": "textures/items/cl/c/componente_me_4k"
+      "textures": "textures/items/cl/arte/componente_me_4k"
     },
     "clc_componente_me_16k": {
-      "textures": "textures/items/cl/c/componente_me_16k"
+      "textures": "textures/items/cl/arte/componente_me_16k"
     },
     "clc_componente_me_64k": {
-      "textures": "textures/items/cl/c/componente_me_64k"
+      "textures": "textures/items/cl/arte/componente_me_64k"
     },
     "clc_cristal_certus": {
-      "textures": "textures/items/cl/c/cristal_certus"
+      "textures": "textures/items/cl/arte/cristal_certus"
     },
     "clc_po_certus": {
-      "textures": "textures/items/cl/c/po_certus"
+      "textures": "textures/items/cl/arte/po_certus"
     },
     "clc_silicio": {
-      "textures": "textures/items/cl/c/silicio"
+      "textures": "textures/items/cl/arte/silicio"
     },
     "clc_cristal_fluix": {
-      "textures": "textures/items/cl/c/cristal_fluix"
+      "textures": "textures/items/cl/arte/cristal_fluix"
     },
     "clc_po_fluix": {
-      "textures": "textures/items/cl/c/po_fluix"
+      "textures": "textures/items/cl/arte/po_fluix"
     },
     "clc_faca_corte": {
-      "textures": "textures/items/cl/c/faca_corte"
+      "textures": "textures/items/cl/arte/faca_corte"
     },
     "clc_processador_basico": {
-      "textures": "textures/items/cl/c/processador_basico"
+      "textures": "textures/items/cl/arte/processador_basico"
     },
     "clc_processador_avancado": {
-      "textures": "textures/items/cl/c/processador_avancado"
+      "textures": "textures/items/cl/arte/processador_avancado"
     },
     "clc_matriz_conversao": {
-      "textures": "textures/items/cl/c/matriz_conversao"
+      "textures": "textures/items/cl/arte/matriz_conversao"
     },
     "clc_celula_agua": {
-      "textures": "textures/items/cl/c/celula_agua"
+      "textures": "textures/items/cl/arte/celula_agua"
     },
     "clc_terminal_sem_fio": {
-      "textures": "textures/items/cl/c/terminal_sem_fio"
+      "textures": "textures/items/cl/arte/terminal_sem_fio"
     },
     "clc_upgrade_alcance_1": {
-      "textures": "textures/items/cl/c/upgrade_alcance_1"
+      "textures": "textures/items/cl/arte/upgrade_alcance_1"
     },
     "clc_upgrade_alcance_2": {
-      "textures": "textures/items/cl/c/upgrade_alcance_2"
+      "textures": "textures/items/cl/arte/upgrade_alcance_2"
     },
     "clc_upgrade_alcance_3": {
-      "textures": "textures/items/cl/c/upgrade_alcance_3"
+      "textures": "textures/items/cl/arte/upgrade_alcance_3"
     },
     "clc_upgrade_alcance_4": {
-      "textures": "textures/items/cl/c/upgrade_alcance_4"
+      "textures": "textures/items/cl/arte/upgrade_alcance_4"
     },
     "clc_upgrade_alcance_5": {
-      "textures": "textures/items/cl/c/upgrade_alcance_5"
+      "textures": "textures/items/cl/arte/upgrade_alcance_5"
     },
     "clc_resina": {
-      "textures": "textures/items/cl/c/resina"
+      "textures": "textures/items/cl/arte/resina"
     },
     "clc_barra_borracha": {
-      "textures": "textures/items/cl/c/barra_borracha"
+      "textures": "textures/items/cl/arte/barra_borracha"
     },
     "clc_plastico_cru": {
-      "textures": "textures/items/cl/c/plastico_cru"
+      "textures": "textures/items/cl/arte/plastico_cru"
     },
     "clc_folha_plastico": {
-      "textures": "textures/items/cl/c/folha_plastico"
+      "textures": "textures/items/cl/arte/folha_plastico"
     },
     "clc_fertilizante": {
-      "textures": "textures/items/cl/c/fertilizante"
+      "textures": "textures/items/cl/arte/fertilizante"
     },
     "clc_lingote_ferro_comprimido": {
-      "textures": "textures/items/cl/c/lingote_ferro_comprimido"
+      "textures": "textures/items/cl/arte/lingote_ferro_comprimido"
     },
     "clc_manometro": {
-      "textures": "textures/items/cl/c/manometro"
+      "textures": "textures/items/cl/arte/manometro"
     },
     "clc_placa_circuito_vazia": {
-      "textures": "textures/items/cl/c/placa_circuito_vazia"
+      "textures": "textures/items/cl/arte/placa_circuito_vazia"
     },
     "clc_transistor": {
-      "textures": "textures/items/cl/c/transistor"
+      "textures": "textures/items/cl/arte/transistor"
     },
     "clc_capacitor": {
-      "textures": "textures/items/cl/c/capacitor"
+      "textures": "textures/items/cl/arte/capacitor"
     },
     "clc_nucleo_sync": {
-      "textures": "textures/items/cl/c/nucleo_sync"
+      "textures": "textures/items/cl/arte/nucleo_sync"
     },
     "clc_lingote_yellorium": {
-      "textures": "textures/items/cl/c/lingote_yellorium"
+      "textures": "textures/items/cl/arte/lingote_yellorium"
     },
     "clc_po_yellorium": {
-      "textures": "textures/items/cl/c/po_yellorium"
+      "textures": "textures/items/cl/arte/po_yellorium"
     },
     "clc_lingote_cianita": {
-      "textures": "textures/items/cl/c/lingote_cianita"
+      "textures": "textures/items/cl/arte/lingote_cianita"
     },
     "clc_lingote_blutonio": {
-      "textures": "textures/items/cl/c/lingote_blutonio"
+      "textures": "textures/items/cl/arte/lingote_blutonio"
     },
     "clc_barra_grafite": {
-      "textures": "textures/items/cl/c/barra_grafite"
+      "textures": "textures/items/cl/arte/barra_grafite"
     },
     "clc_cinzel": {
-      "textures": "textures/items/cl/c/cinzel"
+      "textures": "textures/items/cl/arte/cinzel"
     },
     "clc_padrao_me_vazio": {
       "textures": "textures/items/cl/c/padrao_me_vazio"

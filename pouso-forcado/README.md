@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.3: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.4: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,12 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.4
+
+- **Arte nova das Fases 15 a 23** (578 imagens): ícones de todos os itens do Tinkers, Fundição, Thermal, JABBA/AE, MineFactory, PneumaticCraft, Sync, Big Reactors, Chisel e BiblioCraft, ícones de menu das máquinas e as texturas dos blocos.
+- Os cubos que vieram com frente, lados, topo e base desenhados (estante, prateleira, suporte de ferramentas, expositor, cabide, lâmpada, lanterna, mesas e bacia de fundição, tanque, dreno, torneira, tubos de pressão, câmara, barras do reator, barril do JABBA, construtor de peças, estação de ferramentas, mesa de moldes) usam cada face e **viram de frente para quem coloca**. Os que já estavam colocados continuam no lugar (testado no servidor).
+- Falta de arte só o que entrou na 1.1, 1.2 e 1.3 (partes 3 e 4 de `docs/prompt-icones-faltando.md`).
 
 ## Novidades da 1.3.3
 

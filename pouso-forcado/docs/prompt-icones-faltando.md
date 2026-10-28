@@ -1,7 +1,7 @@
-# Prompt para gerar os ícones que faltam (Pouso Forçado 1.0.0)
+# Prompt para gerar os ícones que faltam (Pouso Forçado 1.3.4)
 
 Copie tudo a partir de "PROMPT" e mande junto a **prancha anterior** como referência de estilo.
-A lista é grande: peça um zip por vez (primeiro os pendentes, depois a Fase 15, a 16 e assim por diante).
+**Já recebidas: partes 1 e 2.** Peça agora só a **parte 3** (zip `novidades_1_2`) e a **parte 4** (zip `novidades_1_3`), um zip por vez.
 Os nomes de arquivo já são os IDs do jogo e não podem mudar.
 
 ---
@@ -111,6 +111,8 @@ Você vai desenhar os ícones e as texturas de um add-on de Minecraft Bedrock ch
 | planta_fruta_cacto_0/1/2 | Plantação de Fruta do Cacto | 3 estágios: broto, planta média, planta madura com fruta do cacto (cacto baixo com frutas rosas) |
 
 ## LISTA, parte 2: Fases 15 a 23 (um zip por fase)
+
+> ✅ Já recebida (1.3.4). Não precisa gerar de novo.
 
 Nos blocos, "máquina" = entregar **B + C (4 faces)**; "cubo" = entregar só **C**.
 Os blocos sem coluna "Tipo" são todos máquina.
@@ -489,6 +491,7 @@ OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
 | refinaria | Refinaria | caixa de vidro com tanques e chama amarela |
 | motor_combustao | Motor a Combustão | motor de aço com pistão e engrenagem |
 | pedreira | Pedreira | caixa de metal amarela e preta com broca |
+| gerador_blaze | Gerador de Blazes (no alto das torres das cidades) | gaiola de ferro escuro com chamas laranja e uma vara de blaze dourada no meio |
 
 **Blocos "cubo" (só C):**
 

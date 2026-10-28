@@ -5,13 +5,33 @@
       "identifier": "cl:barra_combustivel",
       "menu_category": {
         "category": "items"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
       }
     },
     "components": {
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {
-          "texture": "clc_barra_combustivel",
+          "texture": "clc_barra_combustivel_lado",
+          "render_method": "opaque"
+        },
+        "north": {
+          "texture": "clc_barra_combustivel_frente",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "clc_barra_combustivel_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_barra_combustivel_baixo",
           "render_method": "opaque"
         }
       },
@@ -23,6 +43,56 @@
       },
       "minecraft:map_color": "#c9c23a",
       "minecraft:light_emission": 6
-    }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      }
+    ]
   }
 }
