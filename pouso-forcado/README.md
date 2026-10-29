@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.4.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.4.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -66,6 +66,7 @@ pouso-forcado/
 │   ├── spawn_rules/        sem animais; monstros reforçados
 │   ├── structures/cl/      nave, dunas, morro, mesa, rochas e templo (geradas por tools/)
 │   └── scripts/            (gerado pelo build a partir de scripts/, não editar)
+├── RP_menu/                pack do menu (panorama do avião, logo e dicas): vai em Recursos Globais
 ├── RP/                     Resource Pack
 │   ├── manifest.json
 │   ├── biomes/             aparência do bioma (névoa, céu, música do deserto)
@@ -101,12 +102,14 @@ npm run build
 Sai em `dist/`:
 - `pouso-forcado.mcaddon` → **é este que você usa**: instala os dois packs e coloca um mundo plano "Pouso Forçado" novo na sua lista de mundos (com os packs dentro dele);
 - `pouso-forcado.mcworld` → só o mundo, já com os packs dentro (plano B, se o `.mcaddon` não trouxer o mundo);
-- `pouso-forcado_BP.mcpack` e `pouso-forcado_RP.mcpack` → só os packs, para usar num mundo infinito normal.
+- `pouso-forcado_BP.mcpack` e `pouso-forcado_RP.mcpack` → só os packs, para usar num mundo infinito normal;
+- `pouso-forcado_menu.mcpack` → só o pack do menu (também vem dentro do `.mcaddon`).
 
 Outros comandos:
 - `npm run texturas`: cria só as texturas que estiverem faltando (não apaga as suas). Para regerar todas: `node tools/gerar-texturas.mjs --force`.
 - `npm run compilar`: só compila o TypeScript.
 - `node tools/gerar-nave.mjs --force` / `node tools/gerar-relevo.mjs --force`: regeram a nave / as dunas, morros e o templo a partir do modelo em código.
+- `node tools/gerar-panorama.mjs <bedrock-samples>/resource_pack`: redesenha o panorama do menu e o fundo da troca de dimensão (o avião caído com as texturas do jogo; uns 2 minutos). Precisa da pasta `resource_pack` do [bedrock-samples](https://github.com/Mojang/bedrock-samples). As imagens já vêm no repositório.
 
 > Os arquivos `dist/pouso-forcado.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
 
@@ -129,11 +132,26 @@ Outros comandos:
 2. Antes de entrar, você pode mudar dificuldade, trapaças etc. em **Editar**.
 3. Cada vez que você importa o `pouso-forcado.mcaddon` de novo, entra mais uma cópia nova do mundo, útil para recomeçar do zero.
 
+### Menu e tela de carregamento
+
+O `.mcaddon` traz um terceiro pack, **Pouso Forçado (Menu)**: o avião caído no deserto no fundo do menu e da tela de "Carregando...", o logo **Pouso Forçado** no lugar do logo do Minecraft e dicas do modpack embaixo da barra. Essas telas aparecem **antes** de o mundo carregar os packs dele, então este pack precisa ficar ligado no jogo todo:
+
+1. **Configurações** → **Recursos Globais** (Global Resources).
+2. Em **Meus Pacotes**, toque em **Pouso Forçado (Menu)** → **Ativar**.
+3. Volte para o menu: o fundo e o logo já mudam. Para voltar ao normal, desative ali mesmo.
+
+Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dentro do mundo Pouso Forçado, a tela de troca de dimensão (ir e voltar do Nether) também mostra o avião caído, mesmo sem o pack do menu.
+
 ### Versões novas
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.4.1
+
+- **Menu e tela de carregamento no tema** (pack novo **Pouso Forçado (Menu)**, ligado em Recursos Globais: ver "Menu e tela de carregamento" acima): o fundo que gira atrás do logo é o avião caído no deserto, no fim da tarde, desenhado bloco a bloco com as texturas do jogo (com sombras, sol quadrado e nuvens); o logo vira **POUSO FORÇADO** em letras de bloco no branco do casco com a faixa laranja; as dicas embaixo da barra de "Carregando..." são 36 dicas do modpack (água, calor, peneira, horda, máquinas, decolagem), em português e inglês.
+- A tela de troca de dimensão (Nether ↔ superfície) mostra o avião caído no lugar da terra.
 
 ## Novidades da 1.4.0
 

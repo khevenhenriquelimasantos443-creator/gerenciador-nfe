@@ -1,0 +1,31 @@
+{
+  "namespace": "progress",
+  "overworld_loading_background": {
+    "texture": "textures/ui/cl/fundo_carregamento",
+    "tiled": false,
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "controls": [
+      {
+        "background_gradient": {
+          "type": "custom",
+          "renderer": "gradient_renderer",
+          "color1": [
+            0,
+            0,
+            0,
+            0.1
+          ],
+          "color2": [
+            0,
+            0,
+            0,
+            0.55
+          ]
+        }
+      }
+    ]
+  }
+}

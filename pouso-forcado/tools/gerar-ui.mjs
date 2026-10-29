@@ -76,4 +76,77 @@ salvar("diario_claro", (x, y) => {
   return mul(hex("#c6cacd"), 0.98 + ruido(x, y, 71) * 0.04);
 }, 16, 16, 3);
 
-console.log("ui das telas: 8 texturas");
+// Logo do menu e da tela de carregamento (no lugar do logo do Minecraft: RP_menu/textures/ui/title.png, do
+// mesmo tamanho do original): "POUSO FORÇADO" em letras de bloco, branco-gelo do casco com a faixa laranja do avião, a lateral
+// em grafite (o volume para baixo, como no logo original) e contorno preto.
+{
+  const LETRAS = {
+    P: ["#####.", "##..##", "##..##", "#####.", "##....", "##....", "##...."],
+    O: [".####.", "##..##", "##..##", "##..##", "##..##", "##..##", ".####."],
+    U: ["##..##", "##..##", "##..##", "##..##", "##..##", "##..##", ".####."],
+    S: [".#####", "##....", "##....", ".####.", "....##", "....##", "#####."],
+    F: ["######", "##....", "##....", "#####.", "##....", "##....", "##...."],
+    R: ["#####.", "##..##", "##..##", "#####.", "##.##.", "##..##", "##..##"],
+    Ç: [".#####", "##....", "##....", "##....", "##....", "##....", ".#####", "..##..", ".##..."],
+    A: [".####.", "##..##", "##..##", "######", "##..##", "##..##", "##..##"],
+    D: ["#####.", "##..##", "##..##", "##..##", "##..##", "##..##", "#####."],
+  };
+  const W = 1937, H = 333, LINHAS = 9;
+  const colunas = [];
+  for (const c of "POUSO FORÇADO") {
+    if (c === " ") colunas.push(...Array(3).fill(null));
+    else {
+      if (colunas.length && colunas[colunas.length - 1] !== null) colunas.push(null);
+      for (let x = 0; x < 6; x++) colunas.push(LETRAS[c].map((l) => l[x] === "#"));
+    }
+  }
+  const cheio = (cx, cy) => cx >= 0 && cy >= 0 && cx < colunas.length && cy < LINHAS && !!colunas[cx]?.[cy];
+  const u = Math.floor(Math.min((W - 40) / colunas.length, (H - 30) / (LINHAS + 0.6)));
+  const fundo = Math.round(u * 0.6), borda = Math.max(3, Math.round(u / 7));
+  const ox = Math.floor((W - colunas.length * u) / 2), oy = Math.floor((H - (7 * u + fundo)) / 2) - u / 2;
+  const frente = (x, y) => cheio(Math.floor((x - ox) / u), Math.floor((y - oy) / u));
+  // Máscaras em pixels: frente das letras, a lateral (volume) e o contorno em volta das duas.
+  const M = new Uint8Array(W * H); // 1 frente, 2 lateral, 3 contorno
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (frente(x, y)) M[y * W + x] = 1;
+  for (let y = H - 1; y >= 0; y--)
+    for (let x = 0; x < W; x++) {
+      if (M[y * W + x]) continue;
+      for (let k = 1; k <= fundo; k++) if (y - k >= 0 && M[(y - k) * W + x] === 1) { M[y * W + x] = 2; break; }
+    }
+  const ocupado = M.map((v) => (v ? 1 : 0));
+  for (let y = 0; y < H; y++)
+    for (let x = 0; x < W; x++) {
+      if (ocupado[y * W + x]) continue;
+      let perto = false;
+      for (let dy = -borda; dy <= borda && !perto; dy++)
+        for (let dx = -borda; dx <= borda && !perto; dx++) {
+          const xx = x + dx, yy = y + dy;
+          perto = xx >= 0 && yy >= 0 && xx < W && yy < H && ocupado[yy * W + xx] === 1;
+        }
+      if (perto) M[y * W + x] = 3;
+    }
+  const branco = hex("#eef1f4"), gelo = hex("#c9d1d8");
+  mkdirSync(join(RAIZ, "RP_menu/textures/ui"), { recursive: true });
+  writeFileSync(join(RAIZ, "RP_menu/textures/ui/title.png"), png((x, y) => {
+    const m = M[y * W + x];
+    if (!m) return null;
+    if (m === 3) return C.contorno;
+    const cx = Math.floor((x - ox) / u), cy = Math.floor((y - oy) / u), fx = (x - ox) - cx * u, fy = (y - oy) - cy * u;
+    if (m === 2) {
+      // Lateral: grafite, mais escura embaixo; cada bloco com a junta marcada.
+      const k = (y - oy - (Math.floor((y - oy - 1) / u) + 1) * u) / fundo;
+      return mul(mix(hex("#59616b"), hex("#2b3138"), Math.max(0, Math.min(1, k))), fx < 2 ? 0.8 : 1);
+    }
+    // Frente: textura de bloco (4x4 por bloco), faixa laranja na 5ª linha, luz em cima e sombra embaixo.
+    const base = cy === 4 ? C.laranja : cy >= 7 ? gelo : branco;
+    let c = mul(base, 0.95 + ruido(cx * 4 + Math.floor((fx * 4) / u), cy * 4 + Math.floor((fy * 4) / u), 81) * 0.08);
+    const g = Math.max(2, Math.round(u / 12));
+    if (fy < g && !cheio(cx, cy - 1)) c = mix(c, [255, 255, 255], cy === 4 ? 0.35 : 0.6);
+    else if (fy >= u - g && !cheio(cx, cy + 1)) c = mul(c, 0.8);
+    else if (fx >= u - g && !cheio(cx + 1, cy)) c = mul(c, 0.86);
+    else if (fx < g && !cheio(cx - 1, cy)) c = mix(c, [255, 255, 255], 0.25);
+    return c;
+  }, W, H));
+}
+
+console.log("ui das telas: 8 texturas e o logo");

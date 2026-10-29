@@ -73,8 +73,9 @@ execFileSync(node, [join(RAIZ, "tools/gerar-catalogo.mjs")], { stdio: "inherit" 
 console.log("> compilando TypeScript");
 rmSync(join(RAIZ, "BP/scripts"), { recursive: true, force: true });
 execFileSync(node, [join(RAIZ, "node_modules/typescript/bin/tsc"), "-p", join(RAIZ, "tsconfig.json")], { stdio: "inherit" });
-console.log("> grupos do inventário criativo");
+console.log("> grupos do inventário criativo e dicas da tela de carregamento");
 execFileSync(node, [join(RAIZ, "tools/gerar-grupos.mjs")], { stdio: "inherit" });
+execFileSync(node, [join(RAIZ, "tools/gerar-dicas.mjs")], { stdio: "inherit" });
 
 console.log("> texturas placeholder e estrutura da nave");
 execFileSync(node, [join(RAIZ, "tools/gerar-texturas.mjs")], { stdio: "inherit" });
@@ -98,6 +99,7 @@ console.log("> validando JSON");
 validarJson(join(RAIZ, "BP"));
 validarItens(join(RAIZ, "BP/items"));
 validarJson(join(RAIZ, "RP"));
+validarJson(join(RAIZ, "RP_menu"));
 validarEstadosDeBlocos(join(RAIZ, "BP/blocks"));
 
 console.log("> testando o carregamento dos scripts");
@@ -112,8 +114,11 @@ const creditos = { nome: "CREDITOS.md", dados: readFileSync(join(RAIZ, "CREDITOS
 const comCreditos = (arquivos, prefixo = "") => [...arquivos, { ...creditos, nome: prefixo + creditos.nome }];
 const bp = gerarZip(comCreditos(empacotar(join(RAIZ, "BP"))));
 const rp = gerarZip(comCreditos(empacotar(join(RAIZ, "RP"))));
+// Pacote do menu (panorama, logo e dicas): sem dependência, para ligar em Recursos Globais. Não vai no mundo.
+const menu = gerarZip(comCreditos(empacotar(join(RAIZ, "RP_menu"))));
 writeFileSync(join(DIST, `${NOME}_BP.mcpack`), bp);
 writeFileSync(join(DIST, `${NOME}_RP.mcpack`), rp);
+writeFileSync(join(DIST, `${NOME}_menu.mcpack`), menu);
 
 // .mcworld: mundo plano de deserto com os dois packs embutidos e já ativados. Cada mundo fica
 // com a versão dos packs de quando foi criado; uma versão nova vem como um mundo novo.
@@ -132,10 +137,11 @@ const mundo = gerarZip([
 writeFileSync(join(DIST, `${NOME}.mcworld`), mundo);
 
 // .mcaddon: segundo a doc oficial, um zip com arquivos .mcpack e .mcworld. O jogo importa os
-// dois packs e coloca o mundo "Pouso Forçado" direto na lista de mundos.
+// três packs e coloca o mundo "Pouso Forçado" direto na lista de mundos.
 const addon = gerarZip([
   { nome: `${NOME}_BP.mcpack`, dados: bp },
   { nome: `${NOME}_RP.mcpack`, dados: rp },
+  { nome: `${NOME}_menu.mcpack`, dados: menu },
   { nome: `${NOME}.mcworld`, dados: mundo },
 ]);
 writeFileSync(join(DIST, `${NOME}.mcaddon`), addon);

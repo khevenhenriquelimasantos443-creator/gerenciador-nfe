@@ -11,9 +11,21 @@ function chunk(tipo, dados) {
   return Buffer.concat([tam, corpo, crc]);
 }
 
-/** pixel(x, y) deve retornar [r, g, b, a]. */
-export function gerarPng(largura, altura, pixel) {
-  const linhas = Buffer.alloc((largura * 4 + 1) * altura);
+// Filtro "Paeth" da linha (o melhor para imagens grandes, como o panorama).
+function paeth(cru, largura, y) {
+  const L = largura * 4, saida = Buffer.alloc(L + 1);
+  saida[0] = 4;
+  for (let i = 0; i < L; i++) {
+    const a = i >= 4 ? cru[y * L + i - 4] : 0, b = y ? cru[(y - 1) * L + i] : 0, c = y && i >= 4 ? cru[(y - 1) * L + i - 4] : 0;
+    const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+    saida[i + 1] = (cru[y * L + i] - (pa <= pb && pa <= pc ? a : pb <= pc ? b : c)) & 255;
+  }
+  return saida;
+}
+
+/** pixel(x, y) deve retornar [r, g, b, a]. filtrar = true deixa imagens grandes bem menores. */
+export function gerarPng(largura, altura, pixel, filtrar = false) {
+  let linhas = Buffer.alloc((largura * 4 + 1) * altura);
   let o = 0;
   for (let y = 0; y < altura; y++) {
     linhas[o++] = 0; // filtro "none"
@@ -21,6 +33,11 @@ export function gerarPng(largura, altura, pixel) {
       const [r, g, b, a] = pixel(x, y);
       linhas[o++] = r; linhas[o++] = g; linhas[o++] = b; linhas[o++] = a;
     }
+  }
+  if (filtrar) {
+    const cru = Buffer.alloc(largura * 4 * altura);
+    for (let y = 0; y < altura; y++) linhas.copy(cru, y * largura * 4, y * (largura * 4 + 1) + 1, (y + 1) * (largura * 4 + 1));
+    linhas = Buffer.concat(Array.from({ length: altura }, (_, y) => paeth(cru, largura, y)));
   }
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(largura, 0);

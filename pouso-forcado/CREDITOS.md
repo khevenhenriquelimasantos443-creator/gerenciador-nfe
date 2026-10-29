@@ -15,6 +15,12 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 - Modelo do avião "Nativo 3.1 — Asas Recuadas", feito pelo dono do projeto (`tools/dados/nave/aviao.json`), com as
   turbinas tiradas e a traseira rasgada por `tools/gerar-aviao.mjs`.
 
+## Menu e tela de carregamento
+
+- O panorama do menu, o fundo da troca de dimensão e o ícone do pacote do menu são imagens do avião caído
+  desenhadas por `tools/gerar-panorama.mjs` com as **texturas originais do Minecraft** (Mojang, do repositório
+  oficial `Mojang/bedrock-samples`). O logo "Pouso Forçado" e as dicas foram feitos para este projeto.
+
 ## Inspiração
 
 - **Crash Landing**, modpack de Iskandar (Minecraft 1.6.4): a ideia de cair num planeta seco,

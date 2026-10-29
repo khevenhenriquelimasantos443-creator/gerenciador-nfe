@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Pouso Forçado (Menu)",
+    "description": "Menu e tela de carregamento do Pouso Forçado: o avião caído no fundo, o logo e as dicas. Ative em Recursos Globais.",
+    "uuid": "2835057b-f8ce-43de-a6ad-250eb060d71e",
+    "version": [1, 4, 1],
+    "min_engine_version": [1, 26, 30]
+  },
+  "modules": [
+    {
+      "description": "Menu",
+      "type": "resources",
+      "uuid": "c79cc95e-c49f-4e22-b916-46e9eaf648e1",
+      "version": [1, 4, 1]
+    }
+  ]
+}
