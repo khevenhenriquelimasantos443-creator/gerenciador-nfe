@@ -263,21 +263,29 @@
         }
       },
       {
-        "grade": {
-          "type": "grid",
+        "lista": {
+          "type": "stack_panel",
           "size": [
             "100%",
-            "default"
+            "100%c"
           ],
+          "orientation": "vertical",
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "grid_item_template": "server_form.cl_diario_botao",
-          "grid_rescaling_type": "horizontal",
+          "factory": {
+            "name": "buttons",
+            "control_ids": {
+              "button": "server_form.cl_diario_botao",
+              "label": "@server_form.dynamic_label",
+              "header": "@server_form.dynamic_header",
+              "divider": "@settings_common.option_group_section_divider"
+            }
+          },
           "collection_name": "form_buttons",
           "bindings": [
             {
               "binding_name": "#form_button_contents",
-              "binding_name_override": "#maximum_grid_items"
+              "binding_name_override": "#collection_length"
             }
           ]
         }
@@ -287,14 +295,14 @@
   "cl_diario_botao": {
     "type": "panel",
     "size": [
-      150,
+      "100%",
       38
     ],
     "controls": [
       {
         "botao@common.button": {
           "size": [
-            146,
+            "100% - 4px",
             34
           ],
           "anchor_from": "center",
