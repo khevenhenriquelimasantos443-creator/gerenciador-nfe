@@ -32,11 +32,8 @@ const MONSTROS = new Set([
 
 const titulo = (id: string): RawMessage => ({ translate: `cl.missao.${id}.titulo` });
 
-// Visual do Diário (1.3.7): RP/ui/server_form.json desenha o painel de console da nave (barra laranja com
-// faixa de alerta, visor escuro e botões de metal em 2 colunas) para os formulários cujo título começa com
-// este marcador invisível. Sem o pacote de recursos, aparece a tela normal do jogo.
-const MARCA = "§p§f§r";
-const tela = (t: RawMessage): RawMessage => ({ rawtext: [{ text: MARCA }, t] });
+// Todas as telas do add-on têm o visual de painel da nave (RP/ui/server_form.json): fundo escuro, então as
+// cores dos textos são as que se leem bem nele (nada de §0 e §8).
 const ICONE_FEITA = "textures/ui/check";
 const ICONE_BLOQUEADA = "textures/ui/achievement_locked_icon";
 /** Barra de 10 traços: verde o que foi feito. */
@@ -61,7 +58,7 @@ function botaoMissao(jogador: Player, e: Estado, m: Missao, c: Capitulo): [RawMe
     const situacao = e.e.includes(m.id) ? { translate: "cl.diario.st_escolher" } : { translate: "cl.diario.st_feita" };
     return [{ rawtext: [{ text: "§a" }, titulo(m.id), { text: "\n" }, situacao] }, ICONE_FEITA];
   }
-  if (!desbloqueada(e, m)) return [{ rawtext: [{ text: "§7" }, titulo(m.id), { text: "\n§8" }, { translate: "cl.diario.st_bloqueada" }] }, ICONE_BLOQUEADA];
+  if (!desbloqueada(e, m)) return [{ rawtext: [{ text: "§7" }, titulo(m.id), { text: "\n§7" }, { translate: "cl.diario.st_bloqueada" }] }, ICONE_BLOQUEADA];
   const feito = Math.min(feitoDe(jogador, e, m), o.qtd);
   return [{ rawtext: [{ text: "§f" }, titulo(m.id), { text: `\n${barra(feito, o.qtd)} §e${feito}/${o.qtd}` }] }, (alvo && iconeDe(alvo)) || iconeDe(c.icone)];
 }
@@ -98,7 +95,7 @@ function corpoMissao(jogador: Player, e: Estado, m: Missao): RawMessage {
 async function escolherRecompensa(jogador: Player, m: Missao): Promise<void> {
   const opcoes = m.escolha ?? [];
   const form = new ActionFormData()
-    .title(tela({ translate: "cl.diario.escolha_titulo" }))
+    .title({ translate: "cl.diario.escolha_titulo" })
     .body({ rawtext: [{ text: "§6" }, titulo(m.id), { text: "§r\n" }, { translate: "cl.diario.escolha_corpo" }] });
   for (const { item, quantidade } of opcoes) form.button({ rawtext: [nomeItem(item), { text: ` x${quantidade}` }] }, iconeDe(item));
   form.button(VOLTAR);
@@ -128,7 +125,7 @@ async function verMissao(jogador: Player, id: string): Promise<void> {
   }
   if (e.e.includes(id)) botoes.push([{ translate: "cl.diario.escolher_um" }, () => escolherRecompensa(jogador, m), iconeDe(IDS.sacolaBoa)]);
   if (aberta) botoes.push([{ rawtext: [{ text: "§7" }, { translate: "cl.diario.pular" }] }, () => confirmarPulo(jogador, m)]);
-  const form = new ActionFormData().title(tela({ translate: `cl.capitulo.${m.cap}.nome` })).body(corpoMissao(jogador, e, m));
+  const form = new ActionFormData().title({ translate: `cl.capitulo.${m.cap}.nome` }).body(corpoMissao(jogador, e, m));
   for (const [texto, , icone] of botoes) form.button(texto, icone);
   form.button(VOLTAR);
   const r = await form.show(jogador);
@@ -142,7 +139,7 @@ async function verCapitulo(jogador: Player, c: Capitulo): Promise<void> {
   const lista = missoesDe(c);
   const n = lista.filter((m) => feita(e, m.id)).length;
   const form = new ActionFormData()
-    .title(tela({ translate: `cl.capitulo.${c.id}.nome` }))
+    .title({ translate: `cl.capitulo.${c.id}.nome` })
     .body({ rawtext: [{ translate: `cl.capitulo.${c.id}.desc` }, { text: `\n\n${barra(n, lista.length)} §e${n}/${lista.length}` }] });
   for (const m of lista) form.button(...botaoMissao(jogador, e, m, c));
   form.button(VOLTAR);
@@ -157,21 +154,49 @@ async function pendentes(jogador: Player): Promise<void> {
   const lista = e.e.map((id) => MISSAO_POR_ID.get(id)).filter((m): m is Missao => !!m);
   if (lista.length === 0) return;
   if (lista.length === 1) return escolherRecompensa(jogador, lista[0]);
-  const form = new ActionFormData().title(tela({ translate: "cl.diario.escolha_titulo" })).body({ translate: "cl.diario.escolha_corpo" });
+  const form = new ActionFormData().title({ translate: "cl.diario.escolha_titulo" }).body({ translate: "cl.diario.escolha_corpo" });
   for (const m of lista) form.button(titulo(m.id), iconeDe(IDS.sacolaBoa));
   form.button(VOLTAR);
   const r = await form.show(jogador);
   if (r.selection !== undefined && r.selection < lista.length) await escolherRecompensa(jogador, lista[r.selection]);
 }
 
+// História e guia (1.4.0): o que aconteceu e como sobreviver, em páginas curtas. Abre sozinha na primeira
+// vez que o jogador abre o Diário; depois, pelo botão no topo. Textos: cl.historia.<página>.<parágrafo>.
+const HISTORIA: ReadonlyArray<number> = [2, 3, 2, 3, 3, 2]; // parágrafos de cada página
+async function historia(jogador: Player, k = 0): Promise<void> {
+  const corpo: RawMessage[] = [{ text: "§l§6" }, { translate: `cl.historia.${k}.titulo` }, { text: "§r\n" }];
+  for (let i = 0; i < HISTORIA[k]; i++) corpo.push({ text: i ? "\n\n" : "\n" }, { translate: `cl.historia.${k}.${i}` });
+  corpo.push({ text: "\n\n" }, { translate: "cl.historia.pagina", with: [String(k + 1), String(HISTORIA.length)] });
+  const acoes: Array<() => Promise<void>> = [];
+  const form = new ActionFormData().title({ translate: "cl.diario.titulo" }).body({ rawtext: corpo });
+  if (k + 1 < HISTORIA.length) {
+    form.button({ translate: "cl.historia.proxima" }, iconeDe(IDS.diarioBordo));
+    acoes.push(() => historia(jogador, k + 1));
+  }
+  if (k > 0) {
+    form.button({ rawtext: [{ text: "§7« " }, { translate: "cl.historia.anterior" }] });
+    acoes.push(() => historia(jogador, k - 1));
+  }
+  form.button({ rawtext: [{ text: "§a" }, { translate: "cl.historia.fim" }] }, ICONE_FEITA);
+  const r = await form.show(jogador);
+  if (r.selection !== undefined && r.selection < acoes.length) await acoes[r.selection]();
+}
+
 async function abrirDiario(jogador: Player): Promise<void> {
+  if (!jogador.getDynamicProperty(PROPS.historiaLida)) {
+    jogador.setDynamicProperty(PROPS.historiaLida, true);
+    await historia(jogador);
+  }
   conferir(jogador); // se já cumpriu uma missão "ter", conclui antes de mostrar
   const e = lerEstado(jogador);
   const feitas = e.f.length + e.pl.length;
   const acoes: Array<() => Promise<void>> = [];
   const form = new ActionFormData()
-    .title(tela({ translate: "cl.diario.titulo" }))
+    .title({ translate: "cl.diario.titulo" })
     .body({ rawtext: [{ translate: "cl.diario.resumo", with: [String(feitas), String(MISSOES.length), String(abertas(e).length)] }, { text: `\n${barra(feitas, MISSOES.length)}\n\n§7` }, { translate: "cl.diario.resumo2" }] });
+  form.button({ translate: "cl.historia.botao" }, iconeDe(IDS.painelNave));
+  acoes.push(() => historia(jogador));
   if (e.e.length) {
     form.button({ rawtext: [{ text: "§6" }, { translate: "cl.diario.escolher", with: [String(e.e.length)] }] }, iconeDe(IDS.sacolaBoa));
     acoes.push(() => pendentes(jogador));
@@ -181,7 +206,7 @@ async function abrirDiario(jogador: Player): Promise<void> {
     const n = lista.filter((m) => feita(e, m.id)).length;
     const liberado = lista.some((m) => feita(e, m.id) || desbloqueada(e, m));
     const cor = n === lista.length ? "§a" : liberado ? "§f" : "§7";
-    const linha2 = liberado ? `${barra(n, lista.length)} §e${n}/${lista.length}` : "§8";
+    const linha2 = liberado ? `${barra(n, lista.length)} §e${n}/${lista.length}` : "§7";
     form.button(
       { rawtext: [{ text: cor }, { translate: `cl.capitulo.${c.id}.nome` }, { text: `\n${linha2}` }, ...(liberado ? [] : [{ translate: "cl.diario.st_bloqueada" }])] },
       liberado ? iconeDe(c.icone) : ICONE_BLOQUEADA,

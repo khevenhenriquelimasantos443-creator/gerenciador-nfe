@@ -179,7 +179,7 @@ async function abrir(jogador: Player, terminal: Block, filtro: string, pagina: n
   // Fabricar (1.2.0): só no Terminal de verdade, com um Montador Molecular na rede.
   const fabrica = !proprio && temMontador(terminal);
   if (fabrica) form.button({ translate: "cl.ac.fabricar" });
-  for (const l of nestaPagina) form.button({ rawtext: [l.nome, { text: ` §8x${l.total}` }] });
+  for (const l of nestaPagina) form.button({ rawtext: [l.nome, { text: ` §7x${l.total}` }] });
   if (temMais) form.button({ translate: "cl.terminal.mais" });
 
   const r = await form.show(jogador);

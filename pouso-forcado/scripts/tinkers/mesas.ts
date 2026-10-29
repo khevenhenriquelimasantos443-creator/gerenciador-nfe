@@ -235,7 +235,7 @@ async function modificar(j: Player): Promise<void> {
     .title({ translate: "cl.tc.modificar" })
     .body({ translate: "cl.tc.mod_corpo", with: [String(espacos)] });
   for (const [m, d] of lista)
-    form.button({ rawtext: [{ translate: `cl.tc.mod.${m}` }, { text: ` §8(${d.qtd}x ` }, nome(d.item), { text: `, ${mods[m] ?? 0}/${d.max})` }] });
+    form.button({ rawtext: [{ translate: `cl.tc.mod.${m}` }, { text: ` §7(${d.qtd}x ` }, nome(d.item), { text: `, ${mods[m] ?? 0}/${d.max})` }] });
   form.button({ translate: "cl.tc.voltar" });
   const r = await form.show(j);
   if (r.canceled || r.selection === undefined || r.selection >= lista.length) return;

@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.3.9";
+export const VERSAO = "1.4.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -93,6 +93,7 @@ export const PROPS = {
   naveLocal: `${NS}:nave_local`, // mundo: JSON { dim, x, y, z } do Painel da Nave (para a Bússola do Avião)
   final: `${NS}:final`, // mundo: dia em que a nave decolou (Fase 10); daí em diante é o modo infinito
   diarioRecebido: `${NS}:diario_recebido`, // jogador
+  historiaLida: `${NS}:historia_lida`, // jogador: já viu a história do começo no Diário (1.4.0)
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)
   ondaFeita: `${NS}:onda_feita`, // mundo: "dia:k" da última onda da horda
   sede: `${NS}:sede`, // jogador (até a 0.18): água de 0 a 20; migrada para "hidratacao"

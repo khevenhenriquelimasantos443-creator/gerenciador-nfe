@@ -62,7 +62,7 @@ async function cinzelarPilha(j: Player): Promise<void> {
   const f1 = new ActionFormData().title({ translate: "cl.ch.titulo" }).body({ translate: "cl.ch.corpo" });
   for (const s of slots) {
     const p = inv.getItem(s)!;
-    f1.button({ rawtext: [nome(p.typeId), { text: ` §8x${p.amount}` }] });
+    f1.button({ rawtext: [nome(p.typeId), { text: ` §7x${p.amount}` }] });
   }
   const r1 = await f1.show(j);
   if (r1.canceled || r1.selection === undefined) return;

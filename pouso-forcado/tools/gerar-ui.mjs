@@ -68,4 +68,12 @@ salvar("diario_botao", placa(C.contorno, C.placa, C.placaLuz, C.placaSombra), 16
 salvar("diario_botao_toque", placa(C.ciano, mix(C.placa, C.ciano, 0.12), mix(C.placaLuz, C.ciano, 0.3), C.placaSombra), 16, 16, 3);
 salvar("diario_botao_apertado", placa(C.ciano, C.painelEsc, C.placaSombra, C.painelEsc), 16, 16, 3);
 
-console.log("ui do Diário: 7 texturas");
+// Placa clara das telas com campos (busca, frequência...): os controles do jogo são feitos para fundo claro.
+salvar("diario_claro", (x, y) => {
+  const n = 16, d = Math.min(x, y, n - 1 - x, n - 1 - y);
+  if (d === 0) return C.contorno;
+  if (d === 1) return y === 1 || x === 1 ? C.metalLuz : C.metalSombra;
+  return mul(hex("#c6cacd"), 0.98 + ruido(x, y, 71) * 0.04);
+}, 16, 16, 3);
+
+console.log("ui das telas: 8 texturas");

@@ -98,7 +98,7 @@ export const temMontador = (terminal: Block): boolean => coletarNaRede(terminal,
 export async function menuFabricar(j: Player, terminal: Block, lista: () => Inventario[]): Promise<void> {
   const padroes = padroesDaRede(terminal);
   const f = new ActionFormData().title({ translate: "cl.ac.titulo" });
-  for (const p of padroes) f.button({ rawtext: [nomeDe(p.resultado), { text: ` §8x${p.qtd}` }] });
+  for (const p of padroes) f.button({ rawtext: [nomeDe(p.resultado), { text: ` §7x${p.qtd}` }] });
   if (!padroes.length) f.body({ translate: "cl.ac.corpo", with: ["0"] });
   const r = await f.show(j);
   if (r.canceled || r.selection === undefined || !padroes[r.selection]) return;
@@ -119,7 +119,7 @@ export async function menuFabricar(j: Player, terminal: Block, lista: () => Inve
 
 // ---------- o bloco ----------
 function nomeReceita(r: ReceitaJson): RawMessage {
-  return { rawtext: [nomeDe(r.resultado), { text: r.qtd > 1 ? ` §8x${r.qtd}` : "" }] };
+  return { rawtext: [nomeDe(r.resultado), { text: r.qtd > 1 ? ` §7x${r.qtd}` : "" }] };
 }
 
 async function gravarPadrao(j: Player, b: Block): Promise<void> {

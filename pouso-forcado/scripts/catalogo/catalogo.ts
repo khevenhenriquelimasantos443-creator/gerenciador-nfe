@@ -236,7 +236,7 @@ function corpoReceita(r: Receita, k: number, n: number): RawMessage {
   const t: RawMessage[] = [{ text: "§l" }, r.maquina, { text: `§r  §7(${k + 1}/${n})§r\n\n` }];
   if (r.grade) {
     for (const linha of r.grade.linhas) {
-      t.push({ text: `§8[${[...linha.padEnd(3)].map((c) => (c === " " ? "  " : `§e${c}§8`)).join("][")}]§r\n` });
+      t.push({ text: `§7[${[...linha.padEnd(3)].map((c) => (c === " " ? "  " : `§e${c}§7`)).join("][")}]§r\n` });
     }
     t.push({ text: "\n" });
     for (const [ch, item] of Object.entries(r.grade.chaves)) t.push({ text: `§e${ch}§r = ` }, nomeDe(item), { text: "\n" });
@@ -283,7 +283,7 @@ export async function verItem(jogador: Player, id: string): Promise<void> {
   const usar = usos.get(id) ?? [];
   const corpo: RawMessage = {
     rawtext: [
-      { text: "§l" }, nomeDe(id), { text: `§r\n§9§o${origemDe(id)}§r\n§8${id}§r\n\n` },
+      { text: "§l" }, nomeDe(id), { text: `§r\n§9§o${origemDe(id)}§r\n§7${id}§r\n\n` },
       { translate: "cl.catalogo.resumo_item", with: [String(fazer.length), String(usar.length)] },
     ],
   };
@@ -395,7 +395,7 @@ export async function abrirCatalogo(jogador: Player): Promise<void> {
   form.button({ translate: "cl.catalogo.barra" }, iconeDe(IDS.organizador));
   for (const m of mods) {
     const icone = m === "Minecraft" ? iconeDe("minecraft:crafting_table") : MODS.find((x) => x.mod === m)?.icones.map(iconeDe).find(Boolean);
-    form.button({ rawtext: [{ text: `${m}\n§8` }, { translate: "cl.catalogo.n_itens", with: [String(n.get(m) ?? 0)] }] }, icone);
+    form.button({ rawtext: [{ text: `${m}\n§7` }, { translate: "cl.catalogo.n_itens", with: [String(n.get(m) ?? 0)] }] }, icone);
   }
   const r = await form.show(jogador);
   if (r.selection === undefined || r.selection > mods.length + 1) return;

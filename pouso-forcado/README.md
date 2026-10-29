@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.9: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.4.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,11 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.4.0
+
+- **Todas as telas do add-on com o visual de painel da nave** (Diário, Catálogo, Opções, Terminal, mesas do Tinkers, reator, Sync, Painel da Nave...): janela grafite com moldura de metal, barra de título laranja com faixa de alerta, visor escuro para o texto e botões de metal com ícone. As telas com campos (busca, frequência do Tesseract, quantidade) usam a mesma moldura com uma placa clara por dentro. Os textos dos botões voltaram (a largura deles ficava zerada na 1.3.9).
+- **História no Diário:** "Leia primeiro: o que aconteceu", 6 páginas curtas (a queda, primeiros dias, água e calor, dia e noite, tecnologia, a volta para casa). Abre sozinha na primeira vez que o Diário é aberto.
 
 ## Novidades da 1.3.9
 

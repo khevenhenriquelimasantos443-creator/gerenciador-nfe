@@ -11,7 +11,25 @@
           },
           {
             "binding_type": "view",
-            "source_property_name": "((#title_text - '§p§f§r') = #title_text)",
+            "source_property_name": "(not ((#title_text - '§v§n§r') = #title_text))",
+            "target_property_name": "#visible"
+          }
+        ]
+      }
+    ]
+  },
+  "custom_form": {
+    "modifications": [
+      {
+        "array_name": "bindings",
+        "operation": "insert_back",
+        "value": [
+          {
+            "binding_name": "#title_text"
+          },
+          {
+            "binding_type": "view",
+            "source_property_name": "(not ((#title_text - '§v§n§r') = #title_text))",
             "target_property_name": "#visible"
           }
         ]
@@ -30,7 +48,8 @@
               "factory": {
                 "name": "server_form_factory",
                 "control_ids": {
-                  "long_form": "@server_form.cl_diario"
+                  "long_form": "@server_form.cl_diario",
+                  "custom_form": "@server_form.cl_diario_campos"
                 }
               }
             }
@@ -51,25 +70,51 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(not ((#title_text - '§p§f§r') = #title_text))",
+        "source_property_name": "((#title_text - '§v§n§r') = #title_text)",
         "target_property_name": "#visible"
       }
     ],
     "controls": [
       {
-        "janela@server_form.cl_diario_janela": {}
+        "moldura@server_form.cl_diario_moldura": {}
+      },
+      {
+        "area@server_form.cl_diario_area": {}
       }
     ]
   },
-  "cl_diario_janela": {
+  "cl_diario_campos": {
+    "type": "panel",
+    "size": [
+      330,
+      214
+    ],
+    "bindings": [
+      {
+        "binding_name": "#title_text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "((#title_text - '§v§n§r') = #title_text)",
+        "target_property_name": "#visible"
+      }
+    ],
+    "controls": [
+      {
+        "moldura@server_form.cl_diario_moldura": {}
+      },
+      {
+        "area@server_form.cl_diario_area_campos": {}
+      }
+    ]
+  },
+  "cl_diario_moldura": {
     "type": "image",
     "texture": "textures/ui/cl/diario_fundo",
     "size": [
       "100%",
       "100%"
     ],
-    "anchor_from": "center",
-    "anchor_to": "center",
     "layer": 2,
     "controls": [
       {
@@ -115,7 +160,7 @@
                   },
                   {
                     "binding_type": "view",
-                    "source_property_name": "(#title_text - '§p§f§r')",
+                    "source_property_name": "(#title_text - '§v§n§r')",
                     "target_property_name": "#text"
                   }
                 ]
@@ -150,51 +195,76 @@
           ],
           "layer": 5
         }
-      },
+      }
+    ]
+  },
+  "cl_diario_area": {
+    "type": "panel",
+    "size": [
+      "100% - 12px",
+      "100% - 34px"
+    ],
+    "anchor_from": "top_middle",
+    "anchor_to": "top_middle",
+    "offset": [
+      0,
+      28
+    ],
+    "layer": 3,
+    "controls": [
       {
-        "area": {
-          "type": "panel",
+        "rolagem@common.scrolling_panel": {
+          "anchor_to": "top_left",
+          "anchor_from": "top_left",
+          "$show_background": false,
           "size": [
-            "100% - 12px",
-            "100% - 34px"
+            "100%",
+            "100%"
           ],
-          "anchor_from": "top_middle",
-          "anchor_to": "top_middle",
-          "offset": [
+          "$scrolling_content": "server_form.cl_diario_conteudo",
+          "$scroll_size": [
+            5,
+            "100% - 4px"
+          ],
+          "$scrolling_pane_size": [
+            "100% - 4px",
+            "100% - 2px"
+          ],
+          "$scrolling_pane_offset": [
+            2,
+            0
+          ],
+          "$scroll_bar_right_padding_size": [
             0,
-            28
-          ],
-          "layer": 1,
-          "controls": [
-            {
-              "rolagem@common.scrolling_panel": {
-                "anchor_to": "top_left",
-                "anchor_from": "top_left",
-                "$show_background": false,
-                "size": [
-                  "100%",
-                  "100%"
-                ],
-                "$scrolling_content": "server_form.cl_diario_conteudo",
-                "$scroll_size": [
-                  5,
-                  "100% - 4px"
-                ],
-                "$scrolling_pane_size": [
-                  "100% - 4px",
-                  "100% - 2px"
-                ],
-                "$scrolling_pane_offset": [
-                  2,
-                  0
-                ],
-                "$scroll_bar_right_padding_size": [
-                  0,
-                  0
-                ]
-              }
-            }
+            0
           ]
+        }
+      }
+    ]
+  },
+  "cl_diario_area_campos": {
+    "type": "image",
+    "texture": "textures/ui/cl/diario_claro",
+    "size": [
+      "100% - 12px",
+      "100% - 34px"
+    ],
+    "anchor_from": "top_middle",
+    "anchor_to": "top_middle",
+    "offset": [
+      0,
+      28
+    ],
+    "layer": 3,
+    "controls": [
+      {
+        "formulario@server_form.custom_form_panel": {
+          "size": [
+            "100% - 6px",
+            "100% - 6px"
+          ],
+          "anchor_from": "center",
+          "anchor_to": "center"
         }
       }
     ]
@@ -429,7 +499,7 @@
                       ],
                       "shadow": true,
                       "size": [
-                        "fill",
+                        "100%",
                         "default"
                       ],
                       "anchor_from": "left_middle",
