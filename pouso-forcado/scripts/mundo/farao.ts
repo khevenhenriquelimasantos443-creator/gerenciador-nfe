@@ -4,6 +4,7 @@ import { aviso } from "../jogador/hud.js";
 import { avisarErro } from "../util/erros.js";
 import { comecarTempestade, tempestadeAtiva } from "./tempestade.js";
 import { intervalo } from "../util/perfil.js";
+import { nascerDoAddon } from "../util/nascer.js";
 
 /*
  * Faraó Amaldiçoado, o chefe do deserto.
@@ -44,7 +45,7 @@ function despertar(dimensao: Dimension, local: Vector3): void {
   efeito(dimensao, "minecraft:huge_explosion_emitter", local);
   system.runTimeout(() => {
     try {
-      dimensao.spawnEntity(MONSTROS_CL.farao, local);
+      nascerDoAddon(dimensao, MONSTROS_CL.farao, local);
       efeito(dimensao, "minecraft:large_explosion", { x: local.x, y: local.y + 1, z: local.z });
     } catch (erro) {
       avisarErro("faraó não nasceu", erro);
@@ -83,7 +84,7 @@ function invocar(farao: Entity, agora: number): void {
     const chao = dimensao.getTopmostBlock({ x, z });
     if (!chao || Math.abs(chao.y - farao.location.y) > 4) continue;
     const local = { x: x + 0.5, y: chao.y + 1, z: z + 0.5 };
-    dimensao.spawnEntity(MONSTROS_CL.mumia, local);
+    nascerDoAddon(dimensao, MONSTROS_CL.mumia, local);
     efeito(dimensao, "minecraft:large_explosion", local);
   }
   dimensao.playSound("mob.evocation_illager.prepare_summon", farao.location);

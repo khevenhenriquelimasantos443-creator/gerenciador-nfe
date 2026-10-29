@@ -308,6 +308,23 @@ teste("petroleo", 300, (t) => {
   });
 });
 
+// 1.3.7: de dia nada nasce na superfície (só o que o add-on põe); o camelo-zumbi some sempre.
+teste("dia", 200, (t) => {
+  world.setTimeOfDay(6000);
+  const solto = t.spawn("minecraft:husk", { x: 2, y: 2, z: 2 });
+  const doAddon = t.spawn("minecraft:husk", { x: 5, y: 2, z: 5 });
+  doAddon.addTag("cl:do_addon");
+  const camelo = t.spawn("minecraft:camel_husk", { x: 4, y: 2, z: 2 });
+  const coelho = t.spawn("minecraft:rabbit", { x: 2, y: 2, z: 5 });
+  t.runAfterDelay(20, () => {
+    log(`dia: husk solto=${solto.isValid} husk do add-on=${doAddon.isValid} camelo-zumbi=${camelo.isValid} coelho=${coelho.isValid}`);
+    t.assert(!solto.isValid, "o husk que nasceu de dia ficou");
+    t.assert(doAddon.isValid, "sumiu o husk posto pelo add-on");
+    t.assert(!camelo.isValid, "o camelo-zumbi ficou");
+    t.succeed();
+  });
+});
+
 // Depuração: o que chega dos eventos de interação e de quebra.
 world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);

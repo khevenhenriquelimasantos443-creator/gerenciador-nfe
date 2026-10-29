@@ -3,6 +3,7 @@ import { GOLEM_AREIA, MONSTROS_CL } from "../config.js";
 import { avisarErro } from "../util/erros.js";
 import { tempestadeAtiva } from "./tempestade.js";
 import { intervalo } from "../util/perfil.js";
+import { nascerDoAddon } from "../util/nascer.js";
 
 /*
  * Golem de Areia: nasce perto de quem está ao ar livre durante a tempestade de areia
@@ -32,7 +33,7 @@ function nascerGolem(jogador: Player): void {
     const pe = chao.above();
     if (!pe?.isAir || !pe.above()?.isAir || !pe.above(2)?.isAir) continue; // ele tem 3 blocos de altura
     const local = { x: x + 0.5, y: pe.y, z: z + 0.5 };
-    dimensao.spawnEntity(MONSTROS_CL.golem, local);
+    nascerDoAddon(dimensao, MONSTROS_CL.golem, local);
     try {
       dimensao.spawnParticle("minecraft:large_explosion", { x: local.x, y: local.y + 1, z: local.z });
     } catch {
@@ -57,11 +58,17 @@ function desmoronarGolens(): void {
   }
 }
 
-// O Escorpião do Deserto saiu do jogo na 1.1.0: a entidade continua registrada (mundos antigos não
-// quebram), mas não nasce mais e os que já existiam somem quando o chunk carrega.
+// Fora do jogo: o Escorpião do Deserto (1.1.0; a entidade continua registrada para os mundos antigos não
+// quebrarem), o Camelo-Zumbi do Minecraft (1.3.7), que nasce no deserto com um husk de lança e um esqueleto
+// montados, e o mercador ambulante com as lhamas (animais e gente só vêm das cápsulas). Não nascem mais e os
+// que existirem somem quando aparecem ou o chunk carrega, com quem estiver montado neles.
+const FORA_DO_JOGO: ReadonlySet<string> = new Set([MONSTROS_CL.escorpiao, "minecraft:camel_husk", "minecraft:wandering_trader", "minecraft:trader_llama"]);
 function semEscorpiao(entidade: Entity): void {
   try {
-    if (entidade.typeId === MONSTROS_CL.escorpiao) entidade.remove();
+    if (!FORA_DO_JOGO.has(entidade.typeId)) return;
+    const montados = entidade.getComponent("minecraft:rideable")?.getRiders() ?? [];
+    for (const m of montados) m.remove();
+    entidade.remove();
   } catch {
     // já saiu do mundo
   }
@@ -69,11 +76,23 @@ function semEscorpiao(entidade: Entity): void {
 
 export function registrarMonstros(): void {
   world.afterEvents.entityLoad.subscribe(({ entity }) => semEscorpiao(entity));
-  world.afterEvents.entitySpawn.subscribe(({ entity }) => semEscorpiao(entity));
+  world.afterEvents.entitySpawn.subscribe(({ entity }) => {
+    if (!FORA_DO_JOGO.has(entity.typeId)) return;
+    // O camelo nasce e os cavaleiros sobem nele logo depois: guarda onde foi e confere de novo em volta.
+    const { dimension, location } = entity;
+    semEscorpiao(entity);
+    system.runTimeout(() => {
+      try {
+        for (const e of dimension.getEntities({ location, maxDistance: 4, families: ["undead"] })) if (!e.hasTag("cl:do_addon")) e.remove();
+      } catch {
+        // chunk descarregado
+      }
+    }, 2);
+  });
   system.runTimeout(() => {
     for (const d of ["overworld", "nether", "the_end"]) {
       try {
-        for (const e of world.getDimension(d).getEntities({ type: MONSTROS_CL.escorpiao })) semEscorpiao(e);
+        for (const tipo of FORA_DO_JOGO) for (const e of world.getDimension(d).getEntities({ type: tipo })) semEscorpiao(e);
       } catch {
         // dimensão sem nada carregado
       }

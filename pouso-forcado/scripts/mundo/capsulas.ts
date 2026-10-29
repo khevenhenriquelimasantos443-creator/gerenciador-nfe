@@ -3,6 +3,7 @@ import { CAPSULA, PROPS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { criarBauCom } from "../util/inventario.js";
 import { intervalo } from "../util/perfil.js";
+import { nascerDoAddon } from "../util/nascer.js";
 
 /*
  * Cápsulas de carga: pedaços da nave que ainda estavam em órbita.
@@ -79,7 +80,7 @@ function montar(dimensao: Dimension, p: Vector3): void {
 
   // Um casal de animais saindo pela abertura.
   const animal = sortear(CAPSULA.animais);
-  for (let i = 0; i < 2; i++) dimensao.spawnEntity(animal, { x: p.x + 0.5 + (i - 0.5), y: p.y + 1, z: p.z + 2.5 });
+  for (let i = 0; i < 2; i++) nascerDoAddon(dimensao, animal, { x: p.x + 0.5 + (i - 0.5), y: p.y + 1, z: p.z + 2.5 });
 }
 
 export function derrubarCapsula(jogador: Player): boolean {

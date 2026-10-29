@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.3.6";
+export const VERSAO = "1.3.7";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -148,8 +148,9 @@ export const HORDA = {
   // A horda vem só a cada `aCadaDias` noites (a 10ª, a 20ª...), com um aviso no fim da tarde. Nessa noite,
   // em cada uma das horas, uma onda em volta de cada jogador. Tamanho = base + porDia × dia (até max).
   onda: { aCadaDias: 10, avisoHora: 12000, horas: [14000, 17000, 20000], base: 8, porDia: 1, max: 30, distanciaMin: 8, distanciaMax: 20 },
-  // De dia, monstros expostos ao céu pegam fogo, menos os que não queimam no jogo normal.
-  sol: { intervaloTicks: 100, segundosFogo: 8, naoQueimam: ["minecraft:husk", "minecraft:spider", "minecraft:cave_spider", "minecraft:creeper"] },
+  // De dia (manhã e tarde) nenhum monstro na superfície (1.3.7): os da noite se enterram na areia a cada
+  // intervaloTicks e os que nascem somem. profundidade = até quantos blocos abaixo da superfície conta como superfície.
+  sol: { intervaloTicks: 100, profundidade: 8 },
 } as const;
 
 // Mundo plano do .mcworld. Tem que bater com tools/gerar-mundo.mjs.

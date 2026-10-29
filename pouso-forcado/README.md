@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.6: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.7: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,12 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.7
+
+- **Sem Camelo-Zumbi** (o camelo morto-vivo do Minecraft com husk de lança e esqueleto montados): não nasce mais e os que existirem somem, com os cavaleiros. O mercador ambulante e as lhamas dele também saem.
+- **De dia (manhã e tarde) nenhum monstro na superfície:** os que sobram da noite se enterram na areia (somem numa nuvem de areia, sem fogo) e nenhum nasce, nem na sombra. Animais só das cápsulas e das crias. Nas cavernas segue como no jogo. Ficam os postos pelo add-on: Geradores de Monstros e de Blazes das cidades, Faraó e múmias, Golem de Areia da tempestade, slime do barril.
+- **Diário de Bordo com cara de painel da nave:** janela de console grafite com moldura de metal, barra de título laranja do avião com faixa de alerta, texto num visor escuro e botões de metal em 2 colunas com ícone grande (borda ciano ao tocar). Capítulos com barra de progresso; missões com ✓ quando feitas, cadeado quando bloqueadas e o item do objetivo quando abertas. Feito em `RP/ui/server_form.json` (texturas de `tools/gerar-ui.mjs`); se o jogo não carregar essa tela, aparece a normal.
 
 ## Novidades da 1.3.6
 

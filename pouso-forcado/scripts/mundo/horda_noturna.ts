@@ -1,5 +1,6 @@
-import { Difficulty, Dimension, EntityInitializationCause, GameMode, Player, Vector3, system, world } from "@minecraft/server";
-import { FAMILIA_RESISTE_SOL, HORDA, PROPS } from "../config.js";
+import { Difficulty, Entity, EntityInitializationCause, GameMode, Player, system, world } from "@minecraft/server";
+import { FAMILIA_RESISTE_SOL, HORDA, MUNDO_PLANO, PROPS } from "../config.js";
+import { DO_ADDON } from "../util/nascer.js";
 import { intervalo } from "../util/perfil.js";
 
 /*
@@ -9,17 +10,17 @@ import { intervalo } from "../util/perfil.js";
  * - A horda vem só a cada HORDA.onda.aCadaDias noites (a 10ª, a 20ª...), com aviso no fim da tarde.
  *   Nessa noite, em cada hora de HORDA.onda.horas chega uma onda: aviso na tela, corneta e
  *   monstros em volta de cada jogador, mais a cada dia que passa.
- * - De dia, o sol do planeta incendeia os monstros expostos ao céu. Husks, aranhas e creepers
- *   não queimam (como no jogo normal), nem o Golem de Areia e o Faraó (família cl_resiste_sol).
- * - De dia, nenhum monstro nasce sob o céu aberto: se o jogo fizer um nascer (spawn natural),
- *   ele é removido no mesmo instante. No subsolo e na sombra o spawn segue normal.
+ * - De dia (manhã e tarde), nenhum monstro na superfície (1.3.7): os que sobraram da noite se enterram
+ *   na areia (somem numa nuvem de areia, sem fogo) e o que nascer some na hora, até à sombra. Ficam os
+ *   postos pelo add-on (marca DO_ADDON) e o Golem de Areia da tempestade (família cl_resiste_sol).
+ *   Nas cavernas, abaixo da superfície, segue como no jogo. Animais não nascem sozinhos (BP/spawn_rules):
+ *   só das cápsulas e das crias.
  * Custo: uma busca de entidades por jogador a cada 10 s à noite; de dia, uma busca de
  * monstros no Overworld a cada HORDA.sol.intervaloTicks.
  */
 const NOITE_INICIO = 13000;
 const NOITE_FIM = 23000;
-const SOL_FIM = 12000; // de 0 a 12000 o sol está alto o bastante para queimar
-const NAO_QUEIMAM: ReadonlySet<string> = new Set(HORDA.sol.naoQueimam);
+const SOL_FIM = 12000; // de 0 a 12000 é dia: nenhum monstro na superfície
 
 // Erros aparecem uma vez por sessão no chat (no celular não dá para ver o log de conteúdo).
 const errosAvisados = new Set<string>();
@@ -137,20 +138,30 @@ function talvezOnda(): void {
   soltarOnda(k + 1, dia);
 }
 
-// Exposto ao céu: nada acima da cabeça (o bloco mais alto da coluna está embaixo do mob).
-function soloCeu(dimensao: Dimension, { x, y, z }: Vector3): boolean {
-  const topo = dimensao.getTopmostBlock({ x, z });
-  return !topo || Math.floor(y) > topo.y;
-}
+// De dia (1.3.7) não fica monstro na superfície: os que sobram da noite se enterram na areia (somem numa nuvem
+// de areia, sem pegar fogo) e nenhum nasce. Cavernas (abaixo da superfície) seguem como no jogo. Os mobs
+// postos pelo add-on (marca DO_ADDON: cidades, faraó, golem da tempestade...) ficam.
+const naSuperficie = (y: number): boolean => y >= MUNDO_PLANO.superficieY - HORDA.sol.profundidade;
+const deDia = (e: Entity): boolean =>
+  !e.hasTag(DO_ADDON) && naSuperficie(e.location.y) &&
+  (e.matches({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] }) || e.matches({ families: ["undead"], excludeFamilies: [FAMILIA_RESISTE_SOL] }));
 
-function solQueima(): void {
+function enterrarNaAreia(): void {
   const dimensao = world.getDimension("minecraft:overworld");
-  for (const mob of dimensao.getEntities({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] })) {
-    if (NAO_QUEIMAM.has(mob.typeId)) continue;
-    try {
-      if (soloCeu(dimensao, mob.location)) mob.setOnFire(HORDA.sol.segundosFogo, true);
-    } catch {
-      // mob no limite do mundo carregado
+  const vistos = new Set<string>();
+  for (const familia of ["monster", "undead"]) {
+    for (const mob of dimensao.getEntities({ families: [familia], excludeFamilies: [FAMILIA_RESISTE_SOL] })) {
+      if (vistos.has(mob.id)) continue;
+      vistos.add(mob.id);
+      try {
+        if (!deDia(mob)) continue;
+        const { x, y, z } = mob.location;
+        dimensao.spawnParticle("minecraft:falling_dust_sand_particle", { x, y: y + 0.5, z });
+        dimensao.spawnParticle("minecraft:falling_dust_sand_particle", { x, y: y + 1.2, z });
+        mob.remove();
+      } catch {
+        // mob no limite do mundo carregado
+      }
     }
   }
 }
@@ -173,16 +184,20 @@ export function registrarHordaNoturna(): void {
   }, HORDA.intervaloTicks);
 
   intervalo("horda", () => {
-    if (solAlto()) solQueima();
+    if (solAlto()) enterrarNaAreia();
   }, HORDA.sol.intervaloTicks);
 
+  // De dia, monstro que nasce na superfície some na hora (a marca DO_ADDON é posta logo depois do spawnEntity:
+  // por isso a conferência fica para o tick seguinte).
   world.afterEvents.entitySpawn.subscribe(({ entity, cause }) => {
     if (cause !== EntityInitializationCause.Spawned || !solAlto()) return;
-    if (entity.typeId === "minecraft:item" || entity.typeId === "minecraft:blaze" || entity.dimension.id !== "minecraft:overworld") return;
-    try {
-      if (entity.matches({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] }) && soloCeu(entity.dimension, entity.location)) entity.remove();
-    } catch {
-      // entidade já saiu do mundo
-    }
+    if (entity.typeId === "minecraft:item" || entity.typeId === "minecraft:xp_orb" || entity.dimension.id !== "minecraft:overworld") return;
+    system.run(() => {
+      try {
+        if (entity.isValid && deDia(entity)) entity.remove();
+      } catch {
+        // entidade já saiu do mundo
+      }
+    });
   });
 }

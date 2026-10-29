@@ -32,6 +32,19 @@ const MONSTROS = new Set([
 
 const titulo = (id: string): RawMessage => ({ translate: `cl.missao.${id}.titulo` });
 
+// Visual do Diário (1.3.7): RP/ui/server_form.json desenha o painel de console da nave (barra laranja com
+// faixa de alerta, visor escuro e botões de metal em 2 colunas) para os formulários cujo título começa com
+// este marcador invisível. Sem o pacote de recursos, aparece a tela normal do jogo.
+const MARCA = "§p§f§r";
+const tela = (t: RawMessage): RawMessage => ({ rawtext: [{ text: MARCA }, t] });
+const ICONE_FEITA = "textures/ui/check";
+const ICONE_BLOQUEADA = "textures/ui/achievement_locked_icon";
+/** Barra de 10 traços: verde o que foi feito. */
+const barra = (n: number, total: number): string => {
+  const k = total ? Math.round((n / total) * 10) : 0;
+  return `§a${"|".repeat(k)}§7${"|".repeat(10 - k)}`;
+};
+
 export function entregarDiario(jogador: Player): void {
   if (jogador.getDynamicProperty(PROPS.diarioRecebido)) return;
   jogador.setDynamicProperty(PROPS.diarioRecebido, true);
@@ -39,14 +52,22 @@ export function entregarDiario(jogador: Player): void {
   jogador.sendMessage({ rawtext: [{ text: "§6[Diário de Bordo]§r " }, { translate: "cl.diario.recebido" }] });
 }
 
-/** Marca na frente do nome da missão: feita, pulada, aberta ou bloqueada. */
-function marca(e: Estado, m: Missao): string {
-  if (e.pl.includes(m.id)) return "§7~ ";
-  if (e.f.includes(m.id)) return e.e.includes(m.id) ? "§6* " : "§2+ ";
-  return desbloqueada(e, m) ? "§e! " : "§8- ";
+/** Botão da missão: ícone (feita, bloqueada ou o item do objetivo) e a situação embaixo do nome. */
+function botaoMissao(jogador: Player, e: Estado, m: Missao, c: Capitulo): [RawMessage, string | undefined] {
+  const o = m.objetivo;
+  const alvo = "item" in o ? o.item : "bloco" in o ? o.bloco : undefined;
+  if (e.pl.includes(m.id)) return [{ rawtext: [{ text: "§7" }, titulo(m.id), { text: "\n§7" }, { translate: "cl.diario.st_pulada" }] }, ICONE_FEITA];
+  if (e.f.includes(m.id)) {
+    const situacao = e.e.includes(m.id) ? { translate: "cl.diario.st_escolher" } : { translate: "cl.diario.st_feita" };
+    return [{ rawtext: [{ text: "§a" }, titulo(m.id), { text: "\n" }, situacao] }, ICONE_FEITA];
+  }
+  if (!desbloqueada(e, m)) return [{ rawtext: [{ text: "§7" }, titulo(m.id), { text: "\n§8" }, { translate: "cl.diario.st_bloqueada" }] }, ICONE_BLOQUEADA];
+  const feito = Math.min(feitoDe(jogador, e, m), o.qtd);
+  return [{ rawtext: [{ text: "§f" }, titulo(m.id), { text: `\n${barra(feito, o.qtd)} §e${feito}/${o.qtd}` }] }, (alvo && iconeDe(alvo)) || iconeDe(c.icone)];
 }
 
 const missoesDe = (c: Capitulo): Missao[] => MISSOES.filter((m) => m.cap === c.id);
+const VOLTAR: RawMessage = { rawtext: [{ text: "§7« " }, { translate: "cl.diario.voltar" }] };
 
 /** Missões de achar cidade: mostra onde está o sinal mais próximo. */
 function dicaDaMissao(jogador: Player, id: string): RawMessage[] {
@@ -58,12 +79,13 @@ function dicaDaMissao(jogador: Player, id: string): RawMessage[] {
 
 function corpoMissao(jogador: Player, e: Estado, m: Missao): RawMessage {
   const linhas: RawMessage[] = [
-    { text: "§l§e" }, titulo(m.id), { text: "§r\n" },
+    { text: "§l§6" }, titulo(m.id), { text: "§r\n" },
     { translate: `cl.missao.${m.id}.desc` }, { text: "\n\n" },
     { translate: "cl.diario.progresso", with: [String(feitoDe(jogador, e, m)), String(m.objetivo.qtd)] },
+    { text: ` ${barra(Math.min(feitoDe(jogador, e, m), m.objetivo.qtd), m.objetivo.qtd)}` },
   ];
-  if (m.recompensa.length) linhas.push({ text: "\n" }, { translate: "cl.diario.recompensa" }, { text: " " }, textoPilhas(m.recompensa));
-  if (m.escolha?.length) linhas.push({ text: "\n" }, { translate: "cl.diario.escolha" }, { text: " " }, textoPilhas(m.escolha));
+  if (m.recompensa.length) linhas.push({ text: "\n§b" }, { translate: "cl.diario.recompensa" }, { text: "§r " }, textoPilhas(m.recompensa));
+  if (m.escolha?.length) linhas.push({ text: "\n§b" }, { translate: "cl.diario.escolha" }, { text: "§r " }, textoPilhas(m.escolha));
   const faltam = m.requer.filter((r) => !feita(e, r));
   if (faltam.length) {
     linhas.push({ text: "\n\n§c" }, { translate: "cl.diario.requer" }, { text: "§r " });
@@ -76,10 +98,10 @@ function corpoMissao(jogador: Player, e: Estado, m: Missao): RawMessage {
 async function escolherRecompensa(jogador: Player, m: Missao): Promise<void> {
   const opcoes = m.escolha ?? [];
   const form = new ActionFormData()
-    .title({ translate: "cl.diario.escolha_titulo" })
-    .body({ rawtext: [titulo(m.id), { text: "\n" }, { translate: "cl.diario.escolha_corpo" }] });
+    .title(tela({ translate: "cl.diario.escolha_titulo" }))
+    .body({ rawtext: [{ text: "§6" }, titulo(m.id), { text: "§r\n" }, { translate: "cl.diario.escolha_corpo" }] });
   for (const { item, quantidade } of opcoes) form.button({ rawtext: [nomeItem(item), { text: ` x${quantidade}` }] }, iconeDe(item));
-  form.button({ translate: "cl.diario.voltar" });
+  form.button(VOLTAR);
   const r = await form.show(jogador);
   if (r.selection !== undefined && r.selection < opcoes.length) escolher(jogador, m.id, r.selection);
 }
@@ -98,17 +120,17 @@ async function verMissao(jogador: Player, id: string): Promise<void> {
   const m = MISSAO_POR_ID.get(id)!;
   const e = lerEstado(jogador);
   const aberta = !feita(e, id) && desbloqueada(e, m);
-  const botoes: Array<[RawMessage, () => Promise<unknown> | void]> = [];
+  const botoes: Array<[RawMessage, () => Promise<unknown> | void, string?]> = [];
   if (aberta && m.objetivo.tipo === "entregar") {
     botoes.push([{ translate: "cl.diario.entregar" }, () => {
       if (!entregar(jogador, id)) jogador.sendMessage({ translate: "cl.diario.entregar_falta" });
-    }]);
+    }, iconeDe(m.objetivo.item)]);
   }
-  if (e.e.includes(id)) botoes.push([{ translate: "cl.diario.escolher_um" }, () => escolherRecompensa(jogador, m)]);
-  if (aberta) botoes.push([{ translate: "cl.diario.pular" }, () => confirmarPulo(jogador, m)]);
-  const form = new ActionFormData().title({ translate: `cl.capitulo.${m.cap}.nome` }).body(corpoMissao(jogador, e, m));
-  for (const [texto] of botoes) form.button(texto);
-  form.button({ translate: "cl.diario.voltar" });
+  if (e.e.includes(id)) botoes.push([{ translate: "cl.diario.escolher_um" }, () => escolherRecompensa(jogador, m), iconeDe(IDS.sacolaBoa)]);
+  if (aberta) botoes.push([{ rawtext: [{ text: "§7" }, { translate: "cl.diario.pular" }] }, () => confirmarPulo(jogador, m)]);
+  const form = new ActionFormData().title(tela({ translate: `cl.capitulo.${m.cap}.nome` })).body(corpoMissao(jogador, e, m));
+  for (const [texto, , icone] of botoes) form.button(texto, icone);
+  form.button(VOLTAR);
   const r = await form.show(jogador);
   if (r.selection === undefined || r.selection >= botoes.length) return;
   await botoes[r.selection][1]();
@@ -118,11 +140,12 @@ async function verMissao(jogador: Player, id: string): Promise<void> {
 async function verCapitulo(jogador: Player, c: Capitulo): Promise<void> {
   const e = lerEstado(jogador);
   const lista = missoesDe(c);
+  const n = lista.filter((m) => feita(e, m.id)).length;
   const form = new ActionFormData()
-    .title({ translate: `cl.capitulo.${c.id}.nome` })
-    .body({ rawtext: [{ translate: `cl.capitulo.${c.id}.desc` }, { text: "\n\n§7" }, { translate: "cl.diario.legenda" }] });
-  for (const m of lista) form.button({ rawtext: [{ text: marca(e, m) }, titulo(m.id)] });
-  form.button({ translate: "cl.diario.voltar" });
+    .title(tela({ translate: `cl.capitulo.${c.id}.nome` }))
+    .body({ rawtext: [{ translate: `cl.capitulo.${c.id}.desc` }, { text: `\n\n${barra(n, lista.length)} §e${n}/${lista.length}` }] });
+  for (const m of lista) form.button(...botaoMissao(jogador, e, m, c));
+  form.button(VOLTAR);
   const r = await form.show(jogador);
   if (r.selection === undefined || r.selection >= lista.length) return;
   await verMissao(jogador, lista[r.selection].id);
@@ -134,9 +157,9 @@ async function pendentes(jogador: Player): Promise<void> {
   const lista = e.e.map((id) => MISSAO_POR_ID.get(id)).filter((m): m is Missao => !!m);
   if (lista.length === 0) return;
   if (lista.length === 1) return escolherRecompensa(jogador, lista[0]);
-  const form = new ActionFormData().title({ translate: "cl.diario.escolha_titulo" }).body({ translate: "cl.diario.escolha_corpo" });
-  for (const m of lista) form.button(titulo(m.id));
-  form.button({ translate: "cl.diario.voltar" });
+  const form = new ActionFormData().title(tela({ translate: "cl.diario.escolha_titulo" })).body({ translate: "cl.diario.escolha_corpo" });
+  for (const m of lista) form.button(titulo(m.id), iconeDe(IDS.sacolaBoa));
+  form.button(VOLTAR);
   const r = await form.show(jogador);
   if (r.selection !== undefined && r.selection < lista.length) await escolherRecompensa(jogador, lista[r.selection]);
 }
@@ -147,8 +170,8 @@ async function abrirDiario(jogador: Player): Promise<void> {
   const feitas = e.f.length + e.pl.length;
   const acoes: Array<() => Promise<void>> = [];
   const form = new ActionFormData()
-    .title({ translate: "cl.diario.titulo" })
-    .body({ rawtext: [{ translate: "cl.diario.resumo", with: [String(feitas), String(MISSOES.length), String(abertas(e).length)] }, { text: "\n\n" }, { translate: "cl.diario.resumo2" }] });
+    .title(tela({ translate: "cl.diario.titulo" }))
+    .body({ rawtext: [{ translate: "cl.diario.resumo", with: [String(feitas), String(MISSOES.length), String(abertas(e).length)] }, { text: `\n${barra(feitas, MISSOES.length)}\n\n§7` }, { translate: "cl.diario.resumo2" }] });
   if (e.e.length) {
     form.button({ rawtext: [{ text: "§6" }, { translate: "cl.diario.escolher", with: [String(e.e.length)] }] }, iconeDe(IDS.sacolaBoa));
     acoes.push(() => pendentes(jogador));
@@ -157,15 +180,19 @@ async function abrirDiario(jogador: Player): Promise<void> {
     const lista = missoesDe(c);
     const n = lista.filter((m) => feita(e, m.id)).length;
     const liberado = lista.some((m) => feita(e, m.id) || desbloqueada(e, m));
-    const cor = n === lista.length ? "§2" : liberado ? "§0" : "§8";
-    form.button({ rawtext: [{ text: cor }, { translate: `cl.capitulo.${c.id}.nome` }, { text: `\n§7${n}/${lista.length}` }] }, iconeDe(c.icone));
+    const cor = n === lista.length ? "§a" : liberado ? "§f" : "§7";
+    const linha2 = liberado ? `${barra(n, lista.length)} §e${n}/${lista.length}` : "§8";
+    form.button(
+      { rawtext: [{ text: cor }, { translate: `cl.capitulo.${c.id}.nome` }, { text: `\n${linha2}` }, ...(liberado ? [] : [{ translate: "cl.diario.st_bloqueada" }])] },
+      liberado ? iconeDe(c.icone) : ICONE_BLOQUEADA,
+    );
     acoes.push(() => verCapitulo(jogador, c));
   }
   form.button({ translate: "cl.catalogo.titulo" }, iconeDe(IDS.catalogo));
   acoes.push(() => abrirCatalogo(jogador));
   form.button({ translate: "cl.opcoes.titulo" }, iconeDe(IDS.organizador));
   acoes.push(() => abrirOpcoes(jogador));
-  form.button({ translate: "cl.diario.fechar" });
+  form.button({ rawtext: [{ text: "§7" }, { translate: "cl.diario.fechar" }] });
 
   const r = await form.show(jogador);
   if (r.selection === undefined || r.selection >= acoes.length) return;

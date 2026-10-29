@@ -5,6 +5,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
 import { darAoJogador, gastarDaMao, itemNaMao, trocarMao } from "../util/inventario.js";
 import { creditar } from "./energia.js";
+import { nascerDoAddon } from "../util/nascer.js";
 
 /*
  * Barril do Ex Nihilo (madeira e pedra).
@@ -144,7 +145,7 @@ export const barril: BlockCustomComponent = {
     if (c === "slime" && d.t >= BARRIL.leiteTicks) {
       mudar(b, "vazio");
       gravar(b, undefined);
-      if (world.getDifficulty() !== Difficulty.Peaceful) e.dimension.spawnEntity("minecraft:slime", { x: b.x + 0.5, y: b.y + 1, z: b.z + 0.5 });
+      if (world.getDifficulty() !== Difficulty.Peaceful) nascerDoAddon(e.dimension, "minecraft:slime", { x: b.x + 0.5, y: b.y + 1, z: b.z + 0.5 });
       return;
     }
     gravar(b, d);

@@ -2,6 +2,7 @@ import { BlockCustomComponent, ItemStack, system, world } from "@minecraft/serve
 import { GERADOR_MONSTROS, IDS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { escolher, sortearSaque } from "../util/aleatorio.js";
+import { nascerDoAddon } from "../util/nascer.js";
 
 /*
  * Gerador de Monstros: o bloco das cidades e masmorras.
@@ -26,7 +27,7 @@ export const geradorMonstros: BlockCustomComponent = {
       for (const dy of [0, 1, -1]) {
         const pe = e.dimension.getBlock({ x, y: e.block.y + dy, z });
         if (!pe?.isAir || !pe.above()?.isAir || pe.below()?.isAir) continue;
-        e.dimension.spawnEntity(escolher(lista), { x: x + 0.5, y: pe.y, z: z + 0.5 });
+        nascerDoAddon(e.dimension, escolher(lista), { x: x + 0.5, y: pe.y, z: z + 0.5 });
         try {
           e.dimension.spawnParticle("minecraft:basic_flame_particle", { x: x + 0.5, y: pe.y + 0.5, z: z + 0.5 });
         } catch {
