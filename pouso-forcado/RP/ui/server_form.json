@@ -42,8 +42,8 @@
   "cl_diario": {
     "type": "panel",
     "size": [
-      "100%",
-      "100%"
+      330,
+      214
     ],
     "bindings": [
       {
@@ -65,12 +65,8 @@
     "type": "image",
     "texture": "textures/ui/cl/diario_fundo",
     "size": [
-      "100% - 16px",
-      "100% - 8px"
-    ],
-    "max_size": [
-      348,
-      236
+      "100%",
+      "100%"
     ],
     "anchor_from": "center",
     "anchor_to": "center",
@@ -291,14 +287,14 @@
   "cl_diario_botao": {
     "type": "panel",
     "size": [
-      160,
+      150,
       38
     ],
     "controls": [
       {
         "botao@common.button": {
           "size": [
-            156,
+            146,
             34
           ],
           "anchor_from": "center",
