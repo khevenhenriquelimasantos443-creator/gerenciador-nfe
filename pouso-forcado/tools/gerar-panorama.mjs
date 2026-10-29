@@ -1,8 +1,11 @@
 // O fundo do menu e da tela de carregamento: o "panorama" (RP_menu/textures/ui/panorama_0..5.png, as 6 faces de
 // um cubo em volta da câmera, que gira devagar atrás do logo) e a imagem da troca de dimensão
-// (RP/textures/ui/cl/fundo_carregamento.png, usada por RP/ui/progress_screen.json). É o avião caído do começo
-// do jogo (a grade final de tools/gerar-aviao.mjs) no deserto, no fim da tarde, desenhado bloco a bloco com as
-// texturas do próprio jogo (um traçador de raios em blocos, com sombra do sol, nuvens e névoa de calor).
+// (RP/textures/ui/cl/fundo_carregamento.png, usada por RP/ui/progress_screen.json). É o deserto no fim da
+// tarde, desenhado bloco a bloco com as texturas do próprio jogo (um traçador de raios em blocos, com sombra do
+// sol, luz do céu, nuvens e névoa de calor). Cada lado do cubo mostra um lugar do jogo; como o panorama gira
+// devagar, eles passam um depois do outro, como slides: o avião caído (a grade final de tools/gerar-aviao.mjs),
+// os destroços de outra nave, o templo soterrado (as estruturas de BP/structures/cl/) e uma cidade abandonada
+// com a torre de rádio (montada como em scripts/mundo/cidade.ts).
 // Roda à mão (uns 2 minutos) e o resultado fica no git. Precisa das texturas do jogo: a pasta resource_pack do
 // github.com/Mojang/bedrock-samples.
 //   node tools/gerar-panorama.mjs <bedrock-samples>/resource_pack [--previa] [--saida=<pasta>]
@@ -23,7 +26,7 @@ if (!VANILLA || !existsSync(join(VANILLA, "textures/blocks"))) {
 }
 const PREVIA = process.argv.includes("--previa");
 const SAIDA = process.argv.find((a) => a.startsWith("--saida="))?.slice(8);
-const FACE = PREVIA ? 256 : 1024;
+const FACE = PREVIA ? Number(process.env.FACE ?? 256) : 1024;
 const FUNDO = PREVIA ? [640, 300] : [1280, 600];
 
 // ---------- leitura das texturas do jogo (PNG e TGA) ----------
@@ -132,6 +135,8 @@ function textura(nome) {
 
 // ---------- os blocos ----------
 // Faces: uma textura só, ou { lado, topo, baixo }. vidro: deixa ver através (com a cor da textura).
+// recorte: grade e andaime (só os pixels cheios da textura param o raio). Vidraça, carpete, móveis e o resto
+// do que é fino ou fica dentro dos prédios entram como ar.
 const DEF = {
   "minecraft:sand": "sand",
   "minecraft:sandstone": { lado: "sandstone_normal", topo: "sandstone_top", baixo: "sandstone_bottom" },
@@ -154,6 +159,20 @@ const DEF = {
   "minecraft:netherrack": "netherrack",
   "minecraft:iron_block": "iron_block",
   "minecraft:cactus": { lado: "cactus_side", topo: "cactus_top", baixo: "cactus_bottom" },
+  "minecraft:cut_sandstone": { lado: "sandstone_smooth", topo: "sandstone_top", baixo: "sandstone_top" },
+  "minecraft:chiseled_sandstone": { lado: "sandstone_carved", topo: "sandstone_top", baixo: "sandstone_top" },
+  "minecraft:cracked_stone_bricks": "stonebrick_cracked",
+  "minecraft:stone_bricks": "stonebrick",
+  "minecraft:stone_brick_slab": "stonebrick",
+  "minecraft:mossy_stone_bricks": "stonebrick_mossy",
+  "minecraft:cobblestone": "cobblestone",
+  "minecraft:andesite": "stone_andesite",
+  "minecraft:polished_andesite": "stone_andesite_smooth",
+  "minecraft:gravel": "gravel",
+  "minecraft:glass": { todas: "glass", vidro: true },
+  "minecraft:magma": "magma",
+  "minecraft:iron_bars": { todas: "iron_bars", recorte: true },
+  "minecraft:scaffolding": { lado: "scaffolding_side", topo: "scaffolding_top", baixo: "scaffolding_bottom", recorte: true },
 };
 const BLOCOS = [null, null]; // 0 = nada (segue o terreno), 1 = ar do avião (tapa o terreno)
 const ID = new Map();
@@ -165,7 +184,7 @@ function id(nome) {
   if (!d) throw new Error(`gerar-panorama: falta a textura de ${nome} em DEF`);
   const f = typeof d === "string" ? { todas: d } : d;
   const lado = textura(f.lado ?? f.todas);
-  BLOCOS.push({ lado, topo: f.topo || f.todas ? textura(f.topo ?? f.todas) : lado, baixo: f.baixo || f.todas ? textura(f.baixo ?? f.todas) : lado, vidro: !!f.vidro });
+  BLOCOS.push({ lado, topo: f.topo || f.todas ? textura(f.topo ?? f.todas) : lado, baixo: f.baixo || f.todas ? textura(f.baixo ?? f.todas) : lado, vidro: !!f.vidro, recorte: !!f.recorte });
   ID.set(nome, BLOCOS.length - 1);
   return BLOCOS.length - 1;
 }
@@ -173,20 +192,203 @@ const AREIA = id("minecraft:sand"), ARENITO = id("minecraft:sandstone"), CACTO =
 const FAIXAS = [id("minecraft:orange_terracotta"), id("minecraft:terracotta"), id("minecraft:white_terracotta")];
 
 // ---------- a cena ----------
-// Avião: a grade final de tools/gerar-aviao.mjs (x, h, z, bloco; h = 0 é o bloco de cima do chão).
+const norm = (v) => { const l = Math.hypot(...v); return v.map((c) => c / l); };
+const cruz = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+const menos = (v) => v.map((c) => -c);
+// Câmera do panorama: um pouco atrás de onde o jogador nasce (8 à frente do nariz e 30 ao lado, em
+// tools/gerar-aviao.mjs) e um pouco acima, olhando o avião de três quartos. Os lugares ficam em volta dela:
+// frente (face 0) o avião, direita (1) o sol e os destroços, trás (2) o templo, esquerda (3) a cidade.
+const CAMERA = [-4.5, 5.2, -31.5];
+const MEIO_DO_AVIAO = [-12, 3, -2]; // o centro da face da frente (o avião fica no meio dela)
+const ALVO = [-22, 3, 0]; // para onde olha a imagem parada
+// A imagem parada (troca de dimensão) é vista de mais longe, para caber o avião inteiro.
+const CAMERA_FUNDO = [24.5, 7, -39.5];
+let olho = CAMERA;
+const F = norm([MEIO_DO_AVIAO[0] - CAMERA[0], 0, MEIO_DO_AVIAO[2] - CAMERA[2]]), U = [0, 1, 0], D = cruz(F, U); // frente, cima, direita
+const longe = (dir, dist) => [Math.round(CAMERA[0] + dir[0] * dist), Math.round(CAMERA[2] + dir[2] * dist)];
+
+// Tudo o que é construção fica numa grade só (0 = nada, segue o terreno; 1 = ar que tapa o terreno).
+// Coordenadas: h = 0 é o bloco de cima do chão (o chão do mundo plano é y 44).
+const O = { x0: -128, x1: 200, y0: -8, y1: 72, z0: -120, z1: 136 };
+const OY = O.y1 - O.y0 + 1, OZ = O.z1 - O.z0 + 1;
+const obras = new Uint8Array((O.x1 - O.x0 + 1) * OY * OZ);
+const dentro = (x, y, z) => x >= O.x0 && x <= O.x1 && y >= O.y0 && y <= O.y1 && z >= O.z0 && z <= O.z1;
+const ondeObra = (x, y, z) => ((x - O.x0) * OY + (y - O.y0)) * OZ + (z - O.z0);
+const por = (x, y, z, nome) => { if (dentro(x, y, z)) obras[ondeObra(x, y, z)] = id(nome); };
+const areas = []; // retângulos das construções, para não pôr duna nem cacto em cima
+const area = (x0, z0, x1, z1) => areas.push({ x0, z0, x1, z1 });
+const livre = (x, z, folga) => areas.every((a) => x < a.x0 - folga || x > a.x1 + folga || z < a.z0 - folga || z > a.z1 + folga);
+
+// Avião: a grade final de tools/gerar-aviao.mjs (x, h, z, bloco).
 const tmp = mkdtempSync(join(tmpdir(), "panorama-"));
 execFileSync(process.execPath, [join(RAIZ, "tools/gerar-aviao.mjs")], { env: { ...process.env, AVIAO_DUMP: join(tmp, "aviao.json") }, stdio: ["ignore", "ignore", "inherit"] });
 const lista = JSON.parse(readFileSync(join(tmp, "aviao.json"), "utf8"));
 rmSync(tmp, { recursive: true });
-const A = { x0: Infinity, x1: -Infinity, y0: Infinity, y1: -Infinity, z0: Infinity, z1: -Infinity };
-for (const [x, y, z] of lista) {
-  A.x0 = Math.min(A.x0, x); A.x1 = Math.max(A.x1, x);
-  A.y0 = Math.min(A.y0, y); A.y1 = Math.max(A.y1, y);
-  A.z0 = Math.min(A.z0, z); A.z1 = Math.max(A.z1, z);
+// (Menos os destroços soltos que caíram bem onde fica a câmera: tapariam a cidade.)
+for (const [x, y, z, b] of lista) if (Math.hypot(x + 0.5 - CAMERA[0], z + 0.5 - CAMERA[2]) > 12) por(x, y, z, b);
+area(Math.min(...lista.map((l) => l[0])), Math.min(...lista.map((l) => l[2])), Math.max(...lista.map((l) => l[0])), Math.max(...lista.map((l) => l[2])));
+
+// Estruturas .mcstructure (NBT little-endian), postas como o jogo põe: o ar da estrutura também entra.
+function lerNbt(d) {
+  let o = 0;
+  const i32 = () => { const v = d.readInt32LE(o); o += 4; return v; };
+  const texto = () => { const n = d.readUInt16LE(o); o += 2; o += n; return d.toString("utf8", o - n, o); };
+  const valor = (t) => {
+    switch (t) {
+      case 1: return d.readInt8(o++);
+      case 2: o += 2; return d.readInt16LE(o - 2);
+      case 3: return i32();
+      case 4: o += 8; return d.readBigInt64LE(o - 8);
+      case 5: o += 4; return d.readFloatLE(o - 4);
+      case 6: o += 8; return d.readDoubleLE(o - 8);
+      case 7: { const n = i32(); o += n; return d.subarray(o - n, o); }
+      case 8: return texto();
+      case 9: { const tt = d[o++], n = i32(); return Array.from({ length: n }, () => valor(tt)); }
+      case 10: { const c = {}; for (let t2; (t2 = d[o++]); ) { const nome = texto(); c[nome] = valor(t2); } return c; }
+      case 11: { const n = i32(); return Array.from({ length: n }, () => i32()); }
+      case 12: { const n = i32(); o += n * 8; return null; }
+    }
+    throw new Error(`NBT: tipo ${t} desconhecido`);
+  };
+  const t = d[o++];
+  texto();
+  return valor(t);
 }
-const AY = A.y1 - A.y0 + 1, AZ = A.z1 - A.z0 + 1;
-const aviao = new Uint8Array((A.x1 - A.x0 + 1) * AY * AZ);
-for (const [x, y, z, b] of lista) aviao[((x - A.x0) * AY + (y - A.y0)) * AZ + (z - A.z0)] = id(b);
+function porEstrutura(nome, x0, h0, z0) {
+  const r = lerNbt(readFileSync(join(RAIZ, "BP/structures/cl", `${nome}.mcstructure`)));
+  const [X, Y, Z] = r.size, paleta = r.structure.palette.default.block_palette.map((b) => b.name), idx = r.structure.block_indices[0];
+  for (let x = 0; x < X; x++)
+    for (let y = 0; y < Y; y++)
+      for (let z = 0; z < Z; z++) {
+        const i = idx[(x * Y + y) * Z + z];
+        if (i >= 0) por(x0 + x, h0 + y, z0 + z, paleta[i]);
+      }
+  area(x0, z0, x0 + X - 1, z0 + Z - 1);
+}
+// Templo soterrado (3 camadas abaixo do chão: deslocY -3 em scripts/config.ts), com a entrada virada para a câmera.
+{
+  const [x, z] = longe(menos(F), 19);
+  porEstrutura("templo_soterrado", x - 7, -2, z - 7);
+}
+// Destroços de outra nave (deslocY -2), embaixo do sol.
+{
+  const [x, z] = longe(norm([D[0] * 0.85 - F[0] * 0.5, 0, D[2] * 0.85 - F[2] * 0.5]), 33);
+  porEstrutura("nave_caida", x - 6, -1, z - 8);
+}
+
+// Cidade abandonada: 7×7 quarteirões de 16 blocos, a torre de rádio no do meio e prédios de tijolo de pedra
+// rachado em volta (mais altos perto do centro), como scripts/mundo/cidade.ts monta no jogo (sem os móveis,
+// baús e geradores, que ficam lá dentro no escuro).
+function rngDe(n) {
+  let s = n >>> 0 || 1;
+  return () => ((s = (Math.imul(s, 1103515245) + 12345) >>> 0) / 4294967296);
+}
+function cidade(cx0, cz0) {
+  const PAREDE = "minecraft:cracked_stone_bricks", PISO = "minecraft:stone_bricks";
+  const REMENDOS = ["minecraft:stone_bricks", "minecraft:mossy_stone_bricks", "minecraft:cobblestone", "minecraft:andesite"];
+  const ENTULHO = ["minecraft:cobblestone", "minecraft:gravel", "minecraft:cracked_stone_bricks", "minecraft:stone_brick_slab"];
+  const ARENITOS = ["minecraft:sandstone", "minecraft:smooth_sandstone", "minecraft:cut_sandstone"];
+  const PEDRAS = ["minecraft:polished_andesite", "minecraft:cracked_stone_bricks", "minecraft:cobblestone"];
+  const escolher = (l, sorte) => l[Math.floor(sorte() * l.length)];
+  const encher = (x1, y1, z1, x2, y2, z2, b) => {
+    for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++)
+      for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) for (let z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) por(x, y, z, b);
+  };
+  const ehAr = (x, y, z) => y >= 1 && obras[ondeObra(x, y, z)] <= 1;
+  const chao = (x0, z0, sorte) => {
+    for (let dx = 0; dx < 16; dx++)
+      for (let dz = 0; dz < 16; dz++) {
+        const r = sorte();
+        por(x0 + dx, 0, z0 + dz, r < 0.35 ? escolher(ARENITOS, sorte) : r < 0.45 ? escolher(PEDRAS, sorte) : "minecraft:sand");
+      }
+    for (let i = 0; i < 18; i++) por(x0 + Math.floor(sorte() * 16), 1, z0 + Math.floor(sorte() * 16), "minecraft:sand");
+  };
+  const ferragem = (x, y, z, sorte) => {
+    for (let i = 2 + Math.floor(sorte() * 3); i > 0 && ehAr(x, y, z); i--) {
+      por(x, y, z, "minecraft:iron_bars");
+      y++;
+      if (sorte() < 0.5) x += sorte() < 0.5 ? 1 : -1;
+      else z += sorte() < 0.5 ? 1 : -1;
+    }
+  };
+  const torre = (x0, z0, sorte) => {
+    const altura = 34, ax = x0 + 6, az = z0 + 6, topo = 1 + altura;
+    chao(x0, z0, sorte);
+    encher(ax, 1, az, ax + 2, altura, az + 2, PAREDE);
+    encher(ax + 1, 1, az + 1, ax + 1, topo, az + 1, "minecraft:scaffolding");
+    encher(ax + 1, 1, az + 2, ax + 1, 2, az + 2, "minecraft:air");
+    encher(ax - 1, topo, az - 1, ax + 3, topo, az + 3, "minecraft:stone_brick_slab");
+    por(ax + 1, topo, az + 1, "minecraft:scaffolding");
+    encher(ax + 2, topo + 1, az + 2, ax + 2, topo + 8, az + 2, "minecraft:iron_bars");
+    ferragem(ax - 1, topo + 1, az + 3, sorte);
+  };
+  const escombros = (x0, z0, sorte) => {
+    chao(x0, z0, sorte);
+    for (let i = 0; i < 7; i++) {
+      const x = x0 + 2 + Math.floor(sorte() * 10), z = z0 + 2 + Math.floor(sorte() * 10);
+      const comp = 2 + Math.floor(sorte() * 5), alt = 1 + Math.floor(sorte() * 4);
+      if (sorte() < 0.5) encher(x, 1, z, Math.min(x0 + 13, x + comp), alt, z, PAREDE);
+      else encher(x, 1, z, x, alt, Math.min(z0 + 13, z + comp), PAREDE);
+      if (sorte() < 0.5) ferragem(x, 1 + alt, z, sorte);
+    }
+    for (let i = 0; i < 25; i++) por(x0 + 1 + Math.floor(sorte() * 14), 1, z0 + 1 + Math.floor(sorte() * 14), escolher(ENTULHO, sorte));
+  };
+  const predio = (x0, z0, dist, sorte) => {
+    const andares = Math.max(2, Math.round(9 * (1 - dist / 4)) + Math.floor(sorte() * 3) - 1);
+    const x1 = x0 + 3, x2 = x0 + 12, z1 = z0 + 3, z2 = z0 + 12, topo = andares * 4;
+    const parede = (lado, p) => [[x1 + p, z1], [x1 + p, z2], [x1, z1 + p], [x2, z1 + p]][lado];
+    chao(x0, z0, sorte);
+    encher(x1, 0, z1, x2, topo, z2, PAREDE);
+    encher(x1 + 1, 1, z1 + 1, x2 - 1, topo - 1, z2 - 1, "minecraft:air");
+    for (let f = 1; f < andares; f++) encher(x1 + 1, f * 4, z1 + 1, x2 - 1, f * 4, z2 - 1, PISO);
+    for (let i = 0; i < andares * 14; i++) {
+      const [x, z] = parede(Math.floor(sorte() * 4), Math.floor(sorte() * 10)), y = 1 + Math.floor(sorte() * andares * 4);
+      if (!ehAr(x, y, z)) por(x, y, z, escolher(REMENDOS, sorte));
+    }
+    // Janelas: quase todas quebradas (vidraça e ar dão no mesmo aqui), algumas com grade.
+    for (let f = 0; f < andares; f++)
+      for (const p of [2, 5, 8])
+        for (let lado = 0; lado < 4; lado++) {
+          const [x, z] = parede(lado, p), janela = sorte() < 0.8 ? "minecraft:air" : "minecraft:iron_bars";
+          por(x, f * 4 + 2, z, janela);
+          por(x, f * 4 + 3, z, sorte() < 0.7 ? "minecraft:air" : janela);
+        }
+    encher(x1 + 6, 1, z2, x1 + 7, 2, z2, "minecraft:air");
+    for (let i = 0; i < andares * 10; i++) {
+      const lado = Math.floor(sorte() * 4), [x, z] = parede(lado, Math.floor(sorte() * 10)), y = 1 + Math.floor(sorte() * andares * 4);
+      const tam = sorte() < 0.3 ? 2 : 1;
+      encher(x, y, z, Math.min(x2, x + (lado >= 2 ? 0 : tam - 1)), y + tam - 1, Math.min(z2, z + (lado >= 2 ? tam - 1 : 0)), "minecraft:air");
+    }
+    for (let i = 0; i < 40; i++) por(x1 + Math.floor(sorte() * 10), topo - Math.floor(sorte() * 5), z1 + Math.floor(sorte() * 10), "minecraft:air");
+    const cantos = andares > 3 ? 1 + (sorte() < 0.5 ? 1 : 0) : sorte() < 0.5 ? 1 : 0;
+    for (let c = 0; c < cantos; c++) {
+      const cx = sorte() < 0.5 ? x1 : x2 - 4, cz = sorte() < 0.5 ? z1 : z2 - 5, fundo = topo - 4 - Math.floor(sorte() * 6);
+      encher(cx, fundo, cz, cx + 4, topo, cz + 4, "minecraft:air");
+      for (let k = 0; k < 3; k++) ferragem(cx + Math.floor(sorte() * 5), fundo, cz + Math.floor(sorte() * 5), sorte);
+    }
+    for (let k = 0; k < 4; k++) {
+      const [x, z] = parede(k, Math.floor(sorte() * 10));
+      ferragem(x, topo + 1, z, sorte);
+    }
+    for (let i = 0; i < 20; i++) {
+      const [x, z] = [[x1 + 1, z1 - 1], [x1 + 1, z2 + 1], [x1 - 1, z1 + 1], [x2 + 1, z1 + 1]][Math.floor(sorte() * 4)], p = Math.floor(sorte() * 9);
+      por(x + (x === x1 - 1 || x === x2 + 1 ? 0 : p), 1, z + (z === z1 - 1 || z === z2 + 1 ? 0 : p), sorte() < 0.5 ? "minecraft:sand" : escolher(ENTULHO, sorte));
+    }
+  };
+  for (let i = -3; i <= 3; i++)
+    for (let j = -3; j <= 3; j++) {
+      const x0 = cx0 + i * 16, z0 = cz0 + j * 16, dist = Math.max(Math.abs(i), Math.abs(j)), sorte = rngDe(9173 + (i + 3) * 7 + (j + 3));
+      if (dist === 0) torre(x0, z0, sorte);
+      else if (sorte() < 0.2) escombros(x0, z0, sorte);
+      else predio(x0, z0, dist, sorte);
+    }
+  area(cx0 - 48, cz0 - 48, cx0 + 63, cz0 + 63);
+}
+{
+  const [x, z] = longe(menos(D), 100);
+  cidade(x - 8, z - 8);
+}
 
 // Terreno: areia plana (o mundo é plano) com dunas baixas, mesas de arenito ao longe e cactos.
 const R = 768, HN = R * 2;
@@ -198,19 +400,11 @@ const hash = (x, z, s) => {
   h = Math.imul(h ^ (h >>> 13), 1274126177);
   return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
 };
-// A câmera fica um pouco atrás de onde o jogador nasce (8 à frente do nariz e 30 ao lado, em
-// tools/gerar-aviao.mjs) e um pouco acima, olhando o avião de três quartos.
-const CAMERA = [-4.5, 5.2, -31.5];
-const ALVO = [-22, 3, 0];
-// A imagem parada (troca de dimensão) é vista de mais longe, para caber o avião inteiro.
-const CAMERA_FUNDO = [17.5, 6.5, -47.5];
-let olho = CAMERA;
-const longeDoAviao = (x, z, folga) => x < A.x0 - folga || x > A.x1 + folga || z < A.z0 - folga || z > A.z1 + folga;
 const morros = [];
 for (let i = 0; i < 260; i++) {
   const cx = (sorte() * 2 - 1) * 600, cz = (sorte() * 2 - 1) * 600, rx = 7 + sorte() * 18, rz = 6 + sorte() * 14;
   const h = 2 + Math.floor(sorte() ** 1.6 * 7);
-  if (!longeDoAviao(cx, cz, Math.max(rx, rz) + 14) || Math.hypot(cx - CAMERA[0], cz - CAMERA[2]) < Math.max(rx, rz) + 10) continue;
+  if (!livre(cx, cz, Math.max(rx, rz) + 30) || Math.hypot(cx - CAMERA[0], cz - CAMERA[2]) < Math.max(rx, rz) + 10) continue;
   morros.push({ cx, cz, rx, rz, h, giro: sorte() * Math.PI });
 }
 const mesas = [
@@ -245,12 +439,12 @@ for (const m of mesas)
 for (let j = 1; j < HN - 1; j++)
   for (let i = 1; i < HN - 1; i++) {
     const k = j * HN + i, x = i - R, z = j - R;
-    if (tipo[k] || !longeDoAviao(x, z, 10) || Math.hypot(x - CAMERA[0], z - CAMERA[2]) < 9 || hash(x, z, 3) > 0.0011) continue;
+    if (tipo[k] || !livre(x, z, 8) || Math.hypot(x - CAMERA[0], z - CAMERA[2]) < 9 || hash(x, z, 3) > 0.0011) continue;
     if (alt[k - 1] !== alt[k] || alt[k + 1] !== alt[k] || alt[k - HN] !== alt[k] || alt[k + HN] !== alt[k]) continue;
     cacto[k] = 1 + Math.floor(hash(x, z, 4) * 3);
   }
 // Uns cactos perto da câmera, fora da frente do avião, para dar primeiro plano.
-for (const [x, z, h] of [[24, -33, 3], [-6, -44, 2], [27, -12, 2]]) cacto[(z + R) * HN + (x + R)] = h;
+for (const [x, z, h] of [[24, -33, 3], [-14, -40, 2], [27, -12, 2]]) if (livre(x, z, 1)) cacto[(z + R) * HN + (x + R)] = h;
 
 // Ruído suave (valor interpolado), para as nuvens saírem em blocos grandes e não em chuvisco.
 function suave(x, z) {
@@ -260,10 +454,10 @@ function suave(x, z) {
   return a + (b - a) * sx + (c - a) * sz + (a - b - c + d) * sx * sz;
 }
 
-const YMAX = 40;
+const YMAX = 64;
 function blocoEm(x, y, z) {
-  if (x >= A.x0 && x <= A.x1 && z >= A.z0 && z <= A.z1 && y >= A.y0 && y <= A.y1) {
-    const v = aviao[((x - A.x0) * AY + (y - A.y0)) * AZ + (z - A.z0)];
+  if (dentro(x, y, z)) {
+    const v = obras[ondeObra(x, y, z)];
     if (v === 1) return 0;
     if (v) return v;
   }
@@ -279,14 +473,9 @@ function blocoEm(x, y, z) {
 }
 
 // ---------- luz, céu e névoa ----------
-const norm = (v) => { const l = Math.hypot(...v); return v.map((c) => c / l); };
-const cruz = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-const escalar = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
-const F = norm([ALVO[0] - CAMERA[0], 0, ALVO[2] - CAMERA[2]]), U = [0, 1, 0], D = cruz(F, U); // frente, cima, direita
-// Sol do fim da tarde, atrás e à direita de quem olha o avião: o casco do lado da câmera fica iluminado e a
-// sombra cai para trás, na areia.
-const SOL = norm([F[0] * -0.35 + D[0] * 0.75, 0.42, F[2] * -0.35 + D[2] * 0.75]);
+// Sol do fim da tarde, atrás e à direita de quem olha o avião (por cima dos destroços): o casco do lado da
+// câmera, o templo de lado e a cidade de frente ficam iluminados, e a sombra do avião cai para trás, na areia.
+const SOL = norm([-0.486, 0.42, -0.67]);
 const S1 = norm(cruz(SOL, U)), S2 = cruz(S1, SOL);
 const COR_SOL = [1.0, 0.84, 0.62], COR_AMB = [0.56, 0.6, 0.7];
 const ZENITE = [64, 122, 204], MEIO = [128, 178, 226], HORIZONTE = [236, 214, 176];
@@ -337,6 +526,11 @@ function tracar(ox, oy, oz, dx, dy, dz, maxT, sombra) {
     if (y > YMAX && dy >= 0) return false;
     const b = blocoEm(x, y, z);
     if (!b) { antes = 0; continue; }
+    if (BLOCOS[b].recorte) {
+      hB = b; hEixo = eixo; hT = t; hSinal = eixo === 0 ? sx : eixo === 1 ? sy : sz;
+      if (texel(ox + dx * t, oy + dy * t, oz + dz * t, 0)[3] < 0.5) { antes = b; continue; }
+      return true;
+    }
     if (BLOCOS[b].vidro) {
       if (!sombra && antes !== b) {
         hB = b; hEixo = eixo; hT = t; hSinal = eixo === 0 ? sx : eixo === 1 ? sy : sz;
@@ -396,7 +590,9 @@ function pixel(dx, dy, dz) {
     const ns = nx * SOL[0] + ny * SOL[1] + nz * SOL[2];
     let sol = 0;
     if (ns > 0 && !tracar(px + nx * 1e-3, py + ny * 1e-3, pz + nz * 1e-3, SOL[0], SOL[1], SOL[2], 220, true)) sol = ns;
-    const luz = COR_AMB.map((a, i) => a * face + COR_SOL[i] * sol * 0.95);
+    // Luz do céu: com teto em cima (dentro dos prédios, embaixo da asa) fica escuro, como no jogo.
+    const ceuAberto = !tracar(px + nx * 1e-3, py + ny * 1e-3, pz + nz * 1e-3, 0, 1, 0, 80, true);
+    const luz = COR_AMB.map((a, i) => a * face * (ceuAberto ? 1 : 0.42) + COR_SOL[i] * sol * 0.95);
     cor = [r * luz[0], g * luz[1], b * luz[2]];
     // Névoa de calor ao longe.
     const n = Math.min(0.9, Math.max(0, (t - 50) / 520) ** 1.15);
@@ -422,7 +618,6 @@ function imagem(w, h, raio) {
 
 // Faces do panorama, na ordem do jogo (conferida no panorama original): 0 frente, 1 direita, 2 trás,
 // 3 esquerda (girando para a direita), 4 cima (a borda de baixo encosta na frente), 5 baixo (a de cima encosta).
-const menos = (v) => v.map((c) => -c);
 const FACES = [
   [F, D, U], [D, menos(F), U], [menos(F), menos(D), U], [menos(D), F, U], [U, D, menos(F)], [menos(U), D, F],
 ];
@@ -451,7 +646,7 @@ function foto(w, h, campo, alvo = ALVO) {
 }
 // Fundo da troca de dimensão: o avião inteiro. Ícone do pacote do menu: a cauda do avião, de perto.
 for (const [arq, png] of [
-  [join(pastaFundo, "fundo_carregamento.png"), foto(...FUNDO, 84)],
+  [join(pastaFundo, "fundo_carregamento.png"), foto(...FUNDO, 74)],
   [SAIDA ? join(SAIDA, "pack_icon.png") : join(RAIZ, "RP_menu/pack_icon.png"), foto(256, 256, 30, [-30, 7, 0])],
 ]) {
   writeFileSync(arq, png);

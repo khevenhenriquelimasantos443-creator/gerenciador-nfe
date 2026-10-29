@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.4.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.4.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,11 +134,13 @@ Outros comandos:
 
 ### Menu e tela de carregamento
 
-O `.mcaddon` traz um terceiro pack, **Pouso Forçado (Menu)**: o avião caído no deserto no fundo do menu e da tela de "Carregando...", o logo **Pouso Forçado** no lugar do logo do Minecraft e dicas do modpack embaixo da barra. Essas telas aparecem **antes** de o mundo carregar os packs dele, então este pack precisa ficar ligado no jogo todo:
+O `.mcaddon` traz um terceiro pack, **Pouso Forçado (Menu)**: o deserto do jogo no fundo do menu e da tela de "Carregando..." (o fundo gira devagar e mostra, um depois do outro, o avião caído, os destroços de outra nave embaixo do sol, o templo soterrado e a cidade abandonada com a torre de rádio), o logo **Pouso Forçado** no lugar do logo do Minecraft e dicas do modpack embaixo da barra. Essas telas aparecem **antes** de o mundo carregar os packs dele, então este pack precisa ficar ligado no jogo todo:
 
 1. **Configurações** → **Recursos Globais** (Global Resources).
 2. Em **Meus Pacotes**, toque em **Pouso Forçado (Menu)** → **Ativar**.
 3. Volte para o menu: o fundo e o logo já mudam. Para voltar ao normal, desative ali mesmo.
+
+O fundo passa mais rápido ou mais devagar em **Configurações** → **Geral** → **Velocidade de Rolagem do Panorama**.
 
 Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dentro do mundo Pouso Forçado, a tela de troca de dimensão (ir e voltar do Nether) também mostra o avião caído, mesmo sem o pack do menu.
 
@@ -147,6 +149,11 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.4.2
+
+- **Fundo do menu com quatro lugares**: o panorama agora é o deserto inteiro em volta. Enquanto gira, passam um depois do outro, como slides, o **avião caído**, os **destroços de outra nave** embaixo do sol, o **templo soterrado** (a estrutura do jogo) e a **cidade abandonada** com a torre de rádio e os prédios quebrados (montada como no jogo). Vale também para a tela de "Carregando...". Dentro dos prédios e embaixo da asa fica escuro, como no jogo.
+- A imagem da troca de dimensão foi vista de outro ponto, com o avião inteiro.
 
 ## Novidades da 1.4.1
 

@@ -17,8 +17,8 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 ## Menu e tela de carregamento
 
-- O panorama do menu, o fundo da troca de dimensão e o ícone do pacote do menu são imagens do avião caído
-  desenhadas por `tools/gerar-panorama.mjs` com as **texturas originais do Minecraft** (Mojang, do repositório
+- O panorama do menu, o fundo da troca de dimensão e o ícone do pacote do menu são imagens do deserto do jogo
+  (avião caído, destroços, templo soterrado e cidade abandonada) desenhadas por `tools/gerar-panorama.mjs` com as **texturas originais do Minecraft** (Mojang, do repositório
   oficial `Mojang/bedrock-samples`). O logo "Pouso Forçado" e as dicas foram feitos para este projeto.
 
 ## Inspiração
