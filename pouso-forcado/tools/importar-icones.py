@@ -44,6 +44,33 @@ def menu(src):
     return quad.resize((64, 64), Image.LANCZOS)
 
 
+def materiais_opacos():
+    """Texturas (clc_<nome>) que os blocos usam com render_method opaco: nelas o transparente apareceria preto."""
+    import json
+    opacos = set()
+    for arq in os.listdir(f"{R}/BP/blocks"):
+        d = json.load(open(f"{R}/BP/blocks/{arq}", encoding="utf8"))["minecraft:block"]
+        mats = [d["components"].get("minecraft:material_instances", {})]
+        mats += [p.get("components", {}).get("minecraft:material_instances", {}) for p in d.get("permutations", [])]
+        for m in mats:
+            for v in m.values():
+                if isinstance(v, dict) and v.get("render_method", "opaque") == "opaque" and str(v.get("texture", "")).startswith("clc_"):
+                    opacos.add(v["texture"][4:])
+    return opacos
+
+
+def fechar_fundo(im):
+    """Textura de material opaco que veio recortada (fundo transparente): o fundo vira um tom escuro da cor
+    média do próprio desenho, com o desenho por cima (folhas e cachos de modelo ficam com cara de folhagem)."""
+    px = [p for p in im.getdata() if p[3] >= 128]
+    if not px:
+        return im
+    media = tuple(int(sum(p[i] for p in px) / len(px) * 0.55) for i in range(3))
+    fundo = Image.new("RGBA", im.size, (*media, 255))
+    fundo.alpha_composite(im)
+    return fundo
+
+
 def main(pacote):
     os.makedirs(f"{SAIDA}/blocos", exist_ok=True)
     itens_jogo = {f[:-5] for f in os.listdir(f"{R}/BP/items")}
@@ -78,6 +105,7 @@ def main(pacote):
             ignorados.append(f"blocos_menu/{nome}")
     faces = f"{pacote}/blocos_faces"
     nf = 0
+    opacos, fechados = materiais_opacos(), []
     if os.path.isdir(faces):
         destino = os.path.join(R, "RP/textures/blocks/cl/arte")
         os.makedirs(destino, exist_ok=True)
@@ -92,11 +120,16 @@ def main(pacote):
                 im = Image.open(f"{faces}/{arq}").convert("RGBA")
                 if im.width > 32:
                     im = im.resize((32, 32), Image.NEAREST if im.width % 32 == 0 else Image.LANCZOS)
+                if nome in opacos and im.getchannel("A").getextrema()[0] < 250:
+                    im = fechar_fundo(im)
+                    fechados.append(nome)
                 im.save(f"{destino}/{nome}.png")
                 nf += 1
             else:
                 ignorados.append(f"blocos_faces/{nome} ({bloco})")
     print(f"faces de bloco: {nf}")
+    if fechados:
+        print(f"fundo transparente fechado (material opaco): {', '.join(fechados)}")
     faltam = sorted(itens_jogo - feitos - {f[:-4] for f in os.listdir(SAIDA) if f.endswith(".png")})
     print(f"importados: {len(feitos)} itens, {nb} blocos")
     print(f"ignorados (não existem no jogo): {', '.join(ignorados) or 'nenhum'}")

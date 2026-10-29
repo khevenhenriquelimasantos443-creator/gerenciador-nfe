@@ -1,10 +1,10 @@
-# Ícones que ainda faltam (versão 1.3.4)
+# Ícones do add-on (versão 1.3.6): nada faltando
 
 Conferido no jogo: tudo o que ainda está sem a arte da outra IA. Mesmo formato, mesmas regras e mesma forma de
 salvar e mandar de `docs/prompt-icones.md` (A = ícone de item, B = ícone de menu de bloco, C = texturas de face).
 Os nomes de arquivo têm que ser exatamente estes, para eu encaixar direto.
 
-**Resumo (1.3.4):** partes 1 e 2 recebidas e no jogo. **Falta só a parte 3 (`novidades_1_2`) e a parte 4 (`novidades_1_3`)**: 26 itens e os blocos listados nelas.
+**Resumo (1.3.6):** todas as partes (1 a 4) recebidas e no jogo: todos os itens têm ícone desenhado e todas as faces de bloco usam arte. Se entrar item ou bloco novo, ele vai numa parte 5.
 Os cubos simples (tijolos do Chisel, vidros, blocos de metal) não precisam de ícone de menu: o jogo desenha o cubo com as faces.
 
 ## Parte 1: pendentes das Fases 12 e 14
@@ -337,6 +337,8 @@ Os blocos sem coluna "Tipo" são todos máquina.
 
 ## LISTA, parte 3: novidades das versões 1.1 e 1.2 (zip `novidades_1_2`)
 
+> ✅ Recebida e importada na 1.3.6.
+
 **Itens (A):**
 
 | Arquivo | Nome | Como deve parecer |
@@ -376,6 +378,8 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | cacho_tamaras_madura | Cacho de Tâmaras (maduro) | cacho de tâmaras marrom-escuras |
 
 ## LISTA, parte 4: novidades da versão 1.3.0 (zip `novidades_1_3`)
+
+> ✅ Recebida e importada na 1.3.6.
 
 Mekanism (gás em cilindros, ligas, cubos de energia, jetpack), BuildCraft (petróleo, engrenagens, máquinas) e
 OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.

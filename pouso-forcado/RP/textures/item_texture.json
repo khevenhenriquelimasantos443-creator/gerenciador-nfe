@@ -924,82 +924,82 @@
       "textures": "textures/items/cl/arte/cinzel"
     },
     "clc_padrao_me_vazio": {
-      "textures": "textures/items/cl/c/padrao_me_vazio"
+      "textures": "textures/items/cl/arte/padrao_me_vazio"
     },
     "clc_bussola_aviao": {
-      "textures": "textures/items/cl/c/bussola_aviao"
+      "textures": "textures/items/cl/arte/bussola_aviao"
     },
     "clc_saco_dormir": {
-      "textures": "textures/items/cl/c/saco_dormir"
+      "textures": "textures/items/cl/arte/saco_dormir"
     },
     "clc_fragmento_meteorito": {
-      "textures": "textures/items/cl/c/fragmento_meteorito"
+      "textures": "textures/items/cl/arte/fragmento_meteorito"
     },
     "clc_cajado_osso": {
-      "textures": "textures/items/cl/c/cajado_osso"
+      "textures": "textures/items/cl/arte/cajado_osso"
     },
     "clc_cajado_ouro": {
-      "textures": "textures/items/cl/c/cajado_ouro"
+      "textures": "textures/items/cl/arte/cajado_ouro"
     },
     "clc_tamara": {
-      "textures": "textures/items/cl/c/tamara"
+      "textures": "textures/items/cl/arte/tamara"
     },
     "clc_cilindro_vazio": {
-      "textures": "textures/items/cl/c/cilindro_vazio"
+      "textures": "textures/items/cl/arte/cilindro_vazio"
     },
     "clc_cilindro_hidrogenio": {
-      "textures": "textures/items/cl/c/cilindro_hidrogenio"
+      "textures": "textures/items/cl/arte/cilindro_hidrogenio"
     },
     "clc_cilindro_oxigenio": {
-      "textures": "textures/items/cl/c/cilindro_oxigenio"
+      "textures": "textures/items/cl/arte/cilindro_oxigenio"
     },
     "clc_cilindro_cloro": {
-      "textures": "textures/items/cl/c/cilindro_cloro"
+      "textures": "textures/items/cl/arte/cilindro_cloro"
     },
     "clc_cilindro_acido": {
-      "textures": "textures/items/cl/c/cilindro_acido"
+      "textures": "textures/items/cl/arte/cilindro_acido"
     },
     "clc_balde_salmoura": {
-      "textures": "textures/items/cl/c/balde_salmoura"
+      "textures": "textures/items/cl/arte/balde_salmoura"
     },
     "clc_po_litio": {
-      "textures": "textures/items/cl/c/po_litio"
+      "textures": "textures/items/cl/arte/po_litio"
     },
     "clc_liga_enriquecida": {
-      "textures": "textures/items/cl/c/liga_enriquecida"
+      "textures": "textures/items/cl/arte/liga_enriquecida"
     },
     "clc_liga_reforcada": {
-      "textures": "textures/items/cl/c/liga_reforcada"
+      "textures": "textures/items/cl/arte/liga_reforcada"
     },
     "clc_liga_atomica": {
-      "textures": "textures/items/cl/c/liga_atomica"
+      "textures": "textures/items/cl/arte/liga_atomica"
     },
     "clc_jetpack": {
-      "textures": "textures/items/cl/c/jetpack"
+      "textures": "textures/items/cl/arte/jetpack"
     },
     "clc_engrenagem_madeira": {
-      "textures": "textures/items/cl/c/engrenagem_madeira"
+      "textures": "textures/items/cl/arte/engrenagem_madeira"
     },
     "clc_engrenagem_pedra": {
-      "textures": "textures/items/cl/c/engrenagem_pedra"
+      "textures": "textures/items/cl/arte/engrenagem_pedra"
     },
     "clc_engrenagem_ferro": {
-      "textures": "textures/items/cl/c/engrenagem_ferro"
+      "textures": "textures/items/cl/arte/engrenagem_ferro"
     },
     "clc_engrenagem_ouro": {
-      "textures": "textures/items/cl/c/engrenagem_ouro"
+      "textures": "textures/items/cl/arte/engrenagem_ouro"
     },
     "clc_engrenagem_diamante": {
-      "textures": "textures/items/cl/c/engrenagem_diamante"
+      "textures": "textures/items/cl/arte/engrenagem_diamante"
     },
     "clc_balde_petroleo": {
-      "textures": "textures/items/cl/c/balde_petroleo"
+      "textures": "textures/items/cl/arte/balde_petroleo"
     },
     "clc_balde_combustivel": {
-      "textures": "textures/items/cl/c/balde_combustivel"
+      "textures": "textures/items/cl/arte/balde_combustivel"
     },
     "clc_asa_delta": {
-      "textures": "textures/items/cl/c/asa_delta"
+      "textures": "textures/items/cl/arte/asa_delta"
     }
   }
 }

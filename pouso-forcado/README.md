@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.3.5: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.3.6: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -134,6 +134,11 @@ Outros comandos:
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.3.6
+
+- **Arte completa:** chegaram as partes 3 e 4 do ChatGPT (132 imagens): Mekanism, BuildCraft, OpenBlocks, cascalho do Nether, Gerador de Blazes, Tesseract, Torre de Defesa, Montador Molecular, Caixa de Entrega, meteorito, varal, tamareira, topo do elevador e os itens das versões 1.1 a 1.3. Agora todos os itens têm ícone desenhado e todas as faces de bloco usam arte.
+- O importador fecha o fundo das texturas de modelo que vierem recortadas (folha da tamareira, cachos de tâmara) com um tom escuro da própria cor, para não aparecer preto no jogo.
 
 ## Novidades da 1.3.5
 

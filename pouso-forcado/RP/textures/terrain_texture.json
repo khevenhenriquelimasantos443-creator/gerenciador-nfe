@@ -1112,46 +1112,46 @@
       "textures": "textures/blocks/cl/arte/carregador_pontual_baixo"
     },
     "clc_varal": {
-      "textures": "textures/blocks/cl/c/varal"
+      "textures": "textures/blocks/cl/arte/varal"
     },
     "clc_varal_carne": {
-      "textures": "textures/blocks/cl/c/varal_carne"
+      "textures": "textures/blocks/cl/arte/varal_carne"
     },
     "clc_tesseract_frente": {
-      "textures": "textures/blocks/cl/c/tesseract_frente"
+      "textures": "textures/blocks/cl/arte/tesseract_frente"
     },
     "clc_tesseract_lado": {
-      "textures": "textures/blocks/cl/c/tesseract_lado"
+      "textures": "textures/blocks/cl/arte/tesseract_lado"
     },
     "clc_tesseract_topo": {
-      "textures": "textures/blocks/cl/c/tesseract_topo"
+      "textures": "textures/blocks/cl/arte/tesseract_topo"
     },
     "clc_tesseract_baixo": {
-      "textures": "textures/blocks/cl/c/tesseract_baixo"
+      "textures": "textures/blocks/cl/arte/tesseract_baixo"
     },
     "clc_torre_defesa_frente": {
-      "textures": "textures/blocks/cl/c/torre_defesa_frente"
+      "textures": "textures/blocks/cl/arte/torre_defesa_frente"
     },
     "clc_torre_defesa_lado": {
-      "textures": "textures/blocks/cl/c/torre_defesa_lado"
+      "textures": "textures/blocks/cl/arte/torre_defesa_lado"
     },
     "clc_torre_defesa_topo": {
-      "textures": "textures/blocks/cl/c/torre_defesa_topo"
+      "textures": "textures/blocks/cl/arte/torre_defesa_topo"
     },
     "clc_torre_defesa_baixo": {
-      "textures": "textures/blocks/cl/c/torre_defesa_baixo"
+      "textures": "textures/blocks/cl/arte/torre_defesa_baixo"
     },
     "clc_montador_molecular_frente": {
-      "textures": "textures/blocks/cl/c/montador_molecular_frente"
+      "textures": "textures/blocks/cl/arte/montador_molecular_frente"
     },
     "clc_montador_molecular_lado": {
-      "textures": "textures/blocks/cl/c/montador_molecular_lado"
+      "textures": "textures/blocks/cl/arte/montador_molecular_lado"
     },
     "clc_montador_molecular_topo": {
-      "textures": "textures/blocks/cl/c/montador_molecular_topo"
+      "textures": "textures/blocks/cl/arte/montador_molecular_topo"
     },
     "clc_montador_molecular_baixo": {
-      "textures": "textures/blocks/cl/c/montador_molecular_baixo"
+      "textures": "textures/blocks/cl/arte/montador_molecular_baixo"
     },
     "clc_lampada_vermelha": {
       "textures": "textures/blocks/cl/c/lampada_vermelha"
@@ -1178,226 +1178,226 @@
       "textures": "textures/blocks/cl/c/lampada_rosa"
     },
     "clc_meteorito": {
-      "textures": "textures/blocks/cl/c/meteorito"
+      "textures": "textures/blocks/cl/arte/meteorito"
     },
     "clc_caixa_entrega_frente": {
-      "textures": "textures/blocks/cl/c/caixa_entrega_frente"
+      "textures": "textures/blocks/cl/arte/caixa_entrega_frente"
     },
     "clc_caixa_entrega_lado": {
-      "textures": "textures/blocks/cl/c/caixa_entrega_lado"
+      "textures": "textures/blocks/cl/arte/caixa_entrega_lado"
     },
     "clc_caixa_entrega_topo": {
-      "textures": "textures/blocks/cl/c/caixa_entrega_topo"
+      "textures": "textures/blocks/cl/arte/caixa_entrega_topo"
     },
     "clc_caixa_entrega_baixo": {
-      "textures": "textures/blocks/cl/c/caixa_entrega_baixo"
+      "textures": "textures/blocks/cl/arte/caixa_entrega_baixo"
     },
     "clc_muda_tamareira": {
-      "textures": "textures/blocks/cl/c/muda_tamareira"
+      "textures": "textures/blocks/cl/arte/muda_tamareira"
     },
     "clc_muda_tamareira_tronco": {
-      "textures": "textures/blocks/cl/c/muda_tamareira_tronco"
+      "textures": "textures/blocks/cl/arte/muda_tamareira_tronco"
     },
     "clc_cacho_tamaras": {
-      "textures": "textures/blocks/cl/c/cacho_tamaras"
+      "textures": "textures/blocks/cl/arte/cacho_tamaras"
     },
     "clc_cacho_tamaras_madura": {
-      "textures": "textures/blocks/cl/c/cacho_tamaras_madura"
+      "textures": "textures/blocks/cl/arte/cacho_tamaras_madura"
     },
     "clc_gerador_blaze_frente": {
-      "textures": "textures/blocks/cl/c/gerador_blaze_frente"
+      "textures": "textures/blocks/cl/arte/gerador_blaze_frente"
     },
     "clc_gerador_blaze_lado": {
-      "textures": "textures/blocks/cl/c/gerador_blaze_lado"
+      "textures": "textures/blocks/cl/arte/gerador_blaze_lado"
     },
     "clc_gerador_blaze_topo": {
-      "textures": "textures/blocks/cl/c/gerador_blaze_topo"
+      "textures": "textures/blocks/cl/arte/gerador_blaze_topo"
     },
     "clc_gerador_blaze_baixo": {
-      "textures": "textures/blocks/cl/c/gerador_blaze_baixo"
+      "textures": "textures/blocks/cl/arte/gerador_blaze_baixo"
     },
     "clc_cascalho_nether": {
-      "textures": "textures/blocks/cl/c/cascalho_nether"
+      "textures": "textures/blocks/cl/arte/cascalho_nether"
     },
     "clc_separador_eletrolitico_frente": {
-      "textures": "textures/blocks/cl/c/separador_eletrolitico_frente"
+      "textures": "textures/blocks/cl/arte/separador_eletrolitico_frente"
     },
     "clc_separador_eletrolitico_lado": {
-      "textures": "textures/blocks/cl/c/separador_eletrolitico_lado"
+      "textures": "textures/blocks/cl/arte/separador_eletrolitico_lado"
     },
     "clc_separador_eletrolitico_topo": {
-      "textures": "textures/blocks/cl/c/separador_eletrolitico_topo"
+      "textures": "textures/blocks/cl/arte/separador_eletrolitico_topo"
     },
     "clc_separador_eletrolitico_baixo": {
-      "textures": "textures/blocks/cl/c/separador_eletrolitico_baixo"
+      "textures": "textures/blocks/cl/arte/separador_eletrolitico_baixo"
     },
     "clc_evaporador_frente": {
-      "textures": "textures/blocks/cl/c/evaporador_frente"
+      "textures": "textures/blocks/cl/arte/evaporador_frente"
     },
     "clc_evaporador_lado": {
-      "textures": "textures/blocks/cl/c/evaporador_lado"
+      "textures": "textures/blocks/cl/arte/evaporador_lado"
     },
     "clc_evaporador_topo": {
-      "textures": "textures/blocks/cl/c/evaporador_topo"
+      "textures": "textures/blocks/cl/arte/evaporador_topo"
     },
     "clc_evaporador_baixo": {
-      "textures": "textures/blocks/cl/c/evaporador_baixo"
+      "textures": "textures/blocks/cl/arte/evaporador_baixo"
     },
     "clc_infusor_quimico_frente": {
-      "textures": "textures/blocks/cl/c/infusor_quimico_frente"
+      "textures": "textures/blocks/cl/arte/infusor_quimico_frente"
     },
     "clc_infusor_quimico_lado": {
-      "textures": "textures/blocks/cl/c/infusor_quimico_lado"
+      "textures": "textures/blocks/cl/arte/infusor_quimico_lado"
     },
     "clc_infusor_quimico_topo": {
-      "textures": "textures/blocks/cl/c/infusor_quimico_topo"
+      "textures": "textures/blocks/cl/arte/infusor_quimico_topo"
     },
     "clc_infusor_quimico_baixo": {
-      "textures": "textures/blocks/cl/c/infusor_quimico_baixo"
+      "textures": "textures/blocks/cl/arte/infusor_quimico_baixo"
     },
     "clc_camara_purificacao_frente": {
-      "textures": "textures/blocks/cl/c/camara_purificacao_frente"
+      "textures": "textures/blocks/cl/arte/camara_purificacao_frente"
     },
     "clc_camara_purificacao_lado": {
-      "textures": "textures/blocks/cl/c/camara_purificacao_lado"
+      "textures": "textures/blocks/cl/arte/camara_purificacao_lado"
     },
     "clc_camara_purificacao_topo": {
-      "textures": "textures/blocks/cl/c/camara_purificacao_topo"
+      "textures": "textures/blocks/cl/arte/camara_purificacao_topo"
     },
     "clc_camara_purificacao_baixo": {
-      "textures": "textures/blocks/cl/c/camara_purificacao_baixo"
+      "textures": "textures/blocks/cl/arte/camara_purificacao_baixo"
     },
     "clc_camara_injecao_frente": {
-      "textures": "textures/blocks/cl/c/camara_injecao_frente"
+      "textures": "textures/blocks/cl/arte/camara_injecao_frente"
     },
     "clc_camara_injecao_lado": {
-      "textures": "textures/blocks/cl/c/camara_injecao_lado"
+      "textures": "textures/blocks/cl/arte/camara_injecao_lado"
     },
     "clc_camara_injecao_topo": {
-      "textures": "textures/blocks/cl/c/camara_injecao_topo"
+      "textures": "textures/blocks/cl/arte/camara_injecao_topo"
     },
     "clc_camara_injecao_baixo": {
-      "textures": "textures/blocks/cl/c/camara_injecao_baixo"
+      "textures": "textures/blocks/cl/arte/camara_injecao_baixo"
     },
     "clc_infusor_metalurgico_frente": {
-      "textures": "textures/blocks/cl/c/infusor_metalurgico_frente"
+      "textures": "textures/blocks/cl/arte/infusor_metalurgico_frente"
     },
     "clc_infusor_metalurgico_lado": {
-      "textures": "textures/blocks/cl/c/infusor_metalurgico_lado"
+      "textures": "textures/blocks/cl/arte/infusor_metalurgico_lado"
     },
     "clc_infusor_metalurgico_topo": {
-      "textures": "textures/blocks/cl/c/infusor_metalurgico_topo"
+      "textures": "textures/blocks/cl/arte/infusor_metalurgico_topo"
     },
     "clc_infusor_metalurgico_baixo": {
-      "textures": "textures/blocks/cl/c/infusor_metalurgico_baixo"
+      "textures": "textures/blocks/cl/arte/infusor_metalurgico_baixo"
     },
     "clc_cubo_energia_basico_frente": {
-      "textures": "textures/blocks/cl/c/cubo_energia_basico_frente"
+      "textures": "textures/blocks/cl/arte/cubo_energia_basico_frente"
     },
     "clc_cubo_energia_basico_lado": {
-      "textures": "textures/blocks/cl/c/cubo_energia_basico_lado"
+      "textures": "textures/blocks/cl/arte/cubo_energia_basico_lado"
     },
     "clc_cubo_energia_basico_topo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_basico_topo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_basico_topo"
     },
     "clc_cubo_energia_basico_baixo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_basico_baixo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_basico_baixo"
     },
     "clc_cubo_energia_avancado_frente": {
-      "textures": "textures/blocks/cl/c/cubo_energia_avancado_frente"
+      "textures": "textures/blocks/cl/arte/cubo_energia_avancado_frente"
     },
     "clc_cubo_energia_avancado_lado": {
-      "textures": "textures/blocks/cl/c/cubo_energia_avancado_lado"
+      "textures": "textures/blocks/cl/arte/cubo_energia_avancado_lado"
     },
     "clc_cubo_energia_avancado_topo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_avancado_topo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_avancado_topo"
     },
     "clc_cubo_energia_avancado_baixo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_avancado_baixo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_avancado_baixo"
     },
     "clc_cubo_energia_elite_frente": {
-      "textures": "textures/blocks/cl/c/cubo_energia_elite_frente"
+      "textures": "textures/blocks/cl/arte/cubo_energia_elite_frente"
     },
     "clc_cubo_energia_elite_lado": {
-      "textures": "textures/blocks/cl/c/cubo_energia_elite_lado"
+      "textures": "textures/blocks/cl/arte/cubo_energia_elite_lado"
     },
     "clc_cubo_energia_elite_topo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_elite_topo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_elite_topo"
     },
     "clc_cubo_energia_elite_baixo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_elite_baixo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_elite_baixo"
     },
     "clc_cubo_energia_definitivo_frente": {
-      "textures": "textures/blocks/cl/c/cubo_energia_definitivo_frente"
+      "textures": "textures/blocks/cl/arte/cubo_energia_definitivo_frente"
     },
     "clc_cubo_energia_definitivo_lado": {
-      "textures": "textures/blocks/cl/c/cubo_energia_definitivo_lado"
+      "textures": "textures/blocks/cl/arte/cubo_energia_definitivo_lado"
     },
     "clc_cubo_energia_definitivo_topo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_definitivo_topo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_definitivo_topo"
     },
     "clc_cubo_energia_definitivo_baixo": {
-      "textures": "textures/blocks/cl/c/cubo_energia_definitivo_baixo"
+      "textures": "textures/blocks/cl/arte/cubo_energia_definitivo_baixo"
     },
     "clc_petroleo": {
       "textures": "textures/blocks/cl/c/petroleo"
     },
     "clc_bomba_frente": {
-      "textures": "textures/blocks/cl/c/bomba_frente"
+      "textures": "textures/blocks/cl/arte/bomba_frente"
     },
     "clc_bomba_lado": {
-      "textures": "textures/blocks/cl/c/bomba_lado"
+      "textures": "textures/blocks/cl/arte/bomba_lado"
     },
     "clc_bomba_topo": {
-      "textures": "textures/blocks/cl/c/bomba_topo"
+      "textures": "textures/blocks/cl/arte/bomba_topo"
     },
     "clc_bomba_baixo": {
-      "textures": "textures/blocks/cl/c/bomba_baixo"
+      "textures": "textures/blocks/cl/arte/bomba_baixo"
     },
     "clc_refinaria_frente": {
-      "textures": "textures/blocks/cl/c/refinaria_frente"
+      "textures": "textures/blocks/cl/arte/refinaria_frente"
     },
     "clc_refinaria_lado": {
-      "textures": "textures/blocks/cl/c/refinaria_lado"
+      "textures": "textures/blocks/cl/arte/refinaria_lado"
     },
     "clc_refinaria_topo": {
-      "textures": "textures/blocks/cl/c/refinaria_topo"
+      "textures": "textures/blocks/cl/arte/refinaria_topo"
     },
     "clc_refinaria_baixo": {
-      "textures": "textures/blocks/cl/c/refinaria_baixo"
+      "textures": "textures/blocks/cl/arte/refinaria_baixo"
     },
     "clc_motor_combustao_frente": {
-      "textures": "textures/blocks/cl/c/motor_combustao_frente"
+      "textures": "textures/blocks/cl/arte/motor_combustao_frente"
     },
     "clc_motor_combustao_lado": {
-      "textures": "textures/blocks/cl/c/motor_combustao_lado"
+      "textures": "textures/blocks/cl/arte/motor_combustao_lado"
     },
     "clc_motor_combustao_topo": {
-      "textures": "textures/blocks/cl/c/motor_combustao_topo"
+      "textures": "textures/blocks/cl/arte/motor_combustao_topo"
     },
     "clc_motor_combustao_baixo": {
-      "textures": "textures/blocks/cl/c/motor_combustao_baixo"
+      "textures": "textures/blocks/cl/arte/motor_combustao_baixo"
     },
     "clc_pedreira_frente": {
-      "textures": "textures/blocks/cl/c/pedreira_frente"
+      "textures": "textures/blocks/cl/arte/pedreira_frente"
     },
     "clc_pedreira_lado": {
-      "textures": "textures/blocks/cl/c/pedreira_lado"
+      "textures": "textures/blocks/cl/arte/pedreira_lado"
     },
     "clc_pedreira_topo": {
-      "textures": "textures/blocks/cl/c/pedreira_topo"
+      "textures": "textures/blocks/cl/arte/pedreira_topo"
     },
     "clc_pedreira_baixo": {
-      "textures": "textures/blocks/cl/c/pedreira_baixo"
+      "textures": "textures/blocks/cl/arte/pedreira_baixo"
     },
     "clc_tumulo": {
-      "textures": "textures/blocks/cl/c/tumulo"
+      "textures": "textures/blocks/cl/arte/tumulo"
     },
     "clc_elevador": {
-      "textures": "textures/blocks/cl/c/elevador"
+      "textures": "textures/blocks/cl/arte/elevador"
     },
     "clc_elevador_topo": {
-      "textures": "textures/blocks/cl/c/elevador_topo"
+      "textures": "textures/blocks/cl/arte/elevador_topo"
     },
     "clv_petroleo": {
       "textures": "textures/blocks/cl/v/petroleo"

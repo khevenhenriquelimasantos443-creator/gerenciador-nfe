@@ -109,7 +109,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:asa_delta": {
   "pt": "Asa-Delta",
   "en": "Hang Glider",
-  "icone": "textures/items/cl/c/asa_delta"
+  "icone": "textures/items/cl/arte/asa_delta"
  },
  "cl:assadeira": {
   "pt": "Assadeira",
@@ -124,17 +124,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:balde_combustivel": {
   "pt": "Balde de Combustível",
   "en": "Fuel Bucket",
-  "icone": "textures/items/cl/c/balde_combustivel"
+  "icone": "textures/items/cl/arte/balde_combustivel"
  },
  "cl:balde_petroleo": {
   "pt": "Balde de Petróleo",
   "en": "Oil Bucket",
-  "icone": "textures/items/cl/c/balde_petroleo"
+  "icone": "textures/items/cl/arte/balde_petroleo"
  },
  "cl:balde_salmoura": {
   "pt": "Balde de Salmoura",
   "en": "Brine Bucket",
-  "icone": "textures/items/cl/c/balde_salmoura"
+  "icone": "textures/items/cl/arte/balde_salmoura"
  },
  "cl:barra_borracha": {
   "pt": "Barra de Borracha",
@@ -239,7 +239,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bomba": {
   "pt": "Bomba",
   "en": "Pump",
-  "icone": "textures/blocks/cl/c/bomba_topo"
+  "icone": "textures/items/cl/arte/blocos/bomba"
  },
  "cl:broa_milho": {
   "pt": "Broa de Milho",
@@ -254,7 +254,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bussola_aviao": {
   "pt": "Bússola do Avião",
   "en": "Plane Compass",
-  "icone": "textures/items/cl/c/bussola_aviao"
+  "icone": "textures/items/cl/arte/bussola_aviao"
  },
  "cl:cabide_armadura": {
   "pt": "Cabide de Armadura",
@@ -274,7 +274,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cacho_tamaras": {
   "pt": "Cacho de Tâmaras",
   "en": "Date Bunch",
-  "icone": "textures/blocks/cl/c/cacho_tamaras"
+  "icone": "textures/blocks/cl/arte/cacho_tamaras"
  },
  "cl:cadinho": {
   "pt": "Cadinho",
@@ -289,7 +289,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:caixa_entrega": {
   "pt": "Caixa de Entrega",
   "en": "Quest Delivery System",
-  "icone": "textures/blocks/cl/c/caixa_entrega_topo"
+  "icone": "textures/items/cl/arte/blocos/caixa_entrega"
  },
  "cl:cajado": {
   "pt": "Cajado",
@@ -299,12 +299,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cajado_osso": {
   "pt": "Cajado de Osso",
   "en": "Bone Crook",
-  "icone": "textures/items/cl/c/cajado_osso"
+  "icone": "textures/items/cl/arte/cajado_osso"
  },
  "cl:cajado_ouro": {
   "pt": "Cajado de Ouro",
   "en": "Golden Crook",
-  "icone": "textures/items/cl/c/cajado_ouro"
+  "icone": "textures/items/cl/arte/cajado_ouro"
  },
  "cl:calcario": {
   "pt": "Calcário",
@@ -359,12 +359,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:camara_injecao": {
   "pt": "Câmara de Injeção Química",
   "en": "Chemical Injection Chamber",
-  "icone": "textures/blocks/cl/c/camara_injecao_topo"
+  "icone": "textures/items/cl/arte/blocos/camara_injecao"
  },
  "cl:camara_purificacao": {
   "pt": "Câmara de Purificação",
   "en": "Purification Chamber",
-  "icone": "textures/blocks/cl/c/camara_purificacao_topo"
+  "icone": "textures/items/cl/arte/blocos/camara_purificacao"
  },
  "cl:camel_pack": {
   "pt": "Camel Pack",
@@ -404,7 +404,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cascalho_nether": {
   "pt": "Cascalho do Nether",
   "en": "Nether Gravel",
-  "icone": "textures/blocks/cl/c/cascalho_nether"
+  "icone": "textures/blocks/cl/arte/cascalho_nether"
  },
  "cl:casco_nave_entalhado": {
   "pt": "Casco da Nave Entalhado",
@@ -524,27 +524,27 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cilindro_acido": {
   "pt": "Cilindro de Ácido Clorídrico",
   "en": "Hydrogen Chloride Tank",
-  "icone": "textures/items/cl/c/cilindro_acido"
+  "icone": "textures/items/cl/arte/cilindro_acido"
  },
  "cl:cilindro_cloro": {
   "pt": "Cilindro de Cloro",
   "en": "Chlorine Tank",
-  "icone": "textures/items/cl/c/cilindro_cloro"
+  "icone": "textures/items/cl/arte/cilindro_cloro"
  },
  "cl:cilindro_hidrogenio": {
   "pt": "Cilindro de Hidrogênio",
   "en": "Hydrogen Tank",
-  "icone": "textures/items/cl/c/cilindro_hidrogenio"
+  "icone": "textures/items/cl/arte/cilindro_hidrogenio"
  },
  "cl:cilindro_oxigenio": {
   "pt": "Cilindro de Oxigênio",
   "en": "Oxygen Tank",
-  "icone": "textures/items/cl/c/cilindro_oxigenio"
+  "icone": "textures/items/cl/arte/cilindro_oxigenio"
  },
  "cl:cilindro_vazio": {
   "pt": "Cilindro de Gás Vazio",
   "en": "Empty Gas Tank",
-  "icone": "textures/items/cl/c/cilindro_vazio"
+  "icone": "textures/items/cl/arte/cilindro_vazio"
  },
  "cl:cinzel": {
   "pt": "Cinzel",
@@ -674,22 +674,22 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cubo_energia_avancado": {
   "pt": "Cubo de Energia Avançado",
   "en": "Advanced Energy Cube",
-  "icone": "textures/blocks/cl/c/cubo_energia_avancado_topo"
+  "icone": "textures/items/cl/arte/blocos/cubo_energia_avancado"
  },
  "cl:cubo_energia_basico": {
   "pt": "Cubo de Energia Básico",
   "en": "Basic Energy Cube",
-  "icone": "textures/blocks/cl/c/cubo_energia_basico_topo"
+  "icone": "textures/items/cl/arte/blocos/cubo_energia_basico"
  },
  "cl:cubo_energia_definitivo": {
   "pt": "Cubo de Energia Definitivo",
   "en": "Ultimate Energy Cube",
-  "icone": "textures/blocks/cl/c/cubo_energia_definitivo_topo"
+  "icone": "textures/items/cl/arte/blocos/cubo_energia_definitivo"
  },
  "cl:cubo_energia_elite": {
   "pt": "Cubo de Energia de Elite",
   "en": "Elite Energy Cube",
-  "icone": "textures/blocks/cl/c/cubo_energia_elite_topo"
+  "icone": "textures/items/cl/arte/blocos/cubo_energia_elite"
  },
  "cl:diario_bordo": {
   "pt": "Diário de Bordo",
@@ -714,7 +714,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:elevador": {
   "pt": "Elevador",
   "en": "Elevator",
-  "icone": "textures/blocks/cl/c/elevador_topo"
+  "icone": "textures/blocks/cl/arte/elevador_topo"
  },
  "cl:empacotador": {
   "pt": "Empacotador Automático",
@@ -724,27 +724,27 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:engrenagem_diamante": {
   "pt": "Engrenagem de Diamante",
   "en": "Diamond Gear",
-  "icone": "textures/items/cl/c/engrenagem_diamante"
+  "icone": "textures/items/cl/arte/engrenagem_diamante"
  },
  "cl:engrenagem_ferro": {
   "pt": "Engrenagem de Ferro",
   "en": "Iron Gear",
-  "icone": "textures/items/cl/c/engrenagem_ferro"
+  "icone": "textures/items/cl/arte/engrenagem_ferro"
  },
  "cl:engrenagem_madeira": {
   "pt": "Engrenagem de Madeira",
   "en": "Wooden Gear",
-  "icone": "textures/items/cl/c/engrenagem_madeira"
+  "icone": "textures/items/cl/arte/engrenagem_madeira"
  },
  "cl:engrenagem_ouro": {
   "pt": "Engrenagem de Ouro",
   "en": "Gold Gear",
-  "icone": "textures/items/cl/c/engrenagem_ouro"
+  "icone": "textures/items/cl/arte/engrenagem_ouro"
  },
  "cl:engrenagem_pedra": {
   "pt": "Engrenagem de Pedra",
   "en": "Stone Gear",
-  "icone": "textures/items/cl/c/engrenagem_pedra"
+  "icone": "textures/items/cl/arte/engrenagem_pedra"
  },
  "cl:esgoto": {
   "pt": "Esgoto",
@@ -854,7 +854,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:evaporador": {
   "pt": "Evaporador Térmico",
   "en": "Thermal Evaporation Controller",
-  "icone": "textures/blocks/cl/c/evaporador_topo"
+  "icone": "textures/items/cl/arte/blocos/evaporador"
  },
  "cl:expositor": {
   "pt": "Expositor",
@@ -939,7 +939,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fragmento_meteorito": {
   "pt": "Fragmento de Meteorito",
   "en": "Meteorite Fragment",
-  "icone": "textures/items/cl/c/fragmento_meteorito"
+  "icone": "textures/items/cl/arte/fragmento_meteorito"
  },
  "cl:frigideira": {
   "pt": "Frigideira",
@@ -969,7 +969,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:gerador_blaze": {
   "pt": "Gerador de Blazes",
   "en": "Blaze Spawner",
-  "icone": "textures/blocks/cl/c/gerador_blaze_topo"
+  "icone": "textures/items/cl/arte/blocos/gerador_blaze"
  },
  "cl:gerador_monstros": {
   "pt": "Gerador de Monstros",
@@ -989,12 +989,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:infusor_metalurgico": {
   "pt": "Infusor Metalúrgico",
   "en": "Metallurgic Infuser",
-  "icone": "textures/blocks/cl/c/infusor_metalurgico_topo"
+  "icone": "textures/items/cl/arte/blocos/infusor_metalurgico"
  },
  "cl:infusor_quimico": {
   "pt": "Infusor Químico",
   "en": "Chemical Infuser",
-  "icone": "textures/blocks/cl/c/infusor_quimico_topo"
+  "icone": "textures/items/cl/arte/blocos/infusor_quimico"
  },
  "cl:interface_camara": {
   "pt": "Interface da Câmara",
@@ -1004,7 +1004,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:jetpack": {
   "pt": "Jetpack",
   "en": "Jetpack",
-  "icone": "textures/items/cl/c/jetpack"
+  "icone": "textures/items/cl/arte/jetpack"
  },
  "cl:lampada": {
   "pt": "Lâmpada",
@@ -1059,17 +1059,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:liga_atomica": {
   "pt": "Liga Atômica",
   "en": "Atomic Alloy",
-  "icone": "textures/items/cl/c/liga_atomica"
+  "icone": "textures/items/cl/arte/liga_atomica"
  },
  "cl:liga_enriquecida": {
   "pt": "Liga Enriquecida",
   "en": "Enriched Alloy",
-  "icone": "textures/items/cl/c/liga_enriquecida"
+  "icone": "textures/items/cl/arte/liga_enriquecida"
  },
  "cl:liga_reforcada": {
   "pt": "Liga Reforçada",
   "en": "Reinforced Alloy",
-  "icone": "textures/items/cl/c/liga_reforcada"
+  "icone": "textures/items/cl/arte/liga_reforcada"
  },
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
@@ -1279,7 +1279,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:meteorito": {
   "pt": "Rocha de Meteorito",
   "en": "Meteorite Rock",
-  "icone": "textures/blocks/cl/c/meteorito"
+  "icone": "textures/blocks/cl/arte/meteorito"
  },
  "cl:milho": {
   "pt": "Milho",
@@ -1349,7 +1349,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:montador_molecular": {
   "pt": "Montador Molecular",
   "en": "Molecular Assembler",
-  "icone": "textures/blocks/cl/c/montador_molecular_topo"
+  "icone": "textures/items/cl/arte/blocos/montador_molecular"
  },
  "cl:montadora": {
   "pt": "Montadora",
@@ -1359,7 +1359,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:motor_combustao": {
   "pt": "Motor a Combustão",
   "en": "Combustion Engine",
-  "icone": "textures/blocks/cl/c/motor_combustao_topo"
+  "icone": "textures/items/cl/arte/blocos/motor_combustao"
  },
  "cl:motor_nave": {
   "pt": "Motor da Nave",
@@ -1369,7 +1369,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:muda_tamareira": {
   "pt": "Muda de Tamareira",
   "en": "Date Palm Sapling",
-  "icone": "textures/blocks/cl/c/muda_tamareira"
+  "icone": "textures/blocks/cl/arte/muda_tamareira"
  },
  "cl:nucleo_funil": {
   "pt": "Núcleo de Funil",
@@ -1509,7 +1509,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:padrao_me_vazio": {
   "pt": "Padrão ME em Branco",
   "en": "Blank Pattern",
-  "icone": "textures/items/cl/c/padrao_me_vazio"
+  "icone": "textures/items/cl/arte/padrao_me_vazio"
  },
  "cl:padrao_travessa": {
   "pt": "Padrão: Travessa",
@@ -1984,7 +1984,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pedreira": {
   "pt": "Pedreira",
   "en": "Quarry",
-  "icone": "textures/blocks/cl/c/pedreira_topo"
+  "icone": "textures/items/cl/arte/blocos/pedreira"
  },
  "cl:pedrinha": {
   "pt": "Pedrinha",
@@ -2184,7 +2184,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:po_litio": {
   "pt": "Pó de Lítio",
   "en": "Lithium Dust",
-  "icone": "textures/items/cl/c/po_litio"
+  "icone": "textures/items/cl/arte/po_litio"
  },
  "cl:po_ouro": {
   "pt": "Pó de Ouro",
@@ -2264,7 +2264,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:refinaria": {
   "pt": "Refinaria",
   "en": "Refinery",
-  "icone": "textures/blocks/cl/c/refinaria_topo"
+  "icone": "textures/items/cl/arte/blocos/refinaria"
  },
  "cl:reprocessador_cianita": {
   "pt": "Reprocessador de Cianita",
@@ -2279,7 +2279,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:saco_dormir": {
   "pt": "Saco de Dormir",
   "en": "Sleeping Bag",
-  "icone": "textures/items/cl/c/saco_dormir"
+  "icone": "textures/items/cl/arte/saco_dormir"
  },
  "cl:sacola_boa": {
   "pt": "Sacola Boa",
@@ -2364,7 +2364,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:separador_eletrolitico": {
   "pt": "Separador Eletrolítico",
   "en": "Electrolytic Separator",
-  "icone": "textures/blocks/cl/c/separador_eletrolitico_topo"
+  "icone": "textures/items/cl/arte/blocos/separador_eletrolitico"
  },
  "cl:serragem": {
   "pt": "Serragem",
@@ -2424,7 +2424,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tamara": {
   "pt": "Tâmara",
   "en": "Date",
-  "icone": "textures/items/cl/c/tamara"
+  "icone": "textures/items/cl/arte/tamara"
  },
  "cl:tanque_refratario": {
   "pt": "Tanque Refratário",
@@ -2444,7 +2444,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tesseract": {
   "pt": "Tesseract",
   "en": "Tesseract",
-  "icone": "textures/blocks/cl/c/tesseract_topo"
+  "icone": "textures/items/cl/arte/blocos/tesseract"
  },
  "cl:tigela_mistura": {
   "pt": "Tigela de Mistura",
@@ -2484,7 +2484,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:torre_defesa": {
   "pt": "Torre de Defesa",
   "en": "Defense Turret",
-  "icone": "textures/blocks/cl/c/torre_defesa_topo"
+  "icone": "textures/items/cl/arte/blocos/torre_defesa"
  },
  "cl:tortilha": {
   "pt": "Tortilha",
@@ -2514,7 +2514,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tumulo": {
   "pt": "Túmulo",
   "en": "Grave",
-  "icone": "textures/blocks/cl/c/tumulo"
+  "icone": "textures/blocks/cl/arte/tumulo"
  },
  "cl:upgrade_alcance_1": {
   "pt": "Upgrade de Alcance +1",
@@ -2589,7 +2589,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:varal": {
   "pt": "Varal",
   "en": "Drying Rack",
-  "icone": "textures/blocks/cl/c/varal"
+  "icone": "textures/blocks/cl/arte/varal"
  },
  "cl:vidro_camara": {
   "pt": "Vidro da Câmara de Pressão",

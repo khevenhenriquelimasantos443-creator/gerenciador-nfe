@@ -1,5 +1,7 @@
 # Prompt para o ChatGPT: ícones que faltam (Pouso Forçado 1.3.5)
 
+> ✅ **Tudo recebido (1.3.6).** Este prompt fica de modelo para uma próxima parte.
+
 Cole tudo a partir de "PROMPT" e anexe uma **prancha.png** das fases 15 a 23 (por exemplo a da Fase 17) como referência de estilo.
 Peça um zip por vez: primeiro a parte 3 (`novidades_1_2.zip`), depois a parte 4 (`novidades_1_3.zip`).
 Os nomes de arquivo já são os IDs do jogo e não podem mudar. As partes 1 e 2 e as lâmpadas coloridas já estão no jogo.
@@ -78,6 +80,8 @@ Você vai desenhar os ícones e as texturas de um add-on de Minecraft Bedrock ch
 
 ## LISTA, parte 3: novidades das versões 1.1 e 1.2 (zip `novidades_1_2`)
 
+> ✅ Já recebida (1.3.6). Não precisa gerar de novo.
+
 **Itens (A):**
 
 | Arquivo | Nome | Como deve parecer |
@@ -117,6 +121,8 @@ Você vai desenhar os ícones e as texturas de um add-on de Minecraft Bedrock ch
 | cacho_tamaras_madura | Cacho de Tâmaras (maduro) | cacho de tâmaras marrom-escuras |
 
 ## LISTA, parte 4: novidades da versão 1.3.0 (zip `novidades_1_3`)
+
+> ✅ Já recebida (1.3.6). Não precisa gerar de novo.
 
 Mekanism (gás em cilindros, ligas, cubos de energia, jetpack), BuildCraft (petróleo, engrenagens, máquinas) e
 OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.

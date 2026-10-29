@@ -1,5 +1,7 @@
 # Prompt para gerar os ícones que faltam (Pouso Forçado 1.3.4)
 
+> ✅ **Tudo recebido (1.3.6).** Este prompt fica de modelo para uma próxima parte.
+
 Copie tudo a partir de "PROMPT" e mande junto a **prancha anterior** como referência de estilo.
 **Já recebidas: partes 1 e 2** (e as 8 lâmpadas coloridas saíram da arte da Lâmpada). Dá também para gerar pela API: `python3 tools/gerar-icones-ia.py 3 <pasta>` com `OPENAI_API_KEY` no ambiente. Peça agora só a **parte 3** (zip `novidades_1_2`) e a **parte 4** (zip `novidades_1_3`), um zip por vez.
 Os nomes de arquivo já são os IDs do jogo e não podem mudar.
@@ -405,6 +407,8 @@ Os blocos sem coluna "Tipo" são todos máquina.
 
 ## LISTA, parte 3: novidades das versões 1.1 e 1.2 (zip `novidades_1_2`)
 
+> ✅ Já recebida (1.3.6). Não precisa gerar de novo.
+
 **Itens (A):**
 
 | Arquivo | Nome | Como deve parecer |
@@ -444,6 +448,8 @@ Os blocos sem coluna "Tipo" são todos máquina.
 | cacho_tamaras_madura | Cacho de Tâmaras (maduro) | cacho de tâmaras marrom-escuras |
 
 ## LISTA, parte 4: novidades da versão 1.3.0 (zip `novidades_1_3`)
+
+> ✅ Já recebida (1.3.6). Não precisa gerar de novo.
 
 Mekanism (gás em cilindros, ligas, cubos de energia, jetpack), BuildCraft (petróleo, engrenagens, máquinas) e
 OpenBlocks (asa-delta, túmulo, elevador), mais o cascalho do Nether da peneira.
