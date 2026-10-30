@@ -54,7 +54,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:aleta_foguete": {
   "pt": "Aleta do Foguete",
   "en": "Rocket Fins",
-  "icone": "textures/items/cl/c/aleta_foguete"
+  "icone": "textures/items/cl/arte/aleta_foguete"
  },
  "cl:alho": {
   "pt": "Alho",
@@ -234,7 +234,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:batedor": {
   "pt": "Batedor",
   "en": "Whisk",
-  "icone": "textures/items/cl/c/batedor"
+  "icone": "textures/items/cl/arte/batedor"
  },
  "cl:bateria": {
   "pt": "Bateria",
@@ -264,7 +264,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bico_foguete": {
   "pt": "Bico do Foguete",
   "en": "Nose Cone",
-  "icone": "textures/items/cl/c/bico_foguete"
+  "icone": "textures/items/cl/arte/bico_foguete"
  },
  "cl:biocombustivel": {
   "pt": "Biocombustível",
@@ -1014,7 +1014,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:equipamento_oxigenio": {
   "pt": "Equipamento de Oxigênio",
   "en": "Oxygen Gear",
-  "icone": "textures/items/cl/c/equipamento_oxigenio"
+  "icone": "textures/items/cl/arte/equipamento_oxigenio"
  },
  "cl:esgoto": {
   "pt": "Esgoto",
@@ -1209,7 +1209,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:foguete_t1": {
   "pt": "Foguete Tier 1",
   "en": "Tier 1 Rocket",
-  "icone": "textures/items/cl/c/foguete_t1"
+  "icone": "textures/items/cl/arte/foguete_t1"
  },
  "cl:folha_infestada": {
   "pt": "Folha Infestada",
@@ -1319,7 +1319,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:helice": {
   "pt": "Hélice",
   "en": "Propeller",
-  "icone": "textures/items/cl/c/helice"
+  "icone": "textures/items/cl/arte/helice"
  },
  "cl:idolo_amaldicoado": {
   "pt": "Ídolo Amaldiçoado",
@@ -1664,7 +1664,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:mascara_oxigenio": {
   "pt": "Máscara de Oxigênio",
   "en": "Oxygen Mask",
-  "icone": "textures/items/cl/c/mascara_oxigenio"
+  "icone": "textures/items/cl/arte/mascara_oxigenio"
  },
  "cl:massa": {
   "pt": "Massa",
@@ -2139,7 +2139,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:motor_foguete": {
   "pt": "Motor do Foguete Tier 1",
   "en": "Tier 1 Rocket Engine",
-  "icone": "textures/items/cl/c/motor_foguete"
+  "icone": "textures/items/cl/arte/motor_foguete"
  },
  "cl:motor_nave": {
   "pt": "Motor da Nave",
@@ -3214,7 +3214,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:regador": {
   "pt": "Regador",
   "en": "Watering Can",
-  "icone": "textures/items/cl/c/regador"
+  "icone": "textures/items/cl/arte/regador"
  },
  "cl:reprocessador_cianita": {
   "pt": "Reprocessador de Cianita",
@@ -3244,7 +3244,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:robo_minerador": {
   "pt": "Robô Minerador",
   "en": "Mining Turtle",
-  "icone": "textures/items/cl/c/robo_minerador"
+  "icone": "textures/items/cl/arte/robo_minerador"
  },
  "cl:rocha_lunar": {
   "pt": "Rocha Lunar",
@@ -3434,17 +3434,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tanque_oxigenio_leve": {
   "pt": "Tanque de Oxigênio Leve",
   "en": "Light Oxygen Tank",
-  "icone": "textures/items/cl/c/tanque_oxigenio_leve"
+  "icone": "textures/items/cl/arte/tanque_oxigenio_leve"
  },
  "cl:tanque_oxigenio_medio": {
   "pt": "Tanque de Oxigênio Médio",
   "en": "Medium Oxygen Tank",
-  "icone": "textures/items/cl/c/tanque_oxigenio_medio"
+  "icone": "textures/items/cl/arte/tanque_oxigenio_medio"
  },
  "cl:tanque_oxigenio_pesado": {
   "pt": "Tanque de Oxigênio Pesado",
   "en": "Heavy Oxygen Tank",
-  "icone": "textures/items/cl/c/tanque_oxigenio_pesado"
+  "icone": "textures/items/cl/arte/tanque_oxigenio_pesado"
  },
  "cl:tanque_refratario": {
   "pt": "Tanque Refratário",

@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.10.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, Create, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.10.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, Create, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,10 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.10.2
+
+- Ícones redesenhados parecidos com os originais (desenho próprio, `tools/desenhar-similares.py`) para os mods cuja arte não pode ser copiada: Foguete Tier 1, Máscara e Equipamento de Oxigênio, os três tanques, bico, aleta e motor do foguete (Galacticraft), Hélice e Batedor (Create), Regador (Extra Utilities) e Robô Minerador.
 
 ## Novidades da 1.10.1 (texturas originais)
 

@@ -126,6 +126,8 @@ aço, estanho e alumínio são os do Tinkers; o silício é o do AE2.
 Galacticraft (proíbe versões para outras plataformas), Extra Utilities (código fechado), Thermal Expansion, MineFactory
 Reloaded, Pam's HarvestCraft, Sync, JABBA, BiblioCraft, Ex Nihilo, Backpacks e Hunger Overhaul (sem licença publicada).
 Os add-ons de Bedrock parecidos (Space.PE, Create e Extra Utilities feitos por outras pessoas) também não entram.
+Alguns desses ícones foram redesenhados por `tools/desenhar-similares.py` lembrando o formato e as cores dos originais
+(desenho próprio, nenhum pixel copiado).
 
 ## Dados do jogo
 

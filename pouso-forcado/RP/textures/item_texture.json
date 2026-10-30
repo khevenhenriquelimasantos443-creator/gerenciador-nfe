@@ -1059,31 +1059,31 @@
       "textures": "textures/items/cl/c/concentrador_oxigenio"
     },
     "clc_mascara_oxigenio": {
-      "textures": "textures/items/cl/c/mascara_oxigenio"
+      "textures": "textures/items/cl/arte/mascara_oxigenio"
     },
     "clc_equipamento_oxigenio": {
-      "textures": "textures/items/cl/c/equipamento_oxigenio"
+      "textures": "textures/items/cl/arte/equipamento_oxigenio"
     },
     "clc_tanque_oxigenio_leve": {
-      "textures": "textures/items/cl/c/tanque_oxigenio_leve"
+      "textures": "textures/items/cl/arte/tanque_oxigenio_leve"
     },
     "clc_tanque_oxigenio_medio": {
-      "textures": "textures/items/cl/c/tanque_oxigenio_medio"
+      "textures": "textures/items/cl/arte/tanque_oxigenio_medio"
     },
     "clc_tanque_oxigenio_pesado": {
-      "textures": "textures/items/cl/c/tanque_oxigenio_pesado"
+      "textures": "textures/items/cl/arte/tanque_oxigenio_pesado"
     },
     "clc_bico_foguete": {
-      "textures": "textures/items/cl/c/bico_foguete"
+      "textures": "textures/items/cl/arte/bico_foguete"
     },
     "clc_aleta_foguete": {
-      "textures": "textures/items/cl/c/aleta_foguete"
+      "textures": "textures/items/cl/arte/aleta_foguete"
     },
     "clc_motor_foguete": {
-      "textures": "textures/items/cl/c/motor_foguete"
+      "textures": "textures/items/cl/arte/motor_foguete"
     },
     "clc_foguete_t1": {
-      "textures": "textures/items/cl/c/foguete_t1"
+      "textures": "textures/items/cl/arte/foguete_t1"
     },
     "clc_coalhada_queijo": {
       "textures": "textures/items/cl/c/coalhada_queijo"
@@ -1440,10 +1440,10 @@
       "textures": "textures/items/cl/c/triturado_zinco"
     },
     "clc_helice": {
-      "textures": "textures/items/cl/c/helice"
+      "textures": "textures/items/cl/arte/helice"
     },
     "clc_batedor": {
-      "textures": "textures/items/cl/c/batedor"
+      "textures": "textures/items/cl/arte/batedor"
     },
     "clc_pedra_viagem": {
       "textures": "textures/items/cl/arte/pedra_viagem"
@@ -1461,10 +1461,10 @@
       "textures": "textures/items/cl/arte/computador"
     },
     "clc_robo_minerador": {
-      "textures": "textures/items/cl/c/robo_minerador"
+      "textures": "textures/items/cl/arte/robo_minerador"
     },
     "clc_regador": {
-      "textures": "textures/items/cl/c/regador"
+      "textures": "textures/items/cl/arte/regador"
     },
     "clc_varinha_construtor": {
       "textures": "textures/items/cl/c/varinha_construtor"

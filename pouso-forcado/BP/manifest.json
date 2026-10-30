@@ -4,7 +4,7 @@
     "name": "Pouso Forçado (Comportamento)",
     "description": "Sobreviva à queda da nave num mundo seco. Fase 6.",
     "uuid": "4d9569a2-3c1b-4044-b3f4-74bd75dab9dd",
-    "version": [1, 10, 1],
+    "version": [1, 10, 2],
     "min_engine_version": [1, 26, 30]
   },
   "modules": [
@@ -12,21 +12,21 @@
       "description": "Blocos e receitas",
       "type": "data",
       "uuid": "3023a31b-3ccf-428a-8fe0-e03fdf1cae27",
-      "version": [1, 10, 1]
+      "version": [1, 10, 2]
     },
     {
       "description": "Scripts",
       "type": "script",
       "language": "javascript",
       "uuid": "e417c113-dfc9-4e46-8dcc-5654a3e128c2",
-      "version": [1, 10, 1],
+      "version": [1, 10, 2],
       "entry": "scripts/main.js"
     }
   ],
   "dependencies": [
     {
       "uuid": "3b16a1a8-8620-4d50-b02b-6528c756a7c0",
-      "version": [1, 10, 1]
+      "version": [1, 10, 2]
     },
     {
       "module_name": "@minecraft/server",
