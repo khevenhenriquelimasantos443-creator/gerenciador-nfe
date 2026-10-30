@@ -109,7 +109,8 @@ Outros comandos:
 - `npm run texturas`: cria só as texturas que estiverem faltando (não apaga as suas). Para regerar todas: `node tools/gerar-texturas.mjs --force`.
 - `npm run compilar`: só compila o TypeScript.
 - `node tools/gerar-nave.mjs --force` / `node tools/gerar-relevo.mjs --force`: regeram a nave / as dunas, morros e o templo a partir do modelo em código.
-- `python3 tools/gerar-wiki.py`: monta a wiki (`docs/wiki/wiki.html`) a partir de `docs/wiki/wiki.fonte.html`, com os ícones e as imagens embutidos.
+- `python3 tools/gerar-wiki.py`: monta a wiki a partir de `docs/wiki/wiki.fonte.html`, com os ícones e as imagens embutidos: `docs/wiki/wiki.html` (página do Claude) e `docs/wiki/site/index.html` (o site).
+- **Site da wiki (Vercel):** projeto `pouso-forcado`, montado direto deste repositório (pasta `pouso-forcado`, branch `claude/dazzling-bell-twympv`), sem instalar nada; o build só copia `docs/wiki/site/index.html` e os arquivos de `dist/` (`.mcaddon` e `.mcworld`) para a pasta publicada. Depois de um build novo do add-on, rode `tools/gerar-wiki.py`, faça o commit e publique de novo.
 - `node tools/gerar-panorama.mjs <bedrock-samples>/resource_pack`: redesenha o panorama do menu e o fundo da troca de dimensão (o avião caído com as texturas do jogo; uns 2 minutos). Precisa da pasta `resource_pack` do [bedrock-samples](https://github.com/Mojang/bedrock-samples). As imagens já vêm no repositório.
 
 > Os arquivos `dist/pouso-forcado.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.

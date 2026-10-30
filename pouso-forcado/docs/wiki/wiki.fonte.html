@@ -108,6 +108,12 @@ tr:last-child td { border-bottom: 0; }
 .passos { counter-reset: passo; list-style: none; padding-left: 0 !important; }
 .passos li { counter-increment: passo; display: grid; grid-template-columns: 2rem 1fr; gap: 0.4rem; margin: 0.45rem 0; }
 .passos li::before { content: counter(passo); font: 700 0.95rem/1.75rem var(--display); text-align: center; width: 1.75rem; height: 1.75rem; color: var(--sobre-laranja); background: var(--laranja); }
+.botoes { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0; }
+.botao { display: inline-flex; flex-direction: column; gap: 0.2rem; min-width: 0; padding: 0.7rem 1rem; text-decoration: none; font: 700 1.05rem/1.2 var(--display); color: var(--sobre-laranja); background: var(--laranja); border: 2px solid var(--laranja); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.25), inset 0 -3px 0 rgba(0, 0, 0, 0.2); }
+.botao span { font: 500 0.74rem/1.2 var(--mono); letter-spacing: 0.04em; opacity: 0.85; }
+.botao.secundario { color: var(--texto); background: var(--painel2); border-color: var(--linha); box-shadow: none; }
+.botao:hover { filter: brightness(1.06); }
+.nota { color: var(--suave); font-size: 0.92rem; }
 .vazio { text-align: center; color: var(--suave); padding: 2rem 0; }
 footer { border-top: 1px solid var(--linha); background: var(--painel); }
 footer .coluna { padding-block: 1.6rem 2.4rem; color: var(--suave); font-size: 0.92rem; }
@@ -126,7 +132,7 @@ footer p { margin: 0.4rem 0; }
     <h1><img src="@img/logo" alt="Pouso Forçado" width="1937" height="333"></h1>
     <p class="chamada">Sua nave caiu num planeta de deserto: sem água, sem animais e quase sem minério à vista. Sobreviva ao sol e às noites, faça máquinas a partir da areia e conserte os quatro sistemas da nave para decolar.</p>
     <ul class="selos">
-      <li>Versão 1.5.1</li>
+      <li>Versão @versao</li>
       <li>Bedrock 26.30+</li>
       <li>24 capítulos de missões</li>
       <li>Inspirado no Crash Landing (1.6.4)</li>
@@ -166,6 +172,15 @@ footer p { margin: 0.4rem 0; }
 <section class="secao" id="comecar">
   <header><img src="@icone/arte/diario_bordo" alt=""><div><h2>Começar</h2><p>Instalar, abrir o mundo e os primeiros minutos.</p></div></header>
   <div class="blocos">
+    <article class="bloco baixar">
+      <h3>Baixar</h3>
+      <p>Versão <strong>@versao</strong>. Toque no botão pelo celular; quando terminar de baixar, abra o arquivo com o Minecraft.</p>
+      <div class="botoes">
+        <a class="botao" href="@baixar/mcaddon">Baixar o add-on <span>.mcaddon · @tamanho/mcaddon</span></a>
+        <a class="botao secundario" href="@baixar/mcworld">Só o mundo <span>.mcworld · @tamanho/mcworld</span></a>
+      </div>
+      <p class="nota">O .mcaddon traz os três pacotes e o mundo pronto. O .mcworld é o plano B, se o mundo não aparecer na lista.</p>
+    </article>
     <article class="bloco">
       <h3>Instalar no celular</h3>
       <ol class="passos">

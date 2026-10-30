@@ -1,4 +1,9 @@
-# Monta a wiki do modpack (docs/wiki/wiki.html) a partir de docs/wiki/wiki.fonte.html:
+# Monta a wiki do modpack a partir de docs/wiki/wiki.fonte.html, em duas saídas:
+# - docs/wiki/wiki.html: a página publicada como Artifact (sem <html>/<head>, que o Artifact põe); os botões de
+#   download apontam para os arquivos no GitHub;
+# - docs/wiki/site/index.html: o site da Vercel (documento completo); os botões apontam para os arquivos ao
+#   lado dele, que o build da Vercel copia de dist/ (ver "Wiki" no README).
+# Trocas na fonte:
 # - "@icone/<caminho>" vira o PNG embutido de RP/textures/items/cl/<caminho>.png (ícones do próprio pack);
 # - "@img/<nome>" vira uma imagem do jogo embutida: o logo do menu (PNG), o fundo da troca de dimensão e as
 #   faces do panorama (JPEG).
@@ -11,6 +16,9 @@ from PIL import Image
 R = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 FONTE = os.path.join(R, "docs/wiki/wiki.fonte.html")
 SAIDA = os.path.join(R, "docs/wiki/wiki.html")
+SITE = os.path.join(R, "docs/wiki/site/index.html")
+GITHUB = "https://github.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/raw/claude/dazzling-bell-twympv/pouso-forcado/dist/"
+ARQUIVOS = {"mcaddon": "pouso-forcado.mcaddon", "mcworld": "pouso-forcado.mcworld"}
 PANORAMA = os.path.join(R, "RP_menu/textures/ui")
 
 
@@ -43,7 +51,17 @@ def icone(caminho):
     return "data:image/png;base64," + base64.b64encode(open(arq, "rb").read()).decode()
 
 
-def main():
+def versao():
+    m = re.search(r'VERSAO = "([0-9.]+)"', open(os.path.join(R, "scripts/config.ts"), encoding="utf-8").read())
+    return m.group(1)
+
+
+def tamanho(chave):
+    mb = os.path.getsize(os.path.join(R, "dist", ARQUIVOS[chave])) / 1024 / 1024
+    return f"{mb:.1f} MB".replace(".", ",")
+
+
+def montar(base_download):
     texto = open(FONTE, encoding="utf-8").read()
     cache = {}
 
@@ -54,8 +72,30 @@ def main():
         return cache[chave]
 
     texto = re.sub(r"@(icone|img)/([a-z0-9_/]+)", troca, texto)
+    texto = re.sub(r"@baixar/(\w+)", lambda m: base_download + ARQUIVOS[m.group(1)], texto)
+    texto = re.sub(r"@tamanho/(\w+)", lambda m: tamanho(m.group(1)), texto)
+    return texto.replace("@versao", versao()), len(cache)
+
+
+def main():
+    texto, n = montar(GITHUB)
     open(SAIDA, "w", encoding="utf-8").write(texto)
-    print(f"wiki: {len(cache)} imagens, {os.path.getsize(SAIDA) // 1024} KB em docs/wiki/wiki.html")
+    # O site: o mesmo conteúdo num documento completo (o cabeçalho é tudo até o fim do <style>).
+    texto, _ = montar("")
+    corte = texto.index("</style>") + len("</style>")
+    favicon = icone("arte/diario_bordo")
+    site = (
+        '<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+        '<meta name="description" content="Guia e download do Pouso Forçado, modpack de sobrevivência no deserto para Minecraft Bedrock.">\n'
+        f'<link rel="icon" href="{favicon}">\n'
+        "<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}"
+        "body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n"
+        + texto[:corte] + "\n</head>\n<body>\n" + texto[corte:] + "\n</body>\n</html>\n"
+    )
+    os.makedirs(os.path.dirname(SITE), exist_ok=True)
+    open(SITE, "w", encoding="utf-8").write(site)
+    print(f"wiki: {n} imagens; {os.path.getsize(SAIDA) // 1024} KB em docs/wiki/wiki.html e site em docs/wiki/site/index.html")
 
 
 if __name__ == "__main__":
