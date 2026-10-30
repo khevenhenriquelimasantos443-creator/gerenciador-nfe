@@ -1087,6 +1087,12 @@
     },
     "clc_coalhada_queijo": {
       "textures": "textures/items/cl/c/coalhada_queijo"
+    },
+    "clc_nucleo_salto": {
+      "textures": "textures/items/cl/c/nucleo_salto"
+    },
+    "clc_chave_masmorra": {
+      "textures": "textures/items/cl/c/chave_masmorra"
     }
   }
 }

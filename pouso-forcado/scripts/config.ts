@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.6.0";
+export const VERSAO = "1.6.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -92,6 +92,7 @@ export const PROPS = {
   reparos: `${NS}:reparos`, // mundo: sistemas da nave já consertados, separados por vírgula
   naveLocal: `${NS}:nave_local`, // mundo: JSON { dim, x, y, z } do Painel da Nave (para a Bússola do Avião)
   final: `${NS}:final`, // mundo: dia em que a nave decolou (Fase 10); daí em diante é o modo infinito
+  nucleoSalto: `${NS}:nucleo_salto`, // mundo: true quando o Núcleo de Salto (da Lua, 1.6.1) foi instalado no Painel da Nave
   diarioRecebido: `${NS}:diario_recebido`, // jogador
   historiaLida: `${NS}:historia_lida`, // jogador: já viu a história do começo no Diário (1.4.0)
   missoes: `${NS}:missoes`, // jogador: JSON com o progresso (scripts/missoes/progresso.ts)

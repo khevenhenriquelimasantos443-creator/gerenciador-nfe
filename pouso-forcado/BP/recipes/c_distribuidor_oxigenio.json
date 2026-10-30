@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_distribuidor_oxigenio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "WXW",
+      "YZY",
+      "WXW"
+    ],
+    "key": {
+      "W": {
+        "item": "cl:placa_aco"
+      },
+      "X": {
+        "item": "cl:ventilador_oxigenio"
+      },
+      "Y": {
+        "item": "cl:respiro_oxigenio"
+      },
+      "Z": {
+        "item": "cl:placa_aluminio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:distribuidor_oxigenio"
+    }
+  }
+}

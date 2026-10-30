@@ -1298,6 +1298,10 @@
   "en": "Torch",
   "icone": "textures/blocks/torch_on"
  },
+ "minecraft:totem_of_undying": {
+  "pt": "totem_of_undying",
+  "en": "totem_of_undying"
+ },
  "minecraft:trapped_chest": {
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",

@@ -416,6 +416,53 @@ teste("viagem", 2400, (t) => {
   });
 });
 
+// 1.6.1: a base lunar (posta ao lado pelo comando de teste), o chefe, a chave e o Baú do Tesouro; e o zumbi comum
+// que nasce na Lua vira o evoluído.
+teste("base", 1400, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  const lua = world.getDimension("cl:lua");
+  try { lua.runCommand("tickingarea add 940 0 -60 1060 0 80 lua_base true"); } catch (e) { log(`tickingarea: ${e}`); }
+  j.teleport({ x: 1000.5, y: 120, z: 0.5 }, { dimension: lua });
+  t.runAfterDelay(200, () => {
+    j.runCommand("scriptevent cl:teste_base");
+    const z = lua.spawnEntity("minecraft:zombie", { x: 1000.5, y: 100, z: 5.5 });
+    t.runAfterDelay(5, () => log(`base: zumbi comum ainda existe=${z.isValid}; evoluídos perto=${lua.getEntities({ type: "cl:zumbi_evoluido", location: { x: 1000.5, y: 100, z: 5.5 }, maxDistance: 6 }).length}`));
+  });
+  t.runAfterDelay(500, () => {
+    const cx = 1006, cz = 0;
+    const tij = lua.getBlock({ x: cx + 5, y: 26, z: cz })?.typeId, escada = lua.getBlock({ x: cx, y: 30, z: cz })?.typeId, bau = lua.getBlock({ x: cx, y: 27, z: cz + 41 })?.typeId;
+    const baus = [lua.getBlock({ x: cx - 31, y: 27, z: cz - 3 })?.typeId, lua.getBlock({ x: cx - 31, y: 27, z: cz + 3 })?.typeId];
+    log(`base: parede=${tij} escada=${escada} tesouro=${bau} baús=${baus}`);
+    t.assert(tij === "cl:tijolo_lunar", "a masmorra não foi construída");
+    t.assert(bau === "cl:bau_tesouro", "sem o Baú do Tesouro");
+    j.teleport({ x: cx + 0.5, y: 27, z: cz + 34.5 }, { dimension: lua });
+  });
+  t.runAfterDelay(560, () => {
+    const chefes = lua.getEntities({ type: "cl:esqueleto_chefe" });
+    log(`base: chefes=${chefes.length} vida=${chefes[0]?.getComponent("health")?.currentValue}`);
+    t.assert(chefes.length === 1, "o chefe não acordou");
+    const morreu = chefes[0].kill();
+    log(`base: kill()=${morreu}`);
+  });
+  t.runAfterDelay(620, () => {
+    const itens = lua.getEntities({ type: "minecraft:item" });
+    const chaves = itens.filter((e) => e.getComponent("item")?.itemStack.typeId === "cl:chave_masmorra");
+    const naMao = quantos(j, "cl:chave_masmorra");
+    log(`base: chave no chão=${chaves.length} no inventário=${naMao}; areia solta na Lua=${itens.filter((e) => e.getComponent("item")?.itemStack.typeId === "minecraft:sand").length}`);
+    t.assert(chaves.length + naMao === 1, "o chefe não deixou a chave");
+    if (!naMao) j.getComponent("minecraft:inventory").container.setItem(1, new ItemStack("cl:chave_masmorra", 1));
+    j.teleport({ x: 1006.5, y: 27, z: 39.5 }, { dimension: lua, facingLocation: { x: 1006.5, y: 27.5, z: 41.5 } });
+  });
+  t.runAfterDelay(640, () => j.interactWithBlock(t.relativeBlockLocation({ x: 1006, y: 27, z: 41 }), Direction.North));
+  t.runAfterDelay(680, () => {
+    log(`base: núcleo=${quantos(j, "cl:nucleo_salto")} chave=${quantos(j, "cl:chave_masmorra")}`);
+    t.assert(quantos(j, "cl:nucleo_salto") === 1, "o baú não deu o Núcleo de Salto");
+    try { lua.runCommand("tickingarea remove lua_base"); } catch {}
+    j.teleport({ x: 3, y: 47, z: 3 }, { dimension: world.getDimension("overworld") });
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });
@@ -429,6 +476,7 @@ teste("danos", 100, (t) => {
 world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);
 });
+world.afterEvents.entityDie.subscribe((ev) => { if (ev.deadEntity.typeId === "cl:esqueleto_chefe") log(`morreu: ${ev.deadEntity.typeId} causa=${ev.damageSource.cause}`); });
 world.afterEvents.playerBreakBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`quebrou: ${ev.brokenBlockPermutation.type.id} modo=${ev.player.getGameMode()}`);
 });

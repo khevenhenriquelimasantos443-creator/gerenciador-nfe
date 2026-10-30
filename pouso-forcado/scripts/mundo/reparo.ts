@@ -23,6 +23,21 @@ export function consertados(): Set<string> {
 }
 
 export const naveConsertada = (): boolean => SISTEMAS_NAVE.every((s) => consertados().has(s.id));
+/** 1.6.1: a bobina de salto queimou; sem o Núcleo de Salto (da Lua) a nave não volta para casa. */
+export const nucleoInstalado = (): boolean => world.getDynamicProperty(PROPS.nucleoSalto) === true;
+
+function instalarNucleo(jogador: Player): void {
+  if (!criativo(jogador)) gastar(jogador, "cl:nucleo_salto", 1);
+  world.setDynamicProperty(PROPS.nucleoSalto, true);
+  registrarAcao(jogador, "nucleo_salto");
+  jogador.playSound("beacon.activate");
+  jogador.dimension.playSound("random.levelup", jogador.location);
+  particula(jogador.dimension, "cl:faisca", { x: jogador.location.x, y: jogador.location.y + 1.2, z: jogador.location.z });
+  for (const j of world.getPlayers()) {
+    j.sendMessage({ rawtext: [{ text: "§6[Diário de Bordo]§r " }, { translate: "cl.nave.nucleo_instalado" }] });
+    j.onScreenDisplay.setTitle({ translate: "cl.nave.pronta_titulo" }, { subtitle: { translate: "cl.nave.pronta_subtitulo" }, fadeInDuration: 10, stayDuration: 100, fadeOutDuration: 20 });
+  }
+}
 
 function quantos(jogador: Player, item: string): number {
   const inv = jogador.getComponent("minecraft:inventory")?.container;
@@ -110,11 +125,16 @@ async function abrirPainel(jogador: Player, painel?: Block): Promise<void> {
     corpo.push({ text: feitos.has(sis.id) ? "§a[OK] §r" : "§c[--] §r" }, { translate: `cl.nave.sistema.${sis.id}` }, { text: "\n" });
   }
   const pendentes = SISTEMAS_NAVE.filter((s) => !feitos.has(s.id));
+  // 1.6.1: a quinta peça, a Bobina de Salto (só pedida em mundos que ainda não decolaram).
+  const faltaNucleo = !jaDecolou() && !nucleoInstalado();
+  if (!jaDecolou()) corpo.push({ translate: faltaNucleo ? "cl.nave.salto_queimada" : "cl.nave.salto_ok" }, { text: "\n" });
   if (jaDecolou()) corpo.push({ text: "\n" }, { translate: "cl.fim.painel_depois" });
   const form = new ActionFormData().title({ translate: "cl.nave.titulo" }).body({ rawtext: corpo });
-  // Fase 10: com tudo consertado, o primeiro botão é a decolagem.
-  const podeDecolar = !pendentes.length && painel !== undefined;
+  // Fase 10: com tudo consertado (e o núcleo no lugar), o primeiro botão é a decolagem.
+  const podeDecolar = !pendentes.length && !faltaNucleo && painel !== undefined;
+  const podeNucleo = faltaNucleo && (criativo(jogador) || quantos(jogador, "cl:nucleo_salto") > 0);
   if (podeDecolar) form.button({ translate: jaDecolou() ? "cl.fim.botao_rever" : "cl.fim.botao" });
+  if (podeNucleo) form.button({ translate: "cl.nave.instalar_nucleo" });
   for (const sis of pendentes) form.button({ rawtext: [{ translate: "cl.nave.consertar" }, { text: " " }, { translate: `cl.nave.sistema.${sis.id}` }] });
   form.button({ translate: "cl.nave.receitas" });
   form.button({ translate: "cl.diario.fechar" });
@@ -123,6 +143,13 @@ async function abrirPainel(jogador: Player, painel?: Block): Promise<void> {
   let sel = r.selection;
   if (podeDecolar) {
     if (sel === 0) return confirmarDecolagem(jogador, painel);
+    sel--;
+  }
+  if (podeNucleo) {
+    if (sel === 0) {
+      if (!nucleoInstalado()) instalarNucleo(jogador);
+      return;
+    }
     sel--;
   }
   if (sel < pendentes.length) return telaSistema(jogador, pendentes[sel]);

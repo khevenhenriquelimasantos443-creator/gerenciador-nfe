@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.6.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft, OpenBlocks e o começo do Galacticraft (a viagem à Lua). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.6.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.6.1 (a Lua de verdade e o final novo)
+
+- **Final novo**: com os 4 sistemas consertados, o Painel da Nave mostra a **Bobina de Salto** queimada. O Núcleo de Salto está na **Base de Pesquisa Lunar**; instalado, aparece o botão Decolar. Mundos que já decolaram seguem no modo infinito, sem pedir o núcleo.
+- **Base de Pesquisa Lunar**: sorteada a 160–240 blocos de onde se pousa na Lua; o rádio avisa as coordenadas e, na Lua, a Bússola do Avião aponta para ela. Cabine na superfície, poço com escada e a masmorra de tijolo lunar: salão, corredores, duas salas de monstros, uma de baús (com chance de Balde de Combustível para a volta) e a sala do chefe.
+- **Esqueleto Evoluído Gigante** (150 de vida, flechas a cada 25 ticks, agarra e arremessa quem chega perto, barra de chefe). Deixa a **Chave da Masmorra Tier 1**, que abre o **Baú do Tesouro** com o Núcleo de Salto.
+- **Monstros evoluídos** (vida do Galacticraft: zumbi 30, esqueleto 25, aranha 22, creeper 25; não queimam no sol): o que nasce no escuro da Lua vira a versão evoluída.
+- **Meteoros na Lua**: como no Galacticraft, um pequeno a cada ~6 min e um grande a cada ~17 min em média, caindo a até 10 blocos do jogador.
+- **Distribuidor de Bolha de Oxigênio**: bolha de até 10 blocos onde se respira sem gastar tanque; gasta 8 de oxigênio por tick (de um Coletor encostado, tanques ou cilindros).
+- **Coletor de Oxigênio** corrigido: soma a cada ~10 ticks, como no original (930 a cada 5 s no planeta; 7,5 por planta a cada 5 s na Lua).
+- 7 missões novas no capítulo Galacticraft.
+- O avião caído só é posto no planeta (antes, se o primeiro jogador estivesse em outra dimensão, ia para lá).
 
 ## Novidades da 1.6.0 (Galacticraft: a Lua)
 

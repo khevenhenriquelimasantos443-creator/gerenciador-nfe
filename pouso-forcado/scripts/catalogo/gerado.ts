@@ -206,6 +206,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "ME Chest",
   "icone": "textures/items/cl/arte/blocos/bau_me"
  },
+ "cl:bau_tesouro": {
+  "pt": "Baú do Tesouro",
+  "en": "Treasure Chest",
+  "icone": "textures/blocks/cl/c/bau_tesouro_topo"
+ },
  "cl:bicho_seda": {
   "pt": "Bicho-da-seda",
   "en": "Silkworm",
@@ -556,6 +561,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Barrel Hammer",
   "icone": "textures/items/cl/arte/chave_barril"
  },
+ "cl:chave_masmorra": {
+  "pt": "Chave da Masmorra Tier 1",
+  "en": "Tier 1 Dungeon Key",
+  "icone": "textures/items/cl/c/chave_masmorra"
+ },
  "cl:chili_poppers": {
   "pt": "Pimentas Empanadas",
   "en": "Chili Poppers",
@@ -770,6 +780,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Dínamo de Redstone",
   "en": "Enervation Dynamo",
   "icone": "textures/items/cl/arte/blocos/dinamo_redstone"
+ },
+ "cl:distribuidor_oxigenio": {
+  "pt": "Distribuidor de Bolha de Oxigênio",
+  "en": "Oxygen Bubble Distributor",
+  "icone": "textures/blocks/cl/c/distribuidor_oxigenio_topo"
  },
  "cl:dreno_fundicao": {
   "pt": "Dreno",
@@ -1500,6 +1515,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Núcleo de Funil",
   "en": "Hopper Core",
   "icone": "textures/items/cl/arte/nucleo_funil"
+ },
+ "cl:nucleo_salto": {
+  "pt": "Núcleo de Salto",
+  "en": "Jump Core",
+  "icone": "textures/items/cl/c/nucleo_salto"
  },
  "cl:nucleo_sync": {
   "pt": "Núcleo Sync",
@@ -2650,6 +2670,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tigela de Mistura",
   "en": "Mixing Bowl",
   "icone": "textures/items/cl/arte/blocos/tigela_mistura"
+ },
+ "cl:tijolo_lunar": {
+  "pt": "Tijolo da Masmorra Lunar",
+  "en": "Moon Dungeon Brick",
+  "icone": "textures/blocks/cl/c/tijolo_lunar"
  },
  "cl:tijolo_refratario": {
   "pt": "Tijolo Refratário",
@@ -4140,6 +4165,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tocha",
   "en": "Torch",
   "icone": "textures/blocks/torch_on"
+ },
+ "minecraft:totem_of_undying": {
+  "pt": "totem_of_undying",
+  "en": "totem_of_undying"
  },
  "minecraft:trapped_chest": {
   "pt": "Baú com Armadilha",
@@ -5978,6 +6007,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_distribuidor_oxigenio",
+  "resultado": "cl:distribuidor_oxigenio",
+  "qtd": 1,
+  "grade": [
+   "WXW",
+   "YZY",
+   "WXW"
+  ],
+  "chaves": {
+   "W": "cl:placa_aco",
+   "X": "cl:ventilador_oxigenio",
+   "Y": "cl:respiro_oxigenio",
+   "Z": "cl:placa_aluminio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_dreno_fundicao",
   "resultado": "cl:dreno_fundicao",
   "qtd": 1,
@@ -7792,6 +7841,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "P": "minecraft:ender_pearl",
    "E": "cl:estrutura_maquina",
    "D": "minecraft:diamond"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolo_lunar",
+  "resultado": "cl:tijolo_lunar",
+  "qtd": 4,
+  "grade": [
+   "XX",
+   "XX"
+  ],
+  "chaves": {
+   "X": "cl:rocha_lunar"
   },
   "estacoes": [
    "crafting_table"
@@ -10182,6 +10247,20 @@ export const DROPS: ReadonlyArray<{ fonte: string; item: string; min: number; ma
   "min": 1,
   "max": 1,
   "chance": 0.4
+ },
+ {
+  "fonte": "cl:esqueleto_chefe",
+  "item": "minecraft:bone",
+  "min": 3,
+  "max": 6,
+  "chance": 1
+ },
+ {
+  "fonte": "cl:esqueleto_chefe",
+  "item": "minecraft:arrow",
+  "min": 4,
+  "max": 10,
+  "chance": 1
  },
  {
   "fonte": "cl:farao",

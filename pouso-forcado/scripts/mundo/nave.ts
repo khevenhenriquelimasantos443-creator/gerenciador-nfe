@@ -48,6 +48,8 @@ function porPortas(dimensao: Dimension, origem: Vector3): void {
  */
 export function garantirNave(jogador: Player): void {
   if (world.getDynamicProperty(PROPS.naveColocada)) return;
+  // Só no planeta (1.6.1): quem estiver na Lua espera voltar.
+  if (jogador.dimension.id !== "minecraft:overworld") return;
   world.setDynamicProperty(PROPS.naveColocada, true);
 
   const dimensao = jogador.dimension;

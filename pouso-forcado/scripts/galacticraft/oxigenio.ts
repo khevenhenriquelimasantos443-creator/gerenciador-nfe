@@ -43,6 +43,21 @@ export function prontoParaLua(j: Player): boolean {
   return false;
 }
 
+/** Bolhas dos Distribuidores (atualizadas pelo tick deles; somem se o distribuidor parar de responder). */
+export const bolhas = new Map<string, { dim: string; x: number; y: number; z: number; r: number; t: number }>();
+function naBolha(j: Player): boolean {
+  const { x, y, z } = j.location;
+  for (const [k, b] of bolhas) {
+    if (system.currentTick - b.t > 60) {
+      bolhas.delete(k);
+      continue;
+    }
+    if (b.dim === j.dimension.id && (x - b.x) ** 2 + (y + 1 - b.y) ** 2 + (z - b.z) ** 2 <= b.r * b.r) return true;
+  }
+  return false;
+}
+const dentroDaBolha = new Set<string>();
+
 /** Jogadores dentro do foguete (na viagem não gastam oxigênio, como no Galacticraft). */
 export const semRespirar = new Set<string>();
 const restante = new Map<string, number>(); // oxigênio somado dos tanques, para o painel
@@ -58,6 +73,12 @@ function semAr(j: Player, msg: RawMessage): void {
 }
 
 function respirar(j: Player): void {
+  if (naBolha(j)) {
+    dentroDaBolha.add(j.id);
+    ultimoDano.delete(j.id);
+    return;
+  }
+  dentroDaBolha.delete(j.id);
   const eq = j.getComponent("minecraft:equippable");
   const cabeca = eq?.getEquipment(EquipmentSlot.Head)?.typeId, peito = eq?.getEquipment(EquipmentSlot.Chest)?.typeId;
   if (cabeca !== MASCARA) return semAr(j, { translate: "cl.gc.sem_equipamento", with: { rawtext: [{ translate: `item.${MASCARA}.name` }] } });
@@ -88,6 +109,7 @@ function respirar(j: Player): void {
 
 /** Linha do painel (hud.ts) para quem está na Lua: oxigênio e quanto tempo dura. */
 export function painelLua(j: Player): RawMessage {
+  if (dentroDaBolha.has(j.id)) return { rawtext: [{ translate: "cl.gc.ox_rotulo" }, { text: " §a" }, { translate: "cl.gc.na_bolha" }] };
   const o2 = restante.get(j.id) ?? 0;
   const s = Math.floor((o2 * 9) / 20);
   const cor = s <= 30 ? "§c" : s <= 120 ? "§e" : "§b";

@@ -7,6 +7,8 @@ import { registrarDetalhe } from "../util/dados.js";
 import { gastarFerramenta } from "../util/inventario.js";
 import { intervalo } from "../util/perfil.js";
 import { noiteDeHorda } from "./horda_noturna.js";
+import { alvoBaseLua } from "../galacticraft/base.js";
+import { LUA } from "../galacticraft/oxigenio.js";
 
 /*
  * Ideias do projeto (1.2.0):
@@ -42,7 +44,9 @@ function alvoDoAviao(): { dim: string; x: number; z: number } | undefined {
 }
 
 function mostrarRumo(j: Player): void {
-  const alvo = alvoDoAviao();
+  // Na Lua, a bússola aponta para o sinal da base de pesquisa (1.6.1).
+  const base = j.dimension.id === LUA ? alvoBaseLua() : undefined;
+  const alvo = base ? { dim: LUA, ...base } : alvoDoAviao();
   if (!alvo) return aviso(j, "cl.bus.sem", 2);
   if (alvo.dim !== j.dimension.id) return aviso(j, "cl.bus.outra_dim", 2);
   const dx = alvo.x + 0.5 - j.location.x, dz = alvo.z + 0.5 - j.location.z;

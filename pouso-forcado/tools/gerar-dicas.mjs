@@ -51,7 +51,8 @@ const MEIO = [
 const FIM = [
   ["Quatro sistemas queimaram na queda: casco, computador de bordo, combustível e motor.", "Four systems burned in the crash: hull, flight computer, fuel and engine."],
   ["O Painel da Nave, na cabine do avião, conserta cada sistema quando você tem as peças.", "The Ship Console in the plane's cockpit repairs each system once you have the parts."],
-  ["Com os quatro sistemas consertados, o Painel da Nave mostra o botão DECOLAR.", "With all four systems repaired, the Ship Console shows the TAKE OFF button."],
+  ["Com os quatro sistemas consertados, falta a Bobina de Salto: o Núcleo de Salto está na base de pesquisa da Lua.", "With all four systems repaired, the Jump Coil is still missing: the Jump Core is in the lunar research base."],
+  ["Na Lua, a Bússola do Avião aponta para o sinal da base de pesquisa.", "On the Moon, the Plane Compass points to the research base signal."],
   ["Ninguém vem buscar você. O único jeito de sair daqui é consertar a nave e decolar.", "No one is coming for you. The only way out is to repair the ship and take off."],
   ["Cada mod tem um capítulo no Diário de Bordo. Siga até o fim para voltar para casa.", "Each mod has a chapter in the Logbook. Follow it to the end to go home."],
 ];

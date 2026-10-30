@@ -1833,6 +1833,33 @@
     },
     "clc_minerio_queijo": {
       "textures": "textures/blocks/cl/c/minerio_queijo"
+    },
+    "clc_tijolo_lunar": {
+      "textures": "textures/blocks/cl/c/tijolo_lunar"
+    },
+    "clc_bau_tesouro_frente": {
+      "textures": "textures/blocks/cl/c/bau_tesouro_frente"
+    },
+    "clc_bau_tesouro_lado": {
+      "textures": "textures/blocks/cl/c/bau_tesouro_lado"
+    },
+    "clc_bau_tesouro_topo": {
+      "textures": "textures/blocks/cl/c/bau_tesouro_topo"
+    },
+    "clc_bau_tesouro_baixo": {
+      "textures": "textures/blocks/cl/c/bau_tesouro_baixo"
+    },
+    "clc_distribuidor_oxigenio_frente": {
+      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_frente"
+    },
+    "clc_distribuidor_oxigenio_lado": {
+      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_lado"
+    },
+    "clc_distribuidor_oxigenio_topo": {
+      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_topo"
+    },
+    "clc_distribuidor_oxigenio_baixo": {
+      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_baixo"
     }
   }
 }

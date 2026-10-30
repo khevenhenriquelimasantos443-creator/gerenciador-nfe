@@ -59,10 +59,11 @@ import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
 import { registrarRelevo } from "./mundo/relevo.js";
 import { comPerfil, registrarPerfil } from "./util/perfil.js";
-import { bancadaNasa, carregador as carregadorCombustivel, coletor, compressor as compressorGC, compressorEletrico, compressorOxigenio, fabricador, registrarMaquinasGC } from "./galacticraft/maquinas.js";
+import { bancadaNasa, carregador as carregadorCombustivel, coletor, compressor as compressorGC, compressorEletrico, compressorOxigenio, distribuidor, fabricador, registrarMaquinasGC } from "./galacticraft/maquinas.js";
 import { registrarDimensaoLua, registrarLua } from "./galacticraft/lua.js";
 import { registrarOxigenio } from "./galacticraft/oxigenio.js";
 import { registrarFoguete } from "./galacticraft/foguete.js";
+import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
   registrarComandos(customCommandRegistry);
@@ -144,8 +145,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   for (const [id, comp] of Object.entries({
     "cl:compressor": compressorGC, "cl:compressor_eletrico": compressorEletrico, "cl:fabricador_circuitos": fabricador,
     "cl:coletor_oxigenio": coletor, "cl:compressor_oxigenio": compressorOxigenio, "cl:carregador_combustivel": carregadorCombustivel,
+    "cl:distribuidor_oxigenio": distribuidor,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
   blockComponentRegistry.registerCustomComponent("cl:bancada_nasa", bancadaNasa);
+  blockComponentRegistry.registerCustomComponent("cl:bau_tesouro", bauTesouro);
 });
 
 registrarPerfil();
@@ -198,3 +201,4 @@ registrarMaquinasGC();
 registrarOxigenio();
 registrarLua();
 registrarFoguete();
+registrarBase();

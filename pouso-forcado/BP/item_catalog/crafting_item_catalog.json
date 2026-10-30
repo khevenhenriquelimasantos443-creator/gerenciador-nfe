@@ -235,6 +235,7 @@
               "cl:faixa_mumia",
               "cl:fragmento_meteorito",
               "cl:motor_nave",
+              "cl:nucleo_salto",
               "cl:organizador",
               "cl:placa_casco",
               "cl:saco_dormir",
@@ -759,6 +760,7 @@
               "cl:aleta_foguete",
               "cl:bico_foguete",
               "cl:cano_oxigenio",
+              "cl:chave_masmorra",
               "cl:coalhada_queijo",
               "cl:concentrador_oxigenio",
               "cl:lata_cobre",
@@ -777,11 +779,13 @@
               "cl:wafer_avancado",
               "cl:wafer_basico",
               "cl:bancada_nasa",
+              "cl:bau_tesouro",
               "cl:carregador_combustivel",
               "cl:coletor_oxigenio",
               "cl:compressor",
               "cl:compressor_eletrico",
               "cl:compressor_oxigenio",
+              "cl:distribuidor_oxigenio",
               "cl:fabricador_circuitos",
               "cl:minerio_cobre_lunar",
               "cl:minerio_estanho_lunar",
@@ -789,7 +793,8 @@
               "cl:plataforma_lancamento",
               "cl:rocha_lunar",
               "cl:solo_lunar",
-              "cl:terra_lunar"
+              "cl:terra_lunar",
+              "cl:tijolo_lunar"
             ]
           }
         ]

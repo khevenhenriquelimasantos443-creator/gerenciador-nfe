@@ -106,7 +106,10 @@ export type Acao =
   | "placa_reforcada"
   | "encher_tanque"
   | "lua"
-  | "voltar_lua";
+  | "voltar_lua"
+  | "base_lua"
+  | "chefe_lua"
+  | "nucleo_salto";
 
 type MissaoBase = {
   id: string;
@@ -333,6 +336,19 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       },
       { id: "gc_queijo", requer: ["gc_lancar"], objetivo: { tipo: "ter", item: "cl:coalhada_queijo", qtd: 8 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 1 }] },
       { id: "gc_volta", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "voltar_lua", qtd: 1 }, recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }] },
+      // 1.6.1: a Lua de verdade e o Núcleo de Salto.
+      { id: "gc_bolha", requer: ["gc_oxigenio"], objetivo: { tipo: "colocar", bloco: "cl:distribuidor_oxigenio", qtd: 1 }, recompensa: [{ item: "cl:cilindro_oxigenio", quantidade: 4 }] },
+      { id: "gc_evoluidos", requer: ["gc_lancar"], objetivo: { tipo: "matar", familia: "evoluido", qtd: 10 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "gc_base", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "base_lua", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 16 }] },
+      { id: "gc_chefe", requer: ["gc_base"], objetivo: { tipo: "acao", acao: "chefe_lua", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "gc_nucleo", requer: ["gc_chefe"], objetivo: { tipo: "ter", item: "cl:nucleo_salto", qtd: 1 }, recompensa: [{ item: "cl:balde_combustivel", quantidade: 1 }] },
+      {
+        id: "gc_instalar",
+        requer: ["gc_nucleo"],
+        objetivo: { tipo: "acao", acao: "nucleo_salto", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }],
+        escolha: [{ item: "minecraft:diamond_block", quantidade: 1 }, { item: "minecraft:totem_of_undying", quantidade: 1 }],
+      },
     ],
   },
   {

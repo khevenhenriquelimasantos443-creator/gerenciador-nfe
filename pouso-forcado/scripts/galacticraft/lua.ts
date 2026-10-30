@@ -1,4 +1,5 @@
-import { BlockVolume, Dimension, DimensionRegistry, world } from "@minecraft/server";
+import { BlockVolume, Dimension, DimensionRegistry, EntityInitializationCause, GameMode, system, world } from "@minecraft/server";
+import { aviso } from "../jogador/hud.js";
 import { rng, sementeDe, sementeDoMundo } from "../util/aleatorio.js";
 import { intervalo } from "../util/perfil.js";
 import { LUA } from "./oxigenio.js";
@@ -169,7 +170,70 @@ const OFFSETS: ReadonlyArray<[number, number]> = (() => {
 })();
 const prontos = new Set<string>();
 
+// ---------- Monstros evoluídos ----------
+// Na Lua, o que o jogo faz nascer no escuro vira a versão evoluída do Galacticraft; o resto some.
+const EVOLUIDO: Readonly<Record<string, string>> = {
+  "minecraft:zombie": "cl:zumbi_evoluido", "minecraft:husk": "cl:zumbi_evoluido", "minecraft:drowned": "cl:zumbi_evoluido", "minecraft:zombie_villager_v2": "cl:zumbi_evoluido",
+  "minecraft:skeleton": "cl:esqueleto_evoluido", "minecraft:stray": "cl:esqueleto_evoluido", "minecraft:bogged": "cl:esqueleto_evoluido",
+  "minecraft:spider": "cl:aranha_evoluida", "minecraft:cave_spider": "cl:aranha_evoluida",
+  "minecraft:creeper": "cl:creeper_evoluido",
+};
+const SOMEM = new Set(["minecraft:enderman", "minecraft:witch", "minecraft:slime", "minecraft:phantom", "minecraft:squid", "minecraft:glow_squid", "minecraft:cod", "minecraft:salmon", "minecraft:bat", "minecraft:dolphin", "minecraft:chicken"]);
+
+// ---------- Meteoros ----------
+// Galacticraft (frequência 7 na Lua): a cada tick, 1 chance em 7.000 de um meteoro pequeno e 1 em 21.000 de um
+// grande para cada jogador, caindo a até 10 blocos dele. Explosão de força tamanho/3 + 2 e rocha de meteorito.
+const METEORO = { checar: 20, pequeno: 7000, grande: 21000 } as const;
+function meteoro(dim: Dimension, x0: number, z0: number, grande: boolean): void {
+  const x = Math.floor(x0 + Math.random() * 20 - 10), z = Math.floor(z0 + Math.random() * 20 - 10);
+  if (!dim.isChunkLoaded({ x, y: 0, z })) return;
+  const chao = dim.getTopmostBlock({ x, z });
+  if (!chao) return;
+  const impacto = { x: x + 0.5, y: chao.y + 1, z: z + 0.5 };
+  for (let k = 0; k <= 10; k++) {
+    system.runTimeout(() => {
+      try {
+        const p = { x: impacto.x + (10 - k) * 2.5, y: impacto.y + (10 - k) * 8, z: impacto.z + (10 - k) * 2.5 };
+        dim.spawnParticle("minecraft:basic_flame_particle", p);
+        if (grande) dim.spawnParticle("minecraft:large_explosion", p);
+      } catch {
+        // chunk descarregou
+      }
+    }, k * 3);
+  }
+  system.runTimeout(() => {
+    try {
+      dim.createExplosion(impacto, grande ? 4 : 2.3, { breaksBlocks: true, causesFire: false });
+      const r = grande ? 2 : 0;
+      for (let dx = -r; dx <= r; dx++) for (let dz = -r; dz <= r; dz++) for (let dy = -r; dy <= 0; dy++) {
+        if (Math.hypot(dx, dy, dz) > r + 0.3) continue;
+        dim.getBlock({ x: x + dx, y: chao.y - 1 + dy, z: z + dz })?.setType("cl:meteorito");
+      }
+    } catch {
+      // chunk descarregou
+    }
+  }, 34);
+}
+
 export function registrarLua(): void {
+  world.afterEvents.entitySpawn.subscribe(({ entity, cause }) => {
+    if (cause !== EntityInitializationCause.Spawned || entity.dimension.id !== LUA) return;
+    const tipo = entity.typeId;
+    const novo = EVOLUIDO[tipo];
+    if (!novo && !SOMEM.has(tipo)) return;
+    const { dimension: dim, location } = entity;
+    entity.remove();
+    if (novo) system.run(() => dim.spawnEntity(novo, location));
+  });
+  intervalo("lua (meteoros)", () => {
+    for (const j of world.getPlayers({ excludeGameModes: [GameMode.Spectator] })) {
+      if (j.dimension.id !== LUA) continue;
+      const grande = Math.random() < METEORO.checar / METEORO.grande;
+      if (!grande && Math.random() >= METEORO.checar / METEORO.pequeno) continue;
+      aviso(j, "cl.gc.meteoro", 2);
+      meteoro(j.dimension, j.location.x, j.location.z, grande);
+    }
+  }, METEORO.checar);
   intervalo("lua (terreno)", () => {
     const naLua = world.getPlayers().filter((j) => j.dimension.id === LUA);
     if (naLua.length === 0) return;

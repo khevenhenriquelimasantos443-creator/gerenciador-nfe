@@ -9,7 +9,7 @@ import { gravar, ler, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador } from "../util/inventario.js";
 import { cabe, contar, entrada, entregar, gastarCE, primeiro, tirar } from "../util/maquina.js";
 import { feito, maquina } from "../maquinas/thermal.js";
-import { capacidadeTanque, gravarOxigenio, LUA, oxigenioDe } from "./oxigenio.js";
+import { bolhas, capacidadeTanque, gravarOxigenio, LUA, oxigenioDe } from "./oxigenio.js";
 
 /*
  * Máquinas do Galacticraft (1.6.0), no padrão das outras: baú em cima = entrada, baú embaixo = saída.
@@ -95,20 +95,21 @@ export const fabricador = maquina((b) => {
 }, "cl.gc.fabricador");
 
 // ---------- Oxigênio ----------
-const OX = { coletorMax: 6000, compressorMax: 1200, arPor40: 93, folhaPor40: 0.75, raio: 5, puxar: 400, encher: 200, cilindro: 1000 } as const;
+// O Coletor soma em média a cada 10 ticks (1 chance em 10 por tick): 93 com ar, 0,75 por planta sem ar.
+const OX = { coletorMax: 6000, compressorMax: 1200, arPor10: 93, folhaPor10: 0.75, raio: 5, puxar: 400, encher: 200, cilindro: 1000 } as const;
 const PLANTAS = [...FOLHAS, "minecraft:wheat", "minecraft:carrots", "minecraft:potatoes", "minecraft:beetroot", "minecraft:melon_stem", "minecraft:pumpkin_stem"];
 
 export const coletor = maquina((b) => {
   let o2 = ler<number>("o2", b, 0);
   if (o2 >= OX.coletorMax) return "parada";
   let ganho: number;
-  if (b.dimension.id !== LUA) ganho = OX.arPor40 * 2.5; // o tick é de 100 ticks = 2,5 × 40
+  if (b.dimension.id !== LUA) ganho = OX.arPor10 * 10; // o tick é de 100 ticks = 10 × 10
   else {
     const r = OX.raio;
     const achados = b.dimension.getBlocks(new BlockVolume({ x: b.x - r, y: b.y - r, z: b.z - r }, { x: b.x + r, y: b.y + r, z: b.z + r }), { includeTypes: PLANTAS }, true);
     let n = 0;
     for (const _ of achados.getBlockLocationIterator()) n++;
-    ganho = Math.floor(n * OX.folhaPor40 * 2.5);
+    ganho = Math.floor(n * OX.folhaPor10 * 10);
   }
   if (ganho <= 0) return "parada";
   if (!gastarCE(b, 25)) return "sem_energia";
@@ -169,6 +170,62 @@ export const compressorOxigenio = maquina((b) => {
   }
   return "parada";
 }, "cl.gc.compressor_ox");
+
+// ---------- Distribuidor de Bolha de Oxigênio ----------
+// Galacticraft: guarda 6.000, gasta 8 por tick ligado; a bolha cresce 0,01 por tick até 10 blocos de raio e
+// encolhe 0,1 por tick quando falta oxigênio ou energia. Puxa do Coletor encostado (16 por tick) e de
+// tanques ou cilindros no baú de cima. Este tick é de 20 ticks.
+const BOLHA = { max: 6000, gasto: 8 * 20, cresce: 0.2, encolhe: 2, raio: 10, puxar: 16 * 20, doTanque: 20 * 20 } as const;
+export const distribuidor = maquina((b) => {
+  let o2 = ler<number>("o2", b, 0);
+  let r = ler<number>("raio", b, 0);
+  const col = coletorVizinho(b);
+  if (col && o2 < BOLHA.max) {
+    const tem = ler<number>("o2", col, 0);
+    const vem = Math.min(tem, BOLHA.puxar, BOLHA.max - o2);
+    if (vem > 0) {
+      gravar("o2", col, tem - vem);
+      o2 += vem;
+    }
+  }
+  const ent = entrada(b);
+  if (ent && o2 + OX.cilindro <= BOLHA.max && tirar(ent, "cl:cilindro_oxigenio")) {
+    o2 += OX.cilindro;
+    entregar(b, [new ItemStack("cl:cilindro_vazio", 1)]);
+  }
+  for (let s = 0; ent && s < ent.size && o2 < BOLHA.max; s++) {
+    const t = ent.getItem(s);
+    if (!t || !capacidadeTanque(t.typeId)) continue;
+    const tem = oxigenioDe(t);
+    if (tem <= 0) continue;
+    const vem = Math.min(tem, BOLHA.doTanque, BOLHA.max - o2);
+    gravarOxigenio(t, tem - vem);
+    ent.setItem(s, t);
+    o2 += vem;
+    break;
+  }
+  const ligado = o2 >= BOLHA.gasto && gastarCE(b, 10);
+  if (ligado) {
+    o2 -= BOLHA.gasto;
+    r = Math.min(BOLHA.raio, r + BOLHA.cresce);
+  } else r = Math.max(0, r - BOLHA.encolhe);
+  gravar("o2", b, o2);
+  gravar("raio", b, r);
+  const chave = `${b.dimension.id}|${b.x},${b.y},${b.z}`;
+  if (r >= 1) {
+    bolhas.set(chave, { dim: b.dimension.id, x: b.x + 0.5, y: b.y + 0.5, z: b.z + 0.5, r, t: system.currentTick });
+    // A borda da bolha: alguns pontos de luz na casca.
+    for (let k = 0; k < 6; k++) {
+      const u = Math.random() * 2 - 1, a = Math.random() * Math.PI * 2, s = Math.sqrt(1 - u * u);
+      try {
+        b.dimension.spawnParticle("minecraft:endrod", { x: b.x + 0.5 + r * s * Math.cos(a), y: b.y + 0.5 + r * u, z: b.z + 0.5 + r * s * Math.sin(a) });
+      } catch {
+        // fora do mundo carregado
+      }
+    }
+  } else bolhas.delete(chave);
+  return ligado ? "ok" : o2 < BOLHA.gasto ? "parada" : "sem_energia";
+}, "cl.gc.distribuidor");
 
 // ---------- Carregador de Combustível ----------
 export const COMBUSTIVEL = { carregadorMax: 12000, porTick: 2, foguete: 1000 } as const;
@@ -236,6 +293,7 @@ export const bancadaNasa: BlockCustomComponent = {
 export function registrarMaquinasGC(): void {
   registrarDetalhe("cl:coletor_oxigenio", (b) => ({ translate: "cl.gc.coletor", with: [String(Math.floor(ler<number>("o2", b, 0)))] }));
   registrarDetalhe("cl:compressor_oxigenio", (b) => ({ translate: "cl.gc.compressor_ox", with: [String(Math.floor(ler<number>("o2", b, 0)))] }));
+  registrarDetalhe("cl:distribuidor_oxigenio", (b) => ({ translate: "cl.gc.distribuidor", with: [String(Math.floor(ler<number>("o2", b, 0))), String(Math.floor(ler<number>("raio", b, 0)))] }));
   registrarDetalhe("cl:carregador_combustivel", (b) => ({ translate: "cl.gc.carregador", with: [String(ler<number>("comb", b, 0))] }));
   registrarNoCatalogo(() => {
     const r: Receita[] = [];
