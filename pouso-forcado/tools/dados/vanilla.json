@@ -193,6 +193,11 @@
   "en": "Carrots",
   "icone": "textures/blocks/carrots_stage_0"
  },
+ "minecraft:cauldron": {
+  "pt": "Caldeirão",
+  "en": "Cauldron",
+  "icone": "textures/items/cauldron"
+ },
  "minecraft:charcoal": {
   "pt": "Carvão Vegetal",
   "en": "Charcoal",
@@ -362,6 +367,11 @@
   "pt": "Tábuas de Carvalho Escuro",
   "en": "Dark Oak Planks",
   "icone": "textures/blocks/planks_big_oak"
+ },
+ "minecraft:daylight_detector": {
+  "pt": "Detector de Luz Solar",
+  "en": "Daylight Detector",
+  "icone": "textures/blocks/daylight_detector_side"
  },
  "minecraft:deadbush": {
   "pt": "Arbusto Morto",
@@ -672,6 +682,11 @@
   "pt": "Machado de Ferro",
   "en": "Iron Axe",
   "icone": "textures/items/iron_axe"
+ },
+ "minecraft:iron_bars": {
+  "pt": "Grade de Ferro",
+  "en": "Iron Bars",
+  "icone": "textures/blocks/iron_bars"
  },
  "minecraft:iron_block": {
   "pt": "Bloco de Ferro",

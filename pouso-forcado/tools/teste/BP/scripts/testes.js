@@ -501,6 +501,41 @@ teste("mekanism", 500, (t) => {
   });
 });
 
+// 1.8.0: Fundidora de Ligas (Aço Elétrico), Moinho SAG (carvão pulverizado) e Gerador Stirling carregando a bateria.
+teste("enderio", 400, (t) => {
+  const bat = (pos, carga) => {
+    t.setBlockType("cl:bateria", pos);
+    const b = t.getBlock(pos);
+    b.setPermutation(b.permutation.withState("cl:carga", carga));
+  };
+  const maquina = (x, z, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) t.getBlock({ x, y: 3, z }).getComponent("inventory").container.addItem(new ItemStack(i, n));
+  };
+  maquina(1, 1, "cl:fundidora_ligas", [["minecraft:iron_ingot", 1], ["cl:po_carvao", 1], ["cl:silicio", 1]]);
+  bat({ x: 2, y: 2, z: 1 }, 15);
+  maquina(5, 1, "cl:moinho_sag", [["minecraft:coal", 1]]);
+  bat({ x: 6, y: 2, z: 1 }, 15);
+  maquina(3, 5, "cl:gerador_stirling", [["minecraft:coal", 1]]);
+  bat({ x: 4, y: 2, z: 5 }, 0);
+  const conta = (x, z, id) => {
+    const c = t.getBlock({ x, y: 1, z }).getComponent("inventory").container;
+    let n = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === id) n += c.getItem(s).amount;
+    return n;
+  };
+  t.runAfterDelay(380, () => {
+    const aco = conta(1, 1, "cl:aco_eletrico"), po = conta(5, 1, "cl:po_carvao"), carga = t.getBlock({ x: 4, y: 2, z: 5 }).permutation.getState("cl:carga");
+    log(`enderio: aço elétrico=${aco} carvão pulverizado=${po} bateria do Stirling=${carga}`);
+    t.assert(aco === 1, "a Fundidora de Ligas não fez o Aço Elétrico");
+    t.assert(po >= 1, "o Moinho SAG não moeu o carvão");
+    t.assert(carga >= 1, "o Gerador Stirling não carregou a bateria");
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });

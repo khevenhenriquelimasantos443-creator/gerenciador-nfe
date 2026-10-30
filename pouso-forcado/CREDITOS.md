@@ -23,6 +23,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 ## Inspiração
 
+- **Ender IO** (CrazyPants, SleepyTrousers e equipe, domínio público/Unlicense): Fundidora de Ligas, Moinho SAG, Gerador
+  Stirling, painéis, bancos de capacitores, Âncoras de Viagem e o Aço Negro, com os números dos arquivos de receitas e de
+  configuração do código público (github.com/SleepyTrousers/EnderIO, versão 5.2). Código e arte próprios.
+
 - **Mekanism Generators** e **Mekanism Tools** (aidancbrady, MIT): geradores, ferramentas e armaduras, com os números lidos
   no código-fonte público (github.com/aidancbrady/Mekanism). Código próprio; as armaduras usam a textura da armadura de
   ferro do jogo (Mojang, `Mojang/bedrock-samples`) tingida por `tools/gerar-armaduras.mjs`.

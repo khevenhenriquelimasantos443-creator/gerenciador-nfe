@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_fundidora_ligas"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IFI",
+      "FCF",
+      "GKG"
+    ],
+    "key": {
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      },
+      "C": {
+        "item": "cl:chassi_maquina"
+      },
+      "G": {
+        "item": "cl:engrenagem_pedra"
+      },
+      "K": {
+        "item": "minecraft:cauldron"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fundidora_ligas"
+    }
+  }
+}

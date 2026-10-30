@@ -270,6 +270,21 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:eio_botas_aco_negro",
+              "name": "cl:itemGroup.name.equipment_ender_io"
+            },
+            "items": [
+              "cl:eio_botas_aco_negro",
+              "cl:eio_calcas_aco_negro",
+              "cl:eio_capacete_aco_negro",
+              "cl:eio_espada_aco_negro",
+              "cl:eio_machado_aco_negro",
+              "cl:eio_peitoral_aco_negro",
+              "cl:eio_picareta_aco_negro"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:foguete_t1",
               "name": "cl:itemGroup.name.equipment_galacticraft"
             },
@@ -851,6 +866,41 @@
               "cl:gerador_gas",
               "cl:gerador_solar_avancado",
               "cl:gerador_solar_mk"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:fundidora_ligas",
+              "name": "cl:itemGroup.name.items_ender_io"
+            },
+            "items": [
+              "cl:aco_eletrico",
+              "cl:aco_negro",
+              "cl:aglutinante_conduite",
+              "cl:capacitor_basico",
+              "cl:capacitor_duplo",
+              "cl:capacitor_octadico",
+              "cl:composto_aglutinante",
+              "cl:cristal_pulsante",
+              "cl:engrenagem_aco_negro",
+              "cl:ferro_condutor",
+              "cl:ferro_pulsante",
+              "cl:liga_energetica",
+              "cl:liga_redstone",
+              "cl:liga_vibrante",
+              "cl:placa_fotovoltaica",
+              "cl:po_carvao",
+              "cl:ancora_viagem",
+              "cl:banco_capacitores",
+              "cl:banco_capacitores_basico",
+              "cl:banco_capacitores_vibrante",
+              "cl:chassi_maquina",
+              "cl:fundidora_ligas",
+              "cl:gerador_stirling",
+              "cl:moinho_sag",
+              "cl:painel_fotovoltaico",
+              "cl:painel_fotovoltaico_avancado",
+              "cl:painel_fotovoltaico_vibrante"
             ]
           },
           {

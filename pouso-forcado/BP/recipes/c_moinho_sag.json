@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_moinho_sag"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "ICI",
+      "GPG"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:flint"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "C": {
+        "item": "cl:chassi_maquina"
+      },
+      "G": {
+        "item": "cl:engrenagem_pedra"
+      },
+      "P": {
+        "item": "minecraft:piston"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:moinho_sag"
+    }
+  }
+}

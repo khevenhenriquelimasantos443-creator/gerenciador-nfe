@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:aco_eletrico",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_aco_eletrico",
+      "minecraft:display_name": {
+        "value": "item.cl:aco_eletrico.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

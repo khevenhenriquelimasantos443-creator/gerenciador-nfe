@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_capacitor_duplo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " E ",
+      "CPC",
+      " E "
+    ],
+    "key": {
+      "E": {
+        "item": "cl:liga_energetica"
+      },
+      "C": {
+        "item": "cl:capacitor_basico"
+      },
+      "P": {
+        "item": "cl:po_carvao"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:capacitor_duplo"
+    }
+  }
+}

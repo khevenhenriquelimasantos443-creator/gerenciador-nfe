@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.7.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.8.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,17 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.8.0 (Ender IO)
+
+Números do Ender IO 5.2 (o código público é o de 1.12); onde a receita de 1.12 pede algo que não existe aqui (Pó do Infinito, corante de máquina), vale a do Ender IO de 1.7.10.
+- **Fundidora de Ligas**: Aço Elétrico (ferro + carvão pulverizado + silício), Liga Energética (redstone + ouro + glowstone), Liga Vibrante (energética + pérola do ender), Liga de Redstone (redstone + silício), Ferro Condutor (redstone + ferro), Ferro Pulsante (ferro + pérola), **Aço Negro** (ferro + carvão pulverizado + obsidiana, ou aço + obsidiana) e a Placa Fotovoltaica; 10.000 a 20.000 RF cada.
+- **Moinho SAG**: minério em 2 pós, carvão em carvão pulverizado (+10%), pedregulho em cascalho, cascalho em areia (+10% de sílex).
+- **Gerador Stirling** (20 RF/t com combustível de fornalha), **Painéis Fotovoltaicos** (10, 40 e 160 RF/t) e **Bancos de Capacitores** (1, 5 e 25 milhões de RF).
+- **Âncora de Viagem**: toque para escolher outra âncora a até 96 blocos e ir até ela.
+- **Aço Negro**: picareta, machado e espada (2.000 usos, velocidade 8) e a armadura, que aparece no corpo.
+- Peças: capacitores básico, de camada dupla e octádico, chassi de máquina, engrenagem de aço negro, aglutinante de conduíte e cristal pulsante.
+- Capítulo **Ender IO** no Diário (8 missões).
 
 ## Novidades da 1.7.0 (os add-ons do Mekanism)
 

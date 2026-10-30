@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_stirling"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SFS",
+      "DCD",
+      "GPG"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stone_bricks"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      },
+      "D": {
+        "item": "cl:aco_negro"
+      },
+      "C": {
+        "item": "cl:chassi_maquina"
+      },
+      "G": {
+        "item": "cl:engrenagem_aco_negro"
+      },
+      "P": {
+        "item": "minecraft:piston"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_stirling"
+    }
+  }
+}

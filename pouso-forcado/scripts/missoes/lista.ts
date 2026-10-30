@@ -109,7 +109,8 @@ export type Acao =
   | "voltar_lua"
   | "base_lua"
   | "chefe_lua"
-  | "nucleo_salto";
+  | "nucleo_salto"
+  | "ancora";
 
 type MissaoBase = {
   id: string;
@@ -318,6 +319,21 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "mx_paxel", requer: ["mx_osmio"], objetivo: { tipo: "ter", item: "cl:mk_paxel_osmio", qtd: 1 }, recompensa: [{ item: "cl:lingote_osmio", quantidade: 6 }] },
       { id: "mx_armadura", objetivo: { tipo: "ter", item: "cl:mk_peitoral_aco", qtd: 1 }, recompensa: [{ item: "cl:lingote_aco", quantidade: 6 }] },
       { id: "mx_obsidiana", requer: ["mx_paxel"], objetivo: { tipo: "ter", item: "cl:mk_espada_obsidiana", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "enderio", // 1.8.0: Ender IO
+    icone: "cl:fundidora_ligas",
+    requer: ["thermal"],
+    missoes: [
+      { id: "eio_capacitor", objetivo: { tipo: "ter", item: "cl:capacitor_basico", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
+      { id: "eio_fundidora", objetivo: { tipo: "colocar", bloco: "cl:fundidora_ligas", qtd: 1 }, recompensa: [{ item: "cl:silicio", quantidade: 4 }] },
+      { id: "eio_aco_eletrico", objetivo: { tipo: "ter", item: "cl:aco_eletrico", qtd: 8 }, recompensa: [{ item: "minecraft:glowstone_dust", quantidade: 8 }] },
+      { id: "eio_aco_negro", requer: ["eio_fundidora"], objetivo: { tipo: "ter", item: "cl:aco_negro", qtd: 8 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 4 }] },
+      { id: "eio_vibrante", requer: ["eio_aco_eletrico"], objetivo: { tipo: "ter", item: "cl:liga_vibrante", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "eio_banco", requer: ["eio_capacitor"], objetivo: { tipo: "colocar", bloco: "cl:banco_capacitores_basico", qtd: 1 }, recompensa: [{ item: "cl:capacitor_basico", quantidade: 4 }] },
+      { id: "eio_ancora", requer: ["eio_aco_negro"], objetivo: { tipo: "acao", acao: "ancora", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
+      { id: "eio_painel", requer: ["eio_vibrante"], objetivo: { tipo: "colocar", bloco: "cl:painel_fotovoltaico_vibrante", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

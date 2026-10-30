@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_painel_fotovoltaico_avancado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "EQE",
+      "PSP",
+      "CDC"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:liga_energetica"
+      },
+      "Q": {
+        "item": "minecraft:quartz_block"
+      },
+      "P": {
+        "item": "cl:placa_fotovoltaica"
+      },
+      "S": {
+        "item": "cl:painel_fotovoltaico"
+      },
+      "C": {
+        "item": "cl:capacitor_duplo"
+      },
+      "D": {
+        "item": "minecraft:daylight_detector"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_fotovoltaico_avancado"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Pendências
 
-Atualizado na 1.7.0.
+Atualizado na 1.8.0.
 
 ## Esperando o jogador (prints do celular)
 
@@ -21,8 +21,8 @@ O jogador escolheu: o Galacticraft vai **só até a Lua**; dos mods da proposta 
 | 1.6.0 | Galacticraft: alumínio, compressor, placas, wafers, oxigênio, Bancada da NASA, plataforma, carregador, Foguete Tier 1, a Lua (terreno e gravidade), ida e volta | pronta |
 | 1.6.1 | A Lua de verdade (meteoros, monstros evoluídos, base de pesquisa com masmorra e chefe, bolha de oxigênio) e o final novo (Bobina de Salto, Núcleo de Salto) | pronta |
 | 1.7.0 | Add-ons do Mekanism da época do 1.6.4: Generators e Tools (o Additions só veio no 1.12) | pronta |
-| 1.8.0 | Ender IO | próxima |
-| 1.9.0 | Create | |
+| 1.8.0 | Ender IO (ligas, Moinho SAG, Stirling, painéis, bancos de capacitores, Âncoras de Viagem, Aço Negro) | pronta |
+| 1.9.0 | Create | próxima |
 | 1.10.0 | Waystones, Mochilas, Robô Minerador (ComputerCraft leve), pedaços do Extra Utilities, redemoinhos do Weather2 | |
 
 ## Feito por último

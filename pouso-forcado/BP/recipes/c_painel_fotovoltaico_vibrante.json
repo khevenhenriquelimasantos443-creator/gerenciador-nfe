@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_painel_fotovoltaico_vibrante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VQV",
+      "PSP",
+      "CDC"
+    ],
+    "key": {
+      "V": {
+        "item": "cl:liga_vibrante"
+      },
+      "Q": {
+        "item": "minecraft:glowstone"
+      },
+      "P": {
+        "item": "cl:placa_fotovoltaica"
+      },
+      "S": {
+        "item": "cl:painel_fotovoltaico_avancado"
+      },
+      "C": {
+        "item": "cl:capacitor_octadico"
+      },
+      "D": {
+        "item": "minecraft:daylight_detector"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_fotovoltaico_vibrante"
+    }
+  }
+}

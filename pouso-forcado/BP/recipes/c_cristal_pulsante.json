@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cristal_pulsante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " P ",
+      "PDP",
+      " P "
+    ],
+    "key": {
+      "P": {
+        "item": "cl:ferro_pulsante"
+      },
+      "D": {
+        "item": "minecraft:diamond"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cristal_pulsante"
+    }
+  }
+}

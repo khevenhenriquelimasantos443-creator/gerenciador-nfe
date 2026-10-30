@@ -1327,6 +1327,75 @@
     },
     "clc_mk_paxel_diamante": {
       "textures": "textures/items/cl/c/mk_paxel_diamante"
+    },
+    "clc_po_carvao": {
+      "textures": "textures/items/cl/c/po_carvao"
+    },
+    "clc_aco_eletrico": {
+      "textures": "textures/items/cl/c/aco_eletrico"
+    },
+    "clc_liga_energetica": {
+      "textures": "textures/items/cl/c/liga_energetica"
+    },
+    "clc_liga_vibrante": {
+      "textures": "textures/items/cl/c/liga_vibrante"
+    },
+    "clc_liga_redstone": {
+      "textures": "textures/items/cl/c/liga_redstone"
+    },
+    "clc_ferro_condutor": {
+      "textures": "textures/items/cl/c/ferro_condutor"
+    },
+    "clc_ferro_pulsante": {
+      "textures": "textures/items/cl/c/ferro_pulsante"
+    },
+    "clc_aco_negro": {
+      "textures": "textures/items/cl/c/aco_negro"
+    },
+    "clc_cristal_pulsante": {
+      "textures": "textures/items/cl/c/cristal_pulsante"
+    },
+    "clc_composto_aglutinante": {
+      "textures": "textures/items/cl/c/composto_aglutinante"
+    },
+    "clc_aglutinante_conduite": {
+      "textures": "textures/items/cl/c/aglutinante_conduite"
+    },
+    "clc_capacitor_basico": {
+      "textures": "textures/items/cl/c/capacitor_basico"
+    },
+    "clc_capacitor_duplo": {
+      "textures": "textures/items/cl/c/capacitor_duplo"
+    },
+    "clc_capacitor_octadico": {
+      "textures": "textures/items/cl/c/capacitor_octadico"
+    },
+    "clc_engrenagem_aco_negro": {
+      "textures": "textures/items/cl/c/engrenagem_aco_negro"
+    },
+    "clc_placa_fotovoltaica": {
+      "textures": "textures/items/cl/c/placa_fotovoltaica"
+    },
+    "clc_eio_picareta_aco_negro": {
+      "textures": "textures/items/cl/c/eio_picareta_aco_negro"
+    },
+    "clc_eio_machado_aco_negro": {
+      "textures": "textures/items/cl/c/eio_machado_aco_negro"
+    },
+    "clc_eio_espada_aco_negro": {
+      "textures": "textures/items/cl/c/eio_espada_aco_negro"
+    },
+    "clc_eio_capacete_aco_negro": {
+      "textures": "textures/items/cl/c/eio_capacete_aco_negro"
+    },
+    "clc_eio_peitoral_aco_negro": {
+      "textures": "textures/items/cl/c/eio_peitoral_aco_negro"
+    },
+    "clc_eio_calcas_aco_negro": {
+      "textures": "textures/items/cl/c/eio_calcas_aco_negro"
+    },
+    "clc_eio_botas_aco_negro": {
+      "textures": "textures/items/cl/c/eio_botas_aco_negro"
     }
   }
 }

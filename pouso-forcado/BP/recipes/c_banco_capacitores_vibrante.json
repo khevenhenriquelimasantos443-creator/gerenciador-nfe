@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_banco_capacitores_vibrante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VCV",
+      "CBC",
+      "VCV"
+    ],
+    "key": {
+      "V": {
+        "item": "cl:liga_vibrante"
+      },
+      "C": {
+        "item": "cl:capacitor_octadico"
+      },
+      "B": {
+        "item": "cl:banco_capacitores"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:banco_capacitores_vibrante"
+    }
+  }
+}

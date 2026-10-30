@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_aglutinante_conduite"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:composto_aglutinante",
+    "output": "cl:aglutinante_conduite"
+  }
+}

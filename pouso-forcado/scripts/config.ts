@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.7.0";
+export const VERSAO = "1.8.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1202,6 +1202,7 @@ export const MODS: ReadonlyArray<{ mod: string; icones: ReadonlyArray<string> }>
   { mod: "OpenBlocks", icones: [`${NS}:elevador`] },
   { mod: "Mekanism Generators", icones: [`${NS}:gerador_eolico`, `${NS}:gerador_calor`] },
   { mod: "Mekanism Tools", icones: [`${NS}:mk_paxel_osmio`, `${NS}:mk_picareta_osmio`] },
+  { mod: "Ender IO", icones: [`${NS}:fundidora_ligas`, `${NS}:aco_negro`] },
   { mod: "Galacticraft", icones: [`${NS}:foguete_t1`, `${NS}:bancada_nasa`] },
 ];
 

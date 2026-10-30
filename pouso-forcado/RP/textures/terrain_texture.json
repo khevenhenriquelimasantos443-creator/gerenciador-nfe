@@ -1947,6 +1947,138 @@
     },
     "clc_gerador_eolico_baixo": {
       "textures": "textures/blocks/cl/c/gerador_eolico_baixo"
+    },
+    "clc_chassi_maquina_frente": {
+      "textures": "textures/blocks/cl/c/chassi_maquina_frente"
+    },
+    "clc_chassi_maquina_lado": {
+      "textures": "textures/blocks/cl/c/chassi_maquina_lado"
+    },
+    "clc_chassi_maquina_topo": {
+      "textures": "textures/blocks/cl/c/chassi_maquina_topo"
+    },
+    "clc_chassi_maquina_baixo": {
+      "textures": "textures/blocks/cl/c/chassi_maquina_baixo"
+    },
+    "clc_fundidora_ligas_frente": {
+      "textures": "textures/blocks/cl/c/fundidora_ligas_frente"
+    },
+    "clc_fundidora_ligas_lado": {
+      "textures": "textures/blocks/cl/c/fundidora_ligas_lado"
+    },
+    "clc_fundidora_ligas_topo": {
+      "textures": "textures/blocks/cl/c/fundidora_ligas_topo"
+    },
+    "clc_fundidora_ligas_baixo": {
+      "textures": "textures/blocks/cl/c/fundidora_ligas_baixo"
+    },
+    "clc_moinho_sag_frente": {
+      "textures": "textures/blocks/cl/c/moinho_sag_frente"
+    },
+    "clc_moinho_sag_lado": {
+      "textures": "textures/blocks/cl/c/moinho_sag_lado"
+    },
+    "clc_moinho_sag_topo": {
+      "textures": "textures/blocks/cl/c/moinho_sag_topo"
+    },
+    "clc_moinho_sag_baixo": {
+      "textures": "textures/blocks/cl/c/moinho_sag_baixo"
+    },
+    "clc_gerador_stirling_frente": {
+      "textures": "textures/blocks/cl/c/gerador_stirling_frente"
+    },
+    "clc_gerador_stirling_lado": {
+      "textures": "textures/blocks/cl/c/gerador_stirling_lado"
+    },
+    "clc_gerador_stirling_topo": {
+      "textures": "textures/blocks/cl/c/gerador_stirling_topo"
+    },
+    "clc_gerador_stirling_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_stirling_baixo"
+    },
+    "clc_painel_fotovoltaico_frente": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_frente"
+    },
+    "clc_painel_fotovoltaico_lado": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_lado"
+    },
+    "clc_painel_fotovoltaico_topo": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_topo"
+    },
+    "clc_painel_fotovoltaico_baixo": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_baixo"
+    },
+    "clc_painel_fotovoltaico_avancado_frente": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_avancado_frente"
+    },
+    "clc_painel_fotovoltaico_avancado_lado": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_avancado_lado"
+    },
+    "clc_painel_fotovoltaico_avancado_topo": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_avancado_topo"
+    },
+    "clc_painel_fotovoltaico_avancado_baixo": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_avancado_baixo"
+    },
+    "clc_painel_fotovoltaico_vibrante_frente": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_vibrante_frente"
+    },
+    "clc_painel_fotovoltaico_vibrante_lado": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_vibrante_lado"
+    },
+    "clc_painel_fotovoltaico_vibrante_topo": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_vibrante_topo"
+    },
+    "clc_painel_fotovoltaico_vibrante_baixo": {
+      "textures": "textures/blocks/cl/c/painel_fotovoltaico_vibrante_baixo"
+    },
+    "clc_banco_capacitores_basico_frente": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_basico_frente"
+    },
+    "clc_banco_capacitores_basico_lado": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_basico_lado"
+    },
+    "clc_banco_capacitores_basico_topo": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_basico_topo"
+    },
+    "clc_banco_capacitores_basico_baixo": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_basico_baixo"
+    },
+    "clc_banco_capacitores_frente": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_frente"
+    },
+    "clc_banco_capacitores_lado": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_lado"
+    },
+    "clc_banco_capacitores_topo": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_topo"
+    },
+    "clc_banco_capacitores_baixo": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_baixo"
+    },
+    "clc_banco_capacitores_vibrante_frente": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_vibrante_frente"
+    },
+    "clc_banco_capacitores_vibrante_lado": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_vibrante_lado"
+    },
+    "clc_banco_capacitores_vibrante_topo": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_vibrante_topo"
+    },
+    "clc_banco_capacitores_vibrante_baixo": {
+      "textures": "textures/blocks/cl/c/banco_capacitores_vibrante_baixo"
+    },
+    "clc_ancora_viagem_frente": {
+      "textures": "textures/blocks/cl/c/ancora_viagem_frente"
+    },
+    "clc_ancora_viagem_lado": {
+      "textures": "textures/blocks/cl/c/ancora_viagem_lado"
+    },
+    "clc_ancora_viagem_topo": {
+      "textures": "textures/blocks/cl/c/ancora_viagem_topo"
+    },
+    "clc_ancora_viagem_baixo": {
+      "textures": "textures/blocks/cl/c/ancora_viagem_baixo"
     }
   }
 }

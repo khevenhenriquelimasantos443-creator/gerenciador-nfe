@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_capacitor_octadico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " V ",
+      "CGC",
+      " V "
+    ],
+    "key": {
+      "V": {
+        "item": "cl:liga_vibrante"
+      },
+      "C": {
+        "item": "cl:capacitor_duplo"
+      },
+      "G": {
+        "item": "minecraft:glowstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:capacitor_octadico"
+    }
+  }
+}

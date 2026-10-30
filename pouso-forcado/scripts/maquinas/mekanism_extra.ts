@@ -45,7 +45,7 @@ export const triturador = maquina((b) => {
 }, "cl.mk.triturador");
 
 // ---------- Geradores ----------
-function produzir(b: Block, porCiclo: number): number {
+export function produzir(b: Block, porCiclo: number): number {
   if (porCiclo <= 0) return 0;
   const total = ler<number>("resto", b, 0) + porCiclo;
   const inteiro = Math.floor(total);
@@ -56,7 +56,8 @@ function produzir(b: Block, porCiclo: number): number {
 }
 const ultimo = new Map<string, number>(); // E/ciclo do último tick, para o toque e o WAILA
 const chave = (b: Block) => `${b.dimension.id}|${b.x},${b.y},${b.z}`;
-function gerador(calcular: (b: Block) => number, dica: string, comFumaca = false) {
+/** Componente de gerador: calcular() dá os E deste ciclo; nominal() (painéis) entra no toque como "rende X". */
+export function gerador(calcular: (b: Block) => number, dica: string, comFumaca = false, nominal?: (b: Block) => number) {
   return {
     onTick(e: { block: Block }) {
       const n = calcular(e.block);
@@ -64,25 +65,25 @@ function gerador(calcular: (b: Block) => number, dica: string, comFumaca = false
       if (produzir(e.block, n) > 0 && comFumaca) e.block.dimension.spawnParticle("cl:fumaca", { x: e.block.x + 0.5, y: e.block.y + 1.3, z: e.block.z + 0.5 });
     },
     onPlayerInteract(e: { player?: Player; block: Block }) {
-      if (e.player) estadoGerador(e.player, e.block, dica);
+      if (e.player) estadoGerador(e.player, e.block, dica, nominal);
     },
   };
 }
-function agora(b: Block): string {
+export function agora(b: Block): string {
   const n = ultimo.get(chave(b)) ?? 0;
   return n > 0 ? rfPorTick(n) : "—";
 }
-function estadoGerador(j: Player, b: Block, dica: string): void {
+function estadoGerador(j: Player, b: Block, dica: string, nominal?: (b: Block) => number): void {
   const valor: RawMessage = (ultimo.get(chave(b)) ?? 0) > 0 ? { text: agora(b) } : { translate: "cl.mk.parado" };
-  const extra = dica === "cl.mk.gerador_solar" ? [{ text: rfPorTick(b.typeId === "cl:gerador_solar_avancado" ? 3 : 0.5) }] : [];
+  const extra = nominal ? [{ text: rfPorTick(nominal(b)) }] : [];
   j.sendMessage({ translate: dica, with: { rawtext: [...extra, valor] } });
 }
 
-function solAlto(): boolean {
+export function solAlto(): boolean {
   const t = world.getTimeOfDay();
   return t > 500 && t < 11500;
 }
-function ceuAberto(b: Block): boolean {
+export function ceuAberto(b: Block): boolean {
   const topo = b.dimension.getTopmostBlock({ x: b.x, z: b.z });
   return !topo || topo.y <= b.y;
 }
@@ -111,8 +112,8 @@ export const geradorCalor = gerador((b) => {
   return jt * POR_J;
 }, "cl.mk.gerador_calor", true);
 
-export const geradorSolar = gerador((b) => (solAlto() && ceuAberto(b) ? 50 * POR_J : 0), "cl.mk.gerador_solar");
-export const geradorSolarAvancado = gerador((b) => (solAlto() && ceuAberto(b) ? 300 * POR_J : 0), "cl.mk.gerador_solar");
+export const geradorSolar = gerador((b) => (solAlto() && ceuAberto(b) ? 50 * POR_J : 0), "cl.mk.gerador_solar", false, () => 50 * POR_J);
+export const geradorSolarAvancado = gerador((b) => (solAlto() && ceuAberto(b) ? 300 * POR_J : 0), "cl.mk.gerador_solar", false, () => 300 * POR_J);
 
 export const geradorBio = gerador((b) => {
   // Um biocombustível dura 200 ticks = 2 ciclos de 350 J/t.
