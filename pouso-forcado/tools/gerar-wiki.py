@@ -1,8 +1,9 @@
 # Monta a wiki do modpack a partir de docs/wiki/wiki.fonte.html, em duas saídas:
 # - docs/wiki/wiki.html: a página publicada como Artifact (sem <html>/<head>, que o Artifact põe); os botões de
 #   download apontam para os arquivos no GitHub;
-# - docs/wiki/site/index.html: o site da Vercel (documento completo); os botões apontam para os arquivos ao
-#   lado dele, que o build da Vercel copia de dist/ (ver "Wiki" no README).
+# - docs/wiki/site/index.html: o site da Vercel (documento completo e leve): as imagens e os downloads vêm
+#   direto deste repositório no GitHub (que é público); as fotos do jogo ficam em docs/wiki/site/img/.
+#   Na Vercel vão só ele e o vercel.json (endereços curtos /baixar e /mundo). Ver "Wiki" no README.
 # Trocas na fonte:
 # - "@icone/<caminho>" vira o PNG embutido de RP/textures/items/cl/<caminho>.png (ícones do próprio pack);
 # - "@img/<nome>" vira uma imagem do jogo embutida: o logo do menu (PNG), o fundo da troca de dimensão e as
@@ -18,6 +19,8 @@ FONTE = os.path.join(R, "docs/wiki/wiki.fonte.html")
 SAIDA = os.path.join(R, "docs/wiki/wiki.html")
 SITE = os.path.join(R, "docs/wiki/site/index.html")
 GITHUB = "https://github.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/raw/claude/dazzling-bell-twympv/pouso-forcado/dist/"
+RAW = "https://raw.githubusercontent.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/claude/dazzling-bell-twympv/pouso-forcado/"
+IMG_SITE = os.path.join(R, "docs/wiki/site/img")
 ARQUIVOS = {"mcaddon": "pouso-forcado.mcaddon", "mcworld": "pouso-forcado.mcworld"}
 PANORAMA = os.path.join(R, "RP_menu/textures/ui")
 
@@ -61,14 +64,29 @@ def tamanho(chave):
     return f"{mb:.1f} MB".replace(".", ",")
 
 
-def montar(base_download):
+def endereco(tipo, nome):
+    """No site, a imagem vem do GitHub: os ícones e o logo estão no pack; as fotos são salvas em JPEG aqui."""
+    if tipo == "icone":
+        return RAW + f"RP/textures/items/cl/{nome}.png"
+    if nome == "logo":
+        return RAW + "RP_menu/textures/ui/title.png"
+    os.makedirs(IMG_SITE, exist_ok=True)
+    dados = base64.b64decode(foto(nome).split(",", 1)[1])
+    open(os.path.join(IMG_SITE, f"{nome}.jpg"), "wb").write(dados)
+    return RAW + f"docs/wiki/site/img/{nome}.jpg"
+
+
+def montar(base_download, embutir=True):
     texto = open(FONTE, encoding="utf-8").read()
     cache = {}
 
     def troca(m):
         chave = m.group(0)
         if chave not in cache:
-            cache[chave] = icone(m.group(2)) if m.group(1) == "icone" else foto(m.group(2))
+            if not embutir:
+                cache[chave] = endereco(m.group(1), m.group(2))
+            else:
+                cache[chave] = icone(m.group(2)) if m.group(1) == "icone" else foto(m.group(2))
         return cache[chave]
 
     texto = re.sub(r"@(icone|img)/([a-z0-9_/]+)", troca, texto)
@@ -81,9 +99,9 @@ def main():
     texto, n = montar(GITHUB)
     open(SAIDA, "w", encoding="utf-8").write(texto)
     # O site: o mesmo conteúdo num documento completo (o cabeçalho é tudo até o fim do <style>).
-    texto, _ = montar("")
+    texto, _ = montar(GITHUB, embutir=False)
     corte = texto.index("</style>") + len("</style>")
-    favicon = icone("arte/diario_bordo")
+    favicon = RAW + "RP/textures/items/cl/arte/diario_bordo.png"
     site = (
         '<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
@@ -93,6 +111,9 @@ def main():
         "body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n"
         + texto[:corte] + "\n</head>\n<body>\n" + texto[corte:] + "\n</body>\n</html>\n"
     )
+    # Enxuto (sem comentários nem recuo): o arquivo vai inteiro no pedido de publicação da Vercel.
+    site = re.sub(r"<!--.*?-->", "", site, flags=re.S)
+    site = "\n".join(l.strip() for l in site.splitlines() if l.strip()) + "\n"
     os.makedirs(os.path.dirname(SITE), exist_ok=True)
     open(SITE, "w", encoding="utf-8").write(site)
     print(f"wiki: {n} imagens; {os.path.getsize(SAIDA) // 1024} KB em docs/wiki/wiki.html e site em docs/wiki/site/index.html")
