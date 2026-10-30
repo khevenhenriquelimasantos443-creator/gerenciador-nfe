@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_forno_costeleta_carneiro_cozida"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:costeleta_carneiro",
+    "output": "cl:costeleta_carneiro_cozida"
+  }
+}

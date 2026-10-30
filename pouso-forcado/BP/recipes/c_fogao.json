@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_fogao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "iii",
+      "B B",
+      "BCB"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:brick_block"
+      },
+      "C": {
+        "item": "minecraft:campfire"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fogao"
+    }
+  }
+}

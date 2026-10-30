@@ -48,6 +48,8 @@ const MEIO = [
   ["O foguete pousa na Lua, mas só decola de uma plataforma 3×3: leve 9 plataformas, um carregador de combustível e energia.", "The rocket lands on the Moon, but only lifts off from a 3×3 pad: bring 9 pads, a fuel loader and power."],
   ["O paxel do Mekanism é picareta, machado e pá numa ferramenta só.", "The Mekanism paxel is a pickaxe, an axe and a shovel in one tool."],
   ["A Turbina Eólica do Mekanism rende mais quanto mais alto estiver.", "The Mekanism Wind Generator makes more power the higher it is."],
+  ["Panela de Cozinha em cima de fogo ou de um Fogão: toque com os ingredientes e, quando ficar pronta, sirva com uma tigela.", "Cooking Pot on top of fire or a Stove: tap with the ingredients and, when it is done, serve with a bowl."],
+  ["Toque numa plantação madura para colher: ela replanta sozinha (Quark).", "Tap a ripe crop to harvest it: it replants itself (Quark)."],
   ["Conduto de Itens: toque nele para o miolo ficar laranja e ele tirar itens do baú encostado e levar aos outros baús da rede.", "Item Conduit: tap it so the core turns orange and it pulls items from the touching chest to the other chests on the network."],
   ["Um balão do Mekanism usado no ar te deixa cair devagar por um minuto.", "A Mekanism balloon used in the air makes you fall slowly for a minute."],
   ["Ponha uma Pedra do Caminho em cada base: tocando numa você vai para qualquer outra que já ativou.", "Put a Waystone at each base: tapping one takes you to any other you have activated."],

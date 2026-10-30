@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.11.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators, Tools e Additions), Ender IO, Create, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.12.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators, Tools e Additions), Ender IO, Create, Farmer's Delight, Quark, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,13 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.12.0 (Farmer's Delight e Quark)
+
+- **Farmer's Delight** (números de FoodValues.java e receitas do código público, arte original): **facas** (sílex, ferro, ouro e diamante), **Tábua de Cortar** (ponha o ingrediente e toque com a faca: repolho em folhas, carne em carne moída, frango em pedaços, porco em bacon, peixe em fatias, abóbora em fatias, massa em macarrão, trigo em palha), **Panela de Cozinha** (em cima de fogo, fogueira, lava, magma ou Fogão; toque com até 6 ingredientes; pratos de tigela se servem com uma tigela; agache de mão vazia para esvaziar), **Fogão** (aquece a panela e assa 6 comidas em cima), **repolho** (plantação nova), caixotes, palha, lona e corda, e ~45 comidas. Os pratos dão **Nutrição** (a fome não baixa) e as sopas e ensopados também **Conforto** (sem lentidão, fraqueza nem fome), com as durações do mod.
+- **Quark** (arte original): caixotes e sacos de armazenamento, blocos de carvão vegetal, cana, cacto e gravetos, **jaspe** e **xisto** (com polido, tijolos, entalhado e pilar), vidro emoldurado, placa de ferro, grade, palha trançada, lanterna de papel, lâmpada de pedra; o **Picarango** (arremessa, quebra o bloco que acerta e volta); **colheita com toque** (planta madura colhe e replanta), **portas duplas** e a **corda** (pule dentro para subir; toque uma corda com outra para estender para baixo).
+- Correção: o toque com Regador ou Varinha marcava o toque para os outros scripts.
+- Capítulos **Farmer's Delight** e **Quark** no Diário.
 
 ## Novidades da 1.11.0 (Mekanism Additions e condutos)
 

@@ -752,6 +752,46 @@ teste("additions", 200, (t) => {
   });
 });
 
+// 1.12.0: Panela (2 tomates no magma = molho), Tábua (repolho + faca), colheita com toque e Picarango.
+teste("farmers", 400, (t) => {
+  t.setBlockType("minecraft:magma", { x: 2, y: 1, z: 2 });
+  t.setBlockType("cl:panela_cozinha", { x: 2, y: 2, z: 2 });
+  t.setBlockType("cl:tabua_cortar", { x: 5, y: 2, z: 2 });
+  t.setBlockType("minecraft:farmland", { x: 2, y: 1, z: 5 });
+  t.setBlockPermutation(BlockPermutation.resolve("minecraft:wheat", { growth: 7 }), { x: 2, y: 2, z: 5 });
+  t.setBlockType("minecraft:cobblestone", { x: 6, y: 3, z: 6 });
+  const j = robo(t, { x: 3, y: 2, z: 3 });
+  const usar = (item, n, pos, face) => {
+    j.setItem(new ItemStack(item, n), 0, true);
+    j.interactWithBlock(pos, face);
+  };
+  t.runAfterDelay(10, () => usar("cl:tomate", 1, { x: 2, y: 2, z: 2 }, Direction.Up));
+  t.runAfterDelay(20, () => usar("cl:tomate", 1, { x: 2, y: 2, z: 2 }, Direction.Up));
+  t.runAfterDelay(30, () => usar("cl:repolho", 1, { x: 5, y: 2, z: 2 }, Direction.Up));
+  t.runAfterDelay(40, () => usar("cl:faca_ferro", 1, { x: 5, y: 2, z: 2 }, Direction.Up));
+  t.runAfterDelay(50, () => {
+    j.setItem(new ItemStack("minecraft:wheat_seeds", 1), 0, true);
+    j.lookAtBlock({ x: 2, y: 2, z: 5 });
+    j.useItemInSlotOnBlock(0, { x: 2, y: 2, z: 5 }, Direction.Up);
+  });
+  t.runAfterDelay(70, () => {
+    j.setItem(new ItemStack("cl:picarango", 1), 1, true);
+    j.lookAtBlock({ x: 6, y: 3, z: 6 });
+  });
+  t.runAfterDelay(75, () => j.useItemInSlot(1));
+  t.runAfterDelay(200, () => usar("minecraft:bowl", 1, { x: 2, y: 2, z: 2 }, Direction.Up));
+  t.runAfterDelay(240, () => {
+    const folhas = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 5.5, y: 2.5, z: 2.5 }), maxDistance: 3 }).filter((e) => e.getComponent("item").itemStack.typeId === "cl:folha_repolho").length + quantos(j, "cl:folha_repolho");
+    const trigo = t.getBlock({ x: 2, y: 2, z: 5 });
+    log(`farmers: molho=${quantos(j, "cl:molho_tomate")} folhas=${folhas} trigo=${trigo.typeId} crescimento=${trigo.permutation.getState("growth")} pedra=${t.getBlock({ x: 6, y: 3, z: 6 }).typeId} picarango=${quantos(j, "cl:picarango")}`);
+    t.assert(quantos(j, "cl:molho_tomate") === 1, "a Panela não fez o molho de tomate");
+    t.assert(folhas >= 1, "a Tábua não cortou o repolho");
+    t.assert(trigo.typeId === "minecraft:wheat" && trigo.permutation.getState("growth") === 0, "a colheita com toque não replantou");
+    t.assert(t.getBlock({ x: 6, y: 3, z: 6 }).isAir && quantos(j, "cl:picarango") === 1, "o Picarango não quebrou o bloco ou não voltou");
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });

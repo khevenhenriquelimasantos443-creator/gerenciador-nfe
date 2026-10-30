@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:wrap_carneiro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_wrap_carneiro",
+      "minecraft:display_name": {
+        "value": "item.cl:wrap_carneiro.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 10,
+        "saturation_modifier": 0.8
+      }
+    }
+  }
+}

@@ -21,6 +21,8 @@ FONTES = {
     "enderio_maq": "enderio/enderio-machines/src/main/resources/assets/enderio/textures/",
     "enderio_cond": "enderio/enderio-conduits/src/main/resources/assets/enderio/textures/",
     "mekanism_additions": "mekanism10/src/additions/resources/assets/mekanismadditions/textures/",
+    "farmers": "farmersdelight/src/main/resources/assets/farmersdelight/textures/",
+    "quark": "quark/src/main/resources/assets/quark/textures/",
     "waystones": "waystones/src/main/resources/assets/waystones/textures/",
     "computercraft": "computercraft/src/main/resources/assets/computercraft/textures/",
     "tinkers": "tconstruct/resources/assets/tinker/textures/",
@@ -34,7 +36,7 @@ FONTES = {
     "enviromine": "enviromine/src/main/resources/assets/enviromine/textures/",
 }
 LICENCAS = {  # arquivo de licença de cada repositório (cópia em docs/licencas/)
-    "mekanism": "mekanism/README.md", "mekanism_additions": "mekanism10/LICENSE", "enderio": "enderio/LICENSE", "waystones": "waystones/LICENSE",
+    "mekanism": "mekanism/README.md", "mekanism_additions": "mekanism10/LICENSE", "farmers": "farmersdelight/LICENSE", "quark": "quark/LICENSE.md", "enderio": "enderio/LICENSE", "waystones": "waystones/LICENSE",
     "computercraft": "computercraft/LICENSE", "tinkers": "tconstruct/README.md", "ae2": "ae2/README.md",
     "pneumaticcraft": "pneumaticcraft/LICENSE", "bigreactors": "bigreactors/LICENSE.txt", "buildcraft": "buildcraft/LICENSE",
     "openblocks": "openblocks/LICENSE", "chisel": "chisel/LICENSE", "chickenchunks": "chickenchunks/LICENSE.txt",
@@ -100,6 +102,51 @@ for pre, arq in (("plastico", "plastic_block"), ("plastico_liso", "slick_plastic
         TINTA[f"{pre}_{c}"] = cor
 unica("enderio_cond", "blocks/", "conduto_energia", "power_conduit")
 unica("enderio_cond", "blocks/", "conduto_item", "item_conduit_core")
+
+# ---------- Farmer's Delight (1.20) ----------
+itens("farmers", "item/", {
+    **{f"faca_{m}": f"{en}_knife" for m, en in (("silex", "flint"), ("ferro", "iron"), ("ouro", "golden"), ("diamante", "diamond"))},
+    "palha": "straw", "lona": "canvas", "repolho": "cabbage", "semente_repolho": "cabbage_seeds", "folha_repolho": "cabbage_leaf",
+    "carne_moida": "minced_beef", "hamburguer_carne": "beef_patty", "pedacos_frango": "chicken_cuts", "pedacos_frango_cozidos": "cooked_chicken_cuts",
+    "bacon": "bacon", "bacon_cozido": "cooked_bacon", "fatia_bacalhau": "cod_slice", "fatia_bacalhau_cozida": "cooked_cod_slice",
+    "fatia_salmao": "salmon_slice", "fatia_salmao_cozida": "cooked_salmon_slice", "costeleta_carneiro": "mutton_chops",
+    "costeleta_carneiro_cozida": "cooked_mutton_chops", "fatia_abobora": "pumpkin_slice", "macarrao_cru": "raw_pasta", "molho_tomate": "tomato_sauce",
+    "arroz_cozido": "cooked_rice", "caldo_osso": "bone_broth", "ensopado_carne": "beef_stew", "sopa_frango": "chicken_soup", "ensopado_peixe": "fish_stew",
+    "sopa_cebola": "onion_soup", "sopa_abobora": "pumpkin_soup", "ensopado_bacalhau": "baked_cod_stew", "sopa_macarrao": "noodle_soup",
+    "macarrao_almondegas": "pasta_with_meatballs", "macarrao_carneiro": "pasta_with_mutton_chop", "ratatouille": "ratatouille",
+    "arroz_cogumelos": "mushroom_rice", "macarrao_tinta_lula": "squid_ink_pasta", "macarrao_legumes": "vegetable_noodles", "rolinhos_repolho": "cabbage_rolls",
+    "bolinhos": "dumplings", "salada_mista": "mixed_salad", "salada_frutas": "fruit_salad", "espetinho": "barbecue_stick", "sanduiche_ovo": "egg_sandwich",
+    "sanduiche_frango": "chicken_sandwich", "sanduiche_bacon": "bacon_sandwich", "wrap_carneiro": "mutton_wrap", "bife_batatas": "steak_and_potatoes",
+    "bacon_ovos": "bacon_and_eggs", "batata_recheada": "stuffed_potato", "salmao_grelhado": "grilled_salmon", "costeletas_assadas": "roasted_mutton_chops",
+})
+faces("farmers", "block/", "panela_cozinha", "cooking_pot_side", "cooking_pot_side", "cooking_pot_top", "cooking_pot_bottom")
+faces("farmers", "block/", "fogao", "stove_front", "stove_side", "stove_top", "stove_bottom")
+faces("farmers", "block/", "tabua_cortar", "cutting_board")
+unica("farmers", "block/", "corda", "rope")
+for i, a in (("caixote_repolho", "cabbage_crate"), ("caixote_tomate", "tomato_crate"), ("caixote_cebola", "onion_crate"), ("caixote_cenoura", "carrot_crate"),
+             ("caixote_batata", "potato_crate"), ("caixote_beterraba", "beetroot_crate")):
+    faces("farmers", "block/", i, f"{a}_side", f"{a}_side", f"{a}_top", "crate_bottom")
+faces("farmers", "block/", "saco_arroz", "rice_bag_side", "rice_bag_side", "rice_bag_top", "rice_bag_bottom")
+faces("farmers", "block/", "fardo_palha", "straw_bale_side", "straw_bale_side", "straw_bale_end")
+
+# ---------- Quark ----------
+itens("quark", "item/", {"picarango": "pickarang"})
+Q = "block/"
+for i, a in (("caixote_maca", "apple_crate"), ("saco_bagas", "berry_sack"), ("saco_polvora", "gunpowder_sack"), ("saco_cacau", "cocoa_beans_sack")):
+    faces("quark", Q, i, a, a, f"{a}_top", f"{a}_bottom")
+for i, a in (("bloco_cana", "sugar_cane_block"), ("bloco_cacto", "cactus_block"), ("bloco_gravetos", "stick_block")):
+    faces("quark", Q, i, a, a, f"{a}_top")
+unica("quark", Q, "bloco_carvao_vegetal", "charcoal_block")
+for p, en in (("jaspe", "jasper"), ("xisto", "shale")):
+    unica("quark", Q, p, en)
+    unica("quark", Q, f"{p}_polido", f"polished_{en}")
+    unica("quark", Q, f"{p}_tijolos", f"{en}_bricks")
+    unica("quark", Q, f"{p}_entalhado", f"chiseled_{en}_bricks")
+    faces("quark", Q, f"{p}_pilar", f"{en}_pillar", f"{en}_pillar", f"{en}_pillar_top")
+for i, a in (("vidro_emoldurado", "framed_glass"), ("bloco_placa_ferro", "iron_plate"), ("bloco_placa_ferro_enferrujada", "rusty_iron_plate"), ("grade", "grate"),
+             ("palha_trancada", "thatch"), ("lampada_pedra", "stone_lamp")):
+    unica("quark", Q, i, a)
+faces("quark", Q, "lanterna_papel", "paper_lantern_side", "paper_lantern_side", "paper_lantern_top_bottom")
 
 # ---------- Ender IO 5.2 ----------
 itens("enderio", "items/", {
@@ -310,6 +357,10 @@ for m, (fonte, padrao) in ARMADURAS.items():
             faltou.append(f"armadura {m}_{n}: {e}")
         else:
             usados.setdefault(fonte, []).append(f"armadura {m}_{n}")
+
+# Plantação de repolho (HarvestCraft no pack, Farmer's Delight na arte): 3 estágios do mod (1, 4 e 7).
+for k, est in enumerate((1, 4, 7)):
+    salvar(abrir("farmers", f"block/cabbages_stage{est}.png"), f"RP/textures/blocks/cl/arte/planta_repolho_{k}.png")
 
 os.makedirs(os.path.join(R, "docs/licencas"), exist_ok=True)
 for fonte, arq in LICENCAS.items():

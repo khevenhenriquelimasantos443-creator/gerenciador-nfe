@@ -1,0 +1,28 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "cl:picarango_voando",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/items/cl/arte/picarango"
+      },
+      "geometry": {
+        "default": "geometry.cl.picarango"
+      },
+      "animations": {
+        "girar": "animation.cl.picarango.girar"
+      },
+      "scripts": {
+        "animate": [
+          "girar"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ]
+    }
+  }
+}

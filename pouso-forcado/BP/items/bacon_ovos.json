@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:bacon_ovos",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_bacon_ovos",
+      "minecraft:display_name": {
+        "value": "item.cl:bacon_ovos.name"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 10,
+        "saturation_modifier": 0.6,
+        "using_converts_to": "minecraft:bowl"
+      }
+    }
+  }
+}

@@ -1,62 +1,633 @@
 {
   "_comentario": "Fase 14: Pam's HarvestCraft. Fonte única para tools/gerar-harvestcraft.mjs (itens, blocos, receitas, ícones, textos e scripts/harvest/gerado.ts). fome = valor do Hunger Overhaul para comida de mod: max(arredondar(fome da 1.12 / 4), 1); saturação 0,1 (o HO dava 0; ver docs/pesquisa-mods.md). agua = hidratação (EnviroMine); temp = °C.",
   "culturas": [
-    { "id": "milho", "pt": "Milho", "en": "Corn", "forma": "milho", "cor": "#f2c94c" },
-    { "id": "tomate", "pt": "Tomate", "en": "Tomato", "forma": "redondo", "cor": "#e0402f" },
-    { "id": "cebola", "pt": "Cebola", "en": "Onion", "forma": "cebola", "cor": "#c98a5a" },
-    { "id": "alho", "pt": "Alho", "en": "Garlic", "forma": "cebola", "cor": "#efe8da" },
-    { "id": "feijao", "pt": "Feijão", "en": "Beans", "forma": "graos", "cor": "#7a3b2e" },
-    { "id": "pimenta", "pt": "Pimenta", "en": "Chili Pepper", "forma": "pimenta", "cor": "#d62d20" },
-    { "id": "pimentao", "pt": "Pimentão", "en": "Bell Pepper", "forma": "pimentao", "cor": "#3fa34d" },
-    { "id": "arroz", "pt": "Arroz", "en": "Rice", "forma": "graos", "cor": "#f4f1e6" },
-    { "id": "amendoim", "pt": "Amendoim", "en": "Peanut", "forma": "amendoim", "cor": "#c99a5e" },
-    { "id": "fruta_cacto", "pt": "Fruta do Cacto", "en": "Cactus Fruit", "produto": "cl:fruta_cacto", "deserto": true, "cor": "#c2185b" }
+    {
+      "id": "milho",
+      "pt": "Milho",
+      "en": "Corn",
+      "forma": "milho",
+      "cor": "#f2c94c"
+    },
+    {
+      "id": "tomate",
+      "pt": "Tomate",
+      "en": "Tomato",
+      "forma": "redondo",
+      "cor": "#e0402f"
+    },
+    {
+      "id": "cebola",
+      "pt": "Cebola",
+      "en": "Onion",
+      "forma": "cebola",
+      "cor": "#c98a5a"
+    },
+    {
+      "id": "alho",
+      "pt": "Alho",
+      "en": "Garlic",
+      "forma": "cebola",
+      "cor": "#efe8da"
+    },
+    {
+      "id": "feijao",
+      "pt": "Feijão",
+      "en": "Beans",
+      "forma": "graos",
+      "cor": "#7a3b2e"
+    },
+    {
+      "id": "pimenta",
+      "pt": "Pimenta",
+      "en": "Chili Pepper",
+      "forma": "pimenta",
+      "cor": "#d62d20"
+    },
+    {
+      "id": "pimentao",
+      "pt": "Pimentão",
+      "en": "Bell Pepper",
+      "forma": "pimentao",
+      "cor": "#3fa34d"
+    },
+    {
+      "id": "arroz",
+      "pt": "Arroz",
+      "en": "Rice",
+      "forma": "graos",
+      "cor": "#f4f1e6"
+    },
+    {
+      "id": "amendoim",
+      "pt": "Amendoim",
+      "en": "Peanut",
+      "forma": "amendoim",
+      "cor": "#c99a5e"
+    },
+    {
+      "id": "fruta_cacto",
+      "pt": "Fruta do Cacto",
+      "en": "Cactus Fruit",
+      "produto": "cl:fruta_cacto",
+      "deserto": true,
+      "cor": "#c2185b"
+    },
+    {
+      "id": "repolho",
+      "pt": "Repolho",
+      "en": "Cabbage",
+      "forma": "redondo",
+      "cor": "#7fbf4a"
+    }
   ],
   "utensilios": [
-    { "id": "tabua_corte", "pt": "Tábua de Corte", "en": "Cutting Board", "padrao": ["B  ", " S ", "  P"], "chave": { "B": "minecraft:brick", "S": "minecraft:stick", "P": "#minecraft:planks" } },
-    { "id": "panela", "pt": "Panela", "en": "Pot", "padrao": ["S  ", "BB ", "BB "], "chave": { "B": "minecraft:brick", "S": "minecraft:stick" } },
-    { "id": "frigideira", "pt": "Frigideira", "en": "Skillet", "padrao": ["B  ", " B ", "  S"], "chave": { "B": "minecraft:brick", "S": "minecraft:stick" } },
-    { "id": "cacarola", "pt": "Caçarola", "en": "Saucepan", "padrao": ["B", "S"], "chave": { "B": "minecraft:brick", "S": "minecraft:stick" } },
-    { "id": "assadeira", "pt": "Assadeira", "en": "Bakeware", "padrao": ["BBB", "B B", "BBB"], "chave": { "B": "minecraft:brick" } },
-    { "id": "pilao", "pt": "Pilão", "en": "Mortar and Pestle", "padrao": ["  S", "P P", " P "], "chave": { "S": "minecraft:stick", "P": "minecraft:stone" } },
-    { "id": "tigela_mistura", "pt": "Tigela de Mistura", "en": "Mixing Bowl", "padrao": ["S  ", "P P", " P "], "chave": { "S": "minecraft:stick", "P": "#minecraft:planks" } },
-    { "id": "espremedor", "pt": "Espremedor", "en": "Juicer", "padrao": ["L", "P"], "chave": { "L": "minecraft:stone_pressure_plate", "P": "minecraft:stone" } }
+    {
+      "id": "tabua_corte",
+      "pt": "Tábua de Corte",
+      "en": "Cutting Board",
+      "padrao": [
+        "B  ",
+        " S ",
+        "  P"
+      ],
+      "chave": {
+        "B": "minecraft:brick",
+        "S": "minecraft:stick",
+        "P": "#minecraft:planks"
+      }
+    },
+    {
+      "id": "panela",
+      "pt": "Panela",
+      "en": "Pot",
+      "padrao": [
+        "S  ",
+        "BB ",
+        "BB "
+      ],
+      "chave": {
+        "B": "minecraft:brick",
+        "S": "minecraft:stick"
+      }
+    },
+    {
+      "id": "frigideira",
+      "pt": "Frigideira",
+      "en": "Skillet",
+      "padrao": [
+        "B  ",
+        " B ",
+        "  S"
+      ],
+      "chave": {
+        "B": "minecraft:brick",
+        "S": "minecraft:stick"
+      }
+    },
+    {
+      "id": "cacarola",
+      "pt": "Caçarola",
+      "en": "Saucepan",
+      "padrao": [
+        "B",
+        "S"
+      ],
+      "chave": {
+        "B": "minecraft:brick",
+        "S": "minecraft:stick"
+      }
+    },
+    {
+      "id": "assadeira",
+      "pt": "Assadeira",
+      "en": "Bakeware",
+      "padrao": [
+        "BBB",
+        "B B",
+        "BBB"
+      ],
+      "chave": {
+        "B": "minecraft:brick"
+      }
+    },
+    {
+      "id": "pilao",
+      "pt": "Pilão",
+      "en": "Mortar and Pestle",
+      "padrao": [
+        "  S",
+        "P P",
+        " P "
+      ],
+      "chave": {
+        "S": "minecraft:stick",
+        "P": "minecraft:stone"
+      }
+    },
+    {
+      "id": "tigela_mistura",
+      "pt": "Tigela de Mistura",
+      "en": "Mixing Bowl",
+      "padrao": [
+        "S  ",
+        "P P",
+        " P "
+      ],
+      "chave": {
+        "S": "minecraft:stick",
+        "P": "#minecraft:planks"
+      }
+    },
+    {
+      "id": "espremedor",
+      "pt": "Espremedor",
+      "en": "Juicer",
+      "padrao": [
+        "L",
+        "P"
+      ],
+      "chave": {
+        "L": "minecraft:stone_pressure_plate",
+        "P": "minecraft:stone"
+      }
+    }
   ],
   "comidas": [
-    { "id": "sal", "pt": "Sal", "en": "Salt", "icone": "po:#ffffff", "em": "panela", "ingredientes": ["cl:agua_impropria"] },
-    { "id": "farinha", "pt": "Farinha", "en": "Flour", "icone": "po:#f3ead6", "em": "pilao", "ingredientes": ["minecraft:wheat"] },
-    { "id": "farinha_arroz", "pt": "Farinha", "en": "Flour", "mesmo": "farinha", "em": "pilao", "ingredientes": ["cl:arroz"] },
-    { "id": "fuba", "pt": "Fubá", "en": "Cornmeal", "icone": "po:#f2c94c", "em": "pilao", "ingredientes": ["cl:milho"] },
-    { "id": "massa", "pt": "Massa", "en": "Dough", "icone": "bola:#f3e2b8", "em": "tigela_mistura", "ingredientes": ["cl:agua_boa", "cl:farinha", "cl:sal"] },
-    { "id": "massa_liquida", "pt": "Massa Líquida", "en": "Batter", "icone": "tigela:#f5e3a8", "em": "tigela_mistura", "ingredientes": ["cl:farinha", "minecraft:egg"] },
-    { "id": "manteiga", "pt": "Manteiga", "en": "Butter", "icone": "bloco:#f7e27a", "em": "cacarola", "ingredientes": ["minecraft:milk_bucket", "cl:sal"] },
-    { "id": "queijo", "pt": "Queijo", "en": "Cheese", "icone": "queijo:#f4c542", "em": "panela", "ingredientes": ["minecraft:milk_bucket", "cl:sal"], "fome": 1 },
-    { "id": "maionese", "pt": "Maionese", "en": "Mayonnaise", "icone": "pote:#fbf3d0", "em": "espremedor", "ingredientes": ["minecraft:egg"] },
-    { "id": "caldo", "pt": "Caldo", "en": "Stock", "icone": "tigela:#c9a46b", "em": "panela", "ingredientes": ["minecraft:bone", "cl:agua_boa"], "qtd": 2, "fome": 1, "agua": 5 },
-    { "id": "ovo_frito", "pt": "Ovo Frito", "en": "Fried Egg", "icone": "ovo", "em": "frigideira", "ingredientes": ["minecraft:egg"], "fome": 1 },
-    { "id": "ovo_cozido", "pt": "Ovo Cozido", "en": "Boiled Egg", "icone": "bola:#f6f1e4", "em": "panela", "ingredientes": ["minecraft:egg", "cl:agua_boa"], "fome": 1 },
-    { "id": "torrada", "pt": "Torrada", "en": "Toast", "icone": "pao:#d39a4a", "em": "assadeira", "ingredientes": ["minecraft:bread", "cl:manteiga"], "fome": 1 },
-    { "id": "pao_massa", "pt": "Pão", "en": "Bread", "resultado": "minecraft:bread", "em": "assadeira", "ingredientes": ["cl:massa"] },
-    { "id": "hamburguer", "pt": "Hambúrguer", "en": "Hamburger", "icone": "sanduiche:#7a4a2a", "em": "frigideira", "ingredientes": ["minecraft:beef", "cl:torrada"], "fome": 2, "temp": 0.05 },
-    { "id": "tortilha", "pt": "Tortilha", "en": "Tortilla", "icone": "disco:#e8c983", "em": "frigideira", "ingredientes": ["cl:fuba", "cl:agua_boa"], "fome": 1 },
-    { "id": "taco", "pt": "Taco", "en": "Taco", "icone": "sanduiche:#e0402f", "em": "tabua_corte", "ingredientes": ["minecraft:cooked_beef", "cl:tomate", "cl:queijo", "cl:tortilha"], "fome": 2 },
-    { "id": "burrito", "pt": "Burrito de Feijão", "en": "Bean Burrito", "icone": "sanduiche:#7a3b2e", "em": "frigideira", "ingredientes": ["cl:feijao", "cl:tortilha", "cl:arroz", "cl:queijo"], "fome": 2, "temp": 0.05 },
-    { "id": "feijao_assado", "pt": "Feijão Assado", "en": "Baked Beans", "icone": "tigela:#8a3b23", "em": "panela", "ingredientes": ["cl:feijao", "minecraft:cooked_porkchop", "minecraft:sugar"], "fome": 1, "temp": 0.05 },
-    { "id": "arroz_frito", "pt": "Arroz Frito", "en": "Fried Rice", "icone": "tigela:#efe0a6", "em": "frigideira", "ingredientes": ["cl:arroz", "minecraft:carrot", "minecraft:egg", "cl:cebola"], "fome": 1, "temp": 0.05 },
-    { "id": "sopa_legumes", "pt": "Sopa de Legumes", "en": "Vegetable Soup", "icone": "tigela:#c97a3a", "em": "panela", "ingredientes": ["minecraft:potato", "minecraft:carrot", "minecraft:brown_mushroom", "cl:caldo"], "fome": 1, "agua": 5, "temp": 0.05 },
-    { "id": "suco_cacto", "pt": "Suco de Fruta do Cacto", "en": "Cactus Fruit Juice", "icone": "copo:#e0457b", "em": "espremedor", "ingredientes": ["cl:fruta_cacto", "cl:fruta_cacto"], "fome": 1, "bebida": true, "agua": 10, "temp": -0.05 },
-    { "id": "sopa_cacto", "pt": "Sopa de Cacto", "en": "Cactus Soup", "icone": "tigela:#5a9a3a", "em": "panela", "ingredientes": ["minecraft:cactus", "cl:caldo"], "fome": 1, "agua": 5, "temp": 0.05 },
-    { "id": "sopa_tomate", "pt": "Sopa de Tomate", "en": "Tomato Soup", "icone": "tigela:#d0392b", "em": "panela", "ingredientes": ["cl:tomate", "cl:caldo"], "fome": 1, "agua": 5, "temp": 0.05 },
-    { "id": "sopa_arroz", "pt": "Sopa de Arroz", "en": "Rice Soup", "icone": "tigela:#efe8d2", "em": "panela", "ingredientes": ["cl:arroz", "cl:caldo"], "fome": 1, "agua": 5, "temp": 0.05 },
-    { "id": "charque", "pt": "Charque", "en": "Beef Jerky", "icone": "tira:#8b3a2a", "em": "", "ingredientes": ["minecraft:beef", "cl:sal"], "fome": 1 },
-    { "id": "pipoca", "pt": "Pipoca", "en": "Popcorn", "icone": "pipoca", "em": "assadeira", "ingredientes": ["cl:milho"], "fome": 1 },
-    { "id": "milho_espiga", "pt": "Milho na Espiga", "en": "Corn on the Cob", "icone": "espiga", "em": "", "ingredientes": ["cl:milho", "cl:manteiga"], "fome": 1 },
-    { "id": "pimentao_recheado", "pt": "Pimentão Recheado", "en": "Stuffed Pepper", "icone": "prato:#3fa34d", "em": "assadeira", "ingredientes": ["cl:pimentao", "cl:tomate", "cl:arroz"], "fome": 1 },
-    { "id": "chili_poppers", "pt": "Pimentas Empanadas", "en": "Chili Poppers", "icone": "prato:#e0682f", "em": "assadeira", "ingredientes": ["cl:pimenta", "cl:massa_liquida", "cl:queijo"], "fome": 2, "temp": 0.05 },
-    { "id": "omelete", "pt": "Omelete", "en": "Omelet", "icone": "disco:#f7d55c", "em": "frigideira", "ingredientes": ["minecraft:egg", "cl:pimentao", "cl:cebola"], "fome": 1 },
-    { "id": "bolinho_arroz", "pt": "Bolinho de Arroz", "en": "Rice Cake", "icone": "bola:#f4f0e2", "em": "assadeira", "ingredientes": ["cl:arroz"], "fome": 1 },
-    { "id": "pemmican", "pt": "Pemmican", "en": "Pemmican", "icone": "tira:#6b3f25", "em": "panela", "ingredientes": ["cl:amendoim", "cl:fruta_cacto", "minecraft:cooked_beef", "minecraft:honey_bottle"], "fome": 2 },
-    { "id": "panquecas", "pt": "Panquecas", "en": "Pancakes", "icone": "pilha:#e0b26a", "em": "frigideira", "ingredientes": ["cl:massa_liquida", "minecraft:milk_bucket"], "fome": 1 },
-    { "id": "broa_milho", "pt": "Broa de Milho", "en": "Cornbread", "icone": "pao:#e9b949", "em": "frigideira", "ingredientes": ["cl:fuba", "minecraft:egg", "minecraft:milk_bucket"], "fome": 1 }
+    {
+      "id": "sal",
+      "pt": "Sal",
+      "en": "Salt",
+      "icone": "po:#ffffff",
+      "em": "panela",
+      "ingredientes": [
+        "cl:agua_impropria"
+      ]
+    },
+    {
+      "id": "farinha",
+      "pt": "Farinha",
+      "en": "Flour",
+      "icone": "po:#f3ead6",
+      "em": "pilao",
+      "ingredientes": [
+        "minecraft:wheat"
+      ]
+    },
+    {
+      "id": "farinha_arroz",
+      "pt": "Farinha",
+      "en": "Flour",
+      "mesmo": "farinha",
+      "em": "pilao",
+      "ingredientes": [
+        "cl:arroz"
+      ]
+    },
+    {
+      "id": "fuba",
+      "pt": "Fubá",
+      "en": "Cornmeal",
+      "icone": "po:#f2c94c",
+      "em": "pilao",
+      "ingredientes": [
+        "cl:milho"
+      ]
+    },
+    {
+      "id": "massa",
+      "pt": "Massa",
+      "en": "Dough",
+      "icone": "bola:#f3e2b8",
+      "em": "tigela_mistura",
+      "ingredientes": [
+        "cl:agua_boa",
+        "cl:farinha",
+        "cl:sal"
+      ]
+    },
+    {
+      "id": "massa_liquida",
+      "pt": "Massa Líquida",
+      "en": "Batter",
+      "icone": "tigela:#f5e3a8",
+      "em": "tigela_mistura",
+      "ingredientes": [
+        "cl:farinha",
+        "minecraft:egg"
+      ]
+    },
+    {
+      "id": "manteiga",
+      "pt": "Manteiga",
+      "en": "Butter",
+      "icone": "bloco:#f7e27a",
+      "em": "cacarola",
+      "ingredientes": [
+        "minecraft:milk_bucket",
+        "cl:sal"
+      ]
+    },
+    {
+      "id": "queijo",
+      "pt": "Queijo",
+      "en": "Cheese",
+      "icone": "queijo:#f4c542",
+      "em": "panela",
+      "ingredientes": [
+        "minecraft:milk_bucket",
+        "cl:sal"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "maionese",
+      "pt": "Maionese",
+      "en": "Mayonnaise",
+      "icone": "pote:#fbf3d0",
+      "em": "espremedor",
+      "ingredientes": [
+        "minecraft:egg"
+      ]
+    },
+    {
+      "id": "caldo",
+      "pt": "Caldo",
+      "en": "Stock",
+      "icone": "tigela:#c9a46b",
+      "em": "panela",
+      "ingredientes": [
+        "minecraft:bone",
+        "cl:agua_boa"
+      ],
+      "qtd": 2,
+      "fome": 1,
+      "agua": 5
+    },
+    {
+      "id": "ovo_frito",
+      "pt": "Ovo Frito",
+      "en": "Fried Egg",
+      "icone": "ovo",
+      "em": "frigideira",
+      "ingredientes": [
+        "minecraft:egg"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "ovo_cozido",
+      "pt": "Ovo Cozido",
+      "en": "Boiled Egg",
+      "icone": "bola:#f6f1e4",
+      "em": "panela",
+      "ingredientes": [
+        "minecraft:egg",
+        "cl:agua_boa"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "torrada",
+      "pt": "Torrada",
+      "en": "Toast",
+      "icone": "pao:#d39a4a",
+      "em": "assadeira",
+      "ingredientes": [
+        "minecraft:bread",
+        "cl:manteiga"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "pao_massa",
+      "pt": "Pão",
+      "en": "Bread",
+      "resultado": "minecraft:bread",
+      "em": "assadeira",
+      "ingredientes": [
+        "cl:massa"
+      ]
+    },
+    {
+      "id": "hamburguer",
+      "pt": "Hambúrguer",
+      "en": "Hamburger",
+      "icone": "sanduiche:#7a4a2a",
+      "em": "frigideira",
+      "ingredientes": [
+        "minecraft:beef",
+        "cl:torrada"
+      ],
+      "fome": 2,
+      "temp": 0.05
+    },
+    {
+      "id": "tortilha",
+      "pt": "Tortilha",
+      "en": "Tortilla",
+      "icone": "disco:#e8c983",
+      "em": "frigideira",
+      "ingredientes": [
+        "cl:fuba",
+        "cl:agua_boa"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "taco",
+      "pt": "Taco",
+      "en": "Taco",
+      "icone": "sanduiche:#e0402f",
+      "em": "tabua_corte",
+      "ingredientes": [
+        "minecraft:cooked_beef",
+        "cl:tomate",
+        "cl:queijo",
+        "cl:tortilha"
+      ],
+      "fome": 2
+    },
+    {
+      "id": "burrito",
+      "pt": "Burrito de Feijão",
+      "en": "Bean Burrito",
+      "icone": "sanduiche:#7a3b2e",
+      "em": "frigideira",
+      "ingredientes": [
+        "cl:feijao",
+        "cl:tortilha",
+        "cl:arroz",
+        "cl:queijo"
+      ],
+      "fome": 2,
+      "temp": 0.05
+    },
+    {
+      "id": "feijao_assado",
+      "pt": "Feijão Assado",
+      "en": "Baked Beans",
+      "icone": "tigela:#8a3b23",
+      "em": "panela",
+      "ingredientes": [
+        "cl:feijao",
+        "minecraft:cooked_porkchop",
+        "minecraft:sugar"
+      ],
+      "fome": 1,
+      "temp": 0.05
+    },
+    {
+      "id": "arroz_frito",
+      "pt": "Arroz Frito",
+      "en": "Fried Rice",
+      "icone": "tigela:#efe0a6",
+      "em": "frigideira",
+      "ingredientes": [
+        "cl:arroz",
+        "minecraft:carrot",
+        "minecraft:egg",
+        "cl:cebola"
+      ],
+      "fome": 1,
+      "temp": 0.05
+    },
+    {
+      "id": "sopa_legumes",
+      "pt": "Sopa de Legumes",
+      "en": "Vegetable Soup",
+      "icone": "tigela:#c97a3a",
+      "em": "panela",
+      "ingredientes": [
+        "minecraft:potato",
+        "minecraft:carrot",
+        "minecraft:brown_mushroom",
+        "cl:caldo"
+      ],
+      "fome": 1,
+      "agua": 5,
+      "temp": 0.05
+    },
+    {
+      "id": "suco_cacto",
+      "pt": "Suco de Fruta do Cacto",
+      "en": "Cactus Fruit Juice",
+      "icone": "copo:#e0457b",
+      "em": "espremedor",
+      "ingredientes": [
+        "cl:fruta_cacto",
+        "cl:fruta_cacto"
+      ],
+      "fome": 1,
+      "bebida": true,
+      "agua": 10,
+      "temp": -0.05
+    },
+    {
+      "id": "sopa_cacto",
+      "pt": "Sopa de Cacto",
+      "en": "Cactus Soup",
+      "icone": "tigela:#5a9a3a",
+      "em": "panela",
+      "ingredientes": [
+        "minecraft:cactus",
+        "cl:caldo"
+      ],
+      "fome": 1,
+      "agua": 5,
+      "temp": 0.05
+    },
+    {
+      "id": "sopa_tomate",
+      "pt": "Sopa de Tomate",
+      "en": "Tomato Soup",
+      "icone": "tigela:#d0392b",
+      "em": "panela",
+      "ingredientes": [
+        "cl:tomate",
+        "cl:caldo"
+      ],
+      "fome": 1,
+      "agua": 5,
+      "temp": 0.05
+    },
+    {
+      "id": "sopa_arroz",
+      "pt": "Sopa de Arroz",
+      "en": "Rice Soup",
+      "icone": "tigela:#efe8d2",
+      "em": "panela",
+      "ingredientes": [
+        "cl:arroz",
+        "cl:caldo"
+      ],
+      "fome": 1,
+      "agua": 5,
+      "temp": 0.05
+    },
+    {
+      "id": "charque",
+      "pt": "Charque",
+      "en": "Beef Jerky",
+      "icone": "tira:#8b3a2a",
+      "em": "",
+      "ingredientes": [
+        "minecraft:beef",
+        "cl:sal"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "pipoca",
+      "pt": "Pipoca",
+      "en": "Popcorn",
+      "icone": "pipoca",
+      "em": "assadeira",
+      "ingredientes": [
+        "cl:milho"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "milho_espiga",
+      "pt": "Milho na Espiga",
+      "en": "Corn on the Cob",
+      "icone": "espiga",
+      "em": "",
+      "ingredientes": [
+        "cl:milho",
+        "cl:manteiga"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "pimentao_recheado",
+      "pt": "Pimentão Recheado",
+      "en": "Stuffed Pepper",
+      "icone": "prato:#3fa34d",
+      "em": "assadeira",
+      "ingredientes": [
+        "cl:pimentao",
+        "cl:tomate",
+        "cl:arroz"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "chili_poppers",
+      "pt": "Pimentas Empanadas",
+      "en": "Chili Poppers",
+      "icone": "prato:#e0682f",
+      "em": "assadeira",
+      "ingredientes": [
+        "cl:pimenta",
+        "cl:massa_liquida",
+        "cl:queijo"
+      ],
+      "fome": 2,
+      "temp": 0.05
+    },
+    {
+      "id": "omelete",
+      "pt": "Omelete",
+      "en": "Omelet",
+      "icone": "disco:#f7d55c",
+      "em": "frigideira",
+      "ingredientes": [
+        "minecraft:egg",
+        "cl:pimentao",
+        "cl:cebola"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "bolinho_arroz",
+      "pt": "Bolinho de Arroz",
+      "en": "Rice Cake",
+      "icone": "bola:#f4f0e2",
+      "em": "assadeira",
+      "ingredientes": [
+        "cl:arroz"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "pemmican",
+      "pt": "Pemmican",
+      "en": "Pemmican",
+      "icone": "tira:#6b3f25",
+      "em": "panela",
+      "ingredientes": [
+        "cl:amendoim",
+        "cl:fruta_cacto",
+        "minecraft:cooked_beef",
+        "minecraft:honey_bottle"
+      ],
+      "fome": 2
+    },
+    {
+      "id": "panquecas",
+      "pt": "Panquecas",
+      "en": "Pancakes",
+      "icone": "pilha:#e0b26a",
+      "em": "frigideira",
+      "ingredientes": [
+        "cl:massa_liquida",
+        "minecraft:milk_bucket"
+      ],
+      "fome": 1
+    },
+    {
+      "id": "broa_milho",
+      "pt": "Broa de Milho",
+      "en": "Cornbread",
+      "icone": "pao:#e9b949",
+      "em": "frigideira",
+      "ingredientes": [
+        "cl:fuba",
+        "minecraft:egg",
+        "minecraft:milk_bucket"
+      ],
+      "fome": 1
+    }
   ]
 }

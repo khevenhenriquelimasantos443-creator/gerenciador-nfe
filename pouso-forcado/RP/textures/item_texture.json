@@ -1519,6 +1519,168 @@
     },
     "clc_balao_preto": {
       "textures": "textures/items/cl/arte/balao_preto"
+    },
+    "clhc_semente_repolho": {
+      "textures": "textures/items/cl/arte/semente_repolho"
+    },
+    "clhc_repolho": {
+      "textures": "textures/items/cl/arte/repolho"
+    },
+    "clc_faca_silex": {
+      "textures": "textures/items/cl/arte/faca_silex"
+    },
+    "clc_faca_ferro": {
+      "textures": "textures/items/cl/arte/faca_ferro"
+    },
+    "clc_faca_ouro": {
+      "textures": "textures/items/cl/arte/faca_ouro"
+    },
+    "clc_faca_diamante": {
+      "textures": "textures/items/cl/arte/faca_diamante"
+    },
+    "clc_palha": {
+      "textures": "textures/items/cl/arte/palha"
+    },
+    "clc_lona": {
+      "textures": "textures/items/cl/arte/lona"
+    },
+    "clc_folha_repolho": {
+      "textures": "textures/items/cl/arte/folha_repolho"
+    },
+    "clc_carne_moida": {
+      "textures": "textures/items/cl/arte/carne_moida"
+    },
+    "clc_hamburguer_carne": {
+      "textures": "textures/items/cl/arte/hamburguer_carne"
+    },
+    "clc_pedacos_frango": {
+      "textures": "textures/items/cl/arte/pedacos_frango"
+    },
+    "clc_pedacos_frango_cozidos": {
+      "textures": "textures/items/cl/arte/pedacos_frango_cozidos"
+    },
+    "clc_bacon": {
+      "textures": "textures/items/cl/arte/bacon"
+    },
+    "clc_bacon_cozido": {
+      "textures": "textures/items/cl/arte/bacon_cozido"
+    },
+    "clc_fatia_bacalhau": {
+      "textures": "textures/items/cl/arte/fatia_bacalhau"
+    },
+    "clc_fatia_bacalhau_cozida": {
+      "textures": "textures/items/cl/arte/fatia_bacalhau_cozida"
+    },
+    "clc_fatia_salmao": {
+      "textures": "textures/items/cl/arte/fatia_salmao"
+    },
+    "clc_fatia_salmao_cozida": {
+      "textures": "textures/items/cl/arte/fatia_salmao_cozida"
+    },
+    "clc_costeleta_carneiro": {
+      "textures": "textures/items/cl/arte/costeleta_carneiro"
+    },
+    "clc_costeleta_carneiro_cozida": {
+      "textures": "textures/items/cl/arte/costeleta_carneiro_cozida"
+    },
+    "clc_fatia_abobora": {
+      "textures": "textures/items/cl/arte/fatia_abobora"
+    },
+    "clc_macarrao_cru": {
+      "textures": "textures/items/cl/arte/macarrao_cru"
+    },
+    "clc_molho_tomate": {
+      "textures": "textures/items/cl/arte/molho_tomate"
+    },
+    "clc_arroz_cozido": {
+      "textures": "textures/items/cl/arte/arroz_cozido"
+    },
+    "clc_caldo_osso": {
+      "textures": "textures/items/cl/arte/caldo_osso"
+    },
+    "clc_ensopado_carne": {
+      "textures": "textures/items/cl/arte/ensopado_carne"
+    },
+    "clc_sopa_frango": {
+      "textures": "textures/items/cl/arte/sopa_frango"
+    },
+    "clc_ensopado_peixe": {
+      "textures": "textures/items/cl/arte/ensopado_peixe"
+    },
+    "clc_sopa_cebola": {
+      "textures": "textures/items/cl/arte/sopa_cebola"
+    },
+    "clc_sopa_abobora": {
+      "textures": "textures/items/cl/arte/sopa_abobora"
+    },
+    "clc_ensopado_bacalhau": {
+      "textures": "textures/items/cl/arte/ensopado_bacalhau"
+    },
+    "clc_sopa_macarrao": {
+      "textures": "textures/items/cl/arte/sopa_macarrao"
+    },
+    "clc_macarrao_almondegas": {
+      "textures": "textures/items/cl/arte/macarrao_almondegas"
+    },
+    "clc_macarrao_carneiro": {
+      "textures": "textures/items/cl/arte/macarrao_carneiro"
+    },
+    "clc_ratatouille": {
+      "textures": "textures/items/cl/arte/ratatouille"
+    },
+    "clc_arroz_cogumelos": {
+      "textures": "textures/items/cl/arte/arroz_cogumelos"
+    },
+    "clc_macarrao_tinta_lula": {
+      "textures": "textures/items/cl/arte/macarrao_tinta_lula"
+    },
+    "clc_macarrao_legumes": {
+      "textures": "textures/items/cl/arte/macarrao_legumes"
+    },
+    "clc_rolinhos_repolho": {
+      "textures": "textures/items/cl/arte/rolinhos_repolho"
+    },
+    "clc_bolinhos": {
+      "textures": "textures/items/cl/arte/bolinhos"
+    },
+    "clc_salada_mista": {
+      "textures": "textures/items/cl/arte/salada_mista"
+    },
+    "clc_salada_frutas": {
+      "textures": "textures/items/cl/arte/salada_frutas"
+    },
+    "clc_espetinho": {
+      "textures": "textures/items/cl/arte/espetinho"
+    },
+    "clc_sanduiche_ovo": {
+      "textures": "textures/items/cl/arte/sanduiche_ovo"
+    },
+    "clc_sanduiche_frango": {
+      "textures": "textures/items/cl/arte/sanduiche_frango"
+    },
+    "clc_sanduiche_bacon": {
+      "textures": "textures/items/cl/arte/sanduiche_bacon"
+    },
+    "clc_wrap_carneiro": {
+      "textures": "textures/items/cl/arte/wrap_carneiro"
+    },
+    "clc_bife_batatas": {
+      "textures": "textures/items/cl/arte/bife_batatas"
+    },
+    "clc_bacon_ovos": {
+      "textures": "textures/items/cl/arte/bacon_ovos"
+    },
+    "clc_batata_recheada": {
+      "textures": "textures/items/cl/arte/batata_recheada"
+    },
+    "clc_salmao_grelhado": {
+      "textures": "textures/items/cl/arte/salmao_grelhado"
+    },
+    "clc_costeletas_assadas": {
+      "textures": "textures/items/cl/arte/costeletas_assadas"
+    },
+    "clc_picarango": {
+      "textures": "textures/items/cl/arte/picarango"
     }
   }
 }

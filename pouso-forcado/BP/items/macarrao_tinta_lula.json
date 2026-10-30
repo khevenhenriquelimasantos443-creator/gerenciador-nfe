@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:macarrao_tinta_lula",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_macarrao_tinta_lula",
+      "minecraft:display_name": {
+        "value": "item.cl:macarrao_tinta_lula.name"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 14,
+        "saturation_modifier": 0.75,
+        "using_converts_to": "minecraft:bowl"
+      }
+    }
+  }
+}

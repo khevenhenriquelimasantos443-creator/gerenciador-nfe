@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_forno_bacon_cozido"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:bacon",
+    "output": "cl:bacon_cozido"
+  }
+}

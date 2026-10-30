@@ -119,7 +119,13 @@ export type Acao =
   | "varinha"
   | "redemoinho"
   | "balao"
-  | "conduto";
+  | "conduto"
+  | "cortar"
+  | "cozinhar"
+  | "nutricao"
+  | "colher"
+  | "picarango"
+  | "corda";
 
 type MissaoBase = {
   id: string;
@@ -370,6 +376,30 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ad_balao", objetivo: { tipo: "acao", acao: "balao", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 8 }] },
       { id: "ad_tnt", objetivo: { tipo: "ter", item: "cl:tnt_obsidiana", qtd: 1 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 6 }] },
       { id: "ad_conduto", objetivo: { tipo: "acao", acao: "conduto", qtd: 1 }, recompensa: [{ item: "cl:aglutinante_conduite", quantidade: 16 }] },
+    ],
+  },
+  {
+    id: "farmers", // 1.12.0: Farmer's Delight
+    icone: "cl:panela_cozinha",
+    requer: ["chegada"],
+    missoes: [
+      { id: "fd_faca", objetivo: { tipo: "ter", item: "cl:faca_silex", qtd: 1 }, recompensa: [{ item: "cl:semente_repolho", quantidade: 4 }] },
+      { id: "fd_cortar", requer: ["fd_faca"], objetivo: { tipo: "acao", acao: "cortar", qtd: 8 }, recompensa: [{ item: "minecraft:bowl", quantidade: 8 }] },
+      { id: "fd_panela", objetivo: { tipo: "acao", acao: "cozinhar", qtd: 1 }, recompensa: [{ item: "cl:arroz", quantidade: 8 }] },
+      { id: "fd_nutricao", requer: ["fd_panela"], objetivo: { tipo: "acao", acao: "nutricao", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "fd_caixote", objetivo: { tipo: "colocar", bloco: "cl:caixote_repolho", qtd: 4 }, recompensa: [{ item: "cl:palha", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "quark", // 1.12.0: Quark
+    icone: "cl:jaspe_tijolos",
+    requer: ["chegada"],
+    missoes: [
+      { id: "qk_jaspe", objetivo: { tipo: "ter", item: "cl:jaspe", qtd: 16 }, recompensa: [{ item: "minecraft:red_dye", quantidade: 4 }] },
+      { id: "qk_colher", objetivo: { tipo: "acao", acao: "colher", qtd: 16 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 16 }] },
+      { id: "qk_picarango", objetivo: { tipo: "acao", acao: "picarango", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+      { id: "qk_corda", objetivo: { tipo: "acao", acao: "corda", qtd: 1 }, recompensa: [{ item: "cl:corda", quantidade: 16 }] },
+      { id: "qk_armazem", objetivo: { tipo: "colocar", bloco: "cl:caixote_maca", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
   {

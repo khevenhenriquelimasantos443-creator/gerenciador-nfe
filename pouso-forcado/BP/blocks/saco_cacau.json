@@ -1,0 +1,39 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:saco_cacau",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_saco_cacau_lado",
+          "render_method": "opaque"
+        },
+        "north": {
+          "texture": "clc_saco_cacau_frente",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "clc_saco_cacau_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_saco_cacau_baixo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#6b3e1f"
+    }
+  }
+}

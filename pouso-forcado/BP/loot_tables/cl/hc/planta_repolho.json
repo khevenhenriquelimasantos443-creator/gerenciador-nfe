@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "cl:semente_repolho",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

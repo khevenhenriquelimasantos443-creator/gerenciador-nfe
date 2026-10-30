@@ -158,7 +158,8 @@ function porNoAr(j: Player): void {
 export function registrarExtraUtils(): void {
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     const id = ev.itemStack?.typeId;
-    if (!id || !toqueNovo(ev)) return;
+    // toqueNovo marca o toque: só chamar quando o item é deste script (senão outros scripts perdem o toque).
+    if (!id || (id !== "cl:regador" && !VARINHAS[id]) || !toqueNovo(ev)) return;
     const { player: j, block: b } = ev;
     if (id === "cl:regador") {
       ev.cancel = true;
