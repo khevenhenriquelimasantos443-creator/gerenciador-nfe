@@ -23,6 +23,11 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 ## Inspiração
 
+- **Galacticraft** (micdoodle8 e equipe, LGPL 3.0): a viagem à Lua, as máquinas de oxigênio, a Bancada da NASA e o
+  Foguete Tier 1. Os números (receitas, tanques, consumo, crateras, combustível) foram lidos no código-fonte público
+  do mod (github.com/micdoodle8/Galacticraft); o código daqui é próprio, e o modelo do foguete e as texturas foram
+  feitos para este projeto (`tools/gerar-foguete.mjs`).
+
 - **Crash Landing**, modpack de Iskandar (Minecraft 1.6.4): a ideia de cair num planeta seco,
   a sede, a água que precisa ser tratada e a progressão por quests. Nenhum texto do pack foi copiado.
 - **Ex Nihilo** (Erasmus_Crowley) e **Ex Aliquo** (Zerokyuuni, MIT): peneira, martelo, barril, cadinho,

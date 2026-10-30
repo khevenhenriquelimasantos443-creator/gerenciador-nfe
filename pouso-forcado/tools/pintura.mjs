@@ -284,6 +284,8 @@ export const PADRAO = {
     if (x % 4 === 3 || y % 4 === 3) return mul(c, 0.6);
     return mul(c, 0.8 + k * 0.35);
   },
+  // Minério: rocha cinza com pintas da cor do minério.
+  pintas: (c) => (x, y) => (ruido(x >> 1, y >> 1, 22) > 0.8 ? mul(c, 0.85 + ruido(x, y, 24) * 0.3) : mul(hex("#8f9296"), 0.9 + ruido(x, y, 23) * 0.12)),
   rachado: (c) => (x, y) => (Math.abs(Math.sin(x * 0.4) * 6 + 16 - y) < 0.8 || Math.abs(x - 10 - Math.sin(y * 0.5) * 3) < 0.6 ? mul(c, 0.55) : mul(c, 0.92 + ruido(x, y, 20) * 0.12)),
   vidro: (c) => (x, y) => (quadro(x, y) ? [...mul(c, 0.7), 255] : Math.abs(x - y - 6) < 1.5 || Math.abs(x - y + 10) < 1 ? [...mix(c, [255, 255, 255], 0.6), 170] : [...c, 70]),
   livros: (c) => (x, y) => {

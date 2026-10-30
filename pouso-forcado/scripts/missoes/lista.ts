@@ -102,7 +102,11 @@ export type Acao =
   | "pedreira"
   | "asa_delta"
   | "elevador"
-  | "tumulo";
+  | "tumulo"
+  | "placa_reforcada"
+  | "encher_tanque"
+  | "lua"
+  | "voltar_lua";
 
 type MissaoBase = {
   id: string;
@@ -306,6 +310,29 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "bc_combustivel", requer: ["bc_petroleo"], objetivo: { tipo: "ter", item: "cl:balde_combustivel", qtd: 1 }, recompensa: [{ item: "cl:engrenagem_ferro", quantidade: 2 }] },
       { id: "bc_motor", requer: ["bc_combustivel"], objetivo: { tipo: "acao", acao: "motor", qtd: 10 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "bc_pedreira", requer: ["bc_motor"], objetivo: { tipo: "acao", acao: "pedreira", qtd: 256 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "galacticraft", // 1.6.0: Galacticraft (só até a Lua)
+    icone: "cl:foguete_t1",
+    requer: ["buildcraft"],
+    missoes: [
+      { id: "gc_aluminio", objetivo: { tipo: "ter", item: "cl:lingote_aluminio", qtd: 8 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
+      { id: "gc_compressor", objetivo: { tipo: "colocar", bloco: "cl:compressor", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 8 }] },
+      { id: "gc_placa", objetivo: { tipo: "acao", acao: "placa_reforcada", qtd: 2 }, recompensa: [{ item: "cl:lingote_aco", quantidade: 6 }] },
+      { id: "gc_wafer", requer: ["gc_aluminio"], objetivo: { tipo: "ter", item: "cl:wafer_basico", qtd: 3 }, recompensa: [{ item: "cl:silicio", quantidade: 4 }] },
+      { id: "gc_oxigenio", requer: ["gc_wafer", "gc_compressor"], objetivo: { tipo: "acao", acao: "encher_tanque", qtd: 1 }, recompensa: [{ item: "cl:lata_estanho", quantidade: 2 }] },
+      { id: "gc_equipamento", requer: ["gc_oxigenio"], objetivo: { tipo: "ter", item: "cl:equipamento_oxigenio", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "gc_foguete", requer: ["gc_placa", "gc_wafer"], objetivo: { tipo: "ter", item: "cl:foguete_t1", qtd: 1 }, recompensa: [{ item: "cl:balde_combustivel", quantidade: 2 }] },
+      {
+        id: "gc_lancar",
+        requer: ["gc_foguete", "gc_equipamento"],
+        objetivo: { tipo: "acao", acao: "lua", qtd: 1 },
+        recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
+        escolha: [{ item: "cl:tanque_oxigenio_medio", quantidade: 1 }, { item: "cl:plataforma_lancamento", quantidade: 9 }],
+      },
+      { id: "gc_queijo", requer: ["gc_lancar"], objetivo: { tipo: "ter", item: "cl:coalhada_queijo", qtd: 8 }, recompensa: [{ item: "minecraft:golden_apple", quantidade: 1 }] },
+      { id: "gc_volta", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "voltar_lua", qtd: 1 }, recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }] },
     ],
   },
   {

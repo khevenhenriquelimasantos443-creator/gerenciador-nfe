@@ -59,9 +59,14 @@ import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
 import { registrarRelevo } from "./mundo/relevo.js";
 import { comPerfil, registrarPerfil } from "./util/perfil.js";
+import { bancadaNasa, carregador as carregadorCombustivel, coletor, compressor as compressorGC, compressorEletrico, compressorOxigenio, fabricador, registrarMaquinasGC } from "./galacticraft/maquinas.js";
+import { registrarDimensaoLua, registrarLua } from "./galacticraft/lua.js";
+import { registrarOxigenio } from "./galacticraft/oxigenio.js";
+import { registrarFoguete } from "./galacticraft/foguete.js";
 
-system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry }) => {
+system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
   registrarComandos(customCommandRegistry);
+  registrarDimensaoLua(dimensionRegistry); // 1.6.0: a Lua do Galacticraft
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -136,6 +141,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     "cl:triturador_monstros": triturador, "cl:esgoto": esgoto, "cl:compostadora": compostadora, "cl:quebrador_blocos": quebrador,
     "cl:colocador_blocos": colocador, "cl:esteira": esteira,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  for (const [id, comp] of Object.entries({
+    "cl:compressor": compressorGC, "cl:compressor_eletrico": compressorEletrico, "cl:fabricador_circuitos": fabricador,
+    "cl:coletor_oxigenio": coletor, "cl:compressor_oxigenio": compressorOxigenio, "cl:carregador_combustivel": carregadorCombustivel,
+  })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  blockComponentRegistry.registerCustomComponent("cl:bancada_nasa", bancadaNasa);
 });
 
 registrarPerfil();
@@ -184,3 +194,7 @@ registrarBuildcraft();
 registrarOpenBlocks();
 registrarAmbiente();
 registrarFome();
+registrarMaquinasGC();
+registrarOxigenio();
+registrarLua();
+registrarFoguete();

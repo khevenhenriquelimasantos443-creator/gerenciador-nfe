@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bancada_nasa"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XZX",
+      "UWU",
+      "YVY"
+    ],
+    "key": {
+      "U": {
+        "item": "minecraft:lever"
+      },
+      "V": {
+        "item": "minecraft:redstone_torch"
+      },
+      "W": {
+        "item": "cl:wafer_avancado"
+      },
+      "X": {
+        "item": "cl:placa_aco"
+      },
+      "Y": {
+        "item": "cl:placa_aco"
+      },
+      "Z": {
+        "item": "minecraft:crafting_table"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bancada_nasa"
+    }
+  }
+}

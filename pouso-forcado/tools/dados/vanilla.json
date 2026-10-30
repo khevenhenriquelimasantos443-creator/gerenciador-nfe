@@ -33,6 +33,11 @@
   "en": "Andesite",
   "icone": "textures/blocks/stone_andesite"
  },
+ "minecraft:anvil": {
+  "pt": "Bigorna",
+  "en": "Anvil",
+  "icone": "textures/blocks/anvil_base"
+ },
  "minecraft:apple": {
   "pt": "Maçã",
   "en": "Apple",
@@ -508,6 +513,11 @@
   "en": "Flint",
   "icone": "textures/items/flint"
  },
+ "minecraft:flint_and_steel": {
+  "pt": "Pederneira",
+  "en": "Flint and Steel",
+  "icone": "textures/items/flint_and_steel"
+ },
  "minecraft:flower_pot": {
   "pt": "Vaso de Flor",
   "en": "Flower Pot",
@@ -537,6 +547,11 @@
   "pt": "Frasco de Vidro",
   "en": "Glass Bottle",
   "icone": "textures/items/potion_bottle_empty"
+ },
+ "minecraft:glass_pane": {
+  "pt": "Painel de Vidro",
+  "en": "Glass Pane",
+  "icone": "textures/blocks/glass"
  },
  "minecraft:glowstone": {
   "pt": "Pedra Luminosa",
@@ -643,6 +658,11 @@
   "en": "Iron Chestplate",
   "icone": "textures/items/iron_chestplate"
  },
+ "minecraft:iron_helmet": {
+  "pt": "Capacete de Ferro",
+  "en": "Iron Helmet",
+  "icone": "textures/items/iron_helmet"
+ },
  "minecraft:iron_ingot": {
   "pt": "Barra de Ferro",
   "en": "Iron Ingot",
@@ -738,6 +758,11 @@
   "en": "Leather Cap",
   "icone": "textures/items/leather_helmet"
  },
+ "minecraft:lever": {
+  "pt": "Alavanca",
+  "en": "Lever",
+  "icone": "textures/items/lever"
+ },
  "minecraft:light_gray_carpet": {
   "pt": "Carpete Cinza-claro",
   "en": "Light Gray Carpet",
@@ -747,6 +772,11 @@
   "pt": "Corante Verde Limão",
   "en": "Lime Dye",
   "icone": "textures/items/dye_powder_lime"
+ },
+ "minecraft:lime_wool": {
+  "pt": "Lã Verde-limão",
+  "en": "Lime Wool",
+  "icone": "textures/blocks/wool_colored_lime"
  },
  "minecraft:lit_blast_furnace": {
   "pt": "Fornalha Potente Acesa",
@@ -882,6 +912,11 @@
   "pt": "Corante Laranja",
   "en": "Orange Dye",
   "icone": "textures/items/dye_powder_orange"
+ },
+ "minecraft:orange_wool": {
+  "pt": "Lã Laranja",
+  "en": "Orange Wool",
+  "icone": "textures/blocks/wool_colored_orange"
  },
  "minecraft:packed_ice": {
   "pt": "Gelo Compactado",
@@ -1023,6 +1058,11 @@
   "en": "Red Sand",
   "icone": "textures/blocks/red_sand"
  },
+ "minecraft:red_wool": {
+  "pt": "Lã Vermelha",
+  "en": "Red Wool",
+  "icone": "textures/blocks/wool_colored_red"
+ },
  "minecraft:redstone": {
   "pt": "Pó de Redstone",
   "en": "Redstone Dust",
@@ -1037,6 +1077,11 @@
   "pt": "Minério de Redstone",
   "en": "Redstone Ore",
   "icone": "textures/blocks/redstone_ore"
+ },
+ "minecraft:redstone_torch": {
+  "pt": "Tocha de Redstone",
+  "en": "Redstone Torch",
+  "icone": "textures/blocks/redstone_torch_on"
  },
  "minecraft:reinforced_deepslate": {
   "pt": "Ardosiabissal Reforçada",
@@ -1172,6 +1217,11 @@
   "pt": "Tijolos de Pedra",
   "en": "Stone Bricks",
   "icone": "textures/blocks/stonebrick"
+ },
+ "minecraft:stone_button": {
+  "pt": "Botão de Pedra",
+  "en": "Stone Button",
+  "icone": "textures/blocks/stone"
  },
  "minecraft:stone_pickaxe": {
   "pt": "Picareta de Pedra",

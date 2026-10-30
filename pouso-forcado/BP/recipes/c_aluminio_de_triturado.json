@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_aluminio_de_triturado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:aluminio_triturado"
+      },
+      {
+        "item": "cl:aluminio_triturado"
+      },
+      {
+        "item": "cl:aluminio_triturado"
+      },
+      {
+        "item": "cl:aluminio_triturado"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:lingote_aluminio"
+    }
+  }
+}

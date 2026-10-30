@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_compressor_eletrico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "WXW",
+      "WYW",
+      "VZV"
+    ],
+    "key": {
+      "V": {
+        "item": "cl:cabo"
+      },
+      "W": {
+        "item": "cl:placa_aco"
+      },
+      "X": {
+        "item": "minecraft:anvil"
+      },
+      "Y": {
+        "item": "cl:placa_bronze"
+      },
+      "Z": {
+        "item": "cl:wafer_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:compressor_eletrico"
+    }
+  }
+}

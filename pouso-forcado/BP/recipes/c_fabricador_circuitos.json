@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_fabricador_circuitos"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "WXW",
+      "UYU",
+      "VZV"
+    ],
+    "key": {
+      "U": {
+        "item": "minecraft:stone_button"
+      },
+      "V": {
+        "item": "cl:cabo"
+      },
+      "W": {
+        "item": "cl:lingote_aluminio"
+      },
+      "X": {
+        "item": "minecraft:lever"
+      },
+      "Y": {
+        "item": "minecraft:furnace"
+      },
+      "Z": {
+        "item": "minecraft:redstone_torch"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fabricador_circuitos"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_coletor_oxigenio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "WWW",
+      "YXZ",
+      "UVU"
+    ],
+    "key": {
+      "U": {
+        "item": "cl:placa_aluminio"
+      },
+      "V": {
+        "item": "cl:concentrador_oxigenio"
+      },
+      "W": {
+        "item": "cl:placa_aco"
+      },
+      "X": {
+        "item": "cl:lata_estanho"
+      },
+      "Y": {
+        "item": "cl:ventilador_oxigenio"
+      },
+      "Z": {
+        "item": "cl:respiro_oxigenio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:coletor_oxigenio"
+    }
+  }
+}

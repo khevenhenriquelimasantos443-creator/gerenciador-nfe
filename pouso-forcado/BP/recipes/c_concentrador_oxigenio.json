@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_concentrador_oxigenio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ZWZ",
+      "WYW",
+      "ZXZ"
+    ],
+    "key": {
+      "W": {
+        "item": "cl:placa_estanho"
+      },
+      "X": {
+        "item": "cl:respiro_oxigenio"
+      },
+      "Y": {
+        "item": "cl:lata_estanho"
+      },
+      "Z": {
+        "item": "cl:placa_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:concentrador_oxigenio"
+    }
+  }
+}

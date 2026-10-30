@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:tanque_oxigenio_pesado",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_tanque_oxigenio_pesado",
+      "minecraft:display_name": {
+        "value": "item.cl:tanque_oxigenio_pesado.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

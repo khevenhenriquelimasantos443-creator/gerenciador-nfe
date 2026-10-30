@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.5.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.6.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft, OpenBlocks e o começo do Galacticraft (a viagem à Lua). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.6.0 (Galacticraft: a Lua)
+
+- **Alumínio**: pedaços de alumínio na peneira (cascalho, areia e poeira, como o estanho do Ex Aliquo); 4 pedaços = 1 lingote.
+- **Compressor** (a carvão: 1 carvão = 8 placas) e **Compressor Elétrico**: 2 lingotes = 1 placa comprimida (cobre, estanho, alumínio, ferro, bronze, aço); placa de cobre + de estanho = de bronze; 3 de aço + 3 de alumínio + 3 de bronze = 2 **Placas Reforçadas**.
+- **Fabricador de Circuitos**: diamante + 2 silício + redstone + tocha = 3 Wafers Básicos (com repetidor = 1 Wafer Avançado).
+- **Oxigênio**: Coletor (6.000; no planeta tira do ar, na Lua só de folhas e plantações a até 5 blocos), Compressor de Oxigênio (enche tanques; aceita os cilindros de oxigênio do Mekanism), Máscara (cabeça), Equipamento (peito) e tanques Leve/Médio/Pesado (900/1.800/2.700, 1 a cada 9 ticks: o leve dura 6 min 45 s). Sem oxigênio na Lua: 2 de dano a cada 5 s.
+- **Bancada da NASA** e **Foguete Tier 1** (1 bico, 8 placas reforçadas, 4 aletas e 1 motor), **Plataforma de Lançamento** 3×3 e **Carregador de Combustível** (12.000 mB; o foguete leva 1.000 mB do combustível da refinaria do BuildCraft).
+- **A Lua**: dimensão própria (a 26.30 deixa o add-on criar dimensões), com o terreno do Galacticraft (crateras de 8 a 30 blocos de raio, solo, terra e rocha lunar, minérios de cobre, estanho e queijo), gravidade baixa (pulo alto e queda lenta) e névoa preta no horizonte.
+- **Viagem**: toque no foguete abastecido e lance: contagem de 10 s, subida em fogo, e o foguete pousa de ré na Lua, na mesma coordenada. Para voltar (70% do tanque) é preciso recolher o foguete e pôr numa plataforma de novo: leve 9 plataformas, um carregador, energia e combustível.
+- Capítulo **Galacticraft** no Diário (10 missões) e duas dicas novas na tela de carregamento.
+- A falta de ar do EnviroMine voltou a machucar: o jogo ignorava o dano de "sufocamento" fora de um bloco (agora é dano de afogamento).
 
 ## Novidades da 1.5.2
 

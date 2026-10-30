@@ -1728,6 +1728,111 @@
     },
     "clc_lampada_rosa_baixo": {
       "textures": "textures/blocks/cl/arte/lampada_rosa_baixo"
+    },
+    "clc_compressor_frente": {
+      "textures": "textures/blocks/cl/c/compressor_frente"
+    },
+    "clc_compressor_lado": {
+      "textures": "textures/blocks/cl/c/compressor_lado"
+    },
+    "clc_compressor_topo": {
+      "textures": "textures/blocks/cl/c/compressor_topo"
+    },
+    "clc_compressor_baixo": {
+      "textures": "textures/blocks/cl/c/compressor_baixo"
+    },
+    "clc_compressor_eletrico_frente": {
+      "textures": "textures/blocks/cl/c/compressor_eletrico_frente"
+    },
+    "clc_compressor_eletrico_lado": {
+      "textures": "textures/blocks/cl/c/compressor_eletrico_lado"
+    },
+    "clc_compressor_eletrico_topo": {
+      "textures": "textures/blocks/cl/c/compressor_eletrico_topo"
+    },
+    "clc_compressor_eletrico_baixo": {
+      "textures": "textures/blocks/cl/c/compressor_eletrico_baixo"
+    },
+    "clc_fabricador_circuitos_frente": {
+      "textures": "textures/blocks/cl/c/fabricador_circuitos_frente"
+    },
+    "clc_fabricador_circuitos_lado": {
+      "textures": "textures/blocks/cl/c/fabricador_circuitos_lado"
+    },
+    "clc_fabricador_circuitos_topo": {
+      "textures": "textures/blocks/cl/c/fabricador_circuitos_topo"
+    },
+    "clc_fabricador_circuitos_baixo": {
+      "textures": "textures/blocks/cl/c/fabricador_circuitos_baixo"
+    },
+    "clc_coletor_oxigenio_frente": {
+      "textures": "textures/blocks/cl/c/coletor_oxigenio_frente"
+    },
+    "clc_coletor_oxigenio_lado": {
+      "textures": "textures/blocks/cl/c/coletor_oxigenio_lado"
+    },
+    "clc_coletor_oxigenio_topo": {
+      "textures": "textures/blocks/cl/c/coletor_oxigenio_topo"
+    },
+    "clc_coletor_oxigenio_baixo": {
+      "textures": "textures/blocks/cl/c/coletor_oxigenio_baixo"
+    },
+    "clc_compressor_oxigenio_frente": {
+      "textures": "textures/blocks/cl/c/compressor_oxigenio_frente"
+    },
+    "clc_compressor_oxigenio_lado": {
+      "textures": "textures/blocks/cl/c/compressor_oxigenio_lado"
+    },
+    "clc_compressor_oxigenio_topo": {
+      "textures": "textures/blocks/cl/c/compressor_oxigenio_topo"
+    },
+    "clc_compressor_oxigenio_baixo": {
+      "textures": "textures/blocks/cl/c/compressor_oxigenio_baixo"
+    },
+    "clc_carregador_combustivel_frente": {
+      "textures": "textures/blocks/cl/c/carregador_combustivel_frente"
+    },
+    "clc_carregador_combustivel_lado": {
+      "textures": "textures/blocks/cl/c/carregador_combustivel_lado"
+    },
+    "clc_carregador_combustivel_topo": {
+      "textures": "textures/blocks/cl/c/carregador_combustivel_topo"
+    },
+    "clc_carregador_combustivel_baixo": {
+      "textures": "textures/blocks/cl/c/carregador_combustivel_baixo"
+    },
+    "clc_bancada_nasa_frente": {
+      "textures": "textures/blocks/cl/c/bancada_nasa_frente"
+    },
+    "clc_bancada_nasa_lado": {
+      "textures": "textures/blocks/cl/c/bancada_nasa_lado"
+    },
+    "clc_bancada_nasa_topo": {
+      "textures": "textures/blocks/cl/c/bancada_nasa_topo"
+    },
+    "clc_bancada_nasa_baixo": {
+      "textures": "textures/blocks/cl/c/bancada_nasa_baixo"
+    },
+    "clc_plataforma_lancamento": {
+      "textures": "textures/blocks/cl/c/plataforma_lancamento"
+    },
+    "clc_solo_lunar": {
+      "textures": "textures/blocks/cl/c/solo_lunar"
+    },
+    "clc_terra_lunar": {
+      "textures": "textures/blocks/cl/c/terra_lunar"
+    },
+    "clc_rocha_lunar": {
+      "textures": "textures/blocks/cl/c/rocha_lunar"
+    },
+    "clc_minerio_cobre_lunar": {
+      "textures": "textures/blocks/cl/c/minerio_cobre_lunar"
+    },
+    "clc_minerio_estanho_lunar": {
+      "textures": "textures/blocks/cl/c/minerio_estanho_lunar"
+    },
+    "clc_minerio_queijo": {
+      "textures": "textures/blocks/cl/c/minerio_queijo"
     }
   }
 }

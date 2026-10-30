@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ventilador_oxigenio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "Z Z",
+      " Y ",
+      "ZXZ"
+    ],
+    "key": {
+      "X": {
+        "item": "minecraft:redstone"
+      },
+      "Y": {
+        "item": "cl:wafer_basico"
+      },
+      "Z": {
+        "item": "cl:placa_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:ventilador_oxigenio"
+    }
+  }
+}

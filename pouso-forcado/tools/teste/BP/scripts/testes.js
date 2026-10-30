@@ -325,6 +325,106 @@ teste("dia", 200, (t) => {
   });
 });
 
+// 1.6.0: a Lua (terreno gerado por script) e o oxigênio. O jogador simulado não carrega chunks na dimensão nova,
+// então o teste abre uma ticking area lá. Sem oxigênio no tanque (dados de item são de cada pacote, o teste não
+// consegue encher), quem está de máscara e equipamento sufoca: 2 de dano a cada 5 s.
+teste("lua", 600, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  const eq = j.getComponent("minecraft:equippable");
+  eq.setEquipment("Head", new ItemStack("cl:mascara_oxigenio", 1));
+  eq.setEquipment("Chest", new ItemStack("cl:equipamento_oxigenio", 1));
+  j.getComponent("minecraft:inventory").container.setItem(9, new ItemStack("cl:tanque_oxigenio_leve", 1));
+  const lua = world.getDimension("cl:lua");
+  try { lua.runCommand("tickingarea add -16 0 -16 31 0 31 lua_teste true"); } catch (e) { log(`tickingarea: ${e}`); }
+  j.teleport({ x: 8.5, y: 120, z: 8.5 }, { dimension: lua });
+  const vida0 = j.getComponent("health").currentValue;
+  let sufocou = 0;
+  const ouvinte = world.afterEvents.entityHurt.subscribe((ev) => {
+    if (ev.hurtEntity.id === j.id && (ev.damageSource.cause === "suffocation" || ev.damageSource.cause === "drowning")) sufocou += ev.damage;
+  });
+  t.runAfterDelay(300, () => {
+    world.afterEvents.entityHurt.unsubscribe(ouvinte);
+    const carregado = lua.isChunkLoaded({ x: 8, y: 0, z: 8 });
+    const topo = carregado ? lua.getTopmostBlock({ x: 8, z: 8 }) : undefined;
+    const fundo = carregado ? lua.getBlock({ x: 0, y: 0, z: 0 })?.typeId : undefined;
+    let minerios = 0;
+    if (carregado) for (let y = 1; y < 60; y++) for (let x = 0; x < 16; x++) { const b = lua.getBlock({ x, y, z: 4 })?.typeId ?? ""; if (b.startsWith("cl:minerio")) minerios++; }
+    const vida = j.getComponent("health").currentValue;
+    log(`lua: carregado=${carregado} topo=${topo?.typeId}@${topo?.y} fundo=${fundo} vida ${vida0}->${vida} sufocou=${sufocou} pos y=${j.location.y.toFixed(1)} minérios numa fatia=${minerios} pulo=${!!j.getEffect("jump_boost")} queda lenta=${!!j.getEffect("slow_falling")}`);
+    t.assert(topo && topo.y > 40 && topo.y < 100, "sem chão na Lua");
+    t.assert(fundo === "minecraft:bedrock", "chunk sem a rocha matriz");
+    t.assert(sufocou >= 4, "sem oxigênio e não sufocou");
+    try { lua.runCommand("tickingarea remove lua_teste"); } catch {}
+    j.teleport({ x: 3, y: 47, z: 3 }, { dimension: world.getDimension("overworld") });
+    t.succeed();
+  });
+});
+
+// 1.6.0: o Compressor faz placa comprimida com carvão; o foguete fica de pé no meio da plataforma 3×3.
+teste("compressor", 400, (t) => {
+  t.setBlockType("cl:compressor", { x: 1, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 3, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 1, z: 1 });
+  const cima = t.getBlock({ x: 1, y: 3, z: 1 }).getComponent("inventory").container;
+  cima.addItem(new ItemStack("minecraft:coal", 1));
+  cima.addItem(new ItemStack("minecraft:iron_ingot", 2));
+  for (let x = 4; x <= 6; x++) for (let z = 4; z <= 6; z++) t.setBlockType("cl:plataforma_lancamento", { x, y: 1, z });
+  const j = robo(t, { x: 2, y: 2, z: 5 });
+  j.getComponent("minecraft:inventory").container.setItem(0, new ItemStack("cl:foguete_t1", 1));
+  j.selectedSlotIndex = 0;
+  t.runAfterDelay(20, () => j.useItemInSlotOnBlock(0, { x: 4, y: 1, z: 4 }, Direction.Up));
+  t.runAfterDelay(260, () => {
+    const baixo = t.getBlock({ x: 1, y: 1, z: 1 }).getComponent("inventory").container;
+    let placa = 0;
+    for (let s = 0; s < baixo.size; s++) if (baixo.getItem(s)?.typeId === "cl:placa_ferro") placa += baixo.getItem(s).amount;
+    const centro = t.worldLocation({ x: 5.5, y: 1.2, z: 5.5 });
+    const f = j.dimension.getEntities({ type: "cl:foguete", location: centro, maxDistance: 1 })[0];
+    log(`compressor: placas=${placa}; foguete=${!!f} item na mão=${quantos(j, "cl:foguete_t1")}`);
+    t.assert(placa === 1, "o compressor não fez a placa");
+    t.assert(f && quantos(j, "cl:foguete_t1") === 0, "o foguete não ficou no meio da plataforma");
+    f?.remove();
+    t.succeed();
+  });
+});
+
+// 1.6.0: a viagem de foguete: lança da plataforma (pelo comando de teste), vai para a Lua, pousa e volta.
+teste("viagem", 2400, (t) => {
+  for (let x = 2; x <= 4; x++) for (let z = 2; z <= 4; z++) t.setBlockType("cl:plataforma_lancamento", { x, y: 1, z });
+  const j = robo(t, { x: 6, y: 2, z: 3 });
+  j.getComponent("minecraft:inventory").container.setItem(0, new ItemStack("cl:foguete_t1", 1));
+  try { world.getDimension("cl:lua").runCommand("tickingarea add 400 0 60 480 0 100 lua_viagem true"); } catch (e) { log(`tickingarea: ${e}`); }
+  t.runAfterDelay(20, () => j.useItemInSlotOnBlock(0, { x: 3, y: 1, z: 3 }, Direction.Up));
+  t.runAfterDelay(40, () => {
+    const n = j.dimension.getEntities({ type: "cl:foguete", location: j.location, maxDistance: 8 }).length;
+    log(`viagem: foguetes perto=${n}`);
+    j.runCommand("scriptevent cl:teste_foguete");
+  });
+  t.runAfterDelay(800, () => {
+    const lua = world.getDimension("cl:lua");
+    const fl = lua.getEntities({ type: "cl:foguete" });
+    log(`viagem: depois de 760 ticks dim=${j.dimension.id} y=${j.location.y.toFixed(1)} foguetes na Lua=${fl.length} ${fl.map((f) => f.location.y.toFixed(1))}`);
+    t.assert(j.dimension.id === "cl:lua", "não chegou na Lua");
+    t.assert(fl.length === 1, "o foguete não pousou na Lua");
+    j.runCommand("scriptevent cl:teste_foguete");
+  });
+  t.runAfterDelay(1600, () => {
+    log(`viagem: volta dim=${j.dimension.id} y=${j.location.y.toFixed(1)} foguetes no planeta=${world.getDimension("overworld").getEntities({ type: "cl:foguete" }).length}`);
+    t.assert(j.dimension.id === "minecraft:overworld", "não voltou ao planeta");
+    for (const f of world.getDimension("overworld").getEntities({ type: "cl:foguete" })) f.remove();
+    try { world.getDimension("cl:lua").runCommand("tickingarea remove lua_viagem"); } catch {}
+    t.succeed();
+  });
+});
+
+// Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
+teste("danos", 100, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  const r = {};
+  for (const c of ["suffocation", "drowning", "temperature", "freezing", "starve", "fire", "magic"]) r[c] = j.applyDamage(1, { cause: c });
+  log(`danos: ${JSON.stringify(r)}`);
+  t.succeed();
+});
+
 // Depuração: o que chega dos eventos de interação e de quebra.
 world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);

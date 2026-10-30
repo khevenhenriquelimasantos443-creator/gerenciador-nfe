@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_lingote_aluminio_po"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:aluminio_po",
+    "output": "cl:lingote_aluminio"
+  }
+}

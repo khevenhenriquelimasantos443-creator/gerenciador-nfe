@@ -7,6 +7,7 @@ import { desidratacao, lerSede } from "./sede.js";
 import { linhaOlhar } from "./olhar.js";
 import { lerTemperatura } from "./temperatura.js";
 import { intervalo } from "../util/perfil.js";
+import { LUA, painelLua } from "../galacticraft/oxigenio.js";
 
 /*
  * Painel fixo na barra de ação: água e temperatura do corpo, redesenhado a cada segundo
@@ -53,6 +54,7 @@ function estados(jogador: Player, corpo: number): RawMessage[] {
 }
 
 function painel(jogador: Player): RawMessage {
+  if (jogador.dimension.id === LUA) return painelLua(jogador);
   const agua = lerSede(jogador);
   const corpo = lerTemperatura(jogador);
   const corAgua = agua < SEDE.fracaAbaixoDe ? "§c" : "§b";

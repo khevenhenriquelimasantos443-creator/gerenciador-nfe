@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tanque_oxigenio_medio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ZZ",
+      "XX",
+      "YY"
+    ],
+    "key": {
+      "X": {
+        "item": "cl:lata_estanho"
+      },
+      "Y": {
+        "item": "cl:placa_estanho"
+      },
+      "Z": {
+        "item": "minecraft:orange_wool"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tanque_oxigenio_medio"
+    }
+  }
+}

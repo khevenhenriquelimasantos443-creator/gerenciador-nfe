@@ -1,6 +1,6 @@
 # Proposta: a saída do planeta (Galacticraft) e mods novos
 
-Rascunho para decidir antes de começar. Nada disto está no jogo ainda.
+**Decidido na 1.6.0:** o Galacticraft vai só até a Lua (a estação espacial e Marte ficam fora); dos mods abaixo entram todos menos o Lycanites; entram também Ender IO, todos os add-ons do Mekanism e o Create. A ordem das versões está em `docs/pendencias.md`. A 1.6.0 (a base e a viagem) já está no jogo.
 
 ## O que o Bedrock deixa fazer agora
 
@@ -35,7 +35,6 @@ Hoje o jogo termina quando a nave decola (cena e créditos). A ideia: a nave con
 | Plataforma de lançamento 3×3 + Carregador de Combustível | 1 balde (1.000 mB) por lançamento | — |
 | Lua: pouca gravidade, sem ar, crateras, minério de queijo, meteoros | dimensão `cl:lua`, terreno por script | meteoritos |
 | Masmorra lunar com chefe (o Esqueleto Evoluído) e esquemas | chefe com o Núcleo de Salto; esquema do Tier 2 | Faraó (chefe) |
-| Estação espacial | dimensão `cl:orbita`: plataforma inicial e volta por foguete | — |
 
 ### Em etapas (uma versão cada)
 
@@ -53,7 +52,6 @@ Hoje o jogo termina quando a nave decola (cena e créditos). A ideia: a nave con
    - instalar o núcleo no Painel da Nave;
    - "Saltar para casa" com cena nova e créditos;
    - capítulo "Rumo às estrelas" no Diário.
-4. **Depois (opcional):** estação espacial em órbita, Tier 2 e Marte.
 
 ### Para não quebrar mundos
 

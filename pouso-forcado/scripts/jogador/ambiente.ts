@@ -245,7 +245,7 @@ function efeitos(j: Player, corpo: number, ar: number, sede: number, arAmbiente:
     efeito(j, "slowness", nivelAr);
     efeito(j, "mining_fatigue", nivelAr);
   }
-  if (ar <= 0) j.applyDamage(AR.danoEmZero, { cause: EntityDamageCause.suffocation });
+  if (ar <= 0) j.applyDamage(AR.danoEmZero, { cause: EntityDamageCause.drowning }); // "suffocation" o jogo ignora fora de um bloco
   if (n % 20 === 0 && (corpo >= i2 || corpo <= h2 || sede < SEDE.fracaAbaixoDe || ar <= AR.muitoLento)) j.playSound("note.bass", { volume: 0.4 });
 }
 

@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_cobre_lunar"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:minerio_cobre_lunar",
+    "output": "minecraft:copper_ingot"
+  }
+}

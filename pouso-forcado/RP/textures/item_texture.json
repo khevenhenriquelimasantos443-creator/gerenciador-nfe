@@ -1000,6 +1000,93 @@
     },
     "clc_asa_delta": {
       "textures": "textures/items/cl/arte/asa_delta"
+    },
+    "clc_aluminio_quebrado": {
+      "textures": "textures/items/cl/c/aluminio_quebrado"
+    },
+    "clc_aluminio_triturado": {
+      "textures": "textures/items/cl/c/aluminio_triturado"
+    },
+    "clc_aluminio_po": {
+      "textures": "textures/items/cl/c/aluminio_po"
+    },
+    "clc_lingote_aluminio": {
+      "textures": "textures/items/cl/c/lingote_aluminio"
+    },
+    "clc_placa_cobre": {
+      "textures": "textures/items/cl/c/placa_cobre"
+    },
+    "clc_placa_estanho": {
+      "textures": "textures/items/cl/c/placa_estanho"
+    },
+    "clc_placa_aluminio": {
+      "textures": "textures/items/cl/c/placa_aluminio"
+    },
+    "clc_placa_ferro": {
+      "textures": "textures/items/cl/c/placa_ferro"
+    },
+    "clc_placa_bronze": {
+      "textures": "textures/items/cl/c/placa_bronze"
+    },
+    "clc_placa_aco": {
+      "textures": "textures/items/cl/c/placa_aco"
+    },
+    "clc_placa_reforcada": {
+      "textures": "textures/items/cl/c/placa_reforcada"
+    },
+    "clc_wafer_basico": {
+      "textures": "textures/items/cl/c/wafer_basico"
+    },
+    "clc_wafer_avancado": {
+      "textures": "textures/items/cl/c/wafer_avancado"
+    },
+    "clc_lata_estanho": {
+      "textures": "textures/items/cl/c/lata_estanho"
+    },
+    "clc_lata_cobre": {
+      "textures": "textures/items/cl/c/lata_cobre"
+    },
+    "clc_cano_oxigenio": {
+      "textures": "textures/items/cl/c/cano_oxigenio"
+    },
+    "clc_ventilador_oxigenio": {
+      "textures": "textures/items/cl/c/ventilador_oxigenio"
+    },
+    "clc_respiro_oxigenio": {
+      "textures": "textures/items/cl/c/respiro_oxigenio"
+    },
+    "clc_concentrador_oxigenio": {
+      "textures": "textures/items/cl/c/concentrador_oxigenio"
+    },
+    "clc_mascara_oxigenio": {
+      "textures": "textures/items/cl/c/mascara_oxigenio"
+    },
+    "clc_equipamento_oxigenio": {
+      "textures": "textures/items/cl/c/equipamento_oxigenio"
+    },
+    "clc_tanque_oxigenio_leve": {
+      "textures": "textures/items/cl/c/tanque_oxigenio_leve"
+    },
+    "clc_tanque_oxigenio_medio": {
+      "textures": "textures/items/cl/c/tanque_oxigenio_medio"
+    },
+    "clc_tanque_oxigenio_pesado": {
+      "textures": "textures/items/cl/c/tanque_oxigenio_pesado"
+    },
+    "clc_bico_foguete": {
+      "textures": "textures/items/cl/c/bico_foguete"
+    },
+    "clc_aleta_foguete": {
+      "textures": "textures/items/cl/c/aleta_foguete"
+    },
+    "clc_motor_foguete": {
+      "textures": "textures/items/cl/c/motor_foguete"
+    },
+    "clc_foguete_t1": {
+      "textures": "textures/items/cl/c/foguete_t1"
+    },
+    "clc_coalhada_queijo": {
+      "textures": "textures/items/cl/c/coalhada_queijo"
     }
   }
 }

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_compressor_oxigenio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XWX",
+      "WZW",
+      "XYX"
+    ],
+    "key": {
+      "W": {
+        "item": "cl:placa_aluminio"
+      },
+      "X": {
+        "item": "cl:placa_aco"
+      },
+      "Y": {
+        "item": "cl:placa_bronze"
+      },
+      "Z": {
+        "item": "cl:concentrador_oxigenio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:compressor_oxigenio"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_compressor"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "WXW",
+      "WYW",
+      "WZW"
+    ],
+    "key": {
+      "W": {
+        "item": "cl:lingote_aluminio"
+      },
+      "X": {
+        "item": "minecraft:anvil"
+      },
+      "Y": {
+        "item": "minecraft:copper_ingot"
+      },
+      "Z": {
+        "item": "cl:wafer_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:compressor"
+    }
+  }
+}

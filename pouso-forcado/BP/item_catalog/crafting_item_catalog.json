@@ -194,6 +194,20 @@
               "cl:picareta_pedra",
               "cl:picareta_silex"
             ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:foguete_t1",
+              "name": "cl:itemGroup.name.equipment_galacticraft"
+            },
+            "items": [
+              "cl:equipamento_oxigenio",
+              "cl:foguete_t1",
+              "cl:mascara_oxigenio",
+              "cl:tanque_oxigenio_leve",
+              "cl:tanque_oxigenio_medio",
+              "cl:tanque_oxigenio_pesado"
+            ]
           }
         ]
       },
@@ -252,10 +266,13 @@
           },
           {
             "group_identifier": {
-              "icon": "cl:cadinho_cru",
+              "icon": "cl:aluminio_po",
               "name": "cl:itemGroup.name.items_ex_nihilo"
             },
             "items": [
+              "cl:aluminio_po",
+              "cl:aluminio_quebrado",
+              "cl:aluminio_triturado",
               "cl:cadinho_cru",
               "cl:cajado_osso",
               "cl:cajado_ouro",
@@ -731,6 +748,48 @@
             "items": [
               "cl:asa_delta",
               "cl:elevador"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:bancada_nasa",
+              "name": "cl:itemGroup.name.items_galacticraft"
+            },
+            "items": [
+              "cl:aleta_foguete",
+              "cl:bico_foguete",
+              "cl:cano_oxigenio",
+              "cl:coalhada_queijo",
+              "cl:concentrador_oxigenio",
+              "cl:lata_cobre",
+              "cl:lata_estanho",
+              "cl:lingote_aluminio",
+              "cl:motor_foguete",
+              "cl:placa_aco",
+              "cl:placa_aluminio",
+              "cl:placa_bronze",
+              "cl:placa_cobre",
+              "cl:placa_estanho",
+              "cl:placa_ferro",
+              "cl:placa_reforcada",
+              "cl:respiro_oxigenio",
+              "cl:ventilador_oxigenio",
+              "cl:wafer_avancado",
+              "cl:wafer_basico",
+              "cl:bancada_nasa",
+              "cl:carregador_combustivel",
+              "cl:coletor_oxigenio",
+              "cl:compressor",
+              "cl:compressor_eletrico",
+              "cl:compressor_oxigenio",
+              "cl:fabricador_circuitos",
+              "cl:minerio_cobre_lunar",
+              "cl:minerio_estanho_lunar",
+              "cl:minerio_queijo",
+              "cl:plataforma_lancamento",
+              "cl:rocha_lunar",
+              "cl:solo_lunar",
+              "cl:terra_lunar"
             ]
           }
         ]

@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_queijo_lunar"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:minerio_queijo",
+    "output": "cl:coalhada_queijo"
+  }
+}

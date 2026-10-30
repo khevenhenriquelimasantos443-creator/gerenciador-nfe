@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:respiro_oxigenio",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_respiro_oxigenio",
+      "minecraft:display_name": {
+        "value": "item.cl:respiro_oxigenio.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

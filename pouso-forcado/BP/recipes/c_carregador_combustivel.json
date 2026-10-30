@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_carregador_combustivel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "XXX",
+      "XZX",
+      "WYW"
+    ],
+    "key": {
+      "W": {
+        "item": "cl:placa_aluminio"
+      },
+      "X": {
+        "item": "cl:placa_aco"
+      },
+      "Y": {
+        "item": "cl:wafer_basico"
+      },
+      "Z": {
+        "item": "cl:lata_estanho"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:carregador_combustivel"
+    }
+  }
+}

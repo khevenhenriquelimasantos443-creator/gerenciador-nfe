@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_motor_foguete"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " YV",
+      "XWX",
+      "XZX"
+    ],
+    "key": {
+      "V": {
+        "item": "minecraft:stone_button"
+      },
+      "W": {
+        "item": "cl:lata_estanho"
+      },
+      "X": {
+        "item": "cl:placa_reforcada"
+      },
+      "Y": {
+        "item": "minecraft:flint_and_steel"
+      },
+      "Z": {
+        "item": "cl:respiro_oxigenio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:motor_foguete"
+    }
+  }
+}

@@ -219,6 +219,9 @@ const APELIDOS = {
   golden_carrot: { icone: "textures/items/carrot_golden" },
   poisonous_potato: { icone: "textures/items/potato_poisonous" },
   white_wool: { lang: "tile.wool.white.name", icone: "textures/blocks/wool_colored_white" },
+  lime_wool: { lang: "tile.wool.lime.name", icone: "textures/blocks/wool_colored_lime" },
+  orange_wool: { lang: "tile.wool.orange.name", icone: "textures/blocks/wool_colored_orange" },
+  red_wool: { lang: "tile.wool.red.name", icone: "textures/blocks/wool_colored_red" },
 };
 
 function vanilla() {
