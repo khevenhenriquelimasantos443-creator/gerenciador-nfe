@@ -8,6 +8,10 @@ Atualizado na 1.5.2.
 - **Outras telas no visual de painel da 1.4.0:** Catálogo, Opções, Terminal e as máquinas.
 - **Logo na tela de "Carregando...":** se o "POUSO FORÇADO" aparece ou se fica o do Minecraft (o fundo já foi confirmado).
 
+## Para decidir
+
+- **Próxima grande versão:** a saída do planeta com o Galacticraft (Lua como dimensão própria, foguete, oxigênio) e mods novos. Ver `docs/proposta-galacticraft.md`.
+
 ## Feito por último
 
 - Wiki do modpack: https://pouso-forcado.vercel.app (fonte em `docs/wiki/wiki.fonte.html`, montada por `tools/gerar-wiki.py`). Atualizar a cada versão com mecânica nova.
