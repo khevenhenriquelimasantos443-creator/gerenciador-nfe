@@ -2,7 +2,7 @@
 // Rodar no console do servidor (tools/testar-servidor.mjs explica):
 //   execute positioned <x> 46 <z> run gametest run pouso:<nome>
 // Cada teste usa a estrutura pouso:vazio (8x6x8, chão de pedra em y 0). Coordenadas relativas a ela.
-import { BlockPermutation, Direction, GameMode, ItemStack, system, world } from "@minecraft/server";
+import { BlockPermutation, BlockVolume, Direction, GameMode, ItemStack, system, world } from "@minecraft/server";
 import { register } from "@minecraft/server-gametest";
 
 const log = (m) => console.warn(`[TESTE] ${m}`);
@@ -580,6 +580,151 @@ teste("create", 700, (t) => {
   });
 });
 
+// 1.10.0: Pedras do Caminho (ativar duas e voltar à última com o Pergaminho de Retorno).
+teste("waystone", 300, (t) => {
+  t.setBlockType("cl:pedra_caminho", { x: 1, y: 1, z: 1 });
+  t.setBlockType("cl:pedra_caminho", { x: 6, y: 1, z: 6 });
+  const j = robo(t, { x: 1, y: 1, z: 2 });
+  t.runAfterDelay(20, () => j.interactWithBlock({ x: 1, y: 1, z: 1 }, Direction.South));
+  t.runAfterDelay(40, () => j.teleport(t.worldLocation({ x: 6.5, y: 1, z: 5.5 })));
+  t.runAfterDelay(60, () => j.interactWithBlock({ x: 6, y: 1, z: 6 }, Direction.North));
+  t.runAfterDelay(80, () => j.teleport(t.worldLocation({ x: 1.5, y: 1, z: 4.5 })));
+  t.runAfterDelay(100, () => {
+    j.setItem(new ItemStack("cl:pergaminho_retorno", 1), 0, true);
+    j.useItemInSlot(0);
+  });
+  t.runAfterDelay(140, () => {
+    const p = t.relativeLocation(j.location);
+    log(`waystone: robô em ${p.x.toFixed(1)},${p.y.toFixed(1)},${p.z.toFixed(1)} pergaminhos=${quantos(j, "cl:pergaminho_retorno")}`);
+    t.assert(Math.hypot(p.x - 6.5, p.z - 6.5) < 2.5, "o Pergaminho de Retorno não levou à última pedra ativada");
+    t.assert(quantos(j, "cl:pergaminho_retorno") === 0, "o pergaminho não foi gasto");
+    t.succeed();
+  });
+});
+
+// 1.10.0: Robô Minerador: pôr com o item, abastecer com carvão e fazer um túnel de 4 numa parede de pedregulho.
+teste("robo", 600, (t) => {
+  // Nesta área o chão de pedra fica na altura 1: o robô anda na altura 2.
+  for (let x = 2; x <= 4; x++) for (let z = 2; z <= 5; z++) for (let y = 2; y <= 3; y++) t.setBlockType("minecraft:cobblestone", { x, y, z });
+  const j = robo(t, { x: 3, y: 2, z: 0 });
+  t.runAfterDelay(10, () => {
+    j.setItem(new ItemStack("cl:robo_minerador", 1), 0, true);
+    j.lookAtBlock({ x: 3, y: 1, z: 1 });
+    j.useItemInSlotOnBlock(0, { x: 3, y: 1, z: 1 }, Direction.Up);
+  });
+  t.runAfterDelay(30, () => {
+    j.teleport(t.worldLocation({ x: 6.5, y: 2, z: 1.5 }));
+    t.setBlockType("minecraft:chest", { x: 3, y: 2, z: 0 });
+    const r = t.getDimension().getEntities({ type: "cl:robo_minerador", location: t.worldLocation({ x: 3.5, y: 2, z: 1.5 }), maxDistance: 3 })[0];
+    if (!r) return t.fail("o robô não apareceu");
+  });
+  // O jogador simulado não dispara o toque em entidade (abastecer): o comando de teste põe 160 (2 carvões).
+  t.runAfterDelay(50, () => j.runCommand("scriptevent cl:teste_robo tunel 4 160"));
+  t.runAfterDelay(560, () => {
+    let ar = 0;
+    for (let x = 2; x <= 4; x++) for (let z = 2; z <= 5; z++) for (let y = 2; y <= 3; y++) if (t.getBlock({ x, y, z }).isAir) ar++;
+    const c = t.getBlock({ x: 3, y: 2, z: 0 }).getComponent("inventory").container;
+    let pedras = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === "minecraft:cobblestone") pedras += c.getItem(s).amount;
+    const r = t.getDimension().getEntities({ type: "cl:robo_minerador", location: t.worldLocation({ x: 3.5, y: 2, z: 1.5 }), maxDistance: 2 }).length;
+    log(`robo: blocos cavados=${ar}/24 pedregulho no baú=${pedras} robô de volta=${r}`);
+    t.assert(ar === 24, "o túnel não ficou aberto");
+    t.assert(pedras >= 20, "o robô não despejou o pedregulho no baú de trás");
+    t.assert(r === 1, "o robô não voltou ao ponto de partida");
+    t.succeed();
+  });
+});
+
+// 1.10.0: Mochila: usar o item põe a mochila no chão; bater nela guarda tudo de volta no item (e usar de novo devolve).
+teste("mochila", 300, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  const achar = () => t.getDimension().getEntities({ type: "cl:mochila", location: j.location, maxDistance: 4 })[0];
+  t.runAfterDelay(10, () => {
+    j.setItem(new ItemStack("cl:mochila", 1), 0, true);
+    j.useItemInSlot(0);
+  });
+  t.runAfterDelay(30, () => {
+    const m = achar();
+    if (!m) return t.fail("a mochila não apareceu no chão");
+    m.getComponent("inventory").container.setItem(4, new ItemStack("minecraft:diamond", 5));
+    j.attackEntity(m);
+  });
+  t.runAfterDelay(60, () => {
+    const inv = j.getComponent("inventory").container;
+    let lore = "";
+    for (let s = 0; s < inv.size; s++) if (inv.getItem(s)?.typeId === "cl:mochila") lore = inv.getItem(s).getLore().join("|");
+    log(`mochila: guardada=${quantos(j, "cl:mochila")} lore=${lore} no chão=${!!achar()}`);
+    t.assert(quantos(j, "cl:mochila") === 1 && !achar(), "bater não guardou a mochila");
+    j.selectedSlotIndex = 0;
+    for (let s = 0; s < inv.size; s++) if (inv.getItem(s)?.typeId === "cl:mochila" && s !== 0) inv.moveItem(s, 0, inv);
+    j.useItemInSlot(0);
+  });
+  t.runAfterDelay(90, () => {
+    const m = achar();
+    const d = m?.getComponent("inventory").container.getItem(4);
+    log(`mochila: de novo no chão=${!!m} diamantes=${d?.amount ?? 0}`);
+    t.assert(d?.typeId === "minecraft:diamond" && d.amount === 5, "o que estava na mochila se perdeu");
+    t.succeed();
+  });
+});
+
+// 1.10.0: Extra Utilities: Lixeira apaga itens jogados, Varinha copia a camada, Regador molha a terra, Bloco Angelical no ar.
+teste("extrautils", 300, (t) => {
+  t.setBlockType("cl:lixeira", { x: 1, y: 1, z: 1 });
+  t.spawnItem(new ItemStack("minecraft:dirt", 8), { x: 1.5, y: 2.2, z: 1.5 });
+  for (let x = 3; x <= 5; x++) t.setBlockType("minecraft:cobblestone", { x, y: 1, z: 1 });
+  t.setBlockType("minecraft:farmland", { x: 3, y: 1, z: 5 });
+  t.setBlockType("minecraft:wheat", { x: 3, y: 2, z: 5 });
+  const j = robo(t, { x: 4, y: 1, z: 3 });
+  t.runAfterDelay(10, () => {
+    j.setItem(new ItemStack("minecraft:cobblestone", 9), 1, false);
+    j.setItem(new ItemStack("cl:varinha_construtor", 1), 0, true);
+    j.lookAtBlock({ x: 4, y: 1, z: 1 });
+    j.useItemInSlotOnBlock(0, { x: 4, y: 1, z: 1 }, Direction.Up);
+  });
+  t.runAfterDelay(30, () => {
+    j.setItem(new ItemStack("cl:regador", 1), 0, true);
+    j.lookAtBlock({ x: 3, y: 2, z: 5 });
+    j.useItemInSlotOnBlock(0, { x: 3, y: 2, z: 5 }, Direction.Up);
+  });
+  t.runAfterDelay(50, () => {
+    j.setItem(new ItemStack("cl:bloco_angelical", 1), 0, true);
+    j.lookAtLocation(t.worldLocation({ x: 4, y: 4, z: 6 }));
+    log(`extrautils: usou o bloco angelical=${j.useItemInSlot(0)}`);
+  });
+  t.runAfterDelay(80, () => {
+    let cima = 0;
+    for (let x = 3; x <= 5; x++) if (t.getBlock({ x, y: 2, z: 1 }).typeId === "minecraft:cobblestone") cima++;
+    const terra = t.getBlock({ x: 3, y: 1, z: 5 }).permutation.getState("moisturized_amount");
+    const itens = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 1.5, y: 2, z: 1.5 }), maxDistance: 2 }).length;
+    const anjos = t.getDimension().getBlocks(new BlockVolume(t.worldBlockLocation({ x: 0, y: 1, z: 0 }), t.worldBlockLocation({ x: 7, y: 5, z: 7 })), { includeTypes: ["cl:bloco_angelical"] }, true).getCapacity();
+    log(`extrautils: varinha=${cima}/3 pedregulho sobrando=${quantos(j, "minecraft:cobblestone")} terra molhada=${terra} itens na lixeira=${itens} bloco angelical=${anjos}`);
+    t.assert(cima === 3, "a Varinha do Construtor não copiou a camada");
+    t.assert(quantos(j, "minecraft:cobblestone") === 6, "a Varinha não gastou os blocos");
+    t.assert(terra === 7, "o Regador não molhou a terra");
+    t.assert(itens === 0, "a Lixeira não apagou o item");
+    t.assert(anjos === 1, "o Bloco Angelical não ficou no ar");
+    t.succeed();
+  });
+});
+
+// 1.10.0: redemoinho de poeira (Weather2) em cima do robô: ele é jogado para o alto.
+teste("redemoinho", 200, (t) => {
+  const j = robo(t, { x: 3, y: 1, z: 3 });
+  let y0 = 0, maior = 0;
+  t.runAfterDelay(10, () => {
+    y0 = j.location.y;
+    j.runCommand("scriptevent cl:teste_redemoinho");
+  });
+  const id = system.runInterval(() => { if (y0) maior = Math.max(maior, j.location.y - y0); }, 1);
+  t.runAfterDelay(120, () => {
+    system.clearRun(id);
+    log(`redemoinho: subiu ${maior.toFixed(2)} blocos`);
+    t.assert(maior > 0.5, "o redemoinho não levantou o robô");
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });
@@ -590,6 +735,15 @@ teste("danos", 100, (t) => {
 });
 
 // Depuração: o que chega dos eventos de interação e de quebra.
+world.beforeEvents.playerInteractWithEntity.subscribe((ev) => {
+  if (ev.player.name === "Robo") log(`tocou na entidade: ${ev.target.typeId} com ${ev.itemStack?.typeId ?? "mão"}`);
+});
+world.afterEvents.playerInteractWithEntity.subscribe((ev) => {
+  if (ev.player.name === "Robo") log(`tocou (depois) na entidade: ${ev.target.typeId} com ${ev.itemStack?.typeId ?? "mão"}`);
+});
+world.afterEvents.itemUse.subscribe((ev) => {
+  if (ev.source.name === "Robo") log(`usou: ${ev.itemStack.typeId}`);
+});
 world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`interagiu: ${ev.itemStack?.typeId ?? "mão"} em ${ev.block.typeId} primeiro=${ev.isFirstEvent}`);
 });

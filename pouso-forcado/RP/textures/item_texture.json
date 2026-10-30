@@ -1444,6 +1444,33 @@
     },
     "clc_batedor": {
       "textures": "textures/items/cl/c/batedor"
+    },
+    "clc_pedra_viagem": {
+      "textures": "textures/items/cl/c/pedra_viagem"
+    },
+    "clc_pergaminho_retorno": {
+      "textures": "textures/items/cl/c/pergaminho_retorno"
+    },
+    "clc_pergaminho_viagem": {
+      "textures": "textures/items/cl/c/pergaminho_viagem"
+    },
+    "clc_mochila": {
+      "textures": "textures/items/cl/c/mochila"
+    },
+    "clc_computador": {
+      "textures": "textures/items/cl/c/computador"
+    },
+    "clc_robo_minerador": {
+      "textures": "textures/items/cl/c/robo_minerador"
+    },
+    "clc_regador": {
+      "textures": "textures/items/cl/c/regador"
+    },
+    "clc_varinha_construtor": {
+      "textures": "textures/items/cl/c/varinha_construtor"
+    },
+    "clc_super_varinha_construtor": {
+      "textures": "textures/items/cl/c/super_varinha_construtor"
     }
   }
 }

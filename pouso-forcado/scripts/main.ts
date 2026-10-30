@@ -66,6 +66,11 @@ import { registrarFoguete } from "./galacticraft/foguete.js";
 import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEnderIO, stirling } from "./maquinas/enderio.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
+import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
+import { registrarMochila } from "./utilidades/mochila.js";
+import { registrarRobo } from "./utilidades/robo.js";
+import { lixeira, registrarExtraUtils } from "./utilidades/extrautils.js";
+import { registrarRedemoinho } from "./mundo/redemoinho.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
@@ -163,6 +168,8 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:manivela", manivela);
   blockComponentRegistry.registerCustomComponent("cl:controlador_velocidade", controladorVelocidade);
   blockComponentRegistry.registerCustomComponent("cl:ancora_viagem", ancora);
+  blockComponentRegistry.registerCustomComponent("cl:pedra_caminho", pedraCaminho);
+  blockComponentRegistry.registerCustomComponent("cl:lixeira", comPerfil("cl:lixeira", lixeira));
   blockComponentRegistry.registerCustomComponent("cl:bancada_nasa", bancadaNasa);
   blockComponentRegistry.registerCustomComponent("cl:bau_tesouro", bauTesouro);
 });
@@ -221,3 +228,8 @@ registrarBase();
 registrarMekanismExtra();
 registrarEnderIO();
 registrarCreate();
+registrarWaystones();
+registrarMochila();
+registrarRobo();
+registrarExtraUtils();
+registrarRedemoinho();

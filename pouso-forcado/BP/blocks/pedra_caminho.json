@@ -1,0 +1,32 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:pedra_caminho",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.pedra_caminho"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_pedra_caminho",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#8a8a92",
+      "minecraft:light_emission": 5,
+      "cl:pedra_caminho": {},
+      "minecraft:light_dampening": 0
+    }
+  }
+}

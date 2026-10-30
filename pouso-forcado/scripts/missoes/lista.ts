@@ -113,7 +113,11 @@ export type Acao =
   | "ancora"
   | "manivela"
   | "moinho16"
-  | "lavar";
+  | "lavar"
+  | "waystone"
+  | "robo"
+  | "varinha"
+  | "redemoinho";
 
 type MissaoBase = {
   id: string;
@@ -351,6 +355,22 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "cr_latao", requer: ["cr_prensa"], objetivo: { tipo: "ter", item: "cl:lingote_latao", qtd: 4 }, recompensa: [{ item: "cl:lingote_zinco", quantidade: 4 }] },
       { id: "cr_moinho", requer: ["cr_manivela"], objetivo: { tipo: "acao", acao: "moinho16", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "cr_lavar", requer: ["cr_prensa"], objetivo: { tipo: "acao", acao: "lavar", qtd: 8 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "utilidades", // 1.10.0: Waystones, Backpacks, ComputerCraft, Extra Utilities e Weather2
+    icone: "cl:pedra_caminho",
+    requer: ["maquinas"],
+    missoes: [
+      { id: "ut_pedra", objetivo: { tipo: "colocar", bloco: "cl:pedra_caminho", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 2 }] },
+      { id: "ut_viajar", requer: ["ut_pedra"], objetivo: { tipo: "acao", acao: "waystone", qtd: 1 }, recompensa: [{ item: "cl:pergaminho_retorno", quantidade: 2 }] },
+      { id: "ut_mochila", objetivo: { tipo: "ter", item: "cl:mochila", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+      { id: "ut_robo", objetivo: { tipo: "ter", item: "cl:robo_minerador", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "ut_tunel", requer: ["ut_robo"], objetivo: { tipo: "acao", acao: "robo", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "ut_lixeira", objetivo: { tipo: "colocar", bloco: "cl:lixeira", qtd: 1 }, recompensa: [{ item: "minecraft:cobblestone", quantidade: 32 }] },
+      { id: "ut_varinha", objetivo: { tipo: "acao", acao: "varinha", qtd: 1 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 2 }] },
+      { id: "ut_comprimido", objetivo: { tipo: "ter", item: "cl:pedregulho_comprimido_3", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "ut_redemoinho", objetivo: { tipo: "acao", acao: "redemoinho", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

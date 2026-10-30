@@ -945,6 +945,58 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:pedra_caminho",
+              "name": "cl:itemGroup.name.items_waystones"
+            },
+            "items": [
+              "cl:pedra_viagem",
+              "cl:pergaminho_retorno",
+              "cl:pergaminho_viagem",
+              "cl:pedra_caminho"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:mochila",
+              "name": "cl:itemGroup.name.items_backpacks"
+            },
+            "items": [
+              "cl:mochila"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:robo_minerador",
+              "name": "cl:itemGroup.name.items_computercraft"
+            },
+            "items": [
+              "cl:computador",
+              "cl:robo_minerador"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:varinha_construtor",
+              "name": "cl:itemGroup.name.items_extra_utilities"
+            },
+            "items": [
+              "cl:regador",
+              "cl:super_varinha_construtor",
+              "cl:varinha_construtor",
+              "cl:bloco_angelical",
+              "cl:lixeira",
+              "cl:pedregulho_comprimido_1",
+              "cl:pedregulho_comprimido_2",
+              "cl:pedregulho_comprimido_3",
+              "cl:pedregulho_comprimido_4",
+              "cl:pedregulho_comprimido_5",
+              "cl:pedregulho_comprimido_6",
+              "cl:pedregulho_comprimido_7",
+              "cl:pedregulho_comprimido_8"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:bancada_nasa",
               "name": "cl:itemGroup.name.items_galacticraft"
             },

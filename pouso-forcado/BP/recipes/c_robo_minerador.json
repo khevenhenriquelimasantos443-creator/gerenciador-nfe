@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_robo_minerador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FPF",
+      "FCF",
+      "FBF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      "C": {
+        "item": "cl:computador"
+      },
+      "B": {
+        "item": "minecraft:chest"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:robo_minerador"
+    }
+  }
+}

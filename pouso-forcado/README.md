@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.9.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, Create, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.10.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, Create, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,15 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.10.0 (utilidades)
+
+- **Waystones**: a **Pedra do Caminho** (quem põe dá o nome; o primeiro toque ativa, os seguintes mostram as pedras que você já ativou e levam até lá, sem custo, na mesma dimensão). **Pedra de Viagem** (abre a lista de qualquer lugar, 300 s de espera), **Pergaminho de Viagem** (uma viagem) e **Pergaminho de Retorno** (volta à última pedra ativada).
+- **Mochila** (Backpacks): 27 espaços. Use para pô-la no chão, abra com o botão **Abrir** e **bata** nela para guardar de volta: tudo fica dentro do item (encantamentos, desgaste e nomes também). Mochila dentro de mochila vale.
+- **Robô Minerador** (a Mining Turtle do ComputerCraft): ponha num bloco, toque com combustível (carvão = 80, bloco de carvão 800, balde de lava 1.000) e escolha o programa: **túnel** de 16, 32 ou 64 (3 de largura por 2 de altura, com pedregulho no chão onde faltar) ou **escavar** 3×3, 5×5 ou 9×9 até a rocha-mãe. Ele guarda 16 espaços e despeja no baú atrás do ponto de partida.
+- **Extra Utilities**: **Lixeira** (apaga o que cai nela ou o que você tocar nela com a mão), **Regador** (molha a terra arada e acelera as plantações em 5×5), **Bloco Angelical** (põe no ar, sem apoio), **Varinha do Construtor** (copia a camada de até 9 blocos iguais) e **Super Varinha** (49), e o **Pedregulho Comprimido** de 1x a 8x.
+- **Redemoinhos de poeira** (Weather2): de dia, fora da tempestade, às vezes aparece um redemoinho perto de você que levanta poeira e joga para o alto quem chegar perto.
+- Capítulo **Utilidades** no Diário (9 missões).
 
 ## Novidades da 1.9.0 (Create)
 

@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_regador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S  ",
+      "SBS",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stone"
+      },
+      "B": {
+        "item": "minecraft:bowl"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:regador"
+    }
+  }
+}

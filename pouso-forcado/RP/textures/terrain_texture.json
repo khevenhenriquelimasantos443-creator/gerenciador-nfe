@@ -2217,6 +2217,39 @@
     },
     "clc_furadeira_baixo": {
       "textures": "textures/blocks/cl/c/furadeira_baixo"
+    },
+    "clc_pedra_caminho": {
+      "textures": "textures/blocks/cl/c/pedra_caminho"
+    },
+    "clc_lixeira": {
+      "textures": "textures/blocks/cl/c/lixeira"
+    },
+    "clc_bloco_angelical": {
+      "textures": "textures/blocks/cl/c/bloco_angelical"
+    },
+    "clc_pedregulho_comprimido_1": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_1"
+    },
+    "clc_pedregulho_comprimido_2": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_2"
+    },
+    "clc_pedregulho_comprimido_3": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_3"
+    },
+    "clc_pedregulho_comprimido_4": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_4"
+    },
+    "clc_pedregulho_comprimido_5": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_5"
+    },
+    "clc_pedregulho_comprimido_6": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_6"
+    },
+    "clc_pedregulho_comprimido_7": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_7"
+    },
+    "clc_pedregulho_comprimido_8": {
+      "textures": "textures/blocks/cl/c/pedregulho_comprimido_8"
     }
   }
 }

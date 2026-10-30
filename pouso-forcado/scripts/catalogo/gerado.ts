@@ -276,6 +276,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Steel",
   "icone": "textures/blocks/cl/arte/bloco_aco"
  },
+ "cl:bloco_angelical": {
+  "pt": "Bloco Angelical",
+  "en": "Angel Block",
+  "icone": "textures/blocks/cl/c/bloco_angelical"
+ },
  "cl:bloco_bronze": {
   "pt": "Bloco de Bronze",
   "en": "Block of Bronze",
@@ -795,6 +800,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Compressor de Oxigênio",
   "en": "Oxygen Compressor",
   "icone": "textures/blocks/cl/c/compressor_oxigenio_topo"
+ },
+ "cl:computador": {
+  "pt": "Computador",
+  "en": "Computer",
+  "icone": "textures/items/cl/c/computador"
  },
  "cl:computador_bordo": {
   "pt": "Computador de Bordo",
@@ -1496,6 +1506,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Zinc Ingot",
   "icone": "textures/items/cl/c/lingote_zinco"
  },
+ "cl:lixeira": {
+  "pt": "Lixeira",
+  "en": "Trash Can",
+  "icone": "textures/blocks/cl/c/lixeira"
+ },
  "cl:machadinha_aco": {
   "pt": "Machadinha de Aço",
   "en": "Steel Hatchet",
@@ -2040,6 +2055,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Mó",
   "en": "Millstone",
   "icone": "textures/blocks/cl/c/mo_topo"
+ },
+ "cl:mochila": {
+  "pt": "Mochila",
+  "en": "Backpack",
+  "icone": "textures/items/cl/c/mochila"
  },
  "cl:moinho": {
   "pt": "Moinho de Vento",
@@ -2746,6 +2766,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Crossbar",
   "icone": "textures/items/cl/arte/peca_travessa_silex"
  },
+ "cl:pedra_caminho": {
+  "pt": "Pedra do Caminho",
+  "en": "Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho"
+ },
  "cl:pedra_entalhado": {
   "pt": "Pedra Entalhado",
   "en": "Carved Stone",
@@ -2786,6 +2811,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Small Bricks Stone",
   "icone": "textures/blocks/cl/arte/pedra_tijolos_pequenos"
  },
+ "cl:pedra_viagem": {
+  "pt": "Pedra de Viagem",
+  "en": "Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem"
+ },
+ "cl:pedregulho_comprimido_1": {
+  "pt": "Pedregulho Comprimido (1x)",
+  "en": "Compressed Cobblestone (1x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_1"
+ },
+ "cl:pedregulho_comprimido_2": {
+  "pt": "Pedregulho Comprimido (2x)",
+  "en": "Compressed Cobblestone (2x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_2"
+ },
+ "cl:pedregulho_comprimido_3": {
+  "pt": "Pedregulho Comprimido (3x)",
+  "en": "Compressed Cobblestone (3x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_3"
+ },
+ "cl:pedregulho_comprimido_4": {
+  "pt": "Pedregulho Comprimido (4x)",
+  "en": "Compressed Cobblestone (4x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_4"
+ },
+ "cl:pedregulho_comprimido_5": {
+  "pt": "Pedregulho Comprimido (5x)",
+  "en": "Compressed Cobblestone (5x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_5"
+ },
+ "cl:pedregulho_comprimido_6": {
+  "pt": "Pedregulho Comprimido (6x)",
+  "en": "Compressed Cobblestone (6x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_6"
+ },
+ "cl:pedregulho_comprimido_7": {
+  "pt": "Pedregulho Comprimido (7x)",
+  "en": "Compressed Cobblestone (7x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_7"
+ },
+ "cl:pedregulho_comprimido_8": {
+  "pt": "Pedregulho Comprimido (8x)",
+  "en": "Compressed Cobblestone (8x)",
+  "icone": "textures/blocks/cl/c/pedregulho_comprimido_8"
+ },
  "cl:pedreira": {
   "pt": "Pedreira",
   "en": "Quarry",
@@ -2810,6 +2880,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Peneira Automática",
   "en": "Automatic Sieve",
   "icone": "textures/items/cl/arte/blocos/peneira_automatica"
+ },
+ "cl:pergaminho_retorno": {
+  "pt": "Pergaminho de Retorno",
+  "en": "Return Scroll",
+  "icone": "textures/items/cl/c/pergaminho_retorno"
+ },
+ "cl:pergaminho_viagem": {
+  "pt": "Pergaminho de Viagem",
+  "en": "Warp Scroll",
+  "icone": "textures/items/cl/c/pergaminho_viagem"
  },
  "cl:petroleo": {
   "pt": "Petróleo",
@@ -3131,6 +3211,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Refinery",
   "icone": "textures/items/cl/arte/blocos/refinaria"
  },
+ "cl:regador": {
+  "pt": "Regador",
+  "en": "Watering Can",
+  "icone": "textures/items/cl/c/regador"
+ },
  "cl:reprocessador_cianita": {
   "pt": "Reprocessador de Cianita",
   "en": "Cyanite Reprocessor",
@@ -3155,6 +3240,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Revestimento de Andesita",
   "en": "Andesite Casing",
   "icone": "textures/blocks/cl/c/revestimento_andesita"
+ },
+ "cl:robo_minerador": {
+  "pt": "Robô Minerador",
+  "en": "Mining Turtle",
+  "icone": "textures/items/cl/c/robo_minerador"
  },
  "cl:rocha_lunar": {
   "pt": "Rocha Lunar",
@@ -3310,6 +3400,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Suco de Fruta do Cacto",
   "en": "Cactus Fruit Juice",
   "icone": "textures/items/cl/arte/suco_cacto"
+ },
+ "cl:super_varinha_construtor": {
+  "pt": "Super Varinha do Construtor",
+  "en": "Super Builder's Wand",
+  "icone": "textures/items/cl/c/super_varinha_construtor"
  },
  "cl:suporte_ferramentas": {
   "pt": "Suporte de Ferramentas",
@@ -3550,6 +3645,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Varal",
   "en": "Drying Rack",
   "icone": "textures/blocks/cl/arte/varal"
+ },
+ "cl:varinha_construtor": {
+  "pt": "Varinha do Construtor",
+  "en": "Builder's Wand",
+  "icone": "textures/items/cl/c/varinha_construtor"
  },
  "cl:vela_moinho": {
   "pt": "Vela de Moinho",
@@ -4160,6 +4260,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Frasco de Experiência",
   "en": "Bottle o' Enchanting",
   "icone": "textures/items/experience_bottle"
+ },
+ "minecraft:feather": {
+  "pt": "Pena",
+  "en": "Feather",
+  "icone": "textures/items/feather"
  },
  "minecraft:fermented_spider_eye": {
   "pt": "Olho de Aranha Fermentado",
@@ -5778,6 +5883,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bloco_angelical",
+  "resultado": "cl:bloco_angelical",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "FOF"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "F": "minecraft:feather",
+   "O": "minecraft:obsidian"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bloco_bronze",
   "resultado": "cl:bloco_bronze",
   "qtd": 1,
@@ -6821,6 +6944,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_computador",
+  "resultado": "cl:computador",
+  "qtd": 1,
+  "grade": [
+   "PPP",
+   "PRP",
+   "PVP"
+  ],
+  "chaves": {
+   "P": "minecraft:stone",
+   "R": "minecraft:redstone",
+   "V": "minecraft:glass_pane"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_concentrador_oxigenio",
   "resultado": "cl:concentrador_oxigenio",
   "qtd": 1,
@@ -7069,6 +7211,126 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "A": "cl:lingote_aco",
    "C": "cl:cubo_energia_avancado"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_1",
+  "resultado": "minecraft:cobblestone",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_1",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_2",
+  "resultado": "cl:pedregulho_comprimido_1",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_2",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_3",
+  "resultado": "cl:pedregulho_comprimido_2",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_3",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_4",
+  "resultado": "cl:pedregulho_comprimido_3",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_4",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_5",
+  "resultado": "cl:pedregulho_comprimido_4",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_5",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_6",
+  "resultado": "cl:pedregulho_comprimido_5",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_6",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_7",
+  "resultado": "cl:pedregulho_comprimido_6",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_7",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_descomprimir_8",
+  "resultado": "cl:pedregulho_comprimido_7",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:pedregulho_comprimido_8",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -8484,6 +8746,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_lixeira",
+  "resultado": "cl:lixeira",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "CBC",
+   "CCC"
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "C": "minecraft:cobblestone",
+   "B": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_manivela",
   "resultado": "cl:manivela",
   "qtd": 1,
@@ -9833,6 +10114,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mochila",
+  "resultado": "cl:mochila",
+  "qtd": 1,
+  "grade": [
+   "LLL",
+   "LWL",
+   "LLL"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "W": "minecraft:white_wool"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_moinho_sag",
   "resultado": "cl:moinho_sag",
   "qtd": 1,
@@ -10172,6 +10471,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_pedra_caminho",
+  "resultado": "cl:pedra_caminho",
+  "qtd": 1,
+  "grade": [
+   " T ",
+   "TWT",
+   "OOO"
+  ],
+  "chaves": {
+   "T": "minecraft:stone_bricks",
+   "W": "cl:pedra_viagem",
+   "O": "minecraft:obsidian"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_pedra_liso",
   "resultado": "cl:pedra_liso",
   "qtd": 4,
@@ -10181,6 +10499,161 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "B": "minecraft:stone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem",
+  "resultado": "cl:pedra_viagem",
+  "qtd": 1,
+  "grade": [
+   " D ",
+   "EPE",
+   " D "
+  ],
+  "chaves": {
+   "D": "minecraft:purple_dye",
+   "E": "minecraft:emerald",
+   "P": "minecraft:ender_pearl"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_1",
+  "resultado": "cl:pedregulho_comprimido_1",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "minecraft:cobblestone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_2",
+  "resultado": "cl:pedregulho_comprimido_2",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_1"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_3",
+  "resultado": "cl:pedregulho_comprimido_3",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_2"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_4",
+  "resultado": "cl:pedregulho_comprimido_4",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_3"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_5",
+  "resultado": "cl:pedregulho_comprimido_5",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_4"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_6",
+  "resultado": "cl:pedregulho_comprimido_6",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_5"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_7",
+  "resultado": "cl:pedregulho_comprimido_7",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_6"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedregulho_comprimido_8",
+  "resultado": "cl:pedregulho_comprimido_8",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "CCC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "cl:pedregulho_comprimido_7"
   },
   "estacoes": [
    "crafting_table"
@@ -10203,6 +10676,52 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "D": "cl:engrenagem_diamante",
    "P": "minecraft:diamond_pickaxe"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pergaminho_retorno",
+  "resultado": "cl:pergaminho_retorno",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:paper",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ender_pearl",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:gold_nugget",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pergaminho_viagem",
+  "resultado": "cl:pergaminho_viagem",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:paper",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:ender_pearl",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:purple_dye",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -10550,6 +11069,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_regador",
+  "resultado": "cl:regador",
+  "qtd": 1,
+  "grade": [
+   "S  ",
+   "SBS",
+   " S "
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "B": "minecraft:bowl"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_reprocessador_cianita",
   "resultado": "cl:reprocessador_cianita",
   "qtd": 1,
@@ -10621,6 +11158,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_robo_minerador",
+  "resultado": "cl:robo_minerador",
+  "qtd": 1,
+  "grade": [
+   "FPF",
+   "FCF",
+   "FBF"
+  ],
+  "chaves": {
+   "F": "minecraft:iron_ingot",
+   "P": "minecraft:diamond_pickaxe",
+   "C": "cl:computador",
+   "B": "minecraft:chest"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -10765,6 +11322,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_super_varinha_construtor",
+  "resultado": "cl:super_varinha_construtor",
+  "qtd": 1,
+  "grade": [
+   "D",
+   "V"
+  ],
+  "chaves": {
+   "D": "minecraft:diamond_block",
+   "V": "cl:varinha_construtor"
+  },
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -11402,6 +11976,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "S": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_varinha_construtor",
+  "resultado": "cl:varinha_construtor",
+  "qtd": 1,
+  "grade": [
+   "O",
+   "S"
+  ],
+  "chaves": {
+   "O": "minecraft:obsidian",
+   "S": "minecraft:stick"
   },
   "estacoes": [
    "crafting_table"

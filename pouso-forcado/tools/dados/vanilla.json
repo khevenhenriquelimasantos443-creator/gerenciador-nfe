@@ -518,6 +518,11 @@
   "en": "Bottle o' Enchanting",
   "icone": "textures/items/experience_bottle"
  },
+ "minecraft:feather": {
+  "pt": "Pena",
+  "en": "Feather",
+  "icone": "textures/items/feather"
+ },
  "minecraft:fermented_spider_eye": {
   "pt": "Olho de Aranha Fermentado",
   "en": "Fermented Spider Eye",

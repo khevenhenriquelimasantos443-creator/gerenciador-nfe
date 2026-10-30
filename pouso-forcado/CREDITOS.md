@@ -23,6 +23,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 ## Inspiração
 
+- **Waystones** (BlayTheNinth), **Backpacks** (Eydamos), **ComputerCraft** (Daniel Ratcliffe, os programas "tunnel" e
+  "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
+  só as ideias e os números (1.10.0). Código, modelos e arte próprios.
+
 - **Create** (simibubi e equipe, MIT): rotação e estresse (Manivela, Roda d'Água, Moinho de Vento, eixos, engrenagens,
   Mó, Rodas Trituradoras, Prensa, Misturador, Ventilador e Furadeira), com os números de estresse e as receitas do código
   público (github.com/Creators-of-Create/Create). Código e arte próprios.
