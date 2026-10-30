@@ -33,5 +33,5 @@ O jogador escolheu: o Galacticraft vai **só até a Lua**; dos mods da proposta 
 ## Decidido
 
 - De dia, todo monstro da superfície se enterra na areia, inclusive o que estiver atacando o jogador (pedido: nenhum mob hostil de manhã e de tarde).
-- Texturas originais dos mods com licença livre: não usar; o projeto fica com a arte própria, que é uniforme.
+- Texturas originais dos mods: **usar sempre que a licença deixar** (decidido na 1.10.1, mudando a decisão antiga de arte uniforme), inclusive nos mods que já estavam no pack. Os outros ficam com a arte própria, redesenhada parecida com a original quando der.
 - Galacticraft só até a Lua (sem estação espacial nem Marte). Sem o Lycanites.

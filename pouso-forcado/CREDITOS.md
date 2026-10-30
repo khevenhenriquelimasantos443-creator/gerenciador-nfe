@@ -8,7 +8,8 @@ Todo o código (TypeScript em `scripts/` e os geradores em `tools/`) foi escrito
 O pacote de recursos é distribuído sob **CC BY-NC-SA 4.0**
 (https://creativecommons.org/licenses/by-nc-sa/4.0/): pode copiar e adaptar, dando crédito,
 sem vender, e mantendo a mesma licença. Isso permite usar texturas de mods com licenças
-CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
+CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. As texturas originais de mods
+(seção "Texturas de terceiros") continuam com a licença do mod de onde vieram.
 
 ## Avião caído
 
@@ -97,8 +98,34 @@ Bordo (moldura, barras, botões e os ícones dos sistemas da nave, em `RP/textur
 
 ## Texturas de terceiros
 
-Nenhuma até esta versão. As próximas fases listam aqui cada textura reaproveitada, com autor,
-mod e licença.
+Desde a 1.10.1, os itens e blocos dos mods abaixo usam as **texturas e ícones originais** do mod, copiados do
+código-fonte público por `tools/importar-originais.py` (a lista de cada um fica em `referencias/licencas/usados.json` e
+a licença de cada repositório em `referencias/licencas/`). Animações viram o 1º quadro; as ferramentas do Tinkers são
+as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do mod:
+
+| Mod | Autores | Licença da arte | Repositório |
+|---|---|---|---|
+| Mekanism, Generators e Tools | aidancbrady (arte: Cheapshot, Archadia) | MIT | github.com/aidancbrady/Mekanism (1.7.10) |
+| Ender IO | CrazyPants, SleepyTrousers e equipe | Unlicense / CC0 | github.com/SleepyTrousers/EnderIO (5.2) |
+| Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
+| ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
+| Tinkers' Construct | mDiyo e SlimeKnights | CC BY 3.0 | github.com/SlimeKnights/TinkersConstruct (1.7.10) |
+| Applied Energistics 2 | AlgorithmX2 e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (rv3) |
+| PneumaticCraft | MineMaarten | GPLv3 | github.com/MineMaarten/PneumaticCraft |
+| Big Reactors | Erogenous Beef | MIT | github.com/erogenousbeef/BigReactors |
+| BuildCraft | SpaceToad e equipe | Minecraft Mod Public License | github.com/BuildCraft/BuildCraft (7.1) |
+| OpenBlocks | OpenMods | MIT | github.com/OpenMods/OpenBlocks |
+| Chisel | Chisel Team | GPLv2 | github.com/Chisel-Team/Chisel (1.7) |
+| ChickenChunks | ChickenBones e equipe | MIT | github.com/TheCBProject/ChickenChunks |
+| EnviroMine | Funwayguy, TimbuckTato e equipe | CC BY-NC-SA 4.0 | github.com/EnviroMine/EnviroMine-1.7 |
+
+Também usados fora do próprio mod: os pós de ferro, ouro, cobre e estanho são os do Mekanism; os lingotes de bronze,
+aço, estanho e alumínio são os do Tinkers; o silício é o do AE2.
+
+**Ficaram com a arte própria** (a licença não deixa usar a arte): Create (arte "todos os direitos reservados"),
+Galacticraft (proíbe versões para outras plataformas), Extra Utilities (código fechado), Thermal Expansion, MineFactory
+Reloaded, Pam's HarvestCraft, Sync, JABBA, BiblioCraft, Ex Nihilo, Backpacks e Hunger Overhaul (sem licença publicada).
+Os add-ons de Bedrock parecidos (Space.PE, Create e Extra Utilities feitos por outras pessoas) também não entram.
 
 ## Dados do jogo
 

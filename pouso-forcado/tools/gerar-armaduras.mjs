@@ -2,7 +2,7 @@
 // exemplos oficiais Mojang/bedrock-samples) tingida com a cor de cada material, e os "attachables" que põem a peça
 // no corpo do jogador (os modelos são os do próprio jogo). Roda à mão (os arquivos gerados vão no repositório):
 //   node tools/gerar-armaduras.mjs
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gerarPng, lerPng } from "./png.mjs";
@@ -19,11 +19,15 @@ const PECAS = [
   ["botas", "boots", "boot_layer_visible", 1],
 ];
 
+// Materiais com a textura original do mod (tools/importar-originais.py, 1.10.1): não pinta por cima.
+const USADOS = join(RAIZ, "referencias/licencas/usados.json");
+const originais = new Set(existsSync(USADOS) ? Object.values(JSON.parse(readFileSync(USADOS, "utf8"))).flat() : []);
 mkdirSync(join(RAIZ, "RP/textures/models/armor/cl"), { recursive: true });
 mkdirSync(join(RAIZ, "RP/attachables"), { recursive: true });
 for (const camada of [1, 2]) {
   const { w, h, rgba } = lerPng(join(RAIZ, `referencias/vanilla/armaduras/iron_${camada}.png`));
   for (const [, m, cor] of MATERIAIS) {
+    if (originais.has(`armadura ${m}_${camada}`)) continue;
     const c = hex(cor);
     const png = gerarPng(w, h, (x, y) => {
       const i = (y * w + x) * 4;

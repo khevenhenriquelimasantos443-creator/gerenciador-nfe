@@ -5,6 +5,14 @@
       "identifier": "cl:tumulo",
       "menu_category": {
         "category": "none"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
       }
     },
     "components": {
@@ -13,7 +21,19 @@
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "clc_tumulo",
+          "texture": "clc_tumulo_lado",
+          "render_method": "opaque"
+        },
+        "north": {
+          "texture": "clc_tumulo_frente",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "clc_tumulo_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_tumulo_baixo",
           "render_method": "opaque"
         }
       },
@@ -51,6 +71,56 @@
           12
         ]
       }
-    }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      }
+    ]
   }
 }
