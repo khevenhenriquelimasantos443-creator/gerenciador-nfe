@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.4.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.5.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -149,6 +149,16 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.5.0
+
+- **Diário de Bordo novo, no desenho do ChatGPT** (moldura de metal, botões grafite e laranja, ícones dos sistemas): uma tela só com tudo à vista.
+  - **Cabeçalho:** "Diário de Bordo | Pouso Forçado", o **estado da nave** (EMERGÊNCIA, EM REPARO ou PRONTA, com LED) e o X para fechar.
+  - **Coluna da esquerda:** os 24 capítulos com ícone (o aberto fica laranja; os que ainda não abriram têm cadeado). Um toque troca de capítulo de qualquer tela.
+  - **Coluna da direita:** a visão geral (progresso total, recompensas para escolher e as missões abertas agora), as missões do capítulo ou o detalhe da missão: nome grande, descrição, ícone do item, o **objetivo com caixinha** e a contagem, a **barra de progresso** em 4 segmentos, o que falta fazer antes e a **recompensa** com ícone.
+  - **Botões embaixo:** "Verificar progresso" (ou "Entregar os itens" / "Escolher recompensa"), "Pular" e "Voltar"; na visão geral, "Leia primeiro", Catálogo e Opções; no capítulo, "Próxima missão".
+  - **Rodapé:** "Sistemas da nave" com os 4 sistemas (casco, computador, combustível e motor) acesos quando consertados e "n/4 reparados".
+- A história ("Leia primeiro") também abre nessa tela. As outras telas do add-on continuam no visual de painel da 1.4.0.
 
 ## Novidades da 1.4.2
 

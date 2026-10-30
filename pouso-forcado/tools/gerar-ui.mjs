@@ -6,6 +6,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hex, mix, mul, png, ruido } from "./pintura.mjs";
+import { lerPng } from "./png.mjs";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PASTA = join(RAIZ, "RP/textures/ui/cl");
@@ -75,6 +76,49 @@ salvar("diario_claro", (x, y) => {
   if (d === 1) return y === 1 || x === 1 ? C.metalLuz : C.metalSombra;
   return mul(hex("#c6cacd"), 0.98 + ruido(x, y, 71) * 0.04);
 }, 16, 16, 3);
+
+// Tela do Diário no layout de painel (1.5.0): a arte desenhada (RP/textures/ui/cl/painel/, feita com o ChatGPT)
+// tem o dobro de resolução; o .json diz o tamanho base (metade) e as bordas fixas do nineslice nesse tamanho,
+// para ficar nítida no celular. Daqui saem também as barras de progresso cheias, as caixinhas do objetivo e o LED.
+{
+  const PAINEL = join(PASTA, "painel");
+  const json = (nome, base, nineslice) => writeFileSync(join(PAINEL, `${nome}.json`), `${JSON.stringify({ nineslice_size: nineslice, base_size: base })}\n`);
+  json("moldura", [64, 64], 6);
+  json("barra_titulo", [96, 16], 4);
+  json("botao_grafite", [64, 16], 2);
+  json("botao_laranja", [64, 16], 4);
+  json("botao_selecionado", [64, 16], [5, 2, 2, 2]);
+  // Barra de progresso em 4 segmentos: progresso_0..10 (décimos), o vazio da arte com laranja por dentro.
+  const vazia = lerPng(join(PAINEL, "barra_progresso_vazia.png"));
+  const px = (x, y) => [...vazia.rgba.subarray((y * vazia.w + x) * 4, (y * vazia.w + x) * 4 + 4)];
+  const escuro = (c) => c[0] + c[1] + c[2] < 3 * 0x38;
+  for (let k = 0; k <= 10; k++) {
+    const limite = Math.round(((vazia.w - 4) * k) / 10) + 2;
+    writeFileSync(join(PAINEL, `progresso_${k}.png`), png((x, y) => {
+      const c = px(x, y);
+      // Só o miolo escuro dos segmentos enche; as divisórias e a moldura ficam.
+      if (x < 2 || x >= limite || y < 2 || y >= vazia.h - 2 || !escuro(c)) return c;
+      const t = (y - 2) / (vazia.h - 5);
+      return y === 2 ? hex("#ffc45a") : mix(hex("#f7951f"), hex("#d9670c"), t);
+    }, vazia.w, vazia.h));
+  }
+  // Caixinha do objetivo (vazia e marcada) e o LED do estado da nave (branco: a tela pinta da cor certa).
+  const caixa = (marcada) => (x, y) => {
+    const d = Math.min(x, y, 11 - x, 11 - y);
+    if (d === 0) return hex("#c9d0d6");
+    if (d === 1) return hex("#0f1418");
+    if (!marcada) return hex("#1b2127");
+    const check = [[3, 6], [4, 7], [5, 8], [6, 7], [7, 6], [8, 5], [8, 4], [9, 3]];
+    return check.some(([cx, cy]) => (x === cx && (y === cy || y === cy - 1))) ? hex("#7dff6a") : hex("#1d3a1d");
+  };
+  writeFileSync(join(PAINEL, "caixa.png"), png(caixa(false), 12, 12));
+  writeFileSync(join(PAINEL, "caixa_marcada.png"), png(caixa(true), 12, 12));
+  writeFileSync(join(PAINEL, "led.png"), png((x, y) => {
+    const d = Math.min(x, y, 5 - x, 7 - y);
+    if (d === 0) return hex("#202020");
+    return x === 1 && y <= 3 ? [255, 255, 255] : hex("#d8d8d8");
+  }, 6, 8));
+}
 
 // Logo do menu e da tela de carregamento (no lugar do logo do Minecraft: RP_menu/textures/ui/title.png, do
 // mesmo tamanho do original): "POUSO FORÇADO" em letras de bloco, branco-gelo do casco com a faixa laranja do avião, a lateral
@@ -149,4 +193,4 @@ salvar("diario_claro", (x, y) => {
   }, W, H));
 }
 
-console.log("ui das telas: 8 texturas e o logo");
+console.log("ui das telas: 8 texturas, o painel do Diário e o logo");

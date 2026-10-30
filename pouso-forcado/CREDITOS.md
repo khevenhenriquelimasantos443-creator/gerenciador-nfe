@@ -69,7 +69,8 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 Os ícones desenhados (itens, ovos dos monstros e os ícones de menu das máquinas) foram feitos pelo
 autor do projeto com ajuda de IA. Ficam em `RP/textures/items/cl/arte/` e são importados por
-`tools/importar-icones.py`; onde ainda não há desenho, vale o ícone gerado pelos scripts.
+`tools/importar-icones.py`; onde ainda não há desenho, vale o ícone gerado pelos scripts. A tela do Diário de
+Bordo (moldura, barras, botões e os ícones dos sistemas da nave, em `RP/textures/ui/cl/painel/`) também.
 
 ## Texturas de terceiros
 

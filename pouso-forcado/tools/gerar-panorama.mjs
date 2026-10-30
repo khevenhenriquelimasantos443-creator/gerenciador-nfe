@@ -15,8 +15,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { inflateSync } from "node:zlib";
-import { gerarPng } from "./png.mjs";
+import { gerarPng, lerPng } from "./png.mjs";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const VANILLA = process.argv[2];
@@ -30,63 +29,6 @@ const FACE = PREVIA ? Number(process.env.FACE ?? 256) : 1024;
 const FUNDO = PREVIA ? [640, 300] : [1280, 600];
 
 // ---------- leitura das texturas do jogo (PNG e TGA) ----------
-function lerPng(arq) {
-  const d = readFileSync(arq);
-  let o = 8, w = 0, h = 0, bits = 8, tipo = 6, pal = null, trns = null;
-  const idat = [];
-  while (o < d.length) {
-    const n = d.readUInt32BE(o), t = d.toString("latin1", o + 4, o + 8), c = d.subarray(o + 8, o + 8 + n);
-    if (t === "IHDR") {
-      [w, h, bits, tipo] = [c.readUInt32BE(0), c.readUInt32BE(4), c[8], c[9]];
-      if (c[12]) throw new Error(`${arq}: PNG entrelaçado`);
-    } else if (t === "PLTE") pal = c;
-    else if (t === "tRNS") trns = c;
-    else if (t === "IDAT") idat.push(c);
-    o += 12 + n;
-  }
-  const canais = { 0: 1, 2: 3, 3: 1, 4: 2, 6: 4 }[tipo];
-  const bpp = Math.max(1, (canais * bits) >> 3), L = Math.ceil((w * canais * bits) / 8);
-  const cru = inflateSync(Buffer.concat(idat)), px = Buffer.alloc(L * h);
-  for (let y = 0; y < h; y++) {
-    const f = cru[y * (L + 1)], de = y * (L + 1) + 1, para = y * L;
-    for (let i = 0; i < L; i++) {
-      const a = i >= bpp ? px[para + i - bpp] : 0, b = y ? px[para - L + i] : 0, c = y && i >= bpp ? px[para - L + i - bpp] : 0;
-      let v = cru[de + i];
-      if (f === 1) v += a;
-      else if (f === 2) v += b;
-      else if (f === 3) v += (a + b) >> 1;
-      else if (f === 4) {
-        const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
-        v += pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
-      }
-      px[para + i] = v & 255;
-    }
-  }
-  const amostra = (y, i) => {
-    if (bits >= 8) return px[y * L + i * (bits >> 3)];
-    const porByte = 8 / bits, byte = px[y * L + Math.floor(i / porByte)];
-    return (byte >> (8 - bits * ((i % porByte) + 1))) & ((1 << bits) - 1);
-  };
-  const rgba = new Uint8Array(w * h * 4);
-  for (let y = 0; y < h; y++)
-    for (let x = 0; x < w; x++) {
-      let r, g, b, a = 255;
-      if (tipo === 3) {
-        const k = amostra(y, x);
-        [r, g, b] = [pal[k * 3], pal[k * 3 + 1], pal[k * 3 + 2]];
-        if (trns && k < trns.length) a = trns[k];
-      } else if (tipo === 0 || tipo === 4) {
-        r = g = b = Math.round(amostra(y, x * canais) * (bits < 8 ? 255 / ((1 << bits) - 1) : 1));
-        if (tipo === 4) a = amostra(y, x * 2 + 1);
-      } else {
-        [r, g, b] = [amostra(y, x * canais), amostra(y, x * canais + 1), amostra(y, x * canais + 2)];
-        if (tipo === 6) a = amostra(y, x * 4 + 3);
-      }
-      rgba.set([r, g, b, a], (y * w + x) * 4);
-    }
-  return { w, h, rgba };
-}
-
 function lerTga(arq) {
   const d = readFileSync(arq);
   const tipo = d[2], w = d.readUInt16LE(12), h = d.readUInt16LE(14), bpp = d[16] >> 3, deCima = d[17] & 0x20;
