@@ -157,7 +157,12 @@ function bloco(f, b) {
   const description = { identifier: `cl:${b.id}`, menu_category: { category: b.menu ?? "items" } };
   if (b.estados) description.states = b.estados;
   const permutations = [...(b.permutacoes ?? [])];
-  if (girar) {
+  // Eixos (1.9.0, Create): de pé, deitados ao norte-sul ou ao leste-oeste, conforme a face onde se encosta.
+  if (b.eixo) {
+    description.traits = { "minecraft:placement_position": { enabled_states: ["minecraft:block_face"] } };
+    for (const [faces, rot] of [[["north", "south"], [90, 0, 0]], [["east", "west"], [0, 0, 90]]])
+      permutations.push({ condition: faces.map((f) => `q.block_state('minecraft:block_face') == '${f}'`).join(" || "), components: { "minecraft:transformation": { rotation: rot } } });
+  } else if (girar) {
     description.traits = { "minecraft:placement_direction": { enabled_states: ["minecraft:cardinal_direction"], y_rotation_offset: 180 } };
     for (const [dir, rot] of [["north", 0], ["west", 90], ["south", 180], ["east", -90]])
       permutations.push({ condition: `q.block_state('minecraft:cardinal_direction') == '${dir}'`, components: { "minecraft:transformation": { rotation: [0, rot, 0] } } });

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_rolamento_moinho"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S",
+      "R",
+      "E"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:oak_slab"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      },
+      "E": {
+        "item": "cl:eixo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:rolamento_moinho"
+    }
+  }
+}

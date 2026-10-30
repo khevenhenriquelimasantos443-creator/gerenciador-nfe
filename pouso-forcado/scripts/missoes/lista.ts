@@ -110,7 +110,10 @@ export type Acao =
   | "base_lua"
   | "chefe_lua"
   | "nucleo_salto"
-  | "ancora";
+  | "ancora"
+  | "manivela"
+  | "moinho16"
+  | "lavar";
 
 type MissaoBase = {
   id: string;
@@ -334,6 +337,20 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "eio_banco", requer: ["eio_capacitor"], objetivo: { tipo: "colocar", bloco: "cl:banco_capacitores_basico", qtd: 1 }, recompensa: [{ item: "cl:capacitor_basico", quantidade: 4 }] },
       { id: "eio_ancora", requer: ["eio_aco_negro"], objetivo: { tipo: "acao", acao: "ancora", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
       { id: "eio_painel", requer: ["eio_vibrante"], objetivo: { tipo: "colocar", bloco: "cl:painel_fotovoltaico_vibrante", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "create", // 1.9.0: Create
+    icone: "cl:engrenagem",
+    requer: ["maquinas"],
+    missoes: [
+      { id: "cr_andesita", objetivo: { tipo: "ter", item: "cl:liga_andesita", qtd: 8 }, recompensa: [{ item: "minecraft:iron_nugget", quantidade: 16 }] },
+      { id: "cr_manivela", requer: ["cr_andesita"], objetivo: { tipo: "acao", acao: "manivela", qtd: 1 }, recompensa: [{ item: "cl:eixo", quantidade: 8 }] },
+      { id: "cr_mo", requer: ["cr_manivela"], objetivo: { tipo: "ter", item: "cl:farinha", qtd: 8 }, recompensa: [{ item: "minecraft:wheat", quantidade: 16 }] },
+      { id: "cr_prensa", requer: ["cr_manivela"], objetivo: { tipo: "ter", item: "cl:chapa_ferro", qtd: 8 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "cr_latao", requer: ["cr_prensa"], objetivo: { tipo: "ter", item: "cl:lingote_latao", qtd: 4 }, recompensa: [{ item: "cl:lingote_zinco", quantidade: 4 }] },
+      { id: "cr_moinho", requer: ["cr_manivela"], objetivo: { tipo: "acao", acao: "moinho16", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "cr_lavar", requer: ["cr_prensa"], objetivo: { tipo: "acao", acao: "lavar", qtd: 8 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

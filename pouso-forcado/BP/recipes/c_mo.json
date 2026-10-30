@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "E",
+      "R",
+      "S"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:engrenagem"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      },
+      "S": {
+        "item": "minecraft:stone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:mo"
+    }
+  }
+}

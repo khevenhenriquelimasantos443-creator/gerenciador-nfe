@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.8.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.9.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, Create, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,16 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.9.0 (Create)
+
+Rotação e estresse com os números do Create: as fontes dão capacidade em SU (stress units) por RPM e as máquinas gastam SU por RPM.
+- **Fontes**: **Manivela** (toque: 32 RPM por 2 s, 256 SU), **Roda d'Água** (com água encostada: 8 RPM, 256 SU) e **Rolamento de Moinho** (1 RPM a cada 8 **Velas de Moinho** a até 4 blocos, 512 SU por RPM).
+- **Transmissão**: **Eixo**, **Engrenagem**, **Engrenagem Grande** e **Caixa de Engrenagens** ligam as peças (giram de verdade quando a rede tem rotação). O **Controlador de Velocidade** troca o RPM da rede (16 a 256, toque para trocar).
+- **Máquinas** (baú em cima = entrada, baú embaixo = saída): **Mó** (trigo → farinha, osso → farinha de osso, cana → açúcar), **Rodas Trituradoras** (minério → bruto triturado com extra, lã → linha), **Prensa Mecânica** (lingote → chapa), **Misturador Mecânico** (cobre + zinco = 2 latão; andesita + pepita de ferro = liga de andesita), **Ventilador Revestido** (soprando por água lava os itens no chão; por lava ou fogo, cozinha) e **Furadeira Mecânica** (quebra o bloco da frente).
+- **Sobrecarga**: se o estresse das máquinas passar da capacidade das fontes, a rede inteira para. Toque numa peça para ver RPM e SU.
+- **Zinco**: os pedaços saem da peneira (como o ósmio); 4 pedaços = 1 lingote. Liga de Andesita, Latão e as chapas de ferro, cobre, ouro e latão.
+- Capítulo **Create** no Diário (7 missões).
 
 ## Novidades da 1.8.0 (Ender IO)
 

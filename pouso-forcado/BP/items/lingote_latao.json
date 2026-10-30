@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:lingote_latao",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_lingote_latao",
+      "minecraft:display_name": {
+        "value": "item.cl:lingote_latao.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

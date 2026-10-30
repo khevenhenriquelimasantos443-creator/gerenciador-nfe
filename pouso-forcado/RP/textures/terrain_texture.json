@@ -2079,6 +2079,144 @@
     },
     "clc_ancora_viagem_baixo": {
       "textures": "textures/blocks/cl/c/ancora_viagem_baixo"
+    },
+    "clc_eixo": {
+      "textures": "textures/blocks/cl/c/eixo"
+    },
+    "clc_engrenagem": {
+      "textures": "textures/blocks/cl/c/engrenagem"
+    },
+    "clc_engrenagem_grande": {
+      "textures": "textures/blocks/cl/c/engrenagem_grande"
+    },
+    "clc_caixa_engrenagens": {
+      "textures": "textures/blocks/cl/c/caixa_engrenagens"
+    },
+    "clc_revestimento_andesita": {
+      "textures": "textures/blocks/cl/c/revestimento_andesita"
+    },
+    "clc_manivela_frente": {
+      "textures": "textures/blocks/cl/c/manivela_frente"
+    },
+    "clc_manivela_lado": {
+      "textures": "textures/blocks/cl/c/manivela_lado"
+    },
+    "clc_manivela_topo": {
+      "textures": "textures/blocks/cl/c/manivela_topo"
+    },
+    "clc_manivela_baixo": {
+      "textures": "textures/blocks/cl/c/manivela_baixo"
+    },
+    "clc_roda_dagua_frente": {
+      "textures": "textures/blocks/cl/c/roda_dagua_frente"
+    },
+    "clc_roda_dagua_lado": {
+      "textures": "textures/blocks/cl/c/roda_dagua_lado"
+    },
+    "clc_roda_dagua_topo": {
+      "textures": "textures/blocks/cl/c/roda_dagua_topo"
+    },
+    "clc_roda_dagua_baixo": {
+      "textures": "textures/blocks/cl/c/roda_dagua_baixo"
+    },
+    "clc_rolamento_moinho_frente": {
+      "textures": "textures/blocks/cl/c/rolamento_moinho_frente"
+    },
+    "clc_rolamento_moinho_lado": {
+      "textures": "textures/blocks/cl/c/rolamento_moinho_lado"
+    },
+    "clc_rolamento_moinho_topo": {
+      "textures": "textures/blocks/cl/c/rolamento_moinho_topo"
+    },
+    "clc_rolamento_moinho_baixo": {
+      "textures": "textures/blocks/cl/c/rolamento_moinho_baixo"
+    },
+    "clc_vela_moinho": {
+      "textures": "textures/blocks/cl/c/vela_moinho"
+    },
+    "clc_controlador_velocidade_frente": {
+      "textures": "textures/blocks/cl/c/controlador_velocidade_frente"
+    },
+    "clc_controlador_velocidade_lado": {
+      "textures": "textures/blocks/cl/c/controlador_velocidade_lado"
+    },
+    "clc_controlador_velocidade_topo": {
+      "textures": "textures/blocks/cl/c/controlador_velocidade_topo"
+    },
+    "clc_controlador_velocidade_baixo": {
+      "textures": "textures/blocks/cl/c/controlador_velocidade_baixo"
+    },
+    "clc_mo_frente": {
+      "textures": "textures/blocks/cl/c/mo_frente"
+    },
+    "clc_mo_lado": {
+      "textures": "textures/blocks/cl/c/mo_lado"
+    },
+    "clc_mo_topo": {
+      "textures": "textures/blocks/cl/c/mo_topo"
+    },
+    "clc_mo_baixo": {
+      "textures": "textures/blocks/cl/c/mo_baixo"
+    },
+    "clc_rodas_trituradoras_frente": {
+      "textures": "textures/blocks/cl/c/rodas_trituradoras_frente"
+    },
+    "clc_rodas_trituradoras_lado": {
+      "textures": "textures/blocks/cl/c/rodas_trituradoras_lado"
+    },
+    "clc_rodas_trituradoras_topo": {
+      "textures": "textures/blocks/cl/c/rodas_trituradoras_topo"
+    },
+    "clc_rodas_trituradoras_baixo": {
+      "textures": "textures/blocks/cl/c/rodas_trituradoras_baixo"
+    },
+    "clc_prensa_mecanica_frente": {
+      "textures": "textures/blocks/cl/c/prensa_mecanica_frente"
+    },
+    "clc_prensa_mecanica_lado": {
+      "textures": "textures/blocks/cl/c/prensa_mecanica_lado"
+    },
+    "clc_prensa_mecanica_topo": {
+      "textures": "textures/blocks/cl/c/prensa_mecanica_topo"
+    },
+    "clc_prensa_mecanica_baixo": {
+      "textures": "textures/blocks/cl/c/prensa_mecanica_baixo"
+    },
+    "clc_misturador_mecanico_frente": {
+      "textures": "textures/blocks/cl/c/misturador_mecanico_frente"
+    },
+    "clc_misturador_mecanico_lado": {
+      "textures": "textures/blocks/cl/c/misturador_mecanico_lado"
+    },
+    "clc_misturador_mecanico_topo": {
+      "textures": "textures/blocks/cl/c/misturador_mecanico_topo"
+    },
+    "clc_misturador_mecanico_baixo": {
+      "textures": "textures/blocks/cl/c/misturador_mecanico_baixo"
+    },
+    "clc_ventilador_frente": {
+      "textures": "textures/blocks/cl/c/ventilador_frente"
+    },
+    "clc_ventilador_lado": {
+      "textures": "textures/blocks/cl/c/ventilador_lado"
+    },
+    "clc_ventilador_topo": {
+      "textures": "textures/blocks/cl/c/ventilador_topo"
+    },
+    "clc_ventilador_baixo": {
+      "textures": "textures/blocks/cl/c/ventilador_baixo"
+    },
+    "clc_furadeira_frente": {
+      "textures": "textures/blocks/cl/c/furadeira_frente"
+    },
+    "clc_furadeira_lado": {
+      "textures": "textures/blocks/cl/c/furadeira_lado"
+    },
+    "clc_furadeira_topo": {
+      "textures": "textures/blocks/cl/c/furadeira_topo"
+    },
+    "clc_furadeira_baixo": {
+      "textures": "textures/blocks/cl/c/furadeira_baixo"
     }
   }
 }

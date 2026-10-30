@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_triturado_zinco"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:triturado_zinco",
+    "output": "cl:lingote_zinco"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_misturador_mecanico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "E",
+      "R",
+      "B"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:engrenagem"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      },
+      "B": {
+        "item": "cl:batedor"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:misturador_mecanico"
+    }
+  }
+}

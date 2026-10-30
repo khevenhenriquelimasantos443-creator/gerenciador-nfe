@@ -1396,6 +1396,54 @@
     },
     "clc_eio_botas_aco_negro": {
       "textures": "textures/items/cl/c/eio_botas_aco_negro"
+    },
+    "clc_liga_andesita": {
+      "textures": "textures/items/cl/c/liga_andesita"
+    },
+    "clc_zinco_quebrado": {
+      "textures": "textures/items/cl/c/zinco_quebrado"
+    },
+    "clc_zinco_triturado": {
+      "textures": "textures/items/cl/c/zinco_triturado"
+    },
+    "clc_zinco_po": {
+      "textures": "textures/items/cl/c/zinco_po"
+    },
+    "clc_lingote_zinco": {
+      "textures": "textures/items/cl/c/lingote_zinco"
+    },
+    "clc_lingote_latao": {
+      "textures": "textures/items/cl/c/lingote_latao"
+    },
+    "clc_chapa_ferro": {
+      "textures": "textures/items/cl/c/chapa_ferro"
+    },
+    "clc_chapa_cobre": {
+      "textures": "textures/items/cl/c/chapa_cobre"
+    },
+    "clc_chapa_ouro": {
+      "textures": "textures/items/cl/c/chapa_ouro"
+    },
+    "clc_chapa_latao": {
+      "textures": "textures/items/cl/c/chapa_latao"
+    },
+    "clc_triturado_ferro": {
+      "textures": "textures/items/cl/c/triturado_ferro"
+    },
+    "clc_triturado_ouro": {
+      "textures": "textures/items/cl/c/triturado_ouro"
+    },
+    "clc_triturado_cobre": {
+      "textures": "textures/items/cl/c/triturado_cobre"
+    },
+    "clc_triturado_zinco": {
+      "textures": "textures/items/cl/c/triturado_zinco"
+    },
+    "clc_helice": {
+      "textures": "textures/items/cl/c/helice"
+    },
+    "clc_batedor": {
+      "textures": "textures/items/cl/c/batedor"
     }
   }
 }

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ventilador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "E",
+      "R",
+      "H"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:eixo"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      },
+      "H": {
+        "item": "cl:helice"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:ventilador"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_zinco_de_quebrado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:zinco_quebrado"
+      },
+      {
+        "item": "cl:zinco_quebrado"
+      },
+      {
+        "item": "cl:zinco_quebrado"
+      },
+      {
+        "item": "cl:zinco_quebrado"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:lingote_zinco"
+    }
+  }
+}

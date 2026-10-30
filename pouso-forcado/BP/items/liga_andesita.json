@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:liga_andesita",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_liga_andesita",
+      "minecraft:display_name": {
+        "value": "item.cl:liga_andesita.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

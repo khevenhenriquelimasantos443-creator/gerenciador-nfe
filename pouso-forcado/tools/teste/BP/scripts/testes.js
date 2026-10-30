@@ -536,6 +536,50 @@ teste("enderio", 400, (t) => {
   });
 });
 
+// 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
+// gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
+teste("create", 700, (t) => {
+  const maquina = (x, z, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) t.getBlock({ x, y: 3, z }).getComponent("inventory").container.addItem(new ItemStack(i, n));
+  };
+  for (let x = 1; x <= 3; x++) t.setBlockType("minecraft:cobblestone", { x, y: 1, z: 1 });
+  for (const p of [{ x: 0, y: 2, z: 1 }, { x: 1, y: 2, z: 0 }, { x: 1, y: 2, z: 2 }]) t.setBlockType("minecraft:cobblestone", p); // a água fica presa
+  t.setBlockType("minecraft:water", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:roda_dagua", { x: 2, y: 2, z: 1 });
+  t.setBlockType("cl:eixo", { x: 3, y: 2, z: 1 });
+  maquina(4, 1, "cl:mo", [["minecraft:wheat", 8]]);
+  t.setBlockType("cl:manivela", { x: 2, y: 2, z: 5 });
+  maquina(3, 5, "cl:prensa_mecanica", [["minecraft:iron_ingot", 8]]);
+  const j = robo(t, { x: 1, y: 1, z: 6 });
+  let toques = 0;
+  const id = system.runInterval(() => {
+    try {
+      j.lookAtBlock({ x: 2, y: 2, z: 5 });
+      j.interactWithBlock({ x: 2, y: 2, z: 5 }, Direction.West);
+      toques++;
+    } catch {}
+  }, 30);
+  const conta = (x, z, item) => {
+    const c = t.getBlock({ x, y: 1, z }).getComponent("inventory").container;
+    let n = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === item) n += c.getItem(s).amount;
+    return n;
+  };
+  t.runAfterDelay(200, () => log(`create: eixo girando=${t.getBlock({ x: 3, y: 2, z: 1 }).permutation.getState("cl:girando")}`));
+  t.runAfterDelay(660, () => {
+    system.clearRun(id);
+    const farinha = conta(4, 1, "cl:farinha"), chapas = conta(3, 5, "cl:chapa_ferro"), gira = t.getBlock({ x: 3, y: 2, z: 1 }).permutation.getState("cl:girando");
+    log(`create: farinha=${farinha} chapas=${chapas} eixo girando=${gira} toques=${toques}`);
+    t.assert(gira === true, "o eixo não ficou girando");
+    t.assert(farinha >= 1, "a Mó não fez farinha");
+    t.assert(chapas >= 1, "a Prensa não fez chapa com a Manivela");
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });

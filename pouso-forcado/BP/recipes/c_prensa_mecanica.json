@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_prensa_mecanica"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "E",
+      "R",
+      "I"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:eixo"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      },
+      "I": {
+        "item": "minecraft:iron_block"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:prensa_mecanica"
+    }
+  }
+}

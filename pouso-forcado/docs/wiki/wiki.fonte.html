@@ -161,6 +161,7 @@ footer p { margin: 0.4rem 0; }
       <a href="#nave">Nave</a>
       <a href="#mekanism">Mekanism</a>
       <a href="#enderio">Ender IO</a>
+      <a href="#create">Create</a>
       <a href="#lua">Lua</a>
       <a href="#utilidades">Utilidades</a>
       <a href="#creditos">Créditos</a>
@@ -683,6 +684,37 @@ footer p { margin: 0.4rem 0; }
         <li><strong>Bancos de Capacitores</strong>: 1, 5 e 25 milhões de RF.</li>
         <li><strong>Âncora de Viagem</strong>: toque para ir até outra âncora a até 96 blocos.</li>
       </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== CREATE ===================== -->
+<section class="secao" id="create">
+  <header><img src="@icone/c/helice" alt=""><div><h2>Create</h2><p>Rotação, estresse e máquinas mecânicas.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3><img src="@icone/c/liga_andesita" alt="">Fontes de rotação</h3>
+      <div class="tabela"><table>
+        <thead><tr><th>Fonte</th><th>RPM</th><th>Capacidade</th></tr></thead>
+        <tbody>
+          <tr><td>Manivela (toque)</td><td>32 por 2 s</td><td>256 SU</td></tr>
+          <tr><td>Roda d'Água (água encostada)</td><td>8</td><td>256 SU</td></tr>
+          <tr><td>Rolamento de Moinho</td><td>1 a cada 8 velas</td><td>512 SU por RPM</td></tr>
+        </tbody>
+      </table></div>
+      <p>Eixos, engrenagens e a Caixa de Engrenagens levam a rotação. O Controlador de Velocidade troca o RPM da rede.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/c/chapa_latao" alt="">Máquinas (SU por RPM)</h3>
+      <ul>
+        <li><strong>Mó</strong> (4): trigo em farinha, osso em farinha de osso, cana em açúcar.</li>
+        <li><strong>Rodas Trituradoras</strong> (8): minério em bruto triturado (com extra), lã em linha.</li>
+        <li><strong>Prensa Mecânica</strong> (8): lingote em chapa.</li>
+        <li><strong>Misturador Mecânico</strong> (4): cobre + zinco = 2 latão; andesita + pepita de ferro = liga de andesita.</li>
+        <li><strong>Ventilador Revestido</strong> (2): soprando por água lava os itens no chão; por lava ou fogo, cozinha.</li>
+        <li><strong>Furadeira Mecânica</strong> (4): quebra o bloco da frente.</li>
+      </ul>
+      <p>Estresse = soma dos SU das máquinas × RPM. Se passar da capacidade, a rede para (sobrecarga).</p>
     </article>
   </div>
 </section>

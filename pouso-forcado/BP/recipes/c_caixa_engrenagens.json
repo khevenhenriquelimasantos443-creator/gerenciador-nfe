@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_caixa_engrenagens"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " E ",
+      "ERE",
+      " E "
+    ],
+    "key": {
+      "E": {
+        "item": "cl:engrenagem"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:caixa_engrenagens"
+    }
+  }
+}

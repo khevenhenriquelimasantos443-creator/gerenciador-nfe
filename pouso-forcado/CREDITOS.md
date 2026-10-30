@@ -23,6 +23,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 ## Inspiração
 
+- **Create** (simibubi e equipe, MIT): rotação e estresse (Manivela, Roda d'Água, Moinho de Vento, eixos, engrenagens,
+  Mó, Rodas Trituradoras, Prensa, Misturador, Ventilador e Furadeira), com os números de estresse e as receitas do código
+  público (github.com/Creators-of-Create/Create). Código e arte próprios.
+
 - **Ender IO** (CrazyPants, SleepyTrousers e equipe, domínio público/Unlicense): Fundidora de Ligas, Moinho SAG, Gerador
   Stirling, painéis, bancos de capacitores, Âncoras de Viagem e o Aço Negro, com os números dos arquivos de receitas e de
   configuração do código público (github.com/SleepyTrousers/EnderIO, versão 5.2). Código e arte próprios.

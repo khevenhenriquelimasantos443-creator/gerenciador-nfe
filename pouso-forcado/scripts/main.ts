@@ -65,6 +65,7 @@ import { registrarOxigenio } from "./galacticraft/oxigenio.js";
 import { registrarFoguete } from "./galacticraft/foguete.js";
 import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEnderIO, stirling } from "./maquinas/enderio.js";
+import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
@@ -155,6 +156,12 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     "cl:fundidora_ligas": fundidora, "cl:moinho_sag": moinhoSag, "cl:gerador_stirling": stirling,
     "cl:painel_fotovoltaico": painelFotovoltaico, "cl:painel_fotovoltaico_avancado": painelFotovoltaico, "cl:painel_fotovoltaico_vibrante": painelFotovoltaico,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  for (const [id, comp] of Object.entries({
+    "cl:mo": mo, "cl:rodas_trituradoras": rodasTrituradoras, "cl:prensa_mecanica": prensa, "cl:misturador_mecanico": misturador,
+    "cl:ventilador": ventilador, "cl:furadeira": furadeira, "cl:roda_dagua": fonteCinetica, "cl:rolamento_moinho": fonteCinetica,
+  })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  blockComponentRegistry.registerCustomComponent("cl:manivela", manivela);
+  blockComponentRegistry.registerCustomComponent("cl:controlador_velocidade", controladorVelocidade);
   blockComponentRegistry.registerCustomComponent("cl:ancora_viagem", ancora);
   blockComponentRegistry.registerCustomComponent("cl:bancada_nasa", bancadaNasa);
   blockComponentRegistry.registerCustomComponent("cl:bau_tesouro", bauTesouro);
@@ -213,3 +220,4 @@ registrarFoguete();
 registrarBase();
 registrarMekanismExtra();
 registrarEnderIO();
+registrarCreate();

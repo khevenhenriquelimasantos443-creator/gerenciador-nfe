@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_controlador_velocidade"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " L ",
+      "ERE"
+    ],
+    "key": {
+      "L": {
+        "item": "cl:chapa_latao"
+      },
+      "E": {
+        "item": "cl:engrenagem"
+      },
+      "R": {
+        "item": "cl:revestimento_andesita"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:controlador_velocidade"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:caixa_engrenagens",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:girando": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_caixa_engrenagens",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#a7a99f"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:girando')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clv_rotor",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

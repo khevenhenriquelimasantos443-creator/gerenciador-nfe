@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_triturado_ouro"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:triturado_ouro",
+    "output": "minecraft:gold_ingot"
+  }
+}

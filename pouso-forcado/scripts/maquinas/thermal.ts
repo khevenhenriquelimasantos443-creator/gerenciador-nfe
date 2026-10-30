@@ -61,8 +61,8 @@ export const pulverizador = maquina((b) => {
 });
 
 // ---------- Fornalha de Redstone ----------
-const PEDACO = /^cl:(ferro|ouro|cobre|estanho|aluminio|osmio)_(quebrado|triturado|po)$/;
-const LINGOTE: Readonly<Record<string, string>> = { ferro: "minecraft:iron_ingot", ouro: "minecraft:gold_ingot", cobre: "minecraft:copper_ingot", estanho: "cl:lingote_estanho", aluminio: "cl:lingote_aluminio", osmio: "cl:lingote_osmio" };
+const PEDACO = /^cl:(ferro|ouro|cobre|estanho|aluminio|osmio|zinco)_(quebrado|triturado|po)$/;
+const LINGOTE: Readonly<Record<string, string>> = { ferro: "minecraft:iron_ingot", ouro: "minecraft:gold_ingot", cobre: "minecraft:copper_ingot", estanho: "cl:lingote_estanho", aluminio: "cl:lingote_aluminio", osmio: "cl:lingote_osmio", zinco: "cl:lingote_zinco" };
 export const fornalhaRedstone = maquina((b) => {
   const ent = entrada(b);
   if (!ent) return "parada";

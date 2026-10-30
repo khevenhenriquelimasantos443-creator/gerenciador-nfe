@@ -48,6 +48,8 @@ const MEIO = [
   ["O foguete pousa na Lua, mas só decola de uma plataforma 3×3: leve 9 plataformas, um carregador de combustível e energia.", "The rocket lands on the Moon, but only lifts off from a 3×3 pad: bring 9 pads, a fuel loader and power."],
   ["O paxel do Mekanism é picareta, machado e pá numa ferramenta só.", "The Mekanism paxel is a pickaxe, an axe and a shovel in one tool."],
   ["A Turbina Eólica do Mekanism rende mais quanto mais alto estiver.", "The Mekanism Wind Generator makes more power the higher it is."],
+  ["No Create, toque numa engrenagem para ver o RPM e o estresse: se as máquinas pedirem mais SU do que as fontes dão, tudo para.", "In Create, tap a cogwheel to see RPM and stress: if machines need more SU than the sources give, everything stops."],
+  ["Uma Roda d'Água com água encostada gira sem parar: ligue-a por eixos a uma Mó para fazer farinha.", "A Water Wheel touching water spins forever: connect it with shafts to a Millstone to make flour."],
   ["Duas Âncoras de Viagem do Ender IO a até 96 blocos: toque numa para ir até a outra.", "Two Ender IO Travel Anchors within 96 blocks: tap one to travel to the other."],
   ["Aqui o portal do Nether não acende: o martelo faz Cascalho do Nether com netherrack, e a peneira tira quartzo e até netherite.", "The Nether portal won't light here: a hammer turns netherrack into Nether Gravel, and sifting it gives quartz and even netherite."],
 ];

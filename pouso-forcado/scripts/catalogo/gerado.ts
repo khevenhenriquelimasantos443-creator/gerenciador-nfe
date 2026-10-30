@@ -231,6 +231,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Barrel",
   "icone": "textures/items/cl/arte/blocos/barril_pedra"
  },
+ "cl:batedor": {
+  "pt": "Batedor",
+  "en": "Whisk",
+  "icone": "textures/items/cl/c/batedor"
+ },
  "cl:bateria": {
   "pt": "Bateria",
   "en": "Battery",
@@ -360,6 +365,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cadinho Cru",
   "en": "Unfired Crucible",
   "icone": "textures/items/cl/arte/cadinho_cru"
+ },
+ "cl:caixa_engrenagens": {
+  "pt": "Caixa de Engrenagens",
+  "en": "Gearbox",
+  "icone": "textures/blocks/cl/c/caixa_engrenagens"
  },
  "cl:caixa_entrega": {
   "pt": "Caixa de Entrega",
@@ -606,6 +616,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "64k ME Storage Cell",
   "icone": "textures/items/cl/arte/celula_me_64k"
  },
+ "cl:chapa_cobre": {
+  "pt": "Chapa de Cobre",
+  "en": "Copper Sheet",
+  "icone": "textures/items/cl/c/chapa_cobre"
+ },
+ "cl:chapa_ferro": {
+  "pt": "Chapa de Ferro",
+  "en": "Iron Sheet",
+  "icone": "textures/items/cl/c/chapa_ferro"
+ },
+ "cl:chapa_latao": {
+  "pt": "Chapa de Latão",
+  "en": "Brass Sheet",
+  "icone": "textures/items/cl/c/chapa_latao"
+ },
+ "cl:chapa_ouro": {
+  "pt": "Chapa de Ouro",
+  "en": "Golden Sheet",
+  "icone": "textures/items/cl/c/chapa_ouro"
+ },
  "cl:charque": {
   "pt": "Charque",
   "en": "Beef Jerky",
@@ -811,6 +841,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Controller",
   "icone": "textures/items/cl/arte/blocos/controlador_reator"
  },
+ "cl:controlador_velocidade": {
+  "pt": "Controlador de Velocidade",
+  "en": "Rotation Speed Controller",
+  "icone": "textures/blocks/cl/c/controlador_velocidade_topo"
+ },
  "cl:coracao_farao": {
   "pt": "Coração do Faraó",
   "en": "Pharaoh's Heart",
@@ -911,6 +946,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dark Steel Pickaxe",
   "icone": "textures/items/cl/c/eio_picareta_aco_negro"
  },
+ "cl:eixo": {
+  "pt": "Eixo",
+  "en": "Shaft",
+  "icone": "textures/blocks/cl/c/eixo"
+ },
  "cl:elevador": {
   "pt": "Elevador",
   "en": "Elevator",
@@ -920,6 +960,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Empacotador Automático",
   "en": "AutoPackager",
   "icone": "textures/items/cl/arte/blocos/empacotador"
+ },
+ "cl:engrenagem": {
+  "pt": "Engrenagem",
+  "en": "Cogwheel",
+  "icone": "textures/blocks/cl/c/engrenagem"
  },
  "cl:engrenagem_aco_negro": {
   "pt": "Engrenagem de Aço Negro",
@@ -935,6 +980,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Engrenagem de Ferro",
   "en": "Iron Gear",
   "icone": "textures/items/cl/arte/engrenagem_ferro"
+ },
+ "cl:engrenagem_grande": {
+  "pt": "Engrenagem Grande",
+  "en": "Large Cogwheel",
+  "icone": "textures/blocks/cl/c/engrenagem_grande"
  },
  "cl:engrenagem_madeira": {
   "pt": "Engrenagem de Madeira",
@@ -1196,6 +1246,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Alloy Smelter",
   "icone": "textures/blocks/cl/c/fundidora_ligas_topo"
  },
+ "cl:furadeira": {
+  "pt": "Furadeira Mecânica",
+  "en": "Mechanical Drill",
+  "icone": "textures/blocks/cl/c/furadeira_topo"
+ },
  "cl:gerador": {
   "pt": "Gerador a Carvão",
   "en": "Coal Generator",
@@ -1250,6 +1305,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Hambúrguer",
   "en": "Hamburger",
   "icone": "textures/items/cl/arte/hamburguer"
+ },
+ "cl:helice": {
+  "pt": "Hélice",
+  "en": "Propeller",
+  "icone": "textures/items/cl/c/helice"
  },
  "cl:idolo_amaldicoado": {
   "pt": "Ídolo Amaldiçoado",
@@ -1336,6 +1396,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tin Canister",
   "icone": "textures/items/cl/c/lata_estanho"
  },
+ "cl:liga_andesita": {
+  "pt": "Liga de Andesita",
+  "en": "Andesite Alloy",
+  "icone": "textures/items/cl/c/liga_andesita"
+ },
  "cl:liga_atomica": {
   "pt": "Liga Atômica",
   "en": "Atomic Alloy",
@@ -1406,6 +1471,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Refined Glowstone Ingot",
   "icone": "textures/items/cl/c/lingote_glowstone_refinado"
  },
+ "cl:lingote_latao": {
+  "pt": "Lingote de Latão",
+  "en": "Brass Ingot",
+  "icone": "textures/items/cl/c/lingote_latao"
+ },
  "cl:lingote_obsidiana_refinada": {
   "pt": "Lingote de Obsidiana Refinada",
   "en": "Refined Obsidian Ingot",
@@ -1420,6 +1490,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Yellorium",
   "en": "Yellorium Ingot",
   "icone": "textures/items/cl/arte/lingote_yellorium"
+ },
+ "cl:lingote_zinco": {
+  "pt": "Lingote de Zinco",
+  "en": "Zinc Ingot",
+  "icone": "textures/items/cl/c/lingote_zinco"
  },
  "cl:machadinha_aco": {
   "pt": "Machadinha de Aço",
@@ -1475,6 +1550,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Maionese",
   "en": "Mayonnaise",
   "icone": "textures/items/cl/arte/maionese"
+ },
+ "cl:manivela": {
+  "pt": "Manivela",
+  "en": "Hand Crank",
+  "icone": "textures/blocks/cl/c/manivela_topo"
  },
  "cl:manometro": {
   "pt": "Manômetro",
@@ -1625,6 +1705,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Minério de Queijo",
   "en": "Cheese Ore",
   "icone": "textures/blocks/cl/c/minerio_queijo"
+ },
+ "cl:misturador_mecanico": {
+  "pt": "Misturador Mecânico",
+  "en": "Mechanical Mixer",
+  "icone": "textures/blocks/cl/c/misturador_mecanico_topo"
  },
  "cl:mk_botas_aco": {
   "pt": "Botas de Aço",
@@ -1950,6 +2035,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Picareta de Ósmio",
   "en": "Osmium Pickaxe",
   "icone": "textures/items/cl/c/mk_picareta_osmio"
+ },
+ "cl:mo": {
+  "pt": "Mó",
+  "en": "Millstone",
+  "icone": "textures/blocks/cl/c/mo_topo"
  },
  "cl:moinho": {
   "pt": "Moinho de Vento",
@@ -3001,6 +3091,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Glacial Precipitator",
   "icone": "textures/items/cl/arte/blocos/precipitador_glacial"
  },
+ "cl:prensa_mecanica": {
+  "pt": "Prensa Mecânica",
+  "en": "Mechanical Press",
+  "icone": "textures/blocks/cl/c/prensa_mecanica_topo"
+ },
  "cl:processador_avancado": {
   "pt": "Processador Avançado",
   "en": "Advanced Processor",
@@ -3056,10 +3151,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steel Casing",
   "icone": "textures/blocks/cl/c/revestimento_aco"
  },
+ "cl:revestimento_andesita": {
+  "pt": "Revestimento de Andesita",
+  "en": "Andesite Casing",
+  "icone": "textures/blocks/cl/c/revestimento_andesita"
+ },
  "cl:rocha_lunar": {
   "pt": "Rocha Lunar",
   "en": "Moon Rock",
   "icone": "textures/blocks/cl/c/rocha_lunar"
+ },
+ "cl:roda_dagua": {
+  "pt": "Roda d'Água",
+  "en": "Water Wheel",
+  "icone": "textures/blocks/cl/c/roda_dagua_topo"
+ },
+ "cl:rodas_trituradoras": {
+  "pt": "Rodas Trituradoras",
+  "en": "Crushing Wheels",
+  "icone": "textures/blocks/cl/c/rodas_trituradoras_topo"
+ },
+ "cl:rolamento_moinho": {
+  "pt": "Rolamento de Moinho",
+  "en": "Windmill Bearing",
+  "icone": "textures/blocks/cl/c/rolamento_moinho_topo"
  },
  "cl:saco_dormir": {
   "pt": "Saco de Dormir",
@@ -3316,6 +3431,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Transistor",
   "icone": "textures/items/cl/arte/transistor"
  },
+ "cl:triturado_cobre": {
+  "pt": "Cobre Bruto Triturado",
+  "en": "Crushed Raw Copper",
+  "icone": "textures/items/cl/c/triturado_cobre"
+ },
+ "cl:triturado_ferro": {
+  "pt": "Ferro Bruto Triturado",
+  "en": "Crushed Raw Iron",
+  "icone": "textures/items/cl/c/triturado_ferro"
+ },
+ "cl:triturado_ouro": {
+  "pt": "Ouro Bruto Triturado",
+  "en": "Crushed Raw Gold",
+  "icone": "textures/items/cl/c/triturado_ouro"
+ },
+ "cl:triturado_zinco": {
+  "pt": "Zinco Bruto Triturado",
+  "en": "Crushed Raw Zinc",
+  "icone": "textures/items/cl/c/triturado_zinco"
+ },
  "cl:triturador_mk": {
   "pt": "Triturador",
   "en": "Crusher",
@@ -3416,6 +3551,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Drying Rack",
   "icone": "textures/blocks/cl/arte/varal"
  },
+ "cl:vela_moinho": {
+  "pt": "Vela de Moinho",
+  "en": "Sail",
+  "icone": "textures/blocks/cl/c/vela_moinho"
+ },
+ "cl:ventilador": {
+  "pt": "Ventilador Revestido",
+  "en": "Encased Fan",
+  "icone": "textures/blocks/cl/c/ventilador_topo"
+ },
  "cl:ventilador_oxigenio": {
   "pt": "Ventilador de Oxigênio",
   "en": "Oxygen Fan",
@@ -3485,6 +3630,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Wafer Básico",
   "en": "Basic Wafer",
   "icone": "textures/items/cl/c/wafer_basico"
+ },
+ "cl:zinco_po": {
+  "pt": "Pó de Minério de Zinco",
+  "en": "Powdered Zinc Ore",
+  "icone": "textures/items/cl/c/zinco_po"
+ },
+ "cl:zinco_quebrado": {
+  "pt": "Pedaço Quebrado de Zinco",
+  "en": "Broken Zinc Ore",
+  "icone": "textures/items/cl/c/zinco_quebrado"
+ },
+ "cl:zinco_triturado": {
+  "pt": "Pedaço Triturado de Zinco",
+  "en": "Crushed Zinc Ore Piece",
+  "icone": "textures/items/cl/c/zinco_triturado"
  },
  "minecraft:acacia_leaves": {
   "pt": "Folhas de Acácia",
@@ -5544,6 +5704,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_batedor",
+  "resultado": "cl:batedor",
+  "qtd": 1,
+  "grade": [
+   " A ",
+   "CAC",
+   "CCC"
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "C": "cl:chapa_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bau_me",
   "resultado": "cl:bau_me",
   "qtd": 1,
@@ -5769,6 +5947,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "S": "minecraft:stick",
    "P": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_caixa_engrenagens",
+  "resultado": "cl:caixa_engrenagens",
+  "qtd": 1,
+  "grade": [
+   " E ",
+   "ERE",
+   " E "
+  ],
+  "chaves": {
+   "E": "cl:engrenagem",
+   "R": "cl:revestimento_andesita"
   },
   "estacoes": [
    "crafting_table"
@@ -6719,6 +6915,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_controlador_velocidade",
+  "resultado": "cl:controlador_velocidade",
+  "qtd": 1,
+  "grade": [
+   " L ",
+   "ERE"
+  ],
+  "chaves": {
+   "L": "cl:chapa_latao",
+   "E": "cl:engrenagem",
+   "R": "cl:revestimento_andesita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_cristal_fluix",
   "resultado": "cl:cristal_fluix",
@@ -7079,6 +7293,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_eixo",
+  "resultado": "cl:eixo",
+  "qtd": 8,
+  "grade": [
+   "A",
+   "A"
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_elevador",
   "resultado": "cl:elevador",
   "qtd": 2,
@@ -7111,6 +7341,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "B": "minecraft:crafting_table",
    "C": "cl:circuito"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_engrenagem",
+  "resultado": "cl:engrenagem",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:eixo",
+    "qtd": 1
+   },
+   {
+    "item": "#minecraft:planks",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -7165,6 +7414,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "M": "minecraft:iron_ingot",
    "G": "cl:engrenagem_pedra"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_engrenagem_grande",
+  "resultado": "cl:engrenagem_grande",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:eixo",
+    "qtd": 1
+   },
+   {
+    "item": "#minecraft:planks",
+    "qtd": 2
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -7612,6 +7880,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_furadeira",
+  "resultado": "cl:furadeira",
+  "qtd": 1,
+  "grade": [
+   " A ",
+   "AIA",
+   " R "
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "I": "minecraft:iron_ingot",
+   "R": "cl:revestimento_andesita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_gerador_bio",
   "resultado": "cl:gerador_bio",
   "qtd": 1,
@@ -7749,6 +8036,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:chassi_maquina",
    "G": "cl:engrenagem_aco_negro",
    "P": "minecraft:piston"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_helice",
+  "resultado": "cl:helice",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "CAC",
+   " C "
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "C": "cl:chapa_ferro"
   },
   "estacoes": [
    "crafting_table"
@@ -8056,6 +8361,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_liga_andesita",
+  "resultado": "cl:liga_andesita",
+  "qtd": 1,
+  "grade": [
+   "AN",
+   "NA"
+  ],
+  "chaves": {
+   "A": "minecraft:andesite",
+   "N": "minecraft:iron_nugget"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_lingote_aluminio_po",
   "resultado": "cl:lingote_aluminio",
@@ -8156,6 +8478,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_manivela",
+  "resultado": "cl:manivela",
+  "qtd": 1,
+  "grade": [
+   "PPP",
+   "  A"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "A": "cl:liga_andesita"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -8269,6 +8608,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "B": "cl:padrao_branco",
    "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_misturador_mecanico",
+  "resultado": "cl:misturador_mecanico",
+  "qtd": 1,
+  "grade": [
+   "E",
+   "R",
+   "B"
+  ],
+  "chaves": {
+   "E": "cl:engrenagem",
+   "R": "cl:revestimento_andesita",
+   "B": "cl:batedor"
   },
   "estacoes": [
    "crafting_table"
@@ -9456,6 +9814,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mo",
+  "resultado": "cl:mo",
+  "qtd": 1,
+  "grade": [
+   "E",
+   "R",
+   "S"
+  ],
+  "chaves": {
+   "E": "cl:engrenagem",
+   "R": "cl:revestimento_andesita",
+   "S": "minecraft:stone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_moinho_sag",
   "resultado": "cl:moinho_sag",
   "qtd": 1,
@@ -10059,6 +10436,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_prensa_mecanica",
+  "resultado": "cl:prensa_mecanica",
+  "qtd": 1,
+  "grade": [
+   "E",
+   "R",
+   "I"
+  ],
+  "chaves": {
+   "E": "cl:eixo",
+   "R": "cl:revestimento_andesita",
+   "I": "minecraft:iron_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_pulverizador",
   "resultado": "cl:pulverizador",
   "qtd": 1,
@@ -10205,6 +10601,80 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "S": "cl:lingote_aco",
    "G": "minecraft:glass",
    "P": "cl:lingote_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_revestimento_andesita",
+  "resultado": "cl:revestimento_andesita",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:liga_andesita",
+    "qtd": 1
+   },
+   {
+    "item": "#minecraft:logs",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_roda_dagua",
+  "resultado": "cl:roda_dagua",
+  "qtd": 1,
+  "grade": [
+   "PPP",
+   "PEP",
+   "PPP"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "E": "cl:eixo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_rodas_trituradoras",
+  "resultado": "cl:rodas_trituradoras",
+  "qtd": 1,
+  "grade": [
+   " A ",
+   "ASA",
+   " A "
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "S": "minecraft:stone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_rolamento_moinho",
+  "resultado": "cl:rolamento_moinho",
+  "qtd": 1,
+  "grade": [
+   "S",
+   "R",
+   "E"
+  ],
+  "chaves": {
+   "S": "minecraft:oak_slab",
+   "R": "cl:revestimento_andesita",
+   "E": "cl:eixo"
   },
   "estacoes": [
    "crafting_table"
@@ -10530,6 +11000,66 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   },
   "estacoes": [
    "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_triturado_cobre",
+  "resultado": "minecraft:copper_ingot",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:triturado_cobre",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_triturado_ferro",
+  "resultado": "minecraft:iron_ingot",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:triturado_ferro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_triturado_ouro",
+  "resultado": "minecraft:gold_ingot",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:triturado_ouro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_triturado_zinco",
+  "resultado": "cl:lingote_zinco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:triturado_zinco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
   ]
  },
  {
@@ -10879,6 +11409,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_vela_moinho",
+  "resultado": "cl:vela_moinho",
+  "qtd": 4,
+  "grade": [
+   "T T",
+   "AWA",
+   "T T"
+  ],
+  "chaves": {
+   "T": "minecraft:stick",
+   "A": "cl:liga_andesita",
+   "W": "minecraft:white_wool"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_ventilador",
+  "resultado": "cl:ventilador",
+  "qtd": 1,
+  "grade": [
+   "E",
+   "R",
+   "H"
+  ],
+  "chaves": {
+   "E": "cl:eixo",
+   "R": "cl:revestimento_andesita",
+   "H": "cl:helice"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_ventilador_oxigenio",
   "resultado": "cl:ventilador_oxigenio",
   "qtd": 1,
@@ -10964,6 +11532,51 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "T": "cl:tijolo_refratario",
    "V": "minecraft:glass"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_zinco_de_po",
+  "resultado": "cl:lingote_zinco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:zinco_po",
+    "qtd": 4
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_zinco_de_quebrado",
+  "resultado": "cl:lingote_zinco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:zinco_quebrado",
+    "qtd": 4
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_zinco_de_triturado",
+  "resultado": "cl:lingote_zinco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:zinco_triturado",
+    "qtd": 4
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]

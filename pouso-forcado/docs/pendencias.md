@@ -22,8 +22,8 @@ O jogador escolheu: o Galacticraft vai **só até a Lua**; dos mods da proposta 
 | 1.6.1 | A Lua de verdade (meteoros, monstros evoluídos, base de pesquisa com masmorra e chefe, bolha de oxigênio) e o final novo (Bobina de Salto, Núcleo de Salto) | pronta |
 | 1.7.0 | Add-ons do Mekanism da época do 1.6.4: Generators e Tools (o Additions só veio no 1.12) | pronta |
 | 1.8.0 | Ender IO (ligas, Moinho SAG, Stirling, painéis, bancos de capacitores, Âncoras de Viagem, Aço Negro) | pronta |
-| 1.9.0 | Create | próxima |
-| 1.10.0 | Waystones, Mochilas, Robô Minerador (ComputerCraft leve), pedaços do Extra Utilities, redemoinhos do Weather2 | |
+| 1.9.0 | Create (Manivela, Roda d'Água, Moinho de Vento, eixos e engrenagens, Mó, Rodas Trituradoras, Prensa, Misturador, Ventilador, Furadeira, zinco e latão) | pronta |
+| 1.10.0 | Waystones, Mochilas, Robô Minerador (ComputerCraft leve), pedaços do Extra Utilities, redemoinhos do Weather2 | próxima |
 
 ## Feito por último
 

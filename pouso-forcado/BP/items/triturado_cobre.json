@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:triturado_cobre",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_triturado_cobre",
+      "minecraft:display_name": {
+        "value": "item.cl:triturado_cobre.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

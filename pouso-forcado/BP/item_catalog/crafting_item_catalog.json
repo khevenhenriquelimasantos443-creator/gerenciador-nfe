@@ -379,6 +379,9 @@
               "cl:ouro_triturado",
               "cl:pedrinha",
               "cl:porcelana",
+              "cl:zinco_po",
+              "cl:zinco_quebrado",
+              "cl:zinco_triturado",
               "cl:barril_madeira",
               "cl:barril_pedra",
               "cl:cadinho"
@@ -901,6 +904,43 @@
               "cl:painel_fotovoltaico",
               "cl:painel_fotovoltaico_avancado",
               "cl:painel_fotovoltaico_vibrante"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:engrenagem",
+              "name": "cl:itemGroup.name.items_create"
+            },
+            "items": [
+              "cl:batedor",
+              "cl:chapa_cobre",
+              "cl:chapa_ferro",
+              "cl:chapa_latao",
+              "cl:chapa_ouro",
+              "cl:helice",
+              "cl:liga_andesita",
+              "cl:lingote_latao",
+              "cl:lingote_zinco",
+              "cl:triturado_cobre",
+              "cl:triturado_ferro",
+              "cl:triturado_ouro",
+              "cl:triturado_zinco",
+              "cl:caixa_engrenagens",
+              "cl:controlador_velocidade",
+              "cl:eixo",
+              "cl:engrenagem",
+              "cl:engrenagem_grande",
+              "cl:furadeira",
+              "cl:manivela",
+              "cl:misturador_mecanico",
+              "cl:mo",
+              "cl:prensa_mecanica",
+              "cl:revestimento_andesita",
+              "cl:roda_dagua",
+              "cl:rodas_trituradoras",
+              "cl:rolamento_moinho",
+              "cl:vela_moinho",
+              "cl:ventilador"
             ]
           },
           {
