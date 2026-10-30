@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.5.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.5.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -149,6 +149,11 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.5.1
+
+- Diário: o texto da história, da missão e do capítulo volta a aparecer embaixo do título (faltava ligar o texto da tela dentro da lista).
+- A linha entre as colunas e os separadores do cabeçalho e do rodapé aparecem inteiros (antes viravam um pontinho); "Sistemas da nave" e "Pouso Forçado" ficam no meio da faixa.
 
 ## Novidades da 1.5.0
 

@@ -633,7 +633,8 @@
             0.78,
             0.8,
             0.82
-          ]
+          ],
+          "keep_ratio": false
         }
       },
       {
@@ -905,7 +906,8 @@
                   0.3,
                   0.33,
                   0.37
-                ]
+                ],
+                "keep_ratio": false
               }
             },
             {
@@ -919,20 +921,29 @@
             },
             {
               "sub": {
-                "type": "label",
-                "text": "cl.painel.subtitulo",
-                "color": [
-                  0.33,
-                  0.36,
-                  0.4
-                ],
+                "type": "panel",
                 "size": [
-                  "default",
-                  "default"
+                  90,
+                  20
                 ],
-                "offset": [
-                  0,
-                  6
+                "controls": [
+                  {
+                    "texto": {
+                      "type": "label",
+                      "text": "cl.painel.subtitulo",
+                      "color": [
+                        0.33,
+                        0.36,
+                        0.4
+                      ],
+                      "size": [
+                        "default",
+                        "default"
+                      ],
+                      "anchor_from": "left_middle",
+                      "anchor_to": "left_middle"
+                    }
+                  }
                 ]
               }
             }
@@ -1376,7 +1387,13 @@
                         "100%",
                         "default"
                       ],
-                      "shadow": true
+                      "shadow": true,
+                      "bindings": [
+                        {
+                          "binding_name": "#form_text",
+                          "binding_type": "global"
+                        }
+                      ]
                     }
                   }
                 ]
@@ -1678,7 +1695,8 @@
                 "offset": [
                   60,
                   0
-                ]
+                ],
+                "keep_ratio": false
               }
             }
           ],
@@ -2535,21 +2553,30 @@
           "controls": [
             {
               "titulo": {
-                "type": "label",
-                "text": "cl.painel.sistemas",
-                "color": [
-                  0.62,
-                  0.66,
-                  0.7
-                ],
-                "shadow": true,
+                "type": "panel",
                 "size": [
-                  "default",
-                  "default"
+                  100,
+                  20
                 ],
-                "offset": [
-                  0,
-                  6
+                "controls": [
+                  {
+                    "texto": {
+                      "type": "label",
+                      "text": "cl.painel.sistemas",
+                      "color": [
+                        0.62,
+                        0.66,
+                        0.7
+                      ],
+                      "shadow": true,
+                      "size": [
+                        "default",
+                        "default"
+                      ],
+                      "anchor_from": "left_middle",
+                      "anchor_to": "left_middle"
+                    }
+                  }
                 ]
               }
             },
@@ -2756,7 +2783,8 @@
                   0.6,
                   0.63,
                   0.67
-                ]
+                ],
+                "keep_ratio": false
               }
             },
             {
