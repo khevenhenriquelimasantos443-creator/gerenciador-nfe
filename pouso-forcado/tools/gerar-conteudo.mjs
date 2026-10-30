@@ -34,6 +34,7 @@ const dirBloco = pasta("RP/textures/blocks/cl/c");
 for (const a of readdirSync(join(RAIZ, "BP/recipes"))) if (a.startsWith("c_")) rmSync(join(RAIZ, "BP/recipes", a));
 
 const nomes = { pt: [], en: [] };
+const maquinas = []; // blocos do tipo "maquina" (os condutos de energia ligam neles, 1.11.0)
 const origem = {};
 const ingrediente = (i) => (i.startsWith("#") ? { tag: i.slice(1) } : { item: i });
 const resultado = (r) => (r.qtd ? { item: r.resultado, count: r.qtd } : { item: r.resultado });
@@ -106,6 +107,7 @@ function bloco(f, b) {
   let mats;
   let quatroFaces = false;
   if (b.tipo === "maquina") {
+    maquinas.push(`cl:${b.id}`);
     const luz = b.luz ?? "ciano";
     const t = {
       frente: textura(`${b.id}_frente`, FACE.frente(luz, b.glifo ?? "engrenagem")),
@@ -162,6 +164,10 @@ function bloco(f, b) {
     description.traits = { "minecraft:placement_position": { enabled_states: ["minecraft:block_face"] } };
     for (const [faces, rot] of [[["north", "south"], [90, 0, 0]], [["east", "west"], [0, 0, 90]]])
       permutations.push({ condition: faces.map((f) => `q.block_state('minecraft:block_face') == '${f}'`).join(" || "), components: { "minecraft:transformation": { rotation: rot } } });
+  } else if (b.face) {
+    // Painéis (1.11.0): o estado minecraft:block_face diz em que face o bloco foi encostado (os ossos e as caixas
+    // de cada face vêm em b.geometria.visivel e b.permutacoes).
+    description.traits = { "minecraft:placement_position": { enabled_states: ["minecraft:block_face"] } };
   } else if (girar) {
     description.traits = { "minecraft:placement_direction": { enabled_states: ["minecraft:cardinal_direction"], y_rotation_offset: 180 } };
     for (const [dir, rot] of [["north", 0], ["west", 90], ["south", 180], ["east", -90]])
@@ -201,6 +207,7 @@ for (const [arq, lingua] of [["RP/texts/pt_BR.lang", "pt"], ["RP/texts/en_US.lan
 pasta("scripts/conteudo");
 writeFileSync(join(RAIZ, "scripts/conteudo/gerado.ts"), `// Gerado por tools/gerar-conteudo.mjs a partir de tools/dados/conteudo/. Não edite à mão.
 export const ORIGEM_CONTEUDO: Readonly<Record<string, string>> = ${JSON.stringify(origem)};
+export const MAQUINAS_CONTEUDO: ReadonlyArray<string> = ${JSON.stringify(maquinas)};
 ${dadosTs.join("\n")}
 `);
 console.log(`conteúdo: ${fases.length} fases, ${Object.keys(origem).length} itens e blocos`);

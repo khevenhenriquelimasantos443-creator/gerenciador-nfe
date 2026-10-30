@@ -1471,6 +1471,54 @@
     },
     "clc_super_varinha_construtor": {
       "textures": "textures/items/cl/c/super_varinha_construtor"
+    },
+    "clc_balao_branco": {
+      "textures": "textures/items/cl/arte/balao_branco"
+    },
+    "clc_balao_laranja": {
+      "textures": "textures/items/cl/arte/balao_laranja"
+    },
+    "clc_balao_magenta": {
+      "textures": "textures/items/cl/arte/balao_magenta"
+    },
+    "clc_balao_azul_claro": {
+      "textures": "textures/items/cl/arte/balao_azul_claro"
+    },
+    "clc_balao_amarelo": {
+      "textures": "textures/items/cl/arte/balao_amarelo"
+    },
+    "clc_balao_lima": {
+      "textures": "textures/items/cl/arte/balao_lima"
+    },
+    "clc_balao_rosa": {
+      "textures": "textures/items/cl/arte/balao_rosa"
+    },
+    "clc_balao_cinza": {
+      "textures": "textures/items/cl/arte/balao_cinza"
+    },
+    "clc_balao_cinza_claro": {
+      "textures": "textures/items/cl/arte/balao_cinza_claro"
+    },
+    "clc_balao_ciano": {
+      "textures": "textures/items/cl/arte/balao_ciano"
+    },
+    "clc_balao_roxo": {
+      "textures": "textures/items/cl/arte/balao_roxo"
+    },
+    "clc_balao_azul": {
+      "textures": "textures/items/cl/arte/balao_azul"
+    },
+    "clc_balao_marrom": {
+      "textures": "textures/items/cl/arte/balao_marrom"
+    },
+    "clc_balao_verde": {
+      "textures": "textures/items/cl/arte/balao_verde"
+    },
+    "clc_balao_vermelho": {
+      "textures": "textures/items/cl/arte/balao_vermelho"
+    },
+    "clc_balao_preto": {
+      "textures": "textures/items/cl/arte/balao_preto"
     }
   }
 }

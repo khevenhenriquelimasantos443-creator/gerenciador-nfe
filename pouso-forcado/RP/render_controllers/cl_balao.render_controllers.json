@@ -1,0 +1,38 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.cl.balao": {
+      "arrays": {
+        "textures": {
+          "Array.cores": [
+            "Texture.branco",
+            "Texture.laranja",
+            "Texture.magenta",
+            "Texture.azul_claro",
+            "Texture.amarelo",
+            "Texture.lima",
+            "Texture.rosa",
+            "Texture.cinza",
+            "Texture.cinza_claro",
+            "Texture.ciano",
+            "Texture.roxo",
+            "Texture.azul",
+            "Texture.marrom",
+            "Texture.verde",
+            "Texture.vermelho",
+            "Texture.preto"
+          ]
+        }
+      },
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.cores[query.variant]"
+      ]
+    }
+  }
+}

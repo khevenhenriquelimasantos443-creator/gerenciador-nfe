@@ -71,6 +71,8 @@ import { registrarMochila } from "./utilidades/mochila.js";
 import { registrarRobo } from "./utilidades/robo.js";
 import { lixeira, registrarExtraUtils } from "./utilidades/extrautils.js";
 import { registrarRedemoinho } from "./mundo/redemoinho.js";
+import { registrarMekanismAdditions, tntObsidiana } from "./maquinas/mekanism_additions.js";
+import { condutoItem, registrarCondutos } from "./maquinas/condutos.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
@@ -169,6 +171,8 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:controlador_velocidade", controladorVelocidade);
   blockComponentRegistry.registerCustomComponent("cl:ancora_viagem", ancora);
   blockComponentRegistry.registerCustomComponent("cl:pedra_caminho", pedraCaminho);
+  blockComponentRegistry.registerCustomComponent("cl:conduto_item", comPerfil("cl:conduto_item", condutoItem));
+  blockComponentRegistry.registerCustomComponent("cl:tnt_obsidiana", tntObsidiana);
   blockComponentRegistry.registerCustomComponent("cl:lixeira", comPerfil("cl:lixeira", lixeira));
   blockComponentRegistry.registerCustomComponent("cl:bancada_nasa", bancadaNasa);
   blockComponentRegistry.registerCustomComponent("cl:bau_tesouro", bauTesouro);
@@ -233,3 +237,5 @@ registrarMochila();
 registrarRobo();
 registrarExtraUtils();
 registrarRedemoinho();
+registrarMekanismAdditions();
+registrarCondutos();

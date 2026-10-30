@@ -117,7 +117,9 @@ export type Acao =
   | "waystone"
   | "robo"
   | "varinha"
-  | "redemoinho";
+  | "redemoinho"
+  | "balao"
+  | "conduto";
 
 type MissaoBase = {
   id: string;
@@ -355,6 +357,19 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "cr_latao", requer: ["cr_prensa"], objetivo: { tipo: "ter", item: "cl:lingote_latao", qtd: 4 }, recompensa: [{ item: "cl:lingote_zinco", quantidade: 4 }] },
       { id: "cr_moinho", requer: ["cr_manivela"], objetivo: { tipo: "acao", acao: "moinho16", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "cr_lavar", requer: ["cr_prensa"], objetivo: { tipo: "acao", acao: "lavar", qtd: 8 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "additions", // 1.11.0: Mekanism Additions e os condutos do Ender IO
+    icone: "cl:plastico_vermelho",
+    requer: ["mekanism"],
+    missoes: [
+      { id: "ad_plastico", objetivo: { tipo: "ter", item: "cl:plastico_branco", qtd: 16 }, recompensa: [{ item: "cl:folha_plastico", quantidade: 8 }] },
+      { id: "ad_painel", requer: ["ad_plastico"], objetivo: { tipo: "colocar", bloco: "cl:painel_brilhante_branco", qtd: 1 }, recompensa: [{ item: "minecraft:glowstone_dust", quantidade: 8 }] },
+      { id: "ad_estrada", requer: ["ad_plastico"], objetivo: { tipo: "colocar", bloco: "cl:estrada_plastico_preto", qtd: 8 }, recompensa: [{ item: "minecraft:slime_ball", quantidade: 4 }] },
+      { id: "ad_balao", objetivo: { tipo: "acao", acao: "balao", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 8 }] },
+      { id: "ad_tnt", objetivo: { tipo: "ter", item: "cl:tnt_obsidiana", qtd: 1 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 6 }] },
+      { id: "ad_conduto", objetivo: { tipo: "acao", acao: "conduto", qtd: 1 }, recompensa: [{ item: "cl:aglutinante_conduite", quantidade: 16 }] },
     ],
   },
   {

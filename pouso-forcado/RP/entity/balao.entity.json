@@ -1,0 +1,35 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "cl:balao",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "branco": "textures/entity/cl/balao/branco",
+        "laranja": "textures/entity/cl/balao/laranja",
+        "magenta": "textures/entity/cl/balao/magenta",
+        "azul_claro": "textures/entity/cl/balao/azul_claro",
+        "amarelo": "textures/entity/cl/balao/amarelo",
+        "lima": "textures/entity/cl/balao/lima",
+        "rosa": "textures/entity/cl/balao/rosa",
+        "cinza": "textures/entity/cl/balao/cinza",
+        "cinza_claro": "textures/entity/cl/balao/cinza_claro",
+        "ciano": "textures/entity/cl/balao/ciano",
+        "roxo": "textures/entity/cl/balao/roxo",
+        "azul": "textures/entity/cl/balao/azul",
+        "marrom": "textures/entity/cl/balao/marrom",
+        "verde": "textures/entity/cl/balao/verde",
+        "vermelho": "textures/entity/cl/balao/vermelho",
+        "preto": "textures/entity/cl/balao/preto"
+      },
+      "geometry": {
+        "default": "geometry.cl.balao"
+      },
+      "render_controllers": [
+        "controller.render.cl.balao"
+      ]
+    }
+  }
+}

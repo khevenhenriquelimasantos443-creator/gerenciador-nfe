@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.10.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), Ender IO, Create, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.11.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators, Tools e Additions), Ender IO, Create, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,13 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.11.0 (Mekanism Additions e condutos)
+
+- **Mekanism Additions** (receitas do código público, arte original): **Plástico** nas 16 cores (bloco, **liso** que escorrega como gelo, **brilhante** que ilumina, **reforçado** que aguenta explosão e **estrada**, que dá Velocidade II), **Painéis Brilhantes** (encostam em qualquer face), **Balões** (no ar, prendem em você e você cai devagar por 60 s; num bicho, levantam o bicho por 10 s; bata para estourar), **TNT de Obsidiana** (acende com isqueiro: 5 s de pavio e raio 12) e os **filhotes** de creeper, esqueleto, esqueleto errante e enderman (1 em 3 nasce bebê). A Folha HDPE é a Folha de Plástico que o pack já tinha.
+- **Condutos do Ender IO**: **Conduto de Energia** (passa energia como os cabos) e **Conduto de Itens** (toque para pôr no modo que tira, de miolo laranja: leva 4 itens por segundo dos baús encostados nele para os baús encostados nos outros condutos).
+- Correção: o Creeper Evoluído da Lua agora explode.
+- Capítulo **Mekanism Additions** no Diário (6 missões).
 
 ## Novidades da 1.10.2
 

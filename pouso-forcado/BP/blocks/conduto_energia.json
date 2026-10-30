@@ -1,0 +1,88 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:conduto_energia",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:n": [
+          false,
+          true
+        ],
+        "cl:s": [
+          false,
+          true
+        ],
+        "cl:l": [
+          false,
+          true
+        ],
+        "cl:o": [
+          false,
+          true
+        ],
+        "cl:cima": [
+          false,
+          true
+        ],
+        "cl:baixo": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.conduto_energia",
+        "bone_visibility": {
+          "norte": "q.block_state('cl:n')",
+          "sul": "q.block_state('cl:s')",
+          "leste": "q.block_state('cl:l')",
+          "oeste": "q.block_state('cl:o')",
+          "cima": "q.block_state('cl:cima')",
+          "baixo": "q.block_state('cl:baixo')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_conduto_energia",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#b8433f",
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      }
+    }
+  }
+}

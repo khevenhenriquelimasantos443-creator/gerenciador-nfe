@@ -20,7 +20,7 @@ const PECAS = [
 ];
 
 // Materiais com a textura original do mod (tools/importar-originais.py, 1.10.1): não pinta por cima.
-const USADOS = join(RAIZ, "referencias/licencas/usados.json");
+const USADOS = join(RAIZ, "docs/licencas/usados.json");
 const originais = new Set(existsSync(USADOS) ? Object.values(JSON.parse(readFileSync(USADOS, "utf8"))).flat() : []);
 mkdirSync(join(RAIZ, "RP/textures/models/armor/cl"), { recursive: true });
 mkdirSync(join(RAIZ, "RP/attachables"), { recursive: true });

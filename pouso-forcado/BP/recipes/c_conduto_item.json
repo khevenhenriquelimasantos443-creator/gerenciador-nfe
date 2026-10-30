@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_conduto_item"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BBB",
+      "III",
+      "BBB"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:aglutinante_conduite"
+      },
+      "I": {
+        "item": "cl:ferro_pulsante"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:conduto_item",
+      "count": 8
+    }
+  }
+}

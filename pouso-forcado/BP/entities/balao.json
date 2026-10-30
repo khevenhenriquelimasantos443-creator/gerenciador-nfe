@@ -1,0 +1,237 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "cl:balao",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "balao",
+          "inanimate"
+        ]
+      },
+      "minecraft:health": {
+        "value": 1,
+        "max": 1
+      },
+      "minecraft:collision_box": {
+        "width": 0.5,
+        "height": 0.6
+      },
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:variant": {
+        "value": 0
+      },
+      "minecraft:fire_immune": {},
+      "minecraft:loot": {
+        "table": "loot_tables/empty.json"
+      }
+    },
+    "component_groups": {
+      "cl:cor_0": {
+        "minecraft:variant": {
+          "value": 0
+        }
+      },
+      "cl:cor_1": {
+        "minecraft:variant": {
+          "value": 1
+        }
+      },
+      "cl:cor_2": {
+        "minecraft:variant": {
+          "value": 2
+        }
+      },
+      "cl:cor_3": {
+        "minecraft:variant": {
+          "value": 3
+        }
+      },
+      "cl:cor_4": {
+        "minecraft:variant": {
+          "value": 4
+        }
+      },
+      "cl:cor_5": {
+        "minecraft:variant": {
+          "value": 5
+        }
+      },
+      "cl:cor_6": {
+        "minecraft:variant": {
+          "value": 6
+        }
+      },
+      "cl:cor_7": {
+        "minecraft:variant": {
+          "value": 7
+        }
+      },
+      "cl:cor_8": {
+        "minecraft:variant": {
+          "value": 8
+        }
+      },
+      "cl:cor_9": {
+        "minecraft:variant": {
+          "value": 9
+        }
+      },
+      "cl:cor_10": {
+        "minecraft:variant": {
+          "value": 10
+        }
+      },
+      "cl:cor_11": {
+        "minecraft:variant": {
+          "value": 11
+        }
+      },
+      "cl:cor_12": {
+        "minecraft:variant": {
+          "value": 12
+        }
+      },
+      "cl:cor_13": {
+        "minecraft:variant": {
+          "value": 13
+        }
+      },
+      "cl:cor_14": {
+        "minecraft:variant": {
+          "value": 14
+        }
+      },
+      "cl:cor_15": {
+        "minecraft:variant": {
+          "value": 15
+        }
+      }
+    },
+    "events": {
+      "cl:cor_0": {
+        "add": {
+          "component_groups": [
+            "cl:cor_0"
+          ]
+        }
+      },
+      "cl:cor_1": {
+        "add": {
+          "component_groups": [
+            "cl:cor_1"
+          ]
+        }
+      },
+      "cl:cor_2": {
+        "add": {
+          "component_groups": [
+            "cl:cor_2"
+          ]
+        }
+      },
+      "cl:cor_3": {
+        "add": {
+          "component_groups": [
+            "cl:cor_3"
+          ]
+        }
+      },
+      "cl:cor_4": {
+        "add": {
+          "component_groups": [
+            "cl:cor_4"
+          ]
+        }
+      },
+      "cl:cor_5": {
+        "add": {
+          "component_groups": [
+            "cl:cor_5"
+          ]
+        }
+      },
+      "cl:cor_6": {
+        "add": {
+          "component_groups": [
+            "cl:cor_6"
+          ]
+        }
+      },
+      "cl:cor_7": {
+        "add": {
+          "component_groups": [
+            "cl:cor_7"
+          ]
+        }
+      },
+      "cl:cor_8": {
+        "add": {
+          "component_groups": [
+            "cl:cor_8"
+          ]
+        }
+      },
+      "cl:cor_9": {
+        "add": {
+          "component_groups": [
+            "cl:cor_9"
+          ]
+        }
+      },
+      "cl:cor_10": {
+        "add": {
+          "component_groups": [
+            "cl:cor_10"
+          ]
+        }
+      },
+      "cl:cor_11": {
+        "add": {
+          "component_groups": [
+            "cl:cor_11"
+          ]
+        }
+      },
+      "cl:cor_12": {
+        "add": {
+          "component_groups": [
+            "cl:cor_12"
+          ]
+        }
+      },
+      "cl:cor_13": {
+        "add": {
+          "component_groups": [
+            "cl:cor_13"
+          ]
+        }
+      },
+      "cl:cor_14": {
+        "add": {
+          "component_groups": [
+            "cl:cor_14"
+          ]
+        }
+      },
+      "cl:cor_15": {
+        "add": {
+          "component_groups": [
+            "cl:cor_15"
+          ]
+        }
+      }
+    }
+  }
+}

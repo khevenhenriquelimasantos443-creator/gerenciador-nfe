@@ -1,7 +1,7 @@
 # Texturas e ícones ORIGINAIS dos mods que permitem (1.10.1): copia do código-fonte de cada mod para a arte do pack
 # (RP/textures/items/cl/arte/<item>.png, RP/textures/blocks/cl/arte/<bloco>[_<face>].png e as camadas das armaduras),
 # que o build já põe no lugar dos desenhos gerados (tools/aplicar-icones.mjs). Animações: só o 1º quadro.
-# Só entram mods com licença que deixa usar a arte (ver CREDITOS.md e referencias/licencas/):
+# Só entram mods com licença que deixa usar a arte (ver CREDITOS.md e docs/licencas/):
 #   Mekanism (MIT), Ender IO (Unlicense/CC0), Waystones (MIT), ComputerCraft (CCPL), Tinkers' Construct (CC BY 3.0),
 #   Applied Energistics 2 (CC BY-NC-SA 3.0), PneumaticCraft (GPLv3), Big Reactors (MIT), BuildCraft (MMPL),
 #   OpenBlocks (MIT), Chisel (GPLv2), ChickenChunks (MIT) e EnviroMine (CC BY-NC-SA 4.0).
@@ -19,6 +19,8 @@ FONTES = {
     "mekanism": "mekanism/src/main/resources/assets/mekanism/",
     "enderio": "enderio/enderio-base/src/main/resources/assets/enderio/textures/",
     "enderio_maq": "enderio/enderio-machines/src/main/resources/assets/enderio/textures/",
+    "enderio_cond": "enderio/enderio-conduits/src/main/resources/assets/enderio/textures/",
+    "mekanism_additions": "mekanism10/src/additions/resources/assets/mekanismadditions/textures/",
     "waystones": "waystones/src/main/resources/assets/waystones/textures/",
     "computercraft": "computercraft/src/main/resources/assets/computercraft/textures/",
     "tinkers": "tconstruct/resources/assets/tinker/textures/",
@@ -31,8 +33,8 @@ FONTES = {
     "chickenchunks": "chickenchunks/src/main/resources/assets/chickenchunks/textures/",
     "enviromine": "enviromine/src/main/resources/assets/enviromine/textures/",
 }
-LICENCAS = {  # arquivo de licença de cada repositório (cópia em referencias/licencas/)
-    "mekanism": "mekanism/README.md", "enderio": "enderio/LICENSE", "waystones": "waystones/LICENSE",
+LICENCAS = {  # arquivo de licença de cada repositório (cópia em docs/licencas/)
+    "mekanism": "mekanism/README.md", "mekanism_additions": "mekanism10/LICENSE", "enderio": "enderio/LICENSE", "waystones": "waystones/LICENSE",
     "computercraft": "computercraft/LICENSE", "tinkers": "tconstruct/README.md", "ae2": "ae2/README.md",
     "pneumaticcraft": "pneumaticcraft/LICENSE", "bigreactors": "bigreactors/LICENSE.txt", "buildcraft": "buildcraft/LICENSE",
     "openblocks": "openblocks/LICENSE", "chisel": "chisel/LICENSE", "chickenchunks": "chickenchunks/LICENSE.txt",
@@ -42,6 +44,7 @@ LICENCAS = {  # arquivo de licença de cada repositório (cópia em referencias/
 ITENS = {}  # id do item -> (fonte, caminho) ou lista de camadas (ferramentas do Tinkers)
 FACES = {}  # id do bloco -> {face: (fonte, caminho)}; face "" = textura única do bloco
 ARMADURAS = {}  # material -> (fonte, caminho com {n})
+TINTA = {}  # id do bloco -> cor "#rrggbb" para tingir a textura (o plástico do Mekanism é cinza e o jogo pinta)
 
 
 def itens(fonte, pasta, mapa):
@@ -85,6 +88,18 @@ faces("mekanism", B, "camara_injecao", "chemical_injection_chamber/ChemicalInjec
       "chemical_injection_chamber/ChemicalInjectionChamberTop", "chemical_injection_chamber/ChemicalInjectionChamberBottom")
 faces("mekanism", B, "evaporador", "SalinationController", "SalinationBlock")
 unica("mekanism", B, "revestimento_aco", "SteelCasing")
+
+# ---------- Mekanism Additions (Mekanism 10, 1.20) ----------
+CORES = [("branco", "#f9fffe"), ("laranja", "#f9801d"), ("magenta", "#c74ebd"), ("azul_claro", "#3ab3da"), ("amarelo", "#fed83d"), ("lima", "#80c71f"),
+         ("rosa", "#f38baa"), ("cinza", "#474f52"), ("cinza_claro", "#9d9d97"), ("ciano", "#169c9c"), ("roxo", "#8932b8"), ("azul", "#3c44aa"),
+         ("marrom", "#835432"), ("verde", "#5e7c16"), ("vermelho", "#b02e26"), ("preto", "#1d1d21")]  # as de tools/dados/conteudo/f32.mjs
+for pre, arq in (("plastico", "plastic_block"), ("plastico_liso", "slick_plastic_block"), ("plastico_brilhante", "plastic_glow_block"),
+                 ("plastico_reforcado", "reinforced_plastic_block"), ("estrada_plastico", "plastic_road"), ("painel_brilhante", "glow_panel")):
+    for c, cor in CORES:
+        unica("mekanism_additions", "block/", f"{pre}_{c}", arq)
+        TINTA[f"{pre}_{c}"] = cor
+unica("enderio_cond", "blocks/", "conduto_energia", "power_conduit")
+unica("enderio_cond", "blocks/", "conduto_item", "item_conduit_core")
 
 # ---------- Ender IO 5.2 ----------
 itens("enderio", "items/", {
@@ -273,6 +288,13 @@ for i, fs in FACES.items():
         faltou.append(f"bloco {i}: {e}")
         continue
     for f, im in ims.items():
+        if i in TINTA:
+            cor = [int(TINTA[i][k:k + 2], 16) for k in (1, 3, 5)]
+            px = im.load()
+            for x in range(im.width):
+                for y in range(im.height):
+                    r, g, b, a = px[x, y]
+                    px[x, y] = tuple(min(255, int(v * c / 255 * 1.12)) for v, c in zip((r, g, b), cor)) + (a,)
         salvar(im, f"RP/textures/blocks/cl/arte/{i}{'_' + f if f else ''}.png")
     # O ícone 3D do Catálogo passa a sair das faces novas (tools/icones-blocos.py).
     antigo = os.path.join(R, f"RP/textures/items/cl/arte/blocos/{i}.png")
@@ -289,11 +311,11 @@ for m, (fonte, padrao) in ARMADURAS.items():
         else:
             usados.setdefault(fonte, []).append(f"armadura {m}_{n}")
 
-os.makedirs(os.path.join(R, "referencias/licencas"), exist_ok=True)
+os.makedirs(os.path.join(R, "docs/licencas"), exist_ok=True)
 for fonte, arq in LICENCAS.items():
-    if fonte in usados or (fonte == "enderio" and "enderio_maq" in usados):
-        shutil.copy(os.path.join(MODS, arq), os.path.join(R, f"referencias/licencas/{fonte}.txt"))
-with open(os.path.join(R, "referencias/licencas/usados.json"), "w") as f:
+    if fonte in usados or (fonte == "enderio" and ("enderio_maq" in usados or "enderio_cond" in usados)):
+        shutil.copy(os.path.join(MODS, arq), os.path.join(R, f"docs/licencas/{fonte}.txt"))
+with open(os.path.join(R, "docs/licencas/usados.json"), "w") as f:
     json.dump(usados, f, ensure_ascii=False, indent=1, sort_keys=True)
 for fonte, l in sorted(usados.items()):
     print(f"{fonte}: {len(l)}")

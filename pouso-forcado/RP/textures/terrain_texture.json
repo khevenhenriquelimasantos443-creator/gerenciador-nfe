@@ -2262,6 +2262,306 @@
     },
     "clc_tumulo_baixo": {
       "textures": "textures/blocks/cl/arte/tumulo_baixo"
+    },
+    "clc_plastico_branco": {
+      "textures": "textures/blocks/cl/arte/plastico_branco"
+    },
+    "clc_plastico_laranja": {
+      "textures": "textures/blocks/cl/arte/plastico_laranja"
+    },
+    "clc_plastico_magenta": {
+      "textures": "textures/blocks/cl/arte/plastico_magenta"
+    },
+    "clc_plastico_azul_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_azul_claro"
+    },
+    "clc_plastico_amarelo": {
+      "textures": "textures/blocks/cl/arte/plastico_amarelo"
+    },
+    "clc_plastico_lima": {
+      "textures": "textures/blocks/cl/arte/plastico_lima"
+    },
+    "clc_plastico_rosa": {
+      "textures": "textures/blocks/cl/arte/plastico_rosa"
+    },
+    "clc_plastico_cinza": {
+      "textures": "textures/blocks/cl/arte/plastico_cinza"
+    },
+    "clc_plastico_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_cinza_claro"
+    },
+    "clc_plastico_ciano": {
+      "textures": "textures/blocks/cl/arte/plastico_ciano"
+    },
+    "clc_plastico_roxo": {
+      "textures": "textures/blocks/cl/arte/plastico_roxo"
+    },
+    "clc_plastico_azul": {
+      "textures": "textures/blocks/cl/arte/plastico_azul"
+    },
+    "clc_plastico_marrom": {
+      "textures": "textures/blocks/cl/arte/plastico_marrom"
+    },
+    "clc_plastico_verde": {
+      "textures": "textures/blocks/cl/arte/plastico_verde"
+    },
+    "clc_plastico_vermelho": {
+      "textures": "textures/blocks/cl/arte/plastico_vermelho"
+    },
+    "clc_plastico_preto": {
+      "textures": "textures/blocks/cl/arte/plastico_preto"
+    },
+    "clc_plastico_liso_branco": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_branco"
+    },
+    "clc_plastico_liso_laranja": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_laranja"
+    },
+    "clc_plastico_liso_magenta": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_magenta"
+    },
+    "clc_plastico_liso_azul_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_azul_claro"
+    },
+    "clc_plastico_liso_amarelo": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_amarelo"
+    },
+    "clc_plastico_liso_lima": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_lima"
+    },
+    "clc_plastico_liso_rosa": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_rosa"
+    },
+    "clc_plastico_liso_cinza": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_cinza"
+    },
+    "clc_plastico_liso_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_cinza_claro"
+    },
+    "clc_plastico_liso_ciano": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_ciano"
+    },
+    "clc_plastico_liso_roxo": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_roxo"
+    },
+    "clc_plastico_liso_azul": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_azul"
+    },
+    "clc_plastico_liso_marrom": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_marrom"
+    },
+    "clc_plastico_liso_verde": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_verde"
+    },
+    "clc_plastico_liso_vermelho": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_vermelho"
+    },
+    "clc_plastico_liso_preto": {
+      "textures": "textures/blocks/cl/arte/plastico_liso_preto"
+    },
+    "clc_plastico_brilhante_branco": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_branco"
+    },
+    "clc_plastico_brilhante_laranja": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_laranja"
+    },
+    "clc_plastico_brilhante_magenta": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_magenta"
+    },
+    "clc_plastico_brilhante_azul_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_azul_claro"
+    },
+    "clc_plastico_brilhante_amarelo": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_amarelo"
+    },
+    "clc_plastico_brilhante_lima": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_lima"
+    },
+    "clc_plastico_brilhante_rosa": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_rosa"
+    },
+    "clc_plastico_brilhante_cinza": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_cinza"
+    },
+    "clc_plastico_brilhante_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_cinza_claro"
+    },
+    "clc_plastico_brilhante_ciano": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_ciano"
+    },
+    "clc_plastico_brilhante_roxo": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_roxo"
+    },
+    "clc_plastico_brilhante_azul": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_azul"
+    },
+    "clc_plastico_brilhante_marrom": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_marrom"
+    },
+    "clc_plastico_brilhante_verde": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_verde"
+    },
+    "clc_plastico_brilhante_vermelho": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_vermelho"
+    },
+    "clc_plastico_brilhante_preto": {
+      "textures": "textures/blocks/cl/arte/plastico_brilhante_preto"
+    },
+    "clc_plastico_reforcado_branco": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_branco"
+    },
+    "clc_plastico_reforcado_laranja": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_laranja"
+    },
+    "clc_plastico_reforcado_magenta": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_magenta"
+    },
+    "clc_plastico_reforcado_azul_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_azul_claro"
+    },
+    "clc_plastico_reforcado_amarelo": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_amarelo"
+    },
+    "clc_plastico_reforcado_lima": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_lima"
+    },
+    "clc_plastico_reforcado_rosa": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_rosa"
+    },
+    "clc_plastico_reforcado_cinza": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_cinza"
+    },
+    "clc_plastico_reforcado_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_cinza_claro"
+    },
+    "clc_plastico_reforcado_ciano": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_ciano"
+    },
+    "clc_plastico_reforcado_roxo": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_roxo"
+    },
+    "clc_plastico_reforcado_azul": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_azul"
+    },
+    "clc_plastico_reforcado_marrom": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_marrom"
+    },
+    "clc_plastico_reforcado_verde": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_verde"
+    },
+    "clc_plastico_reforcado_vermelho": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_vermelho"
+    },
+    "clc_plastico_reforcado_preto": {
+      "textures": "textures/blocks/cl/arte/plastico_reforcado_preto"
+    },
+    "clc_estrada_plastico_branco": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_branco"
+    },
+    "clc_estrada_plastico_laranja": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_laranja"
+    },
+    "clc_estrada_plastico_magenta": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_magenta"
+    },
+    "clc_estrada_plastico_azul_claro": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_azul_claro"
+    },
+    "clc_estrada_plastico_amarelo": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_amarelo"
+    },
+    "clc_estrada_plastico_lima": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_lima"
+    },
+    "clc_estrada_plastico_rosa": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_rosa"
+    },
+    "clc_estrada_plastico_cinza": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_cinza"
+    },
+    "clc_estrada_plastico_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_cinza_claro"
+    },
+    "clc_estrada_plastico_ciano": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_ciano"
+    },
+    "clc_estrada_plastico_roxo": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_roxo"
+    },
+    "clc_estrada_plastico_azul": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_azul"
+    },
+    "clc_estrada_plastico_marrom": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_marrom"
+    },
+    "clc_estrada_plastico_verde": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_verde"
+    },
+    "clc_estrada_plastico_vermelho": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_vermelho"
+    },
+    "clc_estrada_plastico_preto": {
+      "textures": "textures/blocks/cl/arte/estrada_plastico_preto"
+    },
+    "clc_painel_brilhante_branco": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_branco"
+    },
+    "clc_painel_brilhante_laranja": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_laranja"
+    },
+    "clc_painel_brilhante_magenta": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_magenta"
+    },
+    "clc_painel_brilhante_azul_claro": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_azul_claro"
+    },
+    "clc_painel_brilhante_amarelo": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_amarelo"
+    },
+    "clc_painel_brilhante_lima": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_lima"
+    },
+    "clc_painel_brilhante_rosa": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_rosa"
+    },
+    "clc_painel_brilhante_cinza": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_cinza"
+    },
+    "clc_painel_brilhante_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_cinza_claro"
+    },
+    "clc_painel_brilhante_ciano": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_ciano"
+    },
+    "clc_painel_brilhante_roxo": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_roxo"
+    },
+    "clc_painel_brilhante_azul": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_azul"
+    },
+    "clc_painel_brilhante_marrom": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_marrom"
+    },
+    "clc_painel_brilhante_verde": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_verde"
+    },
+    "clc_painel_brilhante_vermelho": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_vermelho"
+    },
+    "clc_painel_brilhante_preto": {
+      "textures": "textures/blocks/cl/arte/painel_brilhante_preto"
+    },
+    "clc_tnt_obsidiana": {
+      "textures": "textures/blocks/cl/c/tnt_obsidiana"
+    },
+    "clc_conduto_energia": {
+      "textures": "textures/blocks/cl/arte/conduto_energia"
+    },
+    "clc_conduto_item": {
+      "textures": "textures/blocks/cl/arte/conduto_item"
+    },
+    "clc_conduto_item_extrai": {
+      "textures": "textures/blocks/cl/c/conduto_item_extrai"
     }
   }
 }

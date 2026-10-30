@@ -1,0 +1,105 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:conduto_item",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:n": [
+          false,
+          true
+        ],
+        "cl:s": [
+          false,
+          true
+        ],
+        "cl:l": [
+          false,
+          true
+        ],
+        "cl:o": [
+          false,
+          true
+        ],
+        "cl:cima": [
+          false,
+          true
+        ],
+        "cl:baixo": [
+          false,
+          true
+        ],
+        "cl:extrai": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.conduto_item",
+        "bone_visibility": {
+          "norte": "q.block_state('cl:n')",
+          "sul": "q.block_state('cl:s')",
+          "leste": "q.block_state('cl:l')",
+          "oeste": "q.block_state('cl:o')",
+          "cima": "q.block_state('cl:cima')",
+          "baixo": "q.block_state('cl:baixo')",
+          "centro_extrai": "q.block_state('cl:extrai')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_conduto_item",
+          "render_method": "opaque"
+        },
+        "extrai": {
+          "texture": "clc_conduto_item_extrai",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#6fa8c9",
+      "minecraft:tick": {
+        "interval_range": [
+          20,
+          20
+        ],
+        "looping": true
+      },
+      "cl:conduto_item": {},
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          5,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_plastico_brilhante_preto"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:plastico_preto"
+      },
+      {
+        "item": "cl:plastico_preto"
+      },
+      {
+        "item": "cl:plastico_preto"
+      },
+      {
+        "item": "minecraft:glowstone_dust"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:plastico_brilhante_preto",
+      "count": 3
+    }
+  }
+}

@@ -17,7 +17,7 @@ const CARGA = "cl:carga";
 // Células de Energia (Thermal, Fase 17) e Cubos de Energia (Mekanism, 1.3.0): capacidade em E.
 // e Bancos de Capacitores (Ender IO, 1.8.0).
 export const CELULAS: Readonly<Record<string, number>> = { ...DADOS_F17.celulas, ...DADOS_F24.cubos, ...DADOS_F29.bancos };
-const CONDUTORES = new Set<string>([IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
+const CONDUTORES = new Set<string>([IDS.cabo, "cl:conduto_energia", IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
 
 // Tesseract (1.2.0): a busca também pula para os outros Tesseracts da mesma frequência (scripts/maquinas/energia_extra.ts).
 let paresDe: (b: Block) => Block[] = () => [];

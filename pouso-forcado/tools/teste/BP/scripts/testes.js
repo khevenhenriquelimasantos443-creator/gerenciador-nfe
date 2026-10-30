@@ -725,6 +725,33 @@ teste("redemoinho", 200, (t) => {
   });
 });
 
+// 1.11.0: Conduto de Itens (tocar põe no modo "tira"; leva do baú A ao baú B) e Balão (cai devagar).
+teste("additions", 200, (t) => {
+  t.setBlockType("minecraft:chest", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:conduto_item", { x: 2, y: 2, z: 1 });
+  t.setBlockType("cl:conduto_item", { x: 3, y: 2, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 4, y: 2, z: 1 });
+  t.setBlockType("cl:plastico_vermelho", { x: 1, y: 2, z: 4 });
+  t.getBlock({ x: 1, y: 2, z: 1 }).getComponent("inventory").container.addItem(new ItemStack("minecraft:cobblestone", 8));
+  const j = robo(t, { x: 2, y: 2, z: 3 });
+  t.runAfterDelay(10, () => j.interactWithBlock({ x: 2, y: 2, z: 1 }, Direction.South));
+  t.runAfterDelay(20, () => {
+    j.setItem(new ItemStack("cl:balao_azul", 1), 0, true);
+    j.useItemInSlot(0);
+  });
+  t.runAfterDelay(120, () => {
+    const c = t.getBlock({ x: 4, y: 2, z: 1 }).getComponent("inventory").container;
+    let n = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === "minecraft:cobblestone") n += c.getItem(s).amount;
+    const balao = t.getDimension().getEntities({ type: "cl:balao", location: j.location, maxDistance: 4 }).length;
+    const cai = !!j.getEffect("slow_falling");
+    log(`additions: itens movidos=${n} extrai=${t.getBlock({ x: 2, y: 2, z: 1 }).permutation.getState("cl:extrai")} balão=${balao} queda lenta=${cai} plástico=${t.getBlock({ x: 1, y: 2, z: 4 }).typeId}`);
+    t.assert(n >= 4, "o Conduto de Itens não levou os itens");
+    t.assert(balao === 1 && cai, "o balão não ficou preso no robô");
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });

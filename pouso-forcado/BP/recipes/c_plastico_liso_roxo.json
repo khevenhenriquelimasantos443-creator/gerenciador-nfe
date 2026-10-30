@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_plastico_liso_roxo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      "#S#",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:plastico_roxo"
+      },
+      "S": {
+        "item": "minecraft:slime_ball"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:plastico_liso_roxo",
+      "count": 4
+    }
+  }
+}

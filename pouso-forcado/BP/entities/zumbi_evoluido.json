@@ -12,7 +12,8 @@
           "type": "bool"
         }
       },
-      "spawn_category": "monster"
+      "spawn_category": "monster",
+      "runtime_identifier": "minecraft:zombie"
     },
     "components": {
       "minecraft:attack": {

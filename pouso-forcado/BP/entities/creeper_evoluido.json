@@ -6,7 +6,8 @@
       "is_experimental": false,
       "is_summonable": true,
       "is_spawnable": true,
-      "spawn_category": "monster"
+      "spawn_category": "monster",
+      "runtime_identifier": "minecraft:creeper"
     },
     "components": {
       "minecraft:attack": {

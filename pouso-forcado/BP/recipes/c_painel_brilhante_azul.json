@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_painel_brilhante_azul"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PHP",
+      "HDH",
+      "GHG"
+    ],
+    "key": {
+      "P": {
+        "item": "minecraft:glass_pane"
+      },
+      "H": {
+        "item": "cl:folha_plastico"
+      },
+      "D": {
+        "item": "minecraft:blue_dye"
+      },
+      "G": {
+        "item": "minecraft:glowstone_dust"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_brilhante_azul",
+      "count": 2
+    }
+  }
+}

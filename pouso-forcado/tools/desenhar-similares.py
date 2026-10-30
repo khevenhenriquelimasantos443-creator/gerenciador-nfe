@@ -174,9 +174,24 @@ def robo():
     salvar(contornar(im), "robo_minerador")
 
 
+def balao(nome, cor):
+    # Balão do Mekanism Additions: bola colorida com brilho, nó e a linha.
+    im, d = novo()
+    c = tuple(int(cor[k:k + 2], 16) for k in (1, 3, 5)) + (255,)
+    d.ellipse([7, 2, 25, 21], fill=c)
+    d.ellipse([10, 5, 15, 10], fill=tom(c, 1.45))
+    d.polygon([(14, 21), (18, 21), (16, 24)], fill=tom(c, 0.75))
+    d.line([(16, 24), (14, 27), (17, 30)], fill=(220, 220, 220, 255))
+    salvar(contornar(im), nome)
+
+
+for c, cor in (("branco", "#f9fffe"), ("laranja", "#f9801d"), ("magenta", "#c74ebd"), ("azul_claro", "#3ab3da"), ("amarelo", "#fed83d"),
+               ("lima", "#80c71f"), ("rosa", "#f38baa"), ("cinza", "#474f52"), ("cinza_claro", "#9d9d97"), ("ciano", "#169c9c"),
+               ("roxo", "#8932b8"), ("azul", "#3c44aa"), ("marrom", "#835432"), ("verde", "#5e7c16"), ("vermelho", "#b02e26"), ("preto", "#1d1d21")):
+    balao(f"balao_{c}", cor)
 for f in (foguete, mascara, equipamento, bico, aleta, motor, helice, batedor, regador, robo):
     f()
 tanque("tanque_oxigenio_leve", (80, 190, 90, 255))
 tanque("tanque_oxigenio_medio", (235, 150, 50, 255))
 tanque("tanque_oxigenio_pesado", (210, 60, 60, 255))
-print("ícones parecidos: 13")
+print("ícones parecidos: 13 + 16 balões")

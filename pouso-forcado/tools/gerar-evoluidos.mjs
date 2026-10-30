@@ -33,7 +33,8 @@ for (const m of MOBS) {
   e.description.identifier = `cl:${m.id}`;
   e.description.is_spawnable = true;
   e.description.is_summonable = true;
-  delete e.description.runtime_identifier;
+  // O comportamento de inchar e explodir do creeper só vale com o tipo de execução do original.
+  e.description.runtime_identifier = `minecraft:${m.de}`;
   const c = e.components;
   c["minecraft:health"] = { value: m.vida, max: m.vida };
   semSol(c);

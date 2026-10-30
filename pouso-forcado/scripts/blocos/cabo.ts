@@ -9,7 +9,7 @@ import { ARMAZENAMENTO, IDS } from "../config.js";
  * Custo: só nos eventos de pôr/quebrar bloco, e só quando há cabo por perto.
  */
 const LIGA = new Set<string>([
-  IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora,
+  IDS.cabo, "cl:conduto_energia", IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora,
   IDS.terminal, IDS.estufa, IDS.condensadorAvancado, ...ARMAZENAMENTO.conteineres,
 ]);
 const LADOS: ReadonlyArray<[string, (b: Block) => Block | undefined]> = [

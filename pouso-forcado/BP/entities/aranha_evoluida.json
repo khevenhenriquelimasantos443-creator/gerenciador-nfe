@@ -5,7 +5,8 @@
       "identifier": "cl:aranha_evoluida",
       "is_summonable": true,
       "is_spawnable": true,
-      "spawn_category": "monster"
+      "spawn_category": "monster",
+      "runtime_identifier": "minecraft:spider"
     },
     "components": {
       "minecraft:attack": {

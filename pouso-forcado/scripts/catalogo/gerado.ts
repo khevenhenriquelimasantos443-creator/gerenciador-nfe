@@ -161,6 +161,86 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Casting Basin",
   "icone": "textures/items/cl/blocos/bacia_fundicao"
  },
+ "cl:balao_amarelo": {
+  "pt": "Balão Amarelo",
+  "en": "Yellow Balloon",
+  "icone": "textures/items/cl/arte/balao_amarelo"
+ },
+ "cl:balao_azul": {
+  "pt": "Balão Azul",
+  "en": "Blue Balloon",
+  "icone": "textures/items/cl/arte/balao_azul"
+ },
+ "cl:balao_azul_claro": {
+  "pt": "Balão Azul-Claro",
+  "en": "Light Blue Balloon",
+  "icone": "textures/items/cl/arte/balao_azul_claro"
+ },
+ "cl:balao_branco": {
+  "pt": "Balão Branco",
+  "en": "White Balloon",
+  "icone": "textures/items/cl/arte/balao_branco"
+ },
+ "cl:balao_ciano": {
+  "pt": "Balão Ciano",
+  "en": "Cyan Balloon",
+  "icone": "textures/items/cl/arte/balao_ciano"
+ },
+ "cl:balao_cinza": {
+  "pt": "Balão Cinza",
+  "en": "Gray Balloon",
+  "icone": "textures/items/cl/arte/balao_cinza"
+ },
+ "cl:balao_cinza_claro": {
+  "pt": "Balão Cinza-Claro",
+  "en": "Light Gray Balloon",
+  "icone": "textures/items/cl/arte/balao_cinza_claro"
+ },
+ "cl:balao_laranja": {
+  "pt": "Balão Laranja",
+  "en": "Orange Balloon",
+  "icone": "textures/items/cl/arte/balao_laranja"
+ },
+ "cl:balao_lima": {
+  "pt": "Balão Lima",
+  "en": "Lime Balloon",
+  "icone": "textures/items/cl/arte/balao_lima"
+ },
+ "cl:balao_magenta": {
+  "pt": "Balão Magenta",
+  "en": "Magenta Balloon",
+  "icone": "textures/items/cl/arte/balao_magenta"
+ },
+ "cl:balao_marrom": {
+  "pt": "Balão Marrom",
+  "en": "Brown Balloon",
+  "icone": "textures/items/cl/arte/balao_marrom"
+ },
+ "cl:balao_preto": {
+  "pt": "Balão Preto",
+  "en": "Black Balloon",
+  "icone": "textures/items/cl/arte/balao_preto"
+ },
+ "cl:balao_rosa": {
+  "pt": "Balão Rosa",
+  "en": "Pink Balloon",
+  "icone": "textures/items/cl/arte/balao_rosa"
+ },
+ "cl:balao_roxo": {
+  "pt": "Balão Roxo",
+  "en": "Purple Balloon",
+  "icone": "textures/items/cl/arte/balao_roxo"
+ },
+ "cl:balao_verde": {
+  "pt": "Balão Verde",
+  "en": "Green Balloon",
+  "icone": "textures/items/cl/arte/balao_verde"
+ },
+ "cl:balao_vermelho": {
+  "pt": "Balão Vermelho",
+  "en": "Red Balloon",
+  "icone": "textures/items/cl/arte/balao_vermelho"
+ },
  "cl:balde_combustivel": {
   "pt": "Balde de Combustível",
   "en": "Fuel Bucket",
@@ -826,6 +906,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Advanced Condenser",
   "icone": "textures/items/cl/arte/blocos/condensador_avancado"
  },
+ "cl:conduto_energia": {
+  "pt": "Conduto de Energia",
+  "en": "Energy Conduit",
+  "icone": "textures/items/cl/blocos/conduto_energia"
+ },
+ "cl:conduto_item": {
+  "pt": "Conduto de Itens",
+  "en": "Item Conduit",
+  "icone": "textures/items/cl/blocos/conduto_item"
+ },
  "cl:construtor_corpos": {
   "pt": "Construtor de Corpos",
   "en": "Shell Constructor",
@@ -1110,6 +1200,86 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Esteira de Animal",
   "en": "Treadmill",
   "icone": "textures/items/cl/arte/blocos/esteira_animal"
+ },
+ "cl:estrada_plastico_amarelo": {
+  "pt": "Estrada de Plástico Amarelo",
+  "en": "Yellow Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_amarelo"
+ },
+ "cl:estrada_plastico_azul": {
+  "pt": "Estrada de Plástico Azul",
+  "en": "Blue Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_azul"
+ },
+ "cl:estrada_plastico_azul_claro": {
+  "pt": "Estrada de Plástico Azul-Claro",
+  "en": "Light Blue Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_azul_claro"
+ },
+ "cl:estrada_plastico_branco": {
+  "pt": "Estrada de Plástico Branco",
+  "en": "White Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_branco"
+ },
+ "cl:estrada_plastico_ciano": {
+  "pt": "Estrada de Plástico Ciano",
+  "en": "Cyan Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_ciano"
+ },
+ "cl:estrada_plastico_cinza": {
+  "pt": "Estrada de Plástico Cinza",
+  "en": "Gray Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_cinza"
+ },
+ "cl:estrada_plastico_cinza_claro": {
+  "pt": "Estrada de Plástico Cinza-Claro",
+  "en": "Light Gray Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_cinza_claro"
+ },
+ "cl:estrada_plastico_laranja": {
+  "pt": "Estrada de Plástico Laranja",
+  "en": "Orange Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_laranja"
+ },
+ "cl:estrada_plastico_lima": {
+  "pt": "Estrada de Plástico Lima",
+  "en": "Lime Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_lima"
+ },
+ "cl:estrada_plastico_magenta": {
+  "pt": "Estrada de Plástico Magenta",
+  "en": "Magenta Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_magenta"
+ },
+ "cl:estrada_plastico_marrom": {
+  "pt": "Estrada de Plástico Marrom",
+  "en": "Brown Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_marrom"
+ },
+ "cl:estrada_plastico_preto": {
+  "pt": "Estrada de Plástico Preto",
+  "en": "Black Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_preto"
+ },
+ "cl:estrada_plastico_rosa": {
+  "pt": "Estrada de Plástico Rosa",
+  "en": "Pink Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_rosa"
+ },
+ "cl:estrada_plastico_roxo": {
+  "pt": "Estrada de Plástico Roxo",
+  "en": "Purple Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_roxo"
+ },
+ "cl:estrada_plastico_verde": {
+  "pt": "Estrada de Plástico Verde",
+  "en": "Green Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_verde"
+ },
+ "cl:estrada_plastico_vermelho": {
+  "pt": "Estrada de Plástico Vermelho",
+  "en": "Red Plastic Road",
+  "icone": "textures/items/cl/blocos/estrada_plastico_vermelho"
  },
  "cl:estrutura_maquina": {
   "pt": "Estrutura de Máquina",
@@ -2321,6 +2491,86 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crossbar Pattern",
   "icone": "textures/items/cl/arte/padrao_travessa"
  },
+ "cl:painel_brilhante_amarelo": {
+  "pt": "Painel Brilhante Amarelo",
+  "en": "Yellow Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_amarelo"
+ },
+ "cl:painel_brilhante_azul": {
+  "pt": "Painel Brilhante Azul",
+  "en": "Blue Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_azul"
+ },
+ "cl:painel_brilhante_azul_claro": {
+  "pt": "Painel Brilhante Azul-Claro",
+  "en": "Light Blue Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_azul_claro"
+ },
+ "cl:painel_brilhante_branco": {
+  "pt": "Painel Brilhante Branco",
+  "en": "White Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_branco"
+ },
+ "cl:painel_brilhante_ciano": {
+  "pt": "Painel Brilhante Ciano",
+  "en": "Cyan Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_ciano"
+ },
+ "cl:painel_brilhante_cinza": {
+  "pt": "Painel Brilhante Cinza",
+  "en": "Gray Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_cinza"
+ },
+ "cl:painel_brilhante_cinza_claro": {
+  "pt": "Painel Brilhante Cinza-Claro",
+  "en": "Light Gray Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_cinza_claro"
+ },
+ "cl:painel_brilhante_laranja": {
+  "pt": "Painel Brilhante Laranja",
+  "en": "Orange Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_laranja"
+ },
+ "cl:painel_brilhante_lima": {
+  "pt": "Painel Brilhante Lima",
+  "en": "Lime Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_lima"
+ },
+ "cl:painel_brilhante_magenta": {
+  "pt": "Painel Brilhante Magenta",
+  "en": "Magenta Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_magenta"
+ },
+ "cl:painel_brilhante_marrom": {
+  "pt": "Painel Brilhante Marrom",
+  "en": "Brown Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_marrom"
+ },
+ "cl:painel_brilhante_preto": {
+  "pt": "Painel Brilhante Preto",
+  "en": "Black Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_preto"
+ },
+ "cl:painel_brilhante_rosa": {
+  "pt": "Painel Brilhante Rosa",
+  "en": "Pink Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_rosa"
+ },
+ "cl:painel_brilhante_roxo": {
+  "pt": "Painel Brilhante Roxo",
+  "en": "Purple Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_roxo"
+ },
+ "cl:painel_brilhante_verde": {
+  "pt": "Painel Brilhante Verde",
+  "en": "Green Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_verde"
+ },
+ "cl:painel_brilhante_vermelho": {
+  "pt": "Painel Brilhante Vermelho",
+  "en": "Red Glow Panel",
+  "icone": "textures/items/cl/blocos/painel_brilhante_vermelho"
+ },
  "cl:painel_fotovoltaico": {
   "pt": "Painel Fotovoltaico",
   "en": "Photovoltaic Cell",
@@ -3076,10 +3326,330 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Planter",
   "icone": "textures/items/cl/arte/blocos/plantadeira"
  },
+ "cl:plastico_amarelo": {
+  "pt": "Plástico Amarelo",
+  "en": "Yellow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_amarelo"
+ },
+ "cl:plastico_azul": {
+  "pt": "Plástico Azul",
+  "en": "Blue Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_azul"
+ },
+ "cl:plastico_azul_claro": {
+  "pt": "Plástico Azul-Claro",
+  "en": "Light Blue Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_azul_claro"
+ },
+ "cl:plastico_branco": {
+  "pt": "Plástico Branco",
+  "en": "White Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_branco"
+ },
+ "cl:plastico_brilhante_amarelo": {
+  "pt": "Plástico Brilhante Amarelo",
+  "en": "Yellow Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_amarelo"
+ },
+ "cl:plastico_brilhante_azul": {
+  "pt": "Plástico Brilhante Azul",
+  "en": "Blue Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_azul"
+ },
+ "cl:plastico_brilhante_azul_claro": {
+  "pt": "Plástico Brilhante Azul-Claro",
+  "en": "Light Blue Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_azul_claro"
+ },
+ "cl:plastico_brilhante_branco": {
+  "pt": "Plástico Brilhante Branco",
+  "en": "White Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_branco"
+ },
+ "cl:plastico_brilhante_ciano": {
+  "pt": "Plástico Brilhante Ciano",
+  "en": "Cyan Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_ciano"
+ },
+ "cl:plastico_brilhante_cinza": {
+  "pt": "Plástico Brilhante Cinza",
+  "en": "Gray Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_cinza"
+ },
+ "cl:plastico_brilhante_cinza_claro": {
+  "pt": "Plástico Brilhante Cinza-Claro",
+  "en": "Light Gray Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_cinza_claro"
+ },
+ "cl:plastico_brilhante_laranja": {
+  "pt": "Plástico Brilhante Laranja",
+  "en": "Orange Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_laranja"
+ },
+ "cl:plastico_brilhante_lima": {
+  "pt": "Plástico Brilhante Lima",
+  "en": "Lime Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_lima"
+ },
+ "cl:plastico_brilhante_magenta": {
+  "pt": "Plástico Brilhante Magenta",
+  "en": "Magenta Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_magenta"
+ },
+ "cl:plastico_brilhante_marrom": {
+  "pt": "Plástico Brilhante Marrom",
+  "en": "Brown Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_marrom"
+ },
+ "cl:plastico_brilhante_preto": {
+  "pt": "Plástico Brilhante Preto",
+  "en": "Black Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_preto"
+ },
+ "cl:plastico_brilhante_rosa": {
+  "pt": "Plástico Brilhante Rosa",
+  "en": "Pink Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_rosa"
+ },
+ "cl:plastico_brilhante_roxo": {
+  "pt": "Plástico Brilhante Roxo",
+  "en": "Purple Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_roxo"
+ },
+ "cl:plastico_brilhante_verde": {
+  "pt": "Plástico Brilhante Verde",
+  "en": "Green Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_verde"
+ },
+ "cl:plastico_brilhante_vermelho": {
+  "pt": "Plástico Brilhante Vermelho",
+  "en": "Red Glow Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_brilhante_vermelho"
+ },
+ "cl:plastico_ciano": {
+  "pt": "Plástico Ciano",
+  "en": "Cyan Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_ciano"
+ },
+ "cl:plastico_cinza": {
+  "pt": "Plástico Cinza",
+  "en": "Gray Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_cinza"
+ },
+ "cl:plastico_cinza_claro": {
+  "pt": "Plástico Cinza-Claro",
+  "en": "Light Gray Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_cinza_claro"
+ },
  "cl:plastico_cru": {
   "pt": "Plástico Cru",
   "en": "Raw Plastic",
   "icone": "textures/items/cl/arte/plastico_cru"
+ },
+ "cl:plastico_laranja": {
+  "pt": "Plástico Laranja",
+  "en": "Orange Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_laranja"
+ },
+ "cl:plastico_lima": {
+  "pt": "Plástico Lima",
+  "en": "Lime Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_lima"
+ },
+ "cl:plastico_liso_amarelo": {
+  "pt": "Plástico Liso Amarelo",
+  "en": "Yellow Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_amarelo"
+ },
+ "cl:plastico_liso_azul": {
+  "pt": "Plástico Liso Azul",
+  "en": "Blue Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_azul"
+ },
+ "cl:plastico_liso_azul_claro": {
+  "pt": "Plástico Liso Azul-Claro",
+  "en": "Light Blue Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_azul_claro"
+ },
+ "cl:plastico_liso_branco": {
+  "pt": "Plástico Liso Branco",
+  "en": "White Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_branco"
+ },
+ "cl:plastico_liso_ciano": {
+  "pt": "Plástico Liso Ciano",
+  "en": "Cyan Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_ciano"
+ },
+ "cl:plastico_liso_cinza": {
+  "pt": "Plástico Liso Cinza",
+  "en": "Gray Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_cinza"
+ },
+ "cl:plastico_liso_cinza_claro": {
+  "pt": "Plástico Liso Cinza-Claro",
+  "en": "Light Gray Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_cinza_claro"
+ },
+ "cl:plastico_liso_laranja": {
+  "pt": "Plástico Liso Laranja",
+  "en": "Orange Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_laranja"
+ },
+ "cl:plastico_liso_lima": {
+  "pt": "Plástico Liso Lima",
+  "en": "Lime Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_lima"
+ },
+ "cl:plastico_liso_magenta": {
+  "pt": "Plástico Liso Magenta",
+  "en": "Magenta Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_magenta"
+ },
+ "cl:plastico_liso_marrom": {
+  "pt": "Plástico Liso Marrom",
+  "en": "Brown Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_marrom"
+ },
+ "cl:plastico_liso_preto": {
+  "pt": "Plástico Liso Preto",
+  "en": "Black Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_preto"
+ },
+ "cl:plastico_liso_rosa": {
+  "pt": "Plástico Liso Rosa",
+  "en": "Pink Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_rosa"
+ },
+ "cl:plastico_liso_roxo": {
+  "pt": "Plástico Liso Roxo",
+  "en": "Purple Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_roxo"
+ },
+ "cl:plastico_liso_verde": {
+  "pt": "Plástico Liso Verde",
+  "en": "Green Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_verde"
+ },
+ "cl:plastico_liso_vermelho": {
+  "pt": "Plástico Liso Vermelho",
+  "en": "Red Slick Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_liso_vermelho"
+ },
+ "cl:plastico_magenta": {
+  "pt": "Plástico Magenta",
+  "en": "Magenta Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_magenta"
+ },
+ "cl:plastico_marrom": {
+  "pt": "Plástico Marrom",
+  "en": "Brown Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_marrom"
+ },
+ "cl:plastico_preto": {
+  "pt": "Plástico Preto",
+  "en": "Black Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_preto"
+ },
+ "cl:plastico_reforcado_amarelo": {
+  "pt": "Plástico Reforçado Amarelo",
+  "en": "Yellow Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_amarelo"
+ },
+ "cl:plastico_reforcado_azul": {
+  "pt": "Plástico Reforçado Azul",
+  "en": "Blue Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_azul"
+ },
+ "cl:plastico_reforcado_azul_claro": {
+  "pt": "Plástico Reforçado Azul-Claro",
+  "en": "Light Blue Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_azul_claro"
+ },
+ "cl:plastico_reforcado_branco": {
+  "pt": "Plástico Reforçado Branco",
+  "en": "White Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_branco"
+ },
+ "cl:plastico_reforcado_ciano": {
+  "pt": "Plástico Reforçado Ciano",
+  "en": "Cyan Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_ciano"
+ },
+ "cl:plastico_reforcado_cinza": {
+  "pt": "Plástico Reforçado Cinza",
+  "en": "Gray Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_cinza"
+ },
+ "cl:plastico_reforcado_cinza_claro": {
+  "pt": "Plástico Reforçado Cinza-Claro",
+  "en": "Light Gray Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_cinza_claro"
+ },
+ "cl:plastico_reforcado_laranja": {
+  "pt": "Plástico Reforçado Laranja",
+  "en": "Orange Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_laranja"
+ },
+ "cl:plastico_reforcado_lima": {
+  "pt": "Plástico Reforçado Lima",
+  "en": "Lime Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_lima"
+ },
+ "cl:plastico_reforcado_magenta": {
+  "pt": "Plástico Reforçado Magenta",
+  "en": "Magenta Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_magenta"
+ },
+ "cl:plastico_reforcado_marrom": {
+  "pt": "Plástico Reforçado Marrom",
+  "en": "Brown Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_marrom"
+ },
+ "cl:plastico_reforcado_preto": {
+  "pt": "Plástico Reforçado Preto",
+  "en": "Black Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_preto"
+ },
+ "cl:plastico_reforcado_rosa": {
+  "pt": "Plástico Reforçado Rosa",
+  "en": "Pink Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_rosa"
+ },
+ "cl:plastico_reforcado_roxo": {
+  "pt": "Plástico Reforçado Roxo",
+  "en": "Purple Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_roxo"
+ },
+ "cl:plastico_reforcado_verde": {
+  "pt": "Plástico Reforçado Verde",
+  "en": "Green Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_verde"
+ },
+ "cl:plastico_reforcado_vermelho": {
+  "pt": "Plástico Reforçado Vermelho",
+  "en": "Red Reinforced Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_reforcado_vermelho"
+ },
+ "cl:plastico_rosa": {
+  "pt": "Plástico Rosa",
+  "en": "Pink Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_rosa"
+ },
+ "cl:plastico_roxo": {
+  "pt": "Plástico Roxo",
+  "en": "Purple Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_roxo"
+ },
+ "cl:plastico_verde": {
+  "pt": "Plástico Verde",
+  "en": "Green Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_verde"
+ },
+ "cl:plastico_vermelho": {
+  "pt": "Plástico Vermelho",
+  "en": "Red Plastic Block",
+  "icone": "textures/items/cl/blocos/plastico_vermelho"
  },
  "cl:plataforma_lancamento": {
   "pt": "Plataforma de Lançamento",
@@ -3491,6 +4061,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Bricks",
   "icone": "textures/items/cl/blocos/tijolos_refratarios"
  },
+ "cl:tnt_obsidiana": {
+  "pt": "TNT de Obsidiana",
+  "en": "Obsidian TNT",
+  "icone": "textures/items/cl/blocos/tnt_obsidiana"
+ },
  "cl:tomada_energia": {
   "pt": "Tomada de Energia",
   "en": "Reactor Power Tap",
@@ -3846,6 +4421,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Birch Slab",
   "icone": "textures/blocks/planks_birch"
  },
+ "minecraft:black_dye": {
+  "pt": "black_dye",
+  "en": "black_dye"
+ },
  "minecraft:blaze_powder": {
   "pt": "Pó de Chamas",
   "en": "Blaze Powder",
@@ -3905,6 +4484,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Carpete Marrom",
   "en": "Brown Carpet",
   "icone": "textures/blocks/wool_colored_brown"
+ },
+ "minecraft:brown_dye": {
+  "pt": "brown_dye",
+  "en": "brown_dye"
  },
  "minecraft:brown_mushroom": {
   "pt": "Cogumelo Marrom",
@@ -4381,6 +4964,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Gray Carpet",
   "icone": "textures/blocks/wool_colored_gray"
  },
+ "minecraft:gray_dye": {
+  "pt": "gray_dye",
+  "en": "gray_dye"
+ },
  "minecraft:green_dye": {
   "pt": "Corante Verde",
   "en": "Green Dye",
@@ -4541,10 +5128,18 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Lever",
   "icone": "textures/items/lever"
  },
+ "minecraft:light_blue_dye": {
+  "pt": "light_blue_dye",
+  "en": "light_blue_dye"
+ },
  "minecraft:light_gray_carpet": {
   "pt": "Carpete Cinza-claro",
   "en": "Light Gray Carpet",
   "icone": "textures/blocks/wool_colored_silver"
+ },
+ "minecraft:light_gray_dye": {
+  "pt": "light_gray_dye",
+  "en": "light_gray_dye"
  },
  "minecraft:lime_dye": {
   "pt": "Corante Verde Limão",
@@ -4575,6 +5170,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Defumador Aceso",
   "en": "Lit Smoker",
   "icone": "textures/blocks/smoker_side"
+ },
+ "minecraft:magenta_dye": {
+  "pt": "magenta_dye",
+  "en": "magenta_dye"
  },
  "minecraft:magma": {
   "pt": "Bloco de Magma",
@@ -5081,6 +5680,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sweet Berries",
   "icone": "textures/items/sweet_berries"
  },
+ "minecraft:tnt": {
+  "pt": "Dinamite",
+  "en": "TNT",
+  "icone": "textures/blocks/tnt_side"
+ },
  "minecraft:torch": {
   "pt": "Tocha",
   "en": "Torch",
@@ -5115,6 +5719,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Carpete Branco",
   "en": "White Carpet",
   "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:white_dye": {
+  "pt": "white_dye",
+  "en": "white_dye"
  },
  "minecraft:white_wool": {
   "pt": "Lã Branca",
@@ -5604,6 +6212,374 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "T": "cl:tijolo_refratario"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_amarelo",
+  "resultado": "cl:balao_amarelo",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:yellow_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_azul",
+  "resultado": "cl:balao_azul",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:blue_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_azul_claro",
+  "resultado": "cl:balao_azul_claro",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:light_blue_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_branco",
+  "resultado": "cl:balao_branco",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:white_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_ciano",
+  "resultado": "cl:balao_ciano",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cyan_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_cinza",
+  "resultado": "cl:balao_cinza",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:gray_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_cinza_claro",
+  "resultado": "cl:balao_cinza_claro",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:light_gray_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_laranja",
+  "resultado": "cl:balao_laranja",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:orange_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_lima",
+  "resultado": "cl:balao_lima",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:lime_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_magenta",
+  "resultado": "cl:balao_magenta",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:magenta_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_marrom",
+  "resultado": "cl:balao_marrom",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:brown_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_preto",
+  "resultado": "cl:balao_preto",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:black_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_rosa",
+  "resultado": "cl:balao_rosa",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:pink_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_roxo",
+  "resultado": "cl:balao_roxo",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:purple_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_verde",
+  "resultado": "cl:balao_verde",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:green_dye",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_balao_vermelho",
+  "resultado": "cl:balao_vermelho",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:leather",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:red_dye",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -6983,6 +7959,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_conduto_energia",
+  "resultado": "cl:conduto_energia",
+  "qtd": 8,
+  "grade": [
+   "BBB",
+   "III",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "cl:aglutinante_conduite",
+   "I": "cl:ferro_condutor"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_conduto_item",
+  "resultado": "cl:conduto_item",
+  "qtd": 8,
+  "grade": [
+   "BBB",
+   "III",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "cl:aglutinante_conduite",
+   "I": "cl:ferro_pulsante"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_construtor_corpos",
   "resultado": "cl:construtor_corpos",
   "qtd": 1,
@@ -7917,6 +8929,294 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "E": "cl:esteira",
    "R": "cl:barra_borracha",
    "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_amarelo",
+  "resultado": "cl:estrada_plastico_amarelo",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_amarelo",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_azul",
+  "resultado": "cl:estrada_plastico_azul",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_azul",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_azul_claro",
+  "resultado": "cl:estrada_plastico_azul_claro",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_azul_claro",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_branco",
+  "resultado": "cl:estrada_plastico_branco",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_branco",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_ciano",
+  "resultado": "cl:estrada_plastico_ciano",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_ciano",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_cinza",
+  "resultado": "cl:estrada_plastico_cinza",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_cinza",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_cinza_claro",
+  "resultado": "cl:estrada_plastico_cinza_claro",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_cinza_claro",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_laranja",
+  "resultado": "cl:estrada_plastico_laranja",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_laranja",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_lima",
+  "resultado": "cl:estrada_plastico_lima",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_lima",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_magenta",
+  "resultado": "cl:estrada_plastico_magenta",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_magenta",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_marrom",
+  "resultado": "cl:estrada_plastico_marrom",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_marrom",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_preto",
+  "resultado": "cl:estrada_plastico_preto",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_preto",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_rosa",
+  "resultado": "cl:estrada_plastico_rosa",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_rosa",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_roxo",
+  "resultado": "cl:estrada_plastico_roxo",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_roxo",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_verde",
+  "resultado": "cl:estrada_plastico_verde",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_verde",
+   "S": "minecraft:sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estrada_plastico_vermelho",
+  "resultado": "cl:estrada_plastico_vermelho",
+  "qtd": 3,
+  "grade": [
+   "SSS",
+   "###",
+   "SSS"
+  ],
+  "chaves": {
+   "#": "cl:plastico_liso_vermelho",
+   "S": "minecraft:sand"
   },
   "estacoes": [
    "crafting_table"
@@ -10369,6 +11669,326 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_amarelo",
+  "resultado": "cl:painel_brilhante_amarelo",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:yellow_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_azul",
+  "resultado": "cl:painel_brilhante_azul",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:blue_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_azul_claro",
+  "resultado": "cl:painel_brilhante_azul_claro",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:light_blue_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_branco",
+  "resultado": "cl:painel_brilhante_branco",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:white_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_ciano",
+  "resultado": "cl:painel_brilhante_ciano",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:cyan_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_cinza",
+  "resultado": "cl:painel_brilhante_cinza",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:gray_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_cinza_claro",
+  "resultado": "cl:painel_brilhante_cinza_claro",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:light_gray_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_laranja",
+  "resultado": "cl:painel_brilhante_laranja",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:orange_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_lima",
+  "resultado": "cl:painel_brilhante_lima",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:lime_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_magenta",
+  "resultado": "cl:painel_brilhante_magenta",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:magenta_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_marrom",
+  "resultado": "cl:painel_brilhante_marrom",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:brown_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_preto",
+  "resultado": "cl:painel_brilhante_preto",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:black_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_rosa",
+  "resultado": "cl:painel_brilhante_rosa",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:pink_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_roxo",
+  "resultado": "cl:painel_brilhante_roxo",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:purple_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_verde",
+  "resultado": "cl:painel_brilhante_verde",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:green_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_brilhante_vermelho",
+  "resultado": "cl:painel_brilhante_vermelho",
+  "qtd": 2,
+  "grade": [
+   "PHP",
+   "HDH",
+   "GHG"
+  ],
+  "chaves": {
+   "P": "minecraft:glass_pane",
+   "H": "cl:folha_plastico",
+   "D": "minecraft:red_dye",
+   "G": "minecraft:glowstone_dust"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_painel_fotovoltaico",
   "resultado": "cl:painel_fotovoltaico",
   "qtd": 1,
@@ -10747,6 +12367,436 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_amarelo",
+  "resultado": "cl:plastico_amarelo",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:yellow_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_azul",
+  "resultado": "cl:plastico_azul",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:blue_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_azul_claro",
+  "resultado": "cl:plastico_azul_claro",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:light_blue_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_branco",
+  "resultado": "cl:plastico_branco",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:white_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_amarelo",
+  "resultado": "cl:plastico_brilhante_amarelo",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_amarelo",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_azul",
+  "resultado": "cl:plastico_brilhante_azul",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_azul",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_azul_claro",
+  "resultado": "cl:plastico_brilhante_azul_claro",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_azul_claro",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_branco",
+  "resultado": "cl:plastico_brilhante_branco",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_branco",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_ciano",
+  "resultado": "cl:plastico_brilhante_ciano",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_ciano",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_cinza",
+  "resultado": "cl:plastico_brilhante_cinza",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_cinza",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_cinza_claro",
+  "resultado": "cl:plastico_brilhante_cinza_claro",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_cinza_claro",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_laranja",
+  "resultado": "cl:plastico_brilhante_laranja",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_laranja",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_lima",
+  "resultado": "cl:plastico_brilhante_lima",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_lima",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_magenta",
+  "resultado": "cl:plastico_brilhante_magenta",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_magenta",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_marrom",
+  "resultado": "cl:plastico_brilhante_marrom",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_marrom",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_preto",
+  "resultado": "cl:plastico_brilhante_preto",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_preto",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_rosa",
+  "resultado": "cl:plastico_brilhante_rosa",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_rosa",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_roxo",
+  "resultado": "cl:plastico_brilhante_roxo",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_roxo",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_verde",
+  "resultado": "cl:plastico_brilhante_verde",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_verde",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_plastico_brilhante_vermelho",
+  "resultado": "cl:plastico_brilhante_vermelho",
+  "qtd": 3,
+  "ingredientes": [
+   {
+    "item": "cl:plastico_vermelho",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:glowstone_dust",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_ciano",
+  "resultado": "cl:plastico_ciano",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:cyan_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_cinza",
+  "resultado": "cl:plastico_cinza",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:gray_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_cinza_claro",
+  "resultado": "cl:plastico_cinza_claro",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:light_gray_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_plastico_cru",
   "resultado": "cl:plastico_cru",
@@ -10780,6 +12830,744 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_laranja",
+  "resultado": "cl:plastico_laranja",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:orange_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_lima",
+  "resultado": "cl:plastico_lima",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:lime_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_amarelo",
+  "resultado": "cl:plastico_liso_amarelo",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_amarelo",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_azul",
+  "resultado": "cl:plastico_liso_azul",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_azul",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_azul_claro",
+  "resultado": "cl:plastico_liso_azul_claro",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_azul_claro",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_branco",
+  "resultado": "cl:plastico_liso_branco",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_branco",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_ciano",
+  "resultado": "cl:plastico_liso_ciano",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_ciano",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_cinza",
+  "resultado": "cl:plastico_liso_cinza",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_cinza",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_cinza_claro",
+  "resultado": "cl:plastico_liso_cinza_claro",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_cinza_claro",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_laranja",
+  "resultado": "cl:plastico_liso_laranja",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_laranja",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_lima",
+  "resultado": "cl:plastico_liso_lima",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_lima",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_magenta",
+  "resultado": "cl:plastico_liso_magenta",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_magenta",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_marrom",
+  "resultado": "cl:plastico_liso_marrom",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_marrom",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_preto",
+  "resultado": "cl:plastico_liso_preto",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_preto",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_rosa",
+  "resultado": "cl:plastico_liso_rosa",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_rosa",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_roxo",
+  "resultado": "cl:plastico_liso_roxo",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_roxo",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_verde",
+  "resultado": "cl:plastico_liso_verde",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_verde",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_liso_vermelho",
+  "resultado": "cl:plastico_liso_vermelho",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#S#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_vermelho",
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_magenta",
+  "resultado": "cl:plastico_magenta",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:magenta_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_marrom",
+  "resultado": "cl:plastico_marrom",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:brown_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_preto",
+  "resultado": "cl:plastico_preto",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:black_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_amarelo",
+  "resultado": "cl:plastico_reforcado_amarelo",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_amarelo",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_azul",
+  "resultado": "cl:plastico_reforcado_azul",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_azul",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_azul_claro",
+  "resultado": "cl:plastico_reforcado_azul_claro",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_azul_claro",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_branco",
+  "resultado": "cl:plastico_reforcado_branco",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_branco",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_ciano",
+  "resultado": "cl:plastico_reforcado_ciano",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_ciano",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_cinza",
+  "resultado": "cl:plastico_reforcado_cinza",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_cinza",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_cinza_claro",
+  "resultado": "cl:plastico_reforcado_cinza_claro",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_cinza_claro",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_laranja",
+  "resultado": "cl:plastico_reforcado_laranja",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_laranja",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_lima",
+  "resultado": "cl:plastico_reforcado_lima",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_lima",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_magenta",
+  "resultado": "cl:plastico_reforcado_magenta",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_magenta",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_marrom",
+  "resultado": "cl:plastico_reforcado_marrom",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_marrom",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_preto",
+  "resultado": "cl:plastico_reforcado_preto",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_preto",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_rosa",
+  "resultado": "cl:plastico_reforcado_rosa",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_rosa",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_roxo",
+  "resultado": "cl:plastico_reforcado_roxo",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_roxo",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_verde",
+  "resultado": "cl:plastico_reforcado_verde",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_verde",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_reforcado_vermelho",
+  "resultado": "cl:plastico_reforcado_vermelho",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#O#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:plastico_vermelho",
+   "O": "cl:po_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_rosa",
+  "resultado": "cl:plastico_rosa",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:pink_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_roxo",
+  "resultado": "cl:plastico_roxo",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:purple_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_verde",
+  "resultado": "cl:plastico_verde",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:green_dye"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_plastico_vermelho",
+  "resultado": "cl:plastico_vermelho",
+  "qtd": 4,
+  "grade": [
+   " # ",
+   "#D#",
+   " # "
+  ],
+  "chaves": {
+   "#": "cl:folha_plastico",
+   "D": "minecraft:red_dye"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -11534,6 +14322,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tnt_obsidiana",
+  "resultado": "cl:tnt_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "OOO",
+   "TTT",
+   "OOO"
+  ],
+  "chaves": {
+   "O": "minecraft:obsidian",
+   "T": "minecraft:tnt"
   },
   "estacoes": [
    "crafting_table"

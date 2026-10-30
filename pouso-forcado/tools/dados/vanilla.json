@@ -103,6 +103,10 @@
   "en": "Birch Slab",
   "icone": "textures/blocks/planks_birch"
  },
+ "minecraft:black_dye": {
+  "pt": "black_dye",
+  "en": "black_dye"
+ },
  "minecraft:blaze_powder": {
   "pt": "Pó de Chamas",
   "en": "Blaze Powder",
@@ -162,6 +166,10 @@
   "pt": "Carpete Marrom",
   "en": "Brown Carpet",
   "icone": "textures/blocks/wool_colored_brown"
+ },
+ "minecraft:brown_dye": {
+  "pt": "brown_dye",
+  "en": "brown_dye"
  },
  "minecraft:brown_mushroom": {
   "pt": "Cogumelo Marrom",
@@ -648,6 +656,10 @@
   "en": "Gray Carpet",
   "icone": "textures/blocks/wool_colored_gray"
  },
+ "minecraft:gray_dye": {
+  "pt": "gray_dye",
+  "en": "gray_dye"
+ },
  "minecraft:green_dye": {
   "pt": "Corante Verde",
   "en": "Green Dye",
@@ -813,10 +825,18 @@
   "en": "Lever",
   "icone": "textures/items/lever"
  },
+ "minecraft:light_blue_dye": {
+  "pt": "light_blue_dye",
+  "en": "light_blue_dye"
+ },
  "minecraft:light_gray_carpet": {
   "pt": "Carpete Cinza-claro",
   "en": "Light Gray Carpet",
   "icone": "textures/blocks/wool_colored_silver"
+ },
+ "minecraft:light_gray_dye": {
+  "pt": "light_gray_dye",
+  "en": "light_gray_dye"
  },
  "minecraft:lime_dye": {
   "pt": "Corante Verde Limão",
@@ -847,6 +867,10 @@
   "pt": "Defumador Aceso",
   "en": "Lit Smoker",
   "icone": "textures/blocks/smoker_side"
+ },
+ "minecraft:magenta_dye": {
+  "pt": "magenta_dye",
+  "en": "magenta_dye"
  },
  "minecraft:magma": {
   "pt": "Bloco de Magma",
@@ -1353,6 +1377,11 @@
   "en": "Sweet Berries",
   "icone": "textures/items/sweet_berries"
  },
+ "minecraft:tnt": {
+  "pt": "Dinamite",
+  "en": "TNT",
+  "icone": "textures/blocks/tnt_side"
+ },
  "minecraft:torch": {
   "pt": "Tocha",
   "en": "Torch",
@@ -1392,6 +1421,10 @@
   "pt": "Carpete Branco",
   "en": "White Carpet",
   "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:white_dye": {
+  "pt": "white_dye",
+  "en": "white_dye"
  },
  "minecraft:white_wool": {
   "pt": "Lã Branca",

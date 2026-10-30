@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "cl:tnt_obsidiana_acesa",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/blocks/cl/c/tnt_obsidiana"
+      },
+      "geometry": {
+        "default": "geometry.cl.tnt_bloco"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ]
+    }
+  }
+}

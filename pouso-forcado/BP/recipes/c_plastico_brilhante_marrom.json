@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_plastico_brilhante_marrom"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:plastico_marrom"
+      },
+      {
+        "item": "cl:plastico_marrom"
+      },
+      {
+        "item": "cl:plastico_marrom"
+      },
+      {
+        "item": "minecraft:glowstone_dust"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:plastico_brilhante_marrom",
+      "count": 3
+    }
+  }
+}

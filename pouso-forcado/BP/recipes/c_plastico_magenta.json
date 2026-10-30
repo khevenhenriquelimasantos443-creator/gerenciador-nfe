@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_plastico_magenta"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      "#D#",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "cl:folha_plastico"
+      },
+      "D": {
+        "item": "minecraft:magenta_dye"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:plastico_magenta",
+      "count": 4
+    }
+  }
+}
