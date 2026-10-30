@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.5.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
+**Versão 1.5.2: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft e OpenBlocks.
 
 ## Fases até o fim
 
@@ -109,6 +109,7 @@ Outros comandos:
 - `npm run texturas`: cria só as texturas que estiverem faltando (não apaga as suas). Para regerar todas: `node tools/gerar-texturas.mjs --force`.
 - `npm run compilar`: só compila o TypeScript.
 - `node tools/gerar-nave.mjs --force` / `node tools/gerar-relevo.mjs --force`: regeram a nave / as dunas, morros e o templo a partir do modelo em código.
+- `python3 tools/gerar-wiki.py`: monta a wiki (`docs/wiki/wiki.html`) a partir de `docs/wiki/wiki.fonte.html`, com os ícones e as imagens embutidos.
 - `node tools/gerar-panorama.mjs <bedrock-samples>/resource_pack`: redesenha o panorama do menu e o fundo da troca de dimensão (o avião caído com as texturas do jogo; uns 2 minutos). Precisa da pasta `resource_pack` do [bedrock-samples](https://github.com/Mojang/bedrock-samples). As imagens já vêm no repositório.
 
 > Os arquivos `dist/pouso-forcado.mcaddon` e `dist/pouso-forcado.mcworld` já vêm no repositório, então dá para baixar direto no celular sem fazer o build.
@@ -149,6 +150,11 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.5.2
+
+- **Wiki do modpack**: `docs/wiki/wiki.html`, uma página só para abrir no celular (abertura com o logo e o avião caído, índice, busca, ícones do pack): começar, sobreviver, Ex Nihilo, energia, máquinas, ferramentas, armazenamento, explorar, perigos, a nave e utilidades. O texto fica em `docs/wiki/wiki.fonte.html`; `python3 tools/gerar-wiki.py` embute as imagens.
+- Dica da tela de carregamento corrigida: falava em ir ao Nether, mas o portal não acende neste modpack.
 
 ## Novidades da 1.5.1
 

@@ -1,0 +1,695 @@
+<title>Wiki do Pouso Forçado</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: faixa de abertura com a foto do avião caído; barra fixa com o índice e a busca; uma coluna de leitura
+   com as seções como painéis do console da nave (grafite, faixa laranja do casco, LED ciano para dicas). */
+:root {
+  --chao: #13171b;
+  --painel: #1b2127;
+  --painel2: #222930;
+  --linha: #2e363e;
+  --texto: #ebe6da;
+  --suave: #a3abb2;
+  --laranja: #f08b1f;
+  --ciano: #4fd8e4;
+  --perigo: #ef6a5e;
+  --verde: #86d67f;
+  --sobre-laranja: #13171b;
+  --hero-texto: #f6f1e6;
+  --hero-sombra: rgba(10, 12, 14, 0.78);
+  --display: "Chakra Petch", "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  --corpo: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --chao: #e9ecee; --painel: #fbfcfc; --painel2: #f1f3f4; --linha: #cfd5da; --texto: #1d2329; --suave: #56606a;
+    --laranja: #b85f05; --ciano: #0b7f8a; --perigo: #b9372c; --verde: #2b7d34; --sobre-laranja: #ffffff; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --chao: #e9ecee; --painel: #fbfcfc; --painel2: #f1f3f4; --linha: #cfd5da; --texto: #1d2329; --suave: #56606a;
+  --laranja: #b85f05; --ciano: #0b7f8a; --perigo: #b9372c; --verde: #2b7d34; --sobre-laranja: #ffffff; color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --chao: #13171b; --painel: #1b2127; --painel2: #222930; --linha: #2e363e; --texto: #ebe6da; --suave: #a3abb2;
+  --laranja: #f08b1f; --ciano: #4fd8e4; --perigo: #ef6a5e; --verde: #86d67f; --sobre-laranja: #13171b; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--chao); color: var(--texto); font: 400 1rem/1.62 var(--corpo); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--painel); }
+a { color: var(--ciano); text-underline-offset: 0.18em; }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--ciano); outline-offset: 2px; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.coluna { max-width: 48rem; margin: 0 auto; }
+
+/* Abertura */
+.abertura { position: relative; background: #2a2016 url("@img/fundo") center 38% / cover no-repeat; color: var(--hero-texto); }
+.abertura::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 12, 14, 0.15) 0%, var(--hero-sombra) 72%, rgba(10, 12, 14, 0.92) 100%); }
+.abertura .gutter { position: relative; z-index: 1; padding-block: 4.5rem 1.6rem; }
+.abertura h1 { margin: 0; line-height: 0; }
+.abertura h1 img { width: min(34rem, 100%); height: auto; image-rendering: pixelated; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.45)); }
+.sobretitulo { font: 500 0.78rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--hero-texto); opacity: 0.85; margin: 0 0 0.9rem; }
+.chamada { font-size: 1.12rem; max-width: 36rem; margin: 1rem 0 1.1rem; text-wrap: pretty; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+.selos { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+.selos li { font: 500 0.74rem/1 var(--mono); letter-spacing: 0.06em; padding: 0.42rem 0.6rem; border: 1px solid rgba(246, 241, 230, 0.35); background: rgba(10, 12, 14, 0.55); }
+.faixa { height: 6px; background: repeating-linear-gradient(-45deg, var(--laranja) 0 10px, #1a1a1a 10px 20px); }
+
+/* Barra fixa: índice e busca */
+.barra { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--painel); border-bottom: 1px solid var(--linha); }
+.barra .coluna { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; padding-block: 0.55rem; }
+.busca { display: flex; align-items: center; gap: 0.4rem; flex: 1 1 14rem; min-width: 0; }
+.busca label { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--suave); }
+.busca input { flex: 1; min-width: 0; font: inherit; color: var(--texto); background: var(--chao); border: 1px solid var(--linha); padding: 0.45rem 0.6rem; }
+.indice { display: flex; gap: 0.35rem; overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; flex: 1 1 100%; }
+.indice a { flex: none; font: 600 0.84rem/1 var(--display); text-decoration: none; color: var(--texto); padding: 0.45rem 0.6rem; background: var(--painel2); border: 1px solid var(--linha); }
+.indice a:hover { border-color: var(--laranja); }
+.contagem { font: 500 0.74rem/1.3 var(--mono); color: var(--suave); margin: 0; }
+
+/* Seções */
+main .coluna { display: flex; flex-direction: column; gap: 2.4rem; padding-block: 2rem 3rem; }
+.secao { scroll-margin-top: 7.5rem; }
+.secao > header { display: flex; align-items: center; gap: 0.8rem; border-bottom: 2px solid var(--laranja); padding-bottom: 0.55rem; margin-bottom: 1.1rem; }
+.secao > header img { width: 40px; height: 40px; image-rendering: pixelated; flex: none; }
+.secao h2 { font: 700 1.6rem/1.15 var(--display); margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+.secao > header p { margin: 0.1rem 0 0; color: var(--suave); font-size: 0.95rem; }
+.blocos { display: flex; flex-direction: column; gap: 1rem; }
+.bloco { background: var(--painel); border: 1px solid var(--linha); padding: 1rem 1.1rem; min-width: 0; }
+.bloco h3 { font: 600 1.15rem/1.25 var(--display); margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.55rem; text-wrap: balance; }
+.bloco h3 img { width: 24px; height: 24px; image-rendering: pixelated; flex: none; }
+.bloco p { margin: 0.5rem 0; }
+.bloco ul, .bloco ol { margin: 0.5rem 0; padding-left: 1.25rem; }
+.bloco li { margin: 0.25rem 0; }
+.bloco li::marker { color: var(--laranja); }
+.bloco > :first-child { margin-top: 0; }
+.bloco > :last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+code, .num { font: 500 0.88em/1 var(--mono); }
+code { background: var(--painel2); border: 1px solid var(--linha); padding: 0.08em 0.32em; }
+.tabela { overflow-x: auto; margin: 0.6rem 0; border: 1px solid var(--linha); }
+table { border-collapse: collapse; width: 100%; font-size: 0.93rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
+th { font: 600 0.78rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--suave); background: var(--painel2); }
+tr:last-child td { border-bottom: 0; }
+.dica { display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 0.6rem; margin: 0.7rem 0; padding: 0.6rem 0.75rem; background: var(--painel2); border: 1px solid var(--linha); }
+.dica::before { content: ""; width: 8px; height: 8px; margin-top: 0.5em; background: var(--ciano); box-shadow: 0 0 6px var(--ciano); grid-row: span 2; }
+.dica b { font: 500 0.72rem/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ciano); }
+.dica.perigo::before { background: var(--perigo); box-shadow: 0 0 6px var(--perigo); }
+.dica.perigo b { color: var(--perigo); }
+.galeria { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin: 0.7rem 0 0; }
+.galeria figure { margin: 0; background: var(--painel2); border: 1px solid var(--linha); }
+.galeria img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; }
+.galeria figcaption { font: 500 0.76rem/1.3 var(--mono); padding: 0.4rem 0.55rem; color: var(--suave); }
+.passos { counter-reset: passo; list-style: none; padding-left: 0 !important; }
+.passos li { counter-increment: passo; display: grid; grid-template-columns: 2rem 1fr; gap: 0.4rem; margin: 0.45rem 0; }
+.passos li::before { content: counter(passo); font: 700 0.95rem/1.75rem var(--display); text-align: center; width: 1.75rem; height: 1.75rem; color: var(--sobre-laranja); background: var(--laranja); }
+.vazio { text-align: center; color: var(--suave); padding: 2rem 0; }
+footer { border-top: 1px solid var(--linha); background: var(--painel); }
+footer .coluna { padding-block: 1.6rem 2.4rem; color: var(--suave); font-size: 0.92rem; }
+footer p { margin: 0.4rem 0; }
+@media (max-width: 34rem) {
+  .galeria { grid-template-columns: minmax(0, 1fr); }
+  .secao h2 { font-size: 1.38rem; }
+  .abertura .gutter { padding-block: 3.2rem 1.3rem; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="abertura">
+  <div class="gutter"><div class="coluna">
+    <p class="sobretitulo">Wiki do modpack · Minecraft Bedrock</p>
+    <h1><img src="@img/logo" alt="Pouso Forçado" width="1937" height="333"></h1>
+    <p class="chamada">Sua nave caiu num planeta de deserto: sem água, sem animais e quase sem minério à vista. Sobreviva ao sol e às noites, faça máquinas a partir da areia e conserte os quatro sistemas da nave para decolar.</p>
+    <ul class="selos">
+      <li>Versão 1.5.1</li>
+      <li>Bedrock 26.30+</li>
+      <li>24 capítulos de missões</li>
+      <li>Inspirado no Crash Landing (1.6.4)</li>
+    </ul>
+  </div></div>
+</div>
+<div class="faixa" aria-hidden="true"></div>
+
+<nav class="barra gutter" aria-label="Índice">
+  <div class="coluna">
+    <div class="busca">
+      <label for="busca">Buscar</label>
+      <input id="busca" type="search" placeholder="peneira, água, faraó, reator…" autocomplete="off">
+    </div>
+    <p class="contagem" id="contagem" aria-live="polite"></p>
+    <div class="indice">
+      <a href="#comecar">Começar</a>
+      <a href="#sobreviver">Sobreviver</a>
+      <a href="#nihilo">Ex Nihilo</a>
+      <a href="#energia">Energia</a>
+      <a href="#maquinas">Máquinas</a>
+      <a href="#ferramentas">Ferramentas</a>
+      <a href="#armazenamento">Armazenamento</a>
+      <a href="#explorar">Explorar</a>
+      <a href="#perigos">Perigos</a>
+      <a href="#nave">Nave</a>
+      <a href="#utilidades">Utilidades</a>
+      <a href="#creditos">Créditos</a>
+    </div>
+  </div>
+</nav>
+
+<main class="gutter">
+<div class="coluna">
+
+<!-- ===================== COMEÇAR ===================== -->
+<section class="secao" id="comecar">
+  <header><img src="@icone/arte/diario_bordo" alt=""><div><h2>Começar</h2><p>Instalar, abrir o mundo e os primeiros minutos.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3>Instalar no celular</h3>
+      <ol class="passos">
+        <li><span>Baixe o <code>pouso-forcado.mcaddon</code> e abra com o <strong>Minecraft</strong>. No Android, se o gerenciador de arquivos não abrir, mande o arquivo pelo Telegram para você mesmo e toque nele lá.</span></li>
+        <li><span>O jogo importa os três pacotes e coloca o mundo <strong>Pouso Forçado</strong> na aba Mundos, já com tudo ativado. Não precisa ligar experimentos.</span></li>
+        <li><span>Para o menu e a tela de carregamento no tema (o deserto girando atrás do logo e as dicas do modpack): <strong>Configurações → Recursos Globais → Meus Pacotes → Pouso Forçado (Menu) → Ativar</strong>.</span></li>
+      </ol>
+      <p>Cada versão nova vem como um mundo novo: o mundo leva dentro dele os pacotes da versão em que foi criado. A versão aparece na linha cinza do chat ao entrar.</p>
+    </article>
+    <article class="bloco">
+      <h3>Os primeiros minutos</h3>
+      <ol class="passos">
+        <li><span>Você começa ao lado do <strong>avião caído</strong>, afundado na areia. Ele é o seu abrigo: tem luz, portas dos dois lados e o <strong>Painel da Nave</strong> na cabine.</span></li>
+        <li><span>No porão de carga há um baú com o que sobrou: <strong>Condensador de Água</strong>, 1 balde, 6 pães, 8 tochas, 4 terras e 2 mudas de carvalho.</span></li>
+        <li><span>Coloque o condensador logo: ele tira <strong>1 balde de água do ar a cada 30 s</strong>. Toque nele com um balde vazio, ou encoste um baú com baldes vazios.</span></li>
+        <li><span>Plante as mudas, faça a bancada e um <strong>martelo de madeira</strong>: com ele, pedregulho vira cascalho, cascalho vira areia e areia vira poeira.</span></li>
+        <li><span>Faça uma <strong>Peneira</strong>: cascalho, areia e poeira soltam minério, sementes e muito mais.</span></li>
+        <li><span>À noite, fique dentro do avião ou num lugar fechado com luz.</span></li>
+        <li><span>Siga o <strong>Diário de Bordo</strong> (toque e segure com ele na mão): cada missão ensina o próximo passo e dá recompensa.</span></li>
+      </ol>
+      <div class="dica"><b>Dica</b><span>Perdeu o Diário? Graveto + areia, sem formato, faz outro (dá até na grade do inventário).</span></div>
+    </article>
+    <article class="bloco">
+      <h3>O mundo</h3>
+      <p>É um mundo plano de areia: você pisa em <span class="num">y = 45</span>. Dunas compridas, morros, mesas de arenito e rochas aparecem por script, chunk a chunk, antes de você chegar. Não há água, rios nem chuva, e nenhum animal nasce sozinho. Por baixo: 5 camadas de areia, 7 de arenito, pedra até <span class="num">y = 1</span> e ardósia até o fundo, com os minérios nas alturas de sempre.</p>
+      <div class="galeria">
+        <figure><img src="@img/pano0" alt="O avião caído na areia, com o rastro de destroços" loading="lazy"><figcaption>O avião caído</figcaption></figure>
+        <figure><img src="@img/pano1" alt="Destroços de outra nave embaixo do sol" loading="lazy"><figcaption>Destroços de outra nave</figcaption></figure>
+        <figure><img src="@img/pano2" alt="Templo soterrado de arenito com faixas laranja" loading="lazy"><figcaption>Templo soterrado</figcaption></figure>
+        <figure><img src="@img/pano3" alt="Cidade abandonada com prédios quebrados" loading="lazy"><figcaption>Cidade abandonada</figcaption></figure>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== SOBREVIVER ===================== -->
+<section class="secao" id="sobreviver">
+  <header><img src="@icone/arte/agua_boa" alt=""><div><h2>Sobreviver</h2><p>Água, calor, ar, comida, animais, dia e noite. Números do EnviroMine e do Hunger Overhaul.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3><img src="@icone/arte/agua_boa" alt="">Água</h3>
+      <p>Além da fome, você tem <strong>hidratação de 0 a 100</strong>, mostrada no painel embaixo da tela. Ela cai devagar o tempo todo, mais rápido no deserto de dia, suando (corpo a 38 °C ou mais) e correndo. Abaixo de 10: fraqueza, fadiga e lentidão. Em 0: 4 de dano a cada 1,5 s.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Água</th><th>Hidratação</th><th>Efeito</th></tr></thead>
+        <tbody>
+          <tr><td>Excelente (fria)</td><td>+25</td><td>esfria o corpo 1 °C</td></tr>
+          <tr><td>Boa (limpa)</td><td>+25</td><td>esfria 0,5 °C</td></tr>
+          <tr><td>Suja</td><td>+25</td><td>esfria 0,2 °C; 25% de chance de Fome ou Veneno</td></tr>
+          <tr><td>Salgada</td><td>+10</td><td>depois desidrata: −1 a cada 1,5 s por 30 s</td></tr>
+          <tr><td>Direto do condensador</td><td>+10</td><td>toque nele cheio com a mão vazia</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>A garrafa de água do jogo e a poça são <strong>salgadas</strong> (como no Crash Landing, toda fonte é salgada).</li>
+        <li><strong>Ferva</strong> na fornalha ou na fogueira: toda água ruim vira Água Boa. O <strong>caldeirão</strong> com água e calor embaixo (fogo, fogueira acesa, lava, magma) enche a garrafa já com Água Boa.</li>
+        <li>Garrafa cercada de 8 cactos = Água Boa. Água Boa + bola de neve = Excelente.</li>
+        <li><strong>Camel Pack</strong> (8 couros em volta de uma garrafa): no peito ou na mão secundária. Enche com Água Boa (4 garrafas = 100) ou agachado no condensador (+75); dá água quando você precisa.</li>
+        <li>Leite, mel, melancia, frutas vermelhas e a <strong>fruta do cacto</strong> (30% ao quebrar um cacto) também matam a sede.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/camel_pack" alt="">Temperatura do corpo</h3>
+      <p>O corpo fica em <strong>37 °C</strong> e anda devagar até a temperatura do ar. O ar faz <strong>50 °C de dia</strong> e uns <strong>6 °C à noite</strong>; a sombra tira 14 °C, a água 5, dormir soma 5 e correr 2. Lava, fogo, fogueira, tocha, fornalha e gerador aceso esquentam o ar em volta. Couro esquenta (+1 por peça), ferro esquenta ao sol e diamante refresca.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Estado</th><th>Quando</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td>Suor</td><td>≥ 38 °C</td><td>gasta água; com hidratação ≥ 75 segura o corpo</td></tr>
+          <tr><td>Insolação I / II / III</td><td>≥ 39 / 41 / 43 °C</td><td>lentidão; fraqueza, fadiga, fome e náusea; 4 de dano</td></tr>
+          <tr><td>Hipotermia I / II / III</td><td>≤ 35 / 32 / 30 °C</td><td>efeitos de frio cada vez mais fortes</td></tr>
+          <tr><td>Congelamento</td><td>3 e 6 min no frio</td><td>deixa cair o item da mão e quase não anda; só a maçã dourada cura</td></tr>
+        </tbody>
+      </table></div>
+      <div class="dica"><b>Dica</b><span>Ao meio-dia, fique na sombra e beba. À noite, fogueira e couro. Beber água fria esfria na hora.</span></div>
+    </article>
+    <article class="bloco">
+      <h3>Qualidade do ar</h3>
+      <p>Vai de 0 a 100. Com céu aberto ela volta sozinha; no subsolo cai perto de lava, fogo e tochas (folhas ajudam). Na <strong>tempestade de areia</strong>, ao ar livre, também cai. Com 25 ou menos vem lentidão; em 0, dano. A <strong>Máscara de Gás</strong> (5 ferros, vidro e 2 filtros) segura o ar em 100 gastando a carga; cada <strong>Filtro de Ar</strong> recarrega 500.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/fruta_cacto" alt="">Comida</h3>
+      <ul>
+        <li><strong>Hunger Overhaul:</strong> comida crua rende 1 de fome, cozida 2, pão 3. A vida só volta com fome 7 ou mais, devagar; levar dano zera o contador. Ao comer você fica <strong>Bem Alimentado</strong> (vida volta 25% mais rápido). Fome baixa ou vida baixa trazem lentidão, fadiga, fraqueza e náusea.</li>
+        <li><strong>Variedade</strong> (Spice of Life): o jogo lembra as últimas 12 comidas. Repetir rende 75%, depois 50% e depois 25%.</li>
+        <li><strong>Cozinha (HarvestCraft):</strong> a terra peneirada solta sementes de milho, tomate, cebola, alho, feijão, pimenta, pimentão, arroz e amendoim; a areia, semente de fruta do cacto. As plantações são lentas (uns 12 min no bioma certo com terra molhada, 24 no deserto, 48 no deserto com terra seca). Oito utensílios (Tábua de Corte, Panela, Frigideira, Caçarola, Assadeira, Pilão, Tigela de Mistura, Espremedor) fazem 35 receitas.</li>
+        <li><strong>Tamareira:</strong> a muda sai da peneira de areia (1/64) e vira uma palmeira com cachos de tâmara.</li>
+        <li><strong>Charque:</strong> carne crua pendurada no Varal seca e vira charque.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3>Animais</h3>
+      <p>Nenhum animal nasce neste planeta. Eles chegam nas <strong>cápsulas de carga</strong>: a partir do dia 1, toda manhã cai uma a 20–48 blocos de um jogador, com aviso e coordenadas. Cada cápsula traz um barril de saque e um <strong>casal</strong> de vacas, ovelhas, galinhas ou porcos. Cuide deles: cruzar só a cada 20 min, ovos são 4 vezes mais raros e a vaca dá leite a cada 20 min.</p>
+    </article>
+    <article class="bloco">
+      <h3>Dia, noite e horda</h3>
+      <ul>
+        <li><strong>De dia</strong> (manhã e tarde) nada hostil nasce na superfície, e os monstros que sobraram da noite <strong>se enterram na areia</strong>. Nas cavernas segue como no jogo normal.</li>
+        <li><strong>À noite</strong> vêm mais monstros que o normal. Fique perto do avião ou num abrigo com luz.</li>
+        <li><strong>Horda:</strong> a cada 10 noites (10ª, 20ª…). No fim da tarde aparece o aviso; à noite chegam 3 ondas (horas 14000, 17000 e 20000), com 8 monstros mais 1 por dia de mundo (até 30) em volta de cada jogador.</li>
+        <li><strong>Saco de Dormir</strong> (3 couros + 3 linhas): à noite, sem monstro perto e fora da noite de horda, pula para o amanhecer.</li>
+      </ul>
+      <div class="dica perigo"><b>Tempestade de areia</b><span>Começa ao acaso (em média uma a cada 45 min de jogo) e dura 25 min: névoa amarela, lentidão ao ar livre, sede 1,5 vez mais rápida e o Golem de Areia. O painel mostra o tempo que falta.</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== EX NIHILO ===================== -->
+<section class="secao" id="nihilo">
+  <header><img src="@icone/arte/martelo_madeira" alt=""><div><h2>Ex Nihilo: tudo sai da areia</h2><p>Martelo, peneira, barril e cadinho, com as tabelas do Ex Nihilo.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3><img src="@icone/arte/martelo_madeira" alt="">Martelo</h3>
+      <p>Seis martelos: madeira, pedra, cobre, ferro, ouro e diamante. Quebrar com ele dá o próximo da cadeia: <strong>pedregulho → cascalho → areia → poeira</strong>. Pedra dá pedrinhas; 4 pedrinhas em quadrado = 1 pedregulho. 4 cascalhos = 1 sílex.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/peneira" alt="">Peneira</h3>
+      <p>Toque com terra, cascalho, areia ou poeira para carregar e depois <strong>14 toques</strong> (ou segure o dedo). Cada linha da tabela é sorteada à parte.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Bloco</th><th>O que sai</th></tr></thead>
+        <tbody>
+          <tr><td>Terra</td><td>pedrinhas, sementes (as do HarvestCraft), mudas</td></tr>
+          <tr><td>Cascalho</td><td>sílex 25%, carvão 12,5%, lápis 5%, diamante 0,8%, esmeralda 0,7%, pedaços quebrados de minério, certus 1/40</td></tr>
+          <tr><td>Areia</td><td>cacau, cacto, muda da selva, cogumelo, pedaços triturados de minério, semente de fruta do cacto, muda de tamareira 1/64</td></tr>
+          <tr><td>Poeira</td><td>farinha de osso 20%, redstone 12,5%, pólvora, pó de glowstone, pó de blaze, pó de minério, Pó de Yellorium 1/40</td></tr>
+        </tbody>
+      </table></div>
+      <p>Pedaços de minério: ferro 1/5, cobre 1/18, ouro 1/32, e estanho. <strong>4 pedaços em quadrado = 1 minério bruto</strong>, que na fornalha vira lingote (na fundição e nas máquinas rende o dobro). A Peneira Automática usa as mesmas tabelas.</p>
+    </article>
+    <article class="bloco">
+      <h3>Barril e cadinho</h3>
+      <ul>
+        <li><strong>Barril</strong> de madeira ou de pedra: compostagem de restos (muda, folha, carne podre, carne…); cheio, vira <strong>terra</strong> em 50 s. Com água: + poeira = argila; + leite = slime. Com lava (só no de pedra): + redstone = netherrack; + pó de glowstone = pedra do End. Lava com água em cima = <strong>obsidiana</strong>.</li>
+        <li><strong>Cadinho</strong> (7 porcelanas; porcelana = argila + farinha de osso), em cima de uma fonte de calor: pedregulho, pedra ou cascalho viram lava (4 = 1 balde); folhas viram água (125 mB cada).</li>
+        <li><strong>Cajado</strong>: folhas soltam bicho-da-seda (1/100). Use o bicho numa folha: ela fica infestada, espalha e, quebrada, dá linha. Cajado de Osso dura 256; o de Ouro acha o dobro de bichos.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3>Sem Nether</h3>
+      <p>Como no Crash Landing, o portal do Nether não acende. O que vem de lá sai da areia: o martelo transforma netherrack em <strong>Cascalho do Nether</strong>, e peneirado ele dá quartzo, pó de pedra luminosa, pólvora, fungo do Nether e, muito raro (1/500), <strong>sucata de netherite</strong>. O pó de blaze sai da poeira peneirada e dos blazes do Gerador de Blazes, no alto da torre de rádio das cidades.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/estufa" alt="">Primeiras máquinas</h3>
+      <ul>
+        <li><strong>Compostor de Terra</strong>: restos viram terra (8 pontos = 1 terra). A carne podre da horda também.</li>
+        <li><strong>Condensador Avançado</strong>: 1 balde a cada 10 s, guarda até 4 e enche baldes de um baú encostado. Com energia, produz em dobro.</li>
+        <li><strong>Estufa</strong>: numa área de 9×9, a terra arada fica sempre molhada e tudo cresce mais rápido. Com energia, tudo cresce sempre.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== ENERGIA ===================== -->
+<section class="secao" id="energia">
+  <header><img src="@icone/arte/blocos/painel_solar" alt=""><div><h2>Energia</h2><p>Tudo em RF, na escala do Thermal Expansion.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3>Como a energia anda</h3>
+      <p>A energia fica nas <strong>baterias</strong> e nas células. Geradores mandam para a mais próxima com espaço; máquinas puxam da mais próxima com carga. "Próxima" quer dizer encostada ou ligada por <strong>cabos</strong> (até 64). Toque em qualquer bloco de energia com a mão vazia para ver o estado.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Bloco</th><th>Gera ou guarda</th><th>Condição</th></tr></thead>
+        <tbody>
+          <tr><td>Painel Solar</td><td>40 RF/t</td><td>de dia, com céu aberto em cima</td></tr>
+          <tr><td>Moinho de Vento</td><td>40 / 80 / 120 RF/t</td><td>a partir de y 50 / 60 / 75, com os 4 lados livres</td></tr>
+          <tr><td>Gerador a Carvão</td><td>80 RF/t</td><td>carvão, toras, tábuas ou gravetos; funciona à noite</td></tr>
+          <tr><td>Dínamo de Redstone</td><td>80 RF/t</td><td>redstone = 64.000 RF, bloco = 576.000 RF</td></tr>
+          <tr><td>Motor a Combustão</td><td>80 RF/t</td><td>combustível (240.000 RF por balde) ou petróleo (80.000 RF)</td></tr>
+          <tr><td>Bateria</td><td>60.000 RF</td><td>o topo vai de vermelho (vazia) a verde (cheia)</td></tr>
+          <tr><td>Células de Energia</td><td>400 mil a 50 milhões de RF</td><td>Básica, Reforçada, Redstone e Ressonante; guardam a carga quando quebradas</td></tr>
+          <tr><td>Cubos de Energia</td><td>800 mil a 51,2 milhões de RF</td><td>Básico, Avançado, Elite e Definitivo (Mekanism)</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><strong>Tesseract</strong>: Tesseracts na mesma frequência ligam as redes de energia sem cabo.</li>
+        <li>Algumas máquinas mostram o custo em E: <strong>1 E = 4.000 RF</strong>.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/controlador_reator" alt="">Reator (Big Reactors)</h3>
+      <ul>
+        <li><strong>Yellorium</strong> só sai da peneira de poeira (Pó de Yellorium 1/40, assado vira lingote). <strong>Grafite</strong>: carvão vegetal na fornalha, ou carvão + 2 cascalhos.</li>
+        <li>O <strong>Controlador</strong> e a <strong>Tomada de Energia</strong> não têm receita: estão nos baús das cidades abandonadas (mais na torre de rádio).</li>
+        <li>Montagem: caixa de 3×3×3 a 7×7×7. Arestas de Carcaça; nas faces, carcaça, vidro, o controlador, portas de acesso, tomadas e portas de refrigeração; no teto, Barras de Controle. Dentro, colunas de Barras de Combustível do chão ao teto. Toque no controlador para conferir: ele diz o que está errado.</li>
+        <li>Energia a cada 5 s = barras × 6,75 E × moderador × (1 − inserção). Moderador: ar 1, água 1,2, grafite 1,8. Um 3×3×3 com 1 barra dá uns 270 RF/t; baldes de água na porta de refrigeração dobram.</li>
+        <li>O combustível gasto vira <strong>Cianita</strong>; o Reprocessador transforma 2 cianitas + 1 balde de água em 1 lingote de Blutônio.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== MÁQUINAS ===================== -->
+<section class="secao" id="maquinas">
+  <header><img src="@icone/arte/blocos/infusor_metalurgico" alt=""><div><h2>Máquinas</h2><p>Thermal, Mekanism, BuildCraft, PneumaticCraft e MineFactory. Quase todas puxam do baú de cima e põem no de baixo.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3>Thermal Expansion</h3>
+      <div class="tabela"><table>
+        <thead><tr><th>Máquina</th><th>Faz</th><th>Custo</th></tr></thead>
+        <tbody>
+          <tr><td>Pulverizador</td><td>minério → 2 pós (+10% de outro pó); pedregulho → cascalho → areia → poeira; osso → 6 farinhas</td><td>4.000 RF</td></tr>
+          <tr><td>Fornalha de Redstone</td><td>funde 2 itens por vez; 4 pedaços do Ex Nihilo = 1 lingote</td><td>1.600 RF por item</td></tr>
+          <tr><td>Fundidora de Indução</td><td>3 cobre + 1 estanho = 4 bronze; ferro + carvão = aço; minério + areia = 2 lingotes</td><td>1.600 a 3.200 RF</td></tr>
+          <tr><td>Serraria</td><td>tora → 6 tábuas (+25% serragem)</td><td>800 RF</td></tr>
+          <tr><td>Extrusora Ígnea</td><td>pedregulho, com lava e água encostadas</td><td>grátis</td></tr>
+          <tr><td>Precipitador Glacial</td><td>4 bolas de neve, com água encostada</td><td>2.000 RF</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+    <article class="bloco">
+      <h3>Mekanism</h3>
+      <p>O gás anda em <strong>Cilindros</strong>; as máquinas têm baú em cima (entrada) e embaixo (saída).</p>
+      <ul>
+        <li><strong>Separador Eletrolítico</strong>: água + 2 cilindros vazios = hidrogênio + oxigênio; salmoura = hidrogênio + cloro.</li>
+        <li><strong>Evaporador Térmico</strong>: sem energia, de dia e com céu aberto. Água vira salmoura; salmoura vira pó de lítio.</li>
+        <li><strong>Infusor Químico</strong>: hidrogênio + cloro = ácido clorídrico.</li>
+        <li><strong>Câmara de Purificação</strong>: minério + oxigênio = <strong>3 pós</strong>. <strong>Câmara de Injeção</strong>: minério + ácido = <strong>4 pós</strong>.</li>
+        <li><strong>Infusor Metalúrgico</strong>: ligas Enriquecida, Reforçada e Atômica; ferro + 2 carvões = aço.</li>
+        <li><strong>Jetpack</strong> no peito: segure pular para subir, gastando hidrogênio.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/bomba" alt="">BuildCraft e o petróleo</h3>
+      <ul>
+        <li><strong>Petróleo</strong> fica em bolsões bem fundos (entre y −24 e 8, na ardósia; nada aparece na superfície). Ele imita um líquido: dá para atravessar e nadar, mas não escorre. Balde vazio pega.</li>
+        <li><strong>Bomba</strong> em cima do poço: esvazia o bolsão (até 96 blocos para baixo) para os baldes de um baú encostado.</li>
+        <li><strong>Refinaria</strong>: petróleo vira combustível. <strong>Motor a Combustão</strong>: queima combustível ou petróleo e manda energia para a rede.</li>
+        <li><strong>Pedreira</strong>: cava 9×9 atrás dela, camada por camada até o fundo; o que sai vai para o baú de cima.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/compressor_ar" alt="">PneumaticCraft</h3>
+      <p>O <strong>Compressor de Ar</strong> queima combustível e enche a rede de tubos. A pressão é igual na rede toda (bar = ar ÷ volume). Tubos comuns ficam em perigo acima de 5 bar, os avançados acima de 20: no perigo, um tubo pode estourar.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Na Câmara de Pressão</th><th>Pressão</th></tr></thead>
+        <tbody>
+          <tr><td>Lingote de ferro → Ferro Comprimido</td><td>2 bar</td></tr>
+          <tr><td>8 blocos de carvão → diamante</td><td>4 bar</td></tr>
+          <tr><td>Folha de plástico + cobre → Placa de Circuito Vazia</td><td>1,5 bar</td></tr>
+          <tr><td>Redstone + ferro comprimido → Transistor</td><td>1 bar</td></tr>
+          <tr><td>Redstone + argila + ferro comprimido → Capacitor</td><td>1 bar</td></tr>
+        </tbody>
+      </table></div>
+      <p>A câmara é um cubo oco de 3×3×3 a 5×5×5. Ferro jogado no chão perto de uma explosão também vira ferro comprimido, com 20% de perda.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/colheitadeira" alt="">MineFactory Reloaded</h3>
+      <p>Resina das toras e cactos → borracha → plástico → <strong>Bloco de Máquina</strong>. As máquinas trabalham num quadrado na frente delas (3×3, até 11×11 com Upgrades de Alcance).</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Máquina</th><th>Faz</th></tr></thead>
+        <tbody>
+          <tr><td>Plantadeira</td><td>planta sementes e mudas</td></tr>
+          <tr><td>Colheitadeira</td><td>colhe plantas maduras, cana, cacto e árvores inteiras</td></tr>
+          <tr><td>Fertilizadora</td><td>faz uma planta crescer com fertilizante ou farinha de osso</td></tr>
+          <tr><td>Rancheiro</td><td>tira leite das vacas da área</td></tr>
+          <tr><td>Triturador de Monstros</td><td>ataca até 3 monstros; drops e garrafas de experiência</td></tr>
+          <tr><td>Esgoto + Compostadora</td><td>esgoto dos animais vira fertilizante</td></tr>
+          <tr><td>Quebrador e Colocador de Blocos</td><td>quebra ou põe o bloco da frente</td></tr>
+          <tr><td>Esteira</td><td>passa uma pilha por segundo de um inventário para outro</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== FERRAMENTAS ===================== -->
+<section class="secao" id="ferramentas">
+  <header><img src="@icone/arte/picareta_aco" alt=""><div><h2>Ferramentas e metal</h2><p>Tinkers' Construct, com as regras do Iguana Tweaks, e a fundição.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3>Montar ferramentas</h3>
+      <ol class="passos">
+        <li><span><strong>Padrão em Branco</strong> (2 tábuas + 2 gravetos = 4). Com ele: Mesa de Moldes (sobre tábua), Construtor de Peças (sobre tora) e Estação de Ferramentas (sobre bancada).</span></li>
+        <li><span>Na <strong>Mesa de Moldes</strong>, escolha a peça: cabo, ligação, cabeças de picareta, pá e machado, lâmina, guarda larga ou travessa.</span></li>
+        <li><span>No <strong>Construtor de Peças</strong>, faça a peça com madeira, pedra, sílex, cacto, osso ou obsidiana. Metal só pela fundição.</span></li>
+        <li><span>Na <strong>Estação de Ferramentas</strong>, monte (picareta, pá, machadinha, espada larga), conserte ou modifique.</span></li>
+      </ol>
+    </article>
+    <article class="bloco">
+      <h3>Nível de mineração e XP</h3>
+      <ul>
+        <li>Ferro, cobre e lápis pedem nível 1; ouro, redstone, diamante e esmeralda pedem 2; obsidiana pede 3. <strong>Com ferramenta fraca o bloco não quebra.</strong></li>
+        <li>Exemplos de durabilidade: sílex 171 (nível 1), ferro 250 (nível 2), obsidiana 89 (nível 3), aço 750 (nível 3).</li>
+        <li>A ferramenta ganha XP (1 por bloco ou golpe) e sobe até 6 níveis, de Desajeitada a Mestra, ganhando espaços de modificador.</li>
+        <li>Em 0 de durabilidade ela fica "quebrada" até ser consertada; nunca some.</li>
+      </ul>
+      <div class="tabela"><table>
+        <thead><tr><th>Modificador</th><th>Item</th><th>Efeito</th></tr></thead>
+        <tbody>
+          <tr><td>Pressa</td><td>16 redstones</td><td>efeito Pressa com a ferramenta na mão (até II)</td></tr>
+          <tr><td>Reforço</td><td>diamante</td><td>+500 de durabilidade</td></tr>
+          <tr><td>Esmeralda</td><td>esmeralda</td><td>+50% de durabilidade</td></tr>
+          <tr><td>Musgo</td><td>3 bolas de musgo</td><td>conserta sozinha devagar</td></tr>
+          <tr><td>Sorte</td><td>32 lápis</td><td>minérios soltam mais</td></tr>
+          <tr><td>Afiado</td><td>16 quartzos</td><td>+1 de dano por nível (até 3)</td></tr>
+          <tr><td>Fogo</td><td>8 pós de blaze</td><td>põe fogo no alvo (até 2)</td></tr>
+          <tr><td>Repulsão</td><td>pistão</td><td>empurra o alvo</td></tr>
+          <tr><td>Ruína dos Artrópodes</td><td>2 olhos fermentados</td><td>mais dano e lentidão em aranhas</td></tr>
+          <tr><td>Obsidiana</td><td>4 obsidianas</td><td>10% por nível de não gastar</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/controlador_fundicao" alt="">Fundição</h3>
+      <ul>
+        <li><strong>Argamassa</strong> (argila + areia + cascalho) assada vira Tijolo Refratário. Com eles: Controlador, Tanque, Dreno, Vidro Refratário, Torneira, Mesa e Bacia.</li>
+        <li>Montagem: piso 3×3 de tijolos refratários, interior 3×3 vazio e uma parede de 12 blocos em volta, com o controlador virado para fora. Até 4 camadas.</li>
+        <li>Lava: toque no Tanque com balde de lava. Jogue os itens dentro: <strong>144 mB = 1 lingote</strong>, e <strong>minério e pedaços rendem o dobro</strong>.</li>
+        <li>Ligas: cobre + estanho viram bronze sozinhos (3 + 1 = 4); carvão com ferro derretido faz aço.</li>
+        <li>Saída: Torneira no Dreno, em cima de uma Mesa (com molde) ou Bacia (bloco). Moldes: uma peça na mesa + 288 mB de ouro.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3>Varal</h3>
+      <p>Três lajes de carvalho em linha. Pendure <strong>carne podre</strong> (vira couro em 5 min) ou <strong>carne crua</strong> (vira charque).</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== ARMAZENAMENTO ===================== -->
+<section class="secao" id="armazenamento">
+  <header><img src="@icone/arte/celula_me_64k" alt=""><div><h2>Armazenamento</h2><p>JABBA, AutoPackager e a rede do Applied Energistics.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3>Barril de Armazenamento e Carrinho</h3>
+      <ul>
+        <li>O barril guarda 1 tipo de item, 64 pilhas. Toque com o item para guardar (dois toques guardam todos iguais da mochila); bata para tirar.</li>
+        <li><strong>Upgrades Estruturais</strong> MK I a VII abrem espaços; cada Upgrade de Armazenamento soma +64 pilhas; o Núcleo de Funil puxa de cima e manda para baixo.</li>
+        <li><strong>Carrinho</strong>: leva um baú ou barril com tudo dentro. O de Diamante leva até gerador de monstros.</li>
+        <li><strong>Empacotador Automático</strong>: compacta o que está no baú de cima (9 lingotes = bloco, 4 areias = arenito…).</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/terminal" alt="">Terminal e rede ME</h3>
+      <ul>
+        <li>Todo baú, barril ou barril de armazenamento encostado num cabo ligado ao <strong>Terminal</strong> entra na rede. O terminal mostra tudo somado: tire, procure pelo nome e guarde a mochila de uma vez.</li>
+        <li><strong>Células ME</strong> 1k, 4k, 16k e 64k nos Drives (10 células) e Baús ME (1 célula). O <strong>Controlador ME</strong> dobra o limite de inventários.</li>
+        <li><strong>Certus</strong>: peneira de cascalho (1/40) e destroços. Cristal Fluix = certus + redstone + lápis.</li>
+        <li><strong>Ponto de Acesso</strong> + Terminal sem Fio: abre o terminal a até 32 blocos.</li>
+        <li><strong>Montador Molecular</strong>: grave padrões de receita; o Terminal ganha <strong>Fabricar</strong>, que faz antes os ingredientes que faltarem.</li>
+        <li><strong>Célula de Água</strong> (ExtraCells): guarda até 768 garrafas de Água Boa.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== EXPLORAR ===================== -->
+<section class="secao" id="explorar">
+  <header><img src="@icone/arte/bussola_aviao" alt=""><div><h2>Explorar</h2><p>Cidades, masmorras, templos, destroços e meteoritos.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3>Cidades abandonadas</h3>
+      <p>O mapa é dividido em quadrados de 640×640 blocos e cada um tem uma cidade (menos o da nave). Cada cidade tem 112×112 blocos: prédios de tijolo de pedra rachado, de 2 a 9 andares, bem quebrados, escuros por dentro, com baús e Geradores de Monstros. No centro, a <strong>torre de rádio</strong> (34 blocos) com um baú bom e um Gerador de Blazes lá em cima.</p>
+      <div class="dica"><b>Dica</b><span>As cidades têm sinal de rádio: na missão "Sinal de rádio", o Diário mostra as coordenadas da mais próxima.</span></div>
+    </article>
+    <article class="bloco">
+      <h3>Masmorras, templos e destroços</h3>
+      <ul>
+        <li><strong>Masmorras</strong> comuns na pedra (y 12 a 26), metade com um poço até a superfície marcado por um anel de arenito entalhado. As <strong>fundas</strong> ficam na ardósia (y −45 a −25), com 2 geradores e saque muito melhor.</li>
+        <li><strong>Templo soterrado</strong>: pirâmide de arenito com faixas laranja, meio enterrada, com baú de saque.</li>
+        <li><strong>Destroços de outra nave</strong>: meio enterrados, com ferro, cobre, redstone, circuitos e placas de casco.</li>
+        <li><strong>Meteoritos</strong>: uns 2 por dia caem a 40–90 blocos de alguém, com aviso e coordenadas. A rocha de meteorito (picareta nível 2) solta fragmentos, minérios, certus, yellorium e às vezes diamante; 9 fragmentos = 1 diamante.</li>
+        <li><strong>Gerador de Monstros</strong>: põe monstros em volta enquanto você está perto. Quebrar leva uns 5 s e dá ferro, ouro, redstone e experiência.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3>Comandos para achar lugares</h3>
+      <p>Funcionam sem trapaças e mostram coordenadas, distância e direção:</p>
+      <ul>
+        <li><code>/cl:cidade</code>: cidade abandonada mais perto.</li>
+        <li><code>/cl:templo</code>: templo soterrado mais perto.</li>
+        <li><code>/cl:destrocos</code>: destroços de nave mais perto.</li>
+      </ul>
+      <p>A <strong>Bússola do Avião</strong>, na mão, mostra para que lado e a quantos metros está o Painel da Nave.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== PERIGOS ===================== -->
+<section class="secao" id="perigos">
+  <header><img src="@icone/arte/faixa_mumia" alt=""><div><h2>Perigos do deserto</h2><p>Os monstros próprios do modpack e o chefe.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3><img src="@icone/arte/faixa_mumia" alt="">Múmia</h3>
+      <p>Um pouco maior que um zumbi, 30 de vida; o golpe dá <strong>fome</strong>. Nasce à noite e no subsolo escuro, vem nas hordas e sai dos geradores. Deixa carne podre e às vezes <strong>Faixa de Múmia</strong>.</p>
+    </article>
+    <article class="bloco">
+      <h3>Golem de Areia</h3>
+      <p>Só aparece durante a <strong>tempestade de areia</strong>, perto de quem está ao ar livre. Grande, lento, 60 de vida, bate forte e quase não é empurrado. Quando a tempestade acaba, ele desmorona e vira areia.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/coracao_farao" alt="">Faraó Amaldiçoado (chefe)</h3>
+      <ol class="passos">
+        <li><span>Faça o <strong>Ídolo Amaldiçoado</strong>: 4 barras de ouro nos cantos, 4 Faixas de Múmia nos lados e arenito talhado no meio.</span></li>
+        <li><span>Coloque o ídolo e <strong>toque nele à noite</strong>. O Faraó sobe da areia com 300 de vida.</span></li>
+        <li><span>Ele chama múmias a cada 12 s e solta uma <strong>rajada de areia</strong> a cada 7 s, que fere, empurra e cega quem está a até 7 blocos. Com metade da vida, chama uma tempestade de areia.</span></li>
+      </ol>
+      <div class="dica perigo"><b>Como lutar</b><span>Fique longe da rajada e use arco. Ele não queima no sol nem é empurrado.</span></div>
+      <p>Derrotado, deixa o <strong>Coração do Faraó</strong> (vai no Motor da Nave e no Núcleo Sync), barras de ouro, diamantes, maçãs douradas e faixas.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== NAVE ===================== -->
+<section class="secao" id="nave">
+  <header><img src="@icone/arte/motor_nave" alt=""><div><h2>Consertar a nave e decolar</h2><p>Os quatro sistemas, as peças e o final.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/painel_nave" alt="">Painel da Nave</h3>
+      <p>Fica na cabine do avião. Toque nele para ver os 4 sistemas e o que falta. Com as peças na mochila, <strong>Instalar</strong> conserta o sistema para o mundo todo.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Sistema</th><th>Peças</th></tr></thead>
+        <tbody>
+          <tr><td>Casco</td><td>12 Placas de Casco + 8 vidros</td></tr>
+          <tr><td>Computador de Bordo</td><td>1 Computador de Bordo</td></tr>
+          <tr><td>Combustível</td><td>8 Células de Combustível</td></tr>
+          <tr><td>Motor</td><td>1 Motor da Nave</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/montadora" alt="">Montadora</h3>
+      <p>Máquina de energia que faz as peças: ingredientes no baú de cima, peça no baú de baixo.</p>
+      <div class="tabela"><table>
+        <thead><tr><th>Peça</th><th>Ingredientes</th><th>Energia</th></tr></thead>
+        <tbody>
+          <tr><td>Placa de Casco</td><td>3 ferro + 2 cobre</td><td>2 E</td></tr>
+          <tr><td>Circuito</td><td>2 redstone + 1 ouro + 1 cobre</td><td>2 E</td></tr>
+          <tr><td>Célula de Combustível</td><td>4 carvão + 1 Água Boa + 1 ferro</td><td>3 E</td></tr>
+          <tr><td>Computador de Bordo</td><td>6 circuitos + 1 diamante + 4 vidros + 4 ouro</td><td>12 E</td></tr>
+          <tr><td>Motor da Nave</td><td>Coração do Faraó + 4 blocos de ferro + 4 circuitos + 1 Bateria</td><td>15 E</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+    <article class="bloco">
+      <h3>A decolagem</h3>
+      <p>Com os 4 sistemas consertados, o Painel da Nave mostra o botão <strong>DECOLAR</strong>. Todos os jogadores veem a cena: contagem, a nave subindo num rastro de fogo e fumaça, e os créditos. Depois cada um ganha uma <strong>Sacola Lendária</strong> e o mundo segue no <strong>modo infinito</strong>, com o capítulo final no Diário.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== UTILIDADES ===================== -->
+<section class="secao" id="utilidades">
+  <header><img src="@icone/arte/catalogo" alt=""><div><h2>Utilidades</h2><p>Diário, Catálogo, ajudas do dia a dia, corpos reserva e decoração.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <h3><img src="@icone/arte/diario_bordo" alt="">Diário de Bordo</h3>
+      <p>Painel da nave com os capítulos à esquerda e a missão à direita: objetivo, barra de progresso, o que falta fazer antes e a recompensa. Várias missões ficam abertas ao mesmo tempo. Botões: <strong>Verificar progresso</strong>, <strong>Entregar os itens</strong> (missões de entregar), <strong>Escolher recompensa</strong> e <strong>Pular</strong> (só se uma missão travar; não dá a recompensa). O rodapé mostra os 4 sistemas da nave.</p>
+      <p><strong>Sacolas de recompensa</strong> (comum, boa, ótima, épica e lendária) sorteiam um grupo de itens. A <strong>Caixa de Entrega</strong> entrega missões com os baús encostados nela.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/catalogo" alt="">Catálogo e livro de receitas</h3>
+      <ul>
+        <li><strong>Catálogo</strong> (graveto + areia + papel): todos os itens por mod, com <strong>Como fazer</strong> e <strong>Onde usar</strong> (bancada, fornalha, peneira com as chances, máquinas, saques). Procure pelo nome; agachado, ele abre o bloco que você está olhando.</li>
+        <li>O <strong>livro de receitas</strong> do inventário mostra todas as receitas de bancada desde o começo, separadas por mod.</li>
+        <li><strong>O que estou olhando</strong>: em cima do painel, o nome do bloco ou bicho na mira, o mod e um detalhe (energia, combustível, crescimento, vida).</li>
+        <li><strong>Organizador</strong> (baú + 2 gravetos): arruma a mochila ou um baú. Quando a pilha da mão acaba, outra igual vem da mochila.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/asa_delta" alt="">OpenBlocks e outras ajudas</h3>
+      <ul>
+        <li><strong>Asa-Delta</strong>: na mão enquanto cai, plana para a frente; agache para fechar.</li>
+        <li><strong>Elevador</strong>: dois, um acima do outro (até 20 blocos). Pule para subir, agache para descer.</li>
+        <li><strong>Túmulo</strong>: ao morrer, o que caiu vai para um túmulo no lugar, com as coordenadas no chat. Toque para pegar tudo.</li>
+        <li><strong>Torre de Defesa</strong>: atira no monstro mais perto até 12 blocos, com energia da rede.</li>
+      </ul>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/construtor_corpos" alt="">Corpos reserva (Sync)</h3>
+      <p>O <strong>Construtor de Corpos</strong> (leva o Núcleo Sync, com o Coração do Faraó) faz um clone a partir de uma amostra de sangue. No <strong>Armazém de Corpos</strong> você troca de corpo, e cada corpo guarda o seu inventário. Ao morrer, você acorda no corpo marcado como casa ou no mais perto. Não há sistema de vidas.</p>
+    </article>
+    <article class="bloco">
+      <h3><img src="@icone/arte/blocos/lampada" alt="">Decoração (Chisel e BiblioCraft)</h3>
+      <ul>
+        <li><strong>Cinzel</strong> (500 usos): troca um bloco pela próxima variante da família (arenito, pedra, mármore, calcário, casco da nave e vidro).</li>
+        <li><strong>Estante</strong>, <strong>Prateleira</strong>, <strong>Suporte de Ferramentas</strong>, <strong>Expositor</strong> e <strong>Cabide de Armadura</strong> guardam e mostram itens.</li>
+        <li><strong>Lanterna</strong>, <strong>Lâmpada</strong> e lâmpadas de 8 cores: toque liga e desliga.</li>
+        <li><strong>Carregadores de Chunk</strong> (3×3 ou 1 chunk) mantêm as máquinas trabalhando longe de você.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<p class="vazio" id="vazio" hidden>Nada encontrado. Tente outra palavra, sem acento ou no singular.</p>
+
+<!-- ===================== CRÉDITOS ===================== -->
+<section class="secao" id="creditos">
+  <header><img src="@icone/arte/sacola_lendaria" alt=""><div><h2>Créditos e inspiração</h2><p>De onde vêm as ideias.</p></div></header>
+  <div class="blocos">
+    <article class="bloco">
+      <p>Inspirado no modpack <strong>Crash Landing</strong>, de Iskandar (Minecraft Java 1.6.4), e nos mods dele: Ex Nihilo e Ex Aliquo, EnviroMine, Hunger Overhaul, Pam's HarvestCraft, Tinkers' Construct e Iguana Tweaks, Thermal Expansion, JABBA, AutoPackager, Applied Energistics e ExtraCells, MineFactory Reloaded, PneumaticCraft, Sync, Big Reactors, Chisel, BiblioCraft, ChickenChunks, Hardcore Questing Mode, JEI/NEI, WAILA e Inventory Tweaks. Na 1.3 entraram também Mekanism, BuildCraft e OpenBlocks.</p>
+      <p>Os mods são de Java e não rodam no Bedrock: todas as mecânicas foram refeitas do zero, com os números dos originais. A arte dos itens e telas foi desenhada para o projeto com ajuda de IA; as imagens do deserto nesta página foram desenhadas com as texturas originais do Minecraft.</p>
+    </article>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer class="gutter">
+  <div class="coluna">
+    <p>Pouso Forçado · add-on gratuito para Minecraft Bedrock · pacote de recursos sob CC BY-NC-SA 4.0.</p>
+    <p>Não é um produto oficial do Minecraft nem da Mojang.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const campo = document.getElementById("busca");
+  const contagem = document.getElementById("contagem");
+  const vazio = document.getElementById("vazio");
+  const secoes = [...document.querySelectorAll(".secao")];
+  const normal = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const blocos = [...document.querySelectorAll(".bloco")].map((el) => ({ el, texto: normal(el.textContent) }));
+  function filtrar() {
+    const termos = normal(campo.value).split(/\s+/).filter(Boolean);
+    let achados = 0;
+    for (const b of blocos) {
+      const ok = termos.every((t) => b.texto.includes(t));
+      b.el.hidden = !ok;
+      if (ok) achados++;
+    }
+    for (const s of secoes) s.hidden = termos.length > 0 && !s.querySelector(".bloco:not([hidden])");
+    contagem.textContent = termos.length ? `${achados} ${achados === 1 ? "trecho" : "trechos"}` : "";
+    vazio.hidden = !(termos.length && achados === 0);
+  }
+  campo.addEventListener("input", filtrar);
+})();
+</script>

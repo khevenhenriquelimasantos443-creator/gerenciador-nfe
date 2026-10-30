@@ -44,7 +44,7 @@ const MEIO = [
   ["Ao morrer, seus itens vão para um Túmulo no lugar, com as coordenadas no chat.", "When you die, your items go into a Grave on the spot, with the coordinates in chat."],
   ["Barris de Armazenamento guardam muito de um item só.", "Storage Barrels hold a lot of a single item."],
   ["Numa rede do AE, todos os itens ficam juntos e o terminal acha qualquer um.", "In an AE network all items are stored together and the terminal finds any of them."],
-  ["O Nether é perigoso, mas tem o que o deserto não tem.", "The Nether is dangerous, but it has what the desert lacks."],
+  ["Aqui o portal do Nether não acende: o martelo faz Cascalho do Nether com netherrack, e a peneira tira quartzo e até netherite.", "The Nether portal won't light here: a hammer turns netherrack into Nether Gravel, and sifting it gives quartz and even netherite."],
 ];
 const FIM = [
   ["Quatro sistemas queimaram na queda: casco, computador de bordo, combustível e motor.", "Four systems burned in the crash: hull, flight computer, fuel and engine."],
