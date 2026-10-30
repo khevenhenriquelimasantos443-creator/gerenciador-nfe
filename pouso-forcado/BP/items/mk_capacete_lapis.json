@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:mk_capacete_lapis",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_mk_capacete_lapis",
+      "minecraft:display_name": {
+        "value": "item.cl:mk_capacete_lapis.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:wearable": {
+        "slot": "slot.armor.head",
+        "protection": 2
+      },
+      "minecraft:durability": {
+        "max_durability": 143
+      },
+      "minecraft:enchantable": {
+        "slot": "armor_head",
+        "value": 8
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "cl:mk_armadura"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_osmio_de_triturado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:osmio_triturado"
+      },
+      {
+        "item": "cl:osmio_triturado"
+      },
+      {
+        "item": "cl:osmio_triturado"
+      },
+      {
+        "item": "cl:osmio_triturado"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:lingote_osmio"
+    }
+  }
+}

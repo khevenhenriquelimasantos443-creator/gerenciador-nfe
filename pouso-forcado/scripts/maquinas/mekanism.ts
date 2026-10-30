@@ -115,6 +115,10 @@ export const camaraInjecao = camara("acido", 4, 200, "injetar", "cl.mk.injecao")
 
 // ---------- Infusor Metalúrgico ----------
 const INFUSOES: ReadonlyArray<{ entra: ReadonlyArray<[string, number]>; sai: string }> = [
+  // 1.7.0 (para o Mekanism Generators e Tools): circuito de controle e os lingotes refinados.
+  { entra: [["minecraft:obsidian", 1], ["minecraft:diamond", 1], ["cl:lingote_osmio", 1]], sai: "cl:lingote_obsidiana_refinada" },
+  { entra: [["minecraft:glowstone_dust", 1], ["cl:lingote_osmio", 1]], sai: "cl:lingote_glowstone_refinado" },
+  { entra: [["cl:lingote_osmio", 1], ["minecraft:redstone", 1]], sai: "cl:circuito_controle_basico" },
   { entra: [["minecraft:iron_ingot", 1], ["minecraft:redstone", 1]], sai: "cl:liga_enriquecida" },
   { entra: [["cl:liga_enriquecida", 1], ["minecraft:diamond", 1]], sai: "cl:liga_reforcada" },
   { entra: [["cl:liga_reforcada", 1], ["minecraft:obsidian", 1]], sai: "cl:liga_atomica" },
@@ -131,6 +135,7 @@ export const infusorMetalurgico = maquina((b) => {
   feito(b, "random.anvil_use");
   return "ok";
 }, "cl.mk.infusor_metalurgico");
+
 
 // ---------- Jetpack ----------
 const JET = { max: 200, porCilindro: 50, gastoTicks: 20 };

@@ -64,6 +64,7 @@ import { registrarDimensaoLua, registrarLua } from "./galacticraft/lua.js";
 import { registrarOxigenio } from "./galacticraft/oxigenio.js";
 import { registrarFoguete } from "./galacticraft/foguete.js";
 import { bauTesouro, registrarBase } from "./galacticraft/base.js";
+import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
   registrarComandos(customCommandRegistry);
@@ -147,6 +148,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     "cl:coletor_oxigenio": coletor, "cl:compressor_oxigenio": compressorOxigenio, "cl:carregador_combustivel": carregadorCombustivel,
     "cl:distribuidor_oxigenio": distribuidor,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
+  for (const [id, comp] of Object.entries({
+    "cl:triturador_mk": trituradorMk, "cl:gerador_calor": geradorCalor, "cl:gerador_solar_mk": geradorSolar, "cl:gerador_solar_avancado": geradorSolarAvancado,
+    "cl:gerador_bio": geradorBio, "cl:gerador_gas": geradorGas, "cl:gerador_eolico": geradorEolico,
+  })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
   blockComponentRegistry.registerCustomComponent("cl:bancada_nasa", bancadaNasa);
   blockComponentRegistry.registerCustomComponent("cl:bau_tesouro", bauTesouro);
 });
@@ -202,3 +207,4 @@ registrarOxigenio();
 registrarLua();
 registrarFoguete();
 registrarBase();
+registrarMekanismExtra();

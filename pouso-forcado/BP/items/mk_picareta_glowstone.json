@@ -1,0 +1,48 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:mk_picareta_glowstone",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_mk_picareta_glowstone",
+      "minecraft:display_name": {
+        "value": "item.cl:mk_picareta_glowstone.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 300
+      },
+      "minecraft:damage": {
+        "value": 7
+      },
+      "minecraft:enchantable": {
+        "slot": "pickaxe",
+        "value": 18
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag('stone', 'metal', 'rail', 'minecraft:is_pickaxe_item_destructible')"
+            },
+            "speed": 14
+          }
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_pickaxe",
+          "minecraft:is_tool",
+          "minecraft:iron_tier",
+          "cl:mk_ferramenta"
+        ]
+      }
+    }
+  }
+}

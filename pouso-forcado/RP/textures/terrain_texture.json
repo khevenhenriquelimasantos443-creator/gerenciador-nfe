@@ -1860,6 +1860,93 @@
     },
     "clc_distribuidor_oxigenio_baixo": {
       "textures": "textures/blocks/cl/c/distribuidor_oxigenio_baixo"
+    },
+    "clc_revestimento_aco": {
+      "textures": "textures/blocks/cl/c/revestimento_aco"
+    },
+    "clc_triturador_mk_frente": {
+      "textures": "textures/blocks/cl/c/triturador_mk_frente"
+    },
+    "clc_triturador_mk_lado": {
+      "textures": "textures/blocks/cl/c/triturador_mk_lado"
+    },
+    "clc_triturador_mk_topo": {
+      "textures": "textures/blocks/cl/c/triturador_mk_topo"
+    },
+    "clc_triturador_mk_baixo": {
+      "textures": "textures/blocks/cl/c/triturador_mk_baixo"
+    },
+    "clc_gerador_calor_frente": {
+      "textures": "textures/blocks/cl/c/gerador_calor_frente"
+    },
+    "clc_gerador_calor_lado": {
+      "textures": "textures/blocks/cl/c/gerador_calor_lado"
+    },
+    "clc_gerador_calor_topo": {
+      "textures": "textures/blocks/cl/c/gerador_calor_topo"
+    },
+    "clc_gerador_calor_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_calor_baixo"
+    },
+    "clc_gerador_solar_mk_frente": {
+      "textures": "textures/blocks/cl/c/gerador_solar_mk_frente"
+    },
+    "clc_gerador_solar_mk_lado": {
+      "textures": "textures/blocks/cl/c/gerador_solar_mk_lado"
+    },
+    "clc_gerador_solar_mk_topo": {
+      "textures": "textures/blocks/cl/c/gerador_solar_mk_topo"
+    },
+    "clc_gerador_solar_mk_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_solar_mk_baixo"
+    },
+    "clc_gerador_solar_avancado_frente": {
+      "textures": "textures/blocks/cl/c/gerador_solar_avancado_frente"
+    },
+    "clc_gerador_solar_avancado_lado": {
+      "textures": "textures/blocks/cl/c/gerador_solar_avancado_lado"
+    },
+    "clc_gerador_solar_avancado_topo": {
+      "textures": "textures/blocks/cl/c/gerador_solar_avancado_topo"
+    },
+    "clc_gerador_solar_avancado_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_solar_avancado_baixo"
+    },
+    "clc_gerador_bio_frente": {
+      "textures": "textures/blocks/cl/c/gerador_bio_frente"
+    },
+    "clc_gerador_bio_lado": {
+      "textures": "textures/blocks/cl/c/gerador_bio_lado"
+    },
+    "clc_gerador_bio_topo": {
+      "textures": "textures/blocks/cl/c/gerador_bio_topo"
+    },
+    "clc_gerador_bio_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_bio_baixo"
+    },
+    "clc_gerador_gas_frente": {
+      "textures": "textures/blocks/cl/c/gerador_gas_frente"
+    },
+    "clc_gerador_gas_lado": {
+      "textures": "textures/blocks/cl/c/gerador_gas_lado"
+    },
+    "clc_gerador_gas_topo": {
+      "textures": "textures/blocks/cl/c/gerador_gas_topo"
+    },
+    "clc_gerador_gas_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_gas_baixo"
+    },
+    "clc_gerador_eolico_frente": {
+      "textures": "textures/blocks/cl/c/gerador_eolico_frente"
+    },
+    "clc_gerador_eolico_lado": {
+      "textures": "textures/blocks/cl/c/gerador_eolico_lado"
+    },
+    "clc_gerador_eolico_topo": {
+      "textures": "textures/blocks/cl/c/gerador_eolico_topo"
+    },
+    "clc_gerador_eolico_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_eolico_baixo"
     }
   }
 }

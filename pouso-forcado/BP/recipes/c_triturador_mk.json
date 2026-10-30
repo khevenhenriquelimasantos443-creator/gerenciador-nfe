@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_triturador_mk"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RCR",
+      "LIL",
+      "RCR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "L": {
+        "item": "minecraft:lava_bucket"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "I": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:triturador_mk"
+    }
+  }
+}

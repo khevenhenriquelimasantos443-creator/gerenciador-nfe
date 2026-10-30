@@ -418,6 +418,11 @@
   "en": "Diamond",
   "icone": "textures/items/diamond"
  },
+ "minecraft:diamond_axe": {
+  "pt": "Machado de Diamante",
+  "en": "Diamond Axe",
+  "icone": "textures/items/diamond_axe"
+ },
  "minecraft:diamond_block": {
   "pt": "Bloco de Diamante",
   "en": "Block of Diamond",
@@ -432,6 +437,11 @@
   "pt": "Picareta de Diamante",
   "en": "Diamond Pickaxe",
   "icone": "textures/items/diamond_pickaxe"
+ },
+ "minecraft:diamond_shovel": {
+  "pt": "Pá de Diamante",
+  "en": "Diamond Shovel",
+  "icone": "textures/items/diamond_shovel"
  },
  "minecraft:dirt": {
   "pt": "Terra",
@@ -588,6 +598,11 @@
   "en": "Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:golden_axe": {
+  "pt": "Machado de Ouro",
+  "en": "Golden Axe",
+  "icone": "textures/items/gold_axe"
+ },
  "minecraft:golden_carrot": {
   "pt": "Cenoura Dourada",
   "en": "Golden Carrot",
@@ -597,6 +612,16 @@
   "pt": "Enxada de Ouro",
   "en": "Golden Hoe",
   "icone": "textures/items/gold_hoe"
+ },
+ "minecraft:golden_pickaxe": {
+  "pt": "Picareta de Ouro",
+  "en": "Golden Pickaxe",
+  "icone": "textures/items/gold_pickaxe"
+ },
+ "minecraft:golden_shovel": {
+  "pt": "Pá de Ouro",
+  "en": "Golden Shovel",
+  "icone": "textures/items/gold_shovel"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",
@@ -682,6 +707,11 @@
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
   "icone": "textures/items/iron_pickaxe"
+ },
+ "minecraft:iron_shovel": {
+  "pt": "Pá de Ferro",
+  "en": "Iron Shovel",
+  "icone": "textures/items/iron_shovel"
  },
  "minecraft:iron_sword": {
   "pt": "Espada de Ferro",
@@ -1208,6 +1238,11 @@
   "en": "Stone",
   "icone": "textures/blocks/stone"
  },
+ "minecraft:stone_axe": {
+  "pt": "Machado de Pedra",
+  "en": "Stone Axe",
+  "icone": "textures/items/stone_axe"
+ },
  "minecraft:stone_brick_slab": {
   "pt": "Laje de Tijolos",
   "en": "Brick Slab",
@@ -1232,6 +1267,11 @@
   "pt": "Placa de Pressão de Pedra",
   "en": "Stone Pressure Plate",
   "icone": "textures/blocks/stone"
+ },
+ "minecraft:stone_shovel": {
+  "pt": "Pá de Pedra",
+  "en": "Stone Shovel",
+  "icone": "textures/items/stone_shovel"
  },
  "minecraft:string": {
   "pt": "Linha",
@@ -1299,8 +1339,9 @@
   "icone": "textures/blocks/torch_on"
  },
  "minecraft:totem_of_undying": {
-  "pt": "totem_of_undying",
-  "en": "totem_of_undying"
+  "pt": "Totem da Imortalidade",
+  "en": "Totem of Undying",
+  "icone": "textures/items/totem"
  },
  "minecraft:trapped_chest": {
   "pt": "Baú com Armadilha",
@@ -1336,6 +1377,21 @@
   "pt": "Lã Branca",
   "en": "White Wool",
   "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:wooden_axe": {
+  "pt": "Machado de Madeira",
+  "en": "Wooden Axe",
+  "icone": "textures/items/wood_axe"
+ },
+ "minecraft:wooden_pickaxe": {
+  "pt": "Picareta de Madeira",
+  "en": "Wooden Pickaxe",
+  "icone": "textures/items/wood_pickaxe"
+ },
+ "minecraft:wooden_shovel": {
+  "pt": "Pá de Madeira",
+  "en": "Wooden Shovel",
+  "icone": "textures/items/wood_shovel"
  },
  "minecraft:yellow_dye": {
   "pt": "Corante Amarelo",

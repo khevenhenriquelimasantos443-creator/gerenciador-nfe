@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk_paxel_lapis"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AFP",
+      " T ",
+      " T "
+    ],
+    "key": {
+      "A": {
+        "item": "cl:mk_machado_lapis"
+      },
+      "F": {
+        "item": "cl:mk_picareta_lapis"
+      },
+      "P": {
+        "item": "cl:mk_pa_lapis"
+      },
+      "T": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:mk_paxel_lapis"
+    }
+  }
+}

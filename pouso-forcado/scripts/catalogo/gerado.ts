@@ -226,6 +226,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nose Cone",
   "icone": "textures/items/cl/c/bico_foguete"
  },
+ "cl:biocombustivel": {
+  "pt": "Biocombustível",
+  "en": "Bio Fuel",
+  "icone": "textures/items/cl/c/biocombustivel"
+ },
  "cl:bloco_aco": {
   "pt": "Bloco de Aço",
   "en": "Block of Steel",
@@ -605,6 +610,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Circuito",
   "en": "Circuit",
   "icone": "textures/items/cl/arte/circuito"
+ },
+ "cl:circuito_controle_avancado": {
+  "pt": "Circuito de Controle Avançado",
+  "en": "Advanced Control Circuit",
+  "icone": "textures/items/cl/c/circuito_controle_avancado"
+ },
+ "cl:circuito_controle_basico": {
+  "pt": "Circuito de Controle Básico",
+  "en": "Basic Control Circuit",
+  "icone": "textures/items/cl/c/circuito_controle_basico"
  },
  "cl:coalhada_queijo": {
   "pt": "Coalhada de Queijo",
@@ -1066,15 +1081,45 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Coal Generator",
   "icone": "textures/items/cl/arte/blocos/gerador"
  },
+ "cl:gerador_bio": {
+  "pt": "Biogerador",
+  "en": "Bio-Generator",
+  "icone": "textures/blocks/cl/c/gerador_bio_topo"
+ },
  "cl:gerador_blaze": {
   "pt": "Gerador de Blazes",
   "en": "Blaze Spawner",
   "icone": "textures/items/cl/arte/blocos/gerador_blaze"
  },
+ "cl:gerador_calor": {
+  "pt": "Gerador a Calor",
+  "en": "Heat Generator",
+  "icone": "textures/blocks/cl/c/gerador_calor_topo"
+ },
+ "cl:gerador_eolico": {
+  "pt": "Turbina Eólica",
+  "en": "Wind Generator",
+  "icone": "textures/blocks/cl/c/gerador_eolico_topo"
+ },
+ "cl:gerador_gas": {
+  "pt": "Gerador a Gás",
+  "en": "Gas-Burning Generator",
+  "icone": "textures/blocks/cl/c/gerador_gas_topo"
+ },
  "cl:gerador_monstros": {
   "pt": "Gerador de Monstros",
   "en": "Monster Generator",
   "icone": "textures/items/cl/arte/blocos/gerador_monstros"
+ },
+ "cl:gerador_solar_avancado": {
+  "pt": "Gerador Solar Avançado",
+  "en": "Advanced Solar Generator",
+  "icone": "textures/blocks/cl/c/gerador_solar_avancado_topo"
+ },
+ "cl:gerador_solar_mk": {
+  "pt": "Gerador Solar",
+  "en": "Solar Generator",
+  "icone": "textures/blocks/cl/c/gerador_solar_mk_topo"
  },
  "cl:hamburguer": {
   "pt": "Hambúrguer",
@@ -1215,6 +1260,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Ferro Comprimido",
   "en": "Compressed Iron Ingot",
   "icone": "textures/items/cl/arte/lingote_ferro_comprimido"
+ },
+ "cl:lingote_glowstone_refinado": {
+  "pt": "Lingote de Glowstone Refinada",
+  "en": "Refined Glowstone Ingot",
+  "icone": "textures/items/cl/c/lingote_glowstone_refinado"
+ },
+ "cl:lingote_obsidiana_refinada": {
+  "pt": "Lingote de Obsidiana Refinada",
+  "en": "Refined Obsidian Ingot",
+  "icone": "textures/items/cl/c/lingote_obsidiana_refinada"
+ },
+ "cl:lingote_osmio": {
+  "pt": "Lingote de Ósmio",
+  "en": "Osmium Ingot",
+  "icone": "textures/items/cl/c/lingote_osmio"
  },
  "cl:lingote_yellorium": {
   "pt": "Lingote de Yellorium",
@@ -1426,6 +1486,331 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cheese Ore",
   "icone": "textures/blocks/cl/c/minerio_queijo"
  },
+ "cl:mk_botas_aco": {
+  "pt": "Botas de Aço",
+  "en": "Steel Boots",
+  "icone": "textures/items/cl/c/mk_botas_aco"
+ },
+ "cl:mk_botas_bronze": {
+  "pt": "Botas de Bronze",
+  "en": "Bronze Boots",
+  "icone": "textures/items/cl/c/mk_botas_bronze"
+ },
+ "cl:mk_botas_glowstone": {
+  "pt": "Botas de Glowstone Refinada",
+  "en": "Refined Glowstone Boots",
+  "icone": "textures/items/cl/c/mk_botas_glowstone"
+ },
+ "cl:mk_botas_lapis": {
+  "pt": "Botas de Lápis-Lazúli",
+  "en": "Lapis Lazuli Boots",
+  "icone": "textures/items/cl/c/mk_botas_lapis"
+ },
+ "cl:mk_botas_obsidiana": {
+  "pt": "Botas de Obsidiana Refinada",
+  "en": "Refined Obsidian Boots",
+  "icone": "textures/items/cl/c/mk_botas_obsidiana"
+ },
+ "cl:mk_botas_osmio": {
+  "pt": "Botas de Ósmio",
+  "en": "Osmium Boots",
+  "icone": "textures/items/cl/c/mk_botas_osmio"
+ },
+ "cl:mk_calcas_aco": {
+  "pt": "Calças de Aço",
+  "en": "Steel Leggings",
+  "icone": "textures/items/cl/c/mk_calcas_aco"
+ },
+ "cl:mk_calcas_bronze": {
+  "pt": "Calças de Bronze",
+  "en": "Bronze Leggings",
+  "icone": "textures/items/cl/c/mk_calcas_bronze"
+ },
+ "cl:mk_calcas_glowstone": {
+  "pt": "Calças de Glowstone Refinada",
+  "en": "Refined Glowstone Leggings",
+  "icone": "textures/items/cl/c/mk_calcas_glowstone"
+ },
+ "cl:mk_calcas_lapis": {
+  "pt": "Calças de Lápis-Lazúli",
+  "en": "Lapis Lazuli Leggings",
+  "icone": "textures/items/cl/c/mk_calcas_lapis"
+ },
+ "cl:mk_calcas_obsidiana": {
+  "pt": "Calças de Obsidiana Refinada",
+  "en": "Refined Obsidian Leggings",
+  "icone": "textures/items/cl/c/mk_calcas_obsidiana"
+ },
+ "cl:mk_calcas_osmio": {
+  "pt": "Calças de Ósmio",
+  "en": "Osmium Leggings",
+  "icone": "textures/items/cl/c/mk_calcas_osmio"
+ },
+ "cl:mk_capacete_aco": {
+  "pt": "Capacete de Aço",
+  "en": "Steel Helmet",
+  "icone": "textures/items/cl/c/mk_capacete_aco"
+ },
+ "cl:mk_capacete_bronze": {
+  "pt": "Capacete de Bronze",
+  "en": "Bronze Helmet",
+  "icone": "textures/items/cl/c/mk_capacete_bronze"
+ },
+ "cl:mk_capacete_glowstone": {
+  "pt": "Capacete de Glowstone Refinada",
+  "en": "Refined Glowstone Helmet",
+  "icone": "textures/items/cl/c/mk_capacete_glowstone"
+ },
+ "cl:mk_capacete_lapis": {
+  "pt": "Capacete de Lápis-Lazúli",
+  "en": "Lapis Lazuli Helmet",
+  "icone": "textures/items/cl/c/mk_capacete_lapis"
+ },
+ "cl:mk_capacete_obsidiana": {
+  "pt": "Capacete de Obsidiana Refinada",
+  "en": "Refined Obsidian Helmet",
+  "icone": "textures/items/cl/c/mk_capacete_obsidiana"
+ },
+ "cl:mk_capacete_osmio": {
+  "pt": "Capacete de Ósmio",
+  "en": "Osmium Helmet",
+  "icone": "textures/items/cl/c/mk_capacete_osmio"
+ },
+ "cl:mk_enxada_aco": {
+  "pt": "Enxada de Aço",
+  "en": "Steel Hoe",
+  "icone": "textures/items/cl/c/mk_enxada_aco"
+ },
+ "cl:mk_enxada_bronze": {
+  "pt": "Enxada de Bronze",
+  "en": "Bronze Hoe",
+  "icone": "textures/items/cl/c/mk_enxada_bronze"
+ },
+ "cl:mk_enxada_glowstone": {
+  "pt": "Enxada de Glowstone Refinada",
+  "en": "Refined Glowstone Hoe",
+  "icone": "textures/items/cl/c/mk_enxada_glowstone"
+ },
+ "cl:mk_enxada_lapis": {
+  "pt": "Enxada de Lápis-Lazúli",
+  "en": "Lapis Lazuli Hoe",
+  "icone": "textures/items/cl/c/mk_enxada_lapis"
+ },
+ "cl:mk_enxada_obsidiana": {
+  "pt": "Enxada de Obsidiana Refinada",
+  "en": "Refined Obsidian Hoe",
+  "icone": "textures/items/cl/c/mk_enxada_obsidiana"
+ },
+ "cl:mk_enxada_osmio": {
+  "pt": "Enxada de Ósmio",
+  "en": "Osmium Hoe",
+  "icone": "textures/items/cl/c/mk_enxada_osmio"
+ },
+ "cl:mk_espada_aco": {
+  "pt": "Espada de Aço",
+  "en": "Steel Sword",
+  "icone": "textures/items/cl/c/mk_espada_aco"
+ },
+ "cl:mk_espada_bronze": {
+  "pt": "Espada de Bronze",
+  "en": "Bronze Sword",
+  "icone": "textures/items/cl/c/mk_espada_bronze"
+ },
+ "cl:mk_espada_glowstone": {
+  "pt": "Espada de Glowstone Refinada",
+  "en": "Refined Glowstone Sword",
+  "icone": "textures/items/cl/c/mk_espada_glowstone"
+ },
+ "cl:mk_espada_lapis": {
+  "pt": "Espada de Lápis-Lazúli",
+  "en": "Lapis Lazuli Sword",
+  "icone": "textures/items/cl/c/mk_espada_lapis"
+ },
+ "cl:mk_espada_obsidiana": {
+  "pt": "Espada de Obsidiana Refinada",
+  "en": "Refined Obsidian Sword",
+  "icone": "textures/items/cl/c/mk_espada_obsidiana"
+ },
+ "cl:mk_espada_osmio": {
+  "pt": "Espada de Ósmio",
+  "en": "Osmium Sword",
+  "icone": "textures/items/cl/c/mk_espada_osmio"
+ },
+ "cl:mk_machado_aco": {
+  "pt": "Machado de Aço",
+  "en": "Steel Axe",
+  "icone": "textures/items/cl/c/mk_machado_aco"
+ },
+ "cl:mk_machado_bronze": {
+  "pt": "Machado de Bronze",
+  "en": "Bronze Axe",
+  "icone": "textures/items/cl/c/mk_machado_bronze"
+ },
+ "cl:mk_machado_glowstone": {
+  "pt": "Machado de Glowstone Refinada",
+  "en": "Refined Glowstone Axe",
+  "icone": "textures/items/cl/c/mk_machado_glowstone"
+ },
+ "cl:mk_machado_lapis": {
+  "pt": "Machado de Lápis-Lazúli",
+  "en": "Lapis Lazuli Axe",
+  "icone": "textures/items/cl/c/mk_machado_lapis"
+ },
+ "cl:mk_machado_obsidiana": {
+  "pt": "Machado de Obsidiana Refinada",
+  "en": "Refined Obsidian Axe",
+  "icone": "textures/items/cl/c/mk_machado_obsidiana"
+ },
+ "cl:mk_machado_osmio": {
+  "pt": "Machado de Ósmio",
+  "en": "Osmium Axe",
+  "icone": "textures/items/cl/c/mk_machado_osmio"
+ },
+ "cl:mk_pa_aco": {
+  "pt": "Pá de Aço",
+  "en": "Steel Shovel",
+  "icone": "textures/items/cl/c/mk_pa_aco"
+ },
+ "cl:mk_pa_bronze": {
+  "pt": "Pá de Bronze",
+  "en": "Bronze Shovel",
+  "icone": "textures/items/cl/c/mk_pa_bronze"
+ },
+ "cl:mk_pa_glowstone": {
+  "pt": "Pá de Glowstone Refinada",
+  "en": "Refined Glowstone Shovel",
+  "icone": "textures/items/cl/c/mk_pa_glowstone"
+ },
+ "cl:mk_pa_lapis": {
+  "pt": "Pá de Lápis-Lazúli",
+  "en": "Lapis Lazuli Shovel",
+  "icone": "textures/items/cl/c/mk_pa_lapis"
+ },
+ "cl:mk_pa_obsidiana": {
+  "pt": "Pá de Obsidiana Refinada",
+  "en": "Refined Obsidian Shovel",
+  "icone": "textures/items/cl/c/mk_pa_obsidiana"
+ },
+ "cl:mk_pa_osmio": {
+  "pt": "Pá de Ósmio",
+  "en": "Osmium Shovel",
+  "icone": "textures/items/cl/c/mk_pa_osmio"
+ },
+ "cl:mk_paxel_aco": {
+  "pt": "Paxel de Aço",
+  "en": "Steel Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_aco"
+ },
+ "cl:mk_paxel_bronze": {
+  "pt": "Paxel de Bronze",
+  "en": "Bronze Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_bronze"
+ },
+ "cl:mk_paxel_diamante": {
+  "pt": "Paxel de Diamante",
+  "en": "Diamond Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_diamante"
+ },
+ "cl:mk_paxel_ferro": {
+  "pt": "Paxel de Ferro",
+  "en": "Iron Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_ferro"
+ },
+ "cl:mk_paxel_glowstone": {
+  "pt": "Paxel de Glowstone Refinada",
+  "en": "Refined Glowstone Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_glowstone"
+ },
+ "cl:mk_paxel_lapis": {
+  "pt": "Paxel de Lápis-Lazúli",
+  "en": "Lapis Lazuli Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_lapis"
+ },
+ "cl:mk_paxel_madeira": {
+  "pt": "Paxel de Madeira",
+  "en": "Wooden Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_madeira"
+ },
+ "cl:mk_paxel_obsidiana": {
+  "pt": "Paxel de Obsidiana Refinada",
+  "en": "Refined Obsidian Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_obsidiana"
+ },
+ "cl:mk_paxel_osmio": {
+  "pt": "Paxel de Ósmio",
+  "en": "Osmium Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_osmio"
+ },
+ "cl:mk_paxel_ouro": {
+  "pt": "Paxel de Ouro",
+  "en": "Golden Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_ouro"
+ },
+ "cl:mk_paxel_pedra": {
+  "pt": "Paxel de Pedra",
+  "en": "Stone Paxel",
+  "icone": "textures/items/cl/c/mk_paxel_pedra"
+ },
+ "cl:mk_peitoral_aco": {
+  "pt": "Peitoral de Aço",
+  "en": "Steel Chestplate",
+  "icone": "textures/items/cl/c/mk_peitoral_aco"
+ },
+ "cl:mk_peitoral_bronze": {
+  "pt": "Peitoral de Bronze",
+  "en": "Bronze Chestplate",
+  "icone": "textures/items/cl/c/mk_peitoral_bronze"
+ },
+ "cl:mk_peitoral_glowstone": {
+  "pt": "Peitoral de Glowstone Refinada",
+  "en": "Refined Glowstone Chestplate",
+  "icone": "textures/items/cl/c/mk_peitoral_glowstone"
+ },
+ "cl:mk_peitoral_lapis": {
+  "pt": "Peitoral de Lápis-Lazúli",
+  "en": "Lapis Lazuli Chestplate",
+  "icone": "textures/items/cl/c/mk_peitoral_lapis"
+ },
+ "cl:mk_peitoral_obsidiana": {
+  "pt": "Peitoral de Obsidiana Refinada",
+  "en": "Refined Obsidian Chestplate",
+  "icone": "textures/items/cl/c/mk_peitoral_obsidiana"
+ },
+ "cl:mk_peitoral_osmio": {
+  "pt": "Peitoral de Ósmio",
+  "en": "Osmium Chestplate",
+  "icone": "textures/items/cl/c/mk_peitoral_osmio"
+ },
+ "cl:mk_picareta_aco": {
+  "pt": "Picareta de Aço",
+  "en": "Steel Pickaxe",
+  "icone": "textures/items/cl/c/mk_picareta_aco"
+ },
+ "cl:mk_picareta_bronze": {
+  "pt": "Picareta de Bronze",
+  "en": "Bronze Pickaxe",
+  "icone": "textures/items/cl/c/mk_picareta_bronze"
+ },
+ "cl:mk_picareta_glowstone": {
+  "pt": "Picareta de Glowstone Refinada",
+  "en": "Refined Glowstone Pickaxe",
+  "icone": "textures/items/cl/c/mk_picareta_glowstone"
+ },
+ "cl:mk_picareta_lapis": {
+  "pt": "Picareta de Lápis-Lazúli",
+  "en": "Lapis Lazuli Pickaxe",
+  "icone": "textures/items/cl/c/mk_picareta_lapis"
+ },
+ "cl:mk_picareta_obsidiana": {
+  "pt": "Picareta de Obsidiana Refinada",
+  "en": "Refined Obsidian Pickaxe",
+  "icone": "textures/items/cl/c/mk_picareta_obsidiana"
+ },
+ "cl:mk_picareta_osmio": {
+  "pt": "Picareta de Ósmio",
+  "en": "Osmium Pickaxe",
+  "icone": "textures/items/cl/c/mk_picareta_osmio"
+ },
  "cl:moinho": {
   "pt": "Moinho de Vento",
   "en": "Windmill",
@@ -1511,6 +1896,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Date Palm Sapling",
   "icone": "textures/blocks/cl/arte/muda_tamareira"
  },
+ "cl:nucleo_eletrolitico": {
+  "pt": "Núcleo Eletrolítico",
+  "en": "Electrolytic Core",
+  "icone": "textures/items/cl/c/nucleo_eletrolitico"
+ },
  "cl:nucleo_funil": {
   "pt": "Núcleo de Funil",
   "en": "Hopper Core",
@@ -1535,6 +1925,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Organizador",
   "en": "Organizer",
   "icone": "textures/items/cl/arte/organizador"
+ },
+ "cl:osmio_po": {
+  "pt": "Pó de Minério de Ósmio",
+  "en": "Powdered Osmium Ore",
+  "icone": "textures/items/cl/c/osmio_po"
+ },
+ "cl:osmio_quebrado": {
+  "pt": "Pedaço Quebrado de Ósmio",
+  "en": "Broken Osmium Ore",
+  "icone": "textures/items/cl/c/osmio_quebrado"
+ },
+ "cl:osmio_triturado": {
+  "pt": "Pedaço Triturado de Ósmio",
+  "en": "Crushed Osmium Ore",
+  "icone": "textures/items/cl/c/osmio_triturado"
  },
  "cl:ouro_po": {
   "pt": "Pó de Minério de Ouro",
@@ -1670,6 +2075,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Painel Solar",
   "en": "Solar Panel",
   "icone": "textures/items/cl/arte/blocos/painel_solar"
+ },
+ "cl:painel_solar_mk": {
+  "pt": "Painel Solar (Mekanism)",
+  "en": "Solar Panel",
+  "icone": "textures/items/cl/c/painel_solar_mk"
  },
  "cl:panela": {
   "pt": "Panela",
@@ -2371,6 +2781,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Lithium Dust",
   "icone": "textures/items/cl/arte/po_litio"
  },
+ "cl:po_osmio": {
+  "pt": "Pó de Ósmio",
+  "en": "Osmium Dust",
+  "icone": "textures/items/cl/c/po_osmio"
+ },
  "cl:po_ouro": {
   "pt": "Pó de Ouro",
   "en": "Pulverized Gold",
@@ -2465,6 +2880,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Respiro de Oxigênio",
   "en": "Oxygen Vent",
   "icone": "textures/items/cl/c/respiro_oxigenio"
+ },
+ "cl:revestimento_aco": {
+  "pt": "Revestimento de Aço",
+  "en": "Steel Casing",
+  "icone": "textures/blocks/cl/c/revestimento_aco"
  },
  "cl:rocha_lunar": {
   "pt": "Rocha Lunar",
@@ -2611,6 +3031,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tool Rack",
   "icone": "textures/items/cl/arte/blocos/suporte_ferramentas"
  },
+ "cl:tablet_energia": {
+  "pt": "Tablet de Energia",
+  "en": "Energy Tablet",
+  "icone": "textures/items/cl/c/tablet_energia"
+ },
  "cl:tabua_corte": {
   "pt": "Tábua de Corte",
   "en": "Cutting Board",
@@ -2720,6 +3145,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Transistor",
   "en": "Transistor",
   "icone": "textures/items/cl/arte/transistor"
+ },
+ "cl:triturador_mk": {
+  "pt": "Triturador",
+  "en": "Crusher",
+  "icone": "textures/blocks/cl/c/triturador_mk_topo"
  },
  "cl:triturador_monstros": {
   "pt": "Triturador de Monstros",
@@ -3301,6 +3731,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Diamond",
   "icone": "textures/items/diamond"
  },
+ "minecraft:diamond_axe": {
+  "pt": "Machado de Diamante",
+  "en": "Diamond Axe",
+  "icone": "textures/items/diamond_axe"
+ },
  "minecraft:diamond_block": {
   "pt": "Bloco de Diamante",
   "en": "Block of Diamond",
@@ -3315,6 +3750,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Picareta de Diamante",
   "en": "Diamond Pickaxe",
   "icone": "textures/items/diamond_pickaxe"
+ },
+ "minecraft:diamond_shovel": {
+  "pt": "Pá de Diamante",
+  "en": "Diamond Shovel",
+  "icone": "textures/items/diamond_shovel"
  },
  "minecraft:dirt": {
   "pt": "Terra",
@@ -3461,6 +3901,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Golden Apple",
   "icone": "textures/items/apple_golden"
  },
+ "minecraft:golden_axe": {
+  "pt": "Machado de Ouro",
+  "en": "Golden Axe",
+  "icone": "textures/items/gold_axe"
+ },
  "minecraft:golden_carrot": {
   "pt": "Cenoura Dourada",
   "en": "Golden Carrot",
@@ -3470,6 +3915,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Enxada de Ouro",
   "en": "Golden Hoe",
   "icone": "textures/items/gold_hoe"
+ },
+ "minecraft:golden_pickaxe": {
+  "pt": "Picareta de Ouro",
+  "en": "Golden Pickaxe",
+  "icone": "textures/items/gold_pickaxe"
+ },
+ "minecraft:golden_shovel": {
+  "pt": "Pá de Ouro",
+  "en": "Golden Shovel",
+  "icone": "textures/items/gold_shovel"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",
@@ -3555,6 +4010,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
   "icone": "textures/items/iron_pickaxe"
+ },
+ "minecraft:iron_shovel": {
+  "pt": "Pá de Ferro",
+  "en": "Iron Shovel",
+  "icone": "textures/items/iron_shovel"
  },
  "minecraft:iron_sword": {
   "pt": "Espada de Ferro",
@@ -4076,6 +4536,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone",
   "icone": "textures/blocks/stone"
  },
+ "minecraft:stone_axe": {
+  "pt": "Machado de Pedra",
+  "en": "Stone Axe",
+  "icone": "textures/items/stone_axe"
+ },
  "minecraft:stone_brick_slab": {
   "pt": "Laje de Tijolos",
   "en": "Brick Slab",
@@ -4100,6 +4565,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Placa de Pressão de Pedra",
   "en": "Stone Pressure Plate",
   "icone": "textures/blocks/stone"
+ },
+ "minecraft:stone_shovel": {
+  "pt": "Pá de Pedra",
+  "en": "Stone Shovel",
+  "icone": "textures/items/stone_shovel"
  },
  "minecraft:string": {
   "pt": "Linha",
@@ -4167,8 +4637,9 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/blocks/torch_on"
  },
  "minecraft:totem_of_undying": {
-  "pt": "totem_of_undying",
-  "en": "totem_of_undying"
+  "pt": "Totem da Imortalidade",
+  "en": "Totem of Undying",
+  "icone": "textures/items/totem"
  },
  "minecraft:trapped_chest": {
   "pt": "Baú com Armadilha",
@@ -4199,6 +4670,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lã Branca",
   "en": "White Wool",
   "icone": "textures/blocks/wool_colored_white"
+ },
+ "minecraft:wooden_axe": {
+  "pt": "Machado de Madeira",
+  "en": "Wooden Axe",
+  "icone": "textures/items/wood_axe"
+ },
+ "minecraft:wooden_pickaxe": {
+  "pt": "Picareta de Madeira",
+  "en": "Wooden Pickaxe",
+  "icone": "textures/items/wood_pickaxe"
+ },
+ "minecraft:wooden_shovel": {
+  "pt": "Pá de Madeira",
+  "en": "Wooden Shovel",
+  "icone": "textures/items/wood_shovel"
  },
  "minecraft:yellow_dye": {
   "pt": "Corante Amarelo",
@@ -5495,6 +5981,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_circuito_controle_avancado",
+  "resultado": "cl:circuito_controle_avancado",
+  "qtd": 1,
+  "grade": [
+   "ECE"
+  ],
+  "chaves": {
+   "E": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_cobre_lunar",
   "resultado": "minecraft:copper_ingot",
@@ -6558,6 +7060,128 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_gerador_bio",
+  "resultado": "cl:gerador_bio",
+  "qtd": 1,
+  "grade": [
+   "RER",
+   "BCB",
+   "NEN"
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "E": "cl:liga_enriquecida",
+   "B": "cl:biocombustivel",
+   "C": "cl:circuito_controle_basico",
+   "N": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gerador_calor",
+  "resultado": "cl:gerador_calor",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "WOW",
+   "CFC"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "W": "minecraft:oak_planks",
+   "O": "cl:lingote_osmio",
+   "C": "minecraft:copper_ingot",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gerador_eolico",
+  "resultado": "cl:gerador_eolico",
+  "qtd": 1,
+  "grade": [
+   " O ",
+   "OAO",
+   "ECE"
+  ],
+  "chaves": {
+   "O": "cl:lingote_osmio",
+   "A": "cl:liga_enriquecida",
+   "E": "cl:tablet_energia",
+   "C": "cl:circuito_controle_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gerador_gas",
+  "resultado": "cl:gerador_gas",
+  "qtd": 1,
+  "grade": [
+   "PEP",
+   "ICI",
+   "PEP"
+  ],
+  "chaves": {
+   "P": "cl:lingote_osmio",
+   "E": "cl:liga_enriquecida",
+   "I": "cl:revestimento_aco",
+   "C": "cl:nucleo_eletrolitico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gerador_solar_avancado",
+  "resultado": "cl:gerador_solar_avancado",
+  "qtd": 1,
+  "grade": [
+   "SES",
+   "SES",
+   "III"
+  ],
+  "chaves": {
+   "S": "cl:gerador_solar_mk",
+   "E": "cl:liga_enriquecida",
+   "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gerador_solar_mk",
+  "resultado": "cl:gerador_solar_mk",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "AIA",
+   "PEP"
+  ],
+  "chaves": {
+   "S": "cl:painel_solar_mk",
+   "A": "cl:liga_enriquecida",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:po_osmio",
+   "E": "cl:tablet_energia"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_infusor_metalurgico",
   "resultado": "cl:infusor_metalurgico",
   "qtd": 1,
@@ -7078,6 +7702,1186 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mk_botas_aco",
+  "resultado": "cl:mk_botas_aco",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_botas_bronze",
+  "resultado": "cl:mk_botas_bronze",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_botas_glowstone",
+  "resultado": "cl:mk_botas_glowstone",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_botas_lapis",
+  "resultado": "cl:mk_botas_lapis",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_botas_obsidiana",
+  "resultado": "cl:mk_botas_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_botas_osmio",
+  "resultado": "cl:mk_botas_osmio",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_calcas_aco",
+  "resultado": "cl:mk_calcas_aco",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_calcas_bronze",
+  "resultado": "cl:mk_calcas_bronze",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_calcas_glowstone",
+  "resultado": "cl:mk_calcas_glowstone",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_calcas_lapis",
+  "resultado": "cl:mk_calcas_lapis",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_calcas_obsidiana",
+  "resultado": "cl:mk_calcas_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_calcas_osmio",
+  "resultado": "cl:mk_calcas_osmio",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_capacete_aco",
+  "resultado": "cl:mk_capacete_aco",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_capacete_bronze",
+  "resultado": "cl:mk_capacete_bronze",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_capacete_glowstone",
+  "resultado": "cl:mk_capacete_glowstone",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_capacete_lapis",
+  "resultado": "cl:mk_capacete_lapis",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_capacete_obsidiana",
+  "resultado": "cl:mk_capacete_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_capacete_osmio",
+  "resultado": "cl:mk_capacete_osmio",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   "X X"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_enxada_aco",
+  "resultado": "cl:mk_enxada_aco",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   " T",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_enxada_bronze",
+  "resultado": "cl:mk_enxada_bronze",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   " T",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_enxada_glowstone",
+  "resultado": "cl:mk_enxada_glowstone",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   " T",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_enxada_lapis",
+  "resultado": "cl:mk_enxada_lapis",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   " T",
+   " T"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_enxada_obsidiana",
+  "resultado": "cl:mk_enxada_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   " T",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_enxada_osmio",
+  "resultado": "cl:mk_enxada_osmio",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   " T",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_espada_aco",
+  "resultado": "cl:mk_espada_aco",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "X",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_espada_bronze",
+  "resultado": "cl:mk_espada_bronze",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "X",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_espada_glowstone",
+  "resultado": "cl:mk_espada_glowstone",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "X",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_espada_lapis",
+  "resultado": "cl:mk_espada_lapis",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "X",
+   "T"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_espada_obsidiana",
+  "resultado": "cl:mk_espada_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "X",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_espada_osmio",
+  "resultado": "cl:mk_espada_osmio",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "X",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_machado_aco",
+  "resultado": "cl:mk_machado_aco",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   "XT",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_machado_bronze",
+  "resultado": "cl:mk_machado_bronze",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   "XT",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_machado_glowstone",
+  "resultado": "cl:mk_machado_glowstone",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   "XT",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_machado_lapis",
+  "resultado": "cl:mk_machado_lapis",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   "XT",
+   " T"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_machado_obsidiana",
+  "resultado": "cl:mk_machado_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   "XT",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_machado_osmio",
+  "resultado": "cl:mk_machado_osmio",
+  "qtd": 1,
+  "grade": [
+   "XX",
+   "XT",
+   " T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_pa_aco",
+  "resultado": "cl:mk_pa_aco",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "T",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_pa_bronze",
+  "resultado": "cl:mk_pa_bronze",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "T",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_pa_glowstone",
+  "resultado": "cl:mk_pa_glowstone",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "T",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_pa_lapis",
+  "resultado": "cl:mk_pa_lapis",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "T",
+   "T"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_pa_obsidiana",
+  "resultado": "cl:mk_pa_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "T",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_pa_osmio",
+  "resultado": "cl:mk_pa_osmio",
+  "qtd": 1,
+  "grade": [
+   "X",
+   "T",
+   "T"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_aco",
+  "resultado": "cl:mk_paxel_aco",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "cl:mk_machado_aco",
+   "F": "cl:mk_picareta_aco",
+   "P": "cl:mk_pa_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_bronze",
+  "resultado": "cl:mk_paxel_bronze",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "cl:mk_machado_bronze",
+   "F": "cl:mk_picareta_bronze",
+   "P": "cl:mk_pa_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_diamante",
+  "resultado": "cl:mk_paxel_diamante",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "minecraft:diamond_axe",
+   "F": "minecraft:diamond_pickaxe",
+   "P": "minecraft:diamond_shovel",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_ferro",
+  "resultado": "cl:mk_paxel_ferro",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "minecraft:iron_axe",
+   "F": "minecraft:iron_pickaxe",
+   "P": "minecraft:iron_shovel",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_glowstone",
+  "resultado": "cl:mk_paxel_glowstone",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "cl:mk_machado_glowstone",
+   "F": "cl:mk_picareta_glowstone",
+   "P": "cl:mk_pa_glowstone",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_lapis",
+  "resultado": "cl:mk_paxel_lapis",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "cl:mk_machado_lapis",
+   "F": "cl:mk_picareta_lapis",
+   "P": "cl:mk_pa_lapis",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_madeira",
+  "resultado": "cl:mk_paxel_madeira",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "minecraft:wooden_axe",
+   "F": "minecraft:wooden_pickaxe",
+   "P": "minecraft:wooden_shovel",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_obsidiana",
+  "resultado": "cl:mk_paxel_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "cl:mk_machado_obsidiana",
+   "F": "cl:mk_picareta_obsidiana",
+   "P": "cl:mk_pa_obsidiana",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_osmio",
+  "resultado": "cl:mk_paxel_osmio",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "cl:mk_machado_osmio",
+   "F": "cl:mk_picareta_osmio",
+   "P": "cl:mk_pa_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_ouro",
+  "resultado": "cl:mk_paxel_ouro",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "minecraft:golden_axe",
+   "F": "minecraft:golden_pickaxe",
+   "P": "minecraft:golden_shovel",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_paxel_pedra",
+  "resultado": "cl:mk_paxel_pedra",
+  "qtd": 1,
+  "grade": [
+   "AFP",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "A": "minecraft:stone_axe",
+   "F": "minecraft:stone_pickaxe",
+   "P": "minecraft:stone_shovel",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_peitoral_aco",
+  "resultado": "cl:mk_peitoral_aco",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "XXX",
+   "XXX"
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_peitoral_bronze",
+  "resultado": "cl:mk_peitoral_bronze",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "XXX",
+   "XXX"
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_peitoral_glowstone",
+  "resultado": "cl:mk_peitoral_glowstone",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "XXX",
+   "XXX"
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_peitoral_lapis",
+  "resultado": "cl:mk_peitoral_lapis",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "XXX",
+   "XXX"
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_peitoral_obsidiana",
+  "resultado": "cl:mk_peitoral_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "XXX",
+   "XXX"
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_peitoral_osmio",
+  "resultado": "cl:mk_peitoral_osmio",
+  "qtd": 1,
+  "grade": [
+   "X X",
+   "XXX",
+   "XXX"
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_picareta_aco",
+  "resultado": "cl:mk_picareta_aco",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "X": "cl:lingote_aco",
+   "T": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_picareta_bronze",
+  "resultado": "cl:mk_picareta_bronze",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "X": "cl:lingote_bronze",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_picareta_glowstone",
+  "resultado": "cl:mk_picareta_glowstone",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "X": "cl:lingote_glowstone_refinado",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_picareta_lapis",
+  "resultado": "cl:mk_picareta_lapis",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "X": "minecraft:lapis_lazuli",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_picareta_obsidiana",
+  "resultado": "cl:mk_picareta_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "X": "cl:lingote_obsidiana_refinada",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk_picareta_osmio",
+  "resultado": "cl:mk_picareta_osmio",
+  "qtd": 1,
+  "grade": [
+   "XXX",
+   " T ",
+   " T "
+  ],
+  "chaves": {
+   "X": "cl:lingote_osmio",
+   "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_montador_molecular",
   "resultado": "cl:montador_molecular",
   "qtd": 1,
@@ -7138,6 +8942,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_nucleo_eletrolitico",
+  "resultado": "cl:nucleo_eletrolitico",
+  "qtd": 1,
+  "grade": [
+   "EPE",
+   "IEG",
+   "EPE"
+  ],
+  "chaves": {
+   "E": "cl:liga_enriquecida",
+   "P": "cl:po_osmio",
+   "I": "cl:po_ferro",
+   "G": "cl:po_ouro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_nucleo_funil",
   "resultado": "cl:nucleo_funil",
@@ -7176,6 +9000,66 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_osmio_de_po",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:osmio_po",
+    "qtd": 4
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_osmio_de_quebrado",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:osmio_quebrado",
+    "qtd": 4
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_osmio_de_triturado",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:osmio_triturado",
+    "qtd": 4
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_osmio_po",
+  "resultado": "cl:lingote_osmio",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:po_osmio",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_padrao_branco",
   "resultado": "cl:padrao_branco",
@@ -7207,6 +9091,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:cristal_certus",
    "R": "minecraft:redstone",
    "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_painel_solar_mk",
+  "resultado": "cl:painel_solar_mk",
+  "qtd": 1,
+  "grade": [
+   "GGG",
+   "RAR",
+   "PPP"
+  ],
+  "chaves": {
+   "G": "minecraft:glass_pane",
+   "R": "minecraft:redstone",
+   "A": "cl:liga_enriquecida",
+   "P": "cl:lingote_osmio"
   },
   "estacoes": [
    "crafting_table"
@@ -7629,6 +9533,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_revestimento_aco",
+  "resultado": "cl:revestimento_aco",
+  "qtd": 1,
+  "grade": [
+   "SGS",
+   "GPG",
+   "SGS"
+  ],
+  "chaves": {
+   "S": "cl:lingote_aco",
+   "G": "minecraft:glass",
+   "P": "cl:lingote_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_saco_dormir",
   "resultado": "cl:saco_dormir",
   "qtd": 1,
@@ -7727,6 +9650,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "S": "minecraft:oak_slab",
    "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tablet_energia",
+  "resultado": "cl:tablet_energia",
+  "qtd": 1,
+  "grade": [
+   "RCR",
+   "ECE",
+   "RCR"
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "minecraft:gold_ingot",
+   "E": "cl:liga_enriquecida"
   },
   "estacoes": [
    "crafting_table"
@@ -7925,6 +9867,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:circuito",
    "E": "cl:estrutura_maquina",
    "K": "cl:capacitor"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_triturador_mk",
+  "resultado": "cl:triturador_mk",
+  "qtd": 1,
+  "grade": [
+   "RCR",
+   "LIL",
+   "RCR"
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "L": "minecraft:lava_bucket",
+   "C": "cl:circuito_controle_basico",
+   "I": "cl:revestimento_aco"
   },
   "estacoes": [
    "crafting_table"

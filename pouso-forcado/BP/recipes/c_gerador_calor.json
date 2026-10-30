@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_calor"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "III",
+      "WOW",
+      "CFC"
+    ],
+    "key": {
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "W": {
+        "item": "minecraft:oak_planks"
+      },
+      "O": {
+        "item": "cl:lingote_osmio"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_calor"
+    }
+  }
+}

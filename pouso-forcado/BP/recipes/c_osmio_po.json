@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_osmio_po"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:po_osmio",
+    "output": "cl:lingote_osmio"
+  }
+}

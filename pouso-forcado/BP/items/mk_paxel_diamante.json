@@ -1,0 +1,62 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:mk_paxel_diamante",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_mk_paxel_diamante",
+      "minecraft:display_name": {
+        "value": "item.cl:mk_paxel_diamante.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 1561
+      },
+      "minecraft:damage": {
+        "value": 7
+      },
+      "minecraft:enchantable": {
+        "slot": "pickaxe",
+        "value": 10
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag('stone', 'metal', 'rail', 'minecraft:is_pickaxe_item_destructible')"
+            },
+            "speed": 8
+          },
+          {
+            "block": {
+              "tags": "query.any_tag('wood', 'log', 'pumpkin', 'plant', 'minecraft:is_axe_item_destructible')"
+            },
+            "speed": 8
+          },
+          {
+            "block": {
+              "tags": "query.any_tag('dirt', 'sand', 'gravel', 'grass', 'snow', 'minecraft:is_shovel_item_destructible')"
+            },
+            "speed": 8
+          }
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_pickaxe",
+          "minecraft:is_axe",
+          "minecraft:is_shovel",
+          "minecraft:is_tool",
+          "minecraft:diamond_tier",
+          "cl:mk_ferramenta"
+        ]
+      }
+    }
+  }
+}

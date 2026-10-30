@@ -463,6 +463,44 @@ teste("base", 1400, (t) => {
   });
 });
 
+// 1.7.0: Gerador a Calor carregando a bateria, Triturador fazendo biocombustível e o desgaste da picareta de ósmio.
+teste("mekanism", 500, (t) => {
+  const pos0 = t.setBlockType;
+  t.setBlockType = (tipo, p) => { try { pos0.call(t, tipo, p); } catch (e) { log(`não pôs ${tipo} em ${JSON.stringify(p)}: ${e}`); throw e; } };
+  const bat = (pos, carga) => {
+    t.setBlockType("cl:bateria", pos);
+    const b = t.getBlock(pos);
+    b.setPermutation(b.permutation.withState("cl:carga", carga));
+  };
+  bat({ x: 1, y: 1, z: 1 }, 0);
+  t.setBlockType("cl:gerador_calor", { x: 2, y: 1, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 2, y: 2, z: 1 });
+  t.getBlock({ x: 2, y: 2, z: 1 }).getComponent("inventory").container.addItem(new ItemStack("minecraft:coal", 2));
+  t.setBlockType("minecraft:chest", { x: 5, y: 1, z: 2 });
+  t.setBlockType("cl:triturador_mk", { x: 5, y: 2, z: 2 });
+  t.setBlockType("minecraft:chest", { x: 5, y: 3, z: 2 });
+  t.getBlock({ x: 5, y: 3, z: 2 }).getComponent("inventory").container.addItem(new ItemStack("minecraft:wheat", 2));
+  bat({ x: 6, y: 2, z: 2 }, 15);
+  t.setBlockType("minecraft:cobblestone", { x: 3, y: 1, z: 5 });
+  const j = robo(t, { x: 3, y: 1, z: 6 });
+  j.getComponent("minecraft:inventory").container.setItem(0, new ItemStack("cl:mk_picareta_osmio", 1));
+  j.selectedSlotIndex = 0;
+  t.runAfterDelay(20, () => j.breakBlock({ x: 3, y: 1, z: 5 }));
+  t.runAfterDelay(460, () => {
+    const carga = t.getBlock({ x: 1, y: 1, z: 1 }).permutation.getState("cl:carga");
+    const baixo = t.getBlock({ x: 5, y: 1, z: 2 }).getComponent("inventory").container;
+    let bio = 0;
+    for (let s = 0; s < baixo.size; s++) if (baixo.getItem(s)?.typeId === "cl:biocombustivel") bio += baixo.getItem(s).amount;
+    const pic = j.getComponent("minecraft:inventory").container.getItem(0);
+    const dano = pic?.getComponent("durability")?.damage;
+    log(`mekanism: bateria do gerador a calor=${carga} biocombustível=${bio} picareta=${pic?.typeId} desgaste=${dano} pedra=${t.getBlock({ x: 3, y: 1, z: 5 }).typeId}`);
+    t.assert(carga >= 2, "o Gerador a Calor não carregou a bateria");
+    t.assert(bio >= 4, "o Triturador não fez biocombustível");
+    t.assert(dano === 1, `a picareta gastou ${dano} (esperava 1)`);
+    t.succeed();
+  });
+});
+
 // Quais causas de dano o jogo aplica de verdade num jogador fora de bloco/água.
 teste("danos", 100, (t) => {
   const j = robo(t, { x: 3, y: 1, z: 3 });

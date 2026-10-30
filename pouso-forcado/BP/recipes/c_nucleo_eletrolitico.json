@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_nucleo_eletrolitico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "EPE",
+      "IEG",
+      "EPE"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:liga_enriquecida"
+      },
+      "P": {
+        "item": "cl:po_osmio"
+      },
+      "I": {
+        "item": "cl:po_ferro"
+      },
+      "G": {
+        "item": "cl:po_ouro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:nucleo_eletrolitico"
+    }
+  }
+}

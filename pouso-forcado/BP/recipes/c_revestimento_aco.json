@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_revestimento_aco"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SGS",
+      "GPG",
+      "SGS"
+    ],
+    "key": {
+      "S": {
+        "item": "cl:lingote_aco"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "P": {
+        "item": "cl:lingote_osmio"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:revestimento_aco"
+    }
+  }
+}

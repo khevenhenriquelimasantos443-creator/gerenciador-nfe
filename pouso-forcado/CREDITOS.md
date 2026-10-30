@@ -23,6 +23,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo.
 
 ## Inspiração
 
+- **Mekanism Generators** e **Mekanism Tools** (aidancbrady, MIT): geradores, ferramentas e armaduras, com os números lidos
+  no código-fonte público (github.com/aidancbrady/Mekanism). Código próprio; as armaduras usam a textura da armadura de
+  ferro do jogo (Mojang, `Mojang/bedrock-samples`) tingida por `tools/gerar-armaduras.mjs`.
+
 - **Galacticraft** (micdoodle8 e equipe, LGPL 3.0): a viagem à Lua, as máquinas de oxigênio, a Bancada da NASA e o
   Foguete Tier 1. Os números (receitas, tanques, consumo, crateras, combustível) foram lidos no código-fonte público
   do mod (github.com/micdoodle8/Galacticraft); o código daqui é próprio, e o modelo do foguete e as texturas foram

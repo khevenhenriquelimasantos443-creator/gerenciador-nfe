@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tablet_energia"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RCR",
+      "ECE",
+      "RCR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "C": {
+        "item": "minecraft:gold_ingot"
+      },
+      "E": {
+        "item": "cl:liga_enriquecida"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tablet_energia"
+    }
+  }
+}

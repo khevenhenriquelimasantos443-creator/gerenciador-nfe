@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.6.1: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.7.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators e Tools), BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,21 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.7.0 (os add-ons do Mekanism)
+
+Na época do Crash Landing (1.6.4) o Mekanism tinha dois add-ons, o **Generators** e o **Tools**; os dois entraram, com os números do código do Mekanism (100 J/t do Mekanism = 1 E a cada 5 s).
+- **Ósmio**: pedaços na peneira (cascalho, areia e poeira, como no Ex Aliquo); 4 pedaços = 1 lingote.
+- **Peças**: Circuito de Controle Básico (ósmio + redstone no Infusor Metalúrgico) e Avançado, Tablet de Energia, Núcleo Eletrolítico, Revestimento de Aço, Painel Solar, Lingote de Obsidiana Refinada (obsidiana + diamante + ósmio) e de Glowstone Refinada (glowstone + ósmio), no Infusor.
+- **Triturador**: plantas viram **Biocombustível** (sementes e cana 2; trigo, maçã, batata, cenoura e pão 4), lingotes viram pó, pedregulho vira cascalho e cascalho vira areia.
+- **Mekanism Generators**:
+  - Gerador a Calor: 150 J/t com combustível de fornalha (1 carvão = 12 E), mais 5 J/t por lava encostada;
+  - Gerador Solar (50 J/t) e Solar Avançado (300 J/t);
+  - Biogerador: 350 J/t; 1 biocombustível = 7 E;
+  - Gerador a Gás: hidrogênio; devolve o que a eletrólise gastou;
+  - Turbina Eólica: de 60 J/t em y 24 a 480 J/t em y 255; na Lua não venta.
+- **Mekanism Tools**: picareta, machado, pá, enxada, espada, **paxel** (picareta + machado + pá) e as 4 peças de armadura de **obsidiana refinada, lápis-lazúli, ósmio, bronze, glowstone refinada e aço**, com a durabilidade, a velocidade, o dano, a proteção e a encantabilidade do mod; paxels de madeira, pedra, ferro, ouro e diamante. As armaduras aparecem no corpo.
+- Capítulo **Mekanism: Geradores e Ferramentas** no Diário (9 missões).
 
 ## Novidades da 1.6.1 (a Lua de verdade e o final novo)
 

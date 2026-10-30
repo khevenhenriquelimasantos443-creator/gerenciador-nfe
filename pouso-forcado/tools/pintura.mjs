@@ -66,6 +66,9 @@ const FERR = {
   pa: (x, y) => elipse(x, y, 22, 10, 6, 7),
   machadinha: (x, y) => (x >= 16 && x <= 27 && y >= 4 && y <= 17 && (x - 16) + (y - 4) * 0.2 <= 11) && !(x > 24 && y > 14),
   espada_larga: (x, y) => diag(x, y, 13, 19, 27, 5, 2.6),
+  // 1.7.0 (Mekanism Tools): enxada e paxel (picareta + machado + pá numa cabeça só).
+  enxada: (x, y) => (x >= 15 && x <= 27 && y >= 4 && y <= 8) || (x >= 23 && x <= 27 && y >= 4 && y <= 12),
+  paxel: (x, y) => diag(x, y, 12, 5, 27, 20, 2.2) || elipse(x, y, 23, 9, 5, 5),
 };
 
 // ---------- ícones de item ----------
@@ -173,6 +176,11 @@ export const ICONE = {
     return mix(ouro, [255, 255, 255], 0.15 - (x + y) / 400);
   },
   peca: (forma, c) => silhueta(S[forma], c),
+  // Armaduras (1.7.0): silhuetas simples na cor do material.
+  capacete: (c) => silhueta((x, y) => (elipse(x, y, 16, 15, 10, 8) && y <= 15) || (x >= 6 && x <= 25 && y >= 15 && y <= 21 && !(x >= 10 && x <= 21 && y >= 17)), c),
+  peitoral: (c) => silhueta((x, y) => (x >= 5 && x <= 26 && y >= 6 && y <= 12 && !(x >= 12 && x <= 19 && y <= 8)) || (x >= 9 && x <= 22 && y >= 12 && y <= 26), c),
+  calcas: (c) => silhueta((x, y) => (x >= 8 && x <= 23 && y >= 5 && y <= 11) || (x >= 8 && x <= 14 && y >= 11 && y <= 27) || (x >= 17 && x <= 23 && y >= 11 && y <= 27), c),
+  botas: (c) => silhueta((x, y) => (x >= 5 && x <= 11 && y >= 12 && y <= 24) || (x >= 5 && x <= 14 && y >= 21 && y <= 25) || (x >= 18 && x <= 24 && y >= 12 && y <= 24) || (x >= 18 && x <= 27 && y >= 21 && y <= 25), c),
   ferramenta: (tipo, c) => (x, y) => {
     const cabeca = solido(FERR[tipo], c, x, y, 0.35);
     if (cabeca) return cabeca;

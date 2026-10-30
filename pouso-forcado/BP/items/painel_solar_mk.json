@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:painel_solar_mk",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_painel_solar_mk",
+      "minecraft:display_name": {
+        "value": "item.cl:painel_solar_mk.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

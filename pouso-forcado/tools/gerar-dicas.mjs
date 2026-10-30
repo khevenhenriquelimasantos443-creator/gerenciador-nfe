@@ -46,6 +46,8 @@ const MEIO = [
   ["Numa rede do AE, todos os itens ficam juntos e o terminal acha qualquer um.", "In an AE network all items are stored together and the terminal finds any of them."],
   ["Na Lua não há ar: vista a Máscara e o Equipamento de Oxigênio e leve tanques cheios. Um tanque leve dura quase 7 minutos.", "There is no air on the Moon: wear the Oxygen Mask and Oxygen Gear and carry full tanks. A light tank lasts almost 7 minutes."],
   ["O foguete pousa na Lua, mas só decola de uma plataforma 3×3: leve 9 plataformas, um carregador de combustível e energia.", "The rocket lands on the Moon, but only lifts off from a 3×3 pad: bring 9 pads, a fuel loader and power."],
+  ["O paxel do Mekanism é picareta, machado e pá numa ferramenta só.", "The Mekanism paxel is a pickaxe, an axe and a shovel in one tool."],
+  ["A Turbina Eólica do Mekanism rende mais quanto mais alto estiver.", "The Mekanism Wind Generator makes more power the higher it is."],
   ["Aqui o portal do Nether não acende: o martelo faz Cascalho do Nether com netherrack, e a peneira tira quartzo e até netherite.", "The Nether portal won't light here: a hammer turns netherrack into Nether Gravel, and sifting it gives quartz and even netherite."],
 ];
 const FIM = [

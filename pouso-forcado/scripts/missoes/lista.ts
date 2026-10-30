@@ -305,6 +305,22 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     ],
   },
   {
+    id: "mekanism_extra", // 1.7.0: Mekanism Generators e Mekanism Tools
+    icone: "cl:gerador_eolico",
+    requer: ["mekanism"],
+    missoes: [
+      { id: "mx_osmio", objetivo: { tipo: "ter", item: "cl:lingote_osmio", qtd: 8 }, recompensa: [{ item: "minecraft:redstone", quantidade: 12 }] },
+      { id: "mx_circuito", requer: ["mx_osmio"], objetivo: { tipo: "ter", item: "cl:circuito_controle_basico", qtd: 1 }, recompensa: [{ item: "cl:liga_enriquecida", quantidade: 4 }] },
+      { id: "mx_calor", requer: ["mx_osmio"], objetivo: { tipo: "colocar", bloco: "cl:gerador_calor", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "mx_bio", requer: ["mx_circuito"], objetivo: { tipo: "ter", item: "cl:biocombustivel", qtd: 16 }, recompensa: [{ item: "minecraft:wheat_seeds", quantidade: 16 }] },
+      { id: "mx_vento", requer: ["mx_circuito"], objetivo: { tipo: "colocar", bloco: "cl:gerador_eolico", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "mx_sol", requer: ["mx_circuito"], objetivo: { tipo: "colocar", bloco: "cl:gerador_solar_avancado", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "mx_paxel", requer: ["mx_osmio"], objetivo: { tipo: "ter", item: "cl:mk_paxel_osmio", qtd: 1 }, recompensa: [{ item: "cl:lingote_osmio", quantidade: 6 }] },
+      { id: "mx_armadura", objetivo: { tipo: "ter", item: "cl:mk_peitoral_aco", qtd: 1 }, recompensa: [{ item: "cl:lingote_aco", quantidade: 6 }] },
+      { id: "mx_obsidiana", requer: ["mx_paxel"], objetivo: { tipo: "ter", item: "cl:mk_espada_obsidiana", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
     id: "buildcraft", // 1.3.0: BuildCraft (petróleo, refinaria, motor e pedreira)
     icone: "cl:pedreira",
     requer: ["thermal"],

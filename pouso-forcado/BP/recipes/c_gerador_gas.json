@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_gas"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PEP",
+      "ICI",
+      "PEP"
+    ],
+    "key": {
+      "P": {
+        "item": "cl:lingote_osmio"
+      },
+      "E": {
+        "item": "cl:liga_enriquecida"
+      },
+      "I": {
+        "item": "cl:revestimento_aco"
+      },
+      "C": {
+        "item": "cl:nucleo_eletrolitico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_gas"
+    }
+  }
+}

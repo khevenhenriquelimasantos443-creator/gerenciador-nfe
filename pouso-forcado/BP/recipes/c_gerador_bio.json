@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_bio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RER",
+      "BCB",
+      "NEN"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "E": {
+        "item": "cl:liga_enriquecida"
+      },
+      "B": {
+        "item": "cl:biocombustivel"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "N": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_bio"
+    }
+  }
+}

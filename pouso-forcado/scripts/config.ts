@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.6.1";
+export const VERSAO = "1.7.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -286,6 +286,7 @@ const pedacos = (estagio: string): Achado[] => [
   { item: `${NS}:cobre_${estagio}`, chance: 1 / 18 },
   { item: `${NS}:estanho_${estagio}`, chance: 1 / 18 }, // Fase 16 (Ex Aliquo: estanho, como o cobre)
   { item: `${NS}:aluminio_${estagio}`, chance: 1 / 18 }, // 1.6.0 (Ex Aliquo: alumínio, para o Galacticraft)
+  { item: `${NS}:osmio_${estagio}`, chance: 1 / 24 }, // 1.7.0 (Ex Aliquo: ósmio, para o Mekanism)
 ];
 export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
   // 1.3.0: sem Nether, o que é do Nether sai do cascalho do Nether (netherrack martelado).
@@ -1199,6 +1200,8 @@ export const MODS: ReadonlyArray<{ mod: string; icones: ReadonlyArray<string> }>
   { mod: "BiblioCraft", icones: [`${NS}:estante`, `${NS}:lampada_amarela`] },
   { mod: "ChickenChunks", icones: [`${NS}:carregador_chunks`] },
   { mod: "OpenBlocks", icones: [`${NS}:elevador`] },
+  { mod: "Mekanism Generators", icones: [`${NS}:gerador_eolico`, `${NS}:gerador_calor`] },
+  { mod: "Mekanism Tools", icones: [`${NS}:mk_paxel_osmio`, `${NS}:mk_picareta_osmio`] },
   { mod: "Galacticraft", icones: [`${NS}:foguete_t1`, `${NS}:bancada_nasa`] },
 ];
 

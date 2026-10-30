@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_eolico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " O ",
+      "OAO",
+      "ECE"
+    ],
+    "key": {
+      "O": {
+        "item": "cl:lingote_osmio"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_eolico"
+    }
+  }
+}

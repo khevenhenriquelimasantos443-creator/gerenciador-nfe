@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk_paxel_aco"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AFP",
+      " T ",
+      " T "
+    ],
+    "key": {
+      "A": {
+        "item": "cl:mk_machado_aco"
+      },
+      "F": {
+        "item": "cl:mk_picareta_aco"
+      },
+      "P": {
+        "item": "cl:mk_pa_aco"
+      },
+      "T": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:mk_paxel_aco"
+    }
+  }
+}

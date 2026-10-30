@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_osmio_de_po"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:osmio_po"
+      },
+      {
+        "item": "cl:osmio_po"
+      },
+      {
+        "item": "cl:osmio_po"
+      },
+      {
+        "item": "cl:osmio_po"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:lingote_osmio"
+    }
+  }
+}

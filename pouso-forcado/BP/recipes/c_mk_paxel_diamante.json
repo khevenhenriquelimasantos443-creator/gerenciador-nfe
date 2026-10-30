@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk_paxel_diamante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AFP",
+      " T ",
+      " T "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:diamond_axe"
+      },
+      "F": {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      "P": {
+        "item": "minecraft:diamond_shovel"
+      },
+      "T": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:mk_paxel_diamante"
+    }
+  }
+}

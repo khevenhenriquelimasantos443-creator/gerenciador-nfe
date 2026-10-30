@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_solar_mk"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "AIA",
+      "PEP"
+    ],
+    "key": {
+      "S": {
+        "item": "cl:painel_solar_mk"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "item": "cl:po_osmio"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_solar_mk"
+    }
+  }
+}

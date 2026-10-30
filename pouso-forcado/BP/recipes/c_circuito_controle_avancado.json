@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_circuito_controle_avancado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ECE"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:circuito_controle_avancado"
+    }
+  }
+}

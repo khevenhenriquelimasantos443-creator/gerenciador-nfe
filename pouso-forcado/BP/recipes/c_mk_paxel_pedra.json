@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk_paxel_pedra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AFP",
+      " T ",
+      " T "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:stone_axe"
+      },
+      "F": {
+        "item": "minecraft:stone_pickaxe"
+      },
+      "P": {
+        "item": "minecraft:stone_shovel"
+      },
+      "T": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:mk_paxel_pedra"
+    }
+  }
+}

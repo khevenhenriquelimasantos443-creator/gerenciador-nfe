@@ -220,6 +220,13 @@ const APELIDOS = {
   poisonous_potato: { icone: "textures/items/potato_poisonous" },
   white_wool: { lang: "tile.wool.white.name", icone: "textures/blocks/wool_colored_white" },
   lime_wool: { lang: "tile.wool.lime.name", icone: "textures/blocks/wool_colored_lime" },
+  golden_axe: { icone: "textures/items/gold_axe" },
+  golden_pickaxe: { icone: "textures/items/gold_pickaxe" },
+  golden_shovel: { icone: "textures/items/gold_shovel" },
+  wooden_axe: { icone: "textures/items/wood_axe" },
+  wooden_pickaxe: { icone: "textures/items/wood_pickaxe" },
+  wooden_shovel: { icone: "textures/items/wood_shovel" },
+  totem_of_undying: { lang: "item.totem.name", icone: "textures/items/totem" },
   orange_wool: { lang: "tile.wool.orange.name", icone: "textures/blocks/wool_colored_orange" },
   red_wool: { lang: "tile.wool.red.name", icone: "textures/blocks/wool_colored_red" },
 };

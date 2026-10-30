@@ -197,6 +197,79 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:mk_paxel_osmio",
+              "name": "cl:itemGroup.name.equipment_mekanism_tools"
+            },
+            "items": [
+              "cl:mk_botas_aco",
+              "cl:mk_botas_bronze",
+              "cl:mk_botas_glowstone",
+              "cl:mk_botas_lapis",
+              "cl:mk_botas_obsidiana",
+              "cl:mk_botas_osmio",
+              "cl:mk_calcas_aco",
+              "cl:mk_calcas_bronze",
+              "cl:mk_calcas_glowstone",
+              "cl:mk_calcas_lapis",
+              "cl:mk_calcas_obsidiana",
+              "cl:mk_calcas_osmio",
+              "cl:mk_capacete_aco",
+              "cl:mk_capacete_bronze",
+              "cl:mk_capacete_glowstone",
+              "cl:mk_capacete_lapis",
+              "cl:mk_capacete_obsidiana",
+              "cl:mk_capacete_osmio",
+              "cl:mk_enxada_aco",
+              "cl:mk_enxada_bronze",
+              "cl:mk_enxada_glowstone",
+              "cl:mk_enxada_lapis",
+              "cl:mk_enxada_obsidiana",
+              "cl:mk_enxada_osmio",
+              "cl:mk_espada_aco",
+              "cl:mk_espada_bronze",
+              "cl:mk_espada_glowstone",
+              "cl:mk_espada_lapis",
+              "cl:mk_espada_obsidiana",
+              "cl:mk_espada_osmio",
+              "cl:mk_machado_aco",
+              "cl:mk_machado_bronze",
+              "cl:mk_machado_glowstone",
+              "cl:mk_machado_lapis",
+              "cl:mk_machado_obsidiana",
+              "cl:mk_machado_osmio",
+              "cl:mk_pa_aco",
+              "cl:mk_pa_bronze",
+              "cl:mk_pa_glowstone",
+              "cl:mk_pa_lapis",
+              "cl:mk_pa_obsidiana",
+              "cl:mk_pa_osmio",
+              "cl:mk_paxel_aco",
+              "cl:mk_paxel_bronze",
+              "cl:mk_paxel_diamante",
+              "cl:mk_paxel_ferro",
+              "cl:mk_paxel_glowstone",
+              "cl:mk_paxel_lapis",
+              "cl:mk_paxel_madeira",
+              "cl:mk_paxel_obsidiana",
+              "cl:mk_paxel_osmio",
+              "cl:mk_paxel_ouro",
+              "cl:mk_paxel_pedra",
+              "cl:mk_peitoral_aco",
+              "cl:mk_peitoral_bronze",
+              "cl:mk_peitoral_glowstone",
+              "cl:mk_peitoral_lapis",
+              "cl:mk_peitoral_obsidiana",
+              "cl:mk_peitoral_osmio",
+              "cl:mk_picareta_aco",
+              "cl:mk_picareta_bronze",
+              "cl:mk_picareta_glowstone",
+              "cl:mk_picareta_lapis",
+              "cl:mk_picareta_obsidiana",
+              "cl:mk_picareta_osmio"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:foguete_t1",
               "name": "cl:itemGroup.name.equipment_galacticraft"
             },
@@ -283,6 +356,9 @@
               "cl:ferro_po",
               "cl:ferro_quebrado",
               "cl:ferro_triturado",
+              "cl:osmio_po",
+              "cl:osmio_quebrado",
+              "cl:osmio_triturado",
               "cl:ouro_po",
               "cl:ouro_quebrado",
               "cl:ouro_triturado",
@@ -523,16 +599,25 @@
             },
             "items": [
               "cl:balde_salmoura",
+              "cl:biocombustivel",
               "cl:cilindro_acido",
               "cl:cilindro_cloro",
               "cl:cilindro_hidrogenio",
               "cl:cilindro_oxigenio",
               "cl:cilindro_vazio",
+              "cl:circuito_controle_avancado",
+              "cl:circuito_controle_basico",
               "cl:jetpack",
               "cl:liga_atomica",
               "cl:liga_enriquecida",
               "cl:liga_reforcada",
+              "cl:lingote_glowstone_refinado",
+              "cl:lingote_obsidiana_refinada",
+              "cl:lingote_osmio",
+              "cl:nucleo_eletrolitico",
               "cl:po_litio",
+              "cl:po_osmio",
+              "cl:tablet_energia",
               "cl:camara_injecao",
               "cl:camara_purificacao",
               "cl:cubo_energia_avancado",
@@ -542,7 +627,9 @@
               "cl:evaporador",
               "cl:infusor_metalurgico",
               "cl:infusor_quimico",
-              "cl:separador_eletrolitico"
+              "cl:revestimento_aco",
+              "cl:separador_eletrolitico",
+              "cl:triturador_mk"
             ]
           },
           {
@@ -749,6 +836,21 @@
             "items": [
               "cl:asa_delta",
               "cl:elevador"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:gerador_eolico",
+              "name": "cl:itemGroup.name.items_mekanism_generators"
+            },
+            "items": [
+              "cl:painel_solar_mk",
+              "cl:gerador_bio",
+              "cl:gerador_calor",
+              "cl:gerador_eolico",
+              "cl:gerador_gas",
+              "cl:gerador_solar_avancado",
+              "cl:gerador_solar_mk"
             ]
           },
           {
