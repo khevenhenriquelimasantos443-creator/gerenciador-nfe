@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/baixar", "destination": "https://github.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/raw/claude/dazzling-bell-twympv/pouso-forcado/dist/pouso-forcado.mcaddon", "permanent": false },
+    { "source": "/mundo", "destination": "https://github.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/raw/claude/dazzling-bell-twympv/pouso-forcado/dist/pouso-forcado.mcworld", "permanent": false }
+  ]
+}

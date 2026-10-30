@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wiki do Pouso Forçado</title>
+<meta name="description" content="Guia e download do Pouso Forçado, modpack de sobrevivência no deserto para Minecraft Bedrock.">
+<link rel="icon" href="https://raw.githubusercontent.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/claude/dazzling-bell-twympv/pouso-forcado/RP/textures/items/cl/arte/diario_bordo.png">
+<style>html,body{margin:0;height:100%;background:#13171b;color:#ebe6da;font:16px/1.5 system-ui,sans-serif}main{display:grid;place-items:center;height:100%;text-align:center;padding:0 16px}a{color:#4fd8e4}</style>
+</head>
+<body>
+<main id="espera"><p>Carregando a wiki…</p></main>
+<script>
+// A wiki fica no GitHub (docs/wiki/site/index.html, feita por tools/gerar-wiki.py): este arquivo só a busca,
+// assim a Vercel mostra sempre a versão mais nova sem publicar de novo.
+const PAGINA = "https://raw.githubusercontent.com/khevenhenriquelimasantos443-creator/gerenciador-nfe/claude/dazzling-bell-twympv/pouso-forcado/docs/wiki/site/index.html";
+fetch(PAGINA, { cache: "no-cache" })
+  .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.text(); })
+  .then((texto) => {
+    document.open();
+    document.write(texto);
+    document.close();
+    if (location.hash) setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView(), 100);
+  })
+  .catch(() => {
+    document.getElementById("espera").innerHTML = '<p>Não deu para carregar a wiki agora. Tente de novo em instantes.</p>';
+  });
+</script>
+</body>
+</html>

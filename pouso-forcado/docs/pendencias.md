@@ -10,7 +10,7 @@ Atualizado na 1.5.2.
 
 ## Feito por último
 
-- Wiki do modpack: `docs/wiki/wiki.html` (fonte em `docs/wiki/wiki.fonte.html`, montada por `tools/gerar-wiki.py`). Atualizar a cada versão com mecânica nova.
+- Wiki do modpack: https://pouso-forcado.vercel.app (fonte em `docs/wiki/wiki.fonte.html`, montada por `tools/gerar-wiki.py`). Atualizar a cada versão com mecânica nova.
 
 ## Decidido
 
