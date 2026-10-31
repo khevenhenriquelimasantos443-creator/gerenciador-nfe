@@ -254,27 +254,35 @@ function corpoReceita(r: Receita, k: number, n: number): RawMessage {
 
 async function verReceitas(jogador: Player, lista: Receita[], titulo: RawMessage, k = 0): Promise<void> {
   const r = lista[k];
-  const ids = [...new Set([...(r.maquinaId ? [r.maquinaId] : []), ...r.entradas.map((e) => real(e.item)), ...r.saidas.map((s) => s.item)])];
-  const acoes: Array<() => Promise<void>> = [];
+  // O que sai vem primeiro, com o ícone grande no botão (o corpo do formulário só leva texto).
+  const produtos = [...new Set(r.saidas.map((s) => s.item))];
+  const ids = [...new Set([...(r.maquinaId ? [r.maquinaId] : []), ...r.entradas.map((e) => real(e.item))])].filter((id) => !produtos.includes(id));
+  const acoes: Array<{ fn: () => Promise<void>; volta: boolean }> = [];
   const form = new ActionFormData().title(titulo).body(corpoReceita(r, k, lista.length));
+  for (const id of produtos) {
+    const l = r.saidas.find((s) => s.item === id)!;
+    form.button({ rawtext: [{ text: "§a" }, { translate: "cl.catalogo.sai" }, { text: "§r " }, textoLinha(l)] }, iconeDe(id));
+    acoes.push({ fn: () => verItem(jogador, id), volta: true });
+  }
   if (k + 1 < lista.length) {
     form.button({ translate: "cl.catalogo.proxima" });
-    acoes.push(() => verReceitas(jogador, lista, titulo, k + 1));
+    acoes.push({ fn: () => verReceitas(jogador, lista, titulo, k + 1), volta: false });
   }
   if (k > 0) {
     form.button({ translate: "cl.catalogo.anterior" });
-    acoes.push(() => verReceitas(jogador, lista, titulo, k - 1));
+    acoes.push({ fn: () => verReceitas(jogador, lista, titulo, k - 1), volta: false });
   }
   for (const id of ids) {
     form.button(nomeDe(id), iconeDe(id));
-    acoes.push(() => verItem(jogador, id));
+    acoes.push({ fn: () => verItem(jogador, id), volta: true });
   }
   form.button({ translate: "cl.diario.voltar" });
   const resp = await form.show(jogador);
   if (resp.selection === undefined || resp.selection >= acoes.length) return;
-  await acoes[resp.selection]();
-  // Voltar de um ingrediente ou de outra página traz de volta a esta receita.
-  if (resp.selection >= (k + 1 < lista.length ? 1 : 0) + (k > 0 ? 1 : 0)) return verReceitas(jogador, lista, titulo, k);
+  const a = acoes[resp.selection];
+  await a.fn();
+  // Voltar de um ingrediente ou do produto traz de volta a esta receita.
+  if (a.volta) return verReceitas(jogador, lista, titulo, k);
 }
 
 export async function verItem(jogador: Player, id: string): Promise<void> {

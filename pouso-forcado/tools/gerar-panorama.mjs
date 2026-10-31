@@ -4,7 +4,8 @@
 // tarde, desenhado bloco a bloco com as texturas do próprio jogo (um traçador de raios em blocos, com sombra do
 // sol, luz do céu, nuvens e névoa de calor). Cada lado do cubo mostra um lugar do jogo; como o panorama gira
 // devagar, eles passam um depois do outro, como slides: o avião caído (a grade final de tools/gerar-aviao.mjs),
-// os destroços de outra nave, o templo soterrado (as estruturas de BP/structures/cl/) e uma cidade abandonada
+// os destroços de outra nave, o templo soterrado (as estruturas de BP/structures/cl/), a pirâmide do YUNG's
+// (1.14.1) e uma cidade abandonada
 // com a torre de rádio (montada como em scripts/mundo/cidade.ts).
 // Roda à mão (uns 2 minutos) e o resultado fica no git. Precisa das texturas do jogo: a pasta resource_pack do
 // github.com/Mojang/bedrock-samples.
@@ -98,6 +99,8 @@ const DEF = {
   "minecraft:orange_terracotta": "hardened_clay_stained_orange",
   "minecraft:white_terracotta": "hardened_clay_stained_white",
   "minecraft:terracotta": "hardened_clay",
+  "minecraft:yellow_terracotta": "hardened_clay_stained_yellow",
+  "minecraft:blue_terracotta": "hardened_clay_stained_blue",
   "minecraft:netherrack": "netherrack",
   "minecraft:iron_block": "iron_block",
   "minecraft:cactus": { lado: "cactus_side", topo: "cactus_top", baixo: "cactus_bottom" },
@@ -152,7 +155,7 @@ const longe = (dir, dist) => [Math.round(CAMERA[0] + dir[0] * dist), Math.round(
 
 // Tudo o que é construção fica numa grade só (0 = nada, segue o terreno; 1 = ar que tapa o terreno).
 // Coordenadas: h = 0 é o bloco de cima do chão (o chão do mundo plano é y 44).
-const O = { x0: -128, x1: 200, y0: -8, y1: 72, z0: -120, z1: 136 };
+const O = { x0: -128, x1: 200, y0: -8, y1: 72, z0: -165, z1: 136 };
 const OY = O.y1 - O.y0 + 1, OZ = O.z1 - O.z0 + 1;
 const obras = new Uint8Array((O.x1 - O.x0 + 1) * OY * OZ);
 const dentro = (x, y, z) => x >= O.x0 && x <= O.x1 && y >= O.y0 && y <= O.y1 && z >= O.z0 && z <= O.z1;
@@ -212,6 +215,32 @@ function porEstrutura(nome, x0, h0, z0) {
 {
   const [x, z] = longe(menos(F), 19);
   porEstrutura("templo_soterrado", x - 7, -2, z - 7);
+}
+// Pirâmide do YUNG's (1.14.0): os 4 pedaços da variante 0 (tools/gerar-templo-yung.py), ao fundo, entre o templo
+// soterrado e a cidade, com a entrada virada para a câmera. Escadas, lajes e muros de arenito entram
+// como arenito; o que fica lá dentro (redstone, baús...) não aparece e fica de fora.
+{
+  const dados = readFileSync(join(RAIZ, "scripts/mundo/templo_yung_dados.ts"), "utf8");
+  const v = JSON.parse(dados.slice(dados.indexOf("{"), dados.lastIndexOf("}") + 1)).variantes[0];
+  const dir = norm([-F[0] - D[0] * 0.7, 0, -F[2] - D[2] * 0.7]);
+  const [cx, cz] = longe(dir, 75);
+  const x0 = cx - Math.floor(v.tam[0] / 2), z0 = cz - Math.floor(v.tam[2] / 2), h0 = -(14 + v.ancora[1]) + 1;
+  const mapa = (n) => {
+    if (n === "minecraft:air" || DEF[n]) return n;
+    if (!n.includes("sandstone")) return null;
+    return n.includes("smooth") ? "minecraft:smooth_sandstone" : n.includes("cut") ? "minecraft:cut_sandstone" : "minecraft:sandstone";
+  };
+  for (const [i, k] of v.tiles) {
+    const r = lerNbt(readFileSync(join(RAIZ, "BP/structures/cl", `templo_yung_0_${i}_${k}.mcstructure`)));
+    const [X, Y, Z] = r.size, paleta = r.structure.palette.default.block_palette.map((b) => mapa(b.name)), idx = r.structure.block_indices[0];
+    for (let x = 0; x < X; x++)
+      for (let y = 0; y < Y; y++)
+        for (let z = 0; z < Z; z++) {
+          const b = idx[(x * Y + y) * Z + z];
+          if (b >= 0 && paleta[b]) por(x0 + i * 64 + x, h0 + y, z0 + k * 64 + z, paleta[b]);
+        }
+  }
+  area(x0, z0, x0 + v.tam[0] - 1, z0 + v.tam[2] - 1);
 }
 // Destroços de outra nave (deslocY -2), embaixo do sol.
 {

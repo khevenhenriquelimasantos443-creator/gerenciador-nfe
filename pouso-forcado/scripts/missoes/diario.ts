@@ -179,13 +179,18 @@ async function painel(jogador: Player, e: Estado, tela: Tela, corpo: RawMessage,
     const cor = !liberado ? "§7" : completo ? "§a" : "§f";
     botoes.push({ marca, texto: { rawtext: [{ text: cor }, { translate: `cl.capitulo.${c.id}.curto` }] }, icone: iconeDe(c.icone), acao: () => ({ tipo: "capitulo", c }) });
   }
-  botoes.push(...direita, ...acoes);
+  // O texto da tela vai como uma linha de texto logo abaixo do título da coluna da direita: o corpo do formulário
+  // (#form_text) não aparece dentro da lista de botões no celular.
+  const k = direita.findIndex((b) => b.marca === M.cabeca);
+  const temCorpo = !!(corpo.rawtext?.length || corpo.translate || corpo.text);
+  const coluna = temCorpo ? [...direita.slice(0, k + 1), { marca: M.aviso, texto: corpo }, ...direita.slice(k + 1)] : direita;
+  botoes.push(...coluna, ...acoes);
   for (const s of SISTEMAS_NAVE) {
     botoes.push({ marca: sistemas.has(s.id) ? M.sistemaOk : M.sistemaQuebrado, texto: { text: "" }, icone: `textures/ui/cl/painel/sistema_${s.id}` });
   }
   botoes.push({ marca: M.reparados, texto: { translate: "cl.painel.reparados", with: [String(n)] } });
 
-  const form = new ActionFormData().title(marcado(M.painel, { translate: "cl.diario.titulo" })).body(corpo);
+  const form = new ActionFormData().title(marcado(M.painel, { translate: "cl.diario.titulo" }));
   for (const b of botoes) form.button(marcado(b.marca, b.texto), b.icone);
   const r = await form.show(jogador);
   if (r.selection === undefined) return null;

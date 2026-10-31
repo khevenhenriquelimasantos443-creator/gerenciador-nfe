@@ -1364,37 +1364,6 @@
                       ],
                       "font_scale_factor": 1.5
                     }
-                  },
-                  {
-                    "espaco": {
-                      "type": "panel",
-                      "size": [
-                        "100%",
-                        4
-                      ]
-                    }
-                  },
-                  {
-                    "corpo": {
-                      "type": "label",
-                      "text": "#form_text",
-                      "color": [
-                        0.88,
-                        0.86,
-                        0.8
-                      ],
-                      "size": [
-                        "100%",
-                        "default"
-                      ],
-                      "shadow": true,
-                      "bindings": [
-                        {
-                          "binding_name": "#form_text",
-                          "binding_type": "global"
-                        }
-                      ]
-                    }
                   }
                 ]
               }
