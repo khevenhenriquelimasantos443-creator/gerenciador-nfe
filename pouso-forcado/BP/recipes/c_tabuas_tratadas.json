@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tabuas_tratadas"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "www",
+      "wbw",
+      "www"
+    ],
+    "key": {
+      "w": {
+        "tag": "minecraft:planks"
+      },
+      "b": {
+        "item": "cl:balde_creosoto"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": [
+      {
+        "item": "cl:tabuas_tratadas",
+        "count": 8
+      },
+      {
+        "item": "minecraft:bucket"
+      }
+    ]
+  }
+}

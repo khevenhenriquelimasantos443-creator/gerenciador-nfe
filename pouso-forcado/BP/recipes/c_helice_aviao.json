@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_helice_aviao"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "II ",
+      " I ",
+      " II"
+    ],
+    "key": {
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:helice_aviao"
+    }
+  }
+}

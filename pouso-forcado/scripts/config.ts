@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.12.0";
+export const VERSAO = "1.13.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -312,6 +312,7 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
     { item: "minecraft:short_grass", chance: 1 / 15 },
     { item: `${NS}:semente_cebola`, chance: 1 / 32 },
     { item: `${NS}:semente_alho`, chance: 1 / 32 },
+    { item: `${NS}:semente_canhamo`, chance: 1 / 32 }, // 1.13.0: cânhamo do Immersive Engineering
     { item: `${NS}:semente_feijao`, chance: 1 / 32 },
     { item: "minecraft:sugar_cane", chance: 1 / 32 },
     { item: `${NS}:semente_pimenta`, chance: 1 / 64 },
@@ -1207,6 +1208,8 @@ export const MODS: ReadonlyArray<{ mod: string; icones: ReadonlyArray<string> }>
   { mod: "Ender IO", icones: [`${NS}:fundidora_ligas`, `${NS}:aco_negro`] },
   { mod: "Create", icones: [`${NS}:engrenagem`, `${NS}:manivela`] },
   { mod: "Farmer's Delight", icones: [`${NS}:panela_cozinha`, `${NS}:faca_ferro`] },
+  { mod: "Immersive Engineering", icones: [`${NS}:forno_coque`, `${NS}:martelo_engenheiro`] },
+  { mod: "Immersive Aircraft", icones: [`${NS}:biplano`, `${NS}:dirigivel`] },
   { mod: "Quark", icones: [`${NS}:jaspe_tijolos`, `${NS}:picarango`] },
   { mod: "Waystones", icones: [`${NS}:pedra_caminho`, `${NS}:pedra_viagem`] },
   { mod: "Backpacks", icones: [`${NS}:mochila`] },

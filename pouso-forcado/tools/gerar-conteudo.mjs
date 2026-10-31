@@ -37,7 +37,9 @@ const nomes = { pt: [], en: [] };
 const maquinas = []; // blocos do tipo "maquina" (os condutos de energia ligam neles, 1.11.0)
 const origem = {};
 const ingrediente = (i) => (i.startsWith("#") ? { tag: i.slice(1) } : { item: i });
-const resultado = (r) => (r.qtd ? { item: r.resultado, count: r.qtd } : { item: r.resultado });
+const resultado1 = (r) => (r.qtd ? { item: r.resultado, count: r.qtd } : { item: r.resultado });
+// r.devolve: itens que voltam junto (o balde vazio do creosoto, 1.13.0); só a receita com forma aceita mais de um resultado.
+const resultado = (r) => (r.devolve ? [resultado1(r), ...r.devolve.map((item) => ({ item }))] : resultado1(r));
 
 function receita(r) {
   const desc = { identifier: `cl:c_${r.id}` };

@@ -2930,10 +2930,61 @@
       "textures": "textures/blocks/cl/arte/lanterna_papel_baixo"
     },
     "clc_bloco_placa_ferro": {
-      "textures": "textures/blocks/cl/c/bloco_placa_ferro"
+      "textures": "textures/blocks/cl/arte/bloco_placa_ferro"
     },
     "clc_bloco_placa_ferro_enferrujada": {
-      "textures": "textures/blocks/cl/c/bloco_placa_ferro_enferrujada"
+      "textures": "textures/blocks/cl/arte/bloco_placa_ferro_enferrujada"
+    },
+    "clhc_canhamo_0": {
+      "textures": "textures/blocks/cl/hc/canhamo_0"
+    },
+    "clhc_canhamo_1": {
+      "textures": "textures/blocks/cl/hc/canhamo_1"
+    },
+    "clhc_canhamo_2": {
+      "textures": "textures/blocks/cl/hc/canhamo_2"
+    },
+    "clc_tijolo_coque": {
+      "textures": "textures/blocks/cl/c/tijolo_coque"
+    },
+    "clc_tijolo_alto_forno": {
+      "textures": "textures/blocks/cl/c/tijolo_alto_forno"
+    },
+    "clc_bloco_coque": {
+      "textures": "textures/blocks/cl/c/bloco_coque"
+    },
+    "clc_tabuas_tratadas": {
+      "textures": "textures/blocks/cl/c/tabuas_tratadas"
+    },
+    "clc_forno_coque": {
+      "textures": "textures/blocks/cl/c/forno_coque"
+    },
+    "clc_forno_coque_north": {
+      "textures": "textures/blocks/cl/c/forno_coque_north"
+    },
+    "clc_alto_forno": {
+      "textures": "textures/blocks/cl/c/alto_forno"
+    },
+    "clc_alto_forno_north": {
+      "textures": "textures/blocks/cl/c/alto_forno_north"
+    },
+    "clc_dinamo_cinetico_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_cinetico_frente"
+    },
+    "clc_dinamo_cinetico_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_cinetico_lado"
+    },
+    "clc_dinamo_cinetico_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_cinetico_topo"
+    },
+    "clc_dinamo_cinetico_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_cinetico_baixo"
+    },
+    "clc_moinho_vento": {
+      "textures": "textures/blocks/cl/c/moinho_vento"
+    },
+    "clc_roda_hidraulica": {
+      "textures": "textures/blocks/cl/c/roda_hidraulica"
     }
   }
 }

@@ -1,0 +1,29 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "animation.cl.dirigivel.inclinar": {
+   "loop": true,
+   "bones": {
+    "corpo": {
+     "rotation": [
+      "q.property('cl:arfagem')",
+      0,
+      "q.property('cl:rolagem')"
+     ]
+    }
+   }
+  },
+  "animation.cl.dirigivel.girar": {
+   "loop": true,
+   "bones": {
+    "propeller": {
+     "rotation": [
+      0,
+      0,
+      "variable.giro"
+     ]
+    }
+   }
+  }
+ }
+}

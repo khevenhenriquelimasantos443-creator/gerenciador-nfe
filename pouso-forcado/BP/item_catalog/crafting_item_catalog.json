@@ -1139,6 +1139,53 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:forno_coque",
+              "name": "cl:itemGroup.name.items_immersive_engineering"
+            },
+            "items": [
+              "cl:balde_creosoto",
+              "cl:bobina_bt",
+              "cl:bobina_fio_cobre",
+              "cl:componente_ferro",
+              "cl:coque",
+              "cl:escoria",
+              "cl:fibra_canhamo",
+              "cl:graveto_tratado",
+              "cl:martelo_engenheiro",
+              "cl:pa_moinho",
+              "cl:segmento_roda",
+              "cl:tecido_canhamo",
+              "cl:vela_lona",
+              "cl:alto_forno",
+              "cl:bloco_coque",
+              "cl:dinamo_cinetico",
+              "cl:forno_coque",
+              "cl:moinho_vento",
+              "cl:roda_hidraulica",
+              "cl:tabuas_tratadas",
+              "cl:tijolo_alto_forno",
+              "cl:tijolo_coque"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:biplano",
+              "name": "cl:itemGroup.name.items_immersive_aircraft"
+            },
+            "items": [
+              "cl:biplano",
+              "cl:caldeira",
+              "cl:casco_aeronave",
+              "cl:dirigivel",
+              "cl:girocoptero",
+              "cl:helice_aviao",
+              "cl:motor_aeronave",
+              "cl:quadricoptero",
+              "cl:vela_aeronave"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:jaspe_tijolos",
               "name": "cl:itemGroup.name.items_quark"
             },
@@ -1349,6 +1396,7 @@
               "cl:semente_alho",
               "cl:semente_amendoim",
               "cl:semente_arroz",
+              "cl:semente_canhamo",
               "cl:semente_cebola",
               "cl:semente_feijao",
               "cl:semente_fruta_cacto",

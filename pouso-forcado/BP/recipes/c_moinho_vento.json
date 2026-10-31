@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_moinho_vento"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ppp",
+      "pip",
+      "ppp"
+    ],
+    "key": {
+      "p": {
+        "item": "cl:pa_moinho"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:moinho_vento"
+    }
+  }
+}

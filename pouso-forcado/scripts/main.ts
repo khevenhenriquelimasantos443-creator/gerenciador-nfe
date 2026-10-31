@@ -75,6 +75,8 @@ import { registrarMekanismAdditions, tntObsidiana } from "./maquinas/mekanism_ad
 import { condutoItem, registrarCondutos } from "./maquinas/condutos.js";
 import { fogao, panela, registrarFarmers, tabua } from "./maquinas/farmers.js";
 import { registrarQuark } from "./utilidades/quark.js";
+import { altoForno, dinamoCinetico, fornoCoque, moinhoVento, registrarImmersive, rodaHidraulica } from "./maquinas/immersive.js";
+import { registrarAeronaves } from "./utilidades/aeronaves.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
@@ -176,6 +178,8 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:conduto_item", comPerfil("cl:conduto_item", condutoItem));
   blockComponentRegistry.registerCustomComponent("cl:tnt_obsidiana", tntObsidiana);
   blockComponentRegistry.registerCustomComponent("cl:panela_cozinha", comPerfil("cl:panela_cozinha", panela));
+  for (const [id, c] of [["cl:forno_coque", fornoCoque], ["cl:alto_forno", altoForno], ["cl:moinho_vento", moinhoVento], ["cl:roda_hidraulica", rodaHidraulica], ["cl:dinamo_cinetico", dinamoCinetico]] as const)
+    blockComponentRegistry.registerCustomComponent(id, comPerfil(id, c));
   blockComponentRegistry.registerCustomComponent("cl:fogao", comPerfil("cl:fogao", fogao));
   blockComponentRegistry.registerCustomComponent("cl:tabua_cortar", tabua);
   blockComponentRegistry.registerCustomComponent("cl:lixeira", comPerfil("cl:lixeira", lixeira));
@@ -246,3 +250,5 @@ registrarMekanismAdditions();
 registrarCondutos();
 registrarFarmers();
 registrarQuark();
+registrarImmersive();
+registrarAeronaves();

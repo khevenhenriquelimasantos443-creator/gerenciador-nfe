@@ -5,7 +5,7 @@ Projeto próprio, inspirado no modpack **Crash Landing** (Minecraft 1.6.4) e nos
 seguem os originais; o código é todo próprio; texturas de terceiros só quando a licença deixa (ver `CREDITOS.md`).
 A pesquisa dos mods e o plano das fases estão em `docs/pesquisa-mods.md`.
 
-**Versão 1.12.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators, Tools e Additions), Ender IO, Create, Farmer's Delight, Quark, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
+**Versão 1.13.0: todas as fases prontas** (0 a 23, com a 10, o final, feita por último), mais Mekanism (com os add-ons Generators, Tools e Additions), Ender IO, Create, Farmer's Delight, Quark, Immersive Engineering, Immersive Aircraft, Waystones, Mochila, Robô Minerador (ComputerCraft), Extra Utilities, redemoinhos do Weather2, BuildCraft, OpenBlocks e o Galacticraft até a Lua (com o final novo: o Núcleo de Salto). O plano das próximas versões está em `docs/proposta-galacticraft.md`.
 
 ## Fases até o fim
 
@@ -151,6 +151,12 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
+
+## Novidades da 1.13.0 (Immersive Engineering e Immersive Aircraft)
+
+- **Immersive Engineering** (números do código do IE 1.20.1, arte própria): **Martelo de Engenheiro**; **Forno de Coque** (cubo 3×3×3 de Tijolos de Coque: bata com o Martelo no tijolo do meio de um lado; toque com carvão, bloco de carvão ou toras para pôr, de mão vazia para pegar o coque, com balde para tirar **creosoto**: carvão → coque em 1.800 ticks e 500 mB); **Tábuas Tratadas** (8 tábuas + balde de creosoto; o balde volta) e gravetos tratados; **Alto-Forno** (cubo de Tijolos de Alto-Forno: ferro → aço + escória em 1.200 ticks, queimando coque ou carvão vegetal); **cânhamo** (semente na peneira; fibra → tecido → velas); **Dínamo Cinético** com **Moinho de Vento** (disco de 9 blocos livre; ~12 RF/t de céu limpo, até ~36 com 8 velas, mais com chuva e tempestade) ou **Roda d'Água** (água corrente em cima ou caindo de um lado; até 3 rodas em fila). As pás giram de verdade.
+- **Immersive Aircraft** (modelos, texturas e ícones originais; física de voo do código do mod): **Biplano** (pule para acelerar; o joystick inclina e vira; no chão, para trás freia), **Dirigível** e **Quadricóptero** (pule para subir, olhe bem para baixo para descer), **Girocóptero** (sem combustível: ande para frente para dar corda até 100%). Toque a aeronave com carvão, coque ou outro combustível para encher a caldeira; bata 3 vezes para recolher.
+- Capítulos **Immersive Engineering** e **Immersive Aircraft** no Diário.
 
 ## Novidades da 1.12.0 (Farmer's Delight e Quark)
 

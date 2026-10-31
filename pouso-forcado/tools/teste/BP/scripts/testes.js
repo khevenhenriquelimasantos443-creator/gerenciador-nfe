@@ -819,3 +819,60 @@ world.afterEvents.playerBreakBlock.subscribe((ev) => {
   if (ev.player.name === "Robo") log(`quebrou: ${ev.brokenBlockPermutation.type.id} modo=${ev.player.getGameMode()}`);
 });
 system.run(() => log("pacote de testes carregado"));
+
+// 1.13.0: Forno de Coque montado com o Martelo, Moinho de Vento num Dínamo e as aeronaves (o voo é pelo scriptevent,
+// porque o jogador simulado não monta).
+teste("immersive", 2200, (t) => {
+  let giroPas = 0;
+  for (let x = 1; x <= 3; x++) for (let y = 1; y <= 3; y++) for (let z = 1; z <= 3; z++) t.setBlockType("cl:tijolo_coque", { x, y, z });
+  t.setBlockType("cl:dinamo_cinetico", { x: 6, y: 6, z: 7 });
+  t.setBlockType("cl:moinho_vento", { x: 6, y: 6, z: 6 });
+  const j = robo(t, { x: 5, y: 1, z: 2 });
+  const usar = (item, n, pos, face) => {
+    j.setItem(new ItemStack(item, n), 0, true);
+    j.interactWithBlock(pos, face);
+  };
+  t.runAfterDelay(5, () => {
+    j.setItem(new ItemStack("cl:martelo_engenheiro", 1), 0, true);
+    j.lookAtBlock({ x: 3, y: 2, z: 2 });
+  });
+  t.runAfterDelay(12, () => j.useItemInSlotOnBlock(0, { x: 3, y: 2, z: 2 }, Direction.East));
+  t.runAfterDelay(20, () => {
+    log(`immersive: boca=${t.getBlock({ x: 3, y: 2, z: 2 }).typeId}`);
+    usar("minecraft:coal", 1, { x: 3, y: 2, z: 2 }, Direction.East);
+  });
+  t.runAfterDelay(30, () => {
+    log(`immersive: carvão na mão depois de pôr=${quantos(j, "minecraft:coal")}`);
+    j.setItem(new ItemStack("cl:girocoptero", 1), 1, true);
+    j.setItem(new ItemStack("cl:quadricoptero", 1), 2, true);
+    j.lookAtBlock({ x: 5, y: 0, z: 5 });
+  });
+  t.runAfterDelay(40, () => j.useItemInSlotOnBlock(1, { x: 5, y: 0, z: 5 }, Direction.Up));
+  t.runAfterDelay(45, () => j.lookAtBlock({ x: 1, y: 0, z: 6 }));
+  t.runAfterDelay(55, () => j.useItemInSlotOnBlock(2, { x: 1, y: 0, z: 6 }, Direction.Up));
+  t.runAfterDelay(60, () => {
+    const n = t.getDimension().getEntities({ families: ["aeronave"], location: j.location, maxDistance: 10 }).length;
+    log(`immersive: aeronaves postas=${n}`);
+    j.runCommand("scriptevent cl:teste_aeronave girocoptero 200");
+  });
+  t.runAfterDelay(280, () => j.runCommand("scriptevent cl:teste_aeronave quadricoptero 120 8"));
+  t.runAfterDelay(250, () => {
+    const pas = t.getDimension().getEntities({ type: "cl:pas_moinho", location: t.worldLocation({ x: 6.5, y: 6.5, z: 6.5 }), maxDistance: 2 })[0];
+    const ocupados = [];
+    for (let h = -4; h <= 4; h++) for (let w = -4; w <= 4; w++) {
+      const b = t.getBlock({ x: 6 + w, y: 6 + h, z: 6 });
+      if ((h || w) && b && !b.isAir) ocupados.push(`${w},${h}:${b.typeId}`);
+    }
+    giroPas = pas?.getProperty("cl:giro") ?? 0;
+    log(`immersive: pás=${!!pas} giro=${pas?.getProperty("cl:giro")} disco=${ocupados.slice(0, 8).join(" ")}`);
+  });
+  t.runAfterDelay(1960, () => j.getComponent("inventory").container.setItem(0, undefined));
+  t.runAfterDelay(1970, () => j.interactWithBlock({ x: 3, y: 2, z: 2 }, Direction.East));
+  t.runAfterDelay(1990, () => {
+    log(`immersive: coque=${quantos(j, "cl:coque")}`);
+    t.assert(t.getBlock({ x: 3, y: 2, z: 2 }).typeId === "cl:forno_coque", "o Martelo não montou o Forno de Coque");
+    t.assert(quantos(j, "cl:coque") === 1, "o Forno de Coque não fez coque");
+    t.assert(giroPas > 0, "o Moinho de Vento não girou");
+    t.succeed();
+  });
+});

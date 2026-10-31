@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_girocoptero"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "HPH",
+      " S "
+    ],
+    "key": {
+      "S": {
+        "item": "cl:vela_aeronave"
+      },
+      "H": {
+        "item": "cl:casco_aeronave"
+      },
+      "P": {
+        "item": "cl:helice_aviao"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:girocoptero"
+    }
+  }
+}

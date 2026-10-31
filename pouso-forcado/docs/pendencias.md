@@ -29,8 +29,8 @@ O jogador escolheu: o Galacticraft vai **só até a Lua**; dos mods da proposta 
 | 1.10.1–1.10.2 | Texturas originais dos mods que permitem; ícones parecidos para os outros | pronta |
 | 1.11.0 | Mekanism Additions (plástico, painéis, balões, TNT de obsidiana, filhotes) e condutos do Ender IO | pronta |
 | 1.12.0 | Farmer's Delight e Quark | pronta |
-| 1.13.0 | Immersive Engineering e Immersive Aircraft | próxima |
-| 1.14.0 | Sophisticated Backpacks (melhorias da mochila) e estruturas do YUNG's | |
+| 1.13.0 | Immersive Engineering e Immersive Aircraft | pronta |
+| 1.14.0 | Sophisticated Backpacks (melhorias da mochila) e estruturas do YUNG's | próxima |
 
 ## Feito por último
 

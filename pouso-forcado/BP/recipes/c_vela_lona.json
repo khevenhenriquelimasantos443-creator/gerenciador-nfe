@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_vela_lona"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " cc",
+      "ccc",
+      " c "
+    ],
+    "key": {
+      "c": {
+        "item": "cl:tecido_canhamo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vela_lona"
+    }
+  }
+}

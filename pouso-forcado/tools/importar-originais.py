@@ -23,6 +23,7 @@ FONTES = {
     "mekanism_additions": "mekanism10/src/additions/resources/assets/mekanismadditions/textures/",
     "farmers": "farmersdelight/src/main/resources/assets/farmersdelight/textures/",
     "quark": "quark/src/main/resources/assets/quark/textures/",
+    "aircraft": "aircraft/common/src/main/resources/assets/immersive_aircraft/textures/",
     "waystones": "waystones/src/main/resources/assets/waystones/textures/",
     "computercraft": "computercraft/src/main/resources/assets/computercraft/textures/",
     "tinkers": "tconstruct/resources/assets/tinker/textures/",
@@ -36,7 +37,7 @@ FONTES = {
     "enviromine": "enviromine/src/main/resources/assets/enviromine/textures/",
 }
 LICENCAS = {  # arquivo de licença de cada repositório (cópia em docs/licencas/)
-    "mekanism": "mekanism/README.md", "mekanism_additions": "mekanism10/LICENSE", "farmers": "farmersdelight/LICENSE", "quark": "quark/LICENSE.md", "enderio": "enderio/LICENSE", "waystones": "waystones/LICENSE",
+    "mekanism": "mekanism/README.md", "mekanism_additions": "mekanism10/LICENSE", "farmers": "farmersdelight/LICENSE", "quark": "quark/LICENSE.md", "aircraft": "aircraft/LICENSE", "enderio": "enderio/LICENSE", "waystones": "waystones/LICENSE",
     "computercraft": "computercraft/LICENSE", "tinkers": "tconstruct/README.md", "ae2": "ae2/README.md",
     "pneumaticcraft": "pneumaticcraft/LICENSE", "bigreactors": "bigreactors/LICENSE.txt", "buildcraft": "buildcraft/LICENSE",
     "openblocks": "openblocks/LICENSE", "chisel": "chisel/LICENSE", "chickenchunks": "chickenchunks/LICENSE.txt",
@@ -128,6 +129,10 @@ for i, a in (("caixote_repolho", "cabbage_crate"), ("caixote_tomate", "tomato_cr
     faces("farmers", "block/", i, f"{a}_side", f"{a}_side", f"{a}_top", "crate_bottom")
 faces("farmers", "block/", "saco_arroz", "rice_bag_side", "rice_bag_side", "rice_bag_top", "rice_bag_bottom")
 faces("farmers", "block/", "fardo_palha", "straw_bale_side", "straw_bale_side", "straw_bale_end")
+
+# ---------- Immersive Aircraft (1.13.0) ----------
+itens("aircraft", "item/", {"casco_aeronave": "hull", "motor_aeronave": "engine", "vela_aeronave": "sail", "helice_aviao": "propeller", "caldeira": "boiler",
+                            "biplano": "biplane", "dirigivel": "airship", "girocoptero": "gyrodyne", "quadricoptero": "quadrocopter"})
 
 # ---------- Quark ----------
 itens("quark", "item/", {"picarango": "pickarang"})

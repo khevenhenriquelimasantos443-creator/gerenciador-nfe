@@ -1,0 +1,33 @@
+{
+ "format_version": "1.10.0",
+ "minecraft:client_entity": {
+  "description": {
+   "identifier": "cl:girocoptero",
+   "materials": {
+    "default": "entity_alphatest"
+   },
+   "textures": {
+    "default": "textures/entity/cl/aeronave/girocoptero"
+   },
+   "geometry": {
+    "default": "geometry.cl.girocoptero"
+   },
+   "animations": {
+    "inclinar": "animation.cl.girocoptero.inclinar",
+    "girar": "animation.cl.girocoptero.girar"
+   },
+   "scripts": {
+    "pre_animation": [
+     "variable.giro = math.mod((variable.giro ?? 0) + q.delta_time * q.property('cl:giro'), 360);"
+    ],
+    "animate": [
+     "inclinar",
+     "girar"
+    ]
+   },
+   "render_controllers": [
+    "controller.render.default"
+   ]
+  }
+ }
+}

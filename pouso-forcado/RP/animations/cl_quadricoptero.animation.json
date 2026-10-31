@@ -1,0 +1,50 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "animation.cl.quadricoptero.inclinar": {
+   "loop": true,
+   "bones": {
+    "corpo": {
+     "rotation": [
+      "q.property('cl:arfagem')",
+      0,
+      "q.property('cl:rolagem')"
+     ]
+    }
+   }
+  },
+  "animation.cl.quadricoptero.girar": {
+   "loop": true,
+   "bones": {
+    "propellor_3": {
+     "rotation": [
+      0,
+      "variable.giro",
+      0
+     ]
+    },
+    "propellor_2": {
+     "rotation": [
+      0,
+      "variable.giro",
+      0
+     ]
+    },
+    "propellor_1": {
+     "rotation": [
+      0,
+      "variable.giro",
+      0
+     ]
+    },
+    "propellor_0": {
+     "rotation": [
+      0,
+      "variable.giro",
+      0
+     ]
+    }
+   }
+  }
+ }
+}

@@ -53,6 +53,11 @@
   "en": "Baked Potato",
   "icone": "textures/items/potato_baked"
  },
+ "minecraft:bamboo": {
+  "pt": "Bambu",
+  "en": "Bamboo",
+  "icone": "textures/blocks/bamboo_stem"
+ },
  "minecraft:barrel": {
   "pt": "Barril",
   "en": "Barrel",
@@ -106,6 +111,11 @@
  "minecraft:black_dye": {
   "pt": "black_dye",
   "en": "black_dye"
+ },
+ "minecraft:blast_furnace": {
+  "pt": "Fornalha Potente",
+  "en": "Blast Furnace",
+  "icone": "textures/blocks/blast_furnace_side"
  },
  "minecraft:blaze_powder": {
   "pt": "Pó de Chamas",
@@ -941,6 +951,11 @@
   "pt": "Fungo do Nether",
   "en": "Nether Wart",
   "icone": "textures/items/nether_wart"
+ },
+ "minecraft:netherbrick": {
+  "pt": "Tijolo do Nether",
+  "en": "Nether Brick",
+  "icone": "textures/items/netherbrick"
  },
  "minecraft:netherite_scrap": {
   "pt": "Fragmentos de Netherita",

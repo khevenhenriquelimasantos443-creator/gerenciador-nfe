@@ -125,7 +125,15 @@ export type Acao =
   | "nutricao"
   | "colher"
   | "picarango"
-  | "corda";
+  | "corda"
+  | "ie_coque"
+  | "ie_alto"
+  | "creosoto"
+  | "aco_alto"
+  | "vento"
+  | "girocoptero"
+  | "biplano_alto"
+  | "voo_lento";
 
 type MissaoBase = {
   id: string;
@@ -400,6 +408,30 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "qk_picarango", objetivo: { tipo: "acao", acao: "picarango", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
       { id: "qk_corda", objetivo: { tipo: "acao", acao: "corda", qtd: 1 }, recompensa: [{ item: "cl:corda", quantidade: 16 }] },
       { id: "qk_armazem", objetivo: { tipo: "colocar", bloco: "cl:caixote_maca", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "ie", // 1.13.0: Immersive Engineering
+    icone: "cl:forno_coque",
+    requer: ["chegada"],
+    missoes: [
+      { id: "ie_martelo", objetivo: { tipo: "ter", item: "cl:martelo_engenheiro", qtd: 1 }, recompensa: [{ item: "minecraft:clay_ball", quantidade: 16 }] },
+      { id: "ie_coque", requer: ["ie_martelo"], objetivo: { tipo: "acao", acao: "ie_coque", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "ie_creosoto", requer: ["ie_coque"], objetivo: { tipo: "acao", acao: "creosoto", qtd: 1 }, recompensa: [{ item: "cl:semente_canhamo", quantidade: 4 }] },
+      { id: "ie_tratada", requer: ["ie_creosoto"], objetivo: { tipo: "ter", item: "cl:tabuas_tratadas", qtd: 16 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "ie_alto", requer: ["ie_coque"], objetivo: { tipo: "acao", acao: "aco_alto", qtd: 1 }, recompensa: [{ item: "cl:coque", quantidade: 16 }] },
+      { id: "ie_vento", requer: ["ie_tratada"], objetivo: { tipo: "acao", acao: "vento", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "aircraft", // 1.13.0: Immersive Aircraft
+    icone: "cl:biplano",
+    requer: ["ie"],
+    missoes: [
+      { id: "ia_motor", objetivo: { tipo: "ter", item: "cl:motor_aeronave", qtd: 1 }, recompensa: [{ item: "minecraft:copper_ingot", quantidade: 8 }] },
+      { id: "ia_giro", objetivo: { tipo: "acao", acao: "girocoptero", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 8 }] },
+      { id: "ia_biplano", requer: ["ia_motor"], objetivo: { tipo: "acao", acao: "biplano_alto", qtd: 1 }, recompensa: [{ item: "cl:coque", quantidade: 32 }] },
+      { id: "ia_dirigivel", requer: ["ia_motor"], objetivo: { tipo: "acao", acao: "voo_lento", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

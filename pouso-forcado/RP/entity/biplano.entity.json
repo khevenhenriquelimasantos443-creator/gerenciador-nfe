@@ -1,0 +1,33 @@
+{
+ "format_version": "1.10.0",
+ "minecraft:client_entity": {
+  "description": {
+   "identifier": "cl:biplano",
+   "materials": {
+    "default": "entity_alphatest"
+   },
+   "textures": {
+    "default": "textures/entity/cl/aeronave/biplano"
+   },
+   "geometry": {
+    "default": "geometry.cl.biplano"
+   },
+   "animations": {
+    "inclinar": "animation.cl.biplano.inclinar",
+    "girar": "animation.cl.biplano.girar"
+   },
+   "scripts": {
+    "pre_animation": [
+     "variable.giro = math.mod((variable.giro ?? 0) + q.delta_time * q.property('cl:giro'), 360);"
+    ],
+    "animate": [
+     "inclinar",
+     "girar"
+    ]
+   },
+   "render_controllers": [
+    "controller.render.default"
+   ]
+  }
+ }
+}

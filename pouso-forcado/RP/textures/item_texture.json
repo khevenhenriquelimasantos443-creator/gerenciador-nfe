@@ -1681,6 +1681,75 @@
     },
     "clc_picarango": {
       "textures": "textures/items/cl/arte/picarango"
+    },
+    "clhc_semente_canhamo": {
+      "textures": "textures/items/cl/hc/semente_canhamo"
+    },
+    "clc_martelo_engenheiro": {
+      "textures": "textures/items/cl/c/martelo_engenheiro"
+    },
+    "clc_coque": {
+      "textures": "textures/items/cl/c/coque"
+    },
+    "clc_escoria": {
+      "textures": "textures/items/cl/c/escoria"
+    },
+    "clc_balde_creosoto": {
+      "textures": "textures/items/cl/c/balde_creosoto"
+    },
+    "clc_graveto_tratado": {
+      "textures": "textures/items/cl/c/graveto_tratado"
+    },
+    "clc_fibra_canhamo": {
+      "textures": "textures/items/cl/c/fibra_canhamo"
+    },
+    "clc_tecido_canhamo": {
+      "textures": "textures/items/cl/c/tecido_canhamo"
+    },
+    "clc_vela_lona": {
+      "textures": "textures/items/cl/c/vela_lona"
+    },
+    "clc_pa_moinho": {
+      "textures": "textures/items/cl/c/pa_moinho"
+    },
+    "clc_segmento_roda": {
+      "textures": "textures/items/cl/c/segmento_roda"
+    },
+    "clc_componente_ferro": {
+      "textures": "textures/items/cl/c/componente_ferro"
+    },
+    "clc_bobina_fio_cobre": {
+      "textures": "textures/items/cl/c/bobina_fio_cobre"
+    },
+    "clc_bobina_bt": {
+      "textures": "textures/items/cl/c/bobina_bt"
+    },
+    "clc_casco_aeronave": {
+      "textures": "textures/items/cl/arte/casco_aeronave"
+    },
+    "clc_motor_aeronave": {
+      "textures": "textures/items/cl/arte/motor_aeronave"
+    },
+    "clc_vela_aeronave": {
+      "textures": "textures/items/cl/arte/vela_aeronave"
+    },
+    "clc_helice_aviao": {
+      "textures": "textures/items/cl/arte/helice_aviao"
+    },
+    "clc_caldeira": {
+      "textures": "textures/items/cl/arte/caldeira"
+    },
+    "clc_biplano": {
+      "textures": "textures/items/cl/arte/biplano"
+    },
+    "clc_dirigivel": {
+      "textures": "textures/items/cl/arte/dirigivel"
+    },
+    "clc_girocoptero": {
+      "textures": "textures/items/cl/arte/girocoptero"
+    },
+    "clc_quadricoptero": {
+      "textures": "textures/items/cl/arte/quadricoptero"
     }
   }
 }

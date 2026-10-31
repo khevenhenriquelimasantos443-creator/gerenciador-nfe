@@ -78,6 +78,14 @@
       "en": "Cabbage",
       "forma": "redondo",
       "cor": "#7fbf4a"
+    },
+    {
+      "id": "canhamo",
+      "pt": "Cânhamo Industrial",
+      "en": "Industrial Hemp",
+      "forma": "milho",
+      "cor": "#6f9a3a",
+      "produto": "cl:fibra_canhamo"
     }
   ],
   "utensilios": [

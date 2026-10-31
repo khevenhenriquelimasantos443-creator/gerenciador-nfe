@@ -24,6 +24,17 @@
   "bau_me",
   "montador_molecular"
  ],
+ "aircraft": [
+  "casco_aeronave",
+  "motor_aeronave",
+  "vela_aeronave",
+  "helice_aviao",
+  "caldeira",
+  "biplano",
+  "dirigivel",
+  "girocoptero",
+  "quadricoptero"
+ ],
  "bigreactors": [
   "lingote_yellorium",
   "po_yellorium",
@@ -458,8 +469,8 @@
   "xisto_entalhado",
   "xisto_pilar",
   "vidro_emoldurado",
-  "placa_ferro",
-  "placa_ferro_enferrujada",
+  "bloco_placa_ferro",
+  "bloco_placa_ferro_enferrujada",
   "grade",
   "palha_trancada",
   "lampada_pedra",

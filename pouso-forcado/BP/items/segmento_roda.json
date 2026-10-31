@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:segmento_roda",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_segmento_roda",
+      "minecraft:display_name": {
+        "value": "item.cl:segmento_roda.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

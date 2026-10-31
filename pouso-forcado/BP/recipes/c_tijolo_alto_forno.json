@@ -1,0 +1,34 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tijolo_alto_forno"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "csc",
+      "sms",
+      "csc"
+    ],
+    "key": {
+      "c": {
+        "item": "minecraft:netherbrick"
+      },
+      "s": {
+        "item": "minecraft:brick"
+      },
+      "m": {
+        "item": "minecraft:magma"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tijolo_alto_forno",
+      "count": 3
+    }
+  }
+}

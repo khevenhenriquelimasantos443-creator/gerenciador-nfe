@@ -1,0 +1,106 @@
+{
+ "format_version": "1.21.50",
+ "minecraft:entity": {
+  "description": {
+   "identifier": "cl:dirigivel",
+   "is_spawnable": false,
+   "is_summonable": true,
+   "properties": {
+    "cl:arfagem": {
+     "type": "float",
+     "range": [
+      -90.0,
+      90.0
+     ],
+     "default": 0.0,
+     "client_sync": true
+    },
+    "cl:rolagem": {
+     "type": "float",
+     "range": [
+      -90.0,
+      90.0
+     ],
+     "default": 0.0,
+     "client_sync": true
+    },
+    "cl:giro": {
+     "type": "float",
+     "range": [
+      0.0,
+      2000.0
+     ],
+     "default": 0.0,
+     "client_sync": true
+    }
+   }
+  },
+  "components": {
+   "minecraft:type_family": {
+    "family": [
+     "aeronave",
+     "inanimate"
+    ]
+   },
+   "minecraft:health": {
+    "value": 20,
+    "max": 20
+   },
+   "minecraft:damage_sensor": {
+    "triggers": [
+     {
+      "cause": "all",
+      "deals_damage": "no"
+     }
+    ]
+   },
+   "minecraft:collision_box": {
+    "width": 2.2,
+    "height": 2.5
+   },
+   "minecraft:physics": {
+    "has_gravity": false,
+    "has_collision": true
+   },
+   "minecraft:pushable": {
+    "is_pushable": false,
+    "is_pushable_by_piston": false
+   },
+   "minecraft:knockback_resistance": {
+    "value": 1
+   },
+   "minecraft:fire_immune": {},
+   "minecraft:persistent": {},
+   "minecraft:loot": {
+    "table": "loot_tables/empty.json"
+   },
+   "minecraft:rideable": {
+    "seat_count": 2,
+    "family_types": [
+     "player"
+    ],
+    "interact_text": "action.interact.ride.boat",
+    "pull_in_entities": false,
+    "seats": [
+     {
+      "position": [
+       0,
+       0.2,
+       0.4
+      ],
+      "lock_rider_rotation": 0
+     },
+     {
+      "position": [
+       0,
+       0.2,
+       -0.3
+      ],
+      "lock_rider_rotation": 0
+     }
+    ]
+   },
+   "minecraft:is_stackable": {}
+  }
+ }
+}

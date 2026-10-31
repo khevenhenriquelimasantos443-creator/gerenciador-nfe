@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_componente_ferro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "i i",
+      " c ",
+      "i i"
+    ],
+    "key": {
+      "i": {
+        "item": "cl:placa_ferro"
+      },
+      "c": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:componente_ferro"
+    }
+  }
+}

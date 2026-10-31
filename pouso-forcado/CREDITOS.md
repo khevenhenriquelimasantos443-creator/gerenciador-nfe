@@ -109,6 +109,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Mekanism Additions | aidancbrady e equipe | MIT | github.com/mekanism/Mekanism (1.20) |
 | Farmer's Delight | vectorwing e equipe | MIT | github.com/vectorwing/FarmersDelight (1.20) |
 | Quark | Vazkii e equipe | CC BY-NC-SA 3.0 | github.com/VazkiiMods/Quark |
+| Immersive Aircraft (ícones, modelos 3D e texturas das aeronaves) | Luke100000 e equipe | GPLv3 | github.com/Luke100000/ImmersiveAircraft |
 | Ender IO (e os condutos) | CrazyPants, SleepyTrousers e equipe | Unlicense / CC0 | github.com/SleepyTrousers/EnderIO (5.2) |
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
@@ -136,3 +137,10 @@ Alguns desses ícones foram redesenhados por `tools/desenhar-similares.py` lembr
 
 Os nomes e ícones dos itens do Minecraft no Catálogo apontam para o pacote de recursos do próprio
 jogo (caminhos tirados de Mojang/bedrock-samples); nenhum arquivo do jogo é copiado para o add-on.
+
+### Immersive Engineering (1.13.0)
+
+Mecânicas e números do Immersive Engineering (BluSunrize e equipe, código GPLv3, github.com/BluSunrize/ImmersiveEngineering,
+branch 1.20.1): Forno de Coque, Alto-Forno, creosoto e madeira tratada, cânhamo, Moinho de Vento, Roda d'Água e Dínamo
+Cinético. A arte do IE pede permissão antes de ser copiada, então os blocos, itens e as pás têm arte própria.
+Os modelos das aeronaves (Immersive Aircraft) foram convertidos do Blockbench para o Bedrock por `tools/gerar-aeronaves.py`.

@@ -1,0 +1,45 @@
+{
+ "format_version": "1.8.0",
+ "render_controllers": {
+  "controller.render.cl.pas_moinho": {
+   "geometry": "Geometry.default",
+   "materials": [
+    {
+     "*": "Material.default"
+    }
+   ],
+   "textures": [
+    "Texture.default"
+   ],
+   "part_visibility": [
+    {
+     "*": true
+    },
+    {
+     "vela_0": "q.property('cl:velas') > 0"
+    },
+    {
+     "vela_1": "q.property('cl:velas') > 1"
+    },
+    {
+     "vela_2": "q.property('cl:velas') > 2"
+    },
+    {
+     "vela_3": "q.property('cl:velas') > 3"
+    },
+    {
+     "vela_4": "q.property('cl:velas') > 4"
+    },
+    {
+     "vela_5": "q.property('cl:velas') > 5"
+    },
+    {
+     "vela_6": "q.property('cl:velas') > 6"
+    },
+    {
+     "vela_7": "q.property('cl:velas') > 7"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tecido_canhamo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "fff",
+      "fsf",
+      "fff"
+    ],
+    "key": {
+      "f": {
+        "item": "cl:fibra_canhamo"
+      },
+      "s": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tecido_canhamo"
+    }
+  }
+}

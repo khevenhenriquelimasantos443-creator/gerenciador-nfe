@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_martelo_engenheiro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " if",
+      " si",
+      "s  "
+    ],
+    "key": {
+      "f": {
+        "item": "minecraft:string"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      },
+      "s": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:martelo_engenheiro"
+    }
+  }
+}

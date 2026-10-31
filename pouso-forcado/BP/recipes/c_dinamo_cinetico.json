@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_dinamo_cinetico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "rcr",
+      "ili"
+    ],
+    "key": {
+      "r": {
+        "item": "minecraft:redstone"
+      },
+      "c": {
+        "item": "cl:componente_ferro"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      },
+      "l": {
+        "item": "cl:bobina_bt"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:dinamo_cinetico"
+    }
+  }
+}

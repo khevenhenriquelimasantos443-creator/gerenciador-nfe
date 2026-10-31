@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_graveto_tratado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "w",
+      "w"
+    ],
+    "key": {
+      "w": {
+        "item": "cl:tabuas_tratadas"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:graveto_tratado",
+      "count": 4
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "format_version": "1.10.0",
+ "minecraft:client_entity": {
+  "description": {
+   "identifier": "cl:roda_agua_giro",
+   "materials": {
+    "default": "entity_alphatest"
+   },
+   "textures": {
+    "default": "textures/entity/cl/moinho/pas"
+   },
+   "geometry": {
+    "default": "geometry.cl.roda_agua_giro"
+   },
+   "animations": {
+    "girar": "animation.cl.roda_agua_giro.girar"
+   },
+   "scripts": {
+    "pre_animation": [
+     "variable.giro = math.mod((variable.giro ?? 0) + q.delta_time * q.property('cl:giro'), 360);"
+    ],
+    "animate": [
+     "girar"
+    ]
+   },
+   "render_controllers": [
+    "controller.render.default"
+   ]
+  }
+ }
+}

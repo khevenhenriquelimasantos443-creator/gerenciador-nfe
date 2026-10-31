@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_quadricoptero"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PBP",
+      "BEB",
+      "PBP"
+    ],
+    "key": {
+      "E": {
+        "item": "cl:motor_aeronave"
+      },
+      "B": {
+        "item": "minecraft:bamboo"
+      },
+      "P": {
+        "item": "cl:helice_aviao"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:quadricoptero"
+    }
+  }
+}

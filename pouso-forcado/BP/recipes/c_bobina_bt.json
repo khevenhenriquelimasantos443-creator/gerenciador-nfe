@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bobina_bt"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "www",
+      "wiw",
+      "www"
+    ],
+    "key": {
+      "w": {
+        "item": "cl:bobina_fio_cobre"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bobina_bt"
+    }
+  }
+}
