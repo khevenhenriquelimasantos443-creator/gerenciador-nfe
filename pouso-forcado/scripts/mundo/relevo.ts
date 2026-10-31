@@ -8,6 +8,7 @@ import { talvezMasmorra } from "./masmorra.js";
 import { porMinerios } from "./minerios.js";
 import { registrarPonto } from "./pontos.js";
 import { raraDoChunk } from "./raras.js";
+import { foraDoYung, pedacoDoChunk, porPedaco } from "./templo_yung.js";
 import { intervalo } from "../util/perfil.js";
 
 /*
@@ -159,20 +160,25 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   const oz = z0 + Math.floor(sorte() * 16) - Math.floor((peca?.tamanho ?? 0) / 2);
   const girar = Math.floor(sorte() * 4);
   const rara = raraDoChunk(cx, cz, semente, naveChunk); // templo ou destroços (no máximo um por região)
-  const colocaPeca = !rara && !!peca && areaPlana(ox, oz, peca.tamanho, semente, nave);
+  // Pirâmide do YUNG's (1.14.0): nada de peças nem masmorras na área dela; o pedaço sai quando os 64×64 carregam.
+  const naPiramide = foraDoYung(ox, oz, semente, naveChunk) < (peca?.tamanho ?? 0) + 4 || foraDoYung(x0 + 8, z0 + 8, semente, naveChunk) < 16;
+  const pedaco = pedacoDoChunk(cx, cz, semente, naveChunk);
+  if (pedaco && !areaCarregada(dimensao, x0, z0, 64)) return "esperar";
+  const colocaPeca = !rara && !naPiramide && !!peca && areaPlana(ox, oz, peca.tamanho, semente, nave);
   if (colocaPeca && !areaCarregada(dimensao, ox, oz, peca.tamanho)) return "esperar";
   if (rara && !areaCarregada(dimensao, x0, z0, rara.tamanho)) return "esperar";
 
   porDunas(dimensao, x0, z0, semente, nave);
   desenterrarJogadores(dimensao, x0, z0);
   porMinerios(dimensao, x0, z0, sorte);
-  if (!pertoDaNave) talvezMasmorra(dimensao, x0, z0, sorte);
+  if (!pertoDaNave && !naPiramide) talvezMasmorra(dimensao, x0, z0, sorte);
 
   if (colocaPeca && peca) {
     const origem: Vector3 = { x: ox, y: MUNDO_PLANO.superficieY + peca.deslocY, z: oz };
     const rotation = peca.girar ? GIROS[girar] : StructureRotation.None;
     world.structureManager.place(peca.estrutura, dimensao, origem, { rotation });
   }
+  if (pedaco) porPedaco(dimensao, pedaco, sorte);
   if (rara) {
     const origem: Vector3 = { x: x0, y: MUNDO_PLANO.superficieY + rara.deslocY, z: z0 };
     world.structureManager.place(rara.estrutura, dimensao, origem);

@@ -1241,6 +1241,22 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:melhoria_ima",
+              "name": "cl:itemGroup.name.items_sophisticated_backpacks"
+            },
+            "items": [
+              "cl:melhoria_alimentacao",
+              "cl:melhoria_base",
+              "cl:melhoria_coleta",
+              "cl:melhoria_compactacao",
+              "cl:melhoria_compactacao_avancada",
+              "cl:melhoria_deposito",
+              "cl:melhoria_ima",
+              "cl:melhoria_reabastecer"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:robo_minerador",
               "name": "cl:itemGroup.name.items_computercraft"
             },

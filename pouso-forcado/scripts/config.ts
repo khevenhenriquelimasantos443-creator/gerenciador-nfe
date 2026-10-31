@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.13.0";
+export const VERSAO = "1.14.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -219,6 +219,10 @@ export const RELEVO = {
 // Assim ficam espalhadas ao acaso, sem amontoar. O chão em volta fica plano (sem dunas).
 // 242 chunks = 3.872 blocos: 15 de cada tipo a cada 15.000 × 15.000 blocos.
 // Para achar: /cl:templo e /cl:destrocos (scripts/jogador/comandos.ts).
+// Pirâmide do YUNG's Better Desert Temples (1.14.0, scripts/mundo/templo_yung.ts): 83×83, uma por quadrado de
+// "celula" chunks; o centro fica "profundidade" blocos abaixo da areia (no mod: 4 a 24). Para achar: /cl:piramide.
+export const TEMPLO_YUNG_MUNDO = { celula: 300, chance: 1, distNave: 12, profundidade: 14 } as const;
+
 export const RARAS = [
   {
     tipo: "templo",
@@ -1213,6 +1217,7 @@ export const MODS: ReadonlyArray<{ mod: string; icones: ReadonlyArray<string> }>
   { mod: "Quark", icones: [`${NS}:jaspe_tijolos`, `${NS}:picarango`] },
   { mod: "Waystones", icones: [`${NS}:pedra_caminho`, `${NS}:pedra_viagem`] },
   { mod: "Backpacks", icones: [`${NS}:mochila`] },
+  { mod: "Sophisticated Backpacks", icones: [`${NS}:melhoria_ima`, `${NS}:melhoria_base`] },
   { mod: "ComputerCraft", icones: [`${NS}:robo_minerador`, `${NS}:computador`] },
   { mod: "Extra Utilities", icones: [`${NS}:varinha_construtor`, `${NS}:lixeira`] },
   { mod: "Galacticraft", icones: [`${NS}:foguete_t1`, `${NS}:bancada_nasa`] },

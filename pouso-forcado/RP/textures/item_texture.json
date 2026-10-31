@@ -1750,6 +1750,30 @@
     },
     "clc_quadricoptero": {
       "textures": "textures/items/cl/arte/quadricoptero"
+    },
+    "clc_melhoria_base": {
+      "textures": "textures/items/cl/c/melhoria_base"
+    },
+    "clc_melhoria_coleta": {
+      "textures": "textures/items/cl/c/melhoria_coleta"
+    },
+    "clc_melhoria_ima": {
+      "textures": "textures/items/cl/c/melhoria_ima"
+    },
+    "clc_melhoria_alimentacao": {
+      "textures": "textures/items/cl/c/melhoria_alimentacao"
+    },
+    "clc_melhoria_compactacao": {
+      "textures": "textures/items/cl/c/melhoria_compactacao"
+    },
+    "clc_melhoria_compactacao_avancada": {
+      "textures": "textures/items/cl/c/melhoria_compactacao_avancada"
+    },
+    "clc_melhoria_deposito": {
+      "textures": "textures/items/cl/c/melhoria_deposito"
+    },
+    "clc_melhoria_reabastecer": {
+      "textures": "textures/items/cl/c/melhoria_reabastecer"
     }
   }
 }

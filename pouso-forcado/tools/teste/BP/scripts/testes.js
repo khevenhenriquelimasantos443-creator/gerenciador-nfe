@@ -876,3 +876,60 @@ teste("immersive", 2200, (t) => {
     t.succeed();
   });
 });
+
+// 1.14.0: o pedaço do templo do YUNG's carrega e só tem blocos conhecidos.
+teste("yung", 600, (t) => {
+  const dim = t.getDimension();
+  const o = { x: 400, y: 10, z: 104 };
+  t.runAfterDelay(5, () => {
+    world.structureManager.place("cl:templo_yung_0_0_0", dim, o);
+    const conta = {};
+    for (let x = 0; x < 64; x++) for (let y = 0; y < 63; y++) for (let z = 0; z < 64; z++) {
+      const b = dim.getBlock({ x: o.x + x, y: o.y + y, z: o.z + z });
+      if (b) conta[b.typeId] = (conta[b.typeId] ?? 0) + 1;
+    }
+    const top = Object.entries(conta).sort((a, b) => b[1] - a[1]);
+    log(`yung: ${top.length} tipos: ${top.slice(0, 40).map(([k, v]) => `${k.replace("minecraft:", "")}=${v}`).join(" ")}`);
+    const ruins = top.filter(([k]) => /unknown|info_update|reserved|structure_void/.test(k));
+    t.assert(ruins.length === 0, `blocos desconhecidos: ${JSON.stringify(ruins)}`);
+    t.succeed();
+  });
+});
+
+// 1.14.0: melhorias da mochila (compactação avançada, ímã e depósito).
+teste("mochila_sb", 400, (t) => {
+  const j = robo(t, { x: 2, y: 1, z: 2 });
+  const inv = () => j.getComponent("inventory").container;
+  const conteudo = () => {
+    const i = inv().getItem(8);
+    return i ? JSON.stringify(i.getLore()) : "sem mochila";
+  };
+  t.runAfterDelay(5, () => j.runCommand("scriptevent cl:teste_mochila compactacao_avancada"));
+  t.runAfterDelay(50, () => {
+    log(`mochila_sb: compactação lore=${conteudo()}`);
+    j.runCommand("clear @s cl:mochila");
+    j.runCommand("scriptevent cl:teste_mochila ima");
+    t.spawnItem(new ItemStack("minecraft:diamond", 3), { x: 4.5, y: 2, z: 2.5 });
+  });
+  t.runAfterDelay(100, () => {
+    log(`mochila_sb: ímã diamantes=${quantos(j, "minecraft:diamond")}`);
+    j.runCommand("clear @s cl:mochila");
+    j.runCommand("scriptevent cl:teste_mochila deposito");
+    t.setBlockType("minecraft:chest", { x: 2, y: 1, z: 4 });
+  });
+  t.runAfterDelay(110, () => {
+    j.selectedSlotIndex = 8;
+    j.isSneaking = true;
+    j.lookAtBlock({ x: 2, y: 1, z: 4 });
+  });
+  t.runAfterDelay(120, () => j.useItemInSlotOnBlock(8, { x: 2, y: 1, z: 4 }, Direction.North));
+  t.runAfterDelay(140, () => {
+    const bau = t.getBlock({ x: 2, y: 1, z: 4 }).getComponent("inventory").container;
+    let n = 0;
+    for (let s = 0; s < bau.size; s++) n += bau.getItem(s)?.amount ?? 0;
+    log(`mochila_sb: baú=${n} mochila=${conteudo()}`);
+    t.assert(quantos(j, "minecraft:diamond") === 3, "o ímã não puxou os diamantes");
+    t.assert(n >= 18, "o depósito não guardou no baú");
+    t.succeed();
+  });
+});

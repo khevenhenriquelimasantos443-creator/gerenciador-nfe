@@ -3,12 +3,14 @@ import { cidadeMaisProxima } from "../mundo/cidade.js";
 import { mostrarDiagnostico } from "../mundo/diagnostico.js";
 import { relatorio } from "../util/perfil.js";
 import { raraMaisProxima } from "../mundo/raras.js";
+import { temploYungMaisProximo } from "../mundo/templo_yung.js";
 import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
 
 /*
  * Comandos de localização, sem precisar de trapaças:
  *   /cl:cidade     cidade abandonada mais perto
  *   /cl:templo     templo soterrado mais perto
+ *   /cl:piramide   templo do deserto (YUNG's) mais perto
  *   /cl:destrocos  destroços de nave mais perto
  *   /cl:diagnostico  versão, conteúdo carregado, blocos ativos e tempo de script por sistema
  * (o jogo também aceita sem o "cl:", se nenhum outro comando tiver o mesmo nome)
@@ -60,6 +62,10 @@ export function registrarComandos(registro: CustomCommandRegistry): void {
     ["cl:cidade", "cl.comando.cidade", (j) => cidadeMaisProxima(j.location.x, j.location.z)],
     ["cl:templo", "cl.comando.templo", (j) => perto("templo", j)],
     ["cl:destrocos", "cl.comando.destrocos", (j) => perto("destrocos", j)],
+    ["cl:piramide", "cl.comando.piramide", (j) => {
+      const nave = chunkDaNave();
+      return nave ? temploYungMaisProximo(j.location.x, j.location.z, sementeDoMundo(), nave) : undefined;
+    }],
   ];
   for (const [nome, rotulo, achar] of comandos) {
     registro.registerCommand(

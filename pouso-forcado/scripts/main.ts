@@ -77,6 +77,8 @@ import { fogao, panela, registrarFarmers, tabua } from "./maquinas/farmers.js";
 import { registrarQuark } from "./utilidades/quark.js";
 import { altoForno, dinamoCinetico, fornoCoque, moinhoVento, registrarImmersive, rodaHidraulica } from "./maquinas/immersive.js";
 import { registrarAeronaves } from "./utilidades/aeronaves.js";
+import { registrarMelhoriasMochila } from "./utilidades/melhorias_mochila.js";
+import { registrarTemploYung } from "./mundo/templo_yung.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
@@ -252,3 +254,5 @@ registrarFarmers();
 registrarQuark();
 registrarImmersive();
 registrarAeronaves();
+registrarMelhoriasMochila();
+registrarTemploYung();

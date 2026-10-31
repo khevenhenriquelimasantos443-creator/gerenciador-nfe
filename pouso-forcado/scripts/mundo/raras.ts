@@ -1,6 +1,7 @@
 import { RARAS } from "../config.js";
 import { rng, sementeDe } from "../util/aleatorio.js";
 import { cidadeDoChunk } from "./cidade.js";
+import { foraDoYung } from "./templo_yung.js";
 
 /*
  * Estruturas raras (templo soterrado, destroços de nave): cada tipo divide o mapa em quadrados
@@ -51,7 +52,7 @@ export function foraDasRaras(x: number, z: number, semente: number, nave: [numbe
     const dz = Math.max(z1 - z, 0, z - (z1 + r.tamanho - 1));
     menor = Math.min(menor, Math.max(dx, dz));
   });
-  return menor;
+  return Math.min(menor, foraDoYung(x, z, semente, nave));
 }
 
 /** A estrutura rara do tipo mais perto da posição (olha o quadrado da posição e os 8 em volta). */

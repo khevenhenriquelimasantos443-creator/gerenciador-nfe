@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_melhoria_compactacao_avancada"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " D ",
+      "GCG",
+      "RRR"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:diamond"
+      },
+      "G": {
+        "item": "minecraft:gold_ingot"
+      },
+      "C": {
+        "item": "cl:melhoria_compactacao"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:melhoria_compactacao_avancada"
+    }
+  }
+}

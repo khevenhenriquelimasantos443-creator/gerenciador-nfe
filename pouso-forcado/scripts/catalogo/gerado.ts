@@ -2236,6 +2236,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Conversion Matrix",
   "icone": "textures/items/cl/arte/matriz_conversao"
  },
+ "cl:melhoria_alimentacao": {
+  "pt": "Melhoria: Alimentação",
+  "en": "Feeding Upgrade",
+  "icone": "textures/items/cl/c/melhoria_alimentacao"
+ },
+ "cl:melhoria_base": {
+  "pt": "Base de Melhoria",
+  "en": "Upgrade Base",
+  "icone": "textures/items/cl/c/melhoria_base"
+ },
+ "cl:melhoria_coleta": {
+  "pt": "Melhoria: Coleta",
+  "en": "Pickup Upgrade",
+  "icone": "textures/items/cl/c/melhoria_coleta"
+ },
+ "cl:melhoria_compactacao": {
+  "pt": "Melhoria: Compactação",
+  "en": "Compacting Upgrade",
+  "icone": "textures/items/cl/c/melhoria_compactacao"
+ },
+ "cl:melhoria_compactacao_avancada": {
+  "pt": "Melhoria: Compactação Avançada",
+  "en": "Advanced Compacting Upgrade",
+  "icone": "textures/items/cl/c/melhoria_compactacao_avancada"
+ },
+ "cl:melhoria_deposito": {
+  "pt": "Melhoria: Depósito",
+  "en": "Deposit Upgrade",
+  "icone": "textures/items/cl/c/melhoria_deposito"
+ },
+ "cl:melhoria_ima": {
+  "pt": "Melhoria: Ímã",
+  "en": "Magnet Upgrade",
+  "icone": "textures/items/cl/c/melhoria_ima"
+ },
+ "cl:melhoria_reabastecer": {
+  "pt": "Melhoria: Reabastecer",
+  "en": "Restock Upgrade",
+  "icone": "textures/items/cl/c/melhoria_reabastecer"
+ },
  "cl:mesa_fundicao": {
   "pt": "Mesa de Fundição",
   "en": "Casting Table",
@@ -5529,6 +5569,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Glass Pane",
   "icone": "textures/blocks/glass"
  },
+ "minecraft:glistering_melon_slice": {
+  "pt": "glistering_melon_slice",
+  "en": "glistering_melon_slice"
+ },
  "minecraft:glowstone": {
   "pt": "Pedra Luminosa",
   "en": "Glowstone",
@@ -6219,6 +6263,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Graveto",
   "en": "Stick",
   "icone": "textures/items/stick"
+ },
+ "minecraft:sticky_piston": {
+  "pt": "Pistão Grudento",
+  "en": "Sticky Piston",
+  "icone": "textures/blocks/piston_side"
  },
  "minecraft:stone": {
   "pt": "Pedra",
@@ -11944,6 +11993,169 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_alimentacao",
+  "resultado": "cl:melhoria_alimentacao",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "ABM",
+   " E "
+  ],
+  "chaves": {
+   "C": "minecraft:golden_carrot",
+   "A": "minecraft:golden_apple",
+   "B": "cl:melhoria_base",
+   "M": "minecraft:glistering_melon_slice",
+   "E": "minecraft:ender_pearl"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_base",
+  "resultado": "cl:melhoria_base",
+  "qtd": 1,
+  "grade": [
+   "SIS",
+   "ILI",
+   "SIS"
+  ],
+  "chaves": {
+   "S": "minecraft:string",
+   "I": "minecraft:iron_ingot",
+   "L": "minecraft:leather"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_coleta",
+  "resultado": "cl:melhoria_coleta",
+  "qtd": 1,
+  "grade": [
+   " P ",
+   "SBS",
+   "RRR"
+  ],
+  "chaves": {
+   "P": "minecraft:sticky_piston",
+   "S": "minecraft:string",
+   "B": "cl:melhoria_base",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_compactacao",
+  "resultado": "cl:melhoria_compactacao",
+  "qtd": 1,
+  "grade": [
+   "IPI",
+   "PBP",
+   "RPR"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "P": "minecraft:piston",
+   "B": "cl:melhoria_base",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_compactacao_avancada",
+  "resultado": "cl:melhoria_compactacao_avancada",
+  "qtd": 1,
+  "grade": [
+   " D ",
+   "GCG",
+   "RRR"
+  ],
+  "chaves": {
+   "D": "minecraft:diamond",
+   "G": "minecraft:gold_ingot",
+   "C": "cl:melhoria_compactacao",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_deposito",
+  "resultado": "cl:melhoria_deposito",
+  "qtd": 1,
+  "grade": [
+   " P ",
+   "IBI",
+   "RCR"
+  ],
+  "chaves": {
+   "P": "minecraft:piston",
+   "I": "minecraft:iron_ingot",
+   "B": "cl:melhoria_base",
+   "R": "minecraft:redstone",
+   "C": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_ima",
+  "resultado": "cl:melhoria_ima",
+  "qtd": 1,
+  "grade": [
+   "EIE",
+   "IPI",
+   "R L"
+  ],
+  "chaves": {
+   "E": "minecraft:ender_pearl",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:melhoria_coleta",
+   "R": "minecraft:redstone",
+   "L": "minecraft:lapis_lazuli"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_reabastecer",
+  "resultado": "cl:melhoria_reabastecer",
+  "qtd": 1,
+  "grade": [
+   " P ",
+   "IBI",
+   "RCR"
+  ],
+  "chaves": {
+   "P": "minecraft:sticky_piston",
+   "I": "minecraft:iron_ingot",
+   "B": "cl:melhoria_base",
+   "R": "minecraft:redstone",
+   "C": "minecraft:chest"
+  },
   "estacoes": [
    "crafting_table"
   ]

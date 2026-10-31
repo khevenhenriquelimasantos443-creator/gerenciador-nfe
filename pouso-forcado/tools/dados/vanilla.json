@@ -596,6 +596,10 @@
   "en": "Glass Pane",
   "icone": "textures/blocks/glass"
  },
+ "minecraft:glistering_melon_slice": {
+  "pt": "glistering_melon_slice",
+  "en": "glistering_melon_slice"
+ },
  "minecraft:glowstone": {
   "pt": "Pedra Luminosa",
   "en": "Glowstone",
@@ -1291,6 +1295,11 @@
   "pt": "Graveto",
   "en": "Stick",
   "icone": "textures/items/stick"
+ },
+ "minecraft:sticky_piston": {
+  "pt": "Pistão Grudento",
+  "en": "Sticky Piston",
+  "icone": "textures/blocks/piston_side"
  },
  "minecraft:stone": {
   "pt": "Pedra",

@@ -2,6 +2,7 @@ import { Entity, EquipmentSlot, ItemStack, Player, system, world } from "@minecr
 import { aviso } from "../jogador/hud.js";
 import { darAoJogador } from "../util/inventario.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
+import { mochilaUsadaEmBau } from "./melhorias_mochila.js";
 
 /*
  * Mochila (1.10.0), a do mod Backpacks (Eydamos): 27 espaços. O Bedrock não abre a tela de um item, então a mochila
@@ -74,7 +75,7 @@ function guardar(j: Player, m: Entity): void {
 
 export function registrarMochila(): void {
   world.afterEvents.itemUse.subscribe(({ itemStack, source }) => {
-    if (itemStack.typeId === ITEM) system.run(() => por(source));
+    if (itemStack.typeId === ITEM && !mochilaUsadaEmBau(source)) system.run(() => por(source));
   });
   world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
     if (hitEntity.typeId !== ENTIDADE || !(damagingEntity instanceof Player) || !hitEntity.isValid) return;

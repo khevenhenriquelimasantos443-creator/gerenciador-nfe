@@ -133,7 +133,11 @@ export type Acao =
   | "vento"
   | "girocoptero"
   | "biplano_alto"
-  | "voo_lento";
+  | "voo_lento"
+  | "ima_mochila"
+  | "comer_mochila"
+  | "deposito_mochila"
+  | "templo_yung";
 
 type MissaoBase = {
   id: string;
@@ -432,6 +436,18 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ia_giro", objetivo: { tipo: "acao", acao: "girocoptero", qtd: 1 }, recompensa: [{ item: "minecraft:string", quantidade: 8 }] },
       { id: "ia_biplano", requer: ["ia_motor"], objetivo: { tipo: "acao", acao: "biplano_alto", qtd: 1 }, recompensa: [{ item: "cl:coque", quantidade: 32 }] },
       { id: "ia_dirigivel", requer: ["ia_motor"], objetivo: { tipo: "acao", acao: "voo_lento", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "mochilas", // 1.14.0: Sophisticated Backpacks e o templo do YUNG's
+    icone: "cl:mochila",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "sb_base", objetivo: { tipo: "ter", item: "cl:melhoria_base", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+      { id: "sb_ima", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "ima_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 2 }] },
+      { id: "sb_comer", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "comer_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:golden_carrot", quantidade: 8 }] },
+      { id: "sb_deposito", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "deposito_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 4 }] },
+      { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {
