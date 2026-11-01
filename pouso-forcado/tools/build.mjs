@@ -128,7 +128,7 @@ const cabecalho = (pasta) => JSON.parse(readFileSync(join(RAIZ, pasta, "manifest
 const bpHeader = cabecalho("BP"), rpHeader = cabecalho("RP");
 const texto = (s) => Buffer.from(s, "utf8");
 const mundo = gerarZip([
-  { nome: "level.dat", dados: gerarLevelDat("Pouso Forçado", false, true) }, // 1.15.0: infinito, com a geração natural
+  { nome: "level.dat", dados: gerarLevelDat("Pouso Forçado") }, // plano: o terreno natural do Bedrock traz água, cavernas e outros biomas (1.15.1)
   { nome: "levelname.txt", dados: texto("Pouso Forçado") },
   { nome: "world_behavior_packs.json", dados: texto(JSON.stringify([{ pack_id: bpHeader.uuid, version: bpHeader.version }], null, 2)) },
   { nome: "world_resource_packs.json", dados: texto(JSON.stringify([{ pack_id: rpHeader.uuid, version: rpHeader.version }], null, 2)) },

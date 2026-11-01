@@ -1,6 +1,7 @@
 import { BlockVolume, Dimension } from "@minecraft/server";
-import { IDS, MASMORRA, MASMORRA_FUNDA_SAQUE, MASMORRA_SAQUE } from "../config.js";
-import { sortearSaque } from "../util/aleatorio.js";
+import { GERADOR_MONSTROS, MASMORRA, MASMORRA_FUNDA_SAQUE, MASMORRA_SAQUE } from "../config.js";
+import { porSpawner } from "../util/spawner.js";
+import { escolher, sortearSaque } from "../util/aleatorio.js";
 import { criarBauCom } from "../util/inventario.js";
 import { registrarPonto } from "./pontos.js";
 
@@ -31,8 +32,9 @@ export function talvezMasmorra(dim: Dimension, x0: number, z0: number, sorte: ()
     if (b && !b.isAir) b.setType(funda ? "minecraft:cracked_deepslate_bricks" : "minecraft:mossy_cobblestone");
   }
   const meio = { x: x0 + 7, z: z0 + 7 };
-  dim.getBlock({ x: meio.x, y, z: meio.z })?.setType(IDS.geradorMonstros);
-  if (funda) dim.getBlock({ x: meio.x + 2, y, z: meio.z + 2 })?.setType(IDS.geradorMonstros);
+  const mobs = funda ? GERADOR_MONSTROS.mobsFundo : GERADOR_MONSTROS.mobs;
+  porSpawner(dim, { x: meio.x, y, z: meio.z }, escolher(mobs, sorte));
+  if (funda) porSpawner(dim, { x: meio.x + 2, y, z: meio.z + 2 }, escolher(mobs, sorte));
   const tabela = funda ? MASMORRA_FUNDA_SAQUE : MASMORRA_SAQUE;
   criarBauCom(dim, { x: x1 + 1, y, z: z2 - 1 }, sortearSaque(tabela, sorte));
   if (funda || sorte() < 0.5) criarBauCom(dim, { x: x2 - 1, y, z: z1 + 1 }, sortearSaque(tabela, sorte));

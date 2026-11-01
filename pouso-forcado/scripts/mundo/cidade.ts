@@ -1,5 +1,6 @@
 import { BlockPermutation, BlockVolume, Dimension } from "@minecraft/server";
-import { CIDADE, CIDADE_SAQUE, IDS, MUNDO_PLANO, NATIVO, TORRE_SAQUE } from "../config.js";
+import { CIDADE, CIDADE_SAQUE, GERADOR_MONSTROS, IDS, MUNDO_PLANO, NATIVO, TORRE_SAQUE } from "../config.js";
+import { porSpawner } from "../util/spawner.js";
 import { pertoDeRaraNativa } from "./nativo.js";
 import { mundoPlano } from "./tipo.js";
 import { chunkDaNave, escolher, rng, sementeDe, sementeDoMundo, sortearSaque } from "../util/aleatorio.js";
@@ -143,7 +144,7 @@ function torre(dim: Dimension, x0: number, z0: number, sorte: () => number): voi
   por(dim, ax + 2, topo + 8, az + 2, "minecraft:lightning_rod");
   criarBauCom(dim, { x: ax - 1, y: topo + 1, z: az - 1 }, sortearSaque(TORRE_SAQUE, sorte));
   // 1.3.0: no alto da torre, um Gerador de Blazes (vara de blaze → pó de blaze, sem o Nether).
-  por(dim, ax + 3, topo + 1, az + 3, "cl:gerador_blaze");
+  porSpawner(dim, { x: ax + 3, y: topo + 1, z: az + 3 }, escolher(GERADOR_MONSTROS.blazes, sorte));
   ferragem(dim, ax - 1, topo + 1, az + 3, sorte);
 }
 
@@ -278,7 +279,8 @@ function predio(dim: Dimension, x0: number, z0: number, dist: number, sorte: () 
     if (sorte() < CIDADE.chanceBauPorAndar) {
       criarBauCom(dim, { x: x2 - 1, y, z: z1 + 1 + Math.floor(sorte() * 6) }, sortearSaque(CIDADE_SAQUE, sorte));
     }
-    if (andaresComGerador.has(f)) por(dim, x1 + 3 + Math.floor(sorte() * 5), y, z1 + 3 + Math.floor(sorte() * 4), IDS.geradorMonstros);
+    // 1.15.1: o spawner do Minecraft, com um dos mobs das cidades.
+    if (andaresComGerador.has(f)) porSpawner(dim, { x: x1 + 3 + Math.floor(sorte() * 5), y, z: z1 + 3 + Math.floor(sorte() * 4) }, escolher(GERADOR_MONSTROS.mobs, sorte));
   }
 }
 

@@ -55,6 +55,10 @@ export function relatorio(): string[] {
 
 export function registrarPerfil(): void {
   inicio = system.currentTick;
+  // Teste no servidor: scriptevent cl:teste_perfil escreve o relatório no log.
+  system.afterEvents.scriptEventReceive.subscribe(({ id }) => {
+    if (id === "cl:teste_perfil") for (const l of relatorio()) console.warn(`[perfil] ${l.replace(/§./g, "")}`);
+  });
   system.runInterval(() => {
     anterior = atual;
     atual = new Map();

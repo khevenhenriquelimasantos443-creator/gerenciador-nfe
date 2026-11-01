@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.15.0";
+export const VERSAO = "1.15.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -84,6 +84,7 @@ export const PROPS = {
   naveColocada: `${NS}:nave_colocada`, // mundo
   naveChunk: `${NS}:nave_chunk`, // mundo: "cx,cz" do chunk da nave
   sementeRelevo: `${NS}:semente_relevo`, // mundo
+  alturasCidades: `${NS}:alturas_cidades`, // 1.15.1: altura do chão de cada cidade no mundo normal
   piramidesPostas: `${NS}:piramides_postas`, // 1.15.0: pirâmides já postas no mundo normal ("x,z" do canto)
   tipoMundo: `${NS}:tipo_mundo`, // mundo: "plano" (o do add-on) ou "normal" (relevo desligado)
   pontos: `${NS}:pontos`, // mundo: JSON com masmorras e destroços já gerados (para as missões)

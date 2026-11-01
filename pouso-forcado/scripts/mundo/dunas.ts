@@ -1,4 +1,4 @@
-import { BlockVolume, Dimension } from "@minecraft/server";
+import { Dimension, ListBlockVolume, Vector3 } from "@minecraft/server";
 import { CIDADE, DUNAS, MUNDO_PLANO, RARAS_BORDA_PLANA } from "../config.js";
 import { foraDaCidade } from "./cidade.js";
 import { foraDasRaras } from "./raras.js";
@@ -11,7 +11,7 @@ import { foraDasRaras } from "./raras.js";
  *   forma cristas compridas (dunas transversais);
  * - "altura máxima": outro ruído largo, para dunas de 3 a 10 blocos variarem pelo mapa.
  * Em volta da nave, das cidades e das estruturas raras (templos, destroços) o chão fica plano.
- * Custo: 1 fillBlocks por coluna com duna (no máximo 256 por chunk).
+ * Custo: 1 fillBlocks por chunk com duna (uma lista com todos os blocos).
  */
 
 let perm: Uint8Array | undefined;
@@ -77,7 +77,11 @@ function degrau(a: number, b: number, v: number): number {
 }
 
 /** Altura da duna (em blocos acima do chão plano) na coluna x, z. */
-export function alturaDuna(x: number, z: number, semente: number, nave: { x: number; z: number }): number {
+export function alturaDuna(x: number, z: number, semente: number, nave: { x: number; z: number }, longeDeTudo = false): number {
+  return Math.round(alturaBruta(x, z, semente, nave, longeDeTudo));
+}
+
+function alturaBruta(x: number, z: number, semente: number, nave: { x: number; z: number }, longeDeTudo = false): number {
   preparar(semente);
   const d = DUNAS;
   const regiao = ruido(x / d.escalaCampo, z / d.escalaCampo) + 0.5 * ruido(x / (d.escalaCampo / 2) + 31, z / (d.escalaCampo / 2) - 17);
@@ -95,25 +99,39 @@ export function alturaDuna(x: number, z: number, semente: number, nave: { x: num
   const distNave = Math.hypot(x - nave.x, z - nave.z);
   const pouso = degrau(d.planoNave, d.planoNave + 40, distNave);
   // Cidades ficam numa planície: as dunas só começam CIDADE.bordaPlana blocos depois da borda.
+  // (longeDeTudo: o chunk inteiro já está longe de cidades e raras, conferido uma vez em porDunas.)
   const chunkNave: [number, number] = [Math.floor(nave.x / 16), Math.floor(nave.z / 16)];
-  const urbano = degrau(0, CIDADE.bordaPlana, foraDaCidade(x, z, semente, chunkNave));
+  const urbano = longeDeTudo ? 1 : degrau(0, CIDADE.bordaPlana, foraDaCidade(x, z, semente, chunkNave));
   // Templos e destroços também ficam num pedaço plano.
-  const raras = degrau(2, RARAS_BORDA_PLANA, foraDasRaras(x, z, semente, chunkNave));
-  return Math.round(limitar(campo * pouso * urbano * raras * (hMax * crista + ondulacao), 0, d.alturaMax + 2));
+  const raras = longeDeTudo ? 1 : degrau(2, RARAS_BORDA_PLANA, foraDasRaras(x, z, semente, chunkNave));
+  return limitar(campo * pouso * urbano * raras * (hMax * crista + ondulacao), 0, d.alturaMax + 2);
 }
 
 /** Enche as colunas do chunk com areia até a altura da duna. Devolve a maior altura posta. */
 export function porDunas(dimensao: Dimension, x0: number, z0: number, semente: number, nave: { x: number; z: number }): number {
   const y = MUNDO_PLANO.superficieY;
   let maior = 0;
+  // 1.15.1: todos os blocos da duna numa lista e um fillBlocks só (antes era um por coluna: ~18 ms por chunk), e a
+  // distância até cidades e raras conferida uma vez por chunk (nos cantos e no meio) em vez de em cada coluna.
+  const chunkNave: [number, number] = [Math.floor(nave.x / 16), Math.floor(nave.z / 16)];
+  const pontos = [[0, 0], [15, 0], [0, 15], [15, 15], [8, 8]];
+  const longeDeTudo = pontos.every(([dx, dz]) => foraDaCidade(x0 + dx, z0 + dz, semente, chunkNave) >= CIDADE.bordaPlana + 16) &&
+    pontos.every(([dx, dz]) => foraDasRaras(x0 + dx, z0 + dz, semente, chunkNave) >= RARAS_BORDA_PLANA + 16);
+  // A conta do ruído é lenta no motor de script do jogo: faz numa grade de 4 em 4 blocos (5×5) e interpola.
+  const G: number[] = [];
+  for (let i = 0; i <= 4; i++) for (let k = 0; k <= 4; k++) G.push(alturaBruta(x0 + i * 4, z0 + k * 4, semente, nave, longeDeTudo));
+  if (G.every((v) => v < 0.5)) return 0;
+  const blocos: Vector3[] = [];
   for (let dx = 0; dx < 16; dx++) {
     for (let dz = 0; dz < 16; dz++) {
-      const h = alturaDuna(x0 + dx, z0 + dz, semente, nave);
+      const i = dx >> 2, k = dz >> 2, fx = (dx & 3) / 4, fz = (dz & 3) / 4;
+      const a = G[i * 5 + k], b = G[(i + 1) * 5 + k], c = G[i * 5 + k + 1], e = G[(i + 1) * 5 + k + 1];
+      const h = Math.round((a * (1 - fx) + b * fx) * (1 - fz) + (c * (1 - fx) + e * fx) * fz);
       if (h <= 0) continue;
       maior = Math.max(maior, h);
-      const p = { x: x0 + dx, y, z: z0 + dz };
-      dimensao.fillBlocks(new BlockVolume(p, { ...p, y: y + h - 1 }), "minecraft:sand");
+      for (let k = 0; k < h; k++) blocos.push({ x: x0 + dx, y: y + k, z: z0 + dz });
     }
   }
+  if (blocos.length) dimensao.fillBlocks(new ListBlockVolume(blocos), "minecraft:sand");
   return maior;
 }

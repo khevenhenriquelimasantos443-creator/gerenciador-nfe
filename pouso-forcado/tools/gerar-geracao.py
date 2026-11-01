@@ -25,7 +25,7 @@ CFG = json.loads(subprocess.check_output(["node", "-e", """
 import('./BP/scripts/config.js').then((m) => console.log(JSON.stringify({
   templo: m.TEMPLO_SAQUE, destrocos: m.DESTROCOS_SAQUE, pecas: m.RELEVO.pecas, nativo: m.NATIVO, raras: m.RARAS,
   minerios: m.MINERIOS.filter((x) => x.bloco), petroleo: m.PETROLEO, masmorra: m.MASMORRA,
-  saqueMasmorra: m.MASMORRA_SAQUE, saqueFunda: m.MASMORRA_FUNDA_SAQUE, gerador: m.IDS.geradorMonstros })));
+  saqueMasmorra: m.MASMORRA_SAQUE, saqueFunda: m.MASMORRA_FUNDA_SAQUE, gerador: m.IDS.geradorMonstros, mobs: m.GERADOR_MONSTROS })));
 """], cwd=RAIZ, text=True))
 FILTRO = [{"test": "has_biome_tag", "operator": "==", "value": "desert"}]
 
@@ -59,6 +59,25 @@ escrever("BP/loot_tables/chests/cl_destrocos.json", tabela(CFG["destrocos"]))
 escrever("BP/loot_tables/chests/cl_piramide.json", tabela(CFG["templo"]))
 escrever("BP/loot_tables/chests/cl_masmorra.json", tabela(CFG["saqueMasmorra"]))
 escrever("BP/loot_tables/chests/cl_masmorra_funda.json", tabela(CFG["saqueFunda"]))
+
+
+# ---------- Spawners do Minecraft (1.15.1): uma estrutura de um bloco para cada mob ----------
+def dados_spawner(mob, x=0, y=0, z=0):
+    g = CFG["mobs"]
+    return N.comp({"block_entity_data": N.comp({
+        "id": N.string("MobSpawner"), "EntityIdentifier": N.string(mob), "isMovable": N.byte(1), "x": N.int_(x), "y": N.int_(y), "z": N.int_(z),
+        "Delay": N.short(20), "MinSpawnDelay": N.short(200), "MaxSpawnDelay": N.short(800), "SpawnCount": N.short(g["porVez"][1]),
+        "MaxNearbyEntities": N.short(g["limitePerto"]), "RequiredPlayerRange": N.short(g["raioJogador"]), "SpawnRange": N.short(3)})})
+
+
+MOBS = sorted(set(CFG["mobs"]["mobs"]) | set(CFG["mobs"]["mobsFundo"]) | set(CFG["mobs"]["blazes"]))
+for mob in MOBS:
+    raiz = N.comp({"format_version": N.int_(1), "size": N.lista(3, [N.int_(1), N.int_(1), N.int_(1)]),
+                   "structure": N.comp({"block_indices": N.lista(9, [N.lista(3, [N.int_(0)]), N.lista(3, [N.int_(-1)])]), "entities": N.lista(10, []),
+                                        "palette": N.comp({"default": N.comp({"block_palette": N.lista(10, [N.comp({"name": N.string("minecraft:mob_spawner"), "states": N.comp({}), "version": N.int_(18481152)})]),
+                                                                              "block_position_data": N.comp({"0": dados_spawner(mob)})})})}),
+                   "structure_world_origin": N.lista(3, [N.int_(0), N.int_(0), N.int_(0)])})
+    (RAIZ / f"BP/structures/cl/spawner_{mob.replace(':', '_')}.mcstructure").write_bytes(N.escrever(raiz))
 
 
 # ---------- Estruturas com baú de saque ----------
@@ -108,10 +127,11 @@ def masmorra(nome, funda):
             for z in range(Z):
                 dentro = 0 < x < X - 1 and 0 < z < Z - 1 and 0 < y < Y - 1
                 grade[(x, y, z)] = ("minecraft:air", {}) if dentro else (musgo if rnd.random() < 0.15 else parede, {})
-    extra = {}
-    grade[(4, 1, 4)] = (CFG["gerador"], {})
-    if funda:
-        grade[(6, 1, 6)] = (CFG["gerador"], {})
+    extra, spawners = {}, {}
+    lista = CFG["mobs"]["mobsFundo"] if funda else CFG["mobs"]["mobs"]
+    for p in ((4, 1, 4), (6, 1, 6)) if funda else ((4, 1, 4),):
+        grade[p] = ("minecraft:mob_spawner", {})
+        spawners[p] = rnd.choice(lista)
     saque = "cl_masmorra_funda" if funda else "cl_masmorra"
     for (x, y, z) in ((1, 1, 7), (7, 1, 1)):
         grade[(x, y, z)] = ("minecraft:chest", {"minecraft:cardinal_direction": "south"})
@@ -126,6 +146,8 @@ def masmorra(nome, funda):
                 if ch not in ids:
                     ids[ch] = len(paleta)
                     paleta.append(N.comp({"name": N.string(nomeb), "states": N.comp({k: N.string(v) for k, v in st.items()}), "version": N.int_(18481152)}))
+                if (x, y, z) in spawners:
+                    dados[str(len(camada))] = dados_spawner(spawners[(x, y, z)], x, y, z)
                 if (x, y, z) in extra:
                     dados[str(len(camada))] = N.comp({"block_entity_data": N.comp({
                         "id": N.string("Chest"), "LootTable": N.string(f"loot_tables/chests/{extra[(x, y, z)]}.json"), "LootTableSeed": N.int_(0),

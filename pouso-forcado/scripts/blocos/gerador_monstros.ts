@@ -42,7 +42,8 @@ export const geradorMonstros: BlockCustomComponent = {
 
 export function registrarGeradorMonstros(): void {
   world.afterEvents.playerBreakBlock.subscribe(({ player, brokenBlockPermutation, block, dimension }) => {
-    if (brokenBlockPermutation.type.id !== IDS.geradorMonstros) return;
+    // 1.15.1: o spawner do Minecraft (cidades e masmorras) conta igual ao Gerador de Monstros.
+    if (brokenBlockPermutation.type.id !== IDS.geradorMonstros && brokenBlockPermutation.type.id !== "minecraft:mob_spawner") return;
     registrarAcao(player, "spawner");
     const local = block.center();
     system.run(() => {

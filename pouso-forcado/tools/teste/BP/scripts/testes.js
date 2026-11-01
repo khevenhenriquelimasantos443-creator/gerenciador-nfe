@@ -979,6 +979,29 @@ teste("piramide_normal", 1400, (t) => {
   });
 });
 
+// Custo do relevo do mundo plano: o jogador anda por chunks novos e o relatório de perfil sai no log.
+teste("perfil_relevo", 1300, (t) => {
+  const j = robo(t, { x: 2, y: 2, z: 2 });
+  const passos = [[2000, 2000], [2100, 2000], [2200, 2000], [2300, 2000], [2400, 2000]];
+  passos.forEach(([x, z], k) => t.runAfterDelay(20 + k * 220, () => j.teleport({ x, y: 50, z })));
+  t.runAfterDelay(1150, () => j.runCommand("scriptevent cl:teste_perfil"));
+  t.runAfterDelay(1180, () => t.succeed());
+});
+
+// 1.15.1: o spawner do Minecraft com o mob escolhido (cidades e masmorras).
+teste("spawner", 700, (t) => {
+  const j = robo(t, { x: 1, y: 2, z: 1 });
+  j.setGameMode(GameMode.Creative);
+  t.runAfterDelay(5, () => world.structureManager.place("cl:spawner_minecraft_husk", t.getDimension(), t.worldLocation({ x: 5, y: 2, z: 5 })));
+  t.runAfterDelay(600, () => {
+    const b = t.getBlock({ x: 5, y: 2, z: 5 });
+    const n = t.getDimension().getEntities({ type: "minecraft:husk", location: t.worldLocation({ x: 5, y: 2, z: 5 }), maxDistance: 8 }).length;
+    log(`spawner: bloco=${b.typeId} husks=${n}`);
+    t.assert(b.typeId === "minecraft:mob_spawner", "não pôs o spawner");
+    t.succeed();
+  });
+});
+
 teste("bau_saque", 200, (t) => {
   const j = robo(t, { x: 2, y: 1, z: 2 });
   t.runAfterDelay(5, () => world.structureManager.place("cl:teste_bau", t.getDimension(), t.worldLocation({ x: 4, y: 1, z: 2 })));

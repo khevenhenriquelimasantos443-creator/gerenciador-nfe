@@ -2,6 +2,8 @@ import { duasLinhas } from "../jogador/hud.js";
 import { Difficulty, Entity, EntityInitializationCause, GameMode, Player, system, world } from "@minecraft/server";
 import { FAMILIA_RESISTE_SOL, HORDA, PROPS } from "../config.js";
 import { alturaDaSuperficie } from "./tipo.js";
+import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
+import { foraDaCidade } from "./cidade.js";
 import { DO_ADDON } from "../util/nascer.js";
 import { intervalo } from "../util/perfil.js";
 
@@ -144,8 +146,13 @@ function talvezOnda(): void {
 // de areia, sem pegar fogo) e nenhum nasce. Cavernas (abaixo da superfície) seguem como no jogo. Os mobs
 // postos pelo add-on (marca DO_ADDON: cidades, faraó, golem da tempestade...) ficam.
 const naSuperficie = (y: number): boolean => y >= alturaDaSuperficie() - HORDA.sol.profundidade;
+// 1.15.1: os spawners das cidades são os do Minecraft (os mobs não levam a marca): quem está numa cidade fica.
+const naCidade = (e: Entity): boolean => {
+  const nave = chunkDaNave();
+  return !!nave && foraDaCidade(e.location.x, e.location.z, sementeDoMundo(), nave) <= 2;
+};
 const deDia = (e: Entity): boolean =>
-  !e.hasTag(DO_ADDON) && naSuperficie(e.location.y) &&
+  !e.hasTag(DO_ADDON) && naSuperficie(e.location.y) && !naCidade(e) &&
   (e.matches({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] }) || e.matches({ families: ["undead"], excludeFamilies: [FAMILIA_RESISTE_SOL] }));
 
 function enterrarNaAreia(): void {

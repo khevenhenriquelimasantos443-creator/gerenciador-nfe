@@ -9,7 +9,7 @@ import { porMinerios } from "./minerios.js";
 import { registrarPonto } from "./pontos.js";
 import { raraDoChunk } from "./raras.js";
 import { foraDoYung, pedacoDoChunk, porPedaco } from "./templo_yung.js";
-import { intervalo } from "../util/perfil.js";
+import { intervalo, medir } from "../util/perfil.js";
 
 /*
  * Relevo do mundo plano: o mundo gera só camadas planas de areia, pedra e ardósia. Este módulo
@@ -169,15 +169,15 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   if (colocaPeca && !areaCarregada(dimensao, ox, oz, peca.tamanho)) return "esperar";
   if (rara && !areaCarregada(dimensao, x0, z0, rara.tamanho)) return "esperar";
 
-  porDunas(dimensao, x0, z0, semente, nave);
+  medir("relevo: dunas", () => porDunas(dimensao, x0, z0, semente, nave));
   desenterrarJogadores(dimensao, x0, z0);
-  porMinerios(dimensao, x0, z0, sorte);
-  if (!pertoDaNave && !naPiramide) talvezMasmorra(dimensao, x0, z0, sorte);
+  medir("relevo: minérios", () => porMinerios(dimensao, x0, z0, sorte));
+  if (!pertoDaNave && !naPiramide) medir("relevo: masmorra", () => talvezMasmorra(dimensao, x0, z0, sorte));
 
   if (colocaPeca && peca) {
     const origem: Vector3 = { x: ox, y: MUNDO_PLANO.superficieY + peca.deslocY, z: oz };
     const rotation = peca.girar ? GIROS[girar] : StructureRotation.None;
-    world.structureManager.place(peca.estrutura, dimensao, origem, { rotation });
+    medir("relevo: peças", () => world.structureManager.place(peca.estrutura, dimensao, origem, { rotation }));
   }
   if (pedaco) porPedaco(dimensao, pedaco);
   if (rara) {
@@ -188,8 +188,10 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
     if ("ponto" in rara) registrarPonto(rara.ponto, b.x, b.y, b.z, 7);
   }
   if (!pertoDaNave) {
-    porArbustosSecos(dimensao, x0, z0, sorte);
-    porCactos(dimensao, x0, z0, sorte);
+    medir("relevo: cactos", () => {
+      porArbustosSecos(dimensao, x0, z0, sorte);
+      porCactos(dimensao, x0, z0, sorte);
+    });
   }
 
   marca.setType(MUNDO_PLANO.marcador);
@@ -198,8 +200,8 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
 
 /**
  * Mundo normal (1.15.0): o relevo, as estruturas e os minérios vêm da geração natural do jogo; o script só monta as
- * cidades (que são feitas quarteirão a quarteirão). O chão do quarteirão é aplainado em NATIVO.alturaCidade: tira o
- * que sobra por cima e enche de areia por baixo. A marca de "feito" é o fundo do chunk (bedrock -> ardósia reforçada).
+ * cidades (que são feitas quarteirão a quarteirão). O chão do quarteirão é aplainado na altura do chão do primeiro
+ * quarteirão da cidade: tira o que sobra por cima e põe arenito por baixo. A marca de "feito" é o fundo do chunk (bedrock -> ardósia reforçada).
  */
 function decorarCidadeNormal(dimensao: Dimension, cx: number, cz: number, semente: number, naveChunk: [number, number]): Resultado {
   const cidade = cidadeDoChunk(cx, cz, semente, naveChunk);
@@ -210,9 +212,23 @@ function decorarCidadeNormal(dimensao: Dimension, cx: number, cz: number, sement
   const marca = dimensao.getBlock(canto);
   if (!marca) return "esperar";
   if (marca.typeId === MUNDO_PLANO.marcador) return "pronto";
-  const Y = NATIVO.alturaCidade;
+  // A altura vem do chão do primeiro quarteirão feito (guardada por cidade), e o alicerce é de arenito: areia por
+  // baixo caía e travava o jogo (1.15.1).
+  const chave = `${cidade.centro[0]},${cidade.centro[1]}`;
+  let alturas: Record<string, number> = {};
+  try {
+    alturas = JSON.parse((world.getDynamicProperty(PROPS.alturasCidades) as string) ?? "{}") as Record<string, number>;
+  } catch {
+    // começa vazio
+  }
+  let Y = alturas[chave];
+  if (Y === undefined) {
+    Y = (dimensao.getTopmostBlock({ x: x0 + 8, z: z0 + 8 })?.y ?? NATIVO.alturaCidade - 1) + 1;
+    alturas[chave] = Y;
+    world.setDynamicProperty(PROPS.alturasCidades, JSON.stringify(alturas));
+  }
   dimensao.fillBlocks(new BlockVolume({ x: x0, y: Y, z: z0 }, { x: x0 + 15, y: Y + 47, z: z0 + 15 }), "minecraft:air");
-  dimensao.fillBlocks(new BlockVolume({ x: x0, y: Y - 8, z: z0 }, { x: x0 + 15, y: Y - 1, z: z0 + 15 }), "minecraft:sand");
+  dimensao.fillBlocks(new BlockVolume({ x: x0, y: Y - 8, z: z0 }, { x: x0 + 15, y: Y - 1, z: z0 + 15 }), "minecraft:sandstone");
   alturaDaCidade(Y);
   construirQuarteirao(dimensao, cx, cz, cidade.dist, semente);
   desenterrarJogadores(dimensao, x0, z0);
