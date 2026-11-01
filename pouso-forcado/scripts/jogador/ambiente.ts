@@ -1,5 +1,6 @@
 import { BlockVolume, Difficulty, EntityDamageCause, EquipmentSlot, GameMode, ItemStack, Player, system, world } from "@minecraft/server";
-import { AR, CAMEL, FOLHAS, IDS, MUNDO_PLANO, PROPS, SEDE, TEMPERATURA, TEMPESTADE } from "../config.js";
+import { alturaDaSuperficie } from "../mundo/tipo.js";
+import { AR, CAMEL, FOLHAS, IDS, PROPS, SEDE, TEMPERATURA, TEMPESTADE } from "../config.js";
 import { tempestadeAtiva } from "../mundo/tempestade.js";
 import { registrarAcao as registrarAcaoAmbiente } from "../missoes/progresso.js";
 import { intervalo } from "../util/perfil.js";
@@ -59,8 +60,8 @@ const ehDia = (): boolean => {
   return t < 12500 || t > 23500;
 };
 
-/** Profundidade "do EnviroMine": o mundo plano tem a superfície em y 45; lá ela fica em 64. */
-const yDoEnviromine = (y: number) => y - MUNDO_PLANO.superficieY + 64;
+/** Profundidade "do EnviroMine": o mundo plano tem a superfície em y 45 (o normal, 63); lá ela fica em 64. */
+const yDoEnviromine = (y: number) => y - alturaDaSuperficie() + 64;
 
 function temperaturaDoAr(j: Player, ceu: boolean, v: Varredura): { ar: number; rapido: boolean } {
   const dia = ehDia();

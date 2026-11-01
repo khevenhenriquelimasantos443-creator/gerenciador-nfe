@@ -20,7 +20,7 @@ const versao = (v) => list("int", v.map(int));
 const b = (v) => byte(v ? 1 : 0);
 
 // `testes`: liga o experimento "Beta APIs" (GameTest), só para o mundo de testes do servidor (tools/testar-servidor).
-export function gerarLevelDat(nome, testes = false) {
+export function gerarLevelDat(nome, testes = false, infinito = false) {
   const camadas = JSON.stringify({
     biome_id: BIOMA_DESERTO,
     block_layers: CAMADAS,
@@ -32,7 +32,7 @@ export function gerarLevelDat(nome, testes = false) {
   const dados = comp({
     // Mundo
     LevelName: str(nome),
-    Generator: int(2), // 0 = limitado, 1 = infinito, 2 = plano
+    Generator: int(infinito ? 1 : 2), // 0 = limitado, 1 = infinito, 2 = plano
     FlatWorldLayers: str(camadas),
     BiomeOverride: str(""),
     RandomSeed: long(Math.floor(Math.random() * 2 ** 31)),

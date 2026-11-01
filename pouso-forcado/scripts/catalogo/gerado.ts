@@ -2131,6 +2131,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Butter",
   "icone": "textures/items/cl/arte/manteiga"
  },
+ "cl:marco_destrocos": {
+  "pt": "Marco de Destroços",
+  "en": "Wreck Marker",
+  "icone": "textures/blocks/cl/c/marco_destrocos"
+ },
+ "cl:marco_masmorra": {
+  "pt": "Marco de Masmorra",
+  "en": "Dungeon Marker",
+  "icone": "textures/blocks/cl/c/marco_masmorra"
+ },
+ "cl:marco_masmorra_funda": {
+  "pt": "Marco de Masmorra Funda",
+  "en": "Deep Dungeon Marker",
+  "icone": "textures/blocks/cl/c/marco_masmorra_funda"
+ },
  "cl:marmore": {
   "pt": "Mármore",
   "en": "Marble",

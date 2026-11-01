@@ -66,6 +66,10 @@ def _s(b, s):
 
 
 def _w(b, t):
+    if t.tipo == 4: b += struct.pack("<q", t.v); return
+    if t.tipo == 5: b += struct.pack("<f", t.v); return
+    if t.tipo == 6: b += struct.pack("<d", t.v); return
+    if t.tipo == 11: b += struct.pack("<i", len(t.v)) + b"".join(struct.pack("<i", x) for x in t.v); return
     if t.tipo == 1: b += struct.pack("<b", t.v)
     elif t.tipo == 2: b += struct.pack("<h", t.v)
     elif t.tipo == 3: b += struct.pack("<i", t.v)
@@ -84,3 +88,51 @@ def escrever(raiz):
     b = bytearray(b"\x0a\x00\x00")
     _w(b, raiz)
     return bytes(b)
+
+
+# ---------- Leitura do NBT do Bedrock (little-endian), guardando os tipos para regravar ----------
+def ler_le(dados):
+    pos = [0]
+
+    def lerb(fmt, n):
+        v = struct.unpack("<" + fmt, dados[pos[0]:pos[0] + n])[0]
+        pos[0] += n
+        return v
+
+    def texto():
+        n = lerb("H", 2)
+        s = dados[pos[0]:pos[0] + n].decode("utf-8", "replace")
+        pos[0] += n
+        return s
+
+    def valor(t):
+        if t == 1: return Tag(1, lerb("b", 1))
+        if t == 2: return Tag(2, lerb("h", 2))
+        if t == 3: return Tag(3, lerb("i", 4))
+        if t == 4: return Tag(4, lerb("q", 8))
+        if t == 5: return Tag(5, lerb("f", 4))
+        if t == 6: return Tag(6, lerb("d", 8))
+        if t == 8: return Tag(8, texto())
+        if t == 9:
+            tt = lerb("b", 1); n = lerb("i", 4)
+            return Tag(9, (tt, [valor(tt) for _ in range(n)]))
+        if t == 10:
+            d = {}
+            while True:
+                tt = lerb("b", 1)
+                if tt == 0: return Tag(10, d)
+                k = texto(); d[k] = valor(tt)
+        if t == 11:
+            n = lerb("i", 4); return Tag(11, [lerb("i", 4) for _ in range(n)])
+        raise ValueError(f"tipo {t}")
+
+    t = lerb("b", 1)
+    texto()
+    return valor(t)
+
+
+def py(t):
+    """Tag -> valor Python (para ler)."""
+    if t.tipo == 10: return {k: py(v) for k, v in t.v.items()}
+    if t.tipo == 9: return [py(x) for x in t.v[1]]
+    return t.v

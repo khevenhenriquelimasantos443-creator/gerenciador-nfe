@@ -933,3 +933,63 @@ teste("mochila_sb", 400, (t) => {
     t.succeed();
   });
 });
+
+// 1.15.0: no mundo normal, o jogo põe as raras nos cantos da grade (NATIVO em config.ts) com baú de saque.
+teste("nativo", 400, (t) => {
+  t.runAfterDelay(200, () => {
+    const dim = t.getDimension();
+    const r = {};
+    for (const [nome, ox, oz, lado] of [["templo", 592, 336, 16], ["destrocos", 1120, 928, 18], ["piramide", 960, 2400, 84], ["brilho", 576, 320, 48]]) {
+      const c = {};
+      for (let x = ox - 2; x < ox + lado + 2; x += nome === "piramide" ? 3 : 1)
+        for (let z = oz - 2; z < oz + lado + 2; z += nome === "piramide" ? 3 : 1) {
+          const topo = dim.getTopmostBlock({ x, z });
+          if (!topo) { c.descarregado = (c.descarregado ?? 0) + 1; continue; }
+          for (let y = topo.y - 50; y <= topo.y; y++) {
+            const b = dim.getBlock({ x, y, z });
+            if (b && /chest|terracotta|concrete|cut_sandstone|marco|gerador|glowstone/.test(b.typeId)) c[b.typeId.replace("minecraft:", "")] = (c[b.typeId.replace("minecraft:", "")] ?? 0) + 1;
+          }
+        }
+      r[nome] = c;
+    }
+    log(`nativo: ${JSON.stringify(r)}`);
+    t.succeed();
+  });
+});
+
+// 1.15.0: no mundo normal, o script põe a pirâmide quando alguém chega perto.
+teste("piramide_normal", 1400, (t) => {
+  const j = robo(t, { x: 2, y: 2, z: 2 });
+  t.runAfterDelay(20, () => j.teleport({ x: 1001, y: 120, z: 2441 }));
+  t.runAfterDelay(1300, () => {
+    const dim = t.getDimension();
+    const c = {};
+    for (let x = 960; x < 1043; x += 2) for (let z = 2400; z < 2483; z += 2) {
+      const topo = dim.getTopmostBlock({ x, z });
+      if (!topo) { c.descarregado = (c.descarregado ?? 0) + 1; continue; }
+      for (let y = topo.y - 60; y <= topo.y; y++) {
+        const b = dim.getBlock({ x, y, z });
+        if (b && /chest|terracotta|cut_sandstone|mob_spawner/.test(b.typeId)) c[b.typeId.replace("minecraft:", "")] = (c[b.typeId.replace("minecraft:", "")] ?? 0) + 1;
+      }
+    }
+    const farao = dim.getEntities({ type: "cl:farao", location: { x: 1001, y: 60, z: 2441 }, maxDistance: 80 }).length;
+    log(`piramide_normal: ${JSON.stringify(c)} farao=${farao}`);
+    t.assert((c.blue_terracotta ?? 0) > 50, "a pirâmide não foi posta");
+    t.succeed();
+  });
+});
+
+teste("bau_saque", 200, (t) => {
+  const j = robo(t, { x: 2, y: 1, z: 2 });
+  t.runAfterDelay(5, () => world.structureManager.place("cl:teste_bau", t.getDimension(), t.worldLocation({ x: 4, y: 1, z: 2 })));
+  t.runAfterDelay(10, () => {
+    const c = t.getBlock({ x: 4, y: 1, z: 2 }).getComponent("inventory").container;
+    log(`bau_saque: antes de abrir vazios=${c.emptySlotsCount}`);
+    j.interactWithBlock({ x: 4, y: 1, z: 2 }, Direction.West);
+  });
+  t.runAfterDelay(30, () => {
+    const c = t.getBlock({ x: 4, y: 1, z: 2 }).getComponent("inventory").container;
+    log(`bau_saque: depois de abrir vazios=${c.emptySlotsCount}`);
+    t.succeed();
+  });
+});

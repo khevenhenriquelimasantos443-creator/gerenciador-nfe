@@ -14,7 +14,7 @@ if (!SRV) throw new Error("uso: node tools/testar-servidor.mjs <pasta do servido
 const MUNDO = join(SRV, "worlds", "teste");
 rmSync(MUNDO, { recursive: true, force: true });
 mkdirSync(MUNDO, { recursive: true });
-writeFileSync(join(MUNDO, "level.dat"), gerarLevelDat("Teste", true));
+writeFileSync(join(MUNDO, "level.dat"), gerarLevelDat("Teste", true, !!process.env.MUNDO_INFINITO));
 writeFileSync(join(MUNDO, "levelname.txt"), "Teste");
 const pacote = (pasta) => JSON.parse(readFileSync(join(pasta, "manifest.json"), "utf8")).header;
 const bps = [join(RAIZ, "BP"), join(RAIZ, "tools/teste/BP")];

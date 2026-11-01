@@ -4,6 +4,8 @@ import { mostrarDiagnostico } from "../mundo/diagnostico.js";
 import { relatorio } from "../util/perfil.js";
 import { raraMaisProxima } from "../mundo/raras.js";
 import { temploYungMaisProximo } from "../mundo/templo_yung.js";
+import { nativoMaisProximo } from "../mundo/nativo.js";
+import { mundoPlano } from "../mundo/tipo.js";
 import { chunkDaNave, sementeDoMundo } from "../util/aleatorio.js";
 
 /*
@@ -63,6 +65,7 @@ export function registrarComandos(registro: CustomCommandRegistry): void {
     ["cl:templo", "cl.comando.templo", (j) => perto("templo", j)],
     ["cl:destrocos", "cl.comando.destrocos", (j) => perto("destrocos", j)],
     ["cl:piramide", "cl.comando.piramide", (j) => {
+      if (!mundoPlano()) return nativoMaisProximo("piramide", j.location.x, j.location.z);
       const nave = chunkDaNave();
       return nave ? temploYungMaisProximo(j.location.x, j.location.z, sementeDoMundo(), nave) : undefined;
     }],
@@ -81,6 +84,7 @@ export function registrarComandos(registro: CustomCommandRegistry): void {
 }
 
 function perto(tipo: "templo" | "destrocos", j: Player): Alvo {
+  if (!mundoPlano()) return nativoMaisProximo(tipo, j.location.x, j.location.z);
   const nave = chunkDaNave();
   if (!nave) return undefined;
   return raraMaisProxima(tipo, j.location.x, j.location.z, sementeDoMundo(), nave);

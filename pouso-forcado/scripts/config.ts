@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.14.1";
+export const VERSAO = "1.15.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -84,6 +84,7 @@ export const PROPS = {
   naveColocada: `${NS}:nave_colocada`, // mundo
   naveChunk: `${NS}:nave_chunk`, // mundo: "cx,cz" do chunk da nave
   sementeRelevo: `${NS}:semente_relevo`, // mundo
+  piramidesPostas: `${NS}:piramides_postas`, // 1.15.0: pirâmides já postas no mundo normal ("x,z" do canto)
   tipoMundo: `${NS}:tipo_mundo`, // mundo: "plano" (o do add-on) ou "normal" (relevo desligado)
   pontos: `${NS}:pontos`, // mundo: JSON com masmorras e destroços já gerados (para as missões)
   visitados: `${NS}:visitados`, // jogador: JSON com os lugares que ele já achou
@@ -219,6 +220,25 @@ export const RELEVO = {
 // Assim ficam espalhadas ao acaso, sem amontoar. O chão em volta fica plano (sem dunas).
 // 242 chunks = 3.872 blocos: 15 de cada tipo a cada 15.000 × 15.000 blocos.
 // Para achar: /cl:templo e /cl:destrocos (scripts/jogador/comandos.ts).
+// Geração natural (1.15.0, mundo normal): o jogo põe as estruturas pelas features (BP/features, BP/feature_rules,
+// geradas por tools/gerar-geracao.py). As raras ficam numa grade fixa de "celula" chunks com o canto no chunk
+// "desloc" de cada célula (a mesma conta no script acha a mais perto para os comandos e as missões). O jogo gira a
+// estrutura ao acaso, então o centro é o que vale.
+export const NATIVO = {
+  templo: { estrutura: `${NS}:templo_soterrado_n`, celula: 96, desloc: [37, 21], tamanho: 15, deslocY: -3 },
+  destrocos: { estrutura: `${NS}:nave_caida_n`, celula: 96, desloc: [70, 58], tamanho: 17, deslocY: -2 },
+  // As pirâmides (83×83) são grandes demais para a feature: o script põe a variante v (pedaços de 64) uma vez, quando
+  // alguém chega a "perto" blocos (scripts/mundo/templo_yung.ts).
+  piramides: [
+    { celula: 240, desloc: [60, 150] },
+    { celula: 240, desloc: [170, 40] },
+    { celula: 240, desloc: [200, 200] },
+  ],
+  pertoPiramide: 160,
+  cidadeLongeDeRaras: 10, // chunks: cidade (por script) não nasce em cima de uma estrutura rara nativa
+  alturaCidade: 64, // no mundo normal a cidade aplaina o chão nesta altura
+} as const;
+
 // Pirâmide do YUNG's Better Desert Temples (1.14.0, scripts/mundo/templo_yung.ts): 83×83, uma por quadrado de
 // "celula" chunks; o centro fica "profundidade" blocos abaixo da areia (no mod: 4 a 24). Para achar: /cl:piramide.
 export const TEMPLO_YUNG_MUNDO = { celula: 300, chance: 1, distNave: 12, profundidade: 14 } as const;

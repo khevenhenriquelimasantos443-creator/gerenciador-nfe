@@ -1,4 +1,4 @@
-import { Player, world } from "@minecraft/server";
+import { BlockCustomComponent, Player, world } from "@minecraft/server";
 import { PROPS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { Acao } from "../missoes/lista.js";
@@ -22,6 +22,21 @@ function lerPontos(): Ponto[] {
     return [];
   }
 }
+
+/**
+ * Marco (1.15.0): as masmorras e os destroços da geração natural trazem um bloco-marco por dentro; no primeiro tick
+ * ele guarda o lugar aqui e vira ar.
+ */
+const MARCOS: Readonly<Record<string, [Acao, number]>> = {
+  "cl:marco_masmorra": ["masmorra", 6], "cl:marco_masmorra_funda": ["masmorra_funda", 6], "cl:marco_destrocos": ["destrocos", 7],
+};
+export const marcoPonto: BlockCustomComponent = {
+  onTick({ block: b }) {
+    const m = MARCOS[b.typeId];
+    if (m) registrarPonto(m[0], b.x, b.y, b.z, m[1]);
+    b.setType("minecraft:air");
+  },
+};
 
 /** Guarda um lugar novo (os mais antigos saem depois de 120). */
 export function registrarPonto(t: Acao, x: number, y: number, z: number, r: number): void {

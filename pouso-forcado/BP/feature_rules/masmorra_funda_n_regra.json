@@ -1,0 +1,48 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:feature_rules": {
+  "description": {
+   "identifier": "cl:masmorra_funda_n_regra",
+   "places_feature": "cl:masmorra_funda_n"
+  },
+  "conditions": {
+   "placement_pass": "underground_pass",
+   "minecraft:biome_filter": [
+    {
+     "test": "has_biome_tag",
+     "operator": "==",
+     "value": "desert"
+    }
+   ]
+  },
+  "distribution": {
+   "iterations": 1,
+   "scatter_chance": {
+    "numerator": 14,
+    "denominator": 1000
+   },
+   "coordinate_eval_order": "xzy",
+   "x": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     8
+    ]
+   },
+   "z": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     8
+    ]
+   },
+   "y": {
+    "distribution": "uniform",
+    "extent": [
+     -45,
+     -25
+    ]
+   }
+  }
+ }
+}

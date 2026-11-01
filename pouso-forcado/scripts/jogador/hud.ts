@@ -20,6 +20,14 @@ import { LUA, painelLua } from "../galacticraft/oxigenio.js";
 const avisos = new Map<string, { msg: RawMessage; ate: number }>();
 
 /** Mostra uma mensagem curta acima do painel por `segundos`. */
+/**
+ * Subtítulo em duas linhas (chave e chave_2): no celular o subtítulo não quebra sozinho e o fim saía da tela.
+ * Os %s vão na primeira linha.
+ */
+export function duasLinhas(chave: string, com?: string[]): RawMessage {
+  return { rawtext: [{ translate: chave, ...(com ? { with: com } : {}) }, { text: "\n" }, { translate: `${chave}_2` }] };
+}
+
 export function aviso(jogador: Player, msg: RawMessage | string, segundos = 3): void {
   avisos.set(jogador.id, { msg: typeof msg === "string" ? { translate: msg } : msg, ate: system.currentTick + segundos * 20 });
   desenhar(jogador);

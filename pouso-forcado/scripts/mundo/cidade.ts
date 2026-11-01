@@ -1,5 +1,7 @@
 import { BlockPermutation, BlockVolume, Dimension } from "@minecraft/server";
-import { CIDADE, CIDADE_SAQUE, IDS, MUNDO_PLANO, TORRE_SAQUE } from "../config.js";
+import { CIDADE, CIDADE_SAQUE, IDS, MUNDO_PLANO, NATIVO, TORRE_SAQUE } from "../config.js";
+import { pertoDeRaraNativa } from "./nativo.js";
+import { mundoPlano } from "./tipo.js";
 import { chunkDaNave, escolher, rng, sementeDe, sementeDoMundo, sortearSaque } from "../util/aleatorio.js";
 import { criarBauCom } from "../util/inventario.js";
 
@@ -17,7 +19,11 @@ import { criarBauCom } from "../util/inventario.js";
  * Custo: ~500 a 1500 blocos mexidos por quarteirão (fillBlocks para paredes e pisos).
  */
 
-const Y = MUNDO_PLANO.superficieY; // primeiro bloco de ar acima do chão
+let Y: number = MUNDO_PLANO.superficieY; // primeiro bloco de ar acima do chão
+/** Altura do chão da cidade: 45 no mundo plano; no normal (1.15.0) a cidade aplaina o chão em NATIVO.alturaCidade. */
+export function alturaDaCidade(y: number): void {
+  Y = y;
+}
 const cache = new Map<string, [number, number] | null>();
 
 /** Chunk do centro da cidade da célula (ou null se a célula não tem cidade). */
@@ -29,7 +35,8 @@ function centroDaCelula(celX: number, celZ: number, semente: number, nave: [numb
   const vao = CIDADE.celula - 2 * CIDADE.margem;
   const cx = celX * CIDADE.celula + CIDADE.margem + Math.floor(sorte() * vao);
   const cz = celZ * CIDADE.celula + CIDADE.margem + Math.floor(sorte() * vao);
-  const longe = Math.max(Math.abs(cx - nave[0]), Math.abs(cz - nave[1])) >= CIDADE.distanciaNave;
+  const longe = Math.max(Math.abs(cx - nave[0]), Math.abs(cz - nave[1])) >= CIDADE.distanciaNave &&
+    (mundoPlano() || !pertoDeRaraNativa(cx, cz, CIDADE.raio + NATIVO.cidadeLongeDeRaras));
   const centro: [number, number] | null = longe ? [cx, cz] : null;
   cache.set(chave, centro);
   return centro;

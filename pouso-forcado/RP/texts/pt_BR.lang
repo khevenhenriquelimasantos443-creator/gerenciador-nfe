@@ -59,9 +59,11 @@ cl.missao.papel.desc=Plante cana-de-açúcar ao lado da água e faça 3 papéis.
 
 ## Horda
 cl.horda.titulo=§cA horda chegou!
-cl.horda.subtitulo=Onda %s de %s: %s monstros. Aguente até o amanhecer.
+cl.horda.subtitulo=Onda %s de %s: %s monstros.
+cl.horda.subtitulo_2=Aguente até o amanhecer.
 cl.horda.aviso=§6Noite de horda
-cl.horda.aviso_sub=Hoje à noite a horda vem. Abrigue-se (o avião tem portas).
+cl.horda.aviso_sub=Hoje à noite a horda vem.
+cl.horda.aviso_sub_2=Abrigue-se no avião.
 
 ## Máquinas (Fase 3)
 tile.cl:peneira.name=Peneira
@@ -96,7 +98,8 @@ item.cl:fruta_cacto.name=Fruta do Cacto
 cl.sede.rotulo=§bÁgua§r
 cl.sede.morrendo=§cVocê está morrendo de sede! Beba água (garrafa do condensador), leite ou coma fruta do cacto.
 cl.capsula.titulo=§6Cápsula de carga!
-cl.capsula.subtitulo=Caindo perto de %s, %s, %s
+cl.capsula.subtitulo=Caindo perto de
+cl.capsula.subtitulo_2=%s, %s, %s
 cl.capsula.encontrada=Você achou uma cápsula de carga. Abra o barril e cuide dos animais: eles não existem mais neste planeta.
 
 ## Missões (Fase 4)
@@ -174,7 +177,8 @@ cl.ponto.masmorra_funda=Você achou uma masmorra funda, na ardósia. O saque aqu
 cl.ponto.destrocos=Destroços de outra nave! Alguém mais caiu neste planeta. Veja o baú da cabine.
 cl.diario.sinal_cidade=§bSinal de rádio fraco perto de x %s, z %s (%s blocos daqui).
 cl.tempestade.titulo=§6Tempestade de areia!
-cl.tempestade.subtitulo=Procure abrigo: lá fora você fica lento e com sede.
+cl.tempestade.subtitulo=Procure abrigo: lá fora
+cl.tempestade.subtitulo_2=você fica lento e com sede.
 cl.tempestade.fim=A tempestade de areia passou.
 
 ## Missões (Fase 6)
@@ -224,7 +228,7 @@ item.cl:faixa_mumia.name=Faixa de Múmia
 item.cl:coracao_farao.name=Coração do Faraó
 tile.cl:idolo_amaldicoado.name=Ídolo Amaldiçoado
 cl.farao.titulo=§6O Faraó despertou!
-cl.farao.subtitulo=A areia treme sob seus pés...
+cl.farao.subtitulo=A areia treme...
 cl.farao.so_noite=O ídolo está frio. Ele só desperta à noite.
 cl.farao.ja_acordado=O Faraó já está acordado por perto!
 cl.farao.tempestade=O Faraó ergue os braços e chama a tempestade!
@@ -779,7 +783,8 @@ cl.fim.sim=§aDecolar
 cl.fim.contagem=Motores ligando...
 cl.fim.decolando=§6Decolando!
 cl.fim.infinito=§6Modo infinito
-cl.fim.infinito_sub=O sinal de resgate foi enviado. O planeta continua aqui.
+cl.fim.infinito_sub=O sinal de resgate foi enviado.
+cl.fim.infinito_sub_2=O planeta continua aqui.
 cl.fim.mensagem=A nave subiu, deixou o sinal de resgate em órbita e voltou para o acampamento: você terminou o Pouso Forçado! O mundo continua; veja o capítulo §6Final§r no Diário.
 cl.fim.de_novo=Fim da cena. A nave está pronta para outra volta quando quiser.
 cl.fim.painel_depois=§7A nave já decolou uma vez: modo infinito.
@@ -1787,10 +1792,13 @@ cl.gc.sinal=§6[Rádio]§r Sinal da base de pesquisa lunar: X %s, Z %s (a %s m).
 cl.gc.base_rumo=Base lunar: %s, %s m
 cl.gc.base_chegou=Você está na base lunar.
 cl.gc.base_entrada=§7Base de Pesquisa Lunar§r: a escada desce para a masmorra.
-cl.gc.chefe_acordou=§cO Esqueleto Evoluído Gigante guarda a sala!
+cl.gc.chefe_acordou=§cO chefe acordou!
+cl.gc.chefe_acordou_sub=O Esqueleto Evoluído Gigante
+cl.gc.chefe_acordou_sub_2=guarda a sala!
 cl.gc.chefe_morto=§6[Diário de Bordo]§r O guardião caiu. A Chave da Masmorra abre o Baú do Tesouro.
 cl.gc.bau_trancado=Trancado. A Chave da Masmorra está com o guardião desta sala.
-cl.gc.bau_aberto=O Baú do Tesouro se abriu: o Núcleo de Salto!
+cl.gc.bau_aberto=O Baú do Tesouro abriu:
+cl.gc.bau_aberto_2=o Núcleo de Salto!
 cl.gc.bau_vazio=O Baú do Tesouro já foi aberto.
 cl.gc.arremessado=O guardião te agarrou e te jogou longe!
 cl.nave.sistema.salto=Bobina de Salto
@@ -2488,6 +2496,9 @@ cl.missao.sb_deposito.titulo=Descarregar
 cl.missao.sb_deposito.desc=Agache e toque num baú com a mochila de Depósito.
 cl.missao.yung_piramide.titulo=A grande pirâmide
 cl.missao.yung_piramide.desc=Entre na pirâmide do deserto (/cl:piramide mostra onde fica).
+tile.cl:marco_masmorra.name=Marco de Masmorra
+tile.cl:marco_masmorra_funda.name=Marco de Masmorra Funda
+tile.cl:marco_destrocos.name=Marco de Destroços
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

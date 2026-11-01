@@ -1,0 +1,48 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:feature_rules": {
+  "description": {
+   "identifier": "cl:bolsao_petroleo_regra",
+   "places_feature": "cl:bolsao_petroleo"
+  },
+  "conditions": {
+   "placement_pass": "underground_pass",
+   "minecraft:biome_filter": [
+    {
+     "test": "has_biome_tag",
+     "operator": "==",
+     "value": "desert"
+    }
+   ]
+  },
+  "distribution": {
+   "iterations": 1,
+   "scatter_chance": {
+    "numerator": 33,
+    "denominator": 1000
+   },
+   "coordinate_eval_order": "xzy",
+   "x": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     16
+    ]
+   },
+   "z": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     16
+    ]
+   },
+   "y": {
+    "distribution": "uniform",
+    "extent": [
+     -24,
+     8
+    ]
+   }
+  }
+ }
+}

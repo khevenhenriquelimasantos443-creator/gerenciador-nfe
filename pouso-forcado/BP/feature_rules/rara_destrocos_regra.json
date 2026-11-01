@@ -1,0 +1,25 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:feature_rules": {
+  "description": {
+   "identifier": "cl:rara_destrocos_regra",
+   "places_feature": "cl:rara_destrocos"
+  },
+  "conditions": {
+   "placement_pass": "surface_pass",
+   "minecraft:biome_filter": [
+    {
+     "test": "has_biome_tag",
+     "operator": "==",
+     "value": "desert"
+    }
+   ]
+  },
+  "distribution": {
+   "iterations": "((math.mod(variable.originx, 1536) == 1120 || math.mod(variable.originx, 1536) == -416) && (math.mod(variable.originz, 1536) == 928 || math.mod(variable.originz, 1536) == -608)) ? 1 : 0",
+   "x": 0,
+   "z": 0,
+   "y": "query.heightmap(variable.worldx, variable.worldz) + (-2)"
+  }
+ }
+}

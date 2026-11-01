@@ -1,8 +1,8 @@
-import { Dimension, StructureRotation, Vector3, system, world } from "@minecraft/server";
-import { DESTROCOS_SAQUE, MUNDO_PLANO, PROPS, RELEVO, TEMPLO_SAQUE } from "../config.js";
+import { BlockVolume, Dimension, StructureRotation, Vector3, system, world } from "@minecraft/server";
+import { DESTROCOS_SAQUE, MUNDO_PLANO, NATIVO, PROPS, RELEVO, TEMPLO_SAQUE } from "../config.js";
 import { chunkDaNave, rng, sementeDe, sementeDoMundo, sortearSaque } from "../util/aleatorio.js";
 import { criarBauCom } from "../util/inventario.js";
-import { cidadeDoChunk, construirQuarteirao } from "./cidade.js";
+import { alturaDaCidade, cidadeDoChunk, construirQuarteirao } from "./cidade.js";
 import { alturaDuna, porDunas } from "./dunas.js";
 import { talvezMasmorra } from "./masmorra.js";
 import { porMinerios } from "./minerios.js";
@@ -91,7 +91,7 @@ function ehChunkDoMundoPlano(dimensao: Dimension, x0: number, z0: number): boole
  * Num mundo normal o relevo fica desligado para sempre (senão punha areia e minério por cima
  * do relevo do jogo). Retorna undefined enquanto o chunk ainda não carregou.
  */
-function tipoDoMundo(): "plano" | "normal" | undefined {
+export function tipoDoMundo(): "plano" | "normal" | undefined {
   const salvo = world.getDynamicProperty(PROPS.tipoMundo);
   if (salvo === "plano" || salvo === "normal") return salvo;
   const jogador = world.getPlayers().find((j) => j.dimension.id === "minecraft:overworld");
@@ -146,6 +146,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   const cidade = cidadeDoChunk(cx, cz, semente, naveChunk);
   if (cidade) {
     porMinerios(dimensao, x0, z0, sorte);
+    alturaDaCidade(MUNDO_PLANO.superficieY);
     construirQuarteirao(dimensao, cx, cz, cidade.dist, semente);
     desenterrarJogadores(dimensao, x0, z0);
     marca.setType(MUNDO_PLANO.marcador);
@@ -178,7 +179,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
     const rotation = peca.girar ? GIROS[girar] : StructureRotation.None;
     world.structureManager.place(peca.estrutura, dimensao, origem, { rotation });
   }
-  if (pedaco) porPedaco(dimensao, pedaco, sorte);
+  if (pedaco) porPedaco(dimensao, pedaco);
   if (rara) {
     const origem: Vector3 = { x: x0, y: MUNDO_PLANO.superficieY + rara.deslocY, z: z0 };
     world.structureManager.place(rara.estrutura, dimensao, origem);
@@ -191,6 +192,30 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
     porCactos(dimensao, x0, z0, sorte);
   }
 
+  marca.setType(MUNDO_PLANO.marcador);
+  return "decorado";
+}
+
+/**
+ * Mundo normal (1.15.0): o relevo, as estruturas e os minérios vêm da geração natural do jogo; o script só monta as
+ * cidades (que são feitas quarteirão a quarteirão). O chão do quarteirão é aplainado em NATIVO.alturaCidade: tira o
+ * que sobra por cima e enche de areia por baixo. A marca de "feito" é o fundo do chunk (bedrock -> ardósia reforçada).
+ */
+function decorarCidadeNormal(dimensao: Dimension, cx: number, cz: number, semente: number, naveChunk: [number, number]): Resultado {
+  const cidade = cidadeDoChunk(cx, cz, semente, naveChunk);
+  if (!cidade) return "pronto";
+  const x0 = cx * 16, z0 = cz * 16;
+  const canto = { x: x0, y: -64, z: z0 };
+  if (!dimensao.isChunkLoaded(canto)) return "esperar";
+  const marca = dimensao.getBlock(canto);
+  if (!marca) return "esperar";
+  if (marca.typeId === MUNDO_PLANO.marcador) return "pronto";
+  const Y = NATIVO.alturaCidade;
+  dimensao.fillBlocks(new BlockVolume({ x: x0, y: Y, z: z0 }, { x: x0 + 15, y: Y + 47, z: z0 + 15 }), "minecraft:air");
+  dimensao.fillBlocks(new BlockVolume({ x: x0, y: Y - 8, z: z0 }, { x: x0 + 15, y: Y - 1, z: z0 + 15 }), "minecraft:sand");
+  alturaDaCidade(Y);
+  construirQuarteirao(dimensao, cx, cz, cidade.dist, semente);
+  desenterrarJogadores(dimensao, x0, z0);
   marca.setType(MUNDO_PLANO.marcador);
   return "decorado";
 }
@@ -248,7 +273,9 @@ export function registrarRelevo(): void {
     // Só depois que a nave já foi posta, para nada nascer em cima dela.
     const nave = chunkDaNave();
     if (!nave) return;
-    if (tipoDoMundo() !== "plano") return;
+    const tipo = tipoDoMundo();
+    if (!tipo) return;
+    const decorar = tipo === "plano" ? decorarChunk : decorarCidadeNormal;
     if (!limpouAreas) {
       limpouAreas = true; // sobras de uma sessão anterior
       try {
@@ -274,7 +301,7 @@ export function registrarRelevo(): void {
         const chave = `${cx},${cz}`;
         if (vistos.has(chave)) continue;
         try {
-          const resultado = decorarChunk(jogador.dimension, cx, cz, semente, nave);
+          const resultado = decorar(jogador.dimension, cx, cz, semente, nave);
           if (resultado !== "esperar") vistos.add(chave);
           if (resultado === "decorado") orcamento--;
           // Chunk longe e ainda não carregado: abre uma ticking area nele (uma de cada vez).

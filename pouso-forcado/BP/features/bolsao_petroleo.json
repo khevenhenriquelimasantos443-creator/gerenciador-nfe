@@ -1,0 +1,21 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:ore_feature": {
+  "description": {
+   "identifier": "cl:bolsao_petroleo"
+  },
+  "count": 64,
+  "replace_rules": [
+   {
+    "places_block": "cl:petroleo",
+    "may_replace": [
+     "minecraft:stone",
+     "minecraft:deepslate",
+     "minecraft:tuff",
+     "minecraft:gravel",
+     "minecraft:dirt"
+    ]
+   }
+  ]
+ }
+}

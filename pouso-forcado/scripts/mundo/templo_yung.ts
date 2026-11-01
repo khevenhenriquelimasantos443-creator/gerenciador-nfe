@@ -1,16 +1,20 @@
-import { Dimension, ItemStack, system, world } from "@minecraft/server";
-import { MUNDO_PLANO, TEMPLO_SAQUE, TEMPLO_YUNG_MUNDO } from "../config.js";
+import { Dimension, system, world } from "@minecraft/server";
+import { MUNDO_PLANO, NATIVO, PROPS, TEMPLO_YUNG_MUNDO } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { chunkDaNave, rng, sementeDe, sementeDoMundo, sortearSaque } from "../util/aleatorio.js";
+import { chunkDaNave, rng, sementeDe, sementeDoMundo } from "../util/aleatorio.js";
 import { cidadeDoChunk } from "./cidade.js";
+import { naPiramideNativa, piramideMaisProxima } from "./nativo.js";
+import { tipoDoMundo } from "./relevo.js";
 import { TEMPLO_YUNG } from "./templo_yung_dados.js";
+import { mundoPlano } from "./tipo.js";
 
 /*
  * Templo do Deserto do YUNG's Better Desert Temples (1.14.0): a pirâmide de 83×83 montada das peças do mod por
  * tools/gerar-templo-yung.py, em pedaços de 64×64. Como as raras (raras.ts), o mapa é dividido em quadrados de
  * TEMPLO_YUNG_MUNDO.celula chunks com no máximo um templo, num chunk sorteado pela semente (longe da nave e das cidades).
  * Cada pedaço é posto pelo relevo quando o chunk do canto dele é decorado e a área de 64×64 está carregada; os baús
- * do pedaço ganham o saque do templo e o pedaço do meio ganha o Faraó. A pirâmide fica com o centro ~14 blocos abaixo
+ * enchem com o saque do templo ao abrir e o pedaço do meio ganha o Faraó. No mundo normal (1.15.0) quem põe a
+ * pirâmide inteira é a geração natural do jogo (scripts/mundo/nativo.ts). A pirâmide fica com o centro ~14 blocos abaixo
  * da areia (no mod: 4 a 24).
  */
 type Templo = { v: number; cx: number; cz: number };
@@ -61,24 +65,13 @@ export function pedacoDoChunk(cx: number, cz: number, semente: number, nave: [nu
   return variante(t.v).tiles.some(([a, b]) => a === i && b === k) ? { t, i, k } : undefined;
 }
 
-export function porPedaco(dim: Dimension, p: { t: Templo; i: number; k: number }, sorte: () => number): void {
+export function porPedaco(dim: Dimension, p: { t: Templo; i: number; k: number }): void {
   const v = variante(p.t.v);
   const ox = p.t.cx * 16, oz = p.t.cz * 16;
   const y0 = MUNDO_PLANO.superficieY - TEMPLO_YUNG_MUNDO.profundidade - v.ancora[1];
   world.structureManager.place(`cl:templo_yung_${p.t.v}_${p.i}_${p.k}`, dim, { x: ox + p.i * PEDACO, y: y0, z: oz + p.k * PEDACO });
+  // Os baús já vêm com a tabela de saque (loot_tables/chests/cl_piramide.json): enchem ao abrir.
   const dentro = (q: readonly number[]) => Math.floor(q[0] / PEDACO) === p.i && Math.floor(q[2] / PEDACO) === p.k;
-  for (const b of v.baus) {
-    if (!dentro(b)) continue;
-    const c = dim.getBlock({ x: ox + b[0], y: y0 + b[1], z: oz + b[2] })?.getComponent("minecraft:inventory")?.container;
-    if (!c) continue;
-    for (const { item, quantidade } of sortearSaque(TEMPLO_SAQUE, sorte)) {
-      try {
-        c.addItem(new ItemStack(item, Math.min(quantidade, new ItemStack(item, 1).maxAmount)));
-      } catch {
-        // item de outro pack
-      }
-    }
-  }
   if (dentro(v.ancora)) {
     try {
       dim.spawnEntity("cl:farao", { x: ox + v.ancora[0] + 0.5, y: y0 + v.ancora[1] + 1, z: oz + v.ancora[2] + 0.5 });
@@ -88,14 +81,86 @@ export function porPedaco(dim: Dimension, p: { t: Templo; i: number; k: number }
   }
 }
 
+// ---------- Mundo normal (1.15.0): a pirâmide da grade, posta uma vez quando alguém chega perto ----------
+const postas = (): string[] => {
+  try {
+    return JSON.parse((world.getDynamicProperty(PROPS.piramidesPostas) as string) ?? "[]") as string[];
+  } catch {
+    return [];
+  }
+};
+let pendente = false; // uma pirâmide carregando de cada vez
+function porPiramide(dim: Dimension, p: { v: number; x0: number; z0: number }): void {
+  const v = variante(p.v);
+  const [X, , Z] = v.tam;
+  const meio = dim.getTopmostBlock({ x: p.x0 + Math.floor(X / 2), z: p.z0 + Math.floor(Z / 2) });
+  const y0 = (meio ? meio.y + 1 : 64) - TEMPLO_YUNG_MUNDO.profundidade - v.ancora[1];
+  for (const [i, k] of v.tiles) world.structureManager.place(`cl:templo_yung_${p.v}_${i}_${k}`, dim, { x: p.x0 + i * PEDACO, y: y0, z: p.z0 + k * PEDACO });
+  try {
+    dim.spawnEntity("cl:farao", { x: p.x0 + v.ancora[0] + 0.5, y: y0 + v.ancora[1] + 1, z: p.z0 + v.ancora[2] + 0.5 });
+  } catch {
+    // sem faraó
+  }
+}
+function piramideNoMundoNormal(): void {
+  if (pendente) return;
+  const feitas = postas();
+  for (const j of world.getPlayers()) {
+    if (j.dimension.id !== "minecraft:overworld") continue;
+    const p = piramideMaisProxima(j.location.x, j.location.z);
+    if (!p || p.distancia > NATIVO.pertoPiramide) continue;
+    const chave = `${p.x0},${p.z0}`;
+    if (feitas.includes(chave)) continue;
+    const dim = j.dimension;
+    const [X, , Z] = variante(p.v).tam;
+    // Carrega a área (6×6 chunks), põe os pedaços e solta a área. Só uma vez por pirâmide.
+    const opcoes = { dimension: dim, from: { x: p.x0, y: -64, z: p.z0 }, to: { x: p.x0 + X - 1, y: 100, z: p.z0 + Z - 1 } };
+    const gerente = world.tickingAreaManager;
+    if (!gerente.hasCapacity(opcoes)) return;
+    pendente = true;
+    const fim = () => {
+      pendente = false;
+      try {
+        gerente.removeTickingArea("cl_piramide");
+      } catch {
+        // já saiu
+      }
+    };
+    gerente
+      .createTickingArea("cl_piramide", opcoes)
+      .then(() => {
+        const lista = postas();
+        if (!lista.includes(chave)) {
+          porPiramide(dim, p);
+          lista.push(chave);
+          world.setDynamicProperty(PROPS.piramidesPostas, JSON.stringify(lista.slice(-200)));
+        }
+        fim();
+      })
+      .catch(fim);
+    return;
+  }
+}
+
 export function registrarTemploYung(): void {
+  system.runInterval(() => {
+    if (tipoDoMundo() === "normal") piramideNoMundoNormal();
+  }, 40);
   // Missão: entrar na pirâmide (abaixo da areia, dentro dela).
   system.runInterval(() => {
     const nave = chunkDaNave();
     if (!nave) return;
     const semente = sementeDoMundo();
+    const plano = mundoPlano();
     for (const j of world.getPlayers()) {
-      if (j.dimension.id !== "minecraft:overworld" || j.location.y > MUNDO_PLANO.superficieY - 3) continue;
+      if (j.dimension.id !== "minecraft:overworld") continue;
+      if (!plano) {
+        // Mundo normal: a pirâmide da geração natural, com teto por cima da cabeça.
+        const { x, y, z } = j.location;
+        if (naPiramideNativa(x, z) && (j.dimension.getTopmostBlock({ x, z })?.y ?? 0) > y + 2) registrarAcao(j, "templo_yung");
+        continue;
+      }
+      if (j.location.y > MUNDO_PLANO.superficieY - 3) continue;
       if (foraDoYung(Math.floor(j.location.x), Math.floor(j.location.z), semente, nave) === 0) registrarAcao(j, "templo_yung");
     }
   }, 60);

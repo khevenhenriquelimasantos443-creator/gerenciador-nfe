@@ -2985,6 +2985,15 @@
     },
     "clc_roda_hidraulica": {
       "textures": "textures/blocks/cl/c/roda_hidraulica"
+    },
+    "clc_marco_masmorra": {
+      "textures": "textures/blocks/cl/c/marco_masmorra"
+    },
+    "clc_marco_masmorra_funda": {
+      "textures": "textures/blocks/cl/c/marco_masmorra_funda"
+    },
+    "clc_marco_destrocos": {
+      "textures": "textures/blocks/cl/c/marco_destrocos"
     }
   }
 }

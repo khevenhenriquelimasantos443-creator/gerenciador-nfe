@@ -8,7 +8,7 @@ cl.condensador.coletado=You collected the condensed water.
 
 ## Welcome
 cl.boas_vindas.titulo=Forced Landing
-cl.boas_vindas.subtitulo=Your ship went down. Survive.
+cl.boas_vindas.subtitulo=The ship crashed. Survive.
 cl.boas_vindas.mensagem=§6[Logbook]§r The ship went down on a dry planet. No rivers, no seas, only sand. Search the wreck: the cabin chest holds what is left of the cargo, including a Water Condenser.
 
 ## Logbook (Phase 2)
@@ -59,9 +59,11 @@ cl.missao.papel.desc=Plant sugar cane next to water and craft 3 paper.
 
 ## Horde
 cl.horda.titulo=§cThe horde is here!
-cl.horda.subtitulo=Wave %s of %s: %s monsters. Hold out until sunrise.
+cl.horda.subtitulo=Wave %s of %s: %s monsters.
+cl.horda.subtitulo_2=Hold out until sunrise.
 cl.horda.aviso=§6Horde night
-cl.horda.aviso_sub=The horde comes tonight. Take shelter (the plane has doors).
+cl.horda.aviso_sub=The horde comes tonight.
+cl.horda.aviso_sub_2=Take shelter in the plane.
 
 ## Machines (Phase 3)
 tile.cl:peneira.name=Sieve
@@ -96,7 +98,8 @@ item.cl:fruta_cacto.name=Cactus Fruit
 cl.sede.rotulo=§bWater§r
 cl.sede.morrendo=§cYou are dying of thirst! Drink water (bottle from the condenser), milk or eat cactus fruit.
 cl.capsula.titulo=§6Cargo pod!
-cl.capsula.subtitulo=Falling near %s, %s, %s
+cl.capsula.subtitulo=Falling near
+cl.capsula.subtitulo_2=%s, %s, %s
 cl.capsula.encontrada=You found a cargo pod. Open the barrel and look after the animals: there are no others left on this planet.
 
 ## Missions (Phase 4)
@@ -174,7 +177,8 @@ cl.ponto.masmorra_funda=You found a deep dungeon, in the deepslate. The loot her
 cl.ponto.destrocos=Wreckage of another ship! Someone else crashed on this planet. Check the cabin chest.
 cl.diario.sinal_cidade=§bWeak radio signal near x %s, z %s (%s blocks away).
 cl.tempestade.titulo=§6Sandstorm!
-cl.tempestade.subtitulo=Find shelter: outside you are slowed and get thirsty.
+cl.tempestade.subtitulo=Find shelter: outside
+cl.tempestade.subtitulo_2=you are slowed and thirsty.
 cl.tempestade.fim=The sandstorm has passed.
 
 ## Missions (Phase 6)
@@ -222,8 +226,8 @@ item.spawn_egg.entity.cl:farao.name=Spawn Cursed Pharaoh
 item.cl:faixa_mumia.name=Mummy Wrap
 item.cl:coracao_farao.name=Pharaoh's Heart
 tile.cl:idolo_amaldicoado.name=Cursed Idol
-cl.farao.titulo=§6The Pharaoh has awakened!
-cl.farao.subtitulo=The sand trembles beneath your feet...
+cl.farao.titulo=§6The Pharaoh awoke!
+cl.farao.subtitulo=The sand trembles...
 cl.farao.so_noite=The idol is cold. It only awakens at night.
 cl.farao.ja_acordado=The Pharaoh is already awake nearby!
 cl.farao.tempestade=The Pharaoh raises his arms and calls the storm!
@@ -778,7 +782,8 @@ cl.fim.sim=§aLift off
 cl.fim.contagem=Engines starting...
 cl.fim.decolando=§6Lifting off!
 cl.fim.infinito=§6Endless mode
-cl.fim.infinito_sub=The rescue signal is out. The planet is still here.
+cl.fim.infinito_sub=The rescue signal is out.
+cl.fim.infinito_sub_2=The planet is still here.
 cl.fim.mensagem=The ship went up, left the rescue beacon in orbit and came back to camp: you finished Pouso Forçado! The world goes on; see the §6Final§r chapter in the Logbook.
 cl.fim.de_novo=End of the scene. The ship is ready for another lap whenever you want.
 cl.fim.painel_depois=§7The ship has already lifted off: endless mode.
@@ -1786,10 +1791,13 @@ cl.gc.sinal=§6[Radio]§r Signal from the lunar research base: X %s, Z %s (%s m 
 cl.gc.base_rumo=Lunar base: %s, %s m
 cl.gc.base_chegou=You are at the lunar base.
 cl.gc.base_entrada=§7Lunar Research Base§r: the ladder goes down to the dungeon.
-cl.gc.chefe_acordou=§cThe Evolved Skeleton Boss guards the room!
+cl.gc.chefe_acordou=§cThe boss awoke!
+cl.gc.chefe_acordou_sub=The Evolved Skeleton Boss
+cl.gc.chefe_acordou_sub_2=guards the room!
 cl.gc.chefe_morto=§6[Logbook]§r The guardian fell. The Dungeon Key opens the Treasure Chest.
 cl.gc.bau_trancado=Locked. The guardian of this room holds the Dungeon Key.
-cl.gc.bau_aberto=The Treasure Chest opened: the Jump Core!
+cl.gc.bau_aberto=The Treasure Chest opened:
+cl.gc.bau_aberto_2=the Jump Core!
 cl.gc.bau_vazio=The Treasure Chest has already been opened.
 cl.gc.arremessado=The guardian grabbed you and threw you away!
 cl.nave.sistema.salto=Jump Coil
@@ -2487,6 +2495,9 @@ cl.missao.sb_deposito.titulo=Unload
 cl.missao.sb_deposito.desc=Sneak and tap a chest with a Deposit backpack.
 cl.missao.yung_piramide.titulo=The great pyramid
 cl.missao.yung_piramide.desc=Enter the desert pyramid (/cl:piramide shows where it is).
+tile.cl:marco_masmorra.name=Dungeon Marker
+tile.cl:marco_masmorra_funda.name=Deep Dungeon Marker
+tile.cl:marco_destrocos.name=Wreck Marker
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

@@ -1,3 +1,4 @@
+import { duasLinhas } from "../jogador/hud.js";
 import { Block, EasingType, InputPermissionCategory, Player, RawMessage, Vector3, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { IDS, PROPS } from "../config.js";
@@ -50,7 +51,7 @@ function terminar(js: Player[], primeira: boolean): void {
     j.camera.clear();
     j.camera.fade({ fadeTime: { fadeInTime: 0, holdTime: 0.5, fadeOutTime: 1.5 }, fadeColor: { red: 0, green: 0, blue: 0 } });
     travar(j, false);
-    j.onScreenDisplay.setTitle({ translate: "cl.fim.infinito" }, { subtitle: { translate: "cl.fim.infinito_sub" }, fadeInDuration: 20, stayDuration: 100, fadeOutDuration: 20 });
+    j.onScreenDisplay.setTitle({ translate: "cl.fim.infinito" }, { subtitle: duasLinhas("cl.fim.infinito_sub"), fadeInDuration: 20, stayDuration: 100, fadeOutDuration: 20 });
     j.sendMessage({ rawtext: [{ text: "§6[Diário de Bordo]§r " }, { translate: primeira ? "cl.fim.mensagem" : "cl.fim.de_novo" }] });
     if (primeira) {
       registrarAcao(j, "decolar");

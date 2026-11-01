@@ -1,6 +1,6 @@
 import { BlockCustomComponent, BlockPermutation, BlockVolume, Dimension, EntityDamageCause, ItemStack, Player, Vector3, system, world } from "@minecraft/server";
 import { LinhaSaque } from "../config.js";
-import { aviso } from "../jogador/hud.js";
+import { aviso, duasLinhas } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { sortearSaque } from "../util/aleatorio.js";
 import { criarBauCom, darAoJogador } from "../util/inventario.js";
@@ -152,7 +152,7 @@ function acordarSala(dim: Dimension, b: Base, s: Sala): void {
     const vivo = dim.getEntities({ type: "cl:esqueleto_chefe", location: centro, maxDistance: s.r * 2 + 4 }).length > 0;
     if (vivo) return;
     dim.spawnEntity("cl:esqueleto_chefe", centro);
-    for (const p of dim.getPlayers({ location: centro, maxDistance: 30 })) p.onScreenDisplay.setTitle({ translate: "cl.gc.chefe_acordou" }, { fadeInDuration: 10, stayDuration: 50, fadeOutDuration: 10 });
+    for (const p of dim.getPlayers({ location: centro, maxDistance: 30 })) p.onScreenDisplay.setTitle({ translate: "cl.gc.chefe_acordou" }, { subtitle: duasLinhas("cl.gc.chefe_acordou_sub"), fadeInDuration: 10, stayDuration: 50, fadeOutDuration: 10 });
     dim.playSound("mob.wither.spawn", centro, { volume: 0.8, pitch: 1.4 });
     return;
   }
@@ -199,7 +199,7 @@ export const bauTesouro: BlockCustomComponent = {
       for (const p of sortearSaque(SAQUE_TESOURO)) darAoJogador(j, p.item, p.quantidade);
       j.playSound("random.chestopen");
       j.playSound("random.levelup");
-      j.onScreenDisplay.setTitle({ text: "§d✦" }, { subtitle: { translate: "cl.gc.bau_aberto" }, fadeInDuration: 10, stayDuration: 60, fadeOutDuration: 10 });
+      j.onScreenDisplay.setTitle({ text: "§d✦" }, { subtitle: duasLinhas("cl.gc.bau_aberto"), fadeInDuration: 10, stayDuration: 60, fadeOutDuration: 10 });
     });
   },
 };

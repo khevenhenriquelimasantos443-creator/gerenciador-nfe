@@ -84,6 +84,8 @@ execFileSync(node, [join(RAIZ, "tools/gerar-nave.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-aviao.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-relevo.mjs")], { stdio: "inherit" });
 execFileSync(node, [join(RAIZ, "tools/gerar-ui.mjs")], { stdio: "inherit" });
+// Geração natural do mundo normal (features, tabelas de saque e estruturas com baú): depois do tsc e das estruturas.
+execFileSync("python3", [join(RAIZ, "tools/gerar-geracao.py")], { stdio: "inherit" });
 // Os geradores reescrevem item_texture.json: os ícones desenhados voltam a valer.
 execFileSync(node, [join(RAIZ, "tools/aplicar-icones.mjs")], { stdio: "inherit" });
 
@@ -126,7 +128,7 @@ const cabecalho = (pasta) => JSON.parse(readFileSync(join(RAIZ, pasta, "manifest
 const bpHeader = cabecalho("BP"), rpHeader = cabecalho("RP");
 const texto = (s) => Buffer.from(s, "utf8");
 const mundo = gerarZip([
-  { nome: "level.dat", dados: gerarLevelDat("Pouso Forçado") },
+  { nome: "level.dat", dados: gerarLevelDat("Pouso Forçado", false, true) }, // 1.15.0: infinito, com a geração natural
   { nome: "levelname.txt", dados: texto("Pouso Forçado") },
   { nome: "world_behavior_packs.json", dados: texto(JSON.stringify([{ pack_id: bpHeader.uuid, version: bpHeader.version }], null, 2)) },
   { nome: "world_resource_packs.json", dados: texto(JSON.stringify([{ pack_id: rpHeader.uuid, version: rpHeader.version }], null, 2)) },

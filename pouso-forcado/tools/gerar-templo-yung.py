@@ -506,6 +506,11 @@ def salvar_tile(blocos, X, Y, Z, caminho):
                     paleta.append(bloco_tag(nome, st))
                 k = len(camada)
                 camada.append(indices[chave])
+                if nome in ("minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel"):
+                    # Saque do templo pela tabela (BP/loot_tables/chests/cl_piramide.json): o baú enche ao abrir.
+                    dados_pos[str(k)] = N.comp({"block_entity_data": N.comp({
+                        "id": N.string("Barrel" if nome == "minecraft:barrel" else "Chest"), "LootTable": N.string("loot_tables/chests/cl_piramide.json"),
+                        "LootTableSeed": N.int_(0), "Items": N.lista(10, []), "isMovable": N.byte(1), "x": N.int_(x), "y": N.int_(y), "z": N.int_(z)})})
                 if gerador:
                     dados_pos[str(k)] = N.comp({"block_entity_data": N.comp({
                         "id": N.string("MobSpawner"), "EntityIdentifier": N.string(gerador), "isMovable": N.byte(1),

@@ -1,5 +1,7 @@
+import { duasLinhas } from "../jogador/hud.js";
 import { Difficulty, Entity, EntityInitializationCause, GameMode, Player, system, world } from "@minecraft/server";
-import { FAMILIA_RESISTE_SOL, HORDA, MUNDO_PLANO, PROPS } from "../config.js";
+import { FAMILIA_RESISTE_SOL, HORDA, PROPS } from "../config.js";
+import { alturaDaSuperficie } from "./tipo.js";
 import { DO_ADDON } from "../util/nascer.js";
 import { intervalo } from "../util/perfil.js";
 
@@ -89,7 +91,7 @@ function soltarOnda(numero: number, dia: number): void {
     jogador.onScreenDisplay.setTitle(
       { translate: "cl.horda.titulo" },
       {
-        subtitle: { translate: "cl.horda.subtitulo", with: [String(numero), String(onda.horas.length), String(tamanho)] },
+        subtitle: duasLinhas("cl.horda.subtitulo", [String(numero), String(onda.horas.length), String(tamanho)]),
         fadeInDuration: 10,
         stayDuration: 60,
         fadeOutDuration: 20,
@@ -118,7 +120,7 @@ function avisoDeHorda(): void {
   if (avisadoNoDia === dia || !noiteDeHorda(dia) || hora() < HORDA.onda.avisoHora || hora() >= NOITE_INICIO) return;
   avisadoNoDia = dia;
   for (const j of jogadoresNoDeserto()) {
-    j.onScreenDisplay.setTitle({ translate: "cl.horda.aviso" }, { subtitle: { translate: "cl.horda.aviso_sub" }, fadeInDuration: 10, stayDuration: 80, fadeOutDuration: 20 });
+    j.onScreenDisplay.setTitle({ translate: "cl.horda.aviso" }, { subtitle: duasLinhas("cl.horda.aviso_sub"), fadeInDuration: 10, stayDuration: 80, fadeOutDuration: 20 });
     j.playSound("raid.horn", { volume: 0.5, pitch: 0.8 });
   }
 }
@@ -141,7 +143,7 @@ function talvezOnda(): void {
 // De dia (1.3.7) não fica monstro na superfície: os que sobram da noite se enterram na areia (somem numa nuvem
 // de areia, sem pegar fogo) e nenhum nasce. Cavernas (abaixo da superfície) seguem como no jogo. Os mobs
 // postos pelo add-on (marca DO_ADDON: cidades, faraó, golem da tempestade...) ficam.
-const naSuperficie = (y: number): boolean => y >= MUNDO_PLANO.superficieY - HORDA.sol.profundidade;
+const naSuperficie = (y: number): boolean => y >= alturaDaSuperficie() - HORDA.sol.profundidade;
 const deDia = (e: Entity): boolean =>
   !e.hasTag(DO_ADDON) && naSuperficie(e.location.y) &&
   (e.matches({ families: ["monster"], excludeFamilies: [FAMILIA_RESISTE_SOL] }) || e.matches({ families: ["undead"], excludeFamilies: [FAMILIA_RESISTE_SOL] }));

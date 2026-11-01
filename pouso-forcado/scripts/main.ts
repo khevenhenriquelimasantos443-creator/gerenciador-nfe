@@ -40,7 +40,7 @@ import { registrarTemperatura } from "./jogador/temperatura.js";
 import { registrarCapsulas } from "./mundo/capsulas.js";
 import { idoloAmaldicoado, registrarFarao } from "./mundo/farao.js";
 import { registrarMonstros } from "./mundo/monstros.js";
-import { registrarPontos } from "./mundo/pontos.js";
+import { marcoPonto, registrarPontos } from "./mundo/pontos.js";
 import { painelNave } from "./mundo/reparo.js";
 import { registrarDecolagem } from "./mundo/decolagem.js";
 import { registrarSemNether } from "./mundo/nether.js";
@@ -180,6 +180,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:conduto_item", comPerfil("cl:conduto_item", condutoItem));
   blockComponentRegistry.registerCustomComponent("cl:tnt_obsidiana", tntObsidiana);
   blockComponentRegistry.registerCustomComponent("cl:panela_cozinha", comPerfil("cl:panela_cozinha", panela));
+  blockComponentRegistry.registerCustomComponent("cl:marco_ponto", marcoPonto);
   for (const [id, c] of [["cl:forno_coque", fornoCoque], ["cl:alto_forno", altoForno], ["cl:moinho_vento", moinhoVento], ["cl:roda_hidraulica", rodaHidraulica], ["cl:dinamo_cinetico", dinamoCinetico]] as const)
     blockComponentRegistry.registerCustomComponent(id, comPerfil(id, c));
   blockComponentRegistry.registerCustomComponent("cl:fogao", comPerfil("cl:fogao", fogao));
