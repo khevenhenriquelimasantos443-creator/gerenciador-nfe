@@ -1,5 +1,5 @@
 // Ponto de entrada do Behavior Pack. Cada fase registra seus módulos aqui.
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { registrarCabos } from "./blocos/cabo.js";
 import { compostor } from "./blocos/compostor.js";
 import { condensadorAgua, condensadorAvancado } from "./blocos/condensador.js";
@@ -27,7 +27,7 @@ import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torne
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
 import { registrarCatalogo } from "./catalogo/catalogo.js";
-import { IDS } from "./config.js";
+import { IDS, VERSAO } from "./config.js";
 import { registrarBoasVindas } from "./jogador/boas_vindas.js";
 import { registrarAguas } from "./jogador/aguas.js";
 import { registrarAmbiente } from "./jogador/ambiente.js";
@@ -82,8 +82,21 @@ import { registrarTemploYung } from "./mundo/templo_yung.js";
 import { registrarFerramentasVanilla } from "./jogador/ferramentas_vanilla.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
+// 1.16.2: se outra cópia do Pouso Forçado (outra versão) estiver ligada no mesmo mundo, os comandos já existem:
+// avisa o jogador ao entrar, em vez de rodar tudo em dobro sem ninguém saber.
+let outraCopia = false;
+world.afterEvents.playerSpawn.subscribe(({ player }) => {
+  if (outraCopia) player.sendMessage({ translate: "cl.duas_versoes", with: [VERSAO] });
+});
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
-  registrarComandos(customCommandRegistry);
+  try {
+    registrarComandos(customCommandRegistry);
+  } catch (e) {
+    if (!String(e).includes("already registered")) throw e;
+    outraCopia = true;
+    console.warn(`[Pouso Forçado ${VERSAO}] outra versão do add-on está ligada neste mundo`);
+    return;
+  }
   registrarDimensaoLua(dimensionRegistry); // 1.6.0: a Lua do Galacticraft
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.

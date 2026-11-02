@@ -49,6 +49,7 @@ cl.missao.forno.desc=Craft and place a furnace (8 cobblestone from pebbles).
 cl.missao.ferro.titulo=Metal
 cl.missao.ferro.desc=No dirt needed: sieve sand (the whole ground is sand). 1 in 5 gives Crushed Iron Ore; 4 make 1 raw iron (at the table) and it smelts in the furnace. Get 3 ingots.
 cl.vanilla.ruim=§cMinecraft tool:§r awful here (slow and wears 8× faster). Use the Tinkers tools.
+cl.duas_versoes=§c[Pouso Forçado %s] This world has two versions of the add-on active at the same time.§r Leave without touching anything: edit the world and, in Behavior and Resource Packs, keep only the newest Pouso Forçado.
 cl.missao.noite.titulo=Survive the night
 cl.missao.noite.desc=Hold out until the next sunrise. Many monsters come at night: build a shelter.
 cl.missao.cacador.titulo=Hunter

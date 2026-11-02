@@ -49,6 +49,7 @@ cl.missao.forno.desc=Faça e coloque uma fornalha (8 pedregulhos de pedrinhas).
 cl.missao.ferro.titulo=Metal
 cl.missao.ferro.desc=Não precisa de terra: peneire areia (o chão todo é areia). 1 em cada 5 dá Pedaço Triturado de Ferro; 4 viram 1 ferro bruto (na mesa) e ele derrete na fornalha. Tenha 3 barras.
 cl.vanilla.ruim=§cFerramenta do Minecraft:§r péssima aqui (lenta e gasta 8× mais). Use as do Tinkers.
+cl.duas_versoes=§c[Pouso Forçado %s] Este mundo está com duas versões do add-on ligadas ao mesmo tempo.§r Saia sem mexer em nada: edite o mundo e, em Pacotes de Comportamento e de Recursos, deixe só o Pouso Forçado da versão mais nova.
 cl.missao.noite.titulo=Sobreviva à noite
 cl.missao.noite.desc=Aguente até o próximo amanhecer. À noite vêm muitos monstros: faça um abrigo.
 cl.missao.cacador.titulo=Caçador
