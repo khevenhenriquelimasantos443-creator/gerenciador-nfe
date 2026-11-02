@@ -140,7 +140,11 @@ export type Acao =
   | "templo_yung"
   | "pw_termo"
   | "energizar"
-  | "aco_energizado";
+  | "aco_energizado"
+  | "reator"
+  | "ender_canal"
+  | "bateria"
+  | "raio";
 
 type MissaoBase = {
   id: string;
@@ -445,6 +449,12 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "pw_termo", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "pw_termo", qtd: 1 }, recompensa: [{ item: "minecraft:water_bucket", quantidade: 1 }] },
       { id: "pw_solar", requer: ["pw_orbe"], objetivo: { tipo: "colocar", bloco: "cl:painel_solar_basico", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "pw_ardente", requer: ["pw_orbe"], objetivo: { tipo: "ter", item: "cl:cristal_ardente", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      // 1.19.0: o resto do Powah!
+      { id: "pw_uraninita", requer: ["pw_pasta"], objetivo: { tipo: "ter", item: "cl:uraninita", qtd: 1 }, recompensa: [{ item: "minecraft:gravel", quantidade: 32 }] },
+      { id: "pw_reator", requer: ["pw_uraninita", "pw_cabo"], objetivo: { tipo: "acao", acao: "reator", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "pw_ender", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "ender_canal", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
+      { id: "pw_bateria", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "bateria", qtd: 1 }, recompensa: [{ item: "minecraft:redstone_block", quantidade: 2 }] },
+      { id: "pw_raio", requer: ["pw_orbe"], objetivo: { tipo: "acao", acao: "raio", qtd: 1 }, recompensa: [{ item: "minecraft:snowball", quantidade: 8 }] },
     ],
   },
   {

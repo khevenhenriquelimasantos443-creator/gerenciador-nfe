@@ -1,0 +1,40 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_battery_nitro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "oko",
+      "iri",
+      "oco"
+    ],
+    "key": {
+      "r": {
+        "item": "minecraft:redstone_block"
+      },
+      "c": {
+        "item": "cl:bateria_pw_espiritual"
+      },
+      "i": {
+        "item": "cl:capacitor_pw_nitro"
+      },
+      "o": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "k": {
+        "item": "cl:cristal_nitro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bateria_pw_nitro",
+      "count": 1
+    }
+  }
+}

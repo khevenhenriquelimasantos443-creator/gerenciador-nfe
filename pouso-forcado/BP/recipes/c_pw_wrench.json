@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_wrench"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " ip",
+      " pi",
+      "p  "
+    ],
+    "key": {
+      "p": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:chave_powah",
+      "count": 1
+    }
+  }
+}

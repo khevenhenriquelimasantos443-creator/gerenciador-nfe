@@ -1,0 +1,40 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_battery_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "oko",
+      "iri",
+      "oco"
+    ],
+    "key": {
+      "r": {
+        "item": "minecraft:redstone_block"
+      },
+      "c": {
+        "item": "cl:bateria_pw_inicial"
+      },
+      "i": {
+        "item": "cl:capacitor_pw_grande"
+      },
+      "o": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "k": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bateria_pw_basico",
+      "count": 1
+    }
+  }
+}

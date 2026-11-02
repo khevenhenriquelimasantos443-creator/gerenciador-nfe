@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.18.0";
+export const VERSAO = "1.19.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -369,6 +369,10 @@ export const PENEIRA: Readonly<Record<string, ReadonlyArray<Achado>>> = {
     { item: "minecraft:lapis_lazuli", chance: 1 / 20 },
     { item: "minecraft:diamond", chance: 1 / 128 },
     { item: `${NS}:cristal_certus`, chance: 1 / 40 }, // Fase 18 (Applied Energistics)
+    // 1.19.0 (Powah!): uraninita, que no mod nasce como minério (aqui todo minério sai da peneira).
+    { item: `${NS}:uraninita_bruta_pobre`, chance: 1 / 30 },
+    { item: `${NS}:uraninita_bruta`, chance: 1 / 60 },
+    { item: `${NS}:uraninita_bruta_densa`, chance: 1 / 160 },
     { item: "minecraft:emerald", chance: 1 / 150 },
     ...pedacos("quebrado"),
   ],

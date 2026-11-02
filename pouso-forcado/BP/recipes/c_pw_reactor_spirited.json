@@ -1,0 +1,34 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_reactor_spirited"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ulu",
+      "lcl",
+      "ulu"
+    ],
+    "key": {
+      "u": {
+        "item": "cl:uraninita"
+      },
+      "l": {
+        "item": "cl:capacitor_pw_espiritual"
+      },
+      "c": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:reator_espiritual",
+      "count": 4
+    }
+  }
+}

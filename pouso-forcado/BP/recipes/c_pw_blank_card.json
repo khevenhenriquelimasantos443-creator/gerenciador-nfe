@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_blank_card"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "p",
+      "p"
+    ],
+    "key": {
+      "p": {
+        "item": "cl:haste_dieletrica"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cartao_branco",
+      "count": 1
+    }
+  }
+}

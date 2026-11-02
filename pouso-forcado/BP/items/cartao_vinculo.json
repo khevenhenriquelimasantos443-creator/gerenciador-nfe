@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cartao_vinculo",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cartao_vinculo",
+      "minecraft:display_name": {
+        "value": "item.cl:cartao_vinculo.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

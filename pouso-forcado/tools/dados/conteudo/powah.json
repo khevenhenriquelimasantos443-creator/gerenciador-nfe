@@ -38,6 +38,186 @@
  ],
  "receitas": [
   {
+   "id": "pw_aerial_pearl",
+   "resultado": "cl:perola_aerea",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pbp",
+    "beb",
+    "pbp"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "e": "minecraft:ender_pearl",
+    "b": "minecraft:iron_bars"
+   }
+  },
+  {
+   "id": "pw_battery_basic",
+   "resultado": "cl:bateria_pw_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oko",
+    "iri",
+    "oco"
+   ],
+   "chave": {
+    "r": "minecraft:redstone_block",
+    "c": "cl:bateria_pw_inicial",
+    "i": "cl:capacitor_pw_grande",
+    "o": "cl:pasta_dieletrica",
+    "k": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "pw_battery_blazing",
+   "resultado": "cl:bateria_pw_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oko",
+    "iri",
+    "oco"
+   ],
+   "chave": {
+    "r": "minecraft:redstone_block",
+    "c": "cl:bateria_pw_endurecido",
+    "i": "cl:capacitor_pw_ardente",
+    "o": "cl:pasta_dieletrica",
+    "k": "cl:cristal_ardente"
+   }
+  },
+  {
+   "id": "pw_battery_hardened",
+   "resultado": "cl:bateria_pw_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oko",
+    "iri",
+    "oco"
+   ],
+   "chave": {
+    "r": "minecraft:redstone_block",
+    "c": "cl:bateria_pw_basico",
+    "i": "cl:capacitor_pw_endurecido",
+    "o": "cl:pasta_dieletrica",
+    "k": "cl:aco_energizado"
+   }
+  },
+  {
+   "id": "pw_battery_niotic",
+   "resultado": "cl:bateria_pw_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oko",
+    "iri",
+    "oco"
+   ],
+   "chave": {
+    "r": "minecraft:redstone_block",
+    "c": "cl:bateria_pw_ardente",
+    "i": "cl:capacitor_pw_niotico",
+    "o": "cl:pasta_dieletrica",
+    "k": "cl:cristal_niotico"
+   }
+  },
+  {
+   "id": "pw_battery_nitro",
+   "resultado": "cl:bateria_pw_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oko",
+    "iri",
+    "oco"
+   ],
+   "chave": {
+    "r": "minecraft:redstone_block",
+    "c": "cl:bateria_pw_espiritual",
+    "i": "cl:capacitor_pw_nitro",
+    "o": "cl:pasta_dieletrica",
+    "k": "cl:cristal_nitro"
+   }
+  },
+  {
+   "id": "pw_battery_spirited",
+   "resultado": "cl:bateria_pw_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oko",
+    "iri",
+    "oco"
+   ],
+   "chave": {
+    "r": "minecraft:redstone_block",
+    "c": "cl:bateria_pw_niotico",
+    "i": "cl:capacitor_pw_espiritual",
+    "o": "cl:pasta_dieletrica",
+    "k": "cl:cristal_espiritual"
+   }
+  },
+  {
+   "id": "pw_battery_starter",
+   "resultado": "cl:bateria_pw_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "minecraft:redstone_block",
+    "i": "cl:capacitor_pw_basico",
+    "o": "cl:pasta_dieletrica"
+   }
+  },
+  {
+   "id": "pw_binding_card",
+   "resultado": "cl:cartao_vinculo",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "br",
+    "rf"
+   ],
+   "chave": {
+    "b": "cl:cartao_branco",
+    "r": "minecraft:redstone",
+    "f": "minecraft:rotten_flesh"
+   }
+  },
+  {
+   "id": "pw_blank_card",
+   "resultado": "cl:cartao_branco",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "p",
+    "p"
+   ],
+   "chave": {
+    "p": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_blank_card_2",
+   "resultado": "cl:cartao_branco",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pp"
+   ],
+   "chave": {
+    "p": "cl:haste_dieletrica"
+   }
+  },
+  {
    "id": "pw_blazing_crystal_block",
    "resultado": "cl:bloco_cristal_ardente",
    "qtd": 1,
@@ -480,6 +660,356 @@
    ]
   },
   {
+   "id": "pw_ender_cell_basic",
+   "resultado": "cl:celula_ender_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "minecraft:iron_ingot",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_basic_2",
+   "resultado": "cl:celula_ender_basico",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_basico"
+   ]
+  },
+  {
+   "id": "pw_ender_cell_blazing",
+   "resultado": "cl:celula_ender_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cristal_ardente",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_blazing_2",
+   "resultado": "cl:celula_ender_ardente",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_ardente"
+   ]
+  },
+  {
+   "id": "pw_ender_cell_hardened",
+   "resultado": "cl:celula_ender_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:aco_energizado",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_hardened_2",
+   "resultado": "cl:celula_ender_endurecido",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_endurecido"
+   ]
+  },
+  {
+   "id": "pw_ender_cell_niotic",
+   "resultado": "cl:celula_ender_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cristal_niotico",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_niotic_2",
+   "resultado": "cl:celula_ender_niotico",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_niotico"
+   ]
+  },
+  {
+   "id": "pw_ender_cell_nitro",
+   "resultado": "cl:celula_ender_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cristal_nitro",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_nitro_2",
+   "resultado": "cl:celula_ender_nitro",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_nitro"
+   ]
+  },
+  {
+   "id": "pw_ender_cell_spirited",
+   "resultado": "cl:celula_ender_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cristal_espiritual",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_spirited_2",
+   "resultado": "cl:celula_ender_espiritual",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_espiritual"
+   ]
+  },
+  {
+   "id": "pw_ender_cell_starter",
+   "resultado": "cl:celula_ender_inicial",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "minecraft:iron_nugget",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_cell_starter_2",
+   "resultado": "cl:celula_ender_inicial",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:celula_ender_inicial"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_basic",
+   "resultado": "cl:portao_ender_basico",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_basico",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_basic_2",
+   "resultado": "cl:portao_ender_basico",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_basico"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_blazing",
+   "resultado": "cl:portao_ender_ardente",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_ardente",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_blazing_2",
+   "resultado": "cl:portao_ender_ardente",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_ardente"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_hardened",
+   "resultado": "cl:portao_ender_endurecido",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_endurecido",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_hardened_2",
+   "resultado": "cl:portao_ender_endurecido",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_endurecido"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_niotic",
+   "resultado": "cl:portao_ender_niotico",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_niotico",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_niotic_2",
+   "resultado": "cl:portao_ender_niotico",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_niotico"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_nitro",
+   "resultado": "cl:portao_ender_nitro",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_nitro",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_nitro_2",
+   "resultado": "cl:portao_ender_nitro",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_nitro"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_spirited",
+   "resultado": "cl:portao_ender_espiritual",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_espiritual",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_spirited_2",
+   "resultado": "cl:portao_ender_espiritual",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_espiritual"
+   ]
+  },
+  {
+   "id": "pw_ender_gate_starter",
+   "resultado": "cl:portao_ender_inicial",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "oio",
+    "ici",
+    "oio"
+   ],
+   "chave": {
+    "c": "cl:nucleo_ender",
+    "i": "cl:cabo_powah_inicial",
+    "o": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "pw_ender_gate_starter_2",
+   "resultado": "cl:portao_ender_inicial",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:portao_ender_inicial"
+   ]
+  },
+  {
    "id": "pw_energized_steel_block",
    "resultado": "cl:bloco_aco_energizado",
    "qtd": 1,
@@ -765,6 +1295,237 @@
    }
   },
   {
+   "id": "pw_energy_discharger_basic",
+   "resultado": "cl:descarregador_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_discharger_blazing",
+   "resultado": "cl:descarregador_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_ardente",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_discharger_hardened",
+   "resultado": "cl:descarregador_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_endurecido",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_discharger_niotic",
+   "resultado": "cl:descarregador_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_niotico",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_discharger_nitro",
+   "resultado": "cl:descarregador_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_nitro",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_discharger_spirited",
+   "resultado": "cl:descarregador_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_espiritual",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_discharger_starter",
+   "resultado": "cl:descarregador_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pcp",
+    "pdp",
+    "pcp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_basic",
+   "resultado": "cl:funil_energia_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "cl:funil_energia_inicial"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_blazing",
+   "resultado": "cl:funil_energia_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_ardente",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "cl:funil_energia_endurecido"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_hardened",
+   "resultado": "cl:funil_energia_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_endurecido",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "cl:funil_energia_basico"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_niotic",
+   "resultado": "cl:funil_energia_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_niotico",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "cl:funil_energia_ardente"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_nitro",
+   "resultado": "cl:funil_energia_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_nitro",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "cl:funil_energia_espiritual"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_spirited",
+   "resultado": "cl:funil_energia_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_espiritual",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "cl:funil_energia_niotico"
+   }
+  },
+  {
+   "id": "pw_energy_hopper_starter",
+   "resultado": "cl:funil_energia_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "php"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "p": "cl:pasta_dieletrica",
+    "d": "cl:involucro_dieletrico",
+    "h": "minecraft:hopper"
+   }
+  },
+  {
    "id": "pw_furnator_basic",
    "resultado": "cl:furnator_basico",
    "qtd": 1,
@@ -1003,6 +1764,16 @@
    }
   },
   {
+   "id": "pw_manual",
+   "resultado": "cl:livro_powah",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:pasta_dieletrica",
+    "minecraft:book"
+   ]
+  },
+  {
    "id": "pw_niotic_crystal_block",
    "resultado": "cl:bloco_cristal_niotico",
    "qtd": 1,
@@ -1050,6 +1821,237 @@
     "p": "minecraft:glass_pane",
     "l": "minecraft:lapis_lazuli",
     "d": "cl:pasta_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_basic",
+   "resultado": "cl:transmissor_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:transmissor_inicial",
+    "i": "cl:capacitor_pw_basico",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_blazing",
+   "resultado": "cl:transmissor_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:transmissor_endurecido",
+    "i": "cl:capacitor_pw_ardente",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_hardened",
+   "resultado": "cl:transmissor_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:transmissor_basico",
+    "i": "cl:capacitor_pw_endurecido",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_niotic",
+   "resultado": "cl:transmissor_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:transmissor_ardente",
+    "i": "cl:capacitor_pw_niotico",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_nitro",
+   "resultado": "cl:transmissor_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:transmissor_espiritual",
+    "i": "cl:capacitor_pw_nitro",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_spirited",
+   "resultado": "cl:transmissor_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:transmissor_niotico",
+    "i": "cl:capacitor_pw_espiritual",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_player_tranmitter_starter",
+   "resultado": "cl:transmissor_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " p ",
+    "ici",
+    " r "
+   ],
+   "chave": {
+    "p": "cl:perola_aerea_jogador",
+    "i": "cl:capacitor_pw_minusculo",
+    "c": "cl:involucro_dieletrico",
+    "r": "cl:haste_dieletrica"
+   }
+  },
+  {
+   "id": "pw_reactor_basic",
+   "resultado": "cl:reator_basico",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_grande",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_reactor_blazing",
+   "resultado": "cl:reator_ardente",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_ardente",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_reactor_hardened",
+   "resultado": "cl:reator_endurecido",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_endurecido",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_reactor_niotic",
+   "resultado": "cl:reator_niotico",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_niotico",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_reactor_nitro",
+   "resultado": "cl:reator_nitro",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_nitro",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_reactor_spirited",
+   "resultado": "cl:reator_espiritual",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_espiritual",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_reactor_starter",
+   "resultado": "cl:reator_inicial",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "ulu",
+    "lcl",
+    "ulu"
+   ],
+   "chave": {
+    "u": "cl:uraninita",
+    "l": "cl:capacitor_pw_minusculo",
+    "c": "cl:involucro_dieletrico"
    }
   },
   {
@@ -1343,6 +2345,112 @@
     "r": "minecraft:redstone",
     "t": "cl:capacitor_pw_minusculo"
    }
+  },
+  {
+   "id": "pw_uraninite",
+   "resultado": "cl:uraninita",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_uraninita"
+   ]
+  },
+  {
+   "id": "pw_uraninite_block",
+   "resultado": "cl:bloco_uraninita",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita",
+    "cl:uraninita"
+   ]
+  },
+  {
+   "id": "pw_uraninite_raw_dense_from_poor",
+   "resultado": "cl:uraninita_bruta_densa",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita_bruta_pobre",
+    "cl:uraninita_bruta_pobre",
+    "cl:uraninita_bruta_pobre",
+    "cl:uraninita_bruta_pobre"
+   ]
+  },
+  {
+   "id": "pw_uraninite_raw_dense_from_raw",
+   "resultado": "cl:uraninita_bruta_densa",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita_bruta",
+    "cl:uraninita_bruta"
+   ]
+  },
+  {
+   "id": "pw_uraninite_raw_dense_to_poor",
+   "resultado": "cl:uraninita_bruta_pobre",
+   "qtd": 4,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita_bruta_densa"
+   ]
+  },
+  {
+   "id": "pw_uraninite_raw_from_dense",
+   "resultado": "cl:uraninita_bruta",
+   "qtd": 2,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita_bruta_densa"
+   ]
+  },
+  {
+   "id": "pw_uraninite_raw_from_poor",
+   "resultado": "cl:uraninita_bruta",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita_bruta_pobre",
+    "cl:uraninita_bruta_pobre"
+   ]
+  },
+  {
+   "id": "pw_uraninite_raw_to_poor",
+   "resultado": "cl:uraninita_bruta_pobre",
+   "qtd": 2,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:uraninita_bruta"
+   ]
+  },
+  {
+   "id": "pw_wrench",
+   "resultado": "cl:chave_powah",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " ip",
+    " pi",
+    "p  "
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "i": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "pw_uraninita_forno",
+   "tipo": "furnace",
+   "entrada": "cl:uraninita_bruta",
+   "resultado": "cl:uraninita"
   }
  ],
  "energizar": [
@@ -1363,6 +2471,33 @@
    ],
    "rf": 90000,
    "resultado": "cl:cristal_ardente",
+   "qtd": 1
+  },
+  {
+   "entradas": [
+    "minecraft:snowball"
+   ],
+   "rf": 500000,
+   "resultado": "cl:bola_neve_carregada",
+   "qtd": 1
+  },
+  {
+   "entradas": [
+    "minecraft:blue_ice",
+    "minecraft:blue_ice"
+   ],
+   "rf": 10000,
+   "resultado": "cl:gelo_seco",
+   "qtd": 1
+  },
+  {
+   "entradas": [
+    "minecraft:ender_eye",
+    "cl:involucro_dieletrico",
+    "cl:capacitor_pw_minusculo"
+   ],
+   "rf": 50000,
+   "resultado": "cl:nucleo_ender",
    "qtd": 1
   },
   {
@@ -1495,6 +2630,125 @@
    "minecraft:magma": 800,
    "cl:bloco_cristal_ardente": 2800
   },
-  "alcanceOrbe": 4
+  "alcanceOrbe": 4,
+  "reator": {
+   "geracao": [
+    100,
+    400,
+    840,
+    1200,
+    2700,
+    3800,
+    5400
+   ],
+   "capacidade": [
+    1000000,
+    4000000,
+    10000000,
+    18000000,
+    30000000,
+    50000000,
+    80000000
+   ]
+  },
+  "bateria": {
+   "capacidade": [
+    100000,
+    1000000,
+    4000000,
+    10000000,
+    25000000,
+    60000000,
+    140000000
+   ],
+   "transferencia": [
+    200,
+    2500,
+    8000,
+    20000,
+    50000,
+    100000,
+    400000
+   ]
+  },
+  "ender": {
+   "canais": [
+    1,
+    2,
+    3,
+    5,
+    7,
+    9,
+    12
+   ],
+   "transferencia": [
+    200,
+    2500,
+    8000,
+    20000,
+    50000,
+    100000,
+    400000
+   ]
+  },
+  "funil": {
+   "transferencia": [
+    500,
+    2500,
+    8000,
+    20000,
+    50000,
+    100000,
+    400000
+   ]
+  },
+  "descarregador": {
+   "transferencia": [
+    200,
+    2500,
+    8000,
+    20000,
+    50000,
+    100000,
+    400000
+   ]
+  },
+  "transmissor": {
+   "transferencia": [
+    500,
+    2500,
+    8000,
+    20000,
+    50000,
+    100000,
+    400000
+   ]
+  },
+  "resfriadores": {
+   "minecraft:snow": [
+    48,
+    -3
+   ],
+   "minecraft:snowball": [
+    12,
+    -3
+   ],
+   "minecraft:ice": [
+    48,
+    -5
+   ],
+   "minecraft:packed_ice": [
+    192,
+    -8
+   ],
+   "minecraft:blue_ice": [
+    568,
+    -17
+   ],
+   "cl:gelo_seco": [
+    712,
+    -32
+   ]
+  }
  }
 }

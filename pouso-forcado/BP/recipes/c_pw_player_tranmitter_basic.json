@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_player_tranmitter_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " p ",
+      "ici",
+      " r "
+    ],
+    "key": {
+      "p": {
+        "item": "cl:transmissor_inicial"
+      },
+      "i": {
+        "item": "cl:capacitor_pw_basico"
+      },
+      "c": {
+        "item": "cl:involucro_dieletrico"
+      },
+      "r": {
+        "item": "cl:haste_dieletrica"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:transmissor_basico",
+      "count": 1
+    }
+  }
+}

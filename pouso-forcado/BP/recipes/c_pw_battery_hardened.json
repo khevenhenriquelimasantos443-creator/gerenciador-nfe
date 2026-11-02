@@ -1,0 +1,40 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_battery_hardened"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "oko",
+      "iri",
+      "oco"
+    ],
+    "key": {
+      "r": {
+        "item": "minecraft:redstone_block"
+      },
+      "c": {
+        "item": "cl:bateria_pw_basico"
+      },
+      "i": {
+        "item": "cl:capacitor_pw_endurecido"
+      },
+      "o": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "k": {
+        "item": "cl:aco_energizado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bateria_pw_endurecido",
+      "count": 1
+    }
+  }
+}

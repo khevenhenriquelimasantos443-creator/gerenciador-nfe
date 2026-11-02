@@ -154,6 +154,15 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.19.0 (Powah! completo)
+
+O resto do Powah!, com a arte e os números do mod (agora 160 receitas e 9 do Orbe):
+- **Reator** (7 níveis): toque no bloco (ou ponha) com mais 35 Reatores do mesmo nível no inventário e ele se monta em 3×3×4. Queima Uraninita (que sai da peneira, no cascalho), esquenta, e rende mais com carvão (+20%) e redstone (+40%); água e gelo/neve/Gelo Seco seguram a temperatura. Quebrar qualquer parte devolve os 36 blocos e a uraninita.
+- **Célula Ender e Portão Ender**: energia sem fio por canal (do mesmo dono, em qualquer lugar). A Célula ganha capacidade com Células de Energia do Powah postas dentro; toque de mão vazia troca o canal.
+- **Baterias** (7 níveis), **Funil de Energia** (carrega as baterias do baú embaixo), **Descarregador** (passa a energia das baterias do baú em cima para a rede) e **Transmissor de Jogador** (carrega as baterias de quem está no Cartão de Vínculo).
+- **Cartão de Vínculo** (use no ar para vincular; num enderman vira o Dimensional), **Pérola Aérea** (num zumbi vira a do Jogador), **Lente do Ender** (Painel Fotoelétrico num enderman), **Bola de Neve Carregada** (raio onde cair), **Gelo Seco**, **Chave** (gira as máquinas) e o **Livro do Powah**.
+- Os cabos usam a arte original do mod. 5 missões novas no capítulo do Powah!.
+
 ## Novidades da 1.18.0 (Powah!)
 
 Mod novo de energia: **Powah!** (owmii, LGPL-3.0), com a arte e os números do código do mod. Tudo em 7 níveis (Inicial, Básico, Endurecido, Ardente, Niótico, Espiritual e Nitro); cada nível pede o anterior, um capacitor do nível e o material dele.
@@ -164,7 +173,6 @@ Mod novo de energia: **Powah!** (owmii, LGPL-3.0), com a arte e os números do c
 - **Células de Energia** (100 mil a 140 milhões de RF) e **Cabos de Energia**, que ligam com geradores, células, máquinas e os outros cabos e condutos do pack.
 - **Orbe Energizador**: até 6 itens dentro; as **Hastes Energizadoras** a até 4 blocos, ligadas à energia, mandam RF até a receita ficar pronta: Aço Energizado (ferro + ouro) e os Cristais Ardente, Niótico, Espiritual e Nitro dos níveis altos.
 - Capítulo novo no Diário (8 missões) e o grupo "Powah!" no menu criativo e no Catálogo.
-- Não entram (não têm uso no pack): o reator de urânio, as células e portões do Ender, o transmissor e o carregador de itens.
 
 ## Novidades da 1.17.0 (Lua)
 

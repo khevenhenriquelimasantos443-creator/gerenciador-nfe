@@ -3353,25 +3353,25 @@
       "textures": "textures/blocks/cl/arte/celula_powah_nitro"
     },
     "clc_cabo_powah_inicial": {
-      "textures": "textures/blocks/cl/c/cabo_powah_inicial"
+      "textures": "textures/blocks/cl/arte/cabo_powah_inicial"
     },
     "clc_cabo_powah_basico": {
-      "textures": "textures/blocks/cl/c/cabo_powah_basico"
+      "textures": "textures/blocks/cl/arte/cabo_powah_basico"
     },
     "clc_cabo_powah_endurecido": {
-      "textures": "textures/blocks/cl/c/cabo_powah_endurecido"
+      "textures": "textures/blocks/cl/arte/cabo_powah_endurecido"
     },
     "clc_cabo_powah_ardente": {
-      "textures": "textures/blocks/cl/c/cabo_powah_ardente"
+      "textures": "textures/blocks/cl/arte/cabo_powah_ardente"
     },
     "clc_cabo_powah_niotico": {
-      "textures": "textures/blocks/cl/c/cabo_powah_niotico"
+      "textures": "textures/blocks/cl/arte/cabo_powah_niotico"
     },
     "clc_cabo_powah_espiritual": {
-      "textures": "textures/blocks/cl/c/cabo_powah_espiritual"
+      "textures": "textures/blocks/cl/arte/cabo_powah_espiritual"
     },
     "clc_cabo_powah_nitro": {
-      "textures": "textures/blocks/cl/c/cabo_powah_nitro"
+      "textures": "textures/blocks/cl/arte/cabo_powah_nitro"
     },
     "clc_haste_energizadora_inicial": {
       "textures": "textures/blocks/cl/arte/haste_energizadora_inicial"
@@ -3411,6 +3411,138 @@
     },
     "clc_bloco_cristal_nitro": {
       "textures": "textures/blocks/cl/arte/bloco_cristal_nitro"
+    },
+    "clc_reator_inicial": {
+      "textures": "textures/blocks/cl/arte/reator_inicial"
+    },
+    "clc_reator_basico": {
+      "textures": "textures/blocks/cl/arte/reator_basico"
+    },
+    "clc_reator_endurecido": {
+      "textures": "textures/blocks/cl/arte/reator_endurecido"
+    },
+    "clc_reator_ardente": {
+      "textures": "textures/blocks/cl/arte/reator_ardente"
+    },
+    "clc_reator_niotico": {
+      "textures": "textures/blocks/cl/arte/reator_niotico"
+    },
+    "clc_reator_espiritual": {
+      "textures": "textures/blocks/cl/arte/reator_espiritual"
+    },
+    "clc_reator_nitro": {
+      "textures": "textures/blocks/cl/arte/reator_nitro"
+    },
+    "clc_celula_ender_inicial": {
+      "textures": "textures/blocks/cl/arte/celula_ender_inicial"
+    },
+    "clc_celula_ender_basico": {
+      "textures": "textures/blocks/cl/arte/celula_ender_basico"
+    },
+    "clc_celula_ender_endurecido": {
+      "textures": "textures/blocks/cl/arte/celula_ender_endurecido"
+    },
+    "clc_celula_ender_ardente": {
+      "textures": "textures/blocks/cl/arte/celula_ender_ardente"
+    },
+    "clc_celula_ender_niotico": {
+      "textures": "textures/blocks/cl/arte/celula_ender_niotico"
+    },
+    "clc_celula_ender_espiritual": {
+      "textures": "textures/blocks/cl/arte/celula_ender_espiritual"
+    },
+    "clc_celula_ender_nitro": {
+      "textures": "textures/blocks/cl/arte/celula_ender_nitro"
+    },
+    "clc_portao_ender_inicial": {
+      "textures": "textures/blocks/cl/arte/portao_ender_inicial"
+    },
+    "clc_portao_ender_basico": {
+      "textures": "textures/blocks/cl/arte/portao_ender_basico"
+    },
+    "clc_portao_ender_endurecido": {
+      "textures": "textures/blocks/cl/arte/portao_ender_endurecido"
+    },
+    "clc_portao_ender_ardente": {
+      "textures": "textures/blocks/cl/arte/portao_ender_ardente"
+    },
+    "clc_portao_ender_niotico": {
+      "textures": "textures/blocks/cl/arte/portao_ender_niotico"
+    },
+    "clc_portao_ender_espiritual": {
+      "textures": "textures/blocks/cl/arte/portao_ender_espiritual"
+    },
+    "clc_portao_ender_nitro": {
+      "textures": "textures/blocks/cl/arte/portao_ender_nitro"
+    },
+    "clc_descarregador_inicial": {
+      "textures": "textures/blocks/cl/arte/descarregador_inicial"
+    },
+    "clc_descarregador_basico": {
+      "textures": "textures/blocks/cl/arte/descarregador_basico"
+    },
+    "clc_descarregador_endurecido": {
+      "textures": "textures/blocks/cl/arte/descarregador_endurecido"
+    },
+    "clc_descarregador_ardente": {
+      "textures": "textures/blocks/cl/arte/descarregador_ardente"
+    },
+    "clc_descarregador_niotico": {
+      "textures": "textures/blocks/cl/arte/descarregador_niotico"
+    },
+    "clc_descarregador_espiritual": {
+      "textures": "textures/blocks/cl/arte/descarregador_espiritual"
+    },
+    "clc_descarregador_nitro": {
+      "textures": "textures/blocks/cl/arte/descarregador_nitro"
+    },
+    "clc_funil_energia_inicial": {
+      "textures": "textures/blocks/cl/arte/funil_energia_inicial"
+    },
+    "clc_funil_energia_basico": {
+      "textures": "textures/blocks/cl/arte/funil_energia_basico"
+    },
+    "clc_funil_energia_endurecido": {
+      "textures": "textures/blocks/cl/arte/funil_energia_endurecido"
+    },
+    "clc_funil_energia_ardente": {
+      "textures": "textures/blocks/cl/arte/funil_energia_ardente"
+    },
+    "clc_funil_energia_niotico": {
+      "textures": "textures/blocks/cl/arte/funil_energia_niotico"
+    },
+    "clc_funil_energia_espiritual": {
+      "textures": "textures/blocks/cl/arte/funil_energia_espiritual"
+    },
+    "clc_funil_energia_nitro": {
+      "textures": "textures/blocks/cl/arte/funil_energia_nitro"
+    },
+    "clc_transmissor_inicial": {
+      "textures": "textures/blocks/cl/arte/transmissor_inicial"
+    },
+    "clc_transmissor_basico": {
+      "textures": "textures/blocks/cl/arte/transmissor_basico"
+    },
+    "clc_transmissor_endurecido": {
+      "textures": "textures/blocks/cl/arte/transmissor_endurecido"
+    },
+    "clc_transmissor_ardente": {
+      "textures": "textures/blocks/cl/arte/transmissor_ardente"
+    },
+    "clc_transmissor_niotico": {
+      "textures": "textures/blocks/cl/arte/transmissor_niotico"
+    },
+    "clc_transmissor_espiritual": {
+      "textures": "textures/blocks/cl/arte/transmissor_espiritual"
+    },
+    "clc_transmissor_nitro": {
+      "textures": "textures/blocks/cl/arte/transmissor_nitro"
+    },
+    "clc_gelo_seco": {
+      "textures": "textures/blocks/cl/arte/gelo_seco"
+    },
+    "clc_bloco_uraninita": {
+      "textures": "textures/blocks/cl/arte/bloco_uraninita"
     }
   }
 }

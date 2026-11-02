@@ -18,7 +18,7 @@ const CARGA = "cl:carga";
 // e Bancos de Capacitores (Ender IO, 1.8.0).
 export const CELULAS: Readonly<Record<string, number>> = { ...DADOS_F17.celulas, ...DADOS_F24.cubos, ...DADOS_F29.bancos, ...DADOS_F39.celulas };
 // Powah! (1.18.0): cabos e geradores também passam energia.
-const POWAH = DADOS_F39.niveis.flatMap((n) => [`cl:cabo_powah_${n}`, `cl:furnator_${n}`, `cl:magmator_${n}`, `cl:termogerador_${n}`, `cl:painel_solar_${n}`]);
+const POWAH = DADOS_F39.niveis.flatMap((n) => [`cl:cabo_powah_${n}`, `cl:furnator_${n}`, `cl:magmator_${n}`, `cl:termogerador_${n}`, `cl:painel_solar_${n}`, `cl:reator_${n}`]);
 const CONDUTORES = new Set<string>([IDS.cabo, "cl:conduto_energia", ...POWAH, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
 
 // Tesseract (1.2.0): a busca também pula para os outros Tesseracts da mesma frequência (scripts/maquinas/energia_extra.ts).
@@ -68,13 +68,23 @@ export function coletarNaRede(origem: Block, quer: (b: Block) => boolean, max: n
   return achados;
 }
 
-export const capacidadeDe = (b: Block): number => (b.typeId === IDS.bateria ? ENERGIA.bateriaMax : CELULAS[b.typeId] ?? 0);
-export const cargaDe = (b: Block): number => (b.typeId === IDS.bateria ? lerEstado<number>(b, CARGA) : CELULAS[b.typeId] ? ler<number>("celula", b, 0) : 0);
+// Armazéns com regra própria (1.19.0: a rede Ender do Powah!, onde a carga é a do canal e não a do bloco).
+type Armazem = { carga(b: Block): number; capacidade(b: Block): number; mudar(b: Block, delta: number): void };
+const especiais = new Map<string, Armazem>();
+export function registrarArmazem(ids: readonly string[], a: Armazem): void {
+  for (const id of ids) especiais.set(id, a);
+}
+export const capacidadeDe = (b: Block): number =>
+  especiais.get(b.typeId)?.capacidade(b) ?? (b.typeId === IDS.bateria ? ENERGIA.bateriaMax : CELULAS[b.typeId] ?? 0);
+export const cargaDe = (b: Block): number =>
+  especiais.get(b.typeId)?.carga(b) ?? (b.typeId === IDS.bateria ? lerEstado<number>(b, CARGA) : CELULAS[b.typeId] ? ler<number>("celula", b, 0) : 0);
 function mudarCarga(b: Block, delta: number): void {
-  if (b.typeId === IDS.bateria) definirEstado(b, CARGA, cargaDe(b) + delta);
+  const e = especiais.get(b.typeId);
+  if (e) e.mudar(b, delta);
+  else if (b.typeId === IDS.bateria) definirEstado(b, CARGA, cargaDe(b) + delta);
   else gravar("celula", b, cargaDe(b) + delta);
 }
-const guarda = (b: Block) => b.typeId === IDS.bateria || CELULAS[b.typeId] !== undefined;
+const guarda = (b: Block) => especiais.has(b.typeId) || b.typeId === IDS.bateria || CELULAS[b.typeId] !== undefined;
 
 /** Manda até `unidades` para baterias/células com espaço. Retorna quantas foram guardadas. */
 export function gerar(origem: Block, unidades: number): number {

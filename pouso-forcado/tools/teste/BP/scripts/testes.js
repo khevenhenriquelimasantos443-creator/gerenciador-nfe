@@ -128,6 +128,45 @@ teste("powah", 700, (t) => {
   });
 });
 
+// 1.19.0: Reator do Powah! montado pelo robô (36 blocos), com uraninita e água; o Funil carrega uma bateria na rede.
+teste("powah_reator", 700, (t) => {
+  const j = robo(t, { x: 2.5, y: 2, z: 5.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  t.setBlockType("cl:cabo_powah_basico", { x: 4, y: 2, z: 2 });
+  t.setBlockType("cl:celula_powah_basico", { x: 5, y: 2, z: 2 });
+  t.setBlockType("cl:cabo_powah_basico", { x: 5, y: 3, z: 2 });
+  t.setBlockType("cl:funil_energia_basico", { x: 6, y: 3, z: 2 });
+  t.setBlockType("minecraft:chest", { x: 6, y: 2, z: 2 });
+  bau(t, { x: 6, y: 2, z: 2 }).addItem(new ItemStack("cl:bateria_pw_inicial", 1));
+  // O núcleo posto direto; tocar nele com 35 Reatores no inventário monta o resto (como pôr o bloco à mão).
+  t.setBlockType("cl:reator_basico", { x: 2, y: 2, z: 2 });
+  t.runAfterDelay(5, () => {
+    inv.setItem(1, new ItemStack("cl:reator_basico", 35));
+    inv.setItem(0, undefined);
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 2, y: 2, z: 2 });
+    j.interactWithBlock({ x: 2, y: 2, z: 2 }, Direction.North);
+  });
+  ["cl:uraninita", "cl:uraninita", "cl:uraninita", "cl:uraninita", "minecraft:water_bucket"].forEach((id, k) => t.runAfterDelay(20 + k * 5, () => {
+    inv.setItem(0, new ItemStack(id, 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 2, y: 2, z: 2 });
+    j.interactWithBlock({ x: 2, y: 2, z: 2 }, Direction.North);
+  }));
+  t.runAfterDelay(650, () => {
+    let partes = 0;
+    for (let x = 1; x <= 3; x++) for (let y = 2; y <= 5; y++) for (let z = 1; z <= 3; z++) if (t.getBlock({ x, y, z }).typeId === "cl:reator_basico") partes++;
+    const c = bau(t, { x: 6, y: 2, z: 2 });
+    let b;
+    for (let k = 0; k < c.size; k++) if (c.getItem(k)) b = c.getItem(k);
+    log(`powah_reator: baú ${t.getBlock({ x: 6, y: 2, z: 2 }).typeId} funil ${t.getBlock({ x: 6, y: 3, z: 2 }).typeId} item ${b?.typeId}`);
+    log(`powah_reator: blocos do reator=${partes} sobraram no inventário=${quantos(j, "cl:reator_basico")} bateria=${JSON.stringify(b?.getLore())}`);
+    t.assert(partes === 36, "o reator não montou");
+    t.assert(!!(b && b.getLore()[0] && !b.getLore()[0].startsWith("§70 RF")), "a bateria não carregou");
+    t.succeed();
+  });
+});
+
 teste("varal", 200, (t) => {
   const j = robo(t);
   t.setBlockType("cl:varal", { x: 3, y: 1, z: 1 });

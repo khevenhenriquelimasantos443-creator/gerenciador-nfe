@@ -28,17 +28,29 @@ for en, pt, _, _ in NIVEIS[2:]:
     ITENS[f"capacitor_{en}"] = f"capacitor_pw_{pt}"
 for en, pt, _, _ in NIVEIS[3:]:
     ITENS[f"crystal_{en}"] = f"cristal_{pt}"
-BLOCOS = {"energized_steel_block": "bloco_aco_energizado", "energizing_orb": "orbe_energizador"}
+# 1.19.0: o resto do mod (reator, rede Ender, transmissor, funil, descarregador, baterias, cartões, pérolas, chave, livro).
+ITENS.update({
+    "uraninite_raw_poor": "uraninita_bruta_pobre", "uraninite_raw": "uraninita_bruta", "uraninite_raw_dense": "uraninita_bruta_densa",
+    "uraninite": "uraninita", "ender_core": "nucleo_ender", "lens_of_ender": "lente_ender", "aerial_pearl": "perola_aerea",
+    "player_aerial_pearl": "perola_aerea_jogador", "blank_card": "cartao_branco", "binding_card": "cartao_vinculo",
+    "binding_card_dim": "cartao_vinculo_dimensional", "wrench": "chave_powah", "charged_snowball": "bola_neve_carregada", "book": "livro_powah",
+})
+for en, pt, _, _ in NIVEIS:
+    ITENS[f"battery_{en}"] = f"bateria_pw_{pt}"
+BLOCOS = {"energized_steel_block": "bloco_aco_energizado", "energizing_orb": "orbe_energizador", "dry_ice": "gelo_seco", "uraninite_block": "bloco_uraninita"}
 for en, pt, _, _ in NIVEIS[3:]:
     BLOCOS[f"{en}_crystal_block"] = f"bloco_cristal_{pt}"
 MAQUINAS = {"furnator": "furnator", "magmator": "magmator", "thermo_generator": "termogerador", "solar_panel": "painel_solar",
-            "energy_cell": "celula_powah", "energy_cable": "cabo_powah", "energizing_rod": "haste_energizadora"}
+            "energy_cell": "celula_powah", "energy_cable": "cabo_powah", "energizing_rod": "haste_energizadora", "reactor": "reator",
+            "ender_cell": "celula_ender", "ender_gate": "portao_ender", "energy_discharger": "descarregador", "energy_hopper": "funil_energia",
+            "player_transmitter": "transmissor"}
 for en, pt, _, _ in NIVEIS:
     for a, b in MAQUINAS.items():
         BLOCOS[f"{a}_{en}"] = f"{b}_{pt}"
 POWAH = {**ITENS, **BLOCOS}
 # As receitas do mod chamam alguns blocos por outro nome.
 POWAH.update({f"cable_{en}": f"cabo_powah_{pt}" for en, pt, _, _ in NIVEIS})
+POWAH.update({f"player_tranmitter_{en}": f"transmissor_{pt}" for en, pt, _, _ in NIVEIS})
 TAGS = {
     "forge:ingots/iron": "minecraft:iron_ingot", "forge:ingots/gold": "minecraft:gold_ingot", "forge:glass": "minecraft:glass",
     "forge:glass_panes": "minecraft:glass_pane", "forge:gems/quartz": "minecraft:quartz", "forge:storage_blocks/quartz": "minecraft:quartz_block",
@@ -82,6 +94,9 @@ for arq in sorted(os.listdir(os.path.join(RECEITAS, "crafting"))):
             continue
         r.update(tipo="shapeless", ingredientes=ings)
     receitas.append(r)
+for arq in ("uraninite_crystal_furnace.json",):
+    j = json.load(open(os.path.join(RECEITAS, "smelting", arq)))
+    receitas.append({"id": "pw_uraninita_forno", "tipo": "furnace", "entrada": f"cl:{POWAH[j['ingredient']['item'].split(':', 1)[1]]}", "resultado": f"cl:{POWAH[j['result']['item'].split(':', 1)[1]]}"})
 energizar = []
 for arq in sorted(os.listdir(os.path.join(RECEITAS, "energizing"))):
     j = json.load(open(os.path.join(RECEITAS, "energizing", arq)))
@@ -104,6 +119,16 @@ numeros = {
     "lavaPorBalde": 100000,  # MagmatorConfig: lava = 10.000 por 100 mB
     "calor": {"minecraft:lava": 1000, "minecraft:flowing_lava": 1000, "minecraft:magma": 800, "cl:bloco_cristal_ardente": 2800},
     "alcanceOrbe": 4,
+    # 1.19.0
+    "reator": {"geracao": [100, 400, 840, 1200, 2700, 3800, 5400], "capacidade": [1000000, 4000000, 10000000, 18000000, 30000000, 50000000, 80000000]},
+    "bateria": {"capacidade": [100000, 1000000, 4000000, 10000000, 25000000, 60000000, 140000000], "transferencia": [200, 2500, 8000, 20000, 50000, 100000, 400000]},
+    "ender": {"canais": [1, 2, 3, 5, 7, 9, 12], "transferencia": [200, 2500, 8000, 20000, 50000, 100000, 400000]},
+    "funil": {"transferencia": [500, 2500, 8000, 20000, 50000, 100000, 400000]},
+    "descarregador": {"transferencia": [200, 2500, 8000, 20000, 50000, 100000, 400000]},
+    "transmissor": {"transferencia": [500, 2500, 8000, 20000, 50000, 100000, 400000]},
+    # Resfriadores sólidos do reator (Powah.java): bloco -> [quantidade, frio]
+    "resfriadores": {"minecraft:snow": [48, -3], "minecraft:snowball": [12, -3], "minecraft:ice": [48, -5], "minecraft:packed_ice": [192, -8],
+                     "minecraft:blue_ice": [568, -17], "cl:gelo_seco": [712, -32]},
 }
 saida = {"niveis": [[pt, ptn, enn] for _, pt, ptn, enn in NIVEIS], "receitas": receitas, "energizar": energizar, "numeros": numeros}
 json.dump(saida, open(os.path.join(R, "tools/dados/conteudo/powah.json"), "w"), ensure_ascii=False, indent=1)
@@ -131,8 +156,9 @@ def com_nivel(base, en):
 
 
 usados = []
+ARQ_ITEM = {"uraninite": "uraninite_crystal"}
 for en, pt in {k: v for k, v in ITENS.items() if k != "dielectric_rod_horizontal"}.items():
-    salvar(abrir(f"item/{en}.png"), f"RP/textures/items/cl/arte/{pt}.png")
+    salvar(abrir(f"item/{ARQ_ITEM.get(en, en)}.png"), f"RP/textures/items/cl/arte/{pt}.png")
     usados.append(pt)
 B = "RP/textures/blocks/cl/arte"
 for en, pt in (("energized_steel_block", "bloco_aco_energizado"), *[(f"{e}_crystal_block", f"bloco_cristal_{p}") for e, p, _, _ in NIVEIS[3:]]):
@@ -164,6 +190,33 @@ for en, pt, _, _ in NIVEIS:
     usados.append(f"celula_powah_{pt}")
     salvar(abrir(f"block/energizing_rod_{en}_gem.png") if os.path.exists(os.path.join(ASSETS, f"block/energizing_rod_{en}_gem.png")) else abrir("block/energizing_rod.png"), f"{B}/haste_energizadora_{pt}.png")
     usados.append(f"haste_energizadora_{pt}")
+
+# 1.19.0: arte das peças novas.
+for en, pt in (("dry_ice", "gelo_seco"), ("uraninite_block", "bloco_uraninita")):
+    salvar(abrir(f"block/{en}.png"), f"{B}/{pt}.png")
+    usados.append(pt)
+for en, pt, _, _ in NIVEIS:
+    salvar(abrir(f"model/tile/reactor_block_{en}.png"), f"{B}/reator_{pt}.png")
+    cel = abrir(f"block/ender_cell_{en}.png")
+    salvar(cel, f"{B}/celula_ender_{pt}.png")
+    portao = abrir("block/ender_gate.png").resize((16, 16), Image.NEAREST)
+    salvar(com_nivel(portao, en), f"{B}/portao_ender_{pt}.png")
+    lado = abrir("block/energy_discharger_side.png")
+    salvar(com_nivel(lado, en), f"{B}/descarregador_{pt}.png")
+    funil = abrir("block/energy_hopper_side.png")
+    salvar(com_nivel(funil, en), f"{B}/funil_energia_{pt}.png")
+    tr = abrir("block/player_transmitter.png").resize((16, 16), Image.NEAREST)
+    try:
+        tr.alpha_composite(abrir(f"block/player_transmitter_{en}_var.png").resize((16, 16), Image.NEAREST))
+    except FileNotFoundError:
+        pass
+    salvar(tr, f"{B}/transmissor_{pt}.png")
+    usados += [f"reator_{pt}", f"celula_ender_{pt}", f"portao_ender_{pt}", f"descarregador_{pt}", f"funil_energia_{pt}", f"transmissor_{pt}"]
+# O fio do cabo do mod é uma textura de modelo (64×64): o miolo dela vira a textura do bloco.
+for en, pt, _, _ in NIVEIS:
+    cabo = abrir(f"block/energy_cable_{en}.png")
+    salvar(cabo.crop((0, 0, 16, 16)) if cabo.width >= 16 else cabo, f"{B}/cabo_powah_{pt}.png")
+    usados.append(f"cabo_powah_{pt}")
 
 os.makedirs(os.path.join(R, "docs/licencas"), exist_ok=True)
 with open(os.path.join(SRC, "LICENSE")) as f, open(os.path.join(R, "docs/licencas/powah.txt"), "w") as g:

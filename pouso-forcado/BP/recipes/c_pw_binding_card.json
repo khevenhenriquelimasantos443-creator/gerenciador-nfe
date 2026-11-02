@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_binding_card"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "br",
+      "rf"
+    ],
+    "key": {
+      "b": {
+        "item": "cl:cartao_branco"
+      },
+      "r": {
+        "item": "minecraft:redstone"
+      },
+      "f": {
+        "item": "minecraft:rotten_flesh"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cartao_vinculo",
+      "count": 1
+    }
+  }
+}

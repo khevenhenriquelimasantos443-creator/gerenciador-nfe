@@ -1828,6 +1828,69 @@
     },
     "clc_placa_termoeletrica": {
       "textures": "textures/items/cl/arte/placa_termoeletrica"
+    },
+    "clc_uraninita_bruta_pobre": {
+      "textures": "textures/items/cl/arte/uraninita_bruta_pobre"
+    },
+    "clc_uraninita_bruta": {
+      "textures": "textures/items/cl/arte/uraninita_bruta"
+    },
+    "clc_uraninita_bruta_densa": {
+      "textures": "textures/items/cl/arte/uraninita_bruta_densa"
+    },
+    "clc_uraninita": {
+      "textures": "textures/items/cl/arte/uraninita"
+    },
+    "clc_bateria_pw_inicial": {
+      "textures": "textures/items/cl/arte/bateria_pw_inicial"
+    },
+    "clc_bateria_pw_basico": {
+      "textures": "textures/items/cl/arte/bateria_pw_basico"
+    },
+    "clc_bateria_pw_endurecido": {
+      "textures": "textures/items/cl/arte/bateria_pw_endurecido"
+    },
+    "clc_bateria_pw_ardente": {
+      "textures": "textures/items/cl/arte/bateria_pw_ardente"
+    },
+    "clc_bateria_pw_niotico": {
+      "textures": "textures/items/cl/arte/bateria_pw_niotico"
+    },
+    "clc_bateria_pw_espiritual": {
+      "textures": "textures/items/cl/arte/bateria_pw_espiritual"
+    },
+    "clc_bateria_pw_nitro": {
+      "textures": "textures/items/cl/arte/bateria_pw_nitro"
+    },
+    "clc_nucleo_ender": {
+      "textures": "textures/items/cl/arte/nucleo_ender"
+    },
+    "clc_lente_ender": {
+      "textures": "textures/items/cl/arte/lente_ender"
+    },
+    "clc_perola_aerea": {
+      "textures": "textures/items/cl/arte/perola_aerea"
+    },
+    "clc_perola_aerea_jogador": {
+      "textures": "textures/items/cl/arte/perola_aerea_jogador"
+    },
+    "clc_cartao_branco": {
+      "textures": "textures/items/cl/arte/cartao_branco"
+    },
+    "clc_cartao_vinculo": {
+      "textures": "textures/items/cl/arte/cartao_vinculo"
+    },
+    "clc_cartao_vinculo_dimensional": {
+      "textures": "textures/items/cl/arte/cartao_vinculo_dimensional"
+    },
+    "clc_chave_powah": {
+      "textures": "textures/items/cl/arte/chave_powah"
+    },
+    "clc_bola_neve_carregada": {
+      "textures": "textures/items/cl/arte/bola_neve_carregada"
+    },
+    "clc_livro_powah": {
+      "textures": "textures/items/cl/arte/livro_powah"
     }
   }
 }

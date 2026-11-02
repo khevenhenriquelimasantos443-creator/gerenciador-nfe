@@ -81,7 +81,7 @@ import { registrarMelhoriasMochila } from "./utilidades/melhorias_mochila.js";
 import { registrarTemploYung } from "./mundo/templo_yung.js";
 import { registrarFerramentasVanilla } from "./jogador/ferramentas_vanilla.js";
 import { registrarJogadores } from "./util/jogadores.js";
-import { furnator as furnatorPw, magmator as magmatorPw, orbe as orbePw, painelSolar as painelSolarPw, registrarPowah, termogerador as termogeradorPw } from "./maquinas/powah.js";
+import { descarregador as descarregadorPw, ender as enderPw, funil as funilPw, furnator as furnatorPw, magmator as magmatorPw, orbe as orbePw, painelSolar as painelSolarPw, reator as reatorPw, registrarPowah, registrarPowahCompleto, termogerador as termogeradorPw, transmissor as transmissorPw } from "./maquinas/powah.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 // 1.16.2: se outra cópia do Pouso Forçado (outra versão) estiver ligada no mesmo mundo, os comandos já existem:
@@ -107,6 +107,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:pw_termogerador", comPerfil("powah: termogerador", termogeradorPw));
   blockComponentRegistry.registerCustomComponent("cl:pw_solar", comPerfil("powah: solar", painelSolarPw));
   blockComponentRegistry.registerCustomComponent("cl:pw_orbe", comPerfil("powah: orbe", orbePw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_reator", comPerfil("powah: reator", reatorPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_ender", enderPw);
+  blockComponentRegistry.registerCustomComponent("cl:pw_descarregador", comPerfil("powah: descarregador", descarregadorPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_funil", comPerfil("powah: funil", funilPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_transmissor", comPerfil("powah: transmissor", transmissorPw));
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -218,6 +223,7 @@ registrarBoasVindas();
 registrarFerramentasVanilla();
 registrarJogadores();
 registrarPowah();
+registrarPowahCompleto();
 registrarHordaNoturna();
 registrarRelevo();
 registrarMissoes();
