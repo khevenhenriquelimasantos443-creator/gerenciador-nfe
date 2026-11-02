@@ -153,6 +153,10 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo sem recomeçar**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.16.3
+
+- A descrição dos packs mostra também a versão do Minecraft que eles pedem: "Versão 1.16.3 · Minecraft 26.30+ · ...".
+
 ## Novidades da 1.16.2
 
 - A descrição de cada pack começa com a versão ("Versão 1.16.2 · ..."), para achar o certo em Editar mundo → Pacotes no celular.

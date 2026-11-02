@@ -15,12 +15,14 @@ const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(RAIZ, "dist");
 const NOME = "pouso-forcado";
 
-// 1.16.2: a versão vai escrita no começo da descrição de cada pack ("Versão 1.16.2 · ..."), para achar o pack certo
+// 1.16.2: a versão vai escrita no começo da descrição de cada pack ("Versão 1.16.3 · Minecraft 26.30+ · ..."), para achar o pack certo
 // na lista de Pacotes do mundo no celular (onde o jogo não mostra a versão).
 for (const pasta of ["BP", "RP", "RP_menu"]) {
   const arq = join(RAIZ, pasta, "manifest.json");
   const m = JSON.parse(readFileSync(arq, "utf8"));
-  const desc = `Versão ${m.header.version.join(".")} · ${m.header.description.replace(/^Versão [\d.]+ · /, "")}`;
+  // E a versão do Minecraft que o pack pede (min_engine_version 1.26.30 -> "Minecraft 26.30+").
+  const jogo = `Minecraft ${m.header.min_engine_version.slice(1).join(".")}+`;
+  const desc = `Versão ${m.header.version.join(".")} · ${jogo} · ${m.header.description.replace(/^Versão [\d.]+ · (Minecraft [\d.]+\+ · )?/, "")}`;
   // Troca só o texto da descrição no arquivo (o resto do manifest fica como está, com as versões em uma linha).
   if (desc !== m.header.description) writeFileSync(arq, readFileSync(arq, "utf8").replace(JSON.stringify(m.header.description), JSON.stringify(desc)));
 }
