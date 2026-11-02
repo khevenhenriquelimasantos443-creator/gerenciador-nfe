@@ -76,9 +76,9 @@ function bate(achado: string | undefined, esperado: string): boolean {
   return false;
 }
 
-/** A coluna x, z tem as camadas exatas do mundo plano do add-on? */
+/** A coluna x, z tem as camadas exatas do mundo plano do add-on (as de antes da 1.16.0 ou as de agora)? */
 function ehColunaDoMundoPlano(dimensao: Dimension, x: number, z: number): boolean {
-  return MUNDO_PLANO.assinatura.every(({ y, bloco }) => bate(dimensao.getBlock({ x, y, z })?.typeId, bloco));
+  return MUNDO_PLANO.assinaturas.some((a) => a.every(({ y, bloco }) => bate(dimensao.getBlock({ x, y, z })?.typeId, bloco)));
 }
 
 /** Pelo menos 2 de 3 colunas do chunk batem (o jogador pode ter cavado uma). */
@@ -136,7 +136,7 @@ function decorarChunk(dimensao: Dimension, cx: number, cz: number, semente: numb
   const marca = dimensao.getBlock(canto);
   if (!marca) return "esperar";
   // Já decorado, ou não é o mundo plano do modelo (ex.: add-on num mundo normal): não mexe.
-  if (marca.typeId !== MUNDO_PLANO.pedraEsperada) return "pronto";
+  if (!(MUNDO_PLANO.pedras as readonly string[]).includes(marca.typeId)) return "pronto";
   if (!ehChunkDoMundoPlano(dimensao, x0, z0)) return "pronto";
 
   const sorte = rng(sementeDe(semente, cx, cz));

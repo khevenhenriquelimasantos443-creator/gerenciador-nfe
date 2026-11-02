@@ -79,6 +79,7 @@ import { altoForno, dinamoCinetico, fornoCoque, moinhoVento, registrarImmersive,
 import { registrarAeronaves } from "./utilidades/aeronaves.js";
 import { registrarMelhoriasMochila } from "./utilidades/melhorias_mochila.js";
 import { registrarTemploYung } from "./mundo/templo_yung.js";
+import { registrarFerramentasVanilla } from "./jogador/ferramentas_vanilla.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRegistry, dimensionRegistry }) => {
@@ -192,6 +193,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
 
 registrarPerfil();
 registrarBoasVindas();
+registrarFerramentasVanilla();
 registrarHordaNoturna();
 registrarRelevo();
 registrarMissoes();

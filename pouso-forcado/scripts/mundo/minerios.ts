@@ -2,22 +2,24 @@ import { Dimension, ListBlockVolume, Vector3 } from "@minecraft/server";
 import { MINERIOS, PETROLEO } from "../config.js";
 
 /*
- * Minérios do mundo plano: o jogo não gera minérios em mundo plano, então cada chunk
- * recebe seus veios uma única vez, junto com o relevo (scripts/mundo/relevo.ts).
- * Cada veio é uma caminhada aleatória curta dentro do chunk que troca só pedra e ardósia.
- * Custo: um fillBlocks por minério por chunk novo (só troca pedra e ardósia).
+ * Veios do mundo plano: o jogo não gera minérios em mundo plano, então cada chunk recebe seus veios uma única vez,
+ * junto com o relevo (scripts/mundo/relevo.ts). Desde a 1.16.0 não há minério do Minecraft (só da peneira): ficam o
+ * mármore e o calcário do Chisel e os bolsões de petróleo.
+ * Cada veio é uma caminhada aleatória curta dentro do chunk que troca só pedra e arenito.
+ * Custo: um fillBlocks por veio por chunk novo.
  */
 
 const PEDRA = "minecraft:stone";
 const ARDOSIA = "minecraft:deepslate";
+const ARENITO = "minecraft:sandstone";
 const PASSOS = [
   [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1],
 ] as const;
 
 export function porMinerios(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
-  // 1.15.1: a caminhada do veio só calcula as posições; cada minério é um fillBlocks numa lista, que só troca a pedra
-  // (ou a ardósia) — antes eram ~250 getBlock + setType por chunk (~9 ms).
-  for (const { minerio, bloco: proprio, veios, tamanho, yMin, yMax } of MINERIOS) {
+  // 1.15.1: a caminhada do veio só calcula as posições; cada veio é um fillBlocks numa lista, que só troca a pedra
+  // (ou o arenito) — antes eram ~250 getBlock + setType por chunk (~9 ms).
+  for (const { bloco, veios, tamanho, yMin, yMax } of MINERIOS) {
     const lista: Vector3[] = [];
     for (let v = 0; v < veios; v++) {
       let x = Math.floor(sorte() * 16);
@@ -33,19 +35,14 @@ export function porMinerios(dimensao: Dimension, x0: number, z0: number, sorte: 
       }
     }
     if (!lista.length) continue;
-    const volume = new ListBlockVolume(lista);
-    if (proprio) dimensao.fillBlocks(volume, proprio, { blockFilter: { includeTypes: [PEDRA] } }); // mármore e calcário só na pedra
-    else {
-      dimensao.fillBlocks(volume, `minecraft:${minerio}_ore`, { blockFilter: { includeTypes: [PEDRA] } });
-      dimensao.fillBlocks(volume, `minecraft:deepslate_${minerio}_ore`, { blockFilter: { includeTypes: [ARDOSIA] } });
-    }
+    dimensao.fillBlocks(new ListBlockVolume(lista), bloco, { blockFilter: { includeTypes: [PEDRA, ARENITO] } });
   }
   porPetroleo(dimensao, x0, z0, sorte);
 }
 
 // Bolsão de petróleo (BuildCraft): redondo, bem abaixo da areia, sem nada que apareça na superfície.
 const OLEO = "cl:petroleo";
-const TROCA = new Set([PEDRA, ARDOSIA, "minecraft:tuff", "minecraft:gravel", "minecraft:dirt"]);
+const TROCA = new Set([PEDRA, ARDOSIA, ARENITO, "minecraft:tuff", "minecraft:gravel", "minecraft:dirt"]);
 function porPetroleo(dimensao: Dimension, x0: number, z0: number, sorte: () => number): void {
   if (sorte() >= PETROLEO.chance) return;
   const r = PETROLEO.raio;

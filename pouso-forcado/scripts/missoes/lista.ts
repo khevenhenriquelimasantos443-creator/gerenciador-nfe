@@ -155,8 +155,8 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     icone: IDS.diarioBordo,
     requer: [],
     missoes: [
-      { id: "condensador", objetivo: { tipo: "colocar", bloco: IDS.condensadorAgua, qtd: 1 }, recompensa: [{ item: "minecraft:dirt", quantidade: 2 }] },
-      { id: "agua", objetivo: { tipo: "ter", item: "minecraft:water_bucket", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 3 }] },
+      // 1.16.0: sem condensador nem pedra de início. Árvore, mesa, peneira (capítulo Máquinas), pedra da peneira,
+      // fornalha, ferro da peneira e só então o condensador (feito com o balde que o "ferro" dá).
       {
         id: "muda",
         objetivo: { tipo: "colocar", bloco: "minecraft:oak_sapling", qtd: 1 },
@@ -164,9 +164,11 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       },
       { id: "lenha", objetivo: { tipo: "quebrar", bloco: "minecraft:oak_log", qtd: 4 }, recompensa: [{ item: "minecraft:wheat_seeds", quantidade: 4 }] },
       { id: "bancada", objetivo: { tipo: "colocar", bloco: "minecraft:crafting_table", qtd: 1 }, recompensa: [{ item: "minecraft:dirt", quantidade: 2 }] },
-      { id: "picareta", objetivo: { tipo: "ter", item: "minecraft:stone_pickaxe", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 4 }] },
+      { id: "picareta", requer: ["peneira"], objetivo: { tipo: "ter", item: "minecraft:cobblestone", qtd: 8 }, recompensa: [{ item: "minecraft:torch", quantidade: 4 }] },
       { id: "forno", objetivo: { tipo: "colocar", bloco: "minecraft:furnace", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 4 }] },
       { id: "ferro", objetivo: { tipo: "ter", item: "minecraft:iron_ingot", qtd: 3 }, recompensa: [{ item: "minecraft:bucket", quantidade: 1 }] },
+      { id: "condensador", objetivo: { tipo: "colocar", bloco: IDS.condensadorAgua, qtd: 1 }, recompensa: [{ item: "minecraft:dirt", quantidade: 2 }] },
+      { id: "agua", objetivo: { tipo: "ter", item: "minecraft:water_bucket", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 3 }] },
       { id: "noite", objetivo: { tipo: "noites", qtd: 1 }, recompensa: [{ item: "minecraft:bread", quantidade: 4 }] },
       { id: "cacador", objetivo: { tipo: "matar", familia: "monster", qtd: 5 }, recompensa: [{ item: "minecraft:sugar_cane", quantidade: 2 }] },
       {

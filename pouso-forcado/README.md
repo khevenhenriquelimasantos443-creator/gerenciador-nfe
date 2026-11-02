@@ -152,6 +152,15 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.16.0 (progressão só pelos mods)
+
+- **Sem pedra e sem minério no subsolo** (mundo novo): debaixo da areia só há arenito até a rocha-mãe. Pedra sai da peneira (terra → pedrinhas, 4 = 1 pedregulho) e minério também (cascalho, areia e poeira do martelo). Ficam o mármore, o calcário e os bolsões de petróleo. Mundos antigos guardam as camadas antigas, mas não ganham mais minério do Minecraft.
+- **Ferramentas do Minecraft péssimas**: na mão dão Cansaço (mineram devagar), espada e machado dão Fraqueza, e cada uso gasta 8× mais (uma picareta de ferro dura uns 30 blocos). As de verdade são as do Tinkers, do Mekanism Tools e do Ender IO.
+- **Baú do avião sem balde e sem Condensador**: 6 potes de Água Boa, pão, tochas, terra, mudas, linha, gravetos, tigelas e farinha de osso (tudo o que a primeira peneira pede). O Condensador agora é feito (4 ferros, vidro, balde e 3 pedregulhos); a missão Metal dá o balde.
+- **Destroços**: os baús das naves caídas sempre têm 2 a 4 potes de Água Boa e às vezes pão, linha, tochas, garrafas e farinha de osso (balde não sai mais).
+- **Diário**: o capítulo da chegada segue a ordem nova (muda, lenha, mesa, pedra da peneira, fornalha, ferro, condensador, água).
+- **Aviso da cápsula**: só "Caindo por perto!", sem as coordenadas.
+
 ## Novidades da 1.13.0 (Immersive Engineering e Immersive Aircraft)
 
 - **Immersive Engineering** (números do código do IE 1.20.1, arte própria): **Martelo de Engenheiro**; **Forno de Coque** (cubo 3×3×3 de Tijolos de Coque: bata com o Martelo no tijolo do meio de um lado; toque com carvão, bloco de carvão ou toras para pôr, de mão vazia para pegar o coque, com balde para tirar **creosoto**: carvão → coque em 1.800 ticks e 500 mB); **Tábuas Tratadas** (8 tábuas + balde de creosoto; o balde volta) e gravetos tratados; **Alto-Forno** (cubo de Tijolos de Alto-Forno: ferro → aço + escória em 1.200 ticks, queimando coque ou carvão vegetal); **cânhamo** (semente na peneira; fibra → tecido → velas); **Dínamo Cinético** com **Moinho de Vento** (disco de 9 blocos livre; ~12 RF/t de céu limpo, até ~36 com 8 velas, mais com chuva e tempestade) ou **Roda d'Água** (água corrente em cima ou caindo de um lado; até 3 rodas em fila). As pás giram de verdade.
@@ -605,14 +614,14 @@ Missões novas: Bem hidratado (beber 5 Águas Boas), O Catálogo, Tudo no lugar,
 
 | # | Missão | Objetivo | Recompensa |
 |---|---|---|---|
-| 1 | Água no deserto | colocar o Condensador de Água | 2 terras |
-| 2 | Primeira gota | ter 1 balde de água | 3 farinhas de osso |
-| 3 | Raízes | plantar 1 muda de carvalho | 1 muda, 2 farinhas de osso |
-| 4 | Lenha | quebrar 4 troncos de carvalho | 4 sementes de trigo |
-| 5 | Oficina improvisada | colocar uma mesa de trabalho | 2 terras |
-| 6 | Debaixo da areia | ter uma picareta de pedra | 4 tochas |
-| 7 | Fogo | colocar uma fornalha | 4 carvões |
-| 8 | Metal | ter 3 barras de ferro | 1 balde |
+| 1 | Raízes | plantar 1 muda de carvalho | 1 muda, 2 farinhas de osso |
+| 2 | Lenha | quebrar 4 troncos de carvalho | 4 sementes de trigo |
+| 3 | Oficina improvisada | colocar uma mesa de trabalho | 2 terras |
+| 4 | Pedra da peneira | ter 8 pedregulhos (depois da missão da Peneira) | 4 tochas |
+| 5 | Fogo | colocar uma fornalha | 4 carvões |
+| 6 | Metal | ter 3 barras de ferro | 1 balde |
+| 7 | Água no deserto | colocar um Condensador de Água (feito) | 2 terras |
+| 8 | Primeira gota | ter 1 balde de água | 3 farinhas de osso |
 | 9 | Sobreviva à noite | chegar ao próximo amanhecer | 4 pães |
 | 10 | Caçador | derrotar 5 monstros | 2 canas-de-açúcar |
 | 11 | Primeira colheita | ter 3 trigos | 2 terras, 4 farinhas de osso |

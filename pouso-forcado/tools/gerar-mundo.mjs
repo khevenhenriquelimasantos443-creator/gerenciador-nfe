@@ -7,11 +7,11 @@ import { byte, comp, float, int, list, long, nbt, str } from "./nbt.mjs";
 // Ardósia de -63 a 0 e pedra de 1 a 32, como no mundo normal; os minérios entram por script.
 // Chão acima de y = 40 também evita slimes nascendo de dia (no Bedrock eles nascem em
 // "slime chunks" abaixo de y = 40 em qualquer luz).
+// 1.16.0: sem pedra nem ardósia no subsolo (como no Crash Landing, pedra e minério só saem da peneira): arenito até a
+// rocha-mãe e areia por cima. A superfície continua em y = 45. Mundos antigos guardam as camadas antigas no level.dat.
 export const CAMADAS = [
   { block_name: "minecraft:bedrock", count: 1 },
-  { block_name: "minecraft:deepslate", count: 64 },
-  { block_name: "minecraft:stone", count: 32 },
-  { block_name: "minecraft:sandstone", count: 7 },
+  { block_name: "minecraft:sandstone", count: 103 },
   { block_name: "minecraft:sand", count: 5 },
 ];
 const BIOMA_DESERTO = 2;

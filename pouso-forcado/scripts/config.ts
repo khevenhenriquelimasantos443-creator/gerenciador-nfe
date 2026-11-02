@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.15.1";
+export const VERSAO = "1.16.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -131,13 +131,22 @@ export const NAVE = {
 } as const;
 
 // O que sobrou da carga. Vai no baú da nave (ou direto para o jogador, se a nave falhar).
+// 1.16.0: ferramentas do Minecraft péssimas (scripts/jogador/ferramentas_vanilla.ts). desgaste = quantas vezes o normal
+// cada uso gasta; cansaco/fraqueza = nível do efeito (0 = I) na mão; duracao/intervalo em ticks.
+export const FERRAMENTAS_VANILLA = { desgaste: 8, cansaco: 0, fraqueza: 0, duracao: 30, intervalo: 10, avisoTicks: 1200 } as const;
+
+// 1.16.0: sem Condensador nem balde de início (o Condensador se faz; água no começo é a dos potes e a de cacto na
+// tigela); o que precisa para a primeira peneira e o primeiro abrigo.
 export const SUPRIMENTOS: ReadonlyArray<{ item: string; quantidade: number }> = [
-  { item: IDS.condensadorAgua, quantidade: 1 },
-  { item: "minecraft:bucket", quantidade: 1 },
+  { item: IDS.aguaBoa, quantidade: 6 },
   { item: "minecraft:bread", quantidade: 6 },
   { item: "minecraft:torch", quantidade: 8 },
   { item: "minecraft:dirt", quantidade: 4 },
   { item: "minecraft:oak_sapling", quantidade: 2 },
+  { item: "minecraft:string", quantidade: 4 },
+  { item: "minecraft:stick", quantidade: 8 },
+  { item: "minecraft:bowl", quantidade: 4 },
+  { item: "minecraft:bone_meal", quantidade: 4 },
 ];
 
 // Noite e dia (scripts/mundo/horda_noturna.ts).
@@ -164,37 +173,42 @@ export const MUNDO_PLANO = {
   // Deepslate reforçado não quebra no sobrevivência, então a marca não some.
   marcadorY: -63,
   marcador: "minecraft:reinforced_deepslate",
-  // Como é o mundo plano em y = -63 (onde fica a marca de "chunk ainda não decorado").
-  pedraEsperada: "minecraft:deepslate",
-  // Assinatura do mundo plano: estas camadas exatas, na coluna do canto do chunk. O mundo normal
+  // Como é o mundo plano em y = -63 (onde fica a marca de "chunk ainda não decorado"): ardósia nos mundos de antes da
+  // 1.16.0, arenito nos novos (sem pedra no subsolo).
+  pedras: ["minecraft:deepslate", "minecraft:sandstone"],
+  // Assinaturas do mundo plano: estas camadas exatas, na coluna do canto do chunk. O mundo normal
   // também tem ardósia em y = -63, então só ela não basta para saber se o mundo é o plano.
-  assinatura: [
-    { y: 0, bloco: "minecraft:deepslate" },
-    { y: 1, bloco: "minecraft:stone" },
-    { y: 32, bloco: "minecraft:stone" },
-    { y: 33, bloco: "minecraft:sandstone" },
-    { y: 39, bloco: "minecraft:sandstone" },
+  assinaturas: [
+    [
+      { y: 0, bloco: "minecraft:deepslate" },
+      { y: 1, bloco: "minecraft:stone" },
+      { y: 32, bloco: "minecraft:stone" },
+      { y: 33, bloco: "minecraft:sandstone" },
+      { y: 39, bloco: "minecraft:sandstone" },
+    ],
+    [
+      { y: -40, bloco: "minecraft:sandstone" },
+      { y: 0, bloco: "minecraft:sandstone" },
+      { y: 1, bloco: "minecraft:sandstone" },
+      { y: 32, bloco: "minecraft:sandstone" },
+      { y: 39, bloco: "minecraft:sandstone" },
+    ],
   ],
 } as const;
 
 // Minérios espalhados por script em cada chunk do mundo plano (scripts/mundo/minerios.ts).
 // veios = quantos por chunk; tamanho = blocos por veio (aprox.); y = faixa de altura.
 // Só substituem pedra e ardósia; abaixo de y = 0 sai a versão de ardósia do minério.
-export const MINERIOS: ReadonlyArray<{ minerio: string; bloco?: string; veios: number; tamanho: number; yMin: number; yMax: number }> = [
-  { minerio: "coal", veios: 10, tamanho: 9, yMin: 0, yMax: 32 },
-  { minerio: "copper", veios: 5, tamanho: 8, yMin: -16, yMax: 32 },
-  { minerio: "iron", veios: 9, tamanho: 7, yMin: -60, yMax: 32 },
-  { minerio: "gold", veios: 3, tamanho: 6, yMin: -60, yMax: -10 },
-  { minerio: "redstone", veios: 4, tamanho: 6, yMin: -60, yMax: -40 },
-  { minerio: "lapis", veios: 2, tamanho: 5, yMin: -60, yMax: 0 },
-  { minerio: "diamond", veios: 1, tamanho: 4, yMin: -60, yMax: -50 },
+// 1.16.0: sem minério do Minecraft (ferro, carvão, diamante... só pela peneira, como no Crash Landing). Ficam só o
+// mármore e o calcário do Chisel, que trocam pedra ou arenito.
+export const MINERIOS: ReadonlyArray<{ minerio: string; bloco: string; veios: number; tamanho: number; yMin: number; yMax: number }> = [
   // Fase 23 (Chisel): mármore e calcário em veios grandes na pedra (no Chisel, veio de 32).
   { minerio: "marmore", bloco: "cl:marmore", veios: 2, tamanho: 32, yMin: 4, yMax: 40 },
   { minerio: "calcario", bloco: "cl:calcario", veios: 1, tamanho: 32, yMin: 4, yMax: 40 },
 ];
 
-// Fase 25 (BuildCraft): bolsões de petróleo bem fundo, na ardósia e na pedra de baixo (1.3.2: nada na
-// superfície). chance = por chunk; bolsão redondo de raio ~4 com o centro entre yMin e yMax.
+// Fase 25 (BuildCraft): bolsões de petróleo bem fundo, no arenito (ou na ardósia e na pedra dos mundos antigos; 1.3.2:
+// nada na superfície). chance = por chunk; bolsão redondo de raio ~4 com o centro entre yMin e yMax.
 export const PETROLEO = { chance: 1 / 30, raio: 4, yMin: -24, yMax: 8 } as const;
 
 // Relevo espalhado por script conforme o jogador explora (scripts/mundo/relevo.ts).
@@ -1058,8 +1072,13 @@ export const DESTROCOS_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:copper_ingot", min: 3, max: 8, chance: 0.7 },
   { item: "minecraft:redstone", min: 3, max: 8, chance: 0.6 },
   { item: "minecraft:glass", min: 2, max: 6, chance: 0.5 },
-  { item: "cl:agua_boa", min: 1, max: 3, chance: 0.6 },
-  { item: "minecraft:bucket", min: 1, max: 1, chance: 0.25 },
+  { item: "cl:agua_boa", min: 2, max: 4, chance: 1 }, // 1.16.0: sempre água (sem balde: o condensador se faz)
+  // 1.16.0: o que falta no começo (comida, linha da peneira, tochas, garrafas para a água de cacto, farinha de osso).
+  { item: "minecraft:bread", min: 2, max: 4, chance: 0.6 },
+  { item: "minecraft:string", min: 2, max: 4, chance: 0.5 },
+  { item: "minecraft:torch", min: 4, max: 8, chance: 0.5 },
+  { item: "minecraft:glass_bottle", min: 1, max: 3, chance: 0.5 },
+  { item: "minecraft:bone_meal", min: 2, max: 6, chance: 0.4 },
   { item: "minecraft:gold_ingot", min: 1, max: 2, chance: 0.2 },
   { item: "cl:circuito", min: 1, max: 2, chance: 0.5 }, // placas de outra nave
   { item: "cl:placa_casco", min: 1, max: 3, chance: 0.4 },

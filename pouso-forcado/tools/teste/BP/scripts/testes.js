@@ -38,13 +38,45 @@ teste("aviao", 1200, (t) => {
           const b = dim.getBlock({ x, y, z });
           if (!b) continue;
           if (b.typeId === "cl:painel_nave") achados.painel.push(`${x - p0.x},${y - p0.y},${z - p0.z} ${b.permutation.getState("minecraft:cardinal_direction")}`);
-          if (b.typeId === "minecraft:chest") achados.bau.push(`${x - p0.x},${y - p0.y},${z - p0.z} vazios=${b.getComponent("inventory").container.emptySlotsCount}`);
+          if (b.typeId === "minecraft:chest") {
+            const c = b.getComponent("inventory").container;
+            const itens = [];
+            for (let k = 0; k < c.size; k++) if (c.getItem(k)) itens.push(`${c.getItem(k).typeId.replace("minecraft:", "")}×${c.getItem(k).amount}`);
+            achados.bau.push(`${x - p0.x},${y - p0.y},${z - p0.z} ${itens.join(" ")}`);
+          }
           if (b.typeId === "minecraft:spruce_door") achados.portas++;
         }
     log(`avião: ${JSON.stringify(achados)}`);
     t.assert(achados.painel.length === 1, "painel da nave");
     t.assert(achados.bau.length === 1, "baú de suprimentos");
     t.assert(achados.portas === 6, `portas: ${achados.portas} metades (esperava 6)`);
+    t.succeed();
+  });
+});
+
+// 1.16.0: ferramenta do Minecraft na mão dá Cansaço e cada bloco gasta 8; o subsolo do mundo plano novo é arenito.
+teste("vanilla", 400, (t) => {
+  const j = robo(t, { x: 1.5, y: 1, z: 1.5 });
+  j.getComponent("minecraft:inventory").container.setItem(0, new ItemStack("minecraft:iron_pickaxe", 1));
+  j.selectedSlotIndex = 0;
+  t.setBlockType("minecraft:sandstone", { x: 3, y: 1, z: 1 });
+  const dim = world.getDimension("overworld");
+  const p = t.worldBlockLocation({ x: 0, y: 0, z: 0 });
+  const camadas = [-60, -20, 0, 20, 39, 40, 44].map((y) => `${y}:${dim.getBlock({ x: p.x - 20, y, z: p.z - 20 })?.typeId.replace("minecraft:", "")}`);
+  log(`vanilla: camadas ${camadas.join(" ")}`);
+  t.runAfterDelay(30, () => {
+    const ef = j.getEffect("mining_fatigue");
+    log(`vanilla: cansaço=${ef ? `${ef.amplifier}/${ef.duration}` : "nenhum"}`);
+    t.assert(!!ef, "sem cansaço com a picareta de ferro");
+    j.lookAtBlock({ x: 3, y: 1, z: 1 });
+    j.breakBlock({ x: 3, y: 1, z: 1 }, Direction.North);
+  });
+  t.runAfterDelay(300, () => {
+    const i = j.getComponent("minecraft:inventory").container.getItem(0);
+    const d = i?.getComponent("minecraft:durability");
+    log(`vanilla: bloco=${t.getBlock({ x: 3, y: 1, z: 1 }).typeId} dano=${d?.damage}/${d?.maxDurability}`);
+    t.assert(t.getBlock({ x: 3, y: 1, z: 1 }).isAir, "não quebrou o arenito");
+    t.assert(d && d.damage >= 8, "não gastou 8");
     t.succeed();
   });
 });

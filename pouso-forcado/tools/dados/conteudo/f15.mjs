@@ -88,7 +88,7 @@ export default {
     "cl.tc.subiu": ["§e%s subiu para o nível %s!", "§e%s reached level %s!"],
     "cl.tc.subiu_espaco": ["§a+1 espaço para modificador.", "§a+1 modifier slot."],
     "cl.capitulo.tinkers.nome": ["Ferramentas (Tinkers' Construct)", "Tools (Tinkers' Construct)"],
-    "cl.capitulo.tinkers.desc": ["Padrões, peças e ferramentas montadas que sobem de nível. Ferramenta fraca não quebra minério forte (Iguana).", "Patterns, parts and built tools that level up. A weak tool can't break a strong ore (Iguana)."],
+    "cl.capitulo.tinkers.desc": ["Padrões, peças e ferramentas montadas que sobem de nível: as ferramentas de verdade (as do Minecraft são péssimas aqui). Ferramenta fraca não quebra minério forte (Iguana).", "Patterns, parts and assembled tools that level up: the real tools (Minecraft ones are awful here). A weak tool cannot break a strong ore (Iguana)."],
     "cl.missao.tc_padrao.titulo": ["Primeiro padrão", "First pattern"],
     "cl.missao.tc_padrao.desc": ["Faça Padrões em Branco (tábuas e gravetos), uma Mesa de Moldes, e transforme um padrão em branco num padrão de peça.", "Craft Blank Patterns (planks and sticks), a Stencil Table, and turn a blank pattern into a part pattern."],
     "cl.missao.tc_peca.titulo": ["Peças", "Parts"],

@@ -1,4 +1,3 @@
-import { duasLinhas } from "../jogador/hud.js";
 import { Dimension, EntityInitializationCause, GameMode, Player, Vector3, system, world } from "@minecraft/server";
 import { CAPSULA, PROPS } from "../config.js";
 import { registrarAcao } from "../missoes/progresso.js";
@@ -92,7 +91,7 @@ export function derrubarCapsula(jogador: Player): boolean {
     j.onScreenDisplay.setTitle(
       { translate: "cl.capsula.titulo" },
       {
-        subtitle: duasLinhas("cl.capsula.subtitulo", [String(pouso.x), String(pouso.y), String(pouso.z)]),
+        subtitle: { translate: "cl.capsula.subtitulo" },
         fadeInDuration: 10,
         stayDuration: 80,
         fadeOutDuration: 20,

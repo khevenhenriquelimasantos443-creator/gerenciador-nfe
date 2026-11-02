@@ -14,7 +14,9 @@ const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const COMECO = [
   ["Sua nave caiu, mas o casco virou abrigo: à noite, fique dentro do avião ou num lugar com luz.", "Your ship crashed, but the hull is a shelter: at night, stay inside the plane or somewhere lit."],
   ["Abra o Diário de Bordo: cada missão ensina o próximo passo e dá recompensa.", "Open the Logbook: each quest teaches the next step and gives a reward."],
-  ["O Condensador de Água, no baú do avião, tira água do ar. Ponha no chão logo no primeiro dia.", "The Water Condenser in the plane's chest pulls water from the air. Place it on day one."],
+  ["Não há pedra nem minério no subsolo: tudo sai da peneira. Terra peneirada dá pedrinhas (4 = 1 pedregulho).", "There is no stone or ore underground: everything comes from the sieve. Sieved dirt gives pebbles (4 = 1 cobblestone)."],
+  ["As ferramentas do Minecraft são péssimas aqui (lentas e gastam 8× mais). Monte as do Tinkers.", "Minecraft tools are awful here (slow and wear 8× faster). Build the Tinkers tools."],
+  ["Antes do Condensador de Água, beba os potes do baú do avião, a água dos destroços e água de cacto fervida.", "Before the Water Condenser, drink the jars in the plane's chest, the water in the wrecks and boiled cactus water."],
   ["Quase não há minério à vista: com o martelo, pedra vira cascalho, cascalho vira areia e areia vira poeira.", "There is almost no ore in sight: with a hammer, stone becomes gravel, gravel becomes sand and sand becomes dust."],
   ["Na Peneira, cascalho, areia e poeira soltam minério, sementes e outras coisas.", "In the Sieve, gravel, sand and dust drop ores, seeds and more."],
   ["Ao sol do meio-dia o corpo esquenta: fique na sombra e beba água.", "Under the midday sun your body heats up: stay in the shade and drink water."],
