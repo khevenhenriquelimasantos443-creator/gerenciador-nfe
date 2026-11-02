@@ -150,7 +150,8 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 
 - Cada versão nova vem como um **mundo novo**: importe o `pouso-forcado.mcaddon` de novo e aparece mais um mundo "Pouso Forçado" na lista.
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
-- **Atualizar um mundo sem recomeçar**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
+- **Atualizar um mundo no celular (Android, sem exportar)**: importe a versão nova; duplique o mundo; na cópia, Editar → Pacotes de Comportamento: desative o Pouso Forçado e ative o que começa com a versão nova ("Versão x.y.z · Minecraft 26.30+"); o mesmo em Pacotes de Recursos. Ao entrar, `/cl:diagnostico` mostra a versão; se aparecer o aviso vermelho de duas versões, apague a cópia (o mundo original não muda). Testado pelo jogador na 1.16.3.
+- **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
 ## Novidades da 1.16.3
