@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.16.0";
+export const VERSAO = "1.16.1";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1180,7 +1180,7 @@ export const ARMAZENAMENTO = {
 export const TEMPESTADE = {
   chancePorMinuto: 1 / 45, // a qualquer hora (dia ou noite): em média uma a cada ~45 min de jogo
   pausaMinutos: 15, // depois de uma tempestade, pelo menos tanto tempo sem outra
-  duracaoTicks: 25 * 60 * 20, // 25 minutos
+  duracaoTicks: 15 * 60 * 20, // 1.16.1: 15 minutos (eram 25)
   sedeMultiplicador: 1.5, // a água do corpo cai mais rápido durante a tempestade
 } as const;
 

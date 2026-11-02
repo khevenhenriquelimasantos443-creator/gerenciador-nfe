@@ -101,7 +101,7 @@ export function registrarTempestade(): void {
   system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity }) => {
     if (id === "cl:tempestade") {
       comecarTempestade();
-      if (sourceEntity instanceof Player) sourceEntity.sendMessage("§7[Pouso Forçado] Tempestade de areia começou (25 min).");
+      if (sourceEntity instanceof Player) sourceEntity.sendMessage(`§7[Pouso Forçado] Tempestade de areia começou (${TEMPESTADE.duracaoTicks / 1200} min).`);
     } else if (id === "cl:tempestade_fim" && tempestadeAtiva()) {
       world.setDynamicProperty(PROPS.tempestadeAte, world.getAbsoluteTime()); // a próxima volta encerra
     }

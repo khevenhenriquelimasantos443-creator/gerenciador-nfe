@@ -15,6 +15,8 @@ const COMECO = [
   ["Sua nave caiu, mas o casco virou abrigo: à noite, fique dentro do avião ou num lugar com luz.", "Your ship crashed, but the hull is a shelter: at night, stay inside the plane or somewhere lit."],
   ["Abra o Diário de Bordo: cada missão ensina o próximo passo e dá recompensa.", "Open the Logbook: each quest teaches the next step and gives a reward."],
   ["Não há pedra nem minério no subsolo: tudo sai da peneira. Terra peneirada dá pedrinhas (4 = 1 pedregulho).", "There is no stone or ore underground: everything comes from the sieve. Sieved dirt gives pebbles (4 = 1 cobblestone)."],
+  ["Terra: encha um Barril de Madeira com 8 folhas ou mudas (ou arbustos secos, cactos, carne podre) e espere 1 minuto.", "Dirt: fill a Wooden Barrel with 8 leaves or saplings (or dead bushes, cacti, rotten flesh) and wait 1 minute."],
+  ["Ferro: peneire areia. 1 em cada 5 dá Pedaço Triturado de Ferro, e 4 deles fazem 1 ferro bruto.", "Iron: sieve sand. 1 in 5 gives Crushed Iron Ore, and 4 of them make 1 raw iron."],
   ["As ferramentas do Minecraft são péssimas aqui (lentas e gastam 8× mais). Monte as do Tinkers.", "Minecraft tools are awful here (slow and wear 8× faster). Build the Tinkers tools."],
   ["Antes do Condensador de Água, beba os potes do baú do avião, a água dos destroços e água de cacto fervida.", "Before the Water Condenser, drink the jars in the plane's chest, the water in the wrecks and boiled cactus water."],
   ["Quase não há minério à vista: com o martelo, pedra vira cascalho, cascalho vira areia e areia vira poeira.", "There is almost no ore in sight: with a hammer, stone becomes gravel, gravel becomes sand and sand becomes dust."],

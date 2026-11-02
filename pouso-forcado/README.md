@@ -152,6 +152,11 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - O mundo leva **dentro dele** uma cópia dos packs da versão em que foi criado. Os mundos antigos continuam como estavam, na versão deles.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.16.1
+
+- Tempestade de areia dura **15 minutos** (eram 25).
+- O Diário explica de onde vem a terra (Barril de Madeira com folhas, mudas, arbustos secos, cactos ou carne podre) e que o ferro sai da areia peneirada.
+
 ## Novidades da 1.16.0 (progressão só pelos mods)
 
 - **Sem pedra e sem minério no subsolo** (mundo novo): debaixo da areia só há arenito até a rocha-mãe. Pedra sai da peneira (terra → pedrinhas, 4 = 1 pedregulho) e minério também (cascalho, areia e poeira do martelo). Ficam o mármore, o calcário e os bolsões de petróleo. Mundos antigos guardam as camadas antigas, mas não ganham mais minério do Minecraft.
