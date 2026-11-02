@@ -1,5 +1,7 @@
 import { EquipmentSlot, GameMode, Player, system, world } from "@minecraft/server";
 import { FERRAMENTAS_VANILLA as F } from "../config.js";
+import { maoDe } from "../util/jogadores.js";
+import { intervalo } from "../util/perfil.js";
 import { aviso } from "./hud.js";
 
 /*
@@ -13,7 +15,6 @@ const RE = /^minecraft:(wooden|stone|iron|golden|diamond|netherite|copper)_(pick
 export const ehFerramentaVanilla = (id: string | undefined): boolean => !!id && RE.test(id);
 const avisado = new Map<string, number>();
 
-const naMao = (j: Player) => j.getComponent("minecraft:equippable")?.getEquipment(EquipmentSlot.Mainhand);
 
 /** Gasta n de durabilidade a mais na ferramenta do Minecraft da mão (quebra se acabar). */
 function desgastar(j: Player, n: number): void {
@@ -41,9 +42,9 @@ function limpar(j: Player): void {
 }
 
 export function registrarFerramentasVanilla(): void {
-  system.runInterval(() => {
+  intervalo("ferramentas do Minecraft", () => {
     for (const j of world.getPlayers()) {
-      const m = RE.exec(naMao(j)?.typeId ?? "");
+      const m = RE.exec(maoDe(j) ?? ""); // 1.16.4: cache do item da mão
       if (!m) continue;
       j.addEffect("mining_fatigue", F.duracao, { amplifier: F.cansaco, showParticles: false });
       if (m[2] === "sword" || m[2] === "axe") j.addEffect("weakness", F.duracao, { amplifier: F.fraqueza, showParticles: false });
@@ -60,6 +61,6 @@ export function registrarFerramentasVanilla(): void {
     if (ehFerramentaVanilla(i?.typeId)) desgastar(j, F.desgaste - 1);
   });
   world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: j }) => {
-    if (j instanceof Player && ehFerramentaVanilla(naMao(j)?.typeId)) desgastar(j, F.desgaste - 1);
+    if (j instanceof Player && ehFerramentaVanilla(maoDe(j))) desgastar(j, F.desgaste - 1);
   });
 }

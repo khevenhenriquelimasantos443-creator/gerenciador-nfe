@@ -1,12 +1,12 @@
-import { GameMode, Player, RawMessage, system, world } from "@minecraft/server";
-import { AR, SEDE, TEMPERATURA } from "../config.js";
+import { GameMode, ItemStack, Player, RawMessage, system, world } from "@minecraft/server";
+import { AR, OLHAR, SEDE, TEMPERATURA } from "../config.js";
 import { arDoJogador, lerAr, nivelCongelamento } from "./ambiente.js";
 import { rotuloFome } from "./fome.js";
 import { tempestadeRestante } from "../mundo/tempestade.js";
 import { desidratacao, lerSede } from "./sede.js";
 import { linhaOlhar } from "./olhar.js";
 import { lerTemperatura } from "./temperatura.js";
-import { intervalo } from "../util/perfil.js";
+import { intervalo, medir } from "../util/perfil.js";
 import { LUA, painelLua } from "../galacticraft/oxigenio.js";
 
 /*
@@ -86,6 +86,10 @@ function painel(jogador: Player): RawMessage {
 }
 
 const ultimoOlhar = new Map<string, RawMessage | undefined>();
+// 1.16.4: o que foi mandado por último para a barra de cada jogador. Mandar a barra é o que mais pesa no celular
+// (o jogo monta o texto na tela): igual ao último, só reenvia depois de 2 s (ela some sozinha em uns 3 s).
+const ultimaBarra = new Map<string, { chave: string; tick: number }>();
+const REENVIO = 40;
 
 function desenhar(jogador: Player, olhar = ultimoOlhar.get(jogador.id)): void {
   const a = avisos.get(jogador.id);
@@ -96,15 +100,58 @@ function desenhar(jogador: Player, olhar = ultimoOlhar.get(jogador.id)): void {
   const linhas: RawMessage[] = [];
   if (ativo) linhas.push(a.msg);
   if (olhar) linhas.push(olhar);
-  if (sobrevivendo) linhas.push(painel(jogador));
+  if (sobrevivendo) linhas.push(medir("painel: dados", () => painel(jogador)));
   if (linhas.length === 0) return;
-  jogador.onScreenDisplay.setActionBar({ rawtext: linhas.flatMap((l, k) => (k ? [{ text: "§r\n" }, l] : [l])) });
+  const barra: RawMessage = { rawtext: linhas.flatMap((l, k) => (k ? [{ text: "§r\n" }, l] : [l])) };
+  const chave = JSON.stringify(barra);
+  const ultima = ultimaBarra.get(jogador.id);
+  if (ultima && ultima.chave === chave && system.currentTick - ultima.tick < REENVIO) return;
+  ultimaBarra.set(jogador.id, { chave, tick: system.currentTick });
+  medir("painel: barra", () => jogador.onScreenDisplay.setActionBar(barra));
+}
+
+/** Teste no servidor: /scriptevent cl:teste_bench mede no log quanto custa cada parte do painel (média de 300). */
+function bench(j: Player, muitas: boolean): void {
+  const N = 300;
+  if (muitas) {
+    // Como uma base com bichos e itens no chão: 200 itens e 60 galinhas num raio de ~30 blocos.
+    const l = j.location;
+    for (let i = 0; i < 260; i++) {
+      const p = { x: l.x + (Math.random() - 0.5) * 60, y: l.y + 1, z: l.z + (Math.random() - 0.5) * 60 };
+      try {
+        if (i < 200) j.dimension.spawnItem(new ItemStack("minecraft:stick", 1), p);
+        else j.dimension.spawnEntity("minecraft:chicken", p);
+      } catch {
+        // fora da área carregada
+      }
+    }
+  }
+  const t = (nome: string, fn: () => unknown) => {
+    const a = Date.now();
+    for (let i = 0; i < N; i++) fn();
+    console.warn(`[bench] ${nome}: ${(((Date.now() - a) * 1000) / N).toFixed(1)} us`);
+  };
+  t("raio entidade", () => j.getEntitiesFromViewDirection({ maxDistance: OLHAR.distanciaEntidade }));
+  t("entidades perto", () => j.dimension.getEntities({ location: j.location, maxDistance: OLHAR.distanciaEntidade }));
+  t("raio bloco", () => j.getBlockFromViewDirection({ maxDistance: 6 }));
+  t("linhaOlhar", () => linhaOlhar(j));
+  t("painel", () => painel(j));
+  t("setActionBar", () => j.onScreenDisplay.setActionBar("x"));
+  t("getGameMode", () => j.getGameMode());
+  t("location", () => j.location);
+  t("getBlock", () => j.dimension.getBlock(j.location));
+  t("dynamic property", () => j.getDynamicProperty("cl:hidratacao"));
+  t("inventario getItem", () => j.getComponent("minecraft:inventory")?.container?.getItem(0));
+  t("world.getPlayers", () => world.getPlayers());
 }
 
 export function registrarHud(): void {
+  system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity }) => {
+    if (id === "cl:teste_bench" && sourceEntity instanceof Player) bench(sourceEntity, message === "entidades");
+  });
   intervalo("painel", () => {
     for (const jogador of world.getPlayers()) {
-      const olhar = linhaOlhar(jogador);
+      const olhar = medir("painel: olhar", () => linhaOlhar(jogador));
       ultimoOlhar.set(jogador.id, olhar);
       desenhar(jogador, olhar);
     }

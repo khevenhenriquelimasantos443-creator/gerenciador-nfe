@@ -43,7 +43,13 @@ const lerProg = (r: Entity): Prog | undefined => {
     return undefined;
   }
 };
-const gravarProg = (r: Entity, p: Prog | undefined) => r.setDynamicProperty(PROG, p ? JSON.stringify(p) : undefined);
+// 1.16.4: os robôs trabalhando ficam numa lista; sem nenhum, o laço não procura entidades no mundo.
+const trabalhando = new Map<string, Entity>();
+const gravarProg = (r: Entity, p: Prog | undefined) => {
+  r.setDynamicProperty(PROG, p ? JSON.stringify(p) : undefined);
+  if (p) trabalhando.set(r.id, r);
+  else trabalhando.delete(r.id);
+};
 const comb = (r: Entity) => (r.getDynamicProperty(COMB) as number | undefined) ?? 0;
 const container = (r: Entity) => r.getComponent("minecraft:inventory")?.container;
 const centro = (p: Vector3) => ({ x: p.x + 0.5, y: p.y, z: p.z + 0.5 });
@@ -312,6 +318,17 @@ export function registrarRobo(): void {
     comecar(j, r, t === "escavar" ? "escavar" : "tunel", Number(n) || 4);
   });
   intervalo("robô", () => {
+    for (const [id, r] of trabalhando) {
+      if (!r.isValid || r.getDynamicProperty(PROG) === undefined) trabalhando.delete(id);
+      else passo(r);
+    }
+  }, 8);
+  // Robô trabalhando que volta a carregar (ou de antes de fechar o mundo) entra na lista; a cada 10 s, por garantia,
+  // uma procura completa.
+  world.afterEvents.entityLoad.subscribe(({ entity }) => {
+    if (entity.typeId === ROBO && entity.getDynamicProperty(PROG) !== undefined) trabalhando.set(entity.id, entity);
+  });
+  intervalo("robô", () => {
     for (const d of ["minecraft:overworld", "cl:lua"]) {
       let dim: Dimension;
       try {
@@ -319,7 +336,7 @@ export function registrarRobo(): void {
       } catch {
         continue;
       }
-      for (const r of dim.getEntities({ type: ROBO })) if (r.getDynamicProperty(PROG) !== undefined) passo(r);
+      for (const r of dim.getEntities({ type: ROBO })) if (r.getDynamicProperty(PROG) !== undefined) trabalhando.set(r.id, r);
     }
-  }, 8);
+  }, 200);
 }

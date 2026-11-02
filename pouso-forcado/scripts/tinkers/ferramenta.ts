@@ -3,6 +3,7 @@ import { TINKERS } from "../config.js";
 import { DADOS_F15 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
+import { maoDe } from "../util/jogadores.js";
 import { intervalo } from "../util/perfil.js";
 
 /*
@@ -262,6 +263,7 @@ export function registrarFerramentas(): void {
   intervalo("tinkers", () => {
     volta++;
     for (const j of world.getPlayers()) {
+      if (!ferramentaDe(maoDe(j))) continue; // 1.16.4: o item da mão vem do cache; só lê o item de quem segura uma
       const inv = j.getComponent("minecraft:inventory")?.container;
       const i = inv?.getItem(j.selectedSlotIndex);
       if (!inv || !i || !ferramentaDe(i.typeId)) continue;

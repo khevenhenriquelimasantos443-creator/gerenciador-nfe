@@ -128,8 +128,10 @@ function portaDupla(b: Block): void {
 const subiu = new Set<string>();
 function corda(): void {
   for (const j of world.getPlayers()) {
+    // 1.16.4: parado no chão (sem pular) a corda não muda nada: não precisa ler os blocos.
+    if (j.isOnGround && !j.isJumping) continue;
     const pe = j.dimension.getBlock(j.location);
-    const cabeca = j.dimension.getBlock(j.getHeadLocation());
+    const cabeca = pe?.typeId === "cl:corda" ? pe : j.dimension.getBlock(j.getHeadLocation());
     if (pe?.typeId !== "cl:corda" && cabeca?.typeId !== "cl:corda") continue;
     if (j.isJumping) {
       j.addEffect("levitation", 4, { amplifier: 3, showParticles: false });

@@ -7,6 +7,7 @@ import { naPiramideNativa, piramideMaisProxima } from "./nativo.js";
 import { tipoDoMundo } from "./relevo.js";
 import { TEMPLO_YUNG } from "./templo_yung_dados.js";
 import { mundoPlano } from "./tipo.js";
+import { intervalo } from "../util/perfil.js";
 
 /*
  * Templo do Deserto do YUNG's Better Desert Temples (1.14.0): a pirâmide de 83×83 montada das peças do mod por
@@ -143,11 +144,11 @@ function piramideNoMundoNormal(): void {
 }
 
 export function registrarTemploYung(): void {
-  system.runInterval(() => {
+  intervalo("templo", () => {
     if (tipoDoMundo() === "normal") piramideNoMundoNormal();
   }, 40);
   // Missão: entrar na pirâmide (abaixo da areia, dentro dela).
-  system.runInterval(() => {
+  intervalo("templo", () => {
     const nave = chunkDaNave();
     if (!nave) return;
     const semente = sementeDoMundo();

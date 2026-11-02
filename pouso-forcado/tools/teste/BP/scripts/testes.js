@@ -81,6 +81,15 @@ teste("vanilla", 400, (t) => {
   });
 });
 
+// Medição de desempenho: 3 jogadores parados por ~6 min; o relatório sai com /scriptevent cl:teste_perfil.
+teste("perfil", 7400, (t) => {
+  const js = [robo(t, { x: 1.5, y: 1, z: 1.5 }), robo(t, { x: 5.5, y: 1, z: 1.5 }), robo(t, { x: 3.5, y: 1, z: 5.5 })];
+  t.runAfterDelay(7300, () => {
+    log(`perfil: ${js.length} jogadores`);
+    t.succeed();
+  });
+});
+
 teste("varal", 200, (t) => {
   const j = robo(t);
   t.setBlockType("cl:varal", { x: 3, y: 1, z: 1 });

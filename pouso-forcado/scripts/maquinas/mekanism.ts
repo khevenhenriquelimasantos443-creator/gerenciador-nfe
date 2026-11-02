@@ -6,6 +6,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, ler, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador } from "../util/inventario.js";
 import { cabe, contar, entrada, entregar, gastarCE, primeiro, tirar } from "../util/maquina.js";
+import { peitoDe } from "../util/jogadores.js";
 import { intervalo } from "../util/perfil.js";
 import { feito, maquina } from "./thermal.js";
 
@@ -147,6 +148,7 @@ function gravarJet(i: ItemStack, n: number): void {
 const voando = new Map<string, number>(); // jogador → ticks de voo desde o último gasto
 
 function cuidarJetpack(j: Player): void {
+  if (peitoDe(j) !== "cl:jetpack") return void voando.delete(j.id); // 1.16.4: cache (util/jogadores.ts)
   const eq = j.getComponent("minecraft:equippable");
   const jet = eq?.getEquipment(EquipmentSlot.Chest);
   if (!eq || jet?.typeId !== "cl:jetpack") return void voando.delete(j.id);

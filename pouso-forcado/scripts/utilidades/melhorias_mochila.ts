@@ -3,6 +3,7 @@ import { DADOS_F37 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
+import { intervalo } from "../util/perfil.js";
 import { toqueNovo } from "../util/toque.js";
 
 /*
@@ -146,13 +147,29 @@ function compactar(s: Slots, avancada: boolean): boolean {
   return mudou;
 }
 
+// 1.16.4: em que espaços do inventário cada jogador leva mochila. Refeito quando uma mochila entra, sai ou muda de
+// lugar (e a cada 3 s, por garantia); quem não leva mochila não tem o inventário inteiro lido a cada segundo.
+const espacos = new Map<string, number[]>();
+function acharMochilas(inv: Container): number[] {
+  const r: number[] = [];
+  for (let k = 0; k < inv.size; k++) if (inv.getItem(k)?.typeId === MOCHILA) r.push(k);
+  return r;
+}
+
 function tick(): void {
+  const refazer = system.currentTick % 60 < 20;
   for (const j of world.getPlayers()) {
+    let slots = espacos.get(j.id);
+    if (slots?.length === 0 && !refazer) continue;
     const inv = j.getComponent("minecraft:inventory")?.container;
     if (!inv) continue;
-    for (let k = 0; k < inv.size; k++) {
+    if (!slots || refazer) espacos.set(j.id, (slots = acharMochilas(inv)));
+    for (const k of slots) {
       const i = inv.getItem(k);
-      if (i?.typeId !== MOCHILA) continue;
+      if (i?.typeId !== MOCHILA) {
+        espacos.delete(j.id);
+        continue;
+      }
       const s = ler(i);
       const m = melhoriaDe(s);
       if (!m) continue;
@@ -207,7 +224,11 @@ function noBau(j: Player, slot: number, bau: Container): void {
 }
 
 export function registrarMelhoriasMochila(): void {
-  system.runInterval(tick, 20);
+  intervalo("mochila", tick, 20);
+  world.afterEvents.playerInventoryItemChange.subscribe(({ player, itemStack, beforeItemStack }) => {
+    if (itemStack?.typeId === MOCHILA || beforeItemStack?.typeId === MOCHILA) espacos.delete(player.id);
+  });
+  world.afterEvents.playerLeave.subscribe(({ playerId }) => espacos.delete(playerId));
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     const { player: j, block: b, itemStack: item } = ev;
     if (item?.typeId !== MOCHILA || !j.isSneaking) return;

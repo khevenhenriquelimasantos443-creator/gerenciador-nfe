@@ -28,6 +28,7 @@ import { intervalo, medir } from "../util/perfil.js";
  */
 
 const vistos = new Set<string>(); // chunks já resolvidos nesta sessão
+const prontoEm = new Map<string, string>(); // jogador → chunk onde tudo em volta já estava pronto (1.16.4)
 const GIROS = [StructureRotation.None, StructureRotation.Rotate90, StructureRotation.Rotate180, StructureRotation.Rotate270];
 
 function areaCarregada(dimensao: Dimension, x: number, z: number, tamanho: number): boolean {
@@ -308,14 +309,20 @@ export function registrarRelevo(): void {
 
     for (const jogador of world.getPlayers()) {
       if (jogador.dimension.id !== "minecraft:overworld") continue;
-      const pcx = Math.floor(jogador.location.x / 16), pcz = Math.floor(jogador.location.z / 16);
+      const l = jogador.location;
+      const pcx = Math.floor(l.x / 16), pcz = Math.floor(l.z / 16);
+      // 1.16.4: com tudo em volta já pronto e o jogador no mesmo chunk, não precisa olhar os 625 chunks de novo.
+      const aqui = `${pcx},${pcz}`;
+      if (prontoEm.get(jogador.id) === aqui) continue;
       let pendentes = 0; // chunks que ainda esperam carregar: não precisa olhar todos a cada ciclo
+      let falta = false;
       for (const [dx, dz] of OFFSETS) {
         if (pendentes > 16) break;
         if (orcamento <= 0) return;
         const cx = pcx + dx, cz = pcz + dz;
         const chave = `${cx},${cz}`;
         if (vistos.has(chave)) continue;
+        falta = true;
         try {
           const resultado = decorar(jogador.dimension, cx, cz, semente, nave);
           if (resultado !== "esperar") vistos.add(chave);
@@ -331,6 +338,7 @@ export function registrarRelevo(): void {
           orcamento--;
         }
       }
+      if (!falta) prontoEm.set(jogador.id, aqui);
     }
   }, RELEVO.intervaloTicks);
 }

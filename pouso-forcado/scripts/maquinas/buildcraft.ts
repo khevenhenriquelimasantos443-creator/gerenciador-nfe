@@ -1,4 +1,4 @@
-import { Block, Direction, ItemStack, Player, system, world } from "@minecraft/server";
+import { Block, Direction, ItemStack, Player, system, world, Vector3 } from "@minecraft/server";
 import { registrarNoCatalogo } from "../catalogo/catalogo.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
@@ -224,15 +224,18 @@ function avancar(cur: Cursor, fundo: number): void {
 // ---------- Dentro do petróleo ----------
 // Como num líquido grosso: anda devagar, afunda devagar (sem dano de queda), pular nada para cima e,
 // com a cabeça dentro, não se enxerga quase nada.
-const emOleo = (j: Player, dy: number): boolean => {
+const emOleo = (j: Player, l: Vector3, dy: number): boolean => {
   try {
-    return j.dimension.getBlock({ x: Math.floor(j.location.x), y: Math.floor(j.location.y + dy), z: Math.floor(j.location.z) })?.typeId === PETROLEO;
+    return j.dimension.getBlock({ x: Math.floor(l.x), y: Math.floor(l.y + dy), z: Math.floor(l.z) })?.typeId === PETROLEO;
   } catch {
     return false;
   }
 };
 function cuidarNado(j: Player): void {
-  const pes = emOleo(j, 0.1), cabeca = emOleo(j, 1.6);
+  // 1.16.4: lê a posição uma vez; a cabeça só é conferida com os pés no óleo ou fora do chão.
+  const l = j.location;
+  const pes = emOleo(j, l, 0.1);
+  const cabeca = (pes || !j.isOnGround) && emOleo(j, l, 1.6);
   if (!pes && !cabeca) return;
   j.addEffect("slowness", 10, { amplifier: 1, showParticles: false });
   if (cabeca) j.addEffect("blindness", 30, { showParticles: false });

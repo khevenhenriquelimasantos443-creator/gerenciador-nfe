@@ -54,7 +54,12 @@ function salvar(jogador: Player, e: Estado): void {
 export const feita = (e: Estado, id: string): boolean => e.f.includes(id) || e.pl.includes(id);
 export const desbloqueada = (e: Estado, m: Missao): boolean => m.requer.every((r) => feita(e, r));
 /** Missões abertas agora: liberadas e ainda não feitas. */
-export const abertas = (e: Estado): Missao[] => MISSOES.filter((m) => !feita(e, m.id) && desbloqueada(e, m));
+export const abertas = (e: Estado): Missao[] => {
+  // 1.16.4: um Set das feitas em vez de procurar nas listas para cada uma das ~300 missões.
+  const feitas = new Set(e.f);
+  for (const id of e.pl) feitas.add(id);
+  return MISSOES.filter((m) => !feitas.has(m.id) && m.requer.every((r) => feitas.has(r)));
+};
 
 export const nomeItem = (id: string): RawMessage => ({ translate: new ItemStack(id).localizationKey });
 
@@ -65,6 +70,18 @@ export function textoPilhas(pilhas: ReadonlyArray<Pilha>): RawMessage {
     rawtext.push(nomeItem(item), { text: ` x${quantidade}` });
   });
   return { rawtext };
+}
+
+/** Quantos de cada item há no inventário, lendo cada espaço uma vez só. */
+export function contarTudo(jogador: Player): Map<string, number> {
+  const contas = new Map<string, number>();
+  const inv = jogador.getComponent("minecraft:inventory")?.container;
+  if (!inv) return contas;
+  for (let s = 0; s < inv.size; s++) {
+    const p = inv.getItem(s);
+    if (p) contas.set(p.typeId, (contas.get(p.typeId) ?? 0) + p.amount);
+  }
+  return contas;
 }
 
 export function contarNoInventario(jogador: Player, item: string): number {
@@ -79,10 +96,10 @@ export function contarNoInventario(jogador: Player, item: string): number {
 }
 
 /** Quanto da missão já foi feito (para mostrar no Diário). */
-export function feitoDe(jogador: Player, e: Estado, m: Missao): number {
+export function feitoDe(jogador: Player, e: Estado, m: Missao, contas?: Map<string, number>): number {
   const obj: Objetivo = m.objetivo;
   if (feita(e, m.id)) return obj.qtd;
-  if (obj.tipo === "ter" || obj.tipo === "entregar") return Math.min(obj.qtd, contarNoInventario(jogador, obj.item));
+  if (obj.tipo === "ter" || obj.tipo === "entregar") return Math.min(obj.qtd, contas ? (contas.get(obj.item) ?? 0) : contarNoInventario(jogador, obj.item));
   if (obj.tipo === "noites") return Math.min(obj.qtd, Math.max(0, world.getDay() - (e.d[m.id] ?? world.getDay())));
   return Math.min(obj.qtd, e.c[m.id] ?? 0);
 }
@@ -196,9 +213,12 @@ export function conferir(jogador: Player): void {
     abrirNovas(jogador, e, new Set(lista.map((m) => m.id)), false);
     salvar(jogador, e);
   }
+  // 1.16.4: o inventário é lido uma vez para todas as missões "ter" abertas (antes, uma vez por missão).
+  let contas: Map<string, number> | undefined;
   for (const m of lista) {
     if (m.objetivo.tipo !== "ter" && m.objetivo.tipo !== "noites") continue;
-    if (feitoDe(jogador, e, m) >= m.objetivo.qtd) concluir(jogador, m.id);
+    if (m.objetivo.tipo === "ter") contas ??= contarTudo(jogador);
+    if (feitoDe(jogador, e, m, contas) >= m.objetivo.qtd) concluir(jogador, m.id);
   }
 }
 

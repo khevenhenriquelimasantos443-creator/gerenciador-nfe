@@ -43,7 +43,7 @@ export default {
       geometria: { ossos: { tumulo: [[[-6, 0, -6], [12, 2, 12]], [[-4, 2, 2], [8, 10, 2]]] } },
       extra: { "minecraft:collision_box": { origin: [-6, 0, -6], size: [12, 12, 12] }, "minecraft:selection_box": { origin: [-6, 0, -6], size: [12, 12, 12] } },
     },
-    { id: "elevador", pt: "Elevador", en: "Elevator", tipo: "cubo", cor: "#e6eaee", padrao: "ladrilho", topo: "polido", dureza: 1, ...OB },
+    { id: "elevador", pt: "Elevador", en: "Elevator", tipo: "cubo", cor: "#e6eaee", padrao: "ladrilho", topo: "polido", dureza: 1, comp: "cl:elevador", ...OB },
   ],
   receitas: [
     { id: "engrenagem_madeira", tipo: "shaped", padrao: [" S ", "S S", " S "], chave: { S: "minecraft:stick" }, resultado: "cl:engrenagem_madeira" },

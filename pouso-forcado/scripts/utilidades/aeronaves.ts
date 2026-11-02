@@ -1,4 +1,5 @@
 import { ButtonState, Entity, GameMode, InputButton, ItemStack, Player, Vector3, system, world } from "@minecraft/server";
+import { intervalo } from "../util/perfil.js";
 import { DADOS_F36 } from "../conteudo/gerado.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { darAoJogador, gastarDaMao } from "../util/inventario.js";
@@ -264,15 +265,19 @@ function voar(e: Entity): void {
   }
 }
 
-function tick(): void {
-  for (const j of world.getPlayers()) {
-    const e = j.getComponent("minecraft:riding")?.entityRidingOn;
-    if (e && TIPOS[e.typeId] && !ativos.has(e.id)) {
-      ativos.set(e.id, e);
-      const s = TIPOS[e.typeId];
-      j.onScreenDisplay.setActionBar(s.tipo === "aviao" ? { translate: "cl.ia.controles_aviao" } : { translate: "cl.ia.controles_rotor", with: { rawtext: [{ translate: `item.${e.typeId}.name` }] } });
-    }
+/** Quem montou numa aeronave: ela passa a voar (e mostra os controles). */
+function montou(j: Player): void {
+  const e = j.getComponent("minecraft:riding")?.entityRidingOn;
+  if (e && TIPOS[e.typeId] && !ativos.has(e.id)) {
+    ativos.set(e.id, e);
+    const s = TIPOS[e.typeId];
+    j.onScreenDisplay.setActionBar(s.tipo === "aviao" ? { translate: "cl.ia.controles_aviao" } : { translate: "cl.ia.controles_rotor", with: { rawtext: [{ translate: `item.${e.typeId}.name` }] } });
   }
+}
+function tick(): void {
+  // 1.16.4: procurar quem montou custava um componente por jogador a cada tick; agora vai a cada 10 ticks (e logo
+  // depois de tocar numa aeronave). Todo tick só as aeronaves ativas.
+  if (system.currentTick % 10 === 0) for (const j of world.getPlayers()) montou(j);
   for (const [id, e] of ativos) {
     if (!e.isValid) {
       ativos.delete(id);
@@ -327,7 +332,11 @@ function recolher(j: Player, e: Entity): void {
 }
 
 export function registrarAeronaves(): void {
-  system.runInterval(tick, 1);
+  intervalo("aeronaves", tick, 1);
+  world.afterEvents.playerInteractWithEntity.subscribe(({ player, target }) => {
+    if (!TIPOS[target.typeId]) return;
+    for (const t of [1, 3, 6]) system.runTimeout(() => player.isValid && montou(player), t);
+  });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     const item = ev.itemStack;
     if (!item || !TIPOS[item.typeId] || !toqueNovo(ev)) return;

@@ -5,6 +5,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { chunkDaNave } from "../util/aleatorio.js";
 import { registrarDetalhe } from "../util/dados.js";
 import { gastarFerramenta } from "../util/inventario.js";
+import { maoDe } from "../util/jogadores.js";
 import { intervalo } from "../util/perfil.js";
 import { noiteDeHorda } from "./horda_noturna.js";
 import { alvoBaseLua } from "../galacticraft/base.js";
@@ -123,8 +124,7 @@ function cairMeteoro(): void {
 export function registrarExtras(): void {
   intervalo("extras", () => {
     for (const j of world.getPlayers()) {
-      const mao = j.getComponent("minecraft:inventory")?.container?.getItem(j.selectedSlotIndex);
-      if (mao?.typeId === "cl:bussola_aviao") mostrarRumo(j);
+      if (maoDe(j) === "cl:bussola_aviao") mostrarRumo(j); // 1.16.4: cache do item da mão
     }
   }, 20);
   intervalo("extras", () => {

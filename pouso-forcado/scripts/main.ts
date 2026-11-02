@@ -52,7 +52,7 @@ import { registrarVariedade } from "./jogador/variedade.js";
 import { registrarCaldeirao } from "./jogador/caldeirao.js";
 import { registrarExtras } from "./mundo/extras.js";
 import { bomba, motor, pedreira, refinaria, registrarBuildcraft } from "./maquinas/buildcraft.js";
-import { registrarOpenBlocks, tumulo } from "./jogador/openblocks.js";
+import { componenteElevador, registrarOpenBlocks, tumulo } from "./jogador/openblocks.js";
 import { camaraInjecao, camaraPurificacao, evaporador, infusorMetalurgico, infusorQuimico, registrarMekanism, separador } from "./maquinas/mekanism.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
@@ -80,6 +80,7 @@ import { registrarAeronaves } from "./utilidades/aeronaves.js";
 import { registrarMelhoriasMochila } from "./utilidades/melhorias_mochila.js";
 import { registrarTemploYung } from "./mundo/templo_yung.js";
 import { registrarFerramentasVanilla } from "./jogador/ferramentas_vanilla.js";
+import { registrarJogadores } from "./util/jogadores.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 // 1.16.2: se outra cópia do Pouso Forçado (outra versão) estiver ligada no mesmo mundo, os comandos já existem:
@@ -98,6 +99,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     return;
   }
   registrarDimensaoLua(dimensionRegistry); // 1.6.0: a Lua do Galacticraft
+  blockComponentRegistry.registerCustomComponent("cl:elevador", componenteElevador); // 1.16.4: onStepOn
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -207,6 +209,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
 registrarPerfil();
 registrarBoasVindas();
 registrarFerramentasVanilla();
+registrarJogadores();
 registrarHordaNoturna();
 registrarRelevo();
 registrarMissoes();

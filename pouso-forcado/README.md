@@ -154,6 +154,19 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.16.4 (desempenho)
+
+Nada muda no jogo; os scripts fazem menos trabalho à toa (medido no servidor de testes, com 3 jogadores):
+- **Elevador**: o laço de todo tick só olha quem está em cima de um (o bloco avisa quando alguém pisa). 5,7 → 0,3 ms/s.
+- **Asa-delta, jetpack, ferramentas do Tinkers e do Minecraft, bússola do avião**: o item da mão e do peito fica guardado (atualiza na troca de item); antes cada laço lia o equipamento do jogo. Asa-delta 1,85 → 0,2 ms/s.
+- **Corda**: parado no chão não lê blocos. 1,45 → 0,25 ms/s. **Petróleo** e **estrada de plástico**: menos leituras por jogador.
+- **Robô**: só os robôs trabalhando são olhados (antes procurava todos no mundo a cada 0,4 s).
+- **Aeronaves**: quem montou é visto ao tocar na aeronave (e a cada 0,5 s), não a cada tick.
+- **Diário**: lê o inventário uma vez para todas as missões "ter" abertas (antes, uma vez por missão).
+- **Relevo**: com tudo em volta já pronto, não revisita os 625 chunks a cada 0,5 s enquanto o jogador fica no mesmo chunk.
+- **Mochila**: só lê o inventário de quem leva mochila.
+- **Painel (barra de status)**: se o texto não mudou, só é reenviado a cada 2 s (no celular, montar a barra é o que mais pesa). O `/cl:diagnostico` mostra o painel em partes (olhar, dados, barra).
+
 ## Novidades da 1.16.3
 
 - A descrição dos packs mostra também a versão do Minecraft que eles pedem: "Versão 1.16.3 · Minecraft 26.30+ · ...".

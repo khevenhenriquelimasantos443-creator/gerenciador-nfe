@@ -95,7 +95,9 @@ export function registrarMekanismAdditions(): void {
   });
   intervalo("estrada de plástico", () => {
     for (const j of world.getPlayers()) {
-      const baixo = j.dimension.getBlock({ x: j.location.x, y: j.location.y - 0.5, z: j.location.z });
+      if (!j.isOnGround) continue; // 1.16.4: no ar não está pisando na estrada
+      const l = j.location;
+      const baixo = j.dimension.getBlock({ x: l.x, y: l.y - 0.5, z: l.z });
       if (baixo?.typeId.startsWith("cl:estrada_plastico_")) j.addEffect("speed", 15, { amplifier: 1, showParticles: false });
     }
   }, 10);

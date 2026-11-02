@@ -1,14 +1,16 @@
-import { Block, Dimension, Player, system, Vector3, world } from "@minecraft/server";
+import { Block, BlockCustomComponent, Dimension, Player, system, Vector3, world } from "@minecraft/server";
 import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, ler, registrarDetalhe } from "../util/dados.js";
 import { darAoJogador } from "../util/inventario.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
+import { maoDe } from "../util/jogadores.js";
 import { intervalo } from "../util/perfil.js";
 
 /*
  * OpenBlocks (1.3.0).
  * - Asa-Delta: segurando na mão e caindo, plana para a frente devagar (agachar fecha a asa).
  * - Elevador: em cima de um, pular leva ao próximo Elevador acima (até 20 blocos); agachar, ao de baixo.
+ *   (1.16.4) Só quem está num elevador é olhado a cada tick.
  * - Túmulo: ao morrer, o que caiu no chão vai para um Túmulo no lugar da morte. Tocar devolve tudo.
  */
 const ASA = { frente: 0.5, descida: -0.08 };
@@ -20,9 +22,10 @@ type Tumulo = { dono: string; itens: ItemSalvo[] };
 // ---------- Asa-Delta ----------
 const planando = new Set<string>();
 function cuidarAsa(j: Player): void {
-  const mao = j.getComponent("minecraft:inventory")?.container?.getItem(j.selectedSlotIndex);
+  // 1.16.4: o item da mão vem do cache (util/jogadores.ts); sem a asa na mão, nada de ler o jogador.
+  if (maoDe(j) !== "cl:asa_delta") return void planando.delete(j.id);
   const caindo = !j.isOnGround && !j.isInWater && !j.isSneaking && j.getVelocity().y < -0.1;
-  if (mao?.typeId !== "cl:asa_delta" || !(caindo || (planando.has(j.id) && !j.isOnGround && !j.isSneaking))) {
+  if (!(caindo || (planando.has(j.id) && !j.isOnGround && !j.isSneaking))) {
     planando.delete(j.id);
     return;
   }
@@ -40,6 +43,19 @@ type Pe = { pos: { x: number; y: number; z: number }; tick: number };
 const pisou = new Map<string, Pe>();
 const antes = new Map<string, { pulo: boolean; agacha: boolean }>();
 const livre = (b: Block | undefined) => !!b && (b.isAir || b.isLiquid);
+// 1.16.4: o laço de todo tick só olha quem está num elevador (ou acabou de sair dele: o pulo tira o pé do bloco).
+// Quem pisa num entra pelo onStepOn do bloco; uma conferida a cada segundo pega quem já estava em cima.
+const noElevador = new Map<string, Player>();
+function entrar(j: Player, b: Block): void {
+  if (!noElevador.has(j.id)) antes.set(j.id, { pulo: j.isJumping, agacha: j.isSneaking });
+  noElevador.set(j.id, j);
+  pisou.set(j.id, { pos: { x: b.x, y: b.y, z: b.z }, tick: system.currentTick });
+}
+export const componenteElevador: BlockCustomComponent = {
+  onStepOn: ({ entity, block }) => {
+    if (entity instanceof Player) entrar(entity, block);
+  },
+};
 function cuidarElevador(j: Player): void {
   const dim = j.dimension;
   const l = j.location;
@@ -127,10 +143,27 @@ export function registrarOpenBlocks(): void {
   }, 2);
   // Todo tick: o pulo pode durar 1 tick só (é barato: um bloco lido por jogador).
   intervalo("elevador", () => {
-    for (const j of world.getPlayers()) cuidarElevador(j);
+    for (const [id, j] of noElevador) {
+      if (!j.isValid) {
+        noElevador.delete(id);
+        continue;
+      }
+      cuidarElevador(j);
+      const pe = pisou.get(id);
+      if (!pe || system.currentTick - pe.tick > 6) noElevador.delete(id);
+    }
   }, 1);
+  intervalo("elevador", () => {
+    for (const j of world.getPlayers()) {
+      if (noElevador.has(j.id) || !j.isOnGround) continue;
+      const l = j.location;
+      const b = j.dimension.getBlock({ x: Math.floor(l.x), y: Math.floor(l.y - 0.1), z: Math.floor(l.z) });
+      if (b?.typeId === ELEVADOR) entrar(j, b);
+    }
+  }, 20);
   world.afterEvents.playerLeave.subscribe(({ playerId }) => {
     planando.delete(playerId);
+    noElevador.delete(playerId);
     pisou.delete(playerId);
     antes.delete(playerId);
   });
