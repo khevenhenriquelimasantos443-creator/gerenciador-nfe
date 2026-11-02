@@ -159,7 +159,7 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 Nada muda no jogo; os scripts fazem menos trabalho à toa (medido no servidor de testes, com 3 jogadores):
 - **Elevador**: o laço de todo tick só olha quem está em cima de um (o bloco avisa quando alguém pisa). 5,7 → 0,3 ms/s.
 - **Asa-delta, jetpack, ferramentas do Tinkers e do Minecraft, bússola do avião**: o item da mão e do peito fica guardado (atualiza na troca de item); antes cada laço lia o equipamento do jogo. Asa-delta 1,85 → 0,2 ms/s.
-- **Corda**: parado no chão não lê blocos. 1,45 → 0,25 ms/s. **Petróleo** e **estrada de plástico**: menos leituras por jogador.
+- **Corda**: parado no chão não lê blocos. 1,45 → 0,25 ms/s. **Petróleo**: não relê o bloco de quem está parado no mesmo lugar; **estrada de plástico**: menos leituras por jogador.
 - **Robô**: só os robôs trabalhando são olhados (antes procurava todos no mundo a cada 0,4 s).
 - **Aeronaves**: quem montou é visto ao tocar na aeronave (e a cada 0,5 s), não a cada tick.
 - **Diário**: lê o inventário uma vez para todas as missões "ter" abertas (antes, uma vez por missão).

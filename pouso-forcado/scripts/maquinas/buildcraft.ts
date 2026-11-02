@@ -231,12 +231,17 @@ const emOleo = (j: Player, l: Vector3, dy: number): boolean => {
     return false;
   }
 };
+// 1.16.4: o bloco onde o jogador estava na última conferida, se lá não havia óleo: parado no mesmo bloco, não lê de novo.
+const semOleoEm = new Map<string, string>();
 function cuidarNado(j: Player): void {
   // 1.16.4: lê a posição uma vez; a cabeça só é conferida com os pés no óleo ou fora do chão.
   const l = j.location;
+  const aqui = `${Math.floor(l.x)},${Math.floor(l.y + 0.1)},${Math.floor(l.z)},${j.dimension.id}`;
+  if (semOleoEm.get(j.id) === aqui && j.isOnGround) return;
   const pes = emOleo(j, l, 0.1);
   const cabeca = (pes || !j.isOnGround) && emOleo(j, l, 1.6);
-  if (!pes && !cabeca) return;
+  if (!pes && !cabeca) return void semOleoEm.set(j.id, aqui);
+  semOleoEm.delete(j.id);
   j.addEffect("slowness", 10, { amplifier: 1, showParticles: false });
   if (cabeca) j.addEffect("blindness", 30, { showParticles: false });
   if (j.isJumping) {
