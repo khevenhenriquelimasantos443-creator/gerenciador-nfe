@@ -1,0 +1,445 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl_ceu_lua",
+        "texture_width": 256,
+        "texture_height": 128,
+        "visible_bounds_width": 116,
+        "visible_bounds_height": 116,
+        "visible_bounds_offset": [
+          0,
+          24,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "ceu",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "az_terra",
+          "parent": "ceu",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            35,
+            0
+          ]
+        },
+        {
+          "name": "el_terra",
+          "parent": "az_terra",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -38,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -80,
+                -80,
+                -768
+              ],
+              "size": [
+                160,
+                160,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    64,
+                    64
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    64,
+                    64
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "az_marte",
+          "parent": "ceu",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            160,
+            0
+          ]
+        },
+        {
+          "name": "el_marte",
+          "parent": "az_marte",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -52,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -24,
+                -24,
+                -768
+              ],
+              "size": [
+                48,
+                48,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    64,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    64,
+                    0
+                  ],
+                  "uv_size": [
+                    32,
+                    32
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "az_jupiter",
+          "parent": "ceu",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            245,
+            0
+          ]
+        },
+        {
+          "name": "el_jupiter",
+          "parent": "az_jupiter",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -33,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -48,
+                -48,
+                -768
+              ],
+              "size": [
+                96,
+                96,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    128,
+                    0
+                  ],
+                  "uv_size": [
+                    64,
+                    64
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    128,
+                    0
+                  ],
+                  "uv_size": [
+                    64,
+                    64
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "az_saturno",
+          "parent": "ceu",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            315,
+            0
+          ]
+        },
+        {
+          "name": "el_saturno",
+          "parent": "az_saturno",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            -58,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -72,
+                -36,
+                -768
+              ],
+              "size": [
+                144,
+                72,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    64
+                  ],
+                  "uv_size": [
+                    128,
+                    64
+                  ]
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    64
+                  ],
+                  "uv_size": [
+                    128,
+                    64
+                  ]
+                },
+                "east": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "west": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "up": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                },
+                "down": {
+                  "uv": [
+                    200,
+                    70
+                  ],
+                  "uv_size": [
+                    2,
+                    2
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -5,15 +5,18 @@
       "identifier": "cl:zumbi_evoluido",
       "min_engine_version": "1.8.0",
       "materials": {
-        "default": "zombie"
+        "default": "zombie",
+        "traje": "entity_alphablend"
       },
       "textures": {
         "default": "textures/entity/zombie/zombie",
-        "baby": "textures/entity/zombie/zombie_baby"
+        "baby": "textures/entity/zombie/zombie_baby",
+        "traje": "textures/entity/cl/traje_espacial"
       },
       "geometry": {
         "default": "geometry.zombie.v1.8",
-        "baby": "geometry.zombie.baby"
+        "baby": "geometry.zombie.baby",
+        "traje": "geometry.cl_traje_zombie"
       },
       "spawn_egg": {
         "texture": "spawn_egg_zombie"
@@ -178,7 +181,10 @@
         }
       ],
       "render_controllers": [
-        "controller.render.zombie.v2"
+        "controller.render.zombie.v2",
+        {
+          "controller.render.cl_traje": "!query.is_baby"
+        }
       ],
       "enable_attachables": true
     }

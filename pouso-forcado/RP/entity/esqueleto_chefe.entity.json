@@ -5,13 +5,16 @@
       "identifier": "cl:esqueleto_chefe",
       "min_engine_version": "1.8.0",
       "materials": {
-        "default": "skeleton"
+        "default": "skeleton",
+        "traje": "entity_alphablend"
       },
       "textures": {
-        "default": "textures/entity/skeleton/skeleton"
+        "default": "textures/entity/skeleton/skeleton",
+        "traje": "textures/entity/cl/traje_espacial"
       },
       "geometry": {
-        "default": "geometry.skeleton.v1.8"
+        "default": "geometry.skeleton.v1.8",
+        "traje": "geometry.cl_traje_skeleton"
       },
       "spawn_egg": {
         "texture": "spawn_egg_skeleton"
@@ -89,7 +92,8 @@
         }
       ],
       "render_controllers": [
-        "controller.render.skeleton"
+        "controller.render.skeleton",
+        "controller.render.cl_traje"
       ],
       "enable_attachables": true
     }

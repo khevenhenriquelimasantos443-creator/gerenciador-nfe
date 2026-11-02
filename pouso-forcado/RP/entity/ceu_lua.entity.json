@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "cl:ceu_lua",
+      "materials": {
+        "default": "entity_emissive_alpha"
+      },
+      "textures": {
+        "default": "textures/entity/cl/planetas"
+      },
+      "geometry": {
+        "default": "geometry.cl_ceu_lua"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ]
+    }
+  }
+}

@@ -46,6 +46,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   feitos para este projeto (`tools/gerar-foguete.mjs`). Os monstros evoluídos e o chefe partem das definições dos
   monstros do jogo nos exemplos oficiais da Mojang (`Mojang/bedrock-samples`, em `referencias/vanilla/entidades/`),
   com a vida e o comportamento do Galacticraft (`tools/gerar-evoluidos.mjs`); usam as texturas do próprio jogo.
+  Desde a 1.17.0 também o Enderman e a Bruxa Evoluídos, e todos usam um traje espacial (capacete e tanques) desenhado
+  para este projeto sobre os modelos do jogo (`referencias/vanilla/modelos`, dos mesmos exemplos da Mojang). Os
+  planetas do céu da Lua também são arte própria (`tools/gerar-ceu-lua.mjs`).
 
 - **Crash Landing**, modpack de Iskandar (Minecraft 1.6.4): a ideia de cair num planeta seco,
   a sede, a água que precisa ser tratada e a progressão por quests. Nenhum texto do pack foi copiado.

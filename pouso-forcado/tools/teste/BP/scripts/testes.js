@@ -90,6 +90,8 @@ teste("perfil", 7400, (t) => {
   });
 });
 
+// 1.17.0: testado que a geração natural (feature rules) não roda na dimensão da Lua (gerador vazio, bioma ocean).
+
 teste("varal", 200, (t) => {
   const j = robo(t);
   t.setBlockType("cl:varal", { x: 3, y: 1, z: 1 });
@@ -392,6 +394,18 @@ teste("lua", 600, (t) => {
     if (carregado) for (let y = 1; y < 60; y++) for (let x = 0; x < 16; x++) { const b = lua.getBlock({ x, y, z: 4 })?.typeId ?? ""; if (b.startsWith("cl:minerio")) minerios++; }
     const vida = j.getComponent("health").currentValue;
     log(`lua: carregado=${carregado} topo=${topo?.typeId}@${topo?.y} fundo=${fundo} vida ${vida0}->${vida} sufocou=${sufocou} pos y=${j.location.y.toFixed(1)} minérios numa fatia=${minerios} pulo=${!!j.getEffect("jump_boost")} queda lenta=${!!j.getEffect("slow_falling")}`);
+    // 1.17.0: o céu com os planetas acompanha o jogador; os evoluídos novos nascem na Lua.
+    const ceu = lua.getEntities({ type: "cl:ceu_lua" });
+    const novos = ["cl:enderman_evoluido", "cl:bruxa_evoluida"].map((id) => {
+      try {
+        const e = lua.spawnEntity(id, { x: j.location.x + 3, y: j.location.y + 1, z: j.location.z });
+        return `${id}=${e.isValid}`;
+      } catch (err) {
+        return `${id}=erro ${err}`;
+      }
+    });
+    log(`lua: céu=${ceu.length} a ${ceu[0] ? Math.hypot(ceu[0].location.x - j.location.x, ceu[0].location.z - j.location.z).toFixed(1) : "-"} blocos; novos: ${novos.join(" ")}`);
+    t.assert(ceu.length === 1, "sem o céu da Lua");
     t.assert(topo && topo.y > 40 && topo.y < 100, "sem chão na Lua");
     t.assert(fundo === "minecraft:bedrock", "chunk sem a rocha matriz");
     t.assert(sufocou >= 4, "sem oxigênio e não sufocou");

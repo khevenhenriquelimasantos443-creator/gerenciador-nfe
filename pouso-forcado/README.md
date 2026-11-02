@@ -154,6 +154,15 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.17.0 (Lua)
+
+- **Lua sem travar**: a dimensão da Lua só pode ser vazia (testado: a geração natural não roda nela), então o chão é posto pelo script, ~14 mil blocos por chunk. Antes saía tudo de uma vez, dois chunks a cada meio segundo; agora cada chunk é feito em pedaços pequenos (`system.runJob`), do chão para baixo, um chunk de cada vez.
+- **Masmorra pronta na chegada**: a Base de Pesquisa Lunar começa a ser preparada quando alguém chega a 160 blocos (uma área de carregamento segura os chunks dela, o terreno dela vem primeiro e ela é construída logo). Antes só começava a 28 blocos e esperava o jogador passar perto de todos os chunks.
+- **Planetas no céu da Lua**: Terra, Marte, Júpiter e Saturno a 48 blocos, acompanhando o jogador (arte própria, `tools/gerar-ceu-lua.mjs`).
+- **Monstros de traje espacial**: todos os evoluídos (e o chefe) usam capacete de vidro e tanques de oxigênio nas costas, como no Galacticraft (desenho próprio, `tools/gerar-evoluidos.mjs`).
+- **Monstros novos na Lua**: Enderman Evoluído (40 de vida) e Bruxa Evoluída (26, joga poções), também de traje; antes o enderman e a bruxa sumiam na Lua. Missões novas no capítulo do Galacticraft. A bruxa também aparece nas salas da masmorra.
+- **Textos de baixo**: o "o que estou olhando" vai em duas linhas (nome e mod; detalhe embaixo) e o painel de água e temperatura põe ar, tempestade e estados numa segunda linha.
+
 ## Novidades da 1.16.4 (desempenho)
 
 Nada muda no jogo; os scripts fazem menos trabalho à toa (medido no servidor de testes, com 3 jogadores):

@@ -6,15 +6,18 @@
       "min_engine_version": "1.8.0",
       "materials": {
         "default": "creeper",
-        "charged": "charged_creeper"
+        "charged": "charged_creeper",
+        "traje": "entity_alphablend"
       },
       "textures": {
         "default": "textures/entity/creeper/creeper",
-        "charged": "textures/entity/creeper/creeper_armor"
+        "charged": "textures/entity/creeper/creeper_armor",
+        "traje": "textures/entity/cl/traje_espacial"
       },
       "geometry": {
         "default": "geometry.creeper.v1.8",
-        "charged": "geometry.creeper.charged.v1.8"
+        "charged": "geometry.creeper.charged.v1.8",
+        "traje": "geometry.cl_traje_creeper"
       },
       "spawn_egg": {
         "texture": "spawn_egg_creeper"
@@ -56,7 +59,8 @@
         "controller.render.creeper",
         {
           "controller.render.creeper_armor": "query.is_powered"
-        }
+        },
+        "controller.render.cl_traje"
       ]
     }
   }

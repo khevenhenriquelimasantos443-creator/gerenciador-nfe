@@ -218,7 +218,8 @@
           "monster",
           "mob",
           "evoluido",
-          "lunar"
+          "lunar",
+          "creeper_evoluido"
         ]
       }
     },

@@ -62,9 +62,8 @@ function detalheBloco(b: Block): RawMessage | undefined {
 
 function linhaEntidade(e: Entity): RawMessage {
   const vida = e.getComponent("minecraft:health");
-  const partes: RawMessage[] = [{ text: "§f" }, e.nameTag ? { text: e.nameTag } : { translate: e.localizationKey }];
-  if (vida) partes.push({ text: `  §c${Math.ceil(vida.currentValue)}/${Math.ceil(vida.effectiveMax)} ` }, { translate: "cl.olhar.vida" });
-  partes.push({ text: `  §9§o${origemDe(e.typeId)}` });
+  const partes: RawMessage[] = [{ text: "§f" }, e.nameTag ? { text: e.nameTag } : { translate: e.localizationKey }, { text: `  §9§o${origemDe(e.typeId)}` }];
+  if (vida) partes.push({ text: `§r\n§c${Math.ceil(vida.currentValue)}/${Math.ceil(vida.effectiveMax)} ` }, { translate: "cl.olhar.vida" });
   return { rawtext: partes };
 }
 
@@ -72,14 +71,14 @@ function linhaEntidade(e: Entity): RawMessage {
 export function linhaOlhar(jogador: Player): RawMessage | undefined {
   if (!olharLigado(jogador)) return undefined;
   try {
-    const alvo = jogador.getEntitiesFromViewDirection({ maxDistance: OLHAR.distanciaEntidade })[0]?.entity;
+    const alvo = jogador.getEntitiesFromViewDirection({ maxDistance: OLHAR.distanciaEntidade }).find((h) => h.entity.typeId !== "cl:ceu_lua")?.entity;
     if (alvo?.isValid) return linhaEntidade(alvo);
     const b = jogador.getBlockFromViewDirection({ maxDistance: OLHAR.distanciaBloco })?.block;
     if (!b || b.isAir || b.isLiquid) return undefined;
-    const partes: RawMessage[] = [{ text: "§f" }, { translate: b.localizationKey }];
+    // 1.17.0: nome e mod numa linha, o detalhe na de baixo (numa linha só, no celular o fim saía da tela).
+    const partes: RawMessage[] = [{ text: "§f" }, { translate: b.localizationKey }, { text: `  §9§o${origemDe(b.typeId)}` }];
     const detalhe = detalheBloco(b);
-    if (detalhe) partes.push({ text: "  §b" }, detalhe);
-    partes.push({ text: `  §9§o${origemDe(b.typeId)}` });
+    if (detalhe) partes.push({ text: "§r\n§b" }, detalhe);
     return { rawtext: partes };
   } catch {
     return undefined; // mira fora do mundo carregado

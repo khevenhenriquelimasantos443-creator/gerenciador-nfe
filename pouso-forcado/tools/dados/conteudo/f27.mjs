@@ -8,6 +8,9 @@ const MOBS = [
   ["aranha_evoluida", "Aranha Evoluída", "Evolved Spider"],
   ["creeper_evoluido", "Creeper Evoluído", "Evolved Creeper"],
   ["esqueleto_chefe", "Esqueleto Evoluído Gigante", "Evolved Skeleton Boss"],
+  // 1.17.0
+  ["enderman_evoluido", "Enderman Evoluído", "Evolved Enderman"],
+  ["bruxa_evoluida", "Bruxa Evoluída", "Evolved Witch"],
 ];
 
 export default {
@@ -57,6 +60,10 @@ export default {
     "cl.nave.nucleo_instalado": ["Núcleo de Salto instalado. A nave está pronta para saltar para casa.", "Jump Core installed. The ship is ready to jump home."],
     "cl.missao.gc_bolha.titulo": ["Bolha de ar", "Air bubble"], "cl.missao.gc_bolha.desc": ["Coloque um Distribuidor de Bolha de Oxigênio.", "Place an Oxygen Bubble Distributor."],
     "cl.missao.gc_evoluidos.titulo": ["Evoluídos", "Evolved"], "cl.missao.gc_evoluidos.desc": ["Derrote 10 monstros evoluídos na Lua.", "Defeat 10 evolved monsters on the Moon."],
+    // 1.17.0: os novos evoluídos e os planetas no céu da Lua.
+    "cl.missao.gc_enderman.titulo": ["Enderman de traje", "Suited Enderman"], "cl.missao.gc_enderman.desc": ["Derrote um Enderman Evoluído na Lua (nasce no escuro, de traje espacial).", "Defeat an Evolved Enderman on the Moon (spawns in the dark, wearing a space suit)."],
+    "cl.missao.gc_bruxa.titulo": ["Bruxa lunar", "Moon Witch"], "cl.missao.gc_bruxa.desc": ["Derrote uma Bruxa Evoluída na Lua: ela joga poções.", "Defeat an Evolved Witch on the Moon: she throws potions."],
+    "entity.cl:ceu_lua.name": ["Céu da Lua", "Moon Sky"],
     "cl.missao.gc_base.titulo": ["O sinal", "The signal"], "cl.missao.gc_base.desc": ["Ache a Base de Pesquisa Lunar (a Bússola do Avião aponta para ela na Lua).", "Find the Lunar Research Base (the Plane Compass points to it on the Moon)."],
     "cl.missao.gc_chefe.titulo": ["O guardião", "The guardian"], "cl.missao.gc_chefe.desc": ["Derrote o Esqueleto Evoluído Gigante na sala do fundo da masmorra.", "Defeat the Evolved Skeleton Boss in the dungeon's back room."],
     "cl.missao.gc_nucleo.titulo": ["Núcleo de Salto", "Jump Core"], "cl.missao.gc_nucleo.desc": ["Abra o Baú do Tesouro com a chave e pegue o Núcleo de Salto.", "Open the Treasure Chest with the key and take the Jump Core."],

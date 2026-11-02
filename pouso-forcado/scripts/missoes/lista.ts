@@ -503,6 +503,9 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       // 1.6.1: a Lua de verdade e o Núcleo de Salto.
       { id: "gc_bolha", requer: ["gc_oxigenio"], objetivo: { tipo: "colocar", bloco: "cl:distribuidor_oxigenio", qtd: 1 }, recompensa: [{ item: "cl:cilindro_oxigenio", quantidade: 4 }] },
       { id: "gc_evoluidos", requer: ["gc_lancar"], objetivo: { tipo: "matar", familia: "evoluido", qtd: 10 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      // 1.17.0: os evoluídos novos do Galacticraft (com traje espacial, como os outros).
+      { id: "gc_enderman", requer: ["gc_lancar"], objetivo: { tipo: "matar", familia: "enderman_evoluido", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 2 }] },
+      { id: "gc_bruxa", requer: ["gc_lancar"], objetivo: { tipo: "matar", familia: "bruxa_evoluida", qtd: 1 }, recompensa: [{ item: "minecraft:glass_bottle", quantidade: 4 }, { item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "gc_base", requer: ["gc_lancar"], objetivo: { tipo: "acao", acao: "base_lua", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 16 }] },
       { id: "gc_chefe", requer: ["gc_base"], objetivo: { tipo: "acao", acao: "chefe_lua", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       { id: "gc_nucleo", requer: ["gc_chefe"], objetivo: { tipo: "ter", item: "cl:nucleo_salto", qtd: 1 }, recompensa: [{ item: "cl:balde_combustivel", quantidade: 1 }] },

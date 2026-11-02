@@ -1,7 +1,7 @@
-import { BlockVolume, Dimension, DimensionRegistry, EntityInitializationCause, GameMode, system, world } from "@minecraft/server";
+import { BlockVolume, Dimension, DimensionRegistry, Entity, EntityInitializationCause, GameMode, ListBlockVolume, Vector3, system, world } from "@minecraft/server";
 import { aviso } from "../jogador/hud.js";
 import { rng, sementeDe, sementeDoMundo } from "../util/aleatorio.js";
-import { intervalo } from "../util/perfil.js";
+import { intervalo, medir } from "../util/perfil.js";
 import { LUA } from "./oxigenio.js";
 
 /*
@@ -13,10 +13,9 @@ import { LUA } from "./oxigenio.js";
  *   perfil 5 − 6·r⁴; crateras que se cruzam somam a profundidade, como no original;
  * - veios de minério de cobre, estanho e queijo na rocha.
  * A marca de "chunk pronto" é a rocha matriz no canto (x0, 0, z0), que não quebra no sobrevivência.
- * Custo: no máximo LUA_GERACAO.maxPorCiclo chunks a cada 10 ticks, só com alguém na Lua; cada chunk é um fill da
- * base e alguns fills por faixa de colunas da mesma altura.
+ * Custo: só com alguém na Lua; um chunk de cada vez, feito em pedaços pelo system.runJob (1.17.0).
  */
-export const LUA_GERACAO = { raioChunks: 4, maxPorCiclo: 2, base: 63, terra: 3 } as const;
+export const LUA_GERACAO = { raioChunks: 4, base: 63, terra: 3 } as const;
 const CRATERAS: ReadonlyArray<[number, number, number]> = [[8, 12, 14], [13, 17, 8], [18, 25, 2], [26, 30, 1]];
 const CHANCE_CRATERA = 0.22; // por chunk
 const VEIOS: ReadonlyArray<[string, number, number, number]> = [
@@ -104,7 +103,14 @@ export const chunkPronto = (dim: Dimension, x: number, z: number): boolean => {
   return dim.isChunkLoaded(p) && dim.getBlock(p)?.typeId === MATRIZ;
 };
 
-function gerarChunk(dim: Dimension, cx: number, cz: number, semente: number): boolean {
+/*
+ * 1.17.0: cada chunk da Lua tem ~14 mil blocos postos pelo script (a dimensão não gera nada sozinha). Antes era tudo
+ * de uma vez, dois chunks a cada meio segundo: no celular a tela travava. Agora o chunk é feito por um trabalho em
+ * pedaços (system.runJob): o jogo dá um pouco de tempo por tick e o trabalho continua no tick seguinte. A ordem é de
+ * cima para baixo (o chão aparece primeiro) e a rocha funda vai em fatias de 4 camadas.
+ */
+const FATIA = 4;
+function* gerarChunk(dim: Dimension, cx: number, cz: number, semente: number): Generator<void, boolean, void> {
   const x0 = cx * 16, z0 = cz * 16;
   if (!dim.isChunkLoaded({ x: x0, y: 0, z: z0 }) || !dim.isChunkLoaded({ x: x0 + 15, y: 0, z: z0 + 15 })) return false;
   if (dim.getBlock({ x: x0, y: 0, z: z0 })?.typeId === MATRIZ) return true;
@@ -116,50 +122,99 @@ function gerarChunk(dim: Dimension, cx: number, cz: number, semente: number): bo
   }
   const topo: number[] = new Array(256);
   let menor = Infinity;
-  for (let z = 0; z < 16; z++) for (let x = 0; x < 16; x++) {
-    const t = alturaBase(p, x0 + x, z0 + z) - fundoCratera(crateras, x0 + x, z0 + z);
-    topo[z * 16 + x] = t;
-    menor = Math.min(menor, t);
+  for (let z = 0; z < 16; z++) {
+    medir("lua: ruído", () => {
+      for (let x = 0; x < 16; x++) {
+        const t = alturaBase(p, x0 + x, z0 + z) - fundoCratera(crateras, x0 + x, z0 + z);
+        topo[z * 16 + x] = t;
+        menor = Math.min(menor, t);
+      }
+    });
+    if (z % 4 === 3) yield;
   }
   const T = LUA_GERACAO.terra;
-  // Rocha do fundo até abaixo da coluna mais baixa: um fill só.
-  preenche(dim, x0, 1, z0, x0 + 15, menor - T - 1, z0 + 15, ROCHA);
-  // Faixas de colunas vizinhas com a mesma altura: rocha que falta, terra e solo.
-  for (let z = 0; z < 16; z++) {
-    let x = 0;
-    while (x < 16) {
-      const t = topo[z * 16 + x];
-      let fim = x;
-      while (fim + 1 < 16 && topo[z * 16 + fim + 1] === t) fim++;
-      preenche(dim, x0 + x, menor - T, z0 + z, x0 + fim, t - T - 1, z0 + z, ROCHA);
-      preenche(dim, x0 + x, t - T, z0 + z, x0 + fim, t - 1, z0 + z, TERRA);
-      preenche(dim, x0 + x, t, z0 + z, x0 + fim, t, z0 + z, SOLO);
-      x = fim + 1;
+  // Solo e terra (uma lista cada) e a rocha que falta entre a coluna mais baixa e a terra de cada coluna.
+  medir("lua: blocos", () => {
+    const terra: Vector3[] = [], solo: Vector3[] = [];
+    for (let z = 0; z < 16; z++) for (let x = 0; x < 16; x++) {
+      const t = topo[z * 16 + x], X = x0 + x, Z = z0 + z;
+      for (let y = t - T; y <= t - 1; y++) terra.push({ x: X, y, z: Z });
+      solo.push({ x: X, y: t, z: Z });
     }
+    dim.fillBlocks(new ListBlockVolume(solo), SOLO);
+    dim.fillBlocks(new ListBlockVolume(terra), TERRA);
+  });
+  yield;
+  medir("lua: blocos", () => {
+    const rocha: Vector3[] = [];
+    for (let z = 0; z < 16; z++) for (let x = 0; x < 16; x++) {
+      const t = topo[z * 16 + x];
+      for (let y = menor - T; y <= t - T - 1; y++) rocha.push({ x: x0 + x, y, z: z0 + z });
+    }
+    if (rocha.length) dim.fillBlocks(new ListBlockVolume(rocha), ROCHA);
+  });
+  yield;
+  // Rocha do fundo até abaixo da coluna mais baixa, em fatias, de cima para baixo.
+  for (let y2 = menor - T - 1; y2 >= 1; y2 -= FATIA) {
+    medir("lua: blocos", () => preenche(dim, x0, Math.max(1, y2 - FATIA + 1), z0, x0 + 15, y2, z0 + 15, ROCHA));
+    yield;
   }
-  // Veios de minério (passeio aleatório dentro da rocha).
+  // Veios de minério (passeio aleatório dentro da rocha): as posições de cada minério numa lista, trocando só a rocha
+  // (o mesmo resultado de antes, que lia e trocava bloco a bloco).
   const sorte = rng(sementeDe(semente, cx, cz, 0x6f72));
   for (const [bloco, veios, tamanho, yMax] of VEIOS) {
-    for (let v = 0; v < veios; v++) {
-      let x = x0 + 1 + Math.floor(sorte() * 14), z = z0 + 1 + Math.floor(sorte() * 14), y = 4 + Math.floor(sorte() * (yMax - 4));
-      for (let k = 0; k < tamanho; k++) {
-        if (x >= x0 && x < x0 + 16 && z >= z0 && z < z0 + 16) {
-          const b = dim.getBlock({ x, y, z });
-          if (b?.typeId === ROCHA) b.setType(bloco);
+    medir("lua: minérios", () => {
+      const lista: Vector3[] = [];
+      for (let v = 0; v < veios; v++) {
+        let x = x0 + 1 + Math.floor(sorte() * 14), z = z0 + 1 + Math.floor(sorte() * 14), y = 4 + Math.floor(sorte() * (yMax - 4));
+        for (let k = 0; k < tamanho; k++) {
+          if (x >= x0 && x < x0 + 16 && z >= z0 && z < z0 + 16) lista.push({ x, y, z });
+          const passo = Math.floor(sorte() * 6);
+          if (passo === 0) x++;
+          else if (passo === 1) x--;
+          else if (passo === 2) z++;
+          else if (passo === 3) z--;
+          else if (passo === 4) y++;
+          else y--;
         }
-        const passo = Math.floor(sorte() * 6);
-        if (passo === 0) x++;
-        else if (passo === 1) x--;
-        else if (passo === 2) z++;
-        else if (passo === 3) z--;
-        else if (passo === 4) y++;
-        else y--;
       }
-    }
+      if (lista.length) dim.fillBlocks(new ListBlockVolume(lista), bloco, { blockFilter: { includeTypes: [ROCHA] } });
+    });
+    yield;
   }
   // Rocha matriz por último: é a marca de que o chunk ficou pronto.
   preenche(dim, x0, 0, z0, x0 + 15, 0, z0 + 15, MATRIZ);
   return true;
+}
+
+// O trabalho em andamento (um chunk de cada vez) e a área que a base lunar pede primeiro.
+let emCurso: string | undefined;
+let prioridade: { dim: Dimension; x1: number; z1: number; x2: number; z2: number } | undefined;
+/** A base lunar pede o terreno da área dela primeiro (em blocos). undefined tira o pedido. */
+export function pedirArea(a: typeof prioridade): void {
+  prioridade = a;
+}
+function comecar(dim: Dimension, cx: number, cz: number, semente: number): void {
+  const chave = `${cx},${cz}`;
+  emCurso = chave;
+  system.runJob(
+    (function* () {
+      try {
+        const it = gerarChunk(dim, cx, cz, semente);
+        let r = it.next();
+        while (!r.done) {
+          yield;
+          r = it.next();
+        }
+        if (r.value) prontos.add(chave);
+      } catch (erro) {
+        // chunk descarregou no meio: fica para depois (os fills podem ser refeitos)
+        if (!`${erro}`.includes("nload")) console.warn(`[Pouso Forçado] Lua, chunk ${chave}: ${erro}`);
+      } finally {
+        emCurso = undefined;
+      }
+    })(),
+  );
 }
 
 const OFFSETS: ReadonlyArray<[number, number]> = (() => {
@@ -177,8 +232,11 @@ const EVOLUIDO: Readonly<Record<string, string>> = {
   "minecraft:skeleton": "cl:esqueleto_evoluido", "minecraft:stray": "cl:esqueleto_evoluido", "minecraft:bogged": "cl:esqueleto_evoluido",
   "minecraft:spider": "cl:aranha_evoluida", "minecraft:cave_spider": "cl:aranha_evoluida",
   "minecraft:creeper": "cl:creeper_evoluido",
+  // 1.17.0: enderman e bruxa também viram os evoluídos do Galacticraft (antes sumiam).
+  "minecraft:enderman": "cl:enderman_evoluido",
+  "minecraft:witch": "cl:bruxa_evoluida",
 };
-const SOMEM = new Set(["minecraft:enderman", "minecraft:witch", "minecraft:slime", "minecraft:phantom", "minecraft:squid", "minecraft:glow_squid", "minecraft:cod", "minecraft:salmon", "minecraft:bat", "minecraft:dolphin", "minecraft:chicken"]);
+const SOMEM = new Set(["minecraft:slime", "minecraft:phantom", "minecraft:squid", "minecraft:glow_squid", "minecraft:cod", "minecraft:salmon", "minecraft:bat", "minecraft:dolphin", "minecraft:chicken"]);
 
 // ---------- Meteoros ----------
 // Galacticraft (frequência 7 na Lua): a cada tick, 1 chance em 7.000 de um meteoro pequeno e 1 em 21.000 de um
@@ -215,6 +273,31 @@ function meteoro(dim: Dimension, x0: number, z0: number, grande: boolean): void 
   }, 34);
 }
 
+// ---------- Céu (1.17.0) ----------
+// Os planetas são a geometria de uma entidade sem corpo (tools/gerar-ceu-lua.mjs) que fica nos pés de cada jogador
+// na Lua: desenhados a 48 blocos, parecem estar no céu e acompanham quem anda. Custo: um teleporte por tick por
+// jogador na Lua.
+const CEU = "cl:ceu_lua";
+const ceus = new Map<string, Entity>();
+function cuidarCeu(): void {
+  for (const j of world.getPlayers()) {
+    const e = ceus.get(j.id);
+    if (j.dimension.id !== LUA) {
+      if (e) {
+        if (e.isValid) e.remove();
+        ceus.delete(j.id);
+      }
+      continue;
+    }
+    try {
+      if (e?.isValid) e.teleport(j.location, { rotation: { x: 0, y: 0 } });
+      else ceus.set(j.id, j.dimension.spawnEntity(CEU, j.location));
+    } catch {
+      // chunk ainda carregando
+    }
+  }
+}
+
 export function registrarLua(): void {
   world.afterEvents.entitySpawn.subscribe(({ entity, cause }) => {
     if (cause !== EntityInitializationCause.Spawned || entity.dimension.id !== LUA) return;
@@ -224,6 +307,16 @@ export function registrarLua(): void {
     const { dimension: dim, location } = entity;
     entity.remove();
     if (novo) system.run(() => dim.spawnEntity(novo, location));
+  });
+  intervalo("lua (céu)", cuidarCeu, 1);
+  world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+    const e = ceus.get(playerId);
+    if (e?.isValid) e.remove();
+    ceus.delete(playerId);
+  });
+  // Céu que sobrou de antes de fechar o mundo: sai (o laço põe um novo).
+  world.afterEvents.entityLoad.subscribe(({ entity }) => {
+    if (entity.typeId === CEU && ![...ceus.values()].some((e) => e.id === entity.id)) entity.remove();
   });
   intervalo("lua (meteoros)", () => {
     for (const j of world.getPlayers({ excludeGameModes: [GameMode.Spectator] })) {
@@ -235,30 +328,36 @@ export function registrarLua(): void {
     }
   }, METEORO.checar);
   intervalo("lua (terreno)", () => {
+    if (emCurso) return; // um chunk de cada vez
     const naLua = world.getPlayers().filter((j) => j.dimension.id === LUA);
     if (naLua.length === 0) return;
     const dim = dimensaoLua();
     const semente = sementeDoMundo();
-    let orcamento = LUA_GERACAO.maxPorCiclo;
-    for (const j of naLua) {
-      const pcx = Math.floor(j.location.x / 16), pcz = Math.floor(j.location.z / 16);
-      for (const [dx, dz] of OFFSETS) {
-        if (orcamento <= 0) return;
-        const cx = pcx + dx, cz = pcz + dz, chave = `${cx},${cz}`;
-        if (prontos.has(chave)) continue;
-        try {
-          if (!dim.isChunkLoaded({ x: cx * 16, y: 0, z: cz * 16 })) continue;
-          const ja = dim.getBlock({ x: cx * 16, y: 0, z: cz * 16 })?.typeId === MATRIZ;
-          if (ja || gerarChunk(dim, cx, cz, semente)) {
-            prontos.add(chave);
-            if (!ja) orcamento--;
-          }
-        } catch (erro) {
-          console.warn(`[Pouso Forçado] Lua, chunk ${chave}: ${erro}`);
-          prontos.add(chave);
-          orcamento--;
-        }
+    const pronto = (cx: number, cz: number): boolean | undefined => {
+      const chave = `${cx},${cz}`;
+      if (prontos.has(chave)) return true;
+      if (!dim.isChunkLoaded({ x: cx * 16, y: 0, z: cz * 16 })) return undefined;
+      if (dim.getBlock({ x: cx * 16, y: 0, z: cz * 16 })?.typeId === MATRIZ) {
+        prontos.add(chave);
+        return true;
       }
+      return false;
+    };
+    try {
+      // Primeiro a área que a base lunar pediu (carregada pela área de carregamento dela).
+      const a = prioridade;
+      if (a) {
+        for (let cx = Math.floor(a.x1 / 16); cx <= Math.floor(a.x2 / 16); cx++)
+          for (let cz = Math.floor(a.z1 / 16); cz <= Math.floor(a.z2 / 16); cz++)
+            if (pronto(cx, cz) === false) return comecar(dim, cx, cz, semente);
+      }
+      for (const j of naLua) {
+        const l = j.location;
+        const pcx = Math.floor(l.x / 16), pcz = Math.floor(l.z / 16);
+        for (const [dx, dz] of OFFSETS) if (pronto(pcx + dx, pcz + dz) === false) return comecar(dim, pcx + dx, pcz + dz, semente);
+      }
+    } catch (erro) {
+      console.warn(`[Pouso Forçado] Lua: ${erro}`);
     }
-  }, 10);
+  }, 5);
 }

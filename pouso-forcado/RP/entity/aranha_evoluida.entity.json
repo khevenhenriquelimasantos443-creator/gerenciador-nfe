@@ -6,13 +6,16 @@
       "min_engine_version": "1.8.0",
       "materials": {
         "default": "spider",
-        "invisible": "spider_invisible"
+        "invisible": "spider_invisible",
+        "traje": "entity_alphablend"
       },
       "textures": {
-        "default": "textures/entity/spider/spider"
+        "default": "textures/entity/spider/spider",
+        "traje": "textures/entity/cl/traje_espacial"
       },
       "geometry": {
-        "default": "geometry.spider.v1.8"
+        "default": "geometry.spider.v1.8",
+        "traje": "geometry.cl_traje_spider"
       },
       "animations": {
         "default_leg_pose": "animation.spider.default_leg_pose",
@@ -25,7 +28,8 @@
         }
       ],
       "render_controllers": [
-        "controller.render.spider"
+        "controller.render.spider",
+        "controller.render.cl_traje"
       ],
       "spawn_egg": {
         "texture": "spawn_egg_spider"

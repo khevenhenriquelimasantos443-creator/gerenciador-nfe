@@ -5,7 +5,7 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { sortearSaque } from "../util/aleatorio.js";
 import { criarBauCom, darAoJogador } from "../util/inventario.js";
 import { intervalo } from "../util/perfil.js";
-import { chunkPronto, dimensaoLua } from "./lua.js";
+import { chunkPronto, dimensaoLua, pedirArea } from "./lua.js";
 import { LUA } from "./oxigenio.js";
 
 /*
@@ -16,7 +16,8 @@ import { LUA } from "./oxigenio.js";
  * o Esqueleto Evoluído Gigante (150 de vida, flechas a cada 25 ticks e arremesso de quem chega perto, como no
  * Galacticraft) acorda quando alguém entra e volta se o jogador sair sem matá-lo. Ele deixa a Chave da Masmorra,
  * que abre o Baú do Tesouro com o Núcleo de Salto (o final novo, em scripts/mundo/reparo.ts).
- * A base é construída de uma vez, por fills, quando alguém chega a 28 blocos e o terreno em volta já existe.
+ * A base é construída de uma vez, por fills, assim que o terreno em volta existe; desde a 1.17.0 isso começa quando
+ * alguém chega a 160 blocos (uma área de carregamento segura os chunks dela), para estar pronta na chegada.
  */
 const PROP = "cl:base_lua";
 const Y0 = 26; // chão da masmorra
@@ -56,7 +57,7 @@ const SAQUE_TESOURO: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:enchanted_golden_apple", min: 1, max: 1, chance: 0.2 },
   { item: "cl:balde_combustivel", min: 1, max: 1, chance: 1 },
 ];
-const MONSTROS = ["cl:zumbi_evoluido", "cl:zumbi_evoluido", "cl:esqueleto_evoluido", "cl:aranha_evoluida", "cl:creeper_evoluido"];
+const MONSTROS = ["cl:zumbi_evoluido", "cl:zumbi_evoluido", "cl:esqueleto_evoluido", "cl:aranha_evoluida", "cl:creeper_evoluido", "cl:bruxa_evoluida"];
 
 export function lerBase(): Base | undefined {
   const v = world.getDynamicProperty(PROP);
@@ -134,6 +135,34 @@ function construir(dim: Dimension, b: Base): void {
   b.feita = true;
   b.salas = [];
   gravarBase(b);
+}
+
+// Área de carregamento da base (uma de cada vez), enquanto ela não está construída.
+const PREPARAR = 160;
+const AREA = "cl_base_lua";
+let areaAberta = false;
+function prepararArea(dim: Dimension, b: Base): void {
+  const caixa = { x1: b.x - 40, z1: b.z - 40, x2: b.x + 40, z2: b.z + 48 };
+  pedirArea({ dim, ...caixa });
+  if (areaAberta) return;
+  const opcoes = { dimension: dim, from: { x: caixa.x1, y: 0, z: caixa.z1 }, to: { x: caixa.x2, y: 120, z: caixa.z2 } };
+  try {
+    if (!world.tickingAreaManager.hasCapacity(opcoes)) return;
+    areaAberta = true;
+    world.tickingAreaManager.createTickingArea(AREA, opcoes).catch(() => (areaAberta = false));
+  } catch {
+    areaAberta = false;
+  }
+}
+function soltarArea(): void {
+  pedirArea(undefined);
+  if (!areaAberta) return;
+  areaAberta = false;
+  try {
+    world.tickingAreaManager.removeTickingArea(AREA);
+  } catch {
+    // já tinha saído
+  }
 }
 
 function podeConstruir(dim: Dimension, b: Base): boolean {
@@ -219,18 +248,24 @@ export function registrarBase(): void {
     const b = lerBase();
     if (!b) return;
     const dim = dimensaoLua();
+    if (!b.feita) {
+      // 1.17.0: a base fica pronta antes de o jogador chegar. A até PREPARAR blocos dela, uma área de carregamento
+      // segura os chunks da base, o terreno deles é gerado primeiro (lua.ts) e a base é construída assim que tudo
+      // estiver pronto. Antes só começava a 28 blocos e esperava o jogador passar perto de todos os chunks.
+      const perto = naLua.some((j) => Math.hypot(j.location.x - b.x, j.location.z - b.z) <= PREPARAR);
+      if (!perto) return;
+      prepararArea(dim, b);
+      if (!podeConstruir(dim, b)) return;
+      try {
+        construir(dim, b);
+      } catch (erro) {
+        console.warn(`[Pouso Forçado] base lunar: ${erro}`);
+        return;
+      }
+      soltarArea();
+    }
     for (const j of naLua) {
       const perto = Math.hypot(j.location.x - b.x, j.location.z - b.z);
-      if (!b.feita) {
-        if (perto <= 28 && podeConstruir(dim, b)) {
-          try {
-            construir(dim, b);
-          } catch (erro) {
-            console.warn(`[Pouso Forçado] base lunar: ${erro}`);
-          }
-        }
-        continue;
-      }
       if (perto <= 12 && j.getDynamicProperty("cl:viu_base") !== true) {
         j.setDynamicProperty("cl:viu_base", true);
         registrarAcao(j, "base_lua");

@@ -1,5 +1,5 @@
 {
-  "format_version": "1.26.20",
+  "format_version": "1.26.0",
   "minecraft:entity": {
     "description": {
       "identifier": "cl:zumbi_evoluido",
@@ -230,8 +230,6 @@
         }
       },
       "minecraft:physics": {},
-      "minecraft:pushable_by_entity": {},
-      "minecraft:pushable_by_block": {},
       "minecraft:rotation_locked_to_vehicle": {},
       "minecraft:shareables": {
         "items": [
@@ -522,8 +520,13 @@
           "monster",
           "mob",
           "evoluido",
-          "lunar"
+          "lunar",
+          "zumbi_evoluido"
         ]
+      },
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
       }
     },
     "component_groups": {

@@ -74,14 +74,17 @@ function painel(jogador: Player): RawMessage {
   ];
   const arAmbiente = arDoJogador.get(jogador.id);
   if (arAmbiente !== undefined) linha.push({ text: ` §7(${Math.round(arAmbiente)}°)` });
+  // 1.17.0: ar, tempestade e estados do corpo numa segunda linha (numa só, no celular o fim saía da tela).
+  const extra: RawMessage[] = [];
   const ar = lerAr(jogador);
-  if (ar < 100) linha.push({ text: "   " }, { translate: "cl.ar.rotulo" }, { text: ` ${ar <= AR.lento ? "§c" : "§f"}${Math.floor(ar)}%` });
+  if (ar < 100) extra.push({ translate: "cl.ar.rotulo" }, { text: ` ${ar <= AR.lento ? "§c" : "§f"}${Math.floor(ar)}%   ` });
   const resta = tempestadeRestante();
   if (resta > 0) {
     const s = Math.ceil(resta / 20);
-    linha.push({ text: "   " }, { translate: "cl.tempestade.rotulo" }, { text: ` §6${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}` });
+    extra.push({ translate: "cl.tempestade.rotulo" }, { text: ` §6${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}   ` });
   }
-  for (const e of estados(jogador, corpo)) linha.push({ text: " §c" }, e);
+  for (const e of estados(jogador, corpo)) extra.push({ text: "§c" }, e, { text: " " });
+  if (extra.length) linha.push({ text: "§r\n" }, ...extra);
   return { rawtext: linha };
 }
 
