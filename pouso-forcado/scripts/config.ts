@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.17.0";
+export const VERSAO = "1.18.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1254,6 +1254,7 @@ export const MODS: ReadonlyArray<{ mod: string; icones: ReadonlyArray<string> }>
   { mod: "Farmer's Delight", icones: [`${NS}:panela_cozinha`, `${NS}:faca_ferro`] },
   { mod: "Immersive Engineering", icones: [`${NS}:forno_coque`, `${NS}:martelo_engenheiro`] },
   { mod: "Immersive Aircraft", icones: [`${NS}:biplano`, `${NS}:dirigivel`] },
+  { mod: "Powah!", icones: [`${NS}:furnator_inicial`, `${NS}:orbe_energizador`] },
   { mod: "Quark", icones: [`${NS}:jaspe_tijolos`, `${NS}:picarango`] },
   { mod: "Waystones", icones: [`${NS}:pedra_caminho`, `${NS}:pedra_viagem`] },
   { mod: "Backpacks", icones: [`${NS}:mochila`] },

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_solar_panel_niotic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ppp",
+      "cdc",
+      "bbb"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_niotico"
+      },
+      "b": {
+        "item": "cl:cristal_niotico"
+      },
+      "p": {
+        "item": "cl:painel_solar_ardente"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_solar_niotico",
+      "count": 1
+    }
+  }
+}

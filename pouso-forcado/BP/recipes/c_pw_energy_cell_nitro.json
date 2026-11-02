@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_energy_cell_nitro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "bnb",
+      "cdc",
+      "bnb"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:celula_powah_espiritual"
+      },
+      "n": {
+        "item": "cl:capacitor_pw_nitro"
+      },
+      "b": {
+        "item": "cl:cristal_nitro"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:celula_powah_nitro",
+      "count": 1
+    }
+  }
+}

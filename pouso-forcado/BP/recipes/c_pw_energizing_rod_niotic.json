@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_energizing_rod_niotic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " q ",
+      "bcb",
+      " h "
+    ],
+    "key": {
+      "q": {
+        "item": "minecraft:quartz_block"
+      },
+      "h": {
+        "item": "cl:haste_energizadora_ardente"
+      },
+      "b": {
+        "item": "cl:capacitor_pw_niotico"
+      },
+      "c": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:haste_energizadora_niotico",
+      "count": 1
+    }
+  }
+}

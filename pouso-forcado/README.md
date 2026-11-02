@@ -154,6 +154,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.18.0 (Powah!)
+
+Mod novo de energia: **Powah!** (owmii, LGPL-3.0), com a arte e os números do código do mod. Tudo em 7 níveis (Inicial, Básico, Endurecido, Ardente, Niótico, Espiritual e Nitro); cada nível pede o anterior, um capacitor do nível e o material dele.
+- **Furnator**: queima combustível de fornalha (o baú em cima, ou toque com ele): 30 RF por tick de queima (carvão = 48.000 RF), gerando de 15 a 4.800 RF/t.
+- **Magmator**: lava (balde = 100.000 RF), no mesmo ritmo.
+- **Termogerador**: calor embaixo (lava, magma ou Bloco de Cristal Ardente) e água (balde, ou uma fonte de água encostada, que não acaba).
+- **Painel Solar**: de dia, com céu aberto (5 a 1.200 RF/t).
+- **Células de Energia** (100 mil a 140 milhões de RF) e **Cabos de Energia**, que ligam com geradores, células, máquinas e os outros cabos e condutos do pack.
+- **Orbe Energizador**: até 6 itens dentro; as **Hastes Energizadoras** a até 4 blocos, ligadas à energia, mandam RF até a receita ficar pronta: Aço Energizado (ferro + ouro) e os Cristais Ardente, Niótico, Espiritual e Nitro dos níveis altos.
+- Capítulo novo no Diário (8 missões) e o grupo "Powah!" no menu criativo e no Catálogo.
+- Não entram (não têm uso no pack): o reator de urânio, as células e portões do Ender, o transmissor e o carregador de itens.
+
 ## Novidades da 1.17.0 (Lua)
 
 - **Lua sem travar**: a dimensão da Lua só pode ser vazia (testado: a geração natural não roda nela), então o chão é posto pelo script, ~14 mil blocos por chunk. Antes saía tudo de uma vez, dois chunks a cada meio segundo; agora cada chunk é feito em pedaços pequenos (`system.runJob`), do chão para baixo, um chunk de cada vez.

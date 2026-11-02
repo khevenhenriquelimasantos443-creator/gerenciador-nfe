@@ -137,7 +137,10 @@ export type Acao =
   | "ima_mochila"
   | "comer_mochila"
   | "deposito_mochila"
-  | "templo_yung";
+  | "templo_yung"
+  | "pw_termo"
+  | "energizar"
+  | "aco_energizado";
 
 type MissaoBase = {
   id: string;
@@ -427,6 +430,21 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "ie_tratada", requer: ["ie_creosoto"], objetivo: { tipo: "ter", item: "cl:tabuas_tratadas", qtd: 16 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
       { id: "ie_alto", requer: ["ie_coque"], objetivo: { tipo: "acao", acao: "aco_alto", qtd: 1 }, recompensa: [{ item: "cl:coque", quantidade: 16 }] },
       { id: "ie_vento", requer: ["ie_tratada"], objetivo: { tipo: "acao", acao: "vento", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+    ],
+  },
+  {
+    id: "powah", // 1.18.0: Powah! (geradores, células e cabos em 7 níveis; Orbe Energizador)
+    icone: "cl:furnator_inicial",
+    requer: ["chegada"],
+    missoes: [
+      { id: "pw_pasta", objetivo: { tipo: "ter", item: "cl:pasta_dieletrica", qtd: 16 }, recompensa: [{ item: "minecraft:clay_ball", quantidade: 8 }] },
+      { id: "pw_furnator", requer: ["pw_pasta"], objetivo: { tipo: "colocar", bloco: "cl:furnator_inicial", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "pw_celula", requer: ["pw_pasta"], objetivo: { tipo: "colocar", bloco: "cl:celula_powah_inicial", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
+      { id: "pw_cabo", requer: ["pw_furnator"], objetivo: { tipo: "ter", item: "cl:cabo_powah_inicial", qtd: 12 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
+      { id: "pw_orbe", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "aco_energizado", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 4 }] },
+      { id: "pw_termo", requer: ["pw_cabo"], objetivo: { tipo: "acao", acao: "pw_termo", qtd: 1 }, recompensa: [{ item: "minecraft:water_bucket", quantidade: 1 }] },
+      { id: "pw_solar", requer: ["pw_orbe"], objetivo: { tipo: "colocar", bloco: "cl:painel_solar_basico", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "pw_ardente", requer: ["pw_orbe"], objetivo: { tipo: "ter", item: "cl:cristal_ardente", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
   {

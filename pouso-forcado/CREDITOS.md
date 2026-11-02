@@ -50,6 +50,10 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   para este projeto sobre os modelos do jogo (`referencias/vanilla/modelos`, dos mesmos exemplos da Mojang). Os
   planetas do céu da Lua também são arte própria (`tools/gerar-ceu-lua.mjs`).
 
+- **Powah!** (owmii, LGPL-3.0, github.com/owmii/Powah): geradores, células, cabos e o Orbe Energizador (1.18.0). A arte
+  dos itens e das faces dos blocos é a do mod e os números e receitas foram lidos do código (`tools/importar-powah.py`;
+  licença em `docs/licencas/powah.txt`). O código daqui é próprio.
+
 - **Crash Landing**, modpack de Iskandar (Minecraft 1.6.4): a ideia de cair num planeta seco,
   a sede, a água que precisa ser tratada e a progressão por quests. Nenhum texto do pack foi copiado.
 - **Ex Nihilo** (Erasmus_Crowley) e **Ex Aliquo** (Zerokyuuni, MIT): peneira, martelo, barril, cadinho,

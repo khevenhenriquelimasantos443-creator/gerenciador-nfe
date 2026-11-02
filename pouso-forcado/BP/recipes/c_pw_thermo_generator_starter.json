@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_thermo_generator_starter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "iii",
+      "cdc",
+      "ppp"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_minusculo"
+      },
+      "i": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "p": {
+        "item": "cl:placa_termoeletrica"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:termogerador_inicial",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_thermo_generator_blazing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "igi",
+      "cdc",
+      "ptp"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_ardente"
+      },
+      "i": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "g": {
+        "item": "cl:cristal_ardente"
+      },
+      "p": {
+        "item": "cl:placa_termoeletrica"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      },
+      "t": {
+        "item": "cl:termogerador_endurecido"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:termogerador_ardente",
+      "count": 1
+    }
+  }
+}

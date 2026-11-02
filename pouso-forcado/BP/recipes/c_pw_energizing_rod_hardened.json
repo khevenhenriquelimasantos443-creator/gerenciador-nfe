@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_energizing_rod_hardened"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " q ",
+      "hch",
+      " e "
+    ],
+    "key": {
+      "q": {
+        "item": "minecraft:quartz_block"
+      },
+      "e": {
+        "item": "cl:haste_energizadora_basico"
+      },
+      "h": {
+        "item": "cl:capacitor_pw_endurecido"
+      },
+      "c": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:haste_energizadora_endurecido",
+      "count": 1
+    }
+  }
+}

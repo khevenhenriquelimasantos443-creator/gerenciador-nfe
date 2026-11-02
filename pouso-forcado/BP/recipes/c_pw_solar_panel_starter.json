@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_solar_panel_starter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ppp",
+      "cdc",
+      "eee"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_minusculo"
+      },
+      "e": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "p": {
+        "item": "cl:painel_fotoeletrico"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_solar_inicial",
+      "count": 1
+    }
+  }
+}

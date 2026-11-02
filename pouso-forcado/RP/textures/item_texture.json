@@ -1774,6 +1774,60 @@
     },
     "clc_melhoria_reabastecer": {
       "textures": "textures/items/cl/c/melhoria_reabastecer"
+    },
+    "clc_pasta_dieletrica": {
+      "textures": "textures/items/cl/arte/pasta_dieletrica"
+    },
+    "clc_haste_dieletrica": {
+      "textures": "textures/items/cl/arte/haste_dieletrica"
+    },
+    "clc_involucro_dieletrico": {
+      "textures": "textures/items/cl/arte/involucro_dieletrico"
+    },
+    "clc_capacitor_pw_minusculo": {
+      "textures": "textures/items/cl/arte/capacitor_pw_minusculo"
+    },
+    "clc_capacitor_pw_basico": {
+      "textures": "textures/items/cl/arte/capacitor_pw_basico"
+    },
+    "clc_capacitor_pw_grande": {
+      "textures": "textures/items/cl/arte/capacitor_pw_grande"
+    },
+    "clc_capacitor_pw_endurecido": {
+      "textures": "textures/items/cl/arte/capacitor_pw_endurecido"
+    },
+    "clc_capacitor_pw_ardente": {
+      "textures": "textures/items/cl/arte/capacitor_pw_ardente"
+    },
+    "clc_capacitor_pw_niotico": {
+      "textures": "textures/items/cl/arte/capacitor_pw_niotico"
+    },
+    "clc_capacitor_pw_espiritual": {
+      "textures": "textures/items/cl/arte/capacitor_pw_espiritual"
+    },
+    "clc_capacitor_pw_nitro": {
+      "textures": "textures/items/cl/arte/capacitor_pw_nitro"
+    },
+    "clc_aco_energizado": {
+      "textures": "textures/items/cl/arte/aco_energizado"
+    },
+    "clc_cristal_ardente": {
+      "textures": "textures/items/cl/arte/cristal_ardente"
+    },
+    "clc_cristal_niotico": {
+      "textures": "textures/items/cl/arte/cristal_niotico"
+    },
+    "clc_cristal_espiritual": {
+      "textures": "textures/items/cl/arte/cristal_espiritual"
+    },
+    "clc_cristal_nitro": {
+      "textures": "textures/items/cl/arte/cristal_nitro"
+    },
+    "clc_painel_fotoeletrico": {
+      "textures": "textures/items/cl/arte/painel_fotoeletrico"
+    },
+    "clc_placa_termoeletrica": {
+      "textures": "textures/items/cl/arte/placa_termoeletrica"
     }
   }
 }

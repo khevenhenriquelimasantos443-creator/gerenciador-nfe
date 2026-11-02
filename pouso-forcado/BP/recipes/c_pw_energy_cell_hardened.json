@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_energy_cell_hardened"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ghg",
+      "cdc",
+      "ghg"
+    ],
+    "key": {
+      "h": {
+        "item": "cl:capacitor_pw_endurecido"
+      },
+      "c": {
+        "item": "cl:celula_powah_basico"
+      },
+      "g": {
+        "item": "cl:aco_energizado"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:celula_powah_endurecido",
+      "count": 1
+    }
+  }
+}

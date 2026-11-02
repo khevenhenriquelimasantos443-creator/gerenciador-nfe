@@ -1,0 +1,1500 @@
+{
+ "niveis": [
+  [
+   "inicial",
+   "Inicial",
+   "Starter"
+  ],
+  [
+   "basico",
+   "Básico",
+   "Basic"
+  ],
+  [
+   "endurecido",
+   "Endurecido",
+   "Hardened"
+  ],
+  [
+   "ardente",
+   "Ardente",
+   "Blazing"
+  ],
+  [
+   "niotico",
+   "Niótico",
+   "Niotic"
+  ],
+  [
+   "espiritual",
+   "Espiritual",
+   "Spirited"
+  ],
+  [
+   "nitro",
+   "Nitro",
+   "Nitro"
+  ]
+ ],
+ "receitas": [
+  {
+   "id": "pw_blazing_crystal_block",
+   "resultado": "cl:bloco_cristal_ardente",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente",
+    "cl:cristal_ardente"
+   ]
+  },
+  {
+   "id": "pw_cable_basic",
+   "resultado": "cl:cabo_powah_basico",
+   "qtd": 6,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "tct",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_basico",
+    "t": "cl:cabo_powah_inicial"
+   }
+  },
+  {
+   "id": "pw_cable_basic_2",
+   "resultado": "cl:cabo_powah_basico",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "ici",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_basico",
+    "i": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "pw_cable_blazing",
+   "resultado": "cl:cabo_powah_ardente",
+   "qtd": 6,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "tct",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_ardente",
+    "t": "cl:cabo_powah_endurecido"
+   }
+  },
+  {
+   "id": "pw_cable_blazing_2",
+   "resultado": "cl:cabo_powah_ardente",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "kck",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_ardente",
+    "k": "cl:cristal_ardente"
+   }
+  },
+  {
+   "id": "pw_cable_hardened",
+   "resultado": "cl:cabo_powah_endurecido",
+   "qtd": 6,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "tct",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_endurecido",
+    "t": "cl:cabo_powah_basico"
+   }
+  },
+  {
+   "id": "pw_cable_hardened_2",
+   "resultado": "cl:cabo_powah_endurecido",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "kck",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_endurecido",
+    "k": "cl:aco_energizado"
+   }
+  },
+  {
+   "id": "pw_cable_niotic",
+   "resultado": "cl:cabo_powah_niotico",
+   "qtd": 6,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "tct",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_niotico",
+    "t": "cl:cabo_powah_ardente"
+   }
+  },
+  {
+   "id": "pw_cable_niotic_2",
+   "resultado": "cl:cabo_powah_niotico",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "kck",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_niotico",
+    "k": "cl:cristal_niotico"
+   }
+  },
+  {
+   "id": "pw_cable_nitro",
+   "resultado": "cl:cabo_powah_nitro",
+   "qtd": 6,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "tct",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_nitro",
+    "t": "cl:cabo_powah_espiritual"
+   }
+  },
+  {
+   "id": "pw_cable_nitro_2",
+   "resultado": "cl:cabo_powah_nitro",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "kck",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_nitro",
+    "k": "cl:cristal_nitro"
+   }
+  },
+  {
+   "id": "pw_cable_spirited",
+   "resultado": "cl:cabo_powah_espiritual",
+   "qtd": 6,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "tct",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_espiritual",
+    "t": "cl:cabo_powah_niotico"
+   }
+  },
+  {
+   "id": "pw_cable_spirited_2",
+   "resultado": "cl:cabo_powah_espiritual",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "kck",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "c": "cl:capacitor_pw_espiritual",
+    "k": "cl:cristal_espiritual"
+   }
+  },
+  {
+   "id": "pw_cable_starter",
+   "resultado": "cl:cabo_powah_inicial",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "ddd",
+    "iti",
+    "ddd"
+   ],
+   "chave": {
+    "d": "cl:haste_dieletrica",
+    "i": "minecraft:iron_nugget",
+    "t": "cl:capacitor_pw_minusculo"
+   }
+  },
+  {
+   "id": "pw_capacitor_basic",
+   "resultado": "cl:capacitor_pw_basico",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    " ip",
+    "iri",
+    "pi "
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "i": "minecraft:iron_ingot",
+    "r": "minecraft:redstone_block"
+   }
+  },
+  {
+   "id": "pw_capacitor_basic_large",
+   "resultado": "cl:capacitor_pw_grande",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:capacitor_pw_basico",
+    "cl:capacitor_pw_basico"
+   ]
+  },
+  {
+   "id": "pw_capacitor_basic_tiny",
+   "resultado": "cl:capacitor_pw_minusculo",
+   "qtd": 2,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:capacitor_pw_basico"
+   ]
+  },
+  {
+   "id": "pw_capacitor_blazing",
+   "resultado": "cl:capacitor_pw_ardente",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "pbp",
+    "bcb",
+    "pbp"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "c": "cl:capacitor_pw_grande",
+    "b": "cl:cristal_ardente"
+   }
+  },
+  {
+   "id": "pw_capacitor_hardened",
+   "resultado": "cl:capacitor_pw_endurecido",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "pbp",
+    "bcb",
+    "pbp"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "c": "cl:capacitor_pw_grande",
+    "b": "cl:aco_energizado"
+   }
+  },
+  {
+   "id": "pw_capacitor_niotic",
+   "resultado": "cl:capacitor_pw_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pbp",
+    "bcb",
+    "pbp"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "c": "cl:capacitor_pw_grande",
+    "b": "cl:cristal_niotico"
+   }
+  },
+  {
+   "id": "pw_capacitor_nitro",
+   "resultado": "cl:capacitor_pw_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pbp",
+    "bcb",
+    "pbp"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "c": "cl:capacitor_pw_grande",
+    "b": "cl:cristal_nitro"
+   }
+  },
+  {
+   "id": "pw_capacitor_spirited",
+   "resultado": "cl:capacitor_pw_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "pbp",
+    "bcb",
+    "pbp"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "c": "cl:capacitor_pw_grande",
+    "b": "cl:cristal_espiritual"
+   }
+  },
+  {
+   "id": "pw_crystal_blazing",
+   "resultado": "cl:cristal_ardente",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_cristal_ardente"
+   ]
+  },
+  {
+   "id": "pw_crystal_niotic",
+   "resultado": "cl:cristal_niotico",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_cristal_niotico"
+   ]
+  },
+  {
+   "id": "pw_crystal_nitro",
+   "resultado": "cl:cristal_nitro",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_cristal_nitro"
+   ]
+  },
+  {
+   "id": "pw_crystal_spirited",
+   "resultado": "cl:cristal_espiritual",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_cristal_espiritual"
+   ]
+  },
+  {
+   "id": "pw_dielectric_casing",
+   "resultado": "cl:involucro_dieletrico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ihi",
+    "v v",
+    "ihi"
+   ],
+   "chave": {
+    "v": "cl:haste_dieletrica",
+    "h": "cl:haste_dieletrica",
+    "i": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "pw_dielectric_paste",
+   "resultado": "cl:pasta_dieletrica",
+   "qtd": 24,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "#minecraft:coals",
+    "#minecraft:coals",
+    "#minecraft:coals",
+    "minecraft:clay_ball",
+    "minecraft:clay_ball",
+    "minecraft:lava_bucket"
+   ]
+  },
+  {
+   "id": "pw_dielectric_paste_2",
+   "resultado": "cl:pasta_dieletrica",
+   "qtd": 16,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "#minecraft:coals",
+    "#minecraft:coals",
+    "minecraft:clay_ball",
+    "minecraft:blaze_powder"
+   ]
+  },
+  {
+   "id": "pw_dielectric_rod",
+   "resultado": "cl:haste_dieletrica",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "pip",
+    "pip",
+    "pip"
+   ],
+   "chave": {
+    "p": "cl:pasta_dieletrica",
+    "i": "minecraft:iron_bars"
+   }
+  },
+  {
+   "id": "pw_dielectric_rod_2",
+   "resultado": "cl:haste_dieletrica",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:haste_dieletrica"
+   ]
+  },
+  {
+   "id": "pw_energized_steel_block",
+   "resultado": "cl:bloco_aco_energizado",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado",
+    "cl:aco_energizado"
+   ]
+  },
+  {
+   "id": "pw_energizing_orb",
+   "resultado": "cl:orbe_energizador",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "gcg",
+    "rrr"
+   ],
+   "chave": {
+    "r": "cl:haste_dieletrica",
+    "g": "minecraft:glass",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_basic",
+   "resultado": "cl:haste_energizadora_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "bcb",
+    " h "
+   ],
+   "chave": {
+    "q": "minecraft:quartz_block",
+    "h": "cl:haste_energizadora_inicial",
+    "b": "cl:capacitor_pw_basico",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_blazing",
+   "resultado": "cl:haste_energizadora_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "bcb",
+    " h "
+   ],
+   "chave": {
+    "q": "minecraft:quartz_block",
+    "h": "cl:haste_energizadora_endurecido",
+    "b": "cl:capacitor_pw_ardente",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_hardened",
+   "resultado": "cl:haste_energizadora_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "hch",
+    " e "
+   ],
+   "chave": {
+    "q": "minecraft:quartz_block",
+    "e": "cl:haste_energizadora_basico",
+    "h": "cl:capacitor_pw_endurecido",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_niotic",
+   "resultado": "cl:haste_energizadora_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "bcb",
+    " h "
+   ],
+   "chave": {
+    "q": "minecraft:quartz_block",
+    "h": "cl:haste_energizadora_ardente",
+    "b": "cl:capacitor_pw_niotico",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_nitro",
+   "resultado": "cl:haste_energizadora_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "bcb",
+    " h "
+   ],
+   "chave": {
+    "q": "minecraft:quartz_block",
+    "h": "cl:haste_energizadora_espiritual",
+    "b": "cl:capacitor_pw_nitro",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_spirited",
+   "resultado": "cl:haste_energizadora_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "bcb",
+    " h "
+   ],
+   "chave": {
+    "q": "minecraft:quartz_block",
+    "h": "cl:haste_energizadora_niotico",
+    "b": "cl:capacitor_pw_espiritual",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energizing_rod_starter",
+   "resultado": "cl:haste_energizadora_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    " q ",
+    "bcb",
+    " h "
+   ],
+   "chave": {
+    "q": "minecraft:quartz",
+    "h": "cl:haste_dieletrica",
+    "b": "cl:capacitor_pw_minusculo",
+    "c": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_basic",
+   "resultado": "cl:celula_powah_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ici",
+    "cdc",
+    "ici"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "i": "minecraft:iron_ingot",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_basic_2",
+   "resultado": "cl:celula_powah_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "iii",
+    "cdc",
+    "iii"
+   ],
+   "chave": {
+    "c": "cl:celula_powah_inicial",
+    "i": "minecraft:iron_ingot",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_blazing",
+   "resultado": "cl:celula_powah_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "bgb",
+    "cdc",
+    "bgb"
+   ],
+   "chave": {
+    "c": "cl:celula_powah_endurecido",
+    "g": "cl:capacitor_pw_ardente",
+    "b": "cl:cristal_ardente",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_hardened",
+   "resultado": "cl:celula_powah_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ghg",
+    "cdc",
+    "ghg"
+   ],
+   "chave": {
+    "h": "cl:capacitor_pw_endurecido",
+    "c": "cl:celula_powah_basico",
+    "g": "cl:aco_energizado",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_niotic",
+   "resultado": "cl:celula_powah_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "bnb",
+    "cdc",
+    "bnb"
+   ],
+   "chave": {
+    "c": "cl:celula_powah_ardente",
+    "n": "cl:capacitor_pw_niotico",
+    "b": "cl:cristal_niotico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_nitro",
+   "resultado": "cl:celula_powah_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "bnb",
+    "cdc",
+    "bnb"
+   ],
+   "chave": {
+    "c": "cl:celula_powah_espiritual",
+    "n": "cl:capacitor_pw_nitro",
+    "b": "cl:cristal_nitro",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_spirited",
+   "resultado": "cl:celula_powah_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "bnb",
+    "cdc",
+    "bnb"
+   ],
+   "chave": {
+    "c": "cl:celula_powah_niotico",
+    "n": "cl:capacitor_pw_espiritual",
+    "b": "cl:cristal_espiritual",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_energy_cell_starter",
+   "resultado": "cl:celula_powah_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ici",
+    "cdc",
+    "ici"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "i": "minecraft:iron_ingot",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_basic",
+   "resultado": "cl:furnator_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "iii",
+    "cdc",
+    "ifi"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "i": "minecraft:iron_ingot",
+    "f": "cl:furnator_inicial",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_blazing",
+   "resultado": "cl:furnator_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "bbb",
+    "cdc",
+    "bfb"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_ardente",
+    "b": "cl:cristal_ardente",
+    "f": "cl:furnator_endurecido",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_hardened",
+   "resultado": "cl:furnator_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_endurecido",
+    "g": "cl:aco_energizado",
+    "f": "cl:furnator_basico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_niotic",
+   "resultado": "cl:furnator_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_niotico",
+    "g": "cl:cristal_niotico",
+    "f": "cl:furnator_ardente",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_nitro",
+   "resultado": "cl:furnator_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_nitro",
+    "g": "cl:cristal_nitro",
+    "f": "cl:furnator_espiritual",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_spirited",
+   "resultado": "cl:furnator_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_espiritual",
+    "g": "cl:cristal_espiritual",
+    "f": "cl:furnator_niotico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_furnator_starter",
+   "resultado": "cl:furnator_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "g": "cl:pasta_dieletrica",
+    "f": "minecraft:furnace",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_basic",
+   "resultado": "cl:magmator_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "iii",
+    "cdc",
+    "ifi"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "i": "minecraft:iron_ingot",
+    "f": "cl:magmator_inicial",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_blazing",
+   "resultado": "cl:magmator_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "bbb",
+    "cdc",
+    "bfb"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_ardente",
+    "b": "cl:cristal_ardente",
+    "f": "cl:magmator_endurecido",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_hardened",
+   "resultado": "cl:magmator_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_endurecido",
+    "g": "cl:aco_energizado",
+    "f": "cl:magmator_basico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_niotic",
+   "resultado": "cl:magmator_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_niotico",
+    "g": "cl:cristal_niotico",
+    "f": "cl:magmator_ardente",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_nitro",
+   "resultado": "cl:magmator_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_nitro",
+    "g": "cl:cristal_nitro",
+    "f": "cl:magmator_espiritual",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_spirited",
+   "resultado": "cl:magmator_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_espiritual",
+    "g": "cl:cristal_espiritual",
+    "f": "cl:magmator_niotico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_magmator_starter",
+   "resultado": "cl:magmator_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ggg",
+    "cdc",
+    "gfg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "g": "cl:pasta_dieletrica",
+    "f": "minecraft:bucket",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_niotic_crystal_block",
+   "resultado": "cl:bloco_cristal_niotico",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico",
+    "cl:cristal_niotico"
+   ]
+  },
+  {
+   "id": "pw_nitro_crystal_block",
+   "resultado": "cl:bloco_cristal_nitro",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro",
+    "cl:cristal_nitro"
+   ]
+  },
+  {
+   "id": "pw_photoelectric_pane",
+   "resultado": "cl:painel_fotoeletrico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "dld",
+    "lpl",
+    "dld"
+   ],
+   "chave": {
+    "p": "minecraft:glass_pane",
+    "l": "minecraft:lapis_lazuli",
+    "d": "cl:pasta_dieletrica"
+   }
+  },
+  {
+   "id": "pw_solar_panel_basic",
+   "resultado": "cl:painel_solar_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "iii"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "i": "minecraft:iron_ingot",
+    "p": "cl:painel_solar_inicial",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_solar_panel_blazing",
+   "resultado": "cl:painel_solar_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "bbb"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_ardente",
+    "b": "cl:cristal_ardente",
+    "p": "cl:painel_solar_endurecido",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_solar_panel_hardened",
+   "resultado": "cl:painel_solar_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "ggg"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_endurecido",
+    "g": "cl:aco_energizado",
+    "p": "cl:painel_solar_basico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_solar_panel_niotic",
+   "resultado": "cl:painel_solar_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "bbb"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_niotico",
+    "b": "cl:cristal_niotico",
+    "p": "cl:painel_solar_ardente",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_solar_panel_nitro",
+   "resultado": "cl:painel_solar_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "eee"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_nitro",
+    "e": "cl:cristal_nitro",
+    "p": "cl:painel_solar_espiritual",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_solar_panel_spirited",
+   "resultado": "cl:painel_solar_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "eee"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_espiritual",
+    "e": "cl:cristal_espiritual",
+    "p": "cl:painel_solar_niotico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_solar_panel_starter",
+   "resultado": "cl:painel_solar_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "ppp",
+    "cdc",
+    "eee"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "e": "cl:pasta_dieletrica",
+    "p": "cl:painel_fotoeletrico",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_spirited_crystal_block",
+   "resultado": "cl:bloco_cristal_espiritual",
+   "qtd": 1,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual",
+    "cl:cristal_espiritual"
+   ]
+  },
+  {
+   "id": "pw_steel_energized",
+   "resultado": "cl:aco_energizado",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_aco_energizado"
+   ]
+  },
+  {
+   "id": "pw_thermo_generator_basic",
+   "resultado": "cl:termogerador_basico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "eie",
+    "cdc",
+    "ptp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_basico",
+    "e": "cl:pasta_dieletrica",
+    "i": "minecraft:iron_ingot",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico",
+    "t": "cl:termogerador_inicial"
+   }
+  },
+  {
+   "id": "pw_thermo_generator_blazing",
+   "resultado": "cl:termogerador_ardente",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "igi",
+    "cdc",
+    "ptp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_ardente",
+    "i": "cl:pasta_dieletrica",
+    "g": "cl:cristal_ardente",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico",
+    "t": "cl:termogerador_endurecido"
+   }
+  },
+  {
+   "id": "pw_thermo_generator_hardened",
+   "resultado": "cl:termogerador_endurecido",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "igi",
+    "cdc",
+    "ptp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_endurecido",
+    "i": "cl:pasta_dieletrica",
+    "g": "cl:aco_energizado",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico",
+    "t": "cl:termogerador_basico"
+   }
+  },
+  {
+   "id": "pw_thermo_generator_niotic",
+   "resultado": "cl:termogerador_niotico",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "igi",
+    "cdc",
+    "ptp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_niotico",
+    "i": "cl:pasta_dieletrica",
+    "g": "cl:cristal_niotico",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico",
+    "t": "cl:termogerador_ardente"
+   }
+  },
+  {
+   "id": "pw_thermo_generator_nitro",
+   "resultado": "cl:termogerador_nitro",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "igi",
+    "cdc",
+    "ptp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_nitro",
+    "i": "cl:pasta_dieletrica",
+    "g": "cl:cristal_nitro",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico",
+    "t": "cl:termogerador_espiritual"
+   }
+  },
+  {
+   "id": "pw_thermo_generator_spirited",
+   "resultado": "cl:termogerador_espiritual",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "igi",
+    "cdc",
+    "ptp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_espiritual",
+    "i": "cl:pasta_dieletrica",
+    "g": "cl:cristal_espiritual",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico",
+    "t": "cl:termogerador_niotico"
+   }
+  },
+  {
+   "id": "pw_thermo_generator_starter",
+   "resultado": "cl:termogerador_inicial",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "iii",
+    "cdc",
+    "ppp"
+   ],
+   "chave": {
+    "c": "cl:capacitor_pw_minusculo",
+    "i": "cl:pasta_dieletrica",
+    "p": "cl:placa_termoeletrica",
+    "d": "cl:involucro_dieletrico"
+   }
+  },
+  {
+   "id": "pw_thermoelectric_plate",
+   "resultado": "cl:placa_termoeletrica",
+   "qtd": 1,
+   "tipo": "shaped",
+   "padrao": [
+    "brb",
+    "rtr",
+    "brb"
+   ],
+   "chave": {
+    "b": "minecraft:blaze_powder",
+    "r": "minecraft:redstone",
+    "t": "cl:capacitor_pw_minusculo"
+   }
+  }
+ ],
+ "energizar": [
+  {
+   "entradas": [
+    "minecraft:blaze_powder",
+    "minecraft:blaze_powder",
+    "minecraft:blaze_powder",
+    "minecraft:blaze_powder"
+   ],
+   "rf": 120000,
+   "resultado": "cl:cristal_ardente",
+   "qtd": 1
+  },
+  {
+   "entradas": [
+    "minecraft:blaze_rod"
+   ],
+   "rf": 90000,
+   "resultado": "cl:cristal_ardente",
+   "qtd": 1
+  },
+  {
+   "entradas": [
+    "minecraft:iron_ingot",
+    "minecraft:gold_ingot"
+   ],
+   "rf": 10000,
+   "resultado": "cl:aco_energizado",
+   "qtd": 2
+  },
+  {
+   "entradas": [
+    "minecraft:diamond"
+   ],
+   "rf": 300000,
+   "resultado": "cl:cristal_niotico",
+   "qtd": 1
+  },
+  {
+   "entradas": [
+    "minecraft:nether_star",
+    "minecraft:redstone_block",
+    "minecraft:redstone_block",
+    "cl:bloco_cristal_ardente"
+   ],
+   "rf": 20000000,
+   "resultado": "cl:cristal_nitro",
+   "qtd": 16
+  },
+  {
+   "entradas": [
+    "minecraft:emerald"
+   ],
+   "rf": 1000000,
+   "resultado": "cl:cristal_espiritual",
+   "qtd": 1
+  }
+ ],
+ "numeros": {
+  "furnator": {
+   "geracao": [
+    15,
+    70,
+    180,
+    400,
+    900,
+    2000,
+    4800
+   ],
+   "capacidade": [
+    10000,
+    100000,
+    500000,
+    900000,
+    2000000,
+    5000000,
+    10000000
+   ]
+  },
+  "magmator": {
+   "geracao": [
+    15,
+    70,
+    180,
+    400,
+    900,
+    2000,
+    4800
+   ],
+   "capacidade": [
+    10000,
+    100000,
+    500000,
+    900000,
+    2000000,
+    5000000,
+    10000000
+   ]
+  },
+  "termogerador": {
+   "geracao": [
+    3,
+    8,
+    18,
+    42,
+    90,
+    200,
+    800
+   ]
+  },
+  "painel_solar": {
+   "geracao": [
+    5,
+    12,
+    40,
+    90,
+    220,
+    500,
+    1200
+   ]
+  },
+  "celula_powah": {
+   "capacidade": [
+    100000,
+    1000000,
+    4000000,
+    10000000,
+    25000000,
+    60000000,
+    140000000
+   ]
+  },
+  "haste_energizadora": {
+   "transferencia": [
+    10,
+    50,
+    120,
+    300,
+    700,
+    1200,
+    3000
+   ]
+  },
+  "combustivelPorTick": 30,
+  "lavaPorBalde": 100000,
+  "calor": {
+   "minecraft:lava": 1000,
+   "minecraft:flowing_lava": 1000,
+   "minecraft:magma": 800,
+   "cl:bloco_cristal_ardente": 2800
+  },
+  "alcanceOrbe": 4
+ }
+}

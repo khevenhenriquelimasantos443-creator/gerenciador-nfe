@@ -2994,6 +2994,423 @@
     },
     "clc_marco_destrocos": {
       "textures": "textures/blocks/cl/c/marco_destrocos"
+    },
+    "clc_furnator_inicial_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_inicial_frente"
+    },
+    "clc_furnator_inicial_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_inicial_lado"
+    },
+    "clc_furnator_inicial_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_inicial_topo"
+    },
+    "clc_furnator_inicial_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_inicial_baixo"
+    },
+    "clc_furnator_basico_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_basico_frente"
+    },
+    "clc_furnator_basico_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_basico_lado"
+    },
+    "clc_furnator_basico_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_basico_topo"
+    },
+    "clc_furnator_basico_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_basico_baixo"
+    },
+    "clc_furnator_endurecido_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_endurecido_frente"
+    },
+    "clc_furnator_endurecido_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_endurecido_lado"
+    },
+    "clc_furnator_endurecido_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_endurecido_topo"
+    },
+    "clc_furnator_endurecido_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_endurecido_baixo"
+    },
+    "clc_furnator_ardente_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_ardente_frente"
+    },
+    "clc_furnator_ardente_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_ardente_lado"
+    },
+    "clc_furnator_ardente_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_ardente_topo"
+    },
+    "clc_furnator_ardente_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_ardente_baixo"
+    },
+    "clc_furnator_niotico_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_niotico_frente"
+    },
+    "clc_furnator_niotico_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_niotico_lado"
+    },
+    "clc_furnator_niotico_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_niotico_topo"
+    },
+    "clc_furnator_niotico_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_niotico_baixo"
+    },
+    "clc_furnator_espiritual_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_espiritual_frente"
+    },
+    "clc_furnator_espiritual_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_espiritual_lado"
+    },
+    "clc_furnator_espiritual_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_espiritual_topo"
+    },
+    "clc_furnator_espiritual_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_espiritual_baixo"
+    },
+    "clc_furnator_nitro_frente": {
+      "textures": "textures/blocks/cl/arte/furnator_nitro_frente"
+    },
+    "clc_furnator_nitro_lado": {
+      "textures": "textures/blocks/cl/arte/furnator_nitro_lado"
+    },
+    "clc_furnator_nitro_topo": {
+      "textures": "textures/blocks/cl/arte/furnator_nitro_topo"
+    },
+    "clc_furnator_nitro_baixo": {
+      "textures": "textures/blocks/cl/arte/furnator_nitro_baixo"
+    },
+    "clc_magmator_inicial_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_inicial_frente"
+    },
+    "clc_magmator_inicial_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_inicial_lado"
+    },
+    "clc_magmator_inicial_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_inicial_topo"
+    },
+    "clc_magmator_inicial_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_inicial_baixo"
+    },
+    "clc_magmator_basico_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_basico_frente"
+    },
+    "clc_magmator_basico_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_basico_lado"
+    },
+    "clc_magmator_basico_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_basico_topo"
+    },
+    "clc_magmator_basico_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_basico_baixo"
+    },
+    "clc_magmator_endurecido_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_endurecido_frente"
+    },
+    "clc_magmator_endurecido_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_endurecido_lado"
+    },
+    "clc_magmator_endurecido_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_endurecido_topo"
+    },
+    "clc_magmator_endurecido_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_endurecido_baixo"
+    },
+    "clc_magmator_ardente_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_ardente_frente"
+    },
+    "clc_magmator_ardente_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_ardente_lado"
+    },
+    "clc_magmator_ardente_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_ardente_topo"
+    },
+    "clc_magmator_ardente_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_ardente_baixo"
+    },
+    "clc_magmator_niotico_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_niotico_frente"
+    },
+    "clc_magmator_niotico_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_niotico_lado"
+    },
+    "clc_magmator_niotico_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_niotico_topo"
+    },
+    "clc_magmator_niotico_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_niotico_baixo"
+    },
+    "clc_magmator_espiritual_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_espiritual_frente"
+    },
+    "clc_magmator_espiritual_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_espiritual_lado"
+    },
+    "clc_magmator_espiritual_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_espiritual_topo"
+    },
+    "clc_magmator_espiritual_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_espiritual_baixo"
+    },
+    "clc_magmator_nitro_frente": {
+      "textures": "textures/blocks/cl/arte/magmator_nitro_frente"
+    },
+    "clc_magmator_nitro_lado": {
+      "textures": "textures/blocks/cl/arte/magmator_nitro_lado"
+    },
+    "clc_magmator_nitro_topo": {
+      "textures": "textures/blocks/cl/arte/magmator_nitro_topo"
+    },
+    "clc_magmator_nitro_baixo": {
+      "textures": "textures/blocks/cl/arte/magmator_nitro_baixo"
+    },
+    "clc_termogerador_inicial_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_inicial_frente"
+    },
+    "clc_termogerador_inicial_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_inicial_lado"
+    },
+    "clc_termogerador_inicial_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_inicial_topo"
+    },
+    "clc_termogerador_inicial_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_inicial_baixo"
+    },
+    "clc_termogerador_basico_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_basico_frente"
+    },
+    "clc_termogerador_basico_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_basico_lado"
+    },
+    "clc_termogerador_basico_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_basico_topo"
+    },
+    "clc_termogerador_basico_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_basico_baixo"
+    },
+    "clc_termogerador_endurecido_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_endurecido_frente"
+    },
+    "clc_termogerador_endurecido_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_endurecido_lado"
+    },
+    "clc_termogerador_endurecido_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_endurecido_topo"
+    },
+    "clc_termogerador_endurecido_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_endurecido_baixo"
+    },
+    "clc_termogerador_ardente_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_ardente_frente"
+    },
+    "clc_termogerador_ardente_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_ardente_lado"
+    },
+    "clc_termogerador_ardente_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_ardente_topo"
+    },
+    "clc_termogerador_ardente_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_ardente_baixo"
+    },
+    "clc_termogerador_niotico_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_niotico_frente"
+    },
+    "clc_termogerador_niotico_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_niotico_lado"
+    },
+    "clc_termogerador_niotico_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_niotico_topo"
+    },
+    "clc_termogerador_niotico_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_niotico_baixo"
+    },
+    "clc_termogerador_espiritual_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_espiritual_frente"
+    },
+    "clc_termogerador_espiritual_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_espiritual_lado"
+    },
+    "clc_termogerador_espiritual_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_espiritual_topo"
+    },
+    "clc_termogerador_espiritual_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_espiritual_baixo"
+    },
+    "clc_termogerador_nitro_frente": {
+      "textures": "textures/blocks/cl/arte/termogerador_nitro_frente"
+    },
+    "clc_termogerador_nitro_lado": {
+      "textures": "textures/blocks/cl/arte/termogerador_nitro_lado"
+    },
+    "clc_termogerador_nitro_topo": {
+      "textures": "textures/blocks/cl/arte/termogerador_nitro_topo"
+    },
+    "clc_termogerador_nitro_baixo": {
+      "textures": "textures/blocks/cl/arte/termogerador_nitro_baixo"
+    },
+    "clc_painel_solar_inicial_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_inicial_frente"
+    },
+    "clc_painel_solar_inicial_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_inicial_lado"
+    },
+    "clc_painel_solar_inicial_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_inicial_topo"
+    },
+    "clc_painel_solar_inicial_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_inicial_baixo"
+    },
+    "clc_painel_solar_basico_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_basico_frente"
+    },
+    "clc_painel_solar_basico_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_basico_lado"
+    },
+    "clc_painel_solar_basico_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_basico_topo"
+    },
+    "clc_painel_solar_basico_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_basico_baixo"
+    },
+    "clc_painel_solar_endurecido_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_endurecido_frente"
+    },
+    "clc_painel_solar_endurecido_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_endurecido_lado"
+    },
+    "clc_painel_solar_endurecido_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_endurecido_topo"
+    },
+    "clc_painel_solar_endurecido_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_endurecido_baixo"
+    },
+    "clc_painel_solar_ardente_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_ardente_frente"
+    },
+    "clc_painel_solar_ardente_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_ardente_lado"
+    },
+    "clc_painel_solar_ardente_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_ardente_topo"
+    },
+    "clc_painel_solar_ardente_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_ardente_baixo"
+    },
+    "clc_painel_solar_niotico_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_niotico_frente"
+    },
+    "clc_painel_solar_niotico_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_niotico_lado"
+    },
+    "clc_painel_solar_niotico_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_niotico_topo"
+    },
+    "clc_painel_solar_niotico_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_niotico_baixo"
+    },
+    "clc_painel_solar_espiritual_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_espiritual_frente"
+    },
+    "clc_painel_solar_espiritual_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_espiritual_lado"
+    },
+    "clc_painel_solar_espiritual_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_espiritual_topo"
+    },
+    "clc_painel_solar_espiritual_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_espiritual_baixo"
+    },
+    "clc_painel_solar_nitro_frente": {
+      "textures": "textures/blocks/cl/arte/painel_solar_nitro_frente"
+    },
+    "clc_painel_solar_nitro_lado": {
+      "textures": "textures/blocks/cl/arte/painel_solar_nitro_lado"
+    },
+    "clc_painel_solar_nitro_topo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_nitro_topo"
+    },
+    "clc_painel_solar_nitro_baixo": {
+      "textures": "textures/blocks/cl/arte/painel_solar_nitro_baixo"
+    },
+    "clc_celula_powah_inicial": {
+      "textures": "textures/blocks/cl/arte/celula_powah_inicial"
+    },
+    "clc_celula_powah_basico": {
+      "textures": "textures/blocks/cl/arte/celula_powah_basico"
+    },
+    "clc_celula_powah_endurecido": {
+      "textures": "textures/blocks/cl/arte/celula_powah_endurecido"
+    },
+    "clc_celula_powah_ardente": {
+      "textures": "textures/blocks/cl/arte/celula_powah_ardente"
+    },
+    "clc_celula_powah_niotico": {
+      "textures": "textures/blocks/cl/arte/celula_powah_niotico"
+    },
+    "clc_celula_powah_espiritual": {
+      "textures": "textures/blocks/cl/arte/celula_powah_espiritual"
+    },
+    "clc_celula_powah_nitro": {
+      "textures": "textures/blocks/cl/arte/celula_powah_nitro"
+    },
+    "clc_cabo_powah_inicial": {
+      "textures": "textures/blocks/cl/c/cabo_powah_inicial"
+    },
+    "clc_cabo_powah_basico": {
+      "textures": "textures/blocks/cl/c/cabo_powah_basico"
+    },
+    "clc_cabo_powah_endurecido": {
+      "textures": "textures/blocks/cl/c/cabo_powah_endurecido"
+    },
+    "clc_cabo_powah_ardente": {
+      "textures": "textures/blocks/cl/c/cabo_powah_ardente"
+    },
+    "clc_cabo_powah_niotico": {
+      "textures": "textures/blocks/cl/c/cabo_powah_niotico"
+    },
+    "clc_cabo_powah_espiritual": {
+      "textures": "textures/blocks/cl/c/cabo_powah_espiritual"
+    },
+    "clc_cabo_powah_nitro": {
+      "textures": "textures/blocks/cl/c/cabo_powah_nitro"
+    },
+    "clc_haste_energizadora_inicial": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_inicial"
+    },
+    "clc_haste_energizadora_basico": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_basico"
+    },
+    "clc_haste_energizadora_endurecido": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_endurecido"
+    },
+    "clc_haste_energizadora_ardente": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_ardente"
+    },
+    "clc_haste_energizadora_niotico": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_niotico"
+    },
+    "clc_haste_energizadora_espiritual": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_espiritual"
+    },
+    "clc_haste_energizadora_nitro": {
+      "textures": "textures/blocks/cl/arte/haste_energizadora_nitro"
+    },
+    "clc_orbe_energizador": {
+      "textures": "textures/blocks/cl/arte/orbe_energizador"
+    },
+    "clc_bloco_aco_energizado": {
+      "textures": "textures/blocks/cl/arte/bloco_aco_energizado"
+    },
+    "clc_bloco_cristal_ardente": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_ardente"
+    },
+    "clc_bloco_cristal_niotico": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_niotico"
+    },
+    "clc_bloco_cristal_espiritual": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_espiritual"
+    },
+    "clc_bloco_cristal_nitro": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_nitro"
     }
   }
 }

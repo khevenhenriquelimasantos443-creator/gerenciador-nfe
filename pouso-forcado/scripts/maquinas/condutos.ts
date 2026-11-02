@@ -1,6 +1,6 @@
 import { Block, BlockCustomComponent, Container, ItemStack, world } from "@minecraft/server";
 import { ARMAZENAMENTO, IDS } from "../config.js";
-import { MAQUINAS_CONTEUDO } from "../conteudo/gerado.js";
+import { DADOS_F39, MAQUINAS_CONTEUDO } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { inv } from "../util/maquina.js";
@@ -19,8 +19,11 @@ const ENERGIA = "cl:conduto_energia";
 const ITEM = "cl:conduto_item";
 const POR_SEGUNDO = 4;
 const MAX_REDE = 64;
+// Os cabos de energia: o Conduto do Ender IO e os Cabos do Powah! (1.18.0), que ligam do mesmo jeito.
+const CABOS_ENERGIA = new Set<string>([ENERGIA, ...DADOS_F39.niveis.map((n) => `cl:cabo_powah_${n}`)]);
+const POWAH = DADOS_F39.niveis.flatMap((n) => ["furnator", "magmator", "termogerador", "painel_solar", "celula_powah", "haste_energizadora"].map((t) => `cl:${t}_${n}`));
 const LIGA_ENERGIA = new Set<string>([
-  ENERGIA, IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora, IDS.terminal,
+  ...CABOS_ENERGIA, ...POWAH, IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora, IDS.terminal,
   IDS.estufa, IDS.condensadorAvancado, ...ARMAZENAMENTO.conteineres, ...Object.keys(CELULAS), ...MAQUINAS_CONTEUDO, "cl:dinamo_redstone", "cl:tesseract",
 ]);
 const LADOS: ReadonlyArray<[string, (b: Block) => Block | undefined]> = [
@@ -38,10 +41,10 @@ const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
 
 function liga(b: Block, v: Block | undefined): boolean {
   if (!v) return false;
-  return b.typeId === ENERGIA ? LIGA_ENERGIA.has(v.typeId) : v.typeId === ITEM || !!inv(v);
+  return CABOS_ENERGIA.has(b.typeId) ? LIGA_ENERGIA.has(v.typeId) : v.typeId === ITEM || !!inv(v);
 }
 function atualizar(b: Block | undefined): void {
-  if (!b || (b.typeId !== ENERGIA && b.typeId !== ITEM)) return;
+  if (!b || (!CABOS_ENERGIA.has(b.typeId) && b.typeId !== ITEM)) return;
   let p = b.permutation;
   for (const [estado, passo] of LADOS) p = p.withState(estado as never, liga(b, ao(b, passo)) as never);
   b.setPermutation(p);

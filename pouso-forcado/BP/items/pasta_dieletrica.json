@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:pasta_dieletrica",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_pasta_dieletrica",
+      "minecraft:display_name": {
+        "value": "item.cl:pasta_dieletrica.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

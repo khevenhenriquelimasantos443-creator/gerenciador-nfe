@@ -16,6 +16,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Electrical Steel Ingot",
   "icone": "textures/items/cl/arte/aco_eletrico"
  },
+ "cl:aco_energizado": {
+  "pt": "Aço Energizado",
+  "en": "Energized Steel",
+  "icone": "textures/items/cl/arte/aco_energizado"
+ },
  "cl:aco_negro": {
   "pt": "Lingote de Aço Negro",
   "en": "Dark Steel Ingot",
@@ -64,7 +69,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:alto_forno": {
   "pt": "Alto-Forno",
   "en": "Blast Furnace",
-  "icone": "textures/blocks/cl/c/alto_forno"
+  "icone": "textures/items/cl/blocos/alto_forno"
  },
  "cl:aluminio_po": {
   "pt": "Pó de Minério de Alumínio",
@@ -406,6 +411,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Steel",
   "icone": "textures/items/cl/blocos/bloco_aco"
  },
+ "cl:bloco_aco_energizado": {
+  "pt": "Bloco de Aço Energizado",
+  "en": "Energized Steel Block",
+  "icone": "textures/items/cl/blocos/bloco_aco_energizado"
+ },
  "cl:bloco_angelical": {
   "pt": "Bloco Angelical",
   "en": "Angel Block",
@@ -434,7 +444,27 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bloco_coque": {
   "pt": "Bloco de Coque",
   "en": "Block of Coal Coke",
-  "icone": "textures/blocks/cl/c/bloco_coque"
+  "icone": "textures/items/cl/blocos/bloco_coque"
+ },
+ "cl:bloco_cristal_ardente": {
+  "pt": "Bloco de Cristal Ardente",
+  "en": "Blazing Crystal Block",
+  "icone": "textures/items/cl/blocos/bloco_cristal_ardente"
+ },
+ "cl:bloco_cristal_espiritual": {
+  "pt": "Bloco de Cristal Espiritual",
+  "en": "Spirited Crystal Block",
+  "icone": "textures/items/cl/blocos/bloco_cristal_espiritual"
+ },
+ "cl:bloco_cristal_niotico": {
+  "pt": "Bloco de Cristal Niótico",
+  "en": "Niotic Crystal Block",
+  "icone": "textures/items/cl/blocos/bloco_cristal_niotico"
+ },
+ "cl:bloco_cristal_nitro": {
+  "pt": "Bloco de Cristal Nitro",
+  "en": "Nitro Crystal Block",
+  "icone": "textures/items/cl/blocos/bloco_cristal_nitro"
  },
  "cl:bloco_estanho": {
   "pt": "Bloco de Estanho",
@@ -464,12 +494,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bloco_placa_ferro": {
   "pt": "Placa de Ferro",
   "en": "Iron Plate",
-  "icone": "textures/blocks/cl/arte/bloco_placa_ferro"
+  "icone": "textures/items/cl/blocos/bloco_placa_ferro"
  },
  "cl:bloco_placa_ferro_enferrujada": {
   "pt": "Placa de Ferro Enferrujada",
   "en": "Rusty Iron Plate",
-  "icone": "textures/blocks/cl/arte/bloco_placa_ferro_enferrujada"
+  "icone": "textures/items/cl/blocos/bloco_placa_ferro_enferrujada"
  },
  "cl:bloco_yellorium": {
   "pt": "Bloco de Yellorium",
@@ -530,6 +560,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cabo de Cobre",
   "en": "Copper Cable",
   "icone": "textures/items/cl/arte/blocos/cabo"
+ },
+ "cl:cabo_powah_ardente": {
+  "pt": "Cabo de Energia Ardente",
+  "en": "Blazing Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_ardente"
+ },
+ "cl:cabo_powah_basico": {
+  "pt": "Cabo de Energia Básico",
+  "en": "Basic Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_basico"
+ },
+ "cl:cabo_powah_endurecido": {
+  "pt": "Cabo de Energia Endurecido",
+  "en": "Hardened Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_endurecido"
+ },
+ "cl:cabo_powah_espiritual": {
+  "pt": "Cabo de Energia Espiritual",
+  "en": "Spirited Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_espiritual"
+ },
+ "cl:cabo_powah_inicial": {
+  "pt": "Cabo de Energia Inicial",
+  "en": "Starter Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_inicial"
+ },
+ "cl:cabo_powah_niotico": {
+  "pt": "Cabo de Energia Niótico",
+  "en": "Niotic Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_niotico"
+ },
+ "cl:cabo_powah_nitro": {
+  "pt": "Cabo de Energia Nitro",
+  "en": "Nitro Energy Cable",
+  "icone": "textures/items/cl/blocos/cabo_powah_nitro"
  },
  "cl:cacarola": {
   "pt": "Caçarola",
@@ -711,6 +776,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Octadic Capacitor",
   "icone": "textures/items/cl/arte/capacitor_octadico"
  },
+ "cl:capacitor_pw_ardente": {
+  "pt": "Capacitor Ardente",
+  "en": "Blazing Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_ardente"
+ },
+ "cl:capacitor_pw_basico": {
+  "pt": "Capacitor Básico (Powah)",
+  "en": "Basic Capacitor (Powah)",
+  "icone": "textures/items/cl/arte/capacitor_pw_basico"
+ },
+ "cl:capacitor_pw_endurecido": {
+  "pt": "Capacitor Endurecido",
+  "en": "Hardened Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_endurecido"
+ },
+ "cl:capacitor_pw_espiritual": {
+  "pt": "Capacitor Espiritual",
+  "en": "Spirited Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_espiritual"
+ },
+ "cl:capacitor_pw_grande": {
+  "pt": "Capacitor Grande",
+  "en": "Large Basic Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_grande"
+ },
+ "cl:capacitor_pw_minusculo": {
+  "pt": "Capacitor Minúsculo",
+  "en": "Tiny Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_minusculo"
+ },
+ "cl:capacitor_pw_niotico": {
+  "pt": "Capacitor Niótico",
+  "en": "Niotic Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_niotico"
+ },
+ "cl:capacitor_pw_nitro": {
+  "pt": "Capacitor Nitro",
+  "en": "Nitro Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pw_nitro"
+ },
  "cl:carcaca_reator": {
   "pt": "Carcaça do Reator",
   "en": "Reactor Casing",
@@ -855,6 +960,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Célula ME 64k",
   "en": "64k ME Storage Cell",
   "icone": "textures/items/cl/arte/celula_me_64k"
+ },
+ "cl:celula_powah_ardente": {
+  "pt": "Célula de Energia Ardente (Powah)",
+  "en": "Blazing Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_ardente"
+ },
+ "cl:celula_powah_basico": {
+  "pt": "Célula de Energia Básico (Powah)",
+  "en": "Basic Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_basico"
+ },
+ "cl:celula_powah_endurecido": {
+  "pt": "Célula de Energia Endurecido (Powah)",
+  "en": "Hardened Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_endurecido"
+ },
+ "cl:celula_powah_espiritual": {
+  "pt": "Célula de Energia Espiritual (Powah)",
+  "en": "Spirited Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_espiritual"
+ },
+ "cl:celula_powah_inicial": {
+  "pt": "Célula de Energia Inicial (Powah)",
+  "en": "Starter Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_inicial"
+ },
+ "cl:celula_powah_niotico": {
+  "pt": "Célula de Energia Niótico (Powah)",
+  "en": "Niotic Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_niotico"
+ },
+ "cl:celula_powah_nitro": {
+  "pt": "Célula de Energia Nitro (Powah)",
+  "en": "Nitro Energy Cell (Powah)",
+  "icone": "textures/items/cl/blocos/celula_powah_nitro"
  },
  "cl:chapa_cobre": {
   "pt": "Chapa de Cobre",
@@ -1136,15 +1276,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Roasted Mutton Chops",
   "icone": "textures/items/cl/arte/costeletas_assadas"
  },
+ "cl:cristal_ardente": {
+  "pt": "Cristal Ardente",
+  "en": "Blazing Crystal",
+  "icone": "textures/items/cl/arte/cristal_ardente"
+ },
  "cl:cristal_certus": {
   "pt": "Cristal de Certus",
   "en": "Certus Quartz Crystal",
   "icone": "textures/items/cl/arte/cristal_certus"
  },
+ "cl:cristal_espiritual": {
+  "pt": "Cristal Espiritual",
+  "en": "Spirited Crystal",
+  "icone": "textures/items/cl/arte/cristal_espiritual"
+ },
  "cl:cristal_fluix": {
   "pt": "Cristal Fluix",
   "en": "Fluix Crystal",
   "icone": "textures/items/cl/arte/cristal_fluix"
+ },
+ "cl:cristal_niotico": {
+  "pt": "Cristal Niótico",
+  "en": "Niotic Crystal",
+  "icone": "textures/items/cl/arte/cristal_niotico"
+ },
+ "cl:cristal_nitro": {
+  "pt": "Cristal Nitro",
+  "en": "Nitro Crystal",
+  "icone": "textures/items/cl/arte/cristal_nitro"
  },
  "cl:cristal_pulsante": {
   "pt": "Cristal Pulsante",
@@ -1179,7 +1339,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:dinamo_cinetico": {
   "pt": "Dínamo Cinético",
   "en": "Kinetic Dynamo",
-  "icone": "textures/blocks/cl/c/dinamo_cinetico_topo"
+  "icone": "textures/items/cl/blocos/dinamo_cinetico"
  },
  "cl:dinamo_redstone": {
   "pt": "Dínamo de Redstone",
@@ -1684,7 +1844,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:forno_coque": {
   "pt": "Forno de Coque",
   "en": "Coke Oven",
-  "icone": "textures/blocks/cl/c/forno_coque"
+  "icone": "textures/items/cl/blocos/forno_coque"
  },
  "cl:fragmento_meteorito": {
   "pt": "Fragmento de Meteorito",
@@ -1720,6 +1880,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Furadeira Mecânica",
   "en": "Mechanical Drill",
   "icone": "textures/items/cl/blocos/furadeira"
+ },
+ "cl:furnator_ardente": {
+  "pt": "Furnator Ardente",
+  "en": "Blazing Furnator",
+  "icone": "textures/items/cl/blocos/furnator_ardente"
+ },
+ "cl:furnator_basico": {
+  "pt": "Furnator Básico",
+  "en": "Basic Furnator",
+  "icone": "textures/items/cl/blocos/furnator_basico"
+ },
+ "cl:furnator_endurecido": {
+  "pt": "Furnator Endurecido",
+  "en": "Hardened Furnator",
+  "icone": "textures/items/cl/blocos/furnator_endurecido"
+ },
+ "cl:furnator_espiritual": {
+  "pt": "Furnator Espiritual",
+  "en": "Spirited Furnator",
+  "icone": "textures/items/cl/blocos/furnator_espiritual"
+ },
+ "cl:furnator_inicial": {
+  "pt": "Furnator Inicial",
+  "en": "Starter Furnator",
+  "icone": "textures/items/cl/blocos/furnator_inicial"
+ },
+ "cl:furnator_niotico": {
+  "pt": "Furnator Niótico",
+  "en": "Niotic Furnator",
+  "icone": "textures/items/cl/blocos/furnator_niotico"
+ },
+ "cl:furnator_nitro": {
+  "pt": "Furnator Nitro",
+  "en": "Nitro Furnator",
+  "icone": "textures/items/cl/blocos/furnator_nitro"
  },
  "cl:gerador": {
   "pt": "Gerador a Carvão",
@@ -1796,6 +1991,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Beef Patty",
   "icone": "textures/items/cl/arte/hamburguer_carne"
  },
+ "cl:haste_dieletrica": {
+  "pt": "Haste Dielétrica",
+  "en": "Dielectric Rod",
+  "icone": "textures/items/cl/arte/haste_dieletrica"
+ },
+ "cl:haste_energizadora_ardente": {
+  "pt": "Haste Energizadora Ardente",
+  "en": "Blazing Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_ardente"
+ },
+ "cl:haste_energizadora_basico": {
+  "pt": "Haste Energizadora Básico",
+  "en": "Basic Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_basico"
+ },
+ "cl:haste_energizadora_endurecido": {
+  "pt": "Haste Energizadora Endurecido",
+  "en": "Hardened Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_endurecido"
+ },
+ "cl:haste_energizadora_espiritual": {
+  "pt": "Haste Energizadora Espiritual",
+  "en": "Spirited Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_espiritual"
+ },
+ "cl:haste_energizadora_inicial": {
+  "pt": "Haste Energizadora Inicial",
+  "en": "Starter Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_inicial"
+ },
+ "cl:haste_energizadora_niotico": {
+  "pt": "Haste Energizadora Niótico",
+  "en": "Niotic Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_niotico"
+ },
+ "cl:haste_energizadora_nitro": {
+  "pt": "Haste Energizadora Nitro",
+  "en": "Nitro Energizing Rod",
+  "icone": "textures/items/cl/blocos/haste_energizadora_nitro"
+ },
  "cl:helice": {
   "pt": "Hélice",
   "en": "Propeller",
@@ -1825,6 +2060,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Interface da Câmara",
   "en": "Pressure Chamber Interface",
   "icone": "textures/items/cl/arte/blocos/interface_camara"
+ },
+ "cl:involucro_dieletrico": {
+  "pt": "Invólucro Dielétrico",
+  "en": "Dielectric Casing",
+  "icone": "textures/items/cl/arte/involucro_dieletrico"
  },
  "cl:jaspe": {
   "pt": "Jaspe",
@@ -2111,6 +2351,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Hatchet",
   "icone": "textures/items/cl/arte/machadinha_silex"
  },
+ "cl:magmator_ardente": {
+  "pt": "Magmator Ardente",
+  "en": "Blazing Magmator",
+  "icone": "textures/items/cl/blocos/magmator_ardente"
+ },
+ "cl:magmator_basico": {
+  "pt": "Magmator Básico",
+  "en": "Basic Magmator",
+  "icone": "textures/items/cl/blocos/magmator_basico"
+ },
+ "cl:magmator_endurecido": {
+  "pt": "Magmator Endurecido",
+  "en": "Hardened Magmator",
+  "icone": "textures/items/cl/blocos/magmator_endurecido"
+ },
+ "cl:magmator_espiritual": {
+  "pt": "Magmator Espiritual",
+  "en": "Spirited Magmator",
+  "icone": "textures/items/cl/blocos/magmator_espiritual"
+ },
+ "cl:magmator_inicial": {
+  "pt": "Magmator Inicial",
+  "en": "Starter Magmator",
+  "icone": "textures/items/cl/blocos/magmator_inicial"
+ },
+ "cl:magmator_niotico": {
+  "pt": "Magmator Niótico",
+  "en": "Niotic Magmator",
+  "icone": "textures/items/cl/blocos/magmator_niotico"
+ },
+ "cl:magmator_nitro": {
+  "pt": "Magmator Nitro",
+  "en": "Nitro Magmator",
+  "icone": "textures/items/cl/blocos/magmator_nitro"
+ },
  "cl:maionese": {
   "pt": "Maionese",
   "en": "Mayonnaise",
@@ -2134,17 +2409,17 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:marco_destrocos": {
   "pt": "Marco de Destroços",
   "en": "Wreck Marker",
-  "icone": "textures/blocks/cl/c/marco_destrocos"
+  "icone": "textures/items/cl/blocos/marco_destrocos"
  },
  "cl:marco_masmorra": {
   "pt": "Marco de Masmorra",
   "en": "Dungeon Marker",
-  "icone": "textures/blocks/cl/c/marco_masmorra"
+  "icone": "textures/items/cl/blocos/marco_masmorra"
  },
  "cl:marco_masmorra_funda": {
   "pt": "Marco de Masmorra Funda",
   "en": "Deep Dungeon Marker",
-  "icone": "textures/blocks/cl/c/marco_masmorra_funda"
+  "icone": "textures/items/cl/blocos/marco_masmorra_funda"
  },
  "cl:marmore": {
   "pt": "Mármore",
@@ -2684,7 +2959,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:moinho_vento": {
   "pt": "Moinho de Vento",
   "en": "Windmill",
-  "icone": "textures/blocks/cl/c/moinho_vento"
+  "icone": "textures/items/cl/blocos/moinho_vento"
  },
  "cl:molde_cabeca_machado": {
   "pt": "Molde: Cabeça de Machado",
@@ -2800,6 +3075,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Omelete",
   "en": "Omelet",
   "icone": "textures/items/cl/arte/omelete"
+ },
+ "cl:orbe_energizador": {
+  "pt": "Orbe Energizador",
+  "en": "Energizing Orb",
+  "icone": "textures/items/cl/blocos/orbe_energizador"
  },
  "cl:organizador": {
   "pt": "Organizador",
@@ -3031,6 +3311,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Red Glow Panel",
   "icone": "textures/items/cl/blocos/painel_brilhante_vermelho"
  },
+ "cl:painel_fotoeletrico": {
+  "pt": "Painel Fotoelétrico",
+  "en": "Photoelectric Pane",
+  "icone": "textures/items/cl/arte/painel_fotoeletrico"
+ },
  "cl:painel_fotovoltaico": {
   "pt": "Painel Fotovoltaico",
   "en": "Photovoltaic Cell",
@@ -3056,10 +3341,45 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Solar Panel",
   "icone": "textures/items/cl/arte/blocos/painel_solar"
  },
+ "cl:painel_solar_ardente": {
+  "pt": "Painel Solar Ardente",
+  "en": "Blazing Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_ardente"
+ },
+ "cl:painel_solar_basico": {
+  "pt": "Painel Solar Básico",
+  "en": "Basic Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_basico"
+ },
+ "cl:painel_solar_endurecido": {
+  "pt": "Painel Solar Endurecido",
+  "en": "Hardened Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_endurecido"
+ },
+ "cl:painel_solar_espiritual": {
+  "pt": "Painel Solar Espiritual",
+  "en": "Spirited Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_espiritual"
+ },
+ "cl:painel_solar_inicial": {
+  "pt": "Painel Solar Inicial",
+  "en": "Starter Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_inicial"
+ },
  "cl:painel_solar_mk": {
   "pt": "Painel Solar (Mekanism)",
   "en": "Solar Panel",
   "icone": "textures/items/cl/arte/painel_solar_mk"
+ },
+ "cl:painel_solar_niotico": {
+  "pt": "Painel Solar Niótico",
+  "en": "Niotic Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_niotico"
+ },
+ "cl:painel_solar_nitro": {
+  "pt": "Painel Solar Nitro",
+  "en": "Nitro Solar Panel",
+  "icone": "textures/items/cl/blocos/painel_solar_nitro"
  },
  "cl:palha": {
   "pt": "Palha",
@@ -3090,6 +3410,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Parede da Câmara de Pressão",
   "en": "Pressure Chamber Wall",
   "icone": "textures/items/cl/blocos/parede_camara"
+ },
+ "cl:pasta_dieletrica": {
+  "pt": "Pasta Dielétrica",
+  "en": "Dielectric Paste",
+  "icone": "textures/items/cl/arte/pasta_dieletrica"
  },
  "cl:peca_cabeca_machado_aco": {
   "pt": "Cabeça de Machado de Aço",
@@ -3761,6 +4086,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Heavy Duty Plate",
   "icone": "textures/items/cl/c/placa_reforcada"
  },
+ "cl:placa_termoeletrica": {
+  "pt": "Placa Termoelétrica",
+  "en": "Thermoelectric Plate",
+  "icone": "textures/items/cl/arte/placa_termoeletrica"
+ },
  "cl:planta_alho": {
   "pt": "Plantação de Alho",
   "en": "Garlic Crop",
@@ -4344,7 +4674,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:roda_hidraulica": {
   "pt": "Roda d'Água",
   "en": "Water Wheel",
-  "icone": "textures/blocks/cl/c/roda_hidraulica"
+  "icone": "textures/items/cl/blocos/roda_hidraulica"
  },
  "cl:rodas_trituradoras": {
   "pt": "Rodas Trituradoras",
@@ -4609,7 +4939,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tabuas_tratadas": {
   "pt": "Tábuas Tratadas",
   "en": "Treated Wood",
-  "icone": "textures/blocks/cl/c/tabuas_tratadas"
+  "icone": "textures/items/cl/blocos/tabuas_tratadas"
  },
  "cl:taco": {
   "pt": "Taco",
@@ -4656,6 +4986,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Wireless Terminal",
   "icone": "textures/items/cl/arte/terminal_sem_fio"
  },
+ "cl:termogerador_ardente": {
+  "pt": "Termogerador Ardente",
+  "en": "Blazing Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_ardente"
+ },
+ "cl:termogerador_basico": {
+  "pt": "Termogerador Básico",
+  "en": "Basic Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_basico"
+ },
+ "cl:termogerador_endurecido": {
+  "pt": "Termogerador Endurecido",
+  "en": "Hardened Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_endurecido"
+ },
+ "cl:termogerador_espiritual": {
+  "pt": "Termogerador Espiritual",
+  "en": "Spirited Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_espiritual"
+ },
+ "cl:termogerador_inicial": {
+  "pt": "Termogerador Inicial",
+  "en": "Starter Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_inicial"
+ },
+ "cl:termogerador_niotico": {
+  "pt": "Termogerador Niótico",
+  "en": "Niotic Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_niotico"
+ },
+ "cl:termogerador_nitro": {
+  "pt": "Termogerador Nitro",
+  "en": "Nitro Thermo Generator",
+  "icone": "textures/items/cl/blocos/termogerador_nitro"
+ },
  "cl:terra_lunar": {
   "pt": "Terra Lunar",
   "en": "Moon Dirt",
@@ -4674,12 +5039,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:tijolo_alto_forno": {
   "pt": "Tijolo de Alto-Forno",
   "en": "Blast Brick",
-  "icone": "textures/blocks/cl/c/tijolo_alto_forno"
+  "icone": "textures/items/cl/blocos/tijolo_alto_forno"
  },
  "cl:tijolo_coque": {
   "pt": "Tijolo de Coque",
   "en": "Coke Brick",
-  "icone": "textures/blocks/cl/c/tijolo_coque"
+  "icone": "textures/items/cl/blocos/tijolo_coque"
  },
  "cl:tijolo_lunar": {
   "pt": "Tijolo da Masmorra Lunar",
@@ -15900,6 +16265,1571 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "minecraft:copper_ingot",
    "E": "cl:estrutura_maquina",
    "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_blazing_crystal_block",
+  "resultado": "cl:bloco_cristal_ardente",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cristal_ardente",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_basic",
+  "resultado": "cl:cabo_powah_basico",
+  "qtd": 6,
+  "grade": [
+   "ddd",
+   "tct",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_basico",
+   "t": "cl:cabo_powah_inicial"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_basic_2",
+  "resultado": "cl:cabo_powah_basico",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "ici",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_basico",
+   "i": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_blazing",
+  "resultado": "cl:cabo_powah_ardente",
+  "qtd": 6,
+  "grade": [
+   "ddd",
+   "tct",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_ardente",
+   "t": "cl:cabo_powah_endurecido"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_blazing_2",
+  "resultado": "cl:cabo_powah_ardente",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "kck",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_ardente",
+   "k": "cl:cristal_ardente"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_hardened",
+  "resultado": "cl:cabo_powah_endurecido",
+  "qtd": 6,
+  "grade": [
+   "ddd",
+   "tct",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_endurecido",
+   "t": "cl:cabo_powah_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_hardened_2",
+  "resultado": "cl:cabo_powah_endurecido",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "kck",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_endurecido",
+   "k": "cl:aco_energizado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_niotic",
+  "resultado": "cl:cabo_powah_niotico",
+  "qtd": 6,
+  "grade": [
+   "ddd",
+   "tct",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_niotico",
+   "t": "cl:cabo_powah_ardente"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_niotic_2",
+  "resultado": "cl:cabo_powah_niotico",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "kck",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_niotico",
+   "k": "cl:cristal_niotico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_nitro",
+  "resultado": "cl:cabo_powah_nitro",
+  "qtd": 6,
+  "grade": [
+   "ddd",
+   "tct",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_nitro",
+   "t": "cl:cabo_powah_espiritual"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_nitro_2",
+  "resultado": "cl:cabo_powah_nitro",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "kck",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_nitro",
+   "k": "cl:cristal_nitro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_spirited",
+  "resultado": "cl:cabo_powah_espiritual",
+  "qtd": 6,
+  "grade": [
+   "ddd",
+   "tct",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_espiritual",
+   "t": "cl:cabo_powah_niotico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_spirited_2",
+  "resultado": "cl:cabo_powah_espiritual",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "kck",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "c": "cl:capacitor_pw_espiritual",
+   "k": "cl:cristal_espiritual"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_cable_starter",
+  "resultado": "cl:cabo_powah_inicial",
+  "qtd": 12,
+  "grade": [
+   "ddd",
+   "iti",
+   "ddd"
+  ],
+  "chaves": {
+   "d": "cl:haste_dieletrica",
+   "i": "minecraft:iron_nugget",
+   "t": "cl:capacitor_pw_minusculo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_capacitor_basic",
+  "resultado": "cl:capacitor_pw_basico",
+  "qtd": 4,
+  "grade": [
+   " ip",
+   "iri",
+   "pi "
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "i": "minecraft:iron_ingot",
+   "r": "minecraft:redstone_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_capacitor_basic_large",
+  "resultado": "cl:capacitor_pw_grande",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:capacitor_pw_basico",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_capacitor_basic_tiny",
+  "resultado": "cl:capacitor_pw_minusculo",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:capacitor_pw_basico",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_capacitor_blazing",
+  "resultado": "cl:capacitor_pw_ardente",
+  "qtd": 2,
+  "grade": [
+   "pbp",
+   "bcb",
+   "pbp"
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "c": "cl:capacitor_pw_grande",
+   "b": "cl:cristal_ardente"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_capacitor_hardened",
+  "resultado": "cl:capacitor_pw_endurecido",
+  "qtd": 2,
+  "grade": [
+   "pbp",
+   "bcb",
+   "pbp"
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "c": "cl:capacitor_pw_grande",
+   "b": "cl:aco_energizado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_capacitor_niotic",
+  "resultado": "cl:capacitor_pw_niotico",
+  "qtd": 1,
+  "grade": [
+   "pbp",
+   "bcb",
+   "pbp"
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "c": "cl:capacitor_pw_grande",
+   "b": "cl:cristal_niotico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_capacitor_nitro",
+  "resultado": "cl:capacitor_pw_nitro",
+  "qtd": 1,
+  "grade": [
+   "pbp",
+   "bcb",
+   "pbp"
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "c": "cl:capacitor_pw_grande",
+   "b": "cl:cristal_nitro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_capacitor_spirited",
+  "resultado": "cl:capacitor_pw_espiritual",
+  "qtd": 1,
+  "grade": [
+   "pbp",
+   "bcb",
+   "pbp"
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "c": "cl:capacitor_pw_grande",
+   "b": "cl:cristal_espiritual"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_crystal_blazing",
+  "resultado": "cl:cristal_ardente",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_cristal_ardente",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_crystal_niotic",
+  "resultado": "cl:cristal_niotico",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_cristal_niotico",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_crystal_nitro",
+  "resultado": "cl:cristal_nitro",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_cristal_nitro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_crystal_spirited",
+  "resultado": "cl:cristal_espiritual",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_cristal_espiritual",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_dielectric_casing",
+  "resultado": "cl:involucro_dieletrico",
+  "qtd": 1,
+  "grade": [
+   "ihi",
+   "v v",
+   "ihi"
+  ],
+  "chaves": {
+   "v": "cl:haste_dieletrica",
+   "h": "cl:haste_dieletrica",
+   "i": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_dielectric_paste",
+  "resultado": "cl:pasta_dieletrica",
+  "qtd": 24,
+  "ingredientes": [
+   {
+    "item": "#minecraft:coals",
+    "qtd": 3
+   },
+   {
+    "item": "minecraft:clay_ball",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:lava_bucket",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_dielectric_paste_2",
+  "resultado": "cl:pasta_dieletrica",
+  "qtd": 16,
+  "ingredientes": [
+   {
+    "item": "#minecraft:coals",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:clay_ball",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:blaze_powder",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_dielectric_rod",
+  "resultado": "cl:haste_dieletrica",
+  "qtd": 8,
+  "grade": [
+   "pip",
+   "pip",
+   "pip"
+  ],
+  "chaves": {
+   "p": "cl:pasta_dieletrica",
+   "i": "minecraft:iron_bars"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_dielectric_rod_2",
+  "resultado": "cl:haste_dieletrica",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:haste_dieletrica",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_energized_steel_block",
+  "resultado": "cl:bloco_aco_energizado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:aco_energizado",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_orb",
+  "resultado": "cl:orbe_energizador",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "gcg",
+   "rrr"
+  ],
+  "chaves": {
+   "r": "cl:haste_dieletrica",
+   "g": "minecraft:glass",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_basic",
+  "resultado": "cl:haste_energizadora_basico",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "bcb",
+   " h "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz_block",
+   "h": "cl:haste_energizadora_inicial",
+   "b": "cl:capacitor_pw_basico",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_blazing",
+  "resultado": "cl:haste_energizadora_ardente",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "bcb",
+   " h "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz_block",
+   "h": "cl:haste_energizadora_endurecido",
+   "b": "cl:capacitor_pw_ardente",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_hardened",
+  "resultado": "cl:haste_energizadora_endurecido",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "hch",
+   " e "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz_block",
+   "e": "cl:haste_energizadora_basico",
+   "h": "cl:capacitor_pw_endurecido",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_niotic",
+  "resultado": "cl:haste_energizadora_niotico",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "bcb",
+   " h "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz_block",
+   "h": "cl:haste_energizadora_ardente",
+   "b": "cl:capacitor_pw_niotico",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_nitro",
+  "resultado": "cl:haste_energizadora_nitro",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "bcb",
+   " h "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz_block",
+   "h": "cl:haste_energizadora_espiritual",
+   "b": "cl:capacitor_pw_nitro",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_spirited",
+  "resultado": "cl:haste_energizadora_espiritual",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "bcb",
+   " h "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz_block",
+   "h": "cl:haste_energizadora_niotico",
+   "b": "cl:capacitor_pw_espiritual",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energizing_rod_starter",
+  "resultado": "cl:haste_energizadora_inicial",
+  "qtd": 1,
+  "grade": [
+   " q ",
+   "bcb",
+   " h "
+  ],
+  "chaves": {
+   "q": "minecraft:quartz",
+   "h": "cl:haste_dieletrica",
+   "b": "cl:capacitor_pw_minusculo",
+   "c": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_basic",
+  "resultado": "cl:celula_powah_basico",
+  "qtd": 1,
+  "grade": [
+   "ici",
+   "cdc",
+   "ici"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_basico",
+   "i": "minecraft:iron_ingot",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_basic_2",
+  "resultado": "cl:celula_powah_basico",
+  "qtd": 1,
+  "grade": [
+   "iii",
+   "cdc",
+   "iii"
+  ],
+  "chaves": {
+   "c": "cl:celula_powah_inicial",
+   "i": "minecraft:iron_ingot",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_blazing",
+  "resultado": "cl:celula_powah_ardente",
+  "qtd": 1,
+  "grade": [
+   "bgb",
+   "cdc",
+   "bgb"
+  ],
+  "chaves": {
+   "c": "cl:celula_powah_endurecido",
+   "g": "cl:capacitor_pw_ardente",
+   "b": "cl:cristal_ardente",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_hardened",
+  "resultado": "cl:celula_powah_endurecido",
+  "qtd": 1,
+  "grade": [
+   "ghg",
+   "cdc",
+   "ghg"
+  ],
+  "chaves": {
+   "h": "cl:capacitor_pw_endurecido",
+   "c": "cl:celula_powah_basico",
+   "g": "cl:aco_energizado",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_niotic",
+  "resultado": "cl:celula_powah_niotico",
+  "qtd": 1,
+  "grade": [
+   "bnb",
+   "cdc",
+   "bnb"
+  ],
+  "chaves": {
+   "c": "cl:celula_powah_ardente",
+   "n": "cl:capacitor_pw_niotico",
+   "b": "cl:cristal_niotico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_nitro",
+  "resultado": "cl:celula_powah_nitro",
+  "qtd": 1,
+  "grade": [
+   "bnb",
+   "cdc",
+   "bnb"
+  ],
+  "chaves": {
+   "c": "cl:celula_powah_espiritual",
+   "n": "cl:capacitor_pw_nitro",
+   "b": "cl:cristal_nitro",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_spirited",
+  "resultado": "cl:celula_powah_espiritual",
+  "qtd": 1,
+  "grade": [
+   "bnb",
+   "cdc",
+   "bnb"
+  ],
+  "chaves": {
+   "c": "cl:celula_powah_niotico",
+   "n": "cl:capacitor_pw_espiritual",
+   "b": "cl:cristal_espiritual",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_energy_cell_starter",
+  "resultado": "cl:celula_powah_inicial",
+  "qtd": 1,
+  "grade": [
+   "ici",
+   "cdc",
+   "ici"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_minusculo",
+   "i": "minecraft:iron_ingot",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_basic",
+  "resultado": "cl:furnator_basico",
+  "qtd": 1,
+  "grade": [
+   "iii",
+   "cdc",
+   "ifi"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_basico",
+   "i": "minecraft:iron_ingot",
+   "f": "cl:furnator_inicial",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_blazing",
+  "resultado": "cl:furnator_ardente",
+  "qtd": 1,
+  "grade": [
+   "bbb",
+   "cdc",
+   "bfb"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_ardente",
+   "b": "cl:cristal_ardente",
+   "f": "cl:furnator_endurecido",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_hardened",
+  "resultado": "cl:furnator_endurecido",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_endurecido",
+   "g": "cl:aco_energizado",
+   "f": "cl:furnator_basico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_niotic",
+  "resultado": "cl:furnator_niotico",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_niotico",
+   "g": "cl:cristal_niotico",
+   "f": "cl:furnator_ardente",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_nitro",
+  "resultado": "cl:furnator_nitro",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_nitro",
+   "g": "cl:cristal_nitro",
+   "f": "cl:furnator_espiritual",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_spirited",
+  "resultado": "cl:furnator_espiritual",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_espiritual",
+   "g": "cl:cristal_espiritual",
+   "f": "cl:furnator_niotico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_furnator_starter",
+  "resultado": "cl:furnator_inicial",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_minusculo",
+   "g": "cl:pasta_dieletrica",
+   "f": "minecraft:furnace",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_basic",
+  "resultado": "cl:magmator_basico",
+  "qtd": 1,
+  "grade": [
+   "iii",
+   "cdc",
+   "ifi"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_basico",
+   "i": "minecraft:iron_ingot",
+   "f": "cl:magmator_inicial",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_blazing",
+  "resultado": "cl:magmator_ardente",
+  "qtd": 1,
+  "grade": [
+   "bbb",
+   "cdc",
+   "bfb"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_ardente",
+   "b": "cl:cristal_ardente",
+   "f": "cl:magmator_endurecido",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_hardened",
+  "resultado": "cl:magmator_endurecido",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_endurecido",
+   "g": "cl:aco_energizado",
+   "f": "cl:magmator_basico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_niotic",
+  "resultado": "cl:magmator_niotico",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_niotico",
+   "g": "cl:cristal_niotico",
+   "f": "cl:magmator_ardente",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_nitro",
+  "resultado": "cl:magmator_nitro",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_nitro",
+   "g": "cl:cristal_nitro",
+   "f": "cl:magmator_espiritual",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_spirited",
+  "resultado": "cl:magmator_espiritual",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_espiritual",
+   "g": "cl:cristal_espiritual",
+   "f": "cl:magmator_niotico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_magmator_starter",
+  "resultado": "cl:magmator_inicial",
+  "qtd": 1,
+  "grade": [
+   "ggg",
+   "cdc",
+   "gfg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_minusculo",
+   "g": "cl:pasta_dieletrica",
+   "f": "minecraft:bucket",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_niotic_crystal_block",
+  "resultado": "cl:bloco_cristal_niotico",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cristal_niotico",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_nitro_crystal_block",
+  "resultado": "cl:bloco_cristal_nitro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cristal_nitro",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_photoelectric_pane",
+  "resultado": "cl:painel_fotoeletrico",
+  "qtd": 1,
+  "grade": [
+   "dld",
+   "lpl",
+   "dld"
+  ],
+  "chaves": {
+   "p": "minecraft:glass_pane",
+   "l": "minecraft:lapis_lazuli",
+   "d": "cl:pasta_dieletrica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_basic",
+  "resultado": "cl:painel_solar_basico",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "iii"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_basico",
+   "i": "minecraft:iron_ingot",
+   "p": "cl:painel_solar_inicial",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_blazing",
+  "resultado": "cl:painel_solar_ardente",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "bbb"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_ardente",
+   "b": "cl:cristal_ardente",
+   "p": "cl:painel_solar_endurecido",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_hardened",
+  "resultado": "cl:painel_solar_endurecido",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "ggg"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_endurecido",
+   "g": "cl:aco_energizado",
+   "p": "cl:painel_solar_basico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_niotic",
+  "resultado": "cl:painel_solar_niotico",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "bbb"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_niotico",
+   "b": "cl:cristal_niotico",
+   "p": "cl:painel_solar_ardente",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_nitro",
+  "resultado": "cl:painel_solar_nitro",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "eee"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_nitro",
+   "e": "cl:cristal_nitro",
+   "p": "cl:painel_solar_espiritual",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_spirited",
+  "resultado": "cl:painel_solar_espiritual",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "eee"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_espiritual",
+   "e": "cl:cristal_espiritual",
+   "p": "cl:painel_solar_niotico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_solar_panel_starter",
+  "resultado": "cl:painel_solar_inicial",
+  "qtd": 1,
+  "grade": [
+   "ppp",
+   "cdc",
+   "eee"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_minusculo",
+   "e": "cl:pasta_dieletrica",
+   "p": "cl:painel_fotoeletrico",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_spirited_crystal_block",
+  "resultado": "cl:bloco_cristal_espiritual",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cristal_espiritual",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pw_steel_energized",
+  "resultado": "cl:aco_energizado",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_aco_energizado",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_basic",
+  "resultado": "cl:termogerador_basico",
+  "qtd": 1,
+  "grade": [
+   "eie",
+   "cdc",
+   "ptp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_basico",
+   "e": "cl:pasta_dieletrica",
+   "i": "minecraft:iron_ingot",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico",
+   "t": "cl:termogerador_inicial"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_blazing",
+  "resultado": "cl:termogerador_ardente",
+  "qtd": 1,
+  "grade": [
+   "igi",
+   "cdc",
+   "ptp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_ardente",
+   "i": "cl:pasta_dieletrica",
+   "g": "cl:cristal_ardente",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico",
+   "t": "cl:termogerador_endurecido"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_hardened",
+  "resultado": "cl:termogerador_endurecido",
+  "qtd": 1,
+  "grade": [
+   "igi",
+   "cdc",
+   "ptp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_endurecido",
+   "i": "cl:pasta_dieletrica",
+   "g": "cl:aco_energizado",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico",
+   "t": "cl:termogerador_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_niotic",
+  "resultado": "cl:termogerador_niotico",
+  "qtd": 1,
+  "grade": [
+   "igi",
+   "cdc",
+   "ptp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_niotico",
+   "i": "cl:pasta_dieletrica",
+   "g": "cl:cristal_niotico",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico",
+   "t": "cl:termogerador_ardente"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_nitro",
+  "resultado": "cl:termogerador_nitro",
+  "qtd": 1,
+  "grade": [
+   "igi",
+   "cdc",
+   "ptp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_nitro",
+   "i": "cl:pasta_dieletrica",
+   "g": "cl:cristal_nitro",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico",
+   "t": "cl:termogerador_espiritual"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_spirited",
+  "resultado": "cl:termogerador_espiritual",
+  "qtd": 1,
+  "grade": [
+   "igi",
+   "cdc",
+   "ptp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_espiritual",
+   "i": "cl:pasta_dieletrica",
+   "g": "cl:cristal_espiritual",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico",
+   "t": "cl:termogerador_niotico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermo_generator_starter",
+  "resultado": "cl:termogerador_inicial",
+  "qtd": 1,
+  "grade": [
+   "iii",
+   "cdc",
+   "ppp"
+  ],
+  "chaves": {
+   "c": "cl:capacitor_pw_minusculo",
+   "i": "cl:pasta_dieletrica",
+   "p": "cl:placa_termoeletrica",
+   "d": "cl:involucro_dieletrico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pw_thermoelectric_plate",
+  "resultado": "cl:placa_termoeletrica",
+  "qtd": 1,
+  "grade": [
+   "brb",
+   "rtr",
+   "brb"
+  ],
+  "chaves": {
+   "b": "minecraft:blaze_powder",
+   "r": "minecraft:redstone",
+   "t": "cl:capacitor_pw_minusculo"
   },
   "estacoes": [
    "crafting_table"

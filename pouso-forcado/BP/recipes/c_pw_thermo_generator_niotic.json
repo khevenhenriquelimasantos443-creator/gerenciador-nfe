@@ -1,0 +1,43 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_thermo_generator_niotic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "igi",
+      "cdc",
+      "ptp"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_niotico"
+      },
+      "i": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "g": {
+        "item": "cl:cristal_niotico"
+      },
+      "p": {
+        "item": "cl:placa_termoeletrica"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      },
+      "t": {
+        "item": "cl:termogerador_ardente"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:termogerador_niotico",
+      "count": 1
+    }
+  }
+}

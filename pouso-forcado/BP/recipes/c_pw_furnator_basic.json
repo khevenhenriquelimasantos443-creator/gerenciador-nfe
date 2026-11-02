@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_furnator_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "iii",
+      "cdc",
+      "ifi"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_basico"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      },
+      "f": {
+        "item": "cl:furnator_inicial"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:furnator_basico",
+      "count": 1
+    }
+  }
+}

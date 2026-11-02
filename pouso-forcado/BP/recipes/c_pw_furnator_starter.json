@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_furnator_starter"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ggg",
+      "cdc",
+      "gfg"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_minusculo"
+      },
+      "g": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "f": {
+        "item": "minecraft:furnace"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:furnator_inicial",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_cable_blazing_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ddd",
+      "kck",
+      "ddd"
+    ],
+    "key": {
+      "d": {
+        "item": "cl:haste_dieletrica"
+      },
+      "c": {
+        "item": "cl:capacitor_pw_ardente"
+      },
+      "k": {
+        "item": "cl:cristal_ardente"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cabo_powah_ardente",
+      "count": 12
+    }
+  }
+}

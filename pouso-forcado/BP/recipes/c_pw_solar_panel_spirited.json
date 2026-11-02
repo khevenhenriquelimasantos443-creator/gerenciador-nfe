@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_solar_panel_spirited"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ppp",
+      "cdc",
+      "eee"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_espiritual"
+      },
+      "e": {
+        "item": "cl:cristal_espiritual"
+      },
+      "p": {
+        "item": "cl:painel_solar_niotico"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_solar_espiritual",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_magmator_hardened"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ggg",
+      "cdc",
+      "gfg"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_endurecido"
+      },
+      "g": {
+        "item": "cl:aco_energizado"
+      },
+      "f": {
+        "item": "cl:magmator_basico"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:magmator_endurecido",
+      "count": 1
+    }
+  }
+}

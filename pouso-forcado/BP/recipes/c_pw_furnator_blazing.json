@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_furnator_blazing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "bbb",
+      "cdc",
+      "bfb"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_ardente"
+      },
+      "b": {
+        "item": "cl:cristal_ardente"
+      },
+      "f": {
+        "item": "cl:furnator_endurecido"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:furnator_ardente",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pw_thermo_generator_basic"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "eie",
+      "cdc",
+      "ptp"
+    ],
+    "key": {
+      "c": {
+        "item": "cl:capacitor_pw_basico"
+      },
+      "e": {
+        "item": "cl:pasta_dieletrica"
+      },
+      "i": {
+        "item": "minecraft:iron_ingot"
+      },
+      "p": {
+        "item": "cl:placa_termoeletrica"
+      },
+      "d": {
+        "item": "cl:involucro_dieletrico"
+      },
+      "t": {
+        "item": "cl:termogerador_inicial"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:termogerador_basico",
+      "count": 1
+    }
+  }
+}

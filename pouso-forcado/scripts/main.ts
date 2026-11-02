@@ -81,6 +81,7 @@ import { registrarMelhoriasMochila } from "./utilidades/melhorias_mochila.js";
 import { registrarTemploYung } from "./mundo/templo_yung.js";
 import { registrarFerramentasVanilla } from "./jogador/ferramentas_vanilla.js";
 import { registrarJogadores } from "./util/jogadores.js";
+import { furnator as furnatorPw, magmator as magmatorPw, orbe as orbePw, painelSolar as painelSolarPw, registrarPowah, termogerador as termogeradorPw } from "./maquinas/powah.js";
 import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
 
 // 1.16.2: se outra cópia do Pouso Forçado (outra versão) estiver ligada no mesmo mundo, os comandos já existem:
@@ -100,6 +101,12 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   }
   registrarDimensaoLua(dimensionRegistry); // 1.6.0: a Lua do Galacticraft
   blockComponentRegistry.registerCustomComponent("cl:elevador", componenteElevador); // 1.16.4: onStepOn
+  // 1.18.0: Powah!
+  blockComponentRegistry.registerCustomComponent("cl:pw_furnator", comPerfil("powah: furnator", furnatorPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_magmator", comPerfil("powah: magmator", magmatorPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_termogerador", comPerfil("powah: termogerador", termogeradorPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_solar", comPerfil("powah: solar", painelSolarPw));
+  blockComponentRegistry.registerCustomComponent("cl:pw_orbe", comPerfil("powah: orbe", orbePw));
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -210,6 +217,7 @@ registrarPerfil();
 registrarBoasVindas();
 registrarFerramentasVanilla();
 registrarJogadores();
+registrarPowah();
 registrarHordaNoturna();
 registrarRelevo();
 registrarMissoes();

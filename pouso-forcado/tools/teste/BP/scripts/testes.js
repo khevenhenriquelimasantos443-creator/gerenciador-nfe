@@ -92,6 +92,42 @@ teste("perfil", 7400, (t) => {
 
 // 1.17.0: testado que a geração natural (feature rules) não roda na dimensão da Lua (gerador vazio, bioma ocean).
 
+// 1.18.0: Powah! — Furnator queima carvão do baú, a energia vai pelo cabo para a célula, e a haste leva para o Orbe,
+// que faz Aço Energizado de ferro e ouro.
+teste("powah", 700, (t) => {
+  const j = robo(t, { x: 4.5, y: 1, z: 5.5 });
+  t.setBlockType("cl:furnator_nitro", { x: 1, y: 1, z: 1 });
+  t.setBlockType("minecraft:chest", { x: 1, y: 2, z: 1 });
+  t.getBlock({ x: 1, y: 2, z: 1 }).getComponent("inventory").container.addItem(new ItemStack("minecraft:coal", 16));
+  t.setBlockType("cl:cabo_powah_nitro", { x: 2, y: 1, z: 1 });
+  t.setBlockType("cl:celula_powah_basico", { x: 3, y: 1, z: 1 });
+  t.setBlockType("cl:cabo_powah_nitro", { x: 4, y: 1, z: 1 });
+  t.setBlockType("cl:haste_energizadora_basico", { x: 4, y: 1, z: 2 });
+  t.setBlockType("cl:orbe_energizador", { x: 4, y: 1, z: 4 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  ["minecraft:iron_ingot", "minecraft:gold_ingot"].forEach((id, k) => {
+    t.runAfterDelay(10 + k * 10, () => {
+      inv.setItem(0, new ItemStack(id, 1));
+      j.selectedSlotIndex = 0;
+      j.lookAtBlock({ x: 4, y: 1, z: 4 });
+      log(`powah: tocou o orbe com ${id}: ${j.interactWithBlock({ x: 4, y: 1, z: 4 }, Direction.North)}`);
+    });
+  });
+  t.runAfterDelay(600, () => {
+    const carvao = noBau(bau(t, { x: 1, y: 2, z: 1 }), "minecraft:coal");
+    inv.setItem(0, undefined);
+    j.lookAtBlock({ x: 4, y: 1, z: 4 });
+    log(`powah: tocou o orbe de mão vazia: ${j.interactWithBlock({ x: 4, y: 1, z: 4 }, Direction.North)}`);
+    t.runAfterDelay(5, () => {
+      const aco = quantos(j, "cl:aco_energizado");
+      log(`powah: carvão no baú=${carvao}/16 aço energizado=${aco}`);
+      t.assert(carvao < 16, "o Furnator não queimou");
+      t.assert(aco === 2, "o Orbe não fez o aço");
+      t.succeed();
+    });
+  });
+});
+
 teste("varal", 200, (t) => {
   const j = robo(t);
   t.setBlockType("cl:varal", { x: 3, y: 1, z: 1 });
