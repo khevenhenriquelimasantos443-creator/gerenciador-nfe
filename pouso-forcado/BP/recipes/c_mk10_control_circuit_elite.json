@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_control_circuit_elite"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "C": {
+        "item": "cl:circuito_controle_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:circuito_controle_elite"
+    }
+  }
+}

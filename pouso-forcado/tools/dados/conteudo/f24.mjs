@@ -1,4 +1,12 @@
 // Fase 24 (1.3.0): Mekanism leve. Sem rede de gás nem reatores: o gás anda em cilindros (itens).
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// 1.21.0: Mekanism 10.7 (o mais novo): nomes, receitas e números de mekanism.json (tools/importar-mekanism.py).
+const MK10 = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "mekanism.json"), "utf8"));
+const NOVAS_MK = new Set(MK10.receitas.map((r) => r.resultado));
+const renomeadoMk = (x) => (MK10.renomear[x.id] ? { ...x, pt: MK10.renomear[x.id][0], en: MK10.renomear[x.id][1] } : x);
 const maq = (id, pt, en, luz, glifo, extra = {}) => ({ id, pt, en, tipo: "maquina", luz, glifo, comp: `cl:${id}`, tick: 100, ...extra });
 const CILINDROS = [
   ["vazio", "Cilindro de Gás Vazio", "Empty Gas Tank", "#9aa3ab"],
@@ -15,7 +23,7 @@ const CUBOS = [
 ];
 const cor = { cinza: "branco" };
 
-export default {
+const BASE = {
   fase: 24,
   mod: "Mekanism",
   itens: [
@@ -73,4 +81,14 @@ export default {
   dados: {
     cubos: Object.fromEntries(CUBOS.map(([id, , , , cap]) => [`cl:cubo_energia_${id}`, cap])),
   },
+};
+
+export default {
+  ...BASE,
+  itens: BASE.itens.map(renomeadoMk),
+  blocos: BASE.blocos.map(renomeadoMk),
+  receitas: BASE.receitas.filter((r) => !NOVAS_MK.has(r.resultado)),
+  // Mekanism 10: cubos de 4, 16, 64 e 256 milhões de J (2,5 J = 1 RF; 1 E = 4.000 RF).
+  dados: { ...BASE.dados, cubos: Object.fromEntries(Object.entries({ basico: "basic", avancado: "advanced", elite: "elite", definitivo: "ultimate" })
+    .map(([pt, en]) => [`cl:cubo_energia_${pt}`, MK10.cubosJ[en] / 2.5 / 4000])) },
 };

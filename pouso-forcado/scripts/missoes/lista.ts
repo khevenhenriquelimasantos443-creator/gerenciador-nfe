@@ -349,6 +349,12 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "me_purificar", requer: ["me_separador"], objetivo: { tipo: "acao", acao: "purificar", qtd: 8 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "me_injetar", requer: ["me_purificar", "me_salmoura"], objetivo: { tipo: "acao", acao: "injetar", qtd: 8 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       { id: "me_jetpack", requer: ["me_separador"], objetivo: { tipo: "acao", acao: "jetpack", qtd: 1 }, recompensa: [{ item: "cl:cilindro_hidrogenio", quantidade: 4 }] },
+      // 1.21.0: Mekanism 10
+      { id: "mk10_enriquecer", objetivo: { tipo: "colocar", bloco: "cl:camara_enriquecimento", qtd: 1 }, recompensa: [{ item: "minecraft:raw_iron", quantidade: 8 }] },
+      { id: "mk10_aglomerado", requer: ["mk10_enriquecer", "me_separador"], objetivo: { tipo: "ter", item: "cl:torrao_ferro", qtd: 6 }, recompensa: [{ item: "cl:cilindro_oxigenio", quantidade: 2 }] },
+      { id: "mk10_estilhaco", requer: ["mk10_aglomerado"], objetivo: { tipo: "ter", item: "cl:fragmento_ferro", qtd: 8 }, recompensa: [{ item: "cl:cilindro_acido", quantidade: 2 }] },
+      { id: "mk10_circuito", requer: ["mk10_enriquecer"], objetivo: { tipo: "ter", item: "cl:circuito_controle_elite", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 2 }] },
+      { id: "mk10_serraria", objetivo: { tipo: "colocar", bloco: "cl:serraria_precisao", qtd: 1 }, recompensa: [{ item: "minecraft:oak_log", quantidade: 16 }] },
     ],
   },
   {

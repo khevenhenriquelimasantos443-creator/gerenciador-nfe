@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_purification_chamber"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "OPO",
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:circuito_controle_avancado"
+      },
+      "O": {
+        "item": "cl:lingote_osmio"
+      },
+      "P": {
+        "item": "cl:camara_enriquecimento"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:camara_purificacao"
+    }
+  }
+}

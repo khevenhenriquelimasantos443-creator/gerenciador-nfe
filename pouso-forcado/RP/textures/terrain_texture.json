@@ -3855,6 +3855,66 @@
     },
     "clc_conduto_energia_ender": {
       "textures": "textures/blocks/cl/c/conduto_energia_ender"
+    },
+    "clc_camara_enriquecimento_frente": {
+      "textures": "textures/blocks/cl/arte/camara_enriquecimento_frente"
+    },
+    "clc_camara_enriquecimento_lado": {
+      "textures": "textures/blocks/cl/arte/camara_enriquecimento_lado"
+    },
+    "clc_camara_enriquecimento_topo": {
+      "textures": "textures/blocks/cl/arte/camara_enriquecimento_topo"
+    },
+    "clc_camara_enriquecimento_baixo": {
+      "textures": "textures/blocks/cl/arte/camara_enriquecimento_baixo"
+    },
+    "clc_compressor_osmio_frente": {
+      "textures": "textures/blocks/cl/arte/compressor_osmio_frente"
+    },
+    "clc_compressor_osmio_lado": {
+      "textures": "textures/blocks/cl/arte/compressor_osmio_lado"
+    },
+    "clc_compressor_osmio_topo": {
+      "textures": "textures/blocks/cl/arte/compressor_osmio_topo"
+    },
+    "clc_compressor_osmio_baixo": {
+      "textures": "textures/blocks/cl/arte/compressor_osmio_baixo"
+    },
+    "clc_combinador_frente": {
+      "textures": "textures/blocks/cl/arte/combinador_frente"
+    },
+    "clc_combinador_lado": {
+      "textures": "textures/blocks/cl/arte/combinador_lado"
+    },
+    "clc_combinador_topo": {
+      "textures": "textures/blocks/cl/arte/combinador_topo"
+    },
+    "clc_combinador_baixo": {
+      "textures": "textures/blocks/cl/arte/combinador_baixo"
+    },
+    "clc_fundidor_energizado_frente": {
+      "textures": "textures/blocks/cl/arte/fundidor_energizado_frente"
+    },
+    "clc_fundidor_energizado_lado": {
+      "textures": "textures/blocks/cl/c/fundidor_energizado_lado"
+    },
+    "clc_fundidor_energizado_topo": {
+      "textures": "textures/blocks/cl/arte/fundidor_energizado_topo"
+    },
+    "clc_fundidor_energizado_baixo": {
+      "textures": "textures/blocks/cl/arte/fundidor_energizado_baixo"
+    },
+    "clc_serraria_precisao_frente": {
+      "textures": "textures/blocks/cl/arte/serraria_precisao_frente"
+    },
+    "clc_serraria_precisao_lado": {
+      "textures": "textures/blocks/cl/arte/serraria_precisao_lado"
+    },
+    "clc_serraria_precisao_topo": {
+      "textures": "textures/blocks/cl/arte/serraria_precisao_topo"
+    },
+    "clc_serraria_precisao_baixo": {
+      "textures": "textures/blocks/cl/arte/serraria_precisao_baixo"
     }
   }
 }

@@ -707,7 +707,8 @@ teste("enderio9", 760, (t) => {
     j.lookAtBlock(r);
     log(`enderio9: fogo na rocha ${k}: ${j.useItemInSlotOnBlock(0, r, Direction.Up)}`);
   }));
-  // Frasco de Alma num zumbi; depois a alma vai para o Motor de Almas.
+  // Frasco de Alma num zumbi; depois a alma vai para o Motor de Almas. De noite: o pack tira os monstros que nascem de dia.
+  world.getDimension("overworld").runCommand("time set 18000");
   const zumbi = t.spawn("minecraft:zombie", { x: 6, y: 1, z: 2 });
   t.runAfterDelay(20, () => {
     inv.setItem(0, new ItemStack("cl:frasco_alma", 1));
@@ -769,6 +770,57 @@ teste("enderio9", 760, (t) => {
     t.assert(r.aguaDeVolta === 1, "o Tanque não guardou e devolveu a água");
     t.assert(r.trigo >= 1, "a Estação Agrícola não colheu");
     t.assert(r.graos >= 1, "o fogo na rocha matriz não deu Grãos do Infinito");
+    t.succeed();
+  });
+});
+
+// 1.21.0: Mekanism 10. Enriquecimento (minério ×2), Purificação com cilindro de oxigênio (×3 em aglomerados),
+// Injeção com cilindro de ácido (×4 em estilhaços), Triturador (aglomerado → pó sujo), Serraria (tora → 6 tábuas),
+// Infusor (ósmio + 2 redstone → circuito) e Compressor de Ósmio (glowstone + lingote de ósmio → refinado).
+teste("mekanism10", 500, (t) => {
+  const bat = (pos) => {
+    t.setBlockType("cl:bateria", pos);
+    const b = t.getBlock(pos);
+    b.setPermutation(b.permutation.withState("cl:carga", 15));
+  };
+  const maquina = (x, z, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) bau(t, { x, y: 3, z }).addItem(new ItemStack(i, n));
+  };
+  maquina(1, 1, "cl:camara_enriquecimento", [["minecraft:iron_ore", 1]]);
+  maquina(3, 1, "cl:camara_purificacao", [["minecraft:iron_ore", 1], ["cl:cilindro_oxigenio", 1]]);
+  maquina(5, 1, "cl:camara_injecao", [["minecraft:iron_ore", 1], ["cl:cilindro_acido", 1]]);
+  bat({ x: 2, y: 2, z: 1 });
+  bat({ x: 4, y: 2, z: 1 });
+  bat({ x: 6, y: 2, z: 1 });
+  maquina(1, 4, "cl:triturador_mk", [["cl:torrao_ferro", 1]]);
+  maquina(3, 4, "cl:serraria_precisao", [["minecraft:oak_log", 1]]);
+  maquina(5, 4, "cl:infusor_metalurgico", [["cl:lingote_osmio", 1], ["minecraft:redstone", 2]]);
+  bat({ x: 2, y: 2, z: 4 });
+  bat({ x: 4, y: 2, z: 4 });
+  bat({ x: 6, y: 2, z: 4 });
+  maquina(1, 6, "cl:compressor_osmio", [["minecraft:glowstone_dust", 1], ["cl:lingote_osmio", 1]]);
+  bat({ x: 2, y: 2, z: 6 });
+  t.runAfterDelay(460, () => {
+    const r = {
+      po: noBau(bau(t, { x: 1, y: 1, z: 1 }), "cl:po_ferro"),
+      aglomerado: noBau(bau(t, { x: 3, y: 1, z: 1 }), "cl:torrao_ferro"),
+      estilhaco: noBau(bau(t, { x: 5, y: 1, z: 1 }), "cl:fragmento_ferro"),
+      poSujo: noBau(bau(t, { x: 1, y: 1, z: 4 }), "cl:po_sujo_ferro"),
+      tabuas: noBau(bau(t, { x: 3, y: 1, z: 4 }), "minecraft:oak_planks"),
+      circuito: noBau(bau(t, { x: 5, y: 1, z: 4 }), "cl:circuito_controle_basico"),
+      refinado: noBau(bau(t, { x: 1, y: 1, z: 6 }), "cl:lingote_glowstone_refinado"),
+    };
+    log(`mekanism10: ${JSON.stringify(r)}`);
+    t.assert(r.po === 2, "a Câmara de Enriquecimento não dobrou o minério");
+    t.assert(r.aglomerado === 3, "a Purificação não fez 3 aglomerados");
+    t.assert(r.estilhaco === 4, "a Injeção não fez 4 estilhaços");
+    t.assert(r.poSujo === 1, "o Triturador não fez o pó sujo");
+    t.assert(r.tabuas === 6, "a Serraria não fez 6 tábuas");
+    t.assert(r.circuito === 1, "o Infusor não fez o circuito");
+    t.assert(r.refinado === 1, "o Compressor de Ósmio não fez o lingote refinado");
     t.succeed();
   });
 });

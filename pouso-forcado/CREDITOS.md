@@ -38,6 +38,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   lidos do código por `tools/importar-enderio.py`; a arte original também (CC0; DTFuel, NeepNoop e os autores do Travel
   Anchors liberaram as suas em CC0, veja docs/licencas/enderio.txt). Código do pack próprio.
 
+- **Mekanism** 10.7 (1.21.0, o mais novo; aidancbrady e equipe, MIT): processamento de minério ×2/×3/×4, máquinas e
+  receitas lidas do código por `tools/importar-mekanism.py`, com a arte original.
+
 - **Mekanism Generators** e **Mekanism Tools** (aidancbrady, MIT): geradores, ferramentas e armaduras, com os números lidos
   no código-fonte público (github.com/aidancbrady/Mekanism). Código próprio; as armaduras usam a textura da armadura de
   ferro do jogo (Mojang, `Mojang/bedrock-samples`) tingida por `tools/gerar-armaduras.mjs`.
@@ -114,7 +117,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 
 | Mod | Autores | Licença da arte | Repositório |
 |---|---|---|---|
-| Mekanism, Generators e Tools | aidancbrady (arte: Cheapshot, Archadia) | MIT | github.com/aidancbrady/Mekanism (1.7.10) |
+| Mekanism, Generators e Tools | aidancbrady e equipe (arte: Cheapshot, Archadia e outros) | MIT | github.com/mekanism/Mekanism (10.7, 1.21.1; e 1.7.10) |
 | Mekanism Additions | aidancbrady e equipe | MIT | github.com/mekanism/Mekanism (1.20) |
 | Farmer's Delight | vectorwing e equipe | MIT | github.com/vectorwing/FarmersDelight (1.20) |
 | Quark | Vazkii e equipe | CC BY-NC-SA 3.0 | github.com/VazkiiMods/Quark |

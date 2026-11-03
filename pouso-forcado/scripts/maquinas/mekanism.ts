@@ -201,20 +201,19 @@ export function registrarMekanism(): void {
     j.playSound("random.fizz");
     aviso(j, { translate: "cl.mk.jetpack_cheio", with: [String(novo), String(JET.max)] }, 3);
   });
-  registrarDetalhe(["cl:camara_purificacao", "cl:camara_injecao"], (b) => ({ translate: "cl.mk.gas", with: [String(ler<number>("gas", b, 0))] }));
+  registrarDetalhe(["cl:camara_purificacao", "cl:camara_injecao"], (b) => {
+    const t = ler<Record<string, number>>("mk10_q", b, {});
+    return { text: `§7${Object.entries(t).map(([q, mb]) => `${q.replace("hydrogen_chloride", "HCl").replace("oxygen", "O₂")}: ${mb} mB`).join(", ") || "—"}` };
+  });
   registrarNoCatalogo(() => {
     const r: Receita[] = [];
     const m = (id: string) => ({ maquina: { translate: `tile.${id}.name` }, maquinaId: id });
-    for (const [de, po] of Object.entries(PO_DO_MINERIO)) {
-      r.push({ ...m("cl:camara_purificacao"), entradas: [{ item: de, qtd: 1 }, { item: CIL("oxigenio"), qtd: 1 }], saidas: [{ item: po, qtd: 3 }], nota: { text: `1 cilindro = ${POR_CILINDRO}` } });
-      r.push({ ...m("cl:camara_injecao"), entradas: [{ item: de, qtd: 1 }, { item: CIL("acido"), qtd: 1 }], saidas: [{ item: po, qtd: 4 }], nota: { text: `1 cilindro = ${POR_CILINDRO}` } });
-    }
+    // 1.21.0: a purificação, a injeção e o infusor são os do Mekanism 10 (mekanism10.ts registra as receitas).
     for (const [de, [gas, volta]] of Object.entries(AGUAS))
       r.push({ ...m("cl:separador_eletrolitico"), entradas: [{ item: de, qtd: 1 }, { item: VAZIO, qtd: 2 }], saidas: [{ item: CIL("hidrogenio"), qtd: 1 }, { item: CIL(gas), qtd: 1 }, { item: volta, qtd: 1 }] });
     r.push({ ...m("cl:infusor_quimico"), entradas: [{ item: CIL("hidrogenio"), qtd: 1 }, { item: CIL("cloro"), qtd: 1 }], saidas: [{ item: CIL("acido"), qtd: 1 }, { item: VAZIO, qtd: 1 }] });
     r.push({ ...m("cl:evaporador"), entradas: [{ item: "minecraft:water_bucket", qtd: 1 }], saidas: [{ item: "cl:balde_salmoura", qtd: 1 }, { item: "cl:sal", qtd: 1, chance: 0.5 }] });
     r.push({ ...m("cl:evaporador"), entradas: [{ item: "cl:balde_salmoura", qtd: 1 }], saidas: [{ item: "cl:po_litio", qtd: 1 }, { item: "minecraft:bucket", qtd: 1 }] });
-    for (const x of INFUSOES) r.push({ ...m("cl:infusor_metalurgico"), entradas: x.entra.map(([item, qtd]) => ({ item, qtd })), saidas: [{ item: x.sai, qtd: 1 }] });
     return r;
   });
 }

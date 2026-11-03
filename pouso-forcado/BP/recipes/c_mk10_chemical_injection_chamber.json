@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_chemical_injection_chamber"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "I#I",
+      "ACA"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:camara_purificacao"
+      },
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "C": {
+        "item": "cl:circuito_controle_elite"
+      },
+      "I": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:camara_injecao"
+    }
+  }
+}

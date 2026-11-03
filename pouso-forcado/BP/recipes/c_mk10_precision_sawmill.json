@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_precision_sawmill"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ICI",
+      "AXA",
+      "ICI"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:serraria_precisao"
+    }
+  }
+}

@@ -2,6 +2,14 @@
 // com o que eles pedem do Mekanism (ósmio, circuitos de controle, tablet de energia, núcleo eletrolítico, revestimento
 // de aço, biocombustível e o Triturador). Números do código do Mekanism (MekanismGenerators, MekanismTools e
 // Mekanism.java): em J/t do Mekanism, 100 J/t = 1 E a cada 5 s (2,5 J = 1 RF). Scripts em scripts/maquinas/mekanism_extra.ts.
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// 1.21.0: Mekanism 10.7 (o mais novo): nomes, receitas e números de mekanism.json (tools/importar-mekanism.py).
+const MK10 = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "mekanism.json"), "utf8"));
+const NOVAS_MK = new Set(MK10.receitas.map((r) => r.resultado));
+const renomeadoMk = (x) => (MK10.renomear[x.id] ? { ...x, pt: MK10.renomear[x.id][0], en: MK10.renomear[x.id][1] } : x);
 const maq = (id, pt, en, luz, glifo, extra = {}) => ({ id, pt, en, tipo: "maquina", luz, glifo, comp: `cl:${id}`, tick: 100, ...extra });
 const GEN = { mod: "Mekanism Generators" };
 const TOOLS = { mod: "Mekanism Tools" };
@@ -63,7 +71,7 @@ const paxel = (id, pt, en, cor, nivel, usos, eff, dano, ench, extra = {}) => ({
   ...extra,
 });
 
-export default {
+const BASE = {
   fase: 28,
   mod: "Mekanism",
   itens: [
@@ -169,4 +177,11 @@ export default {
     "cl.missao.mx_armadura.titulo": ["Armadura de aço", "Steel armor"], "cl.missao.mx_armadura.desc": ["Tenha o Peitoral de Aço.", "Have the Steel Chestplate."],
     "cl.missao.mx_obsidiana.titulo": ["Obsidiana refinada", "Refined obsidian"], "cl.missao.mx_obsidiana.desc": ["Faça uma Espada de Obsidiana Refinada.", "Make a Refined Obsidian Sword."],
   },
+};
+
+export default {
+  ...BASE,
+  itens: BASE.itens.map(renomeadoMk),
+  blocos: BASE.blocos.map(renomeadoMk),
+  receitas: BASE.receitas.filter((r) => !NOVAS_MK.has(r.resultado)),
 };

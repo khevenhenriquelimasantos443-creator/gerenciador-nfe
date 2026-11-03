@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_energy_cube_advanced"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AEA",
+      "IPI",
+      "AEA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "I": {
+        "item": "cl:lingote_osmio"
+      },
+      "P": {
+        "item": "cl:cubo_energia_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cubo_energia_avancado"
+    }
+  }
+}

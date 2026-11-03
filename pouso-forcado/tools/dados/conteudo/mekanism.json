@@ -1,0 +1,7596 @@
+{
+ "itens": [
+  {
+   "id": "torrao_ferro",
+   "pt": "Aglomerado de Ferro",
+   "en": "Iron Clump",
+   "mek": "clump_iron"
+  },
+  {
+   "id": "torrao_ouro",
+   "pt": "Aglomerado de Ouro",
+   "en": "Gold Clump",
+   "mek": "clump_gold"
+  },
+  {
+   "id": "torrao_cobre",
+   "pt": "Aglomerado de Cobre",
+   "en": "Copper Clump",
+   "mek": "clump_copper"
+  },
+  {
+   "id": "torrao_estanho",
+   "pt": "Aglomerado de Estanho",
+   "en": "Tin Clump",
+   "mek": "clump_tin"
+  },
+  {
+   "id": "torrao_osmio",
+   "pt": "Aglomerado de Ósmio",
+   "en": "Osmium Clump",
+   "mek": "clump_osmium"
+  },
+  {
+   "id": "fragmento_ferro",
+   "pt": "Estilhaço de ferro",
+   "en": "Iron Shard",
+   "mek": "shard_iron"
+  },
+  {
+   "id": "fragmento_ouro",
+   "pt": "Estilhaço de ouro",
+   "en": "Gold Shard",
+   "mek": "shard_gold"
+  },
+  {
+   "id": "fragmento_cobre",
+   "pt": "Estilhaço de cobre",
+   "en": "Copper Shard",
+   "mek": "shard_copper"
+  },
+  {
+   "id": "fragmento_estanho",
+   "pt": "Estilhaço de estanho",
+   "en": "Tin Shard",
+   "mek": "shard_tin"
+  },
+  {
+   "id": "fragmento_osmio",
+   "pt": "Estilhaço de ósmio",
+   "en": "Osmium Shard",
+   "mek": "shard_osmium"
+  },
+  {
+   "id": "po_sujo_ferro",
+   "pt": "Pó de Ferro Sujo",
+   "en": "Dirty Iron Dust",
+   "mek": "dirty_dust_iron"
+  },
+  {
+   "id": "po_sujo_ouro",
+   "pt": "Pó de Ouro Sujo",
+   "en": "Dirty Gold Dust",
+   "mek": "dirty_dust_gold"
+  },
+  {
+   "id": "po_sujo_cobre",
+   "pt": "Pó de Cobre Sujo",
+   "en": "Dirty Copper Dust",
+   "mek": "dirty_dust_copper"
+  },
+  {
+   "id": "po_sujo_estanho",
+   "pt": "Pó de Estanho Sujo",
+   "en": "Dirty Tin Dust",
+   "mek": "dirty_dust_tin"
+  },
+  {
+   "id": "po_sujo_osmio",
+   "pt": "Pó de Ósmio Sujo",
+   "en": "Dirty Osmium Dust",
+   "mek": "dirty_dust_osmium"
+  },
+  {
+   "id": "ferro_enriquecido",
+   "pt": "Ferro Enriquecido",
+   "en": "Enriched Iron",
+   "mek": "enriched_iron"
+  },
+  {
+   "id": "po_aco",
+   "pt": "Pó de Aço",
+   "en": "Steel Dust",
+   "mek": "dust_steel"
+  },
+  {
+   "id": "po_diamante",
+   "pt": "Pó de Diamante",
+   "en": "Diamond Dust",
+   "mek": "dust_diamond"
+  },
+  {
+   "id": "po_obsidiana_refinada",
+   "pt": "Pó de Obsidiana Refinada",
+   "en": "Refined Obsidian Dust",
+   "mek": "dust_refined_obsidian"
+  },
+  {
+   "id": "carbono_enriquecido",
+   "pt": "Carbono Enriquecido",
+   "en": "Enriched Carbon",
+   "mek": "enriched_carbon"
+  },
+  {
+   "id": "redstone_enriquecida",
+   "pt": "Redstone Enriquecida",
+   "en": "Enriched Redstone",
+   "mek": "enriched_redstone"
+  },
+  {
+   "id": "diamante_enriquecido",
+   "pt": "Diamante Enriquecido",
+   "en": "Enriched Diamond",
+   "mek": "enriched_diamond"
+  },
+  {
+   "id": "obsidiana_refinada_enriquecida",
+   "pt": "Obsidiana Enriquecida",
+   "en": "Enriched Obsidian",
+   "mek": "enriched_refined_obsidian"
+  },
+  {
+   "id": "ouro_enriquecido",
+   "pt": "Ouro Enriquecido",
+   "en": "Enriched Gold",
+   "mek": "enriched_gold"
+  },
+  {
+   "id": "estanho_enriquecido",
+   "pt": "Estanho Enriquecido",
+   "en": "Enriched Tin",
+   "mek": "enriched_tin"
+  },
+  {
+   "id": "circuito_controle_elite",
+   "pt": "Circuito de Controle Elite",
+   "en": "Elite Control Circuit",
+   "mek": "elite_control_circuit"
+  },
+  {
+   "id": "circuito_controle_supremo",
+   "pt": "Circuito de Controle Ultimate",
+   "en": "Ultimate Control Circuit",
+   "mek": "ultimate_control_circuit"
+  }
+ ],
+ "maquinas": [
+  {
+   "id": "camara_enriquecimento",
+   "pt": "Câmara de Enriquecimento",
+   "en": "Enrichment Chamber",
+   "mek": "enrichment_chamber"
+  },
+  {
+   "id": "compressor_osmio",
+   "pt": "Compressor de Ósmio",
+   "en": "Osmium Compressor",
+   "mek": "osmium_compressor"
+  },
+  {
+   "id": "combinador",
+   "pt": "Combinador",
+   "en": "Combiner",
+   "mek": "combiner"
+  },
+  {
+   "id": "fundidor_energizado",
+   "pt": "Fundição Energizada",
+   "en": "Energized Smelter",
+   "mek": "energized_smelter"
+  },
+  {
+   "id": "serraria_precisao",
+   "pt": "Serraria de Precisão",
+   "en": "Precision Sawmill",
+   "mek": "precision_sawmill"
+  }
+ ],
+ "renomear": {
+  "liga_enriquecida": [
+   "Liga Fundida",
+   "Infused Alloy"
+  ],
+  "liga_reforcada": [
+   "Liga Reforçada",
+   "Reinforced Alloy"
+  ],
+  "liga_atomica": [
+   "Liga Atômica",
+   "Atomic Alloy"
+  ],
+  "circuito_controle_basico": [
+   "Circuito de Controle Básico",
+   "Basic Control Circuit"
+  ],
+  "circuito_controle_avancado": [
+   "Circuito de Controle Avançado",
+   "Advanced Control Circuit"
+  ],
+  "revestimento_aco": [
+   "Revestimento de aço",
+   "Steel Casing"
+  ],
+  "tablet_energia": [
+   "Tablete de Energia",
+   "Energy Tablet"
+  ],
+  "nucleo_eletrolitico": [
+   "Núcleo Eletrolítico",
+   "Electrolytic Core"
+  ],
+  "camara_purificacao": [
+   "Câmara de Purificação",
+   "Purification Chamber"
+  ],
+  "camara_injecao": [
+   "Câmara de Injeção Química",
+   "Chemical Injection Chamber"
+  ],
+  "infusor_metalurgico": [
+   "Infusor Metalúrgico",
+   "Metallurgic Infuser"
+  ],
+  "triturador_mk": [
+   "Triturador",
+   "Crusher"
+  ],
+  "separador_eletrolitico": [
+   "Separador Eletrolítico",
+   "Electrolytic Separator"
+  ],
+  "infusor_quimico": [
+   "Infusor Químico",
+   "Chemical Infuser"
+  ],
+  "cubo_energia_basico": [
+   "Cubo de Energia Básico",
+   "Basic Energy Cube"
+  ],
+  "cubo_energia_avancado": [
+   "Cubo de Energia Avançado",
+   "Advanced Energy Cube"
+  ],
+  "cubo_energia_elite": [
+   "Cubo de Energia Elite",
+   "Elite Energy Cube"
+  ],
+  "cubo_energia_definitivo": [
+   "Cubo de Energia Ultimate",
+   "Ultimate Energy Cube"
+  ]
+ },
+ "receitas": [
+  {
+   "id": "mk10_chemical_injection_chamber",
+   "resultado": "cl:camara_injecao",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "I#I",
+    "ACA"
+   ],
+   "chave": {
+    "#": "cl:camara_purificacao",
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot"
+   }
+  },
+  {
+   "id": "mk10_electrolytic_core",
+   "resultado": "cl:nucleo_eletrolitico",
+   "tipo": "shaped",
+   "padrao": [
+    "AOA",
+    "IA#",
+    "AOA"
+   ],
+   "chave": {
+    "#": "cl:po_ouro",
+    "A": "cl:liga_enriquecida",
+    "I": "cl:po_ferro",
+    "O": "cl:po_osmio"
+   }
+  },
+  {
+   "id": "mk10_electrolytic_separator",
+   "resultado": "cl:separador_eletrolitico",
+   "tipo": "shaped",
+   "padrao": [
+    "IRI",
+    "A#A",
+    "IRI"
+   ],
+   "chave": {
+    "#": "cl:nucleo_eletrolitico",
+    "A": "cl:liga_enriquecida",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone"
+   }
+  },
+  {
+   "id": "mk10_energy_tablet",
+   "resultado": "cl:tablet_energia",
+   "tipo": "shaped",
+   "padrao": [
+    "RIR",
+    "AIA",
+    "RIR"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "I": "minecraft:gold_ingot",
+    "R": "minecraft:redstone"
+   }
+  },
+  {
+   "id": "mk10_enrichment_chamber",
+   "resultado": "cl:camara_enriquecimento",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IXI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mk10_metallurgic_infuser",
+   "resultado": "cl:infusor_metalurgico",
+   "tipo": "shaped",
+   "padrao": [
+    "I#I",
+    "ROR",
+    "I#I"
+   ],
+   "chave": {
+    "#": "minecraft:furnace",
+    "I": "minecraft:iron_ingot",
+    "O": "cl:lingote_osmio",
+    "R": "minecraft:redstone"
+   }
+  },
+  {
+   "id": "mk10_osmium_compressor",
+   "resultado": "cl:compressor_osmio",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "BXB",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "B": "minecraft:bucket",
+    "C": "cl:circuito_controle_avancado",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mk10_precision_sawmill",
+   "resultado": "cl:serraria_precisao",
+   "tipo": "shaped",
+   "padrao": [
+    "ICI",
+    "AXA",
+    "ICI"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mk10_purification_chamber",
+   "resultado": "cl:camara_purificacao",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "OPO",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "O": "cl:lingote_osmio",
+    "P": "cl:camara_enriquecimento"
+   }
+  },
+  {
+   "id": "mk10_energy_cube_advanced",
+   "resultado": "cl:cubo_energia_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "AEA",
+    "IPI",
+    "AEA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "E": "cl:tablet_energia",
+    "I": "cl:lingote_osmio",
+    "P": "cl:cubo_energia_basico"
+   }
+  },
+  {
+   "id": "mk10_energy_cube_basic",
+   "resultado": "cl:cubo_energia_basico",
+   "tipo": "shaped",
+   "padrao": [
+    "AEA",
+    "IPI",
+    "AEA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "E": "cl:tablet_energia",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mk10_energy_cube_elite",
+   "resultado": "cl:cubo_energia_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "AEA",
+    "IPI",
+    "AEA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "E": "cl:tablet_energia",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:cubo_energia_avancado"
+   }
+  },
+  {
+   "id": "mk10_energy_cube_ultimate",
+   "resultado": "cl:cubo_energia_definitivo",
+   "tipo": "shaped",
+   "padrao": [
+    "AEA",
+    "IPI",
+    "AEA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "E": "cl:tablet_energia",
+    "I": "minecraft:diamond",
+    "P": "cl:cubo_energia_elite"
+   }
+  },
+  {
+   "id": "mk10_control_circuit_advanced",
+   "resultado": "cl:circuito_controle_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico"
+   }
+  },
+  {
+   "id": "mk10_control_circuit_elite",
+   "resultado": "cl:circuito_controle_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_avancado"
+   }
+  },
+  {
+   "id": "mk10_control_circuit_ultimate",
+   "resultado": "cl:circuito_controle_supremo",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_elite"
+   }
+  }
+ ],
+ "processos": {
+  "enriching": [
+   {
+    "entra": [
+     "cl:po_diamante"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:diamond",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:diamond_ore",
+     "minecraft:deepslate_diamond_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:diamond",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_ouro"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ouro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gold_ore",
+     "minecraft:deepslate_gold_ore",
+     "minecraft:nether_gold_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ouro",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ouro",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_ouro",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_carvao"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:coal",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:coal_ore",
+     "minecraft:deepslate_coal_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:coal",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_estanho"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_estanho",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_estanho_lunar"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_estanho",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:redstone_ore",
+     "minecraft:deepslate_redstone_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:redstone",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_cobre"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_cobre",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ore",
+     "minecraft:deepslate_copper_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_cobre",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_cobre",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_cobre",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:emerald_ore",
+     "minecraft:deepslate_emerald_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:emerald",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_quartzo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_osmio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_osmio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_lapis"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:lapis_lazuli",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:lapis_ore",
+     "minecraft:deepslate_lapis_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:lapis_lazuli",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:ancient_debris"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:netherite_scrap",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_sujo_ferro"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ferro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:iron_ore",
+     "minecraft:deepslate_iron_ore"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ferro",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ferro",
+     12
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:po_ferro",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_carvao"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:charcoal",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:clay"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:clay_ball",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:glowstone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:glowstone_dust",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobweb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:string",
+     9
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:coal"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:carbono_enriquecido",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:diamond"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:diamante_enriquecido",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_ouro"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:ouro_enriquecido",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:redstone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:redstone_enriquecida",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_obsidiana_refinada"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:obsidiana_refinada_enriquecida",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_estanho"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:estanho_enriquecido",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_nether_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:nether_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gravel"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:flint",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:nether_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_nether_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:purpur_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:purpur_pillar",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:sand"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:gravel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:soul_sand"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:soul_soil",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:packed_mud"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mud_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mud"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:clay",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:diorite_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_diorite_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:diorite_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_diorite_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:diorite"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_diorite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:andesite_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_andesite_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:andesite_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_andesite_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:andesite"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_andesite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_polished_blackstone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_polished_blackstone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_blackstone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_polished_blackstone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_cobblestone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_cobblestone_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_cobblestone_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_cobblestone_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_stone_brick_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone_brick_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_stone_brick_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone_brick_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_stone_brick_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone_brick_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mossy_stone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_stone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_deepslate_tiles",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobbled_deepslate_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_deepslate_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobbled_deepslate_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_deepslate_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobbled_deepslate_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_deepslate_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_deepslate_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_deepslate_tiles"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tiles",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_deepslate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tile_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tile_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tile_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tile_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_brick_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tile_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_brick_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tile_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_brick_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tiles"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_deepslate_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_deepslate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:smooth_quartz"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:smooth_quartz_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:smooth_quartz_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:granite_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_granite_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:granite_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_granite_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:granite"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_granite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_tuff",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_tuff"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_brick_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_brick_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_brick_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_brick_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_brick_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_brick_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cocoa_beans"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:brown_dye",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cactus"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:green_dye",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pitcher_plant"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cyan_dye",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:lilac"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:magenta_dye",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:peony"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:pink_dye",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:rose_bush"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:red_dye",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:sunflower"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:yellow_dye",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:blue_orchid"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:light_blue_dye",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:sea_pickle"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:lime_dye",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:allium"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:magenta_dye",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dandelion"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:yellow_dye",
+     2
+    ]
+   }
+  ],
+  "crushing": [
+   {
+    "entra": [
+     "minecraft:diamond"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_diamante",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gold_ingot"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ouro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_ouro"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_ouro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_aco"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_aco",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_obsidiana_refinada"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_obsidiana_refinada",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:coal"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_carvao",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_estanho"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_estanho",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_estanho"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_estanho",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ingot"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_cobre",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_cobre"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_cobre",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_quartzo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_osmio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_osmio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_osmio"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_osmio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:lingote_glowstone_refinado"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:glowstone_dust",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:lapis_lazuli"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_lapis",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:iron_ingot"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_ferro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:torrao_ferro"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_sujo_ferro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bone_meal",
+     6
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bone_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bone_meal",
+     9
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:music_disc_5"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:disc_fragment_5",
+     9
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_nether_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:nether_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:gravel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:flint"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:gunpowder",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gravel"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:sand",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:honeycomb_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:honeycomb",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mud_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:packed_mud",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:nether_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_nether_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dripstone_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:pointed_dripstone",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:purpur_pillar"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:purpur_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:soul_soil"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:soul_sand",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:white_wool"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:string",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_diorite"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:diorite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_diorite_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:diorite_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_diorite_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:diorite_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_andesite"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:andesite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_andesite_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:andesite_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_andesite_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:andesite_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_polished_blackstone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_polished_blackstone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_blackstone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_polished_blackstone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_blackstone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:blackstone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:blackstone_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:blackstone_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_blackstone_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:blackstone_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_copper_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_exposed_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:exposed_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_oxidized_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oxidized_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_chiseled_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_copper_bulb"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_copper_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_copper_grate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_cut_copper"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:waxed_weathered_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:weathered_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_stone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_stone_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobblestone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_brick_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tile_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_brick_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tile_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_brick_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tile_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_deepslate_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_deepslate_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_tiles",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cracked_deepslate_tiles"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_deepslate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_brick_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_brick_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_deepslate_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:deepslate_brick_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tile_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobbled_deepslate_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tile_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobbled_deepslate_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tiles"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cracked_deepslate_tiles",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_tile_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobbled_deepslate_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:deepslate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cobbled_deepslate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_quartz_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_quartz_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz_pillar",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz_pillar"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:smooth_quartz_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:smooth_quartz"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:quartz_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:smooth_quartz_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:quartz_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:smooth_quartz",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:prismarine_shard",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:prismarine_shard",
+     9
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_brick_slab"
+    ],
+    "qtd": 2,
+    "sai": [
+     "minecraft:prismarine_shard",
+     9
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_brick_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:prismarine_shard",
+     9
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:prismarine_shard",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:prismarine_shard",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:prismarine_shard",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_granite"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:granite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_granite_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:granite_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_granite_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:granite_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:apple"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:baked_potato"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bamboo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:big_dripleaf"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bread"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cake"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     6
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:carved_pumpkin"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cookie"
+    ],
+    "qtd": 4,
+    "sai": [
+     "cl:biocombustivel",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:crimson_roots"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:poisonous_potato"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dried_kelp"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:fern"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:glow_lichen"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:hanging_roots"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:kelp"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:large_fern"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:lily_pad"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_roots"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:melon_slice"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:moss_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:moss_carpet"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:biocombustivel",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:nether_sprouts"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pink_petals"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pitcher_pod"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pumpkin_pie"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     7
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:rotten_flesh"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:sea_pickle"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:seagrass"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:short_grass"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:shroomlight"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:small_dripleaf"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:spore_blossom"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tall_grass"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:warped_roots"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:warped_wart_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:biocombustivel",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_brick_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_brick_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_brick_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_bricks"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:polished_tuff",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_tuff"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_brick_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff_slab"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_stairs"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_brick_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:chiseled_tuff",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:polished_tuff_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:tuff_wall"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:tuff_brick_wall",
+     1
+    ]
+   }
+  ],
+  "combining": [
+   {
+    "entra": [
+     "cl:po_diamante"
+    ],
+    "qtd": 5,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_diamond_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_diamante"
+    ],
+    "qtd": 5,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:diamond_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_gold_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:gold_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:netherrack"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:nether_gold_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_carvao"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_coal_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_carvao"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:coal_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:redstone"
+    ],
+    "qtd": 16,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_redstone_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:redstone"
+    ],
+    "qtd": 16,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:redstone_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "qtd": 20,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_copper_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "qtd": 20,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:copper_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_quartzo"
+    ],
+    "qtd": 14,
+    "extra": [
+     "minecraft:netherrack"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:nether_quartz_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_lapis"
+    ],
+    "qtd": 27,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_lapis_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_lapis"
+    ],
+    "qtd": 27,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:lapis_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:deepslate_iron_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "qtd": 8,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:iron_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:flint"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:gravel",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_roots"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:mud"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:muddy_mangrove_roots",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_obsidiana"
+    ],
+    "qtd": 4,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:obsidian",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:hanging_roots"
+    ],
+    "qtd": 3,
+    "extra": [
+     "minecraft:dirt"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:rooted_dirt",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_block"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_copper_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_bulb"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_door"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_grate"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_trapdoor"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cut_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cut_copper_slab"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_chiseled_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_bulb"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_door"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_grate"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_exposed_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_chiseled_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_bulb"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_door"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_grate"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_cut_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oxidized_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_oxidized_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_chiseled_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_bulb"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_door"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_grate"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:honeycomb"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:waxed_weathered_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:sweet_berries"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:glowstone_dust"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:glow_berries",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:ink_sac"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:glowstone_dust"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:glow_ink_sac",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:item_frame"
+    ],
+    "qtd": 1,
+    "extra": [
+     "minecraft:glowstone_dust"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "minecraft:glow_item_frame",
+     1
+    ]
+   }
+  ],
+  "sawing": [
+   {
+    "entra": [
+     "minecraft:bamboo_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo",
+     9
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:barrel"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     7
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:chest"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     8
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_bookshelf"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     6
+    ],
+    "extra": [
+     "minecraft:oak_slab",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:composter"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_slab",
+     7
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:crafting_table"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     4
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:item_frame"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stick",
+     8
+    ],
+    "extra": [
+     "minecraft:leather",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:jukebox"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     8
+    ],
+    "extra": [
+     "minecraft:diamond",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:ladder"
+    ],
+    "qtd": 3,
+    "sai": [
+     "minecraft:stick",
+     7
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:lectern"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     8
+    ],
+    "extra": [
+     "minecraft:book",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:melon"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:melon_slice",
+     9
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:note_block"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     8
+    ],
+    "extra": [
+     "minecraft:redstone",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pumpkin"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:carved_pumpkin",
+     1
+    ],
+    "extra": [
+     "minecraft:pumpkin_seeds",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:redstone_torch"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:stick",
+     1
+    ],
+    "extra": [
+     "minecraft:redstone",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:soul_torch"
+    ],
+    "qtd": 4,
+    "sai": [
+     "minecraft:torch",
+     4
+    ],
+    "extra": [
+     "minecraft:soul_soil",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stick"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:serragem",
+     1
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:torch"
+    ],
+    "qtd": 4,
+    "sai": [
+     "minecraft:stick",
+     1
+    ],
+    "extra": [
+     "minecraft:coal",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:trapped_chest"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     8
+    ],
+    "extra": [
+     "minecraft:tripwire_hook",
+     1,
+     0.75
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:acacia_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:birch_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:cherry_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:crimson_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:crimson_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:jungle_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:oak_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:spruce_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:warped_door"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:warped_planks",
+     2
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:acacia_log",
+     "minecraft:stripped_acacia_log",
+     "minecraft:acacia_wood",
+     "minecraft:stripped_acacia_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:birch_log",
+     "minecraft:stripped_birch_log",
+     "minecraft:birch_wood",
+     "minecraft:stripped_birch_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cherry_log",
+     "minecraft:stripped_cherry_log",
+     "minecraft:cherry_wood",
+     "minecraft:stripped_cherry_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:crimson_stem",
+     "minecraft:stripped_crimson_stem",
+     "minecraft:crimson_hyphae",
+     "minecraft:stripped_crimson_hyphae"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:crimson_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_log",
+     "minecraft:stripped_dark_oak_log",
+     "minecraft:dark_oak_wood",
+     "minecraft:stripped_dark_oak_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:jungle_log",
+     "minecraft:stripped_jungle_log",
+     "minecraft:jungle_wood",
+     "minecraft:stripped_jungle_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_log",
+     "minecraft:stripped_mangrove_log",
+     "minecraft:mangrove_wood",
+     "minecraft:stripped_mangrove_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oak_log",
+     "minecraft:stripped_oak_log",
+     "minecraft:oak_wood",
+     "minecraft:stripped_oak_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:spruce_log",
+     "minecraft:stripped_spruce_log",
+     "minecraft:spruce_wood",
+     "minecraft:stripped_spruce_wood"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:warped_stem",
+     "minecraft:stripped_warped_stem",
+     "minecraft:warped_hyphae",
+     "minecraft:stripped_warped_hyphae"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:warped_planks",
+     6
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:acacia_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:birch_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cherry_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:crimson_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:crimson_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:jungle_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oak_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:spruce_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:warped_fence_gate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:warped_planks",
+     2
+    ],
+    "extra": [
+     "minecraft:stick",
+     4,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:acacia_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_raft"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:birch_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:cherry_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:jungle_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:oak_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:spruce_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     5
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:acacia_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_chest_raft"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_raft",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:birch_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cherry_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:jungle_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oak_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:spruce_chest_boat"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_boat",
+     1
+    ],
+    "extra": [
+     "minecraft:chest",
+     1,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:acacia_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:birch_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cherry_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:crimson_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:crimson_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:jungle_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oak_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:spruce_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:warped_pressure_plate"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:warped_planks",
+     1
+    ],
+    "extra": [
+     "cl:serragem",
+     2,
+     0.25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:acacia_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:birch_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cherry_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:crimson_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:crimson_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:jungle_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:oak_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:spruce_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:warped_hanging_sign"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:warped_planks",
+     2
+    ],
+    "extra": [
+     "cl:serragem",
+     1,
+     0.5
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:black_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:black_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:blue_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:blue_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:brown_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:brown_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cyan_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:cyan_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gray_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:gray_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:green_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:green_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:light_blue_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:light_blue_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:light_gray_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:light_gray_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:lime_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:lime_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:magenta_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:magenta_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:orange_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:orange_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pink_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:pink_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:purple_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:purple_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:red_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:red_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:white_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:white_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:yellow_bed"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": [
+     "minecraft:yellow_wool",
+     3,
+     1.0
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:acacia_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:acacia_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:bamboo_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:bamboo_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:birch_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:birch_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:cherry_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:cherry_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:crimson_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:crimson_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:dark_oak_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:dark_oak_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:jungle_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:jungle_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:mangrove_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:mangrove_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:oak_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:oak_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:spruce_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:spruce_planks",
+     3
+    ],
+    "extra": []
+   },
+   {
+    "entra": [
+     "minecraft:warped_trapdoor"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:warped_planks",
+     3
+    ],
+    "extra": []
+   }
+  ],
+  "purifying": [
+   {
+    "entra": [
+     "minecraft:gold_ore",
+     "minecraft:deepslate_gold_ore",
+     "minecraft:nether_gold_ore"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ouro",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold_block"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ouro",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ouro",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_ouro"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ouro",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_estanho_lunar"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_estanho",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_estanho"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_estanho",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ore",
+     "minecraft:deepslate_copper_ore"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_cobre",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper_block"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_cobre",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_cobre",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_cobre"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_cobre",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_osmio"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_osmio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:iron_ore",
+     "minecraft:deepslate_iron_ore"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ferro",
+     3
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron_block"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ferro",
+     18
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ferro",
+     2
+    ]
+   },
+   {
+    "entra": [
+     "cl:fragmento_ferro"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:torrao_ferro",
+     1
+    ]
+   }
+  ],
+  "injecting": [
+   {
+    "entra": [
+     "minecraft:dirt"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:mud",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:terracotta"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:clay",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_block"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_bulb"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_door"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_grate"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_trapdoor"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cut_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cut_copper_slab"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:exposed_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_chiseled_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_bulb"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_door"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_grate"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:weathered_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:oxidized_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_chiseled_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_chiseled_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_bulb"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_copper_bulb",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_door"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_copper_door",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_grate"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_copper_grate",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_copper_trapdoor"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_copper_trapdoor",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_cut_copper",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper_slab"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_cut_copper_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:exposed_cut_copper_stairs"
+    ],
+    "qtd": 1,
+    "quimico": "oxygen",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:weathered_cut_copper_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_brain_coral"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:brain_coral",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_brain_coral_block"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 5,
+    "porTick": true,
+    "sai": [
+     "minecraft:brain_coral_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_brain_coral_fan"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:brain_coral_fan",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_bubble_coral"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:bubble_coral",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_bubble_coral_block"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 5,
+    "porTick": true,
+    "sai": [
+     "minecraft:bubble_coral_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_bubble_coral_fan"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:bubble_coral_fan",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_fire_coral"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:fire_coral",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_fire_coral_block"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 5,
+    "porTick": true,
+    "sai": [
+     "minecraft:fire_coral_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_fire_coral_fan"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:fire_coral_fan",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_horn_coral"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:horn_coral",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_horn_coral_block"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 5,
+    "porTick": true,
+    "sai": [
+     "minecraft:horn_coral_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_horn_coral_fan"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:horn_coral_fan",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_tube_coral"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:tube_coral",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_tube_coral_block"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 5,
+    "porTick": true,
+    "sai": [
+     "minecraft:tube_coral_block",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dead_tube_coral_fan"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 3,
+    "porTick": true,
+    "sai": [
+     "minecraft:tube_coral_fan",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:black_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:black_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:blue_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:blue_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:brown_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:brown_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cyan_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:cyan_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gray_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:gray_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:green_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:green_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:light_blue_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:light_blue_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:light_gray_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:light_gray_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:lime_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:lime_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:magenta_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:magenta_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:orange_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:orange_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:pink_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:pink_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:purple_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:purple_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:red_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:red_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:white_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:white_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:yellow_concrete_powder"
+    ],
+    "qtd": 1,
+    "quimico": "water_vapor",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "minecraft:yellow_concrete",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:gold_ore",
+     "minecraft:deepslate_gold_ore",
+     "minecraft:nether_gold_ore"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ouro",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold_block"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ouro",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ouro",
+     8
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_estanho_lunar"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_estanho",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ore",
+     "minecraft:deepslate_copper_ore"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_cobre",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper_block"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_cobre",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_cobre",
+     8
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:iron_ore",
+     "minecraft:deepslate_iron_ore"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ferro",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron_block"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 2,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ferro",
+     24
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "qtd": 3,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ferro",
+     8
+    ]
+   }
+  ],
+  "compressing": [
+   {
+    "entra": [
+     "cl:po_obsidiana_refinada"
+    ],
+    "qtd": 1,
+    "quimico": "osmium",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:lingote_obsidiana_refinada",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:glowstone_dust"
+    ],
+    "qtd": 1,
+    "quimico": "osmium",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:lingote_glowstone_refinado",
+     1
+    ]
+   }
+  ],
+  "metallurgic_infusing": [
+   {
+    "entra": [
+     "cl:lingote_osmio"
+    ],
+    "qtd": 1,
+    "quimico": "redstone",
+    "quantidade": 20,
+    "porTick": false,
+    "sai": [
+     "cl:circuito_controle_basico",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:circuito_controle_basico"
+    ],
+    "qtd": 1,
+    "quimico": "redstone",
+    "quantidade": 60,
+    "porTick": false,
+    "sai": [
+     "cl:circuito_controle_avancado",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:circuito_controle_avancado"
+    ],
+    "qtd": 1,
+    "quimico": "diamond",
+    "quantidade": 120,
+    "porTick": false,
+    "sai": [
+     "cl:circuito_controle_elite",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:circuito_controle_elite"
+    ],
+    "qtd": 1,
+    "quimico": "refined_obsidian",
+    "quantidade": 240,
+    "porTick": false,
+    "sai": [
+     "cl:circuito_controle_supremo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:blackstone"
+    ],
+    "qtd": 1,
+    "quimico": "gold",
+    "quantidade": 100,
+    "porTick": false,
+    "sai": [
+     "minecraft:gilded_blackstone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:clay_ball"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:slime_ball",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:clay"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 40,
+    "porTick": false,
+    "sai": [
+     "minecraft:slime_ball",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:crimson_nylium"
+    ],
+    "qtd": 1,
+    "quimico": "fungi",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:warped_nylium",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dirt"
+    ],
+    "qtd": 1,
+    "quimico": "fungi",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mycelium",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:dirt"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:podzol",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:netherrack"
+    ],
+    "qtd": 1,
+    "quimico": "fungi",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:crimson_nylium",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:sand"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:dirt",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_cobblestone",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone_slab"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_cobblestone_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone_stairs"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_cobblestone_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone_wall"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_cobblestone_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_bricks"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_stone_bricks",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_brick_slab"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_stone_brick_slab",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_brick_stairs"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_stone_brick_stairs",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stone_brick_wall"
+    ],
+    "qtd": 1,
+    "quimico": "bio",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "minecraft:mossy_stone_brick_wall",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:liga_reforcada"
+    ],
+    "qtd": 1,
+    "quimico": "refined_obsidian",
+    "quantidade": 40,
+    "porTick": false,
+    "sai": [
+     "cl:liga_atomica",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ingot"
+    ],
+    "qtd": 1,
+    "quimico": "redstone",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:liga_enriquecida",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:liga_enriquecida"
+    ],
+    "qtd": 1,
+    "quimico": "diamond",
+    "quantidade": 20,
+    "porTick": false,
+    "sai": [
+     "cl:liga_reforcada",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:ferro_enriquecido"
+    ],
+    "qtd": 1,
+    "quimico": "carbon",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:po_aco",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_obsidiana"
+    ],
+    "qtd": 1,
+    "quimico": "diamond",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:po_obsidiana_refinada",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ingot"
+    ],
+    "qtd": 3,
+    "quimico": "tin",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:lingote_bronze",
+     4
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:iron_ingot"
+    ],
+    "qtd": 1,
+    "quimico": "carbon",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:ferro_enriquecido",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_ferro"
+    ],
+    "qtd": 1,
+    "quimico": "carbon",
+    "quantidade": 10,
+    "porTick": false,
+    "sai": [
+     "cl:ferro_enriquecido",
+     1
+    ]
+   }
+  ]
+ },
+ "infusao": {
+  "oxygen": {
+   "minecraft:flint": 10
+  },
+  "osmium": {
+   "cl:lingote_osmio": 200
+  },
+  "bio": {
+   "cl:biocombustivel": 5
+  },
+  "diamond": {
+   "cl:po_diamante": 10,
+   "cl:diamante_enriquecido": 80
+  },
+  "gold": {
+   "cl:po_ouro": 10,
+   "cl:ouro_enriquecido": 80
+  },
+  "refined_obsidian": {
+   "cl:po_obsidiana_refinada": 10,
+   "cl:obsidiana_refinada_enriquecida": 80
+  },
+  "tin": {
+   "cl:po_estanho": 10,
+   "cl:estanho_enriquecido": 80
+  },
+  "redstone": {
+   "minecraft:redstone_block": 90,
+   "minecraft:redstone": 10,
+   "cl:redstone_enriquecida": 80
+  },
+  "carbon": {
+   "cl:bloco_carvao_vegetal": 180,
+   "minecraft:coal_block": 90,
+   "cl:carbono_enriquecido": 80
+  }
+ },
+ "ce": {
+  "enrichmentChamber": 100,
+  "osmiumCompressor": 200,
+  "combiner": 100,
+  "crusher": 100,
+  "metallurgicInfuser": 100,
+  "purificationChamber": 400,
+  "energizedSmelter": 100,
+  "chemicalInjectionChamber": 800,
+  "precisionSawmill": 100
+ },
+ "cubosJ": {
+  "basic": 4000000,
+  "advanced": 16000000,
+  "elite": 64000000,
+  "ultimate": 256000000
+ }
+}

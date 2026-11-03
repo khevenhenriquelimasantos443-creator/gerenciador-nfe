@@ -53,7 +53,8 @@ import { registrarCaldeirao } from "./jogador/caldeirao.js";
 import { registrarExtras } from "./mundo/extras.js";
 import { bomba, motor, pedreira, refinaria, registrarBuildcraft } from "./maquinas/buildcraft.js";
 import { componenteElevador, registrarOpenBlocks, tumulo } from "./jogador/openblocks.js";
-import { camaraInjecao, camaraPurificacao, evaporador, infusorMetalurgico, infusorQuimico, registrarMekanism, separador } from "./maquinas/mekanism.js";
+import { evaporador, infusorQuimico, registrarMekanism, separador } from "./maquinas/mekanism.js";
+import { COMPONENTES_MK10, infusor10, injecao10, purificacao10, registrarMekanism10, triturador10 } from "./maquinas/mekanism10.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
@@ -83,7 +84,7 @@ import { registrarTemploYung } from "./mundo/templo_yung.js";
 import { registrarFerramentasVanilla } from "./jogador/ferramentas_vanilla.js";
 import { registrarJogadores } from "./util/jogadores.js";
 import { descarregador as descarregadorPw, ender as enderPw, funil as funilPw, furnator as furnatorPw, magmator as magmatorPw, orbe as orbePw, painelSolar as painelSolarPw, reator as reatorPw, registrarPowah, registrarPowahCompleto, termogerador as termogeradorPw, transmissor as transmissorPw } from "./maquinas/powah.js";
-import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra, triturador as trituradorMk } from "./maquinas/mekanism_extra.js";
+import { geradorBio, geradorCalor, geradorEolico, geradorGas, geradorSolar, geradorSolarAvancado, registrarMekanismExtra } from "./maquinas/mekanism_extra.js";
 
 // 1.16.2: se outra cópia do Pouso Forçado (outra versão) estiver ligada no mesmo mundo, os comandos já existem:
 // avisa o jogador ao entrar, em vez de rodar tudo em dobro sem ninguém saber.
@@ -148,7 +149,8 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:caixa_entrega", caixaEntrega);
   for (const [id, comp] of Object.entries({
     "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador, "cl:infusor_quimico": infusorQuimico,
-    "cl:camara_purificacao": camaraPurificacao, "cl:camara_injecao": camaraInjecao, "cl:infusor_metalurgico": infusorMetalurgico,
+    "cl:camara_purificacao": purificacao10, "cl:camara_injecao": injecao10, "cl:infusor_metalurgico": infusor10, // 1.21.0: Mekanism 10
+    ...COMPONENTES_MK10,
     "cl:bomba": bomba, "cl:refinaria": refinaria, "cl:motor_combustao": motor, "cl:pedreira": pedreira,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
   blockComponentRegistry.registerCustomComponent("cl:tumulo", tumulo);
@@ -195,7 +197,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     "cl:distribuidor_oxigenio": distribuidor,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
   for (const [id, comp] of Object.entries({
-    "cl:triturador_mk": trituradorMk, "cl:gerador_calor": geradorCalor, "cl:gerador_solar_mk": geradorSolar, "cl:gerador_solar_avancado": geradorSolarAvancado,
+    "cl:triturador_mk": triturador10, "cl:gerador_calor": geradorCalor, "cl:gerador_solar_mk": geradorSolar, "cl:gerador_solar_avancado": geradorSolarAvancado,
     "cl:gerador_bio": geradorBio, "cl:gerador_gas": geradorGas, "cl:gerador_eolico": geradorEolico,
     "cl:fundidora_ligas": fundidora, "cl:moinho_sag": moinhoSag, "cl:gerador_stirling": stirling,
     "cl:painel_fotovoltaico": painelFotovoltaico, "cl:painel_fotovoltaico_avancado": painelFotovoltaico, "cl:painel_fotovoltaico_vibrante": painelFotovoltaico,
@@ -279,6 +281,7 @@ registrarBase();
 registrarMekanismExtra();
 registrarEnderIO();
 registrarEnderIO9();
+registrarMekanism10();
 registrarCreate();
 registrarWaystones();
 registrarMochila();

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_metallurgic_infuser"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "I#I",
+      "ROR",
+      "I#I"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:furnace"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "O": {
+        "item": "cl:lingote_osmio"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:infusor_metalurgico"
+    }
+  }
+}

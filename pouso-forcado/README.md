@@ -154,6 +154,22 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.21.0 (Mekanism 10.7, o mais novo)
+
+O Mekanism foi atualizado para a versão mais nova (10.7, Minecraft 1.21.1), com as receitas, os números e a arte
+original do mod (MIT):
+- **Processamento de minério do Mekanism de hoje**: Câmara de Enriquecimento (minério ×2; pó sujo → pó), Câmara de
+  Purificação com oxigênio (minério ×3 em **Aglomerados**), Câmara de Injeção Química com cloreto de hidrogênio
+  (minério ×4 em **Estilhaços**), e o Triturador (aglomerado → **pó sujo**). Ferro, ouro, cobre, estanho e ósmio.
+- Máquinas novas: **Câmara de Enriquecimento**, **Combinador** (pó + pedregulho = minério), **Serraria de Precisão**
+  (tora = 6 tábuas + serragem), **Fundição Energizada** e **Compressor de Ósmio** (lingotes refinados).
+- **Infusor Metalúrgico** com os tipos de infusão do mod (carvão, redstone, pó de diamante, ouro, estanho, obsidiana
+  refinada, biocombustível e cogumelo) e os circuitos **Elite** e **Ultimate**; ferro enriquecido e pó de aço.
+- O gás continua em cilindros (1 cilindro = 1.000 mB); o sílex também dá oxigênio na Purificação.
+- Gasto de energia do Mekanism 10 (Purificação 16.000 RF, Injeção 32.000 RF por operação) e os Cubos de Energia com
+  4, 16, 64 e 256 milhões de J. 140 receitas de enriquecimento, 170 do triturador, 117 da serraria e mais.
+  5 missões novas no capítulo do Mekanism.
+
 ## Novidades da 1.20.0 (Ender IO 9, o mais novo)
 
 O Ender IO foi atualizado para a versão mais nova (Ender IO 9, ramo 26.3, do Team Ender IO), com as receitas, os

@@ -2116,6 +2116,87 @@
     },
     "clc_frasco_alma_cheio": {
       "textures": "textures/items/cl/arte/frasco_alma_cheio"
+    },
+    "clc_torrao_ferro": {
+      "textures": "textures/items/cl/arte/torrao_ferro"
+    },
+    "clc_torrao_ouro": {
+      "textures": "textures/items/cl/arte/torrao_ouro"
+    },
+    "clc_torrao_cobre": {
+      "textures": "textures/items/cl/arte/torrao_cobre"
+    },
+    "clc_torrao_estanho": {
+      "textures": "textures/items/cl/arte/torrao_estanho"
+    },
+    "clc_torrao_osmio": {
+      "textures": "textures/items/cl/arte/torrao_osmio"
+    },
+    "clc_fragmento_ferro": {
+      "textures": "textures/items/cl/arte/fragmento_ferro"
+    },
+    "clc_fragmento_ouro": {
+      "textures": "textures/items/cl/arte/fragmento_ouro"
+    },
+    "clc_fragmento_cobre": {
+      "textures": "textures/items/cl/arte/fragmento_cobre"
+    },
+    "clc_fragmento_estanho": {
+      "textures": "textures/items/cl/arte/fragmento_estanho"
+    },
+    "clc_fragmento_osmio": {
+      "textures": "textures/items/cl/arte/fragmento_osmio"
+    },
+    "clc_po_sujo_ferro": {
+      "textures": "textures/items/cl/arte/po_sujo_ferro"
+    },
+    "clc_po_sujo_ouro": {
+      "textures": "textures/items/cl/arte/po_sujo_ouro"
+    },
+    "clc_po_sujo_cobre": {
+      "textures": "textures/items/cl/arte/po_sujo_cobre"
+    },
+    "clc_po_sujo_estanho": {
+      "textures": "textures/items/cl/arte/po_sujo_estanho"
+    },
+    "clc_po_sujo_osmio": {
+      "textures": "textures/items/cl/arte/po_sujo_osmio"
+    },
+    "clc_ferro_enriquecido": {
+      "textures": "textures/items/cl/arte/ferro_enriquecido"
+    },
+    "clc_po_aco": {
+      "textures": "textures/items/cl/arte/po_aco"
+    },
+    "clc_po_diamante": {
+      "textures": "textures/items/cl/arte/po_diamante"
+    },
+    "clc_po_obsidiana_refinada": {
+      "textures": "textures/items/cl/arte/po_obsidiana_refinada"
+    },
+    "clc_carbono_enriquecido": {
+      "textures": "textures/items/cl/arte/carbono_enriquecido"
+    },
+    "clc_redstone_enriquecida": {
+      "textures": "textures/items/cl/arte/redstone_enriquecida"
+    },
+    "clc_diamante_enriquecido": {
+      "textures": "textures/items/cl/arte/diamante_enriquecido"
+    },
+    "clc_obsidiana_refinada_enriquecida": {
+      "textures": "textures/items/cl/arte/obsidiana_refinada_enriquecida"
+    },
+    "clc_ouro_enriquecido": {
+      "textures": "textures/items/cl/arte/ouro_enriquecido"
+    },
+    "clc_estanho_enriquecido": {
+      "textures": "textures/items/cl/arte/estanho_enriquecido"
+    },
+    "clc_circuito_controle_elite": {
+      "textures": "textures/items/cl/arte/circuito_controle_elite"
+    },
+    "clc_circuito_controle_supremo": {
+      "textures": "textures/items/cl/arte/circuito_controle_supremo"
     }
   }
 }
