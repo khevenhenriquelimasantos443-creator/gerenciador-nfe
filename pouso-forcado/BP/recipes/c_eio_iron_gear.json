@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_iron_gear"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NIN",
+      "IGI",
+      "NIN"
+    ],
+    "key": {
+      "G": {
+        "item": "cl:graos_infinito"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "N": {
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:engrenagem_ferro"
+    }
+  }
+}

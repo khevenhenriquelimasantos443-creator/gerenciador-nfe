@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_soularium_nugget_to_ingot"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NNN",
+      "NNN",
+      "NNN"
+    ],
+    "key": {
+      "N": {
+        "item": "cl:pepita_almario"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:almario"
+    }
+  }
+}

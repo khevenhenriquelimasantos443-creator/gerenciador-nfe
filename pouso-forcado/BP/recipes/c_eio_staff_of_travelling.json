@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_staff_of_travelling"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  C",
+      " I ",
+      "I  "
+    ],
+    "key": {
+      "C": {
+        "item": "cl:cristal_ender"
+      },
+      "I": {
+        "item": "cl:aco_negro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cajado_viagem"
+    }
+  }
+}

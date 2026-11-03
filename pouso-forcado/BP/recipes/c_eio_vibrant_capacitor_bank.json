@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_vibrant_capacitor_bank"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "VOV",
+      "BCB",
+      "VOV"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:banco_capacitores"
+      },
+      "C": {
+        "item": "cl:cristal_vibrante"
+      },
+      "O": {
+        "item": "cl:capacitor_octadico"
+      },
+      "V": {
+        "item": "cl:liga_vibrante"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:banco_capacitores_vibrante"
+    }
+  }
+}

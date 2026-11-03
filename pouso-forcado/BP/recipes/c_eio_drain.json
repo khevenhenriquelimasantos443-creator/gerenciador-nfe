@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_drain"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ICI",
+      "IVI",
+      "GBG"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "C": {
+        "item": "cl:vidro_transparente"
+      },
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      },
+      "I": {
+        "item": "cl:ferro_condutor"
+      },
+      "V": {
+        "item": "cl:chassi_maquina"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:dreno"
+    }
+  }
+}

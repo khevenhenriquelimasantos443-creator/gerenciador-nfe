@@ -65,6 +65,7 @@ import { registrarOxigenio } from "./galacticraft/oxigenio.js";
 import { registrarFoguete } from "./galacticraft/foguete.js";
 import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEnderIO, stirling } from "./maquinas/enderio.js";
+import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
 import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
 import { registrarMochila } from "./utilidades/mochila.js";
@@ -112,6 +113,8 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:pw_descarregador", comPerfil("powah: descarregador", descarregadorPw));
   blockComponentRegistry.registerCustomComponent("cl:pw_funil", comPerfil("powah: funil", funilPw));
   blockComponentRegistry.registerCustomComponent("cl:pw_transmissor", comPerfil("powah: transmissor", transmissorPw));
+  // 1.20.0: Ender IO 9
+  for (const [id, c] of Object.entries(COMPONENTES_EIO9)) blockComponentRegistry.registerCustomComponent(id, comPerfil(`eio: ${id.slice(7)}`, c));
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -275,6 +278,7 @@ registrarFoguete();
 registrarBase();
 registrarMekanismExtra();
 registrarEnderIO();
+registrarEnderIO9();
 registrarCreate();
 registrarWaystones();
 registrarMochila();

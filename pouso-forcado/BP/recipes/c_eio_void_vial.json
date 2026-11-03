@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_void_vial"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "QVQ",
+      "GQG"
+    ],
+    "key": {
+      "G": {
+        "item": "cl:graos_infinito"
+      },
+      "Q": {
+        "item": "cl:quartzo_fundido"
+      },
+      "S": {
+        "item": "cl:almario"
+      },
+      "V": {
+        "item": "cl:semente_suspeita"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:frasco_vazio"
+    }
+  }
+}

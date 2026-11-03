@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_weather_crystal"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " P ",
+      "VEV",
+      " P "
+    ],
+    "key": {
+      "E": {
+        "item": "cl:cristal_ender"
+      },
+      "P": {
+        "item": "cl:cristal_pulsante"
+      },
+      "V": {
+        "item": "cl:cristal_vibrante"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cristal_climatico"
+    }
+  }
+}

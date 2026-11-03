@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:eletrodo_zumbi",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_eletrodo_zumbi",
+      "minecraft:display_name": {
+        "value": "item.cl:eletrodo_zumbi.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

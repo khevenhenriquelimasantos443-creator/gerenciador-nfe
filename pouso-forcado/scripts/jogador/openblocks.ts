@@ -23,7 +23,9 @@ type Tumulo = { dono: string; itens: ItemSalvo[] };
 const planando = new Set<string>();
 function cuidarAsa(j: Player): void {
   // 1.16.4: o item da mão vem do cache (util/jogadores.ts); sem a asa na mão, nada de ler o jogador.
-  if (maoDe(j) !== "cl:asa_delta") return void planando.delete(j.id);
+  // 1.20.0: o Planador do Ender IO 9 voa igual.
+  const mao = maoDe(j);
+  if (mao !== "cl:asa_delta" && mao !== "cl:planador") return void planando.delete(j.id);
   const caindo = !j.isOnGround && !j.isInWater && !j.isSneaking && j.getVelocity().y < -0.1;
   if (!(caindo || (planando.has(j.id) && !j.isOnGround && !j.isSneaking))) {
     planando.delete(j.id);

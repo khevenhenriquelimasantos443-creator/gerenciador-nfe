@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:balde_semente_nuvem_concentrada",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_balde_semente_nuvem_concentrada",
+      "minecraft:display_name": {
+        "value": "item.cl:balde_semente_nuvem_concentrada.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

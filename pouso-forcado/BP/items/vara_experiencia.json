@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:vara_experiencia",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_vara_experiencia",
+      "minecraft:display_name": {
+        "value": "item.cl:vara_experiencia.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

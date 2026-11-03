@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_redstone_alloy_grinding_ball"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " I ",
+      "III",
+      " I "
+    ],
+    "key": {
+      "I": {
+        "item": "cl:liga_redstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:esfera_liga_redstone",
+      "count": 24
+    }
+  }
+}

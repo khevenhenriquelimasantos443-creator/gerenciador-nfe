@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_dark_steel_grinding_ball"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " I ",
+      "III",
+      " I "
+    ],
+    "key": {
+      "I": {
+        "item": "cl:aco_negro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:esfera_aco_negro",
+      "count": 24
+    }
+  }
+}

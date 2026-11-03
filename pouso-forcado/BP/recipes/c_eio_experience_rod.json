@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_experience_rod"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  S",
+      "VE ",
+      "SV "
+    ],
+    "key": {
+      "E": {
+        "item": "cl:liga_vibrante"
+      },
+      "S": {
+        "item": "cl:almario"
+      },
+      "V": {
+        "item": "cl:semente_suspeita"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vara_experiencia"
+    }
+  }
+}

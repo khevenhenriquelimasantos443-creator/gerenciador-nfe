@@ -1,0 +1,5582 @@
+{
+ "itens": [
+  {
+   "id": "aco_end",
+   "pt": "Lingote de Aço do End",
+   "en": "End Steel Ingot",
+   "eio": "end_steel_ingot"
+  },
+  {
+   "id": "almario",
+   "pt": "Lingote de Almário",
+   "en": "Soularium Ingot",
+   "eio": "soularium_ingot"
+  },
+  {
+   "id": "pepita_aco_negro",
+   "pt": "Pepita de Aço Sombrio",
+   "en": "Dark Steel Nugget",
+   "eio": "dark_steel_nugget"
+  },
+  {
+   "id": "pepita_aco_end",
+   "pt": "Pepita de Aço do End",
+   "en": "End Steel Nugget",
+   "eio": "end_steel_nugget"
+  },
+  {
+   "id": "pepita_liga_energetica",
+   "pt": "Pepita de Liga Energética",
+   "en": "Energetic Alloy Nugget",
+   "eio": "energetic_alloy_nugget"
+  },
+  {
+   "id": "pepita_liga_vibrante",
+   "pt": "Pepita de Liga Vibrante",
+   "en": "Vibrant Alloy Nugget",
+   "eio": "vibrant_alloy_nugget"
+  },
+  {
+   "id": "pepita_liga_redstone",
+   "pt": "Pepita de Liga de Redstone",
+   "en": "Redstone Alloy Nugget",
+   "eio": "redstone_alloy_nugget"
+  },
+  {
+   "id": "pepita_ferro_condutor",
+   "pt": "Pepita de Liga Condutiva",
+   "en": "Conductive Alloy Nugget",
+   "eio": "conductive_alloy_nugget"
+  },
+  {
+   "id": "pepita_ferro_pulsante",
+   "pt": "Pepita de Liga Pulsante",
+   "en": "Pulsating Alloy Nugget",
+   "eio": "pulsating_alloy_nugget"
+  },
+  {
+   "id": "pepita_almario",
+   "pt": "Pepita de Almário",
+   "en": "Soularium Nugget",
+   "eio": "soularium_nugget"
+  },
+  {
+   "id": "esfera_aco_negro",
+   "pt": "Esfera de Trituração de Aço Sombrio",
+   "en": "Dark Steel Grinding Ball",
+   "eio": "dark_steel_grinding_ball"
+  },
+  {
+   "id": "esfera_aco_end",
+   "pt": "Esfera de Trituração de Aço do End",
+   "en": "End Steel Grinding Ball",
+   "eio": "end_steel_grinding_ball"
+  },
+  {
+   "id": "esfera_liga_energetica",
+   "pt": "Esfera de Trituração de Liga Energética",
+   "en": "Energetic Alloy Grinding Ball",
+   "eio": "energetic_alloy_grinding_ball"
+  },
+  {
+   "id": "esfera_liga_vibrante",
+   "pt": "Esfera de Trituração de Liga Vibrante",
+   "en": "Vibrant Alloy Grinding Ball",
+   "eio": "vibrant_alloy_grinding_ball"
+  },
+  {
+   "id": "esfera_liga_redstone",
+   "pt": "Esfera de Trituração de Liga de Redstone",
+   "en": "Redstone Alloy Grinding Ball",
+   "eio": "redstone_alloy_grinding_ball"
+  },
+  {
+   "id": "esfera_ferro_condutor",
+   "pt": "Esfera de Trituração de Liga Condutiva",
+   "en": "Conductive Alloy Grinding Ball",
+   "eio": "conductive_alloy_grinding_ball"
+  },
+  {
+   "id": "esfera_ferro_pulsante",
+   "pt": "Esfera de Trituração de Liga Pulsante",
+   "en": "Pulsating Alloy Grinding Ball",
+   "eio": "pulsating_alloy_grinding_ball"
+  },
+  {
+   "id": "esfera_almario",
+   "pt": "Esfera de Trituração de Almário",
+   "en": "Soularium Grinding Ball",
+   "eio": "soularium_grinding_ball"
+  },
+  {
+   "id": "po_perola_ender",
+   "pt": "Pó de Pérola do Ender",
+   "en": "Powdered Ender Pearl",
+   "eio": "powdered_ender_pearl"
+  },
+  {
+   "id": "po_lapis",
+   "pt": "Pó de Lápis-lazúli",
+   "en": "Powdered Lapis Lazuli",
+   "eio": "powdered_lapis_lazuli"
+  },
+  {
+   "id": "po_obsidiana",
+   "pt": "Pó de Obsidiana",
+   "en": "Powdered Obsidian",
+   "eio": "powdered_obsidian"
+  },
+  {
+   "id": "po_quartzo",
+   "pt": "Pó de Quartzo",
+   "en": "Powdered Quartz",
+   "eio": "powdered_quartz"
+  },
+  {
+   "id": "graos_infinito",
+   "pt": "Grãos do Infinito",
+   "en": "Grains of Infinity",
+   "eio": "grains_of_infinity"
+  },
+  {
+   "id": "graos_piezalidade",
+   "pt": "Grãos de Piezalidade",
+   "en": "Grains of Piezallity",
+   "eio": "pulsating_powder"
+  },
+  {
+   "id": "graos_vibracao",
+   "pt": "Grãos de Vibração",
+   "en": "Grains of Vibrancy",
+   "eio": "vibrant_powder"
+  },
+  {
+   "id": "graos_presciencia",
+   "pt": "Grãos da Presciência",
+   "en": "Grains of Prescience",
+   "eio": "prescient_powder"
+  },
+  {
+   "id": "graos_end",
+   "pt": "Grãos do End",
+   "en": "Grains of the End",
+   "eio": "ender_crystal_powder"
+  },
+  {
+   "id": "cristal_vibrante",
+   "pt": "Cristal Vibrante",
+   "en": "Vibrant Crystal",
+   "eio": "vibrant_crystal"
+  },
+  {
+   "id": "cristal_ender",
+   "pt": "Cristal do Ender",
+   "en": "Ender Crystal",
+   "eio": "ender_crystal"
+  },
+  {
+   "id": "cristal_sedutor",
+   "pt": "Cristal Sedutor",
+   "en": "Enticing Crystal",
+   "eio": "enticing_crystal"
+  },
+  {
+   "id": "cristal_climatico",
+   "pt": "Cristal Climático",
+   "en": "Weather Crystal",
+   "eio": "weather_crystal"
+  },
+  {
+   "id": "cristal_presciencia",
+   "pt": "Cristal da Presciência",
+   "en": "Prescient Crystal",
+   "eio": "prescient_crystal"
+  },
+  {
+   "id": "engrenagem_energizada",
+   "pt": "Engrenagem de Bimetal Energizado",
+   "en": "Energized Bimetal Gear",
+   "eio": "energized_gear"
+  },
+  {
+   "id": "engrenagem_vibrante",
+   "pt": "Engrenagem de Bimetal Vibrante",
+   "en": "Vibrant Bimetal Gear",
+   "eio": "vibrant_gear"
+  },
+  {
+   "id": "composto_fotovoltaico",
+   "pt": "Composto Fotovoltaico",
+   "en": "Photovoltaic Composite",
+   "eio": "photovoltaic_composite"
+  },
+  {
+   "id": "materia_vegetal_verde",
+   "pt": "Recortes e Aparas",
+   "en": "Clippings and Trimmings",
+   "eio": "plant_matter_green"
+  },
+  {
+   "id": "materia_vegetal_marrom",
+   "pt": "Galhos e Podas",
+   "en": "Twigs and Prunings",
+   "eio": "plant_matter_brown"
+  },
+  {
+   "id": "graveto_nutritivo",
+   "pt": "Graveto Nutritivo",
+   "en": "Nutritious Stick",
+   "eio": "nutritious_stick"
+  },
+  {
+   "id": "frasco_alma",
+   "pt": "Frasco de Alma",
+   "en": "Soul Vial",
+   "eio": "soul_vial"
+  },
+  {
+   "id": "gerador_quebrado",
+   "pt": "Gerador de Monstros Quebrado",
+   "en": "Broken Spawner",
+   "eio": "broken_spawner"
+  },
+  {
+   "id": "controlador_logico_z",
+   "pt": "Controlador Lógico Z",
+   "en": "Z-Logic Controller",
+   "eio": "z_logic_controller"
+  },
+  {
+   "id": "contratante_esqueletico",
+   "pt": "Contratante Esquelético",
+   "en": "Skeletal Contractor",
+   "eio": "skeletal_contractor"
+  },
+  {
+   "id": "eletrodo_zumbi",
+   "pt": "Eletrodo Zumbi",
+   "en": "Zombie Electrode",
+   "eio": "zombie_electrode"
+  },
+  {
+   "id": "diodo_guardiao",
+   "pt": "Diodo Guardião",
+   "en": "Guardian Diode",
+   "eio": "guardian_diode"
+  },
+  {
+   "id": "ressonador_ender",
+   "pt": "Ressonador do Ender",
+   "en": "Ender Resonator",
+   "eio": "ender_resonator"
+  },
+  {
+   "id": "frank_n_zumbi",
+   "pt": "Frank'N'Zumbi",
+   "en": "Frank'N'Zombie",
+   "eio": "frank_n_zombie"
+  },
+  {
+   "id": "ender_senciente",
+   "pt": "Ender Senciente",
+   "en": "Sentient Ender",
+   "eio": "sentient_ender"
+  },
+  {
+   "id": "enderios",
+   "pt": "Enderios",
+   "en": "Enderios",
+   "eio": "enderios"
+  },
+  {
+   "id": "vara_infinito",
+   "pt": "Vara do Infinito",
+   "en": "Infinity Rod",
+   "eio": "infinity_rod"
+  },
+  {
+   "id": "vara_experiencia",
+   "pt": "Vara de Experiência",
+   "en": "Experience Rod",
+   "eio": "experience_rod"
+  },
+  {
+   "id": "chave_yeta",
+   "pt": "Chave Yeta",
+   "en": "Yeta Wrench",
+   "eio": "yeta_wrench"
+  },
+  {
+   "id": "cajado_viagem",
+   "pt": "Cajado de Viagem",
+   "en": "Staff of Travelling",
+   "eio": "staff_of_travelling"
+  },
+  {
+   "id": "cajado_levitacao",
+   "pt": "Cajado de Levitação",
+   "en": "Staff of Levity",
+   "eio": "staff_of_levity"
+  },
+  {
+   "id": "planador",
+   "pt": "Planador",
+   "en": "Glider",
+   "eio": "glider"
+  },
+  {
+   "id": "asa_planador",
+   "pt": "Asa de Planador",
+   "en": "Glider Wing",
+   "eio": "glider_wing"
+  },
+  {
+   "id": "eletroima",
+   "pt": "Eletroímã",
+   "en": "Electromagnet",
+   "eio": "electromagnet"
+  },
+  {
+   "id": "corrente_almas",
+   "pt": "Corrente de Almas",
+   "en": "Soul Chain",
+   "eio": "soul_chain"
+  },
+  {
+   "id": "cabeca_enderman",
+   "pt": "Cabeça de Enderman",
+   "en": "Enderman Head",
+   "eio": "enderman_head"
+  },
+  {
+   "id": "simbolo_animal",
+   "pt": "Símbolo de Animal",
+   "en": "Animal Token",
+   "eio": "animal_token"
+  },
+  {
+   "id": "simbolo_monstro",
+   "pt": "Símbolo de Monstro",
+   "en": "Monster Token",
+   "eio": "monster_token"
+  },
+  {
+   "id": "simbolo_jogador",
+   "pt": "Símbolo de Jogador",
+   "en": "Player Token",
+   "eio": "player_token"
+  },
+  {
+   "id": "semente_suspeita",
+   "pt": "Semente Suspeita",
+   "en": "Suspicious Seed",
+   "eio": "suspicious_seed"
+  },
+  {
+   "id": "frasco_vazio",
+   "pt": "Frasco do Vazio",
+   "en": "Vial of the Void",
+   "eio": "void_vial"
+  },
+  {
+   "id": "balde_hootch",
+   "pt": "Balde de Hootch",
+   "en": "Hootch Bucket",
+   "eio": "hootch_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_combustivel_foguete",
+   "pt": "Balde de Combustível de Foguete",
+   "en": "Rocket Fuel Bucket",
+   "eio": "rocket_fuel_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_agua_fogo",
+   "pt": "Balde de Água de Fogo",
+   "en": "Fire Water Bucket",
+   "eio": "fire_water_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_destilado_nutrientes",
+   "pt": "Balde de Destilado de Nutrientes",
+   "en": "Nutrient Distillation Bucket",
+   "eio": "nutrient_distillation_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_luz_solar",
+   "pt": "Balde de Luz Solar Líquida",
+   "en": "Liquid Sunshine Bucket",
+   "eio": "liquid_sunshine_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_semente_nuvem",
+   "pt": "Balde de Semente de Nuvem",
+   "en": "Cloud Seed Bucket",
+   "eio": "cloud_seed_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_semente_nuvem_concentrada",
+   "pt": "Balde de Semente de Nuvem Concentrada",
+   "en": "Cloud Seed Concentrated Bucket",
+   "eio": "cloud_seed_concentrated_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_suco_xp",
+   "pt": "Balde de Suco de XP",
+   "en": "XP Juice Bucket",
+   "eio": "xp_juice_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_vapor_levitacao",
+   "pt": "Balde de Vapor de Levitação",
+   "en": "Vapor of Levity Bucket",
+   "eio": "vapor_of_levity_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_orvalho_vazio",
+   "pt": "Balde de Orvalho do Vazio",
+   "en": "Dew of the Void Bucket",
+   "eio": "dew_of_the_void_bucket",
+   "balde": true
+  },
+  {
+   "id": "balde_escuridao_liquida",
+   "pt": "Balde de Escuridão Líquida",
+   "en": "Liquid Darkness Bucket",
+   "eio": "liquid_darkness_bucket",
+   "balde": true
+  }
+ ],
+ "blocos": [
+  {
+   "id": "bloco_aco_negro",
+   "pt": "Bloco de Aço Sombrio",
+   "en": "Dark Steel Block",
+   "eio": "dark_steel_block"
+  },
+  {
+   "id": "bloco_aco_end",
+   "pt": "Bloco de Aço do End",
+   "en": "End Steel Block",
+   "eio": "end_steel_block"
+  },
+  {
+   "id": "bloco_liga_energetica",
+   "pt": "Bloco de Liga Energética",
+   "en": "Energetic Alloy Block",
+   "eio": "energetic_alloy_block"
+  },
+  {
+   "id": "bloco_liga_vibrante",
+   "pt": "Bloco de Liga Vibrante",
+   "en": "Vibrant Alloy Block",
+   "eio": "vibrant_alloy_block"
+  },
+  {
+   "id": "bloco_liga_redstone",
+   "pt": "Bloco de Liga de Redstone",
+   "en": "Redstone Alloy Block",
+   "eio": "redstone_alloy_block"
+  },
+  {
+   "id": "bloco_ferro_condutor",
+   "pt": "Bloco de Liga Condutiva",
+   "en": "Conductive Alloy Block",
+   "eio": "conductive_alloy_block"
+  },
+  {
+   "id": "bloco_ferro_pulsante",
+   "pt": "Bloco de Liga Pulsante",
+   "en": "Pulsating Alloy Block",
+   "eio": "pulsating_alloy_block"
+  },
+  {
+   "id": "bloco_almario",
+   "pt": "Bloco de Almário",
+   "en": "Soularium Block",
+   "eio": "soularium_block"
+  },
+  {
+   "id": "quartzo_fundido",
+   "pt": "Quartzo Fundido",
+   "en": "Fused Quartz",
+   "eio": "fused_quartz"
+  },
+  {
+   "id": "quartzo_fundido_iluminado",
+   "pt": "Quartzo Fundido Iluminado",
+   "en": "Enlightened Fused Quartz",
+   "eio": "fused_quartz_e"
+  },
+  {
+   "id": "quartzo_fundido_escuro",
+   "pt": "Quartzo Fundido Escuro",
+   "en": "Dark Fused Quartz",
+   "eio": "fused_quartz_d"
+  },
+  {
+   "id": "vidro_transparente",
+   "pt": "Vidro Transparente",
+   "en": "Clear Glass",
+   "eio": "clear_glass"
+  },
+  {
+   "id": "vidro_transparente_iluminado",
+   "pt": "Vidro Transparente Iluminado",
+   "en": "Enlightened Clear Glass",
+   "eio": "clear_glass_e"
+  },
+  {
+   "id": "vidro_transparente_escuro",
+   "pt": "Vidro Transparente Escuro",
+   "en": "Dark Clear Glass",
+   "eio": "clear_glass_d"
+  },
+  {
+   "id": "obsidiana_reforcada",
+   "pt": "Obsidiana Reforçada",
+   "en": "Reinforced Obsidian",
+   "eio": "reinforced_obsidian_block"
+  },
+  {
+   "id": "isolamento_industrial",
+   "pt": "Isolamento Industrial",
+   "en": "Industrial Insulation",
+   "eio": "industrial_insulation"
+  },
+  {
+   "id": "barras_aco_negro",
+   "pt": "Barras de Aço Sombrio",
+   "en": "Dark Steel Bars",
+   "eio": "dark_steel_bars"
+  },
+  {
+   "id": "barras_aco_end",
+   "pt": "Barras de Aço do End",
+   "en": "End Steel Bars",
+   "eio": "end_steel_bars"
+  },
+  {
+   "id": "chassi_almas",
+   "pt": "Chassis de Almas",
+   "en": "Ensouled Chassis",
+   "eio": "ensouled_chassis"
+  }
+ ],
+ "maquinas": [
+  {
+   "id": "fatiar_emendar",
+   "pt": "Fatiar e Emendar",
+   "en": "Slice'N'Splice",
+   "eio": "slice_and_splice"
+  },
+  {
+   "id": "vinculador_almas",
+   "pt": "Vinculador de Almas",
+   "en": "Soul Binder",
+   "eio": "soul_binder"
+  },
+  {
+   "id": "crisol_fermentacao",
+   "pt": "Crisol de Fermentação (VAT)",
+   "en": "VAT",
+   "eio": "vat"
+  },
+  {
+   "id": "motor_almas",
+   "pt": "Motor de Almas",
+   "en": "Soul Engine",
+   "eio": "soul_engine"
+  },
+  {
+   "id": "gerador_energizado",
+   "pt": "Gerador de Monstros Energizado",
+   "en": "Powered Spawner",
+   "eio": "powered_spawner"
+  },
+  {
+   "id": "funil_impulso",
+   "pt": "Funil de Impulso",
+   "en": "Impulse Hopper",
+   "eio": "impulse_hopper"
+  },
+  {
+   "id": "carregador_fio",
+   "pt": "Carregador com Fio",
+   "en": "Wired Charger",
+   "eio": "wired_charger"
+  },
+  {
+   "id": "carregador_sem_fio",
+   "pt": "Carregador Sem Fio",
+   "en": "Wireless Charger",
+   "eio": "wireless_charger"
+  },
+  {
+   "id": "obelisco_xp",
+   "pt": "Obelisco de XP",
+   "en": "XP Obelisk",
+   "eio": "xp_obelisk"
+  },
+  {
+   "id": "vacuo_xp",
+   "pt": "Vácuo de XP",
+   "en": "XP Vacuum",
+   "eio": "xp_vacuum"
+  },
+  {
+   "id": "bau_vacuo",
+   "pt": "Baú de Vácuo",
+   "en": "Vacuum Chest",
+   "eio": "vacuum_chest"
+  },
+  {
+   "id": "obelisco_inibicao",
+   "pt": "Obelisco de Inibição",
+   "en": "Inhibitor Obelisk",
+   "eio": "inhibitor_obelisk"
+  },
+  {
+   "id": "obelisco_aversao",
+   "pt": "Obelisco de Aversão",
+   "en": "Aversion Obelisk",
+   "eio": "aversion_obelisk"
+  },
+  {
+   "id": "obelisco_atracao",
+   "pt": "Obelisco de Atração",
+   "en": "Attractor Obelisk",
+   "eio": "attractor_obelisk"
+  },
+  {
+   "id": "obelisco_relocacao",
+   "pt": "Obelisco de Relocação",
+   "en": "Relocator Obelisk",
+   "eio": "relocator_obelisk"
+  },
+  {
+   "id": "obelisco_climatico",
+   "pt": "Obelisco Climático",
+   "en": "Weather Obelisk",
+   "eio": "weather_obelisk"
+  },
+  {
+   "id": "dreno",
+   "pt": "Dreno",
+   "en": "Drain",
+   "eio": "drain"
+  },
+  {
+   "id": "tanque_fluido",
+   "pt": "Tanque de Fluido",
+   "en": "Fluid Tank",
+   "eio": "fluid_tank"
+  },
+  {
+   "id": "tanque_fluido_pressurizado",
+   "pt": "Tanque de Fluido Pressurizado",
+   "en": "Pressurized Fluid Tank",
+   "eio": "pressurized_fluid_tank"
+  },
+  {
+   "id": "estacao_agricola",
+   "pt": "Estação Agrícola",
+   "en": "Farming Station",
+   "eio": "farming_station"
+  }
+ ],
+ "renomear": {
+  "po_carvao": [
+   "Pó de Carvão",
+   "Powdered Coal"
+  ],
+  "aco_negro": [
+   "Lingote de Aço Sombrio",
+   "Dark Steel Ingot"
+  ],
+  "liga_energetica": [
+   "Lingote de Liga Energética",
+   "Energetic Alloy Ingot"
+  ],
+  "liga_vibrante": [
+   "Lingote de Liga Vibrante",
+   "Vibrant Alloy Ingot"
+  ],
+  "liga_redstone": [
+   "Lingote de Liga de Redstone",
+   "Redstone Alloy Ingot"
+  ],
+  "ferro_condutor": [
+   "Lingote de Liga Condutiva",
+   "Conductive Alloy Ingot"
+  ],
+  "ferro_pulsante": [
+   "Lingote de Liga Pulsante",
+   "Pulsating Alloy Ingot"
+  ],
+  "cristal_pulsante": [
+   "Cristal Pulsante",
+   "Pulsating Crystal"
+  ],
+  "composto_aglutinante": [
+   "Composto Aglomerante de Condutor",
+   "Conduit Binder Composite"
+  ],
+  "aglutinante_conduite": [
+   "Aglomerante de Condutor",
+   "Conduit Binder"
+  ],
+  "capacitor_basico": [
+   "Capacitor Básico",
+   "Basic Capacitor"
+  ],
+  "capacitor_duplo": [
+   "Capacitor de Camada Dupla",
+   "Double-Layer Capacitor"
+  ],
+  "capacitor_octadico": [
+   "Capacitor Octádico",
+   "Octadic Capacitor"
+  ],
+  "engrenagem_aco_negro": [
+   "Engrenagem de Bimetal Sombrio",
+   "Dark Bimetal Gear"
+  ],
+  "placa_fotovoltaica": [
+   "Chapa Fotovoltaica",
+   "Photovoltaic Plate"
+  ],
+  "chassi_maquina": [
+   "Chassis do Vazio",
+   "Void Chassis"
+  ],
+  "fundidora_ligas": [
+   "Fundição de Ligas",
+   "Alloy Smelter"
+  ],
+  "moinho_sag": [
+   "Triturador SAG",
+   "SAG Mill"
+  ],
+  "gerador_stirling": [
+   "Gerador Stirling",
+   "Stirling Generator"
+  ],
+  "painel_fotovoltaico": [
+   "Módulo Fotovoltaico Energético",
+   "Energetic Photovoltaic Module"
+  ],
+  "painel_fotovoltaico_avancado": [
+   "Módulo Fotovoltaico Pulsante",
+   "Pulsating Photovoltaic Module"
+  ],
+  "painel_fotovoltaico_vibrante": [
+   "Módulo Fotovoltaico Vibrante",
+   "Vibrant Photovoltaic Module"
+  ],
+  "banco_capacitores_basico": [
+   "Banco de Capacitores Básico",
+   "Basic Capacitor Bank"
+  ],
+  "banco_capacitores": [
+   "Banco de Capacitores Avançado",
+   "Advanced Capacitor Bank"
+  ],
+  "banco_capacitores_vibrante": [
+   "Banco de Capacitores Vibrante",
+   "Vibrant Capacitor Bank"
+  ],
+  "ancora_viagem": [
+   "Âncora de Viagem",
+   "Travel Anchor"
+  ],
+  "eio_espada_aco_negro": [
+   "O Ender",
+   "The Ender"
+  ],
+  "conduto_energia": null,
+  "conduto_item": null,
+  "conduto_energia_aprimorado": null,
+  "conduto_energia_ender": null
+ },
+ "receitas": [
+  {
+   "id": "eio_advanced_capacitor_bank",
+   "resultado": "cl:banco_capacitores",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "CRC",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:ferro_condutor",
+    "C": "cl:capacitor_duplo",
+    "R": "minecraft:redstone_block"
+   }
+  },
+  {
+   "id": "eio_alloy_smelter",
+   "resultado": "cl:fundidora_ligas",
+   "tipo": "shaped",
+   "padrao": [
+    "GFG",
+    "FVF",
+    "IOI"
+   ],
+   "chave": {
+    "F": "minecraft:furnace",
+    "G": "cl:engrenagem_ferro",
+    "I": "minecraft:iron_ingot",
+    "O": "minecraft:obsidian",
+    "V": "cl:chassi_maquina"
+   }
+  },
+  {
+   "id": "eio_attractor_obelisk",
+   "resultado": "cl:obelisco_atracao",
+   "tipo": "shaped",
+   "padrao": [
+    " M ",
+    "EGE",
+    "ICI"
+   ],
+   "chave": {
+    "C": "cl:chassi_almas",
+    "E": "cl:liga_energetica",
+    "G": "cl:engrenagem_energizada",
+    "I": "cl:almario",
+    "M": "cl:cristal_sedutor"
+   }
+  },
+  {
+   "id": "eio_aversion_obelisk",
+   "resultado": "cl:obelisco_aversao",
+   "tipo": "shaped",
+   "padrao": [
+    " H ",
+    "EIE",
+    "ICI"
+   ],
+   "chave": {
+    "C": "cl:chassi_almas",
+    "E": "cl:liga_energetica",
+    "H": "cl:cabeca_enderman",
+    "I": "cl:almario"
+   }
+  },
+  {
+   "id": "eio_basic_capacitor",
+   "resultado": "cl:capacitor_basico",
+   "tipo": "shaped",
+   "padrao": [
+    " NG",
+    "NIN",
+    "GN "
+   ],
+   "chave": {
+    "G": "cl:graos_infinito",
+    "I": "minecraft:copper_ingot",
+    "N": "minecraft:gold_nugget"
+   }
+  },
+  {
+   "id": "eio_conductive_alloy_block",
+   "resultado": "cl:bloco_ferro_condutor",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:ferro_condutor"
+   }
+  },
+  {
+   "id": "eio_conductive_alloy_grinding_ball",
+   "resultado": "cl:esfera_ferro_condutor",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:ferro_condutor"
+   }
+  },
+  {
+   "id": "eio_conductive_alloy_ingot",
+   "resultado": "cl:ferro_condutor",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_ferro_condutor"
+   ]
+  },
+  {
+   "id": "eio_conductive_alloy_nugget",
+   "resultado": "cl:pepita_ferro_condutor",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:ferro_condutor"
+   ]
+  },
+  {
+   "id": "eio_conduit_binder_composite",
+   "resultado": "cl:composto_aglutinante",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "GCG",
+    "SGS",
+    "GCG"
+   ],
+   "chave": {
+    "C": "minecraft:clay_ball",
+    "G": "minecraft:gravel",
+    "S": "minecraft:sand"
+   }
+  },
+  {
+   "id": "eio_aglutinante",
+   "tipo": "furnace",
+   "entrada": "cl:composto_aglutinante",
+   "resultado": "cl:aglutinante_conduite"
+  },
+  {
+   "id": "eio_dark_bimetal_gear",
+   "resultado": "cl:engrenagem_aco_negro",
+   "tipo": "shaped",
+   "padrao": [
+    "NIN",
+    "IGI",
+    "NIN"
+   ],
+   "chave": {
+    "G": "cl:engrenagem_ferro",
+    "I": "cl:aco_negro",
+    "N": "cl:pepita_aco_negro"
+   }
+  },
+  {
+   "id": "eio_dark_steel_bars",
+   "resultado": "cl:barras_aco_negro",
+   "qtd": 16,
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:aco_negro"
+   }
+  },
+  {
+   "id": "eio_dark_steel_block",
+   "resultado": "cl:bloco_aco_negro",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:aco_negro"
+   }
+  },
+  {
+   "id": "eio_dark_steel_grinding_ball",
+   "resultado": "cl:esfera_aco_negro",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:aco_negro"
+   }
+  },
+  {
+   "id": "eio_dark_steel_ingot",
+   "resultado": "cl:aco_negro",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_aco_negro"
+   ]
+  },
+  {
+   "id": "eio_dark_steel_nugget",
+   "resultado": "cl:pepita_aco_negro",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:aco_negro"
+   ]
+  },
+  {
+   "id": "eio_dark_steel_sword",
+   "resultado": "cl:eio_espada_aco_negro",
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    " I ",
+    " S "
+   ],
+   "chave": {
+    "I": "cl:aco_negro",
+    "S": "minecraft:stick"
+   }
+  },
+  {
+   "id": "eio_double_layer_capacitor",
+   "resultado": "cl:capacitor_duplo",
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "CDC",
+    " I "
+   ],
+   "chave": {
+    "C": "cl:capacitor_basico",
+    "D": "cl:po_carvao",
+    "I": "cl:liga_energetica"
+   }
+  },
+  {
+   "id": "eio_drain",
+   "resultado": "cl:dreno",
+   "tipo": "shaped",
+   "padrao": [
+    "ICI",
+    "IVI",
+    "GBG"
+   ],
+   "chave": {
+    "B": "minecraft:bucket",
+    "C": "cl:vidro_transparente",
+    "G": "cl:engrenagem_ferro",
+    "I": "cl:ferro_condutor",
+    "V": "cl:chassi_maquina"
+   }
+  },
+  {
+   "id": "eio_electromagnet",
+   "resultado": "cl:eletroima",
+   "tipo": "shaped",
+   "padrao": [
+    "EVE",
+    "E E",
+    "C C"
+   ],
+   "chave": {
+    "C": "cl:ferro_condutor",
+    "E": "cl:liga_energetica",
+    "V": "cl:cristal_vibrante"
+   }
+  },
+  {
+   "id": "eio_end_steel_bars",
+   "resultado": "cl:barras_aco_end",
+   "qtd": 12,
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:aco_end"
+   }
+  },
+  {
+   "id": "eio_end_steel_block",
+   "resultado": "cl:bloco_aco_end",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:aco_end"
+   }
+  },
+  {
+   "id": "eio_end_steel_grinding_ball",
+   "resultado": "cl:esfera_aco_end",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:aco_end"
+   }
+  },
+  {
+   "id": "eio_end_steel_ingot",
+   "resultado": "cl:aco_end",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_aco_end"
+   ]
+  },
+  {
+   "id": "eio_end_steel_nugget",
+   "resultado": "cl:pepita_aco_end",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:aco_end"
+   ]
+  },
+  {
+   "id": "eio_ender_energy_conduit",
+   "resultado": "cl:conduto_energia_ender",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "BBB",
+    "III",
+    "BBB"
+   ],
+   "chave": {
+    "B": "cl:aglutinante_conduite",
+    "I": "cl:liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_enderios",
+   "resultado": "cl:enderios",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:bowl",
+    "minecraft:milk_bucket",
+    "minecraft:wheat",
+    "cl:po_perola_ender"
+   ]
+  },
+  {
+   "id": "eio_energetic_alloy_block",
+   "resultado": "cl:bloco_liga_energetica",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:liga_energetica"
+   }
+  },
+  {
+   "id": "eio_energetic_alloy_grinding_ball",
+   "resultado": "cl:esfera_liga_energetica",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:liga_energetica"
+   }
+  },
+  {
+   "id": "eio_energetic_alloy_ingot",
+   "resultado": "cl:liga_energetica",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_liga_energetica"
+   ]
+  },
+  {
+   "id": "eio_energetic_alloy_nugget",
+   "resultado": "cl:pepita_liga_energetica",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:liga_energetica"
+   ]
+  },
+  {
+   "id": "eio_energetic_photovoltaic_module",
+   "resultado": "cl:painel_fotovoltaico",
+   "tipo": "shaped",
+   "padrao": [
+    "EFE",
+    "PPP",
+    "CDC"
+   ],
+   "chave": {
+    "C": "cl:capacitor_basico",
+    "D": "minecraft:redstone",
+    "E": "minecraft:gold_ingot",
+    "F": "minecraft:glass",
+    "P": "cl:placa_fotovoltaica"
+   }
+  },
+  {
+   "id": "eio_energized_gear",
+   "resultado": "cl:engrenagem_energizada",
+   "tipo": "shaped",
+   "padrao": [
+    "NIN",
+    "IGI",
+    "NIN"
+   ],
+   "chave": {
+    "G": "cl:engrenagem_ferro",
+    "I": "cl:liga_energetica",
+    "N": "cl:pepita_liga_energetica"
+   }
+  },
+  {
+   "id": "eio_energy_conduit",
+   "resultado": "cl:conduto_energia",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "BBB",
+    "III",
+    "BBB"
+   ],
+   "chave": {
+    "B": "cl:aglutinante_conduite",
+    "I": "cl:ferro_condutor"
+   }
+  },
+  {
+   "id": "eio_enhanced_energy_conduit",
+   "resultado": "cl:conduto_energia_aprimorado",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "BBB",
+    "III",
+    "BBB"
+   ],
+   "chave": {
+    "B": "cl:aglutinante_conduite",
+    "I": "cl:liga_energetica"
+   }
+  },
+  {
+   "id": "eio_ensouled_chassis",
+   "resultado": "cl:chassi_almas",
+   "tipo": "shaped",
+   "padrao": [
+    "CIC",
+    "IQI",
+    "CIC"
+   ],
+   "chave": {
+    "C": "cl:corrente_almas",
+    "I": "cl:almario",
+    "Q": "minecraft:quartz"
+   }
+  },
+  {
+   "id": "eio_experience_rod",
+   "resultado": "cl:vara_experiencia",
+   "tipo": "shaped",
+   "padrao": [
+    "  S",
+    "VE ",
+    "SV "
+   ],
+   "chave": {
+    "E": "cl:liga_vibrante",
+    "S": "cl:almario",
+    "V": "cl:semente_suspeita"
+   }
+  },
+  {
+   "id": "eio_farming_station",
+   "resultado": "cl:estacao_agricola",
+   "tipo": "shaped",
+   "padrao": [
+    "EGE",
+    "SCS",
+    "DZD"
+   ],
+   "chave": {
+    "C": "cl:chassi_almas",
+    "D": "cl:aco_negro",
+    "E": "cl:engrenagem_energizada",
+    "G": "cl:cristal_pulsante",
+    "S": "cl:almario",
+    "Z": "cl:controlador_logico_z"
+   }
+  },
+  {
+   "id": "eio_fluid_tank",
+   "resultado": "cl:tanque_fluido",
+   "tipo": "shaped",
+   "padrao": [
+    "IBI",
+    "BGB",
+    "IBI"
+   ],
+   "chave": {
+    "B": "minecraft:iron_bars",
+    "G": "minecraft:glass",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "eio_glider",
+   "resultado": "cl:planador",
+   "tipo": "shaped",
+   "padrao": [
+    " D ",
+    "WDW"
+   ],
+   "chave": {
+    "D": "cl:aco_negro",
+    "W": "cl:asa_planador"
+   }
+  },
+  {
+   "id": "eio_glider_wing",
+   "resultado": "cl:asa_planador",
+   "tipo": "shaped",
+   "padrao": [
+    "  D",
+    " DL",
+    "DLL"
+   ],
+   "chave": {
+    "D": "cl:aco_negro",
+    "L": "minecraft:leather"
+   }
+  },
+  {
+   "id": "eio_impulse_hopper",
+   "resultado": "cl:funil_impulso",
+   "tipo": "shaped",
+   "padrao": [
+    "IHI",
+    "GCG",
+    "IRI"
+   ],
+   "chave": {
+    "C": "cl:chassi_maquina",
+    "G": "cl:engrenagem_ferro",
+    "H": "minecraft:hopper",
+    "I": "cl:ferro_condutor",
+    "R": "cl:liga_redstone"
+   }
+  },
+  {
+   "id": "eio_infinity_rod",
+   "resultado": "cl:vara_infinito",
+   "tipo": "shaped",
+   "padrao": [
+    " NG",
+    "NSN",
+    "GN "
+   ],
+   "chave": {
+    "G": "cl:graos_infinito",
+    "N": "cl:pepita_aco_negro",
+    "S": "minecraft:stick"
+   }
+  },
+  {
+   "id": "eio_inhibitor_obelisk",
+   "resultado": "cl:obelisco_inibicao",
+   "tipo": "shaped",
+   "padrao": [
+    " M ",
+    "EGE",
+    "ICI"
+   ],
+   "chave": {
+    "C": "cl:chassi_almas",
+    "E": "cl:liga_energetica",
+    "G": "cl:engrenagem_ferro",
+    "I": "cl:almario",
+    "M": "cl:cristal_ender"
+   }
+  },
+  {
+   "id": "eio_iron_gear",
+   "resultado": "cl:engrenagem_ferro",
+   "tipo": "shaped",
+   "padrao": [
+    "NIN",
+    "IGI",
+    "NIN"
+   ],
+   "chave": {
+    "G": "cl:graos_infinito",
+    "I": "minecraft:iron_ingot",
+    "N": "minecraft:iron_nugget"
+   }
+  },
+  {
+   "id": "eio_conductive_alloy_nugget_to_ingot",
+   "resultado": "cl:ferro_condutor",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_ferro_condutor"
+   }
+  },
+  {
+   "id": "eio_dark_steel_nugget_to_ingot",
+   "resultado": "cl:aco_negro",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_aco_negro"
+   }
+  },
+  {
+   "id": "eio_end_steel_nugget_to_ingot",
+   "resultado": "cl:aco_end",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_aco_end"
+   }
+  },
+  {
+   "id": "eio_energetic_alloy_nugget_to_ingot",
+   "resultado": "cl:liga_energetica",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_liga_energetica"
+   }
+  },
+  {
+   "id": "eio_pulsating_alloy_nugget_to_ingot",
+   "resultado": "cl:ferro_pulsante",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_ferro_pulsante"
+   }
+  },
+  {
+   "id": "eio_redstone_alloy_nugget_to_ingot",
+   "resultado": "cl:liga_redstone",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_liga_redstone"
+   }
+  },
+  {
+   "id": "eio_soularium_nugget_to_ingot",
+   "resultado": "cl:almario",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_almario"
+   }
+  },
+  {
+   "id": "eio_vibrant_alloy_nugget_to_ingot",
+   "resultado": "cl:liga_vibrante",
+   "tipo": "shaped",
+   "padrao": [
+    "NNN",
+    "NNN",
+    "NNN"
+   ],
+   "chave": {
+    "N": "cl:pepita_liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_item_conduit",
+   "resultado": "cl:conduto_item",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "BBB",
+    "CIC",
+    "BBB"
+   ],
+   "chave": {
+    "B": "cl:aglutinante_conduite",
+    "C": "cl:ferro_condutor",
+    "I": "cl:ferro_pulsante"
+   }
+  },
+  {
+   "id": "eio_octadic_capacitor",
+   "resultado": "cl:capacitor_octadico",
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "CGC",
+    " I "
+   ],
+   "chave": {
+    "C": "cl:capacitor_duplo",
+    "G": "minecraft:glowstone",
+    "I": "cl:liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_photovoltaic_composite",
+   "resultado": "cl:composto_fotovoltaico",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:po_lapis",
+    "cl:po_carvao",
+    "cl:silicio"
+   ]
+  },
+  {
+   "id": "eio_pressurized_fluid_tank",
+   "resultado": "cl:tanque_fluido_pressurizado",
+   "tipo": "shaped",
+   "padrao": [
+    "IBI",
+    "BGB",
+    "IBI"
+   ],
+   "chave": {
+    "B": "cl:barras_aco_negro",
+    "G": "cl:quartzo_fundido",
+    "I": "cl:aco_negro"
+   }
+  },
+  {
+   "id": "eio_pulsating_alloy_block",
+   "resultado": "cl:bloco_ferro_pulsante",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:ferro_pulsante"
+   }
+  },
+  {
+   "id": "eio_pulsating_alloy_grinding_ball",
+   "resultado": "cl:esfera_ferro_pulsante",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:ferro_pulsante"
+   }
+  },
+  {
+   "id": "eio_pulsating_alloy_ingot",
+   "resultado": "cl:ferro_pulsante",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_ferro_pulsante"
+   ]
+  },
+  {
+   "id": "eio_pulsating_alloy_nugget",
+   "resultado": "cl:pepita_ferro_pulsante",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:ferro_pulsante"
+   ]
+  },
+  {
+   "id": "eio_pulsating_crystal",
+   "resultado": "cl:cristal_pulsante",
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PDP",
+    "PPP"
+   ],
+   "chave": {
+    "D": "minecraft:diamond",
+    "P": "cl:pepita_ferro_pulsante"
+   }
+  },
+  {
+   "id": "eio_pulsating_photovoltaic_module",
+   "resultado": "cl:painel_fotovoltaico_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "IFI",
+    "PDP",
+    "CSC"
+   ],
+   "chave": {
+    "C": "cl:capacitor_duplo",
+    "D": "cl:po_carvao",
+    "F": "cl:quartzo_fundido_iluminado",
+    "I": "cl:ferro_pulsante",
+    "P": "cl:placa_fotovoltaica",
+    "S": "cl:painel_fotovoltaico"
+   }
+  },
+  {
+   "id": "eio_redstone_alloy_block",
+   "resultado": "cl:bloco_liga_redstone",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:liga_redstone"
+   }
+  },
+  {
+   "id": "eio_redstone_alloy_grinding_ball",
+   "resultado": "cl:esfera_liga_redstone",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:liga_redstone"
+   }
+  },
+  {
+   "id": "eio_redstone_alloy_ingot",
+   "resultado": "cl:liga_redstone",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_liga_redstone"
+   ]
+  },
+  {
+   "id": "eio_redstone_alloy_nugget",
+   "resultado": "cl:pepita_liga_redstone",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:liga_redstone"
+   ]
+  },
+  {
+   "id": "eio_reinforced_obsidian_block",
+   "resultado": "cl:obsidiana_reforcada",
+   "tipo": "shaped",
+   "padrao": [
+    "GBG",
+    "BOB",
+    "GBG"
+   ],
+   "chave": {
+    "B": "cl:barras_aco_negro",
+    "G": "cl:graos_infinito",
+    "O": "minecraft:obsidian"
+   }
+  },
+  {
+   "id": "eio_relocator_obelisk",
+   "resultado": "cl:obelisco_relocacao",
+   "tipo": "shaped",
+   "padrao": [
+    "P",
+    "A"
+   ],
+   "chave": {
+    "A": "cl:obelisco_aversao",
+    "P": "minecraft:prismarine"
+   }
+  },
+  {
+   "id": "eio_sag_mill",
+   "resultado": "cl:moinho_sag",
+   "tipo": "shaped",
+   "padrao": [
+    "GFG",
+    "IVI",
+    "OPO"
+   ],
+   "chave": {
+    "F": "minecraft:flint",
+    "G": "cl:engrenagem_ferro",
+    "I": "minecraft:iron_ingot",
+    "O": "minecraft:obsidian",
+    "P": "minecraft:piston",
+    "V": "cl:chassi_maquina"
+   }
+  },
+  {
+   "id": "eio_slice_and_splice",
+   "resultado": "cl:fatiar_emendar",
+   "tipo": "shaped",
+   "padrao": [
+    "IHI",
+    "ICI",
+    "GBG"
+   ],
+   "chave": {
+    "B": "minecraft:iron_bars",
+    "C": "cl:chassi_almas",
+    "G": "cl:engrenagem_energizada",
+    "H": "minecraft:skeleton_skull",
+    "I": "cl:almario"
+   }
+  },
+  {
+   "id": "eio_soul_binder",
+   "resultado": "cl:vinculador_almas",
+   "tipo": "shaped",
+   "padrao": [
+    "IVI",
+    "GCG",
+    "IZI"
+   ],
+   "chave": {
+    "C": "cl:chassi_almas",
+    "G": "cl:engrenagem_energizada",
+    "I": "cl:almario",
+    "V": "cl:frasco_alma",
+    "Z": "cl:controlador_logico_z"
+   }
+  },
+  {
+   "id": "eio_soul_chain",
+   "resultado": "cl:corrente_almas",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    " N ",
+    "QIQ",
+    " N "
+   ],
+   "chave": {
+    "I": "cl:almario",
+    "N": "cl:pepita_almario",
+    "Q": "cl:po_quartzo"
+   }
+  },
+  {
+   "id": "eio_soul_engine",
+   "resultado": "cl:motor_almas",
+   "tipo": "shaped",
+   "padrao": [
+    "IGI",
+    "BCB",
+    "IZI"
+   ],
+   "chave": {
+    "B": "minecraft:bucket",
+    "C": "cl:chassi_almas",
+    "G": "cl:quartzo_fundido",
+    "I": "cl:almario",
+    "Z": "cl:eletrodo_zumbi"
+   }
+  },
+  {
+   "id": "eio_soul_vial",
+   "resultado": "cl:frasco_alma",
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "Q Q",
+    " Q "
+   ],
+   "chave": {
+    "Q": "cl:quartzo_fundido",
+    "S": "cl:almario"
+   }
+  },
+  {
+   "id": "eio_soularium_block",
+   "resultado": "cl:bloco_almario",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:almario"
+   }
+  },
+  {
+   "id": "eio_soularium_grinding_ball",
+   "resultado": "cl:esfera_almario",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:almario"
+   }
+  },
+  {
+   "id": "eio_soularium_ingot",
+   "resultado": "cl:almario",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_almario"
+   ]
+  },
+  {
+   "id": "eio_soularium_nugget",
+   "resultado": "cl:pepita_almario",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:almario"
+   ]
+  },
+  {
+   "id": "eio_staff_of_levity",
+   "resultado": "cl:cajado_levitacao",
+   "tipo": "shaped",
+   "padrao": [
+    "  C",
+    " R ",
+    "R  "
+   ],
+   "chave": {
+    "C": "cl:cristal_presciencia",
+    "R": "cl:vara_infinito"
+   }
+  },
+  {
+   "id": "eio_staff_of_travelling",
+   "resultado": "cl:cajado_viagem",
+   "tipo": "shaped",
+   "padrao": [
+    "  C",
+    " I ",
+    "I  "
+   ],
+   "chave": {
+    "C": "cl:cristal_ender",
+    "I": "cl:aco_negro"
+   }
+  },
+  {
+   "id": "eio_stirling_generator",
+   "resultado": "cl:gerador_stirling",
+   "tipo": "shaped",
+   "padrao": [
+    "GFG",
+    "IVI",
+    "ODO"
+   ],
+   "chave": {
+    "D": "minecraft:deepslate",
+    "F": "minecraft:furnace",
+    "G": "cl:engrenagem_ferro",
+    "I": "minecraft:iron_ingot",
+    "O": "minecraft:obsidian",
+    "V": "cl:chassi_maquina"
+   }
+  },
+  {
+   "id": "eio_travel_anchor",
+   "resultado": "cl:ancora_viagem",
+   "tipo": "shaped",
+   "padrao": [
+    "IBI",
+    "BCB",
+    "IBI"
+   ],
+   "chave": {
+    "B": "cl:aglutinante_conduite",
+    "C": "cl:cristal_pulsante",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "eio_vacuum_chest",
+   "resultado": "cl:bau_vacuo",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "ICI",
+    "IPI"
+   ],
+   "chave": {
+    "C": "minecraft:chest",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:cristal_pulsante"
+   }
+  },
+  {
+   "id": "eio_vat",
+   "resultado": "cl:crisol_fermentacao",
+   "tipo": "shaped",
+   "padrao": [
+    "SBS",
+    "ACA",
+    "MRM"
+   ],
+   "chave": {
+    "A": "cl:ferro_condutor",
+    "B": "minecraft:barrel",
+    "C": "cl:chassi_maquina",
+    "M": "cl:engrenagem_ferro",
+    "R": "cl:liga_redstone",
+    "S": "cl:aco_negro"
+   }
+  },
+  {
+   "id": "eio_vibrant_alloy_block",
+   "resultado": "cl:bloco_liga_vibrante",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "III",
+    "III"
+   ],
+   "chave": {
+    "I": "cl:liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_vibrant_alloy_grinding_ball",
+   "resultado": "cl:esfera_liga_vibrante",
+   "qtd": 24,
+   "tipo": "shaped",
+   "padrao": [
+    " I ",
+    "III",
+    " I "
+   ],
+   "chave": {
+    "I": "cl:liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_vibrant_alloy_ingot",
+   "resultado": "cl:liga_vibrante",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_liga_vibrante"
+   ]
+  },
+  {
+   "id": "eio_vibrant_alloy_nugget",
+   "resultado": "cl:pepita_liga_vibrante",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:liga_vibrante"
+   ]
+  },
+  {
+   "id": "eio_vibrant_capacitor_bank",
+   "resultado": "cl:banco_capacitores_vibrante",
+   "tipo": "shaped",
+   "padrao": [
+    "VOV",
+    "BCB",
+    "VOV"
+   ],
+   "chave": {
+    "B": "cl:banco_capacitores",
+    "C": "cl:cristal_vibrante",
+    "O": "cl:capacitor_octadico",
+    "V": "cl:liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_vibrant_crystal",
+   "resultado": "cl:cristal_vibrante",
+   "tipo": "shaped",
+   "padrao": [
+    "PPP",
+    "PDP",
+    "PPP"
+   ],
+   "chave": {
+    "D": "minecraft:emerald",
+    "P": "cl:pepita_liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_vibrant_gear",
+   "resultado": "cl:engrenagem_vibrante",
+   "tipo": "shaped",
+   "padrao": [
+    "NIN",
+    "IGI",
+    "NIN"
+   ],
+   "chave": {
+    "G": "cl:engrenagem_energizada",
+    "I": "cl:liga_vibrante",
+    "N": "cl:pepita_liga_vibrante"
+   }
+  },
+  {
+   "id": "eio_vibrant_photovoltaic_module",
+   "resultado": "cl:painel_fotovoltaico_vibrante",
+   "tipo": "shaped",
+   "padrao": [
+    "IFI",
+    "PGP",
+    "CSC"
+   ],
+   "chave": {
+    "C": "cl:capacitor_octadico",
+    "F": "cl:quartzo_fundido_escuro",
+    "G": "minecraft:glowstone",
+    "I": "cl:liga_vibrante",
+    "P": "cl:placa_fotovoltaica",
+    "S": "cl:painel_fotovoltaico_avancado"
+   }
+  },
+  {
+   "id": "eio_void_chassis",
+   "resultado": "cl:chassi_maquina",
+   "tipo": "shaped",
+   "padrao": [
+    "IGI",
+    "G G",
+    "IGI"
+   ],
+   "chave": {
+    "G": "cl:graos_infinito",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "eio_void_vial",
+   "resultado": "cl:frasco_vazio",
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "QVQ",
+    "GQG"
+   ],
+   "chave": {
+    "G": "cl:graos_infinito",
+    "Q": "cl:quartzo_fundido",
+    "S": "cl:almario",
+    "V": "cl:semente_suspeita"
+   }
+  },
+  {
+   "id": "eio_weather_crystal",
+   "resultado": "cl:cristal_climatico",
+   "tipo": "shaped",
+   "padrao": [
+    " P ",
+    "VEV",
+    " P "
+   ],
+   "chave": {
+    "E": "cl:cristal_ender",
+    "P": "cl:cristal_pulsante",
+    "V": "cl:cristal_vibrante"
+   }
+  },
+  {
+   "id": "eio_weather_obelisk",
+   "resultado": "cl:obelisco_climatico",
+   "tipo": "shaped",
+   "padrao": [
+    " W ",
+    "ESE",
+    "SCS"
+   ],
+   "chave": {
+    "C": "cl:chassi_maquina",
+    "E": "cl:liga_energetica",
+    "S": "cl:almario",
+    "W": "cl:cristal_climatico"
+   }
+  },
+  {
+   "id": "eio_wired_charger",
+   "resultado": "cl:carregador_fio",
+   "tipo": "shaped",
+   "padrao": [
+    "CCC",
+    "CVC",
+    "CCC"
+   ],
+   "chave": {
+    "C": "cl:ferro_condutor",
+    "V": "cl:chassi_maquina"
+   }
+  },
+  {
+   "id": "eio_wireless_charger",
+   "resultado": "cl:carregador_sem_fio",
+   "tipo": "shaped",
+   "padrao": [
+    "CCC",
+    "CVC",
+    "CEC"
+   ],
+   "chave": {
+    "C": "cl:ferro_condutor",
+    "E": "cl:ressonador_ender",
+    "V": "cl:chassi_maquina"
+   }
+  },
+  {
+   "id": "eio_xp_obelisk",
+   "resultado": "cl:obelisco_xp",
+   "tipo": "shaped",
+   "padrao": [
+    " R ",
+    " I ",
+    "ICI"
+   ],
+   "chave": {
+    "C": "cl:chassi_almas",
+    "I": "cl:almario",
+    "R": "cl:vara_experiencia"
+   }
+  },
+  {
+   "id": "eio_xp_vacuum",
+   "resultado": "cl:vacuo_xp",
+   "tipo": "shaped",
+   "padrao": [
+    "III",
+    "IRI",
+    "IPI"
+   ],
+   "chave": {
+    "I": "minecraft:iron_ingot",
+    "P": "cl:cristal_pulsante",
+    "R": "cl:frasco_vazio"
+   }
+  },
+  {
+   "id": "eio_yeta_wrench",
+   "resultado": "cl:chave_yeta",
+   "tipo": "shaped",
+   "padrao": [
+    "I I",
+    " G ",
+    " I "
+   ],
+   "chave": {
+    "G": "cl:graos_infinito",
+    "I": "minecraft:copper_ingot"
+   }
+  }
+ ],
+ "ligas": [
+  {
+   "entra": [
+    [
+     "cl:po_carvao",
+     1
+    ],
+    [
+     "minecraft:egg",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:black_dye",
+    1
+   ],
+   "rf": 1000,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:po_carvao",
+     2
+    ],
+    [
+     "minecraft:slime_ball",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:black_dye",
+    2
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:materia_vegetal_marrom",
+     6
+    ],
+    [
+     "minecraft:egg",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:brown_dye",
+    1
+   ],
+   "rf": 1000,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:materia_vegetal_marrom",
+     12
+    ],
+    [
+     "minecraft:slime_ball",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:brown_dye",
+    2
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:glass",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:vidro_transparente",
+     1
+    ],
+    [
+     "minecraft:amethyst_shard",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_escuro",
+    1
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:vidro_transparente",
+     1
+    ],
+    [
+     "minecraft:amethyst_block",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_escuro",
+    1
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:glass",
+     1
+    ],
+    [
+     "minecraft:amethyst_shard",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_escuro",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:glass",
+     1
+    ],
+    [
+     "minecraft:amethyst_block",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_escuro",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:vidro_transparente",
+     1
+    ],
+    [
+     "minecraft:glowstone_dust",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_iluminado",
+    1
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:vidro_transparente",
+     1
+    ],
+    [
+     "minecraft:glowstone",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_iluminado",
+    1
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:glass",
+     1
+    ],
+    [
+     "minecraft:glowstone_dust",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_iluminado",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:glass",
+     1
+    ],
+    [
+     "minecraft:glowstone",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:vidro_transparente_iluminado",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:iron_ingot",
+     1
+    ],
+    [
+     "minecraft:copper_ingot",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:ferro_condutor",
+    2
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:iron_ingot",
+     1
+    ],
+    [
+     "cl:po_carvao",
+     1
+    ],
+    [
+     "minecraft:obsidian",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:aco_negro",
+    2
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:oak_sapling",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:dead_bush",
+    1
+   ],
+   "rf": 500,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:end_stone",
+     1
+    ],
+    [
+     "cl:aco_negro",
+     1
+    ],
+    [
+     "minecraft:obsidian",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:aco_end",
+    2
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:po_perola_ender",
+     9
+    ]
+   ],
+   "sai": [
+    "minecraft:ender_pearl",
+    1
+   ],
+   "rf": 2000,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:redstone",
+     1
+    ],
+    [
+     "cl:ferro_condutor",
+     1
+    ],
+    [
+     "minecraft:gold_ingot",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:liga_energetica",
+    2
+   ],
+   "rf": 4800,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz_block",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:quartzo_fundido",
+     1
+    ],
+    [
+     "minecraft:amethyst_shard",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_escuro",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:quartzo_fundido",
+     1
+    ],
+    [
+     "minecraft:amethyst_block",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_escuro",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz",
+     4
+    ],
+    [
+     "minecraft:amethyst_shard",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_escuro",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz",
+     4
+    ],
+    [
+     "minecraft:amethyst_block",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_escuro",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz_block",
+     1
+    ],
+    [
+     "minecraft:amethyst_shard",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_escuro",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz_block",
+     1
+    ],
+    [
+     "minecraft:amethyst_block",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_escuro",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:quartzo_fundido",
+     1
+    ],
+    [
+     "minecraft:glowstone_dust",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_iluminado",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:quartzo_fundido",
+     1
+    ],
+    [
+     "minecraft:glowstone",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_iluminado",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz",
+     4
+    ],
+    [
+     "minecraft:glowstone_dust",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_iluminado",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz",
+     4
+    ],
+    [
+     "minecraft:glowstone",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_iluminado",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz_block",
+     1
+    ],
+    [
+     "minecraft:glowstone_dust",
+     4
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_iluminado",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:quartz_block",
+     1
+    ],
+    [
+     "minecraft:glowstone",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:quartzo_fundido_iluminado",
+    1
+   ],
+   "rf": 6400,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:materia_vegetal_verde",
+     6
+    ],
+    [
+     "minecraft:egg",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:green_dye",
+    1
+   ],
+   "rf": 1000,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:materia_vegetal_verde",
+     12
+    ],
+    [
+     "minecraft:slime_ball",
+     1
+    ]
+   ],
+   "sai": [
+    "minecraft:green_dye",
+    2
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:po_lapis",
+     1
+    ],
+    [
+     "minecraft:white_wool",
+     1
+    ],
+    [
+     [
+      "cl:po_ferro",
+      "cl:po_estanho"
+     ],
+     1
+    ]
+   ],
+   "sai": [
+    "cl:isolamento_industrial",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.5
+  },
+  {
+   "entra": [
+    [
+     "cl:composto_fotovoltaico",
+     2
+    ]
+   ],
+   "sai": [
+    "cl:placa_fotovoltaica",
+    1
+   ],
+   "rf": 5600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:iron_ingot",
+     1
+    ],
+    [
+     "minecraft:ender_pearl",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:ferro_pulsante",
+    2
+   ],
+   "rf": 4800,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:beetroot",
+     1
+    ],
+    [
+     "minecraft:clay_ball",
+     3
+    ],
+    [
+     "minecraft:egg",
+     6
+    ]
+   ],
+   "sai": [
+    "minecraft:red_dye",
+    12
+   ],
+   "rf": 1600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "minecraft:redstone",
+     1
+    ],
+    [
+     "minecraft:copper_ingot",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:liga_redstone",
+    1
+   ],
+   "rf": 3200,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     [
+      "minecraft:soul_sand",
+      "minecraft:soul_soil"
+     ],
+     1
+    ],
+    [
+     "minecraft:gold_ingot",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:almario",
+    1
+   ],
+   "rf": 5600,
+   "xp": 0.3
+  },
+  {
+   "entra": [
+    [
+     "cl:liga_energetica",
+     1
+    ],
+    [
+     "minecraft:ender_pearl",
+     1
+    ],
+    [
+     "minecraft:glowstone_dust",
+     1
+    ]
+   ],
+   "sai": [
+    "cl:liga_vibrante",
+    2
+   ],
+   "rf": 5600,
+   "xp": 0.3
+  }
+ ],
+ "moagem": [
+  {
+   "entra": [
+    "minecraft:allium"
+   ],
+   "sai": [
+    [
+     "minecraft:magenta_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:magenta_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:magenta_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "cl:lingote_aluminio"
+   ],
+   "sai": [
+    [
+     "cl:aluminio_po",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:azure_bluet"
+   ],
+   "sai": [
+    [
+     "minecraft:light_gray_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:light_gray_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:light_gray_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:blaze_rod"
+   ],
+   "sai": [
+    [
+     "minecraft:blaze_powder",
+     4,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:blue_orchid"
+   ],
+   "sai": [
+    [
+     "minecraft:light_blue_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:light_blue_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:light_blue_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:bone"
+   ],
+   "sai": [
+    [
+     "minecraft:bone_meal",
+     6,
+     1
+    ],
+    [
+     "minecraft:bone_meal",
+     2,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:bone_block"
+   ],
+   "sai": [
+    [
+     "minecraft:bone_meal",
+     9,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:cactus"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     3,
+     1
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     3,
+     0.75
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     3,
+     0.5
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     3,
+     0.25
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:clay"
+   ],
+   "sai": [
+    [
+     "minecraft:clay_ball",
+     2,
+     1
+    ],
+    [
+     "minecraft:clay_ball",
+     1,
+     0.1
+    ],
+    [
+     "cl:silicio",
+     2,
+     0.8
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:coal",
+    "minecraft:charcoal"
+   ],
+   "sai": [
+    [
+     "cl:po_carvao",
+     1,
+     1
+    ],
+    [
+     "cl:po_carvao",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:coal_ore",
+    "minecraft:deepslate_coal_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:coal",
+     3,
+     1
+    ],
+    [
+     "cl:po_carvao",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:diamond",
+     1,
+     0.005
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:cobbled_deepslate"
+   ],
+   "sai": [
+    [
+     "minecraft:cobblestone",
+     1,
+     1
+    ],
+    [
+     "cl:graos_infinito",
+     1,
+     0.12
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:cobblestone"
+   ],
+   "sai": [
+    [
+     "minecraft:gravel",
+     1,
+     0.7
+    ],
+    [
+     "minecraft:gravel",
+     1,
+     0.3
+    ],
+    [
+     "minecraft:sand",
+     1,
+     0.1
+    ],
+    [
+     "minecraft:flint",
+     1,
+     0.05
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:cobweb"
+   ],
+   "sai": [
+    [
+     "minecraft:string",
+     2,
+     1
+    ],
+    [
+     "minecraft:string",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:string",
+     1,
+     0.3
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:copper_ingot"
+   ],
+   "sai": [
+    [
+     "cl:po_cobre",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:copper_ore",
+    "minecraft:deepslate_copper_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:raw_copper",
+     1,
+     1
+    ],
+    [
+     "minecraft:raw_copper",
+     1,
+     0.33
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:dandelion"
+   ],
+   "sai": [
+    [
+     "minecraft:yellow_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:yellow_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:yellow_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:deepslate"
+   ],
+   "sai": [
+    [
+     "minecraft:cobbled_deepslate",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:diamond_ore",
+    "minecraft:deepslate_diamond_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:diamond",
+     2,
+     1
+    ],
+    [
+     "minecraft:diamond",
+     1,
+     0.25
+    ],
+    [
+     "cl:po_carvao",
+     1,
+     0.1
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:emerald_ore",
+    "minecraft:deepslate_emerald_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:emerald",
+     2,
+     1
+    ],
+    [
+     "minecraft:emerald",
+     1,
+     0.25
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "cl:cristal_ender"
+   ],
+   "sai": [
+    [
+     "cl:graos_end",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:ender_pearl"
+   ],
+   "sai": [
+    [
+     "cl:po_perola_ender",
+     9,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:fern"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.6
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.05
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:flower_pot"
+   ],
+   "sai": [
+    [
+     "minecraft:brick",
+     1,
+     0.9
+    ],
+    [
+     "minecraft:brick",
+     1,
+     0.3
+    ],
+    [
+     "minecraft:brick",
+     1,
+     0.1
+    ],
+    [
+     "cl:po_carvao",
+     1,
+     0.05
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:glass"
+   ],
+   "sai": [
+    [
+     "minecraft:sand",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:glowstone"
+   ],
+   "sai": [
+    [
+     "minecraft:glowstone_dust",
+     3,
+     1
+    ],
+    [
+     "minecraft:glowstone_dust",
+     1,
+     0.8
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:gold_ingot"
+   ],
+   "sai": [
+    [
+     "cl:po_ouro",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:gold_ore",
+    "minecraft:deepslate_gold_ore",
+    "minecraft:nether_gold_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:raw_gold",
+     1,
+     1
+    ],
+    [
+     "minecraft:raw_gold",
+     1,
+     0.33
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:tall_grass"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.6
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.05
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:gravel"
+   ],
+   "sai": [
+    [
+     "minecraft:sand",
+     1,
+     0.7
+    ],
+    [
+     "minecraft:sand",
+     1,
+     0.3
+    ],
+    [
+     "minecraft:flint",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:iron_ingot"
+   ],
+   "sai": [
+    [
+     "cl:po_ferro",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:iron_ore",
+    "minecraft:deepslate_iron_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:raw_iron",
+     1,
+     1
+    ],
+    [
+     "minecraft:raw_iron",
+     1,
+     0.33
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:lapis_lazuli"
+   ],
+   "sai": [
+    [
+     "cl:po_lapis",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:lapis_ore",
+    "minecraft:deepslate_lapis_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:lapis_lazuli",
+     8,
+     1
+    ],
+    [
+     "minecraft:lapis_lazuli",
+     1,
+     0.2
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:large_fern"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     2,
+     0.6
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     2,
+     0.1
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:oak_leaves"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.02
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:lily_pad"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     3,
+     0.15
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     3,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:mossy_cobblestone"
+   ],
+   "sai": [
+    [
+     "minecraft:cobblestone",
+     1,
+     1
+    ],
+    [
+     "minecraft:vine",
+     1,
+     0.7
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:obsidian"
+   ],
+   "sai": [
+    [
+     "cl:po_obsidiana",
+     4,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:orange_tulip"
+   ],
+   "sai": [
+    [
+     "minecraft:orange_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:orange_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:orange_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "cl:lingote_osmio"
+   ],
+   "sai": [
+    [
+     "cl:po_osmio",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:oxeye_daisy"
+   ],
+   "sai": [
+    [
+     "minecraft:white_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:white_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:white_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:pink_tulip"
+   ],
+   "sai": [
+    [
+     "minecraft:pink_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:pink_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:pink_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:peony"
+   ],
+   "sai": [
+    [
+     "minecraft:pink_dye",
+     2,
+     0.8
+    ],
+    [
+     "minecraft:pink_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:pink_dye",
+     2,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.2
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:poppy"
+   ],
+   "sai": [
+    [
+     "minecraft:red_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:red_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:red_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "cl:cristal_presciencia"
+   ],
+   "sai": [
+    [
+     "cl:graos_presciencia",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:prismarine_shard"
+   ],
+   "sai": [
+    [
+     "minecraft:prismarine_crystals",
+     1,
+     1
+    ],
+    [
+     "minecraft:prismarine_crystals",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "cl:cristal_pulsante"
+   ],
+   "sai": [
+    [
+     "cl:graos_piezalidade",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:quartz"
+   ],
+   "sai": [
+    [
+     "cl:po_quartzo",
+     1,
+     1
+    ],
+    [
+     "cl:po_quartzo",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:quartz_block"
+   ],
+   "sai": [
+    [
+     "minecraft:quartz",
+     2,
+     1
+    ],
+    [
+     "minecraft:quartz",
+     2,
+     0.25
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:quartz_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:quartz",
+     2,
+     1
+    ],
+    [
+     "cl:po_quartzo",
+     1,
+     0.1
+    ],
+    [
+     "minecraft:netherrack",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:quartz_slab"
+   ],
+   "sai": [
+    [
+     "minecraft:quartz",
+     1,
+     1
+    ],
+    [
+     "minecraft:quartz",
+     1,
+     0.25
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:quartz_stairs"
+   ],
+   "sai": [
+    [
+     "minecraft:quartz",
+     2,
+     1
+    ],
+    [
+     "minecraft:quartz",
+     2,
+     0.25
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:raw_copper"
+   ],
+   "sai": [
+    [
+     "cl:po_cobre",
+     1,
+     1
+    ],
+    [
+     "cl:po_cobre",
+     1,
+     0.8
+    ],
+    [
+     "cl:po_ouro",
+     1,
+     0.12
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:raw_gold"
+   ],
+   "sai": [
+    [
+     "cl:po_ouro",
+     1,
+     1
+    ],
+    [
+     "cl:po_ouro",
+     1,
+     0.8
+    ],
+    [
+     "cl:po_cobre",
+     1,
+     0.2
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:raw_iron"
+   ],
+   "sai": [
+    [
+     "cl:po_ferro",
+     1,
+     1
+    ],
+    [
+     "cl:po_ferro",
+     1,
+     0.8
+    ],
+    [
+     "cl:po_estanho",
+     1,
+     0.05
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:red_tulip"
+   ],
+   "sai": [
+    [
+     "minecraft:red_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:red_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:red_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:redstone_ore",
+    "minecraft:deepslate_redstone_ore"
+   ],
+   "sai": [
+    [
+     "minecraft:redstone",
+     8,
+     1
+    ],
+    [
+     "minecraft:redstone",
+     1,
+     0.2
+    ],
+    [
+     "cl:silicio",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:rose_bush"
+   ],
+   "sai": [
+    [
+     "minecraft:red_dye",
+     2,
+     0.8
+    ],
+    [
+     "minecraft:red_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:red_dye",
+     2,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.2
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:sand"
+   ],
+   "sai": [
+    [
+     "cl:silicio",
+     1,
+     0.5
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:sandstone"
+   ],
+   "sai": [
+    [
+     "minecraft:sand",
+     2,
+     1
+    ],
+    [
+     "minecraft:sand",
+     2,
+     0.4
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  },
+  {
+   "entra": [
+    "minecraft:dead_bush"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.8
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.6
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.3
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:stone"
+   ],
+   "sai": [
+    [
+     "minecraft:cobblestone",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:sugar_cane"
+   ],
+   "sai": [
+    [
+     "minecraft:sugar",
+     1,
+     1
+    ],
+    [
+     "minecraft:sugar",
+     1,
+     0.5
+    ],
+    [
+     "minecraft:sugar",
+     2,
+     0.5
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.2
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:sunflower"
+   ],
+   "sai": [
+    [
+     "minecraft:yellow_dye",
+     2,
+     0.8
+    ],
+    [
+     "minecraft:yellow_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:yellow_dye",
+     2,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.2
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:tall_grass"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     2,
+     0.6
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     2,
+     0.1
+    ],
+    [
+     "cl:materia_vegetal_marrom",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "cl:lingote_estanho"
+   ],
+   "sai": [
+    [
+     "cl:po_estanho",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "cl:minerio_estanho_lunar"
+   ],
+   "sai": [
+    [
+     "minecraft:cobblestone",
+     1,
+     0.15
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "cl:cristal_vibrante"
+   ],
+   "sai": [
+    [
+     "cl:graos_vibracao",
+     1,
+     1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "none"
+  },
+  {
+   "entra": [
+    "minecraft:vine"
+   ],
+   "sai": [
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.15
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:white_tulip"
+   ],
+   "sai": [
+    [
+     "minecraft:white_dye",
+     1,
+     0.8
+    ],
+    [
+     "minecraft:white_dye",
+     1,
+     0.6
+    ],
+    [
+     "minecraft:white_dye",
+     1,
+     0.3
+    ],
+    [
+     "cl:materia_vegetal_verde",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "multiply_output"
+  },
+  {
+   "entra": [
+    "minecraft:white_wool"
+   ],
+   "sai": [
+    [
+     "minecraft:string",
+     2,
+     1
+    ],
+    [
+     "minecraft:string",
+     1,
+     0.1
+    ]
+   ],
+   "rf": 2400,
+   "bonus": "chance_only"
+  }
+ ],
+ "fatiar": [
+  {
+   "entra": [
+    "cl:almario",
+    "cl:cabeca_enderman",
+    "cl:almario",
+    "cl:silicio",
+    "cl:liga_vibrante",
+    "cl:silicio"
+   ],
+   "sai": [
+    "cl:ressonador_ender",
+    1
+   ],
+   "rf": 20000
+  },
+  {
+   "entra": [
+    "cl:liga_energetica",
+    "minecraft:prismarine_crystals",
+    "cl:liga_energetica",
+    "minecraft:prismarine_shard",
+    "cl:capacitor_basico",
+    "minecraft:prismarine_shard"
+   ],
+   "sai": [
+    "cl:diodo_guardiao",
+    1
+   ],
+   "rf": 20000
+  },
+  {
+   "entra": [
+    "cl:almario",
+    "minecraft:skeleton_skull",
+    "cl:almario",
+    "minecraft:rotten_flesh",
+    "cl:capacitor_basico",
+    "minecraft:rotten_flesh"
+   ],
+   "sai": [
+    "cl:contratante_esqueletico",
+    1
+   ],
+   "rf": 20000
+  },
+  {
+   "entra": [
+    "cl:almario",
+    "minecraft:zombie_head",
+    "cl:almario",
+    "cl:silicio",
+    "minecraft:redstone",
+    "cl:silicio"
+   ],
+   "sai": [
+    "cl:controlador_logico_z",
+    1
+   ],
+   "rf": 20000
+  },
+  {
+   "entra": [
+    "cl:liga_energetica",
+    "minecraft:zombie_head",
+    "cl:liga_energetica",
+    "cl:silicio",
+    "cl:capacitor_basico",
+    "cl:silicio"
+   ],
+   "sai": [
+    "cl:eletrodo_zumbi",
+    1
+   ],
+   "rf": 20000
+  }
+ ],
+ "almas": [
+  {
+   "entra": "cl:esfera_almario",
+   "alma": "animal",
+   "sai": [
+    "cl:simbolo_animal",
+    1
+   ],
+   "rf": 12800,
+   "xp": 1
+  },
+  {
+   "entra": "cl:gerador_quebrado",
+   "alma": "qualquer",
+   "sai": [
+    "cl:gerador_quebrado",
+    1
+   ],
+   "rf": 288000,
+   "xp": 8
+  },
+  {
+   "entra": "cl:cristal_vibrante",
+   "alma": "minecraft:enderman",
+   "sai": [
+    "cl:cristal_ender",
+    1
+   ],
+   "rf": 76800,
+   "xp": 6
+  },
+  {
+   "entra": "cl:painel_fotovoltaico",
+   "alma": "solar",
+   "sai": [
+    "cl:painel_fotovoltaico",
+    1
+   ],
+   "rf": 12800,
+   "xp": 8
+  },
+  {
+   "entra": "minecraft:emerald",
+   "alma": "minecraft:villager",
+   "sai": [
+    "cl:cristal_sedutor",
+    1
+   ],
+   "rf": 51200,
+   "xp": 4
+  },
+  {
+   "entra": "cl:estacao_agricola",
+   "alma": "fazenda",
+   "sai": [
+    "cl:estacao_agricola",
+    1
+   ],
+   "rf": 188000,
+   "xp": 5
+  },
+  {
+   "entra": "cl:controlador_logico_z",
+   "alma": "minecraft:zombie",
+   "sai": [
+    "cl:frank_n_zumbi",
+    1
+   ],
+   "rf": 51200,
+   "xp": 4
+  },
+  {
+   "entra": "minecraft:chiseled_stone_bricks",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_chiseled_stone_bricks",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "minecraft:cobblestone",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_cobblestone",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "minecraft:cracked_stone_bricks",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_cracked_stone_bricks",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "minecraft:deepslate",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_deepslate",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "minecraft:mossy_stone_bricks",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_mossy_stone_bricks",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "minecraft:stone",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_stone",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "minecraft:stone_bricks",
+   "alma": "minecraft:silverfish",
+   "sai": [
+    "minecraft:infested_stone_bricks",
+    1
+   ],
+   "rf": 10000,
+   "xp": 0
+  },
+  {
+   "entra": "cl:esfera_almario",
+   "alma": "monstro",
+   "sai": [
+    "cl:simbolo_monstro",
+    1
+   ],
+   "rf": 12800,
+   "xp": 1
+  },
+  {
+   "entra": "cl:esfera_aco_negro",
+   "alma": "minecraft:villager",
+   "sai": [
+    "cl:simbolo_jogador",
+    1
+   ],
+   "rf": 12800,
+   "xp": 1
+  },
+  {
+   "entra": "cl:gerador_energizado",
+   "alma": "qualquer",
+   "sai": [
+    "cl:gerador_energizado",
+    1
+   ],
+   "rf": 288000,
+   "xp": 8
+  },
+  {
+   "entra": "cl:cristal_vibrante",
+   "alma": "minecraft:shulker",
+   "sai": [
+    "cl:cristal_presciencia",
+    1
+   ],
+   "rf": 100000,
+   "xp": 8
+  },
+  {
+   "entra": "cl:painel_fotovoltaico_avancado",
+   "alma": "solar",
+   "sai": [
+    "cl:painel_fotovoltaico_avancado",
+    1
+   ],
+   "rf": 51200,
+   "xp": 12
+  },
+  {
+   "entra": "cl:ressonador_ender",
+   "alma": "minecraft:witch",
+   "sai": [
+    "cl:ender_senciente",
+    1
+   ],
+   "rf": 51200,
+   "xp": 4
+  },
+  {
+   "entra": "cl:motor_almas",
+   "alma": "motor",
+   "sai": [
+    "cl:motor_almas",
+    1
+   ],
+   "rf": 188000,
+   "xp": 5
+  },
+  {
+   "entra": "cl:painel_fotovoltaico_vibrante",
+   "alma": "solar",
+   "sai": [
+    "cl:painel_fotovoltaico_vibrante",
+    1
+   ],
+   "rf": 288000,
+   "xp": 14
+  }
+ ],
+ "cuba": [
+  {
+   "entra": "cl:balde_semente_nuvem",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:lightning_rod"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "minecraft:wind_charge"
+    ],
+    "mult": {}
+   },
+   "sai": "cl:balde_semente_nuvem_concentrada",
+   "mbSai": 500,
+   "ticks": 600
+  },
+  {
+   "entra": "minecraft:water_bucket",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:prismarine_shard"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "minecraft:snow",
+     "minecraft:snow_block",
+     "minecraft:snowball",
+     "minecraft:ice",
+     "minecraft:packed_ice",
+     "minecraft:blue_ice"
+    ],
+    "mult": {
+     "minecraft:blue_ice": 81.0,
+     "minecraft:packed_ice": 9.0,
+     "minecraft:snow": 0.12,
+     "minecraft:snowball": 0.11
+    }
+   },
+   "sai": "cl:balde_semente_nuvem",
+   "mbSai": 1000,
+   "ticks": 400
+  },
+  {
+   "entra": "cl:balde_destilado_nutrientes",
+   "mb": 4000,
+   "r1": {
+    "ids": [
+     "cl:graos_piezalidade"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "cl:graos_end"
+    ],
+    "mult": {}
+   },
+   "sai": "cl:balde_orvalho_vazio",
+   "mbSai": 1000,
+   "ticks": 400
+  },
+  {
+   "entra": "cl:balde_hootch",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:blaze_powder"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "minecraft:redstone"
+    ],
+    "mult": {}
+   },
+   "sai": "cl:balde_agua_fogo",
+   "mbSai": 1000,
+   "ticks": 400
+  },
+  {
+   "entra": "minecraft:water_bucket",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:wheat_seeds",
+     "minecraft:melon_seeds",
+     "minecraft:pumpkin_seeds",
+     "minecraft:beetroot_seeds"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "minecraft:wheat",
+     "minecraft:carrot",
+     "minecraft:potato",
+     "minecraft:beetroot"
+    ],
+    "mult": {
+     "minecraft:sugar_cane": 0.5
+    }
+   },
+   "sai": "cl:balde_hootch",
+   "mbSai": 250,
+   "ticks": 200
+  },
+  {
+   "entra": "cl:balde_luz_solar",
+   "mb": 500,
+   "r1": {
+    "ids": [
+     "minecraft:amethyst_shard"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "cl:po_obsidiana"
+    ],
+    "mult": {}
+   },
+   "sai": "cl:balde_escuridao_liquida",
+   "mbSai": 1000,
+   "ticks": 600
+  },
+  {
+   "entra": "minecraft:water_bucket",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:glowstone_dust",
+     "minecraft:glowstone",
+     "minecraft:sea_lantern",
+     "minecraft:sea_pickle",
+     "minecraft:glow_lichen",
+     "minecraft:glow_berries",
+     "minecraft:glow_ink_sac"
+    ],
+    "mult": {
+     "minecraft:glow_berries": 0.15,
+     "minecraft:glow_ink_sac": 0.5,
+     "minecraft:glow_lichen": 0.2,
+     "minecraft:glowstone_dust": 0.25,
+     "minecraft:sea_pickle": 0.25
+    }
+   },
+   "r2": {
+    "ids": [
+     "minecraft:sunflower",
+     "minecraft:torchflower"
+    ],
+    "mult": {
+     "minecraft:torchflower": 1.2
+    }
+   },
+   "sai": "cl:balde_luz_solar",
+   "mbSai": 1000,
+   "ticks": 200
+  },
+  {
+   "entra": "minecraft:water_bucket",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:beef",
+     "minecraft:porkchop",
+     "minecraft:chicken",
+     "minecraft:mutton",
+     "minecraft:rabbit"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "minecraft:wheat",
+     "minecraft:carrot",
+     "minecraft:potato",
+     "minecraft:beetroot"
+    ],
+    "mult": {
+     "minecraft:sugar_cane": 0.5
+    }
+   },
+   "sai": "cl:balde_destilado_nutrientes",
+   "mbSai": 250,
+   "ticks": 200
+  },
+  {
+   "entra": "cl:balde_hootch",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "minecraft:tnt",
+     "minecraft:firework_star",
+     "minecraft:firework_rocket",
+     "minecraft:fire_charge",
+     "minecraft:gunpowder"
+    ],
+    "mult": {
+     "minecraft:fire_charge": 0.5,
+     "minecraft:firework_rocket": 0.4,
+     "minecraft:firework_star": 0.4,
+     "minecraft:gunpowder": 0.25
+    }
+   },
+   "r2": {
+    "ids": [
+     "minecraft:redstone"
+    ],
+    "mult": {}
+   },
+   "sai": "cl:balde_combustivel_foguete",
+   "mbSai": 1000,
+   "ticks": 400
+  },
+  {
+   "entra": "cl:balde_orvalho_vazio",
+   "mb": 1000,
+   "r1": {
+    "ids": [
+     "cl:graos_piezalidade"
+    ],
+    "mult": {}
+   },
+   "r2": {
+    "ids": [
+     "cl:graos_presciencia"
+    ],
+    "mult": {}
+   },
+   "sai": "cl:balde_vapor_levitacao",
+   "mbSai": 1000,
+   "ticks": 400
+  }
+ ],
+ "tanque": [
+  {
+   "modo": "encher",
+   "entra": "minecraft:black_concrete_powder",
+   "sai": "minecraft:black_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:blue_concrete_powder",
+   "sai": "minecraft:blue_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:brown_concrete_powder",
+   "sai": "minecraft:brown_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:cyan_concrete_powder",
+   "sai": "minecraft:cyan_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:glass_bottle",
+   "sai": "minecraft:experience_bottle",
+   "fluido": "cl:balde_suco_xp",
+   "mb": 250
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:gray_concrete_powder",
+   "sai": "minecraft:gray_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:green_concrete_powder",
+   "sai": "minecraft:green_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:light_blue_concrete_powder",
+   "sai": "minecraft:light_blue_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:light_gray_concrete_powder",
+   "sai": "minecraft:light_gray_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:lime_concrete_powder",
+   "sai": "minecraft:lime_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:magenta_concrete_powder",
+   "sai": "minecraft:magenta_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:stick",
+   "sai": "cl:graveto_nutritivo",
+   "fluido": "cl:balde_destilado_nutrientes",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:orange_concrete_powder",
+   "sai": "minecraft:orange_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:pink_concrete_powder",
+   "sai": "minecraft:pink_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:purple_concrete_powder",
+   "sai": "minecraft:purple_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:red_concrete_powder",
+   "sai": "minecraft:red_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:sponge",
+   "sai": "minecraft:wet_sponge",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:white_concrete_powder",
+   "sai": "minecraft:white_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "encher",
+   "entra": "minecraft:yellow_concrete_powder",
+   "sai": "minecraft:yellow_concrete",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  },
+  {
+   "modo": "esvaziar",
+   "entra": "minecraft:experience_bottle",
+   "sai": "minecraft:glass_bottle",
+   "fluido": "cl:balde_suco_xp",
+   "mb": 250
+  },
+  {
+   "modo": "esvaziar",
+   "entra": "minecraft:wet_sponge",
+   "sai": "minecraft:sponge",
+   "fluido": "minecraft:water_bucket",
+   "mb": 1000
+  }
+ ],
+ "fogo": [
+  {
+   "bases": [
+    "minecraft:bedrock"
+   ],
+   "vira": null,
+   "sai": "cl:graos_infinito",
+   "chance": 0.8,
+   "min": 1,
+   "max": 3
+  },
+  {
+   "bases": [
+    "minecraft:bedrock"
+   ],
+   "vira": null,
+   "sai": "cl:semente_suspeita",
+   "chance": 0.3,
+   "min": 1,
+   "max": 1
+  },
+  {
+   "bases": [
+    "minecraft:deepslate"
+   ],
+   "vira": "minecraft:cobblestone",
+   "sai": "cl:graos_infinito",
+   "chance": 0.4,
+   "min": 1,
+   "max": 1
+  }
+ ],
+ "clima": {
+  "cl:balde_luz_solar": "clear",
+  "cl:balde_semente_nuvem": "rain",
+  "cl:balde_semente_nuvem_concentrada": "lightning"
+ },
+ "numeros": {
+  "capacidade": {
+   "alloySmelter": 64000,
+   "crafter": 64000,
+   "impulseHopper": 64000,
+   "poweredSpawner": 100000,
+   "sagMill": 64000,
+   "slicer": 100000,
+   "soulBinder": 128000,
+   "stirlingGenerator": 64000,
+   "paintingMachine": 64000,
+   "wiredCharger": 128000,
+   "wirelessCharger": 128000,
+   "soulEngine": 100000,
+   "drain": 64000,
+   "niard": 64000,
+   "farmingStation": 64000,
+   "inhibitor": 64000,
+   "aversion": 64000,
+   "relocator": 64000,
+   "attractor": 64000
+  },
+  "uso": {
+   "alloySmelter": 20,
+   "crafter": 3200,
+   "impulseHopper": 16,
+   "poweredSpawner": 20,
+   "sagMill": 20,
+   "slicer": 30,
+   "soulBinder": 60,
+   "paintingMachine": 30,
+   "wiredCharger": 60,
+   "drain": 10,
+   "niard": 10,
+   "farmingStation": 40,
+   "inhibitor": 20,
+   "aversion": 20,
+   "relocator": 20,
+   "attractor": 20
+  },
+  "stirling": {
+   "geracao": 40.0,
+   "queima": 0.375,
+   "eficiencia": 80.0
+  },
+  "solar": {
+   "painel_fotovoltaico": 4.0,
+   "painel_fotovoltaico_avancado": 16.0,
+   "painel_fotovoltaico_vibrante": 64.0
+  },
+  "bancos": {
+   "banco_capacitores_basico": 500000.0,
+   "banco_capacitores": 2000000.0,
+   "banco_capacitores_vibrante": 4000000.0
+  },
+  "carregadorSemFio": {
+   "alcance": 16.0,
+   "porTick": 60.0
+  },
+  "carregadorFio": 60.0,
+  "obeliscos": {
+   "atracao": 8.0,
+   "inibicao": 16.0,
+   "aversao": 16.0,
+   "relocacao": 16.0
+  },
+  "gerador": {
+   "quantidade": 4.0,
+   "maxPerto": 2.0,
+   "custoPadrao": 50000.0,
+   "custo": {
+    "minecraft:zombie": 32000,
+    "minecraft:husk": 32000,
+    "minecraft:drowned": 32000,
+    "minecraft:skeleton": 32000,
+    "minecraft:stray": 32000,
+    "minecraft:wither_skeleton": 32000,
+    "minecraft:bogged": 32000,
+    "minecraft:allay": 12000,
+    "minecraft:armadillo": 12000,
+    "minecraft:axolotl": 10000,
+    "minecraft:bat": 10000,
+    "minecraft:bee": 10000,
+    "minecraft:blaze": 40000,
+    "minecraft:breeze": 40000,
+    "minecraft:camel": 15000,
+    "minecraft:cat": 10000,
+    "minecraft:cave_spider": 32000,
+    "minecraft:chicken": 10000,
+    "minecraft:cod": 10000,
+    "minecraft:copper_golem": 50000,
+    "minecraft:cow": 10000,
+    "minecraft:creeper": 32000,
+    "minecraft:dolphin": 12000,
+    "minecraft:donkey": 12000,
+    "minecraft:elder_guardian": 32000,
+    "minecraft:ender_dragon": 1000000,
+    "minecraft:enderman": 60000,
+    "minecraft:endermite": 32000,
+    "minecraft:evoker": 100000,
+    "minecraft:fox": 10000,
+    "minecraft:frog": 10000,
+    "minecraft:ghast": 32000,
+    "minecraft:giant": 60000,
+    "minecraft:glow_squid": 10000,
+    "minecraft:goat": 10000,
+    "minecraft:guardian": 32000,
+    "minecraft:hoglin": 32000,
+    "minecraft:horse": 15000,
+    "minecraft:illusioner": 32000,
+    "minecraft:iron_golem": 80000,
+    "minecraft:llama": 12000,
+    "minecraft:magma_cube": 32000,
+    "minecraft:mooshroom": 12000,
+    "minecraft:mule": 12000,
+    "minecraft:nautilus": 12000,
+    "minecraft:ocelot": 12000,
+    "minecraft:panda": 12000,
+    "minecraft:parrot": 12000,
+    "minecraft:phantom": 32000,
+    "minecraft:pig": 12000,
+    "minecraft:piglin": 32000,
+    "minecraft:piglin_brute": 32000,
+    "minecraft:pillager": 32000,
+    "minecraft:polar_bear": 15000,
+    "minecraft:pufferfish": 10000,
+    "minecraft:rabbit": 10000,
+    "minecraft:ravager": 60000,
+    "minecraft:salmon": 10000,
+    "minecraft:sheep": 10000,
+    "minecraft:shulker": 200000,
+    "minecraft:silverfish": 10000,
+    "minecraft:slime": 32000,
+    "minecraft:sniffer": 60000,
+    "minecraft:snow_golem": 15000,
+    "minecraft:spider": 32000,
+    "minecraft:squid": 10000,
+    "minecraft:strider": 12000,
+    "minecraft:tadpole": 10000,
+    "minecraft:trader_llama": 12000,
+    "minecraft:tropical_fish": 10000,
+    "minecraft:turtle": 10000,
+    "minecraft:vex": 20000,
+    "minecraft:villager": 32000,
+    "minecraft:vindicator": 32000,
+    "minecraft:wandering_trader": 40000,
+    "minecraft:warden": 1000000,
+    "minecraft:witch": 32000,
+    "minecraft:wither": 1000000,
+    "minecraft:wolf": 15000
+   }
+  },
+  "motor": {
+   "minecraft:creeper": {
+    "fluido": "cl:balde_combustivel_foguete",
+    "rfPorMb": 800,
+    "ticksPorMb": 12
+   },
+   "minecraft:enderman": {
+    "fluido": "cl:balde_orvalho_vazio",
+    "rfPorMb": 1200,
+    "ticksPorMb": 12
+   },
+   "minecraft:zombie": {
+    "fluido": "cl:balde_destilado_nutrientes",
+    "rfPorMb": 1000,
+    "ticksPorMb": 18
+   },
+   "minecraft:husk": {
+    "fluido": "cl:balde_destilado_nutrientes",
+    "rfPorMb": 1000,
+    "ticksPorMb": 18
+   },
+   "minecraft:drowned": {
+    "fluido": "cl:balde_destilado_nutrientes",
+    "rfPorMb": 1000,
+    "ticksPorMb": 18
+   },
+   "minecraft:zombie_villager_v2": {
+    "fluido": "cl:balde_destilado_nutrientes",
+    "rfPorMb": 1000,
+    "ticksPorMb": 18
+   },
+   "minecraft:blaze": {
+    "fluido": "minecraft:lava_bucket",
+    "rfPorMb": 800,
+    "ticksPorMb": 18
+   }
+  },
+  "esferas": {
+   "cl:esfera_ferro_condutor": {
+    "BonusMultiplier": 1.0,
+    "Durability": 40000,
+    "OutputMultiplier": 1.35,
+    "PowerUse": 1.0
+   },
+   "cl:esfera_aco_negro": {
+    "BonusMultiplier": 2.0,
+    "Durability": 125000,
+    "OutputMultiplier": 1.35,
+    "PowerUse": 0.7
+   },
+   "cl:esfera_aco_end": {
+    "BonusMultiplier": 2.4,
+    "Durability": 75000,
+    "OutputMultiplier": 1.4,
+    "PowerUse": 0.7
+   },
+   "cl:esfera_liga_energetica": {
+    "BonusMultiplier": 1.1,
+    "Durability": 80000,
+    "OutputMultiplier": 1.6,
+    "PowerUse": 1.1
+   },
+   "cl:esfera_ferro_pulsante": {
+    "BonusMultiplier": 1.85,
+    "Durability": 100000,
+    "OutputMultiplier": 1.0,
+    "PowerUse": 1.0
+   },
+   "cl:esfera_liga_redstone": {
+    "BonusMultiplier": 1.0,
+    "Durability": 30000,
+    "OutputMultiplier": 1.0,
+    "PowerUse": 0.35
+   },
+   "cl:esfera_almario": {
+    "BonusMultiplier": 2.15,
+    "Durability": 80000,
+    "OutputMultiplier": 1.2,
+    "PowerUse": 0.9
+   },
+   "cl:esfera_liga_vibrante": {
+    "BonusMultiplier": 1.35,
+    "Durability": 80000,
+    "OutputMultiplier": 1.75,
+    "PowerUse": 1.13
+   },
+   "minecraft:flint": {
+    "BonusMultiplier": 1.25,
+    "Durability": 24000,
+    "OutputMultiplier": 1.2,
+    "PowerUse": 0.85
+   }
+  },
+  "viagem": {
+   "pulo": 24.0,
+   "ateBloco": 192.0,
+   "entreBlocos": 96.0,
+   "rfPorUso": 1000.0,
+   "capacidade": 100000.0
+  },
+  "levitacao": {
+   "rfPorTick": 1.0,
+   "capacidade": 10000.0
+  },
+  "eletroima": {
+   "rfPorTick": 1.0,
+   "capacidade": 100000.0,
+   "alcance": 5.0,
+   "maxItens": 20.0
+  },
+  "enderios": {
+   "chance": 0.3,
+   "alcance": 16.0
+  },
+  "graoFogo": {
+   "idadeMinima": 260.0
+  },
+  "cabecaChance": 0.07
+ }
+}

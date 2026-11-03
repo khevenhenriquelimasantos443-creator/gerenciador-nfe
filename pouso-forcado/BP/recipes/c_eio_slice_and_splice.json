@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_slice_and_splice"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IHI",
+      "ICI",
+      "GBG"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:iron_bars"
+      },
+      "C": {
+        "item": "cl:chassi_almas"
+      },
+      "G": {
+        "item": "cl:engrenagem_energizada"
+      },
+      "H": {
+        "item": "minecraft:skeleton_skull"
+      },
+      "I": {
+        "item": "cl:almario"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fatiar_emendar"
+    }
+  }
+}

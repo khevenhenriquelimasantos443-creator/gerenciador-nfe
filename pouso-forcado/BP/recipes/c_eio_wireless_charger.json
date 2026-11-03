@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_wireless_charger"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CCC",
+      "CVC",
+      "CEC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:ferro_condutor"
+      },
+      "E": {
+        "item": "cl:ressonador_ender"
+      },
+      "V": {
+        "item": "cl:chassi_maquina"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:carregador_sem_fio"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:simbolo_monstro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_simbolo_monstro",
+      "minecraft:display_name": {
+        "value": "item.cl:simbolo_monstro.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

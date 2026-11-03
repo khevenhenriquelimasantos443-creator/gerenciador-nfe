@@ -1061,6 +1061,11 @@
   "en": "Water Bottle",
   "icone": "textures/items/potion_bottle_drinkable"
  },
+ "minecraft:prismarine": {
+  "pt": "prismarine",
+  "en": "prismarine",
+  "icone": "textures/blocks/prismarine_rough"
+ },
  "minecraft:pumpkin": {
   "pt": "Abóbora",
   "en": "Pumpkin",
@@ -1216,6 +1221,11 @@
   "en": "Short Grass",
   "icone": "textures/blocks/tallgrass_carried"
  },
+ "minecraft:skeleton_skull": {
+  "pt": "skeleton_skull",
+  "en": "skeleton_skull",
+  "icone": "textures/blocks/soul_sand"
+ },
  "minecraft:slime": {
   "pt": "Bloco de Slime",
   "en": "Slime Block",
@@ -1260,6 +1270,11 @@
   "pt": "Fogo das Almas",
   "en": "Soul Fire",
   "icone": "textures/blocks/soul_fire_0"
+ },
+ "minecraft:soul_sand": {
+  "pt": "Areia das Almas",
+  "en": "Soul Sand",
+  "icone": "textures/blocks/soul_sand"
  },
  "minecraft:spider_eye": {
   "pt": "Olho de Aranha",

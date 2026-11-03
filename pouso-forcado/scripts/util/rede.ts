@@ -19,7 +19,7 @@ const CARGA = "cl:carga";
 export const CELULAS: Readonly<Record<string, number>> = { ...DADOS_F17.celulas, ...DADOS_F24.cubos, ...DADOS_F29.bancos, ...DADOS_F39.celulas };
 // Powah! (1.18.0): cabos e geradores também passam energia.
 const POWAH = DADOS_F39.niveis.flatMap((n) => [`cl:cabo_powah_${n}`, `cl:furnator_${n}`, `cl:magmator_${n}`, `cl:termogerador_${n}`, `cl:painel_solar_${n}`, `cl:reator_${n}`]);
-const CONDUTORES = new Set<string>([IDS.cabo, "cl:conduto_energia", ...POWAH, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
+const CONDUTORES = new Set<string>([IDS.cabo, "cl:conduto_energia", "cl:conduto_energia_aprimorado", "cl:conduto_energia_ender", ...POWAH, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);
 
 // Tesseract (1.2.0): a busca também pula para os outros Tesseracts da mesma frequência (scripts/maquinas/energia_extra.ts).
 let paresDe: (b: Block) => Block[] = () => [];

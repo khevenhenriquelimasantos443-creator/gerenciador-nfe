@@ -21,7 +21,7 @@ import { cabe, contar, entrada, entregar, gastarCE, inv, primeiro, saida, tirar 
  */
 type Dados = { alcance?: number; esgoto?: number; mortes?: number };
 const T = "mfr";
-const SEMENTES: Readonly<Record<string, string>> = { ...MFR.sementes, ...Object.fromEntries(CULTURAS.map((c) => [c.semente, c.planta])) };
+export const SEMENTES: Readonly<Record<string, string>> = { ...MFR.sementes, ...Object.fromEntries(CULTURAS.map((c) => [c.semente, c.planta])) };
 const PLANTAS_HC = new Map(CULTURAS.map((c) => [c.planta, c.produto]));
 const OPOSTO: Readonly<Record<string, [number, number]>> = { north: [0, 1], south: [0, -1], east: [-1, 0], west: [1, 0] };
 const ultimo = new Map<string, string>();
@@ -40,7 +40,7 @@ function area(b: Block, centrada = false): { pos: Vector3[]; canto: Vector3; lad
   return { pos, canto: { x: cx - r, y: b.y - 1, z: cz - r }, lado: 2 * r + 1 };
 }
 
-function bloco(dim: Dimension, p: Vector3): Block | undefined {
+export function bloco(dim: Dimension, p: Vector3): Block | undefined {
   try {
     return dim.getBlock(p);
   } catch {
@@ -49,7 +49,7 @@ function bloco(dim: Dimension, p: Vector3): Block | undefined {
 }
 
 /** Recolhe os itens soltos na área para o baú da máquina (um pouco depois, para dar tempo de cair). */
-function recolher(b: Block, canto: Vector3, lado: number, altura = 4): void {
+export function recolher(b: Block, canto: Vector3, lado: number, altura = 4): void {
   system.runTimeout(() => {
     if (!b.isValid) return;
     const destino = saida(b);
@@ -62,7 +62,7 @@ function recolher(b: Block, canto: Vector3, lado: number, altura = 4): void {
   }, 4);
 }
 
-function quebrar(dim: Dimension, p: Vector3): void {
+export function quebrar(dim: Dimension, p: Vector3): void {
   dim.runCommand(`setblock ${p.x} ${p.y} ${p.z} air destroy`);
 }
 
@@ -124,7 +124,7 @@ export const plantadeira = maquina("cl:plantadeira", (b) => {
 });
 
 // ---------- Colheitadeira ----------
-function madura(a: Block): boolean {
+export function madura(a: Block): boolean {
   if ((MFR.maduras as readonly string[]).includes(a.typeId)) return lerEstado<number>(a, "growth") >= 7;
   if ((MFR.inteiras as readonly string[]).includes(a.typeId)) return true;
   if (PLANTAS_HC.has(a.typeId)) return lerEstado<number>(a, "cl:estagio") >= 2;
@@ -190,7 +190,7 @@ export const colheitadeira = maquina("cl:colheitadeira", (b) => {
 });
 
 // ---------- Fertilizadora (e o fertilizante na mão) ----------
-function adubar(a: Block): boolean {
+export function adubar(a: Block): boolean {
   if (crescerPlantacao(a, 1)) return true;
   const g = (() => {
     try {

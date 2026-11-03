@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_xp_obelisk"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " R ",
+      " I ",
+      "ICI"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:chassi_almas"
+      },
+      "I": {
+        "item": "cl:almario"
+      },
+      "R": {
+        "item": "cl:vara_experiencia"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:obelisco_xp"
+    }
+  }
+}

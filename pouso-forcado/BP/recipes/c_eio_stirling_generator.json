@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_stirling_generator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GFG",
+      "IVI",
+      "ODO"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:deepslate"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      },
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "O": {
+        "item": "minecraft:obsidian"
+      },
+      "V": {
+        "item": "cl:chassi_maquina"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_stirling"
+    }
+  }
+}

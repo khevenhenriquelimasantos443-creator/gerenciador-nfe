@@ -1,3 +1,6 @@
+Ender IO 9 (Team Ender IO), github.com/Team-EnderIO/EnderIO. Código: Unlicense. Arte: CC0 1.0 (README do mod e
+docs/license/*: DTFuel, NeepNoop e os autores do Travel Anchors liberaram as contribuições em CC0).
+
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or

@@ -32,9 +32,11 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   Mó, Rodas Trituradoras, Prensa, Misturador, Ventilador e Furadeira), com os números de estresse e as receitas do código
   público (github.com/Creators-of-Create/Create). Código e arte próprios.
 
-- **Ender IO** (CrazyPants, SleepyTrousers e equipe, domínio público/Unlicense): Fundidora de Ligas, Moinho SAG, Gerador
-  Stirling, painéis, bancos de capacitores, Âncoras de Viagem e o Aço Negro, com os números dos arquivos de receitas e de
-  configuração do código público (github.com/SleepyTrousers/EnderIO, versão 5.2). Código e arte próprios.
+- **Ender IO** (CrazyPants, SleepyTrousers e Team Ender IO, Unlicense/CC0): desde a 1.20.0 o Ender IO 9, o mais novo
+  (github.com/Team-EnderIO/EnderIO, ramo 26.3), com os itens, os nomes em português, as receitas (bancada, Fundição de
+  Ligas, Triturador SAG, Fatiar e Emendar, Vinculador de Almas, Crisol, tanques, fogo) e os números das configurações
+  lidos do código por `tools/importar-enderio.py`; a arte original também (CC0; DTFuel, NeepNoop e os autores do Travel
+  Anchors liberaram as suas em CC0, veja docs/licencas/enderio.txt). Código do pack próprio.
 
 - **Mekanism Generators** e **Mekanism Tools** (aidancbrady, MIT): geradores, ferramentas e armaduras, com os números lidos
   no código-fonte público (github.com/aidancbrady/Mekanism). Código próprio; as armaduras usam a textura da armadura de
@@ -117,7 +119,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Farmer's Delight | vectorwing e equipe | MIT | github.com/vectorwing/FarmersDelight (1.20) |
 | Quark | Vazkii e equipe | CC BY-NC-SA 3.0 | github.com/VazkiiMods/Quark |
 | Immersive Aircraft (ícones, modelos 3D e texturas das aeronaves) | Luke100000 e equipe | GPLv3 | github.com/Luke100000/ImmersiveAircraft |
-| Ender IO (e os condutos) | CrazyPants, SleepyTrousers e equipe | Unlicense / CC0 | github.com/SleepyTrousers/EnderIO (5.2) |
+| Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
 | Tinkers' Construct | mDiyo e SlimeKnights | CC BY 3.0 | github.com/SlimeKnights/TinkersConstruct (1.7.10) |

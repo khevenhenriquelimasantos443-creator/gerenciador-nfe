@@ -3543,6 +3543,318 @@
     },
     "clc_bloco_uraninita": {
       "textures": "textures/blocks/cl/arte/bloco_uraninita"
+    },
+    "clc_bloco_aco_negro": {
+      "textures": "textures/blocks/cl/arte/bloco_aco_negro"
+    },
+    "clc_bloco_aco_end": {
+      "textures": "textures/blocks/cl/arte/bloco_aco_end"
+    },
+    "clc_bloco_liga_energetica": {
+      "textures": "textures/blocks/cl/arte/bloco_liga_energetica"
+    },
+    "clc_bloco_liga_vibrante": {
+      "textures": "textures/blocks/cl/arte/bloco_liga_vibrante"
+    },
+    "clc_bloco_liga_redstone": {
+      "textures": "textures/blocks/cl/arte/bloco_liga_redstone"
+    },
+    "clc_bloco_ferro_condutor": {
+      "textures": "textures/blocks/cl/arte/bloco_ferro_condutor"
+    },
+    "clc_bloco_ferro_pulsante": {
+      "textures": "textures/blocks/cl/arte/bloco_ferro_pulsante"
+    },
+    "clc_bloco_almario": {
+      "textures": "textures/blocks/cl/arte/bloco_almario"
+    },
+    "clc_quartzo_fundido": {
+      "textures": "textures/blocks/cl/arte/quartzo_fundido"
+    },
+    "clc_quartzo_fundido_iluminado": {
+      "textures": "textures/blocks/cl/arte/quartzo_fundido_iluminado"
+    },
+    "clc_quartzo_fundido_escuro": {
+      "textures": "textures/blocks/cl/arte/quartzo_fundido_escuro"
+    },
+    "clc_vidro_transparente": {
+      "textures": "textures/blocks/cl/arte/vidro_transparente"
+    },
+    "clc_vidro_transparente_iluminado": {
+      "textures": "textures/blocks/cl/arte/vidro_transparente_iluminado"
+    },
+    "clc_vidro_transparente_escuro": {
+      "textures": "textures/blocks/cl/arte/vidro_transparente_escuro"
+    },
+    "clc_obsidiana_reforcada": {
+      "textures": "textures/blocks/cl/arte/obsidiana_reforcada"
+    },
+    "clc_isolamento_industrial": {
+      "textures": "textures/blocks/cl/arte/isolamento_industrial"
+    },
+    "clc_barras_aco_negro": {
+      "textures": "textures/blocks/cl/arte/barras_aco_negro"
+    },
+    "clc_barras_aco_end": {
+      "textures": "textures/blocks/cl/arte/barras_aco_end"
+    },
+    "clc_chassi_almas_frente": {
+      "textures": "textures/blocks/cl/c/chassi_almas_frente"
+    },
+    "clc_chassi_almas_lado": {
+      "textures": "textures/blocks/cl/c/chassi_almas_lado"
+    },
+    "clc_chassi_almas_topo": {
+      "textures": "textures/blocks/cl/c/chassi_almas_topo"
+    },
+    "clc_chassi_almas_baixo": {
+      "textures": "textures/blocks/cl/c/chassi_almas_baixo"
+    },
+    "clc_fatiar_emendar_frente": {
+      "textures": "textures/blocks/cl/arte/fatiar_emendar_frente"
+    },
+    "clc_fatiar_emendar_lado": {
+      "textures": "textures/blocks/cl/arte/fatiar_emendar_lado"
+    },
+    "clc_fatiar_emendar_topo": {
+      "textures": "textures/blocks/cl/arte/fatiar_emendar_topo"
+    },
+    "clc_fatiar_emendar_baixo": {
+      "textures": "textures/blocks/cl/arte/fatiar_emendar_baixo"
+    },
+    "clc_vinculador_almas_frente": {
+      "textures": "textures/blocks/cl/arte/vinculador_almas_frente"
+    },
+    "clc_vinculador_almas_lado": {
+      "textures": "textures/blocks/cl/arte/vinculador_almas_lado"
+    },
+    "clc_vinculador_almas_topo": {
+      "textures": "textures/blocks/cl/arte/vinculador_almas_topo"
+    },
+    "clc_vinculador_almas_baixo": {
+      "textures": "textures/blocks/cl/arte/vinculador_almas_baixo"
+    },
+    "clc_crisol_fermentacao_frente": {
+      "textures": "textures/blocks/cl/arte/crisol_fermentacao_frente"
+    },
+    "clc_crisol_fermentacao_lado": {
+      "textures": "textures/blocks/cl/arte/crisol_fermentacao_lado"
+    },
+    "clc_crisol_fermentacao_topo": {
+      "textures": "textures/blocks/cl/arte/crisol_fermentacao_topo"
+    },
+    "clc_crisol_fermentacao_baixo": {
+      "textures": "textures/blocks/cl/arte/crisol_fermentacao_baixo"
+    },
+    "clc_motor_almas_frente": {
+      "textures": "textures/blocks/cl/arte/motor_almas_frente"
+    },
+    "clc_motor_almas_lado": {
+      "textures": "textures/blocks/cl/arte/motor_almas_lado"
+    },
+    "clc_motor_almas_topo": {
+      "textures": "textures/blocks/cl/arte/motor_almas_topo"
+    },
+    "clc_motor_almas_baixo": {
+      "textures": "textures/blocks/cl/arte/motor_almas_baixo"
+    },
+    "clc_gerador_energizado_frente": {
+      "textures": "textures/blocks/cl/arte/gerador_energizado_frente"
+    },
+    "clc_gerador_energizado_lado": {
+      "textures": "textures/blocks/cl/arte/gerador_energizado_lado"
+    },
+    "clc_gerador_energizado_topo": {
+      "textures": "textures/blocks/cl/arte/gerador_energizado_topo"
+    },
+    "clc_gerador_energizado_baixo": {
+      "textures": "textures/blocks/cl/arte/gerador_energizado_baixo"
+    },
+    "clc_funil_impulso_frente": {
+      "textures": "textures/blocks/cl/arte/funil_impulso_frente"
+    },
+    "clc_funil_impulso_lado": {
+      "textures": "textures/blocks/cl/arte/funil_impulso_lado"
+    },
+    "clc_funil_impulso_topo": {
+      "textures": "textures/blocks/cl/arte/funil_impulso_topo"
+    },
+    "clc_funil_impulso_baixo": {
+      "textures": "textures/blocks/cl/arte/funil_impulso_baixo"
+    },
+    "clc_carregador_fio_frente": {
+      "textures": "textures/blocks/cl/arte/carregador_fio_frente"
+    },
+    "clc_carregador_fio_lado": {
+      "textures": "textures/blocks/cl/arte/carregador_fio_lado"
+    },
+    "clc_carregador_fio_topo": {
+      "textures": "textures/blocks/cl/arte/carregador_fio_topo"
+    },
+    "clc_carregador_fio_baixo": {
+      "textures": "textures/blocks/cl/arte/carregador_fio_baixo"
+    },
+    "clc_carregador_sem_fio_frente": {
+      "textures": "textures/blocks/cl/arte/carregador_sem_fio_frente"
+    },
+    "clc_carregador_sem_fio_lado": {
+      "textures": "textures/blocks/cl/arte/carregador_sem_fio_lado"
+    },
+    "clc_carregador_sem_fio_topo": {
+      "textures": "textures/blocks/cl/arte/carregador_sem_fio_topo"
+    },
+    "clc_carregador_sem_fio_baixo": {
+      "textures": "textures/blocks/cl/arte/carregador_sem_fio_baixo"
+    },
+    "clc_obelisco_xp_frente": {
+      "textures": "textures/blocks/cl/arte/obelisco_xp_frente"
+    },
+    "clc_obelisco_xp_lado": {
+      "textures": "textures/blocks/cl/arte/obelisco_xp_lado"
+    },
+    "clc_obelisco_xp_topo": {
+      "textures": "textures/blocks/cl/arte/obelisco_xp_topo"
+    },
+    "clc_obelisco_xp_baixo": {
+      "textures": "textures/blocks/cl/arte/obelisco_xp_baixo"
+    },
+    "clc_vacuo_xp_frente": {
+      "textures": "textures/blocks/cl/arte/vacuo_xp_frente"
+    },
+    "clc_vacuo_xp_lado": {
+      "textures": "textures/blocks/cl/arte/vacuo_xp_lado"
+    },
+    "clc_vacuo_xp_topo": {
+      "textures": "textures/blocks/cl/arte/vacuo_xp_topo"
+    },
+    "clc_vacuo_xp_baixo": {
+      "textures": "textures/blocks/cl/arte/vacuo_xp_baixo"
+    },
+    "clc_bau_vacuo_frente": {
+      "textures": "textures/blocks/cl/arte/bau_vacuo_frente"
+    },
+    "clc_bau_vacuo_lado": {
+      "textures": "textures/blocks/cl/arte/bau_vacuo_lado"
+    },
+    "clc_bau_vacuo_topo": {
+      "textures": "textures/blocks/cl/arte/bau_vacuo_topo"
+    },
+    "clc_bau_vacuo_baixo": {
+      "textures": "textures/blocks/cl/arte/bau_vacuo_baixo"
+    },
+    "clc_obelisco_inibicao_frente": {
+      "textures": "textures/blocks/cl/arte/obelisco_inibicao_frente"
+    },
+    "clc_obelisco_inibicao_lado": {
+      "textures": "textures/blocks/cl/arte/obelisco_inibicao_lado"
+    },
+    "clc_obelisco_inibicao_topo": {
+      "textures": "textures/blocks/cl/arte/obelisco_inibicao_topo"
+    },
+    "clc_obelisco_inibicao_baixo": {
+      "textures": "textures/blocks/cl/arte/obelisco_inibicao_baixo"
+    },
+    "clc_obelisco_aversao_frente": {
+      "textures": "textures/blocks/cl/arte/obelisco_aversao_frente"
+    },
+    "clc_obelisco_aversao_lado": {
+      "textures": "textures/blocks/cl/arte/obelisco_aversao_lado"
+    },
+    "clc_obelisco_aversao_topo": {
+      "textures": "textures/blocks/cl/arte/obelisco_aversao_topo"
+    },
+    "clc_obelisco_aversao_baixo": {
+      "textures": "textures/blocks/cl/arte/obelisco_aversao_baixo"
+    },
+    "clc_obelisco_atracao_frente": {
+      "textures": "textures/blocks/cl/arte/obelisco_atracao_frente"
+    },
+    "clc_obelisco_atracao_lado": {
+      "textures": "textures/blocks/cl/arte/obelisco_atracao_lado"
+    },
+    "clc_obelisco_atracao_topo": {
+      "textures": "textures/blocks/cl/arte/obelisco_atracao_topo"
+    },
+    "clc_obelisco_atracao_baixo": {
+      "textures": "textures/blocks/cl/arte/obelisco_atracao_baixo"
+    },
+    "clc_obelisco_relocacao_frente": {
+      "textures": "textures/blocks/cl/arte/obelisco_relocacao_frente"
+    },
+    "clc_obelisco_relocacao_lado": {
+      "textures": "textures/blocks/cl/arte/obelisco_relocacao_lado"
+    },
+    "clc_obelisco_relocacao_topo": {
+      "textures": "textures/blocks/cl/arte/obelisco_relocacao_topo"
+    },
+    "clc_obelisco_relocacao_baixo": {
+      "textures": "textures/blocks/cl/arte/obelisco_relocacao_baixo"
+    },
+    "clc_obelisco_climatico_frente": {
+      "textures": "textures/blocks/cl/arte/obelisco_climatico_frente"
+    },
+    "clc_obelisco_climatico_lado": {
+      "textures": "textures/blocks/cl/arte/obelisco_climatico_lado"
+    },
+    "clc_obelisco_climatico_topo": {
+      "textures": "textures/blocks/cl/arte/obelisco_climatico_topo"
+    },
+    "clc_obelisco_climatico_baixo": {
+      "textures": "textures/blocks/cl/arte/obelisco_climatico_baixo"
+    },
+    "clc_dreno_frente": {
+      "textures": "textures/blocks/cl/arte/dreno_frente"
+    },
+    "clc_dreno_lado": {
+      "textures": "textures/blocks/cl/arte/dreno_lado"
+    },
+    "clc_dreno_topo": {
+      "textures": "textures/blocks/cl/arte/dreno_topo"
+    },
+    "clc_dreno_baixo": {
+      "textures": "textures/blocks/cl/arte/dreno_baixo"
+    },
+    "clc_tanque_fluido_frente": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_frente"
+    },
+    "clc_tanque_fluido_lado": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_lado"
+    },
+    "clc_tanque_fluido_topo": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_topo"
+    },
+    "clc_tanque_fluido_baixo": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_baixo"
+    },
+    "clc_tanque_fluido_pressurizado_frente": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_pressurizado_frente"
+    },
+    "clc_tanque_fluido_pressurizado_lado": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_pressurizado_lado"
+    },
+    "clc_tanque_fluido_pressurizado_topo": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_pressurizado_topo"
+    },
+    "clc_tanque_fluido_pressurizado_baixo": {
+      "textures": "textures/blocks/cl/arte/tanque_fluido_pressurizado_baixo"
+    },
+    "clc_estacao_agricola_frente": {
+      "textures": "textures/blocks/cl/arte/estacao_agricola_frente"
+    },
+    "clc_estacao_agricola_lado": {
+      "textures": "textures/blocks/cl/arte/estacao_agricola_lado"
+    },
+    "clc_estacao_agricola_topo": {
+      "textures": "textures/blocks/cl/arte/estacao_agricola_topo"
+    },
+    "clc_estacao_agricola_baixo": {
+      "textures": "textures/blocks/cl/arte/estacao_agricola_baixo"
+    },
+    "clc_conduto_energia_aprimorado": {
+      "textures": "textures/blocks/cl/c/conduto_energia_aprimorado"
+    },
+    "clc_conduto_energia_ender": {
+      "textures": "textures/blocks/cl/c/conduto_energia_ender"
     }
   }
 }

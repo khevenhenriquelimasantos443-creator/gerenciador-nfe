@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_impulse_hopper"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IHI",
+      "GCG",
+      "IRI"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:chassi_maquina"
+      },
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      },
+      "H": {
+        "item": "minecraft:hopper"
+      },
+      "I": {
+        "item": "cl:ferro_condutor"
+      },
+      "R": {
+        "item": "cl:liga_redstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:funil_impulso"
+    }
+  }
+}

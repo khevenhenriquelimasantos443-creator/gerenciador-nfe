@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:frasco_alma_cheio",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_frasco_alma_cheio",
+      "minecraft:display_name": {
+        "value": "item.cl:frasco_alma_cheio.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

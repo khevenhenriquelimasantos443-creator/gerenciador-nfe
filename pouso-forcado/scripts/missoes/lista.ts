@@ -144,7 +144,17 @@ export type Acao =
   | "reator"
   | "ender_canal"
   | "bateria"
-  | "raio";
+  | "raio"
+  // 1.20.0: Ender IO 9
+  | "fatiar"
+  | "vincular"
+  | "crisol"
+  | "motor_almas"
+  | "gerador_alma"
+  | "obelisco_xp"
+  | "cajado_viagem"
+  | "frasco_alma"
+  | "cabeca_ender";
 
 type MissaoBase = {
   id: string;
@@ -364,12 +374,25 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     missoes: [
       { id: "eio_capacitor", objetivo: { tipo: "ter", item: "cl:capacitor_basico", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
       { id: "eio_fundidora", objetivo: { tipo: "colocar", bloco: "cl:fundidora_ligas", qtd: 1 }, recompensa: [{ item: "cl:silicio", quantidade: 4 }] },
-      { id: "eio_aco_eletrico", objetivo: { tipo: "ter", item: "cl:aco_eletrico", qtd: 8 }, recompensa: [{ item: "minecraft:glowstone_dust", quantidade: 8 }] },
+      { id: "eio_aco_eletrico", objetivo: { tipo: "ter", item: "cl:ferro_condutor", qtd: 8 }, recompensa: [{ item: "minecraft:glowstone_dust", quantidade: 8 }] },
       { id: "eio_aco_negro", requer: ["eio_fundidora"], objetivo: { tipo: "ter", item: "cl:aco_negro", qtd: 8 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 4 }] },
       { id: "eio_vibrante", requer: ["eio_aco_eletrico"], objetivo: { tipo: "ter", item: "cl:liga_vibrante", qtd: 4 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
       { id: "eio_banco", requer: ["eio_capacitor"], objetivo: { tipo: "colocar", bloco: "cl:banco_capacitores_basico", qtd: 1 }, recompensa: [{ item: "cl:capacitor_basico", quantidade: 4 }] },
       { id: "eio_ancora", requer: ["eio_aco_negro"], objetivo: { tipo: "acao", acao: "ancora", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
       { id: "eio_painel", requer: ["eio_vibrante"], objetivo: { tipo: "colocar", bloco: "cl:painel_fotovoltaico_vibrante", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      // 1.20.0: Ender IO 9
+      { id: "eio_graos", objetivo: { tipo: "ter", item: "cl:graos_infinito", qtd: 4 }, recompensa: [{ item: "minecraft:flint_and_steel", quantidade: 1 }] },
+      { id: "eio_almario", requer: ["eio_fundidora"], objetivo: { tipo: "ter", item: "cl:almario", qtd: 4 }, recompensa: [{ item: "minecraft:soul_sand", quantidade: 8 }] },
+      { id: "eio_frasco", requer: ["eio_almario"], objetivo: { tipo: "acao", acao: "frasco_alma", qtd: 1 }, recompensa: [{ item: "cl:frasco_alma", quantidade: 1 }] },
+      { id: "eio_cabeca", requer: ["eio_aco_negro"], objetivo: { tipo: "acao", acao: "cabeca_ender", qtd: 1 }, recompensa: [{ item: "minecraft:bone", quantidade: 16 }] },
+      { id: "eio_fatiar", requer: ["eio_almario"], objetivo: { tipo: "acao", acao: "fatiar", qtd: 1 }, recompensa: [{ item: "cl:silicio", quantidade: 8 }] },
+      { id: "eio_vinculador", requer: ["eio_fatiar", "eio_frasco"], objetivo: { tipo: "acao", acao: "vincular", qtd: 1 }, recompensa: [{ item: "minecraft:experience_bottle", quantidade: 8 }] },
+      { id: "eio_crisol", requer: ["eio_aco_negro"], objetivo: { tipo: "acao", acao: "crisol", qtd: 1 }, recompensa: [{ item: "minecraft:wheat_seeds", quantidade: 16 }] },
+      { id: "eio_motor", requer: ["eio_fatiar", "eio_frasco"], objetivo: { tipo: "acao", acao: "motor_almas", qtd: 1 }, recompensa: [{ item: "cl:balde_destilado_nutrientes", quantidade: 1 }] },
+      { id: "eio_gerador", requer: ["eio_vinculador"], objetivo: { tipo: "acao", acao: "gerador_alma", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
+      { id: "eio_xp", requer: ["eio_almario"], objetivo: { tipo: "acao", acao: "obelisco_xp", qtd: 1 }, recompensa: [{ item: "minecraft:experience_bottle", quantidade: 4 }] },
+      { id: "eio_cajado", requer: ["eio_ancora"], objetivo: { tipo: "acao", acao: "cajado_viagem", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 4 }] },
+      { id: "eio_estacao", requer: ["eio_fatiar"], objetivo: { tipo: "colocar", bloco: "cl:estacao_agricola", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 32 }] },
     ],
   },
   {

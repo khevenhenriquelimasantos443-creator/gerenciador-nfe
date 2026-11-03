@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_relocator_obelisk"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P",
+      "A"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:obelisco_aversao"
+      },
+      "P": {
+        "item": "minecraft:prismarine"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:obelisco_relocacao"
+    }
+  }
+}

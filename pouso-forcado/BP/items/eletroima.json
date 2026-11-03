@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:eletroima",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_eletroima",
+      "minecraft:display_name": {
+        "value": "item.cl:eletroima.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_glider"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " D ",
+      "WDW"
+    ],
+    "key": {
+      "D": {
+        "item": "cl:aco_negro"
+      },
+      "W": {
+        "item": "cl:asa_planador"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:planador"
+    }
+  }
+}

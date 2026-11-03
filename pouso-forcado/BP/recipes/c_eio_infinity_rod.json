@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_infinity_rod"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " NG",
+      "NSN",
+      "GN "
+    ],
+    "key": {
+      "G": {
+        "item": "cl:graos_infinito"
+      },
+      "N": {
+        "item": "cl:pepita_aco_negro"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vara_infinito"
+    }
+  }
+}

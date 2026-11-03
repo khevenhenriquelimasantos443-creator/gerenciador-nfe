@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_reinforced_obsidian_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GBG",
+      "BOB",
+      "GBG"
+    ],
+    "key": {
+      "B": {
+        "item": "cl:barras_aco_negro"
+      },
+      "G": {
+        "item": "cl:graos_infinito"
+      },
+      "O": {
+        "item": "minecraft:obsidian"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:obsidiana_reforcada"
+    }
+  }
+}

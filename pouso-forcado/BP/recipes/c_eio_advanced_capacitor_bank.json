@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_advanced_capacitor_bank"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "CRC",
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:ferro_condutor"
+      },
+      "C": {
+        "item": "cl:capacitor_duplo"
+      },
+      "R": {
+        "item": "minecraft:redstone_block"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:banco_capacitores"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:enderios",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_enderios",
+      "minecraft:display_name": {
+        "value": "item.cl:enderios.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:food": {
+        "nutrition": 10,
+        "saturation_modifier": 0.8,
+        "can_always_eat": true,
+        "using_converts_to": "minecraft:bowl"
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_void_chassis"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IGI",
+      "G G",
+      "IGI"
+    ],
+    "key": {
+      "G": {
+        "item": "cl:graos_infinito"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:chassi_maquina"
+    }
+  }
+}

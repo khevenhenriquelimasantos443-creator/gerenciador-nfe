@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_soul_binder"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IVI",
+      "GCG",
+      "IZI"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:chassi_almas"
+      },
+      "G": {
+        "item": "cl:engrenagem_energizada"
+      },
+      "I": {
+        "item": "cl:almario"
+      },
+      "V": {
+        "item": "cl:frasco_alma"
+      },
+      "Z": {
+        "item": "cl:controlador_logico_z"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vinculador_almas"
+    }
+  }
+}

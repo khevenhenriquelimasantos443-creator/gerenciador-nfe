@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_yeta_wrench"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "I I",
+      " G ",
+      " I "
+    ],
+    "key": {
+      "G": {
+        "item": "cl:graos_infinito"
+      },
+      "I": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:chave_yeta"
+    }
+  }
+}

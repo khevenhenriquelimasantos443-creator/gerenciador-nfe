@@ -3,6 +3,19 @@
 // o Aço Negro em EquipmentData). Onde a receita de 1.12 pedia algo que não existe aqui (Pó do Infinito, que nasce de
 // fogo em rocha matriz, e os corantes de máquina), vale a receita do Ender IO de 1.7.10 (chassi com capacitor).
 // Energia: 1 E = 4.000 RF. Scripts em scripts/maquinas/enderio.ts.
+// 1.20.0: atualizado para o Ender IO 9 (o mais novo): os nomes (Aço Sombrio, Liga Condutiva...), as receitas, os
+// painéis e os bancos vêm de enderio.json (tools/importar-enderio.py); aqui ficam só os itens de antes e o que o
+// Ender IO 9 não tem (Aço Elétrico, ferramentas e armadura de Aço Sombrio).
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const EIO9 = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "enderio.json"), "utf8"));
+const NOVAS = new Set(EIO9.receitas.map((r) => r.resultado));
+const renomeado = (x) => {
+  const n = EIO9.renomear[x.id];
+  return n ? { ...x, pt: n[0], en: n[1] } : x;
+};
 const maq = (id, pt, en, luz, glifo, extra = {}) => ({ id, pt, en, tipo: "maquina", luz, glifo, comp: `cl:${id}`, tick: 100, ...extra });
 const LIGAS = [
   ["aco_eletrico", "Aço Elétrico", "Electrical Steel", "#b9bec4"],
@@ -11,7 +24,7 @@ const LIGAS = [
   ["liga_redstone", "Liga de Redstone", "Redstone Alloy", "#c43a3a"],
   ["ferro_condutor", "Ferro Condutor", "Conductive Iron", "#d9a0a0"],
   ["ferro_pulsante", "Ferro Pulsante", "Pulsating Iron", "#6fd6a8"],
-  ["aco_negro", "Aço Negro", "Dark Steel", "#3c3f44"],
+  ["aco_negro", "Aço Sombrio", "Dark Steel", "#3c3f44"],
 ];
 const BANCOS = [
   ["basico", "Básico", "Basic", "branco", 250],
@@ -32,7 +45,7 @@ const DIGGER = {
   sword: "'minecraft:is_sword_item_destructible'",
 };
 const ferramenta = (id, pt, en, ic, base, slot, tag) => ({
-  id: `eio_${id}_aco_negro`, pt: `${pt} de Aço Negro`, en: `Dark Steel ${en}`, icone: `ferramenta:${ic}:#3c3f44`, pilha: 1, cat: "equipment",
+  id: `eio_${id}_aco_negro`, pt: `${pt} de Aço Sombrio`, en: `Dark Steel ${en}`, icone: `ferramenta:${ic}:#3c3f44`, pilha: 1, cat: "equipment",
   comp: {
     "minecraft:hand_equipped": true,
     "minecraft:durability": { max_durability: 2000 },
@@ -43,7 +56,7 @@ const ferramenta = (id, pt, en, ic, base, slot, tag) => ({
   },
 });
 const armadura = (id, pt, en, ic, slot, eslot, mult, prot) => ({
-  id: `eio_${id}_aco_negro`, pt: `${pt} de Aço Negro`, en: `Dark Steel ${en}`, icone: `${ic}:#3c3f44`, pilha: 1, cat: "equipment",
+  id: `eio_${id}_aco_negro`, pt: `${pt} de Aço Sombrio`, en: `Dark Steel ${en}`, icone: `${ic}:#3c3f44`, pilha: 1, cat: "equipment",
   comp: {
     "minecraft:wearable": { slot, protection: prot },
     "minecraft:durability": { max_durability: 35 * mult },
@@ -52,7 +65,7 @@ const armadura = (id, pt, en, ic, slot, eslot, mult, prot) => ({
   },
 });
 
-export default {
+const F29 = {
   fase: 29,
   mod: "Ender IO",
   itens: [
@@ -110,28 +123,36 @@ export default {
     })),
   ],
   textos: {
-    "cl.eio.fundidora": ["Fundidora de Ligas: os ingredientes no baú de cima e a liga sai embaixo (Aço Elétrico: ferro + carvão pulverizado + silício; Energética: redstone + ouro + glowstone; Vibrante: energética + pérola do ender; de Redstone: redstone + silício; Ferro Condutor: redstone + ferro; Ferro Pulsante: ferro + pérola; Aço Negro: ferro + carvão pulverizado + obsidiana). 2,5 a 5 E.", "Alloy Smelter: ingredients in the chest above, the alloy comes out below (Electrical Steel: iron + pulverized coal + silicon; Energetic: redstone + gold + glowstone; Vibrant: energetic + ender pearl; Redstone: redstone + silicon; Conductive Iron: redstone + iron; Pulsating Iron: iron + pearl; Dark Steel: iron + pulverized coal + obsidian). 2.5 to 5 E."],
-    "cl.eio.moinho": ["Moinho SAG: minério vira 2 pós (como o Pulverizador), carvão vira carvão pulverizado, pedregulho vira cascalho e cascalho vira areia. 0,6 a 0,9 E.", "SAG Mill: ore becomes 2 dusts (like the Pulverizer), coal becomes pulverized coal, cobblestone becomes gravel and gravel becomes sand. 0.6 to 0.9 E."],
-    "cl.eio.stirling": ["Gerador Stirling: combustível de fornalha no baú de cima, 20 RF/t (1 carvão = 32.000 RF). Agora: %s.", "Stirling Generator: furnace fuel in the chest above, 20 RF/t (1 coal = 32,000 RF). Now: %s."],
-    "cl.eio.painel": ["Painel Fotovoltaico: de dia e com céu aberto, %s. Agora: %s.", "Photovoltaic Cell: by day under open sky, %s. Now: %s."],
+    "cl.eio.fundidora": ["Fundição de Ligas: os ingredientes no baú de cima e a liga sai embaixo (as receitas do Ender IO 9 estão no Catálogo: Liga Condutiva = ferro + cobre; de Redstone = redstone + cobre; Energética = redstone + Liga Condutiva + glowstone; Vibrante = Energética + pérola + Grãos do Infinito; Pulsante = ferro + pérola; Aço Sombrio = ferro + pó de carvão + obsidiana; Almário = areia das almas + ouro; Aço do End = pedra do End + Aço Sombrio + obsidiana).", "Alloy Smelter: ingredients in the chest above, the alloy comes out below (the Ender IO 9 recipes are in the Catalog: Conductive = iron + copper; Redstone = redstone + copper; Energetic = redstone + Conductive + glowstone; Vibrant = Energetic + pearl + Grains of Infinity; Pulsating = iron + pearl; Dark Steel = iron + coal dust + obsidian; Soularium = soul sand + gold; End Steel = end stone + Dark Steel + obsidian)."],
+    "cl.eio.moinho": ["Triturador SAG: minério vira minério bruto extra e pó, carvão vira pó de carvão, pedregulho vira cascalho, flores viram corante... Uma Esfera de Trituração no baú de cima aumenta a saída e gasta menos energia.", "SAG Mill: ore gives extra raw ore and dust, coal becomes coal dust, cobblestone becomes gravel, flowers become dye... A Grinding Ball in the chest above raises the output and uses less power."],
+    "cl.eio.stirling": ["Gerador Stirling: combustível de fornalha no baú de cima, 40 RF/t (o carvão dura 480 ticks). Agora: %s.", "Stirling Generator: furnace fuel in the chest above, 40 RF/t (coal lasts 480 ticks). Now: %s."],
+    "cl.eio.painel": ["Módulo Fotovoltaico: de dia e com céu aberto, %s. Agora: %s.", "Photovoltaic Module: by day under open sky, %s. Now: %s."],
     "cl.eio.ancora.titulo": ["Âncora de Viagem", "Travel Anchor"],
     "cl.eio.ancora.corpo": ["Escolha outra âncora a até 96 blocos para viajar até ela.", "Pick another anchor within 96 blocks to travel to it."],
     "cl.eio.ancora.nenhuma": ["Nenhuma outra Âncora de Viagem a até 96 blocos.", "No other Travel Anchor within 96 blocks."],
     "cl.eio.ancora.item": ["Âncora em %s, %s, %s (%s m)", "Anchor at %s, %s, %s (%s m)"],
     "cl.capitulo.enderio.nome": ["Ender IO", "Ender IO"],
     "cl.capitulo.enderio.curto": ["Ender IO", "Ender IO"],
-    "cl.capitulo.enderio.desc": ["Ligas na Fundidora de Ligas, o Moinho SAG, o Gerador Stirling, painéis fotovoltaicos, bancos de capacitores, Âncoras de Viagem e o Aço Negro.", "Alloys in the Alloy Smelter, the SAG Mill, the Stirling Generator, photovoltaic cells, capacitor banks, Travel Anchors and Dark Steel."],
+    "cl.capitulo.enderio.desc": ["Ender IO 9: ligas na Fundição de Ligas, o Triturador SAG, geradores, módulos fotovoltaicos, bancos de capacitores, máquinas de almas, o Crisol de Fermentação, obeliscos, a Estação Agrícola, Âncoras e Cajado de Viagem.", "Ender IO 9: alloys in the Alloy Smelter, the SAG Mill, generators, photovoltaic modules, capacitor banks, soul machines, the VAT, obelisks, the Farming Station, Travel Anchors and the Staff of Travelling."],
     "cl.missao.eio_capacitor.titulo": ["Capacitor", "Capacitor"], "cl.missao.eio_capacitor.desc": ["Faça um Capacitor Básico.", "Make a Basic Capacitor."],
-    "cl.missao.eio_fundidora.titulo": ["Fundidora de Ligas", "Alloy Smelter"], "cl.missao.eio_fundidora.desc": ["Coloque uma Fundidora de Ligas.", "Place an Alloy Smelter."],
-    "cl.missao.eio_aco_eletrico.titulo": ["Aço Elétrico", "Electrical Steel"], "cl.missao.eio_aco_eletrico.desc": ["Junte 8 Lingotes de Aço Elétrico.", "Collect 8 Electrical Steel Ingots."],
-    "cl.missao.eio_aco_negro.titulo": ["Aço Negro", "Dark Steel"], "cl.missao.eio_aco_negro.desc": ["Junte 8 Lingotes de Aço Negro.", "Collect 8 Dark Steel Ingots."],
+    "cl.missao.eio_fundidora.titulo": ["Fundição de Ligas", "Alloy Smelter"], "cl.missao.eio_fundidora.desc": ["Coloque uma Fundição de Ligas.", "Place an Alloy Smelter."],
+    "cl.missao.eio_aco_eletrico.titulo": ["Liga Condutiva", "Conductive Alloy"], "cl.missao.eio_aco_eletrico.desc": ["Junte 8 Lingotes de Liga Condutiva (ferro + cobre na Fundição de Ligas).", "Collect 8 Conductive Alloy Ingots (iron + copper in the Alloy Smelter)."],
+    "cl.missao.eio_aco_negro.titulo": ["Aço Sombrio", "Dark Steel"], "cl.missao.eio_aco_negro.desc": ["Junte 8 Lingotes de Aço Sombrio.", "Collect 8 Dark Steel Ingots."],
     "cl.missao.eio_vibrante.titulo": ["Liga Vibrante", "Vibrant Alloy"], "cl.missao.eio_vibrante.desc": ["Faça 4 Lingotes de Liga Vibrante.", "Make 4 Vibrant Alloy Ingots."],
     "cl.missao.eio_banco.titulo": ["Banco de Capacitores", "Capacitor Bank"], "cl.missao.eio_banco.desc": ["Coloque um Banco de Capacitores Básico.", "Place a Basic Capacitor Bank."],
     "cl.missao.eio_ancora.titulo": ["Viajante", "Traveler"], "cl.missao.eio_ancora.desc": ["Viaje entre duas Âncoras de Viagem.", "Travel between two Travel Anchors."],
-    "cl.missao.eio_painel.titulo": ["Sol vibrante", "Vibrant sun"], "cl.missao.eio_painel.desc": ["Coloque um Painel Fotovoltaico Vibrante.", "Place a Vibrant Photovoltaic Cell."],
+    "cl.missao.eio_painel.titulo": ["Sol vibrante", "Vibrant sun"], "cl.missao.eio_painel.desc": ["Coloque um Módulo Fotovoltaico Vibrante.", "Place a Vibrant Photovoltaic Module."],
   },
+};
+export default {
+  ...F29,
+  itens: F29.itens.map(renomeado),
+  blocos: F29.blocos.map(renomeado),
+  // As receitas do Ender IO 9 (f40) tomam o lugar das de antes; ficam o Aço Elétrico e as ferramentas de Aço Sombrio.
+  receitas: F29.receitas.filter((r) => !NOVAS.has(r.resultado)),
   dados: {
-    bancos: Object.fromEntries(BANCOS.map(([id, , , , cap]) => [`cl:banco_capacitores${sufixo(id)}`, cap])),
-    paineis: Object.fromEntries(PAINEIS.map(([id, , , , rft]) => [`cl:painel_fotovoltaico${sufixo(id)}`, rft])),
+    // Ender IO 9 (EnergyConfig): bancos de 500.000, 2.000.000 e 4.000.000 RF; módulos de 4, 16 e 64 RF/t.
+    bancos: Object.fromEntries(Object.entries(EIO9.numeros.bancos).map(([id, rf]) => [`cl:${id}`, rf / 4000])),
+    paineis: Object.fromEntries(Object.entries(EIO9.numeros.solar).map(([id, rft]) => [`cl:${id}`, rft])),
   },
 };

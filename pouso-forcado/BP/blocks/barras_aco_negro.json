@@ -1,0 +1,54 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:barras_aco_negro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.barras_aco_negro"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_barras_aco_negro",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#5a5e66",
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -1
+        ],
+        "size": [
+          16,
+          16,
+          2
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -1
+        ],
+        "size": [
+          16,
+          16,
+          2
+        ]
+      }
+    }
+  }
+}

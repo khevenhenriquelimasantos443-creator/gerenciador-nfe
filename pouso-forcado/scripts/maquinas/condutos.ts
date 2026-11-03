@@ -20,7 +20,8 @@ const ITEM = "cl:conduto_item";
 const POR_SEGUNDO = 4;
 const MAX_REDE = 64;
 // Os cabos de energia: o Conduto do Ender IO e os Cabos do Powah! (1.18.0), que ligam do mesmo jeito.
-const CABOS_ENERGIA = new Set<string>([ENERGIA, ...DADOS_F39.niveis.map((n) => `cl:cabo_powah_${n}`)]);
+// 1.20.0: os Condutores de Energia Aprimorado e do Ender (Ender IO 9).
+const CABOS_ENERGIA = new Set<string>([ENERGIA, "cl:conduto_energia_aprimorado", "cl:conduto_energia_ender", ...DADOS_F39.niveis.map((n) => `cl:cabo_powah_${n}`)]);
 const POWAH = DADOS_F39.niveis.flatMap((n) => ["furnator", "magmator", "termogerador", "painel_solar", "celula_powah", "haste_energizadora"].map((t) => `cl:${t}_${n}`));
 const LIGA_ENERGIA = new Set<string>([
   ...CABOS_ENERGIA, ...POWAH, IDS.cabo, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, IDS.peneiraAutomatica, IDS.montadora, IDS.terminal,

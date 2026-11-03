@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_dark_bimetal_gear"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NIN",
+      "IGI",
+      "NIN"
+    ],
+    "key": {
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      },
+      "I": {
+        "item": "cl:aco_negro"
+      },
+      "N": {
+        "item": "cl:pepita_aco_negro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:engrenagem_aco_negro"
+    }
+  }
+}

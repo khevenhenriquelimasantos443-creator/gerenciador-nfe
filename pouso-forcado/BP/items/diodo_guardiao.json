@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:diodo_guardiao",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_diodo_guardiao",
+      "minecraft:display_name": {
+        "value": "item.cl:diodo_guardiao.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_fluid_tank"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IBI",
+      "BGB",
+      "IBI"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:iron_bars"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tanque_fluido"
+    }
+  }
+}

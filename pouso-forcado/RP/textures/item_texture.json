@@ -1891,6 +1891,231 @@
     },
     "clc_livro_powah": {
       "textures": "textures/items/cl/arte/livro_powah"
+    },
+    "clc_aco_end": {
+      "textures": "textures/items/cl/arte/aco_end"
+    },
+    "clc_almario": {
+      "textures": "textures/items/cl/arte/almario"
+    },
+    "clc_pepita_aco_negro": {
+      "textures": "textures/items/cl/arte/pepita_aco_negro"
+    },
+    "clc_pepita_aco_end": {
+      "textures": "textures/items/cl/arte/pepita_aco_end"
+    },
+    "clc_pepita_liga_energetica": {
+      "textures": "textures/items/cl/arte/pepita_liga_energetica"
+    },
+    "clc_pepita_liga_vibrante": {
+      "textures": "textures/items/cl/arte/pepita_liga_vibrante"
+    },
+    "clc_pepita_liga_redstone": {
+      "textures": "textures/items/cl/arte/pepita_liga_redstone"
+    },
+    "clc_pepita_ferro_condutor": {
+      "textures": "textures/items/cl/arte/pepita_ferro_condutor"
+    },
+    "clc_pepita_ferro_pulsante": {
+      "textures": "textures/items/cl/arte/pepita_ferro_pulsante"
+    },
+    "clc_pepita_almario": {
+      "textures": "textures/items/cl/arte/pepita_almario"
+    },
+    "clc_esfera_aco_negro": {
+      "textures": "textures/items/cl/arte/esfera_aco_negro"
+    },
+    "clc_esfera_aco_end": {
+      "textures": "textures/items/cl/arte/esfera_aco_end"
+    },
+    "clc_esfera_liga_energetica": {
+      "textures": "textures/items/cl/arte/esfera_liga_energetica"
+    },
+    "clc_esfera_liga_vibrante": {
+      "textures": "textures/items/cl/arte/esfera_liga_vibrante"
+    },
+    "clc_esfera_liga_redstone": {
+      "textures": "textures/items/cl/arte/esfera_liga_redstone"
+    },
+    "clc_esfera_ferro_condutor": {
+      "textures": "textures/items/cl/arte/esfera_ferro_condutor"
+    },
+    "clc_esfera_ferro_pulsante": {
+      "textures": "textures/items/cl/arte/esfera_ferro_pulsante"
+    },
+    "clc_esfera_almario": {
+      "textures": "textures/items/cl/arte/esfera_almario"
+    },
+    "clc_po_perola_ender": {
+      "textures": "textures/items/cl/arte/po_perola_ender"
+    },
+    "clc_po_lapis": {
+      "textures": "textures/items/cl/arte/po_lapis"
+    },
+    "clc_po_obsidiana": {
+      "textures": "textures/items/cl/arte/po_obsidiana"
+    },
+    "clc_po_quartzo": {
+      "textures": "textures/items/cl/arte/po_quartzo"
+    },
+    "clc_graos_infinito": {
+      "textures": "textures/items/cl/arte/graos_infinito"
+    },
+    "clc_graos_piezalidade": {
+      "textures": "textures/items/cl/arte/graos_piezalidade"
+    },
+    "clc_graos_vibracao": {
+      "textures": "textures/items/cl/arte/graos_vibracao"
+    },
+    "clc_graos_presciencia": {
+      "textures": "textures/items/cl/arte/graos_presciencia"
+    },
+    "clc_graos_end": {
+      "textures": "textures/items/cl/arte/graos_end"
+    },
+    "clc_cristal_vibrante": {
+      "textures": "textures/items/cl/arte/cristal_vibrante"
+    },
+    "clc_cristal_ender": {
+      "textures": "textures/items/cl/arte/cristal_ender"
+    },
+    "clc_cristal_sedutor": {
+      "textures": "textures/items/cl/arte/cristal_sedutor"
+    },
+    "clc_cristal_climatico": {
+      "textures": "textures/items/cl/arte/cristal_climatico"
+    },
+    "clc_cristal_presciencia": {
+      "textures": "textures/items/cl/arte/cristal_presciencia"
+    },
+    "clc_engrenagem_energizada": {
+      "textures": "textures/items/cl/arte/engrenagem_energizada"
+    },
+    "clc_engrenagem_vibrante": {
+      "textures": "textures/items/cl/arte/engrenagem_vibrante"
+    },
+    "clc_composto_fotovoltaico": {
+      "textures": "textures/items/cl/arte/composto_fotovoltaico"
+    },
+    "clc_materia_vegetal_verde": {
+      "textures": "textures/items/cl/arte/materia_vegetal_verde"
+    },
+    "clc_materia_vegetal_marrom": {
+      "textures": "textures/items/cl/arte/materia_vegetal_marrom"
+    },
+    "clc_graveto_nutritivo": {
+      "textures": "textures/items/cl/arte/graveto_nutritivo"
+    },
+    "clc_frasco_alma": {
+      "textures": "textures/items/cl/arte/frasco_alma"
+    },
+    "clc_gerador_quebrado": {
+      "textures": "textures/items/cl/arte/gerador_quebrado"
+    },
+    "clc_controlador_logico_z": {
+      "textures": "textures/items/cl/arte/controlador_logico_z"
+    },
+    "clc_contratante_esqueletico": {
+      "textures": "textures/items/cl/arte/contratante_esqueletico"
+    },
+    "clc_eletrodo_zumbi": {
+      "textures": "textures/items/cl/arte/eletrodo_zumbi"
+    },
+    "clc_diodo_guardiao": {
+      "textures": "textures/items/cl/arte/diodo_guardiao"
+    },
+    "clc_ressonador_ender": {
+      "textures": "textures/items/cl/arte/ressonador_ender"
+    },
+    "clc_frank_n_zumbi": {
+      "textures": "textures/items/cl/c/frank_n_zumbi"
+    },
+    "clc_ender_senciente": {
+      "textures": "textures/items/cl/c/ender_senciente"
+    },
+    "clc_enderios": {
+      "textures": "textures/items/cl/arte/enderios"
+    },
+    "clc_vara_infinito": {
+      "textures": "textures/items/cl/arte/vara_infinito"
+    },
+    "clc_vara_experiencia": {
+      "textures": "textures/items/cl/arte/vara_experiencia"
+    },
+    "clc_chave_yeta": {
+      "textures": "textures/items/cl/arte/chave_yeta"
+    },
+    "clc_cajado_viagem": {
+      "textures": "textures/items/cl/arte/cajado_viagem"
+    },
+    "clc_cajado_levitacao": {
+      "textures": "textures/items/cl/arte/cajado_levitacao"
+    },
+    "clc_planador": {
+      "textures": "textures/items/cl/arte/planador"
+    },
+    "clc_asa_planador": {
+      "textures": "textures/items/cl/arte/asa_planador"
+    },
+    "clc_eletroima": {
+      "textures": "textures/items/cl/arte/eletroima"
+    },
+    "clc_corrente_almas": {
+      "textures": "textures/items/cl/arte/corrente_almas"
+    },
+    "clc_cabeca_enderman": {
+      "textures": "textures/items/cl/c/cabeca_enderman"
+    },
+    "clc_simbolo_animal": {
+      "textures": "textures/items/cl/arte/simbolo_animal"
+    },
+    "clc_simbolo_monstro": {
+      "textures": "textures/items/cl/arte/simbolo_monstro"
+    },
+    "clc_simbolo_jogador": {
+      "textures": "textures/items/cl/arte/simbolo_jogador"
+    },
+    "clc_semente_suspeita": {
+      "textures": "textures/items/cl/arte/semente_suspeita"
+    },
+    "clc_frasco_vazio": {
+      "textures": "textures/items/cl/arte/frasco_vazio"
+    },
+    "clc_balde_hootch": {
+      "textures": "textures/items/cl/arte/balde_hootch"
+    },
+    "clc_balde_combustivel_foguete": {
+      "textures": "textures/items/cl/arte/balde_combustivel_foguete"
+    },
+    "clc_balde_agua_fogo": {
+      "textures": "textures/items/cl/arte/balde_agua_fogo"
+    },
+    "clc_balde_destilado_nutrientes": {
+      "textures": "textures/items/cl/arte/balde_destilado_nutrientes"
+    },
+    "clc_balde_luz_solar": {
+      "textures": "textures/items/cl/arte/balde_luz_solar"
+    },
+    "clc_balde_semente_nuvem": {
+      "textures": "textures/items/cl/arte/balde_semente_nuvem"
+    },
+    "clc_balde_semente_nuvem_concentrada": {
+      "textures": "textures/items/cl/arte/balde_semente_nuvem_concentrada"
+    },
+    "clc_balde_suco_xp": {
+      "textures": "textures/items/cl/arte/balde_suco_xp"
+    },
+    "clc_balde_vapor_levitacao": {
+      "textures": "textures/items/cl/arte/balde_vapor_levitacao"
+    },
+    "clc_balde_orvalho_vazio": {
+      "textures": "textures/items/cl/arte/balde_orvalho_vazio"
+    },
+    "clc_balde_escuridao_liquida": {
+      "textures": "textures/items/cl/arte/balde_escuridao_liquida"
+    },
+    "clc_frasco_alma_cheio": {
+      "textures": "textures/items/cl/arte/frasco_alma_cheio"
     }
   }
 }

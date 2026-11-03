@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_attractor_obelisk"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "EGE",
+      "ICI"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:chassi_almas"
+      },
+      "E": {
+        "item": "cl:liga_energetica"
+      },
+      "G": {
+        "item": "cl:engrenagem_energizada"
+      },
+      "I": {
+        "item": "cl:almario"
+      },
+      "M": {
+        "item": "cl:cristal_sedutor"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:obelisco_atracao"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_pulsating_photovoltaic_module"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IFI",
+      "PDP",
+      "CSC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:capacitor_duplo"
+      },
+      "D": {
+        "item": "cl:po_carvao"
+      },
+      "F": {
+        "item": "cl:quartzo_fundido_iluminado"
+      },
+      "I": {
+        "item": "cl:ferro_pulsante"
+      },
+      "P": {
+        "item": "cl:placa_fotovoltaica"
+      },
+      "S": {
+        "item": "cl:painel_fotovoltaico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_fotovoltaico_avancado"
+    }
+  }
+}

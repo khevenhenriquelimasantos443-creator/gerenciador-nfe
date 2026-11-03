@@ -153,29 +153,9 @@ for i, a in (("vidro_emoldurado", "framed_glass"), ("bloco_placa_ferro", "iron_p
     unica("quark", Q, i, a)
 faces("quark", Q, "lanterna_papel", "paper_lantern_side", "paper_lantern_side", "paper_lantern_top_bottom")
 
-# ---------- Ender IO 5.2 ----------
-itens("enderio", "items/", {
-    "po_carvao": "item_material_powder_coal", "aco_eletrico": "item_alloy_ingot_electrical_steel", "liga_energetica": "item_alloy_ingot_energetic_alloy",
-    "liga_vibrante": "item_alloy_ingot_vibrant_alloy", "liga_redstone": "item_alloy_ingot_redstone_alloy", "ferro_condutor": "item_alloy_ingot_conductive_iron",
-    "ferro_pulsante": "item_alloy_ingot_pulsating_iron", "aco_negro": "item_alloy_ingot_dark_steel", "cristal_pulsante": "item_material_pulsating_crystal",
-    "composto_aglutinante": "item_material_binder_composite", "aglutinante_conduite": "item_material_conduit_binder",
-    "capacitor_basico": "item_basic_capacitor_basic", "capacitor_duplo": "item_basic_capacitor_activated", "capacitor_octadico": "item_basic_capacitor_ender",
-    "engrenagem_aco_negro": "item_material_gear_darksteel", "placa_fotovoltaica": "item_material_plate_photovoltaic",
-    "eio_picareta_aco_negro": "item_dark_steel_pickaxe", "eio_machado_aco_negro": "item_dark_steel_axe", "eio_espada_aco_negro": "item_dark_steel_sword",
-    "eio_capacete_aco_negro": "item_dark_steel_helmet", "eio_peitoral_aco_negro": "item_dark_steel_chestplate",
-    "eio_calcas_aco_negro": "item_dark_steel_leggings", "eio_botas_aco_negro": "item_dark_steel_boots",
-})
+# ---------- Ender IO ----------
+# 1.20.0: a arte do Ender IO agora é a do Ender IO 9 (o mais novo), em tools/importar-enderio.py.
 ARMADURAS["aco_negro"] = ("enderio", "models/armor/dark_steel_layer_{n}.png")
-M = ("block_machine_side", "block_machine_top", "block_machine_bottom")
-faces("enderio", "blocks/", "fundidora_ligas", "block_alloy_smelter_front", *M)
-faces("enderio", "blocks/", "moinho_sag", "block_sagmill_front", *M)
-faces("enderio", "blocks/", "gerador_stirling", "block_stirling_gen_front_off", *M)
-faces("enderio", "blocks/", "chassi_maquina", "block_machine_back", *M)
-for i in ("banco_capacitores_basico", "banco_capacitores", "banco_capacitores_vibrante"):
-    faces("enderio", "blocks/", i, "capacitor_bank")
-faces("enderio", "blocks/", "ancora_viagem", "block_travel_anchor")
-for i, p in (("painel_fotovoltaico", "normal"), ("painel_fotovoltaico_avancado", "advanced"), ("painel_fotovoltaico_vibrante", "vibrant")):
-    faces("enderio_maq", "blocks/", i, f"solar_panel_{p}_side", f"solar_panel_{p}_side", f"solar_panel_{p}_top", f"solar_panel_{p}_side")
 
 # ---------- Waystones e ComputerCraft ----------
 itens("waystones", "items/", {"pedra_viagem": "warpStone", "pergaminho_retorno": "returnScroll", "pergaminho_viagem": "returnScroll"})

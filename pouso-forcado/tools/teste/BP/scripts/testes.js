@@ -666,6 +666,113 @@ teste("enderio", 400, (t) => {
   });
 });
 
+// 1.20.0: Ender IO 9. Fundição (Almário), Triturador com esfera, Fatiar e Emendar, Crisol (Hootch), Frasco de Alma
+// num zumbi, Motor de Almas com a alma do zumbi, Tanque, Estação Agrícola e o fogo na rocha matriz (Grãos do Infinito).
+teste("enderio9", 760, (t) => {
+  const j = robo(t, { x: 3.5, y: 1, z: 2.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const bat = (pos, carga) => {
+    t.setBlockType("cl:bateria", pos);
+    const b = t.getBlock(pos);
+    b.setPermutation(b.permutation.withState("cl:carga", carga));
+  };
+  const maquina = (x, z, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) bau(t, { x, y: 3, z }).addItem(new ItemStack(i, n));
+  };
+  maquina(1, 1, "cl:fundidora_ligas", [["minecraft:soul_sand", 1], ["minecraft:gold_ingot", 1]]);
+  maquina(3, 1, "cl:moinho_sag", [["minecraft:iron_ore", 1], ["cl:esfera_aco_negro", 1]]);
+  maquina(5, 1, "cl:fatiar_emendar", [["cl:almario", 2], ["minecraft:zombie_head", 1], ["cl:silicio", 2], ["minecraft:redstone", 1]]);
+  bat({ x: 2, y: 2, z: 1 }, 15);
+  bat({ x: 4, y: 2, z: 1 }, 15);
+  // Balde não empilha: 4 baldes de água em 4 entradas.
+  maquina(1, 4, "cl:crisol_fermentacao", [["minecraft:water_bucket", 1], ["minecraft:water_bucket", 1], ["minecraft:water_bucket", 1], ["minecraft:water_bucket", 1],
+    ["minecraft:wheat_seeds", 4], ["minecraft:wheat", 4], ["minecraft:bucket", 1]]);
+  maquina(3, 4, "cl:motor_almas", [["cl:balde_destilado_nutrientes", 1]]);
+  bat({ x: 4, y: 2, z: 4 }, 0);
+  t.setBlockType("cl:tanque_fluido", { x: 5, y: 1, z: 3 });
+  // Estação Agrícola: trigo maduro em terra arada do lado, no mesmo nível.
+  maquina(6, 6, "cl:estacao_agricola", []);
+  bat({ x: 7, y: 2, z: 6 }, 15);
+  t.setBlockType("minecraft:farmland", { x: 5, y: 1, z: 6 });
+  t.setBlockPermutation(BlockPermutation.resolve("minecraft:wheat", { growth: 7 }), { x: 5, y: 2, z: 6 });
+  // Fogo em rocha matriz: 80% de chance de 1 a 3 grãos em cada uma.
+  const rochas = [{ x: 1, y: 1, z: 6 }, { x: 2, y: 1, z: 6 }, { x: 3, y: 1, z: 6 }];
+  for (const r of rochas) t.setBlockType("minecraft:bedrock", r);
+  rochas.forEach((r, k) => t.runAfterDelay([5, 70, 90][k], () => {
+    inv.setItem(0, new ItemStack("minecraft:flint_and_steel", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock(r);
+    log(`enderio9: fogo na rocha ${k}: ${j.useItemInSlotOnBlock(0, r, Direction.Up)}`);
+  }));
+  // Frasco de Alma num zumbi; depois a alma vai para o Motor de Almas.
+  const zumbi = t.spawn("minecraft:zombie", { x: 6, y: 1, z: 2 });
+  t.runAfterDelay(20, () => {
+    inv.setItem(0, new ItemStack("cl:frasco_alma", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtEntity(zumbi);
+    // No celular, tocar num monstro bate nele: o frasco pega a alma com a batida.
+    log(`enderio9: frasco no zumbi: ${j.attackEntity(zumbi)}`);
+  });
+  t.runAfterDelay(30, () => {
+    let slot = -1;
+    for (let s = 0; s < inv.size; s++) if (inv.getItem(s)?.typeId === "cl:frasco_alma_cheio") slot = s;
+    log(`enderio9: frasco cheio no slot ${slot}`);
+    if (slot < 0) return;
+    inv.swapItems(slot, 0, inv);
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 3, y: 2, z: 4 });
+    log(`enderio9: frasco no motor: ${j.interactWithBlock({ x: 3, y: 2, z: 4 }, Direction.North)}`);
+  });
+  // Tanque: balde de água entra, balde vazio tira de volta.
+  t.runAfterDelay(40, () => {
+    inv.setItem(0, new ItemStack("minecraft:water_bucket", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 5, y: 1, z: 3 });
+    j.interactWithBlock({ x: 5, y: 1, z: 3 }, Direction.North);
+  });
+  t.runAfterDelay(50, () => {
+    const vazio = quantos(j, "minecraft:bucket");
+    inv.setItem(0, new ItemStack("minecraft:bucket", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 5, y: 1, z: 3 });
+    j.interactWithBlock({ x: 5, y: 1, z: 3 }, Direction.North);
+    log(`enderio9: baldes vazios depois de pôr a água no tanque: ${vazio}`);
+  });
+  let aguaDeVolta = 0;
+  t.runAfterDelay(60, () => (aguaDeVolta = quantos(j, "minecraft:water_bucket")));
+  t.runAfterDelay(720, () => {
+    const dim = t.getDimension();
+    const graos = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 2, y: 2, z: 6 }), maxDistance: 4 })
+      .map((e) => e.getComponent("minecraft:item").itemStack).filter((p) => p.typeId === "cl:graos_infinito").reduce((n, p) => n + p.amount, 0);
+    const r = {
+      almario: noBau(bau(t, { x: 1, y: 1, z: 1 }), "cl:almario"),
+      ferroBruto: noBau(bau(t, { x: 3, y: 1, z: 1 }), "minecraft:raw_iron"),
+      zLogic: noBau(bau(t, { x: 5, y: 1, z: 1 }), "cl:controlador_logico_z"),
+      hootch: noBau(bau(t, { x: 1, y: 1, z: 4 }), "cl:balde_hootch"),
+      motor: t.getBlock({ x: 4, y: 2, z: 4 }).permutation.getState("cl:carga"),
+      aguaDeVolta,
+      trigo: noBau(bau(t, { x: 6, y: 1, z: 6 }), "minecraft:wheat"),
+      graos: graos + quantos(j, "cl:graos_infinito") + noBau(bau(t, { x: 6, y: 1, z: 6 }), "cl:graos_infinito"),
+      rochas: rochas.map((r) => t.getBlock(r).typeId + "/" + t.getBlock({ ...r, y: 2 }).typeId).join(" "),
+      zumbiSumiu: !zumbi.isValid,
+    };
+    log(`enderio9: ${JSON.stringify(r)}`);
+    t.assert(r.almario >= 1, "a Fundição não fez Almário");
+    t.assert(r.ferroBruto >= 1, "o Triturador SAG não moeu o minério");
+    t.assert(r.zLogic === 1, "o Fatiar e Emendar não fez o Controlador Lógico Z");
+    t.assert(r.hootch >= 1, "o Crisol não fez Hootch");
+    t.assert(r.zumbiSumiu, "o Frasco de Alma não pegou o zumbi");
+    t.assert(r.motor >= 1, "o Motor de Almas não gerou");
+    t.assert(r.aguaDeVolta === 1, "o Tanque não guardou e devolveu a água");
+    t.assert(r.trigo >= 1, "a Estação Agrícola não colheu");
+    t.assert(r.graos >= 1, "o fogo na rocha matriz não deu Grãos do Infinito");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

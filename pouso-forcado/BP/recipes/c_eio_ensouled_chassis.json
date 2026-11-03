@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_ensouled_chassis"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CIC",
+      "IQI",
+      "CIC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:corrente_almas"
+      },
+      "I": {
+        "item": "cl:almario"
+      },
+      "Q": {
+        "item": "minecraft:quartz"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:chassi_almas"
+    }
+  }
+}

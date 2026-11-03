@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_vibrant_photovoltaic_module"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IFI",
+      "PGP",
+      "CSC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:capacitor_octadico"
+      },
+      "F": {
+        "item": "cl:quartzo_fundido_escuro"
+      },
+      "G": {
+        "item": "minecraft:glowstone"
+      },
+      "I": {
+        "item": "cl:liga_vibrante"
+      },
+      "P": {
+        "item": "cl:placa_fotovoltaica"
+      },
+      "S": {
+        "item": "cl:painel_fotovoltaico_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:painel_fotovoltaico_vibrante"
+    }
+  }
+}

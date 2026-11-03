@@ -1,0 +1,25 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:obsidiana_reforcada",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_obsidiana_reforcada",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 50
+      },
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:map_color": "#5a5e66"
+    }
+  }
+}

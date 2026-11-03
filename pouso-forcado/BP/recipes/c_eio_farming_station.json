@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_farming_station"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "EGE",
+      "SCS",
+      "DZD"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:chassi_almas"
+      },
+      "D": {
+        "item": "cl:aco_negro"
+      },
+      "E": {
+        "item": "cl:engrenagem_energizada"
+      },
+      "G": {
+        "item": "cl:cristal_pulsante"
+      },
+      "S": {
+        "item": "cl:almario"
+      },
+      "Z": {
+        "item": "cl:controlador_logico_z"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:estacao_agricola"
+    }
+  }
+}

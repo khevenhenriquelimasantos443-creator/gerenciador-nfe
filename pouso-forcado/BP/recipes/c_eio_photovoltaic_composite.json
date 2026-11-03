@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_eio_photovoltaic_composite"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:po_lapis"
+      },
+      {
+        "item": "cl:po_carvao"
+      },
+      {
+        "item": "cl:silicio"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:composto_fotovoltaico"
+    }
+  }
+}

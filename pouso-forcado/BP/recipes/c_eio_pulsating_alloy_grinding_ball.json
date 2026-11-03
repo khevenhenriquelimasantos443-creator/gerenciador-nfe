@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_pulsating_alloy_grinding_ball"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " I ",
+      "III",
+      " I "
+    ],
+    "key": {
+      "I": {
+        "item": "cl:ferro_pulsante"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:esfera_ferro_pulsante",
+      "count": 24
+    }
+  }
+}

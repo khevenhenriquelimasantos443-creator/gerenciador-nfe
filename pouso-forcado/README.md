@@ -154,6 +154,29 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.20.0 (Ender IO 9, o mais novo)
+
+O Ender IO foi atualizado para a versão mais nova (Ender IO 9, ramo 26.3, do Team Ender IO), com as receitas, os
+números e a arte original do mod (CC0). Os add-ons de antes (Endergy, Zoo, Machines) já vêm dentro dele:
+- **Receitas novas** em tudo: Liga Condutiva = ferro + cobre; Aço Sombrio = ferro + pó de carvão + obsidiana (sai 2);
+  Almário = areia das almas + ouro; Aço do End; quartzo fundido e vidro transparente; corantes. 42 receitas na
+  Fundição de Ligas e 72 no Triturador SAG (com as **Esferas de Trituração**, que aumentam a saída e gastam menos).
+- **Grãos do Infinito**: ponha fogo (isqueiro) em rocha matriz ou pedra do abismo e espere ~13 s. Entram nos
+  capacitores, na engrenagem e no chassi.
+- **Máquinas de almas**: Frasco de Alma (bata na criatura com ele para guardar a alma), Fatiar e Emendar (Controlador
+  Lógico Z, Eletrodo Zumbi...), Vinculador de Almas (Cristal do Ender, Cristal Sedutor, Frank'N'Zumbi), **Motor de
+  Almas** (gera energia queimando o fluido da alma: zumbi, creeper, enderman ou blaze) e **Gerador de Monstros
+  Energizado** (toque os dois com o frasco cheio).
+- **Crisol de Fermentação** e os fluidos em baldes (Hootch, Combustível de Foguete, Água de Fogo, Destilado de
+  Nutrientes, Luz Solar Líquida, Semente de Nuvem...), **Tanques**, **Dreno**, **Estação Agrícola** (planta, aduba e
+  colhe 11×11), **Funil de Impulso**, **Carregadores** com e sem fio, **Obeliscos** (XP, Aversão, Relocação,
+  Inibição, Atração e Climático), **Vácuo de XP** e **Baú de Vácuo**.
+- Itens: **Cajado de Viagem** (pula 24 blocos ou vai até uma Âncora a 192), **Cajado de Levitação**, **Planador**,
+  **Eletroímã**, **Chave Yeta**, Enderios e a espada **O Ender** (7% de cortar a cabeça do monstro).
+- Números do Ender IO 9: Gerador Stirling 40 RF/t, módulos 4/16/64 RF/t, bancos de 0,5/2/4 milhões de RF.
+  Nomes do português do próprio mod (Aço Sombrio, Liga Condutiva, Fundição de Ligas, Triturador SAG...). Nada sumiu
+  do mundo: o Aço Elétrico (que o Ender IO 9 não tem) continua com a receita antiga. 12 missões novas.
+
 ## Novidades da 1.19.0 (Powah! completo)
 
 O resto do Powah!, com a arte e os números do mod (agora 160 receitas e 9 do Orbe):

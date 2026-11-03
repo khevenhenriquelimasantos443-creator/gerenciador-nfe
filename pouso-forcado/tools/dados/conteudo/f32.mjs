@@ -87,8 +87,7 @@ export default {
       { id: `balao_${c}`, tipo: "shapeless", ingredientes: ["minecraft:leather", "minecraft:string", tinta(en)], resultado: `cl:balao_${c}`, qtd: 2 },
     ]),
     { id: "tnt_obsidiana", tipo: "shaped", padrao: ["OOO", "TTT", "OOO"], chave: { O: "minecraft:obsidian", T: "minecraft:tnt" }, resultado: "cl:tnt_obsidiana" },
-    { id: "conduto_energia", tipo: "shaped", padrao: ["BBB", "III", "BBB"], chave: { B: "cl:aglutinante_conduite", I: "cl:ferro_condutor" }, resultado: "cl:conduto_energia", qtd: 8 },
-    { id: "conduto_item", tipo: "shaped", padrao: ["BBB", "III", "BBB"], chave: { B: "cl:aglutinante_conduite", I: "cl:ferro_pulsante" }, resultado: "cl:conduto_item", qtd: 8 },
+    // 1.20.0: as receitas dos condutos são as do Ender IO 9 (f40).
   ],
   textos: {
     "entity.cl:balao.name": ["Balão", "Balloon"],

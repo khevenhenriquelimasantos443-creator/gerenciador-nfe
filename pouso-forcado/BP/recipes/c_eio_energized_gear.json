@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_eio_energized_gear"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NIN",
+      "IGI",
+      "NIN"
+    ],
+    "key": {
+      "G": {
+        "item": "cl:engrenagem_ferro"
+      },
+      "I": {
+        "item": "cl:liga_energetica"
+      },
+      "N": {
+        "item": "cl:pepita_liga_energetica"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:engrenagem_energizada"
+    }
+  }
+}
