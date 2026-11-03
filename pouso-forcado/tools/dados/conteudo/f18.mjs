@@ -1,4 +1,12 @@
 // Fase 18: armazenamento — JABBA (barril e carrinho), AutoPackager e Applied Energistics 1 + ExtraCells.
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// 1.22.0: Applied Energistics 2 de hoje (26.3): nomes, receitas e a célula 256k vêm de ae2.json (tools/importar-ae2.py).
+const AE2 = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "ae2.json"), "utf8"));
+const NOVAS_AE = new Set(AE2.receitas.map((r) => r.resultado));
+const renomeadoAe = (x) => (AE2.renomear[x.id] ? { ...x, pt: AE2.renomear[x.id][0], en: AE2.renomear[x.id][1] } : x);
 const ESTRUTURAIS = [
   ["I", "#minecraft:planks", "madeira", "#a07c48"],
   ["II", "minecraft:iron_ingot", "ferro", "#d6d9dc"],
@@ -11,7 +19,7 @@ const ESTRUTURAIS = [
 const CELULAS = [["1k", "#a0703a"], ["4k", "#3fa34d"], ["16k", "#3a7bd5"], ["64k", "#8e44ad"]];
 const ae = (id, pt, en, glifo) => ({ id, pt, en, tipo: "maquina", luz: "violeta", glifo, comp: `cl:${id}` });
 
-export default {
+const BASE = {
   fase: 18,
   mod: "JABBA",
   itens: [
@@ -136,4 +144,13 @@ export default {
     estruturais: [1, 3, 7, 15, 31, 63, 127], // espaços de upgrade por MK
     celulas: Object.fromEntries(CELULAS.map(([k], i) => [`cl:celula_me_${k}`, { bytes: [1024, 4096, 16384, 65536][i], porTipo: [8, 32, 128, 512][i] }])),
   },
+};
+
+export default {
+  ...BASE,
+  itens: BASE.itens.map(renomeadoAe),
+  blocos: BASE.blocos.map(renomeadoAe),
+  // O Fluix agora se faz na água e os processadores no Inscritor (como no AE2); o resto vem com as receitas do AE2.
+  receitas: BASE.receitas.filter((r) => !NOVAS_AE.has(r.resultado)),
+  dados: { ...BASE.dados, celulas: { ...BASE.dados.celulas, "cl:celula_me_256k": { bytes: 262144, porTipo: 2048 } } },
 };

@@ -2197,6 +2197,66 @@
     },
     "clc_circuito_controle_supremo": {
       "textures": "textures/items/cl/arte/circuito_controle_supremo"
+    },
+    "clc_cristal_certus_carregado": {
+      "textures": "textures/items/cl/arte/cristal_certus_carregado"
+    },
+    "clc_processador_calculo": {
+      "textures": "textures/items/cl/arte/processador_calculo"
+    },
+    "clc_prensa_silicio": {
+      "textures": "textures/items/cl/arte/prensa_silicio"
+    },
+    "clc_prensa_logica": {
+      "textures": "textures/items/cl/arte/prensa_logica"
+    },
+    "clc_prensa_calculo": {
+      "textures": "textures/items/cl/arte/prensa_calculo"
+    },
+    "clc_prensa_engenharia": {
+      "textures": "textures/items/cl/arte/prensa_engenharia"
+    },
+    "clc_silicio_impresso": {
+      "textures": "textures/items/cl/arte/silicio_impresso"
+    },
+    "clc_circuito_logico_impresso": {
+      "textures": "textures/items/cl/arte/circuito_logico_impresso"
+    },
+    "clc_circuito_calculo_impresso": {
+      "textures": "textures/items/cl/arte/circuito_calculo_impresso"
+    },
+    "clc_circuito_engenharia_impresso": {
+      "textures": "textures/items/cl/arte/circuito_engenharia_impresso"
+    },
+    "clc_componente_me_256k": {
+      "textures": "textures/items/cl/arte/componente_me_256k"
+    },
+    "clc_celula_me_256k": {
+      "textures": "textures/items/cl/arte/celula_me_256k"
+    },
+    "clc_involucro_celula_me": {
+      "textures": "textures/items/cl/arte/involucro_celula_me"
+    },
+    "clc_cabo_me_fluix": {
+      "textures": "textures/items/cl/c/cabo_me_fluix"
+    },
+    "clc_fibra_quartzo": {
+      "textures": "textures/items/cl/c/fibra_quartzo"
+    },
+    "clc_receptor_sem_fio": {
+      "textures": "textures/items/cl/arte/receptor_sem_fio"
+    },
+    "clc_nucleo_aniquilacao": {
+      "textures": "textures/items/cl/arte/nucleo_aniquilacao"
+    },
+    "clc_nucleo_formacao": {
+      "textures": "textures/items/cl/arte/nucleo_formacao"
+    },
+    "clc_perola_fluix": {
+      "textures": "textures/items/cl/arte/perola_fluix"
+    },
+    "clc_po_pedra_ceu": {
+      "textures": "textures/items/cl/arte/po_pedra_ceu"
     }
   }
 }

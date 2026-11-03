@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_crafting_molecular_assembler"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "cde",
+      "aba"
+    ],
+    "key": {
+      "a": {
+        "item": "minecraft:iron_ingot"
+      },
+      "b": {
+        "item": "cl:vidro_quartzo"
+      },
+      "c": {
+        "item": "cl:nucleo_aniquilacao"
+      },
+      "d": {
+        "item": "minecraft:crafting_table"
+      },
+      "e": {
+        "item": "cl:nucleo_formacao"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:montador_molecular"
+    }
+  }
+}

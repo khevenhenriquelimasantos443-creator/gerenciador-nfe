@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_parts_quartz_fiber_part"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aaa",
+      "bbb",
+      "aaa"
+    ],
+    "key": {
+      "a": {
+        "item": "minecraft:glass"
+      },
+      "b": {
+        "item": "cl:po_certus"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fibra_quartzo",
+      "count": 3
+    }
+  }
+}

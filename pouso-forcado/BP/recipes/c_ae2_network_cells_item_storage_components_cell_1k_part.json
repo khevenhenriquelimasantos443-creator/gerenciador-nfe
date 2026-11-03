@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_cells_item_storage_components_cell_1k_part"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "bcb",
+      "aba"
+    ],
+    "key": {
+      "a": {
+        "item": "minecraft:redstone"
+      },
+      "b": {
+        "item": "cl:cristal_certus"
+      },
+      "c": {
+        "item": "cl:processador_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:componente_me_1k"
+    }
+  }
+}

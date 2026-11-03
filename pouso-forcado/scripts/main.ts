@@ -67,6 +67,7 @@ import { registrarFoguete } from "./galacticraft/foguete.js";
 import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEnderIO, stirling } from "./maquinas/enderio.js";
 import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
+import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
 import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
 import { registrarMochila } from "./utilidades/mochila.js";
@@ -151,6 +152,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
     "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador, "cl:infusor_quimico": infusorQuimico,
     "cl:camara_purificacao": purificacao10, "cl:camara_injecao": injecao10, "cl:infusor_metalurgico": infusor10, // 1.21.0: Mekanism 10
     ...COMPONENTES_MK10,
+    "cl:ae2_inscritor": inscritor, "cl:ae2_carregador_ae": carregadorAe, // 1.22.0: AE2
     "cl:bomba": bomba, "cl:refinaria": refinaria, "cl:motor_combustao": motor, "cl:pedreira": pedreira,
   })) blockComponentRegistry.registerCustomComponent(id, comPerfil(id, comp));
   blockComponentRegistry.registerCustomComponent("cl:tumulo", tumulo);
@@ -282,6 +284,7 @@ registrarMekanismExtra();
 registrarEnderIO();
 registrarEnderIO9();
 registrarMekanism10();
+registrarAE2();
 registrarCreate();
 registrarWaystones();
 registrarMochila();

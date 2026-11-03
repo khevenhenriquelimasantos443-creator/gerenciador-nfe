@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_blocks_storage_chest"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "c c",
+      "ded"
+    ],
+    "key": {
+      "a": {
+        "item": "minecraft:glass"
+      },
+      "b": {
+        "item": "cl:terminal"
+      },
+      "c": {
+        "item": "cl:cabo_me_fluix"
+      },
+      "d": {
+        "item": "minecraft:iron_ingot"
+      },
+      "e": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bau_me"
+    }
+  }
+}

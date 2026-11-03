@@ -825,6 +825,54 @@ teste("mekanism10", 500, (t) => {
   });
 });
 
+// 1.22.0: AE2 de hoje. Inscritor (prensa + ouro = circuito lógico; circuito + redstone + silício impresso = Processador
+// Lógico; prensa + bloco de ferro = cópia), Carregador (certus → carregado) e Fluix na água.
+teste("ae2", 500, (t) => {
+  const bat = (pos) => {
+    t.setBlockType("cl:bateria", pos);
+    const b = t.getBlock(pos);
+    b.setPermutation(b.permutation.withState("cl:carga", 15));
+  };
+  const maquina = (x, z, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) bau(t, { x, y: 3, z }).addItem(new ItemStack(i, n));
+  };
+  maquina(1, 1, "cl:inscritor", [["cl:prensa_logica", 1], ["minecraft:gold_ingot", 1]]);
+  maquina(3, 1, "cl:inscritor", [["cl:circuito_logico_impresso", 1], ["minecraft:redstone", 1], ["cl:silicio_impresso", 1]]);
+  maquina(5, 1, "cl:inscritor", [["cl:prensa_calculo", 1], ["minecraft:iron_block", 1]]);
+  bat({ x: 2, y: 2, z: 1 });
+  bat({ x: 4, y: 2, z: 1 });
+  bat({ x: 6, y: 2, z: 1 });
+  maquina(1, 4, "cl:carregador_ae", [["cl:cristal_certus", 1]]);
+  bat({ x: 2, y: 2, z: 4 });
+  // Água presa num buraco: os três itens caem nela.
+  t.setBlockType("minecraft:water", { x: 5, y: 1, z: 5 });
+  t.runAfterDelay(20, () => {
+    for (const id of ["cl:cristal_certus_carregado", "minecraft:redstone", "minecraft:quartz"]) t.spawnItem(new ItemStack(id, 1), { x: 5.5, y: 1.5, z: 5.5 });
+  });
+  t.runAfterDelay(460, () => {
+    const fluix = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 5.5, y: 1.5, z: 5.5 }), maxDistance: 3 })
+      .map((e) => e.getComponent("minecraft:item").itemStack).filter((p) => p.typeId === "cl:cristal_fluix").reduce((n, p) => n + p.amount, 0);
+    const r = {
+      circuito: noBau(bau(t, { x: 1, y: 1, z: 1 }), "cl:circuito_logico_impresso"),
+      prensaFicou: noBau(bau(t, { x: 1, y: 3, z: 1 }), "cl:prensa_logica"),
+      processador: noBau(bau(t, { x: 3, y: 1, z: 1 }), "cl:processador_basico"),
+      copia: noBau(bau(t, { x: 5, y: 1, z: 1 }), "cl:prensa_calculo"),
+      carregado: noBau(bau(t, { x: 1, y: 1, z: 4 }), "cl:cristal_certus_carregado"),
+      fluix,
+    };
+    log(`ae2: ${JSON.stringify(r)}`);
+    t.assert(r.circuito === 1 && r.prensaFicou === 1, "o Inscritor não imprimiu o circuito (ou gastou a prensa)");
+    t.assert(r.processador === 1, "o Inscritor não fez o Processador Lógico");
+    t.assert(r.copia === 1, "o Inscritor não copiou a prensa");
+    t.assert(r.carregado === 1, "o Carregador não carregou o certus");
+    t.assert(r.fluix === 2, "não virou Fluix na água");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

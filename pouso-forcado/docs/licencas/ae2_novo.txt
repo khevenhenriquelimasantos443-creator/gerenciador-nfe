@@ -1,0 +1,2 @@
+Applied Energistics 2 (AlgorithmX2, Ridanisaurus Rid e equipe), github.com/AppliedEnergistics/Applied-Energistics-2, ramo main
+(Minecraft 26.3). Código: LGPL-3.0 (API: MIT). Texturas e modelos: CC BY-NC-SA 3.0. Textos e traduções: sem restrição (CC0).

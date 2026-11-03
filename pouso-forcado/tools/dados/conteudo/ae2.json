@@ -1,0 +1,962 @@
+{
+ "itens": [
+  {
+   "id": "cristal_certus_carregado",
+   "pt": "Cristal Carregado de Quartzo Certus",
+   "en": "Charged Certus Quartz Crystal"
+  },
+  {
+   "id": "processador_calculo",
+   "pt": "Processador de Cálculo",
+   "en": "Calculation Processor"
+  },
+  {
+   "id": "prensa_silicio",
+   "pt": "Prensa Inscitora de Silício",
+   "en": "Inscriber Silicon Press"
+  },
+  {
+   "id": "prensa_logica",
+   "pt": "Prensa Inscritora Lógica",
+   "en": "Inscriber Logic Press"
+  },
+  {
+   "id": "prensa_calculo",
+   "pt": "Prensa Inscritora de Cálculo",
+   "en": "Inscriber Calculation Press"
+  },
+  {
+   "id": "prensa_engenharia",
+   "pt": "Prensa Inscritora de Engenharia",
+   "en": "Inscriber Engineering Press"
+  },
+  {
+   "id": "silicio_impresso",
+   "pt": "Circuito Impresso de Silício",
+   "en": "Printed Silicon"
+  },
+  {
+   "id": "circuito_logico_impresso",
+   "pt": "Circuito Impresso Lógico",
+   "en": "Printed Logic Circuit"
+  },
+  {
+   "id": "circuito_calculo_impresso",
+   "pt": "Circuito Impresso de Cálculo",
+   "en": "Printed Calculation Circuit"
+  },
+  {
+   "id": "circuito_engenharia_impresso",
+   "pt": "Circuito Impresso de Engenharia",
+   "en": "Printed Engineering Circuit"
+  },
+  {
+   "id": "componente_me_256k",
+   "pt": "Componente de Armazenamento de 256k",
+   "en": "256k ME Storage Component"
+  },
+  {
+   "id": "celula_me_256k",
+   "pt": "Célula de Armazenamento de 256k para Itens",
+   "en": "256k ME Item Storage Cell"
+  },
+  {
+   "id": "involucro_celula_me",
+   "pt": "Cápsula para Células de Armazenamento de Itens",
+   "en": "ME Item Cell Housing"
+  },
+  {
+   "id": "cabo_me_fluix",
+   "pt": "Cabo ME Fluix",
+   "en": "Fluix ME Glass Cable"
+  },
+  {
+   "id": "fibra_quartzo",
+   "pt": "Fibra de Quartzo",
+   "en": "Quartz Fiber"
+  },
+  {
+   "id": "receptor_sem_fio",
+   "pt": "Receptor Sem Fio",
+   "en": "Wireless Receiver"
+  },
+  {
+   "id": "nucleo_aniquilacao",
+   "pt": "Núcleo de Aniquilação",
+   "en": "Annihilation Core"
+  },
+  {
+   "id": "nucleo_formacao",
+   "pt": "Núcleo de Formação",
+   "en": "Formation Core"
+  },
+  {
+   "id": "perola_fluix",
+   "pt": "Pérola de Fluix",
+   "en": "Fluix Pearl"
+  },
+  {
+   "id": "po_pedra_ceu",
+   "pt": "Pó de Pedra do Céu",
+   "en": "Sky Stone Dust"
+  }
+ ],
+ "blocos": [
+  {
+   "id": "vidro_quartzo",
+   "pt": "Vidro de Quartzo",
+   "en": "Quartz Glass"
+  },
+  {
+   "id": "pedra_ceu_lisa",
+   "pt": "Pedra do Céu Lisa",
+   "en": "Sky Stone Block"
+  },
+  {
+   "id": "celula_energia_ae",
+   "pt": "Célula de Energia",
+   "en": "Energy Cell"
+  },
+  {
+   "id": "celula_energia_ae_densa",
+   "pt": "Célula Densa de Energia",
+   "en": "Dense Energy Cell"
+  },
+  {
+   "id": "bloco_fluix",
+   "pt": "Bloco de Fluix",
+   "en": "Fluix Block"
+  }
+ ],
+ "maquinas": [
+  {
+   "id": "inscritor",
+   "pt": "Inscritor",
+   "en": "Inscriber"
+  },
+  {
+   "id": "carregador_ae",
+   "pt": "Carregador",
+   "en": "Charger"
+  }
+ ],
+ "renomear": {
+  "cristal_certus": [
+   "Cristal de Quartzo Certus",
+   "Certus Quartz Crystal"
+  ],
+  "po_certus": [
+   "Pó de Quartzo Certus",
+   "Certus Quartz Dust"
+  ],
+  "cristal_fluix": [
+   "Cristal de Fluix",
+   "Fluix Crystal"
+  ],
+  "po_fluix": [
+   "Pó de Fluix",
+   "Fluix Dust"
+  ],
+  "processador_basico": [
+   "Processador Lógico",
+   "Logic Processor"
+  ],
+  "processador_avancado": [
+   "Processador de Engenharia",
+   "Engineering Processor"
+  ],
+  "faca_corte": [
+   "Faca de Quartzo Certus",
+   "Certus Quartz Cutting Knife"
+  ],
+  "controlador_me": [
+   "Controlador ME",
+   "ME Controller"
+  ],
+  "drive_me": [
+   "Gabinete ME",
+   "ME Drive"
+  ],
+  "bau_me": [
+   "Baú ME",
+   "ME Chest"
+  ],
+  "montador_molecular": [
+   "Montador Molecular",
+   "Molecular Assembler"
+  ],
+  "ponto_acesso": [
+   "Ponto de Acesso Sem Fio",
+   "ME Wireless Access Point"
+  ],
+  "terminal_sem_fio": [
+   "Terminal Sem Fio",
+   "Wireless Terminal"
+  ],
+  "padrao_me_vazio": [
+   "Padrão em Branco",
+   "Blank Pattern"
+  ],
+  "componente_me_1k": [
+   "Componente de Armazenamento de 1k",
+   "1k ME Storage Component"
+  ],
+  "componente_me_4k": [
+   "Componente de Armazenamento de 4k",
+   "4k ME Storage Component"
+  ],
+  "componente_me_16k": [
+   "Componente de Armazenamento de 16k",
+   "16k ME Storage Component"
+  ],
+  "componente_me_64k": [
+   "Componente de Armazenamento de 64k",
+   "64k ME Storage Component"
+  ],
+  "celula_me_1k": [
+   "Célula de Armazenamento de 1k para Itens",
+   "1k ME Item Storage Cell"
+  ],
+  "celula_me_4k": [
+   "Célula de Armazenamento de 4k para Itens",
+   "4k ME Item Storage Cell"
+  ],
+  "celula_me_16k": [
+   "Célula de Armazenamento de 16k para Itens",
+   "16k ME Item Storage Cell"
+  ],
+  "celula_me_64k": [
+   "Célula de 64k de Armazenamento para Itens",
+   "64k ME Item Storage Cell"
+  ]
+ },
+ "receitas": [
+  {
+   "id": "ae2_materials_annihilationcore",
+   "resultado": "cl:nucleo_aniquilacao",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "abc"
+   ],
+   "chave": {
+    "a": "minecraft:quartz",
+    "b": "cl:po_fluix",
+    "c": "cl:processador_basico"
+   }
+  },
+  {
+   "id": "ae2_materials_formationcore",
+   "resultado": "cl:nucleo_formacao",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "abc"
+   ],
+   "chave": {
+    "a": "cl:cristal_certus",
+    "b": "cl:po_fluix",
+    "c": "cl:processador_basico"
+   }
+  },
+  {
+   "id": "ae2_decorative_fluix_block",
+   "resultado": "cl:bloco_fluix",
+   "tipo": "shaped",
+   "padrao": [
+    "aa",
+    "aa"
+   ],
+   "chave": {
+    "a": "cl:cristal_fluix"
+   }
+  },
+  {
+   "id": "ae2_decorative_quartz_glass",
+   "resultado": "cl:vidro_quartzo",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bab",
+    "aba"
+   ],
+   "chave": {
+    "a": "cl:po_certus",
+    "b": "minecraft:glass"
+   }
+  },
+  {
+   "id": "ae2_network_wireless_access_point",
+   "resultado": "cl:ponto_acesso",
+   "tipo": "shaped",
+   "padrao": [
+    "a",
+    "b",
+    "c"
+   ],
+   "chave": {
+    "a": "cl:receptor_sem_fio",
+    "b": "cl:processador_calculo",
+    "c": "cl:cabo_me_fluix"
+   }
+  },
+  {
+   "id": "ae2_network_wireless_part",
+   "resultado": "cl:receptor_sem_fio",
+   "tipo": "shaped",
+   "padrao": [
+    " a ",
+    "bcb",
+    " b "
+   ],
+   "chave": {
+    "a": "cl:perola_fluix",
+    "b": "minecraft:iron_ingot",
+    "c": "cl:fibra_quartzo"
+   }
+  },
+  {
+   "id": "ae2_network_wireless_terminal",
+   "resultado": "cl:terminal_sem_fio",
+   "tipo": "shaped",
+   "padrao": [
+    "a",
+    "b",
+    "c"
+   ],
+   "chave": {
+    "a": "cl:receptor_sem_fio",
+    "b": "cl:terminal",
+    "c": "cl:celula_energia_ae_densa"
+   }
+  },
+  {
+   "id": "ae2_network_cables_glass_fluix",
+   "resultado": "cl:cabo_me_fluix",
+   "qtd": 4,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:fibra_quartzo",
+    "cl:cristal_fluix",
+    "cl:cristal_fluix"
+   ]
+  },
+  {
+   "id": "ae2_network_blocks_controller",
+   "resultado": "cl:controlador_me",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "aba"
+   ],
+   "chave": {
+    "a": "cl:pedra_ceu_lisa",
+    "b": "cl:cristal_fluix",
+    "c": "cl:processador_avancado"
+   }
+  },
+  {
+   "id": "ae2_network_blocks_crystal_processing_charger",
+   "resultado": "cl:carregador_ae",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "a  ",
+    "aba"
+   ],
+   "chave": {
+    "a": "minecraft:iron_ingot",
+    "b": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_blocks_energy_dense_energy_cell",
+   "resultado": "cl:celula_energia_ae_densa",
+   "tipo": "shaped",
+   "padrao": [
+    "aaa",
+    "aba",
+    "aaa"
+   ],
+   "chave": {
+    "a": "cl:celula_energia_ae",
+    "b": "cl:processador_calculo"
+   }
+  },
+  {
+   "id": "ae2_network_blocks_energy_energy_cell",
+   "resultado": "cl:celula_energia_ae",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "aba"
+   ],
+   "chave": {
+    "a": "cl:cristal_certus",
+    "b": "cl:po_fluix",
+    "c": "cl:vidro_quartzo"
+   }
+  },
+  {
+   "id": "ae2_network_blocks_inscribers",
+   "resultado": "cl:inscritor",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "c a",
+    "aba"
+   ],
+   "chave": {
+    "a": "minecraft:iron_ingot",
+    "b": "minecraft:piston",
+    "c": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_blocks_storage_chest",
+   "resultado": "cl:bau_me",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "c c",
+    "ded"
+   ],
+   "chave": {
+    "a": "minecraft:glass",
+    "b": "cl:terminal",
+    "c": "cl:cabo_me_fluix",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_blocks_storage_drive",
+   "resultado": "cl:drive_me",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "c c",
+    "aba"
+   ],
+   "chave": {
+    "a": "minecraft:iron_ingot",
+    "b": "cl:processador_avancado",
+    "c": "cl:cabo_me_fluix"
+   }
+  },
+  {
+   "id": "ae2_network_parts_quartz_fiber_part",
+   "resultado": "cl:fibra_quartzo",
+   "qtd": 3,
+   "tipo": "shaped",
+   "padrao": [
+    "aaa",
+    "bbb",
+    "aaa"
+   ],
+   "chave": {
+    "a": "minecraft:glass",
+    "b": "cl:po_certus"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_cell_housing",
+   "resultado": "cl:involucro_celula_me",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "b b",
+    "cdc"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:redstone",
+    "c": "minecraft:iron_ingot",
+    "d": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_16k",
+   "resultado": "cl:celula_me_16k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "ded"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:redstone",
+    "c": "cl:componente_me_16k",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_16k_storage",
+   "resultado": "cl:celula_me_16k",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:componente_me_16k",
+    "cl:involucro_celula_me"
+   ]
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_1k",
+   "resultado": "cl:celula_me_1k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "ded"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:redstone",
+    "c": "cl:componente_me_1k",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_1k_storage",
+   "resultado": "cl:celula_me_1k",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:involucro_celula_me",
+    "cl:componente_me_1k"
+   ]
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_256k",
+   "resultado": "cl:celula_me_256k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "ded"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:redstone",
+    "c": "cl:componente_me_256k",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_256k_storage",
+   "resultado": "cl:celula_me_256k",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:involucro_celula_me",
+    "cl:componente_me_256k"
+   ]
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_4k",
+   "resultado": "cl:celula_me_4k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "ded"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:redstone",
+    "c": "cl:componente_me_4k",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_4k_storage",
+   "resultado": "cl:celula_me_4k",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:involucro_celula_me",
+    "cl:componente_me_4k"
+   ]
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_64k",
+   "resultado": "cl:celula_me_64k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "ded"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:redstone",
+    "c": "cl:componente_me_64k",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_cell_64k_storage",
+   "resultado": "cl:celula_me_64k",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:involucro_celula_me",
+    "cl:componente_me_64k"
+   ]
+  },
+  {
+   "id": "ae2_network_cells_item_storage_components_cell_16k_part",
+   "resultado": "cl:componente_me_16k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "cdc",
+    "aca"
+   ],
+   "chave": {
+    "a": "minecraft:glowstone_dust",
+    "b": "cl:processador_calculo",
+    "c": "cl:componente_me_4k",
+    "d": "cl:vidro_quartzo"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_components_cell_1k_part",
+   "resultado": "cl:componente_me_1k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "aba"
+   ],
+   "chave": {
+    "a": "minecraft:redstone",
+    "b": "cl:cristal_certus",
+    "c": "cl:processador_basico"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_components_cell_256k_part",
+   "resultado": "cl:componente_me_256k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "cdc",
+    "aca"
+   ],
+   "chave": {
+    "a": "cl:po_pedra_ceu",
+    "b": "cl:processador_calculo",
+    "c": "cl:componente_me_64k",
+    "d": "cl:vidro_quartzo"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_components_cell_4k_part",
+   "resultado": "cl:componente_me_4k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "cdc",
+    "aca"
+   ],
+   "chave": {
+    "a": "minecraft:redstone",
+    "b": "cl:processador_calculo",
+    "c": "cl:componente_me_1k",
+    "d": "cl:vidro_quartzo"
+   }
+  },
+  {
+   "id": "ae2_network_cells_item_storage_components_cell_64k_part",
+   "resultado": "cl:componente_me_64k",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "cdc",
+    "aca"
+   ],
+   "chave": {
+    "a": "minecraft:glowstone_dust",
+    "b": "cl:processador_calculo",
+    "c": "cl:componente_me_16k",
+    "d": "cl:vidro_quartzo"
+   }
+  },
+  {
+   "id": "ae2_network_crafting_molecular_assembler",
+   "resultado": "cl:montador_molecular",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "cde",
+    "aba"
+   ],
+   "chave": {
+    "a": "minecraft:iron_ingot",
+    "b": "cl:vidro_quartzo",
+    "c": "cl:nucleo_aniquilacao",
+    "d": "minecraft:crafting_table",
+    "e": "cl:nucleo_formacao"
+   }
+  },
+  {
+   "id": "ae2_network_crafting_patterns_blank",
+   "resultado": "cl:padrao_me_vazio",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "ded"
+   ],
+   "chave": {
+    "a": "cl:vidro_quartzo",
+    "b": "minecraft:glowstone_dust",
+    "c": "cl:cristal_certus",
+    "d": "minecraft:iron_ingot",
+    "e": "minecraft:copper_ingot"
+   }
+  },
+  {
+   "id": "ae2_misc_deconstruction_fluix_block",
+   "resultado": "cl:cristal_fluix",
+   "qtd": 4,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_fluix"
+   ]
+  },
+  {
+   "id": "ae2_misc_fluixpearl",
+   "resultado": "cl:perola_fluix",
+   "tipo": "shaped",
+   "padrao": [
+    "aba",
+    "bcb",
+    "aba"
+   ],
+   "chave": {
+    "a": "cl:po_fluix",
+    "b": "cl:cristal_fluix",
+    "c": "minecraft:ender_pearl"
+   }
+  },
+  {
+   "id": "ae2_smelting_smooth_sky_stone_block",
+   "tipo": "furnace",
+   "entrada": "cl:meteorito",
+   "resultado": "cl:pedra_ceu_lisa"
+  },
+  {
+   "id": "ae2_tools_certus_quartz_cutting_knife",
+   "resultado": "cl:faca_corte",
+   "tipo": "shaped",
+   "padrao": [
+    "  a",
+    "ba ",
+    "cc "
+   ],
+   "chave": {
+    "a": "minecraft:stick",
+    "b": "minecraft:iron_ingot",
+    "c": "cl:cristal_certus"
+   }
+  }
+ ],
+ "inscritor": [
+  {
+   "cima": "cl:circuito_calculo_impresso",
+   "meio": "minecraft:redstone",
+   "baixo": "cl:silicio_impresso",
+   "prensa": true,
+   "sai": [
+    "cl:processador_calculo",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_calculo",
+   "meio": "minecraft:iron_block",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:prensa_calculo",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_calculo",
+   "meio": "cl:cristal_certus",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:circuito_calculo_impresso",
+    1
+   ]
+  },
+  {
+   "cima": null,
+   "meio": "cl:cristal_certus",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:po_certus",
+    1
+   ]
+  },
+  {
+   "cima": null,
+   "meio": "minecraft:ender_pearl",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:po_perola_ender",
+    1
+   ]
+  },
+  {
+   "cima": "cl:circuito_engenharia_impresso",
+   "meio": "minecraft:redstone",
+   "baixo": "cl:silicio_impresso",
+   "prensa": true,
+   "sai": [
+    "cl:processador_avancado",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_engenharia",
+   "meio": "minecraft:iron_block",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:prensa_engenharia",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_engenharia",
+   "meio": "minecraft:diamond",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:circuito_engenharia_impresso",
+    1
+   ]
+  },
+  {
+   "cima": null,
+   "meio": "cl:cristal_fluix",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:po_fluix",
+    1
+   ]
+  },
+  {
+   "cima": "cl:circuito_logico_impresso",
+   "meio": "minecraft:redstone",
+   "baixo": "cl:silicio_impresso",
+   "prensa": true,
+   "sai": [
+    "cl:processador_basico",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_logica",
+   "meio": "minecraft:iron_block",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:prensa_logica",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_logica",
+   "meio": "minecraft:gold_ingot",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:circuito_logico_impresso",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_silicio",
+   "meio": "minecraft:iron_block",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:prensa_silicio",
+    1
+   ]
+  },
+  {
+   "cima": "cl:prensa_silicio",
+   "meio": "cl:silicio",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:silicio_impresso",
+    1
+   ]
+  },
+  {
+   "cima": null,
+   "meio": "cl:meteorito",
+   "baixo": null,
+   "prensa": false,
+   "sai": [
+    "cl:po_pedra_ceu",
+    1
+   ]
+  }
+ ],
+ "carregar": [
+  {
+   "entra": "cl:cristal_certus",
+   "sai": "cl:cristal_certus_carregado"
+  }
+ ],
+ "agua": [
+  {
+   "entra": [
+    "cl:cristal_certus_carregado",
+    "cl:po_certus"
+   ],
+   "sai": [
+    "cl:cristal_certus",
+    2
+   ]
+  },
+  {
+   "entra": [
+    "cl:cristal_certus_carregado",
+    "cl:po_fluix"
+   ],
+   "sai": [
+    "cl:cristal_fluix",
+    1
+   ]
+  },
+  {
+   "entra": [
+    "cl:cristal_certus_carregado",
+    "minecraft:redstone",
+    "minecraft:quartz"
+   ],
+   "sai": [
+    "cl:cristal_fluix",
+    2
+   ]
+  }
+ ]
+}

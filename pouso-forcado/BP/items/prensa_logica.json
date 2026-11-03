@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:prensa_logica",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_prensa_logica",
+      "minecraft:display_name": {
+        "value": "item.cl:prensa_logica.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

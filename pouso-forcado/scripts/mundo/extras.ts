@@ -21,7 +21,9 @@ import { LUA } from "../galacticraft/oxigenio.js";
  */
 const LADOS = ["frente", "frente_direita", "direita", "tras_direita", "tras", "tras_esquerda", "esquerda", "frente_esquerda"];
 const METEORO = { chancePorMinuto: 1 / 40, distancia: [40, 90], raio: 1.6 };
+const PRENSAS = ["cl:prensa_silicio", "cl:prensa_logica", "cl:prensa_calculo", "cl:prensa_engenharia"];
 const SAQUE_METEORITO: ReadonlyArray<[string, number, number, number]> = [
+  ["cl:meteorito", 1, 1, 1], // 1.22.0: a Pedra do Céu do AE2 (vai na fornalha para a Pedra do Céu Lisa)
   // item, mín, máx, chance
   ["cl:fragmento_meteorito", 1, 2, 1],
   ["minecraft:raw_iron", 1, 3, 0.5],
@@ -109,6 +111,14 @@ function cairMeteoro(): void {
         const dd = Math.hypot(dx, dy * 1.3, dz);
         if (dd > r + Math.random() * 0.4) continue;
         dim.getBlock({ x: x + dx, y: chao.y - 1 + dy, z: z + dz })?.setType(Math.random() < 0.15 ? "minecraft:magma" : "cl:meteorito");
+      }
+      // 1.22.0 (AE2): o "cubo misterioso" do meteoro, um baú no meio com uma Prensa Inscritora e Pedra do Céu.
+      const centro = dim.getBlock({ x, y: chao.y - 1, z });
+      if (centro) {
+        centro.setType("minecraft:chest");
+        const bau = centro.getComponent("minecraft:inventory")?.container;
+        bau?.addItem(new ItemStack(PRENSAS[Math.floor(Math.random() * PRENSAS.length)], 1));
+        bau?.addItem(new ItemStack("cl:meteorito", 4));
       }
       for (const p of world.getPlayers()) {
         if (p.dimension.id !== dim.id) continue;

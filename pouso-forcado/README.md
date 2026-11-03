@@ -154,6 +154,20 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.22.0 (Applied Energistics 2, o mais novo)
+
+O Applied Energistics virou o AE2 de hoje (Minecraft 26.3), com as receitas e a arte do mod:
+- **Prensas Inscritoras** (Silício, Lógica, de Cálculo e de Engenharia) vêm dos **meteoros**: cada um que cai deixa um
+  baú no meio da cratera com uma prensa e Pedra do Céu.
+- **Inscritor**: prensa + bloco de ferro = cópia da prensa; prensa + item = circuito impresso; circuito + redstone +
+  silício impresso = **Processador Lógico, de Cálculo ou de Engenharia** (os processadores agora só saem dele).
+- **Carregador**: Quartzo Certus vira Certus Carregado. **Fluix**: jogue Certus Carregado, redstone e quartzo juntos na
+  água (dá 2).
+- Receitas do AE2 para controlador (Pedra do Céu Lisa), drive, baú, células (Cápsula + Componente), montador, ponto de
+  acesso e terminal sem fio; itens novos: Vidro de Quartzo, Cabo ME Fluix, Fibra de Quartzo, Receptor Sem Fio, núcleos
+  de Aniquilação e Formação, Pérola de Fluix, Células de Energia do AE2 e a **Célula de Armazenamento 256k**.
+  4 missões novas no capítulo de armazenamento.
+
 ## Novidades da 1.21.0 (Mekanism 10.7, o mais novo)
 
 O Mekanism foi atualizado para a versão mais nova (10.7, Minecraft 1.21.1), com as receitas, os números e a arte

@@ -126,7 +126,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
 | Tinkers' Construct | mDiyo e SlimeKnights | CC BY 3.0 | github.com/SlimeKnights/TinkersConstruct (1.7.10) |
-| Applied Energistics 2 | AlgorithmX2 e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (rv3) |
+| Applied Energistics 2 | AlgorithmX2, Ridanisaurus Rid e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (main, 26.3; e rv3) |
 | PneumaticCraft | MineMaarten | GPLv3 | github.com/MineMaarten/PneumaticCraft |
 | Big Reactors | Erogenous Beef | MIT | github.com/erogenousbeef/BigReactors |
 | BuildCraft | SpaceToad e equipe | Minecraft Mod Public License | github.com/BuildCraft/BuildCraft (7.1) |

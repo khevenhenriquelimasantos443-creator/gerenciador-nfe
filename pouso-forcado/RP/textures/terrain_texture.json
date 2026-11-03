@@ -3915,6 +3915,63 @@
     },
     "clc_serraria_precisao_baixo": {
       "textures": "textures/blocks/cl/arte/serraria_precisao_baixo"
+    },
+    "clc_vidro_quartzo": {
+      "textures": "textures/blocks/cl/c/vidro_quartzo"
+    },
+    "clc_pedra_ceu_lisa": {
+      "textures": "textures/blocks/cl/arte/pedra_ceu_lisa"
+    },
+    "clc_celula_energia_ae_frente": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_frente"
+    },
+    "clc_celula_energia_ae_lado": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_lado"
+    },
+    "clc_celula_energia_ae_topo": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_topo"
+    },
+    "clc_celula_energia_ae_baixo": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_baixo"
+    },
+    "clc_celula_energia_ae_densa_frente": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_densa_frente"
+    },
+    "clc_celula_energia_ae_densa_lado": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_densa_lado"
+    },
+    "clc_celula_energia_ae_densa_topo": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_densa_topo"
+    },
+    "clc_celula_energia_ae_densa_baixo": {
+      "textures": "textures/blocks/cl/c/celula_energia_ae_densa_baixo"
+    },
+    "clc_bloco_fluix": {
+      "textures": "textures/blocks/cl/arte/bloco_fluix"
+    },
+    "clc_inscritor_frente": {
+      "textures": "textures/blocks/cl/arte/inscritor_frente"
+    },
+    "clc_inscritor_lado": {
+      "textures": "textures/blocks/cl/arte/inscritor_lado"
+    },
+    "clc_inscritor_topo": {
+      "textures": "textures/blocks/cl/arte/inscritor_topo"
+    },
+    "clc_inscritor_baixo": {
+      "textures": "textures/blocks/cl/arte/inscritor_baixo"
+    },
+    "clc_carregador_ae_frente": {
+      "textures": "textures/blocks/cl/arte/carregador_ae_frente"
+    },
+    "clc_carregador_ae_lado": {
+      "textures": "textures/blocks/cl/arte/carregador_ae_lado"
+    },
+    "clc_carregador_ae_topo": {
+      "textures": "textures/blocks/cl/arte/carregador_ae_topo"
+    },
+    "clc_carregador_ae_baixo": {
+      "textures": "textures/blocks/cl/arte/carregador_ae_baixo"
     }
   }
 }

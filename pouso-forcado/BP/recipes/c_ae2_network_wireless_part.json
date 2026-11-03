@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_wireless_part"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " a ",
+      "bcb",
+      " b "
+    ],
+    "key": {
+      "a": {
+        "item": "cl:perola_fluix"
+      },
+      "b": {
+        "item": "minecraft:iron_ingot"
+      },
+      "c": {
+        "item": "cl:fibra_quartzo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:receptor_sem_fio"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_blocks_controller"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "bcb",
+      "aba"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:pedra_ceu_lisa"
+      },
+      "b": {
+        "item": "cl:cristal_fluix"
+      },
+      "c": {
+        "item": "cl:processador_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:controlador_me"
+    }
+  }
+}

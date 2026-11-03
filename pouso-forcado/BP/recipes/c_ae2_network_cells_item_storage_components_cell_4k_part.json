@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_cells_item_storage_components_cell_4k_part"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "cdc",
+      "aca"
+    ],
+    "key": {
+      "a": {
+        "item": "minecraft:redstone"
+      },
+      "b": {
+        "item": "cl:processador_calculo"
+      },
+      "c": {
+        "item": "cl:componente_me_1k"
+      },
+      "d": {
+        "item": "cl:vidro_quartzo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:componente_me_4k"
+    }
+  }
+}

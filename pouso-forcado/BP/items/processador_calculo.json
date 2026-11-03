@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:processador_calculo",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_processador_calculo",
+      "minecraft:display_name": {
+        "value": "item.cl:processador_calculo.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

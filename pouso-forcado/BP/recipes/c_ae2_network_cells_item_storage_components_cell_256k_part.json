@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_cells_item_storage_components_cell_256k_part"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "cdc",
+      "aca"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:po_pedra_ceu"
+      },
+      "b": {
+        "item": "cl:processador_calculo"
+      },
+      "c": {
+        "item": "cl:componente_me_64k"
+      },
+      "d": {
+        "item": "cl:vidro_quartzo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:componente_me_256k"
+    }
+  }
+}

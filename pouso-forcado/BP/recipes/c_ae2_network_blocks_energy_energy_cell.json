@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_blocks_energy_energy_cell"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "bcb",
+      "aba"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:cristal_certus"
+      },
+      "b": {
+        "item": "cl:po_fluix"
+      },
+      "c": {
+        "item": "cl:vidro_quartzo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:celula_energia_ae"
+    }
+  }
+}

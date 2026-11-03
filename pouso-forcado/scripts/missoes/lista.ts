@@ -154,7 +154,10 @@ export type Acao =
   | "obelisco_xp"
   | "cajado_viagem"
   | "frasco_alma"
-  | "cabeca_ender";
+  | "cabeca_ender"
+  // 1.22.0: AE2
+  | "ae2_logico"
+  | "ae2_fluix";
 
 type MissaoBase = {
   id: string;
@@ -594,6 +597,11 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }],
         escolha: [{ item: "cl:celula_me_4k", quantidade: 1 }, { item: "minecraft:diamond", quantidade: 3 }],
       },
+      // 1.22.0: Applied Energistics 2 de hoje
+      { id: "ae2_prensa", requer: ["ar_certus"], objetivo: { tipo: "colocar", bloco: "cl:inscritor", qtd: 1 }, recompensa: [{ item: "minecraft:iron_block", quantidade: 2 }] },
+      { id: "ae2_logico", requer: ["ae2_prensa"], objetivo: { tipo: "acao", acao: "ae2_logico", qtd: 1 }, recompensa: [{ item: "cl:silicio", quantidade: 8 }] },
+      { id: "ae2_fluix", requer: ["ar_certus"], objetivo: { tipo: "acao", acao: "ae2_fluix", qtd: 1 }, recompensa: [{ item: "minecraft:quartz", quantidade: 8 }] },
+      { id: "ae2_256k", requer: ["ar_celula"], objetivo: { tipo: "ter", item: "cl:celula_me_256k", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },
   {

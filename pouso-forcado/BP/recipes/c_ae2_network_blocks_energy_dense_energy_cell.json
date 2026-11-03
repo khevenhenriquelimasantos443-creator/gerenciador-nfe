@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_blocks_energy_dense_energy_cell"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aaa",
+      "aba",
+      "aaa"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:celula_energia_ae"
+      },
+      "b": {
+        "item": "cl:processador_calculo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:celula_energia_ae_densa"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_wireless_access_point"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "a",
+      "b",
+      "c"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:receptor_sem_fio"
+      },
+      "b": {
+        "item": "cl:processador_calculo"
+      },
+      "c": {
+        "item": "cl:cabo_me_fluix"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:ponto_acesso"
+    }
+  }
+}

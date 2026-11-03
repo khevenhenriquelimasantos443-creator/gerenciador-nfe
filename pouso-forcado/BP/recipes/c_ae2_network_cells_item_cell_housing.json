@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_cells_item_cell_housing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "b b",
+      "cdc"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:vidro_quartzo"
+      },
+      "b": {
+        "item": "minecraft:redstone"
+      },
+      "c": {
+        "item": "minecraft:iron_ingot"
+      },
+      "d": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:involucro_celula_me"
+    }
+  }
+}

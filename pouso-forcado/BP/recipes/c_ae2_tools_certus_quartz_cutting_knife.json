@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_tools_certus_quartz_cutting_knife"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  a",
+      "ba ",
+      "cc "
+    ],
+    "key": {
+      "a": {
+        "item": "minecraft:stick"
+      },
+      "b": {
+        "item": "minecraft:iron_ingot"
+      },
+      "c": {
+        "item": "cl:cristal_certus"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:faca_corte"
+    }
+  }
+}

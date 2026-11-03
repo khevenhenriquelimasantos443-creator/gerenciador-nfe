@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_wireless_terminal"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "a",
+      "b",
+      "c"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:receptor_sem_fio"
+      },
+      "b": {
+        "item": "cl:terminal"
+      },
+      "c": {
+        "item": "cl:celula_energia_ae_densa"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:terminal_sem_fio"
+    }
+  }
+}

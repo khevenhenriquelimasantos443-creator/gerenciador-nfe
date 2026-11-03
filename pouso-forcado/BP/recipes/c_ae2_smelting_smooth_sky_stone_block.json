@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_ae2_smelting_smooth_sky_stone_block"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:meteorito",
+    "output": "cl:pedra_ceu_lisa"
+  }
+}

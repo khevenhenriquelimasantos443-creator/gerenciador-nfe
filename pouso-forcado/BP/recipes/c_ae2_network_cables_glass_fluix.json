@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_ae2_network_cables_glass_fluix"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:fibra_quartzo"
+      },
+      {
+        "item": "cl:cristal_fluix"
+      },
+      {
+        "item": "cl:cristal_fluix"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cabo_me_fluix",
+      "count": 4
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_decorative_quartz_glass"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "bab",
+      "aba"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:po_certus"
+      },
+      "b": {
+        "item": "minecraft:glass"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vidro_quartzo",
+      "count": 4
+    }
+  }
+}

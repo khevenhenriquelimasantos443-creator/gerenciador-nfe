@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.21.0";
+export const VERSAO = "1.22.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1152,15 +1152,7 @@ export const MONTADORA: ReadonlyArray<ReceitaMontadora> = [
     resultado: IDS.placaCasco, quantidade: 1, energia: 2,
     ingredientes: [{ item: "minecraft:iron_ingot", qtd: 3 }, { item: "minecraft:copper_ingot", qtd: 2 }],
   },
-  // Fase 18 (Applied Energistics): os processadores saem da Montadora (no AE1, da fornalha).
-  {
-    resultado: "cl:processador_basico", quantidade: 1, energia: 2,
-    ingredientes: [{ item: "cl:silicio", qtd: 1 }, { item: "minecraft:gold_ingot", qtd: 1 }, { item: "minecraft:redstone", qtd: 2 }],
-  },
-  {
-    resultado: "cl:processador_avancado", quantidade: 1, energia: 4,
-    ingredientes: [{ item: "cl:silicio", qtd: 1 }, { item: "minecraft:diamond", qtd: 1 }, { item: "cl:cristal_fluix", qtd: 1 }, { item: "minecraft:redstone", qtd: 2 }],
-  },
+  // Fase 18 (Applied Energistics): os processadores saíam daqui; desde a 1.22.0 (AE2 de hoje) saem do Inscritor.
 ];
 
 // Os 4 sistemas da nave (scripts/mundo/reparo.ts), consertados no Painel da Nave.

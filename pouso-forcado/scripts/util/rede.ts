@@ -1,6 +1,6 @@
 import { Block } from "@minecraft/server";
 import { ENERGIA, IDS } from "../config.js";
-import { DADOS_F17, DADOS_F24, DADOS_F29, DADOS_F39 } from "../conteudo/gerado.js";
+import { DADOS_F17, DADOS_F24, DADOS_F29, DADOS_F39, DADOS_F42 } from "../conteudo/gerado.js";
 import { definirEstado, lerEstado, vizinhos } from "./blocos.js";
 import { gravar, ler } from "./dados.js";
 
@@ -16,7 +16,7 @@ const CARGA = "cl:carga";
 // Por onde a energia passa: cabos e os próprios blocos de energia (máquinas não conduzem).
 // Células de Energia (Thermal, Fase 17) e Cubos de Energia (Mekanism, 1.3.0): capacidade em E.
 // e Bancos de Capacitores (Ender IO, 1.8.0).
-export const CELULAS: Readonly<Record<string, number>> = { ...DADOS_F17.celulas, ...DADOS_F24.cubos, ...DADOS_F29.bancos, ...DADOS_F39.celulas };
+export const CELULAS: Readonly<Record<string, number>> = { ...DADOS_F17.celulas, ...DADOS_F24.cubos, ...DADOS_F29.bancos, ...DADOS_F39.celulas, ...DADOS_F42.celulas };
 // Powah! (1.18.0): cabos e geradores também passam energia.
 const POWAH = DADOS_F39.niveis.flatMap((n) => [`cl:cabo_powah_${n}`, `cl:furnator_${n}`, `cl:magmator_${n}`, `cl:termogerador_${n}`, `cl:painel_solar_${n}`, `cl:reator_${n}`]);
 const CONDUTORES = new Set<string>([IDS.cabo, "cl:conduto_energia", "cl:conduto_energia_aprimorado", "cl:conduto_energia_ender", ...POWAH, IDS.bateria, IDS.painelSolar, IDS.gerador, IDS.moinho, "cl:dinamo_redstone", "cl:tesseract", ...Object.keys(CELULAS)]);

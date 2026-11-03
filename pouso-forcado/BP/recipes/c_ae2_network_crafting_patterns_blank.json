@@ -1,0 +1,40 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ae2_network_crafting_patterns_blank"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "aba",
+      "bcb",
+      "ded"
+    ],
+    "key": {
+      "a": {
+        "item": "cl:vidro_quartzo"
+      },
+      "b": {
+        "item": "minecraft:glowstone_dust"
+      },
+      "c": {
+        "item": "cl:cristal_certus"
+      },
+      "d": {
+        "item": "minecraft:iron_ingot"
+      },
+      "e": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:padrao_me_vazio",
+      "count": 2
+    }
+  }
+}
