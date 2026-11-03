@@ -3972,6 +3972,12 @@
     },
     "clc_carregador_ae_baixo": {
       "textures": "textures/blocks/cl/arte/carregador_ae_baixo"
+    },
+    "clc_bloco_ouro_rosa": {
+      "textures": "textures/blocks/cl/c/bloco_ouro_rosa"
+    },
+    "clc_bloco_bronze_ametista": {
+      "textures": "textures/blocks/cl/c/bloco_bronze_ametista"
     }
   }
 }

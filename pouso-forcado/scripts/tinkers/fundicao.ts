@@ -29,7 +29,7 @@ const T = "fundicao";
 const PAREDE = new Set(["cl:tijolos_refratarios", "cl:vidro_refratario", "cl:tanque_refratario", "cl:dreno_fundicao", "cl:controlador_fundicao"]);
 const DIRS: Readonly<Record<string, [number, number]>> = { north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0] };
 const PECAS = DADOS_F15.pecas as Readonly<Record<string, { custo: number }>>;
-const METAIS_FERRAMENTA = new Set(["ferro", "cobre", "bronze", "aco"]);
+const METAIS_FERRAMENTA = new Set(["ferro", "cobre", "bronze", "aco", "ouro_rosa", "bronze_ametista"]);
 const nomeMetal = (m: string): RawMessage => ({ translate: `cl.fun.metal.${m}` });
 const nomeItem = (id: string): RawMessage => ({ translate: `item.${id}.name` });
 const indice = () => (JSON.parse((world.getDynamicProperty("cl:fundicoes") as string | undefined) ?? "[]") as string[]);
@@ -121,6 +121,19 @@ function ligas(f: Fundicao): void {
     tirar(f, "cobre", cobre);
     tirar(f, "estanho", estanho);
     somar(f, "bronze", sai);
+  }
+  // 1.24.0 (Tinkers 3): Ouro Rosa e Bronze de Ametista.
+  const r = FUNDICAO.ouroRosa;
+  while (qtd(f, "cobre") >= r.cobre && qtd(f, "ouro") >= r.ouro) {
+    tirar(f, "cobre", r.cobre);
+    tirar(f, "ouro", r.ouro);
+    somar(f, "ouro_rosa", r.sai);
+  }
+  const a = FUNDICAO.bronzeAmetista;
+  while (qtd(f, "cobre") >= a.cobre && qtd(f, "ametista") >= a.ametista) {
+    tirar(f, "cobre", a.cobre);
+    tirar(f, "ametista", a.ametista);
+    somar(f, "bronze_ametista", a.sai);
   }
 }
 

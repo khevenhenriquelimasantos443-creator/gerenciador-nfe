@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.23.0";
+export const VERSAO = "1.24.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -462,16 +462,18 @@ export const TINKERS = {
   espacosIniciais: 1,
   niveisComEspaco: [2, 4, 6], // +1 espaço para modificador
   consertoPorItem: 0.25, // cada item do material conserta 25% da durabilidade
-  metais: ["ferro", "cobre", "bronze", "aco"],
+  metais: ["ferro", "cobre", "bronze", "aco", "ouro_rosa", "bronze_ametista"],
   // Item -> material (Construtor de Peças e conserto). Tábuas de qualquer madeira = madeira.
   materialDeItem: {
     "minecraft:cobblestone": "pedra", "minecraft:stone": "pedra", "minecraft:cobbled_deepslate": "pedra", "minecraft:mossy_cobblestone": "pedra",
     "minecraft:flint": "silex", "minecraft:cactus": "cacto", "minecraft:bone": "osso", "minecraft:obsidian": "obsidiana",
     "minecraft:iron_ingot": "ferro", "minecraft:copper_ingot": "cobre", "cl:lingote_bronze": "bronze", "cl:lingote_aco": "aco",
+    "cl:lingote_ouro_rosa": "ouro_rosa", "cl:lingote_bronze_ametista": "bronze_ametista",
   } as Readonly<Record<string, string>>,
   consertoCom: {
     pedra: "minecraft:cobblestone", silex: "minecraft:flint", cacto: "minecraft:cactus", osso: "minecraft:bone", obsidiana: "minecraft:obsidian",
     ferro: "minecraft:iron_ingot", cobre: "minecraft:copper_ingot", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco",
+    ouro_rosa: "cl:lingote_ouro_rosa", bronze_ametista: "cl:lingote_bronze_ametista",
   } as Readonly<Record<string, string>>,
   // Iguana: nível de mineração que cada bloco pede (os outros: 0).
   nivelBloco: {
@@ -563,12 +565,21 @@ export const FUNDICAO = {
     "cl:bloco_bronze": ["bronze", 1296],
     "cl:lingote_aco": ["aco", 144],
     "cl:bloco_aco": ["aco", 1296],
+    // 1.24.0 (Tinkers 3): ametista e as ligas novas
+    "minecraft:amethyst_shard": ["ametista", 144],
+    "minecraft:amethyst_block": ["ametista", 576],
+    "cl:lingote_ouro_rosa": ["ouro_rosa", 144],
+    "cl:lingote_bronze_ametista": ["bronze_ametista", 144],
   } as Readonly<Record<string, readonly [string, number]>>,
-  lingote: { ferro: "minecraft:iron_ingot", ouro: "minecraft:gold_ingot", cobre: "minecraft:copper_ingot", estanho: "cl:lingote_estanho", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco" } as Readonly<Record<string, string>>,
+  lingote: { ferro: "minecraft:iron_ingot", ouro: "minecraft:gold_ingot", cobre: "minecraft:copper_ingot", estanho: "cl:lingote_estanho", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco",
+    ouro_rosa: "cl:lingote_ouro_rosa", bronze_ametista: "cl:lingote_bronze_ametista" } as Readonly<Record<string, string>>,
   pepita: { ferro: "minecraft:iron_nugget", ouro: "minecraft:gold_nugget" } as Readonly<Record<string, string>>,
   bloco: { ferro: "minecraft:iron_block", ouro: "minecraft:gold_block", cobre: "minecraft:copper_block", estanho: "cl:bloco_estanho", bronze: "cl:bloco_bronze", aco: "cl:bloco_aco" } as Readonly<Record<string, string>>,
   // Ligas: bronze = 3 cobre + 1 estanho -> 4 (em passos de 48 mB); aço = 144 mB de ferro + 1 carvão jogado dentro.
   bronze: { cobre: 36, estanho: 12, sai: 48 },
+  // 1.24.0 (Tinkers 3, smeltery/alloys): Ouro Rosa = 1 cobre + 1 ouro -> 2; Bronze de Ametista = 1 cobre + 1 ametista -> 1.
+  ouroRosa: { cobre: 72, ouro: 72, sai: 144 },
+  bronzeAmetista: { cobre: 144, ametista: 144, sai: 144 },
   acoCom: ["minecraft:coal", "minecraft:charcoal"],
 } as const;
 

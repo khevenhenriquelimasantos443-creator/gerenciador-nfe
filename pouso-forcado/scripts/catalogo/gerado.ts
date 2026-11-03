@@ -561,6 +561,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Bronze",
   "icone": "textures/items/cl/blocos/bloco_bronze"
  },
+ "cl:bloco_bronze_ametista": {
+  "pt": "Bloco de Bronze de Ametista",
+  "en": "Block of Amethyst Bronze",
+  "icone": "textures/blocks/cl/c/bloco_bronze_ametista"
+ },
  "cl:bloco_cacto": {
   "pt": "Bloco de Cacto",
   "en": "Cactus Block",
@@ -655,6 +660,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Máquina",
   "en": "Machine Block",
   "icone": "textures/items/cl/arte/blocos/bloco_maquina"
+ },
+ "cl:bloco_ouro_rosa": {
+  "pt": "Bloco de Ouro Rosa",
+  "en": "Block of Rose Gold",
+  "icone": "textures/blocks/cl/c/bloco_ouro_rosa"
  },
  "cl:bloco_placa_ferro": {
   "pt": "Placa de Ferro",
@@ -1961,6 +1971,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Oxygen Gear",
   "icone": "textures/items/cl/arte/equipamento_oxigenio"
  },
+ "cl:escavadeira_aco": {
+  "pt": "Escavadeira de Aço",
+  "en": "Steel Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_aco"
+ },
+ "cl:escavadeira_bronze": {
+  "pt": "Escavadeira de Bronze",
+  "en": "Bronze Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_bronze"
+ },
+ "cl:escavadeira_bronze_ametista": {
+  "pt": "Escavadeira de Bronze de Ametista",
+  "en": "Amethyst Bronze Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_bronze_ametista"
+ },
+ "cl:escavadeira_cacto": {
+  "pt": "Escavadeira de Cacto",
+  "en": "Cactus Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_cacto"
+ },
+ "cl:escavadeira_cobre": {
+  "pt": "Escavadeira de Cobre",
+  "en": "Copper Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_cobre"
+ },
+ "cl:escavadeira_ferro": {
+  "pt": "Escavadeira de Ferro",
+  "en": "Iron Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_ferro"
+ },
+ "cl:escavadeira_madeira": {
+  "pt": "Escavadeira de Madeira",
+  "en": "Wood Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_madeira"
+ },
+ "cl:escavadeira_obsidiana": {
+  "pt": "Escavadeira de Obsidiana",
+  "en": "Obsidian Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_obsidiana"
+ },
+ "cl:escavadeira_osso": {
+  "pt": "Escavadeira de Osso",
+  "en": "Bone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_osso"
+ },
+ "cl:escavadeira_ouro_rosa": {
+  "pt": "Escavadeira de Ouro Rosa",
+  "en": "Rose Gold Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_ouro_rosa"
+ },
+ "cl:escavadeira_pedra": {
+  "pt": "Escavadeira de Pedra",
+  "en": "Stone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_pedra"
+ },
+ "cl:escavadeira_silex": {
+  "pt": "Escavadeira de Sílex",
+  "en": "Flint Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_silex"
+ },
  "cl:escoria": {
   "pt": "Escória",
   "en": "Slag",
@@ -2021,6 +2091,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bronze Broadsword",
   "icone": "textures/items/cl/arte/espada_larga_bronze"
  },
+ "cl:espada_larga_bronze_ametista": {
+  "pt": "Espada Larga de Bronze de Ametista",
+  "en": "Amethyst Bronze Broadsword",
+  "icone": "textures/items/cl/arte/espada_larga_bronze_ametista"
+ },
  "cl:espada_larga_cacto": {
   "pt": "Espada Larga de Cacto",
   "en": "Cactus Broadsword",
@@ -2050,6 +2125,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Espada Larga de Osso",
   "en": "Bone Broadsword",
   "icone": "textures/items/cl/arte/espada_larga_osso"
+ },
+ "cl:espada_larga_ouro_rosa": {
+  "pt": "Espada Larga de Ouro Rosa",
+  "en": "Rose Gold Broadsword",
+  "icone": "textures/items/cl/arte/espada_larga_ouro_rosa"
  },
  "cl:espada_larga_pedra": {
   "pt": "Espada Larga de Pedra",
@@ -2931,6 +3011,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bronze Ingot",
   "icone": "textures/items/cl/arte/lingote_bronze"
  },
+ "cl:lingote_bronze_ametista": {
+  "pt": "Lingote de Bronze de Ametista",
+  "en": "Amethyst Bronze Ingot",
+  "icone": "textures/items/cl/arte/lingote_bronze_ametista"
+ },
  "cl:lingote_cianita": {
   "pt": "Lingote de Cianita",
   "en": "Cyanite Ingot",
@@ -2965,6 +3050,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Ósmio",
   "en": "Osmium Ingot",
   "icone": "textures/items/cl/arte/lingote_osmio"
+ },
+ "cl:lingote_ouro_rosa": {
+  "pt": "Lingote de Ouro Rosa",
+  "en": "Rose Gold Ingot",
+  "icone": "textures/items/cl/arte/lingote_ouro_rosa"
  },
  "cl:lingote_yellorium": {
   "pt": "Lingote de Yellorium",
@@ -3026,6 +3116,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bronze Hatchet",
   "icone": "textures/items/cl/arte/machadinha_bronze"
  },
+ "cl:machadinha_bronze_ametista": {
+  "pt": "Machadinha de Bronze de Ametista",
+  "en": "Amethyst Bronze Hatchet",
+  "icone": "textures/items/cl/arte/machadinha_bronze_ametista"
+ },
  "cl:machadinha_cacto": {
   "pt": "Machadinha de Cacto",
   "en": "Cactus Hatchet",
@@ -3056,6 +3151,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Hatchet",
   "icone": "textures/items/cl/arte/machadinha_osso"
  },
+ "cl:machadinha_ouro_rosa": {
+  "pt": "Machadinha de Ouro Rosa",
+  "en": "Rose Gold Hatchet",
+  "icone": "textures/items/cl/arte/machadinha_ouro_rosa"
+ },
  "cl:machadinha_pedra": {
   "pt": "Machadinha de Pedra",
   "en": "Stone Hatchet",
@@ -3065,6 +3165,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Machadinha de Sílex",
   "en": "Flint Hatchet",
   "icone": "textures/items/cl/arte/machadinha_silex"
+ },
+ "cl:machado_largo_aco": {
+  "pt": "Machado Largo de Aço",
+  "en": "Steel Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_aco"
+ },
+ "cl:machado_largo_bronze": {
+  "pt": "Machado Largo de Bronze",
+  "en": "Bronze Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_bronze"
+ },
+ "cl:machado_largo_bronze_ametista": {
+  "pt": "Machado Largo de Bronze de Ametista",
+  "en": "Amethyst Bronze Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_bronze_ametista"
+ },
+ "cl:machado_largo_cacto": {
+  "pt": "Machado Largo de Cacto",
+  "en": "Cactus Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_cacto"
+ },
+ "cl:machado_largo_cobre": {
+  "pt": "Machado Largo de Cobre",
+  "en": "Copper Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_cobre"
+ },
+ "cl:machado_largo_ferro": {
+  "pt": "Machado Largo de Ferro",
+  "en": "Iron Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_ferro"
+ },
+ "cl:machado_largo_madeira": {
+  "pt": "Machado Largo de Madeira",
+  "en": "Wood Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_madeira"
+ },
+ "cl:machado_largo_obsidiana": {
+  "pt": "Machado Largo de Obsidiana",
+  "en": "Obsidian Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_obsidiana"
+ },
+ "cl:machado_largo_osso": {
+  "pt": "Machado Largo de Osso",
+  "en": "Bone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_osso"
+ },
+ "cl:machado_largo_ouro_rosa": {
+  "pt": "Machado Largo de Ouro Rosa",
+  "en": "Rose Gold Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_ouro_rosa"
+ },
+ "cl:machado_largo_pedra": {
+  "pt": "Machado Largo de Pedra",
+  "en": "Stone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_pedra"
+ },
+ "cl:machado_largo_silex": {
+  "pt": "Machado Largo de Sílex",
+  "en": "Flint Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_silex"
  },
  "cl:magmator_ardente": {
   "pt": "Magmator Ardente",
@@ -3180,6 +3340,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Mármore Tijolinhos",
   "en": "Small Bricks Marble",
   "icone": "textures/items/cl/blocos/marmore_tijolos_pequenos"
+ },
+ "cl:marreta_aco": {
+  "pt": "Marreta de Aço",
+  "en": "Steel Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_aco"
+ },
+ "cl:marreta_bronze": {
+  "pt": "Marreta de Bronze",
+  "en": "Bronze Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_bronze"
+ },
+ "cl:marreta_bronze_ametista": {
+  "pt": "Marreta de Bronze de Ametista",
+  "en": "Amethyst Bronze Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_bronze_ametista"
+ },
+ "cl:marreta_cacto": {
+  "pt": "Marreta de Cacto",
+  "en": "Cactus Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_cacto"
+ },
+ "cl:marreta_cobre": {
+  "pt": "Marreta de Cobre",
+  "en": "Copper Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_cobre"
+ },
+ "cl:marreta_ferro": {
+  "pt": "Marreta de Ferro",
+  "en": "Iron Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_ferro"
+ },
+ "cl:marreta_madeira": {
+  "pt": "Marreta de Madeira",
+  "en": "Wood Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_madeira"
+ },
+ "cl:marreta_obsidiana": {
+  "pt": "Marreta de Obsidiana",
+  "en": "Obsidian Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_obsidiana"
+ },
+ "cl:marreta_osso": {
+  "pt": "Marreta de Osso",
+  "en": "Bone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_osso"
+ },
+ "cl:marreta_ouro_rosa": {
+  "pt": "Marreta de Ouro Rosa",
+  "en": "Rose Gold Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_ouro_rosa"
+ },
+ "cl:marreta_pedra": {
+  "pt": "Marreta de Pedra",
+  "en": "Stone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_pedra"
+ },
+ "cl:marreta_silex": {
+  "pt": "Marreta de Sílex",
+  "en": "Flint Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_silex"
  },
  "cl:martelo_cobre": {
   "pt": "Martelo de Cobre",
@@ -3691,6 +3911,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hatchet Head Cast",
   "icone": "textures/items/cl/arte/molde_cabeca_machado"
  },
+ "cl:molde_cabeca_machado_larga": {
+  "pt": "Molde: Cabeça de Machado Largo",
+  "en": "Broad Axe Head Cast",
+  "icone": "textures/items/cl/c/molde_cabeca_machado_larga"
+ },
+ "cl:molde_cabeca_martelo": {
+  "pt": "Molde: Cabeça de Martelo",
+  "en": "Hammer Head Cast",
+  "icone": "textures/items/cl/c/molde_cabeca_martelo"
+ },
  "cl:molde_cabeca_pa": {
   "pt": "Molde: Cabeça de Pá",
   "en": "Shovel Head Cast",
@@ -3705,6 +3935,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Molde: Cabo",
   "en": "Tool Rod Cast",
   "icone": "textures/items/cl/arte/molde_cabo"
+ },
+ "cl:molde_cabo_resistente": {
+  "pt": "Molde: Cabo Resistente",
+  "en": "Tough Handle Cast",
+  "icone": "textures/items/cl/c/molde_cabo_resistente"
  },
  "cl:molde_guarda_larga": {
   "pt": "Molde: Guarda Larga",
@@ -3721,6 +3956,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Binding Cast",
   "icone": "textures/items/cl/arte/molde_ligacao"
  },
+ "cl:molde_ligacao_resistente": {
+  "pt": "Molde: Ligação Resistente",
+  "en": "Tough Binding Cast",
+  "icone": "textures/items/cl/c/molde_ligacao_resistente"
+ },
  "cl:molde_lingote": {
   "pt": "Molde de Lingote",
   "en": "Ingot Cast",
@@ -3730,6 +3970,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Molde de Pepita",
   "en": "Nugget Cast",
   "icone": "textures/items/cl/arte/molde_pepita"
+ },
+ "cl:molde_placa_grande": {
+  "pt": "Molde: Placa Grande",
+  "en": "Large Plate Cast",
+  "icone": "textures/items/cl/c/molde_placa_grande"
  },
  "cl:molde_travessa": {
   "pt": "Molde: Travessa",
@@ -3926,6 +4171,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bronze Shovel",
   "icone": "textures/items/cl/arte/pa_bronze"
  },
+ "cl:pa_bronze_ametista": {
+  "pt": "Pá de Bronze de Ametista",
+  "en": "Amethyst Bronze Shovel",
+  "icone": "textures/items/cl/arte/pa_bronze_ametista"
+ },
  "cl:pa_cacto": {
   "pt": "Pá de Cacto",
   "en": "Cactus Shovel",
@@ -3961,6 +4211,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Shovel",
   "icone": "textures/items/cl/arte/pa_osso"
  },
+ "cl:pa_ouro_rosa": {
+  "pt": "Pá de Ouro Rosa",
+  "en": "Rose Gold Shovel",
+  "icone": "textures/items/cl/arte/pa_ouro_rosa"
+ },
  "cl:pa_pedra": {
   "pt": "Pá de Pedra",
   "en": "Stone Shovel",
@@ -3981,6 +4236,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hatchet Head Pattern",
   "icone": "textures/items/cl/arte/padrao_cabeca_machado"
  },
+ "cl:padrao_cabeca_machado_larga": {
+  "pt": "Padrão: Cabeça de Machado Largo",
+  "en": "Broad Axe Head Pattern",
+  "icone": "textures/items/cl/c/padrao_cabeca_machado_larga"
+ },
+ "cl:padrao_cabeca_martelo": {
+  "pt": "Padrão: Cabeça de Martelo",
+  "en": "Hammer Head Pattern",
+  "icone": "textures/items/cl/c/padrao_cabeca_martelo"
+ },
  "cl:padrao_cabeca_pa": {
   "pt": "Padrão: Cabeça de Pá",
   "en": "Shovel Head Pattern",
@@ -3995,6 +4260,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Padrão: Cabo",
   "en": "Tool Rod Pattern",
   "icone": "textures/items/cl/arte/padrao_cabo"
+ },
+ "cl:padrao_cabo_resistente": {
+  "pt": "Padrão: Cabo Resistente",
+  "en": "Tough Handle Pattern",
+  "icone": "textures/items/cl/c/padrao_cabo_resistente"
  },
  "cl:padrao_guarda_larga": {
   "pt": "Padrão: Guarda Larga",
@@ -4011,10 +4281,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Binding Pattern",
   "icone": "textures/items/cl/arte/padrao_ligacao"
  },
+ "cl:padrao_ligacao_resistente": {
+  "pt": "Padrão: Ligação Resistente",
+  "en": "Tough Binding Pattern",
+  "icone": "textures/items/cl/c/padrao_ligacao_resistente"
+ },
  "cl:padrao_me_vazio": {
   "pt": "Padrão em Branco",
   "en": "Blank Pattern",
   "icone": "textures/items/cl/arte/padrao_me_vazio"
+ },
+ "cl:padrao_placa_grande": {
+  "pt": "Padrão: Placa Grande",
+  "en": "Large Plate Pattern",
+  "icone": "textures/items/cl/c/padrao_placa_grande"
  },
  "cl:padrao_travessa": {
   "pt": "Padrão: Travessa",
@@ -4216,6 +4496,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bronze Hatchet Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_bronze"
  },
+ "cl:peca_cabeca_machado_bronze_ametista": {
+  "pt": "Cabeça de Machado de Bronze de Ametista",
+  "en": "Amethyst Bronze Hatchet Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_bronze_ametista"
+ },
  "cl:peca_cabeca_machado_cacto": {
   "pt": "Cabeça de Machado de Cacto",
   "en": "Cactus Hatchet Head",
@@ -4230,6 +4515,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cabeça de Machado de Ferro",
   "en": "Iron Hatchet Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_ferro"
+ },
+ "cl:peca_cabeca_machado_larga_aco": {
+  "pt": "Cabeça de Machado Largo de Aço",
+  "en": "Steel Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_aco"
+ },
+ "cl:peca_cabeca_machado_larga_bronze": {
+  "pt": "Cabeça de Machado Largo de Bronze",
+  "en": "Bronze Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_bronze"
+ },
+ "cl:peca_cabeca_machado_larga_bronze_ametista": {
+  "pt": "Cabeça de Machado Largo de Bronze de Ametista",
+  "en": "Amethyst Bronze Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_bronze_ametista"
+ },
+ "cl:peca_cabeca_machado_larga_cacto": {
+  "pt": "Cabeça de Machado Largo de Cacto",
+  "en": "Cactus Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_cacto"
+ },
+ "cl:peca_cabeca_machado_larga_cobre": {
+  "pt": "Cabeça de Machado Largo de Cobre",
+  "en": "Copper Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_cobre"
+ },
+ "cl:peca_cabeca_machado_larga_ferro": {
+  "pt": "Cabeça de Machado Largo de Ferro",
+  "en": "Iron Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_ferro"
+ },
+ "cl:peca_cabeca_machado_larga_madeira": {
+  "pt": "Cabeça de Machado Largo de Madeira",
+  "en": "Wood Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_madeira"
+ },
+ "cl:peca_cabeca_machado_larga_obsidiana": {
+  "pt": "Cabeça de Machado Largo de Obsidiana",
+  "en": "Obsidian Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_obsidiana"
+ },
+ "cl:peca_cabeca_machado_larga_osso": {
+  "pt": "Cabeça de Machado Largo de Osso",
+  "en": "Bone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_osso"
+ },
+ "cl:peca_cabeca_machado_larga_ouro_rosa": {
+  "pt": "Cabeça de Machado Largo de Ouro Rosa",
+  "en": "Rose Gold Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_ouro_rosa"
+ },
+ "cl:peca_cabeca_machado_larga_pedra": {
+  "pt": "Cabeça de Machado Largo de Pedra",
+  "en": "Stone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_pedra"
+ },
+ "cl:peca_cabeca_machado_larga_silex": {
+  "pt": "Cabeça de Machado Largo de Sílex",
+  "en": "Flint Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_silex"
  },
  "cl:peca_cabeca_machado_madeira": {
   "pt": "Cabeça de Machado de Madeira",
@@ -4246,6 +4591,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Hatchet Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_osso"
  },
+ "cl:peca_cabeca_machado_ouro_rosa": {
+  "pt": "Cabeça de Machado de Ouro Rosa",
+  "en": "Rose Gold Hatchet Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_ouro_rosa"
+ },
  "cl:peca_cabeca_machado_pedra": {
   "pt": "Cabeça de Machado de Pedra",
   "en": "Stone Hatchet Head",
@@ -4256,6 +4606,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Hatchet Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_silex"
  },
+ "cl:peca_cabeca_martelo_aco": {
+  "pt": "Cabeça de Martelo de Aço",
+  "en": "Steel Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_aco"
+ },
+ "cl:peca_cabeca_martelo_bronze": {
+  "pt": "Cabeça de Martelo de Bronze",
+  "en": "Bronze Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_bronze"
+ },
+ "cl:peca_cabeca_martelo_bronze_ametista": {
+  "pt": "Cabeça de Martelo de Bronze de Ametista",
+  "en": "Amethyst Bronze Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_bronze_ametista"
+ },
+ "cl:peca_cabeca_martelo_cacto": {
+  "pt": "Cabeça de Martelo de Cacto",
+  "en": "Cactus Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_cacto"
+ },
+ "cl:peca_cabeca_martelo_cobre": {
+  "pt": "Cabeça de Martelo de Cobre",
+  "en": "Copper Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_cobre"
+ },
+ "cl:peca_cabeca_martelo_ferro": {
+  "pt": "Cabeça de Martelo de Ferro",
+  "en": "Iron Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_ferro"
+ },
+ "cl:peca_cabeca_martelo_madeira": {
+  "pt": "Cabeça de Martelo de Madeira",
+  "en": "Wood Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_madeira"
+ },
+ "cl:peca_cabeca_martelo_obsidiana": {
+  "pt": "Cabeça de Martelo de Obsidiana",
+  "en": "Obsidian Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_obsidiana"
+ },
+ "cl:peca_cabeca_martelo_osso": {
+  "pt": "Cabeça de Martelo de Osso",
+  "en": "Bone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_osso"
+ },
+ "cl:peca_cabeca_martelo_ouro_rosa": {
+  "pt": "Cabeça de Martelo de Ouro Rosa",
+  "en": "Rose Gold Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_ouro_rosa"
+ },
+ "cl:peca_cabeca_martelo_pedra": {
+  "pt": "Cabeça de Martelo de Pedra",
+  "en": "Stone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_pedra"
+ },
+ "cl:peca_cabeca_martelo_silex": {
+  "pt": "Cabeça de Martelo de Sílex",
+  "en": "Flint Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_silex"
+ },
  "cl:peca_cabeca_pa_aco": {
   "pt": "Cabeça de Pá de Aço",
   "en": "Steel Shovel Head",
@@ -4265,6 +4675,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cabeça de Pá de Bronze",
   "en": "Bronze Shovel Head",
   "icone": "textures/items/cl/arte/peca_cabeca_pa_bronze"
+ },
+ "cl:peca_cabeca_pa_bronze_ametista": {
+  "pt": "Cabeça de Pá de Bronze de Ametista",
+  "en": "Amethyst Bronze Shovel Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_bronze_ametista"
  },
  "cl:peca_cabeca_pa_cacto": {
   "pt": "Cabeça de Pá de Cacto",
@@ -4296,6 +4711,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Shovel Head",
   "icone": "textures/items/cl/arte/peca_cabeca_pa_osso"
  },
+ "cl:peca_cabeca_pa_ouro_rosa": {
+  "pt": "Cabeça de Pá de Ouro Rosa",
+  "en": "Rose Gold Shovel Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_pa_ouro_rosa"
+ },
  "cl:peca_cabeca_pa_pedra": {
   "pt": "Cabeça de Pá de Pedra",
   "en": "Stone Shovel Head",
@@ -4315,6 +4735,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cabeça de Picareta de Bronze",
   "en": "Bronze Pickaxe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_bronze"
+ },
+ "cl:peca_cabeca_picareta_bronze_ametista": {
+  "pt": "Cabeça de Picareta de Bronze de Ametista",
+  "en": "Amethyst Bronze Pickaxe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_bronze_ametista"
  },
  "cl:peca_cabeca_picareta_cacto": {
   "pt": "Cabeça de Picareta de Cacto",
@@ -4346,6 +4771,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Pickaxe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_osso"
  },
+ "cl:peca_cabeca_picareta_ouro_rosa": {
+  "pt": "Cabeça de Picareta de Ouro Rosa",
+  "en": "Rose Gold Pickaxe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_ouro_rosa"
+ },
  "cl:peca_cabeca_picareta_pedra": {
   "pt": "Cabeça de Picareta de Pedra",
   "en": "Stone Pickaxe Head",
@@ -4365,6 +4795,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cabo de Bronze",
   "en": "Bronze Tool Rod",
   "icone": "textures/items/cl/arte/peca_cabo_bronze"
+ },
+ "cl:peca_cabo_bronze_ametista": {
+  "pt": "Cabo de Bronze de Ametista",
+  "en": "Amethyst Bronze Tool Rod",
+  "icone": "textures/items/cl/arte/peca_cabo_bronze_ametista"
  },
  "cl:peca_cabo_cacto": {
   "pt": "Cabo de Cacto",
@@ -4396,10 +4831,75 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Tool Rod",
   "icone": "textures/items/cl/arte/peca_cabo_osso"
  },
+ "cl:peca_cabo_ouro_rosa": {
+  "pt": "Cabo de Ouro Rosa",
+  "en": "Rose Gold Tool Rod",
+  "icone": "textures/items/cl/arte/peca_cabo_ouro_rosa"
+ },
  "cl:peca_cabo_pedra": {
   "pt": "Cabo de Pedra",
   "en": "Stone Tool Rod",
   "icone": "textures/items/cl/arte/peca_cabo_pedra"
+ },
+ "cl:peca_cabo_resistente_aco": {
+  "pt": "Cabo Resistente de Aço",
+  "en": "Steel Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_aco"
+ },
+ "cl:peca_cabo_resistente_bronze": {
+  "pt": "Cabo Resistente de Bronze",
+  "en": "Bronze Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_bronze"
+ },
+ "cl:peca_cabo_resistente_bronze_ametista": {
+  "pt": "Cabo Resistente de Bronze de Ametista",
+  "en": "Amethyst Bronze Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_bronze_ametista"
+ },
+ "cl:peca_cabo_resistente_cacto": {
+  "pt": "Cabo Resistente de Cacto",
+  "en": "Cactus Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_cacto"
+ },
+ "cl:peca_cabo_resistente_cobre": {
+  "pt": "Cabo Resistente de Cobre",
+  "en": "Copper Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_cobre"
+ },
+ "cl:peca_cabo_resistente_ferro": {
+  "pt": "Cabo Resistente de Ferro",
+  "en": "Iron Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_ferro"
+ },
+ "cl:peca_cabo_resistente_madeira": {
+  "pt": "Cabo Resistente de Madeira",
+  "en": "Wood Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_madeira"
+ },
+ "cl:peca_cabo_resistente_obsidiana": {
+  "pt": "Cabo Resistente de Obsidiana",
+  "en": "Obsidian Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_obsidiana"
+ },
+ "cl:peca_cabo_resistente_osso": {
+  "pt": "Cabo Resistente de Osso",
+  "en": "Bone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_osso"
+ },
+ "cl:peca_cabo_resistente_ouro_rosa": {
+  "pt": "Cabo Resistente de Ouro Rosa",
+  "en": "Rose Gold Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_ouro_rosa"
+ },
+ "cl:peca_cabo_resistente_pedra": {
+  "pt": "Cabo Resistente de Pedra",
+  "en": "Stone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_pedra"
+ },
+ "cl:peca_cabo_resistente_silex": {
+  "pt": "Cabo Resistente de Sílex",
+  "en": "Flint Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_silex"
  },
  "cl:peca_cabo_silex": {
   "pt": "Cabo de Sílex",
@@ -4415,6 +4915,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Guarda Larga de Bronze",
   "en": "Bronze Wide Guard",
   "icone": "textures/items/cl/arte/peca_guarda_larga_bronze"
+ },
+ "cl:peca_guarda_larga_bronze_ametista": {
+  "pt": "Guarda Larga de Bronze de Ametista",
+  "en": "Amethyst Bronze Wide Guard",
+  "icone": "textures/items/cl/arte/peca_guarda_larga_bronze_ametista"
  },
  "cl:peca_guarda_larga_cacto": {
   "pt": "Guarda Larga de Cacto",
@@ -4446,6 +4951,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Wide Guard",
   "icone": "textures/items/cl/arte/peca_guarda_larga_osso"
  },
+ "cl:peca_guarda_larga_ouro_rosa": {
+  "pt": "Guarda Larga de Ouro Rosa",
+  "en": "Rose Gold Wide Guard",
+  "icone": "textures/items/cl/arte/peca_guarda_larga_ouro_rosa"
+ },
  "cl:peca_guarda_larga_pedra": {
   "pt": "Guarda Larga de Pedra",
   "en": "Stone Wide Guard",
@@ -4465,6 +4975,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lâmina de Espada de Bronze",
   "en": "Bronze Sword Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_bronze"
+ },
+ "cl:peca_lamina_espada_bronze_ametista": {
+  "pt": "Lâmina de Espada de Bronze de Ametista",
+  "en": "Amethyst Bronze Sword Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_bronze_ametista"
  },
  "cl:peca_lamina_espada_cacto": {
   "pt": "Lâmina de Espada de Cacto",
@@ -4496,6 +5011,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Sword Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_osso"
  },
+ "cl:peca_lamina_espada_ouro_rosa": {
+  "pt": "Lâmina de Espada de Ouro Rosa",
+  "en": "Rose Gold Sword Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_ouro_rosa"
+ },
  "cl:peca_lamina_espada_pedra": {
   "pt": "Lâmina de Espada de Pedra",
   "en": "Stone Sword Blade",
@@ -4515,6 +5035,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Ligação de Bronze",
   "en": "Bronze Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_bronze"
+ },
+ "cl:peca_ligacao_bronze_ametista": {
+  "pt": "Ligação de Bronze de Ametista",
+  "en": "Amethyst Bronze Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_bronze_ametista"
  },
  "cl:peca_ligacao_cacto": {
   "pt": "Ligação de Cacto",
@@ -4546,15 +5071,140 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_osso"
  },
+ "cl:peca_ligacao_ouro_rosa": {
+  "pt": "Ligação de Ouro Rosa",
+  "en": "Rose Gold Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_ouro_rosa"
+ },
  "cl:peca_ligacao_pedra": {
   "pt": "Ligação de Pedra",
   "en": "Stone Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_pedra"
  },
+ "cl:peca_ligacao_resistente_aco": {
+  "pt": "Ligação Resistente de Aço",
+  "en": "Steel Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_aco"
+ },
+ "cl:peca_ligacao_resistente_bronze": {
+  "pt": "Ligação Resistente de Bronze",
+  "en": "Bronze Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_bronze"
+ },
+ "cl:peca_ligacao_resistente_bronze_ametista": {
+  "pt": "Ligação Resistente de Bronze de Ametista",
+  "en": "Amethyst Bronze Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_bronze_ametista"
+ },
+ "cl:peca_ligacao_resistente_cacto": {
+  "pt": "Ligação Resistente de Cacto",
+  "en": "Cactus Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_cacto"
+ },
+ "cl:peca_ligacao_resistente_cobre": {
+  "pt": "Ligação Resistente de Cobre",
+  "en": "Copper Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_cobre"
+ },
+ "cl:peca_ligacao_resistente_ferro": {
+  "pt": "Ligação Resistente de Ferro",
+  "en": "Iron Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_ferro"
+ },
+ "cl:peca_ligacao_resistente_madeira": {
+  "pt": "Ligação Resistente de Madeira",
+  "en": "Wood Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_madeira"
+ },
+ "cl:peca_ligacao_resistente_obsidiana": {
+  "pt": "Ligação Resistente de Obsidiana",
+  "en": "Obsidian Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_obsidiana"
+ },
+ "cl:peca_ligacao_resistente_osso": {
+  "pt": "Ligação Resistente de Osso",
+  "en": "Bone Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_osso"
+ },
+ "cl:peca_ligacao_resistente_ouro_rosa": {
+  "pt": "Ligação Resistente de Ouro Rosa",
+  "en": "Rose Gold Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_ouro_rosa"
+ },
+ "cl:peca_ligacao_resistente_pedra": {
+  "pt": "Ligação Resistente de Pedra",
+  "en": "Stone Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_pedra"
+ },
+ "cl:peca_ligacao_resistente_silex": {
+  "pt": "Ligação Resistente de Sílex",
+  "en": "Flint Tough Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_silex"
+ },
  "cl:peca_ligacao_silex": {
   "pt": "Ligação de Sílex",
   "en": "Flint Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_silex"
+ },
+ "cl:peca_placa_grande_aco": {
+  "pt": "Placa Grande de Aço",
+  "en": "Steel Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_aco"
+ },
+ "cl:peca_placa_grande_bronze": {
+  "pt": "Placa Grande de Bronze",
+  "en": "Bronze Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_bronze"
+ },
+ "cl:peca_placa_grande_bronze_ametista": {
+  "pt": "Placa Grande de Bronze de Ametista",
+  "en": "Amethyst Bronze Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_bronze_ametista"
+ },
+ "cl:peca_placa_grande_cacto": {
+  "pt": "Placa Grande de Cacto",
+  "en": "Cactus Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_cacto"
+ },
+ "cl:peca_placa_grande_cobre": {
+  "pt": "Placa Grande de Cobre",
+  "en": "Copper Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_cobre"
+ },
+ "cl:peca_placa_grande_ferro": {
+  "pt": "Placa Grande de Ferro",
+  "en": "Iron Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_ferro"
+ },
+ "cl:peca_placa_grande_madeira": {
+  "pt": "Placa Grande de Madeira",
+  "en": "Wood Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_madeira"
+ },
+ "cl:peca_placa_grande_obsidiana": {
+  "pt": "Placa Grande de Obsidiana",
+  "en": "Obsidian Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_obsidiana"
+ },
+ "cl:peca_placa_grande_osso": {
+  "pt": "Placa Grande de Osso",
+  "en": "Bone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_osso"
+ },
+ "cl:peca_placa_grande_ouro_rosa": {
+  "pt": "Placa Grande de Ouro Rosa",
+  "en": "Rose Gold Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_ouro_rosa"
+ },
+ "cl:peca_placa_grande_pedra": {
+  "pt": "Placa Grande de Pedra",
+  "en": "Stone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_pedra"
+ },
+ "cl:peca_placa_grande_silex": {
+  "pt": "Placa Grande de Sílex",
+  "en": "Flint Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_silex"
  },
  "cl:peca_travessa_aco": {
   "pt": "Travessa de Aço",
@@ -4565,6 +5215,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Travessa de Bronze",
   "en": "Bronze Crossbar",
   "icone": "textures/items/cl/arte/peca_travessa_bronze"
+ },
+ "cl:peca_travessa_bronze_ametista": {
+  "pt": "Travessa de Bronze de Ametista",
+  "en": "Amethyst Bronze Crossbar",
+  "icone": "textures/items/cl/arte/peca_travessa_bronze_ametista"
  },
  "cl:peca_travessa_cacto": {
   "pt": "Travessa de Cacto",
@@ -4595,6 +5250,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Travessa de Osso",
   "en": "Bone Crossbar",
   "icone": "textures/items/cl/arte/peca_travessa_osso"
+ },
+ "cl:peca_travessa_ouro_rosa": {
+  "pt": "Travessa de Ouro Rosa",
+  "en": "Rose Gold Crossbar",
+  "icone": "textures/items/cl/arte/peca_travessa_ouro_rosa"
  },
  "cl:peca_travessa_pedra": {
   "pt": "Travessa de Pedra",
@@ -4826,6 +5486,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bronze Pickaxe",
   "icone": "textures/items/cl/arte/picareta_bronze"
  },
+ "cl:picareta_bronze_ametista": {
+  "pt": "Picareta de Bronze de Ametista",
+  "en": "Amethyst Bronze Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_bronze_ametista"
+ },
  "cl:picareta_cacto": {
   "pt": "Picareta de Cacto",
   "en": "Cactus Pickaxe",
@@ -4855,6 +5520,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Picareta de Osso",
   "en": "Bone Pickaxe",
   "icone": "textures/items/cl/arte/picareta_osso"
+ },
+ "cl:picareta_ouro_rosa": {
+  "pt": "Picareta de Ouro Rosa",
+  "en": "Rose Gold Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_ouro_rosa"
  },
  "cl:picareta_pedra": {
   "pt": "Picareta de Pedra",
@@ -6600,6 +7270,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Laje de Acácia",
   "en": "Acacia Slab",
   "icone": "textures/blocks/planks_acacia"
+ },
+ "minecraft:amethyst_block": {
+  "pt": "Bloco de Ametista",
+  "en": "Block of Amethyst",
+  "icone": "textures/blocks/amethyst_block"
+ },
+ "minecraft:amethyst_shard": {
+  "pt": "Fragmento de Ametista",
+  "en": "Amethyst Shard",
+  "icone": "textures/items/amethyst_shard"
  },
  "minecraft:andesite": {
   "pt": "Andesito",
@@ -9887,6 +10567,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bloco_bronze_ametista",
+  "resultado": "cl:bloco_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "LLL",
+   "LLL",
+   "LLL"
+  ],
+  "chaves": {
+   "L": "cl:lingote_bronze_ametista"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bloco_cacto",
   "resultado": "cl:bloco_cacto",
   "qtd": 1,
@@ -10109,6 +10806,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "F": "cl:folha_plastico",
    "G": "minecraft:glass",
    "S": "minecraft:smooth_stone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_ouro_rosa",
+  "resultado": "cl:bloco_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "LLL",
+   "LLL",
+   "LLL"
+  ],
+  "chaves": {
+   "L": "cl:lingote_ouro_rosa"
   },
   "estacoes": [
    "crafting_table"
@@ -15395,6 +16109,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:c_lingotes_bronze_ametista",
+  "resultado": "cl:lingote_bronze_ametista",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_bronze_ametista",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:c_lingotes_estanho",
   "resultado": "cl:lingote_estanho",
   "qtd": 9,
@@ -15416,6 +16145,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "ingredientes": [
    {
     "item": "cl:bloco_ferro_comprimido",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingotes_ouro_rosa",
+  "resultado": "cl:lingote_ouro_rosa",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_ouro_rosa",
     "qtd": 1
    }
   ],

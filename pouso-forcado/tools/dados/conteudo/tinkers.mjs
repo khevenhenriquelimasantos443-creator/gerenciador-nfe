@@ -1,17 +1,23 @@
 // Tabelas do Tinkers' Construct 1.6.4 (+ Iguana Tweaks) usadas pelas Fases 15 e 16.
 // dur = durabilidade da cabeça (TC), vel = velocidade (TC ÷ 100, inteiro no Bedrock), dano = ataque extra,
 // nivel = nível de mineração (Iguana), cabo = multiplicador da durabilidade quando é o cabo.
+// 1.24.0: números do Tinkers' Construct 3.12.1 (o mais novo; tinkering/materials/stats): durabilidade da cabeça,
+// velocidade (arredondada: o Bedrock só aceita inteiro), dano, nível (madeira/ouro 0, pedra 1, ferro 2, diamante 3,
+// netherite 4) e cabo = 1 + a durabilidade do cabo. Cacto e obsidiana não são cabeça no TC3: ficam os de antes.
 export const MATERIAIS = {
-  madeira: { pt: "Madeira", en: "Wood", dur: 97, vel: 3, dano: 0, nivel: 0, cabo: 1.0, cor: "#a07c48" },
-  pedra: { pt: "Pedra", en: "Stone", dur: 131, vel: 4, dano: 1, nivel: 1, cabo: 0.5, cor: "#8c8c8c" },
-  silex: { pt: "Sílex", en: "Flint", dur: 171, vel: 5, dano: 2, nivel: 1, cabo: 0.7, cor: "#55545e" },
+  madeira: { pt: "Madeira", en: "Wood", dur: 60, vel: 2, dano: 0, nivel: 0, cabo: 1.0, cor: "#a07c48" },
+  pedra: { pt: "Pedra", en: "Stone", dur: 130, vel: 4, dano: 1, nivel: 1, cabo: 0.9, cor: "#8c8c8c" },
+  silex: { pt: "Sílex", en: "Flint", dur: 85, vel: 4, dano: 1, nivel: 1, cabo: 0.85, cor: "#55545e" },
   cacto: { pt: "Cacto", en: "Cactus", dur: 150, vel: 5, dano: 2, nivel: 1, cabo: 1.0, cor: "#4f8f3a" },
-  osso: { pt: "Osso", en: "Bone", dur: 200, vel: 4, dano: 1, nivel: 1, cabo: 1.0, cor: "#e6dfc6" },
+  osso: { pt: "Osso", en: "Bone", dur: 100, vel: 3, dano: 1, nivel: 1, cabo: 0.75, cor: "#e6dfc6" },
   obsidiana: { pt: "Obsidiana", en: "Obsidian", dur: 89, vel: 7, dano: 2, nivel: 3, cabo: 0.8, cor: "#3d2c5e" },
-  ferro: { pt: "Ferro", en: "Iron", dur: 250, vel: 6, dano: 2, nivel: 2, cabo: 1.3, cor: "#d6d9dc", metal: true },
-  cobre: { pt: "Cobre", en: "Copper", dur: 180, vel: 5, dano: 2, nivel: 1, cabo: 1.15, cor: "#d4743c", metal: true },
-  bronze: { pt: "Bronze", en: "Bronze", dur: 350, vel: 7, dano: 2, nivel: 2, cabo: 1.3, cor: "#c8913a", metal: true },
-  aco: { pt: "Aço", en: "Steel", dur: 750, vel: 10, dano: 4, nivel: 3, cabo: 1.3, cor: "#8797a6", metal: true },
+  ferro: { pt: "Ferro", en: "Iron", dur: 250, vel: 6, dano: 2, nivel: 2, cabo: 1.1, cor: "#d6d9dc", metal: true },
+  cobre: { pt: "Cobre", en: "Copper", dur: 210, vel: 5, dano: 1, nivel: 2, cabo: 0.8, cor: "#d4743c", metal: true },
+  bronze: { pt: "Bronze", en: "Bronze", dur: 760, vel: 7, dano: 2, nivel: 3, cabo: 1.1, cor: "#c8913a", metal: true },
+  aco: { pt: "Aço", en: "Steel", dur: 775, vel: 6, dano: 3, nivel: 3, cabo: 1.05, cor: "#8797a6", metal: true },
+  // Ligas novas do TC3 (Fundição): Ouro Rosa = cobre + ouro; Bronze de Ametista = cobre + fragmento de ametista.
+  ouro_rosa: { pt: "Ouro Rosa", en: "Rose Gold", dur: 175, vel: 9, dano: 1, nivel: 0, cabo: 0.7, cor: "#f0a090", metal: true },
+  bronze_ametista: { pt: "Bronze de Ametista", en: "Amethyst Bronze", dur: 720, vel: 7, dano: 2, nivel: 3, cabo: 1.0, cor: "#b07ad8", metal: true },
 };
 // Peças: custo em itens do material no Construtor de Peças (ou em lingotes, na fundição).
 export const PECAS = {
@@ -23,6 +29,12 @@ export const PECAS = {
   lamina_espada: { pt: "Lâmina de Espada", en: "Sword Blade", custo: 2 },
   guarda_larga: { pt: "Guarda Larga", en: "Wide Guard", custo: 1 },
   travessa: { pt: "Travessa", en: "Crossbar", custo: 1 },
+  // 1.24.0: peças das ferramentas grandes do TC3 (custo do Construtor de Peças do mod).
+  cabeca_martelo: { pt: "Cabeça de Martelo", en: "Hammer Head", custo: 8 },
+  placa_grande: { pt: "Placa Grande", en: "Large Plate", custo: 4 },
+  cabo_resistente: { pt: "Cabo Resistente", en: "Tough Handle", custo: 3 },
+  ligacao_resistente: { pt: "Ligação Resistente", en: "Tough Binding", custo: 3 },
+  cabeca_machado_larga: { pt: "Cabeça de Machado Largo", en: "Broad Axe Head", custo: 8 },
 };
 // Ferramentas: peças (a primeira é a cabeça), dano base e o que quebram.
 export const FERRAMENTAS = {
@@ -30,6 +42,14 @@ export const FERRAMENTAS = {
   pa: { pt: "Pá", en: "Shovel", pecas: ["cabeca_pa", "cabo"], dano: 1, tag: "minecraft:is_shovel_item_destructible" },
   machadinha: { pt: "Machadinha", en: "Hatchet", pecas: ["cabeca_machado", "cabo"], dano: 3, tag: "minecraft:is_axe_item_destructible" },
   espada_larga: { pt: "Espada Larga", en: "Broadsword", pecas: ["lamina_espada", "guarda_larga", "cabo"], dano: 4 },
+  // 1.24.0: as ferramentas grandes do TC3 (tool_definitions): Marreta e Escavadeira quebram 3×3, o Machado Largo derruba a
+  // árvore inteira. dur = multiplicador da durabilidade, vel = da velocidade.
+  marreta: { pt: "Marreta", en: "Sledge Hammer", pecas: ["cabeca_martelo", "placa_grande", "cabo_resistente"], dano: 4, dur: 4, vel: 0.4, area: true, slot: "pickaxe",
+    tag: "minecraft:is_pickaxe_item_destructible" },
+  escavadeira: { pt: "Escavadeira", en: "Excavator", pecas: ["placa_grande", "ligacao_resistente", "cabo_resistente"], dano: 2, dur: 3.75, vel: 0.3, area: true, slot: "shovel",
+    tag: "minecraft:is_shovel_item_destructible" },
+  machado_largo: { pt: "Machado Largo", en: "Broad Axe", pecas: ["cabeca_machado_larga", "ligacao_resistente", "cabo_resistente"], dano: 8, dur: 4.25, vel: 0.3, arvore: true, slot: "axe",
+    tag: "minecraft:is_axe_item_destructible" },
 };
 
 const de = (mat) => `de ${MATERIAIS[mat].pt}`;
@@ -44,9 +64,9 @@ export function itensDe(mats) {
         "minecraft:hand_equipped": true,
         "minecraft:durability": { max_durability: 1000 },
         "minecraft:damage": d.dano + m.dano,
-        "minecraft:enchantable": { slot: f === "espada_larga" ? "sword" : f === "pa" ? "shovel" : f === "machadinha" ? "axe" : "pickaxe", value: 10 },
+        "minecraft:enchantable": { slot: d.slot ?? (f === "espada_larga" ? "sword" : f === "pa" ? "shovel" : f === "machadinha" ? "axe" : "pickaxe"), value: 10 },
       };
-      if (d.tag) comp["minecraft:digger"] = { use_efficiency: true, destroy_speeds: [{ block: { tags: `q.any_tag('${d.tag}')` }, speed: m.vel }] };
+      if (d.tag) comp["minecraft:digger"] = { use_efficiency: true, destroy_speeds: [{ block: { tags: `q.any_tag('${d.tag}')` }, speed: Math.max(1, Math.round(m.vel * (d.vel ?? 1))) }] };
       itens.push({ id: `${f}_${mat}`, pt: `${d.pt} ${de(mat)}`, en: `${m.en} ${d.en}`, icone: `ferramenta:${f}:${m.cor}`, pilha: 1, cat: "equipment", comp });
     }
   }

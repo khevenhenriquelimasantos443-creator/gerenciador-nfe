@@ -154,6 +154,17 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.24.0 (Tinkers' Construct 3, o mais novo)
+
+O Tinkers foi atualizado para o Tinkers' Construct 3.12.1 (o mais novo), com os números e a arte do mod (MIT):
+- **Números do TC3** em todos os materiais (durabilidade, velocidade, dano e nível de cada cabeça e o bônus do cabo).
+- **Ligas novas na Fundição**: **Ouro Rosa** (1 cobre + 1 ouro = 2; rápido, nível do ouro) e **Bronze de Ametista**
+  (1 cobre + 1 fragmento de ametista = 1; nível do diamante). Viram peças e ferramentas como os outros metais.
+- **Ferramentas grandes do TC3**: **Marreta** (quebra 3×3 na face mirada), **Escavadeira** (cava 3×3 de terra e
+  areia) e **Machado Largo** (derruba a árvore inteira). Agachado, quebram um bloco só. Peças novas: Cabeça de Martelo,
+  Placa Grande, Cabo Resistente, Ligação Resistente e Cabeça de Machado Largo.
+- **Arte do TC3**: peças e ferramentas com o desenho do mod, pintadas na cor de cada material.
+
 ## Novidades da 1.23.0 (Create 6, o mais novo)
 
 O Create foi atualizado para a versão mais nova (6.0.11, Minecraft 1.21.1), com as receitas do mod (a arte do Create é

@@ -873,6 +873,35 @@ teste("ae2", 500, (t) => {
   });
 });
 
+// 1.24.0: Tinkers 3. A Marreta quebra 3×3 na face mirada; o Machado Largo derruba a árvore inteira.
+teste("tinkers3", 200, (t) => {
+  const j = robo(t, { x: 4.5, y: 1, z: 1.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  for (let x = 3; x <= 5; x++) for (let y = 2; y <= 4; y++) t.setBlockType("minecraft:stone", { x, y, z: 4 });
+  for (let y = 1; y <= 4; y++) t.setBlockType("minecraft:oak_log", { x: 1, y, z: 2 });
+  t.runAfterDelay(10, () => {
+    inv.setItem(0, new ItemStack("cl:marreta_ferro", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 4, y: 3, z: 4 });
+    log(`tinkers3: marreta: ${j.breakBlock({ x: 4, y: 3, z: 4 }, Direction.North)}`);
+  });
+  t.runAfterDelay(60, () => {
+    inv.setItem(0, new ItemStack("cl:machado_largo_ferro", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 1, y: 1, z: 2 });
+    log(`tinkers3: machado largo: ${j.breakBlock({ x: 1, y: 1, z: 2 }, Direction.East)}`);
+  });
+  t.runAfterDelay(160, () => {
+    let pedra = 0, toras = 0;
+    for (let x = 3; x <= 5; x++) for (let y = 2; y <= 4; y++) if (t.getBlock({ x, y, z: 4 }).typeId === "minecraft:stone") pedra++;
+    for (let y = 1; y <= 4; y++) if (t.getBlock({ x: 1, y, z: 2 }).typeId === "minecraft:oak_log") toras++;
+    log(`tinkers3: pedra que sobrou=${pedra}/9 toras que sobraram=${toras}/4`);
+    t.assert(pedra === 0, "a Marreta não quebrou 3×3");
+    t.assert(toras === 0, "o Machado Largo não derrubou a árvore");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

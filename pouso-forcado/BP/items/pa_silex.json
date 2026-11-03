@@ -17,7 +17,7 @@
       "minecraft:durability": {
         "max_durability": 1000
       },
-      "minecraft:damage": 3,
+      "minecraft:damage": 2,
       "minecraft:enchantable": {
         "slot": "shovel",
         "value": 10
@@ -29,7 +29,7 @@
             "block": {
               "tags": "q.any_tag('minecraft:is_shovel_item_destructible')"
             },
-            "speed": 5
+            "speed": 4
           }
         ]
       }

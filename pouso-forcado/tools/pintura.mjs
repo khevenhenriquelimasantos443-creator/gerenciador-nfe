@@ -58,6 +58,12 @@ const S = {
   lamina_espada: (x, y) => diag(x, y, 8, 24, 26, 6, 3) || diag(x, y, 24, 8, 28, 4, 1.4),
   guarda_larga: (x, y) => (y >= 13 && y <= 18 && x >= 4 && x <= 27) || (Math.abs(x - 16) <= 3 && y >= 10 && y <= 21),
   travessa: (x, y) => y >= 14 && y <= 17 && x >= 7 && x <= 24,
+  // 1.24.0 (Tinkers 3): peças das ferramentas grandes.
+  cabeca_martelo: (x, y) => (x >= 6 && x <= 25 && y >= 8 && y <= 18) || (Math.abs(x - 16) <= 2 && y >= 18 && y <= 26),
+  placa_grande: (x, y) => x >= 6 && x <= 25 && y >= 6 && y <= 25,
+  cabo_resistente: (x, y) => diag(x, y, 7, 26, 25, 6, 2.6),
+  ligacao_resistente: (x, y) => elipse(x, y, 16, 16, 11, 11) && !elipse(x, y, 16, 16, 5, 5),
+  cabeca_machado_larga: (x, y) => (x >= 7 && x <= 25 && y >= 5 && y <= 27 && x <= 7 + (y < 16 ? 18 - (16 - y) * 0.2 : 18 - (y - 16) * 0.2)),
 };
 // Ferramentas montadas: cabeça na cor do material, cabo de madeira.
 const CABO = (x, y) => diag(x, y, 5, 27, 20, 12, 1.4);
@@ -69,6 +75,10 @@ const FERR = {
   // 1.7.0 (Mekanism Tools): enxada e paxel (picareta + machado + pá numa cabeça só).
   enxada: (x, y) => (x >= 15 && x <= 27 && y >= 4 && y <= 8) || (x >= 23 && x <= 27 && y >= 4 && y <= 12),
   paxel: (x, y) => diag(x, y, 12, 5, 27, 20, 2.2) || elipse(x, y, 23, 9, 5, 5),
+  // 1.24.0 (Tinkers 3)
+  marreta: (x, y) => x >= 14 && x <= 28 && y >= 3 && y <= 13,
+  escavadeira: (x, y) => elipse(x, y, 22, 10, 8, 8),
+  machado_largo: (x, y) => (x >= 14 && x <= 28 && y >= 2 && y <= 20 && (x - 14) + (y - 2) * 0.15 <= 14),
 };
 
 // ---------- ícones de item ----------

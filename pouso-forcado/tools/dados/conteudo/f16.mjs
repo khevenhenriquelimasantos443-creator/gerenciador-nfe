@@ -8,6 +8,9 @@ const lingotes = [
   ["bronze", "Bronze", "Bronze", "#c8913a"],
   ["aco", "Aço", "Steel", "#8797a6"],
   ["estanho", "Estanho", "Tin", "#c4cad0"],
+  // 1.24.0: as ligas novas do Tinkers 3
+  ["ouro_rosa", "Ouro Rosa", "Rose Gold", "#f0a090"],
+  ["bronze_ametista", "Bronze de Ametista", "Amethyst Bronze", "#b07ad8"],
 ];
 
 export default {
@@ -85,6 +88,8 @@ export default {
     "cl.fun.liga": ["Liga: %s", "Alloy: %s"],
     "cl.fun.metal.ferro": ["Ferro", "Iron"],
     "cl.fun.metal.ouro": ["Ouro", "Gold"],
+    "cl.fun.metal.ouro_rosa": ["Ouro Rosa", "Rose Gold"], "cl.fun.metal.bronze_ametista": ["Bronze de Ametista", "Amethyst Bronze"],
+    "cl.fun.metal.ametista": ["Ametista", "Amethyst"],
     "cl.fun.metal.cobre": ["Cobre", "Copper"],
     "cl.fun.metal.estanho": ["Estanho", "Tin"],
     "cl.fun.metal.bronze": ["Bronze", "Bronze"],

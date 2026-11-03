@@ -28,6 +28,8 @@ export type Tipo = keyof typeof DADOS_F15.ferramentas;
 export type Mods = Record<string, number>;
 const MAT = DADOS_F15.materiais as Readonly<Record<string, (typeof DADOS_F15.materiais)[Mat]>>;
 export const TIPOS = Object.keys(DADOS_F15.ferramentas) as Tipo[];
+type Def = { pecas: readonly string[]; dur?: number; area?: boolean; arvore?: boolean };
+const FERR = DADOS_F15.ferramentas as unknown as Readonly<Record<string, Def>>;
 
 /** "cl:picareta_silex" -> { tipo, mat } (ou undefined se não é ferramenta do Tinkers). */
 export function ferramentaDe(id: string | undefined): { tipo: Tipo; mat: Mat } | undefined {
@@ -59,6 +61,7 @@ function durabilidadeMax(tipo: Tipo, cabeca: Mat, cabo: Mat, lig: Mat | undefine
   let max = base * MAT[cabo].cabo * TINKERS.iguanaDurabilidade;
   max += (mods.reforco ?? 0) * TINKERS.modificadores.reforco.durabilidade;
   max *= 1 + (mods.esmeralda ?? 0) * TINKERS.modificadores.esmeralda.fator;
+  max *= FERR[tipo]?.dur ?? 1; // 1.24.0: as ferramentas grandes do TC3 duram mais (Marreta ×4, Escavadeira ×3,75, Machado Largo ×4,25)
   return Math.max(1, Math.round(max));
 }
 
@@ -220,6 +223,50 @@ function registrarRenascer(): void {
   }, 600);
 }
 
+// ---------- Área (Marreta, Escavadeira) e árvore (Machado Largo) ----------
+const INQUEBRAVEIS = new Set(["minecraft:bedrock", "minecraft:barrier", "minecraft:command_block", "minecraft:structure_block", "minecraft:mob_spawner", "minecraft:chest", "minecraft:end_portal_frame"]);
+const TERRA = ["dirt", "sand", "gravel", "grass", "snow", "clay", "mud", "soul", "farmland", "mycelium", "podzol", "concrete_powder"];
+function serveArea(tipo: string, b: { typeId: string; hasTag(t: string): boolean }): boolean {
+  const id = b.typeId;
+  const terra = TERRA.some((t) => id.includes(t));
+  return tipo === "escavadeira" ? terra : !terra && !id.includes("log") && !id.includes("planks") && !id.includes("leaves");
+}
+/** As 8 posições em volta, no plano da face que o jogador mira (como a Marreta do TC3). */
+function area(j: Player, b: { x: number; y: number; z: number }): { x: number; y: number; z: number }[] {
+  const v = j.getViewDirection();
+  const ax = Math.abs(v.x), ay = Math.abs(v.y), az = Math.abs(v.z);
+  const r: { x: number; y: number; z: number }[] = [];
+  for (let a = -1; a <= 1; a++) for (let c = -1; c <= 1; c++) {
+    if (!a && !c) continue;
+    if (ay >= ax && ay >= az) r.push({ x: b.x + a, y: b.y, z: b.z + c });
+    else if (ax >= az) r.push({ x: b.x, y: b.y + a, z: b.z + c });
+    else r.push({ x: b.x + a, y: b.y + c, z: b.z });
+  }
+  return r;
+}
+/** As toras ligadas acima e em volta (até 64), para o Machado Largo. */
+function arvore(b: { x: number; y: number; z: number; dimension: { getBlock(p: { x: number; y: number; z: number }): { typeId: string } | undefined } }, id: string): { x: number; y: number; z: number }[] {
+  if (!/_log$|_stem$|_wood$|_hyphae$/.test(id)) return [];
+  const achadas: { x: number; y: number; z: number }[] = [];
+  const vistos = new Set<string>();
+  const fila = [{ x: b.x, y: b.y, z: b.z }];
+  while (fila.length && achadas.length < 64) {
+    const p = fila.shift()!;
+    for (let dx = -1; dx <= 1; dx++) for (let dy = 0; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
+      const q = { x: p.x + dx, y: p.y + dy, z: p.z + dz };
+      const k = `${q.x},${q.y},${q.z}`;
+      if (vistos.has(k) || (q.x === b.x && q.y === b.y && q.z === b.z)) continue;
+      vistos.add(k);
+      const t = b.dimension.getBlock(q)?.typeId;
+      if (t === id) {
+        achadas.push(q);
+        fila.push(q);
+      }
+    }
+  }
+  return achadas;
+}
+
 export function registrarFerramentas(): void {
   world.beforeEvents.playerBreakBlock.subscribe((ev) => {
     const f = ferramentaDe(ev.itemStack?.typeId);
@@ -248,6 +295,22 @@ export function registrarFerramentas(): void {
       if (n) block.dimension.spawnItem(new ItemStack(extra, n), block.center());
     }
     if (!criativo(player)) usar(player, f.tipo === "espada_larga" ? 2 : 1);
+    // 1.24.0 (TC3): Marreta e Escavadeira quebram 3×3 na face mirada; o Machado Largo derruba a árvore.
+    const def = FERR[f.tipo];
+    if ((def?.area || def?.arvore) && !player.isSneaking && itemStackBeforeBreak!.getDynamicProperty("tc:dur") !== 0) {
+      const extra = def.arvore ? arvore(block, brokenBlockPermutation.type.id) : area(player, block);
+      system.run(() => {
+        let n = 0;
+        for (const p of extra) {
+          const b = block.dimension.getBlock(p);
+          if (!b || b.isAir || b.isLiquid || INQUEBRAVEIS.has(b.typeId) || (TINKERS.nivelBloco[b.typeId] ?? 0) > nivelMat(f.mat)) continue;
+          if (def.area && !serveArea(f.tipo, b)) continue;
+          block.dimension.runCommand(`setblock ${p.x} ${p.y} ${p.z} air destroy`);
+          n++;
+        }
+        if (n && !criativo(player)) usar(player, n);
+      });
+    }
   });
   world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
     if (!(damagingEntity instanceof Player)) return;

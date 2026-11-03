@@ -126,7 +126,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
-| Tinkers' Construct | mDiyo e SlimeKnights | CC BY 3.0 | github.com/SlimeKnights/TinkersConstruct (1.7.10) |
+| Tinkers' Construct | mDiyo e SlimeKnights | MIT (TC3) e CC BY 3.0 (1.7.10) | github.com/SlimeKnights/TinkersConstruct (3.12.1, 1.20.1; e 1.7.10) |
 | Applied Energistics 2 | AlgorithmX2, Ridanisaurus Rid e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (main, 26.3; e rv3) |
 | PneumaticCraft | MineMaarten | GPLv3 | github.com/MineMaarten/PneumaticCraft |
 | Big Reactors | Erogenous Beef | MIT | github.com/erogenousbeef/BigReactors |

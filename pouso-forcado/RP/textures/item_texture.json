@@ -2263,6 +2263,402 @@
     },
     "clc_farinha_cinzas": {
       "textures": "textures/items/cl/c/farinha_cinzas"
+    },
+    "clc_padrao_cabeca_martelo": {
+      "textures": "textures/items/cl/c/padrao_cabeca_martelo"
+    },
+    "clc_padrao_placa_grande": {
+      "textures": "textures/items/cl/c/padrao_placa_grande"
+    },
+    "clc_padrao_cabo_resistente": {
+      "textures": "textures/items/cl/c/padrao_cabo_resistente"
+    },
+    "clc_padrao_ligacao_resistente": {
+      "textures": "textures/items/cl/c/padrao_ligacao_resistente"
+    },
+    "clc_padrao_cabeca_machado_larga": {
+      "textures": "textures/items/cl/c/padrao_cabeca_machado_larga"
+    },
+    "clc_peca_cabeca_martelo_madeira": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_madeira"
+    },
+    "clc_peca_placa_grande_madeira": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_madeira"
+    },
+    "clc_peca_cabo_resistente_madeira": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_madeira"
+    },
+    "clc_peca_ligacao_resistente_madeira": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_madeira"
+    },
+    "clc_peca_cabeca_machado_larga_madeira": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_madeira"
+    },
+    "clc_marreta_madeira": {
+      "textures": "textures/items/cl/arte/marreta_madeira"
+    },
+    "clc_escavadeira_madeira": {
+      "textures": "textures/items/cl/arte/escavadeira_madeira"
+    },
+    "clc_machado_largo_madeira": {
+      "textures": "textures/items/cl/arte/machado_largo_madeira"
+    },
+    "clc_peca_cabeca_martelo_pedra": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_pedra"
+    },
+    "clc_peca_placa_grande_pedra": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_pedra"
+    },
+    "clc_peca_cabo_resistente_pedra": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_pedra"
+    },
+    "clc_peca_ligacao_resistente_pedra": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_pedra"
+    },
+    "clc_peca_cabeca_machado_larga_pedra": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_pedra"
+    },
+    "clc_marreta_pedra": {
+      "textures": "textures/items/cl/arte/marreta_pedra"
+    },
+    "clc_escavadeira_pedra": {
+      "textures": "textures/items/cl/arte/escavadeira_pedra"
+    },
+    "clc_machado_largo_pedra": {
+      "textures": "textures/items/cl/arte/machado_largo_pedra"
+    },
+    "clc_peca_cabeca_martelo_silex": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_silex"
+    },
+    "clc_peca_placa_grande_silex": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_silex"
+    },
+    "clc_peca_cabo_resistente_silex": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_silex"
+    },
+    "clc_peca_ligacao_resistente_silex": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_silex"
+    },
+    "clc_peca_cabeca_machado_larga_silex": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_silex"
+    },
+    "clc_marreta_silex": {
+      "textures": "textures/items/cl/arte/marreta_silex"
+    },
+    "clc_escavadeira_silex": {
+      "textures": "textures/items/cl/arte/escavadeira_silex"
+    },
+    "clc_machado_largo_silex": {
+      "textures": "textures/items/cl/arte/machado_largo_silex"
+    },
+    "clc_peca_cabeca_martelo_cacto": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_cacto"
+    },
+    "clc_peca_placa_grande_cacto": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_cacto"
+    },
+    "clc_peca_cabo_resistente_cacto": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_cacto"
+    },
+    "clc_peca_ligacao_resistente_cacto": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_cacto"
+    },
+    "clc_peca_cabeca_machado_larga_cacto": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_cacto"
+    },
+    "clc_marreta_cacto": {
+      "textures": "textures/items/cl/arte/marreta_cacto"
+    },
+    "clc_escavadeira_cacto": {
+      "textures": "textures/items/cl/arte/escavadeira_cacto"
+    },
+    "clc_machado_largo_cacto": {
+      "textures": "textures/items/cl/arte/machado_largo_cacto"
+    },
+    "clc_peca_cabeca_martelo_osso": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_osso"
+    },
+    "clc_peca_placa_grande_osso": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_osso"
+    },
+    "clc_peca_cabo_resistente_osso": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_osso"
+    },
+    "clc_peca_ligacao_resistente_osso": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_osso"
+    },
+    "clc_peca_cabeca_machado_larga_osso": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_osso"
+    },
+    "clc_marreta_osso": {
+      "textures": "textures/items/cl/arte/marreta_osso"
+    },
+    "clc_escavadeira_osso": {
+      "textures": "textures/items/cl/arte/escavadeira_osso"
+    },
+    "clc_machado_largo_osso": {
+      "textures": "textures/items/cl/arte/machado_largo_osso"
+    },
+    "clc_peca_cabeca_martelo_obsidiana": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_obsidiana"
+    },
+    "clc_peca_placa_grande_obsidiana": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_obsidiana"
+    },
+    "clc_peca_cabo_resistente_obsidiana": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_obsidiana"
+    },
+    "clc_peca_ligacao_resistente_obsidiana": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_obsidiana"
+    },
+    "clc_peca_cabeca_machado_larga_obsidiana": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_obsidiana"
+    },
+    "clc_marreta_obsidiana": {
+      "textures": "textures/items/cl/arte/marreta_obsidiana"
+    },
+    "clc_escavadeira_obsidiana": {
+      "textures": "textures/items/cl/arte/escavadeira_obsidiana"
+    },
+    "clc_machado_largo_obsidiana": {
+      "textures": "textures/items/cl/arte/machado_largo_obsidiana"
+    },
+    "clc_molde_cabeca_martelo": {
+      "textures": "textures/items/cl/c/molde_cabeca_martelo"
+    },
+    "clc_molde_placa_grande": {
+      "textures": "textures/items/cl/c/molde_placa_grande"
+    },
+    "clc_molde_cabo_resistente": {
+      "textures": "textures/items/cl/c/molde_cabo_resistente"
+    },
+    "clc_molde_ligacao_resistente": {
+      "textures": "textures/items/cl/c/molde_ligacao_resistente"
+    },
+    "clc_molde_cabeca_machado_larga": {
+      "textures": "textures/items/cl/c/molde_cabeca_machado_larga"
+    },
+    "clc_lingote_ouro_rosa": {
+      "textures": "textures/items/cl/arte/lingote_ouro_rosa"
+    },
+    "clc_lingote_bronze_ametista": {
+      "textures": "textures/items/cl/arte/lingote_bronze_ametista"
+    },
+    "clc_peca_cabeca_martelo_ferro": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_ferro"
+    },
+    "clc_peca_placa_grande_ferro": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_ferro"
+    },
+    "clc_peca_cabo_resistente_ferro": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_ferro"
+    },
+    "clc_peca_ligacao_resistente_ferro": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_ferro"
+    },
+    "clc_peca_cabeca_machado_larga_ferro": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_ferro"
+    },
+    "clc_marreta_ferro": {
+      "textures": "textures/items/cl/arte/marreta_ferro"
+    },
+    "clc_escavadeira_ferro": {
+      "textures": "textures/items/cl/arte/escavadeira_ferro"
+    },
+    "clc_machado_largo_ferro": {
+      "textures": "textures/items/cl/arte/machado_largo_ferro"
+    },
+    "clc_peca_cabeca_martelo_cobre": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_cobre"
+    },
+    "clc_peca_placa_grande_cobre": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_cobre"
+    },
+    "clc_peca_cabo_resistente_cobre": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_cobre"
+    },
+    "clc_peca_ligacao_resistente_cobre": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_cobre"
+    },
+    "clc_peca_cabeca_machado_larga_cobre": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_cobre"
+    },
+    "clc_marreta_cobre": {
+      "textures": "textures/items/cl/arte/marreta_cobre"
+    },
+    "clc_escavadeira_cobre": {
+      "textures": "textures/items/cl/arte/escavadeira_cobre"
+    },
+    "clc_machado_largo_cobre": {
+      "textures": "textures/items/cl/arte/machado_largo_cobre"
+    },
+    "clc_peca_cabeca_martelo_bronze": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_bronze"
+    },
+    "clc_peca_placa_grande_bronze": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_bronze"
+    },
+    "clc_peca_cabo_resistente_bronze": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_bronze"
+    },
+    "clc_peca_ligacao_resistente_bronze": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_bronze"
+    },
+    "clc_peca_cabeca_machado_larga_bronze": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_bronze"
+    },
+    "clc_marreta_bronze": {
+      "textures": "textures/items/cl/arte/marreta_bronze"
+    },
+    "clc_escavadeira_bronze": {
+      "textures": "textures/items/cl/arte/escavadeira_bronze"
+    },
+    "clc_machado_largo_bronze": {
+      "textures": "textures/items/cl/arte/machado_largo_bronze"
+    },
+    "clc_peca_cabeca_martelo_aco": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_aco"
+    },
+    "clc_peca_placa_grande_aco": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_aco"
+    },
+    "clc_peca_cabo_resistente_aco": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_aco"
+    },
+    "clc_peca_ligacao_resistente_aco": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_aco"
+    },
+    "clc_peca_cabeca_machado_larga_aco": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_aco"
+    },
+    "clc_marreta_aco": {
+      "textures": "textures/items/cl/arte/marreta_aco"
+    },
+    "clc_escavadeira_aco": {
+      "textures": "textures/items/cl/arte/escavadeira_aco"
+    },
+    "clc_machado_largo_aco": {
+      "textures": "textures/items/cl/arte/machado_largo_aco"
+    },
+    "clc_peca_cabo_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabo_ouro_rosa"
+    },
+    "clc_peca_ligacao_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_ligacao_ouro_rosa"
+    },
+    "clc_peca_cabeca_picareta_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_ouro_rosa"
+    },
+    "clc_peca_cabeca_pa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_ouro_rosa"
+    },
+    "clc_peca_cabeca_machado_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_ouro_rosa"
+    },
+    "clc_peca_lamina_espada_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_lamina_espada_ouro_rosa"
+    },
+    "clc_peca_guarda_larga_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_guarda_larga_ouro_rosa"
+    },
+    "clc_peca_travessa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_travessa_ouro_rosa"
+    },
+    "clc_peca_cabeca_martelo_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_ouro_rosa"
+    },
+    "clc_peca_placa_grande_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_ouro_rosa"
+    },
+    "clc_peca_cabo_resistente_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_ouro_rosa"
+    },
+    "clc_peca_ligacao_resistente_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_ouro_rosa"
+    },
+    "clc_peca_cabeca_machado_larga_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_ouro_rosa"
+    },
+    "clc_picareta_ouro_rosa": {
+      "textures": "textures/items/cl/arte/picareta_ouro_rosa"
+    },
+    "clc_pa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/pa_ouro_rosa"
+    },
+    "clc_machadinha_ouro_rosa": {
+      "textures": "textures/items/cl/arte/machadinha_ouro_rosa"
+    },
+    "clc_espada_larga_ouro_rosa": {
+      "textures": "textures/items/cl/arte/espada_larga_ouro_rosa"
+    },
+    "clc_marreta_ouro_rosa": {
+      "textures": "textures/items/cl/arte/marreta_ouro_rosa"
+    },
+    "clc_escavadeira_ouro_rosa": {
+      "textures": "textures/items/cl/arte/escavadeira_ouro_rosa"
+    },
+    "clc_machado_largo_ouro_rosa": {
+      "textures": "textures/items/cl/arte/machado_largo_ouro_rosa"
+    },
+    "clc_peca_cabo_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabo_bronze_ametista"
+    },
+    "clc_peca_ligacao_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_ligacao_bronze_ametista"
+    },
+    "clc_peca_cabeca_picareta_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabeca_picareta_bronze_ametista"
+    },
+    "clc_peca_cabeca_pa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabeca_pa_bronze_ametista"
+    },
+    "clc_peca_cabeca_machado_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_bronze_ametista"
+    },
+    "clc_peca_lamina_espada_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_lamina_espada_bronze_ametista"
+    },
+    "clc_peca_guarda_larga_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_guarda_larga_bronze_ametista"
+    },
+    "clc_peca_travessa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_travessa_bronze_ametista"
+    },
+    "clc_peca_cabeca_martelo_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabeca_martelo_bronze_ametista"
+    },
+    "clc_peca_placa_grande_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_placa_grande_bronze_ametista"
+    },
+    "clc_peca_cabo_resistente_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabo_resistente_bronze_ametista"
+    },
+    "clc_peca_ligacao_resistente_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_ligacao_resistente_bronze_ametista"
+    },
+    "clc_peca_cabeca_machado_larga_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peca_cabeca_machado_larga_bronze_ametista"
+    },
+    "clc_picareta_bronze_ametista": {
+      "textures": "textures/items/cl/arte/picareta_bronze_ametista"
+    },
+    "clc_pa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/pa_bronze_ametista"
+    },
+    "clc_machadinha_bronze_ametista": {
+      "textures": "textures/items/cl/arte/machadinha_bronze_ametista"
+    },
+    "clc_espada_larga_bronze_ametista": {
+      "textures": "textures/items/cl/arte/espada_larga_bronze_ametista"
+    },
+    "clc_marreta_bronze_ametista": {
+      "textures": "textures/items/cl/arte/marreta_bronze_ametista"
+    },
+    "clc_escavadeira_bronze_ametista": {
+      "textures": "textures/items/cl/arte/escavadeira_bronze_ametista"
+    },
+    "clc_machado_largo_bronze_ametista": {
+      "textures": "textures/items/cl/arte/machado_largo_bronze_ametista"
     }
   }
 }

@@ -28,6 +28,16 @@
   "pt": "Ar",
   "en": "Air"
  },
+ "minecraft:amethyst_block": {
+  "pt": "Bloco de Ametista",
+  "en": "Block of Amethyst",
+  "icone": "textures/blocks/amethyst_block"
+ },
+ "minecraft:amethyst_shard": {
+  "pt": "Fragmento de Ametista",
+  "en": "Amethyst Shard",
+  "icone": "textures/items/amethyst_shard"
+ },
  "minecraft:andesite": {
   "pt": "Andesito",
   "en": "Andesite",
