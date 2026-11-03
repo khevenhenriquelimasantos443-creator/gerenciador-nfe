@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:mochila_ferro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_mochila_ferro",
+      "minecraft:display_name": {
+        "value": "item.cl:mochila_ferro.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

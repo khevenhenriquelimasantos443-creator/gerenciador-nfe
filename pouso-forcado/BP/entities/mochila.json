@@ -7,16 +7,116 @@
       "is_summonable": true
     },
     "components": {
-      "minecraft:type_family": { "family": ["mochila", "inanimate"] },
-      "minecraft:health": { "value": 20, "max": 20 },
-      "minecraft:damage_sensor": { "triggers": [{ "cause": "all", "deals_damage": "no" }] },
-      "minecraft:collision_box": { "width": 0.7, "height": 0.75 },
-      "minecraft:physics": { "has_gravity": true, "has_collision": true },
-      "minecraft:pushable": { "is_pushable": false, "is_pushable_by_piston": true },
-      "minecraft:knockback_resistance": { "value": 1 },
+      "minecraft:type_family": {
+        "family": [
+          "mochila",
+          "inanimate"
+        ]
+      },
+      "minecraft:health": {
+        "value": 20,
+        "max": 20
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:collision_box": {
+        "width": 0.7,
+        "height": 0.75
+      },
+      "minecraft:physics": {
+        "has_gravity": true,
+        "has_collision": true
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1
+      },
       "minecraft:persistent": {},
       "minecraft:fire_immune": {},
-      "minecraft:inventory": { "inventory_size": 27, "container_type": "minecart_chest", "can_be_siphoned_from": false }
+      "minecraft:inventory": {
+        "inventory_size": 27,
+        "container_type": "minecart_chest",
+        "can_be_siphoned_from": false
+      },
+      "minecraft:interact": {
+        "interactions": [
+          {
+            "on_interact": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player"
+                  },
+                  {
+                    "any_of": [
+                      {
+                        "test": "has_equipment",
+                        "subject": "other",
+                        "domain": "hand",
+                        "value": "minecraft:copper_ingot"
+                      },
+                      {
+                        "test": "has_equipment",
+                        "subject": "other",
+                        "domain": "hand",
+                        "value": "minecraft:iron_ingot"
+                      },
+                      {
+                        "test": "has_equipment",
+                        "subject": "other",
+                        "domain": "hand",
+                        "value": "minecraft:gold_ingot"
+                      },
+                      {
+                        "test": "has_equipment",
+                        "subject": "other",
+                        "domain": "hand",
+                        "value": "minecraft:diamond"
+                      },
+                      {
+                        "test": "has_equipment",
+                        "subject": "other",
+                        "domain": "hand",
+                        "value": "minecraft:netherite_ingot"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "interact_text": "cl.mochila.botao_melhorar"
+          },
+          {
+            "on_interact": {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "player"
+                  },
+                  {
+                    "test": "is_sneaking",
+                    "subject": "other"
+                  }
+                ]
+              }
+            },
+            "interact_text": "cl.mochila.botao_pagina"
+          }
+        ]
+      }
     }
   }
 }

@@ -3476,6 +3476,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Feeding Upgrade",
   "icone": "textures/items/cl/c/melhoria_alimentacao"
  },
+ "cl:melhoria_alimentacao_avancada": {
+  "pt": "Melhoria: Alimentação Avançada",
+  "en": "Advanced Feeding Upgrade",
+  "icone": "textures/items/cl/c/melhoria_alimentacao_avancada"
+ },
  "cl:melhoria_base": {
   "pt": "Base de Melhoria",
   "en": "Upgrade Base",
@@ -3501,15 +3506,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Deposit Upgrade",
   "icone": "textures/items/cl/c/melhoria_deposito"
  },
+ "cl:melhoria_fornalha": {
+  "pt": "Melhoria: Fornalha",
+  "en": "Smelting Upgrade",
+  "icone": "textures/items/cl/c/melhoria_fornalha"
+ },
+ "cl:melhoria_fundicao_auto": {
+  "pt": "Melhoria: Fornalha Automática",
+  "en": "Auto-Smelting Upgrade",
+  "icone": "textures/items/cl/c/melhoria_fundicao_auto"
+ },
  "cl:melhoria_ima": {
   "pt": "Melhoria: Ímã",
   "en": "Magnet Upgrade",
   "icone": "textures/items/cl/c/melhoria_ima"
  },
+ "cl:melhoria_ima_avancada": {
+  "pt": "Melhoria: Ímã Avançado",
+  "en": "Advanced Magnet Upgrade",
+  "icone": "textures/items/cl/c/melhoria_ima_avancada"
+ },
  "cl:melhoria_reabastecer": {
   "pt": "Melhoria: Reabastecer",
   "en": "Restock Upgrade",
   "icone": "textures/items/cl/c/melhoria_reabastecer"
+ },
+ "cl:melhoria_recarga": {
+  "pt": "Melhoria: Reposição",
+  "en": "Refill Upgrade",
+  "icone": "textures/items/cl/c/melhoria_recarga"
  },
  "cl:mesa_fundicao": {
   "pt": "Mesa de Fundição",
@@ -3890,6 +3915,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Mochila",
   "en": "Backpack",
   "icone": "textures/items/cl/c/mochila"
+ },
+ "cl:mochila_cobre": {
+  "pt": "Mochila de Cobre",
+  "en": "Copper Backpack",
+  "icone": "textures/items/cl/c/mochila_cobre"
+ },
+ "cl:mochila_diamante": {
+  "pt": "Mochila de Diamante",
+  "en": "Diamond Backpack",
+  "icone": "textures/items/cl/c/mochila_diamante"
+ },
+ "cl:mochila_ferro": {
+  "pt": "Mochila de Ferro",
+  "en": "Iron Backpack",
+  "icone": "textures/items/cl/c/mochila_ferro"
+ },
+ "cl:mochila_netherite": {
+  "pt": "Mochila de Netherita",
+  "en": "Netherite Backpack",
+  "icone": "textures/items/cl/c/mochila_netherite"
+ },
+ "cl:mochila_ouro": {
+  "pt": "Mochila de Ouro",
+  "en": "Gold Backpack",
+  "icone": "textures/items/cl/c/mochila_ouro"
  },
  "cl:moinho": {
   "pt": "Moinho de Vento",
@@ -16324,6 +16374,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_melhoria_alimentacao_avancada",
+  "resultado": "cl:melhoria_alimentacao_avancada",
+  "qtd": 1,
+  "grade": [
+   " D ",
+   "GVG",
+   "RRR"
+  ],
+  "chaves": {
+   "D": "minecraft:diamond",
+   "G": "minecraft:gold_ingot",
+   "V": "cl:melhoria_alimentacao",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_melhoria_base",
   "resultado": "cl:melhoria_base",
   "qtd": 1,
@@ -16424,6 +16494,47 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_melhoria_fornalha",
+  "resultado": "cl:melhoria_fornalha",
+  "qtd": 1,
+  "grade": [
+   "RIR",
+   "IBI",
+   "RFR"
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "I": "minecraft:iron_ingot",
+   "B": "cl:melhoria_base",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_fundicao_auto",
+  "resultado": "cl:melhoria_fundicao_auto",
+  "qtd": 1,
+  "grade": [
+   "DHD",
+   "RSH",
+   "GHG"
+  ],
+  "chaves": {
+   "D": "minecraft:diamond",
+   "H": "minecraft:hopper",
+   "R": "minecraft:redstone",
+   "S": "cl:melhoria_fornalha",
+   "G": "minecraft:gold_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_melhoria_ima",
   "resultado": "cl:melhoria_ima",
   "qtd": 1,
@@ -16445,6 +16556,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_melhoria_ima_avancada",
+  "resultado": "cl:melhoria_ima_avancada",
+  "qtd": 1,
+  "grade": [
+   " D ",
+   "GMG",
+   "RRR"
+  ],
+  "chaves": {
+   "D": "minecraft:diamond",
+   "G": "minecraft:gold_ingot",
+   "M": "cl:melhoria_ima",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_melhoria_reabastecer",
   "resultado": "cl:melhoria_reabastecer",
   "qtd": 1,
@@ -16455,6 +16586,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "P": "minecraft:sticky_piston",
+   "I": "minecraft:iron_ingot",
+   "B": "cl:melhoria_base",
+   "R": "minecraft:redstone",
+   "C": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_recarga",
+  "resultado": "cl:melhoria_recarga",
+  "qtd": 1,
+  "grade": [
+   " E ",
+   "IBI",
+   "RCR"
+  ],
+  "chaves": {
+   "E": "minecraft:ender_pearl",
    "I": "minecraft:iron_ingot",
    "B": "cl:melhoria_base",
    "R": "minecraft:redstone",

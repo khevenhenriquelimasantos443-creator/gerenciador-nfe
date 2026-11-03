@@ -154,6 +154,22 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.25.0 (Sophisticated Backpacks 3.26, o mais novo)
+
+A mochila ganhou os níveis e as melhorias novas do Sophisticated Backpacks 3.26.19 (com os números do mod; código e
+ícones próprios):
+- **Níveis**: Couro 27 espaços e 1 melhoria, **Cobre** 45 e 1, **Ferro** 54 e 2, **Ouro** 81 e 3, **Diamante** 108 e 5,
+  **Netherita** 120 e 7. Para subir, ponha a mochila no chão e toque nela com o material na mão (8 lingotes de cobre,
+  4 de ferro, 8 de ouro, 8 diamantes ou 1 lingote de netherita): **nada do que está dentro se perde**. No celular o
+  botão vira "Melhorar".
+- **Páginas**: o Bedrock mostra 27 espaços por vez; agachado e tocando na mochila aberta, troca de página (botão
+  "Página"). O que for posto além do espaço da última página cai no chão.
+- **Várias melhorias de uma vez**: valem as primeiras melhorias diferentes até o número do nível.
+- **Melhorias novas**: Ímã Avançado (raio 5), Alimentação Avançada (escolhe a comida que mais rende e, com pouca
+  vida, come mesmo que sobre), Fornalha (funde minério, minério bruto, pó e carne crua com o carvão de dentro, 10 s por
+  item), Fornalha Automática (também puxa o que dá para fundir do inventário) e Reposição (completa as pilhas da barra).
+- 5 missões novas no capítulo Melhorias da Mochila. Os níveis estão no Catálogo.
+
 ## Novidades da 1.24.0 (Tinkers' Construct 3, o mais novo)
 
 O Tinkers foi atualizado para o Tinkers' Construct 3.12.1 (o mais novo), com os números e a arte do mod (MIT):

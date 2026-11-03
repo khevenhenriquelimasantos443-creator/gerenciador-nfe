@@ -137,6 +137,8 @@ export type Acao =
   | "ima_mochila"
   | "comer_mochila"
   | "deposito_mochila"
+  | "fundir_mochila"
+  | "recarga_mochila"
   | "templo_yung"
   | "pw_termo"
   | "energizar"
@@ -509,6 +511,12 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "sb_ima", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "ima_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:ender_pearl", quantidade: 2 }] },
       { id: "sb_comer", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "comer_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:golden_carrot", quantidade: 8 }] },
       { id: "sb_deposito", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "deposito_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:chest", quantidade: 4 }] },
+      // 1.25.0: níveis e melhorias novas do Sophisticated Backpacks 3.26.
+      { id: "sb_cobre", objetivo: { tipo: "ter", item: "cl:mochila_cobre", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
+      { id: "sb_ouro", requer: ["sb_cobre"], objetivo: { tipo: "ter", item: "cl:mochila_ouro", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 4 }] },
+      { id: "sb_netherite", requer: ["sb_ouro"], objetivo: { tipo: "ter", item: "cl:mochila_netherite", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "sb_fornalha", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "fundir_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "sb_recarga", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "recarga_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 32 }] },
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
     ],
   },

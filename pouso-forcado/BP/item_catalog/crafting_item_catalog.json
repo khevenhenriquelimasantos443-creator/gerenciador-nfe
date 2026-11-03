@@ -1703,13 +1703,23 @@
             },
             "items": [
               "cl:melhoria_alimentacao",
+              "cl:melhoria_alimentacao_avancada",
               "cl:melhoria_base",
               "cl:melhoria_coleta",
               "cl:melhoria_compactacao",
               "cl:melhoria_compactacao_avancada",
               "cl:melhoria_deposito",
+              "cl:melhoria_fornalha",
+              "cl:melhoria_fundicao_auto",
               "cl:melhoria_ima",
-              "cl:melhoria_reabastecer"
+              "cl:melhoria_ima_avancada",
+              "cl:melhoria_reabastecer",
+              "cl:melhoria_recarga",
+              "cl:mochila_cobre",
+              "cl:mochila_diamante",
+              "cl:mochila_ferro",
+              "cl:mochila_netherite",
+              "cl:mochila_ouro"
             ]
           },
           {

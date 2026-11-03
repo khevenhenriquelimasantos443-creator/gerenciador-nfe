@@ -902,6 +902,78 @@ teste("tinkers3", 200, (t) => {
   });
 });
 
+world.afterEvents.entityDie.subscribe(({ deadEntity: e, damageSource: d }) => {
+  if (e.typeId === "minecraft:player") log(`morreu: ${d.cause} por ${d.damagingEntity?.typeId ?? "-"} em ${Math.round(e.location.x)},${Math.round(e.location.y)},${Math.round(e.location.z)}`);
+});
+// 1.25.0: Sophisticated Backpacks 3.26 (o toque vai por scriptevent: o jogador simulado não dispara o evento de tocar
+// numa entidade). Mochila no chão: tocar com 8 lingotes de cobre sobe para a de Cobre (45);
+// agachado e tocando vai para a página 2; o que passa do espaço 45 cai no chão; bater guarda tudo na Mochila de Cobre.
+teste("mochila_niveis", 160, (t) => {
+  const j = robo(t, { x: 2, y: 1, z: 2 });
+  const inv = j.getComponent("inventory").container;
+  let m;
+  t.runAfterDelay(5, () => {
+    inv.setItem(0, new ItemStack("cl:mochila", 1));
+    j.selectedSlotIndex = 0;
+    j.useItemInSlot(0);
+  });
+  t.runAfterDelay(20, () => {
+    m = t.getDimension().getEntities({ type: "cl:mochila", location: j.location, maxDistance: 4 })[0];
+    t.assert(!!m, "a mochila não foi para o chão");
+    const c = m.getComponent("inventory").container;
+    for (let k = 0; k < 27; k++) c.setItem(k, new ItemStack("minecraft:dirt", 1));
+    inv.setItem(1, new ItemStack("minecraft:copper_ingot", 8));
+    j.selectedSlotIndex = 1;
+    j.runCommand("scriptevent cl:teste_mochila_tocar");
+  });
+  t.runAfterDelay(35, () => {
+    log(`mochila_niveis: cobre que sobrou=${quantos(j, "minecraft:copper_ingot")}`);
+    j.selectedSlotIndex = 2;
+    j.isSneaking = true;
+    j.runCommand("scriptevent cl:teste_mochila_tocar");
+  });
+  t.runAfterDelay(50, () => {
+    j.isSneaking = false;
+    const c = m.getComponent("inventory").container;
+    let n = 0;
+    for (let k = 0; k < c.size; k++) if (c.getItem(k)) n++;
+    log(`mochila_niveis: página 2 com ${n} itens`);
+    t.assert(n === 0, "não trocou de página");
+    c.setItem(5, new ItemStack("minecraft:diamond", 1));
+    c.setItem(20, new ItemStack("minecraft:emerald", 1)); // espaço 48 de 45: cai no chão
+  });
+  t.runAfterDelay(60, () => j.attackEntity(m));
+  t.runAfterDelay(80, () => {
+    let lore = "nada";
+    for (let k = 0; k < inv.size; k++) if (inv.getItem(k)?.typeId === "cl:mochila_cobre") lore = JSON.stringify(inv.getItem(k).getLore());
+    const esmeralda = t.getDimension().getEntities({ type: "minecraft:item", location: j.location, maxDistance: 6 }).some((e) => e.getComponent("item")?.itemStack.typeId === "minecraft:emerald");
+    log(`mochila_niveis: mochila de cobre ${lore}, esmeralda no chão=${esmeralda || quantos(j, "minecraft:emerald") > 0}`);
+    t.assert(quantos(j, "minecraft:copper_ingot") === 0, "não gastou o cobre");
+    t.assert(lore.includes("28/45"), "a Mochila de Cobre não guardou as 2 páginas");
+    t.assert(esmeralda || quantos(j, "minecraft:emerald") > 0, "o que passou do espaço sumiu");
+    t.succeed();
+  });
+});
+
+// 1.25.0: Mochila de Ferro (2 melhorias) com Fornalha e Reposição: a barra é completada da mochila e o minério bruto vira
+// lingote com o carvão de dentro (10 s por item).
+teste("mochila_fornalha", 600, (t) => {
+  const j = robo(t, { x: 2, y: 1, z: 2 });
+  const inv = j.getComponent("inventory").container;
+  const lore = () => JSON.stringify(inv.getItem(8)?.getLore() ?? []);
+  t.runAfterDelay(3, () => inv.setItem(0, new ItemStack("minecraft:cobblestone", 10)));
+  t.runAfterDelay(5, () => j.runCommand("scriptevent cl:teste_mochila fornalha,recarga cl:mochila_ferro"));
+  t.runAfterDelay(60, () => log(`mochila_fornalha: depois da reposição pedregulho=${inv.getItem(0)?.amount} mochila=${lore()}`));
+  t.runAfterDelay(520, () => {
+    log(`mochila_fornalha: mochila=${lore()} pedregulho na barra=${inv.getItem(0)?.amount} vivo=${j.isValid && j.getComponent("health")?.currentValue}`);
+    t.assert(inv.getItem(8)?.typeId === "cl:mochila_ferro", "sumiu a mochila");
+    t.assert(inv.getItem(0)?.amount === 15, "a Reposição não completou a barra");
+    // 2 melhorias + ferro + pão (o pedregulho foi para a barra, o carvão queimou e o minério virou lingote).
+    t.assert(lore().includes("4/54"), "a Fornalha não fundiu os 2 minérios");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

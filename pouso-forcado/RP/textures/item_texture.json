@@ -2659,6 +2659,36 @@
     },
     "clc_machado_largo_bronze_ametista": {
       "textures": "textures/items/cl/arte/machado_largo_bronze_ametista"
+    },
+    "clc_mochila_cobre": {
+      "textures": "textures/items/cl/c/mochila_cobre"
+    },
+    "clc_mochila_ferro": {
+      "textures": "textures/items/cl/c/mochila_ferro"
+    },
+    "clc_mochila_ouro": {
+      "textures": "textures/items/cl/c/mochila_ouro"
+    },
+    "clc_mochila_diamante": {
+      "textures": "textures/items/cl/c/mochila_diamante"
+    },
+    "clc_mochila_netherite": {
+      "textures": "textures/items/cl/c/mochila_netherite"
+    },
+    "clc_melhoria_ima_avancada": {
+      "textures": "textures/items/cl/c/melhoria_ima_avancada"
+    },
+    "clc_melhoria_alimentacao_avancada": {
+      "textures": "textures/items/cl/c/melhoria_alimentacao_avancada"
+    },
+    "clc_melhoria_fornalha": {
+      "textures": "textures/items/cl/c/melhoria_fornalha"
+    },
+    "clc_melhoria_fundicao_auto": {
+      "textures": "textures/items/cl/c/melhoria_fundicao_auto"
+    },
+    "clc_melhoria_recarga": {
+      "textures": "textures/items/cl/c/melhoria_recarga"
     }
   }
 }

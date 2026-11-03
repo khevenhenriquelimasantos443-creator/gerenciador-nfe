@@ -28,6 +28,11 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
   só as ideias e os números (1.10.0). Código, modelos e arte próprios.
 
+- **Sophisticated Backpacks** (P3pp3rF1y; código e arte com todos os direitos reservados): as melhorias da mochila
+  (1.14.0) e, desde a 1.25.0, a versão 3.26.19 (a mais nova): os níveis Couro, Cobre, Ferro, Ouro, Diamante e Netherita
+  com os espaços e as melhorias de cada um, o raio dos ímãs e o formato das receitas. Só as ideias e os números; código
+  e ícones próprios.
+
 - **Create** (simibubi e equipe, MIT; desde a 1.23.0 com as receitas do Create 6.0.11, o mais novo, lidas por
   `tools/importar-create.py`): rotação e estresse (Manivela, Roda d'Água, Moinho de Vento, eixos, engrenagens,
   Mó, Rodas Trituradoras, Prensa, Misturador, Ventilador e Furadeira), com os números de estresse e as receitas do código
@@ -141,7 +146,8 @@ aço, estanho e alumínio são os do Tinkers; o silício é o do AE2.
 
 **Ficaram com a arte própria** (a licença não deixa usar a arte): Create (arte "todos os direitos reservados"),
 Galacticraft (proíbe versões para outras plataformas), Extra Utilities (código fechado), Thermal Expansion, MineFactory
-Reloaded, Pam's HarvestCraft, Sync, JABBA, BiblioCraft, Ex Nihilo, Backpacks e Hunger Overhaul (sem licença publicada).
+Reloaded, Pam's HarvestCraft, Sync, JABBA, BiblioCraft, Ex Nihilo, Backpacks e Hunger Overhaul (sem licença publicada),
+Sophisticated Backpacks (todos os direitos reservados).
 Os add-ons de Bedrock parecidos (Space.PE, Create e Extra Utilities feitos por outras pessoas) também não entram.
 Alguns desses ícones foram redesenhados por `tools/desenhar-similares.py` lembrando o formato e as cores dos originais
 (desenho próprio, nenhum pixel copiado).

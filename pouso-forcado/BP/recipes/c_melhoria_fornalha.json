@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_melhoria_fornalha"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RIR",
+      "IBI",
+      "RFR"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "B": {
+        "item": "cl:melhoria_base"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:melhoria_fornalha"
+    }
+  }
+}

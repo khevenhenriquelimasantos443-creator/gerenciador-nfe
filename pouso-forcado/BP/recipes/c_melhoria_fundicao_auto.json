@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_melhoria_fundicao_auto"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "DHD",
+      "RSH",
+      "GHG"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:diamond"
+      },
+      "H": {
+        "item": "minecraft:hopper"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "S": {
+        "item": "cl:melhoria_fornalha"
+      },
+      "G": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:melhoria_fundicao_auto"
+    }
+  }
+}
