@@ -3,6 +3,13 @@
 // cada 8 velas) e o impacto também (Prensa e Rodas Trituradoras 8, Mó, Misturador e Furadeira 4, Ventilador 2).
 // Eixos e engrenagens ligam tudo; o Controlador de Velocidade muda o RPM da rede (o estresse total é em SU).
 // Scripts em scripts/maquinas/create.ts.
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// 1.23.0: as receitas das peças são as do Create 6 (create.json, tools/importar-create.py).
+const CR6 = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "create.json"), "utf8"));
+const NOVAS_CR = new Set(CR6.receitas.map((r) => r.resultado));
 const maq = (id, pt, en, luz, glifo, extra = {}) => ({ id, pt, en, tipo: "maquina", luz, glifo, comp: `cl:${id}`, tick: 20, ...extra });
 const ANDESITA = "#a7a99f";
 // Peças que giram: o estado cl:girando troca a textura pela do rotor animado (clv_rotor, de tools/gerar-visual.mjs).
@@ -17,7 +24,7 @@ const caixa = (o, t) => ({ "minecraft:collision_box": { origin: o, size: t }, "m
 const METAIS = [["ferro", "de Ferro", "Iron", "#d6d9dc", "minecraft:iron_ingot"], ["cobre", "de Cobre", "Copper", "#d4743c", "minecraft:copper_ingot"], ["ouro", "de Ouro", "Golden", "#f2c94c", "minecraft:gold_ingot"], ["latao", "de Latão", "Brass", "#e2b23f", "cl:lingote_latao"]];
 const TRITURADOS = [["ferro", "Ferro", "Iron", "#c9b8a8"], ["ouro", "Ouro", "Gold", "#e8c860"], ["cobre", "Cobre", "Copper", "#c7865a"], ["zinco", "Zinco", "Zinc", "#9fc7b5"]];
 
-export default {
+const BASE = {
   fase: 30,
   mod: "Create",
   itens: [
@@ -93,3 +100,5 @@ export default {
     "cl.missao.cr_lavar.titulo": ["Lavagem", "Washing"], "cl.missao.cr_lavar.desc": ["Lave 8 itens com o Ventilador soprando por água.", "Wash 8 items with a Fan blowing through water."],
   },
 };
+
+export default { ...BASE, receitas: BASE.receitas.filter((r) => !NOVAS_CR.has(r.resultado)) };

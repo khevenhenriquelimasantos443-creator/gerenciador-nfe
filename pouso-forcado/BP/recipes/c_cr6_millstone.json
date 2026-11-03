@@ -2,32 +2,32 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_ventilador"
+      "identifier": "cl:c_cr6_millstone"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      "E",
-      "R",
-      "H"
+      "C",
+      "S",
+      "I"
     ],
     "key": {
-      "E": {
-        "item": "cl:eixo"
+      "C": {
+        "item": "cl:engrenagem"
       },
-      "R": {
+      "I": {
+        "item": "minecraft:stone"
+      },
+      "S": {
         "item": "cl:revestimento_andesita"
-      },
-      "H": {
-        "item": "cl:helice"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:ventilador"
+      "item": "cl:mo"
     }
   }
 }

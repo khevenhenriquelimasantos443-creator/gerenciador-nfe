@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:farinha_cinzas",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_farinha_cinzas",
+      "minecraft:display_name": {
+        "value": "item.cl:farinha_cinzas.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

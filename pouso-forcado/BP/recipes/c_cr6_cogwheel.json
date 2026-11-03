@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "cl:c_engrenagem_grande"
+      "identifier": "cl:c_cr6_cogwheel"
     },
     "tags": [
       "crafting_table"
@@ -13,16 +13,13 @@
       },
       {
         "tag": "minecraft:planks"
-      },
-      {
-        "tag": "minecraft:planks"
       }
     ],
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:engrenagem_grande"
+      "item": "cl:engrenagem"
     }
   }
 }

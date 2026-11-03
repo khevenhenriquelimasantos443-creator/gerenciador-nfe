@@ -2,28 +2,29 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_liga_andesita"
+      "identifier": "cl:c_cr6_propeller"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      "AN",
-      "NA"
+      " S ",
+      "SCS",
+      " S "
     ],
     "key": {
-      "A": {
-        "item": "minecraft:andesite"
+      "C": {
+        "item": "cl:liga_andesita"
       },
-      "N": {
-        "item": "minecraft:iron_nugget"
+      "S": {
+        "item": "cl:chapa_ferro"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:liga_andesita"
+      "item": "cl:helice"
     }
   }
 }

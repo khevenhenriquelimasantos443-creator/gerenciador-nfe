@@ -2967,6 +2967,9 @@ cl.missao.ae2_fluix.titulo=Fluix na água
 cl.missao.ae2_fluix.desc=Jogue Certus Carregado, redstone e quartzo juntos na água.
 cl.missao.ae2_256k.titulo=256k
 cl.missao.ae2_256k.desc=Faça uma Célula de Armazenamento 256k.
+item.cl:pepita_experiencia.name=Pepita de Experiência
+item.cl:farinha_cinzas.name=Farinha de Netherrack
+cl.cr.assombrar=Ventilador: soprando por fogo das almas (ou fogueira das almas), assombra os itens.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

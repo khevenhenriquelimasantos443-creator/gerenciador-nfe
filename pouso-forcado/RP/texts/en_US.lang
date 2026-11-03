@@ -2966,6 +2966,9 @@ cl.missao.ae2_fluix.titulo=Fluix in water
 cl.missao.ae2_fluix.desc=Throw Charged Certus, redstone and quartz together in water.
 cl.missao.ae2_256k.titulo=256k
 cl.missao.ae2_256k.desc=Make a 256k Storage Cell.
+item.cl:pepita_experiencia.name=Nugget of Experience
+item.cl:farinha_cinzas.name=Cinder Flour
+cl.cr.assombrar=Fan: blowing through soul fire (or a soul campfire), haunts the items.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

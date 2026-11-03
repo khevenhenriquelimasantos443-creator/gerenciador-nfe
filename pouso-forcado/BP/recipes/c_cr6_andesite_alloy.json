@@ -2,29 +2,28 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_caixa_engrenagens"
+      "identifier": "cl:c_cr6_andesite_alloy"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      " E ",
-      "ERE",
-      " E "
+      "BA",
+      "AB"
     ],
     "key": {
-      "E": {
-        "item": "cl:engrenagem"
+      "A": {
+        "item": "minecraft:andesite"
       },
-      "R": {
-        "item": "cl:revestimento_andesita"
+      "B": {
+        "item": "minecraft:iron_nugget"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:caixa_engrenagens"
+      "item": "cl:liga_andesita"
     }
   }
 }

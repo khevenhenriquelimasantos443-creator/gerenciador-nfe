@@ -2,32 +2,29 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_furadeira"
+      "identifier": "cl:c_cr6_gearbox"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      " A ",
-      "AIA",
-      " R "
+      " C ",
+      "CBC",
+      " C "
     ],
     "key": {
-      "A": {
-        "item": "cl:liga_andesita"
-      },
-      "I": {
-        "item": "minecraft:iron_ingot"
-      },
-      "R": {
+      "B": {
         "item": "cl:revestimento_andesita"
+      },
+      "C": {
+        "item": "cl:engrenagem"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:furadeira"
+      "item": "cl:caixa_engrenagens"
     }
   }
 }

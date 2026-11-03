@@ -2266,6 +2266,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flour",
   "icone": "textures/items/cl/arte/farinha"
  },
+ "cl:farinha_cinzas": {
+  "pt": "Farinha de Netherrack",
+  "en": "Cinder Flour",
+  "icone": "textures/items/cl/c/farinha_cinzas"
+ },
  "cl:fatia_abobora": {
   "pt": "Fatia de Abóbora",
   "en": "Pumpkin Slice",
@@ -4745,6 +4750,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pepita de Almário",
   "en": "Soularium Nugget",
   "icone": "textures/items/cl/arte/pepita_almario"
+ },
+ "cl:pepita_experiencia": {
+  "pt": "Pepita de Experiência",
+  "en": "Nugget of Experience",
+  "icone": "textures/items/cl/c/pepita_experiencia"
  },
  "cl:pepita_ferro_condutor": {
   "pt": "Pepita de Liga Condutiva",
@@ -9757,24 +9767,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
-  "id": "cl:c_batedor",
-  "resultado": "cl:batedor",
-  "qtd": 1,
-  "grade": [
-   " A ",
-   "CAC",
-   "CCC"
-  ],
-  "chaves": {
-   "A": "cl:liga_andesita",
-   "C": "cl:chapa_ferro"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
   "id": "cl:c_bico_foguete",
   "resultado": "cl:bico_foguete",
   "qtd": 1,
@@ -10279,24 +10271,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "S": "minecraft:stick",
    "P": "minecraft:oak_slab"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_caixa_engrenagens",
-  "resultado": "cl:caixa_engrenagens",
-  "qtd": 1,
-  "grade": [
-   " E ",
-   "ERE",
-   " E "
-  ],
-  "chaves": {
-   "E": "cl:engrenagem",
-   "R": "cl:revestimento_andesita"
   },
   "estacoes": [
    "crafting_table"
@@ -11275,6 +11249,279 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_andesite_alloy",
+  "resultado": "cl:liga_andesita",
+  "qtd": 1,
+  "grade": [
+   "BA",
+   "AB"
+  ],
+  "chaves": {
+   "A": "minecraft:andesite",
+   "B": "minecraft:iron_nugget"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_cr6_cogwheel",
+  "resultado": "cl:engrenagem",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:eixo",
+    "qtd": 1
+   },
+   {
+    "item": "#minecraft:planks",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_encased_fan",
+  "resultado": "cl:ventilador",
+  "qtd": 1,
+  "grade": [
+   "S",
+   "A",
+   "P"
+  ],
+  "chaves": {
+   "A": "cl:revestimento_andesita",
+   "P": "cl:helice",
+   "S": "cl:eixo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_gearbox",
+  "resultado": "cl:caixa_engrenagens",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "CBC",
+   " C "
+  ],
+  "chaves": {
+   "B": "cl:revestimento_andesita",
+   "C": "cl:engrenagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_hand_crank",
+  "resultado": "cl:manivela",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   "  A"
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "C": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_cr6_large_cogwheel",
+  "resultado": "cl:engrenagem_grande",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:eixo",
+    "qtd": 1
+   },
+   {
+    "item": "#minecraft:planks",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_mechanical_drill",
+  "resultado": "cl:furadeira",
+  "qtd": 1,
+  "grade": [
+   " A ",
+   "AIA",
+   " C "
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "C": "cl:revestimento_andesita",
+   "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_mechanical_mixer",
+  "resultado": "cl:misturador_mecanico",
+  "qtd": 1,
+  "grade": [
+   "S",
+   "C",
+   "I"
+  ],
+  "chaves": {
+   "C": "cl:revestimento_andesita",
+   "I": "cl:batedor",
+   "S": "cl:engrenagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_millstone",
+  "resultado": "cl:mo",
+  "qtd": 1,
+  "grade": [
+   "C",
+   "S",
+   "I"
+  ],
+  "chaves": {
+   "C": "cl:engrenagem",
+   "I": "minecraft:stone",
+   "S": "cl:revestimento_andesita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_propeller",
+  "resultado": "cl:helice",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SCS",
+   " S "
+  ],
+  "chaves": {
+   "C": "cl:liga_andesita",
+   "S": "cl:chapa_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_shaft",
+  "resultado": "cl:eixo",
+  "qtd": 8,
+  "grade": [
+   "A",
+   "A"
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_water_wheel",
+  "resultado": "cl:roda_dagua",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SCS",
+   "SSS"
+  ],
+  "chaves": {
+   "C": "cl:eixo",
+   "S": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_whisk",
+  "resultado": "cl:batedor",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "SCS",
+   "SSS"
+  ],
+  "chaves": {
+   "C": "cl:liga_andesita",
+   "S": "cl:chapa_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_white_sail",
+  "resultado": "cl:vela_moinho",
+  "qtd": 2,
+  "grade": [
+   "WS",
+   "SA"
+  ],
+  "chaves": {
+   "A": "cl:liga_andesita",
+   "S": "minecraft:stick",
+   "W": "minecraft:white_wool"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cr6_windmill_bearing",
+  "resultado": "cl:rolamento_moinho",
+  "qtd": 1,
+  "grade": [
+   "B",
+   "C",
+   "I"
+  ],
+  "chaves": {
+   "B": "minecraft:oak_slab",
+   "C": "minecraft:stone",
+   "I": "cl:eixo"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -13489,22 +13736,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
-  "id": "cl:c_eixo",
-  "resultado": "cl:eixo",
-  "qtd": 8,
-  "grade": [
-   "A",
-   "A"
-  ],
-  "chaves": {
-   "A": "cl:liga_andesita"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
   "id": "cl:c_elevador",
   "resultado": "cl:elevador",
   "qtd": 2,
@@ -13542,25 +13773,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
-  "tipo": "sem_forma",
-  "id": "cl:c_engrenagem",
-  "resultado": "cl:engrenagem",
-  "qtd": 1,
-  "ingredientes": [
-   {
-    "item": "cl:eixo",
-    "qtd": 1
-   },
-   {
-    "item": "#minecraft:planks",
-    "qtd": 1
-   }
-  ],
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
   "tipo": "bancada",
   "id": "cl:c_engrenagem_diamante",
   "resultado": "cl:engrenagem_diamante",
@@ -13592,25 +13804,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "M": "minecraft:iron_ingot",
    "G": "cl:engrenagem_pedra"
   },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "sem_forma",
-  "id": "cl:c_engrenagem_grande",
-  "resultado": "cl:engrenagem_grande",
-  "qtd": 1,
-  "ingredientes": [
-   {
-    "item": "cl:eixo",
-    "qtd": 1
-   },
-   {
-    "item": "#minecraft:planks",
-    "qtd": 2
-   }
-  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -14538,25 +14731,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
-  "id": "cl:c_furadeira",
-  "resultado": "cl:furadeira",
-  "qtd": 1,
-  "grade": [
-   " A ",
-   "AIA",
-   " R "
-  ],
-  "chaves": {
-   "A": "cl:liga_andesita",
-   "I": "minecraft:iron_ingot",
-   "R": "cl:revestimento_andesita"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
   "id": "cl:c_gerador_bio",
   "resultado": "cl:gerador_bio",
   "qtd": 1,
@@ -14723,24 +14897,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "w": "cl:tabuas_tratadas"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_helice",
-  "resultado": "cl:helice",
-  "qtd": 1,
-  "grade": [
-   " C ",
-   "CAC",
-   " C "
-  ],
-  "chaves": {
-   "A": "cl:liga_andesita",
-   "C": "cl:chapa_ferro"
   },
   "estacoes": [
    "crafting_table"
@@ -15163,23 +15319,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
-  "tipo": "bancada",
-  "id": "cl:c_liga_andesita",
-  "resultado": "cl:liga_andesita",
-  "qtd": 1,
-  "grade": [
-   "AN",
-   "NA"
-  ],
-  "chaves": {
-   "A": "minecraft:andesite",
-   "N": "minecraft:iron_nugget"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
   "tipo": "fornalha",
   "id": "cl:c_lingote_aluminio_po",
   "resultado": "cl:lingote_aluminio",
@@ -15314,23 +15453,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "#": "cl:palha"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_manivela",
-  "resultado": "cl:manivela",
-  "qtd": 1,
-  "grade": [
-   "PPP",
-   "  A"
-  ],
-  "chaves": {
-   "P": "#minecraft:planks",
-   "A": "cl:liga_andesita"
   },
   "estacoes": [
    "crafting_table"
@@ -15627,25 +15749,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "B": "cl:padrao_branco",
    "P": "#minecraft:planks"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_misturador_mecanico",
-  "resultado": "cl:misturador_mecanico",
-  "qtd": 1,
-  "grade": [
-   "E",
-   "R",
-   "B"
-  ],
-  "chaves": {
-   "E": "cl:engrenagem",
-   "R": "cl:revestimento_andesita",
-   "B": "cl:batedor"
   },
   "estacoes": [
    "crafting_table"
@@ -17133,25 +17236,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "X": "cl:lingote_osmio",
    "T": "minecraft:stick"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_mo",
-  "resultado": "cl:mo",
-  "qtd": 1,
-  "grade": [
-   "E",
-   "R",
-   "S"
-  ],
-  "chaves": {
-   "E": "cl:engrenagem",
-   "R": "cl:revestimento_andesita",
-   "S": "minecraft:stone"
   },
   "estacoes": [
    "crafting_table"
@@ -22669,24 +22753,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
-  "id": "cl:c_roda_dagua",
-  "resultado": "cl:roda_dagua",
-  "qtd": 1,
-  "grade": [
-   "PPP",
-   "PEP",
-   "PPP"
-  ],
-  "chaves": {
-   "P": "#minecraft:planks",
-   "E": "cl:eixo"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
   "id": "cl:c_roda_hidraulica",
   "resultado": "cl:roda_hidraulica",
   "qtd": 1,
@@ -22716,25 +22782,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "A": "cl:liga_andesita",
    "S": "minecraft:stone"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_rolamento_moinho",
-  "resultado": "cl:rolamento_moinho",
-  "qtd": 1,
-  "grade": [
-   "S",
-   "R",
-   "E"
-  ],
-  "chaves": {
-   "S": "minecraft:oak_slab",
-   "R": "cl:revestimento_andesita",
-   "E": "cl:eixo"
   },
   "estacoes": [
    "crafting_table"
@@ -23890,44 +23937,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "c": "cl:tecido_canhamo"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_vela_moinho",
-  "resultado": "cl:vela_moinho",
-  "qtd": 4,
-  "grade": [
-   "T T",
-   "AWA",
-   "T T"
-  ],
-  "chaves": {
-   "T": "minecraft:stick",
-   "A": "cl:liga_andesita",
-   "W": "minecraft:white_wool"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_ventilador",
-  "resultado": "cl:ventilador",
-  "qtd": 1,
-  "grade": [
-   "E",
-   "R",
-   "H"
-  ],
-  "chaves": {
-   "E": "cl:eixo",
-   "R": "cl:revestimento_andesita",
-   "H": "cl:helice"
   },
   "estacoes": [
    "crafting_table"

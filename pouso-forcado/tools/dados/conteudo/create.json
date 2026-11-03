@@ -1,0 +1,2373 @@
+{
+ "processos": {
+  "milling": [
+   {
+    "entra": [
+     "minecraft:allium"
+    ],
+    "sai": [
+     [
+      "minecraft:magenta_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:purple_dye",
+      2,
+      0.1
+     ],
+     [
+      "minecraft:pink_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:andesite"
+    ],
+    "sai": [
+     [
+      "minecraft:cobblestone",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:azure_bluet"
+    ],
+    "sai": [
+     [
+      "minecraft:light_gray_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:white_dye",
+      2,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:beetroot"
+    ],
+    "sai": [
+     [
+      "minecraft:red_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:beetroot_seeds",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:blue_orchid"
+    ],
+    "sai": [
+     [
+      "minecraft:light_blue_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:light_gray_dye",
+      1,
+      0.05
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:bone"
+    ],
+    "sai": [
+     [
+      "minecraft:bone_meal",
+      3,
+      1
+     ],
+     [
+      "minecraft:white_dye",
+      1,
+      0.25
+     ],
+     [
+      "minecraft:bone_meal",
+      3,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:bone_meal"
+    ],
+    "sai": [
+     [
+      "minecraft:white_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:light_gray_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:cactus"
+    ],
+    "sai": [
+     [
+      "minecraft:green_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:green_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:charcoal"
+    ],
+    "sai": [
+     [
+      "minecraft:black_dye",
+      1,
+      1
+     ],
+     [
+      "minecraft:gray_dye",
+      2,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:clay"
+    ],
+    "sai": [
+     [
+      "minecraft:clay_ball",
+      4,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:coal"
+    ],
+    "sai": [
+     [
+      "minecraft:black_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:gray_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone"
+    ],
+    "sai": [
+     [
+      "minecraft:gravel",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:cocoa_beans"
+    ],
+    "sai": [
+     [
+      "minecraft:brown_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:brown_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:cornflower"
+    ],
+    "sai": [
+     [
+      "minecraft:blue_dye",
+      2,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:dandelion"
+    ],
+    "sai": [
+     [
+      "minecraft:yellow_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:yellow_dye",
+      1,
+      0.05
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:dripstone_block"
+    ],
+    "sai": [
+     [
+      "minecraft:clay_ball",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:fern"
+    ],
+    "sai": [
+     [
+      "minecraft:green_dye",
+      1,
+      1
+     ],
+     [
+      "minecraft:wheat_seeds",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:granite"
+    ],
+    "sai": [
+     [
+      "minecraft:red_sand",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:gravel"
+    ],
+    "sai": [
+     [
+      "minecraft:flint",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:ink_sac"
+    ],
+    "sai": [
+     [
+      "minecraft:black_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:gray_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:lapis_lazuli"
+    ],
+    "sai": [
+     [
+      "minecraft:blue_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:blue_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:large_fern"
+    ],
+    "sai": [
+     [
+      "minecraft:green_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:green_dye",
+      1,
+      0.5
+     ],
+     [
+      "minecraft:wheat_seeds",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:lilac"
+    ],
+    "sai": [
+     [
+      "minecraft:magenta_dye",
+      3,
+      1
+     ],
+     [
+      "minecraft:magenta_dye",
+      1,
+      0.25
+     ],
+     [
+      "minecraft:purple_dye",
+      1,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:lily_of_the_valley"
+    ],
+    "sai": [
+     [
+      "minecraft:white_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:lime_dye",
+      1,
+      0.1
+     ],
+     [
+      "minecraft:white_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:orange_tulip"
+    ],
+    "sai": [
+     [
+      "minecraft:orange_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:lime_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:oxeye_daisy"
+    ],
+    "sai": [
+     [
+      "minecraft:light_gray_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:white_dye",
+      1,
+      0.2
+     ],
+     [
+      "minecraft:yellow_dye",
+      1,
+      0.05
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:peony"
+    ],
+    "sai": [
+     [
+      "minecraft:pink_dye",
+      3,
+      1
+     ],
+     [
+      "minecraft:magenta_dye",
+      1,
+      0.25
+     ],
+     [
+      "minecraft:pink_dye",
+      1,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:pink_petals"
+    ],
+    "sai": [
+     [
+      "minecraft:pink_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:lime_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:pink_tulip"
+    ],
+    "sai": [
+     [
+      "minecraft:pink_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:lime_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:pitcher_plant"
+    ],
+    "sai": [
+     [
+      "minecraft:cyan_dye",
+      4,
+      1
+     ],
+     [
+      "minecraft:purple_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:poppy"
+    ],
+    "sai": [
+     [
+      "minecraft:red_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:green_dye",
+      1,
+      0.05
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:red_tulip"
+    ],
+    "sai": [
+     [
+      "minecraft:red_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:lime_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:rose_bush"
+    ],
+    "sai": [
+     [
+      "minecraft:red_dye",
+      3,
+      1
+     ],
+     [
+      "minecraft:green_dye",
+      2,
+      0.05
+     ],
+     [
+      "minecraft:red_dye",
+      2,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:saddle"
+    ],
+    "sai": [
+     [
+      "minecraft:leather",
+      2,
+      1
+     ],
+     [
+      "minecraft:leather",
+      2,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:sandstone"
+    ],
+    "sai": [
+     [
+      "minecraft:sand",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:sea_pickle"
+    ],
+    "sai": [
+     [
+      "minecraft:lime_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:green_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:sugar_cane"
+    ],
+    "sai": [
+     [
+      "minecraft:sugar",
+      2,
+      1
+     ],
+     [
+      "minecraft:sugar",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:sunflower"
+    ],
+    "sai": [
+     [
+      "minecraft:yellow_dye",
+      3,
+      1
+     ],
+     [
+      "minecraft:orange_dye",
+      1,
+      0.25
+     ],
+     [
+      "minecraft:yellow_dye",
+      1,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:terracotta"
+    ],
+    "sai": [
+     [
+      "minecraft:red_sand",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:torchflower"
+    ],
+    "sai": [
+     [
+      "minecraft:orange_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:green_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:wheat"
+    ],
+    "sai": [
+     [
+      "cl:farinha",
+      1,
+      1
+     ],
+     [
+      "cl:farinha",
+      2,
+      0.25
+     ],
+     [
+      "minecraft:wheat_seeds",
+      1,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:white_tulip"
+    ],
+    "sai": [
+     [
+      "minecraft:white_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:lime_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:wither_rose"
+    ],
+    "sai": [
+     [
+      "minecraft:black_dye",
+      2,
+      1
+     ],
+     [
+      "minecraft:black_dye",
+      1,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:white_wool"
+    ],
+    "sai": [
+     [
+      "minecraft:string",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   }
+  ],
+  "crushing": [
+   {
+    "entra": [
+     "minecraft:amethyst_block"
+    ],
+    "sai": [
+     [
+      "minecraft:amethyst_shard",
+      3,
+      1
+     ],
+     [
+      "minecraft:amethyst_shard",
+      1,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:amethyst_cluster"
+    ],
+    "sai": [
+     [
+      "minecraft:amethyst_shard",
+      7,
+      1
+     ],
+     [
+      "minecraft:amethyst_shard",
+      1,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:blaze_rod"
+    ],
+    "sai": [
+     [
+      "minecraft:blaze_powder",
+      3,
+      1
+     ],
+     [
+      "minecraft:blaze_powder",
+      3,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:coal_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:coal",
+      1,
+      1
+     ],
+     [
+      "minecraft:coal",
+      1,
+      0.75
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:copper_ore"
+    ],
+    "sai": [
+     [
+      "cl:triturado_cobre",
+      5,
+      1
+     ],
+     [
+      "cl:triturado_cobre",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_coal_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:coal",
+      2,
+      1
+     ],
+     [
+      "minecraft:coal",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_copper_ore"
+    ],
+    "sai": [
+     [
+      "cl:triturado_cobre",
+      7,
+      1
+     ],
+     [
+      "cl:triturado_cobre",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_diamond_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:diamond",
+      2,
+      1
+     ],
+     [
+      "minecraft:diamond",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_emerald_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:emerald",
+      2,
+      1
+     ],
+     [
+      "minecraft:emerald",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_gold_ore"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ouro",
+      2,
+      1
+     ],
+     [
+      "cl:triturado_ouro",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      2,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_iron_ore"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ferro",
+      2,
+      1
+     ],
+     [
+      "cl:triturado_ferro",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_lapis_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:lapis_lazuli",
+      12,
+      1
+     ],
+     [
+      "minecraft:lapis_lazuli",
+      1,
+      0.5
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate_redstone_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:redstone",
+      7,
+      1
+     ],
+     [
+      "minecraft:redstone",
+      1,
+      0.5
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobbled_deepslate",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:diamond_horse_armor"
+    ],
+    "sai": [
+     [
+      "minecraft:diamond",
+      1,
+      1
+     ],
+     [
+      "minecraft:leather",
+      2,
+      0.5
+     ],
+     [
+      "minecraft:diamond",
+      3,
+      0.1
+     ],
+     [
+      "minecraft:string",
+      2,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:diamond_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:diamond",
+      1,
+      1
+     ],
+     [
+      "minecraft:diamond",
+      1,
+      0.75
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:emerald_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:emerald",
+      1,
+      1
+     ],
+     [
+      "minecraft:emerald",
+      1,
+      0.75
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:gilded_blackstone"
+    ],
+    "sai": [
+     [
+      "minecraft:gold_nugget",
+      18,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:blackstone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:glowstone"
+    ],
+    "sai": [
+     [
+      "minecraft:glowstone_dust",
+      3,
+      1
+     ],
+     [
+      "minecraft:glowstone_dust",
+      1,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:gold_ore"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ouro",
+      1,
+      1
+     ],
+     [
+      "cl:triturado_ouro",
+      1,
+      0.75
+     ],
+     [
+      "cl:pepita_experiencia",
+      2,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:golden_horse_armor"
+    ],
+    "sai": [
+     [
+      "minecraft:gold_ingot",
+      2,
+      1
+     ],
+     [
+      "minecraft:leather",
+      2,
+      0.5
+     ],
+     [
+      "minecraft:gold_ingot",
+      2,
+      0.5
+     ],
+     [
+      "minecraft:string",
+      2,
+      0.25
+     ],
+     [
+      "minecraft:gold_nugget",
+      8,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:gravel"
+    ],
+    "sai": [
+     [
+      "minecraft:sand",
+      1,
+      1
+     ],
+     [
+      "minecraft:flint",
+      1,
+      0.1
+     ],
+     [
+      "minecraft:clay_ball",
+      1,
+      0.05
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:iron_horse_armor"
+    ],
+    "sai": [
+     [
+      "minecraft:iron_ingot",
+      2,
+      1
+     ],
+     [
+      "minecraft:leather",
+      1,
+      0.5
+     ],
+     [
+      "minecraft:iron_ingot",
+      1,
+      0.5
+     ],
+     [
+      "minecraft:string",
+      2,
+      0.25
+     ],
+     [
+      "minecraft:iron_nugget",
+      4,
+      0.25
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:iron_ore"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ferro",
+      1,
+      1
+     ],
+     [
+      "cl:triturado_ferro",
+      1,
+      0.75
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:lapis_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:lapis_lazuli",
+      10,
+      1
+     ],
+     [
+      "minecraft:lapis_lazuli",
+      1,
+      0.5
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:leather_horse_armor"
+    ],
+    "sai": [
+     [
+      "minecraft:leather",
+      2,
+      1
+     ],
+     [
+      "minecraft:leather",
+      2,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:nether_gold_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:gold_nugget",
+      18,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:netherrack",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:nether_quartz_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:quartz",
+      2,
+      1
+     ],
+     [
+      "minecraft:quartz",
+      1,
+      0.25
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:netherrack",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:netherrack"
+    ],
+    "sai": [
+     [
+      "cl:farinha_cinzas",
+      1,
+      1
+     ],
+     [
+      "cl:farinha_cinzas",
+      1,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:obsidian"
+    ],
+    "sai": [
+     [
+      "cl:po_obsidiana",
+      1,
+      1
+     ],
+     [
+      "minecraft:obsidian",
+      1,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:prismarine_crystals"
+    ],
+    "sai": [
+     [
+      "minecraft:quartz",
+      1,
+      1
+     ],
+     [
+      "minecraft:quartz",
+      2,
+      0.5
+     ],
+     [
+      "minecraft:glowstone_dust",
+      2,
+      0.1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "sai": [
+     [
+      "cl:triturado_cobre",
+      1,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper_block"
+    ],
+    "sai": [
+     [
+      "cl:triturado_cobre",
+      9,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      9,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ouro",
+      1,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      2,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold_block"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ouro",
+      9,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      18,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ferro",
+      1,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron_block"
+    ],
+    "sai": [
+     [
+      "cl:triturado_ferro",
+      9,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      9,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "cl:zinco_bruto"
+    ],
+    "sai": [
+     [
+      "cl:triturado_zinco",
+      1,
+      1
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:redstone_ore"
+    ],
+    "sai": [
+     [
+      "minecraft:redstone",
+      6,
+      1
+     ],
+     [
+      "minecraft:redstone",
+      1,
+      0.5
+     ],
+     [
+      "cl:pepita_experiencia",
+      1,
+      0.75
+     ],
+     [
+      "minecraft:cobblestone",
+      1,
+      0.125
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:white_wool"
+    ],
+    "sai": [
+     [
+      "minecraft:string",
+      2,
+      1
+     ],
+     [
+      "minecraft:string",
+      1,
+      0.5
+     ]
+    ],
+    "calor": null
+   }
+  ],
+  "pressing": [
+   {
+    "entra": [
+     "cl:lingote_latao"
+    ],
+    "sai": [
+     [
+      "cl:chapa_latao",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:copper_ingot"
+    ],
+    "sai": [
+     [
+      "cl:chapa_cobre",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:gold_ingot"
+    ],
+    "sai": [
+     [
+      "cl:chapa_ouro",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:iron_ingot"
+    ],
+    "sai": [
+     [
+      "cl:chapa_ferro",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:dirt"
+    ],
+    "sai": [
+     [
+      "minecraft:dirt_path",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:grass_block"
+    ],
+    "sai": [
+     [
+      "minecraft:dirt_path",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:sugar_cane"
+    ],
+    "sai": [
+     [
+      "minecraft:paper",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   }
+  ],
+  "mixing": [
+   {
+    "entra": [
+     "minecraft:andesite",
+     "minecraft:iron_nugget"
+    ],
+    "sai": [
+     [
+      "cl:liga_andesita",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:copper_ingot",
+     "cl:lingote_zinco"
+    ],
+    "sai": [
+     [
+      "cl:lingote_latao",
+      2,
+      1
+     ]
+    ],
+    "calor": "heated"
+   },
+   {
+    "entra": [
+     "minecraft:cobblestone"
+    ],
+    "sai": [
+     [
+      "minecraft:lava",
+      1,
+      1
+     ]
+    ],
+    "calor": "superheated"
+   }
+  ],
+  "splashing": [
+   {
+    "entra": [
+     "cl:triturado_ouro"
+    ],
+    "sai": [
+     [
+      "minecraft:gold_nugget",
+      9,
+      1
+     ],
+     [
+      "minecraft:quartz",
+      1,
+      0.5
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "cl:triturado_ferro"
+    ],
+    "sai": [
+     [
+      "minecraft:iron_nugget",
+      9,
+      1
+     ],
+     [
+      "minecraft:redstone",
+      1,
+      0.75
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:ice"
+    ],
+    "sai": [
+     [
+      "minecraft:packed_ice",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:magma_block"
+    ],
+    "sai": [
+     [
+      "minecraft:obsidian",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:white_wool"
+    ],
+    "sai": [
+     [
+      "minecraft:white_wool",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   }
+  ],
+  "haunting": [
+   {
+    "entra": [
+     "minecraft:cobblestone"
+    ],
+    "sai": [
+     [
+      "minecraft:blackstone",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:red_mushroom"
+    ],
+    "sai": [
+     [
+      "minecraft:crimson_fungus",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:sweet_berries"
+    ],
+    "sai": [
+     [
+      "minecraft:glow_berries",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:ink_sac"
+    ],
+    "sai": [
+     [
+      "minecraft:glow_ink_sac",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:chiseled_stone_bricks"
+    ],
+    "sai": [
+     [
+      "minecraft:infested_chiseled_stone_bricks",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:cracked_stone_bricks"
+    ],
+    "sai": [
+     [
+      "minecraft:infested_cracked_stone_bricks",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:deepslate"
+    ],
+    "sai": [
+     [
+      "minecraft:infested_deepslate",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:mossy_stone_bricks"
+    ],
+    "sai": [
+     [
+      "minecraft:infested_mossy_stone_bricks",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:stone"
+    ],
+    "sai": [
+     [
+      "minecraft:infested_stone",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:stone_bricks"
+    ],
+    "sai": [
+     [
+      "minecraft:infested_stone_bricks",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:brick"
+    ],
+    "sai": [
+     [
+      "minecraft:nether_brick",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:potato"
+    ],
+    "sai": [
+     [
+      "minecraft:poisonous_potato",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:campfire"
+    ],
+    "sai": [
+     [
+      "minecraft:soul_campfire",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:lantern"
+    ],
+    "sai": [
+     [
+      "minecraft:soul_lantern",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:torch"
+    ],
+    "sai": [
+     [
+      "minecraft:soul_torch",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   },
+   {
+    "entra": [
+     "minecraft:brown_mushroom"
+    ],
+    "sai": [
+     [
+      "minecraft:warped_fungus",
+      1,
+      1
+     ]
+    ],
+    "calor": null
+   }
+  ]
+ },
+ "receitas": [
+  {
+   "id": "cr6_andesite_alloy",
+   "resultado": "cl:liga_andesita",
+   "tipo": "shaped",
+   "padrao": [
+    "BA",
+    "AB"
+   ],
+   "chave": {
+    "A": "minecraft:andesite",
+    "B": "minecraft:iron_nugget"
+   }
+  },
+  {
+   "id": "cr6_cogwheel",
+   "resultado": "cl:engrenagem",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:eixo",
+    "#minecraft:planks"
+   ]
+  },
+  {
+   "id": "cr6_encased_fan",
+   "resultado": "cl:ventilador",
+   "tipo": "shaped",
+   "padrao": [
+    "S",
+    "A",
+    "P"
+   ],
+   "chave": {
+    "A": "cl:revestimento_andesita",
+    "P": "cl:helice",
+    "S": "cl:eixo"
+   }
+  },
+  {
+   "id": "cr6_gearbox",
+   "resultado": "cl:caixa_engrenagens",
+   "tipo": "shaped",
+   "padrao": [
+    " C ",
+    "CBC",
+    " C "
+   ],
+   "chave": {
+    "B": "cl:revestimento_andesita",
+    "C": "cl:engrenagem"
+   }
+  },
+  {
+   "id": "cr6_hand_crank",
+   "resultado": "cl:manivela",
+   "tipo": "shaped",
+   "padrao": [
+    "CCC",
+    "  A"
+   ],
+   "chave": {
+    "A": "cl:liga_andesita",
+    "C": "#minecraft:planks"
+   }
+  },
+  {
+   "id": "cr6_large_cogwheel",
+   "resultado": "cl:engrenagem_grande",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:eixo",
+    "#minecraft:planks",
+    "#minecraft:planks"
+   ]
+  },
+  {
+   "id": "cr6_mechanical_drill",
+   "resultado": "cl:furadeira",
+   "tipo": "shaped",
+   "padrao": [
+    " A ",
+    "AIA",
+    " C "
+   ],
+   "chave": {
+    "A": "cl:liga_andesita",
+    "C": "cl:revestimento_andesita",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "cr6_mechanical_mixer",
+   "resultado": "cl:misturador_mecanico",
+   "tipo": "shaped",
+   "padrao": [
+    "S",
+    "C",
+    "I"
+   ],
+   "chave": {
+    "C": "cl:revestimento_andesita",
+    "I": "cl:batedor",
+    "S": "cl:engrenagem"
+   }
+  },
+  {
+   "id": "cr6_millstone",
+   "resultado": "cl:mo",
+   "tipo": "shaped",
+   "padrao": [
+    "C",
+    "S",
+    "I"
+   ],
+   "chave": {
+    "C": "cl:engrenagem",
+    "I": "minecraft:stone",
+    "S": "cl:revestimento_andesita"
+   }
+  },
+  {
+   "id": "cr6_propeller",
+   "resultado": "cl:helice",
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "SCS",
+    " S "
+   ],
+   "chave": {
+    "C": "cl:liga_andesita",
+    "S": "cl:chapa_ferro"
+   }
+  },
+  {
+   "id": "cr6_shaft",
+   "resultado": "cl:eixo",
+   "qtd": 8,
+   "tipo": "shaped",
+   "padrao": [
+    "A",
+    "A"
+   ],
+   "chave": {
+    "A": "cl:liga_andesita"
+   }
+  },
+  {
+   "id": "cr6_water_wheel",
+   "resultado": "cl:roda_dagua",
+   "tipo": "shaped",
+   "padrao": [
+    "SSS",
+    "SCS",
+    "SSS"
+   ],
+   "chave": {
+    "C": "cl:eixo",
+    "S": "#minecraft:planks"
+   }
+  },
+  {
+   "id": "cr6_whisk",
+   "resultado": "cl:batedor",
+   "tipo": "shaped",
+   "padrao": [
+    " C ",
+    "SCS",
+    "SSS"
+   ],
+   "chave": {
+    "C": "cl:liga_andesita",
+    "S": "cl:chapa_ferro"
+   }
+  },
+  {
+   "id": "cr6_white_sail",
+   "resultado": "cl:vela_moinho",
+   "qtd": 2,
+   "tipo": "shaped",
+   "padrao": [
+    "WS",
+    "SA"
+   ],
+   "chave": {
+    "A": "cl:liga_andesita",
+    "S": "minecraft:stick",
+    "W": "minecraft:white_wool"
+   }
+  },
+  {
+   "id": "cr6_windmill_bearing",
+   "resultado": "cl:rolamento_moinho",
+   "tipo": "shaped",
+   "padrao": [
+    "B",
+    "C",
+    "I"
+   ],
+   "chave": {
+    "B": "minecraft:oak_slab",
+    "C": "minecraft:stone",
+    "I": "cl:eixo"
+   }
+  }
+ ],
+ "itens": [
+  {
+   "id": "pepita_experiencia",
+   "pt": "Pepita de Experiência",
+   "en": "Nugget of Experience"
+  },
+  {
+   "id": "farinha_cinzas",
+   "pt": "Farinha de Netherrack",
+   "en": "Cinder Flour"
+  }
+ ]
+}

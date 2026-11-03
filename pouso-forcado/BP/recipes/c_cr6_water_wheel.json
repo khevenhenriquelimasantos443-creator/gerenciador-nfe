@@ -2,32 +2,29 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_rolamento_moinho"
+      "identifier": "cl:c_cr6_water_wheel"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      "S",
-      "R",
-      "E"
+      "SSS",
+      "SCS",
+      "SSS"
     ],
     "key": {
-      "S": {
-        "item": "minecraft:oak_slab"
-      },
-      "R": {
-        "item": "cl:revestimento_andesita"
-      },
-      "E": {
+      "C": {
         "item": "cl:eixo"
+      },
+      "S": {
+        "tag": "minecraft:planks"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:rolamento_moinho"
+      "item": "cl:roda_dagua"
     }
   }
 }

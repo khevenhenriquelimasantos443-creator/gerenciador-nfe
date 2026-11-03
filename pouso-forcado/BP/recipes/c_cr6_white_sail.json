@@ -2,28 +2,32 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_manivela"
+      "identifier": "cl:c_cr6_white_sail"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      "PPP",
-      "  A"
+      "WS",
+      "SA"
     ],
     "key": {
-      "P": {
-        "tag": "minecraft:planks"
-      },
       "A": {
         "item": "cl:liga_andesita"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "W": {
+        "item": "minecraft:white_wool"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:manivela"
+      "item": "cl:vela_moinho",
+      "count": 2
     }
   }
 }

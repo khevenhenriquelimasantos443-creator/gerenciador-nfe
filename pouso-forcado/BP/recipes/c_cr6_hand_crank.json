@@ -1,25 +1,29 @@
 {
   "format_version": "1.20.10",
-  "minecraft:recipe_shapeless": {
+  "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_engrenagem"
+      "identifier": "cl:c_cr6_hand_crank"
     },
     "tags": [
       "crafting_table"
     ],
-    "ingredients": [
-      {
-        "item": "cl:eixo"
+    "pattern": [
+      "CCC",
+      "  A"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_andesita"
       },
-      {
+      "C": {
         "tag": "minecraft:planks"
       }
-    ],
+    },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:engrenagem"
+      "item": "cl:manivela"
     }
   }
 }

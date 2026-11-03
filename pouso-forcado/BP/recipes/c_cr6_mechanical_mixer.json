@@ -2,29 +2,32 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_batedor"
+      "identifier": "cl:c_cr6_mechanical_mixer"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      " A ",
-      "CAC",
-      "CCC"
+      "S",
+      "C",
+      "I"
     ],
     "key": {
-      "A": {
-        "item": "cl:liga_andesita"
-      },
       "C": {
-        "item": "cl:chapa_ferro"
+        "item": "cl:revestimento_andesita"
+      },
+      "I": {
+        "item": "cl:batedor"
+      },
+      "S": {
+        "item": "cl:engrenagem"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:batedor"
+      "item": "cl:misturador_mecanico"
     }
   }
 }

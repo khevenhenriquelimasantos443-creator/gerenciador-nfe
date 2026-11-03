@@ -2,32 +2,32 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "cl:c_misturador_mecanico"
+      "identifier": "cl:c_cr6_windmill_bearing"
     },
     "tags": [
       "crafting_table"
     ],
     "pattern": [
-      "E",
-      "R",
-      "B"
+      "B",
+      "C",
+      "I"
     ],
     "key": {
-      "E": {
-        "item": "cl:engrenagem"
-      },
-      "R": {
-        "item": "cl:revestimento_andesita"
-      },
       "B": {
-        "item": "cl:batedor"
+        "item": "minecraft:oak_slab"
+      },
+      "C": {
+        "item": "minecraft:stone"
+      },
+      "I": {
+        "item": "cl:eixo"
       }
     },
     "unlock": {
       "context": "AlwaysUnlocked"
     },
     "result": {
-      "item": "cl:misturador_mecanico"
+      "item": "cl:rolamento_moinho"
     }
   }
 }

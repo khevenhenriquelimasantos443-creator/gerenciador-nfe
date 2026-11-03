@@ -2257,6 +2257,12 @@
     },
     "clc_po_pedra_ceu": {
       "textures": "textures/items/cl/arte/po_pedra_ceu"
+    },
+    "clc_pepita_experiencia": {
+      "textures": "textures/items/cl/c/pepita_experiencia"
+    },
+    "clc_farinha_cinzas": {
+      "textures": "textures/items/cl/c/farinha_cinzas"
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Block, BlockCustomComponent, BlockVolume, ItemStack, RawMessage, system, world } from "@minecraft/server";
 import { registrarNoCatalogo, Receita } from "../catalogo/catalogo.js";
+import { DADOS_F43 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { vizinhos } from "../util/blocos.js";
@@ -96,6 +97,10 @@ const estado = (r: Rede): RawMessage =>
 
 // ---------- Máquinas ----------
 type Saida = ReadonlyArray<[string, number, number]>; // item, quantidade, chance
+// 1.23.0: as receitas do Create 6 (DADOS_F43, de tools/importar-create.py) entram por cima das de antes.
+type Processo = { entra: string[]; sai: [string, number, number][]; calor: string | null };
+const P6 = (DADOS_F43 as unknown as { processos: Record<string, Processo[]> }).processos;
+const tabela = (lista: Processo[]): Record<string, Saida> => Object.fromEntries(lista.map((r) => [r.entra[0], r.sai]));
 const CRUS: ReadonlyArray<[string, string]> = [["ferro", "iron"], ["ouro", "gold"], ["cobre", "copper"]];
 export const MO: Readonly<Record<string, Saida>> = {
   "minecraft:wheat": [["cl:farinha", 1, 1], ["cl:farinha", 1, 0.25], ["minecraft:wheat_seeds", 1, 0.25]],
@@ -104,6 +109,7 @@ export const MO: Readonly<Record<string, Saida>> = {
   "minecraft:bone": [["minecraft:bone_meal", 3, 1], ["minecraft:white_dye", 1, 0.25]],
   "minecraft:sugar_cane": [["minecraft:sugar", 2, 1]],
   ...Object.fromEntries(CRUS.map(([pt, en]): [string, Saida] => [`minecraft:raw_${en}`, [[`cl:triturado_${pt}`, 1, 1]]])),
+  ...tabela(P6.milling),
 };
 export const RODAS: Readonly<Record<string, Saida>> = {
   ...Object.fromEntries(CRUS.flatMap(([pt, en]): Array<[string, Saida]> => [
@@ -114,13 +120,19 @@ export const RODAS: Readonly<Record<string, Saida>> = {
   "minecraft:cobblestone": [["minecraft:gravel", 1, 1]],
   "minecraft:gravel": [["minecraft:sand", 1, 1], ["minecraft:flint", 1, 0.1]],
   "minecraft:white_wool": [["minecraft:string", 2, 1], ["minecraft:string", 1, 0.5]],
+  ...tabela(P6.crushing),
 };
 export const PRENSA: Readonly<Record<string, string>> = {
   "minecraft:iron_ingot": "cl:chapa_ferro", "minecraft:copper_ingot": "cl:chapa_cobre", "minecraft:gold_ingot": "cl:chapa_ouro", "cl:lingote_latao": "cl:chapa_latao",
+  ...Object.fromEntries(P6.pressing.map((r) => [r.entra[0], r.sai[0][0]])),
 };
 export const MISTURAS: ReadonlyArray<{ entra: ReadonlyArray<[string, number]>; sai: [string, number] }> = [
   { entra: [["minecraft:copper_ingot", 1], ["cl:lingote_zinco", 1]], sai: ["cl:lingote_latao", 2] },
   { entra: [["minecraft:andesite", 1], ["minecraft:iron_nugget", 1]], sai: ["cl:liga_andesita", 1] },
+  // Create 6 (o latão pede calor no mod; aqui o Misturador basta, o pack não tem o Queimador de Blaze).
+  ...P6.mixing
+    .filter((r) => !(r.entra.length === 2 && r.entra.includes("cl:lingote_zinco")) && !(r.entra.includes("minecraft:andesite") && r.entra.includes("minecraft:iron_nugget")))
+    .map((r) => ({ entra: [...new Set(r.entra)].map((id): [string, number] => [id, r.entra.filter((x) => x === id).length]), sai: [r.sai[0][0], r.sai[0][1]] as [string, number] })),
 ];
 
 /** Máquina do Create: o trabalho anda o RPM da rede a cada segundo; ao passar de `custo`, faz uma operação. */
@@ -186,7 +198,11 @@ const LAVAR: Readonly<Record<string, Saida>> = {
   "cl:triturado_ouro": [["minecraft:gold_nugget", 9, 1]],
   "minecraft:gravel": [["minecraft:flint", 1, 0.25], ["minecraft:iron_nugget", 1, 0.125]],
   "minecraft:sand": [["minecraft:clay_ball", 1, 0.25]],
+  ...tabela(P6.splashing),
 };
+// Assombrar (Create 6): soprando por fogo das almas.
+const ASSOMBRAR: Readonly<Record<string, Saida>> = tabela(P6.haunting);
+const ALMA = new Set(["minecraft:soul_fire", "minecraft:soul_campfire", "minecraft:soul_lantern"]);
 const COZINHAR: Readonly<Record<string, string>> = {
   "cl:triturado_ferro": "minecraft:iron_ingot", "cl:triturado_ouro": "minecraft:gold_ingot", "cl:triturado_cobre": "minecraft:copper_ingot", "cl:triturado_zinco": "cl:lingote_zinco",
   "minecraft:raw_iron": "minecraft:iron_ingot", "minecraft:raw_gold": "minecraft:gold_ingot", "minecraft:raw_copper": "minecraft:copper_ingot",
@@ -197,10 +213,11 @@ const COZINHAR: Readonly<Record<string, string>> = {
 const CALOR = new Set(["minecraft:lava", "minecraft:flowing_lava", "minecraft:fire", "minecraft:magma", "minecraft:campfire"]);
 export const ventilador = maquinaCreate(20, (b) => {
   const { dx, dz } = frente(b);
-  let modo: "lavar" | "cozinhar" | undefined;
+  let modo: "lavar" | "cozinhar" | "assombrar" | undefined;
   for (let k = 1; k <= 4 && !modo; k++) {
     const t = b.dimension.getBlock({ x: b.x + dx * k, y: b.y, z: b.z + dz * k })?.typeId ?? "";
     if (AGUA.has(t)) modo = "lavar";
+    else if (ALMA.has(t)) modo = "assombrar";
     else if (CALOR.has(t)) modo = "cozinhar";
   }
   if (!modo) return true;
@@ -210,8 +227,8 @@ export const ventilador = maquinaCreate(20, (b) => {
     const pilha = e.getComponent("minecraft:item")?.itemStack;
     if (!pilha) continue;
     const local = e.location;
-    if (modo === "lavar") {
-      const s = LAVAR[pilha.typeId];
+    if (modo === "lavar" || modo === "assombrar") {
+      const s = (modo === "lavar" ? LAVAR : ASSOMBRAR)[pilha.typeId];
       if (!s) continue;
       e.remove();
       for (const [id, n, c] of s) {
@@ -291,6 +308,16 @@ export const controlador: BlockCustomComponent = {
 };
 
 export function registrarCreate(): void {
+  // Pepita de Experiência (Create 6): usar dá 3 de XP.
+  world.afterEvents.itemUse.subscribe(({ itemStack, source: j }) => {
+    if (itemStack.typeId !== "cl:pepita_experiencia") return;
+    j.addExperience(3);
+    j.playSound("random.orb");
+    const inv = j.getComponent("minecraft:inventory")?.container;
+    const s = j.selectedSlotIndex;
+    const p = inv?.getItem(s);
+    if (inv && p?.typeId === itemStack.typeId) inv.setItem(s, p.amount > 1 ? Object.assign(p, { amount: p.amount - 1 }) : undefined);
+  });
   registrarDetalhe([...Object.keys(IMPACTO), ...FONTES, CONTROLADOR], (b) => {
     const r = rede(b);
     return { text: r.sobrecarga ? `§c${r.estresse}/${r.cap} SU` : `§7${r.rpm} RPM, ${r.estresse}/${r.cap} SU` };
@@ -304,6 +331,7 @@ export function registrarCreate(): void {
     tab("cl:mo", MO);
     tab("cl:rodas_trituradoras", RODAS);
     tab("cl:ventilador", LAVAR);
+    tab("cl:ventilador", ASSOMBRAR);
     for (const [de, sai] of Object.entries(PRENSA)) r.push({ ...m("cl:prensa_mecanica"), entradas: [{ item: de, qtd: 1 }], saidas: [{ item: sai, qtd: 1 }] });
     for (const x of MISTURAS) r.push({ ...m("cl:misturador_mecanico"), entradas: x.entra.map(([item, qtd]) => ({ item, qtd })), saidas: [{ item: x.sai[0], qtd: x.sai[1] }] });
     return r;
