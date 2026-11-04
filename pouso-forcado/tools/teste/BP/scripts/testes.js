@@ -1644,6 +1644,37 @@ teste("waystones2", 260, (t) => {
   });
 });
 
+// 1.36.0: Extreme Reactors: turbina 5×5×4 (mancal, eixo, 4 pás, 4 bobinas de ferro) monta e transforma vapor em RF.
+teste("turbina", 160, (t) => {
+  const j = robo(t, { x: 6.5, y: 2, z: 6.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`turbina: ${c} -> ${e}`); } };
+  for (let x = 1; x <= 5; x++) for (let y = 2; y <= 5; y++) for (let z = 1; z <= 5; z++) {
+    const borda = x === 1 || x === 5 || y === 2 || y === 5 || z === 1 || z === 5;
+    try { t.setBlockType(borda ? "cl:carcaca_turbina" : "minecraft:air", { x, y, z }); } catch { /* já era ar */ }
+  }
+  t.setBlockType("cl:mancal_rotor", { x: 3, y: 2, z: 3 });
+  t.setBlockType("cl:controlador_turbina", { x: 3, y: 3, z: 1 });
+  t.setBlockType("cl:tomada_turbina", { x: 1, y: 3, z: 3 });
+  t.setBlockType("cl:porta_fluido_turbina", { x: 5, y: 3, z: 3 });
+  t.setBlockType("cl:eixo_rotor", { x: 3, y: 3, z: 3 });
+  t.setBlockType("cl:eixo_rotor", { x: 3, y: 4, z: 3 });
+  for (const [x, z] of [[2, 3], [4, 3], [3, 2], [3, 4]]) {
+    t.setBlockType("cl:pa_rotor", { x, y: 4, z });
+    t.setBlockType("minecraft:iron_block", { x, y: 3, z });
+  }
+  const w = (p) => t.worldBlockLocation(p);
+  t.runAfterDelay(10, () => {
+    const c = w({ x: 3, y: 3, z: 1 }), p = w({ x: 5, y: 3, z: 3 });
+    cmd(`scriptevent cl:teste_turbina validar ${c.x} ${c.y} ${c.z}`);
+    cmd(`scriptevent cl:teste_turbina vapor ${p.x} ${p.y} ${p.z} 5000`);
+  });
+  t.runAfterDelay(14, () => {
+    const c = w({ x: 3, y: 3, z: 1 });
+    cmd(`scriptevent cl:teste_turbina ciclo ${c.x} ${c.y} ${c.z}`);
+  });
+  t.runAfterDelay(20, () => t.succeed());
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

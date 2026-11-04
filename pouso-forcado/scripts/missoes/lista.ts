@@ -81,6 +81,9 @@ export type Acao =
   | "wy2_partilha"
   | "wy2_placa"
   | "wy2_pergaminho"
+  | "er_turbina"
+  | "er_vapor"
+  | "er_ludicrita"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -583,6 +586,16 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "extreme", // 1.36.0: Extreme Reactors 2.4
+    icone: "cl:controlador_turbina",
+    requer: ["maquinas"],
+    missoes: [
+      { id: "er_turbina", objetivo: { tipo: "acao", acao: "er_turbina", qtd: 1 }, recompensa: [{ item: "minecraft:iron_block", quantidade: 4 }] },
+      { id: "er_vapor", requer: ["er_turbina"], objetivo: { tipo: "acao", acao: "er_vapor", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "er_ludicrita", objetivo: { tipo: "acao", acao: "er_ludicrita", qtd: 1 }, recompensa: [{ item: "minecraft:end_crystal", quantidade: 1 }] },
     ],
   },
   {

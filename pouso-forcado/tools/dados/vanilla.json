@@ -641,6 +641,11 @@
   "en": "End Stone Bricks",
   "icone": "textures/blocks/end_bricks"
  },
+ "minecraft:end_crystal": {
+  "pt": "Cristal do End",
+  "en": "End Crystal",
+  "icone": "textures/items/end_crystal"
+ },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
   "en": "End Stone",
@@ -1111,6 +1116,11 @@
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
  },
+ "minecraft:nether_star": {
+  "pt": "nether_star",
+  "en": "nether_star",
+  "icone": "textures/items/nether_star"
+ },
  "minecraft:nether_wart": {
   "pt": "Fungo do Nether",
   "en": "Nether Wart",
@@ -1120,6 +1130,11 @@
   "pt": "Tijolo do Nether",
   "en": "Nether Brick",
   "icone": "textures/items/netherbrick"
+ },
+ "minecraft:netherite_block": {
+  "pt": "Bloco de Netherita",
+  "en": "Block of Netherite",
+  "icone": "textures/blocks/netherite_block"
  },
  "minecraft:netherite_ingot": {
   "pt": "Barra de Netherita",

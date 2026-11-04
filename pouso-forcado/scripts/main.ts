@@ -73,6 +73,7 @@ import { registrarArtefatos } from "./utilidades/artefatos.js";
 import { bauGrandeComp, registrarBausGrandes } from "./utilidades/baus_grandes.js";
 import { gavetaComp, registrarGavetas } from "./utilidades/gavetas.js";
 import { registrarJetpacks } from "./utilidades/jetpacks.js";
+import { registrarTurbina, turbina, turbinaParte } from "./maquinas/turbina.js";
 import { cestoComp, porcoesComp, redeComp, registrarFarmersNovo, soloComp } from "./maquinas/farmers_novo.js";
 import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tochas.js";
 import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
@@ -138,6 +139,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   // 1.32.0: Iron Chests e Storage Drawers.
   blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
   blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
+  // 1.36.0: turbina do Extreme Reactors.
+  blockComponentRegistry.registerCustomComponent("cl:turbina", turbina);
+  blockComponentRegistry.registerCustomComponent("cl:turbina_parte", turbinaParte);
   // 1.34.0: Farmer's Delight 1.3.0.
   blockComponentRegistry.registerCustomComponent("cl:fd_porcoes", porcoesComp);
   blockComponentRegistry.registerCustomComponent("cl:fd_solo", soloComp);
@@ -326,6 +330,7 @@ registrarBausGrandes(); // 1.32.0: Iron Chests
 registrarGavetas(); // 1.32.0: Storage Drawers
 registrarJetpacks(); // 1.33.0: Iron Jetpacks
 registrarFarmersNovo(); // 1.34.0: Farmer's Delight 1.3.0
+registrarTurbina(); // 1.36.0: Extreme Reactors
 registrarTochas(); // 1.33.0: TorchMaster
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();

@@ -1,6 +1,7 @@
 import { Block, BlockCustomComponent, Dimension, ItemStack, Player, RawMessage, Vector3, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { REATOR } from "../config.js";
+import { ENERGIA, REATOR, TURBINA } from "../config.js";
+import { deixarVapor, portaDeTurbina } from "./turbina.js";
 import { registrarNoCatalogo } from "../catalogo/catalogo.js";
 import { creditar } from "../blocos/energia.js";
 import { aviso } from "../jogador/hud.js";
@@ -131,6 +132,7 @@ function ciclo(c: Block): void {
     const queima = Math.min(r.comb, r.barras * REATOR.consumo * (1 - ins));
     let e = r.barras * REATOR.base * r.mod * (1 - ins) * (queima / Math.max(1e-9, r.barras * REATOR.consumo * (1 - ins)));
     // Refrigeração: 1 balde de água a cada REATOR.refrigeracaoCiclos dobra a energia.
+    let comAgua = false;
     if (r.refri.length) {
       if (r.agua <= 0) {
         for (const p of r.refri) {
@@ -144,9 +146,25 @@ function ciclo(c: Block): void {
         }
       }
       if (r.agua > 0) {
+        comAgua = true;
         e *= 2;
         r.agua--;
       }
+    }
+    // 1.36.0 (Extreme Reactors): refrigeração ativa. Porta de Refrigeração encostada na Porta de Fluido de uma
+    // turbina: com água, a energia vira vapor para a turbina (e não sai pelas tomadas).
+    const turbinas = r.refri.map((p) => bloco(dim, p)).map((b) => (b ? portaDeTurbina(b) : undefined)).filter((x): x is Block => !!x);
+    if (turbinas.length) {
+      r.comb -= queima;
+      r.cian += queima;
+      // Sem água não há vapor (a água vem em baldes no baú encostado na Porta de Refrigeração).
+      if (comAgua) {
+        const vapor = (e * ENERGIA.rfPorUnidade * TURBINA.vaporPorRf) / turbinas.length;
+        for (const tb of turbinas) deixarVapor(tb, vapor);
+      }
+      r.ultimo = comAgua ? e : 0;
+      gravar("reator", c, r);
+      return;
     }
     r.comb -= queima;
     r.cian += queima;
@@ -259,7 +277,19 @@ export const reprocessador: BlockCustomComponent = {
   onTick(e) {
     const b = e.block;
     const ent = entrada(b);
-    if (!ent || contar(ent, "cl:lingote_cianita") < 2 || contar(ent, "minecraft:water_bucket") < 1 || !cabe(b)) return;
+    if (!ent || !cabe(b)) return;
+    // 1.36.0 (Extreme Reactors): 2 lingotes + 1 cianita: blutônio → ludicrita → ridiculita → inanita.
+    for (const [de, para] of [["cl:lingote_inanita", ""], ["cl:lingote_ridiculita", "cl:lingote_inanita"], ["cl:lingote_ludicrita", "cl:lingote_ridiculita"], ["cl:lingote_blutonio", "cl:lingote_ludicrita"]] as const) {
+      if (!para || contar(ent, de) < 2 || contar(ent, "cl:lingote_cianita") < 1) continue;
+      if (!gastarCE(b, REATOR.reprocessadorCE * 4)) return;
+      tirar(ent, de, 2);
+      tirar(ent, "cl:lingote_cianita", 1);
+      entregar(b, [new ItemStack(para, 1)]);
+      const j = b.dimension.getPlayers({ location: b.center(), maxDistance: 16, closest: 1 })[0];
+      if (j && para === "cl:lingote_ludicrita") registrarAcao(j, "er_ludicrita");
+      return;
+    }
+    if (contar(ent, "cl:lingote_cianita") < 2 || contar(ent, "minecraft:water_bucket") < 1) return;
     if (!gastarCE(b, REATOR.reprocessadorCE)) return;
     tirar(ent, "cl:lingote_cianita", 2);
     tirar(ent, "minecraft:water_bucket");

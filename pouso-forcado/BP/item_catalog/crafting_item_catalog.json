@@ -2940,6 +2940,28 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:lingote_inanita",
+              "name": "cl:itemGroup.name.items_extreme_reactors"
+            },
+            "items": [
+              "cl:lingote_inanita",
+              "cl:lingote_ludicrita",
+              "cl:lingote_ridiculita",
+              "cl:bloco_inanita",
+              "cl:bloco_ludicrita",
+              "cl:bloco_ridiculita",
+              "cl:carcaca_turbina",
+              "cl:controlador_turbina",
+              "cl:eixo_rotor",
+              "cl:mancal_rotor",
+              "cl:pa_rotor",
+              "cl:porta_fluido_turbina",
+              "cl:tomada_turbina",
+              "cl:vidro_turbina"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:melhoria_bau_cobre_ferro",
               "name": "cl:itemGroup.name.items_iron_chests"
             },

@@ -154,6 +154,20 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.36.0 (Extreme Reactors 2.4, o mais novo)
+
+- **Turbina** (multibloco de 3 a 9 de lado): Carcaça nas arestas; nas faces Vidro, Controlador, **Mancal do Rotor**,
+  Tomadas e Portas de Fluido; dentro o **Eixo** saindo do mancal, **Pás** encostadas no eixo (25 mB/t de vapor cada) e
+  **bobinas** (blocos de metal encostados no eixo) com a eficiência do mod: ferro 1,0, cobre 1,2, bronze 1,4, aço 1,5,
+  ouro 2,0, netherita 2,2, manyullyn 3,5, ludicrita 5,23, ridiculita 7,47 e inanita 9,76.
+- **Refrigeração ativa**: a Porta de Refrigeração do reator encostada numa Porta de Fluido da turbina manda **vapor**
+  (com água em baldes no baú da porta) em vez de energia; a turbina rende bem mais que o reator sozinho.
+- **Moderadores novos** no reator (moderação do mod): blocos de ferro e cobre 1,40, ouro 1,45, diamante e esmeralda
+  1,50, netherita 1,65, vidro 1,10, bronze, aço e estanho.
+- **Ligas raras** no Reprocessador (2 lingotes + 1 cianita): blutônio → **ludicrita** → **ridiculita** → **inanita**,
+  e os blocos delas (com cristal do End, estrela do Nether e bloco de netherita), as melhores bobinas.
+- Ideias e números do código do mod (arte própria). Diário: capítulo Turbina.
+
 ## Novidades da 1.35.0 (Waystones 26.3, o mais novo)
 
 - **Viajar custa experiência** como no mod novo: 0,01 ponto por bloco (até 27; outra dimensão 27), saindo de uma

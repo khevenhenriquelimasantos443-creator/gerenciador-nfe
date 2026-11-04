@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tomada_turbina"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CSC",
+      "SBS",
+      "CSC"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:carcaca_turbina"
+      },
+      "S": {
+        "item": "minecraft:redstone"
+      },
+      "B": {
+        "item": "minecraft:redstone_block"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tomada_turbina"
+    }
+  }
+}

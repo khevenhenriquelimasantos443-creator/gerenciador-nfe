@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.35.0";
+export const VERSAO = "1.36.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -834,11 +834,34 @@ export const REATOR = {
   base: 6.75, // E por barra de combustível por ciclo (3x3x3 com 1 barra ≈ 270 RF/t)
   consumo: 10, // mB de combustível por barra por ciclo (1 lingote = 1.000 mB)
   porBarra: 4000, // mB de combustível que cabem por barra
-  moderador: { "minecraft:air": 1.1, "minecraft:water": 1.33, "cl:bloco_grafite": 2.0 } as Readonly<Record<string, number>>,
+  moderador: {
+    "minecraft:air": 1.1, "minecraft:water": 1.33, "cl:bloco_grafite": 2.0,
+    // 1.36.0: os moderadores do Extreme Reactors 2.4 (a "moderação" de ReactorGameData.java).
+    "minecraft:iron_block": 1.40, "minecraft:gold_block": 1.45, "minecraft:diamond_block": 1.50, "minecraft:emerald_block": 1.50,
+    "minecraft:netherite_block": 1.65, "minecraft:copper_block": 1.40, "minecraft:glass": 1.10, "cl:bloco_bronze": 1.41, "cl:bloco_aco": 1.42,
+    "cl:bloco_estanho": 1.38,
+  } as Readonly<Record<string, number>>,
   combustivel: { "cl:lingote_yellorium": 1000, "cl:lingote_blutonio": 1000 } as Readonly<Record<string, number>>,
   refrigeracaoCiclos: 10, // 1 balde de água a cada 10 ciclos dobra a energia
   bufferMax: 200, // E guardados no reator sem tomada
   reprocessadorCE: 50,
+} as const;
+
+// 1.36.0: turbina do Extreme Reactors 2.4 (scripts/maquinas/turbina.ts). Bobinas: [eficiência, bônus] de
+// TurbineGameData.java; cada pá passa até 25 mB/t; o vapor rende 10 RF por mB na eficiência 1. O reator em
+// refrigeração ativa manda vapor em vez de energia: 1 mB para cada 2 RF que daria (com as pás e boas bobinas, a
+// turbina tira bem mais que o reator sozinho, como no mod).
+export const TURBINA = {
+  ladoMin: 3,
+  ladoMax: 9,
+  mbPorPa: 25,
+  rfPorMb: 10,
+  vaporPorRf: 0.5,
+  bobinas: {
+    "minecraft:iron_block": [1.0, 1.0], "minecraft:copper_block": [1.2, 1.0], "cl:bloco_estanho": [1.1, 1.0], "cl:bloco_bronze": [1.4, 1.0],
+    "cl:bloco_aco": [1.5, 1.0], "cl:bloco_cobalto": [1.2, 1.0], "minecraft:gold_block": [2.0, 1.0], "minecraft:netherite_block": [2.2, 1.02],
+    "cl:bloco_manyullyn": [3.5, 1.0], "cl:bloco_ludicrita": [5.23, 1.03939], "cl:bloco_ridiculita": [7.47, 1.2055], "cl:bloco_inanita": [9.76, 1.3],
+  } as Readonly<Record<string, readonly [number, number]>>,
 } as const;
 
 // Fase 14: plantações do HarvestCraft (scripts/blocos/plantacao.ts). A cada minecraft:tick (30 a 60 s)

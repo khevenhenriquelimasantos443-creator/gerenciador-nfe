@@ -28,6 +28,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
   só as ideias e os números (1.10.0). Código, modelos e arte próprios.
 
+- **Extreme Reactors** (ZeroNoRyouki; sem licença publicada para a arte): a turbina, a refrigeração ativa, os
+  moderadores e as bobinas com os números de ReactorGameData.java e TurbineGameData.java (2.4.18,
+  github.com/ZeroNoRyouki/ExtremeReactors2) e as ligas do reprocessador. Código e arte próprios.
 - **Iron Jetpacks** (BlakeBr0; MIT, inclusive a arte; github.com/BlakeBr0/IronJetpacks, 26.1): os jetpacks com os
   números do mod e as receitas geradas por ele; a arte das peças (tingida com a cor de cada tier, como o mod faz). O
   modelo vestido e o voo são código próprio (`tools/importar-jetpacks-tochas.py`).

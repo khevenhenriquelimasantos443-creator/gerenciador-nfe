@@ -1311,6 +1311,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Hepatizon",
   "icone": "textures/blocks/cl/arte/bloco_hepatizon"
  },
+ "cl:bloco_inanita": {
+  "pt": "Bloco de Inanita",
+  "en": "Inanite Block",
+  "icone": "textures/blocks/cl/c/bloco_inanita"
+ },
  "cl:bloco_liga_energetica": {
   "pt": "Bloco de Liga Energética",
   "en": "Energetic Alloy Block",
@@ -1325,6 +1330,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Liga Vibrante",
   "en": "Vibrant Alloy Block",
   "icone": "textures/items/cl/blocos/bloco_liga_vibrante"
+ },
+ "cl:bloco_ludicrita": {
+  "pt": "Bloco de Ludicrita",
+  "en": "Ludicrite Block",
+  "icone": "textures/blocks/cl/c/bloco_ludicrita"
  },
  "cl:bloco_manyullyn": {
   "pt": "Bloco de Manyullyn",
@@ -1350,6 +1360,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Placa de Ferro Enferrujada",
   "en": "Rusty Iron Plate",
   "icone": "textures/items/cl/blocos/bloco_placa_ferro_enferrujada"
+ },
+ "cl:bloco_ridiculita": {
+  "pt": "Bloco de Ridiculita",
+  "en": "Ridiculite Block",
+  "icone": "textures/blocks/cl/c/bloco_ridiculita"
  },
  "cl:bloco_slime_brasa": {
   "pt": "Bloco de Slime de Brasa",
@@ -2261,6 +2276,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Casing",
   "icone": "textures/items/cl/blocos/carcaca_reator"
  },
+ "cl:carcaca_turbina": {
+  "pt": "Carcaça da Turbina",
+  "en": "Turbine Housing",
+  "icone": "textures/blocks/cl/c/carcaca_turbina"
+ },
  "cl:carne_infinita": {
   "pt": "Carne Infinita",
   "en": "Everlasting Beef",
@@ -3156,6 +3176,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Controller",
   "icone": "textures/items/cl/blocos/controlador_reator"
  },
+ "cl:controlador_turbina": {
+  "pt": "Controlador da Turbina",
+  "en": "Turbine Controller",
+  "icone": "textures/blocks/cl/c/controlador_turbina_topo"
+ },
  "cl:controlador_velocidade": {
   "pt": "Controlador de Velocidade",
   "en": "Rotation Speed Controller",
@@ -3495,6 +3520,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Eixo",
   "en": "Shaft",
   "icone": "textures/items/cl/blocos/eixo"
+ },
+ "cl:eixo_rotor": {
+  "pt": "Eixo do Rotor",
+  "en": "Rotor Shaft",
+  "icone": "textures/blocks/cl/c/eixo_rotor"
  },
  "cl:eletrodo_zumbi": {
   "pt": "Eletrodo Zumbi",
@@ -5706,10 +5736,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hepatizon Ingot",
   "icone": "textures/items/cl/arte/lingote_hepatizon"
  },
+ "cl:lingote_inanita": {
+  "pt": "Lingote de Inanita",
+  "en": "Inanite Ingot",
+  "icone": "textures/items/cl/c/lingote_inanita"
+ },
  "cl:lingote_latao": {
   "pt": "Lingote de Latão",
   "en": "Brass Ingot",
   "icone": "textures/items/cl/c/lingote_latao"
+ },
+ "cl:lingote_ludicrita": {
+  "pt": "Lingote de Ludicrita",
+  "en": "Ludicrite Ingot",
+  "icone": "textures/items/cl/c/lingote_ludicrita"
  },
  "cl:lingote_manyullyn": {
   "pt": "Lingote de Manyullyn",
@@ -5730,6 +5770,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Ouro Rosa",
   "en": "Rose Gold Ingot",
   "icone": "textures/items/cl/arte/lingote_ouro_rosa"
+ },
+ "cl:lingote_ridiculita": {
+  "pt": "Lingote de Ridiculita",
+  "en": "Ridiculite Ingot",
+  "icone": "textures/items/cl/c/lingote_ridiculita"
  },
  "cl:lingote_slime_brasa": {
   "pt": "Lingote de Slime de Brasa",
@@ -6225,6 +6270,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Malha",
   "en": "Maille",
   "icone": "textures/items/cl/arte/malha"
+ },
+ "cl:mancal_rotor": {
+  "pt": "Mancal do Rotor",
+  "en": "Rotor Bearing",
+  "icone": "textures/blocks/cl/c/mancal_rotor"
  },
  "cl:manivela": {
   "pt": "Manivela",
@@ -7745,6 +7795,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pá de Pedra",
   "en": "Stone Shovel",
   "icone": "textures/items/cl/arte/pa_pedra"
+ },
+ "cl:pa_rotor": {
+  "pt": "Pá do Rotor",
+  "en": "Rotor Blade",
+  "icone": "textures/blocks/cl/c/pa_rotor"
  },
  "cl:pa_silex": {
   "pt": "Pá de Sílex",
@@ -11701,6 +11756,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Access Port",
   "icone": "textures/items/cl/blocos/porta_acesso_reator"
  },
+ "cl:porta_fluido_turbina": {
+  "pt": "Porta de Fluido da Turbina",
+  "en": "Turbine Fluid Port",
+  "icone": "textures/blocks/cl/c/porta_fluido_turbina"
+ },
  "cl:porta_refrigeracao": {
   "pt": "Porta de Refrigeração",
   "en": "Reactor Coolant Port",
@@ -12701,6 +12761,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Power Tap",
   "icone": "textures/items/cl/blocos/tomada_energia"
  },
+ "cl:tomada_turbina": {
+  "pt": "Tomada de Energia da Turbina",
+  "en": "Turbine Power Tap",
+  "icone": "textures/blocks/cl/c/tomada_turbina"
+ },
  "cl:tomate": {
   "pt": "Tomate",
   "en": "Tomato",
@@ -13130,6 +13195,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Vidro Transparente Iluminado",
   "en": "Enlightened Clear Glass",
   "icone": "textures/items/cl/blocos/vidro_transparente_iluminado"
+ },
+ "cl:vidro_turbina": {
+  "pt": "Vidro da Turbina",
+  "en": "Turbine Glass",
+  "icone": "textures/blocks/cl/c/vidro_turbina"
  },
  "cl:vinculador_almas": {
   "pt": "Vinculador de Almas",
@@ -13824,6 +13894,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "End Stone Bricks",
   "icone": "textures/blocks/end_bricks"
  },
+ "minecraft:end_crystal": {
+  "pt": "Cristal do End",
+  "en": "End Crystal",
+  "icone": "textures/items/end_crystal"
+ },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
   "en": "End Stone",
@@ -14279,6 +14354,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
  },
+ "minecraft:nether_star": {
+  "pt": "nether_star",
+  "en": "nether_star",
+  "icone": "textures/items/nether_star"
+ },
  "minecraft:nether_wart": {
   "pt": "Fungo do Nether",
   "en": "Nether Wart",
@@ -14288,6 +14368,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tijolo do Nether",
   "en": "Nether Brick",
   "icone": "textures/items/netherbrick"
+ },
+ "minecraft:netherite_block": {
+  "pt": "Bloco de Netherita",
+  "en": "Block of Netherite",
+  "icone": "textures/blocks/netherite_block"
  },
  "minecraft:netherite_ingot": {
   "pt": "Barra de Netherita",
@@ -18601,6 +18686,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_inanita",
+  "resultado": "cl:bloco_inanita",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "ISI",
+   "III"
+  ],
+  "chaves": {
+   "I": "cl:lingote_inanita",
+   "S": "minecraft:netherite_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_ludicrita",
+  "resultado": "cl:bloco_ludicrita",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "ISI",
+   "III"
+  ],
+  "chaves": {
+   "I": "cl:lingote_ludicrita",
+   "S": "minecraft:end_crystal"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_bloco_manyullyn",
   "resultado": "cl:bloco_manyullyn",
@@ -18682,6 +18803,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_ridiculita",
+  "resultado": "cl:bloco_ridiculita",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "ISI",
+   "III"
+  ],
+  "chaves": {
+   "I": "cl:lingote_ridiculita",
+   "S": "minecraft:nether_star"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -20862,6 +21001,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_carcaca_turbina",
+  "resultado": "cl:carcaca_turbina",
+  "qtd": 4,
+  "grade": [
+   "IGI",
+   "GCG",
+   "IGI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "G": "cl:lingote_cianita",
+   "C": "minecraft:redstone_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_carregador_chunks",
   "resultado": "cl:carregador_chunks",
   "qtd": 1,
@@ -21735,6 +21893,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "minecraft:comparator",
    "G": "cl:gaveta",
    "D": "minecraft:diamond"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_controlador_turbina",
+  "resultado": "cl:controlador_turbina",
+  "qtd": 1,
+  "grade": [
+   "CXC",
+   "YDY",
+   "CRC"
+  ],
+  "chaves": {
+   "C": "cl:carcaca_turbina",
+   "X": "minecraft:comparator",
+   "Y": "cl:lingote_cianita",
+   "D": "minecraft:diamond",
+   "R": "minecraft:redstone"
   },
   "estacoes": [
    "crafting_table"
@@ -24685,6 +24864,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "G": "cl:graos_infinito",
    "I": "minecraft:copper_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_eixo_rotor",
+  "resultado": "cl:eixo_rotor",
+  "qtd": 1,
+  "grade": [
+   " I ",
+   "ICI",
+   " I "
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "C": "cl:lingote_cianita"
   },
   "estacoes": [
    "crafting_table"
@@ -27764,6 +27961,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mancal_rotor",
+  "resultado": "cl:mancal_rotor",
+  "qtd": 1,
+  "grade": [
+   "IRI",
+   "B B",
+   "IRI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "R": "minecraft:redstone_block",
+   "B": "minecraft:iron_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mangrove_cabinet",
   "resultado": "cl:armario_mangue",
   "qtd": 1,
@@ -30378,6 +30594,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "b": "cl:tabuas_tratadas",
    "s": "cl:graveto_tratado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pa_rotor",
+  "resultado": "cl:pa_rotor",
+  "qtd": 1,
+  "grade": [
+   "ICI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "C": "cl:lingote_cianita"
   },
   "estacoes": [
    "crafting_table"
@@ -33503,6 +33735,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "C": "cl:carcaca_reator",
    "H": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_porta_fluido_turbina",
+  "resultado": "cl:porta_fluido_turbina",
+  "qtd": 1,
+  "grade": [
+   "CSC",
+   "SBS",
+   "CSC"
+  ],
+  "chaves": {
+   "C": "cl:carcaca_turbina",
+   "S": "minecraft:water_bucket",
+   "B": "minecraft:lava_bucket"
   },
   "estacoes": [
    "crafting_table"
@@ -38226,6 +38477,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_tomada_turbina",
+  "resultado": "cl:tomada_turbina",
+  "qtd": 1,
+  "grade": [
+   "CSC",
+   "SBS",
+   "CSC"
+  ],
+  "chaves": {
+   "C": "cl:carcaca_turbina",
+   "S": "minecraft:redstone",
+   "B": "minecraft:redstone_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_torneira",
   "resultado": "cl:torneira",
   "qtd": 1,
@@ -38876,6 +39146,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "T": "cl:tijolo_refratario",
    "V": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_vidro_turbina",
+  "resultado": "cl:vidro_turbina",
+  "qtd": 1,
+  "grade": [
+   "GCG"
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "C": "cl:carcaca_turbina"
   },
   "estacoes": [
    "crafting_table"

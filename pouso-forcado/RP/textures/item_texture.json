@@ -5671,6 +5671,15 @@
     },
     "clc_pergaminho_vinculado": {
       "textures": "textures/items/cl/c/pergaminho_vinculado"
+    },
+    "clc_lingote_ludicrita": {
+      "textures": "textures/items/cl/c/lingote_ludicrita"
+    },
+    "clc_lingote_ridiculita": {
+      "textures": "textures/items/cl/c/lingote_ridiculita"
+    },
+    "clc_lingote_inanita": {
+      "textures": "textures/items/cl/c/lingote_inanita"
     }
   }
 }

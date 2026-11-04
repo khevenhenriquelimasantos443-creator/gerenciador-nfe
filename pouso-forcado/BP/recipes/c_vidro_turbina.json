@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_vidro_turbina"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GCG"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "C": {
+        "item": "cl:carcaca_turbina"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vidro_turbina"
+    }
+  }
+}

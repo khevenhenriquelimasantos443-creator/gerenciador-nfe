@@ -5133,6 +5133,48 @@
     },
     "clc_placa_dobra": {
       "textures": "textures/blocks/cl/c/placa_dobra"
+    },
+    "clc_bloco_ludicrita": {
+      "textures": "textures/blocks/cl/c/bloco_ludicrita"
+    },
+    "clc_bloco_ridiculita": {
+      "textures": "textures/blocks/cl/c/bloco_ridiculita"
+    },
+    "clc_bloco_inanita": {
+      "textures": "textures/blocks/cl/c/bloco_inanita"
+    },
+    "clc_carcaca_turbina": {
+      "textures": "textures/blocks/cl/c/carcaca_turbina"
+    },
+    "clc_vidro_turbina": {
+      "textures": "textures/blocks/cl/c/vidro_turbina"
+    },
+    "clc_controlador_turbina_frente": {
+      "textures": "textures/blocks/cl/c/controlador_turbina_frente"
+    },
+    "clc_controlador_turbina_lado": {
+      "textures": "textures/blocks/cl/c/controlador_turbina_lado"
+    },
+    "clc_controlador_turbina_topo": {
+      "textures": "textures/blocks/cl/c/controlador_turbina_topo"
+    },
+    "clc_controlador_turbina_baixo": {
+      "textures": "textures/blocks/cl/c/controlador_turbina_baixo"
+    },
+    "clc_mancal_rotor": {
+      "textures": "textures/blocks/cl/c/mancal_rotor"
+    },
+    "clc_eixo_rotor": {
+      "textures": "textures/blocks/cl/c/eixo_rotor"
+    },
+    "clc_pa_rotor": {
+      "textures": "textures/blocks/cl/c/pa_rotor"
+    },
+    "clc_tomada_turbina": {
+      "textures": "textures/blocks/cl/c/tomada_turbina"
+    },
+    "clc_porta_fluido_turbina": {
+      "textures": "textures/blocks/cl/c/porta_fluido_turbina"
     }
   }
 }
