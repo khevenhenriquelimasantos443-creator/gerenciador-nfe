@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_jetpack"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SCS",
+      "ITI",
+      " I "
+    ],
+    "key": {
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "I": {
+        "item": "cl:lingote_estanho"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      },
+      "T": {
+        "item": "cl:tanque_quimico_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack"
+    }
+  }
+}

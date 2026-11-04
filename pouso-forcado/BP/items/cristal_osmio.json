@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cristal_osmio",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cristal_osmio",
+      "minecraft:display_name": {
+        "value": "item.cl:cristal_osmio.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

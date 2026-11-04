@@ -1,0 +1,821 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_oxidador_quimico",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        4,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "east": {
+         "uv": [
+          8,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "south": {
+         "uv": [
+          8,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "west": {
+         "uv": [
+          8,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "up": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "down": {
+         "uv": [
+          16,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        }
+       }
+      },
+      {
+       "origin": [
+        1,
+        4,
+        -6
+       ],
+       "size": [
+        4,
+        1,
+        12
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          15
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "east": {
+         "uv": [
+          0,
+          15
+         ],
+         "uv_size": [
+          6,
+          0.5
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "south": {
+         "uv": [
+          0,
+          15
+         ],
+         "uv_size": [
+          2,
+          0.5
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "west": {
+         "uv": [
+          0,
+          15
+         ],
+         "uv_size": [
+          6,
+          0.5
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "up": {
+         "uv": [
+          2,
+          15.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        }
+       }
+      },
+      {
+       "origin": [
+        0,
+        5,
+        -7
+       ],
+       "size": [
+        6,
+        11,
+        5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          2.5,
+          5
+         ],
+         "uv_size": [
+          3.0,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "east": {
+         "uv": [
+          10,
+          5
+         ],
+         "uv_size": [
+          2.5,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "south": {
+         "uv": [
+          10,
+          5
+         ],
+         "uv_size": [
+          2.5,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "west": {
+         "uv": [
+          10,
+          10.5
+         ],
+         "uv_size": [
+          2.5,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "up": {
+         "uv": [
+          12.5,
+          5
+         ],
+         "uv_size": [
+          -2.5,
+          -3
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "down": {
+         "uv": [
+          12.5,
+          5
+         ],
+         "uv_size": [
+          -2.5,
+          -3
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        0,
+        5,
+        -1
+       ],
+       "size": [
+        6,
+        11,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          2.5,
+          10.5
+         ],
+         "uv_size": [
+          3.0,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "east": {
+         "uv": [
+          5.5,
+          5
+         ],
+         "uv_size": [
+          4.0,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "south": {
+         "uv": [
+          2.5,
+          5
+         ],
+         "uv_size": [
+          3.0,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "west": {
+         "uv": [
+          5.5,
+          10.5
+         ],
+         "uv_size": [
+          4.0,
+          5.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "up": {
+         "uv": [
+          9.5,
+          5
+         ],
+         "uv_size": [
+          -4.0,
+          -3
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "down": {
+         "uv": [
+          9.5,
+          5
+         ],
+         "uv_size": [
+          -4.0,
+          -3
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        1
+       ],
+       "size": [
+        1,
+        3,
+        3
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          1.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          1.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "up": {
+         "uv": [
+          0.5,
+          1.5
+         ],
+         "uv_size": [
+          -0.5,
+          -1.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "down": {
+         "uv": [
+          0.5,
+          1.5
+         ],
+         "uv_size": [
+          -0.5,
+          -1.5
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        5,
+        4,
+        -4
+       ],
+       "size": [
+        2,
+        8,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          0
+         ],
+         "uv_size": [
+          1,
+          4
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "south": {
+         "uv": [
+          1,
+          0
+         ],
+         "uv_size": [
+          1,
+          4
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "up": {
+         "uv": [
+          1,
+          4
+         ],
+         "uv_size": [
+          -1,
+          -4
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        12,
+        -4
+       ],
+       "size": [
+        7,
+        4,
+        8
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          2,
+          8
+         ],
+         "uv_size": [
+          4,
+          2
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "west": {
+         "uv": [
+          10,
+          8
+         ],
+         "uv_size": [
+          4,
+          2
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "up": {
+         "uv": [
+          16,
+          8
+         ],
+         "uv_size": [
+          -3.5,
+          -4
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        4,
+        -8
+       ],
+       "size": [
+        7,
+        12,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          12.5,
+          10
+         ],
+         "uv_size": [
+          3.5,
+          6
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "east": {
+         "uv": [
+          6,
+          8
+         ],
+         "uv_size": [
+          2,
+          6
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "west": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          2,
+          6
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "up": {
+         "uv": [
+          16,
+          4
+         ],
+         "uv_size": [
+          -3.5,
+          -2
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        4,
+        4
+       ],
+       "size": [
+        7,
+        12,
+        4
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          2,
+          6
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "south": {
+         "uv": [
+          12.5,
+          10
+         ],
+         "uv_size": [
+          3.5,
+          6
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        },
+        "west": {
+         "uv": [
+          14,
+          8
+         ],
+         "uv_size": [
+          2,
+          6
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "up": {
+         "uv": [
+          16,
+          10
+         ],
+         "uv_size": [
+          -3.5,
+          -2
+         ],
+         "material_instance": "m_chemical_oxidizer_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        1,
+        6,
+        -2
+       ],
+       "size": [
+        4,
+        9,
+        1
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          2.75,
+          0
+         ],
+         "uv_size": [
+          0.25,
+          2.25
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "west": {
+         "uv": [
+          2.75,
+          0
+         ],
+         "uv_size": [
+          0.25,
+          2.25
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "up": {
+         "uv": [
+          2.75,
+          0
+         ],
+         "uv_size": [
+          1.0,
+          0.25
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "down": {
+         "uv": [
+          14.75,
+          1
+         ],
+         "uv_size": [
+          5.0,
+          -1
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        }
+       }
+      },
+      {
+       "origin": [
+        8,
+        3,
+        -5
+       ],
+       "size": [
+        0,
+        10,
+        10
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          5,
+          5
+         ],
+         "material_instance": "m_ports_large_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        7,
+        4,
+        -5
+       ],
+       "size": [
+        1,
+        9,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          4.5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          5,
+          4.5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          4.5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "west": {
+         "uv": [
+          0,
+          5
+         ],
+         "uv_size": [
+          5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "up": {
+         "uv": [
+          5,
+          0.5
+         ],
+         "uv_size": [
+          -5,
+          -0.5
+         ],
+         "material_instance": "m_ports_large"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        4,
+        -4
+       ],
+       "size": [
+        0,
+        8,
+        8
+       ],
+       "uv": {
+        "west": {
+         "uv": [
+          8,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        4,
+        -4
+       ],
+       "size": [
+        7,
+        8,
+        8
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          1.5,
+          10
+         ],
+         "uv_size": [
+          5.0,
+          4
+         ],
+         "material_instance": "m_chemical_oxidizer"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

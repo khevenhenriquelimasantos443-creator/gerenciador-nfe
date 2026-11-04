@@ -154,6 +154,25 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.49.0 (Mekanism completo, parte 1: minério ×5 e a química)
+
+Começo do Mekanism completo (10.7.19, o mais novo), com as receitas, os números, a arte e os modelos 3D do mod:
+- **Minério ×5**: a **Câmara de Dissolução Química** (minério + ácido sulfúrico = 1.000 mB de pasta suja), o **Lavador
+  Químico** (pasta suja + 5 vezes mais água = pasta limpa) e o **Cristalizador Químico** (200 mB de pasta limpa = 1 cristal).
+  O cristal vai à Câmara de Injeção (estilhaço) e segue o caminho do ×4. Ferro, ouro, cobre e estanho.
+- **Ácido sulfúrico**: o **Oxidador Químico** (pó de enxofre = dióxido de enxofre), o **Infusor Químico** (agora com as 3
+  receitas do mod: cloreto de hidrogênio, trióxido de enxofre e ácido sulfúrico) e o **Condensentrador Rotativo** (água ⇄
+  vapor d'água; agachado e tocando, inverte). Enxofre: pólvora na Câmara de Injeção, ou carvão na Câmara de Reação.
+- **Câmara de Reação Pressurizada**: biocombustível + água + hidrogênio = substrato e eteno; substrato + eteno + oxigênio =
+  **PEAD** (o plástico do Mekanism: pellet, barra, folha e vareta); carvão e madeira viram hidrogênio.
+- **Tanques de Químico e de Fluido** (Básico, Avançado, Elite e Definitivo, com as capacidades do mod: 64 a 8.192 baldes e
+  32 a 256 baldes). Cilindro ou balde cheio no baú de cima esvazia no tanque; vazio no baú de cima sai cheio embaixo.
+  Quebrado, o tanque leva o que tem dentro.
+- **Barril Pessoal** (54 espaços; só quem pôs abre e recolhe), o **Tanque Dinâmico** (por enquanto o bloco, para as receitas)
+  e o **minério de fluorita** (embaixo da terra, como no mod).
+- As máquinas guardam os cilindros vazios e enchem um quando juntam 1.000 mB; o gasto de energia é o do Mekanism.
+- Diário: quatro missões novas no capítulo do Mekanism.
+
 ## Novidades da 1.48.0 (inventário do criativo por mod)
 
 - O Bedrock não deixa criar aba nova no criativo. Então **tudo do modpack fica numa aba só, a última (Natureza)**, depois

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:pellet_pead",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_pellet_pead",
+      "minecraft:display_name": {
+        "value": "item.cl:pellet_pead.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

@@ -4,3 +4,4 @@ dist/*
 !dist/pouso-forcado.mcaddon
 !dist/pouso-forcado.mcworld
 referencias/
+__pycache__/

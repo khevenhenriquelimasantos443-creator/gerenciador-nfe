@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_storage_blocks_fluorite"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "#P#",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:fluorita"
+      },
+      "P": {
+        "item": "cl:fluorita"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bloco_fluorita"
+    }
+  }
+}

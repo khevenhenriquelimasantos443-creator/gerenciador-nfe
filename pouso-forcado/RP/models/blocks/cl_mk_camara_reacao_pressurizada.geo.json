@@ -1,0 +1,578 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_camara_reacao_pressurizada",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        4,
+        -2
+       ],
+       "size": [
+        16,
+        12,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          7
+         ],
+         "uv_size": [
+          8,
+          6
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "east": {
+         "uv": [
+          11,
+          2
+         ],
+         "uv_size": [
+          5,
+          6
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "south": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          6
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "west": {
+         "uv": [
+          11,
+          2
+         ],
+         "uv_size": [
+          5,
+          6
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          8,
+          0
+         ],
+         "uv_size": [
+          -8,
+          5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      },
+      {
+       "origin": [
+        2,
+        4,
+        -7
+       ],
+       "size": [
+        2,
+        11,
+        5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          1.5
+         ],
+         "uv_size": [
+          1,
+          5.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "east": {
+         "uv": [
+          6.5,
+          1.5
+         ],
+         "uv_size": [
+          -2.5,
+          5.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "west": {
+         "uv": [
+          0,
+          1.5
+         ],
+         "uv_size": [
+          2.5,
+          5.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "up": {
+         "uv": [
+          7,
+          1.5
+         ],
+         "uv_size": [
+          -2.5,
+          -1.0
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        5,
+        4,
+        -7
+       ],
+       "size": [
+        2,
+        11,
+        5
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          3,
+          1.5
+         ],
+         "uv_size": [
+          1,
+          5.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "east": {
+         "uv": [
+          0.5,
+          1.5
+         ],
+         "uv_size": [
+          2.5,
+          5.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "west": {
+         "uv": [
+          4,
+          1.5
+         ],
+         "uv_size": [
+          2.5,
+          5.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "up": {
+         "uv": [
+          7,
+          1.5
+         ],
+         "uv_size": [
+          -2.5,
+          -1.0
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        4,
+        -6
+       ],
+       "size": [
+        9,
+        10,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          2
+         ],
+         "uv_size": [
+          4.5,
+          5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "west": {
+         "uv": [
+          11.5,
+          2
+         ],
+         "uv_size": [
+          2.0,
+          5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        },
+        "up": {
+         "uv": [
+          11.5,
+          0
+         ],
+         "uv_size": [
+          -4.5,
+          2
+         ],
+         "material_instance": "m_pressurized_reaction_chamber_elements"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        4,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "east": {
+         "uv": [
+          0,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "south": {
+         "uv": [
+          0,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "west": {
+         "uv": [
+          0,
+          14
+         ],
+         "uv_size": [
+          8,
+          2
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          8,
+          0
+         ],
+         "uv_size": [
+          -8,
+          8
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      },
+      {
+       "origin": [
+        4,
+        13,
+        -6
+       ],
+       "size": [
+        1,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          2.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          10,
+          3
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "down": {
+         "uv": [
+          11,
+          2.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      },
+      {
+       "origin": [
+        4,
+        11,
+        -6
+       ],
+       "size": [
+        1,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          2.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          11,
+          3.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "down": {
+         "uv": [
+          11,
+          2.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      },
+      {
+       "origin": [
+        4,
+        9,
+        -6
+       ],
+       "size": [
+        1,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          2.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          11,
+          3.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "down": {
+         "uv": [
+          11,
+          2.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      },
+      {
+       "origin": [
+        4,
+        7,
+        -6
+       ],
+       "size": [
+        1,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          2.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          11,
+          3.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "down": {
+         "uv": [
+          11,
+          2.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      },
+      {
+       "origin": [
+        4,
+        5,
+        -6
+       ],
+       "size": [
+        1,
+        1,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          2.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "up": {
+         "uv": [
+          11,
+          3.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        },
+        "down": {
+         "uv": [
+          11,
+          2.5
+         ],
+         "uv_size": [
+          -2,
+          -0.5
+         ],
+         "material_instance": "m_pressurized_reaction_chamber"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

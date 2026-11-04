@@ -1,0 +1,1529 @@
+{
+ "itens": [
+  {
+   "id": "cristal_ferro",
+   "pt": "Cristal de Ferro",
+   "en": "Iron Crystal"
+  },
+  {
+   "id": "cristal_ouro",
+   "pt": "Cristal de Ouro",
+   "en": "Gold Crystal"
+  },
+  {
+   "id": "cristal_cobre",
+   "pt": "Cristal de Cobre",
+   "en": "Copper Crystal"
+  },
+  {
+   "id": "cristal_estanho",
+   "pt": "Cristal de Estanho",
+   "en": "Tin Crystal"
+  },
+  {
+   "id": "cristal_osmio",
+   "pt": "Cristal de Ósmio",
+   "en": "Osmium Crystal"
+  },
+  {
+   "id": "po_enxofre",
+   "pt": "Pó de Enxofre",
+   "en": "Sulfur Dust"
+  },
+  {
+   "id": "fluorita",
+   "pt": "Fluorita",
+   "en": "Fluorite"
+  },
+  {
+   "id": "po_fluorita",
+   "pt": "Pó de Fluorita",
+   "en": "Fluorite Dust"
+  },
+  {
+   "id": "substrato",
+   "pt": "Substrato",
+   "en": "Substrate"
+  },
+  {
+   "id": "pellet_pead",
+   "pt": "Pastilha de PEAD",
+   "en": "HDPE Pellet"
+  },
+  {
+   "id": "barra_pead",
+   "pt": "Vara de PEAD",
+   "en": "HDPE Rod"
+  },
+  {
+   "id": "folha_pead",
+   "pt": "Folha de PEAD",
+   "en": "HDPE Sheet"
+  },
+  {
+   "id": "vareta_pead",
+   "pt": "Barra de Polietileno",
+   "en": "PlaStick"
+  }
+ ],
+ "cilindros": [
+  {
+   "id": "cilindro_dioxido_enxofre",
+   "q": "sulfur_dioxide",
+   "pt": "Cilindro de Dióxido de enxofre líquido",
+   "en": "Liquid Sulfur Dioxide Tank",
+   "cor": "#a99d90"
+  },
+  {
+   "id": "cilindro_trioxido_enxofre",
+   "q": "sulfur_trioxide",
+   "pt": "Cilindro de Trióxido de enxofre líquido",
+   "en": "Liquid Sulfur Trioxide Tank",
+   "cor": "#ce6c6c"
+  },
+  {
+   "id": "cilindro_acido_sulfurico",
+   "q": "sulfuric_acid",
+   "pt": "Cilindro de Ácido Sulfúrico Líquido",
+   "en": "Liquid Sulfuric Acid Tank",
+   "cor": "#82802b"
+  },
+  {
+   "id": "cilindro_vapor_agua",
+   "q": "water_vapor",
+   "pt": "Cilindro de Water Vapor",
+   "en": "Water Vapor Tank",
+   "cor": "#d8e4ec"
+  },
+  {
+   "id": "cilindro_eteno",
+   "q": "ethene",
+   "pt": "Cilindro de Etileno Líquido",
+   "en": "Liquid Ethene Tank",
+   "cor": "#eaccf9"
+  },
+  {
+   "id": "cilindro_litio",
+   "q": "lithium",
+   "pt": "Cilindro de Lítio líquido",
+   "en": "Liquid Lithium Tank",
+   "cor": "#eba400"
+  },
+  {
+   "id": "cilindro_sodio",
+   "q": "sodium",
+   "pt": "Cilindro de Sódio líquido",
+   "en": "Liquid Sodium Tank",
+   "cor": "#e9fef4"
+  },
+  {
+   "id": "cilindro_pasta_suja_ferro",
+   "q": "dirty_iron",
+   "pt": "Cilindro de Pasta Suja de Ferro",
+   "en": "Dirty Iron Slurry Tank",
+   "cor": "#695547"
+  },
+  {
+   "id": "cilindro_pasta_suja_ouro",
+   "q": "dirty_gold",
+   "pt": "Cilindro de Pasta Suja de Ouro",
+   "en": "Dirty Gold Slurry Tank",
+   "cor": "#917b3d"
+  },
+  {
+   "id": "cilindro_pasta_suja_cobre",
+   "q": "dirty_copper",
+   "pt": "Cilindro de Pasta Suja de Cobre",
+   "en": "Dirty Copper Slurry Tank",
+   "cor": "#784426"
+  },
+  {
+   "id": "cilindro_pasta_suja_estanho",
+   "q": "dirty_tin",
+   "pt": "Cilindro de Pasta Suja de Estanho",
+   "en": "Dirty Tin Slurry Tank",
+   "cor": "#7a7a82"
+  },
+  {
+   "id": "cilindro_pasta_suja_osmio",
+   "q": "dirty_osmium",
+   "pt": "Cilindro de Pasta Suja de Ósmio",
+   "en": "Dirty Osmium Slurry Tank",
+   "cor": "#124875"
+  },
+  {
+   "id": "cilindro_pasta_limpa_ferro",
+   "q": "clean_iron",
+   "pt": "Cilindro de Pasta Limpa de Ferro",
+   "en": "Clean Iron Slurry Tank",
+   "cor": "#af8e77"
+  },
+  {
+   "id": "cilindro_pasta_limpa_ouro",
+   "q": "clean_gold",
+   "pt": "Cilindro de Pasta Limpa de Ouro",
+   "en": "Clean Gold Slurry Tank",
+   "cor": "#f2cd67"
+  },
+  {
+   "id": "cilindro_pasta_limpa_cobre",
+   "q": "clean_copper",
+   "pt": "Cilindro de Pasta Limpa de Cobre",
+   "en": "Clean Copper Slurry Tank",
+   "cor": "#c87240"
+  },
+  {
+   "id": "cilindro_pasta_limpa_estanho",
+   "q": "clean_tin",
+   "pt": "Cilindro de Pasta Limpa de Estanho",
+   "en": "Clean Tin Slurry Tank",
+   "cor": "#ccccd9"
+  },
+  {
+   "id": "cilindro_pasta_limpa_osmio",
+   "q": "clean_osmium",
+   "pt": "Cilindro de Pasta Limpa de Ósmio",
+   "en": "Clean Osmium Slurry Tank",
+   "cor": "#1e79c3"
+  }
+ ],
+ "cilindroDe": {
+  "oxygen": "cilindro_oxigenio",
+  "hydrogen": "cilindro_hidrogenio",
+  "chlorine": "cilindro_cloro",
+  "hydrogen_chloride": "cilindro_acido",
+  "sulfur_dioxide": "cilindro_dioxido_enxofre",
+  "sulfur_trioxide": "cilindro_trioxido_enxofre",
+  "sulfuric_acid": "cilindro_acido_sulfurico",
+  "water_vapor": "cilindro_vapor_agua",
+  "ethene": "cilindro_eteno",
+  "lithium": "cilindro_litio",
+  "sodium": "cilindro_sodio",
+  "dirty_iron": "cilindro_pasta_suja_ferro",
+  "dirty_gold": "cilindro_pasta_suja_ouro",
+  "dirty_copper": "cilindro_pasta_suja_cobre",
+  "dirty_tin": "cilindro_pasta_suja_estanho",
+  "dirty_osmium": "cilindro_pasta_suja_osmio",
+  "clean_iron": "cilindro_pasta_limpa_ferro",
+  "clean_gold": "cilindro_pasta_limpa_ouro",
+  "clean_copper": "cilindro_pasta_limpa_cobre",
+  "clean_tin": "cilindro_pasta_limpa_estanho",
+  "clean_osmium": "cilindro_pasta_limpa_osmio"
+ },
+ "maquinas": [
+  {
+   "id": "oxidador_quimico",
+   "pt": "Oxidador Químico",
+   "en": "Chemical Oxidizer",
+   "modelo": {
+    "geometria": "geometry.cl.mk_oxidador_quimico",
+    "materiais": {
+     "m_chemical_oxidizer": "clc_mkm_chemical_oxidizer",
+     "m_chemical_oxidizer_elements": "clc_mkm_chemical_oxidizer_elements",
+     "m_ports_large_led": "clc_mkm_ports_large_led",
+     "m_ports_large": "clc_mkm_ports_large",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_ports": "clc_mkm_ports"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "camara_dissolucao",
+   "pt": "Câmara de Dissolução Química",
+   "en": "Chemical Dissolution Chamber",
+   "modelo": {
+    "geometria": "geometry.cl.mk_camara_dissolucao",
+    "materiais": {
+     "m_chemical_dissolution_chamber_1": "clc_mkm_chemical_dissolution_chamber_1",
+     "m_bottom": "clc_mkm_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_ports_large": "clc_mkm_ports_large",
+     "m_ports_large_led": "clc_mkm_ports_large_led",
+     "m_chemical_dissolution_chamber_2": "clc_mkm_chemical_dissolution_chamber_2",
+     "m_glass": "clc_mkm_glass"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "lavador_quimico",
+   "pt": "Lavadora Química",
+   "en": "Chemical Washer",
+   "modelo": {
+    "geometria": "geometry.cl.mk_lavador_quimico",
+    "materiais": {
+     "m_chemical_washer": "clc_mkm_chemical_washer",
+     "m_chemical_washer_elements": "clc_mkm_chemical_washer_elements",
+     "m_ports_large": "clc_mkm_ports_large",
+     "m_ports_large_led": "clc_mkm_ports_large_led",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "cristalizador_quimico",
+   "pt": "Cristalizador Químico",
+   "en": "Chemical Crystallizer",
+   "modelo": {
+    "geometria": "geometry.cl.mk_cristalizador_quimico",
+    "materiais": {
+     "m_chemical_crystallizer_elements2": "clc_mkm_chemical_crystallizer_elements2",
+     "m_chemical_crystallizer_elements1": "clc_mkm_chemical_crystallizer_elements1",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_chemical_crystallizer": "clc_mkm_chemical_crystallizer"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "condensentrador_rotativo",
+   "pt": "Condensentrador Rotativo",
+   "en": "Rotary Condensentrator",
+   "modelo": {
+    "geometria": "geometry.cl.mk_condensentrador_rotativo",
+    "materiais": {
+     "m_rotary_condensentrator": "clc_mkm_rotary_condensentrator",
+     "m_ports_large": "clc_mkm_ports_large",
+     "m_ports_large_led": "clc_mkm_ports_large_led",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_bottom": "clc_mkm_bottom"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "camara_reacao_pressurizada",
+   "pt": "Câmara de Reação Pressurizada",
+   "en": "Pressurized Reaction Chamber",
+   "modelo": {
+    "geometria": "geometry.cl.mk_camara_reacao_pressurizada",
+    "materiais": {
+     "m_pressurized_reaction_chamber_elements": "clc_mkm_pressurized_reaction_chamber_elements",
+     "m_pressurized_reaction_chamber": "clc_mkm_pressurized_reaction_chamber"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "infusor_quimico",
+   "pt": "Infusor Químico",
+   "en": "Chemical Infuser",
+   "modelo": {
+    "geometria": "geometry.cl.mk_infusor_quimico",
+    "materiais": {
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_chemical_infuser": "clc_mkm_chemical_infuser"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ],
+ "tanques": [
+  {
+   "id": "tanque_quimico_basico",
+   "pt": "Tanque Químico Básico",
+   "en": "Basic Chemical Tank",
+   "tipo": "quimico",
+   "cap": 64000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_quimico_basico",
+    "materiais": {
+     "m_chemical_tank": "clc_mkm_chemical_tank",
+     "m_chemical_tank_basic_valve": "clc_mkm_chemical_tank_basic_valve"
+    },
+    "caixa": {
+     "origin": [
+      -5,
+      0,
+      -5
+     ],
+     "size": [
+      10,
+      16,
+      10
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_fluido_basico",
+   "pt": "Tanque de Fluidos Básico",
+   "en": "Basic Fluid Tank",
+   "tipo": "fluido",
+   "cap": 32000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_fluido_basico",
+    "materiais": {
+     "m_fluid_tank": "clc_mkm_fluid_tank",
+     "m_fluid_tank_top": "clc_mkm_fluid_tank_top",
+     "m_fluid_tank_side_off": "clc_mkm_fluid_tank_side_off",
+     "m_ports_large_led": "clc_mkm_ports_large_led"
+    },
+    "caixa": {
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      12,
+      16,
+      12
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_quimico_avancado",
+   "pt": "Tanque Químico Avançado",
+   "en": "Advanced Chemical Tank",
+   "tipo": "quimico",
+   "cap": 256000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_quimico_avancado",
+    "materiais": {
+     "m_chemical_tank": "clc_mkm_chemical_tank",
+     "m_chemical_tank_advanced_valve": "clc_mkm_chemical_tank_advanced_valve"
+    },
+    "caixa": {
+     "origin": [
+      -5,
+      0,
+      -5
+     ],
+     "size": [
+      10,
+      16,
+      10
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_fluido_avancado",
+   "pt": "Tanque Avançado de Fluidos",
+   "en": "Advanced Fluid Tank",
+   "tipo": "fluido",
+   "cap": 64000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_fluido_avancado",
+    "materiais": {
+     "m_fluid_tank": "clc_mkm_fluid_tank",
+     "m_fluid_tank_top": "clc_mkm_fluid_tank_top",
+     "m_fluid_tank_side_off": "clc_mkm_fluid_tank_side_off",
+     "m_ports_large_led": "clc_mkm_ports_large_led"
+    },
+    "caixa": {
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      12,
+      16,
+      12
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_quimico_elite",
+   "pt": "Tanque Químico Elite",
+   "en": "Elite Chemical Tank",
+   "tipo": "quimico",
+   "cap": 1024000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_quimico_elite",
+    "materiais": {
+     "m_chemical_tank": "clc_mkm_chemical_tank",
+     "m_chemical_tank_elite_valve": "clc_mkm_chemical_tank_elite_valve"
+    },
+    "caixa": {
+     "origin": [
+      -5,
+      0,
+      -5
+     ],
+     "size": [
+      10,
+      16,
+      10
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_fluido_elite",
+   "pt": "Tanque de Fluidos Elite",
+   "en": "Elite Fluid Tank",
+   "tipo": "fluido",
+   "cap": 128000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_fluido_elite",
+    "materiais": {
+     "m_fluid_tank": "clc_mkm_fluid_tank",
+     "m_fluid_tank_top": "clc_mkm_fluid_tank_top",
+     "m_fluid_tank_side_off": "clc_mkm_fluid_tank_side_off",
+     "m_ports_large_led": "clc_mkm_ports_large_led"
+    },
+    "caixa": {
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      12,
+      16,
+      12
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_quimico_definitivo",
+   "pt": "Tanque Químico Ultimate",
+   "en": "Ultimate Chemical Tank",
+   "tipo": "quimico",
+   "cap": 8192000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_quimico_definitivo",
+    "materiais": {
+     "m_chemical_tank": "clc_mkm_chemical_tank",
+     "m_chemical_tank_ultimate_valve": "clc_mkm_chemical_tank_ultimate_valve"
+    },
+    "caixa": {
+     "origin": [
+      -5,
+      0,
+      -5
+     ],
+     "size": [
+      10,
+      16,
+      10
+     ]
+    }
+   }
+  },
+  {
+   "id": "tanque_fluido_definitivo",
+   "pt": "Tanque de fluidos ultimate",
+   "en": "Ultimate Fluid Tank",
+   "tipo": "fluido",
+   "cap": 256000,
+   "modelo": {
+    "geometria": "geometry.cl.mk_tanque_fluido_definitivo",
+    "materiais": {
+     "m_fluid_tank": "clc_mkm_fluid_tank",
+     "m_fluid_tank_top": "clc_mkm_fluid_tank_top",
+     "m_fluid_tank_side_off": "clc_mkm_fluid_tank_side_off",
+     "m_ports_large_led": "clc_mkm_ports_large_led"
+    },
+    "caixa": {
+     "origin": [
+      -6,
+      0,
+      -6
+     ],
+     "size": [
+      12,
+      16,
+      12
+     ]
+    }
+   }
+  }
+ ],
+ "blocos": [
+  {
+   "id": "tanque_dinamico",
+   "pt": "Tanque Dinâmico",
+   "en": "Dynamic Tank"
+  },
+  {
+   "id": "minerio_fluorita",
+   "pt": "Minério de Fluorita",
+   "en": "Fluorite Ore"
+  },
+  {
+   "id": "minerio_fluorita_profundo",
+   "pt": "Minério de Fluorita de Ardósia",
+   "en": "Deepslate Fluorite Ore"
+  },
+  {
+   "id": "bloco_fluorita",
+   "pt": "Bloco de Fluorita",
+   "en": "Block of Fluorite"
+  },
+  {
+   "id": "barril_pessoal",
+   "pt": "Barril Pessoal",
+   "en": "Personal Barrel"
+  }
+ ],
+ "receitas": [
+  {
+   "id": "mkc_chemical_crystallizer",
+   "resultado": "cl:cristalizador_quimico",
+   "tipo": "shaped",
+   "padrao": [
+    "IAI",
+    "CXC",
+    "IAI"
+   ],
+   "chave": {
+    "A": "cl:fluorita",
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_obsidiana_refinada",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_chemical_dissolution_chamber",
+   "resultado": "cl:camara_dissolucao",
+   "tipo": "shaped",
+   "padrao": [
+    "ITI",
+    "CXC",
+    "ITI"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_obsidiana_refinada",
+    "T": "cl:tanque_quimico_basico",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_chemical_oxidizer",
+   "resultado": "cl:oxidador_quimico",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "P#T",
+    "ACA"
+   ],
+   "chave": {
+    "#": "cl:tanque_dinamico",
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "P": "cl:barril_pessoal",
+    "T": "cl:tanque_quimico_basico"
+   }
+  },
+  {
+   "id": "mkc_chemical_washer",
+   "resultado": "cl:lavador_quimico",
+   "tipo": "shaped",
+   "padrao": [
+    "IBI",
+    "CXC",
+    "ITI"
+   ],
+   "chave": {
+    "B": "cl:tanque_fluido_basico",
+    "C": "cl:circuito_controle_supremo",
+    "I": "cl:lingote_obsidiana_refinada",
+    "T": "cl:tanque_quimico_basico",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mkc_dynamic_tank",
+   "resultado": "cl:tanque_dinamico",
+   "qtd": 4,
+   "tipo": "shaped",
+   "padrao": [
+    " S ",
+    "SBS",
+    " S "
+   ],
+   "chave": {
+    "B": "minecraft:bucket",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_hdpe_rod",
+   "resultado": "cl:barra_pead",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:pellet_pead"
+   }
+  },
+  {
+   "id": "mkc_hdpe_stick",
+   "resultado": "cl:vareta_pead",
+   "tipo": "shaped",
+   "padrao": [
+    "#",
+    "#"
+   ],
+   "chave": {
+    "#": "cl:barra_pead"
+   }
+  },
+  {
+   "id": "mkc_personal_barrel",
+   "resultado": "cl:barril_pessoal",
+   "tipo": "shaped",
+   "padrao": [
+    "SGS",
+    "PCP",
+    "SSS"
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "G": "minecraft:glass",
+    "P": "minecraft:barrel",
+    "S": "cl:lingote_aco"
+   }
+  },
+  {
+   "id": "mkc_pressurized_reaction_chamber",
+   "resultado": "cl:camara_reacao_pressurizada",
+   "tipo": "shaped",
+   "padrao": [
+    "SAS",
+    "CPC",
+    "T#T"
+   ],
+   "chave": {
+    "#": "cl:tanque_dinamico",
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "P": "cl:camara_enriquecimento",
+    "S": "cl:lingote_aco",
+    "T": "cl:tanque_quimico_basico"
+   }
+  },
+  {
+   "id": "mkc_rotary_condensentrator",
+   "resultado": "cl:condensentrador_rotativo",
+   "tipo": "shaped",
+   "padrao": [
+    "GCG",
+    "TE#",
+    "GCG"
+   ],
+   "chave": {
+    "#": "cl:tanque_fluido_basico",
+    "C": "cl:circuito_controle_basico",
+    "E": "cl:tablet_energia",
+    "G": "minecraft:glass",
+    "T": "cl:tanque_quimico_basico"
+   }
+  },
+  {
+   "id": "mkc_chemical_tank_advanced",
+   "resultado": "cl:tanque_quimico_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "AOA",
+    "OPO",
+    "AOA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "O": "cl:lingote_osmio",
+    "P": "cl:tanque_quimico_basico"
+   }
+  },
+  {
+   "id": "mkc_chemical_tank_basic",
+   "resultado": "cl:tanque_quimico_basico",
+   "tipo": "shaped",
+   "padrao": [
+    "AOA",
+    "O O",
+    "AOA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "O": "cl:lingote_osmio"
+   }
+  },
+  {
+   "id": "mkc_chemical_tank_elite",
+   "resultado": "cl:tanque_quimico_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "AOA",
+    "OPO",
+    "AOA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "O": "cl:lingote_osmio",
+    "P": "cl:tanque_quimico_avancado"
+   }
+  },
+  {
+   "id": "mkc_chemical_tank_ultimate",
+   "resultado": "cl:tanque_quimico_definitivo",
+   "tipo": "shaped",
+   "padrao": [
+    "AOA",
+    "OPO",
+    "AOA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "O": "cl:lingote_osmio",
+    "P": "cl:tanque_quimico_elite"
+   }
+  },
+  {
+   "id": "mkc_processing_fluorite_from_block",
+   "resultado": "cl:fluorita",
+   "qtd": 9,
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:bloco_fluorita"
+   ]
+  },
+  {
+   "id": "mkc_storage_blocks_fluorite",
+   "resultado": "cl:bloco_fluorita",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "#P#",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:fluorita",
+    "P": "cl:fluorita"
+   }
+  },
+  {
+   "id": "mkc_fluid_tank_advanced",
+   "resultado": "cl:tanque_fluido_avancado",
+   "tipo": "shaped",
+   "padrao": [
+    "AIA",
+    "IPI",
+    "AIA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:tanque_fluido_basico"
+   }
+  },
+  {
+   "id": "mkc_fluid_tank_basic",
+   "resultado": "cl:tanque_fluido_basico",
+   "tipo": "shaped",
+   "padrao": [
+    "AIA",
+    "I I",
+    "AIA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "I": "minecraft:iron_ingot"
+   }
+  },
+  {
+   "id": "mkc_fluid_tank_elite",
+   "resultado": "cl:tanque_fluido_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "AIA",
+    "IPI",
+    "AIA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:tanque_fluido_avancado"
+   }
+  },
+  {
+   "id": "mkc_fluid_tank_ultimate",
+   "resultado": "cl:tanque_fluido_definitivo",
+   "tipo": "shaped",
+   "padrao": [
+    "AIA",
+    "IPI",
+    "AIA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:tanque_fluido_elite"
+   }
+  }
+ ],
+ "processos": {
+  "oxidizing": [
+   {
+    "entra": [
+     "cl:sal"
+    ],
+    "qtd": 1,
+    "sai_q": [
+     "brine",
+     15
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_litio"
+    ],
+    "qtd": 1,
+    "sai_q": [
+     "lithium",
+     100
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_enxofre"
+    ],
+    "qtd": 1,
+    "sai_q": [
+     "sulfur_dioxide",
+     100
+    ]
+   }
+  ],
+  "chemical_infusing": [
+   {
+    "entra_q": [
+     [
+      "hydrogen",
+      1
+     ],
+     [
+      "chlorine",
+      1
+     ]
+    ],
+    "sai_q": [
+     "hydrogen_chloride",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "oxygen",
+      1
+     ],
+     [
+      "sulfur_dioxide",
+      2
+     ]
+    ],
+    "sai_q": [
+     "sulfur_trioxide",
+     2
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "sulfur_trioxide",
+      1
+     ],
+     [
+      "water_vapor",
+      1
+     ]
+    ],
+    "sai_q": [
+     "sulfuric_acid",
+     1
+    ]
+   }
+  ],
+  "dissolution": [
+   {
+    "entra": [
+     "minecraft:gold_ore",
+     "minecraft:deepslate_gold_ore",
+     "minecraft:nether_gold_ore"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_gold",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold_block"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_gold",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_gold"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_gold",
+     2000
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_estanho_lunar"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_tin",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:copper_ore",
+     "minecraft:deepslate_copper_ore"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_copper",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper_block"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_copper",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_copper"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_copper",
+     2000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:iron_ore",
+     "minecraft:deepslate_iron_ore"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_iron",
+     1000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron_block"
+    ],
+    "qtd": 1,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      200
+     ]
+    ],
+    "sai_q": [
+     "dirty_iron",
+     6000
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:raw_iron"
+    ],
+    "qtd": 3,
+    "entra_q": [
+     [
+      "sulfuric_acid",
+      100
+     ]
+    ],
+    "sai_q": [
+     "dirty_iron",
+     2000
+    ]
+   }
+  ],
+  "washing": [
+   {
+    "entra_q": [
+     [
+      "dirty_gold",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_gold",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "dirty_lead",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_lead",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "dirty_tin",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_tin",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "dirty_copper",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_copper",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "dirty_uranium",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_uranium",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "dirty_osmium",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_osmium",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "dirty_iron",
+      1
+     ]
+    ],
+    "agua": 5,
+    "sai_q": [
+     "clean_iron",
+     1
+    ]
+   }
+  ],
+  "crystallizing": [
+   {
+    "entra_q": [
+     [
+      "clean_gold",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_ouro",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "clean_tin",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_estanho",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "clean_copper",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_cobre",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "clean_osmium",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_osmio",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "clean_iron",
+      200
+     ]
+    ],
+    "sai": [
+     "cl:cristal_ferro",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "lithium",
+      100
+     ]
+    ],
+    "sai": [
+     "cl:po_litio",
+     1
+    ]
+   },
+   {
+    "entra_q": [
+     [
+      "brine",
+      15
+     ]
+    ],
+    "sai": [
+     "cl:sal",
+     1
+    ]
+   }
+  ],
+  "rotary": [
+   {
+    "gas": "brine",
+    "liquido": "brine"
+   },
+   {
+    "gas": "water_vapor",
+    "liquido": "water"
+   }
+  ],
+  "reaction": [
+   {
+    "entra": [
+     "cl:serragem"
+    ],
+    "qtd": 8,
+    "agua": 25,
+    "entra_q": [
+     [
+      "oxygen",
+      25
+     ]
+    ],
+    "ticks": 37,
+    "energia": 0,
+    "sai_q": [
+     "hydrogen",
+     25
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:stick"
+    ],
+    "qtd": 3,
+    "agua": 10,
+    "entra_q": [
+     [
+      "oxygen",
+      10
+     ]
+    ],
+    "ticks": 15,
+    "energia": 0,
+    "sai_q": [
+     "hydrogen",
+     10
+    ]
+   },
+   {
+    "entra": [
+     "cl:substrato"
+    ],
+    "qtd": 1,
+    "agua": 0,
+    "entra_q": [
+     [
+      "oxygen",
+      10
+     ],
+     [
+      "ethene",
+      50
+     ]
+    ],
+    "ticks": 60,
+    "energia": 1000,
+    "sai": [
+     "cl:pellet_pead",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:substrato"
+    ],
+    "qtd": 1,
+    "agua": 200,
+    "entra_q": [
+     [
+      "ethene",
+      100
+     ]
+    ],
+    "ticks": 400,
+    "energia": 200,
+    "sai": [
+     "cl:substrato",
+     8
+    ],
+    "sai_q": [
+     "oxygen",
+     10
+    ]
+   },
+   {
+    "entra": [
+     "cl:biocombustivel"
+    ],
+    "qtd": 2,
+    "agua": 10,
+    "entra_q": [
+     [
+      "hydrogen",
+      100
+     ]
+    ],
+    "ticks": 100,
+    "energia": 0,
+    "sai": [
+     "cl:substrato",
+     1
+    ],
+    "sai_q": [
+     "ethene",
+     100
+    ]
+   },
+   {
+    "entra": [
+     "minecraft:coal"
+    ],
+    "qtd": 1,
+    "agua": 100,
+    "entra_q": [
+     [
+      "oxygen",
+      100
+     ]
+    ],
+    "ticks": 100,
+    "energia": 0,
+    "sai": [
+     "cl:po_enxofre",
+     1
+    ],
+    "sai_q": [
+     "hydrogen",
+     100
+    ]
+   }
+  ]
+ },
+ "ce": {
+  "oxidizing": 200,
+  "dissolution": 400,
+  "crystallizing": 800,
+  "washing": 200,
+  "chemical_infusing": 200,
+  "rotary": 50,
+  "reaction": 5
+ }
+}

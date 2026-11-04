@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_rotary_condensentrator"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GCG",
+      "TE#",
+      "GCG"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:tanque_fluido_basico"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "E": {
+        "item": "cl:tablet_energia"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "T": {
+        "item": "cl:tanque_quimico_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:condensentrador_rotativo"
+    }
+  }
+}

@@ -48,13 +48,14 @@ import { registrarEnergiaExtra, tesseract, torreDefesa } from "./maquinas/energi
 import { montadorMolecular, registrarAutocraft } from "./armazenamento/autocraft.js";
 import { cachoTamaras, mudaTamareira, registrarTamareira } from "./harvest/tamareira.js";
 import { frutoHc, hortaHc, mudaHc, registrarHc2 } from "./harvest/hc2.js";
+import { quimicaComp, registrarMekanismQuimica, tanqueComp as tanqueMkComp } from "./maquinas/mekanism_quimica.js";
 import { caixaEntrega, registrarEntrega } from "./missoes/entrega.js";
 import { registrarVariedade } from "./jogador/variedade.js";
 import { registrarCaldeirao } from "./jogador/caldeirao.js";
 import { registrarExtras } from "./mundo/extras.js";
 import { bomba, motor, pedreira, refinaria, registrarBuildcraft } from "./maquinas/buildcraft.js";
 import { componenteElevador, registrarOpenBlocks, tumulo } from "./jogador/openblocks.js";
-import { evaporador, infusorQuimico, registrarMekanism, separador } from "./maquinas/mekanism.js";
+import { evaporador, registrarMekanism, separador } from "./maquinas/mekanism.js";
 import { COMPONENTES_MK10, infusor10, injecao10, purificacao10, registrarMekanism10, triturador10 } from "./maquinas/mekanism10.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
@@ -214,9 +215,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:horta", hortaHc);
   blockComponentRegistry.registerCustomComponent("cl:muda_hc", mudaHc);
   blockComponentRegistry.registerCustomComponent("cl:fruto_hc", frutoHc);
+  blockComponentRegistry.registerCustomComponent("cl:mk_quimica", quimicaComp);
+  blockComponentRegistry.registerCustomComponent("cl:mk_tanque", tanqueMkComp);
   blockComponentRegistry.registerCustomComponent("cl:caixa_entrega", caixaEntrega);
   for (const [id, comp] of Object.entries({
-    "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador, "cl:infusor_quimico": infusorQuimico,
+    "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador,
     "cl:camara_purificacao": purificacao10, "cl:camara_injecao": injecao10, "cl:infusor_metalurgico": infusor10, // 1.21.0: Mekanism 10
     ...COMPONENTES_MK10,
     "cl:ae2_inscritor": inscritor, "cl:ae2_carregador_ae": carregadorAe, // 1.22.0: AE2
@@ -342,6 +345,7 @@ registrarEnergiaExtra();
 registrarAutocraft();
 registrarTamareira();
 registrarHc2();
+registrarMekanismQuimica();
 registrarEntrega();
 registrarVariedade();
 registrarCaldeirao();

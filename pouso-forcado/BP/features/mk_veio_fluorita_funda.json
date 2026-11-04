@@ -1,0 +1,27 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:ore_feature": {
+  "description": {
+   "identifier": "cl:mk_veio_fluorita_funda"
+  },
+  "count": 13,
+  "replace_rules": [
+   {
+    "places_block": "cl:minerio_fluorita",
+    "may_replace": [
+     "minecraft:stone",
+     "minecraft:andesite",
+     "minecraft:diorite",
+     "minecraft:granite"
+    ]
+   },
+   {
+    "places_block": "cl:minerio_fluorita_profundo",
+    "may_replace": [
+     "minecraft:deepslate",
+     "minecraft:tuff"
+    ]
+   }
+  ]
+ }
+}

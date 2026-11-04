@@ -470,6 +470,11 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "mk10_estilhaco", requer: ["mk10_aglomerado"], objetivo: { tipo: "ter", item: "cl:fragmento_ferro", qtd: 8 }, recompensa: [{ item: "cl:cilindro_acido", quantidade: 2 }] },
       { id: "mk10_circuito", requer: ["mk10_enriquecer"], objetivo: { tipo: "ter", item: "cl:circuito_controle_elite", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 2 }] },
       { id: "mk10_serraria", objetivo: { tipo: "colocar", bloco: "cl:serraria_precisao", qtd: 1 }, recompensa: [{ item: "minecraft:oak_log", quantidade: 16 }] },
+      // 1.49.0: Mekanism completo, parte 1 (minério ×5 e a química)
+      { id: "mkq_oxidador", requer: ["mk10_circuito"], objetivo: { tipo: "colocar", bloco: "cl:oxidador_quimico", qtd: 1 }, recompensa: [{ item: "minecraft:gunpowder", quantidade: 16 }] },
+      { id: "mkq_acido", requer: ["mkq_oxidador"], objetivo: { tipo: "ter", item: "cl:cilindro_acido_sulfurico", qtd: 1 }, recompensa: [{ item: "cl:cilindro_vazio", quantidade: 8 }] },
+      { id: "mkq_cristal", requer: ["mkq_acido"], objetivo: { tipo: "ter", item: "cl:cristal_ferro", qtd: 5 }, recompensa: [{ item: "minecraft:iron_ore", quantidade: 8 }] },
+      { id: "mkq_pead", requer: ["mkq_oxidador"], objetivo: { tipo: "ter", item: "cl:pellet_pead", qtd: 1 }, recompensa: [{ item: "cl:biocombustivel", quantidade: 16 }] },
     ],
   },
   {

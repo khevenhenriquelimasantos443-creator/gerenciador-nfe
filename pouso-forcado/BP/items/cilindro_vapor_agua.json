@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cilindro_vapor_agua",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cilindro_vapor_agua",
+      "minecraft:display_name": {
+        "value": "item.cl:cilindro_vapor_agua.name"
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

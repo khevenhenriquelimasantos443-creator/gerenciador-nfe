@@ -38,7 +38,7 @@ const BASE = {
   blocos: [
     maq("separador_eletrolitico", "Separador Eletrolítico", "Electrolytic Separator", "azul", "gota"),
     maq("evaporador", "Evaporador Térmico", "Thermal Evaporation Controller", "amarelo", "floco", { tick: 200 }),
-    maq("infusor_quimico", "Infusor Químico", "Chemical Infuser", "verde", "circulo"),
+    // O Infusor Químico passou para a Fase 66 (1.49.0, Mekanism completo): modelo do mod e as receitas do 10.7.
     maq("camara_purificacao", "Câmara de Purificação", "Purification Chamber", "azul", "cristal"),
     maq("camara_injecao", "Câmara de Injeção Química", "Chemical Injection Chamber", "verde", "cristal"),
     maq("infusor_metalurgico", "Infusor Metalúrgico", "Metallurgic Infuser", "vermelho", "engrenagem"),

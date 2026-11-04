@@ -1,0 +1,69 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:tanque_quimico_basico",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.mk_tanque_quimico_basico",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_mkm_chemical_tank",
+          "render_method": "alpha_test"
+        },
+        "m_chemical_tank": {
+          "texture": "clc_mkm_chemical_tank",
+          "render_method": "alpha_test"
+        },
+        "m_chemical_tank_basic_valve": {
+          "texture": "clc_mkm_chemical_tank_basic_valve",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#9aa3ab",
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:tick": {
+        "interval_range": [
+          20,
+          20
+        ],
+        "looping": true
+      },
+      "cl:mk_tanque": {},
+      "minecraft:collision_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          16,
+          10
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          16,
+          10
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}

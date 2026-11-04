@@ -385,6 +385,19 @@ escrever("BP/feature_rules/xu2_lirio_regra.json", {"format_version": "1.13.0", "
     "distribution": {"iterations": 1, "scatter_chance": chance(1 / 8), "x": {"distribution": "uniform", "extent": [0, 16]},
                      "y": "query.heightmap(variable.worldx, variable.worldz)", "z": {"distribution": "uniform", "extent": [0, 16]}}}})
 
+# 1.49.0 (Mekanism completo, parte 1): minério de fluorita com os números do mod (OreType.FLUORITE): 5 veios de até 5
+# em toda a altura abaixo de y 23 e 3 de até 13 perto do fundo (y -64 a 4), trocando pedra (ou ardósia: o profundo).
+for nome, tam, veios, y0, y1 in (("fluorita", 5, 5, -64, 23), ("fluorita_funda", 13, 3, -64, 4)):
+    escrever(f"BP/features/mk_veio_{nome}.json", {"format_version": "1.13.0", "minecraft:ore_feature": {
+        "description": {"identifier": f"cl:mk_veio_{nome}"}, "count": tam,
+        "replace_rules": [{"places_block": "cl:minerio_fluorita", "may_replace": ["minecraft:stone", "minecraft:andesite", "minecraft:diorite", "minecraft:granite"]},
+                          {"places_block": "cl:minerio_fluorita_profundo", "may_replace": ["minecraft:deepslate", "minecraft:tuff"]}]}})
+    escrever(f"BP/feature_rules/mk_veio_{nome}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:mk_veio_{nome}_regra", "places_feature": f"cl:mk_veio_{nome}"},
+        "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "overworld"}]},
+        "distribution": {"iterations": veios, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
+
 # 1.47.0 (Pam's HarvestCraft 2): as 6 hortas silvestres (cada uma no seu tipo de bioma: 1 em 20 chunks, 32 tentativas
 # espalhadas ±6 e ±2 na altura) e as árvores frutíferas (cada árvore 1 em 90 chunks na floresta do seu grupo; os frutos
 # ficam pendurados embaixo das folhas).

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cilindro_pasta_limpa_osmio",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cilindro_pasta_limpa_osmio",
+      "minecraft:display_name": {
+        "value": "item.cl:cilindro_pasta_limpa_osmio.name"
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

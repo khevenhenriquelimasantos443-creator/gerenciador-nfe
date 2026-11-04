@@ -923,9 +923,11 @@ teste("mochila_niveis", 160, (t) => {
   t.runAfterDelay(5, () => {
     inv.setItem(0, new ItemStack("cl:mochila", 1));
     j.selectedSlotIndex = 0;
+    j.isSneaking = true; // desde a 1.31.0, usar abre o menu na mão; agachado põe no chão
     j.useItemInSlot(0);
   });
   t.runAfterDelay(20, () => {
+    j.isSneaking = false;
     m = t.getDimension().getEntities({ type: "cl:mochila", location: j.location, maxDistance: 4 })[0];
     t.assert(!!m, "a mochila não foi para o chão");
     const c = m.getComponent("inventory").container;
@@ -2708,6 +2710,63 @@ teste("hc2", 300, (t) => {
     t.assert(r.macieira.endsWith("_log") && r.macas >= 1, "a muda não virou macieira com frutos");
     t.assert(r.cerejeira.endsWith("_log") && r.cerejas >= 1, "a árvore do mundo não nasceu com frutos");
     t.assert(silvestres >= 1, "a horta do mundo não nasceu");
+    t.succeed();
+  });
+});
+
+// 1.49.0: Mekanism completo, parte 1. Oxidador (enxofre → dióxido), Câmara de Dissolução (minério + ácido → pasta suja),
+// Lavador (pasta suja + água → limpa), Cristalizador (pasta limpa → cristais), Infusor (H2 + Cl2 → HCl), Condensentrador
+// (água → vapor), Câmara de Reação (biocombustível + água + H2 → substrato) e o Tanque de Químico (guarda e devolve).
+teste("mkq", 1400, (t) => {
+  const j = robo(t, { x: 7.5, y: 2, z: 7.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`mkq: ${c} -> ${e}`); } };
+  // Duas baterias cheias ao lado de cada máquina (o gasto do Mekanism esvazia uma bateria em 7 ciclos).
+  const bat = (pos) => {
+    for (const p of [pos, { ...pos, z: pos.z + 1 }]) {
+      t.setBlockType("cl:bateria", p);
+      const b = t.getBlock(p);
+      b.setPermutation(b.permutation.withState("cl:carga", 15));
+    }
+  };
+  const maquina = (x, z, id, itens, energia = true) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) for (let k = 0; k < n; k++) bau(t, { x, y: 3, z }).addItem(new ItemStack(i, 1));
+    if (energia) bat({ x: x + 1, y: 2, z });
+  };
+  maquina(0, 0, "cl:oxidador_quimico", [["cl:po_enxofre", 10], ["cl:cilindro_vazio", 1]]);
+  maquina(2, 0, "cl:camara_dissolucao", [["minecraft:iron_ore", 1], ["cl:cilindro_acido_sulfurico", 1]]);
+  maquina(4, 0, "cl:lavador_quimico", [["cl:cilindro_pasta_suja_ferro", 1], ["minecraft:water_bucket", 5]]);
+  maquina(6, 0, "cl:cristalizador_quimico", [["cl:cilindro_pasta_limpa_ferro", 1]]);
+  maquina(0, 3, "cl:infusor_quimico", [["cl:cilindro_hidrogenio", 1], ["cl:cilindro_cloro", 1]]);
+  maquina(2, 3, "cl:condensentrador_rotativo", [["minecraft:water_bucket", 1], ["cl:cilindro_vazio", 1]]);
+  maquina(4, 3, "cl:camara_reacao_pressurizada", [["cl:biocombustivel", 2], ["minecraft:water_bucket", 1], ["cl:cilindro_hidrogenio", 1]]);
+  maquina(6, 3, "cl:tanque_quimico_basico", [["cl:cilindro_oxigenio", 2]], false);
+  t.runAfterDelay(300, () => bau(t, { x: 6, y: 3, z: 3 }).addItem(new ItemStack("cl:cilindro_vazio", 1)));
+  t.runAfterDelay(1300, () => {
+    for (const [x, z] of [[0, 3], [2, 3], [4, 0]]) { const p = t.worldBlockLocation({ x, y: 2, z }); cmd(`scriptevent cl:teste_mkq estado ${p.x} ${p.y} ${p.z}`); }
+  });
+  t.runAfterDelay(1320, () => {
+    const r = {
+      so2: noBau(bau(t, { x: 0, y: 1, z: 0 }), "cl:cilindro_dioxido_enxofre"),
+      suja: noBau(bau(t, { x: 2, y: 1, z: 0 }), "cl:cilindro_pasta_suja_ferro"),
+      limpa: noBau(bau(t, { x: 4, y: 1, z: 0 }), "cl:cilindro_pasta_limpa_ferro"),
+      cristais: noBau(bau(t, { x: 6, y: 1, z: 0 }), "cl:cristal_ferro"),
+      hcl: noBau(bau(t, { x: 0, y: 1, z: 3 }), "cl:cilindro_acido"),
+      vapor: noBau(bau(t, { x: 2, y: 1, z: 3 }), "cl:cilindro_vapor_agua"),
+      substrato: noBau(bau(t, { x: 4, y: 1, z: 3 }), "cl:substrato"),
+      oxigenioDeVolta: noBau(bau(t, { x: 6, y: 1, z: 3 }), "cl:cilindro_oxigenio"),
+    };
+    log(`mkq: ${JSON.stringify(r)}`);
+    t.assert(r.so2 === 1, "o Oxidador não encheu o cilindro de dióxido de enxofre");
+    t.assert(r.suja === 1, "a Câmara de Dissolução não fez a pasta suja");
+    t.assert(r.limpa === 1, "o Lavador não fez a pasta limpa");
+    t.assert(r.cristais === 5, "o Cristalizador não fez 5 cristais");
+    t.assert(r.hcl === 1, "o Infusor não fez o cloreto de hidrogênio");
+    t.assert(r.vapor === 1, "o Condensentrador não fez o vapor");
+    t.assert(r.substrato === 1, "a Câmara de Reação não fez o substrato");
+    t.assert(r.oxigenioDeVolta === 1, "o Tanque de Químico não encheu o cilindro vazio");
     t.succeed();
   });
 });

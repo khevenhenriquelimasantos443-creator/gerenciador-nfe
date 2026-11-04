@@ -7039,6 +7039,96 @@
     },
     "clhc_noz_torrada": {
       "textures": "textures/items/cl/hc/noz_torrada"
+    },
+    "clc_cristal_ferro": {
+      "textures": "textures/items/cl/arte/cristal_ferro"
+    },
+    "clc_cristal_ouro": {
+      "textures": "textures/items/cl/arte/cristal_ouro"
+    },
+    "clc_cristal_cobre": {
+      "textures": "textures/items/cl/arte/cristal_cobre"
+    },
+    "clc_cristal_estanho": {
+      "textures": "textures/items/cl/arte/cristal_estanho"
+    },
+    "clc_cristal_osmio": {
+      "textures": "textures/items/cl/arte/cristal_osmio"
+    },
+    "clc_po_enxofre": {
+      "textures": "textures/items/cl/arte/po_enxofre"
+    },
+    "clc_fluorita": {
+      "textures": "textures/items/cl/arte/fluorita"
+    },
+    "clc_po_fluorita": {
+      "textures": "textures/items/cl/arte/po_fluorita"
+    },
+    "clc_substrato": {
+      "textures": "textures/items/cl/arte/substrato"
+    },
+    "clc_pellet_pead": {
+      "textures": "textures/items/cl/arte/pellet_pead"
+    },
+    "clc_barra_pead": {
+      "textures": "textures/items/cl/arte/barra_pead"
+    },
+    "clc_folha_pead": {
+      "textures": "textures/items/cl/arte/folha_pead"
+    },
+    "clc_vareta_pead": {
+      "textures": "textures/items/cl/arte/vareta_pead"
+    },
+    "clc_cilindro_dioxido_enxofre": {
+      "textures": "textures/items/cl/c/cilindro_dioxido_enxofre"
+    },
+    "clc_cilindro_trioxido_enxofre": {
+      "textures": "textures/items/cl/c/cilindro_trioxido_enxofre"
+    },
+    "clc_cilindro_acido_sulfurico": {
+      "textures": "textures/items/cl/c/cilindro_acido_sulfurico"
+    },
+    "clc_cilindro_vapor_agua": {
+      "textures": "textures/items/cl/c/cilindro_vapor_agua"
+    },
+    "clc_cilindro_eteno": {
+      "textures": "textures/items/cl/c/cilindro_eteno"
+    },
+    "clc_cilindro_litio": {
+      "textures": "textures/items/cl/c/cilindro_litio"
+    },
+    "clc_cilindro_sodio": {
+      "textures": "textures/items/cl/c/cilindro_sodio"
+    },
+    "clc_cilindro_pasta_suja_ferro": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_ferro"
+    },
+    "clc_cilindro_pasta_suja_ouro": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_ouro"
+    },
+    "clc_cilindro_pasta_suja_cobre": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_cobre"
+    },
+    "clc_cilindro_pasta_suja_estanho": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_estanho"
+    },
+    "clc_cilindro_pasta_suja_osmio": {
+      "textures": "textures/items/cl/c/cilindro_pasta_suja_osmio"
+    },
+    "clc_cilindro_pasta_limpa_ferro": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_ferro"
+    },
+    "clc_cilindro_pasta_limpa_ouro": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_ouro"
+    },
+    "clc_cilindro_pasta_limpa_cobre": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_cobre"
+    },
+    "clc_cilindro_pasta_limpa_estanho": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_estanho"
+    },
+    "clc_cilindro_pasta_limpa_osmio": {
+      "textures": "textures/items/cl/c/cilindro_pasta_limpa_osmio"
     }
   }
 }

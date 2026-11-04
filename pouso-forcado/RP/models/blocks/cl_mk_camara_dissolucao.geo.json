@@ -1,0 +1,1442 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_camara_dissolucao",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        7,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          3.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          3.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          3.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          3.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "up": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8.01,
+        3,
+        -4
+       ],
+       "size": [
+        1.0,
+        8,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          1,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "east": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "south": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          1,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "up": {
+         "uv": [
+          1,
+          8
+         ],
+         "uv_size": [
+          -1,
+          -8
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8.01,
+        3,
+        -4
+       ],
+       "size": [
+        0.0,
+        8,
+        8
+       ],
+       "uv": {
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.01,
+        3.01,
+        -5
+       ],
+       "size": [
+        1.0000000000000018,
+        10.0,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "west": {
+         "uv": [
+          0,
+          5.5
+         ],
+         "uv_size": [
+          5,
+          5.0
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "up": {
+         "uv": [
+          0.5,
+          5
+         ],
+         "uv_size": [
+          -0.5,
+          -5
+         ],
+         "material_instance": "m_ports_large"
+        }
+       }
+      },
+      {
+       "origin": [
+        8.010000000000002,
+        3.01,
+        -5
+       ],
+       "size": [
+        0.0,
+        10.0,
+        10
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          5,
+          5
+         ],
+         "material_instance": "m_ports_large_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        7,
+        7
+       ],
+       "size": [
+        16,
+        8,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          11.5
+         ],
+         "uv_size": [
+          8,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "east": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          8.5
+         ],
+         "uv_size": [
+          8,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "west": {
+         "uv": [
+          7.5,
+          8.5
+         ],
+         "uv_size": [
+          0.5,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        7,
+        6
+       ],
+       "size": [
+        14,
+        8,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          11.5
+         ],
+         "uv_size": [
+          7,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          1,
+          11.5
+         ],
+         "uv_size": [
+          0.5,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          7.5,
+          11.5
+         ],
+         "uv_size": [
+          0.5,
+          4.0
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        15,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "east": {
+         "uv": [
+          0,
+          7.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "south": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "west": {
+         "uv": [
+          8,
+          7.5
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "up": {
+         "uv": [
+          8,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        12,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        15
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          7
+         ],
+         "uv_size": [
+          8,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "east": {
+         "uv": [
+          0.5,
+          7
+         ],
+         "uv_size": [
+          7.5,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "west": {
+         "uv": [
+          0,
+          7
+         ],
+         "uv_size": [
+          7.5,
+          0.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "up": {
+         "uv": [
+          16,
+          15.5
+         ],
+         "uv_size": [
+          -8,
+          -7.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        },
+        "down": {
+         "uv": [
+          16,
+          7.5
+         ],
+         "uv_size": [
+          -8,
+          -7.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_2"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        7,
+        -5
+       ],
+       "size": [
+        10,
+        3,
+        11
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          5.5
+         ],
+         "uv_size": [
+          5,
+          1.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          5.5
+         ],
+         "uv_size": [
+          5,
+          1.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          5.5
+         ],
+         "uv_size": [
+          5.5,
+          1.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "up": {
+         "uv": [
+          13,
+          5.5
+         ],
+         "uv_size": [
+          -5,
+          -5.5
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        13,
+        -4
+       ],
+       "size": [
+        8,
+        2,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          9,
+          7
+         ],
+         "uv_size": [
+          4,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8.5,
+          7
+         ],
+         "uv_size": [
+          5.0,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8.5,
+          7
+         ],
+         "uv_size": [
+          5.0,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        13,
+        -7
+       ],
+       "size": [
+        1,
+        2,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          7.5,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        6,
+        13,
+        -7
+       ],
+       "size": [
+        1,
+        2,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        11,
+        -3
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        11,
+        0
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        11,
+        3
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        11,
+        -3
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        11,
+        0
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        11,
+        3
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        2,
+        11,
+        -3
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        2,
+        11,
+        0
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        2,
+        11,
+        3
+       ],
+       "size": [
+        2,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "east": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "south": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "west": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          0.5,
+          1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        },
+        "down": {
+         "uv": [
+          8.5,
+          10
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_chemical_dissolution_chamber_1"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        7,
+        -7
+       ],
+       "size": [
+        14,
+        5,
+        13
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          14,
+          5
+         ],
+         "material_instance": "m_glass"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          13,
+          5
+         ],
+         "material_instance": "m_glass"
+        },
+        "west": {
+         "uv": [
+          3,
+          0
+         ],
+         "uv_size": [
+          13,
+          5
+         ],
+         "material_instance": "m_glass"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

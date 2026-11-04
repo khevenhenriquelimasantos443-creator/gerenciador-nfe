@@ -7524,6 +7524,210 @@
     },
     "clhc_fruto_noz_2": {
       "textures": "textures/blocks/cl/hc/fruto_noz_2"
+    },
+    "clc_oxidador_quimico_frente": {
+      "textures": "textures/blocks/cl/c/oxidador_quimico_frente"
+    },
+    "clc_oxidador_quimico_lado": {
+      "textures": "textures/blocks/cl/c/oxidador_quimico_lado"
+    },
+    "clc_oxidador_quimico_topo": {
+      "textures": "textures/blocks/cl/c/oxidador_quimico_topo"
+    },
+    "clc_oxidador_quimico_baixo": {
+      "textures": "textures/blocks/cl/c/oxidador_quimico_baixo"
+    },
+    "clc_camara_dissolucao_frente": {
+      "textures": "textures/blocks/cl/c/camara_dissolucao_frente"
+    },
+    "clc_camara_dissolucao_lado": {
+      "textures": "textures/blocks/cl/c/camara_dissolucao_lado"
+    },
+    "clc_camara_dissolucao_topo": {
+      "textures": "textures/blocks/cl/c/camara_dissolucao_topo"
+    },
+    "clc_camara_dissolucao_baixo": {
+      "textures": "textures/blocks/cl/c/camara_dissolucao_baixo"
+    },
+    "clc_lavador_quimico_frente": {
+      "textures": "textures/blocks/cl/c/lavador_quimico_frente"
+    },
+    "clc_lavador_quimico_lado": {
+      "textures": "textures/blocks/cl/c/lavador_quimico_lado"
+    },
+    "clc_lavador_quimico_topo": {
+      "textures": "textures/blocks/cl/c/lavador_quimico_topo"
+    },
+    "clc_lavador_quimico_baixo": {
+      "textures": "textures/blocks/cl/c/lavador_quimico_baixo"
+    },
+    "clc_cristalizador_quimico_frente": {
+      "textures": "textures/blocks/cl/c/cristalizador_quimico_frente"
+    },
+    "clc_cristalizador_quimico_lado": {
+      "textures": "textures/blocks/cl/c/cristalizador_quimico_lado"
+    },
+    "clc_cristalizador_quimico_topo": {
+      "textures": "textures/blocks/cl/c/cristalizador_quimico_topo"
+    },
+    "clc_cristalizador_quimico_baixo": {
+      "textures": "textures/blocks/cl/c/cristalizador_quimico_baixo"
+    },
+    "clc_condensentrador_rotativo_frente": {
+      "textures": "textures/blocks/cl/c/condensentrador_rotativo_frente"
+    },
+    "clc_condensentrador_rotativo_lado": {
+      "textures": "textures/blocks/cl/c/condensentrador_rotativo_lado"
+    },
+    "clc_condensentrador_rotativo_topo": {
+      "textures": "textures/blocks/cl/c/condensentrador_rotativo_topo"
+    },
+    "clc_condensentrador_rotativo_baixo": {
+      "textures": "textures/blocks/cl/c/condensentrador_rotativo_baixo"
+    },
+    "clc_camara_reacao_pressurizada_frente": {
+      "textures": "textures/blocks/cl/c/camara_reacao_pressurizada_frente"
+    },
+    "clc_camara_reacao_pressurizada_lado": {
+      "textures": "textures/blocks/cl/c/camara_reacao_pressurizada_lado"
+    },
+    "clc_camara_reacao_pressurizada_topo": {
+      "textures": "textures/blocks/cl/c/camara_reacao_pressurizada_topo"
+    },
+    "clc_camara_reacao_pressurizada_baixo": {
+      "textures": "textures/blocks/cl/c/camara_reacao_pressurizada_baixo"
+    },
+    "clc_tanque_quimico_basico": {
+      "textures": "textures/blocks/cl/c/tanque_quimico_basico"
+    },
+    "clc_tanque_fluido_basico": {
+      "textures": "textures/blocks/cl/c/tanque_fluido_basico"
+    },
+    "clc_tanque_quimico_avancado": {
+      "textures": "textures/blocks/cl/c/tanque_quimico_avancado"
+    },
+    "clc_tanque_fluido_avancado": {
+      "textures": "textures/blocks/cl/c/tanque_fluido_avancado"
+    },
+    "clc_tanque_quimico_elite": {
+      "textures": "textures/blocks/cl/c/tanque_quimico_elite"
+    },
+    "clc_tanque_fluido_elite": {
+      "textures": "textures/blocks/cl/c/tanque_fluido_elite"
+    },
+    "clc_tanque_quimico_definitivo": {
+      "textures": "textures/blocks/cl/c/tanque_quimico_definitivo"
+    },
+    "clc_tanque_fluido_definitivo": {
+      "textures": "textures/blocks/cl/c/tanque_fluido_definitivo"
+    },
+    "clc_tanque_dinamico": {
+      "textures": "textures/blocks/cl/arte/tanque_dinamico"
+    },
+    "clc_minerio_fluorita": {
+      "textures": "textures/blocks/cl/arte/minerio_fluorita"
+    },
+    "clc_minerio_fluorita_profundo": {
+      "textures": "textures/blocks/cl/arte/minerio_fluorita_profundo"
+    },
+    "clc_bloco_fluorita": {
+      "textures": "textures/blocks/cl/arte/bloco_fluorita"
+    },
+    "clc_barril_pessoal": {
+      "textures": "textures/blocks/cl/c/barril_pessoal"
+    },
+    "clc_barril_pessoal_frente": {
+      "textures": "textures/blocks/cl/arte/barril_pessoal_frente"
+    },
+    "clc_barril_pessoal_lado": {
+      "textures": "textures/blocks/cl/arte/barril_pessoal_lado"
+    },
+    "clc_barril_pessoal_topo": {
+      "textures": "textures/blocks/cl/arte/barril_pessoal_topo"
+    },
+    "clc_barril_pessoal_baixo": {
+      "textures": "textures/blocks/cl/arte/barril_pessoal_baixo"
+    },
+    "clc_mkm_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_bottom"
+    },
+    "clc_mkm_chemical_crystallizer": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_crystallizer"
+    },
+    "clc_mkm_chemical_crystallizer_elements1": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_crystallizer_elements1"
+    },
+    "clc_mkm_chemical_crystallizer_elements2": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_crystallizer_elements2"
+    },
+    "clc_mkm_chemical_dissolution_chamber_1": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_dissolution_chamber_1"
+    },
+    "clc_mkm_chemical_dissolution_chamber_2": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_dissolution_chamber_2"
+    },
+    "clc_mkm_chemical_infuser": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_infuser"
+    },
+    "clc_mkm_chemical_oxidizer": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_oxidizer"
+    },
+    "clc_mkm_chemical_oxidizer_elements": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_oxidizer_elements"
+    },
+    "clc_mkm_chemical_tank": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_tank"
+    },
+    "clc_mkm_chemical_tank_advanced_valve": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_tank_advanced_valve"
+    },
+    "clc_mkm_chemical_tank_basic_valve": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_tank_basic_valve"
+    },
+    "clc_mkm_chemical_tank_elite_valve": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_tank_elite_valve"
+    },
+    "clc_mkm_chemical_tank_ultimate_valve": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_tank_ultimate_valve"
+    },
+    "clc_mkm_chemical_washer": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_washer"
+    },
+    "clc_mkm_chemical_washer_elements": {
+      "textures": "textures/blocks/cl/arte/mkm_chemical_washer_elements"
+    },
+    "clc_mkm_fluid_tank": {
+      "textures": "textures/blocks/cl/arte/mkm_fluid_tank"
+    },
+    "clc_mkm_fluid_tank_side_off": {
+      "textures": "textures/blocks/cl/arte/mkm_fluid_tank_side_off"
+    },
+    "clc_mkm_fluid_tank_top": {
+      "textures": "textures/blocks/cl/arte/mkm_fluid_tank_top"
+    },
+    "clc_mkm_glass": {
+      "textures": "textures/blocks/cl/arte/mkm_glass"
+    },
+    "clc_mkm_ports": {
+      "textures": "textures/blocks/cl/arte/mkm_ports"
+    },
+    "clc_mkm_ports_large": {
+      "textures": "textures/blocks/cl/arte/mkm_ports_large"
+    },
+    "clc_mkm_ports_large_led": {
+      "textures": "textures/blocks/cl/arte/mkm_ports_large_led"
+    },
+    "clc_mkm_ports_led": {
+      "textures": "textures/blocks/cl/arte/mkm_ports_led"
+    },
+    "clc_mkm_pressurized_reaction_chamber": {
+      "textures": "textures/blocks/cl/arte/mkm_pressurized_reaction_chamber"
+    },
+    "clc_mkm_pressurized_reaction_chamber_elements": {
+      "textures": "textures/blocks/cl/arte/mkm_pressurized_reaction_chamber_elements"
+    },
+    "clc_mkm_rotary_condensentrator": {
+      "textures": "textures/blocks/cl/arte/mkm_rotary_condensentrator"
     }
   }
 }

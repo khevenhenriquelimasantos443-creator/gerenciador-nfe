@@ -271,6 +271,22 @@
  },
  "receitas": [
   {
+   "id": "mk10_chemical_infuser",
+   "resultado": "cl:infusor_quimico",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "TXT",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "T": "cl:tanque_quimico_basico",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
    "id": "mk10_chemical_injection_chamber",
    "resultado": "cl:camara_injecao",
    "tipo": "shaped",
@@ -319,6 +335,22 @@
    }
   },
   {
+   "id": "mk10_energized_smelter",
+   "resultado": "cl:fundidor_energizado",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "GXG",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "G": "minecraft:glass",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
    "id": "mk10_energy_tablet",
    "resultado": "cl:tablet_energia",
    "tipo": "shaped",
@@ -347,6 +379,22 @@
     "C": "cl:circuito_controle_basico",
     "I": "minecraft:iron_ingot",
     "X": "cl:revestimento_aco"
+   }
+  },
+  {
+   "id": "mk10_jetpack",
+   "resultado": "cl:jetpack",
+   "tipo": "shaped",
+   "padrao": [
+    "SCS",
+    "ITI",
+    " I "
+   ],
+   "chave": {
+    "C": "cl:circuito_controle_basico",
+    "I": "cl:lingote_estanho",
+    "S": "cl:lingote_aco",
+    "T": "cl:tanque_quimico_basico"
    }
   },
   {
@@ -411,6 +459,21 @@
     "C": "cl:circuito_controle_avancado",
     "O": "cl:lingote_osmio",
     "P": "cl:camara_enriquecimento"
+   }
+  },
+  {
+   "id": "mk10_steel_casing",
+   "resultado": "cl:revestimento_aco",
+   "tipo": "shaped",
+   "padrao": [
+    "SGS",
+    "GOG",
+    "SGS"
+   ],
+   "chave": {
+    "G": "minecraft:glass",
+    "O": "cl:lingote_osmio",
+    "S": "cl:lingote_aco"
    }
   },
   {
@@ -685,6 +748,27 @@
    },
    {
     "entra": [
+     "cl:po_fluorita"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:fluorita",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:minerio_fluorita",
+     "cl:minerio_fluorita_profundo"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:fluorita",
+     6
+    ]
+   },
+   {
+    "entra": [
      "cl:po_quartzo"
     ],
     "qtd": 1,
@@ -817,6 +901,16 @@
    },
    {
     "entra": [
+     "cl:pellet_pead"
+    ],
+    "qtd": 3,
+    "sai": [
+     "cl:folha_pead",
+     1
+    ]
+   },
+   {
+    "entra": [
      "minecraft:cobweb"
     ],
     "qtd": 1,
@@ -907,6 +1001,16 @@
    },
    {
     "entra": [
+     "minecraft:gunpowder"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:flint",
+     1
+    ]
+   },
+   {
+    "entra": [
      "minecraft:nether_bricks"
     ],
     "qtd": 1,
@@ -942,6 +1046,16 @@
     "qtd": 1,
     "sai": [
      "minecraft:soul_soil",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_enxofre"
+    ],
+    "qtd": 1,
+    "sai": [
+     "minecraft:gunpowder",
      1
     ]
    },
@@ -1994,6 +2108,16 @@
     "qtd": 1,
     "sai": [
      "cl:po_sujo_cobre",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:fluorita"
+    ],
+    "qtd": 1,
+    "sai": [
+     "cl:po_fluorita",
      1
     ]
    },
@@ -3720,6 +3844,34 @@
     "qtdExtra": 1,
     "sai": [
      "minecraft:copper_ore",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_fluorita"
+    ],
+    "qtd": 14,
+    "extra": [
+     "minecraft:cobbled_deepslate"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_fluorita_profundo",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:po_fluorita"
+    ],
+    "qtd": 14,
+    "extra": [
+     "minecraft:cobblestone"
+    ],
+    "qtdExtra": 1,
+    "sai": [
+     "cl:minerio_fluorita",
      1
     ]
    },
@@ -6244,6 +6396,19 @@
    },
    {
     "entra": [
+     "minecraft:gunpowder"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:po_enxofre",
+     1
+    ]
+   },
+   {
+    "entra": [
      "minecraft:terracotta"
     ],
     "qtd": 1,
@@ -7011,6 +7176,19 @@
    },
    {
     "entra": [
+     "cl:cristal_ouro"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ouro",
+     1
+    ]
+   },
+   {
+    "entra": [
      "minecraft:gold_ore",
      "minecraft:deepslate_gold_ore",
      "minecraft:nether_gold_ore"
@@ -7052,6 +7230,19 @@
    },
    {
     "entra": [
+     "cl:cristal_estanho"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_estanho",
+     1
+    ]
+   },
+   {
+    "entra": [
      "cl:minerio_estanho_lunar"
     ],
     "qtd": 1,
@@ -7061,6 +7252,19 @@
     "sai": [
      "cl:fragmento_estanho",
      4
+    ]
+   },
+   {
+    "entra": [
+     "cl:cristal_cobre"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_cobre",
+     1
     ]
    },
    {
@@ -7101,6 +7305,32 @@
     "sai": [
      "cl:fragmento_cobre",
      8
+    ]
+   },
+   {
+    "entra": [
+     "cl:cristal_osmio"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_osmio",
+     1
+    ]
+   },
+   {
+    "entra": [
+     "cl:cristal_ferro"
+    ],
+    "qtd": 1,
+    "quimico": "hydrogen_chloride",
+    "quantidade": 1,
+    "porTick": true,
+    "sai": [
+     "cl:fragmento_ferro",
+     1
     ]
    },
    {
@@ -7545,6 +7775,12 @@
   },
   "osmium": {
    "cl:lingote_osmio": 200
+  },
+  "hydrogen_chloride": {
+   "cl:sal": 2
+  },
+  "sulfuric_acid": {
+   "cl:po_enxofre": 2
   },
   "bio": {
    "cl:biocombustivel": 5

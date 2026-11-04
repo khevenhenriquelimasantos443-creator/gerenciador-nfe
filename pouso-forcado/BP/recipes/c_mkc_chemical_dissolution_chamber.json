@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_chemical_dissolution_chamber"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ITI",
+      "CXC",
+      "ITI"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "I": {
+        "item": "cl:lingote_obsidiana_refinada"
+      },
+      "T": {
+        "item": "cl:tanque_quimico_basico"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:camara_dissolucao"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_fluid_tank_elite"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AIA",
+      "IPI",
+      "AIA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "item": "cl:tanque_fluido_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tanque_fluido_elite"
+    }
+  }
+}

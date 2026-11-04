@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_chemical_oxidizer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "P#T",
+      "ACA"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:tanque_dinamico"
+      },
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "P": {
+        "item": "cl:barril_pessoal"
+      },
+      "T": {
+        "item": "cl:tanque_quimico_basico"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:oxidador_quimico"
+    }
+  }
+}

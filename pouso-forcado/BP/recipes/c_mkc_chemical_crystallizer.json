@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_chemical_crystallizer"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IAI",
+      "CXC",
+      "IAI"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:fluorita"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "I": {
+        "item": "cl:lingote_obsidiana_refinada"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cristalizador_quimico"
+    }
+  }
+}

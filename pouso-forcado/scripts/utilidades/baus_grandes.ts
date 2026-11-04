@@ -1,5 +1,5 @@
 import { Block, BlockCustomComponent, BlockPermutation, Dimension, Entity, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
-import { DADOS_F51, DADOS_F53 } from "../conteudo/gerado.js";
+import { DADOS_F51, DADOS_F53, DADOS_F66 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
@@ -13,7 +13,17 @@ import { codigoDoItem, guardarNoItem, lerCodigo } from "../util/item_guarda.js";
  */
 const ENT = "cl:bau_grande";
 // 1.34.0: os armários do Farmer's Delight (27 espaços) usam a mesma tela de baú.
-const TAMANHO = { ...(DADOS_F51.baus as Readonly<Record<string, number>>), ...(DADOS_F53.armarios as Readonly<Record<string, number>>) } as Readonly<Record<string, number>>;
+// 1.49.0: o Barril Pessoal do Mekanism (54 espaços): só quem pôs abre e recolhe.
+const TAMANHO = { ...(DADOS_F51.baus as Readonly<Record<string, number>>), ...(DADOS_F53.armarios as Readonly<Record<string, number>>),
+  ...(DADOS_F66.baus as Readonly<Record<string, number>>) } as Readonly<Record<string, number>>;
+const P_DONO = "cl:dono";
+/** Barril Pessoal de outro jogador? (avisa) */
+function alheio(j: Player, m: Entity): boolean {
+  const dono = m.getDynamicProperty(P_DONO) as string | undefined;
+  if (!dono || dono === j.id) return false;
+  aviso(j, "cl.mkq.pessoal", 3);
+  return true;
+}
 const MELHORIAS = DADOS_F51.melhoriasBau as unknown as Readonly<Record<string, readonly [string, string]>>;
 const POR_PAG = 27;
 const P_TIPO = "cl:bau_tipo", P_PAG = "cl:pag", P_TUDO = "cl:paginas";
@@ -221,7 +231,8 @@ export function registrarBausGrandes(): void {
     const p = pendente.get(player.id);
     pendente.delete(player.id);
     const ok = p && system.currentTick - p.tick <= 3;
-    garantirEntidade(block, (ok ? lerCodigo<Slots>(p.cod) : undefined) ?? [], ok ? p.nome : undefined);
+    const m = garantirEntidade(block, (ok ? lerCodigo<Slots>(p.cod) : undefined) ?? [], ok ? p.nome : undefined);
+    if (m && block.typeId === "cl:barril_pessoal") m.setDynamicProperty(P_DONO, player.id);
     aviso(player, "cl.bau.dica", 4);
     if (block.typeId === "cl:bau_cobre") registrarAcao(player, "ic_cobre");
   });
@@ -229,6 +240,10 @@ export function registrarBausGrandes(): void {
   world.beforeEvents.playerInteractWithEntity.subscribe((ev) => {
     if (ev.target.typeId !== ENT) return;
     const j = ev.player, m = ev.target;
+    if (alheio(j, m)) {
+      ev.cancel = true;
+      return;
+    }
     const i = ev.itemStack;
     if (i && MELHORIAS[i.typeId.replace("cl:", "")]) {
       ev.cancel = true;
@@ -248,7 +263,7 @@ export function registrarBausGrandes(): void {
   world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
     if (hitEntity.typeId !== ENT || !(damagingEntity instanceof Player)) return;
     const j = damagingEntity;
-    system.run(() => hitEntity.isValid && recolher(j, hitEntity));
+    system.run(() => hitEntity.isValid && !alheio(j, hitEntity) && recolher(j, hitEntity));
   });
   // Bloco quebrado por outro jeito (explosão, comando): solta tudo.
   world.afterEvents.blockExplode.subscribe(({ block, explodedBlockPermutation }) => {

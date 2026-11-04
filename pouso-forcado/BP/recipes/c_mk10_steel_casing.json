@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mk10_steel_casing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SGS",
+      "GOG",
+      "SGS"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "O": {
+        "item": "cl:lingote_osmio"
+      },
+      "S": {
+        "item": "cl:lingote_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:revestimento_aco"
+    }
+  }
+}

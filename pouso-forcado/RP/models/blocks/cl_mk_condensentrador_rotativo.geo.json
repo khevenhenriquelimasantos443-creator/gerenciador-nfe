@@ -1,0 +1,1379 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_condensentrador_rotativo",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        15,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          8,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        13,
+        -8
+       ],
+       "size": [
+        16,
+        1,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          7.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          8,
+          7.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          8,
+          7.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          8,
+          7.5
+         ],
+         "uv_size": [
+          -8,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          -8
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          -8
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        11,
+        -6
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        9,
+        -6
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        -6
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        5,
+        -6
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        7,
+        5
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        9,
+        5
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        11,
+        5
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        5,
+        5
+       ],
+       "size": [
+        2,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15,
+          15.5
+         ],
+         "uv_size": [
+          1,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -1,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        6,
+        14,
+        6
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        6,
+        14,
+        -7
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        14,
+        -7
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        14,
+        6
+       ],
+       "size": [
+        1,
+        1,
+        1
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          13.5,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -0.9900000000000002,
+        5,
+        -3
+       ],
+       "size": [
+        2.0,
+        6,
+        6
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          15.5,
+          15.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        14,
+        -4
+       ],
+       "size": [
+        8,
+        1,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          15.5,
+          15.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          15.5,
+          15.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          15.5,
+          15.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          15.5,
+          15.5
+         ],
+         "uv_size": [
+          0.5,
+          0.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        1,
+        5,
+        -7
+       ],
+       "size": [
+        6,
+        8,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          12
+         ],
+         "uv_size": [
+          3,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          7,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          7,
+          12
+         ],
+         "uv_size": [
+          3,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          0,
+          12
+         ],
+         "uv_size": [
+          7,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8.01,
+        3,
+        -5
+       ],
+       "size": [
+        1.0,
+        10,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          4.5,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          0.5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          5,
+          5
+         ],
+         "material_instance": "m_ports_large"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8.01,
+        3,
+        -5
+       ],
+       "size": [
+        0.0,
+        10,
+        10
+       ],
+       "uv": {
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          5,
+          5
+         ],
+         "material_instance": "m_ports_large_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        7.01,
+        4,
+        -4
+       ],
+       "size": [
+        1.0000000000000018,
+        8,
+        8
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          1,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          1,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "up": {
+         "uv": [
+          8,
+          1
+         ],
+         "uv_size": [
+          -8,
+          -1
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        8.010000000000002,
+        4,
+        -4
+       ],
+       "size": [
+        0.0,
+        8,
+        8
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        5,
+        -7
+       ],
+       "size": [
+        6,
+        8,
+        14
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          12
+         ],
+         "uv_size": [
+          3,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          7,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          7,
+          12
+         ],
+         "uv_size": [
+          3,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          0,
+          12
+         ],
+         "uv_size": [
+          7,
+          4
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -0.5,
+        11,
+        -0.5
+       ],
+       "size": [
+        1.0,
+        2,
+        1.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -0.5,
+          -1
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        5,
+        16
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "east": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "south": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "west": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          2.5
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "up": {
+         "uv": [
+          16,
+          8
+         ],
+         "uv_size": [
+          -8,
+          -8
+         ],
+         "material_instance": "m_rotary_condensentrator"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -16
+         ],
+         "material_instance": "m_bottom"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

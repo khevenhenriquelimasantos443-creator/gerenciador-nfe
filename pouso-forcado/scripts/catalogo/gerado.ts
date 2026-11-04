@@ -1261,6 +1261,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Graphite Bar",
   "icone": "textures/items/cl/arte/barra_grafite"
  },
+ "cl:barra_pead": {
+  "pt": "Vara de PEAD",
+  "en": "HDPE Rod",
+  "icone": "textures/items/cl/arte/barra_pead"
+ },
  "cl:barras_aco_end": {
   "pt": "Barras de Aço do End",
   "en": "End Steel Bars",
@@ -1290,6 +1295,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Barril de Pedra",
   "en": "Stone Barrel",
   "icone": "textures/items/cl/arte/blocos/barril_pedra"
+ },
+ "cl:barril_pessoal": {
+  "pt": "Barril Pessoal",
+  "en": "Personal Barrel",
+  "icone": "textures/items/cl/blocos/barril_pessoal"
  },
  "cl:basalto_lunar": {
   "pt": "Basalto Lunar",
@@ -1800,6 +1810,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Fluix",
   "en": "Fluix Block",
   "icone": "textures/items/cl/blocos/bloco_fluix"
+ },
+ "cl:bloco_fluorita": {
+  "pt": "Bloco de Fluorita",
+  "en": "Block of Fluorite",
+  "icone": "textures/items/cl/blocos/bloco_fluorita"
  },
  "cl:bloco_grafite": {
   "pt": "Bloco de Grafite",
@@ -2601,6 +2616,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Chute",
   "icone": "textures/items/cl/blocos/calha_refrataria"
  },
+ "cl:camara_dissolucao": {
+  "pt": "Câmara de Dissolução Química",
+  "en": "Chemical Dissolution Chamber",
+  "icone": "textures/items/cl/blocos/camara_dissolucao"
+ },
  "cl:camara_enriquecimento": {
   "pt": "Câmara de Enriquecimento",
   "en": "Enrichment Chamber",
@@ -2615,6 +2635,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Câmara de Purificação",
   "en": "Purification Chamber",
   "icone": "textures/items/cl/blocos/camara_purificacao"
+ },
+ "cl:camara_reacao_pressurizada": {
+  "pt": "Câmara de Reação Pressurizada",
+  "en": "Pressurized Reaction Chamber",
+  "icone": "textures/items/cl/blocos/camara_reacao_pressurizada"
  },
  "cl:camel_pack": {
   "pt": "Camel Pack",
@@ -3626,20 +3651,105 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Hydrogen Chloride Tank",
   "icone": "textures/items/cl/arte/cilindro_acido"
  },
+ "cl:cilindro_acido_sulfurico": {
+  "pt": "Cilindro de Ácido Sulfúrico Líquido",
+  "en": "Liquid Sulfuric Acid Tank",
+  "icone": "textures/items/cl/c/cilindro_acido_sulfurico"
+ },
  "cl:cilindro_cloro": {
   "pt": "Cilindro de Cloro",
   "en": "Chlorine Tank",
   "icone": "textures/items/cl/arte/cilindro_cloro"
+ },
+ "cl:cilindro_dioxido_enxofre": {
+  "pt": "Cilindro de Dióxido de enxofre líquido",
+  "en": "Liquid Sulfur Dioxide Tank",
+  "icone": "textures/items/cl/c/cilindro_dioxido_enxofre"
+ },
+ "cl:cilindro_eteno": {
+  "pt": "Cilindro de Etileno Líquido",
+  "en": "Liquid Ethene Tank",
+  "icone": "textures/items/cl/c/cilindro_eteno"
  },
  "cl:cilindro_hidrogenio": {
   "pt": "Cilindro de Hidrogênio",
   "en": "Hydrogen Tank",
   "icone": "textures/items/cl/arte/cilindro_hidrogenio"
  },
+ "cl:cilindro_litio": {
+  "pt": "Cilindro de Lítio líquido",
+  "en": "Liquid Lithium Tank",
+  "icone": "textures/items/cl/c/cilindro_litio"
+ },
  "cl:cilindro_oxigenio": {
   "pt": "Cilindro de Oxigênio",
   "en": "Oxygen Tank",
   "icone": "textures/items/cl/arte/cilindro_oxigenio"
+ },
+ "cl:cilindro_pasta_limpa_cobre": {
+  "pt": "Cilindro de Pasta Limpa de Cobre",
+  "en": "Clean Copper Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_limpa_cobre"
+ },
+ "cl:cilindro_pasta_limpa_estanho": {
+  "pt": "Cilindro de Pasta Limpa de Estanho",
+  "en": "Clean Tin Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_limpa_estanho"
+ },
+ "cl:cilindro_pasta_limpa_ferro": {
+  "pt": "Cilindro de Pasta Limpa de Ferro",
+  "en": "Clean Iron Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_limpa_ferro"
+ },
+ "cl:cilindro_pasta_limpa_osmio": {
+  "pt": "Cilindro de Pasta Limpa de Ósmio",
+  "en": "Clean Osmium Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_limpa_osmio"
+ },
+ "cl:cilindro_pasta_limpa_ouro": {
+  "pt": "Cilindro de Pasta Limpa de Ouro",
+  "en": "Clean Gold Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_limpa_ouro"
+ },
+ "cl:cilindro_pasta_suja_cobre": {
+  "pt": "Cilindro de Pasta Suja de Cobre",
+  "en": "Dirty Copper Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_suja_cobre"
+ },
+ "cl:cilindro_pasta_suja_estanho": {
+  "pt": "Cilindro de Pasta Suja de Estanho",
+  "en": "Dirty Tin Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_suja_estanho"
+ },
+ "cl:cilindro_pasta_suja_ferro": {
+  "pt": "Cilindro de Pasta Suja de Ferro",
+  "en": "Dirty Iron Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_suja_ferro"
+ },
+ "cl:cilindro_pasta_suja_osmio": {
+  "pt": "Cilindro de Pasta Suja de Ósmio",
+  "en": "Dirty Osmium Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_suja_osmio"
+ },
+ "cl:cilindro_pasta_suja_ouro": {
+  "pt": "Cilindro de Pasta Suja de Ouro",
+  "en": "Dirty Gold Slurry Tank",
+  "icone": "textures/items/cl/c/cilindro_pasta_suja_ouro"
+ },
+ "cl:cilindro_sodio": {
+  "pt": "Cilindro de Sódio líquido",
+  "en": "Liquid Sodium Tank",
+  "icone": "textures/items/cl/c/cilindro_sodio"
+ },
+ "cl:cilindro_trioxido_enxofre": {
+  "pt": "Cilindro de Trióxido de enxofre líquido",
+  "en": "Liquid Sulfur Trioxide Tank",
+  "icone": "textures/items/cl/c/cilindro_trioxido_enxofre"
+ },
+ "cl:cilindro_vapor_agua": {
+  "pt": "Cilindro de Water Vapor",
+  "en": "Water Vapor Tank",
+  "icone": "textures/items/cl/c/cilindro_vapor_agua"
  },
  "cl:cilindro_vazio": {
   "pt": "Cilindro de Gás Vazio",
@@ -3916,6 +4026,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Advanced Condenser",
   "icone": "textures/items/cl/arte/blocos/condensador_avancado"
  },
+ "cl:condensentrador_rotativo": {
+  "pt": "Condensentrador Rotativo",
+  "en": "Rotary Condensentrator",
+  "icone": "textures/items/cl/blocos/condensentrador_rotativo"
+ },
  "cl:conduto_energia": {
   "pt": "Conduto de Energia",
   "en": "Energy Conduit",
@@ -4146,6 +4261,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Weather Crystal",
   "icone": "textures/items/cl/arte/cristal_climatico"
  },
+ "cl:cristal_cobre": {
+  "pt": "Cristal de Cobre",
+  "en": "Copper Crystal",
+  "icone": "textures/items/cl/arte/cristal_cobre"
+ },
  "cl:cristal_ender": {
   "pt": "Cristal do Ender",
   "en": "Ender Crystal",
@@ -4155,6 +4275,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cristal Espiritual",
   "en": "Spirited Crystal",
   "icone": "textures/items/cl/arte/cristal_espiritual"
+ },
+ "cl:cristal_estanho": {
+  "pt": "Cristal de Estanho",
+  "en": "Tin Crystal",
+  "icone": "textures/items/cl/arte/cristal_estanho"
+ },
+ "cl:cristal_ferro": {
+  "pt": "Cristal de Ferro",
+  "en": "Iron Crystal",
+  "icone": "textures/items/cl/arte/cristal_ferro"
  },
  "cl:cristal_fluix": {
   "pt": "Cristal de Fluix",
@@ -4170,6 +4300,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cristal Nitro",
   "en": "Nitro Crystal",
   "icone": "textures/items/cl/arte/cristal_nitro"
+ },
+ "cl:cristal_osmio": {
+  "pt": "Cristal de Ósmio",
+  "en": "Osmium Crystal",
+  "icone": "textures/items/cl/arte/cristal_osmio"
+ },
+ "cl:cristal_ouro": {
+  "pt": "Cristal de Ouro",
+  "en": "Gold Crystal",
+  "icone": "textures/items/cl/arte/cristal_ouro"
  },
  "cl:cristal_presciencia": {
   "pt": "Cristal da Presciência",
@@ -4230,6 +4370,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cristal Vibrante",
   "en": "Vibrant Crystal",
   "icone": "textures/items/cl/arte/cristal_vibrante"
+ },
+ "cl:cristalizador_quimico": {
+  "pt": "Cristalizador Químico",
+  "en": "Chemical Crystallizer",
+  "icone": "textures/items/cl/blocos/cristalizador_quimico"
  },
  "cl:cubo_energia_avancado": {
   "pt": "Cubo de Energia Avançado",
@@ -5716,6 +5861,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Helium Flamingo",
   "icone": "textures/items/cl/arte/flamingo_helio"
  },
+ "cl:fluorita": {
+  "pt": "Fluorita",
+  "en": "Fluorite",
+  "icone": "textures/items/cl/arte/fluorita"
+ },
  "cl:fogao": {
   "pt": "Fogão",
   "en": "Stove",
@@ -5885,6 +6035,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Folha Infestada",
   "en": "Infested Leaves",
   "icone": "textures/items/cl/arte/blocos/folha_infestada"
+ },
+ "cl:folha_pead": {
+  "pt": "Folha de PEAD",
+  "en": "HDPE Sheet",
+  "icone": "textures/items/cl/arte/folha_pead"
  },
  "cl:folha_plastico": {
   "pt": "Folha de Plástico",
@@ -7336,6 +7491,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Swasher",
   "icone": "textures/items/cl/arte/lavador"
  },
+ "cl:lavador_quimico": {
+  "pt": "Lavadora Química",
+  "en": "Chemical Washer",
+  "icone": "textures/items/cl/blocos/lavador_quimico"
+ },
  "cl:legumes_assados": {
   "pt": "Legumes Assados",
   "en": "Baked Vegetable Medly",
@@ -8781,6 +8941,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Moon Tin Ore",
   "icone": "textures/items/cl/blocos/minerio_estanho_lunar"
  },
+ "cl:minerio_fluorita": {
+  "pt": "Minério de Fluorita",
+  "en": "Fluorite Ore",
+  "icone": "textures/items/cl/blocos/minerio_fluorita"
+ },
+ "cl:minerio_fluorita_profundo": {
+  "pt": "Minério de Fluorita de Ardósia",
+  "en": "Deepslate Fluorite Ore",
+  "icone": "textures/items/cl/blocos/minerio_fluorita_profundo"
+ },
  "cl:minerio_queijo": {
   "pt": "Minério de Queijo",
   "en": "Cheese Ore",
@@ -10085,6 +10255,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Oxicoco",
   "en": "Cranberry",
   "icone": "textures/items/cl/hc/oxicoco"
+ },
+ "cl:oxidador_quimico": {
+  "pt": "Oxidador Químico",
+  "en": "Chemical Oxidizer",
+  "icone": "textures/items/cl/blocos/oxidador_quimico"
  },
  "cl:pa_aco": {
   "pt": "Pá de Aço",
@@ -13101,6 +13276,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Fish and Chips",
   "icone": "textures/items/cl/hc/peixe_fritas"
  },
+ "cl:pellet_pead": {
+  "pt": "Pastilha de PEAD",
+  "en": "HDPE Pellet",
+  "icone": "textures/items/cl/arte/pellet_pead"
+ },
  "cl:pemmican": {
   "pt": "Pemmican",
   "en": "Pemmican",
@@ -14576,6 +14756,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Diamond Dust",
   "icone": "textures/items/cl/arte/po_diamante"
  },
+ "cl:po_enxofre": {
+  "pt": "Pó de Enxofre",
+  "en": "Sulfur Dust",
+  "icone": "textures/items/cl/arte/po_enxofre"
+ },
  "cl:po_estanho": {
   "pt": "Pó de Estanho",
   "en": "Pulverized Tin",
@@ -14590,6 +14775,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pó de Fluix",
   "en": "Fluix Dust",
   "icone": "textures/items/cl/arte/po_fluix"
+ },
+ "cl:po_fluorita": {
+  "pt": "Pó de Fluorita",
+  "en": "Fluorite Dust",
+  "icone": "textures/items/cl/arte/po_fluorita"
  },
  "cl:po_lapis": {
   "pt": "Pó de Lápis-lazúli",
@@ -16161,6 +16351,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Chocolate Ice Cream",
   "icone": "textures/items/cl/hc/sorvete_chocolate"
  },
+ "cl:substrato": {
+  "pt": "Substrato",
+  "en": "Substrate",
+  "icone": "textures/items/cl/arte/substrato"
+ },
  "cl:suco_bagas_brilhantes": {
   "pt": "Suco de Bagas Brilhantes",
   "en": "Glow Berry Juice",
@@ -16276,10 +16471,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Scorched Tank",
   "icone": "textures/items/cl/blocos/tanque_chamuscado"
  },
+ "cl:tanque_dinamico": {
+  "pt": "Tanque Dinâmico",
+  "en": "Dynamic Tank",
+  "icone": "textures/items/cl/blocos/tanque_dinamico"
+ },
  "cl:tanque_fluido": {
   "pt": "Tanque de Fluido",
   "en": "Fluid Tank",
   "icone": "textures/items/cl/blocos/tanque_fluido"
+ },
+ "cl:tanque_fluido_avancado": {
+  "pt": "Tanque Avançado de Fluidos",
+  "en": "Advanced Fluid Tank",
+  "icone": "textures/items/cl/blocos/tanque_fluido_avancado"
+ },
+ "cl:tanque_fluido_basico": {
+  "pt": "Tanque de Fluidos Básico",
+  "en": "Basic Fluid Tank",
+  "icone": "textures/items/cl/blocos/tanque_fluido_basico"
+ },
+ "cl:tanque_fluido_definitivo": {
+  "pt": "Tanque de fluidos ultimate",
+  "en": "Ultimate Fluid Tank",
+  "icone": "textures/items/cl/blocos/tanque_fluido_definitivo"
+ },
+ "cl:tanque_fluido_elite": {
+  "pt": "Tanque de Fluidos Elite",
+  "en": "Elite Fluid Tank",
+  "icone": "textures/items/cl/blocos/tanque_fluido_elite"
  },
  "cl:tanque_fluido_pressurizado": {
   "pt": "Tanque de Fluido Pressurizado",
@@ -16300,6 +16520,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tanque de Oxigênio Pesado",
   "en": "Heavy Oxygen Tank",
   "icone": "textures/items/cl/arte/tanque_oxigenio_pesado"
+ },
+ "cl:tanque_quimico_avancado": {
+  "pt": "Tanque Químico Avançado",
+  "en": "Advanced Chemical Tank",
+  "icone": "textures/items/cl/blocos/tanque_quimico_avancado"
+ },
+ "cl:tanque_quimico_basico": {
+  "pt": "Tanque Químico Básico",
+  "en": "Basic Chemical Tank",
+  "icone": "textures/items/cl/blocos/tanque_quimico_basico"
+ },
+ "cl:tanque_quimico_definitivo": {
+  "pt": "Tanque Químico Ultimate",
+  "en": "Ultimate Chemical Tank",
+  "icone": "textures/items/cl/blocos/tanque_quimico_definitivo"
+ },
+ "cl:tanque_quimico_elite": {
+  "pt": "Tanque Químico Elite",
+  "en": "Elite Chemical Tank",
+  "icone": "textures/items/cl/blocos/tanque_quimico_elite"
  },
  "cl:tanque_refratario": {
   "pt": "Tanque Refratário",
@@ -17045,6 +17285,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Varal",
   "en": "Drying Rack",
   "icone": "textures/items/cl/blocos/varal"
+ },
+ "cl:vareta_pead": {
+  "pt": "Barra de Polietileno",
+  "en": "PlaStick",
+  "icone": "textures/items/cl/arte/vareta_pead"
  },
  "cl:varinha_construtor": {
   "pt": "Varinha do Construtor",
@@ -18214,11 +18459,6 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Ferro",
   "en": "Block of Iron",
   "icone": "textures/blocks/iron_block"
- },
- "minecraft:iron_chestplate": {
-  "pt": "Peitoral de Ferro",
-  "en": "Iron Chestplate",
-  "icone": "textures/items/iron_chestplate"
  },
  "minecraft:iron_helmet": {
   "pt": "Capacete de Ferro",
@@ -31977,26 +32217,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
-  "id": "cl:c_infusor_quimico",
-  "resultado": "cl:infusor_quimico",
-  "qtd": 1,
-  "grade": [
-   "CLC",
-   "AEA",
-   "CLC"
-  ],
-  "chaves": {
-   "C": "cl:cilindro_vazio",
-   "L": "cl:liga_enriquecida",
-   "A": "cl:lingote_aco",
-   "E": "cl:estrutura_maquina"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
   "id": "cl:c_insolador",
   "resultado": "cl:insolador",
   "qtd": 1,
@@ -32110,26 +32330,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "#": "cl:jaspe_polido"
-  },
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_jetpack",
-  "resultado": "cl:jetpack",
-  "qtd": 1,
-  "grade": [
-   "AHA",
-   "LCL",
-   "A A"
-  ],
-  "chaves": {
-   "A": "cl:lingote_aco",
-   "H": "cl:cilindro_hidrogenio",
-   "L": "cl:liga_enriquecida",
-   "C": "minecraft:iron_chestplate"
   },
   "estacoes": [
    "crafting_table"
@@ -34364,6 +34564,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mk10_chemical_infuser",
+  "resultado": "cl:infusor_quimico",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "TXT",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico",
+   "T": "cl:tanque_quimico_basico",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mk10_chemical_injection_chamber",
   "resultado": "cl:camara_injecao",
   "qtd": 1,
@@ -34465,6 +34685,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "A": "cl:liga_enriquecida",
    "I": "minecraft:iron_ingot",
    "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk10_energized_smelter",
+  "resultado": "cl:fundidor_energizado",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "GXG",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "G": "minecraft:glass",
+   "X": "cl:revestimento_aco"
   },
   "estacoes": [
    "crafting_table"
@@ -34591,6 +34831,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mk10_jetpack",
+  "resultado": "cl:jetpack",
+  "qtd": 1,
+  "grade": [
+   "SCS",
+   "ITI",
+   " I "
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_basico",
+   "I": "cl:lingote_estanho",
+   "S": "cl:lingote_aco",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mk10_metallurgic_infuser",
   "resultado": "cl:infusor_metalurgico",
   "qtd": 1,
@@ -34664,6 +34924,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:circuito_controle_avancado",
    "O": "cl:lingote_osmio",
    "P": "cl:camara_enriquecimento"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mk10_steel_casing",
+  "resultado": "cl:revestimento_aco",
+  "qtd": 1,
+  "grade": [
+   "SGS",
+   "GOG",
+   "SGS"
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "O": "cl:lingote_osmio",
+   "S": "cl:lingote_aco"
   },
   "estacoes": [
    "crafting_table"
@@ -35844,6 +36123,384 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "X": "cl:lingote_osmio",
    "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_crystallizer",
+  "resultado": "cl:cristalizador_quimico",
+  "qtd": 1,
+  "grade": [
+   "IAI",
+   "CXC",
+   "IAI"
+  ],
+  "chaves": {
+   "A": "cl:fluorita",
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_obsidiana_refinada",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_dissolution_chamber",
+  "resultado": "cl:camara_dissolucao",
+  "qtd": 1,
+  "grade": [
+   "ITI",
+   "CXC",
+   "ITI"
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_obsidiana_refinada",
+   "T": "cl:tanque_quimico_basico",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_oxidizer",
+  "resultado": "cl:oxidador_quimico",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "P#T",
+   "ACA"
+  ],
+  "chaves": {
+   "#": "cl:tanque_dinamico",
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico",
+   "P": "cl:barril_pessoal",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_tank_advanced",
+  "resultado": "cl:tanque_quimico_avancado",
+  "qtd": 1,
+  "grade": [
+   "AOA",
+   "OPO",
+   "AOA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "O": "cl:lingote_osmio",
+   "P": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_tank_basic",
+  "resultado": "cl:tanque_quimico_basico",
+  "qtd": 1,
+  "grade": [
+   "AOA",
+   "O O",
+   "AOA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "O": "cl:lingote_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_tank_elite",
+  "resultado": "cl:tanque_quimico_elite",
+  "qtd": 1,
+  "grade": [
+   "AOA",
+   "OPO",
+   "AOA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "O": "cl:lingote_osmio",
+   "P": "cl:tanque_quimico_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_tank_ultimate",
+  "resultado": "cl:tanque_quimico_definitivo",
+  "qtd": 1,
+  "grade": [
+   "AOA",
+   "OPO",
+   "AOA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "O": "cl:lingote_osmio",
+   "P": "cl:tanque_quimico_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_washer",
+  "resultado": "cl:lavador_quimico",
+  "qtd": 1,
+  "grade": [
+   "IBI",
+   "CXC",
+   "ITI"
+  ],
+  "chaves": {
+   "B": "cl:tanque_fluido_basico",
+   "C": "cl:circuito_controle_supremo",
+   "I": "cl:lingote_obsidiana_refinada",
+   "T": "cl:tanque_quimico_basico",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_dynamic_tank",
+  "resultado": "cl:tanque_dinamico",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SBS",
+   " S "
+  ],
+  "chaves": {
+   "B": "minecraft:bucket",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_fluid_tank_advanced",
+  "resultado": "cl:tanque_fluido_avancado",
+  "qtd": 1,
+  "grade": [
+   "AIA",
+   "IPI",
+   "AIA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:tanque_fluido_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_fluid_tank_basic",
+  "resultado": "cl:tanque_fluido_basico",
+  "qtd": 1,
+  "grade": [
+   "AIA",
+   "I I",
+   "AIA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_fluid_tank_elite",
+  "resultado": "cl:tanque_fluido_elite",
+  "qtd": 1,
+  "grade": [
+   "AIA",
+   "IPI",
+   "AIA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:tanque_fluido_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_fluid_tank_ultimate",
+  "resultado": "cl:tanque_fluido_definitivo",
+  "qtd": 1,
+  "grade": [
+   "AIA",
+   "IPI",
+   "AIA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:tanque_fluido_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hdpe_rod",
+  "resultado": "cl:barra_pead",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:pellet_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_hdpe_stick",
+  "resultado": "cl:vareta_pead",
+  "qtd": 1,
+  "grade": [
+   "#",
+   "#"
+  ],
+  "chaves": {
+   "#": "cl:barra_pead"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_personal_barrel",
+  "resultado": "cl:barril_pessoal",
+  "qtd": 1,
+  "grade": [
+   "SGS",
+   "PCP",
+   "SSS"
+  ],
+  "chaves": {
+   "C": "cl:circuito_controle_basico",
+   "G": "minecraft:glass",
+   "P": "minecraft:barrel",
+   "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_pressurized_reaction_chamber",
+  "resultado": "cl:camara_reacao_pressurizada",
+  "qtd": 1,
+  "grade": [
+   "SAS",
+   "CPC",
+   "T#T"
+  ],
+  "chaves": {
+   "#": "cl:tanque_dinamico",
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico",
+   "P": "cl:camara_enriquecimento",
+   "S": "cl:lingote_aco",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_mkc_processing_fluorite_from_block",
+  "resultado": "cl:fluorita",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_fluorita",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_rotary_condensentrator",
+  "resultado": "cl:condensentrador_rotativo",
+  "qtd": 1,
+  "grade": [
+   "GCG",
+   "TE#",
+   "GCG"
+  ],
+  "chaves": {
+   "#": "cl:tanque_fluido_basico",
+   "C": "cl:circuito_controle_basico",
+   "E": "cl:tablet_energia",
+   "G": "minecraft:glass",
+   "T": "cl:tanque_quimico_basico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_storage_blocks_fluorite",
+  "resultado": "cl:bloco_fluorita",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "#P#",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:fluorita",
+   "P": "cl:fluorita"
   },
   "estacoes": [
    "crafting_table"
@@ -43116,25 +43773,6 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
-  "estacoes": [
-   "crafting_table"
-  ]
- },
- {
-  "tipo": "bancada",
-  "id": "cl:c_revestimento_aco",
-  "resultado": "cl:revestimento_aco",
-  "qtd": 1,
-  "grade": [
-   "SGS",
-   "GPG",
-   "SGS"
-  ],
-  "chaves": {
-   "S": "cl:lingote_aco",
-   "G": "minecraft:glass",
-   "P": "cl:lingote_osmio"
-  },
   "estacoes": [
    "crafting_table"
   ]
