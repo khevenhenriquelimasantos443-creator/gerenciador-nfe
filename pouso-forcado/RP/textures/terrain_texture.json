@@ -1730,88 +1730,88 @@
       "textures": "textures/blocks/cl/arte/lampada_rosa_baixo"
     },
     "clc_compressor_frente": {
-      "textures": "textures/blocks/cl/c/compressor_frente"
+      "textures": "textures/blocks/cl/arte/compressor_frente"
     },
     "clc_compressor_lado": {
-      "textures": "textures/blocks/cl/c/compressor_lado"
+      "textures": "textures/blocks/cl/arte/compressor_lado"
     },
     "clc_compressor_topo": {
-      "textures": "textures/blocks/cl/c/compressor_topo"
+      "textures": "textures/blocks/cl/arte/compressor_topo"
     },
     "clc_compressor_baixo": {
-      "textures": "textures/blocks/cl/c/compressor_baixo"
+      "textures": "textures/blocks/cl/arte/compressor_baixo"
     },
     "clc_compressor_eletrico_frente": {
-      "textures": "textures/blocks/cl/c/compressor_eletrico_frente"
+      "textures": "textures/blocks/cl/arte/compressor_eletrico_frente"
     },
     "clc_compressor_eletrico_lado": {
-      "textures": "textures/blocks/cl/c/compressor_eletrico_lado"
+      "textures": "textures/blocks/cl/arte/compressor_eletrico_lado"
     },
     "clc_compressor_eletrico_topo": {
-      "textures": "textures/blocks/cl/c/compressor_eletrico_topo"
+      "textures": "textures/blocks/cl/arte/compressor_eletrico_topo"
     },
     "clc_compressor_eletrico_baixo": {
-      "textures": "textures/blocks/cl/c/compressor_eletrico_baixo"
+      "textures": "textures/blocks/cl/arte/compressor_eletrico_baixo"
     },
     "clc_fabricador_circuitos_frente": {
-      "textures": "textures/blocks/cl/c/fabricador_circuitos_frente"
+      "textures": "textures/blocks/cl/arte/fabricador_circuitos_frente"
     },
     "clc_fabricador_circuitos_lado": {
-      "textures": "textures/blocks/cl/c/fabricador_circuitos_lado"
+      "textures": "textures/blocks/cl/arte/fabricador_circuitos_lado"
     },
     "clc_fabricador_circuitos_topo": {
-      "textures": "textures/blocks/cl/c/fabricador_circuitos_topo"
+      "textures": "textures/blocks/cl/arte/fabricador_circuitos_topo"
     },
     "clc_fabricador_circuitos_baixo": {
-      "textures": "textures/blocks/cl/c/fabricador_circuitos_baixo"
+      "textures": "textures/blocks/cl/arte/fabricador_circuitos_baixo"
     },
     "clc_coletor_oxigenio_frente": {
-      "textures": "textures/blocks/cl/c/coletor_oxigenio_frente"
+      "textures": "textures/blocks/cl/arte/coletor_oxigenio_frente"
     },
     "clc_coletor_oxigenio_lado": {
-      "textures": "textures/blocks/cl/c/coletor_oxigenio_lado"
+      "textures": "textures/blocks/cl/arte/coletor_oxigenio_lado"
     },
     "clc_coletor_oxigenio_topo": {
-      "textures": "textures/blocks/cl/c/coletor_oxigenio_topo"
+      "textures": "textures/blocks/cl/arte/coletor_oxigenio_topo"
     },
     "clc_coletor_oxigenio_baixo": {
-      "textures": "textures/blocks/cl/c/coletor_oxigenio_baixo"
+      "textures": "textures/blocks/cl/arte/coletor_oxigenio_baixo"
     },
     "clc_compressor_oxigenio_frente": {
-      "textures": "textures/blocks/cl/c/compressor_oxigenio_frente"
+      "textures": "textures/blocks/cl/arte/compressor_oxigenio_frente"
     },
     "clc_compressor_oxigenio_lado": {
-      "textures": "textures/blocks/cl/c/compressor_oxigenio_lado"
+      "textures": "textures/blocks/cl/arte/compressor_oxigenio_lado"
     },
     "clc_compressor_oxigenio_topo": {
-      "textures": "textures/blocks/cl/c/compressor_oxigenio_topo"
+      "textures": "textures/blocks/cl/arte/compressor_oxigenio_topo"
     },
     "clc_compressor_oxigenio_baixo": {
-      "textures": "textures/blocks/cl/c/compressor_oxigenio_baixo"
+      "textures": "textures/blocks/cl/arte/compressor_oxigenio_baixo"
     },
     "clc_carregador_combustivel_frente": {
-      "textures": "textures/blocks/cl/c/carregador_combustivel_frente"
+      "textures": "textures/blocks/cl/arte/carregador_combustivel_frente"
     },
     "clc_carregador_combustivel_lado": {
-      "textures": "textures/blocks/cl/c/carregador_combustivel_lado"
+      "textures": "textures/blocks/cl/arte/carregador_combustivel_lado"
     },
     "clc_carregador_combustivel_topo": {
-      "textures": "textures/blocks/cl/c/carregador_combustivel_topo"
+      "textures": "textures/blocks/cl/arte/carregador_combustivel_topo"
     },
     "clc_carregador_combustivel_baixo": {
-      "textures": "textures/blocks/cl/c/carregador_combustivel_baixo"
+      "textures": "textures/blocks/cl/arte/carregador_combustivel_baixo"
     },
     "clc_bancada_nasa_frente": {
-      "textures": "textures/blocks/cl/c/bancada_nasa_frente"
+      "textures": "textures/blocks/cl/arte/bancada_nasa_frente"
     },
     "clc_bancada_nasa_lado": {
-      "textures": "textures/blocks/cl/c/bancada_nasa_lado"
+      "textures": "textures/blocks/cl/arte/bancada_nasa_lado"
     },
     "clc_bancada_nasa_topo": {
-      "textures": "textures/blocks/cl/c/bancada_nasa_topo"
+      "textures": "textures/blocks/cl/arte/bancada_nasa_topo"
     },
     "clc_bancada_nasa_baixo": {
-      "textures": "textures/blocks/cl/c/bancada_nasa_baixo"
+      "textures": "textures/blocks/cl/arte/bancada_nasa_baixo"
     },
     "clc_plataforma_lancamento": {
       "textures": "textures/blocks/cl/c/plataforma_lancamento"
@@ -1820,22 +1820,22 @@
       "textures": "textures/blocks/cl/c/solo_lunar"
     },
     "clc_terra_lunar": {
-      "textures": "textures/blocks/cl/c/terra_lunar"
+      "textures": "textures/blocks/cl/arte/terra_lunar"
     },
     "clc_rocha_lunar": {
-      "textures": "textures/blocks/cl/c/rocha_lunar"
+      "textures": "textures/blocks/cl/arte/rocha_lunar"
     },
     "clc_minerio_cobre_lunar": {
-      "textures": "textures/blocks/cl/c/minerio_cobre_lunar"
+      "textures": "textures/blocks/cl/arte/minerio_cobre_lunar"
     },
     "clc_minerio_estanho_lunar": {
-      "textures": "textures/blocks/cl/c/minerio_estanho_lunar"
+      "textures": "textures/blocks/cl/arte/minerio_estanho_lunar"
     },
     "clc_minerio_queijo": {
-      "textures": "textures/blocks/cl/c/minerio_queijo"
+      "textures": "textures/blocks/cl/arte/minerio_queijo"
     },
     "clc_tijolo_lunar": {
-      "textures": "textures/blocks/cl/c/tijolo_lunar"
+      "textures": "textures/blocks/cl/arte/tijolo_lunar"
     },
     "clc_bau_tesouro_frente": {
       "textures": "textures/blocks/cl/c/bau_tesouro_frente"
@@ -1850,16 +1850,16 @@
       "textures": "textures/blocks/cl/c/bau_tesouro_baixo"
     },
     "clc_distribuidor_oxigenio_frente": {
-      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_frente"
+      "textures": "textures/blocks/cl/arte/distribuidor_oxigenio_frente"
     },
     "clc_distribuidor_oxigenio_lado": {
-      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_lado"
+      "textures": "textures/blocks/cl/arte/distribuidor_oxigenio_lado"
     },
     "clc_distribuidor_oxigenio_topo": {
-      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_topo"
+      "textures": "textures/blocks/cl/arte/distribuidor_oxigenio_topo"
     },
     "clc_distribuidor_oxigenio_baixo": {
-      "textures": "textures/blocks/cl/c/distribuidor_oxigenio_baixo"
+      "textures": "textures/blocks/cl/arte/distribuidor_oxigenio_baixo"
     },
     "clc_revestimento_aco": {
       "textures": "textures/blocks/cl/arte/revestimento_aco"
@@ -5736,6 +5736,96 @@
     },
     "clc_orquidea_planta_3": {
       "textures": "textures/blocks/cl/arte/orquidea_planta_3"
+    },
+    "clc_basalto_lunar": {
+      "textures": "textures/blocks/cl/arte/basalto_lunar"
+    },
+    "clc_tijolos_basalto_lunar": {
+      "textures": "textures/blocks/cl/arte/tijolos_basalto_lunar"
+    },
+    "clc_tijolos_basalto_lunar_rachados": {
+      "textures": "textures/blocks/cl/arte/tijolos_basalto_lunar_rachados"
+    },
+    "clc_pedregulho_lunar": {
+      "textures": "textures/blocks/cl/arte/pedregulho_lunar"
+    },
+    "clc_rocha_lunar_polida": {
+      "textures": "textures/blocks/cl/arte/rocha_lunar_polida"
+    },
+    "clc_tijolos_rocha_lunar": {
+      "textures": "textures/blocks/cl/arte/tijolos_rocha_lunar"
+    },
+    "clc_tijolos_rocha_lunar_rachados": {
+      "textures": "textures/blocks/cl/arte/tijolos_rocha_lunar_rachados"
+    },
+    "clc_tijolos_rocha_lunar_entalhados": {
+      "textures": "textures/blocks/cl/arte/tijolos_rocha_lunar_entalhados"
+    },
+    "clc_pilar_rocha_lunar": {
+      "textures": "textures/blocks/cl/c/pilar_rocha_lunar"
+    },
+    "clc_ardosia_lunar": {
+      "textures": "textures/blocks/cl/c/ardosia_lunar"
+    },
+    "clc_ardosia_lunar_pedregulho": {
+      "textures": "textures/blocks/cl/arte/ardosia_lunar_pedregulho"
+    },
+    "clc_minerio_safira_lunar": {
+      "textures": "textures/blocks/cl/arte/minerio_safira_lunar"
+    },
+    "clc_bloco_safira_lunar": {
+      "textures": "textures/blocks/cl/arte/bloco_safira_lunar"
+    },
+    "clc_vidro_lunar": {
+      "textures": "textures/blocks/cl/arte/vidro_lunar"
+    },
+    "clc_plataforma_lancamento_frente": {
+      "textures": "textures/blocks/cl/arte/plataforma_lancamento_frente"
+    },
+    "clc_plataforma_lancamento_lado": {
+      "textures": "textures/blocks/cl/arte/plataforma_lancamento_lado"
+    },
+    "clc_plataforma_lancamento_topo": {
+      "textures": "textures/blocks/cl/arte/plataforma_lancamento_topo"
+    },
+    "clc_plataforma_lancamento_baixo": {
+      "textures": "textures/blocks/cl/arte/plataforma_lancamento_baixo"
+    },
+    "clc_solo_lunar_frente": {
+      "textures": "textures/blocks/cl/arte/solo_lunar_frente"
+    },
+    "clc_solo_lunar_lado": {
+      "textures": "textures/blocks/cl/arte/solo_lunar_lado"
+    },
+    "clc_solo_lunar_topo": {
+      "textures": "textures/blocks/cl/arte/solo_lunar_topo"
+    },
+    "clc_solo_lunar_baixo": {
+      "textures": "textures/blocks/cl/arte/solo_lunar_baixo"
+    },
+    "clc_pilar_rocha_lunar_frente": {
+      "textures": "textures/blocks/cl/arte/pilar_rocha_lunar_frente"
+    },
+    "clc_pilar_rocha_lunar_lado": {
+      "textures": "textures/blocks/cl/arte/pilar_rocha_lunar_lado"
+    },
+    "clc_pilar_rocha_lunar_topo": {
+      "textures": "textures/blocks/cl/arte/pilar_rocha_lunar_topo"
+    },
+    "clc_pilar_rocha_lunar_baixo": {
+      "textures": "textures/blocks/cl/arte/pilar_rocha_lunar_baixo"
+    },
+    "clc_ardosia_lunar_frente": {
+      "textures": "textures/blocks/cl/arte/ardosia_lunar_frente"
+    },
+    "clc_ardosia_lunar_lado": {
+      "textures": "textures/blocks/cl/arte/ardosia_lunar_lado"
+    },
+    "clc_ardosia_lunar_topo": {
+      "textures": "textures/blocks/cl/arte/ardosia_lunar_topo"
+    },
+    "clc_ardosia_lunar_baixo": {
+      "textures": "textures/blocks/cl/arte/ardosia_lunar_baixo"
     }
   }
 }

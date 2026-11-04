@@ -154,6 +154,16 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.41.0 (Galacticraft 5, o mais novo)
+
+- O Galacticraft 5 (a versão nova, reescrita) é MIT, inclusive a arte: as máquinas (coletor, compressores, fabricador
+  de circuitos, distribuidor e carregador), a bancada e a plataforma do foguete, a rocha, a terra, o solo e os minérios
+  da Lua, as peças do foguete, os tanques, a máscara e o equipamento de oxigênio agora têm a **arte original** (50 trocas).
+- **Blocos novos da Lua**: basalto lunar (e tijolos), ardósia lunar, pedregulho, rocha polida, tijolos, rachados,
+  entalhados e pilar de rocha lunar, vidro lunar e a **safira lunar** (minério, gema e bloco). O basalto, a ardósia e a
+  safira aparecem no fundo da Lua.
+- Diário: missões da safira e do basalto no capítulo do Galacticraft.
+
 ## Novidades da 1.40.0 (Extra Utilities 2, o mais novo)
 
 - **Espinhos** de madeira, ferro, ouro e diamante: a cada 0,5 s ferem quem está em cima (1, 4, 2 e 8). Os de madeira

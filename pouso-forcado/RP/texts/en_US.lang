@@ -5096,6 +5096,25 @@ cl.missao.xu2_laco.titulo=Lassoed
 cl.missao.xu2_laco.desc=Catch a creature with the Golden Lasso.
 cl.missao.xu2_magnum.titulo=Magnum Torch
 cl.missao.xu2_magnum.desc=Place a Magnum Torch at your base.
+item.cl:safira_lunar.name=Lunar Sapphire
+tile.cl:basalto_lunar.name=Moon Basalt
+tile.cl:tijolos_basalto_lunar.name=Moon Basalt Bricks
+tile.cl:tijolos_basalto_lunar_rachados.name=Cracked Moon Basalt Bricks
+tile.cl:pedregulho_lunar.name=Cobbled Moon Rock
+tile.cl:rocha_lunar_polida.name=Polished Moon Rock
+tile.cl:tijolos_rocha_lunar.name=Moon Rock Bricks
+tile.cl:tijolos_rocha_lunar_rachados.name=Cracked Moon Rock Bricks
+tile.cl:tijolos_rocha_lunar_entalhados.name=Chiseled Moon Rock Bricks
+tile.cl:pilar_rocha_lunar.name=Moon Rock Pillar
+tile.cl:ardosia_lunar.name=Lunaslate
+tile.cl:ardosia_lunar_pedregulho.name=Cobbled Lunaslate
+tile.cl:minerio_safira_lunar.name=Lunar Sapphire Ore
+tile.cl:bloco_safira_lunar.name=Lunar Sapphire Block
+tile.cl:vidro_lunar.name=Moon Glass
+cl.missao.gc5_safira.titulo=Lunar Sapphire
+cl.missao.gc5_safira.desc=Find 3 lunar sapphires deep in the Moon.
+cl.missao.gc5_basalto.titulo=Moon Basalt
+cl.missao.gc5_basalto.desc=Build with 8 Moon Basalt Bricks.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

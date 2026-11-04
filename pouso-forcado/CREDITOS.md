@@ -177,7 +177,8 @@ Também usados fora do próprio mod: os pós de ferro, ouro, cobre e estanho sã
 aço, estanho e alumínio são os do Tinkers; o silício é o do AE2.
 
 **Ficaram com a arte própria** (a licença não deixa usar a arte): Create (arte "todos os direitos reservados"),
-Galacticraft (proíbe versões para outras plataformas), Extra Utilities (código fechado), Thermal Expansion, MineFactory
+Galacticraft antigo (proíbe versões para outras plataformas; desde a 1.41.0 a arte é a do **Galacticraft 5**, da Team
+Galacticraft, licença MIT, github.com/TeamGalacticraft/Galacticraft, `tools/importar-gc5.py`), Extra Utilities (código fechado), Thermal Expansion, MineFactory
 Reloaded, Pam's HarvestCraft, Sync, JABBA, BiblioCraft, Ex Nihilo, Backpacks e Hunger Overhaul (sem licença publicada),
 Sophisticated Backpacks (todos os direitos reservados).
 Os add-ons de Bedrock parecidos (Space.PE, Create e Extra Utilities feitos por outras pessoas) também não entram.

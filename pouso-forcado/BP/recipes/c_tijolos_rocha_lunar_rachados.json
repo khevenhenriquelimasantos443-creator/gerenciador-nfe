@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_tijolos_rocha_lunar_rachados"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:tijolos_rocha_lunar",
+    "output": "cl:tijolos_rocha_lunar_rachados"
+  }
+}

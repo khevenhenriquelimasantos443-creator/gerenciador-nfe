@@ -23,6 +23,10 @@ const VEIOS: ReadonlyArray<[string, number, number, number]> = [
   ["cl:minerio_cobre_lunar", 6, 6, 60],
   ["cl:minerio_estanho_lunar", 6, 6, 60],
   ["cl:minerio_queijo", 8, 5, 64],
+  // 1.41.0 (Galacticraft 5): bolsões de basalto e de ardósia lunar no fundo e a safira lunar.
+  ["cl:basalto_lunar", 2, 24, 40],
+  ["cl:ardosia_lunar", 3, 28, 20],
+  ["cl:minerio_safira_lunar", 2, 4, 30],
 ];
 const ROCHA = "cl:rocha_lunar", TERRA = "cl:terra_lunar", SOLO = "cl:solo_lunar", MATRIZ = "minecraft:bedrock";
 

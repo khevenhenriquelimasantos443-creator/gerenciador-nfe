@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_vidro_lunar"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:terra_lunar",
+    "output": "cl:vidro_lunar"
+  }
+}

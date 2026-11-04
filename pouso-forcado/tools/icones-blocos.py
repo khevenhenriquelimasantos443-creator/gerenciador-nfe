@@ -20,6 +20,9 @@ def tex(nome):
         arq = f"{R}/RP/{p}.png"
         if not os.path.exists(arq):  # textura do próprio jogo: cópia local em referencias/vanilla (fora do git)
             arq = f"{R}/referencias/vanilla/{p}.png"
+        if not os.path.exists(arq):  # sem a cópia: madeira lisa (toras ocas e postes do Quark, 1.37.0)
+            cache[nome] = Image.new("RGBA", (16, 16), (128, 96, 58, 255))
+            return cache[nome]
         im = Image.open(arq).convert("RGBA")
         cache[nome] = im.crop((0, 0, im.width, im.width))  # 1º quadro das animadas
     return cache[nome]

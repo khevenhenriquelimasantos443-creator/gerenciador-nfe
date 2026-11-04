@@ -468,6 +468,13 @@ teste("lua", 600, (t) => {
     const fundo = carregado ? lua.getBlock({ x: 0, y: 0, z: 0 })?.typeId : undefined;
     let minerios = 0;
     if (carregado) for (let y = 1; y < 60; y++) for (let x = 0; x < 16; x++) { const b = lua.getBlock({ x, y, z: 4 })?.typeId ?? ""; if (b.startsWith("cl:minerio")) minerios++; }
+    // 1.41.0: os bolsões novos do Galacticraft 5 (basalto, ardósia e safira lunar) no chunk inteiro.
+    const gc5 = {};
+    if (carregado) for (let y = 1; y < 45; y++) for (let x = 0; x < 16; x++) for (let z = 0; z < 16; z++) {
+      const b = lua.getBlock({ x, y, z })?.typeId ?? "";
+      if (b === "cl:basalto_lunar" || b === "cl:ardosia_lunar" || b === "cl:minerio_safira_lunar") gc5[b] = (gc5[b] ?? 0) + 1;
+    }
+    log(`lua: gc5 ${JSON.stringify(gc5)}`);
     const vida = j.getComponent("health").currentValue;
     log(`lua: carregado=${carregado} topo=${topo?.typeId}@${topo?.y} fundo=${fundo} vida ${vida0}->${vida} sufocou=${sufocou} pos y=${j.location.y.toFixed(1)} minérios numa fatia=${minerios} pulo=${!!j.getEffect("jump_boost")} queda lenta=${!!j.getEffect("slow_falling")}`);
     // 1.17.0: o céu com os planetas acompanha o jogador; os evoluídos novos nascem na Lua.

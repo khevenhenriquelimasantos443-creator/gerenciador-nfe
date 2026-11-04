@@ -768,6 +768,9 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     requer: ["buildcraft"],
     missoes: [
       { id: "gc_aluminio", objetivo: { tipo: "ter", item: "cl:lingote_aluminio", qtd: 8 }, recompensa: [{ item: "minecraft:redstone", quantidade: 8 }] },
+      // 1.41.0 (Galacticraft 5): a safira e o basalto da Lua.
+      { id: "gc5_safira", objetivo: { tipo: "ter", item: "cl:safira_lunar", qtd: 3 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+      { id: "gc5_basalto", objetivo: { tipo: "colocar", bloco: "cl:tijolos_basalto_lunar", qtd: 8 }, recompensa: [{ item: "cl:rocha_lunar", quantidade: 32 }] },
       { id: "gc_compressor", objetivo: { tipo: "colocar", bloco: "cl:compressor", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 8 }] },
       { id: "gc_placa", objetivo: { tipo: "acao", acao: "placa_reforcada", qtd: 2 }, recompensa: [{ item: "cl:lingote_aco", quantidade: 6 }] },
       { id: "gc_wafer", requer: ["gc_aluminio"], objetivo: { tipo: "ter", item: "cl:wafer_basico", qtd: 3 }, recompensa: [{ item: "cl:silicio", quantidade: 4 }] },

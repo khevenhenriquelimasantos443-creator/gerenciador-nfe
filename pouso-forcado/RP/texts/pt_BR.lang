@@ -5097,6 +5097,25 @@ cl.missao.xu2_laco.titulo=No laço
 cl.missao.xu2_laco.desc=Pegue um bicho com o Laço Dourado.
 cl.missao.xu2_magnum.titulo=Tocha Magnum
 cl.missao.xu2_magnum.desc=Ponha uma Tocha Magnum na base.
+item.cl:safira_lunar.name=Safira Lunar
+tile.cl:basalto_lunar.name=Basalto Lunar
+tile.cl:tijolos_basalto_lunar.name=Tijolos de Basalto Lunar
+tile.cl:tijolos_basalto_lunar_rachados.name=Tijolos de Basalto Lunar Rachados
+tile.cl:pedregulho_lunar.name=Pedregulho Lunar
+tile.cl:rocha_lunar_polida.name=Rocha Lunar Polida
+tile.cl:tijolos_rocha_lunar.name=Tijolos de Rocha Lunar
+tile.cl:tijolos_rocha_lunar_rachados.name=Tijolos de Rocha Lunar Rachados
+tile.cl:tijolos_rocha_lunar_entalhados.name=Tijolos de Rocha Lunar Entalhados
+tile.cl:pilar_rocha_lunar.name=Pilar de Rocha Lunar
+tile.cl:ardosia_lunar.name=Ardósia Lunar
+tile.cl:ardosia_lunar_pedregulho.name=Pedregulho de Ardósia Lunar
+tile.cl:minerio_safira_lunar.name=Minério de Safira Lunar
+tile.cl:bloco_safira_lunar.name=Bloco de Safira Lunar
+tile.cl:vidro_lunar.name=Vidro Lunar
+cl.missao.gc5_safira.titulo=Safira Lunar
+cl.missao.gc5_safira.desc=Ache 3 safiras lunares no fundo da Lua.
+cl.missao.gc5_basalto.titulo=Basalto Lunar
+cl.missao.gc5_basalto.desc=Construa com 8 Tijolos de Basalto Lunar.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

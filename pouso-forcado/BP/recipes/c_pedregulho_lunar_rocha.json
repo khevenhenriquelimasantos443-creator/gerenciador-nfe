@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "cl:c_pedregulho_lunar_rocha"
+    },
+    "tags": [
+      "furnace"
+    ],
+    "input": "cl:pedregulho_lunar",
+    "output": "cl:rocha_lunar"
+  }
+}

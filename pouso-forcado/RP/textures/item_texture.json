@@ -1032,31 +1032,31 @@
       "textures": "textures/items/cl/c/placa_aco"
     },
     "clc_placa_reforcada": {
-      "textures": "textures/items/cl/c/placa_reforcada"
+      "textures": "textures/items/cl/arte/placa_reforcada"
     },
     "clc_wafer_basico": {
-      "textures": "textures/items/cl/c/wafer_basico"
+      "textures": "textures/items/cl/arte/wafer_basico"
     },
     "clc_wafer_avancado": {
-      "textures": "textures/items/cl/c/wafer_avancado"
+      "textures": "textures/items/cl/arte/wafer_avancado"
     },
     "clc_lata_estanho": {
-      "textures": "textures/items/cl/c/lata_estanho"
+      "textures": "textures/items/cl/arte/lata_estanho"
     },
     "clc_lata_cobre": {
-      "textures": "textures/items/cl/c/lata_cobre"
+      "textures": "textures/items/cl/arte/lata_cobre"
     },
     "clc_cano_oxigenio": {
-      "textures": "textures/items/cl/c/cano_oxigenio"
+      "textures": "textures/items/cl/arte/cano_oxigenio"
     },
     "clc_ventilador_oxigenio": {
-      "textures": "textures/items/cl/c/ventilador_oxigenio"
+      "textures": "textures/items/cl/arte/ventilador_oxigenio"
     },
     "clc_respiro_oxigenio": {
-      "textures": "textures/items/cl/c/respiro_oxigenio"
+      "textures": "textures/items/cl/arte/respiro_oxigenio"
     },
     "clc_concentrador_oxigenio": {
-      "textures": "textures/items/cl/c/concentrador_oxigenio"
+      "textures": "textures/items/cl/arte/concentrador_oxigenio"
     },
     "clc_mascara_oxigenio": {
       "textures": "textures/items/cl/arte/mascara_oxigenio"
@@ -5743,6 +5743,9 @@
     },
     "clc_laco_amaldicoado": {
       "textures": "textures/items/cl/arte/laco_amaldicoado"
+    },
+    "clc_safira_lunar": {
+      "textures": "textures/items/cl/arte/safira_lunar"
     }
   }
 }
