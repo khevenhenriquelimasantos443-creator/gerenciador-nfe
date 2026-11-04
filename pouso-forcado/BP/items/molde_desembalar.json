@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:molde_desembalar",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_molde_desembalar",
+      "minecraft:display_name": {
+        "value": "item.cl:molde_desembalar.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

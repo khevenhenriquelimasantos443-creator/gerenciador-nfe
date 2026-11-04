@@ -94,6 +94,11 @@ export type Acao =
   | "qk4_barra"
   | "qk4_nuvem"
   | "qk4_batatinha"
+  | "ie12_prensa"
+  | "ie12_salitre"
+  | "ie12_diesel"
+  | "ie12_termo"
+  | "ie12_campanula"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -596,6 +601,19 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "ie12", // 1.38.0: Immersive Engineering 12.4
+    icone: "cl:gerador_diesel",
+    requer: ["ie"],
+    missoes: [
+      { id: "ie12_prensa", objetivo: { tipo: "acao", acao: "ie12_prensa", qtd: 1 }, recompensa: [{ item: "cl:placa_aco", quantidade: 4 }] },
+      { id: "ie12_salitre", objetivo: { tipo: "acao", acao: "ie12_salitre", qtd: 1 }, recompensa: [{ item: "minecraft:sandstone", quantidade: 32 }] },
+      { id: "ie12_biodiesel", requer: ["ie12_salitre"], objetivo: { tipo: "ter", item: "cl:balde_biodiesel", qtd: 1 }, recompensa: [{ item: "minecraft:bucket", quantidade: 4 }] },
+      { id: "ie12_diesel", requer: ["ie12_biodiesel"], objetivo: { tipo: "acao", acao: "ie12_diesel", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "ie12_termo", objetivo: { tipo: "acao", acao: "ie12_termo", qtd: 1 }, recompensa: [{ item: "minecraft:packed_ice", quantidade: 8 }] },
+      { id: "ie12_campanula", objetivo: { tipo: "acao", acao: "ie12_campanula", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 32 }] },
     ],
   },
   {

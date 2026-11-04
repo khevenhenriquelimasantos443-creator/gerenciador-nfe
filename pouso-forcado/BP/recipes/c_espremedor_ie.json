@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_espremedor_ie"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PBP",
+      "CWC",
+      "SSS"
+    ],
+    "key": {
+      "P": {
+        "item": "minecraft:piston"
+      },
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "C": {
+        "item": "cl:componente_ferro"
+      },
+      "W": {
+        "item": "cl:tabuas_tratadas"
+      },
+      "S": {
+        "item": "cl:placa_ferro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:espremedor_ie"
+    }
+  }
+}

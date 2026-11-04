@@ -154,6 +154,22 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.38.0 (Immersive Engineering 12.4, o mais novo)
+
+- Máquinas novas do IE (aqui em bloco único: baú de entrada em cima, de saída embaixo, energia da rede), com os RF por
+  operação das receitas do mod:
+  - **Prensa de Metal** com moldes (chapa, engrenagem, haste e desembalar): chapas e engrenagens dos metais do pack e
+    haste de blaze com 5 pós de blaze.
+  - **Triturador**: minério → 2 pós, minério bruto → 1 pó + 33%, e o **arenito vira areia com 50% de Pó de Salitre**.
+  - **Serraria**: tora → 6 tábuas + serragem.
+  - Linha do **biodiesel**: **Espremedor** (sementes → óleo vegetal), **Fermentador** (cana, batata, maçã, mel... →
+    etanol), **Refinaria** (1 balde de óleo + 1 de etanol, com salitre → 2 baldes de biodiesel) e **Gerador a Diesel**
+    (4.096 RF/t; o balde de biodiesel dura 250 ticks, o de creosoto 20). Baldes vazios no baú de cima saem cheios.
+  - **Gerador Termelétrico**: quente de um lado e frio do outro (lava 1.300 K, gelo compacto 240 K...) dá
+    √(diferença)/2 RF/t por eixo.
+  - **Campânula de Jardim**: semente e solo no baú de cima; colhe sozinha (8 RF/t, 40 plantas do mod).
+- Arte própria (a do IE pede permissão). Diário: capítulo Immersive Engineering 12.
+
 ## Novidades da 1.37.0 (Quark 4.1, o mais novo)
 
 - **Corindo** em 9 cores: cristais que brilham nas paredes das cavernas e crescem aglomerados; **Lâmpadas de Cristal**

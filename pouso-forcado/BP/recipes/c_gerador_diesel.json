@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_diesel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FBF",
+      "CMC",
+      "SSS"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:furnace"
+      },
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "C": {
+        "item": "cl:componente_ferro"
+      },
+      "M": {
+        "item": "cl:bobina_bt"
+      },
+      "S": {
+        "item": "cl:placa_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_diesel"
+    }
+  }
+}

@@ -1,0 +1,1866 @@
+{
+ "prensa": [
+  {
+   "molde": "cl:molde_haste",
+   "entrada": [
+    "minecraft:blaze_powder"
+   ],
+   "qtd": 5,
+   "saida": "minecraft:blaze_rod",
+   "n": 1,
+   "rf": 3200
+  },
+  {
+   "molde": "cl:molde_engrenagem",
+   "entrada": [
+    "minecraft:gold_ingot"
+   ],
+   "qtd": 4,
+   "saida": "cl:engrenagem_ouro",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_engrenagem",
+   "entrada": [
+    "minecraft:iron_ingot"
+   ],
+   "qtd": 4,
+   "saida": "cl:engrenagem_ferro",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_desembalar",
+   "entrada": [
+    "minecraft:melon_block"
+   ],
+   "qtd": 1,
+   "saida": "minecraft:melon_slice",
+   "n": 9,
+   "rf": 3200
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "cl:lingote_aluminio"
+   ],
+   "qtd": 1,
+   "saida": "cl:placa_aluminio",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "cl:lingote_latao"
+   ],
+   "qtd": 1,
+   "saida": "cl:chapa_latao",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "cl:lingote_bronze"
+   ],
+   "qtd": 1,
+   "saida": "cl:placa_bronze",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "minecraft:copper_ingot"
+   ],
+   "qtd": 1,
+   "saida": "cl:placa_cobre",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "minecraft:gold_ingot"
+   ],
+   "qtd": 1,
+   "saida": "cl:chapa_ouro",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "minecraft:iron_ingot"
+   ],
+   "qtd": 1,
+   "saida": "cl:placa_ferro",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "cl:lingote_aco"
+   ],
+   "qtd": 1,
+   "saida": "cl:placa_aco",
+   "n": 1,
+   "rf": 2400
+  },
+  {
+   "molde": "cl:molde_chapa",
+   "entrada": [
+    "cl:lingote_estanho"
+   ],
+   "qtd": 1,
+   "saida": "cl:placa_estanho",
+   "n": 1,
+   "rf": 2400
+  }
+ ],
+ "triturador": [
+  {
+   "entrada": [
+    "minecraft:amethyst_block"
+   ],
+   "saida": "minecraft:amethyst_shard",
+   "n": 4,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:charcoal"
+   ],
+   "saida": "minecraft:black_dye",
+   "n": 1,
+   "extras": [
+    [
+     "minecraft:gray_dye",
+     0.2
+    ]
+   ],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:blaze_rod"
+   ],
+   "saida": "minecraft:blaze_powder",
+   "n": 4,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:lapis_lazuli"
+   ],
+   "saida": "minecraft:blue_dye",
+   "n": 2,
+   "extras": [
+    [
+     "minecraft:light_gray_dye",
+     0.1
+    ]
+   ],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:bone"
+   ],
+   "saida": "minecraft:bone_meal",
+   "n": 6,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:clay"
+   ],
+   "saida": "minecraft:clay_ball",
+   "n": 4,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:coal"
+   ],
+   "saida": "cl:po_carvao",
+   "n": 1,
+   "extras": [],
+   "rf": 2400
+  },
+  {
+   "entrada": [
+    "minecraft:coal_block"
+   ],
+   "saida": "cl:po_carvao",
+   "n": 9,
+   "extras": [],
+   "rf": 4800
+  },
+  {
+   "entrada": [
+    "minecraft:coarse_dirt"
+   ],
+   "saida": "minecraft:dirt",
+   "n": 1,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:cobblestone",
+    "minecraft:cobbled_deepslate"
+   ],
+   "saida": "minecraft:gravel",
+   "n": 1,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:dark_prismarine"
+   ],
+   "saida": "minecraft:prismarine_shard",
+   "n": 8,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:deepslate"
+   ],
+   "saida": "minecraft:cobbled_deepslate",
+   "n": 1,
+   "extras": [],
+   "rf": 2000
+  },
+  {
+   "entrada": [
+    "minecraft:glass"
+   ],
+   "saida": "minecraft:sand",
+   "n": 1,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:glowstone"
+   ],
+   "saida": "minecraft:glowstone_dust",
+   "n": 4,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:gravel"
+   ],
+   "saida": "minecraft:sand",
+   "n": 1,
+   "extras": [
+    [
+     "minecraft:flint",
+     0.1
+    ]
+   ],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:copper_ingot"
+   ],
+   "saida": "cl:po_cobre",
+   "n": 1,
+   "extras": [],
+   "rf": 3000
+  },
+  {
+   "entrada": [
+    "minecraft:gold_ingot"
+   ],
+   "saida": "cl:po_ouro",
+   "n": 1,
+   "extras": [],
+   "rf": 3000
+  },
+  {
+   "entrada": [
+    "minecraft:iron_ingot"
+   ],
+   "saida": "cl:po_ferro",
+   "n": 1,
+   "extras": [],
+   "rf": 3000
+  },
+  {
+   "entrada": [
+    "cl:lingote_osmio"
+   ],
+   "saida": "cl:po_osmio",
+   "n": 1,
+   "extras": [],
+   "rf": 3000
+  },
+  {
+   "entrada": [
+    "cl:lingote_aco"
+   ],
+   "saida": "cl:po_aco",
+   "n": 1,
+   "extras": [],
+   "rf": 3000
+  },
+  {
+   "entrada": [
+    "cl:lingote_estanho"
+   ],
+   "saida": "cl:po_estanho",
+   "n": 1,
+   "extras": [],
+   "rf": 3000
+  },
+  {
+   "entrada": [
+    "minecraft:nether_gold_ore"
+   ],
+   "saida": "cl:po_ouro",
+   "n": 2,
+   "extras": [],
+   "rf": 4200
+  },
+  {
+   "entrada": [
+    "minecraft:nether_wart_block"
+   ],
+   "saida": "minecraft:nether_wart",
+   "n": 9,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:coal_ore",
+    "minecraft:deepslate_coal_ore"
+   ],
+   "saida": "minecraft:coal",
+   "n": 4,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:copper_ore",
+    "minecraft:deepslate_copper_ore"
+   ],
+   "saida": "cl:po_cobre",
+   "n": 2,
+   "extras": [
+    [
+     "cl:po_ouro",
+     0.1
+    ]
+   ],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:diamond_ore",
+    "minecraft:deepslate_diamond_ore"
+   ],
+   "saida": "minecraft:diamond",
+   "n": 2,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:emerald_ore",
+    "minecraft:deepslate_emerald_ore"
+   ],
+   "saida": "minecraft:emerald",
+   "n": 2,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:gold_ore",
+    "minecraft:deepslate_gold_ore"
+   ],
+   "saida": "cl:po_ouro",
+   "n": 2,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:iron_ore",
+    "minecraft:deepslate_iron_ore"
+   ],
+   "saida": "cl:po_ferro",
+   "n": 2,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:lapis_ore",
+    "minecraft:deepslate_lapis_ore"
+   ],
+   "saida": "minecraft:lapis_lazuli",
+   "n": 9,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:quartz_ore"
+   ],
+   "saida": "minecraft:quartz",
+   "n": 3,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:redstone_ore",
+    "minecraft:deepslate_redstone_ore"
+   ],
+   "saida": "minecraft:redstone",
+   "n": 6,
+   "extras": [],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:prismarine"
+   ],
+   "saida": "minecraft:prismarine_shard",
+   "n": 4,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:prismarine_bricks"
+   ],
+   "saida": "minecraft:prismarine_shard",
+   "n": 9,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:quartz_block"
+   ],
+   "saida": "minecraft:quartz",
+   "n": 4,
+   "extras": [],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:raw_copper_block"
+   ],
+   "saida": "cl:po_cobre",
+   "n": 12,
+   "extras": [],
+   "rf": 54000
+  },
+  {
+   "entrada": [
+    "minecraft:raw_gold_block"
+   ],
+   "saida": "cl:po_ouro",
+   "n": 12,
+   "extras": [],
+   "rf": 54000
+  },
+  {
+   "entrada": [
+    "minecraft:raw_iron_block"
+   ],
+   "saida": "cl:po_ferro",
+   "n": 12,
+   "extras": [],
+   "rf": 54000
+  },
+  {
+   "entrada": [
+    "minecraft:raw_copper"
+   ],
+   "saida": "cl:po_cobre",
+   "n": 1,
+   "extras": [
+    [
+     "cl:po_cobre",
+     0.33333334
+    ]
+   ],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:raw_gold"
+   ],
+   "saida": "cl:po_ouro",
+   "n": 1,
+   "extras": [
+    [
+     "cl:po_ouro",
+     0.33333334
+    ]
+   ],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:raw_iron"
+   ],
+   "saida": "cl:po_ferro",
+   "n": 1,
+   "extras": [
+    [
+     "cl:po_ferro",
+     0.33333334
+    ]
+   ],
+   "rf": 6000
+  },
+  {
+   "entrada": [
+    "minecraft:red_sandstone"
+   ],
+   "saida": "minecraft:red_sand",
+   "n": 2,
+   "extras": [
+    [
+     "cl:po_salitre",
+     0.5
+    ]
+   ],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:sandstone"
+   ],
+   "saida": "minecraft:sand",
+   "n": 2,
+   "extras": [
+    [
+     "cl:po_salitre",
+     0.5
+    ]
+   ],
+   "rf": 3200
+  },
+  {
+   "entrada": [
+    "minecraft:stone"
+   ],
+   "saida": "minecraft:cobblestone",
+   "n": 1,
+   "extras": [],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:bone_meal"
+   ],
+   "saida": "minecraft:white_dye",
+   "n": 2,
+   "extras": [
+    [
+     "minecraft:light_gray_dye",
+     0.1
+    ]
+   ],
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:white_wool",
+    "minecraft:orange_wool",
+    "minecraft:magenta_wool",
+    "minecraft:light_blue_wool",
+    "minecraft:yellow_wool",
+    "minecraft:lime_wool",
+    "minecraft:pink_wool",
+    "minecraft:gray_wool",
+    "minecraft:light_gray_wool",
+    "minecraft:cyan_wool",
+    "minecraft:purple_wool",
+    "minecraft:blue_wool",
+    "minecraft:brown_wool",
+    "minecraft:green_wool",
+    "minecraft:red_wool",
+    "minecraft:black_wool"
+   ],
+   "saida": "minecraft:string",
+   "n": 4,
+   "extras": [],
+   "rf": 3200
+  }
+ ],
+ "serraria": [
+  {
+   "entrada": [
+    "minecraft:acacia_door"
+   ],
+   "saida": "minecraft:acacia_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:acacia_log"
+   ],
+   "saida": "minecraft:acacia_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:acacia_planks"
+   ],
+   "saida": "minecraft:acacia_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:acacia_stairs"
+   ],
+   "saida": "minecraft:acacia_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:acacia_wood"
+   ],
+   "saida": "minecraft:acacia_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:bamboo_door"
+   ],
+   "saida": "minecraft:bamboo_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:bamboo_block"
+   ],
+   "saida": "minecraft:bamboo_planks",
+   "n": 3,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:bamboo_planks"
+   ],
+   "saida": "minecraft:bamboo_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:bamboo_stairs"
+   ],
+   "saida": "minecraft:bamboo_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:birch_door"
+   ],
+   "saida": "minecraft:birch_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:birch_log"
+   ],
+   "saida": "minecraft:birch_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:birch_planks"
+   ],
+   "saida": "minecraft:birch_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:birch_stairs"
+   ],
+   "saida": "minecraft:birch_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:birch_wood"
+   ],
+   "saida": "minecraft:birch_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:bookshelf"
+   ],
+   "saida": "minecraft:oak_planks",
+   "n": 4,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:cherry_door"
+   ],
+   "saida": "minecraft:cherry_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:cherry_log"
+   ],
+   "saida": "minecraft:cherry_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:cherry_planks"
+   ],
+   "saida": "minecraft:cherry_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:cherry_stairs"
+   ],
+   "saida": "minecraft:cherry_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:cherry_wood"
+   ],
+   "saida": "minecraft:cherry_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:crimson_door"
+   ],
+   "saida": "minecraft:crimson_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:crimson_stem"
+   ],
+   "saida": "minecraft:crimson_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:crimson_planks"
+   ],
+   "saida": "minecraft:crimson_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:crimson_stairs"
+   ],
+   "saida": "minecraft:crimson_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:crimson_hyphae"
+   ],
+   "saida": "minecraft:crimson_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:dark_oak_door"
+   ],
+   "saida": "minecraft:dark_oak_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:dark_oak_log"
+   ],
+   "saida": "minecraft:dark_oak_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:dark_oak_planks"
+   ],
+   "saida": "minecraft:dark_oak_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:dark_oak_stairs"
+   ],
+   "saida": "minecraft:dark_oak_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:dark_oak_wood"
+   ],
+   "saida": "minecraft:dark_oak_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:jungle_door"
+   ],
+   "saida": "minecraft:jungle_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:jungle_log"
+   ],
+   "saida": "minecraft:jungle_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:jungle_planks"
+   ],
+   "saida": "minecraft:jungle_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:jungle_stairs"
+   ],
+   "saida": "minecraft:jungle_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:jungle_wood"
+   ],
+   "saida": "minecraft:jungle_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:mangrove_door"
+   ],
+   "saida": "minecraft:mangrove_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:mangrove_log"
+   ],
+   "saida": "minecraft:mangrove_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:mangrove_planks"
+   ],
+   "saida": "minecraft:mangrove_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:mangrove_stairs"
+   ],
+   "saida": "minecraft:mangrove_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:mangrove_wood"
+   ],
+   "saida": "minecraft:mangrove_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:oak_door"
+   ],
+   "saida": "minecraft:oak_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:oak_log"
+   ],
+   "saida": "minecraft:oak_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:oak_planks"
+   ],
+   "saida": "minecraft:oak_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:oak_stairs"
+   ],
+   "saida": "minecraft:oak_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:oak_wood"
+   ],
+   "saida": "minecraft:oak_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:spruce_door"
+   ],
+   "saida": "minecraft:spruce_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:spruce_log"
+   ],
+   "saida": "minecraft:spruce_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:spruce_planks"
+   ],
+   "saida": "minecraft:spruce_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:spruce_stairs"
+   ],
+   "saida": "minecraft:spruce_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:spruce_wood"
+   ],
+   "saida": "minecraft:spruce_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_acacia_log",
+    "minecraft:stripped_acacia_wood"
+   ],
+   "saida": "minecraft:acacia_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_bamboo_block"
+   ],
+   "saida": "minecraft:bamboo_planks",
+   "n": 3,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_birch_log",
+    "minecraft:stripped_birch_wood"
+   ],
+   "saida": "minecraft:birch_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_cherry_log",
+    "minecraft:stripped_cherry_wood"
+   ],
+   "saida": "minecraft:cherry_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_crimson_stem",
+    "minecraft:stripped_crimson_hyphae"
+   ],
+   "saida": "minecraft:crimson_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_dark_oak_log",
+    "minecraft:stripped_dark_oak_wood"
+   ],
+   "saida": "minecraft:dark_oak_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_jungle_log",
+    "minecraft:stripped_jungle_wood"
+   ],
+   "saida": "minecraft:jungle_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_mangrove_log",
+    "minecraft:stripped_mangrove_wood"
+   ],
+   "saida": "minecraft:mangrove_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_oak_log",
+    "minecraft:stripped_oak_wood"
+   ],
+   "saida": "minecraft:oak_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_spruce_log",
+    "minecraft:stripped_spruce_wood"
+   ],
+   "saida": "minecraft:spruce_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:stripped_warped_stem",
+    "minecraft:stripped_warped_hyphae"
+   ],
+   "saida": "minecraft:warped_planks",
+   "n": 6,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:warped_door"
+   ],
+   "saida": "minecraft:warped_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:warped_stem"
+   ],
+   "saida": "minecraft:warped_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:warped_planks"
+   ],
+   "saida": "minecraft:warped_slab",
+   "n": 2,
+   "serragem": 1,
+   "rf": 800
+  },
+  {
+   "entrada": [
+    "minecraft:warped_stairs"
+   ],
+   "saida": "minecraft:warped_planks",
+   "n": 1,
+   "serragem": 1,
+   "rf": 1600
+  },
+  {
+   "entrada": [
+    "minecraft:warped_hyphae"
+   ],
+   "saida": "minecraft:warped_planks",
+   "n": 6,
+   "serragem": 2,
+   "rf": 1600
+  }
+ ],
+ "espremedor": {
+  "minecraft:beetroot_seeds": 60,
+  "cl:semente_canhamo": 120,
+  "minecraft:melon_seeds": 20,
+  "minecraft:pumpkin_seeds": 40,
+  "minecraft:wheat_seeds": 80
+ },
+ "rfEspremedor": 6400,
+ "fermentador": {
+  "minecraft:apple": [
+   80,
+   null
+  ],
+  "minecraft:beetroot": [
+   40,
+   null
+  ],
+  "minecraft:glow_berries": [
+   100,
+   null
+  ],
+  "minecraft:honey_bottle": [
+   250,
+   "minecraft:glass_bottle"
+  ],
+  "minecraft:melon_slice": [
+   20,
+   null
+  ],
+  "minecraft:potato": [
+   80,
+   null
+  ],
+  "minecraft:sugar_cane": [
+   80,
+   null
+  ],
+  "minecraft:sweet_berries": [
+   50,
+   null
+  ]
+ },
+ "rfFermentador": 6400,
+ "refinaria": {
+  "oleo": 8,
+  "etanol": 8,
+  "biodiesel": 16,
+  "rf": 80
+ },
+ "combustivel": {
+  "cl:balde_biodiesel": 250,
+  "cl:balde_creosoto": 20
+ },
+ "termo": {
+  "minecraft:blue_ice": 200,
+  "minecraft:ice": 260,
+  "minecraft:magma_block": 1300,
+  "minecraft:packed_ice": 240,
+  "minecraft:snow": 273,
+  "minecraft:water": 300,
+  "minecraft:flowing_water": 300,
+  "minecraft:lava": 1300,
+  "minecraft:flowing_lava": 1300
+ },
+ "campanula": [
+  {
+   "semente": "minecraft:allium",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:allium",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:azure_bluet",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:azure_bluet",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:bamboo",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:bamboo",
+     1,
+     1
+    ]
+   ],
+   "tempo": 560
+  },
+  {
+   "semente": "minecraft:beetroot_seeds",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:beetroot",
+     2,
+     1
+    ],
+    [
+     "minecraft:beetroot_seeds",
+     1,
+     0.25
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:blue_orchid",
+   "solo": [
+    "minecraft:mud"
+   ],
+   "saidas": [
+    [
+     "minecraft:blue_orchid",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:brown_mushroom",
+   "solo": [
+    "minecraft:mycelium",
+    "minecraft:podzol"
+   ],
+   "saidas": [
+    [
+     "minecraft:brown_mushroom",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:cactus",
+   "solo": [
+    "minecraft:sand",
+    "minecraft:red_sand"
+   ],
+   "saidas": [
+    [
+     "minecraft:cactus",
+     1,
+     1
+    ]
+   ],
+   "tempo": 560
+  },
+  {
+   "semente": "minecraft:carrot",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:carrot",
+     2,
+     1
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:chorus_flower",
+   "solo": [
+    "minecraft:end_stone"
+   ],
+   "saidas": [
+    [
+     "minecraft:chorus_fruit",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:cornflower",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:cornflower",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:crimson_fungus",
+   "solo": [
+    "minecraft:crimson_nylium"
+   ],
+   "saidas": [
+    [
+     "minecraft:crimson_fungus",
+     1,
+     1
+    ]
+   ],
+   "tempo": 560
+  },
+  {
+   "semente": "minecraft:dandelion",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:dandelion",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:fern",
+   "solo": [
+    "minecraft:coarse_dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:fern",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:glow_berries",
+   "solo": [
+    "minecraft:moss_block"
+   ],
+   "saidas": [
+    [
+     "minecraft:glow_berries",
+     1,
+     1
+    ]
+   ],
+   "tempo": 640
+  },
+  {
+   "semente": "cl:semente_canhamo",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "cl:fibra_canhamo",
+     1,
+     1
+    ],
+    [
+     "cl:semente_canhamo",
+     1,
+     0.5
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:lilac",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:lilac",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:lily_of_the_valley",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:lily_of_the_valley",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:melon_seeds",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:melon_block",
+     1,
+     1
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:moss_block",
+   "solo": [
+    "minecraft:cobblestone",
+    "minecraft:cobbled_deepslate"
+   ],
+   "saidas": [
+    [
+     "minecraft:moss_block",
+     1,
+     1
+    ]
+   ],
+   "tempo": 1200
+  },
+  {
+   "semente": "minecraft:nether_wart",
+   "solo": [
+    "minecraft:soul_sand"
+   ],
+   "saidas": [
+    [
+     "minecraft:nether_wart",
+     2,
+     1
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:orange_tulip",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:orange_tulip",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:oxeye_daisy",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:oxeye_daisy",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:peony",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:peony",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:pink_tulip",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:pink_tulip",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:pitcher_pod",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:pitcher_plant",
+     1,
+     1
+    ]
+   ],
+   "tempo": 1200
+  },
+  {
+   "semente": "minecraft:poppy",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:poppy",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:potato",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:potato",
+     2,
+     1
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:pumpkin_seeds",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:pumpkin",
+     1,
+     1
+    ]
+   ],
+   "tempo": 800
+  },
+  {
+   "semente": "minecraft:red_mushroom",
+   "solo": [
+    "minecraft:mycelium",
+    "minecraft:podzol"
+   ],
+   "saidas": [
+    [
+     "minecraft:red_mushroom",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:red_tulip",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:red_tulip",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:rose_bush",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:rose_bush",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:short_grass",
+   "solo": [
+    "minecraft:coarse_dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:short_grass",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:sugar_cane",
+   "solo": [
+    "minecraft:sand",
+    "minecraft:red_sand"
+   ],
+   "saidas": [
+    [
+     "minecraft:sugar_cane",
+     1,
+     1
+    ]
+   ],
+   "tempo": 560
+  },
+  {
+   "semente": "minecraft:sunflower",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:sunflower",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:sweet_berries",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:sweet_berries",
+     2,
+     1
+    ]
+   ],
+   "tempo": 560
+  },
+  {
+   "semente": "minecraft:torchflower_seeds",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:torchflower",
+     1,
+     1
+    ]
+   ],
+   "tempo": 1200
+  },
+  {
+   "semente": "minecraft:warped_fungus",
+   "solo": [
+    "minecraft:warped_nylium"
+   ],
+   "saidas": [
+    [
+     "minecraft:warped_fungus",
+     1,
+     1
+    ]
+   ],
+   "tempo": 560
+  },
+  {
+   "semente": "minecraft:wheat_seeds",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:wheat",
+     2,
+     1
+    ],
+    [
+     "minecraft:wheat_seeds",
+     1,
+     0.25
+    ]
+   ],
+   "tempo": 640
+  },
+  {
+   "semente": "minecraft:white_tulip",
+   "solo": [
+    "minecraft:dirt"
+   ],
+   "saidas": [
+    [
+     "minecraft:white_tulip",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  },
+  {
+   "semente": "minecraft:wither_rose",
+   "solo": [
+    "minecraft:soul_soil"
+   ],
+   "saidas": [
+    [
+     "minecraft:wither_rose",
+     1,
+     1
+    ]
+   ],
+   "tempo": 480
+  }
+ ]
+}

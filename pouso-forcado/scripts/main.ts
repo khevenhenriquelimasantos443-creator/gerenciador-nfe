@@ -74,6 +74,7 @@ import { bauGrandeComp, registrarBausGrandes } from "./utilidades/baus_grandes.j
 import { gavetaComp, registrarGavetas } from "./utilidades/gavetas.js";
 import { registrarJetpacks } from "./utilidades/jetpacks.js";
 import { registrarTurbina, turbina, turbinaParte } from "./maquinas/turbina.js";
+import { campanula, espremedorIe, fermentador, geradorDiesel, geradorTermeletrico, prensaMetal, refinariaIe, registrarImmersive12, serrariaIe, trituradorIe } from "./maquinas/immersive12.js";
 import { cestoComp, porcoesComp, redeComp, registrarFarmersNovo, soloComp } from "./maquinas/farmers_novo.js";
 import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tochas.js";
 import { banquinhoComp, batatinhaComp, caixaMonstrosComp, calhaComp, cochoComp, corindoComp, lampadaCristalComp, nuvemComp, registrarQuark4 } from "./utilidades/quark4.js";
@@ -140,6 +141,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   // 1.32.0: Iron Chests e Storage Drawers.
   blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
   blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
+  // 1.38.0: Immersive Engineering 12.4.
+  for (const [nome, comp] of [["cl:prensa_metal", prensaMetal], ["cl:triturador_ie", trituradorIe], ["cl:serraria_ie", serrariaIe], ["cl:espremedor_ie", espremedorIe],
+    ["cl:fermentador", fermentador], ["cl:refinaria_ie", refinariaIe], ["cl:gerador_diesel", geradorDiesel], ["cl:gerador_termeletrico", geradorTermeletrico], ["cl:campanula", campanula]] as const)
+    blockComponentRegistry.registerCustomComponent(nome, comPerfil(`ie12: ${nome.slice(3)}`, comp));
   // 1.37.0: Quark 4.1.
   for (const [nome, comp] of [["cl:corindo", corindoComp], ["cl:lampada_cristal", lampadaCristalComp], ["cl:banquinho", banquinhoComp], ["cl:batatinha", batatinhaComp],
     ["cl:caixa_monstros", caixaMonstrosComp], ["cl:calha_itens", calhaComp], ["cl:cocho", cochoComp], ["cl:nuvem", nuvemComp]] as const)
@@ -338,6 +343,7 @@ registrarFarmersNovo(); // 1.34.0: Farmer's Delight 1.3.0
 registrarTurbina(); // 1.36.0: Extreme Reactors
 registrarTochas(); // 1.33.0: TorchMaster
 registrarQuark4(); // 1.37.0: Quark 4.1
+registrarImmersive12(); // 1.38.0: Immersive Engineering 12.4
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();

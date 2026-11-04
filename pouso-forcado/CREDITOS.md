@@ -185,7 +185,11 @@ Alguns desses ícones foram redesenhados por `tools/desenhar-similares.py` lembr
 Os nomes e ícones dos itens do Minecraft no Catálogo apontam para o pacote de recursos do próprio
 jogo (caminhos tirados de Mojang/bedrock-samples); nenhum arquivo do jogo é copiado para o add-on.
 
-### Immersive Engineering (1.13.0)
+### Immersive Engineering (1.13.0 e 1.38.0)
+
+Na 1.38.0, as receitas e os números do IE 12.4 (branch 1.21.1, `tools/importar-ie12.py`): Prensa de Metal e moldes,
+Triturador, Serraria, Espremedor, Fermentador, Refinaria, Gerador a Diesel (IEServerConfig: 4.096 RF/t), Gerador
+Termelétrico (√ΔT/2 por eixo, do ThermoelectricGenBlockEntity) e Campânula de Jardim (8 RF/t). Código e arte próprios.
 
 Mecânicas e números do Immersive Engineering (BluSunrize e equipe, código GPLv3, github.com/BluSunrize/ImmersiveEngineering,
 branch 1.20.1): Forno de Coque, Alto-Forno, creosoto e madeira tratada, cânhamo, Moinho de Vento, Roda d'Água e Dínamo

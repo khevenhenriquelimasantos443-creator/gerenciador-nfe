@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_refinaria_ie"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BGB",
+      "CTC",
+      "SSS"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "C": {
+        "item": "cl:componente_ferro"
+      },
+      "T": {
+        "item": "minecraft:cauldron"
+      },
+      "S": {
+        "item": "cl:placa_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:refinaria_ie"
+    }
+  }
+}

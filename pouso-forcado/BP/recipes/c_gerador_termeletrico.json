@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gerador_termeletrico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "CRC",
+      "CRC"
+    ],
+    "key": {
+      "S": {
+        "item": "cl:placa_ferro"
+      },
+      "C": {
+        "item": "cl:placa_cobre"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gerador_termeletrico"
+    }
+  }
+}

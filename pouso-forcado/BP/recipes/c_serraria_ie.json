@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_serraria_ie"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " X ",
+      "CBC",
+      "WWW"
+    ],
+    "key": {
+      "X": {
+        "item": "minecraft:stonecutter_block"
+      },
+      "C": {
+        "item": "cl:componente_ferro"
+      },
+      "B": {
+        "item": "cl:bobina_bt"
+      },
+      "W": {
+        "item": "cl:tabuas_tratadas"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:serraria_ie"
+    }
+  }
+}

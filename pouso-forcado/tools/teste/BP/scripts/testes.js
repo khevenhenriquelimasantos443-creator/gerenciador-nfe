@@ -1768,6 +1768,57 @@ teste("quark4", 300, (t) => {
   });
 });
 
+// 1.38.0: Immersive Engineering 12.4. Cada máquina com baú em cima e embaixo e uma bateria cheia do lado; os
+// geradores com uma célula vazia.
+teste("ie12", 800, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 7.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`ie12: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const maquina = (id, x, z, itens, energia = "bateria") => {
+    t.setBlockType("minecraft:chest", { x, y: 2, z });
+    t.setBlockType(id, { x, y: 3, z });
+    t.setBlockType("minecraft:chest", { x, y: 4, z });
+    const c = t.getBlock({ x, y: 4, z }).getComponent("inventory").container;
+    for (const [i, n] of itens) c.addItem(new ItemStack(i, n));
+    if (energia === "bateria") t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x: x + 1, y: 3, z });
+    else if (energia) t.setBlockType(energia, { x: x + 1, y: 3, z });
+  };
+  const saida = (x, z) => {
+    const c = t.getBlock({ x, y: 2, z }).getComponent("inventory").container;
+    const r = {};
+    for (let s = 0; s < c.size; s++) { const i = c.getItem(s); if (i) r[i.typeId.replace(/^(minecraft|cl):/, "")] = (r[i.typeId.replace(/^(minecraft|cl):/, "")] ?? 0) + i.amount; }
+    return r;
+  };
+  maquina("cl:prensa_metal", 0, 0, [["cl:molde_chapa", 1], ["minecraft:iron_ingot", 2]]);
+  maquina("cl:triturador_ie", 2, 0, [["minecraft:sandstone", 4]]);
+  maquina("cl:serraria_ie", 4, 0, [["minecraft:oak_log", 2]]);
+  maquina("cl:espremedor_ie", 6, 0, [["minecraft:wheat_seeds", 16]]);
+  maquina("cl:fermentador", 0, 3, [["minecraft:honey_bottle", 1]]);
+  maquina("cl:refinaria_ie", 2, 3, [["cl:po_salitre", 1], ["cl:balde_oleo_vegetal", 1], ["cl:balde_etanol", 1]]);
+  maquina("cl:campanula", 4, 3, [["minecraft:wheat_seeds", 1], ["minecraft:dirt", 1]]);
+  maquina("cl:gerador_diesel", 0, 6, [["cl:balde_biodiesel", 1]], "cl:celula_powah_basico");
+  // Termelétrico: lava em cima, gelo compacto embaixo, célula do lado.
+  t.setBlockType("cl:gerador_termeletrico", { x: 5, y: 3, z: 6 });
+  t.setBlockType("minecraft:packed_ice", { x: 5, y: 2, z: 6 });
+  t.setBlockType("minecraft:lava", { x: 5, y: 4, z: 6 });
+  t.setBlockType("cl:celula_powah_basico", { x: 6, y: 3, z: 6 });
+  t.runAfterDelay(680, () => {
+    for (const [x, z] of [[6, 0], [0, 3], [0, 6], [5, 6]]) { const p = w({ x, y: 3, z }); cmd(`scriptevent cl:teste_ie12 ${p.x} ${p.y} ${p.z}`); }
+  });
+  t.runAfterDelay(685, () => {
+    const r = { prensa: saida(0, 0), tritura: saida(2, 0), serra: saida(4, 0), ferm: saida(0, 3), refino: saida(2, 3), campanula: saida(4, 3), diesel: saida(0, 6) };
+    log(`ie12: ${JSON.stringify(r)}`);
+    t.assert(r.prensa.placa_ferro === 2, "a prensa não fez as chapas");
+    t.assert(r.tritura.sand >= 8, "o triturador não moeu o arenito");
+    t.assert(r.serra.oak_planks === 12 && r.serra.serragem === 4, "a serraria não serrou");
+    t.assert(r.ferm.glass_bottle === 1, "o fermentador não devolveu a garrafa");
+    t.assert(r.refino.balde_biodiesel === 2, "a refinaria não fez biodiesel");
+    t.assert(r.campanula.wheat >= 2, "a campânula não colheu");
+    t.assert(r.diesel.bucket === 1, "o gerador a diesel não queimou o biodiesel");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

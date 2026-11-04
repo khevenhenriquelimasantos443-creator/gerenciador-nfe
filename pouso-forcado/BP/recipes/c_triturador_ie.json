@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_triturador_ie"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "HHH",
+      "CFC",
+      "SSS"
+    ],
+    "key": {
+      "H": {
+        "item": "minecraft:hopper"
+      },
+      "C": {
+        "item": "cl:componente_ferro"
+      },
+      "F": {
+        "item": "minecraft:flint"
+      },
+      "S": {
+        "item": "cl:placa_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:triturador_ie"
+    }
+  }
+}

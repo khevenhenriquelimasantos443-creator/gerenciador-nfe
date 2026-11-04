@@ -1699,6 +1699,11 @@
   "en": "Stone Shovel",
   "icone": "textures/items/stone_shovel"
  },
+ "minecraft:stonecutter_block": {
+  "pt": "Cortador de Pedras",
+  "en": "Stonecutter",
+  "icone": "textures/blocks/stonecutter2_side"
+ },
  "minecraft:string": {
   "pt": "Linha",
   "en": "String",

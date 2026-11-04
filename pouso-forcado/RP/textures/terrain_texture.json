@@ -5535,6 +5535,114 @@
     },
     "clc_lampada_cristal_violeta_acesa": {
       "textures": "textures/blocks/cl/arte/lampada_cristal_violeta_acesa"
+    },
+    "clc_prensa_metal_frente": {
+      "textures": "textures/blocks/cl/c/prensa_metal_frente"
+    },
+    "clc_prensa_metal_lado": {
+      "textures": "textures/blocks/cl/c/prensa_metal_lado"
+    },
+    "clc_prensa_metal_topo": {
+      "textures": "textures/blocks/cl/c/prensa_metal_topo"
+    },
+    "clc_prensa_metal_baixo": {
+      "textures": "textures/blocks/cl/c/prensa_metal_baixo"
+    },
+    "clc_triturador_ie_frente": {
+      "textures": "textures/blocks/cl/c/triturador_ie_frente"
+    },
+    "clc_triturador_ie_lado": {
+      "textures": "textures/blocks/cl/c/triturador_ie_lado"
+    },
+    "clc_triturador_ie_topo": {
+      "textures": "textures/blocks/cl/c/triturador_ie_topo"
+    },
+    "clc_triturador_ie_baixo": {
+      "textures": "textures/blocks/cl/c/triturador_ie_baixo"
+    },
+    "clc_serraria_ie_frente": {
+      "textures": "textures/blocks/cl/c/serraria_ie_frente"
+    },
+    "clc_serraria_ie_lado": {
+      "textures": "textures/blocks/cl/c/serraria_ie_lado"
+    },
+    "clc_serraria_ie_topo": {
+      "textures": "textures/blocks/cl/c/serraria_ie_topo"
+    },
+    "clc_serraria_ie_baixo": {
+      "textures": "textures/blocks/cl/c/serraria_ie_baixo"
+    },
+    "clc_espremedor_ie_frente": {
+      "textures": "textures/blocks/cl/c/espremedor_ie_frente"
+    },
+    "clc_espremedor_ie_lado": {
+      "textures": "textures/blocks/cl/c/espremedor_ie_lado"
+    },
+    "clc_espremedor_ie_topo": {
+      "textures": "textures/blocks/cl/c/espremedor_ie_topo"
+    },
+    "clc_espremedor_ie_baixo": {
+      "textures": "textures/blocks/cl/c/espremedor_ie_baixo"
+    },
+    "clc_fermentador_frente": {
+      "textures": "textures/blocks/cl/c/fermentador_frente"
+    },
+    "clc_fermentador_lado": {
+      "textures": "textures/blocks/cl/c/fermentador_lado"
+    },
+    "clc_fermentador_topo": {
+      "textures": "textures/blocks/cl/c/fermentador_topo"
+    },
+    "clc_fermentador_baixo": {
+      "textures": "textures/blocks/cl/c/fermentador_baixo"
+    },
+    "clc_refinaria_ie_frente": {
+      "textures": "textures/blocks/cl/c/refinaria_ie_frente"
+    },
+    "clc_refinaria_ie_lado": {
+      "textures": "textures/blocks/cl/c/refinaria_ie_lado"
+    },
+    "clc_refinaria_ie_topo": {
+      "textures": "textures/blocks/cl/c/refinaria_ie_topo"
+    },
+    "clc_refinaria_ie_baixo": {
+      "textures": "textures/blocks/cl/c/refinaria_ie_baixo"
+    },
+    "clc_gerador_diesel_frente": {
+      "textures": "textures/blocks/cl/c/gerador_diesel_frente"
+    },
+    "clc_gerador_diesel_lado": {
+      "textures": "textures/blocks/cl/c/gerador_diesel_lado"
+    },
+    "clc_gerador_diesel_topo": {
+      "textures": "textures/blocks/cl/c/gerador_diesel_topo"
+    },
+    "clc_gerador_diesel_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_diesel_baixo"
+    },
+    "clc_gerador_termeletrico_frente": {
+      "textures": "textures/blocks/cl/c/gerador_termeletrico_frente"
+    },
+    "clc_gerador_termeletrico_lado": {
+      "textures": "textures/blocks/cl/c/gerador_termeletrico_lado"
+    },
+    "clc_gerador_termeletrico_topo": {
+      "textures": "textures/blocks/cl/c/gerador_termeletrico_topo"
+    },
+    "clc_gerador_termeletrico_baixo": {
+      "textures": "textures/blocks/cl/c/gerador_termeletrico_baixo"
+    },
+    "clc_campanula_frente": {
+      "textures": "textures/blocks/cl/c/campanula_frente"
+    },
+    "clc_campanula_lado": {
+      "textures": "textures/blocks/cl/c/campanula_lado"
+    },
+    "clc_campanula_topo": {
+      "textures": "textures/blocks/cl/c/campanula_topo"
+    },
+    "clc_campanula_baixo": {
+      "textures": "textures/blocks/cl/c/campanula_baixo"
     }
   }
 }

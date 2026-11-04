@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_fermentador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GBG",
+      "CTC",
+      "SSS"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "C": {
+        "item": "cl:componente_ferro"
+      },
+      "T": {
+        "item": "minecraft:cauldron"
+      },
+      "S": {
+        "item": "cl:placa_ferro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fermentador"
+    }
+  }
+}

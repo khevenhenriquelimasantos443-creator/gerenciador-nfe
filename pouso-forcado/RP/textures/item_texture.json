@@ -5698,6 +5698,30 @@
     },
     "clc_caco_vidro": {
       "textures": "textures/items/cl/arte/caco_vidro"
+    },
+    "clc_molde_chapa": {
+      "textures": "textures/items/cl/c/molde_chapa"
+    },
+    "clc_molde_engrenagem": {
+      "textures": "textures/items/cl/c/molde_engrenagem"
+    },
+    "clc_molde_haste": {
+      "textures": "textures/items/cl/c/molde_haste"
+    },
+    "clc_molde_desembalar": {
+      "textures": "textures/items/cl/c/molde_desembalar"
+    },
+    "clc_po_salitre": {
+      "textures": "textures/items/cl/c/po_salitre"
+    },
+    "clc_balde_oleo_vegetal": {
+      "textures": "textures/items/cl/c/balde_oleo_vegetal"
+    },
+    "clc_balde_etanol": {
+      "textures": "textures/items/cl/c/balde_etanol"
+    },
+    "clc_balde_biodiesel": {
+      "textures": "textures/items/cl/c/balde_biodiesel"
     }
   }
 }
