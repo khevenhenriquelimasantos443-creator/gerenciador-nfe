@@ -154,6 +154,20 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.29.0 (Tinkers' Construct 3 completo, parte 4 de 5: a Fundição inteira)
+
+- **Fusor + Aquecedor**: a fundição de um bloco do TC3. Combustível no Aquecedor (carvão, bloco de carvão, vara de
+  blaze, balde de lava), itens no baú em cima do Fusor (ou toque com eles), torneira do lado. Minério não dobra no Fusor.
+- **Ligador**: puxa os líquidos dos Fusores encostados e faz as ligas.
+- **Fundição Fantástica** (chamuscada): como a Fundição, mas não faz liga e dá **subproduto** dos minérios (ferro dá
+  aço, ouro dá cobalto, cobre dá ouro, ósmio dá ferro). Tijolo chamuscado: Argamassa do Nether (areia das almas, creme
+  de magma e cascalho) na fornalha.
+- **Calha**: o baú encostado nela alimenta a fundição. **Canal**: a torneira enche várias mesas em fila.
+- **Moldes de areia**: areia na Mesa de Fundição + toque com uma peça = molde que serve uma vez (a peça fica com você).
+- Blocos de construção refratários e chamuscados (pedra, pedregulho, pavimento, tijolos rachados, finos, pequenos,
+  triangulares, de creeper, ladrilho, estrada, lanternas, vidros de alma, fumê e chamuscado), mesa, bacia, tanque e dreno
+  chamuscados — tudo com a arte do TC3 (os blocos de antes da Fundição também ganharam a arte nova).
+
 ## Novidades da 1.28.0 (Tinkers' Construct 3 completo, parte 3 de 5: armaduras e armas)
 
 - **Armadura de Placa** de 20 materiais (cobre, ferro, ouro, alumínio, pedra carbonizada, pedra chamuscada,

@@ -1150,6 +1150,49 @@ teste("tinkers3_armas", 160, (t) => {
   });
 });
 
+// 1.29.0: Fusor + Aquecedor derretem ferro e a torneira enche o molde de lingote; dois Fusores (cobre e estanho) no
+// Ligador fazem bronze.
+teste("tinkers3_fusor", 400, (t) => {
+  const j = robo(t, { x: 3.5, y: 1, z: 2.5 });
+  const inv = j.getComponent("inventory").container;
+  t.setBlockType("cl:aquecedor", { x: 1, y: 1, z: 1 });
+  t.setBlockType("cl:fusor", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:torneira", { x: 2, y: 2, z: 1 });
+  t.setBlockType("cl:mesa_fundicao", { x: 2, y: 1, z: 1 });
+  for (const x of [4, 6]) {
+    t.setBlockType("cl:aquecedor", { x, y: 1, z: 4 });
+    t.setBlockType("cl:fusor", { x, y: 2, z: 4 });
+  }
+  t.setBlockType("cl:ligador", { x: 5, y: 2, z: 4 });
+  t.setBlockType("cl:torneira", { x: 5, y: 2, z: 5 });
+  t.setBlockType("cl:mesa_fundicao", { x: 5, y: 1, z: 5 });
+  const tocar = (item, pos) => {
+    // Com item: no espaço 0; de mão vazia: o espaço 8 (para não apagar o que já recolheu).
+    if (item) inv.setItem(0, new ItemStack(item, 1));
+    j.selectedSlotIndex = item ? 0 : 8;
+    j.lookAtBlock(pos);
+    j.interactWithBlock(pos, Direction.Up);
+  };
+  const passos = [
+    ["minecraft:coal_block", { x: 1, y: 1, z: 1 }], ["cl:molde_lingote", { x: 2, y: 1, z: 1 }], ["minecraft:iron_ingot", { x: 1, y: 2, z: 1 }],
+    ["minecraft:coal_block", { x: 4, y: 1, z: 4 }], ["minecraft:coal_block", { x: 6, y: 1, z: 4 }], ["cl:molde_lingote", { x: 5, y: 1, z: 5 }],
+    ["minecraft:copper_ingot", { x: 4, y: 2, z: 4 }], ["minecraft:copper_ingot", { x: 4, y: 2, z: 4 }], ["minecraft:copper_ingot", { x: 4, y: 2, z: 4 }],
+    ["cl:lingote_estanho", { x: 6, y: 2, z: 4 }],
+  ];
+  passos.forEach(([item, pos], k) => t.runAfterDelay(5 + k * 4, () => tocar(item, pos)));
+  t.runAfterDelay(160, () => tocar(undefined, { x: 2, y: 2, z: 1 }));
+  t.runAfterDelay(170, () => tocar(undefined, { x: 5, y: 2, z: 5 }));
+  t.runAfterDelay(190, () => tocar(undefined, { x: 2, y: 1, z: 1 }));
+  t.runAfterDelay(200, () => tocar(undefined, { x: 5, y: 1, z: 5 }));
+  t.runAfterDelay(220, () => {
+    const ferro = quantos(j, "minecraft:iron_ingot"), bronze = quantos(j, "cl:lingote_bronze");
+    log(`tinkers3_fusor: ferro=${ferro} bronze=${bronze} moldes=${quantos(j, "cl:molde_lingote")}`);
+    t.assert(ferro >= 1, "o Fusor não derreteu o ferro");
+    t.assert(bronze >= 1, "o Ligador não fez bronze");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

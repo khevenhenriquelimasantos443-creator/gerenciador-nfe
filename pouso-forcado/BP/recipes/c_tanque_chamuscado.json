@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tanque_chamuscado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "TTT",
+      "TGT",
+      "TTT"
+    ],
+    "key": {
+      "T": {
+        "item": "cl:tijolo_chamuscado"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tanque_chamuscado"
+    }
+  }
+}

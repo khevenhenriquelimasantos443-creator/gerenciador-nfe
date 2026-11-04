@@ -256,6 +256,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Travel Anchor",
   "icone": "textures/items/cl/blocos/ancora_viagem"
  },
+ "cl:aquecedor": {
+  "pt": "Aquecedor Refratário",
+  "en": "Seared Heater",
+  "icone": "textures/blocks/cl/arte/aquecedor_topo"
+ },
  "cl:arco_longo_aco": {
   "pt": "Arco Longo de Aço",
   "en": "Steel Longbow",
@@ -431,6 +436,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Grout",
   "icone": "textures/items/cl/arte/argamassa"
  },
+ "cl:argamassa_nether": {
+  "pt": "Argamassa do Nether",
+  "en": "Nether Grout",
+  "icone": "textures/items/cl/c/argamassa_nether"
+ },
  "cl:armazem_corpos": {
   "pt": "Armazém de Corpos",
   "en": "Shell Storage",
@@ -475,6 +485,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bacia de Fundição",
   "en": "Casting Basin",
   "icone": "textures/items/cl/blocos/bacia_fundicao"
+ },
+ "cl:bacia_fundicao_chamuscada": {
+  "pt": "Bacia de Fundição Chamuscada",
+  "en": "Scorched Casting Basin",
+  "icone": "textures/blocks/cl/arte/bacia_fundicao_chamuscada_topo"
  },
  "cl:bacon": {
   "pt": "Bacon",
@@ -1696,6 +1711,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Bone Broth",
   "icone": "textures/items/cl/arte/caldo_osso"
  },
+ "cl:calha_chamuscada": {
+  "pt": "Calha Chamuscada",
+  "en": "Scorched Chute",
+  "icone": "textures/blocks/cl/arte/calha_chamuscada"
+ },
+ "cl:calha_refrataria": {
+  "pt": "Calha Refratária",
+  "en": "Seared Chute",
+  "icone": "textures/blocks/cl/arte/calha_refrataria"
+ },
  "cl:camara_enriquecimento": {
   "pt": "Câmara de Enriquecimento",
   "en": "Enrichment Chamber",
@@ -1715,6 +1740,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Camel Pack",
   "en": "Camel Pack",
   "icone": "textures/items/cl/arte/camel_pack"
+ },
+ "cl:canal": {
+  "pt": "Canal Refratário",
+  "en": "Seared Channel",
+  "icone": "textures/blocks/cl/arte/canal"
  },
  "cl:cano_oxigenio": {
   "pt": "Cano de Oxigênio",
@@ -2646,6 +2676,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Smeltery Controller",
   "icone": "textures/items/cl/blocos/controlador_fundicao"
  },
+ "cl:controlador_fundicao_fantastica": {
+  "pt": "Controlador da Fundição Fantástica",
+  "en": "Foundry Controller",
+  "icone": "textures/blocks/cl/arte/controlador_fundicao_fantastica_topo"
+ },
  "cl:controlador_logico_z": {
   "pt": "Controlador Lógico Z",
   "en": "Z-Logic Controller",
@@ -2925,6 +2960,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Dreno",
   "en": "Drain",
   "icone": "textures/items/cl/blocos/dreno"
+ },
+ "cl:dreno_chamuscado": {
+  "pt": "Dreno Chamuscado",
+  "en": "Scorched Drain",
+  "icone": "textures/blocks/cl/arte/dreno_chamuscado"
  },
  "cl:dreno_fundicao": {
   "pt": "Dreno",
@@ -3756,6 +3796,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Treadmill",
   "icone": "textures/items/cl/arte/blocos/esteira_animal"
  },
+ "cl:estrada_chamuscada": {
+  "pt": "Estrada Chamuscada",
+  "en": "Scorched Road",
+  "icone": "textures/blocks/cl/arte/estrada_chamuscada"
+ },
  "cl:estrada_plastico_amarelo": {
   "pt": "Estrada de Plástico Amarelo",
   "en": "Yellow Plastic Road",
@@ -3835,6 +3880,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Estrada de Plástico Vermelho",
   "en": "Red Plastic Road",
   "icone": "textures/items/cl/blocos/estrada_plastico_vermelho"
+ },
+ "cl:estrada_refrataria": {
+  "pt": "Estrada Refratária",
+  "en": "Seared Road",
+  "icone": "textures/blocks/cl/arte/estrada_refrataria"
  },
  "cl:estrutura_maquina": {
   "pt": "Estrutura de Máquina",
@@ -4376,6 +4426,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Furnator",
   "icone": "textures/items/cl/blocos/furnator_nitro"
  },
+ "cl:fusor": {
+  "pt": "Fusor Refratário",
+  "en": "Seared Melter",
+  "icone": "textures/blocks/cl/arte/fusor_topo"
+ },
  "cl:gelo_seco": {
   "pt": "Gelo Seco",
   "en": "Dry Ice",
@@ -4791,6 +4846,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Kama",
   "icone": "textures/items/cl/arte/kama_slime_rainha"
  },
+ "cl:ladrilho_refratario": {
+  "pt": "Ladrilho Refratário",
+  "en": "Seared Tiles",
+  "icone": "textures/blocks/cl/arte/ladrilho_refratario"
+ },
  "cl:lampada": {
   "pt": "Lâmpada",
   "en": "Fancy Lamp",
@@ -4846,10 +4906,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Fancy Lantern",
   "icone": "textures/items/cl/arte/blocos/lanterna"
  },
+ "cl:lanterna_chamuscada": {
+  "pt": "Lanterna Chamuscada",
+  "en": "Scorched Lantern",
+  "icone": "textures/blocks/cl/arte/lanterna_chamuscada"
+ },
  "cl:lanterna_papel": {
   "pt": "Lanterna de Papel",
   "en": "Paper Lantern",
   "icone": "textures/items/cl/blocos/lanterna_papel"
+ },
+ "cl:lanterna_refrataria": {
+  "pt": "Lanterna Refratária",
+  "en": "Seared Lantern",
+  "icone": "textures/blocks/cl/arte/lanterna_refrataria"
  },
  "cl:lata_cobre": {
   "pt": "Lata de Cobre",
@@ -4900,6 +4970,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Liga Vibrante",
   "en": "Vibrant Alloy Ingot",
   "icone": "textures/items/cl/arte/liga_vibrante"
+ },
+ "cl:ligador": {
+  "pt": "Ligador Chamuscado",
+  "en": "Scorched Alloyer",
+  "icone": "textures/blocks/cl/arte/ligador_topo"
  },
  "cl:lingote_aco": {
   "pt": "Lingote de Aço",
@@ -5966,6 +6041,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Casting Table",
   "icone": "textures/items/cl/blocos/mesa_fundicao"
  },
+ "cl:mesa_fundicao_chamuscada": {
+  "pt": "Mesa de Fundição Chamuscada",
+  "en": "Scorched Casting Table",
+  "icone": "textures/blocks/cl/arte/mesa_fundicao_chamuscada_topo"
+ },
  "cl:mesa_moldes": {
   "pt": "Mesa de Moldes",
   "en": "Stencil Table",
@@ -6385,6 +6465,86 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Moinho de Vento",
   "en": "Windmill",
   "icone": "textures/items/cl/blocos/moinho_vento"
+ },
+ "cl:molde_areia_cabeca_enxo": {
+  "pt": "Molde de Areia: Cabeça de Enxó",
+  "en": "Adze Head Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabeca_enxo"
+ },
+ "cl:molde_areia_cabeca_machado": {
+  "pt": "Molde de Areia: Cabeça de Machado Pequeno",
+  "en": "Small Axe Head Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabeca_machado"
+ },
+ "cl:molde_areia_cabeca_machado_larga": {
+  "pt": "Molde de Areia: Cabeça de Machado Grande",
+  "en": "Broad Axe Head Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabeca_machado_larga"
+ },
+ "cl:molde_areia_cabeca_martelo": {
+  "pt": "Molde de Areia: Cabeça de Martelo",
+  "en": "Hammer Head Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabeca_martelo"
+ },
+ "cl:molde_areia_cabeca_pa": {
+  "pt": "Molde de Areia: Cabeça de Pá",
+  "en": "Shovel Head Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabeca_pa"
+ },
+ "cl:molde_areia_cabeca_picareta": {
+  "pt": "Molde de Areia: Cabeça de Picareta",
+  "en": "Pick Head Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabeca_picareta"
+ },
+ "cl:molde_areia_cabo": {
+  "pt": "Molde de Areia: Cabo de Ferramenta",
+  "en": "Tool Handle Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabo"
+ },
+ "cl:molde_areia_cabo_resistente": {
+  "pt": "Molde de Areia: Cabo Resistente",
+  "en": "Tough Handle Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_cabo_resistente"
+ },
+ "cl:molde_areia_guarda_larga": {
+  "pt": "Molde de Areia: Guarda Larga",
+  "en": "Wide Guard Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_guarda_larga"
+ },
+ "cl:molde_areia_lamina_espada": {
+  "pt": "Molde de Areia: Lâmina Pequena",
+  "en": "Small Blade Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_lamina_espada"
+ },
+ "cl:molde_areia_lamina_larga": {
+  "pt": "Molde de Areia: Lâmina Grande",
+  "en": "Broad Blade Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_lamina_larga"
+ },
+ "cl:molde_areia_ligacao": {
+  "pt": "Molde de Areia: Ligamento de Ferramenta",
+  "en": "Tool Binding Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_ligacao"
+ },
+ "cl:molde_areia_ligacao_resistente": {
+  "pt": "Molde de Areia: Colar Resistente",
+  "en": "Tough Collar Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_ligacao_resistente"
+ },
+ "cl:molde_areia_lingote": {
+  "pt": "Molde de Areia: Lingote",
+  "en": "Ingot Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_lingote"
+ },
+ "cl:molde_areia_placa_grande": {
+  "pt": "Molde de Areia: Placa Grande",
+  "en": "Large Plate Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_placa_grande"
+ },
+ "cl:molde_areia_travessa": {
+  "pt": "Molde de Areia: Travessa",
+  "en": "Crossbar Sand Cast",
+  "icone": "textures/items/cl/c/molde_areia_travessa"
  },
  "cl:molde_cabeca_enxo": {
   "pt": "Molde: Cabeça de Enxó",
@@ -7030,6 +7190,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pasta Dielétrica",
   "en": "Dielectric Paste",
   "icone": "textures/items/cl/arte/pasta_dieletrica"
+ },
+ "cl:pavimento_refratario": {
+  "pt": "Pavimento Refratário",
+  "en": "Seared Paver",
+  "icone": "textures/blocks/cl/arte/pavimento_refratario"
  },
  "cl:peca_cabeca_enxo_aco": {
   "pt": "Cabeça de Enxó de Aço",
@@ -9211,6 +9376,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sky Stone Block",
   "icone": "textures/blocks/cl/arte/pedra_ceu_lisa"
  },
+ "cl:pedra_chamuscada_bloco": {
+  "pt": "Pedra Chamuscada",
+  "en": "Scorched Stone",
+  "icone": "textures/blocks/cl/arte/pedra_chamuscada_bloco_topo"
+ },
+ "cl:pedra_chamuscada_entalhada": {
+  "pt": "Pedra Chamuscada Entalhada",
+  "en": "Chiseled Scorched Stone",
+  "icone": "textures/blocks/cl/arte/pedra_chamuscada_entalhada"
+ },
+ "cl:pedra_chamuscada_polida": {
+  "pt": "Pedra Chamuscada Polida",
+  "en": "Polished Scorched Stone",
+  "icone": "textures/blocks/cl/arte/pedra_chamuscada_polida_topo"
+ },
  "cl:pedra_entalhado": {
   "pt": "Pedra Entalhado",
   "en": "Carved Stone",
@@ -9240,6 +9420,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pedra Polido",
   "en": "Polished Stone",
   "icone": "textures/items/cl/blocos/pedra_polido"
+ },
+ "cl:pedra_refrataria_bloco": {
+  "pt": "Pedra Refratária",
+  "en": "Seared Stone",
+  "icone": "textures/blocks/cl/arte/pedra_refrataria_bloco"
  },
  "cl:pedra_tijolos": {
   "pt": "Pedra Tijolos",
@@ -9295,6 +9480,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pedregulho Comprimido (8x)",
   "en": "Compressed Cobblestone (8x)",
   "icone": "textures/items/cl/blocos/pedregulho_comprimido_8"
+ },
+ "cl:pedregulho_refratario": {
+  "pt": "Pedregulho Refratário",
+  "en": "Seared Cobblestone",
+  "icone": "textures/blocks/cl/arte/pedregulho_refratario"
  },
  "cl:pedreira": {
   "pt": "Pedreira",
@@ -11061,6 +11251,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Date",
   "icone": "textures/items/cl/arte/tamara"
  },
+ "cl:tanque_chamuscado": {
+  "pt": "Tanque Chamuscado",
+  "en": "Scorched Tank",
+  "icone": "textures/blocks/cl/arte/tanque_chamuscado"
+ },
  "cl:tanque_fluido": {
   "pt": "Tanque de Fluido",
   "en": "Fluid Tank",
@@ -11201,10 +11396,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Brick",
   "icone": "textures/items/cl/arte/tijolo_refratario"
  },
+ "cl:tijolos_chamuscados": {
+  "pt": "Tijolos Chamuscados",
+  "en": "Scorched Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_chamuscados"
+ },
  "cl:tijolos_refratarios": {
   "pt": "Tijolos Refratários",
   "en": "Seared Bricks",
   "icone": "textures/items/cl/blocos/tijolos_refratarios"
+ },
+ "cl:tijolos_refratarios_creeper": {
+  "pt": "Tijolos Refratários de Creeper",
+  "en": "Creeper Seared Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_refratarios_creeper"
+ },
+ "cl:tijolos_refratarios_finos": {
+  "pt": "Tijolos Refratários Finos",
+  "en": "Fancy Seared Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_refratarios_finos"
+ },
+ "cl:tijolos_refratarios_pequenos": {
+  "pt": "Tijolos Refratários Pequenos",
+  "en": "Small Seared Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_refratarios_pequenos"
+ },
+ "cl:tijolos_refratarios_rachados": {
+  "pt": "Tijolos Refratários Rachados",
+  "en": "Cracked Seared Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_refratarios_rachados"
+ },
+ "cl:tijolos_refratarios_triangulo": {
+  "pt": "Tijolos Refratários Triangulares",
+  "en": "Triangle Seared Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_refratarios_triangulo"
  },
  "cl:tnt_obsidiana": {
   "pt": "TNT de Obsidiana",
@@ -11521,10 +11746,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Oxygen Fan",
   "icone": "textures/items/cl/c/ventilador_oxigenio"
  },
+ "cl:vidro_alma_refratario": {
+  "pt": "Vidro de Alma Refratário",
+  "en": "Seared Soul Glass",
+  "icone": "textures/blocks/cl/arte/vidro_alma_refratario"
+ },
  "cl:vidro_camara": {
   "pt": "Vidro da Câmara de Pressão",
   "en": "Pressure Chamber Glass",
   "icone": "textures/items/cl/blocos/vidro_camara"
+ },
+ "cl:vidro_chamuscado": {
+  "pt": "Vidro Chamuscado",
+  "en": "Scorched Glass",
+  "icone": "textures/blocks/cl/arte/vidro_chamuscado"
  },
  "cl:vidro_emoldurado": {
   "pt": "Vidro Emoldurado",
@@ -11535,6 +11770,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Vidro Entalhado",
   "en": "Carved Glass",
   "icone": "textures/items/cl/blocos/vidro_entalhado"
+ },
+ "cl:vidro_fume_refratario": {
+  "pt": "Vidro Fumê Refratário",
+  "en": "Seared Tinted Glass",
+  "icone": "textures/blocks/cl/arte/vidro_fume_refratario"
  },
  "cl:vidro_ladrilho": {
   "pt": "Vidro Ladrilho",
@@ -12564,6 +12804,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Magma Block",
   "icone": "textures/blocks/magma"
  },
+ "minecraft:magma_cream": {
+  "pt": "Creme de Magma",
+  "en": "Magma Cream",
+  "icone": "textures/items/magma_cream"
+ },
  "minecraft:mangrove_log": {
   "pt": "Tora de Mangue",
   "en": "Mangrove Log",
@@ -13102,6 +13347,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bagas Doces",
   "en": "Sweet Berries",
   "icone": "textures/items/sweet_berries"
+ },
+ "minecraft:tinted_glass": {
+  "pt": "Vidro Fumê",
+  "en": "Tinted Glass",
+  "icone": "textures/blocks/tinted_glass"
  },
  "minecraft:tnt": {
   "pt": "Dinamite",
@@ -14257,6 +14507,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_aquecedor",
+  "resultado": "cl:aquecedor",
+  "qtd": 1,
+  "grade": [
+   "TTT",
+   "T T",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_arco_longo_aco",
   "resultado": "cl:arco_longo_aco",
   "qtd": 1,
@@ -14789,6 +15056,29 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_argamassa_nether",
+  "resultado": "cl:argamassa_nether",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:soul_sand",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:magma_cream",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:gravel",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_armazem_corpos",
   "resultado": "cl:armazem_corpos",
@@ -14838,6 +15128,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bacia_fundicao_chamuscada",
+  "resultado": "cl:bacia_fundicao_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "T T",
+   "T T",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado"
   },
   "estacoes": [
    "crafting_table"
@@ -17883,6 +18190,56 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_calha_chamuscada",
+  "resultado": "cl:calha_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "T T",
+   " T ",
+   "T T"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calha_refrataria",
+  "resultado": "cl:calha_refrataria",
+  "qtd": 1,
+  "grade": [
+   "T T",
+   " T ",
+   "T T"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_canal",
+  "resultado": "cl:canal",
+  "qtd": 3,
+  "grade": [
+   "T T",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_cano_oxigenio",
   "resultado": "cl:cano_oxigenio",
   "qtd": 6,
@@ -18874,6 +19231,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_controlador_fundicao_fantastica",
+  "resultado": "cl:controlador_fundicao_fantastica",
+  "qtd": 1,
+  "grade": [
+   "TTT",
+   "TOT",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado",
+   "O": "minecraft:obsidian"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_controlador_velocidade",
   "resultado": "cl:controlador_velocidade",
   "qtd": 1,
@@ -18904,6 +19279,246 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   },
   "estacoes": [
    "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_estrada_chamuscada",
+  "resultado": "cl:estrada_chamuscada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_chamuscados",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_estrada_refrataria",
+  "resultado": "cl:estrada_refrataria",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_ladrilho_refratario",
+  "resultado": "cl:ladrilho_refratario",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_lanterna_chamuscada",
+  "resultado": "cl:lanterna_chamuscada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_chamuscados",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_lanterna_refrataria",
+  "resultado": "cl:lanterna_refrataria",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_pavimento_refratario",
+  "resultado": "cl:pavimento_refratario",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_pedra_chamuscada_bloco",
+  "resultado": "cl:pedra_chamuscada_bloco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_chamuscados",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_pedra_chamuscada_entalhada",
+  "resultado": "cl:pedra_chamuscada_entalhada",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_chamuscados",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_pedra_chamuscada_polida",
+  "resultado": "cl:pedra_chamuscada_polida",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_chamuscados",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_pedra_refrataria_bloco",
+  "resultado": "cl:pedra_refrataria_bloco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_pedregulho_refratario",
+  "resultado": "cl:pedregulho_refratario",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_tijolos_refratarios_creeper",
+  "resultado": "cl:tijolos_refratarios_creeper",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_tijolos_refratarios_finos",
+  "resultado": "cl:tijolos_refratarios_finos",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_tijolos_refratarios_pequenos",
+  "resultado": "cl:tijolos_refratarios_pequenos",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_tijolos_refratarios_rachados",
+  "resultado": "cl:tijolos_refratarios_rachados",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_corte_tijolos_refratarios_triangulo",
+  "resultado": "cl:tijolos_refratarios_triangulo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:tijolos_refratarios",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "stonecutter"
   ]
  },
  {
@@ -19512,6 +20127,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "X": "cl:ventilador_oxigenio",
    "Y": "cl:respiro_oxigenio",
    "Z": "cl:placa_aluminio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_dreno_chamuscado",
+  "resultado": "cl:dreno_chamuscado",
+  "qtd": 1,
+  "grade": [
+   "T T",
+   "T T",
+   "T T"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado"
   },
   "estacoes": [
    "crafting_table"
@@ -22886,6 +23518,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_fusor",
+  "resultado": "cl:fusor",
+  "qtd": 1,
+  "grade": [
+   "TGT",
+   "T T",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_refratario",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_gerador_bio",
   "resultado": "cl:gerador_bio",
   "qtd": 1,
@@ -23468,6 +24118,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "X": "cl:lingote_estanho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_ligador",
+  "resultado": "cl:ligador",
+  "qtd": 1,
+  "grade": [
+   "TGT",
+   "TMT",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado",
+   "G": "minecraft:glass",
+   "M": "cl:fusor"
   },
   "estacoes": [
    "crafting_table"
@@ -24263,6 +24932,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "T": "cl:tijolo_refratario"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mesa_fundicao_chamuscada",
+  "resultado": "cl:mesa_fundicao_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "TTT",
+   "T T",
+   "T T"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado"
   },
   "estacoes": [
    "crafting_table"
@@ -32400,6 +33086,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_tanque_chamuscado",
+  "resultado": "cl:tanque_chamuscado",
+  "qtd": 1,
+  "grade": [
+   "TTT",
+   "TGT",
+   "TTT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_tanque_oxigenio_leve",
   "resultado": "cl:tanque_oxigenio_leve",
   "qtd": 1,
@@ -32531,6 +33235,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "fornalha",
+  "id": "cl:c_tijolo_chamuscado",
+  "resultado": "cl:tijolo_chamuscado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:argamassa_nether",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_tijolo_coque",
   "resultado": "cl:tijolo_coque",
@@ -32578,6 +33297,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolos_chamuscados",
+  "resultado": "cl:tijolos_chamuscados",
+  "qtd": 1,
+  "grade": [
+   "TT",
+   "TT"
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado"
+  },
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -33128,6 +33863,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_vidro_alma_refratario",
+  "resultado": "cl:vidro_alma_refratario",
+  "qtd": 1,
+  "grade": [
+   " T ",
+   "TST",
+   " T "
+  ],
+  "chaves": {
+   "T": "cl:tijolo_refratario",
+   "S": "minecraft:soul_sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_vidro_camara",
   "resultado": "cl:vidro_camara",
@@ -33148,6 +33901,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_vidro_chamuscado",
+  "resultado": "cl:vidro_chamuscado",
+  "qtd": 1,
+  "grade": [
+   " T ",
+   "TGT",
+   " T "
+  ],
+  "chaves": {
+   "T": "cl:tijolo_chamuscado",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_vidro_emoldurado",
   "resultado": "cl:vidro_emoldurado",
   "qtd": 4,
@@ -33159,6 +33930,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "I": "minecraft:iron_nugget",
    "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_vidro_fume_refratario",
+  "resultado": "cl:vidro_fume_refratario",
+  "qtd": 1,
+  "grade": [
+   " T ",
+   "TGT",
+   " T "
+  ],
+  "chaves": {
+   "T": "cl:tijolo_refratario",
+   "G": "minecraft:tinted_glass"
   },
   "estacoes": [
    "crafting_table"

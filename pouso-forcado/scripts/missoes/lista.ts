@@ -351,6 +351,10 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "tc3_arco", objetivo: { tipo: "ter", item: "cl:arco_longo_madeira", qtd: 1 }, recompensa: [{ item: "minecraft:arrow", quantidade: 32 }] },
       { id: "tc3_slime_botas", requer: ["tc3_slime_ceu"], objetivo: { tipo: "acao", acao: "tc_quicar", qtd: 1 }, recompensa: [{ item: "cl:bola_slime_ceu", quantidade: 8 }] },
       { id: "tc3_shuriken", objetivo: { tipo: "acao", acao: "tc_shuriken", qtd: 1 }, recompensa: [{ item: "minecraft:flint", quantidade: 16 }] },
+      // 1.29.0: a Fundição inteira.
+      { id: "tc3_fusor", objetivo: { tipo: "ter", item: "cl:fusor", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "tc3_fantastica", objetivo: { tipo: "ter", item: "cl:controlador_fundicao_fantastica", qtd: 1 }, recompensa: [{ item: "minecraft:lava_bucket", quantidade: 1 }] },
+      { id: "tc3_molde_areia", objetivo: { tipo: "ter", item: "cl:molde_areia_lingote", qtd: 1 }, recompensa: [{ item: "minecraft:sand", quantidade: 16 }] },
     ],
   },
   {

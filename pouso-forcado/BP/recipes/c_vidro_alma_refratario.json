@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_vidro_alma_refratario"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " T ",
+      "TST",
+      " T "
+    ],
+    "key": {
+      "T": {
+        "item": "cl:tijolo_refratario"
+      },
+      "S": {
+        "item": "minecraft:soul_sand"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:vidro_alma_refratario"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_argamassa_nether"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:soul_sand"
+      },
+      {
+        "item": "minecraft:magma_cream"
+      },
+      {
+        "item": "minecraft:gravel"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:argamassa_nether",
+      "count": 2
+    }
+  }
+}

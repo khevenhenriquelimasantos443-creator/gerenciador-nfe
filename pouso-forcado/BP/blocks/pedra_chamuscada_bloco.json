@@ -1,0 +1,35 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:pedra_chamuscada_bloco",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_pedra_chamuscada_bloco",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_pedra_chamuscada_bloco_topo",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "clc_pedra_chamuscada_bloco_topo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 10
+      },
+      "minecraft:map_color": "#4a3a30"
+    }
+  }
+}

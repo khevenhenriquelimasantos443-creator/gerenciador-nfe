@@ -5110,6 +5110,57 @@
     },
     "clc_dardo_manyullyn": {
       "textures": "textures/items/cl/arte/dardo_manyullyn"
+    },
+    "clc_argamassa_nether": {
+      "textures": "textures/items/cl/c/argamassa_nether"
+    },
+    "clc_molde_areia_lingote": {
+      "textures": "textures/items/cl/c/molde_areia_lingote"
+    },
+    "clc_molde_areia_cabeca_picareta": {
+      "textures": "textures/items/cl/c/molde_areia_cabeca_picareta"
+    },
+    "clc_molde_areia_cabeca_machado": {
+      "textures": "textures/items/cl/c/molde_areia_cabeca_machado"
+    },
+    "clc_molde_areia_lamina_espada": {
+      "textures": "textures/items/cl/c/molde_areia_lamina_espada"
+    },
+    "clc_molde_areia_cabeca_enxo": {
+      "textures": "textures/items/cl/c/molde_areia_cabeca_enxo"
+    },
+    "clc_molde_areia_cabeca_martelo": {
+      "textures": "textures/items/cl/c/molde_areia_cabeca_martelo"
+    },
+    "clc_molde_areia_lamina_larga": {
+      "textures": "textures/items/cl/c/molde_areia_lamina_larga"
+    },
+    "clc_molde_areia_cabeca_machado_larga": {
+      "textures": "textures/items/cl/c/molde_areia_cabeca_machado_larga"
+    },
+    "clc_molde_areia_placa_grande": {
+      "textures": "textures/items/cl/c/molde_areia_placa_grande"
+    },
+    "clc_molde_areia_ligacao": {
+      "textures": "textures/items/cl/c/molde_areia_ligacao"
+    },
+    "clc_molde_areia_ligacao_resistente": {
+      "textures": "textures/items/cl/c/molde_areia_ligacao_resistente"
+    },
+    "clc_molde_areia_cabo": {
+      "textures": "textures/items/cl/c/molde_areia_cabo"
+    },
+    "clc_molde_areia_cabo_resistente": {
+      "textures": "textures/items/cl/c/molde_areia_cabo_resistente"
+    },
+    "clc_molde_areia_cabeca_pa": {
+      "textures": "textures/items/cl/c/molde_areia_cabeca_pa"
+    },
+    "clc_molde_areia_guarda_larga": {
+      "textures": "textures/items/cl/c/molde_areia_guarda_larga"
+    },
+    "clc_molde_areia_travessa": {
+      "textures": "textures/items/cl/c/molde_areia_travessa"
     }
   }
 }

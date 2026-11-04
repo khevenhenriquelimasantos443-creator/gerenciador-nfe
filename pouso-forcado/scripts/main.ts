@@ -23,7 +23,7 @@ import { armazemCorpos, construtorCorpos, registrarSync } from "./maquinas/sync.
 import { cabide, carregador, estante, guardaItens, luminaria, registrarDecoracao } from "./maquinas/decoracao.js";
 import { barraControle, controladorReator, portaAcesso, portaRefrigeracao, registrarReator, reprocessador, tomada } from "./maquinas/reator.js";
 import { colheitadeira, colocador, compostadora, esgoto, esteira, fertilizadora, plantadeira, quebrador, rancheiro, registrarMFR, triturador } from "./maquinas/mfr.js";
-import { baciaComp, fundicaoComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
+import { aquecedorComp, baciaComp, fundicaoComp, fusorComp, ligadorComp, mesaComp, registrarFundicao, tanqueComp, torneiraComp } from "./tinkers/fundicao.js";
 import { peneira } from "./blocos/peneira.js";
 import { terminal } from "./blocos/terminal.js";
 import { registrarCatalogo } from "./catalogo/catalogo.js";
@@ -168,6 +168,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:torneira", torneiraComp);
   blockComponentRegistry.registerCustomComponent("cl:mesa_fundicao", mesaComp);
   blockComponentRegistry.registerCustomComponent("cl:bacia_fundicao", baciaComp);
+  // 1.29.0: Fusor, Aquecedor e Ligador do Tinkers 3.
+  blockComponentRegistry.registerCustomComponent("cl:aquecedor", aquecedorComp);
+  blockComponentRegistry.registerCustomComponent("cl:fusor", comPerfil("cl:fusor", fusorComp));
+  blockComponentRegistry.registerCustomComponent("cl:ligador", comPerfil("cl:ligador", ligadorComp));
   for (const [id, comp] of Object.entries({
     "cl:pulverizador": pulverizador, "cl:fornalha_redstone": fornalhaRedstone, "cl:fundidora_inducao": fundidoraInducao, "cl:serraria": serraria,
     "cl:extrusora_ignea": extrusora, "cl:precipitador_glacial": precipitador, "cl:dinamo_redstone": dinamo,

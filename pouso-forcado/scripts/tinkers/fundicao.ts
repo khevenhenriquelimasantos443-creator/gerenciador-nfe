@@ -23,10 +23,22 @@ import { abrirUmMenu } from "../util/menus.js";
  * Quebrar qualquer bloco refratário desmonta as fundições em volta (até tocar no controlador de novo).
  * Custo: 1 busca de itens no interior por segundo por fundição pronta.
  */
-type Fundicao = { ok: boolean; h: number; cap: number; tanques: Vector3[]; drenos: Vector3[]; metais: [string, number][] };
+type Loja = { metais: [string, number][] };
+type Fundicao = Loja & { ok: boolean; h: number; cap: number; tanques: Vector3[]; drenos: Vector3[]; calhas?: Vector3[] };
 type Mesa = { item?: string; pronto?: string };
 const T = "fundicao";
-const PAREDE = new Set(["cl:tijolos_refratarios", "cl:vidro_refratario", "cl:tanque_refratario", "cl:dreno_fundicao", "cl:controlador_fundicao"]);
+const PAREDE = new Set(["cl:tijolos_refratarios", "cl:vidro_refratario", "cl:tanque_refratario", "cl:dreno_fundicao", "cl:controlador_fundicao",
+  // 1.29.0 (Tinkers completo, parte 4): os blocos novos da Fundição e da Fundição Fantástica (chamuscada).
+  "cl:calha_refrataria", "cl:vidro_alma_refratario", "cl:vidro_fume_refratario", "cl:lanterna_refrataria", "cl:tijolos_refratarios_finos", "cl:tijolos_refratarios_rachados",
+  "cl:tijolos_refratarios_pequenos", "cl:tijolos_refratarios_triangulo", "cl:tijolos_refratarios_creeper", "cl:ladrilho_refratario"]);
+const PAREDE_CHAMUSCADA = new Set(["cl:tijolos_chamuscados", "cl:vidro_chamuscado", "cl:tanque_chamuscado", "cl:tanque_refratario", "cl:dreno_chamuscado", "cl:calha_chamuscada",
+  "cl:controlador_fundicao_fantastica", "cl:pedra_chamuscada_polida", "cl:pedra_chamuscada_entalhada", "cl:lanterna_chamuscada"]);
+const TANQUES = new Set(["cl:tanque_refratario", "cl:tanque_chamuscado"]);
+const DRENOS = new Set(["cl:dreno_fundicao", "cl:dreno_chamuscado"]);
+const CALHAS = new Set(["cl:calha_refrataria", "cl:calha_chamuscada"]);
+export const MESAS = new Set(["cl:mesa_fundicao", "cl:mesa_fundicao_chamuscada"]);
+export const BACIAS = new Set(["cl:bacia_fundicao", "cl:bacia_fundicao_chamuscada"]);
+const fantastica = (c: Block) => c.typeId === "cl:controlador_fundicao_fantastica";
 const DIRS: Readonly<Record<string, [number, number]>> = { north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0] };
 const PECAS = DADOS_F15.pecas as Readonly<Record<string, { custo: number }>>;
 // 1.26.0: os metais de ferramenta são os materiais de metal do Tinkers 3 (cobalto, manyullyn, ferro-porco...).
@@ -75,9 +87,12 @@ function bloco(dim: Dimension, p: Vector3): Block | undefined {
 function validar(c: Block): { f?: Omit<Fundicao, "metais">; erro?: string } {
   const [dx, dz] = DIRS[lerEstado<string>(c, "minecraft:cardinal_direction")] ?? [0, -1];
   const cx = c.x + dx * 2, cz = c.z + dz * 2, y0 = c.y;
+  const ff = fantastica(c);
+  const piso = ff ? "cl:tijolos_chamuscados" : "cl:tijolos_refratarios";
+  const paredes = ff ? PAREDE_CHAMUSCADA : PAREDE;
   for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++)
-    if (bloco(c.dimension, { x: cx + a, y: y0 - 1, z: cz + b })?.typeId !== "cl:tijolos_refratarios") return { erro: "piso" };
-  const tanques: Vector3[] = [], drenos: Vector3[] = [];
+    if (bloco(c.dimension, { x: cx + a, y: y0 - 1, z: cz + b })?.typeId !== piso) return { erro: "piso" };
+  const tanques: Vector3[] = [], drenos: Vector3[] = [], calhas: Vector3[] = [];
   let h = 0;
   for (; h < FUNDICAO.maxCamadas; h++) {
     const y = y0 + h;
@@ -87,22 +102,23 @@ function validar(c: Block): { f?: Omit<Fundicao, "metais">; erro?: string } {
     const parede: Vector3[] = [];
     for (let k = -1; k <= 1; k++) parede.push({ x: cx + k, y, z: cz - 2 }, { x: cx + k, y, z: cz + 2 }, { x: cx - 2, y, z: cz + k }, { x: cx + 2, y, z: cz + k });
     const blocos = parede.map((p) => bloco(c.dimension, p));
-    const paredeOk = blocos.every((b) => b && PAREDE.has(b.typeId));
+    const paredeOk = blocos.every((b) => b && paredes.has(b.typeId));
     if (!interiorOk || !paredeOk) {
       if (h === 0) return { erro: interiorOk ? "parede" : "interior" };
       break;
     }
     for (const b of blocos) {
-      if (b!.typeId === "cl:tanque_refratario") tanques.push(b!.location);
-      if (b!.typeId === "cl:dreno_fundicao") drenos.push(b!.location);
+      if (TANQUES.has(b!.typeId)) tanques.push(b!.location);
+      if (DRENOS.has(b!.typeId)) drenos.push(b!.location);
+      if (CALHAS.has(b!.typeId)) calhas.push(b!.location);
     }
   }
   if (tanques.length === 0) return { erro: "tanque" };
-  return { f: { ok: true, h, cap: h * FUNDICAO.capacidadePorCamada, tanques, drenos } };
+  return { f: { ok: true, h, cap: h * FUNDICAO.capacidadePorCamada, tanques, drenos, calhas } };
 }
 
 const lerF = (c: Block): Fundicao => ler<Fundicao>(T, c, { ok: false, h: 0, cap: 0, tanques: [], drenos: [], metais: [] });
-const total = (f: Fundicao) => f.metais.reduce((s, [, v]) => s + v, 0);
+export const total = (f: Loja) => f.metais.reduce((s, [, v]) => s + v, 0);
 const lavaDe = (dim: Dimension, p: Vector3) => lerEm<number>("tanque", dim, p, 0);
 const lavaTotal = (dim: Dimension, f: Fundicao) => f.tanques.reduce((s, p) => s + lavaDe(dim, p), 0);
 
@@ -121,23 +137,23 @@ function gastarLava(dim: Dimension, f: Fundicao, mb: number): boolean {
   return true;
 }
 
-function somar(f: Fundicao, metal: string, mb: number): void {
+export function somar(f: Loja, metal: string, mb: number): void {
   const linha = f.metais.find(([m]) => m === metal);
   if (linha) linha[1] += mb;
   else f.metais.push([metal, mb]);
 }
 
-function tirar(f: Fundicao, metal: string, mb: number): void {
+export function tirar(f: Loja, metal: string, mb: number): void {
   const linha = f.metais.find(([m]) => m === metal);
   if (!linha) return;
   linha[1] -= mb;
   f.metais = f.metais.filter(([, v]) => v > 0);
 }
 
-const qtd = (f: Fundicao, metal: string) => f.metais.find(([m]) => m === metal)?.[1] ?? 0;
+export const qtd = (f: Loja, metal: string) => f.metais.find(([m]) => m === metal)?.[1] ?? 0;
 
 /** Bronze sozinho; aço quando tem carvão e ferro. */
-function ligas(f: Fundicao): void {
+export function ligas(f: Loja): void {
   const { cobre, estanho, sai } = FUNDICAO.bronze;
   while (qtd(f, "cobre") >= cobre && qtd(f, "estanho") >= estanho) {
     tirar(f, "cobre", cobre);
@@ -188,6 +204,33 @@ function tick(c: Block): void {
     }
   }
   const itens = c.dimension.getEntities({ type: "minecraft:item", location: canto, volume: { x: 3, y: f.h, z: 3 } });
+  // 1.29.0: Calha — o que está no baú encostado na calha (em cima ou do lado de fora) entra na fundição.
+  for (const ch of f.calhas ?? []) {
+    if (derreteu >= FUNDICAO.derretePorSegundo) break;
+    for (const viz of [{ x: 0, y: 1, z: 0 }, { x: 1, y: 0, z: 0 }, { x: -1, y: 0, z: 0 }, { x: 0, y: 0, z: 1 }, { x: 0, y: 0, z: -1 }]) {
+      const b = bloco(c.dimension, { x: ch.x + viz.x, y: ch.y + viz.y, z: ch.z + viz.z });
+      let inv;
+      try {
+        inv = b?.getComponent("minecraft:inventory")?.container;
+      } catch {
+        inv = undefined;
+      }
+      if (!inv) continue;
+      for (let k = 0; k < inv.size && derreteu < FUNDICAO.derretePorSegundo; k++) {
+        const it = inv.getItem(k);
+        const v = it && valorDe(it.typeId);
+        if (!it || !v || total(f) + v[1] > f.cap || !gastarLava(c.dimension, f, FUNDICAO.lavaPorItem)) continue;
+        somar(f, v[0], v[1]);
+        if (fantastica(c)) subproduto(f, it.typeId, v);
+        if (it.amount > 1) {
+          it.amount--;
+          inv.setItem(k, it);
+        } else inv.setItem(k, undefined);
+        derreteu++;
+        mudou = true;
+      }
+    }
+  }
   if (itens.length === 0 && !mudou) return;
   for (const e of itens) {
     if (derreteu >= FUNDICAO.derretePorSegundo) break;
@@ -213,6 +256,7 @@ function tick(c: Block): void {
     while (n < pilha.amount && derreteu < FUNDICAO.derretePorSegundo && total(f) + v[1] <= f.cap) {
       if (!gastarLava(c.dimension, f, FUNDICAO.lavaPorItem)) break;
       somar(f, v[0], v[1]);
+      if (fantastica(c)) subproduto(f, pilha.typeId, v);
       n++;
       derreteu++;
     }
@@ -222,11 +266,18 @@ function tick(c: Block): void {
     }
   }
   if (!mudou) return;
-  ligas(f);
+  if (!fantastica(c)) ligas(f); // a Fundição Fantástica não faz liga (TC3)
   gravar(T, c, f);
   c.dimension.playSound("bucket.fill_lava", c.center(), { volume: 0.4 });
   const quem = c.dimension.getPlayers({ location: c.center(), maxDistance: 16, closest: 1 })[0];
   if (quem) for (let i = 0; i < derreteu; i++) registrarAcao(quem, "derreter");
+}
+
+// Subprodutos da Fundição Fantástica (melting/metal/*/ore do TC3): um terço do que o mod dá, só de minério e bruto.
+const SUBPRODUTO: Readonly<Record<string, readonly [string, number]>> = { ferro: ["aco", 1 / 3], ouro: ["cobalto", 1 / 3], cobre: ["ouro", 1 / 9], osmio: ["ferro", 1 / 3] };
+function subproduto(f: Loja, id: string, v: readonly [string, number]): void {
+  const s = SUBPRODUTO[v[0]];
+  if (s && /raw_|_ore$|bruto|minerio/.test(id)) somar(f, s[0], Math.round(v[1] * s[1]));
 }
 
 function consumirEntidade(e: { location: Vector3; dimension: Dimension; remove(): void }, pilha: ItemStack, n: number): void {
@@ -344,6 +395,16 @@ function tocarMesa(j: Player, b: Block, bacia: boolean): void {
     j.playSound("random.click");
     return aviso(j, { translate: "cl.fun.na_mesa", with: { rawtext: [nomeItem(mao.typeId)] } });
   }
+  // 1.29.0: areia na mesa + peça (ou lingote) na mão = molde de areia (a peça fica com você).
+  if (!bacia && (m.item === "minecraft:sand" || m.item === "minecraft:red_sand") && mao) {
+    const pm = pecaDe(mao.typeId);
+    const molde = pm && PECAS[pm[0]] ? `cl:molde_areia_${pm[0]}` : /_ingot$|^cl:lingote_/.test(mao.typeId) ? "cl:molde_areia_lingote" : undefined;
+    if (molde) {
+      gravar(tipo, b, { pronto: molde });
+      j.playSound("dig.sand");
+      return aviso(j, { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(molde)] } });
+    }
+  }
   if (!bacia && m.item && !mao) {
     darAoJogador(j, m.item);
     gravar(tipo, b, undefined);
@@ -370,6 +431,12 @@ function fundir(metal: string, item: string | undefined, bacia: boolean): [strin
   const comp = pm && D45.compostos.find((x) => x.de === pm[1] && x.liquido === metal);
   if (pm && comp && PECAS[pm[0]]) return [`cl:peca_${pm[0]}_${comp.vira}`, comp.mb * PECAS[pm[0]].custo, true];
   if (item === "cl:molde_lingote") return lingoteDe(metal) ? [lingoteDe(metal)!, 144, false] : "nao_serve";
+  // 1.29.0: molde de areia (TC3): serve uma vez só.
+  if (item === "cl:molde_areia_lingote") return lingoteDe(metal) ? [lingoteDe(metal)!, 144, true] : "nao_serve";
+  if (item.startsWith("cl:molde_areia_")) {
+    const peca = item.slice("cl:molde_areia_".length);
+    return PECAS[peca] && METAIS_FERRAMENTA.has(metal) ? [`cl:peca_${peca}_${metal}`, PECAS[peca].custo * 144, true] : "nao_serve";
+  }
   if (item === "cl:molde_pepita") return FUNDICAO.pepita[metal] ? [FUNDICAO.pepita[metal], 16, false] : "nao_serve";
   if (item.startsWith("cl:molde_")) {
     const peca = item.slice("cl:molde_".length);
@@ -382,39 +449,199 @@ function fundir(metal: string, item: string | undefined, bacia: boolean): [strin
   return molde ? [molde, FUNDICAO.ouroParaMolde, true] : "nao_serve";
 }
 
+// 1.29.0: de onde a torneira tira (dreno de uma fundição, ou Fusor/Ligador encostado) e onde cai (mesa ou bacia
+// embaixo, ou pelo Canal até a primeira mesa/bacia livre, como os canais do TC3).
+type Fonte = { loja: Loja; salvar: (l: Loja) => void };
+function fonteDa(t: Block): Fonte | undefined {
+  for (const b of [t.north(), t.south(), t.east(), t.west()]) {
+    if (!b) continue;
+    if (DRENOS.has(b.typeId)) {
+      const pc = lerEm<Vector3 | undefined>("dreno", t.dimension, b.location, undefined);
+      const c = pc && bloco(t.dimension, pc);
+      if (c && (c.typeId === "cl:controlador_fundicao" || c.typeId === "cl:controlador_fundicao_fantastica")) {
+        const f = lerF(c);
+        if (f.ok) return { loja: f, salvar: (l) => gravar(T, c, l) };
+      }
+    }
+    if (b.typeId === "cl:fusor" || b.typeId === "cl:ligador") {
+      const k = b.typeId === "cl:fusor" ? "fusor" : "ligador";
+      const l = ler<Loja>(k, b, { metais: [] });
+      return { loja: l, salvar: (x) => gravar(k, b, { ...ler<object>(k, b, {}), metais: x.metais }) };
+    }
+  }
+  return undefined;
+}
+function alvosDa(t: Block): Block[] {
+  const baixo = t.below();
+  if (!baixo) return [];
+  if (MESAS.has(baixo.typeId) || BACIAS.has(baixo.typeId)) return [baixo];
+  if (baixo.typeId !== "cl:canal") return [];
+  const r: Block[] = [];
+  const vistos = new Set<string>();
+  const fila = [baixo];
+  while (fila.length && vistos.size < 32) {
+    const c = fila.shift()!;
+    const k = `${c.x},${c.z}`;
+    if (vistos.has(k)) continue;
+    vistos.add(k);
+    const sob = c.below();
+    if (sob && (MESAS.has(sob.typeId) || BACIAS.has(sob.typeId))) r.push(sob);
+    for (const v of [c.north(), c.south(), c.east(), c.west()]) if (v?.typeId === "cl:canal") fila.push(v);
+  }
+  return r;
+}
+
 export const torneiraComp: BlockCustomComponent = {
   onPlayerInteract(e) {
     const j = e.player;
     if (!j) return;
     const t = e.block;
-    const alvo = t.below();
-    const bacia = alvo?.typeId === "cl:bacia_fundicao";
-    if (!alvo || (!bacia && alvo.typeId !== "cl:mesa_fundicao")) return aviso(j, "cl.fun.torneira_sem", 5);
-    const dreno = [t.north(), t.south(), t.east(), t.west()].find((b) => b?.typeId === "cl:dreno_fundicao");
-    const pc = dreno && lerEm<Vector3 | undefined>("dreno", t.dimension, dreno.location, undefined);
-    const c = pc && bloco(t.dimension, pc);
-    if (!c || c.typeId !== "cl:controlador_fundicao") return aviso(j, "cl.fun.torneira_sem", 5);
-    const f = lerF(c);
-    if (!f.ok || f.metais.length === 0) return aviso(j, "cl.fun.vazia", 5);
-    const tipo = bacia ? "bacia" : "mesa";
-    const m = ler<Mesa>(tipo, alvo, {});
-    if (m.pronto) return aviso(j, { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(m.pronto)] } });
-    const [metal, tem] = f.metais[0]; // sai o que está mais embaixo (o primeiro que derreteu)
-    const r = fundir(metal, m.item, bacia);
-    if (r === undefined) return aviso(j, "cl.fun.mesa_vazia");
-    if (r === "nao_serve") return aviso(j, "cl.fun.nao_serve");
-    const [sai, mb, consome] = r;
-    if (tem < mb) return aviso(j, { translate: "cl.fun.pouco_metal", with: [String(mb)] });
-    tirar(f, metal, mb);
-    gravar(T, c, f);
-    gravar(tipo, alvo, { item: consome ? undefined : m.item, pronto: sai });
-    t.dimension.playSound("bucket.empty_lava", t.center(), { pitch: 1.4 });
-    system.runTimeout(() => j.isValid && aviso(j, { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(sai)] } }), 10);
-    if (consome && sai.startsWith("cl:peca_")) registrarAcao(j, "tc_composto");
-    else if (consome && sai.startsWith("cl:molde_")) registrarAcao(j, "molde");
-    if (sai === "cl:lingote_bronze") registrarAcao(j, "bronze");
+    const alvos = alvosDa(t);
+    if (!alvos.length) return aviso(j, "cl.fun.torneira_sem", 5);
+    const fonte = fonteDa(t);
+    if (!fonte) return aviso(j, "cl.fun.torneira_sem", 5);
+    if (fonte.loja.metais.length === 0) return aviso(j, "cl.fun.vazia", 5);
+    const [metal, tem] = fonte.loja.metais[0]; // sai o que está mais embaixo (o primeiro que derreteu)
+    let ultimo: string | RawMessage = "cl.fun.mesa_vazia";
+    for (const alvo of alvos) {
+      const bacia = BACIAS.has(alvo.typeId);
+      const tipo = bacia ? "bacia" : "mesa";
+      const m = ler<Mesa>(tipo, alvo, {});
+      if (m.pronto) {
+        ultimo = { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(m.pronto)] } };
+        continue;
+      }
+      const r = fundir(metal, m.item, bacia);
+      if (r === undefined) continue;
+      if (r === "nao_serve") {
+        ultimo = "cl.fun.nao_serve";
+        continue;
+      }
+      const [sai, mb, consome] = r;
+      if (tem < mb) {
+        ultimo = { translate: "cl.fun.pouco_metal", with: [String(mb)] };
+        continue;
+      }
+      tirar(fonte.loja, metal, mb);
+      fonte.salvar(fonte.loja);
+      gravar(tipo, alvo, { item: consome ? undefined : m.item, pronto: sai });
+      t.dimension.playSound("bucket.empty_lava", t.center(), { pitch: 1.4 });
+      system.runTimeout(() => j.isValid && aviso(j, { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(sai)] } }), 10);
+      if (consome && sai.startsWith("cl:peca_") && !m.item?.startsWith("cl:molde_areia_")) registrarAcao(j, "tc_composto");
+      else if (consome && sai.startsWith("cl:molde_")) registrarAcao(j, "molde");
+      if (sai === "cl:lingote_bronze") registrarAcao(j, "bronze");
+      return;
+    }
+    aviso(j, ultimo, 5);
   },
 };
+
+// ---------- 1.29.0: Fusor, Aquecedor e Ligador (TC3) ----------
+// Aquecedor: queima combustível (em ticks, como a fornalha); o Fusor em cima derrete um item a cada segundo, gastando
+// 200 ticks de combustível por item (minério sem dobrar, como no Fusor do TC3). O Ligador puxa os líquidos dos Fusores
+// encostados e faz as ligas. A torneira tira do Fusor ou do Ligador.
+const COMBUSTIVEL: Readonly<Record<string, number>> = {
+  "minecraft:coal": 1600, "minecraft:charcoal": 1600, "minecraft:coal_block": 16000, "minecraft:blaze_rod": 2400, "minecraft:lava_bucket": 20000,
+  "minecraft:dried_kelp_block": 4000, "cl:coque": 3200, "cl:bloco_coque": 32000,
+};
+const CAP_FUSOR = 1296, CAP_LIGADOR = 2592, CUSTO_FUSOR = 200;
+type Fusor = Loja & { entrada: string[] };
+export const aquecedorComp: BlockCustomComponent = {
+  onPlayerInteract({ block, player: j }) {
+    if (!j) return;
+    const mao = itemNaMao(j)?.typeId;
+    const v = mao && COMBUSTIVEL[mao];
+    const tem = ler<number>("aquecedor", block, 0);
+    if (!v) return aviso(j, { translate: "cl.fun.aquecedor", with: [String(Math.round(tem / 20))] }, 4);
+    gastarDaMao(j);
+    if (mao === "minecraft:lava_bucket") darAoJogador(j, "minecraft:bucket");
+    gravar("aquecedor", block, tem + v);
+    j.playSound("fire.ignite");
+    aviso(j, { translate: "cl.fun.aquecedor", with: [String(Math.round((tem + v) / 20))] }, 4);
+  },
+};
+export const fusorComp: BlockCustomComponent = {
+  onTick({ block }) {
+    const f = ler<Fusor>("fusor", block, { metais: [], entrada: [] });
+    let mudou = false;
+    // Puxa do baú de cima (até 3 na fila).
+    let bau;
+    try {
+      bau = block.above()?.getComponent("minecraft:inventory")?.container;
+    } catch {
+      bau = undefined;
+    }
+    for (let k = 0; bau && k < bau.size && f.entrada.length < 3; k++) {
+      const it = bau.getItem(k);
+      if (!it || !valorDe(it.typeId)) continue;
+      f.entrada.push(it.typeId);
+      if (it.amount > 1) {
+        it.amount--;
+        bau.setItem(k, it);
+      } else bau.setItem(k, undefined);
+      mudou = true;
+    }
+    const aq = block.below();
+    const fogo = aq?.typeId === "cl:aquecedor" ? ler<number>("aquecedor", aq, 0) : 0;
+    if (f.entrada.length && fogo >= CUSTO_FUSOR) {
+      const id = f.entrada[0];
+      const v = valorDe(id);
+      const mb = v ? (/raw_|_ore$|bruto|minerio/.test(id) ? Math.round(v[1] / 2) : v[1]) : 0;
+      if (v && total(f) + mb <= CAP_FUSOR) {
+        f.entrada.shift();
+        somar(f, v[0], mb);
+        gravar("aquecedor", aq!, fogo - CUSTO_FUSOR);
+        block.dimension.playSound("bucket.fill_lava", block.center(), { volume: 0.3 });
+        mudou = true;
+      } else if (!v) {
+        f.entrada.shift();
+        mudou = true;
+      }
+    }
+    if (mudou) gravar("fusor", block, f);
+  },
+  onPlayerInteract({ block, player: j }) {
+    if (!j) return;
+    const f = ler<Fusor>("fusor", block, { metais: [], entrada: [] });
+    const mao = itemNaMao(j);
+    if (mao && valorDe(mao.typeId) && f.entrada.length < 3) {
+      gastarDaMao(j);
+      f.entrada.push(mao.typeId);
+      gravar("fusor", block, f);
+      j.playSound("random.click");
+    }
+    aviso(j, { translate: "cl.fun.fusor", with: { rawtext: [{ text: String(f.entrada.length) }, ...descrever(f)] } }, 5);
+  },
+};
+export const ligadorComp: BlockCustomComponent = {
+  onTick({ block }) {
+    const l = ler<Loja>("ligador", block, { metais: [] });
+    let mudou = false;
+    for (const b of [block.north(), block.south(), block.east(), block.west()]) {
+      if (b?.typeId !== "cl:fusor") continue;
+      const f = ler<Fusor>("fusor", b, { metais: [], entrada: [] });
+      if (!f.metais.length) continue;
+      for (const [m, v] of [...f.metais]) {
+        const cabe = Math.min(v, CAP_LIGADOR - total(l));
+        if (cabe <= 0) break;
+        somar(l, m, cabe);
+        tirar(f, m, cabe);
+        mudou = true;
+      }
+      gravar("fusor", b, f);
+    }
+    if (!mudou) return;
+    ligas(l);
+    gravar("ligador", block, l);
+  },
+  onPlayerInteract({ block, player: j }) {
+    if (j) aviso(j, { translate: "cl.fun.ligador", with: { rawtext: descrever(ler<Loja>("ligador", block, { metais: [] })) } }, 5);
+  },
+};
+function descrever(l: Loja): RawMessage[] {
+  if (!l.metais.length) return [{ translate: "cl.fun.nada" }];
+  return l.metais.flatMap(([m, v], i) => [{ text: i ? ", " : "" }, nomeMetal(m), { text: ` ${v} mB` }]);
+}
 
 export function registrarFundicao(): void {
   // 1.26.0 (TC3, loot_modifiers/wither_bone): os ossos do Esqueleto Wither viram Osso Necrótico.
@@ -440,21 +667,21 @@ export function registrarFundicao(): void {
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     const dim = block.dimension, p = block.location;
-    if (id === "cl:mesa_fundicao" || id === "cl:bacia_fundicao") {
-      const tipo = id === "cl:mesa_fundicao" ? "mesa" : "bacia";
+    if (MESAS.has(id) || BACIAS.has(id)) {
+      const tipo = MESAS.has(id) ? "mesa" : "bacia";
       const m = lerEm<Mesa>(tipo, dim, p, {});
       for (const it of [m.item, m.pronto]) if (it) dim.spawnItem(new ItemStack(it, 1), block.center());
       gravarEm(tipo, dim, p, undefined);
     }
-    if (!PAREDE.has(id) && id !== "cl:tijolos_refratarios") return;
-    if (id === "cl:tanque_refratario") gravarEm("tanque", dim, p, undefined);
-    if (id === "cl:dreno_fundicao") gravarEm("dreno", dim, p, undefined);
+    if (!PAREDE.has(id) && !PAREDE_CHAMUSCADA.has(id) && id !== "cl:tijolos_refratarios") return;
+    if (TANQUES.has(id)) gravarEm("tanque", dim, p, undefined);
+    if (DRENOS.has(id)) gravarEm("dreno", dim, p, undefined);
     // Desmonta as fundições perto (o metal fica guardado no controlador).
     const vivas: string[] = [];
     for (const k of indice()) {
       const [d, xyz] = [k.slice(0, k.lastIndexOf(":")), k.slice(k.lastIndexOf(":") + 1)];
       const [x, y, z] = xyz.split(",").map(Number);
-      if (id === "cl:controlador_fundicao" && d === dim.id && x === p.x && y === p.y && z === p.z) {
+      if ((id === "cl:controlador_fundicao" || id === "cl:controlador_fundicao_fantastica") && d === dim.id && x === p.x && y === p.y && z === p.z) {
         gravarEm(T, dim, p, undefined);
         continue;
       }
@@ -505,14 +732,17 @@ export function registrarFundicao(): void {
     }
     return r;
   });
-  registrarDetalhe("cl:controlador_fundicao", (b) => {
+  registrarDetalhe(["cl:controlador_fundicao", "cl:controlador_fundicao_fantastica"], (b) => {
     const f = lerF(b);
     if (!f.ok) return { translate: "cl.fun.invalida", with: [""] };
     return f.metais.length ? { rawtext: f.metais.flatMap(([m, v], i) => [{ text: i ? ", " : "" }, nomeMetal(m), { text: ` ${v} mB` }]) } : { translate: "cl.fun.vazia" };
   });
+  registrarDetalhe("cl:fusor", (b) => ({ rawtext: descrever(ler<Loja>("fusor", b, { metais: [] })) }));
+  registrarDetalhe("cl:ligador", (b) => ({ rawtext: descrever(ler<Loja>("ligador", b, { metais: [] })) }));
+  registrarDetalhe("cl:aquecedor", (b) => ({ translate: "cl.fun.aquecedor", with: [String(Math.round(ler<number>("aquecedor", b, 0) / 20))] }));
   registrarDetalhe("cl:tanque_refratario", (b) => ({ translate: "cl.fun.tanque", with: [String(ler<number>("tanque", b, 0)), String(FUNDICAO.tanqueMax)] }));
-  registrarDetalhe(["cl:mesa_fundicao", "cl:bacia_fundicao"], (b) => {
-    const m = ler<Mesa>(b.typeId === "cl:mesa_fundicao" ? "mesa" : "bacia", b, {});
+  registrarDetalhe(["cl:mesa_fundicao", "cl:bacia_fundicao", "cl:mesa_fundicao_chamuscada", "cl:bacia_fundicao_chamuscada"], (b) => {
+    const m = ler<Mesa>(MESAS.has(b.typeId) ? "mesa" : "bacia", b, {});
     if (m.pronto) return { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(m.pronto)] } };
     return m.item ? { translate: "cl.fun.na_mesa", with: { rawtext: [nomeItem(m.item)] } } : undefined;
   });

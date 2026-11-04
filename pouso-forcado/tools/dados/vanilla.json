@@ -931,6 +931,11 @@
   "en": "Magma Block",
   "icone": "textures/blocks/magma"
  },
+ "minecraft:magma_cream": {
+  "pt": "Creme de Magma",
+  "en": "Magma Cream",
+  "icone": "textures/items/magma_cream"
+ },
  "minecraft:mangrove_log": {
   "pt": "Tora de Mangue",
   "en": "Mangrove Log",
@@ -1469,6 +1474,11 @@
   "pt": "Bagas Doces",
   "en": "Sweet Berries",
   "icone": "textures/items/sweet_berries"
+ },
+ "minecraft:tinted_glass": {
+  "pt": "Vidro Fumê",
+  "en": "Tinted Glass",
+  "icone": "textures/blocks/tinted_glass"
  },
  "minecraft:tnt": {
   "pt": "Dinamite",

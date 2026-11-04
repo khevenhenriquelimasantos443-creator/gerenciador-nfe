@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_ligador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "TGT",
+      "TMT",
+      "TTT"
+    ],
+    "key": {
+      "T": {
+        "item": "cl:tijolo_chamuscado"
+      },
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "M": {
+        "item": "cl:fusor"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:ligador"
+    }
+  }
+}

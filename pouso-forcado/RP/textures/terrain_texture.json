@@ -4218,6 +4218,156 @@
     },
     "clc_cacho_cristal_slime_ender": {
       "textures": "textures/blocks/cl/arte/cacho_cristal_slime_ender"
+    },
+    "clc_pedra_refrataria_bloco": {
+      "textures": "textures/blocks/cl/arte/pedra_refrataria_bloco"
+    },
+    "clc_pedregulho_refratario": {
+      "textures": "textures/blocks/cl/arte/pedregulho_refratario"
+    },
+    "clc_pavimento_refratario": {
+      "textures": "textures/blocks/cl/arte/pavimento_refratario"
+    },
+    "clc_tijolos_refratarios_rachados": {
+      "textures": "textures/blocks/cl/arte/tijolos_refratarios_rachados"
+    },
+    "clc_tijolos_refratarios_finos": {
+      "textures": "textures/blocks/cl/arte/tijolos_refratarios_finos"
+    },
+    "clc_tijolos_refratarios_triangulo": {
+      "textures": "textures/blocks/cl/arte/tijolos_refratarios_triangulo"
+    },
+    "clc_tijolos_refratarios_pequenos": {
+      "textures": "textures/blocks/cl/arte/tijolos_refratarios_pequenos"
+    },
+    "clc_tijolos_refratarios_creeper": {
+      "textures": "textures/blocks/cl/arte/tijolos_refratarios_creeper"
+    },
+    "clc_ladrilho_refratario": {
+      "textures": "textures/blocks/cl/arte/ladrilho_refratario"
+    },
+    "clc_estrada_refrataria": {
+      "textures": "textures/blocks/cl/arte/estrada_refrataria"
+    },
+    "clc_lanterna_refrataria": {
+      "textures": "textures/blocks/cl/arte/lanterna_refrataria"
+    },
+    "clc_vidro_alma_refratario": {
+      "textures": "textures/blocks/cl/arte/vidro_alma_refratario"
+    },
+    "clc_vidro_fume_refratario": {
+      "textures": "textures/blocks/cl/arte/vidro_fume_refratario"
+    },
+    "clc_tijolos_chamuscados": {
+      "textures": "textures/blocks/cl/arte/tijolos_chamuscados"
+    },
+    "clc_pedra_chamuscada_bloco": {
+      "textures": "textures/blocks/cl/arte/pedra_chamuscada_bloco"
+    },
+    "clc_pedra_chamuscada_bloco_topo": {
+      "textures": "textures/blocks/cl/arte/pedra_chamuscada_bloco_topo"
+    },
+    "clc_estrada_chamuscada": {
+      "textures": "textures/blocks/cl/arte/estrada_chamuscada"
+    },
+    "clc_pedra_chamuscada_polida": {
+      "textures": "textures/blocks/cl/arte/pedra_chamuscada_polida"
+    },
+    "clc_pedra_chamuscada_polida_topo": {
+      "textures": "textures/blocks/cl/arte/pedra_chamuscada_polida_topo"
+    },
+    "clc_pedra_chamuscada_entalhada": {
+      "textures": "textures/blocks/cl/arte/pedra_chamuscada_entalhada"
+    },
+    "clc_lanterna_chamuscada": {
+      "textures": "textures/blocks/cl/arte/lanterna_chamuscada"
+    },
+    "clc_vidro_chamuscado": {
+      "textures": "textures/blocks/cl/arte/vidro_chamuscado"
+    },
+    "clc_aquecedor": {
+      "textures": "textures/blocks/cl/c/aquecedor"
+    },
+    "clc_aquecedor_frente": {
+      "textures": "textures/blocks/cl/arte/aquecedor_frente"
+    },
+    "clc_aquecedor_lado": {
+      "textures": "textures/blocks/cl/arte/aquecedor_lado"
+    },
+    "clc_aquecedor_topo": {
+      "textures": "textures/blocks/cl/arte/aquecedor_topo"
+    },
+    "clc_aquecedor_baixo": {
+      "textures": "textures/blocks/cl/arte/aquecedor_baixo"
+    },
+    "clc_fusor": {
+      "textures": "textures/blocks/cl/c/fusor"
+    },
+    "clc_fusor_frente": {
+      "textures": "textures/blocks/cl/arte/fusor_frente"
+    },
+    "clc_fusor_lado": {
+      "textures": "textures/blocks/cl/arte/fusor_lado"
+    },
+    "clc_fusor_topo": {
+      "textures": "textures/blocks/cl/arte/fusor_topo"
+    },
+    "clc_fusor_baixo": {
+      "textures": "textures/blocks/cl/arte/fusor_baixo"
+    },
+    "clc_ligador": {
+      "textures": "textures/blocks/cl/c/ligador"
+    },
+    "clc_ligador_frente": {
+      "textures": "textures/blocks/cl/arte/ligador_frente"
+    },
+    "clc_ligador_lado": {
+      "textures": "textures/blocks/cl/arte/ligador_lado"
+    },
+    "clc_ligador_topo": {
+      "textures": "textures/blocks/cl/arte/ligador_topo"
+    },
+    "clc_ligador_baixo": {
+      "textures": "textures/blocks/cl/arte/ligador_baixo"
+    },
+    "clc_controlador_fundicao_fantastica_frente": {
+      "textures": "textures/blocks/cl/arte/controlador_fundicao_fantastica_frente"
+    },
+    "clc_controlador_fundicao_fantastica_lado": {
+      "textures": "textures/blocks/cl/arte/controlador_fundicao_fantastica_lado"
+    },
+    "clc_controlador_fundicao_fantastica_topo": {
+      "textures": "textures/blocks/cl/arte/controlador_fundicao_fantastica_topo"
+    },
+    "clc_controlador_fundicao_fantastica_baixo": {
+      "textures": "textures/blocks/cl/arte/controlador_fundicao_fantastica_baixo"
+    },
+    "clc_dreno_chamuscado": {
+      "textures": "textures/blocks/cl/arte/dreno_chamuscado"
+    },
+    "clc_calha_refrataria": {
+      "textures": "textures/blocks/cl/arte/calha_refrataria"
+    },
+    "clc_calha_chamuscada": {
+      "textures": "textures/blocks/cl/arte/calha_chamuscada"
+    },
+    "clc_tanque_chamuscado": {
+      "textures": "textures/blocks/cl/arte/tanque_chamuscado"
+    },
+    "clc_mesa_fundicao_chamuscada": {
+      "textures": "textures/blocks/cl/arte/mesa_fundicao_chamuscada"
+    },
+    "clc_mesa_fundicao_chamuscada_topo": {
+      "textures": "textures/blocks/cl/arte/mesa_fundicao_chamuscada_topo"
+    },
+    "clc_bacia_fundicao_chamuscada": {
+      "textures": "textures/blocks/cl/arte/bacia_fundicao_chamuscada"
+    },
+    "clc_bacia_fundicao_chamuscada_topo": {
+      "textures": "textures/blocks/cl/arte/bacia_fundicao_chamuscada_topo"
+    },
+    "clc_canal": {
+      "textures": "textures/blocks/cl/arte/canal"
     }
   }
 }
