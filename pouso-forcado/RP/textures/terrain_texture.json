@@ -5910,6 +5910,69 @@
     },
     "clc_pirolisador_baixo": {
       "textures": "textures/blocks/cl/c/pirolisador_baixo"
+    },
+    "clc_motor_redstone_frente": {
+      "textures": "textures/blocks/cl/arte/motor_redstone_frente"
+    },
+    "clc_motor_redstone_lado": {
+      "textures": "textures/blocks/cl/arte/motor_redstone_lado"
+    },
+    "clc_motor_redstone_topo": {
+      "textures": "textures/blocks/cl/arte/motor_redstone_topo"
+    },
+    "clc_motor_redstone_baixo": {
+      "textures": "textures/blocks/cl/arte/motor_redstone_baixo"
+    },
+    "clc_motor_stirling_frente": {
+      "textures": "textures/blocks/cl/arte/motor_stirling_frente"
+    },
+    "clc_motor_stirling_lado": {
+      "textures": "textures/blocks/cl/arte/motor_stirling_lado"
+    },
+    "clc_motor_stirling_topo": {
+      "textures": "textures/blocks/cl/arte/motor_stirling_topo"
+    },
+    "clc_motor_stirling_baixo": {
+      "textures": "textures/blocks/cl/arte/motor_stirling_baixo"
+    },
+    "clc_poco_mineracao_frente": {
+      "textures": "textures/blocks/cl/arte/poco_mineracao_frente"
+    },
+    "clc_poco_mineracao_lado": {
+      "textures": "textures/blocks/cl/arte/poco_mineracao_lado"
+    },
+    "clc_poco_mineracao_topo": {
+      "textures": "textures/blocks/cl/arte/poco_mineracao_topo"
+    },
+    "clc_poco_mineracao_baixo": {
+      "textures": "textures/blocks/cl/arte/poco_mineracao_baixo"
+    },
+    "clc_comporta_frente": {
+      "textures": "textures/blocks/cl/arte/comporta_frente"
+    },
+    "clc_comporta_lado": {
+      "textures": "textures/blocks/cl/arte/comporta_lado"
+    },
+    "clc_comporta_topo": {
+      "textures": "textures/blocks/cl/arte/comporta_topo"
+    },
+    "clc_comporta_baixo": {
+      "textures": "textures/blocks/cl/arte/comporta_baixo"
+    },
+    "clc_enchedor_frente": {
+      "textures": "textures/blocks/cl/arte/enchedor_frente"
+    },
+    "clc_enchedor_lado": {
+      "textures": "textures/blocks/cl/arte/enchedor_lado"
+    },
+    "clc_enchedor_topo": {
+      "textures": "textures/blocks/cl/arte/enchedor_topo"
+    },
+    "clc_enchedor_baixo": {
+      "textures": "textures/blocks/cl/arte/enchedor_baixo"
+    },
+    "clc_marco": {
+      "textures": "textures/blocks/cl/arte/marco"
     }
   }
 }

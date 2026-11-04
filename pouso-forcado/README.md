@@ -154,6 +154,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.43.0 (BuildCraft 8, o mais novo)
+
+- **Motor de Redstone** (com sinal de redstone, 0,05 MJ/t) e **Motor Stirling** (com redstone, queima o combustível do
+  forno a 1 MJ/t; 1 MJ = 10 RF).
+- **Poço de Mineração**: cava em linha reta para baixo, um bloco por segundo (16 × (dureza + 1) × 2 MJ cada), e põe
+  os itens no baú de cima.
+- **Comporta**: baldes de água ou lava no baú de cima enchem o buraco mais fundo embaixo dela.
+- **Enchedor** com **Marcos**: dois Marcos nos cantos opostos (até 64 blocos) marcam a área; toque no Enchedor e
+  escolha Limpar, Encher, Caixa ou Pirâmide (blocos do baú de cima; quebrar custa como minerar, pôr custa distância × 10
+  MJ).
+- Arte do BuildCraft (MMPL). Diário: capítulo BC 8.
+
 ## Novidades da 1.42.0 (Thermal Expansion 11, o mais novo)
 
 - **Dínamos novos** (40 RF/t, combustível no baú de cima): **Stirling** (carvão 24.000 RF, bloco de carvão 240.000,

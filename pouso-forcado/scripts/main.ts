@@ -77,6 +77,7 @@ import { registrarTurbina, turbina, turbinaParte } from "./maquinas/turbina.js";
 import { altoFalanteComp, impressoraComp, monitorComp, registrarCcTweaked } from "./utilidades/cctweaked.js";
 import { candelabroComp, espinhoComp, lirioComp, orquideaComp, registrarXu2, tochaMagnumComp } from "./utilidades/xu2.js";
 import { dinamoDesencantamento, dinamoGourmand, dinamoLapidario, dinamoMagmatico, dinamoStirling, insolador, pirolisador, registrarThermal11 } from "./maquinas/thermal11.js";
+import { comporta, enchedor, marcoComp, motorRedstone, motorStirling, pocoMineracao, registrarBuildcraft8 } from "./maquinas/buildcraft8.js";
 import { campanula, espremedorIe, fermentador, geradorDiesel, geradorTermeletrico, prensaMetal, refinariaIe, registrarImmersive12, serrariaIe, trituradorIe } from "./maquinas/immersive12.js";
 import { cestoComp, porcoesComp, redeComp, registrarFarmersNovo, soloComp } from "./maquinas/farmers_novo.js";
 import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tochas.js";
@@ -144,6 +145,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   // 1.32.0: Iron Chests e Storage Drawers.
   blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
   blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
+  // 1.43.0: BuildCraft 8.
+  for (const [nome, comp] of [["cl:motor_redstone", motorRedstone], ["cl:motor_stirling", motorStirling], ["cl:poco_mineracao", pocoMineracao],
+    ["cl:comporta", comporta], ["cl:enchedor", enchedor]] as const)
+    blockComponentRegistry.registerCustomComponent(nome, comPerfil(`bc8: ${nome.slice(3)}`, comp));
+  blockComponentRegistry.registerCustomComponent("cl:marco", marcoComp);
   // 1.42.0: Thermal Expansion 11.
   for (const [nome, comp] of [["cl:dinamo_stirling", dinamoStirling], ["cl:dinamo_magmatico", dinamoMagmatico], ["cl:dinamo_lapidario", dinamoLapidario],
     ["cl:dinamo_gourmand", dinamoGourmand], ["cl:dinamo_desencantamento", dinamoDesencantamento], ["cl:insolador", insolador], ["cl:pirolisador", pirolisador]] as const)
@@ -361,6 +367,7 @@ registrarImmersive12(); // 1.38.0: Immersive Engineering 12.4
 registrarCcTweaked(); // 1.39.0: CC: Tweaked 1.121
 registrarXu2(); // 1.40.0: Extra Utilities 2
 registrarThermal11(); // 1.42.0: Thermal Expansion 11
+registrarBuildcraft8(); // 1.43.0: BuildCraft 8
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();

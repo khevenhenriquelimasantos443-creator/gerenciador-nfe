@@ -113,6 +113,10 @@ export type Acao =
   | "th11_lapidario"
   | "th11_insolador"
   | "th11_pirolisador"
+  | "bc8_motor"
+  | "bc8_poco"
+  | "bc8_enchedor"
+  | "bc8_comporta"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -615,6 +619,17 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "bc8", // 1.43.0: BuildCraft 8
+    icone: "cl:enchedor",
+    requer: ["buildcraft"],
+    missoes: [
+      { id: "bc8_motor", objetivo: { tipo: "acao", acao: "bc8_motor", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
+      { id: "bc8_poco", objetivo: { tipo: "acao", acao: "bc8_poco", qtd: 32 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "bc8_comporta", objetivo: { tipo: "acao", acao: "bc8_comporta", qtd: 1 }, recompensa: [{ item: "minecraft:bucket", quantidade: 4 }] },
+      { id: "bc8_enchedor", objetivo: { tipo: "acao", acao: "bc8_enchedor", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
     ],
   },
   {

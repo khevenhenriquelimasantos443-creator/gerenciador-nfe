@@ -1861,8 +1861,14 @@
               "cl:engrenagem_ouro",
               "cl:engrenagem_pedra",
               "cl:bomba",
+              "cl:comporta",
+              "cl:enchedor",
+              "cl:marco",
               "cl:motor_combustao",
+              "cl:motor_redstone",
+              "cl:motor_stirling",
               "cl:pedreira",
+              "cl:poco_mineracao",
               "cl:refinaria"
             ]
           },

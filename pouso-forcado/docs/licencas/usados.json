@@ -149,15 +149,21 @@
   "barra_combustivel"
  ],
  "buildcraft": [
-  "engrenagem_madeira",
-  "engrenagem_pedra",
-  "engrenagem_ferro",
-  "engrenagem_ouro",
-  "engrenagem_diamante",
-  "balde_petroleo",
   "balde_combustivel",
+  "balde_petroleo",
+  "bomba",
+  "comporta",
+  "enchedor",
+  "engrenagem_diamante",
+  "engrenagem_ferro",
+  "engrenagem_madeira",
+  "engrenagem_ouro",
+  "engrenagem_pedra",
+  "marco",
+  "motor_redstone",
+  "motor_stirling",
   "petroleo",
-  "bomba"
+  "poco_mineracao"
  ],
  "chickenchunks": [
   "carregador_chunks",

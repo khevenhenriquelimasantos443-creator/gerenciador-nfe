@@ -170,6 +170,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | PneumaticCraft | MineMaarten | GPLv3 | github.com/MineMaarten/PneumaticCraft |
 | Big Reactors | Erogenous Beef | MIT | github.com/erogenousbeef/BigReactors |
 | BuildCraft | SpaceToad e equipe | Minecraft Mod Public License | github.com/BuildCraft/BuildCraft (7.1) |
+| BuildCraft 8 (1.43.0: motores de Redstone e Stirling, Poço de Mineração, Comporta, Enchedor e Marco; números de TileEngine*_BC8, BlockUtil e SnapshotBuilder) | SpaceToad e equipe | Minecraft Mod Public License | github.com/BuildCraft/BuildCraft (8.0.x-1.12.2) |
 | OpenBlocks | OpenMods | MIT | github.com/OpenMods/OpenBlocks |
 | Chisel | Chisel Team | GPLv2 | github.com/Chisel-Team/Chisel (1.7) |
 | ChickenChunks | ChickenBones e equipe | MIT | github.com/TheCBProject/ChickenChunks |

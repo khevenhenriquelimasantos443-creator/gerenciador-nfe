@@ -1892,6 +1892,59 @@ teste("waystone", 300, (t) => {
   });
 });
 
+// 1.43.0: BuildCraft 8. Motor Stirling com redstone queima carvão; Poço de Mineração cava até a rocha-mãe; Comporta
+// enche o buraco mais fundo; Enchedor enche a área entre dois Marcos com pedregulho.
+teste("bc8", 300, (t) => {
+  const j = robo(t, { x: 7.5, y: 2, z: 0.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`bc8: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const bau = (p, itens) => { t.setBlockType("minecraft:chest", p); const c = t.getBlock(p).getComponent("inventory").container; for (const i of itens) c.addItem(i); return c; };
+  // Motor Stirling: redstone embaixo, célula do lado.
+  t.setBlockType("minecraft:redstone_block", { x: 0, y: 2, z: 0 });
+  t.setBlockType("cl:motor_stirling", { x: 0, y: 3, z: 0 });
+  bau({ x: 0, y: 4, z: 0 }, [new ItemStack("minecraft:coal", 1)]);
+  t.setBlockType("cl:celula_powah_basico", { x: 1, y: 3, z: 0 });
+  // Poço: duas pedras e a rocha-mãe embaixo.
+  t.setBlockType("minecraft:bedrock", { x: 3, y: 1, z: 3 });
+  t.setBlockType("minecraft:stone", { x: 3, y: 2, z: 3 });
+  t.setBlockType("minecraft:stone", { x: 3, y: 3, z: 3 });
+  t.setBlockType("cl:poco_mineracao", { x: 3, y: 4, z: 3 });
+  bau({ x: 3, y: 5, z: 3 }, []);
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x: 4, y: 4, z: 3 });
+  // Comporta: balde de água em cima, buraco de 2 embaixo.
+  for (let x = 5; x <= 7; x++) for (let y = 2; y <= 3; y++) for (let z = 5; z <= 7; z++) if (x !== 6 || z !== 6) t.setBlockType("minecraft:stone", { x, y, z });
+  t.setBlockType("cl:comporta", { x: 6, y: 4, z: 6 });
+  bau({ x: 6, y: 5, z: 6 }, [new ItemStack("minecraft:water_bucket", 1)]);
+  // Enchedor e os dois marcos.
+  t.setBlockType("cl:enchedor", { x: 1, y: 3, z: 6 });
+  bau({ x: 1, y: 4, z: 6 }, [new ItemStack("minecraft:cobblestone", 32)]);
+  t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x: 0, y: 3, z: 6 });
+  t.setBlockType("cl:marco", { x: 2, y: 2, z: 5 });
+  t.setBlockType("cl:marco", { x: 4, y: 3, z: 7 });
+  t.runAfterDelay(10, () => { const p = w({ x: 1, y: 3, z: 6 }); cmd(`scriptevent cl:teste_bc8 obra encher ${p.x} ${p.y} ${p.z}`); });
+  t.runAfterDelay(160, () => {
+    for (const [x, y, z] of [[0, 3, 0], [3, 4, 3], [1, 3, 6]]) { const p = w({ x, y, z }); cmd(`scriptevent cl:teste_bc8 ver - ${p.x} ${p.y} ${p.z}`); }
+  });
+  t.runAfterDelay(165, () => {
+    const r = {};
+    r.carvao = t.getBlock({ x: 0, y: 4, z: 0 }).getComponent("inventory").container.emptySlotsCount === 27;
+    r.cavou = [t.getBlock({ x: 3, y: 3, z: 3 }).typeId, t.getBlock({ x: 3, y: 2, z: 3 }).typeId, t.getBlock({ x: 3, y: 1, z: 3 }).typeId];
+    const c = t.getBlock({ x: 3, y: 5, z: 3 }).getComponent("inventory").container;
+    r.pedrasNoBau = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)) r.pedrasNoBau += c.getItem(s).amount;
+    r.agua = t.getBlock({ x: 6, y: 2, z: 6 }).typeId;
+    let cheios = 0;
+    for (let x = 2; x <= 4; x++) for (let y = 2; y <= 3; y++) for (let z = 5; z <= 7; z++) if (t.getBlock({ x, y, z }).typeId === "minecraft:cobblestone") cheios++;
+    r.cheios = cheios;
+    log(`bc8: ${JSON.stringify(r)}`);
+    t.assert(r.carvao, "o Motor Stirling não pegou o carvão");
+    t.assert(r.cavou[0] === "minecraft:air" && r.cavou[1] === "minecraft:air" && r.cavou[2] === "minecraft:bedrock" && r.pedrasNoBau >= 2, "o Poço de Mineração não cavou");
+    t.assert(r.agua.includes("water"), "a Comporta não encheu o buraco");
+    t.assert(r.cheios === 16, "o Enchedor não encheu a área");
+    t.succeed();
+  });
+});
+
 // 1.42.0: Thermal 11. Dínamos Stirling, Lapidário e de Desencantamento queimam e mandam energia para a célula; o
 // Pirolisador faz coque; o Insolador com água encostada vai juntando energia para a colheita.
 teste("th11", 300, (t) => {

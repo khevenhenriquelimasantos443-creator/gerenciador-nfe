@@ -1,0 +1,42 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_enchedor"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "DMD",
+      "YGY",
+      "OCO"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:black_dye"
+      },
+      "M": {
+        "item": "cl:marco"
+      },
+      "Y": {
+        "item": "minecraft:yellow_dye"
+      },
+      "G": {
+        "item": "cl:engrenagem_ouro"
+      },
+      "O": {
+        "item": "minecraft:gold_ingot"
+      },
+      "C": {
+        "item": "minecraft:chest"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:enchedor"
+    }
+  }
+}

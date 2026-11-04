@@ -3276,6 +3276,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "64k ME Storage Component",
   "icone": "textures/items/cl/arte/componente_me_64k"
  },
+ "cl:comporta": {
+  "pt": "Comporta",
+  "en": "Flood Gate",
+  "icone": "textures/items/cl/blocos/comporta"
+ },
  "cl:compostadora": {
   "pt": "Compostadora",
   "en": "Composter",
@@ -3855,6 +3860,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Empacotador Automático",
   "en": "AutoPackager",
   "icone": "textures/items/cl/arte/blocos/empacotador"
+ },
+ "cl:enchedor": {
+  "pt": "Enchedor",
+  "en": "Filler",
+  "icone": "textures/items/cl/blocos/enchedor"
  },
  "cl:ender_senciente": {
   "pt": "Ender Senciente",
@@ -6721,6 +6731,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Butter",
   "icone": "textures/items/cl/arte/manteiga"
  },
+ "cl:marco": {
+  "pt": "Marco",
+  "en": "Land Mark",
+  "icone": "textures/items/cl/blocos/marco"
+ },
  "cl:marco_destrocos": {
   "pt": "Marco de Destroços",
   "en": "Wreck Marker",
@@ -7990,6 +8005,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Motor da Nave",
   "en": "Ship Engine",
   "icone": "textures/items/cl/arte/motor_nave"
+ },
+ "cl:motor_redstone": {
+  "pt": "Motor de Redstone",
+  "en": "Redstone Engine",
+  "icone": "textures/items/cl/blocos/motor_redstone"
+ },
+ "cl:motor_stirling": {
+  "pt": "Motor Stirling",
+  "en": "Stirling Engine",
+  "icone": "textures/items/cl/blocos/motor_stirling"
  },
  "cl:muda_slime_ceu": {
   "pt": "Muda de Slime-do-Céu",
@@ -12235,6 +12260,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pó de Yellorium",
   "en": "Yellorium Dust",
   "icone": "textures/items/cl/arte/po_yellorium"
+ },
+ "cl:poco_mineracao": {
+  "pt": "Poço de Mineração",
+  "en": "Mining Well",
+  "icone": "textures/items/cl/blocos/poco_mineracao"
  },
  "cl:poeira": {
   "pt": "Poeira",
@@ -23060,6 +23090,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_comporta",
+  "resultado": "cl:comporta",
+  "qtd": 1,
+  "grade": [
+   "IGI",
+   "BTB",
+   "IBI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "G": "cl:engrenagem_ferro",
+   "B": "minecraft:iron_bars",
+   "T": "minecraft:bucket"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_compostadora",
   "resultado": "cl:compostadora",
   "qtd": 1,
@@ -26413,6 +26463,28 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "P": "minecraft:piston",
    "B": "minecraft:crafting_table",
    "C": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_enchedor",
+  "resultado": "cl:enchedor",
+  "qtd": 1,
+  "grade": [
+   "DMD",
+   "YGY",
+   "OCO"
+  ],
+  "chaves": {
+   "D": "minecraft:black_dye",
+   "M": "cl:marco",
+   "Y": "minecraft:yellow_dye",
+   "G": "cl:engrenagem_ouro",
+   "O": "minecraft:gold_ingot",
+   "C": "minecraft:chest"
   },
   "estacoes": [
    "crafting_table"
@@ -29904,6 +29976,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_marco",
+  "resultado": "cl:marco",
+  "qtd": 1,
+  "grade": [
+   "L",
+   "T"
+  ],
+  "chaves": {
+   "L": "minecraft:lapis_lazuli",
+   "T": "minecraft:redstone_torch"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_marmore_liso",
   "resultado": "cl:marmore_liso",
   "qtd": 4,
@@ -32356,6 +32445,46 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "X": "cl:placa_reforcada",
    "Y": "minecraft:flint_and_steel",
    "Z": "cl:respiro_oxigenio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_motor_redstone",
+  "resultado": "cl:motor_redstone",
+  "qtd": 1,
+  "grade": [
+   "WWW",
+   " G ",
+   "EPE"
+  ],
+  "chaves": {
+   "W": "#minecraft:planks",
+   "G": "minecraft:glass",
+   "E": "cl:engrenagem_madeira",
+   "P": "minecraft:piston"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_motor_stirling",
+  "resultado": "cl:motor_stirling",
+  "qtd": 1,
+  "grade": [
+   "CCC",
+   " G ",
+   "EPE"
+  ],
+  "chaves": {
+   "C": "minecraft:cobblestone",
+   "G": "minecraft:glass",
+   "E": "cl:engrenagem_pedra",
+   "P": "minecraft:piston"
   },
   "estacoes": [
    "crafting_table"
@@ -35760,6 +35889,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_poco_mineracao",
+  "resultado": "cl:poco_mineracao",
+  "qtd": 1,
+  "grade": [
+   "IRI",
+   "IGI",
+   "IPI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "R": "minecraft:redstone",
+   "G": "cl:engrenagem_ferro",
+   "P": "minecraft:iron_pickaxe"
+  },
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
