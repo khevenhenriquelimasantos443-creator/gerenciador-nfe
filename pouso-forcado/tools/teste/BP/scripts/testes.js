@@ -1355,6 +1355,120 @@ teste("artefatos", 260, (t) => {
   });
 });
 
+// 1.32.0: Iron Chests (o baú de ferro vira entidade com páginas, bater guarda com tudo, a melhoria troca o baú normal
+// sem esvaziar) e Storage Drawers (gaveta guarda e tira, compactadora, controlador, quebrar guarda no item).
+teste("armazenamento", 420, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 2.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const dim = t.getDimension();
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`armazenamento: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const ent = () => dim.getEntities({ type: "cl:bau_grande", location: t.worldLocation({ x: 2.5, y: 2, z: 4.5 }), maxDistance: 1.5 })[0];
+  t.setBlockType("minecraft:chest", { x: 5, y: 2, z: 4 });
+  t.setBlockType("cl:gaveta", { x: 2, y: 2, z: 6 });
+  t.setBlockType("cl:controlador_gavetas", { x: 3, y: 2, z: 6 });
+  t.setBlockType("cl:gaveta_compactadora", { x: 5, y: 2, z: 6 });
+  const r = {};
+  t.runAfterDelay(4, () => {
+    inv.setItem(0, new ItemStack("cl:bau_ferro", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 2, y: 1, z: 4 });
+    r.pos = j.useItemInSlotOnBlock(0, { x: 2, y: 1, z: 4 }, Direction.Up);
+  });
+  t.runAfterDelay(10, () => {
+    const m = ent();
+    r.entidade = !!m;
+    m?.getComponent("inventory").container.setItem(0, new ItemStack("minecraft:diamond", 5));
+    cmd("scriptevent cl:teste_bau pagina");
+  });
+  t.runAfterDelay(14, () => {
+    r.pagina2Vazia = !ent()?.getComponent("inventory").container.getItem(0);
+    cmd("scriptevent cl:teste_bau recolher");
+  });
+  t.runAfterDelay(18, () => {
+    r.recolheu = !ent() && t.getBlock({ x: 2, y: 2, z: 4 }).typeId === "minecraft:air";
+    r.lore = JSON.stringify(inv.getItem(0)?.getLore() ?? inv.getItem(1)?.getLore());
+    // Põe de novo: volta com os diamantes.
+    for (let k = 0; k < 9; k++) if (inv.getItem(k)?.typeId === "cl:bau_ferro") j.selectedSlotIndex = k;
+    j.lookAtBlock({ x: 2, y: 1, z: 4 });
+    j.useItemInSlotOnBlock(j.selectedSlotIndex, { x: 2, y: 1, z: 4 }, Direction.Up);
+  });
+  t.runAfterDelay(26, () => {
+    r.voltou = ent()?.getComponent("inventory").container.getItem(0)?.amount ?? 0;
+    // Melhoria no baú normal com 3 diamantes.
+    t.getBlock({ x: 5, y: 2, z: 4 }).getComponent("inventory").container.setItem(0, new ItemStack("minecraft:diamond", 3));
+    inv.setItem(3, new ItemStack("cl:melhoria_bau_madeira_cobre", 1));
+    j.selectedSlotIndex = 3;
+    j.lookAtBlock({ x: 5, y: 2, z: 4 });
+    j.useItemInSlotOnBlock(3, { x: 5, y: 2, z: 4 }, Direction.Up);
+  });
+  // O robô não dispara o toque num baú do jogo: a mesma função pelo scriptevent, de cima do baú.
+  t.runAfterDelay(29, () => {
+    if (t.getBlock({ x: 5, y: 2, z: 4 }).typeId !== "minecraft:chest") return;
+    j.teleport(t.worldLocation({ x: 5.5, y: 3, z: 4.5 }));
+    cmd("scriptevent cl:teste_bau melhorar cl:melhoria_bau_madeira_cobre");
+  });
+  t.runAfterDelay(34, () => {
+    r.melhorado = t.getBlock({ x: 5, y: 2, z: 4 }).typeId;
+    const m = dim.getEntities({ type: "cl:bau_grande", location: t.worldLocation({ x: 5.5, y: 2, z: 4.5 }), maxDistance: 1.5 })[0];
+    r.diamantesNoCobre = m?.getComponent("inventory").container.getItem(0)?.amount ?? 0;
+    // Gaveta: guarda 64 pedregulhos e tira 64.
+    inv.setItem(4, new ItemStack("minecraft:cobblestone", 64));
+    j.selectedSlotIndex = 4;
+    const g = w({ x: 2, y: 2, z: 6 });
+    cmd(`scriptevent cl:teste_gaveta por ${g.x} ${g.y} ${g.z} 0`);
+  });
+  t.runAfterDelay(38, () => {
+    r.guardou = quantos(j, "minecraft:cobblestone") === 0;
+    const g = w({ x: 2, y: 2, z: 6 });
+    cmd(`scriptevent cl:teste_gaveta tirar ${g.x} ${g.y} ${g.z} 0`);
+  });
+  t.runAfterDelay(42, () => {
+    r.tirou = quantos(j, "minecraft:cobblestone");
+    // Compactadora: 18 pepitas viram 2 lingotes.
+    inv.setItem(5, new ItemStack("minecraft:iron_nugget", 18));
+    j.selectedSlotIndex = 5;
+    const g = w({ x: 5, y: 2, z: 6 });
+    cmd(`scriptevent cl:teste_gaveta por ${g.x} ${g.y} ${g.z} 0`);
+    cmd(`scriptevent cl:teste_gaveta tirar ${g.x} ${g.y} ${g.z} 1`);
+  });
+  t.runAfterDelay(46, () => {
+    r.lingotes = quantos(j, "minecraft:iron_ingot");
+    // Controlador: com o item na mão, guarda na gaveta ligada (vazia).
+    inv.setItem(6, new ItemStack("minecraft:cobblestone", 30));
+    j.selectedSlotIndex = 6;
+    const c = w({ x: 3, y: 2, z: 6 });
+    cmd(`scriptevent cl:teste_gaveta controlador ${c.x} ${c.y} ${c.z}`);
+  });
+  t.runAfterDelay(50, () => {
+    r.controlador = quantos(j, "minecraft:cobblestone");
+    // Mais 64 na gaveta (94): a batida de quebrar tira uma pilha (como no mod) e o resto vai no item.
+    for (let k = 0; k < 9; k++) if (inv.getItem(k)?.typeId === "minecraft:cobblestone") j.selectedSlotIndex = k;
+    const g = w({ x: 2, y: 2, z: 6 });
+    cmd(`scriptevent cl:teste_gaveta por ${g.x} ${g.y} ${g.z} 0`);
+  });
+  t.runAfterDelay(54, () => {
+    j.selectedSlotIndex = 8;
+    j.lookAtBlock({ x: 2, y: 2, z: 6 });
+    j.breakBlock({ x: 2, y: 2, z: 6 }, Direction.North);
+  });
+  t.runAfterDelay(400, () => {
+    const caiu = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 2.5, y: 2.5, z: 6.5 }), maxDistance: 3 }).map((e) => e.getComponent("item")?.itemStack);
+    const gav = caiu.find((i) => i?.typeId === "cl:gaveta") ?? [0, 1, 2, 3, 4, 5, 6, 7, 8].map((k) => inv.getItem(k)).find((i) => i?.typeId === "cl:gaveta");
+    r.gavetaItem = gav ? JSON.stringify(gav.getLore()) : "nada";
+    r.bloco = t.getBlock({ x: 2, y: 2, z: 6 }).typeId;
+    log(`armazenamento: ${JSON.stringify(r)}`);
+    t.assert(r.entidade && r.pagina2Vazia, "o baú de ferro não virou baú com páginas");
+    t.assert(r.recolheu && r.voltou === 5, "o baú não guardou/devolveu o que tinha");
+    t.assert(r.melhorado === "cl:bau_cobre" && r.diamantesNoCobre === 3, "a melhoria não trocou o baú sem esvaziar");
+    t.assert(r.guardou && r.tirou === 64, "a gaveta não guardou/tirou");
+    t.assert(r.lingotes === 2, "a compactadora não compactou");
+    t.assert(r.controlador === 64, "o controlador não guardou");
+    t.assert(r.gavetaItem.includes("30"), "a gaveta quebrada não guardou o que tinha");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

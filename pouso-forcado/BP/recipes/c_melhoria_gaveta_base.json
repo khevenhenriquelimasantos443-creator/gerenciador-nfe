@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_melhoria_gaveta_base"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "SGS",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "G": {
+        "item": "cl:gaveta"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:melhoria_gaveta_base",
+      "count": 2
+    }
+  }
+}

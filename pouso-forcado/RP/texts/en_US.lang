@@ -4378,7 +4378,7 @@ cl.livro.livro_materiais.1=Materials and You.
 Every Tinker tool is made of parts, each part of a material. The head (first part) sets speed, damage and mining level; the handle multiplies durability; the binding (and the materials) give traits.
 
 Start with the Stencil Table (patterns), the Part Builder (wood, stone, flint, bone parts...) and the Tool Station.
-cl.livro.livro_materiais.2=Large tools (Sledge Hammer, Vein Hammer, Excavator, Broad Axe, Scythe, Cleaver) have 4 parts and need the Tinker's Anvil (3 iron blocks and 4 ingots).
+cl.livro.livro_materiais.2=Large tools (Sledge Hammer, Vein Hammer, Excavator, Broad Axe, Scythe, Cleaver) have 4 parts and need the Tinker's Anvil (3 iron blocks and 4 seared bricks).
 
 Next pages: each material's durability, speed, damage, level and trait.
 cl.livro.livro_fundicao_pequena.1=Puny Smelting.
@@ -4560,6 +4560,74 @@ cl.missao.art_cheio.titulo=Every slot
 cl.missao.art_cheio.desc=Fill all 7 artifact slots.
 cl.missao.mochila_mao.titulo=Backpack in hand
 cl.missao.mochila_mao.desc=Use the backpack (without sneaking) and store something straight from your hand.
+item.cl:melhoria_bau_madeira_cobre.name=Wood to Copper Chest Upgrade
+item.cl:melhoria_bau_madeira_ferro.name=Wood to Iron Chest Upgrade
+item.cl:melhoria_bau_cobre_ferro.name=Copper to Iron Chest Upgrade
+item.cl:melhoria_bau_ferro_ouro.name=Iron to Gold Chest Upgrade
+item.cl:melhoria_bau_ouro_diamante.name=Gold to Diamond Chest Upgrade
+item.cl:melhoria_bau_diamante_cristal.name=Diamond to Crystal Chest Upgrade
+item.cl:melhoria_bau_diamante_obsidiana.name=Diamond to Obsidian Chest Upgrade
+item.cl:melhoria_gaveta_1.name=Storage Upgrade (I)
+item.cl:melhoria_gaveta_2.name=Storage Upgrade (II)
+item.cl:melhoria_gaveta_3.name=Storage Upgrade (III)
+item.cl:melhoria_gaveta_4.name=Storage Upgrade (IV)
+item.cl:melhoria_gaveta_5.name=Storage Upgrade (V)
+item.cl:melhoria_gaveta_6.name=Storage Upgrade (VI)
+item.cl:melhoria_gaveta_7.name=Storage Upgrade (VII)
+item.cl:melhoria_gaveta_base.name=Upgrade Template
+item.cl:melhoria_gaveta_vazio.name=Void Upgrade
+item.cl:chave_gaveta.name=Drawer Key
+tile.cl:bau_cobre.name=Copper Chest
+tile.cl:bau_ferro.name=Iron Chest
+tile.cl:bau_ouro.name=Gold Chest
+tile.cl:bau_diamante.name=Diamond Chest
+tile.cl:bau_cristal.name=Crystal Chest
+tile.cl:bau_obsidiana.name=Obsidian Chest
+tile.cl:bau_terra.name=DirtChest 9000!
+tile.cl:gaveta.name=Drawer
+tile.cl:gaveta_2.name=Drawers 1x2
+tile.cl:gaveta_4.name=Drawers 2x2
+tile.cl:gaveta_compactadora.name=Compacting Drawers
+tile.cl:controlador_gavetas.name=Drawer Controller
+tile.cl:acabamento_gaveta.name=Drawer Trim
+entity.cl:bau_grande.name=Chest
+cl.bau.pagina=Page %s of %s
+cl.bau.dica=Big chest: sneak and tap to change page; hit it to pick it up with everything inside (like a shulker box).
+cl.bau.melhorou=The chest became %s, keeping everything.
+cl.bau.duplo=Split the double chest before upgrading.
+cl.bau.errado=This upgrade is for %s.
+cl.bau.conteudo=§7%s items stored
+cl.gaveta.vazia=Empty drawer
+cl.gaveta.linha=%s: %s / %s
+cl.gaveta.melhorias=§7Upgrades: %s/7 (x%s)
+cl.gaveta.titulo=Drawer
+cl.gaveta.corpo=Tap with an item to store (double tap: all of that item from your inventory). Hit to take a stack (sneaking: one). Sneak with an empty hand: this menu. When broken, the drawer keeps everything in the item.
+cl.gaveta.tirar_melhoria=Remove: %s
+cl.gaveta.cheia=The drawer is full.
+cl.gaveta.outro=This drawer holds another item.
+cl.gaveta.max_melhorias=The drawer already has 7 upgrades.
+cl.gaveta.travada=Drawer locked to its item (use the key again to unlock).
+cl.gaveta.destravada=Drawer unlocked.
+cl.gaveta.nao_compacta=The Compacting Drawer only takes items that compact (iron, gold, diamond, coal, redstone...).
+cl.gaveta.controlador=Controller: stored %s items in the nearby drawers.
+cl.gaveta.especial=Named, enchanted or damaged items don't go in drawers.
+cl.capitulo.armazenamento.nome=Chests and Drawers
+cl.capitulo.armazenamento.curto=Chests+
+cl.capitulo.armazenamento.desc=Bigger chests (Copper 45, Iron 54, Gold 81, Diamond, Crystal and Obsidian 108) with pages, and drawers that hold lots of a single item: tap to store, hit to take. Upgrades multiply the capacity.
+cl.missao.ic_cobre.titulo=Copper Chest
+cl.missao.ic_cobre.desc=Make a Copper Chest (45 slots).
+cl.missao.ic_melhoria.titulo=Upgrade in place
+cl.missao.ic_melhoria.desc=Use a chest upgrade on a chest full of stuff.
+cl.missao.ic_diamante.titulo=Diamond Chest
+cl.missao.ic_diamante.desc=Have a Diamond Chest (108 slots).
+cl.missao.sd_gaveta.titulo=Drawer
+cl.missao.sd_gaveta.desc=Store 1000 items in drawers.
+cl.missao.sd_compacta.titulo=Compacting
+cl.missao.sd_compacta.desc=Make the Compacting Drawer: put nuggets in, take blocks out.
+cl.missao.sd_controlador.titulo=Controller
+cl.missao.sd_controlador.desc=Store through the Drawer Controller.
+cl.missao.sd_melhoria.titulo=Upgraded drawer
+cl.missao.sd_melhoria.desc=Put a storage upgrade in a drawer.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado
@@ -4618,6 +4686,8 @@ cl:itemGroup.name.items_galacticraft=Galacticraft
 cl:itemGroup.name.equipment_galacticraft=Galacticraft
 cl:itemGroup.name.items_artifacts=Artifacts
 cl:itemGroup.name.equipment_artifacts=Artifacts
+cl:itemGroup.name.items_iron_chests=Iron Chests
+cl:itemGroup.name.items_storage_drawers=Storage Drawers
 ## fim Grupos
 ## Dicas da tela de carregamento (gerado por tools/gerar-dicas.mjs)
 beginnerTips.1=Your ship crashed, but the hull is a shelter: at night, stay inside the plane or somewhere lit.

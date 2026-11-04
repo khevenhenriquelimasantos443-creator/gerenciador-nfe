@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_melhoria_gaveta_6"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SMS",
+      "MBM",
+      "SMS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stick"
+      },
+      "M": {
+        "item": "minecraft:diamond"
+      },
+      "B": {
+        "item": "cl:melhoria_gaveta_base"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:melhoria_gaveta_6"
+    }
+  }
+}

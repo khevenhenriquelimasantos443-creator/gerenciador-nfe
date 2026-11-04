@@ -11,6 +11,11 @@ export type ReceitaJson = {
 };
 export type InfoItem = { pt: string; en: string; icone?: string };
 export const ITENS: Readonly<Record<string, InfoItem>> = {
+ "cl:acabamento_gaveta": {
+  "pt": "Acabamento de Gaveta",
+  "en": "Drawer Trim",
+  "icone": "textures/blocks/cl/arte/acabamento_gaveta_topo"
+ },
  "cl:aco_eletrico": {
   "pt": "Lingote de Aço Elétrico",
   "en": "Electrical Steel Ingot",
@@ -811,6 +816,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Battery",
   "icone": "textures/items/cl/arte/bateria_pw_nitro"
  },
+ "cl:bau_cobre": {
+  "pt": "Baú de Cobre",
+  "en": "Copper Chest",
+  "icone": "textures/blocks/cl/arte/bau_cobre_topo"
+ },
+ "cl:bau_cristal": {
+  "pt": "Baú de Cristal",
+  "en": "Crystal Chest",
+  "icone": "textures/blocks/cl/arte/bau_cristal_topo"
+ },
+ "cl:bau_diamante": {
+  "pt": "Baú de Diamante",
+  "en": "Diamond Chest",
+  "icone": "textures/blocks/cl/arte/bau_diamante_topo"
+ },
+ "cl:bau_ferro": {
+  "pt": "Baú de Ferro",
+  "en": "Iron Chest",
+  "icone": "textures/blocks/cl/arte/bau_ferro_topo"
+ },
  "cl:bau_me": {
   "pt": "Baú ME",
   "en": "ME Chest",
@@ -821,10 +846,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cast Chest",
   "icone": "textures/blocks/cl/arte/bau_moldes_topo"
  },
+ "cl:bau_obsidiana": {
+  "pt": "Baú de Obsidiana",
+  "en": "Obsidian Chest",
+  "icone": "textures/blocks/cl/arte/bau_obsidiana_topo"
+ },
+ "cl:bau_ouro": {
+  "pt": "Baú de Ouro",
+  "en": "Gold Chest",
+  "icone": "textures/blocks/cl/arte/bau_ouro_topo"
+ },
  "cl:bau_pecas": {
   "pt": "Baú de Peças",
   "en": "Part Chest",
   "icone": "textures/blocks/cl/arte/bau_pecas_topo"
+ },
+ "cl:bau_terra": {
+  "pt": "Baú de Terra 9000!",
+  "en": "DirtChest 9000!",
+  "icone": "textures/blocks/cl/arte/bau_terra_topo"
  },
  "cl:bau_tesouro": {
   "pt": "Baú do Tesouro",
@@ -2396,6 +2436,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Barrel Hammer",
   "icone": "textures/items/cl/arte/chave_barril"
  },
+ "cl:chave_gaveta": {
+  "pt": "Chave de Gaveta",
+  "en": "Drawer Key",
+  "icone": "textures/items/cl/arte/chave_gaveta"
+ },
  "cl:chave_masmorra": {
   "pt": "Chave da Masmorra Tier 1",
   "en": "Tier 1 Dungeon Key",
@@ -2835,6 +2880,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Controlador da Fundição Fantástica",
   "en": "Foundry Controller",
   "icone": "textures/blocks/cl/arte/controlador_fundicao_fantastica_topo"
+ },
+ "cl:controlador_gavetas": {
+  "pt": "Controlador de Gavetas",
+  "en": "Drawer Controller",
+  "icone": "textures/blocks/cl/arte/controlador_gavetas_topo"
  },
  "cl:controlador_logico_z": {
   "pt": "Controlador Lógico Z",
@@ -4641,6 +4691,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Feral Claws",
   "icone": "textures/items/cl/arte/garras_ferozes"
  },
+ "cl:gaveta": {
+  "pt": "Gaveta",
+  "en": "Drawer",
+  "icone": "textures/blocks/cl/arte/gaveta_topo"
+ },
+ "cl:gaveta_2": {
+  "pt": "Gaveta 1×2",
+  "en": "Drawers 1x2",
+  "icone": "textures/blocks/cl/arte/gaveta_2_topo"
+ },
+ "cl:gaveta_4": {
+  "pt": "Gaveta 2×2",
+  "en": "Drawers 2x2",
+  "icone": "textures/blocks/cl/arte/gaveta_4_topo"
+ },
+ "cl:gaveta_compactadora": {
+  "pt": "Gaveta Compactadora",
+  "en": "Compacting Drawers",
+  "icone": "textures/blocks/cl/arte/gaveta_compactadora_topo"
+ },
  "cl:gelo_seco": {
   "pt": "Gelo Seco",
   "en": "Dry Ice",
@@ -6256,6 +6326,41 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Upgrade Base",
   "icone": "textures/items/cl/c/melhoria_base"
  },
+ "cl:melhoria_bau_cobre_ferro": {
+  "pt": "Melhoria de Baú: Cobre → Ferro",
+  "en": "Copper to Iron Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_cobre_ferro"
+ },
+ "cl:melhoria_bau_diamante_cristal": {
+  "pt": "Melhoria de Baú: Diamante → Cristal",
+  "en": "Diamond to Crystal Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_diamante_cristal"
+ },
+ "cl:melhoria_bau_diamante_obsidiana": {
+  "pt": "Melhoria de Baú: Diamante → Obsidiana",
+  "en": "Diamond to Obsidian Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_diamante_obsidiana"
+ },
+ "cl:melhoria_bau_ferro_ouro": {
+  "pt": "Melhoria de Baú: Ferro → Ouro",
+  "en": "Iron to Gold Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_ferro_ouro"
+ },
+ "cl:melhoria_bau_madeira_cobre": {
+  "pt": "Melhoria de Baú: Madeira → Cobre",
+  "en": "Wood to Copper Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_madeira_cobre"
+ },
+ "cl:melhoria_bau_madeira_ferro": {
+  "pt": "Melhoria de Baú: Madeira → Ferro",
+  "en": "Wood to Iron Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_madeira_ferro"
+ },
+ "cl:melhoria_bau_ouro_diamante": {
+  "pt": "Melhoria de Baú: Ouro → Diamante",
+  "en": "Gold to Diamond Chest Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_bau_ouro_diamante"
+ },
  "cl:melhoria_coleta": {
   "pt": "Melhoria: Coleta",
   "en": "Pickup Upgrade",
@@ -6285,6 +6390,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Melhoria: Fornalha Automática",
   "en": "Auto-Smelting Upgrade",
   "icone": "textures/items/cl/c/melhoria_fundicao_auto"
+ },
+ "cl:melhoria_gaveta_1": {
+  "pt": "Melhoria de Armazenamento (I)",
+  "en": "Storage Upgrade (I)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_1"
+ },
+ "cl:melhoria_gaveta_2": {
+  "pt": "Melhoria de Armazenamento (II)",
+  "en": "Storage Upgrade (II)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_2"
+ },
+ "cl:melhoria_gaveta_3": {
+  "pt": "Melhoria de Armazenamento (III)",
+  "en": "Storage Upgrade (III)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_3"
+ },
+ "cl:melhoria_gaveta_4": {
+  "pt": "Melhoria de Armazenamento (IV)",
+  "en": "Storage Upgrade (IV)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_4"
+ },
+ "cl:melhoria_gaveta_5": {
+  "pt": "Melhoria de Armazenamento (V)",
+  "en": "Storage Upgrade (V)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_5"
+ },
+ "cl:melhoria_gaveta_6": {
+  "pt": "Melhoria de Armazenamento (VI)",
+  "en": "Storage Upgrade (VI)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_6"
+ },
+ "cl:melhoria_gaveta_7": {
+  "pt": "Melhoria de Armazenamento (VII)",
+  "en": "Storage Upgrade (VII)",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_7"
+ },
+ "cl:melhoria_gaveta_base": {
+  "pt": "Modelo de Melhoria",
+  "en": "Upgrade Template",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_base"
+ },
+ "cl:melhoria_gaveta_vazio": {
+  "pt": "Melhoria de Vazio",
+  "en": "Void Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_gaveta_vazio"
  },
  "cl:melhoria_ima": {
   "pt": "Melhoria: Ímã",
@@ -12599,6 +12749,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
  },
+ "minecraft:comparator": {
+  "pt": "Comparador",
+  "en": "Comparator",
+  "icone": "textures/items/comparator"
+ },
  "minecraft:compass": {
   "pt": "Bússola",
   "en": "Compass",
@@ -14155,6 +14310,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_acabamento_gaveta",
+  "resultado": "cl:acabamento_gaveta",
+  "qtd": 4,
+  "grade": [
+   "SPS",
+   "PPP",
+   "SPS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_ae2_decorative_fluix_block",
   "resultado": "cl:bloco_fluix",
   "qtd": 1,
@@ -14947,11 +15120,12 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "qtd": 1,
   "grade": [
    "TTT",
-   "T T",
+   "TFT",
    "TTT"
   ],
   "chaves": {
-   "T": "cl:tijolo_refratario"
+   "T": "cl:tijolo_refratario",
+   "F": "minecraft:furnace"
   },
   "estacoes": [
    "crafting_table"
@@ -16162,6 +16336,99 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bau_cobre",
+  "resultado": "cl:bau_cobre",
+  "qtd": 1,
+  "grade": [
+   "CGC",
+   "CBC",
+   "CCC"
+  ],
+  "chaves": {
+   "C": "minecraft:copper_ingot",
+   "G": "minecraft:glass",
+   "B": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bau_cristal",
+  "resultado": "cl:bau_cristal",
+  "qtd": 1,
+  "grade": [
+   "GGG",
+   "GBG",
+   "GGG"
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "B": "cl:bau_diamante"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bau_diamante",
+  "resultado": "cl:bau_diamante",
+  "qtd": 1,
+  "grade": [
+   "GGG",
+   "DBD",
+   "GGG"
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "D": "minecraft:diamond",
+   "B": "cl:bau_ouro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bau_ferro",
+  "resultado": "cl:bau_ferro",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "IBI",
+   "III"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "B": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bau_ferro_cobre",
+  "resultado": "cl:bau_ferro",
+  "qtd": 1,
+  "grade": [
+   "IGI",
+   "GBG",
+   "IGI"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "G": "minecraft:glass",
+   "B": "cl:bau_cobre"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bau_moldes",
   "resultado": "cl:bau_moldes",
   "qtd": 1,
@@ -16180,6 +16447,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bau_obsidiana",
+  "resultado": "cl:bau_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "OOO",
+   "OBO",
+   "OOO"
+  ],
+  "chaves": {
+   "O": "minecraft:obsidian",
+   "B": "cl:bau_diamante"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bau_ouro",
+  "resultado": "cl:bau_ouro",
+  "qtd": 1,
+  "grade": [
+   "GGG",
+   "GBG",
+   "GGG"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "B": "cl:bau_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bau_pecas",
   "resultado": "cl:bau_pecas",
   "qtd": 1,
@@ -16191,6 +16494,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "P": "cl:padrao_branco",
    "C": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bau_terra",
+  "resultado": "cl:bau_terra",
+  "qtd": 1,
+  "grade": [
+   "DDD",
+   "DBD",
+   "DDD"
+  ],
+  "chaves": {
+   "D": "minecraft:dirt",
+   "B": "minecraft:chest"
   },
   "estacoes": [
    "crafting_table"
@@ -16791,12 +17112,12 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "qtd": 1,
   "grade": [
    "BBB",
-   " I ",
-   "III"
+   " T ",
+   "TTT"
   ],
   "chaves": {
    "B": "minecraft:iron_block",
-   "I": "minecraft:iron_ingot"
+   "T": "cl:tijolo_refratario"
   },
   "estacoes": [
    "crafting_table"
@@ -19507,6 +19828,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_chave_gaveta",
+  "resultado": "cl:chave_gaveta",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "GBG",
+   " G "
+  ],
+  "chaves": {
+   "G": "minecraft:gold_nugget",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_cilindro_vazio",
   "resultado": "cl:cilindro_vazio",
   "qtd": 4,
@@ -19858,6 +20197,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "T": "cl:tijolo_chamuscado",
    "O": "minecraft:obsidian"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_controlador_gavetas",
+  "resultado": "cl:controlador_gavetas",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "CGC",
+   "SDS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "C": "minecraft:comparator",
+   "G": "cl:gaveta",
+   "D": "minecraft:diamond"
   },
   "estacoes": [
    "crafting_table"
@@ -24244,6 +24603,81 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_gaveta",
+  "resultado": "cl:gaveta",
+  "qtd": 1,
+  "grade": [
+   "PPP",
+   "PBP",
+   "PSP"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "B": "minecraft:chest",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gaveta_2",
+  "resultado": "cl:gaveta_2",
+  "qtd": 2,
+  "grade": [
+   "PBP",
+   "PPP",
+   "PBP"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "B": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gaveta_4",
+  "resultado": "cl:gaveta_4",
+  "qtd": 4,
+  "grade": [
+   "BPB",
+   "PPP",
+   "BPB"
+  ],
+  "chaves": {
+   "P": "#minecraft:planks",
+   "B": "minecraft:chest"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_gaveta_compactadora",
+  "resultado": "cl:gaveta_compactadora",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "PGP",
+   "SIS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "P": "minecraft:piston",
+   "G": "cl:gaveta",
+   "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_gerador_bio",
   "resultado": "cl:gerador_bio",
   "qtd": 1,
@@ -25551,6 +25985,132 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_cobre_ferro",
+  "resultado": "cl:melhoria_bau_cobre_ferro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "X": "minecraft:copper_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_diamante_cristal",
+  "resultado": "cl:melhoria_bau_diamante_cristal",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:glass",
+   "X": "minecraft:obsidian"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_diamante_obsidiana",
+  "resultado": "cl:melhoria_bau_diamante_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:obsidian",
+   "X": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_ferro_ouro",
+  "resultado": "cl:melhoria_bau_ferro_ouro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "X": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_madeira_cobre",
+  "resultado": "cl:melhoria_bau_madeira_cobre",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "X": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_madeira_ferro",
+  "resultado": "cl:melhoria_bau_madeira_ferro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "X": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_bau_ouro_diamante",
+  "resultado": "cl:melhoria_bau_ouro_diamante",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MXM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:glass",
+   "X": "minecraft:diamond"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_melhoria_coleta",
   "resultado": "cl:melhoria_coleta",
   "qtd": 1,
@@ -25666,6 +26226,175 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "R": "minecraft:redstone",
    "S": "cl:melhoria_fornalha",
    "G": "minecraft:gold_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_1",
+  "resultado": "cl:melhoria_gaveta_1",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:obsidian",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_2",
+  "resultado": "cl:melhoria_gaveta_2",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:copper_ingot",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_3",
+  "resultado": "cl:melhoria_gaveta_3",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:iron_ingot",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_4",
+  "resultado": "cl:melhoria_gaveta_4",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:gold_ingot",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_5",
+  "resultado": "cl:melhoria_gaveta_5",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:emerald",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_6",
+  "resultado": "cl:melhoria_gaveta_6",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:diamond",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_7",
+  "resultado": "cl:melhoria_gaveta_7",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "MBM",
+   "SMS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "M": "minecraft:netherite_ingot",
+   "B": "cl:melhoria_gaveta_base"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_base",
+  "resultado": "cl:melhoria_gaveta_base",
+  "qtd": 2,
+  "grade": [
+   "SSS",
+   "SGS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "G": "cl:gaveta"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melhoria_gaveta_vazio",
+  "resultado": "cl:melhoria_gaveta_vazio",
+  "qtd": 1,
+  "grade": [
+   "OOO",
+   "OBO",
+   "OOO"
+  ],
+  "chaves": {
+   "O": "minecraft:obsidian",
+   "B": "cl:melhoria_gaveta_base"
   },
   "estacoes": [
    "crafting_table"

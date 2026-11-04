@@ -154,6 +154,24 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.32.0 (Iron Chests e Storage Drawers 13.2)
+
+- **Baús maiores** (Iron Chests, com a arte do mod): Cobre 45, Ferro 54, Ouro 81, Diamante, Cristal e Obsidiana 108
+  (o de Obsidiana aguenta explosão) e o Baú de Terra 9000! (1 espaço). Abrem com a tela de baú do jogo, em páginas de 27
+  (agachado + tocar troca de página). **Bater no baú guarda o baú com tudo dentro** (como uma caixa de shulker); pôr de
+  novo devolve tudo.
+- **Melhorias de baú**: tocar um baú (inclusive o baú normal do jogo) com a melhoria troca o baú sem tirar nada.
+- **Gavetas** (Storage Drawers, com a arte do mod): 1×1 (32 pilhas), 1×2 (2 × 16) e 2×2 (4 × 8) de um item só. Toque
+  com o item para guardar (dois toques, ou de mão vazia: tudo daquele item da mochila); bata para tirar uma pilha
+  (agachado: um). Agachado e de mão vazia: o menu com o que tem e as melhorias.
+- **Gaveta Compactadora**: guarda bloco, lingote e pepita do mesmo material juntos (põe pepita, tira bloco).
+- **Controlador de Gavetas**: guarda em todas as gavetas encostadas (a rede do mod, com o Acabamento de Gaveta).
+- **Melhorias de armazenamento** I a VII (×2, ×4, ×8, ×16, ×64, ×256, ×2048, somadas como no mod), de **Vazio** (o que
+  sobra some) e a **Chave** (trava o item da gaveta). Quebrada, a gaveta guarda tudo no item.
+- Receitas que batiam com as do jogo ou de outros blocos foram trocadas: Bigorna do Tinker (3 blocos de ferro e 4
+  tijolos refratários), Aquecedor (tijolos refratários em volta de uma fornalha) e Baú de Cobre (com um vidro em cima).
+- Diário: capítulo Baús e Gavetas.
+
 ## Novidades da 1.31.0 (Artifacts 15.1 e a mochila que abre na mão)
 
 - **Mochila na mão**: usar a mochila abre um menu sem pôr no chão: guardar tudo da mochila do jogador (a barra rápida

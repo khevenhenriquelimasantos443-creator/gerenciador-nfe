@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_gaveta_compactadora"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "PGP",
+      "SIS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stone"
+      },
+      "P": {
+        "item": "minecraft:piston"
+      },
+      "G": {
+        "item": "cl:gaveta"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:gaveta_compactadora"
+    }
+  }
+}

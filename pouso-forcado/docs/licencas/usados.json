@@ -444,6 +444,22 @@
   "saco_arroz",
   "fardo_palha"
  ],
+ "ironchest": [
+  "bau_cobre",
+  "bau_cristal",
+  "bau_diamante",
+  "bau_ferro",
+  "bau_obsidiana",
+  "bau_ouro",
+  "bau_terra",
+  "melhoria_bau_cobre_ferro",
+  "melhoria_bau_diamante_cristal",
+  "melhoria_bau_diamante_obsidiana",
+  "melhoria_bau_ferro_ouro",
+  "melhoria_bau_madeira_cobre",
+  "melhoria_bau_madeira_ferro",
+  "melhoria_bau_ouro_diamante"
+ ],
  "mekanism": [
   "lingote_osmio",
   "po_osmio",
@@ -892,6 +908,24 @@
   "palha_trancada",
   "lampada_pedra",
   "lanterna_papel"
+ ],
+ "storagedrawers": [
+  "acabamento_gaveta",
+  "chave_gaveta",
+  "controlador_gavetas",
+  "gaveta",
+  "gaveta_2",
+  "gaveta_4",
+  "gaveta_compactadora",
+  "melhoria_gaveta_1",
+  "melhoria_gaveta_2",
+  "melhoria_gaveta_3",
+  "melhoria_gaveta_4",
+  "melhoria_gaveta_5",
+  "melhoria_gaveta_6",
+  "melhoria_gaveta_7",
+  "melhoria_gaveta_base",
+  "melhoria_gaveta_vazio"
  ],
  "tinkers": [
   "peca_cabo_madeira",

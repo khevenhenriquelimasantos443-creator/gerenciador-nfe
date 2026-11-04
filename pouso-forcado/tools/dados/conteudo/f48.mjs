@@ -69,7 +69,7 @@ export default {
     { id: "vidro_alma_refratario", tipo: "shaped", padrao: [" T ", "TST", " T "], chave: { T: "cl:tijolo_refratario", S: "minecraft:soul_sand" }, resultado: "cl:vidro_alma_refratario" },
     { id: "vidro_fume_refratario", tipo: "shaped", padrao: [" T ", "TGT", " T "], chave: { T: "cl:tijolo_refratario", G: "minecraft:tinted_glass" }, resultado: "cl:vidro_fume_refratario" },
     { id: "vidro_chamuscado", tipo: "shaped", padrao: [" T ", "TGT", " T "], chave: { T: "cl:tijolo_chamuscado", G: "minecraft:glass" }, resultado: "cl:vidro_chamuscado" },
-    { id: "aquecedor", tipo: "shaped", padrao: ["TTT", "T T", "TTT"], chave: { T: "cl:tijolo_refratario" }, resultado: "cl:aquecedor" },
+    { id: "aquecedor", tipo: "shaped", padrao: ["TTT", "TFT", "TTT"], chave: { T: "cl:tijolo_refratario", F: "minecraft:furnace" }, resultado: "cl:aquecedor" },
     { id: "fusor", tipo: "shaped", padrao: ["TGT", "T T", "TTT"], chave: { T: "cl:tijolo_refratario", G: "minecraft:glass" }, resultado: "cl:fusor" },
     { id: "ligador", tipo: "shaped", padrao: ["TGT", "TMT", "TTT"], chave: { T: "cl:tijolo_chamuscado", G: "minecraft:glass", M: "cl:fusor" }, resultado: "cl:ligador" },
     { id: "controlador_fundicao_fantastica", tipo: "shaped", padrao: ["TTT", "TOT", "TTT"], chave: { T: "cl:tijolo_chamuscado", O: "minecraft:obsidian" }, resultado: "cl:controlador_fundicao_fantastica" },

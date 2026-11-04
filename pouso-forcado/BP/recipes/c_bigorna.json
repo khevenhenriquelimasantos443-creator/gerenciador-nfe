@@ -9,15 +9,15 @@
     ],
     "pattern": [
       "BBB",
-      " I ",
-      "III"
+      " T ",
+      "TTT"
     ],
     "key": {
       "B": {
         "item": "minecraft:iron_block"
       },
-      "I": {
-        "item": "minecraft:iron_ingot"
+      "T": {
+        "item": "cl:tijolo_refratario"
       }
     },
     "unlock": {

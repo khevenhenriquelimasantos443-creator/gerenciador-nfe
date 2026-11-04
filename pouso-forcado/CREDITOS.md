@@ -28,6 +28,12 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
   só as ideias e os números (1.10.0). Código, modelos e arte próprios.
 
+- **Iron Chests** (progwml6; GPL-3, inclusive a arte; github.com/progwml6/ironchest): os baús com os tamanhos do mod
+  e as melhorias; a arte dos baús (o atlas do modelo vira as faces do bloco) e das melhorias
+  (`tools/importar-baus-gavetas.py`). A licença está em `docs/licencas/ironchest.txt`.
+- **Storage Drawers** (jaquadro; MIT, inclusive a arte; github.com/jaquadro/StorageDrawers, 13.2): as gavetas com as
+  capacidades e os multiplicadores do mod, a compactadora, o controlador e as melhorias, com a arte do mod. Código
+  próprio.
 - **Artifacts** (Wouter Pauwels/ochotonida; MIT, inclusive a arte; github.com/ochotonida/artifacts, 15.1.3): os
   artefatos com os números do mod e a arte dos itens (`tools/importar-artifacts.py`). A Tela de Artefatos e os
   efeitos são código próprio.
@@ -140,6 +146,8 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
+| Iron Chests | progwml6 | GPL-3 | github.com/progwml6/ironchest (1.21.9) |
+| Storage Drawers | jaquadro | MIT | github.com/jaquadro/StorageDrawers (13.2, 26.3) |
 | Artifacts | Wouter Pauwels (ochotonida) | MIT | github.com/ochotonida/artifacts (15.1.3, 26.1) |
 | Tinkers' Construct | mDiyo e SlimeKnights | MIT (TC3) e CC BY 3.0 (1.7.10) | github.com/SlimeKnights/TinkersConstruct (3.12.1, 1.20.1; e 1.7.10) |
 | Applied Energistics 2 | AlgorithmX2, Ridanisaurus Rid e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (main, 26.3; e rv3) |

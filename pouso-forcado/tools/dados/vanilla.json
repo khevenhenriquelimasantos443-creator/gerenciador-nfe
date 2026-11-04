@@ -321,6 +321,11 @@
   "en": "Cocoa Beans",
   "icone": "textures/items/dye_powder_brown"
  },
+ "minecraft:comparator": {
+  "pt": "Comparador",
+  "en": "Comparator",
+  "icone": "textures/items/comparator"
+ },
  "minecraft:compass": {
   "pt": "Bússola",
   "en": "Compass",

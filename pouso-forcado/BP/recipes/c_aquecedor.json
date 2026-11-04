@@ -9,12 +9,15 @@
     ],
     "pattern": [
       "TTT",
-      "T T",
+      "TFT",
       "TTT"
     ],
     "key": {
       "T": {
         "item": "cl:tijolo_refratario"
+      },
+      "F": {
+        "item": "minecraft:furnace"
       }
     },
     "unlock": {

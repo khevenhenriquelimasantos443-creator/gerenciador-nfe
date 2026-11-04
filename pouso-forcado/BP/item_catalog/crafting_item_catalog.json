@@ -2812,6 +2812,52 @@
               "cl:carne_infinita",
               "cl:estojo_artefatos"
             ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:melhoria_bau_cobre_ferro",
+              "name": "cl:itemGroup.name.items_iron_chests"
+            },
+            "items": [
+              "cl:melhoria_bau_cobre_ferro",
+              "cl:melhoria_bau_diamante_cristal",
+              "cl:melhoria_bau_diamante_obsidiana",
+              "cl:melhoria_bau_ferro_ouro",
+              "cl:melhoria_bau_madeira_cobre",
+              "cl:melhoria_bau_madeira_ferro",
+              "cl:melhoria_bau_ouro_diamante",
+              "cl:bau_cobre",
+              "cl:bau_cristal",
+              "cl:bau_diamante",
+              "cl:bau_ferro",
+              "cl:bau_obsidiana",
+              "cl:bau_ouro",
+              "cl:bau_terra"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:chave_gaveta",
+              "name": "cl:itemGroup.name.items_storage_drawers"
+            },
+            "items": [
+              "cl:chave_gaveta",
+              "cl:melhoria_gaveta_1",
+              "cl:melhoria_gaveta_2",
+              "cl:melhoria_gaveta_3",
+              "cl:melhoria_gaveta_4",
+              "cl:melhoria_gaveta_5",
+              "cl:melhoria_gaveta_6",
+              "cl:melhoria_gaveta_7",
+              "cl:melhoria_gaveta_base",
+              "cl:melhoria_gaveta_vazio",
+              "cl:acabamento_gaveta",
+              "cl:controlador_gavetas",
+              "cl:gaveta",
+              "cl:gaveta_2",
+              "cl:gaveta_4",
+              "cl:gaveta_compactadora"
+            ]
           }
         ]
       },

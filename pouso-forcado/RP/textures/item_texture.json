@@ -5368,6 +5368,57 @@
     },
     "clc_estojo_artefatos": {
       "textures": "textures/items/cl/c/estojo_artefatos"
+    },
+    "clc_melhoria_bau_madeira_cobre": {
+      "textures": "textures/items/cl/arte/melhoria_bau_madeira_cobre"
+    },
+    "clc_melhoria_bau_madeira_ferro": {
+      "textures": "textures/items/cl/arte/melhoria_bau_madeira_ferro"
+    },
+    "clc_melhoria_bau_cobre_ferro": {
+      "textures": "textures/items/cl/arte/melhoria_bau_cobre_ferro"
+    },
+    "clc_melhoria_bau_ferro_ouro": {
+      "textures": "textures/items/cl/arte/melhoria_bau_ferro_ouro"
+    },
+    "clc_melhoria_bau_ouro_diamante": {
+      "textures": "textures/items/cl/arte/melhoria_bau_ouro_diamante"
+    },
+    "clc_melhoria_bau_diamante_cristal": {
+      "textures": "textures/items/cl/arte/melhoria_bau_diamante_cristal"
+    },
+    "clc_melhoria_bau_diamante_obsidiana": {
+      "textures": "textures/items/cl/arte/melhoria_bau_diamante_obsidiana"
+    },
+    "clc_melhoria_gaveta_1": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_1"
+    },
+    "clc_melhoria_gaveta_2": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_2"
+    },
+    "clc_melhoria_gaveta_3": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_3"
+    },
+    "clc_melhoria_gaveta_4": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_4"
+    },
+    "clc_melhoria_gaveta_5": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_5"
+    },
+    "clc_melhoria_gaveta_6": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_6"
+    },
+    "clc_melhoria_gaveta_7": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_7"
+    },
+    "clc_melhoria_gaveta_base": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_base"
+    },
+    "clc_melhoria_gaveta_vazio": {
+      "textures": "textures/items/cl/arte/melhoria_gaveta_vazio"
+    },
+    "clc_chave_gaveta": {
+      "textures": "textures/items/cl/arte/chave_gaveta"
     }
   }
 }

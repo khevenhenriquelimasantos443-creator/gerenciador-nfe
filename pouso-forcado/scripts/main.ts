@@ -70,6 +70,8 @@ import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
 import { cristalBrotandoComp, mudaSlimeComp, slimeCongeladoComp } from "./tinkers/slime.js";
 import { registrarArmas } from "./tinkers/armas.js";
 import { registrarArtefatos } from "./utilidades/artefatos.js";
+import { bauGrandeComp, registrarBausGrandes } from "./utilidades/baus_grandes.js";
+import { gavetaComp, registrarGavetas } from "./utilidades/gavetas.js";
 import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
@@ -130,6 +132,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:mesa_modificadores", mesaModificadoresComp);
   blockComponentRegistry.registerCustomComponent("cl:bau_tc", bauTcComp);
   blockComponentRegistry.registerCustomComponent("cl:punji", punjiComp);
+  // 1.32.0: Iron Chests e Storage Drawers.
+  blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
+  blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -303,6 +308,8 @@ registrarEnderIO9();
 registrarArmas(); // 1.28.0: armaduras, escudos, arcos e arremessáveis do Tinkers 3
 registrarTesteModificadores();
 registrarArtefatos(); // 1.31.0: Artifacts (Tela de Artefatos)
+registrarBausGrandes(); // 1.32.0: Iron Chests
+registrarGavetas(); // 1.32.0: Storage Drawers
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();

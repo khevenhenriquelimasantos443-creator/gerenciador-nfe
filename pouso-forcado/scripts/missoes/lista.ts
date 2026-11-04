@@ -65,6 +65,12 @@ export type Acao =
   | "art_diferente"
   | "art_cheio"
   | "mochila_mao"
+  | "ic_cobre"
+  | "ic_melhoria"
+  | "sd_guardar"
+  | "sd_compacta"
+  | "sd_controlador"
+  | "sd_melhoria"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -567,6 +573,20 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "armazenamento", // 1.32.0: Iron Chests e Storage Drawers
+    icone: "cl:bau_ferro",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "ic_cobre", objetivo: { tipo: "acao", acao: "ic_cobre", qtd: 1 }, recompensa: [{ item: "minecraft:copper_ingot", quantidade: 8 }] },
+      { id: "ic_melhoria", requer: ["ic_cobre"], objetivo: { tipo: "acao", acao: "ic_melhoria", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "ic_diamante", requer: ["ic_melhoria"], objetivo: { tipo: "ter", item: "cl:bau_diamante", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "sd_gaveta", objetivo: { tipo: "acao", acao: "sd_guardar", qtd: 10 }, recompensa: [{ item: "cl:gaveta_2", quantidade: 2 }] },
+      { id: "sd_melhoria", requer: ["sd_gaveta"], objetivo: { tipo: "acao", acao: "sd_melhoria", qtd: 1 }, recompensa: [{ item: "minecraft:obsidian", quantidade: 8 }] },
+      { id: "sd_compacta", requer: ["sd_gaveta"], objetivo: { tipo: "acao", acao: "sd_compacta", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 9 }] },
+      { id: "sd_controlador", requer: ["sd_gaveta"], objetivo: { tipo: "acao", acao: "sd_controlador", qtd: 1 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },
     ],
   },
   {

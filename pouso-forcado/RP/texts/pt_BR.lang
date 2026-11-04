@@ -4379,7 +4379,7 @@ cl.livro.livro_materiais.1=Materiais e Você.
 Toda ferramenta do Tinker é feita de peças, e cada peça de um material. A cabeça (a primeira peça) decide a velocidade, o dano e o nível de mineração; o cabo multiplica a durabilidade; a ligação (e os materiais) dão traços.
 
 Comece pela Mesa de Moldes (padrões), o Construtor de Peças (peças de madeira, pedra, sílex, osso...) e a Estação de Ferramentas.
-cl.livro.livro_materiais.2=As ferramentas grandes (Marreta, Martelo de Mineração, Escavadeira, Machado Grande, Foice, Espadão) têm 4 peças e precisam da Bigorna do Tinker (3 blocos de ferro e 4 lingotes).
+cl.livro.livro_materiais.2=As ferramentas grandes (Marreta, Martelo de Mineração, Escavadeira, Machado Grande, Foice, Espadão) têm 4 peças e precisam da Bigorna do Tinker (3 blocos de ferro e 4 tijolos refratários).
 
 Nas próximas páginas, cada material: durabilidade, velocidade, dano, nível e traço.
 cl.livro.livro_fundicao_pequena.1=Fundição Pequena.
@@ -4561,6 +4561,74 @@ cl.missao.art_cheio.titulo=Todos os espaços
 cl.missao.art_cheio.desc=Fique com os 7 espaços de artefato cheios.
 cl.missao.mochila_mao.titulo=Mochila na mão
 cl.missao.mochila_mao.desc=Use a mochila (sem agachar) e guarde algo direto da mão.
+item.cl:melhoria_bau_madeira_cobre.name=Melhoria de Baú: Madeira → Cobre
+item.cl:melhoria_bau_madeira_ferro.name=Melhoria de Baú: Madeira → Ferro
+item.cl:melhoria_bau_cobre_ferro.name=Melhoria de Baú: Cobre → Ferro
+item.cl:melhoria_bau_ferro_ouro.name=Melhoria de Baú: Ferro → Ouro
+item.cl:melhoria_bau_ouro_diamante.name=Melhoria de Baú: Ouro → Diamante
+item.cl:melhoria_bau_diamante_cristal.name=Melhoria de Baú: Diamante → Cristal
+item.cl:melhoria_bau_diamante_obsidiana.name=Melhoria de Baú: Diamante → Obsidiana
+item.cl:melhoria_gaveta_1.name=Melhoria de Armazenamento (I)
+item.cl:melhoria_gaveta_2.name=Melhoria de Armazenamento (II)
+item.cl:melhoria_gaveta_3.name=Melhoria de Armazenamento (III)
+item.cl:melhoria_gaveta_4.name=Melhoria de Armazenamento (IV)
+item.cl:melhoria_gaveta_5.name=Melhoria de Armazenamento (V)
+item.cl:melhoria_gaveta_6.name=Melhoria de Armazenamento (VI)
+item.cl:melhoria_gaveta_7.name=Melhoria de Armazenamento (VII)
+item.cl:melhoria_gaveta_base.name=Modelo de Melhoria
+item.cl:melhoria_gaveta_vazio.name=Melhoria de Vazio
+item.cl:chave_gaveta.name=Chave de Gaveta
+tile.cl:bau_cobre.name=Baú de Cobre
+tile.cl:bau_ferro.name=Baú de Ferro
+tile.cl:bau_ouro.name=Baú de Ouro
+tile.cl:bau_diamante.name=Baú de Diamante
+tile.cl:bau_cristal.name=Baú de Cristal
+tile.cl:bau_obsidiana.name=Baú de Obsidiana
+tile.cl:bau_terra.name=Baú de Terra 9000!
+tile.cl:gaveta.name=Gaveta
+tile.cl:gaveta_2.name=Gaveta 1×2
+tile.cl:gaveta_4.name=Gaveta 2×2
+tile.cl:gaveta_compactadora.name=Gaveta Compactadora
+tile.cl:controlador_gavetas.name=Controlador de Gavetas
+tile.cl:acabamento_gaveta.name=Acabamento de Gaveta
+entity.cl:bau_grande.name=Baú
+cl.bau.pagina=Página %s de %s
+cl.bau.dica=Baú grande: agachado e tocando troca de página; bater guarda o baú com tudo dentro (como uma caixa de shulker).
+cl.bau.melhorou=O baú virou %s, sem perder nada.
+cl.bau.duplo=Separe o baú duplo antes de melhorar.
+cl.bau.errado=Esta melhoria é para %s.
+cl.bau.conteudo=§7%s itens guardados
+cl.gaveta.vazia=Gaveta vazia
+cl.gaveta.linha=%s: %s / %s
+cl.gaveta.melhorias=§7Melhorias: %s/7 (×%s)
+cl.gaveta.titulo=Gaveta
+cl.gaveta.corpo=Toque com um item para guardar (dois toques: tudo daquele item da mochila). Bata para tirar uma pilha (agachado: um). Agachado e de mão vazia: este menu. Quebrada, a gaveta guarda tudo no item.
+cl.gaveta.tirar_melhoria=Tirar: %s
+cl.gaveta.cheia=A gaveta está cheia.
+cl.gaveta.outro=Esta gaveta guarda outro item.
+cl.gaveta.max_melhorias=A gaveta já tem 7 melhorias.
+cl.gaveta.travada=Gaveta travada no item (chave de novo destrava).
+cl.gaveta.destravada=Gaveta destravada.
+cl.gaveta.nao_compacta=A Compactadora só guarda o que vira bloco (ferro, ouro, diamante, carvão, redstone...).
+cl.gaveta.controlador=Controlador: guardou %s itens nas gavetas em volta.
+cl.gaveta.especial=Itens com nome, encanto ou desgaste não vão na gaveta.
+cl.capitulo.armazenamento.nome=Baús e Gavetas (Iron Chests, Storage Drawers)
+cl.capitulo.armazenamento.curto=Baús+
+cl.capitulo.armazenamento.desc=Baús maiores (Cobre 45, Ferro 54, Ouro 81, Diamante, Cristal e Obsidiana 108) com páginas, e as gavetas que guardam muito de um item só: toque para guardar, bata para tirar. Melhorias multiplicam o que cabe.
+cl.missao.ic_cobre.titulo=Baú de Cobre
+cl.missao.ic_cobre.desc=Faça um Baú de Cobre (45 espaços).
+cl.missao.ic_melhoria.titulo=Melhorar sem esvaziar
+cl.missao.ic_melhoria.desc=Use uma melhoria de baú num baú cheio de coisas.
+cl.missao.ic_diamante.titulo=Baú de Diamante
+cl.missao.ic_diamante.desc=Tenha um Baú de Diamante (108 espaços).
+cl.missao.sd_gaveta.titulo=Gaveta
+cl.missao.sd_gaveta.desc=Guarde 1000 itens em gavetas.
+cl.missao.sd_compacta.titulo=Compactadora
+cl.missao.sd_compacta.desc=Faça a Gaveta Compactadora: põe pepita, tira bloco.
+cl.missao.sd_controlador.titulo=Controlador
+cl.missao.sd_controlador.desc=Guarde pelo Controlador de Gavetas.
+cl.missao.sd_melhoria.titulo=Gaveta melhorada
+cl.missao.sd_melhoria.desc=Ponha uma melhoria de armazenamento numa gaveta.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado
@@ -4619,6 +4687,8 @@ cl:itemGroup.name.items_galacticraft=Galacticraft
 cl:itemGroup.name.equipment_galacticraft=Galacticraft
 cl:itemGroup.name.items_artifacts=Artifacts
 cl:itemGroup.name.equipment_artifacts=Artifacts
+cl:itemGroup.name.items_iron_chests=Iron Chests
+cl:itemGroup.name.items_storage_drawers=Storage Drawers
 ## fim Grupos
 ## Dicas da tela de carregamento (gerado por tools/gerar-dicas.mjs)
 beginnerTips.1=Sua nave caiu, mas o casco virou abrigo: à noite, fique dentro do avião ou num lugar com luz.
