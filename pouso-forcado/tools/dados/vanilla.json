@@ -386,6 +386,11 @@
   "en": "Copper Ore",
   "icone": "textures/blocks/copper_ore"
  },
+ "minecraft:cornflower": {
+  "pt": "cornflower",
+  "en": "cornflower",
+  "icone": "textures/blocks/flower_cornflower"
+ },
  "minecraft:cracked_stone_bricks": {
   "pt": "Tijolos de Pedra Rachados",
   "en": "Cracked Stone Bricks",
@@ -516,6 +521,11 @@
   "en": "Dispenser",
   "icone": "textures/blocks/furnace_side"
  },
+ "minecraft:dragon_breath": {
+  "pt": "Bafo do Dragão",
+  "en": "Dragon's Breath",
+  "icone": "textures/items/dragons_breath"
+ },
  "minecraft:dried_kelp": {
   "pt": "Algas Secas",
   "en": "Dried Kelp",
@@ -525,6 +535,11 @@
   "pt": "Bloco de Algas Secas",
   "en": "Dried Kelp Block",
   "icone": "textures/blocks/dried_kelp_side_a"
+ },
+ "minecraft:echo_shard": {
+  "pt": "Fragmento de Eco",
+  "en": "Echo Shard",
+  "icone": "textures/items/echo_shard"
  },
  "minecraft:egg": {
   "pt": "Ovo",
@@ -892,6 +907,11 @@
   "pt": "light_gray_dye",
   "en": "light_gray_dye"
  },
+ "minecraft:lightning_rod": {
+  "pt": "Para-raios",
+  "en": "Lightning Rod",
+  "icone": "textures/blocks/lightning_rod"
+ },
  "minecraft:lime_dye": {
   "pt": "Corante Verde Limão",
   "en": "Lime Dye",
@@ -1005,6 +1025,11 @@
   "pt": "Tijolo do Nether",
   "en": "Nether Brick",
   "icone": "textures/items/netherbrick"
+ },
+ "minecraft:netherite_ingot": {
+  "pt": "Barra de Netherita",
+  "en": "Netherite Ingot",
+  "icone": "textures/items/netherite_ingot"
  },
  "minecraft:netherite_scrap": {
   "pt": "Fragmentos de Netherita",
@@ -1120,6 +1145,11 @@
   "en": "prismarine",
   "icone": "textures/blocks/prismarine_rough"
  },
+ "minecraft:pufferfish": {
+  "pt": "Baiacu",
+  "en": "Pufferfish",
+  "icone": "textures/items/fish_pufferfish_raw"
+ },
  "minecraft:pumpkin": {
   "pt": "Abóbora",
   "en": "Pumpkin",
@@ -1159,6 +1189,11 @@
   "pt": "Coelho Cru",
   "en": "Raw Rabbit",
   "icone": "textures/items/rabbit_raw"
+ },
+ "minecraft:rabbit_foot": {
+  "pt": "Pé de Coelho",
+  "en": "Rabbit's Foot",
+  "icone": "textures/items/rabbit_foot"
  },
  "minecraft:rabbit_hide": {
   "pt": "Pele de Coelho",
@@ -1279,6 +1314,16 @@
   "pt": "Grama Baixa",
   "en": "Short Grass",
   "icone": "textures/blocks/tallgrass_carried"
+ },
+ "minecraft:shroomlight": {
+  "pt": "Cogubrilho",
+  "en": "Shroomlight",
+  "icone": "textures/blocks/shroomlight"
+ },
+ "minecraft:shulker_shell": {
+  "pt": "Casco de Shulker",
+  "en": "Shulker Shell",
+  "icone": "textures/items/shulker_shell"
  },
  "minecraft:skeleton_skull": {
   "pt": "skeleton_skull",

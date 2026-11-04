@@ -44,11 +44,12 @@ export const FERRAMENTAS = {
       {
         pt: f.pt, en: f.en, pecas: f.pecas, tags: f.tags, slot: f.slot, tracos: f.tracos,
         base: r(f.base.attack_damage ?? 0), mDano: r(f.mult.attack_damage ?? 1), dur: r(f.mult.durability ?? 1), vel: r(f.mult.mining_speed ?? 1),
+        espacos: { melhorias: f.espacos.upgrades ?? 3, habilidades: f.espacos.abilities ?? 1 },
         ...(f.area ? { area: f.area } : {}),
       },
     ]),
   ),
-  pa: { pt: "Pá", en: "Shovel", pecas: ["cabeca_pa", "cabo"], tags: ["minecraft:is_shovel_item_destructible"], slot: "shovel", tracos: [], base: 1, mDano: 1, dur: 1, vel: 1 },
+  pa: { pt: "Pá", en: "Shovel", pecas: ["cabeca_pa", "cabo"], tags: ["minecraft:is_shovel_item_destructible"], slot: "shovel", tracos: [], base: 1, mDano: 1, dur: 1, vel: 1, espacos: { melhorias: 3, habilidades: 1 } },
 };
 export const TRACOS = D.tracos;
 

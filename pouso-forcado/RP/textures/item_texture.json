@@ -2424,19 +2424,19 @@
       "textures": "textures/items/cl/arte/machado_largo_obsidiana"
     },
     "clc_molde_cabeca_martelo": {
-      "textures": "textures/items/cl/c/molde_cabeca_martelo"
+      "textures": "textures/items/cl/arte/molde_cabeca_martelo"
     },
     "clc_molde_placa_grande": {
-      "textures": "textures/items/cl/c/molde_placa_grande"
+      "textures": "textures/items/cl/arte/molde_placa_grande"
     },
     "clc_molde_cabo_resistente": {
-      "textures": "textures/items/cl/c/molde_cabo_resistente"
+      "textures": "textures/items/cl/arte/molde_cabo_resistente"
     },
     "clc_molde_ligacao_resistente": {
-      "textures": "textures/items/cl/c/molde_ligacao_resistente"
+      "textures": "textures/items/cl/arte/molde_ligacao_resistente"
     },
     "clc_molde_cabeca_machado_larga": {
-      "textures": "textures/items/cl/c/molde_cabeca_machado_larga"
+      "textures": "textures/items/cl/arte/molde_cabeca_machado_larga"
     },
     "clc_lingote_ouro_rosa": {
       "textures": "textures/items/cl/arte/lingote_ouro_rosa"
@@ -3678,10 +3678,10 @@
       "textures": "textures/items/cl/arte/peca_ligacao_resistente_trepadeira_slime_ender"
     },
     "clc_molde_cabeca_enxo": {
-      "textures": "textures/items/cl/c/molde_cabeca_enxo"
+      "textures": "textures/items/cl/arte/molde_cabeca_enxo"
     },
     "clc_molde_lamina_larga": {
-      "textures": "textures/items/cl/c/molde_lamina_larga"
+      "textures": "textures/items/cl/arte/molde_lamina_larga"
     },
     "clc_peca_cabeca_enxo_ferro": {
       "textures": "textures/items/cl/arte/peca_cabeca_enxo_ferro"
@@ -5115,43 +5115,43 @@
       "textures": "textures/items/cl/c/argamassa_nether"
     },
     "clc_molde_areia_lingote": {
-      "textures": "textures/items/cl/c/molde_areia_lingote"
+      "textures": "textures/items/cl/arte/molde_areia_lingote"
     },
     "clc_molde_areia_cabeca_picareta": {
-      "textures": "textures/items/cl/c/molde_areia_cabeca_picareta"
+      "textures": "textures/items/cl/arte/molde_areia_cabeca_picareta"
     },
     "clc_molde_areia_cabeca_machado": {
-      "textures": "textures/items/cl/c/molde_areia_cabeca_machado"
+      "textures": "textures/items/cl/arte/molde_areia_cabeca_machado"
     },
     "clc_molde_areia_lamina_espada": {
-      "textures": "textures/items/cl/c/molde_areia_lamina_espada"
+      "textures": "textures/items/cl/arte/molde_areia_lamina_espada"
     },
     "clc_molde_areia_cabeca_enxo": {
-      "textures": "textures/items/cl/c/molde_areia_cabeca_enxo"
+      "textures": "textures/items/cl/arte/molde_areia_cabeca_enxo"
     },
     "clc_molde_areia_cabeca_martelo": {
-      "textures": "textures/items/cl/c/molde_areia_cabeca_martelo"
+      "textures": "textures/items/cl/arte/molde_areia_cabeca_martelo"
     },
     "clc_molde_areia_lamina_larga": {
-      "textures": "textures/items/cl/c/molde_areia_lamina_larga"
+      "textures": "textures/items/cl/arte/molde_areia_lamina_larga"
     },
     "clc_molde_areia_cabeca_machado_larga": {
-      "textures": "textures/items/cl/c/molde_areia_cabeca_machado_larga"
+      "textures": "textures/items/cl/arte/molde_areia_cabeca_machado_larga"
     },
     "clc_molde_areia_placa_grande": {
-      "textures": "textures/items/cl/c/molde_areia_placa_grande"
+      "textures": "textures/items/cl/arte/molde_areia_placa_grande"
     },
     "clc_molde_areia_ligacao": {
-      "textures": "textures/items/cl/c/molde_areia_ligacao"
+      "textures": "textures/items/cl/arte/molde_areia_ligacao"
     },
     "clc_molde_areia_ligacao_resistente": {
-      "textures": "textures/items/cl/c/molde_areia_ligacao_resistente"
+      "textures": "textures/items/cl/arte/molde_areia_ligacao_resistente"
     },
     "clc_molde_areia_cabo": {
-      "textures": "textures/items/cl/c/molde_areia_cabo"
+      "textures": "textures/items/cl/arte/molde_areia_cabo"
     },
     "clc_molde_areia_cabo_resistente": {
-      "textures": "textures/items/cl/c/molde_areia_cabo_resistente"
+      "textures": "textures/items/cl/arte/molde_areia_cabo_resistente"
     },
     "clc_molde_areia_cabeca_pa": {
       "textures": "textures/items/cl/c/molde_areia_cabeca_pa"
@@ -5161,6 +5161,66 @@
     },
     "clc_molde_areia_travessa": {
       "textures": "textures/items/cl/c/molde_areia_travessa"
+    },
+    "clc_livro_materiais": {
+      "textures": "textures/items/cl/arte/livro_materiais"
+    },
+    "clc_livro_fundicao_pequena": {
+      "textures": "textures/items/cl/arte/livro_fundicao_pequena"
+    },
+    "clc_livro_fundicao_poderosa": {
+      "textures": "textures/items/cl/arte/livro_fundicao_poderosa"
+    },
+    "clc_livro_geringoncas": {
+      "textures": "textures/items/cl/arte/livro_geringoncas"
+    },
+    "clc_livro_fundicao_fantastica": {
+      "textures": "textures/items/cl/arte/livro_fundicao_fantastica"
+    },
+    "clc_livro_enciclopedia": {
+      "textures": "textures/items/cl/arte/livro_enciclopedia"
+    },
+    "clc_picareta_guerra": {
+      "textures": "textures/items/cl/arte/picareta_guerra"
+    },
+    "clc_placa_batalha": {
+      "textures": "textures/items/cl/arte/placa_batalha"
+    },
+    "clc_lavador": {
+      "textures": "textures/items/cl/arte/lavador"
+    },
+    "clc_machado_minotauro": {
+      "textures": "textures/items/cl/arte/machado_minotauro"
+    },
+    "clc_panela_fusao": {
+      "textures": "textures/items/cl/arte/panela_fusao"
+    },
+    "clc_cajado_ceu": {
+      "textures": "textures/items/cl/arte/cajado_ceu"
+    },
+    "clc_cajado_terra": {
+      "textures": "textures/items/cl/arte/cajado_terra"
+    },
+    "clc_cajado_icor": {
+      "textures": "textures/items/cl/arte/cajado_icor"
+    },
+    "clc_cajado_ender": {
+      "textures": "textures/items/cl/arte/cajado_ender"
+    },
+    "clc_efln": {
+      "textures": "textures/items/cl/arte/efln"
+    },
+    "clc_bola_brilhante": {
+      "textures": "textures/items/cl/arte/bola_brilhante"
+    },
+    "clc_estilingue_slime": {
+      "textures": "textures/items/cl/c/estilingue_slime"
+    },
+    "clc_pano_sedoso": {
+      "textures": "textures/items/cl/c/pano_sedoso"
+    },
+    "clc_mochila_porco": {
+      "textures": "textures/items/cl/arte/mochila_porco"
     }
   }
 }

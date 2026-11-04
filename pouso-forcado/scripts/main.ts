@@ -12,7 +12,7 @@ import { montadora } from "./blocos/montadora.js";
 import { folhaInfestada, registrarNihilo } from "./blocos/nihilo.js";
 import { planta, registrarPlantacao } from "./blocos/plantacao.js";
 import { registrarFerramentas } from "./tinkers/ferramenta.js";
-import { construtorPecasComp, estacaoFerramentasComp, mesaMoldesComp } from "./tinkers/mesas.js";
+import { bigornaComp, construtorPecasComp, estacaoFerramentasComp, mesaModificadoresComp, mesaMoldesComp, registrarTesteModificadores } from "./tinkers/mesas.js";
 import { registrarVaral, varal } from "./tinkers/varal.js";
 import { celulaEnergia, dinamo, extrusora, fornalhaRedstone, fundidoraInducao, precipitador, pulverizador, registrarThermal, serraria } from "./maquinas/thermal.js";
 import { barrilArmazenamento, registrarJabba } from "./armazenamento/jabba.js";
@@ -69,6 +69,7 @@ import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEn
 import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
 import { cristalBrotandoComp, mudaSlimeComp, slimeCongeladoComp } from "./tinkers/slime.js";
 import { registrarArmas } from "./tinkers/armas.js";
+import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
 import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
@@ -123,6 +124,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:muda_slime", mudaSlimeComp);
   blockComponentRegistry.registerCustomComponent("cl:cristal_brotando", cristalBrotandoComp);
   blockComponentRegistry.registerCustomComponent("cl:slime_congelado", slimeCongeladoComp);
+  // 1.30.0: Tinkers 3 parte 5.
+  blockComponentRegistry.registerCustomComponent("cl:bigorna", bigornaComp);
+  blockComponentRegistry.registerCustomComponent("cl:mesa_modificadores", mesaModificadoresComp);
+  blockComponentRegistry.registerCustomComponent("cl:bau_tc", bauTcComp);
+  blockComponentRegistry.registerCustomComponent("cl:punji", punjiComp);
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));
@@ -294,6 +300,8 @@ registrarMekanismExtra();
 registrarEnderIO();
 registrarEnderIO9();
 registrarArmas(); // 1.28.0: armaduras, escudos, arcos e arremessáveis do Tinkers 3
+registrarTesteModificadores();
+registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();
 registrarCreate();

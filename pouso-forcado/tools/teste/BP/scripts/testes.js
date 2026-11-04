@@ -23,7 +23,8 @@ function teste(nome, ticks, fn) {
     .structureName("pouso:vazio")
     .maxTicks(ticks);
 }
-const robo = (t, pos = { x: 1, y: 1, z: 1 }) => t.spawnSimulatedPlayer(pos, "Robo", GameMode.Survival);
+// O chão da estrutura fica em y 1: o robô nasce em cima dele (em y 1 ele às vezes sufocava dentro da pedra).
+const robo = (t, pos = { x: 1, y: 1, z: 1 }) => t.spawnSimulatedPlayer({ ...pos, y: Math.max(pos.y, 2) }, "Robo", GameMode.Survival);
 
 // O avião aparece com o primeiro jogador: procura o painel, o baú e as portas em volta.
 teste("aviao", 1200, (t) => {
@@ -1189,6 +1190,110 @@ teste("tinkers3_fusor", 400, (t) => {
     log(`tinkers3_fusor: ferro=${ferro} bronze=${bronze} moldes=${quantos(j, "cl:molde_lingote")}`);
     t.assert(ferro >= 1, "o Fusor não derreteu o ferro");
     t.assert(bronze >= 1, "o Ligador não fez bronze");
+    t.succeed();
+  });
+});
+
+// 1.30.0: Tinkers parte 5. Autofundir (habilidade de 4 itens: só na Bigorna) faz o minério de ferro sair lingote;
+// Expandido abre a picareta em 3×3; Mochila de Porco guarda a vaca; Estacas Punji ferem o porco; Picareta de Guerra
+// atira flecha; Cajado do Ender teleporta; Baú de Peças guarda a peça e solta ao quebrar.
+teste("tinkers3_extras", 420, (t) => {
+  const j = robo(t, { x: 1.5, y: 2, z: 1.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const dim = t.getDimension();
+  const pôr = (id, p) => { try { t.setBlockType(id, p); } catch (e) { log(`tinkers3_extras: não pôs ${id} em ${JSON.stringify(p)}: ${e}`); } };
+  pôr("minecraft:iron_ore", { x: 1, y: 3, z: 4 });
+  for (let x = 4; x <= 6; x++) for (let y = 2; y <= 4; y++) pôr("minecraft:stone", { x, y, z: 4 });
+  pôr("minecraft:stone", { x: 1, y: 2, z: 7 });
+  pôr("cl:bau_pecas", { x: 3, y: 2, z: 7 });
+  pôr("cl:estacas_punji", { x: 7, y: 2, z: 1 });
+  const vaca = t.spawn("minecraft:cow", { x: 1.5, y: 2, z: 3.5 });
+  const porco = t.spawn("minecraft:pig", { x: 7.5, y: 2, z: 1.5 });
+  let porcoVida = 99;
+  const ouvir = system.runInterval(() => {
+    try {
+      if (porco.isValid) porcoVida = Math.min(porcoVida, porco.getComponent("health").currentValue);
+    } catch { /* */ }
+  }, 2);
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`tinkers3_extras: ${c} -> ${e}`); } };
+  t.runAfterDelay(4, () => {
+    inv.setItem(4, new ItemStack("cl:mochila_porco", 1));
+    j.selectedSlotIndex = 4;
+    j.lookAtEntity(vaca);
+    log(`tinkers3_extras: mochila de porco ${j.useItemInSlot(4)}`);
+  });
+  t.runAfterDelay(12, () => {
+    inv.setItem(0, new ItemStack("cl:picareta_cobalto", 1));
+    for (const [id, n, k] of [["minecraft:raw_iron", 1, 10], ["minecraft:blast_furnace", 1, 11], ["minecraft:iron_ingot", 1, 12], ["minecraft:coal_block", 2, 13],
+      ["minecraft:piston", 2, 14], ["cl:lingote_bronze_ametista", 1, 15], ["cl:bola_slime_icor", 2, 16]]) inv.setItem(k, new ItemStack(id, n));
+    j.selectedSlotIndex = 0;
+    cmd("scriptevent cl:teste_tc_mod autofundir");
+  });
+  t.runAfterDelay(14, () => cmd("scriptevent cl:teste_tc_mod autofundir bigorna"));
+  t.runAfterDelay(16, () => cmd("scriptevent cl:teste_tc_mod expandido bigorna"));
+  t.runAfterDelay(20, () => {
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 1, y: 3, z: 4 });
+    log(`tinkers3_extras: quebrar minério ${j.breakBlock({ x: 1, y: 3, z: 4 }, Direction.North)}`);
+  });
+  let lingote = [];
+  t.runAfterDelay(70, () => {
+    lingote = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 1.5, y: 3.5, z: 4.5 }), maxDistance: 3 }).map((e) => e.getComponent("item")?.itemStack.typeId);
+    inv.setItem(1, new ItemStack("cl:picareta_cobalto", 1));
+    j.selectedSlotIndex = 1;
+    cmd("scriptevent cl:teste_tc_mod expandido bigorna");
+  });
+  t.runAfterDelay(74, () => {
+    j.teleport(t.worldLocation({ x: 5.5, y: 2, z: 1.5 }));
+    j.selectedSlotIndex = 1;
+    j.lookAtBlock({ x: 5, y: 3, z: 4 });
+    log(`tinkers3_extras: quebrar parede ${j.breakBlock({ x: 5, y: 3, z: 4 }, Direction.North)}`);
+  });
+  let pedra = -1, flechas = -1, pos;
+  t.runAfterDelay(140, () => {
+    pedra = 0;
+    for (let x = 4; x <= 6; x++) for (let y = 2; y <= 4; y++) if (t.getBlock({ x, y, z: 4 }).typeId === "minecraft:stone") pedra++;
+    inv.setItem(5, new ItemStack("cl:picareta_guerra", 1));
+    inv.setItem(6, new ItemStack("minecraft:arrow", 4));
+    j.selectedSlotIndex = 5;
+    j.lookAtLocation(t.worldLocation({ x: 5.5, y: 3, z: 7 }));
+    log(`tinkers3_extras: picareta de guerra ${j.useItemInSlot(5)}`);
+  });
+  t.runAfterDelay(150, () => {
+    flechas = quantos(j, "minecraft:arrow");
+    j.teleport(t.worldLocation({ x: 1.5, y: 2, z: 1.5 }));
+    inv.setItem(2, new ItemStack("cl:cajado_ender", 1));
+    j.selectedSlotIndex = 2;
+    j.lookAtBlock({ x: 1, y: 2, z: 7 });
+  });
+  t.runAfterDelay(152, () => log(`tinkers3_extras: cajado ${j.useItemInSlot(2)}`));
+  let pecas = -1;
+  t.runAfterDelay(170, () => {
+    pos = t.relativeLocation(j.location);
+    j.teleport(t.worldLocation({ x: 3.5, y: 2, z: 5.5 }));
+    inv.setItem(3, new ItemStack("cl:peca_cabo_ferro", 2));
+    j.selectedSlotIndex = 3;
+    j.lookAtBlock({ x: 3, y: 2, z: 7 });
+    j.interactWithBlock({ x: 3, y: 2, z: 7 }, Direction.North);
+  });
+  t.runAfterDelay(180, () => {
+    pecas = quantos(j, "cl:peca_cabo_ferro");
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 3, y: 2, z: 7 });
+    j.breakBlock({ x: 3, y: 2, z: 7 }, Direction.North);
+  });
+  t.runAfterDelay(380, () => {
+    system.clearRun(ouvir);
+    const soltou = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3.5, y: 2.5, z: 7.5 }), maxDistance: 3 }).map((e) => e.getComponent("item")?.itemStack.typeId);
+    const lore = inv.getItem(4)?.getLore() ?? [];
+    log(`tinkers3_extras: drops minério=${JSON.stringify(lingote)} pedra que sobrou=${pedra}/9 vaca guardada=${!vaca.isValid} lore=${JSON.stringify(lore)} porco vida=${porcoVida} flechas=${flechas} pos=${JSON.stringify(pos)} peças no robô=${pecas} soltou=${JSON.stringify(soltou)} bau=${t.getBlock({ x: 3, y: 2, z: 7 }).typeId}`);
+    t.assert(lingote.includes("minecraft:iron_ingot"), "Autofundir não fundiu o minério");
+    t.assert(pedra <= 1, "Expandido não abriu a área");
+    t.assert(!vaca.isValid && lore.length > 0, "a Mochila de Porco não guardou a vaca");
+    t.assert(porcoVida < 10, "as Estacas Punji não feriram");
+    t.assert(flechas === 3, "a Picareta de Guerra não atirou");
+    t.assert(pos && pos.z > 6, "o Cajado do Ender não teleportou");
+    t.assert(pecas === 0 && soltou.includes("cl:peca_cabo_ferro"), "o Baú de Peças não guardou/soltou");
     t.succeed();
   });
 });

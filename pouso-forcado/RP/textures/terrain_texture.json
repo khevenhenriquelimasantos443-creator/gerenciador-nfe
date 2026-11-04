@@ -4368,6 +4368,114 @@
     },
     "clc_canal": {
       "textures": "textures/blocks/cl/arte/canal"
+    },
+    "clc_bigorna": {
+      "textures": "textures/blocks/cl/c/bigorna"
+    },
+    "clc_bigorna_frente": {
+      "textures": "textures/blocks/cl/arte/bigorna_frente"
+    },
+    "clc_bigorna_lado": {
+      "textures": "textures/blocks/cl/arte/bigorna_lado"
+    },
+    "clc_bigorna_topo": {
+      "textures": "textures/blocks/cl/arte/bigorna_topo"
+    },
+    "clc_bigorna_baixo": {
+      "textures": "textures/blocks/cl/arte/bigorna_baixo"
+    },
+    "clc_bigorna_chamuscada": {
+      "textures": "textures/blocks/cl/c/bigorna_chamuscada"
+    },
+    "clc_bigorna_chamuscada_frente": {
+      "textures": "textures/blocks/cl/arte/bigorna_chamuscada_frente"
+    },
+    "clc_bigorna_chamuscada_lado": {
+      "textures": "textures/blocks/cl/arte/bigorna_chamuscada_lado"
+    },
+    "clc_bigorna_chamuscada_topo": {
+      "textures": "textures/blocks/cl/arte/bigorna_chamuscada_topo"
+    },
+    "clc_bigorna_chamuscada_baixo": {
+      "textures": "textures/blocks/cl/arte/bigorna_chamuscada_baixo"
+    },
+    "clc_mesa_modificadores": {
+      "textures": "textures/blocks/cl/c/mesa_modificadores"
+    },
+    "clc_mesa_modificadores_frente": {
+      "textures": "textures/blocks/cl/arte/mesa_modificadores_frente"
+    },
+    "clc_mesa_modificadores_lado": {
+      "textures": "textures/blocks/cl/arte/mesa_modificadores_lado"
+    },
+    "clc_mesa_modificadores_topo": {
+      "textures": "textures/blocks/cl/arte/mesa_modificadores_topo"
+    },
+    "clc_mesa_modificadores_baixo": {
+      "textures": "textures/blocks/cl/arte/mesa_modificadores_baixo"
+    },
+    "clc_estacao_criacao": {
+      "textures": "textures/blocks/cl/c/estacao_criacao"
+    },
+    "clc_estacao_criacao_frente": {
+      "textures": "textures/blocks/cl/arte/estacao_criacao_frente"
+    },
+    "clc_estacao_criacao_lado": {
+      "textures": "textures/blocks/cl/arte/estacao_criacao_lado"
+    },
+    "clc_estacao_criacao_topo": {
+      "textures": "textures/blocks/cl/arte/estacao_criacao_topo"
+    },
+    "clc_estacao_criacao_baixo": {
+      "textures": "textures/blocks/cl/arte/estacao_criacao_baixo"
+    },
+    "clc_bau_pecas": {
+      "textures": "textures/blocks/cl/c/bau_pecas"
+    },
+    "clc_bau_pecas_frente": {
+      "textures": "textures/blocks/cl/arte/bau_pecas_frente"
+    },
+    "clc_bau_pecas_lado": {
+      "textures": "textures/blocks/cl/arte/bau_pecas_lado"
+    },
+    "clc_bau_pecas_topo": {
+      "textures": "textures/blocks/cl/arte/bau_pecas_topo"
+    },
+    "clc_bau_pecas_baixo": {
+      "textures": "textures/blocks/cl/arte/bau_pecas_baixo"
+    },
+    "clc_bau_moldes": {
+      "textures": "textures/blocks/cl/c/bau_moldes"
+    },
+    "clc_bau_moldes_frente": {
+      "textures": "textures/blocks/cl/arte/bau_moldes_frente"
+    },
+    "clc_bau_moldes_lado": {
+      "textures": "textures/blocks/cl/arte/bau_moldes_lado"
+    },
+    "clc_bau_moldes_topo": {
+      "textures": "textures/blocks/cl/arte/bau_moldes_topo"
+    },
+    "clc_bau_moldes_baixo": {
+      "textures": "textures/blocks/cl/arte/bau_moldes_baixo"
+    },
+    "clc_bau_tinker": {
+      "textures": "textures/blocks/cl/c/bau_tinker"
+    },
+    "clc_bau_tinker_frente": {
+      "textures": "textures/blocks/cl/arte/bau_tinker_frente"
+    },
+    "clc_bau_tinker_lado": {
+      "textures": "textures/blocks/cl/arte/bau_tinker_lado"
+    },
+    "clc_bau_tinker_topo": {
+      "textures": "textures/blocks/cl/arte/bau_tinker_topo"
+    },
+    "clc_bau_tinker_baixo": {
+      "textures": "textures/blocks/cl/arte/bau_tinker_baixo"
+    },
+    "clc_estacas_punji": {
+      "textures": "textures/blocks/cl/arte/estacas_punji"
     }
   }
 }

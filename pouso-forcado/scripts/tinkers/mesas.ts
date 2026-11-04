@@ -1,4 +1,4 @@
-import { BlockCustomComponent, ItemStack, Player, RawMessage } from "@minecraft/server";
+import { BlockCustomComponent, ItemStack, Player, RawMessage, system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { TINKERS } from "../config.js";
 import { DADOS_F15 } from "../conteudo/gerado.js";
@@ -6,8 +6,8 @@ import { aviso } from "../jogador/hud.js";
 import { contarNoInventario, registrarAcao, tirarDoInventario } from "../missoes/progresso.js";
 import { darAoJogador, gastarDaMao, itemNaMao } from "../util/inventario.js";
 import { abrirUmMenu } from "../util/menus.js";
-import { Mat, Mods, Tipo, TIPOS, consertar, criarFerramenta, durabilidade, ferramentaDe, modsDe, recalcular } from "./ferramenta.js";
-import { tracosDe } from "./tracos.js";
+import { Mat, Mods, Tipo, TIPOS, consertar, criarFerramenta, durabilidade, ferramentaDe, habDe, modsDe, recalcular } from "./ferramenta.js";
+import { slimeMax, tracosDe } from "./tracos.js";
 
 /*
  * As três mesas do Tinkers' Construct (Fase 15). Tudo pelo toque com o item na mão + menus:
@@ -135,9 +135,11 @@ async function escolherMat(j: Player, peca: string, opcoes: Mat[]): Promise<Mat 
   return r.canceled || r.selection === undefined ? undefined : opcoes[r.selection];
 }
 
-async function montar(j: Player): Promise<void> {
-  const possiveis = TIPOS.filter((t) => FERR[t].pecas.every((p) => pecasNaMochila(j, p).length > 0));
-  if (possiveis.length === 0) return aviso(j, "cl.tc.sem_pecas", 6);
+async function montar(j: Player, naBigorna = false): Promise<void> {
+  const todas = TIPOS.filter((t) => FERR[t].pecas.every((p) => pecasNaMochila(j, p).length > 0));
+  // 1.30.0 (TC3): a Estação de Ferramentas monta até 3 peças; as de 4 peças só na Bigorna do Tinker.
+  const possiveis = naBigorna ? todas : todas.filter((t) => FERR[t].pecas.length <= 3);
+  if (possiveis.length === 0) return aviso(j, todas.length ? "cl.tc.precisa_bigorna" : "cl.tc.sem_pecas", 6);
   const form = new ActionFormData().title({ translate: "cl.tc.estacao_titulo" }).body({ translate: "cl.tc.montar_corpo" });
   for (const t of possiveis) form.button({ translate: `cl.tc.ferr.${t}` });
   const r = await form.show(j);
@@ -245,38 +247,173 @@ function trocarMao(j: Player, i: ItemStack): void {
   j.getComponent("minecraft:inventory")?.container?.setItem(j.selectedSlotIndex, i);
 }
 
-// ---------- Modificadores (Fase 16) ----------
-type Modificador = { item: string; qtd: number; max: number };
-async function modificar(j: Player): Promise<void> {
+// ---------- Modificadores (Fase 16; 1.30.0 com os do TC3) ----------
+type Modificador = {
+  item: string; qtd: number; max: number; tipo?: "habilidade" | "livre";
+  itens?: readonly (readonly [string, number])[]; niveis?: readonly (readonly (readonly [string, number])[])[];
+};
+const MODS = TINKERS.modificadores as unknown as Readonly<Record<string, Modificador>>;
+/** O que o próximo nível pede. */
+function receitaDe(d: Modificador, nivel: number): readonly (readonly [string, number])[] {
+  if (d.niveis) return d.niveis[Math.min(nivel, d.niveis.length - 1)];
+  return d.itens ?? [[d.item, d.qtd]];
+}
+const ingrediente = (r: readonly (readonly [string, number])[]): RawMessage[] =>
+  r.flatMap(([id, n], k) => [{ text: `${k ? ", " : ""}${n}x ` }, nome(id)]);
+
+async function modificar(j: Player, naBigorna = false): Promise<void> {
   const mao = itemNaMao(j);
-  if (!mao || !ferramentaDe(mao.typeId)) return;
+  const f = ferramentaDe(mao?.typeId);
+  if (!mao || !f) return;
   const espacos = (mao.getDynamicProperty("tc:esp") as number | undefined) ?? 0;
+  const hab = habDe(mao, f.tipo);
   const mods: Mods = modsDe(mao);
-  const lista = Object.entries(TINKERS.modificadores as Readonly<Record<string, Modificador>>);
+  const lista = Object.entries(MODS);
   const form = new ActionFormData()
-    .title({ translate: "cl.tc.modificar" })
-    .body({ translate: "cl.tc.mod_corpo", with: [String(espacos)] });
-  for (const [m, d] of lista)
-    form.button({ rawtext: [{ translate: `cl.tc.mod.${m}` }, { text: ` §7(${d.qtd}x ` }, nome(d.item), { text: `, ${mods[m] ?? 0}/${d.max})` }] });
+    .title({ translate: naBigorna ? "cl.tc.bigorna_titulo" : "cl.tc.modificar" })
+    .body({ rawtext: [{ translate: "cl.tc.mod_corpo", with: [String(espacos)] }, { text: "\n" }, { translate: "cl.tc.habilidades", with: [String(hab)] }] });
+  for (const [m, d] of lista) {
+    const r = receitaDe(d, mods[m] ?? 0);
+    form.button({
+      rawtext: [
+        { translate: `cl.tc.mod.${m}` }, ...(d.tipo === "habilidade" ? [{ text: " " }, { translate: "cl.tc.mod_habilidade" }] : []),
+        { text: "\n§7" }, ...ingrediente(r), { text: ` §8${mods[m] ?? 0}/${d.max}` },
+        ...(!naBigorna && r.length > 3 ? [{ text: " " }, { translate: "cl.tc.mod_bigorna" }] : []),
+      ],
+    });
+  }
   form.button({ translate: "cl.tc.voltar" });
-  const r = await form.show(j);
-  if (r.canceled || r.selection === undefined || r.selection >= lista.length) return;
-  const [m, d] = lista[r.selection];
+  const res = await form.show(j);
+  if (res.canceled || res.selection === undefined || res.selection >= lista.length) return;
   const atual = itemNaMao(j);
   if (!atual || atual.typeId !== mao.typeId) return;
-  if ((mods[m] ?? 0) >= d.max) return aviso(j, "cl.tc.mod_max");
-  if (espacos <= 0) return aviso(j, "cl.tc.mod_sem_espaco");
-  if (contarNoInventario(j, d.item) < d.qtd) return aviso(j, { translate: "cl.tc.sem_material", with: { rawtext: [nome(d.item)] } });
-  tirarDoInventario(j, d.item, d.qtd);
-  mods[m] = (mods[m] ?? 0) + 1;
+  aplicarModificador(j, atual, lista[res.selection][0], naBigorna);
+}
+
+/** Aplica o modificador `m` na ferramenta `atual` (a da mão), pagando com a mochila. Devolve se aplicou. */
+export function aplicarModificador(j: Player, atual: ItemStack, m: string, naBigorna: boolean): boolean {
+  const f = ferramentaDe(atual.typeId);
+  const d = MODS[m];
+  if (!f || !d) return false;
+  durabilidade(atual); // completa a ferramenta feita na bancada
+  const espacos = (atual.getDynamicProperty("tc:esp") as number | undefined) ?? 0;
+  const hab = habDe(atual, f.tipo);
+  const mods: Mods = modsDe(atual);
+  const nivel = mods[m] ?? 0;
+  const r = receitaDe(d, nivel);
+  // TC3: a Estação tem 3 espaços de item; receita maior só na Bigorna.
+  const nao = (msg: RawMessage | string) => (aviso(j, msg), false);
+  if (!naBigorna && r.length > 3) return nao("cl.tc.precisa_bigorna");
+  // Slime extra (livre): cada bola dá 25 de slime, sem gastar espaço.
+  if (m === "slime") {
+    if (contarNoInventario(j, d.item) < 1) return nao({ translate: "cl.tc.sem_material", with: { rawtext: [nome(d.item)] } });
+    mods.slime = 1;
+    atual.setDynamicProperty("tc:mods", JSON.stringify(mods));
+    const t = tracosDe(atual, f.tipo, f.mat);
+    const max = slimeMax(atual, t);
+    const agora = (atual.getDynamicProperty("tc:slime") as number | undefined) ?? 0;
+    if (agora >= max) return nao("cl.tc.mod_max");
+    const bolas = Math.min(contarNoInventario(j, d.item), Math.ceil((max - agora) / 25));
+    tirarDoInventario(j, d.item, bolas);
+    atual.setDynamicProperty("tc:slime", Math.min(max, agora + 25 * bolas));
+    concluir(j, atual, m, d);
+    return true;
+  }
+  if (nivel >= d.max) return nao("cl.tc.mod_max");
+  if (d.tipo === "habilidade" && hab <= 0) return nao("cl.tc.mod_sem_habilidade");
+  if (d.tipo !== "habilidade" && espacos <= 0) return nao("cl.tc.mod_sem_espaco");
+  const falta = r.find(([id, n]) => contarNoInventario(j, id) < n);
+  if (falta) return nao({ translate: "cl.tc.sem_material", with: { rawtext: [nome(falta[0])] } });
+  for (const [id, n] of r) tirarDoInventario(j, id, n);
+  mods[m] = nivel + 1;
   atual.setDynamicProperty("tc:mods", JSON.stringify(mods));
-  atual.setDynamicProperty("tc:esp", espacos - 1);
+  if (d.tipo === "habilidade") atual.setDynamicProperty("tc:hab", hab - 1);
+  else atual.setDynamicProperty("tc:esp", espacos - 1);
+  if (d.tipo === "habilidade") registrarAcao(j, "tc3_habilidade");
+  concluir(j, atual, m, d);
+  return true;
+}
+function concluir(j: Player, atual: ItemStack, m: string, _d: Modificador): void {
   recalcular(atual);
   trocarMao(j, atual);
   j.playSound("random.orb");
   aviso(j, { translate: "cl.tc.mod_feito", with: { rawtext: [{ translate: `cl.tc.mod.${m}` }] } });
   registrarAcao(j, "modificar");
 }
+
+/** 1.30.0: Bigorna do Tinker: tudo da Estação, mais as ferramentas de 4 peças e os modificadores grandes. */
+async function bigorna(j: Player): Promise<void> {
+  const mao = itemNaMao(j);
+  const f = ferramentaDe(mao?.typeId);
+  if (!mao || !f) return montar(j, true);
+  const form = new ActionFormData()
+    .title({ translate: "cl.tc.bigorna_titulo" })
+    .button({ translate: "cl.tc.modificar" })
+    .button({ translate: "cl.tc.montar" })
+    .button({ translate: "cl.tc.tracos" })
+    .button({ translate: "cl.tc.consertar_estacao" });
+  const r = await form.show(j);
+  if (r.canceled || r.selection === undefined) return;
+  if (r.selection === 0) return modificar(j, true);
+  if (r.selection === 1) return montar(j, true);
+  if (r.selection === 2) return verTracos(j, mao, f.tipo, f.mat);
+  return estacao(j);
+}
+export const bigornaComp: BlockCustomComponent = {
+  onPlayerInteract(e) {
+    const j = e.player;
+    if (j) abrirUmMenu(j, () => bigorna(j));
+  },
+};
+
+/** 1.30.0: Mesa de Modificadores (TC3 Modifier Worktable): tira um modificador com uma esponja molhada; o espaço volta. */
+async function mesaModificadores(j: Player): Promise<void> {
+  const mao = itemNaMao(j);
+  const f = ferramentaDe(mao?.typeId);
+  if (!mao || !f) return aviso(j, "cl.tc.sem_ferramenta");
+  const mods = modsDe(mao);
+  const lista = Object.entries(mods).filter(([, n]) => n > 0);
+  if (!lista.length) return aviso(j, "cl.tc.sem_modificadores");
+  const form = new ActionFormData().title({ translate: "tile.cl:mesa_modificadores.name" }).body({ translate: "cl.tc.remover" });
+  for (const [m, n] of lista) form.button({ rawtext: [{ translate: `cl.tc.mod.${m}` }, { text: ` §8${n}` }] });
+  const r = await form.show(j);
+  if (r.canceled || r.selection === undefined) return;
+  const [m, n] = lista[r.selection];
+  const atual = itemNaMao(j);
+  if (!atual || atual.typeId !== mao.typeId) return;
+  if (contarNoInventario(j, "minecraft:wet_sponge") < 1) return aviso(j, "cl.tc.sem_esponja");
+  tirarDoInventario(j, "minecraft:wet_sponge", 1);
+  darAoJogador(j, new ItemStack("minecraft:sponge", 1));
+  const novo = { ...modsDe(atual) };
+  delete novo[m];
+  atual.setDynamicProperty("tc:mods", JSON.stringify(novo));
+  const d = MODS[m];
+  if (m === "slime") atual.setDynamicProperty("tc:slime", 0);
+  else if (d?.tipo === "habilidade") atual.setDynamicProperty("tc:hab", habDe(atual, f.tipo) + n);
+  else if (d) atual.setDynamicProperty("tc:esp", ((atual.getDynamicProperty("tc:esp") as number | undefined) ?? 0) + n);
+  recalcular(atual);
+  trocarMao(j, atual);
+  j.playSound("random.anvil_use", { volume: 0.5 });
+  aviso(j, { translate: "cl.tc.removeu", with: { rawtext: [{ translate: `cl.tc.mod.${m}` }] } });
+}
+/** Teste no servidor (o jogador simulado não responde menu): scriptevent cl:teste_tc_mod <mod>[,<mod>...] [bigorna]. */
+export function registrarTesteModificadores(): void {
+  system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: j }) => {
+    if (id !== "cl:teste_tc_mod" || !(j instanceof Player)) return;
+    const [lista, onde] = message.split(" ");
+    const i = itemNaMao(j);
+    if (!i) return;
+    const res = lista.split(",").map((m) => `${m}=${aplicarModificador(j, i, m, onde === "bigorna")}`);
+    console.warn(`[teste_tc_mod] ${res.join(" ")} mods=${i.getDynamicProperty("tc:mods")} hab=${i.getDynamicProperty("tc:hab")} esp=${i.getDynamicProperty("tc:esp")}`);
+  });
+}
+
+export const mesaModificadoresComp: BlockCustomComponent = {
+  onPlayerInteract(e) {
+    const j = e.player;
+    if (j) abrirUmMenu(j, () => mesaModificadores(j));
+  },
+};
 
 export const estacaoFerramentasComp: BlockCustomComponent = {
   onPlayerInteract(e) {

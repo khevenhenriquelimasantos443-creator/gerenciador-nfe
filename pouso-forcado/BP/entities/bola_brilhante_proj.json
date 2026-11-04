@@ -1,0 +1,36 @@
+{
+ "format_version": "1.21.0",
+ "minecraft:entity": {
+  "description": {
+   "identifier": "cl:bola_brilhante_proj",
+   "is_spawnable": false,
+   "is_summonable": true
+  },
+  "components": {
+   "minecraft:collision_box": {
+    "width": 0.25,
+    "height": 0.25
+   },
+   "minecraft:projectile": {
+    "on_hit": {
+     "remove_on_hit": {}
+    },
+    "power": 1.3,
+    "gravity": 0.05,
+    "uncertainty_base": 1,
+    "uncertainty_multiplier": 0,
+    "anchor": 1,
+    "offset": [
+     0,
+     -0.1,
+     0
+    ]
+   },
+   "minecraft:physics": {},
+   "minecraft:pushable": {
+    "is_pushable": true,
+    "is_pushable_by_piston": true
+   }
+  }
+ }
+}

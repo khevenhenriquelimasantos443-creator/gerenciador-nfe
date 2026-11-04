@@ -1,4 +1,4 @@
-import { Block, Entity, EntityDamageCause, ItemStack, Player, system, world } from "@minecraft/server";
+import { Block, Dimension, Entity, EntityDamageCause, ItemStack, Player, Vector3, system, world } from "@minecraft/server";
 import { DADOS_F15 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { madura, SEMENTES } from "../maquinas/mfr.js";
@@ -35,9 +35,20 @@ const MAT = DADOS_F15.materiais as unknown as Readonly<Record<string, MatDef>>;
 const FERR = DADOS_F15.ferramentas as unknown as Readonly<Record<string, FerrDef>>;
 const num = (i: ItemStack, k: string, p = 0) => (i.getDynamicProperty(k) as number | undefined) ?? p;
 
-/** Os traços da ferramenta: da cabeça, da ligação e do tipo (nível de cada um). */
+// 1.30.0: modificadores do TC3 que agem como traços (mesmo efeito).
+const MOD_TRACO: Readonly<Record<string, string>> = {
+  golpeada: "smite", antiaquatico: "antiaquatic", magnetico: "magnetic", decapitacao: "severing", expandido: "expanded", autofundir: "autosmelt",
+  seda: "silky", derreter: "melting", inquebravel: "unbreakable", brilho: "glowing", alma: "soulbound", slime: "overslime",
+};
+/** Os traços da ferramenta: da cabeça, da ligação, do tipo e dos modificadores (nível de cada um). */
 export function tracosDe(i: ItemStack, tipo: string, mat: string): Map<string, number> {
   const t = new Map<string, number>();
+  try {
+    for (const [m, n] of Object.entries(JSON.parse((i.getDynamicProperty("tc:mods") as string | undefined) ?? "{}") as Record<string, number>))
+      if (MOD_TRACO[m]) t.set(MOD_TRACO[m], (t.get(MOD_TRACO[m]) ?? 0) + n);
+  } catch {
+    // sem modificadores
+  }
   for (const x of MAT[mat]?.tracos ?? []) t.set(x, (t.get(x) ?? 0) + 1);
   const lig = i.getDynamicProperty("tc:lig") as string | undefined;
   if (lig && lig !== mat) for (const x of MAT[lig]?.tracos ?? []) t.set(x, (t.get(x) ?? 0) + 1);
@@ -48,6 +59,7 @@ export function tracosDe(i: ItemStack, tipo: string, mat: string): Map<string, n
 // ---------- Slime extra (overslime) ----------
 /** Quanto slime extra cabe: 50, +100 com Nublado, +10% da durabilidade com Soberano. */
 export function slimeMax(i: ItemStack, t: Map<string, number>): number {
+  // 1.30.0: o modificador Slime dá o slime extra a qualquer ferramenta (o traço Slimebilidade também).
   if (!t.has("overslime")) return 0;
   return 50 + (t.has("overcast") ? 100 : 0) + (t.has("overlord") ? Math.round(num(i, "tc:max", 1) * 0.1) : 0);
 }
@@ -64,6 +76,7 @@ export function ganharSlime(i: ItemStack, t: Map<string, number>, n: number): bo
  * seguram). Grava o que mudou no item.
  */
 export function desgaste(j: Player, i: ItemStack, t: Map<string, number>, gasto: number): number {
+  if (t.has("unbreakable")) return 0; // Inquebrável
   let resto = gasto;
   const slime = num(i, "tc:slime");
   if (slime > 0 && resto > 0) {
@@ -91,6 +104,7 @@ const ehDia = () => {
 
 // ---------- Golpe ----------
 const MORTOS_VIVOS = new Set(["minecraft:zombie", "minecraft:husk", "minecraft:drowned", "minecraft:skeleton", "minecraft:stray", "minecraft:wither_skeleton", "minecraft:zombie_villager_v2", "minecraft:zombie_pigman", "minecraft:zoglin", "minecraft:phantom", "minecraft:wither", "minecraft:bogged", "cl:mumia", "cl:farao"]);
+const AQUATICOS = new Set(["minecraft:drowned", "minecraft:guardian", "minecraft:elder_guardian", "minecraft:squid", "minecraft:glow_squid", "minecraft:pufferfish", "minecraft:cod", "minecraft:salmon", "minecraft:tropicalfish", "minecraft:dolphin", "minecraft:axolotl", "minecraft:turtle"]);
 const CABECAS: Readonly<Record<string, string>> = {
   "minecraft:zombie": "minecraft:zombie_head", "minecraft:husk": "minecraft:zombie_head", "minecraft:skeleton": "minecraft:skeleton_skull", "minecraft:stray": "minecraft:skeleton_skull",
   "minecraft:creeper": "minecraft:creeper_head", "minecraft:wither_skeleton": "minecraft:wither_skeleton_skull", "minecraft:piglin": "minecraft:piglin_head", "minecraft:player": "minecraft:player_head",
@@ -107,6 +121,7 @@ export function noGolpe(j: Player, alvo: Entity, i: ItemStack, t: Map<string, nu
     if (t.has("jagged")) extra += Math.round((1 - dur / max) * 3);
     if (t.has("pierce")) extra += t.get("pierce")!;
     if (t.has("smite") && MORTOS_VIVOS.has(alvo.typeId)) extra += 2.5 * t.get("smite")!;
+    if (t.has("antiaquatic") && AQUATICOS.has(alvo.typeId)) extra += 2.5 * t.get("antiaquatic")!;
     if (t.has("scorching") && alvo.getComponent("minecraft:onfire")) extra += 2;
     if (t.has("antitoxin") && j.getEffect("poison")) extra += 2;
     if (t.has("conducting") && j.getComponent("minecraft:onfire")) extra += 3;
@@ -119,6 +134,7 @@ export function noGolpe(j: Player, alvo: Entity, i: ItemStack, t: Map<string, nu
       alvo.applyKnockback({ x: (dx / d) * 0.4 * t.get("knockback")!, z: (dz / d) * 0.4 * t.get("knockback")! }, 0.25);
     }
     if (t.has("enderference")) alvo.addEffect("slowness", 60, { amplifier: 1 });
+    if (t.has("melting")) alvo.setOnFire(3, true);
     if (t.has("necrotic") && !j.isOnGround && j.getVelocity().y < 0) {
       const h = j.getComponent("minecraft:health");
       if (h) h.setCurrentValue(Math.min(h.effectiveMax, h.currentValue + 2));
@@ -185,6 +201,42 @@ export function aoQuebrar(j: Player, i: ItemStack, t: Map<string, number>, b: Bl
   return mudou;
 }
 
+// ---------- Drops (Autofundir, Derreter, Toque Sedoso) ----------
+/** Ajusta o que caiu de um bloco quebrado em `p`: Toque Sedoso solta o próprio bloco; Autofundir/Derreter, fundido. */
+export function ajustarDrops(dim: Dimension, p: Vector3, id: string, t: Map<string, number>, fundir: Readonly<Record<string, string>>): void {
+  const seda = t.has("silky"), funde = t.has("autosmelt") || t.has("melting");
+  if (!seda && !funde) return;
+  system.run(() => {
+    try {
+      const centro = { x: p.x + 0.5, y: p.y + 0.5, z: p.z + 0.5 };
+      const itens = dim.getEntities({ type: "minecraft:item", location: centro, maxDistance: 1.3 });
+      if (seda && itens.length && !id.includes("air")) {
+        let bloco: ItemStack | undefined;
+        try {
+          bloco = new ItemStack(id, 1);
+        } catch {
+          bloco = undefined;
+        }
+        if (bloco && !itens.some((e) => e.getComponent("minecraft:item")?.itemStack.typeId === id)) {
+          for (const e of itens) e.remove();
+          dim.spawnItem(bloco, centro);
+          return;
+        }
+      }
+      if (funde) for (const e of itens) {
+        const it = e.getComponent("minecraft:item")?.itemStack;
+        const para = it && fundir[it.typeId];
+        if (!it || !para) continue;
+        const onde = e.location;
+        e.remove();
+        dim.spawnItem(new ItemStack(para, it.amount), onde);
+      }
+    } catch {
+      // chunk descarregado
+    }
+  });
+}
+
 // ---------- Na mão (1 s) ----------
 export function naMao(j: Player, i: ItemStack, t: Map<string, number>, volta: number): boolean {
   const dur = num(i, "tc:dur"), max = num(i, "tc:max", 1);
@@ -236,7 +288,7 @@ function trocar(b: Block, id: string): boolean {
   }
 }
 /** Toque com a ferramenta num bloco. Devolve quanto de durabilidade gastou (0 = nada a fazer). */
-export function acaoNoBloco(j: Player, t: Map<string, number>, b: Block, area: boolean): number {
+export function acaoNoBloco(j: Player, t: Map<string, number>, b: Block, area: boolean, face?: Vector3): number {
   const id = b.typeId;
   const livre = b.above()?.isAir ?? false;
   if (t.has("harvest") && madura(b)) {
@@ -268,6 +320,11 @@ export function acaoNoBloco(j: Player, t: Map<string, number>, b: Block, area: b
       j.playSound("use.wood");
       return 1;
     }
+  }
+  // Brilho (TC3 glowing): se nada mais aconteceu, põe uma luz no bloco de ar do lado tocado (gasta 10).
+  if (t.has("glowing") && face) {
+    const ar = b.offset(face);
+    if (ar?.isAir && (trocar(ar, "minecraft:light_block_15") || trocar(ar, "minecraft:light_block"))) return 10;
   }
   return 0;
 }

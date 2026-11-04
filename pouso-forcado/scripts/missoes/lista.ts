@@ -58,6 +58,9 @@ export type Acao =
   | "tc_arvore_slime"
   | "tc_quicar"
   | "tc_shuriken"
+  | "tc3_habilidade"
+  | "tc_cajado"
+  | "tc_antiga"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -355,6 +358,11 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "tc3_fusor", objetivo: { tipo: "ter", item: "cl:fusor", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
       { id: "tc3_fantastica", objetivo: { tipo: "ter", item: "cl:controlador_fundicao_fantastica", qtd: 1 }, recompensa: [{ item: "minecraft:lava_bucket", quantidade: 1 }] },
       { id: "tc3_molde_areia", objetivo: { tipo: "ter", item: "cl:molde_areia_lingote", qtd: 1 }, recompensa: [{ item: "minecraft:sand", quantidade: 16 }] },
+      // 1.30.0: Bigorna, habilidades, livros e ferramentas antigas.
+      { id: "tc3_bigorna", objetivo: { tipo: "ter", item: "cl:bigorna", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "tc3_habilidade", requer: ["tc3_bigorna"], objetivo: { tipo: "acao", acao: "tc3_habilidade", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "tc3_enciclopedia", objetivo: { tipo: "ter", item: "cl:livro_enciclopedia", qtd: 1 }, recompensa: [{ item: "minecraft:experience_bottle", quantidade: 8 }] },
+      { id: "tc3_antiga", objetivo: { tipo: "acao", acao: "tc_antiga", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 8 }] },
     ],
   },
   {

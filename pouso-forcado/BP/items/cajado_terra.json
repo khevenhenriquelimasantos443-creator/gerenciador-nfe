@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cajado_terra",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cajado_terra",
+      "minecraft:display_name": {
+        "value": "item.cl:cajado_terra.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 800
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:tc_cajado"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bola_brilhante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "SGS",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:snowball"
+      },
+      "G": {
+        "item": "minecraft:glowstone_dust"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bola_brilhante",
+      "count": 8
+    }
+  }
+}

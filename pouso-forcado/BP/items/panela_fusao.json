@@ -1,0 +1,44 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:panela_fusao",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_panela_fusao",
+      "minecraft:display_name": {
+        "value": "item.cl:panela_fusao.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 1490
+      },
+      "minecraft:enchantable": {
+        "slot": "shovel",
+        "value": 15
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:tc_antiga"
+        ]
+      },
+      "minecraft:damage": 3,
+      "minecraft:allow_off_hand": true,
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "q.any_tag('minecraft:is_shovel_item_destructible')"
+            },
+            "speed": 6
+          }
+        ]
+      }
+    }
+  }
+}

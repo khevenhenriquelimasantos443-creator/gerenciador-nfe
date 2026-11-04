@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.29.0";
+export const VERSAO = "1.30.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -502,20 +502,42 @@ export const TINKERS = {
     [`${NS}:meteorito`]: 2, // 1.2.0
     [`${NS}:minerio_cobalto`]: 2, // 1.26.0: o cobalto pede ferramenta de ferro (TC3)
   } as Readonly<Record<string, number>>,
+  // 1.30.0 (Tinkers completo, parte 5): os modificadores do TC3 (recipes/tools/modifiers): quanto pede cada nível
+  // (needed_per_level), nível máximo e tipo de espaço (melhoria; habilidade = 1 espaço de habilidade; livre = sem espaço).
+  // "itens": receita de vários itens (com mais de 3 itens diferentes, só na Bigorna); "niveis": receita de cada nível.
   modificadores: {
-    pressa: { item: "minecraft:redstone", qtd: 16, max: 2 }, // Pressa I/II com a ferramenta na mão
-    reforco: { item: "minecraft:diamond", qtd: 1, max: 1, durabilidade: 500 },
+    pressa: { item: "minecraft:redstone", qtd: 45, max: 5 }, // Pressa: Haste com a ferramenta na mão
+    reforco: { item: "minecraft:diamond", qtd: 1, max: 1, durabilidade: 500 }, // Diamante
     esmeralda: { item: "minecraft:emerald", qtd: 1, max: 1, fator: 0.5 },
-    musgo: { item: "cl:bola_musgo", qtd: 3, max: 1, segundos: 15 }, // +1 de durabilidade a cada 15 s
-    // 1.2.0 (sorte, repulsão, artrópodes, obsidiana) e 1.3.0 (afiado e fogo: quartzo e pó de blaze vêm da peneira e das cidades).
-    sorte: { item: "minecraft:lapis_lazuli", qtd: 32, max: 3, chance: 1 / 3 }, // Fortuna: cada nível, 1/3 de chance de um drop a mais
-    repulsao: { item: "minecraft:piston", qtd: 1, max: 2, forca: 0.8 }, // empurra o alvo
-    artropodes: { item: "minecraft:fermented_spider_eye", qtd: 2, max: 3, dano: 2.5 }, // + dano em aranhas, e lentidão
-    obsidiana: { item: "minecraft:obsidian", qtd: 4, max: 3, chance: 0.1 }, // 10% por nível de não gastar durabilidade
-    // 1.3.0: quartzo e pó de blaze já existem sem o Nether (peneira e gerador de blaze nas cidades).
-    afiado: { item: "minecraft:quartz", qtd: 16, max: 3, dano: 1 }, // +1 de dano por nível
-    fogo: { item: "minecraft:blaze_powder", qtd: 8, max: 2, segundos: 3 }, // põe fogo no alvo (3 s por nível)
+    netherita: { item: "minecraft:netherite_ingot", qtd: 1, max: 1, fator: 0.2 },
+    musgo: { item: "cl:bola_musgo", qtd: 3, max: 1, segundos: 15 }, // +1 de durabilidade a cada 15 s (do pack de antes)
+    sorte: { item: "minecraft:lapis_block", qtd: 2, max: 3, chance: 1 / 3, tipo: "habilidade", niveis: [
+      [["minecraft:copper_ingot", 2], ["minecraft:cornflower", 1], ["minecraft:lapis_block", 2]],
+      [["minecraft:gold_ingot", 2], ["minecraft:golden_carrot", 1], ["minecraft:ender_pearl", 2]],
+      [["cl:lingote_ouro_rosa", 2], ["minecraft:rabbit_foot", 1], ["minecraft:diamond", 1], ["minecraft:name_tag", 1]],
+    ] }, // Fortuna (a cada nível, 1/3 de chance de um drop a mais)
+    repulsao: { item: "minecraft:piston", qtd: 1, max: 2, forca: 0.8, itens: [["minecraft:piston", 1], ["minecraft:slime", 1]] },
+    artropodes: { item: "minecraft:fermented_spider_eye", qtd: 15, max: 5, dano: 2.5 },
+    obsidiana: { item: "minecraft:obsidian", qtd: 4, max: 5, chance: 0.1 }, // Reforçado: 10% por nível de não gastar
+    afiado: { item: "minecraft:quartz", qtd: 36, max: 5, dano: 1 },
+    fogo: { item: "minecraft:blaze_powder", qtd: 25, max: 5, segundos: 3 },
+    golpeada: { item: "minecraft:glistering_melon_slice", qtd: 5, max: 5 },
+    antiaquatico: { item: "minecraft:pufferfish", qtd: 1, max: 5 },
+    magnetico: { item: "minecraft:compass", qtd: 1, max: 1 },
+    decapitacao: { item: "cl:osso_necrotico", qtd: 2, max: 1, itens: [["cl:osso_necrotico", 2], ["minecraft:lightning_rod", 1], ["minecraft:tnt", 1]] },
+    alma: { item: "minecraft:echo_shard", qtd: 1, max: 1 },
+    slime: { item: "minecraft:slime_ball", qtd: 1, max: 1, tipo: "livre" }, // Slime extra: cada bola dá 25
+    autofundir: { item: "minecraft:blast_furnace", qtd: 1, max: 1, tipo: "habilidade",
+      itens: [["minecraft:raw_iron", 1], ["minecraft:blast_furnace", 1], ["minecraft:iron_ingot", 1], ["minecraft:coal_block", 2]] },
+    seda: { item: "cl:pano_sedoso", qtd: 5, max: 1, tipo: "habilidade" },
+    expandido: { item: "minecraft:piston", qtd: 2, max: 2, tipo: "habilidade",
+      itens: [["minecraft:piston", 2], ["cl:lingote_bronze_ametista", 1], ["cl:bola_slime_icor", 2]] },
+    derreter: { item: "minecraft:blaze_rod", qtd: 2, max: 1, tipo: "habilidade", itens: [["minecraft:blaze_rod", 2], ["cl:fusor", 1], ["minecraft:lava_bucket", 2]] },
+    inquebravel: { item: "minecraft:shulker_shell", qtd: 2, max: 1, tipo: "habilidade",
+      itens: [["minecraft:shulker_shell", 2], ["minecraft:dragon_breath", 1], ["minecraft:netherite_ingot", 2]] },
+    brilho: { item: "minecraft:glowstone", qtd: 1, max: 1, tipo: "habilidade", itens: [["minecraft:glowstone", 1], ["minecraft:daylight_detector", 1], ["minecraft:shroomlight", 1]] },
   },
+
   // Fortuna (lápis): o que cada minério solta a mais.
   fortuna: {
     "minecraft:coal_ore": "minecraft:coal", "minecraft:deepslate_coal_ore": "minecraft:coal",

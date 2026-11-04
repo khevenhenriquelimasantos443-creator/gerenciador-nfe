@@ -154,6 +154,28 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.30.0 (Tinkers' Construct 3 completo, parte 5 de 5: modificadores, Bigorna e o resto do mod)
+
+- **Modificadores do TC3** com os números do mod: Pressa (até 5), Diamante (nível 3), Esmeralda, Netherita (+20% de
+  durabilidade e nível 4), Fortuna (3 níveis, cada um com a receita do TC3), Repulsão, Artrópodes, Reforçado, Afiado,
+  Fogo, Golpeada, Antiaquático, Magnético, Decapitação, Vinculada à Alma (a ferramenta volta com você ao renascer),
+  Slime extra (+25 por bola, sem espaço) e as **habilidades** (espaço próprio): Autofundir, Toque Sedoso, Expandido
+  (área maior), Derreter, Inquebrável e Brilho (toque para pôr luz). Cada ferramenta tem os espaços de melhoria e de
+  habilidade do TC3.
+- **Bigorna do Tinker** (e a Chamuscada): monta as ferramentas de 4 peças e aplica os modificadores de mais de 3 itens.
+  A Estação de Ferramentas agora monta só as de até 3 peças, como no TC3.
+- **Mesa de Modificadores**: tira um modificador com 1 esponja molhada (o espaço volta). **Estação de Criação**: bancada.
+- **Baús de Peças, de Moldes e do Tinker** (54 pilhas): toque com o item para guardar, de mão vazia para tirar; quebrado,
+  solta tudo.
+- **Livros** (Materiais e Você com os números de cada material, Fundição Pequena, Poderosa e Fantástica, Geringonças) e a
+  **Enciclopédia** (os 5 juntos, com a lista dos modificadores).
+- **Ferramentas antigas** nos baús da pirâmide do deserto: Picareta de Guerra e Lavador (atiram flecha), Machado do
+  Minotauro (investida), Placa de Batalha e Panela de Fusão (escudo na mão secundária; a Panela funde o que quebra).
+- **Cajados de slime**: Céu (salto), Terra (onda de choque), Icor (bola de fogo), Ender (teleporte de até 32 blocos).
+- **Geringonças**: EFLN (explode onde cai), Bola Brilhante (luz onde cai), Estilingue de Slime, Estacas Punji e a
+  **Mochila de Porco** (leva um animal guardado e solta onde você olha).
+- Diário: Bigorna, Habilidade, Enciclopédia e Ferramenta antiga. Toda a arte é a do TC3.
+
 ## Novidades da 1.29.0 (Tinkers' Construct 3 completo, parte 4 de 5: a Fundição inteira)
 
 - **Fusor + Aquecedor**: a fundição de um bloco do TC3. Combustível no Aquecedor (carvão, bloco de carvão, vara de

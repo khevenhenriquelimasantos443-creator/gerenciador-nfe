@@ -78,7 +78,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   Construct 3.12.1** completo (MIT, inclusive a arte; github.com/SlimeKnights/TinkersConstruct): os 40 materiais com
   os números e os traços do mod, as peças e ferramentas de mão, as áreas, o cobalto, as ligas, os materiais compostos
   e a arte das peças, ferramentas, lingotes e blocos (pintada com as paletas do mod), lidos por
-  `tools/importar-tinkers3.py`.
+  `tools/importar-tinkers3.py`; o mundo dos slimes, as armaduras e armas, a fundição inteira e (1.30.0) os
+  modificadores, a Bigorna, os livros, as ferramentas antigas, os cajados e as geringonças, com a arte do mod
+  (`tools/importar-slime-tc3.py`, `-armas.py`, `-fundicao.py` e `-extras.py`). Os textos dos livros são próprios.
 - **Thermal Expansion** (Team CoFH): as máquinas da Fase 17 e os custos em RF. Código e desenhos próprios.
 - **JABBA** (ProfMobius), **AutoPackager** (Wolf_IV), **Applied Energistics** (AlgorithmX2) e **ExtraCells** (M3gaFr3ak):
   barril e upgrades, carrinho, empacotador, células ME com os bytes do AE1, drive, baú ME e terminal sem fio.

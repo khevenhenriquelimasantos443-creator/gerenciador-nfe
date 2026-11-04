@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:bola_brilhante",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_bola_brilhante",
+      "minecraft:display_name": {
+        "value": "item.cl:bola_brilhante.name"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:throwable": {
+        "do_swing_animation": true,
+        "launch_power_scale": 1,
+        "max_launch_power": 1.3
+      },
+      "minecraft:projectile": {
+        "projectile_entity": "cl:bola_brilhante_proj",
+        "minimum_critical_power": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:machado_minotauro",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_machado_minotauro",
+      "minecraft:display_name": {
+        "value": "item.cl:machado_minotauro.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 1490
+      },
+      "minecraft:enchantable": {
+        "slot": "axe",
+        "value": 15
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:tc_antiga"
+        ]
+      },
+      "minecraft:damage": 8,
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "q.any_tag('minecraft:is_axe_item_destructible')"
+            },
+            "speed": 7
+          }
+        ]
+      }
+    }
+  }
+}

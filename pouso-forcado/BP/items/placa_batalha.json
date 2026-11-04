@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:placa_batalha",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_placa_batalha",
+      "minecraft:display_name": {
+        "value": "item.cl:placa_batalha.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 1490
+      },
+      "minecraft:enchantable": {
+        "slot": "sword",
+        "value": 15
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:tc_antiga"
+        ]
+      },
+      "minecraft:damage": 4,
+      "minecraft:allow_off_hand": true
+    }
+  }
+}

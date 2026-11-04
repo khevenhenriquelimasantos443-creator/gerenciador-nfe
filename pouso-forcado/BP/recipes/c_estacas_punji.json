@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_estacas_punji"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "S S",
+      " S ",
+      "S S"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:sugar_cane"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:estacas_punji",
+      "count": 3
+    }
+  }
+}

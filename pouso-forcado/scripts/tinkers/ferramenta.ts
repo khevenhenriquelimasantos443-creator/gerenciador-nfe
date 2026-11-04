@@ -6,7 +6,8 @@ import { registrarAcao } from "../missoes/progresso.js";
 import { maoDe } from "../util/jogadores.js";
 import { intervalo } from "../util/perfil.js";
 import { toqueNovo } from "../util/toque.js";
-import { acaoNoBloco, aoQuebrar, desgaste, morder, naMao, noAbate, noGolpe, slimeMax, tracosDe } from "./tracos.js";
+import { acaoNoBloco, ajustarDrops, aoQuebrar, desgaste, morder, naMao, noAbate, noGolpe, slimeMax, tracosDe } from "./tracos.js";
+import { THERMAL } from "../config.js";
 
 /*
  * Ferramentas montadas do Tinkers' Construct, com as regras do Iguana Tweaks (Fases 15 e 16).
@@ -31,7 +32,7 @@ export type Mods = Record<string, number>;
 const MAT = DADOS_F15.materiais as Readonly<Record<string, (typeof DADOS_F15.materiais)[Mat]>>;
 export const TIPOS = Object.keys(DADOS_F15.ferramentas) as Tipo[];
 type Area = { tipo: string; l?: number; a?: number; p?: number; dist?: number; coluna?: number };
-type Def = { pecas: readonly string[]; dur?: number; area?: Area; slot?: string; tracos?: readonly (readonly [string, number])[] };
+type Def = { pecas: readonly string[]; dur?: number; area?: Area; slot?: string; tracos?: readonly (readonly [string, number])[]; espacos?: { melhorias: number; habilidades: number } };
 type MatTr = { tracos?: readonly string[]; cabo?: number };
 const MTR = DADOS_F15.materiais as unknown as Readonly<Record<string, MatTr>>;
 const temTraco = (m: string | undefined, t: string) => !!m && (MTR[m]?.tracos ?? []).includes(t);
@@ -50,8 +51,15 @@ export function ferramentaDe(id: string | undefined): { tipo: Tipo; mat: Mat } |
 }
 
 export const nivelMat = (mat: string): number => (MAT[mat] as { nivel?: number } | undefined)?.nivel ?? 0;
+/** 1.30.0: nível de mineração da ferramenta (Diamante sobe para 3 e Netherita para 4, como no TC3). */
+export function nivelDe(i: ItemStack, mat: string): number {
+  const m = modsDe(i);
+  return Math.max(nivelMat(mat), m.netherita ? 4 : 0, m.reforco ? 3 : 0);
+}
 const num = (i: ItemStack, k: string, padrao = 0) => (i.getDynamicProperty(k) as number | undefined) ?? padrao;
 const txt = (i: ItemStack, k: string) => i.getDynamicProperty(k) as string | undefined;
+/** Espaços de habilidade livres (ferramenta de antes da 1.30.0: os do tipo). */
+export const habDe = (i: ItemStack, tipo: string) => (i.getDynamicProperty("tc:hab") as number | undefined) ?? FERR[tipo]?.espacos?.habilidades ?? 1;
 export const xpPara = (nivel: number) => Math.round(TINKERS.xpBase * TINKERS.xpFator ** (nivel - 1));
 export function modsDe(i: ItemStack): Mods {
   try {
@@ -67,6 +75,7 @@ function durabilidadeMax(tipo: Tipo, cabeca: Mat, cabo: Mat, lig: Mat | undefine
   let max = base * (MTR[cabo]?.cabo ?? 1) * TINKERS.iguanaDurabilidade;
   max += (mods.reforco ?? 0) * TINKERS.modificadores.reforco.durabilidade;
   max *= 1 + (mods.esmeralda ?? 0) * TINKERS.modificadores.esmeralda.fator;
+  max *= 1 + (mods.netherita ?? 0) * TINKERS.modificadores.netherita.fator;
   max *= FERR[tipo]?.dur ?? 1; // multiplicador do TC3 (Marreta ×4, Martelo de Mineração ×5, Adaga ×0,75...)
   // Traços: Dúctil (aço) e Preservado (madeira tratada) duram mais.
   if (temTraco(cabeca, "ductile") || temTraco(lig, "ductile")) max *= 1.1;
@@ -99,6 +108,7 @@ export function atualizar(i: ItemStack): void {
   if (sm) linhas.push({ translate: "cl.tc.slime", with: [String(num(i, "tc:slime")), String(sm)] });
   if (num(i, "tc:escudo")) linhas.push({ translate: "cl.tc.escudo", with: [String(num(i, "tc:escudo"))] });
   linhas.push({ translate: "cl.tc.espacos", with: [String(num(i, "tc:esp"))] });
+  linhas.push({ translate: "cl.tc.habilidades", with: [String(habDe(i, f.tipo))] });
   i.setLore(linhas);
   const barra = i.getComponent("minecraft:durability");
   if (barra) barra.damage = Math.min(barra.maxDurability - 1, Math.round((1 - dur / max) * (barra.maxDurability - 1)));
@@ -114,7 +124,9 @@ export function criarFerramenta(tipo: Tipo, cabeca: Mat, cabo: Mat, lig?: Mat): 
   i.setDynamicProperty("tc:dur", max);
   i.setDynamicProperty("tc:nivel", 1);
   i.setDynamicProperty("tc:xp", 0);
-  i.setDynamicProperty("tc:esp", TINKERS.espacosIniciais + (temTraco(cabeca, "enhanced") ? 1 : 0)); // Aprimorado (ouro rosa)
+  // 1.30.0: os espaços do TC3 (melhorias e habilidades de cada ferramenta); Aprimorado (ouro rosa) dá mais um.
+  i.setDynamicProperty("tc:esp", (FERR[tipo]?.espacos?.melhorias ?? 3) + (temTraco(cabeca, "enhanced") ? 1 : 0));
+  i.setDynamicProperty("tc:hab", FERR[tipo]?.espacos?.habilidades ?? 1);
   atualizar(i);
   return i;
 }
@@ -343,9 +355,9 @@ export function registrarFerramentas(): void {
       return;
     }
     const precisa = TINKERS.nivelBloco[ev.block.typeId] ?? 0;
-    if (precisa > nivelMat(f.mat)) {
+    if (precisa > nivelDe(i, f.mat)) {
       ev.cancel = true;
-      system.run(() => aviso(ev.player, { translate: "cl.tc.nivel_baixo", with: [String(precisa), String(nivelMat(f.mat))] }));
+      system.run(() => aviso(ev.player, { translate: "cl.tc.nivel_baixo", with: [String(precisa), String(nivelDe(i, f.mat))] }));
     }
   });
   world.afterEvents.playerBreakBlock.subscribe(({ player, block, brokenBlockPermutation, itemStackBeforeBreak }) => {
@@ -362,20 +374,30 @@ export function registrarFerramentas(): void {
     }
     // 1.26.0: traços ao quebrar (Magnético, Queimante, Impulso, Escudo de Pedra, Tesoura...).
     const m = naMaoDe(player);
+    const tr = tracosDe(itemStackBeforeBreak!, f.tipo, f.mat);
     if (m && m.i.typeId === itemStackBeforeBreak!.typeId && aoQuebrar(player, m.i, tracosDe(m.i, f.tipo, f.mat), block, id)) m.inv.setItem(player.selectedSlotIndex, m.i);
+    // 1.30.0: Autofundir, Derreter e Toque Sedoso mexem no que caiu.
+    ajustarDrops(block.dimension, block.location, id, tr, THERMAL.fornalha as Readonly<Record<string, string>>);
     if (!criativo(player)) usar(player, corpoACorpo(f.tipo) ? 2 : 1);
     // Áreas do TC3 (agachado, quebra um bloco só).
     const def = FERR[f.tipo];
-    if (def?.area && !player.isSneaking && itemStackBeforeBreak!.getDynamicProperty("tc:dur") !== 0) {
-      const lista = blocosDaArea(player, block.dimension, block, id, def.area);
+    // Expandido (TC3): a área cresce 1 para cada lado por nível; ferramenta sem área ganha 3×3.
+    const exp = tr.get("expanded") ?? 0;
+    const area: Area | undefined = def?.area
+      ? exp ? { ...def.area, l: (def.area.l ?? 1) + 2 * exp, a: (def.area.a ?? 1) + 2 * exp, dist: (def.area.dist ?? 0) + exp } : def.area
+      : exp ? { tipo: "caixa", l: 1 + 2 * exp, a: 1 + 2 * exp, p: 1 } : undefined;
+    if (area && !player.isSneaking && itemStackBeforeBreak!.getDynamicProperty("tc:dur") !== 0) {
+      const lista = blocosDaArea(player, block.dimension, block, id, area);
       system.run(() => {
         let n = 0;
         for (const p of lista) {
           const b = block.dimension.getBlock(p);
-          if (!b || b.isAir || b.isLiquid || INQUEBRAVEIS.has(b.typeId) || (TINKERS.nivelBloco[b.typeId] ?? 0) > nivelMat(f.mat)) continue;
-          if (def.area!.tipo === "caixa" && !serveArea(f.tipo, b.typeId)) continue;
-          if (def.area!.tipo === "arvore" && !serveArea("machado_largo", b.typeId)) continue;
+          if (!b || b.isAir || b.isLiquid || INQUEBRAVEIS.has(b.typeId) || (TINKERS.nivelBloco[b.typeId] ?? 0) > nivelDe(itemStackBeforeBreak!, f.mat)) continue;
+          if (area.tipo === "caixa" && !serveArea(f.tipo, b.typeId)) continue;
+          if (area.tipo === "arvore" && !serveArea("machado_largo", b.typeId)) continue;
+          const bid = b.typeId;
           block.dimension.runCommand(`setblock ${p.x} ${p.y} ${p.z} air destroy`);
+          ajustarDrops(block.dimension, p, bid, tr, THERMAL.fornalha as Readonly<Record<string, string>>);
           n++;
         }
         if (n && !criativo(player)) usar(player, n);
@@ -405,10 +427,12 @@ export function registrarFerramentas(): void {
     const f = ferramentaDe(itemStack?.typeId);
     if (!f || !itemStack || itemStack.getDynamicProperty("tc:dur") === 0) return;
     const t = tracosDe(itemStack, f.tipo, f.mat);
-    if (!["harvest", "tilling", "pathing", "stripping"].some((x) => t.has(x)) || !toqueNovo(ev)) return;
+    if (!["harvest", "tilling", "pathing", "stripping", "glowing"].some((x) => t.has(x)) || !toqueNovo(ev)) return;
+    const face = ev.blockFace;
+    const V: Readonly<Record<string, { x: number; y: number; z: number }>> = { Up: { x: 0, y: 1, z: 0 }, Down: { x: 0, y: -1, z: 0 }, North: { x: 0, y: 0, z: -1 }, South: { x: 0, y: 0, z: 1 }, East: { x: 1, y: 0, z: 0 }, West: { x: -1, y: 0, z: 0 } };
     system.run(() => {
       if (!block.isValid) return;
-      const gasto = acaoNoBloco(player, t, block, f.tipo === "foice");
+      const gasto = acaoNoBloco(player, t, block, f.tipo === "foice", V[face]);
       if (gasto && !criativo(player)) usar(player, gasto);
     });
   });
@@ -423,6 +447,34 @@ export function registrarFerramentas(): void {
     }
   });
   registrarRenascer();
+  // 1.30.0: Vinculada à Alma (TC3 soulbound): ao morrer, a ferramenta não fica no chão; volta quando você renasce.
+  const almas = new Map<string, ItemStack[]>();
+  world.afterEvents.entityDie.subscribe(
+    ({ deadEntity }) => {
+      if (!(deadEntity instanceof Player)) return;
+      const dim = deadEntity.dimension, onde = deadEntity.location, id = deadEntity.id;
+      system.runTimeout(() => {
+        try {
+          for (const e of dim.getEntities({ type: "minecraft:item", location: onde, maxDistance: 4 })) {
+            const it = e.getComponent("minecraft:item")?.itemStack;
+            if (!it || !ferramentaDe(it.typeId) || !(modsDe(it).alma ?? 0)) continue;
+            almas.set(id, [...(almas.get(id) ?? []), it]);
+            e.remove();
+          }
+        } catch {
+          // chunk descarregado
+        }
+      }, 2);
+    },
+    { entityTypes: ["minecraft:player"] },
+  );
+  world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
+    const lista = almas.get(player.id);
+    if (initialSpawn || !lista) return;
+    almas.delete(player.id);
+    const inv = player.getComponent("minecraft:inventory")?.container;
+    for (const it of lista) if (inv?.addItem(it)) player.dimension.spawnItem(it, player.location);
+  });
   // Pressa (redstone) e Musgo (conserto sozinho) valem com a ferramenta na mão; 1.26.0: e os traços na mão.
   let volta = 0;
   intervalo("tinkers", () => {
@@ -435,7 +487,7 @@ export function registrarFerramentas(): void {
       if (!inv || !i || !f) continue;
       const mods = modsDe(i);
       let mudou = false;
-      if (mods.pressa && i.getDynamicProperty("tc:dur") !== 0) j.addEffect("haste", 30, { amplifier: mods.pressa - 1, showParticles: false });
+      if (mods.pressa && i.getDynamicProperty("tc:dur") !== 0) j.addEffect("haste", 30, { amplifier: Math.min(4, mods.pressa - 1), showParticles: false });
       if (mods.musgo && volta % TINKERS.modificadores.musgo.segundos === 0 && consertar(i, mods.musgo) > 0) mudou = true;
       if (naMao(j, i, tracosDe(i, f.tipo, f.mat), volta)) {
         atualizar(i);

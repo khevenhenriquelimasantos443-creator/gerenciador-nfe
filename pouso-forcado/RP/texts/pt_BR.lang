@@ -4309,6 +4309,124 @@ cl.missao.tc3_fantastica.titulo=Fundição Fantástica
 cl.missao.tc3_fantastica.desc=Faça o Controlador da Fundição Fantástica (tijolos chamuscados da argamassa do Nether + obsidiana).
 cl.missao.tc3_molde_areia.titulo=Molde de areia
 cl.missao.tc3_molde_areia.desc=Ponha areia na Mesa de Fundição e toque com uma peça: sai um molde de areia (usa uma vez).
+item.cl:livro_materiais.name=Materiais e Você
+item.cl:livro_fundicao_pequena.name=Fundição Pequena
+item.cl:livro_fundicao_poderosa.name=Fundição Poderosa
+item.cl:livro_geringoncas.name=Geringonças do Tinker
+item.cl:livro_fundicao_fantastica.name=Fundição Fantástica
+item.cl:livro_enciclopedia.name=Enciclopédia do Tinker
+item.cl:picareta_guerra.name=Picareta de Guerra
+item.cl:placa_batalha.name=Placa de Batalha
+item.cl:lavador.name=Lavador
+item.cl:machado_minotauro.name=Machado do Minotauro
+item.cl:panela_fusao.name=Panela de Fusão
+item.cl:cajado_ceu.name=Cajado de Slime-do-Céu
+item.cl:cajado_terra.name=Cajado de Slime-da-Terra
+item.cl:cajado_icor.name=Cajado de Icor
+item.cl:cajado_ender.name=Cajado de Slime-do-Ender
+item.cl:efln.name=EFLN
+item.cl:bola_brilhante.name=Bola Brilhante
+item.cl:estilingue_slime.name=Estilingue de Slime
+item.cl:pano_sedoso.name=Pano Sedoso
+item.cl:mochila_porco.name=Mochila de Porco
+tile.cl:bigorna.name=Bigorna do Tinker
+tile.cl:bigorna_chamuscada.name=Bigorna Chamuscada
+tile.cl:mesa_modificadores.name=Mesa de Modificadores
+tile.cl:estacao_criacao.name=Estação de Criação
+tile.cl:bau_pecas.name=Baú de Peças
+tile.cl:bau_moldes.name=Baú de Moldes
+tile.cl:bau_tinker.name=Baú do Tinker
+tile.cl:estacas_punji.name=Estacas Punji
+entity.cl:efln_proj.name=EFLN
+entity.cl:bola_brilhante_proj.name=Bola Brilhante
+cl.tc.mod.netherita=Netherita (mais durabilidade, nível 4)
+cl.tc.mod.golpeada=Golpeada (mortos-vivos)
+cl.tc.mod.antiaquatico=Antiaquático
+cl.tc.mod.magnetico=Magnético
+cl.tc.mod.decapitacao=Decapitação
+cl.tc.mod.alma=Vinculada à Alma (fica com você ao morrer)
+cl.tc.mod.slime=Slime extra (+25 por bola)
+cl.tc.mod.autofundir=Autofundir (o que quebra sai fundido)
+cl.tc.mod.seda=Toque Sedoso
+cl.tc.mod.expandido=Expandido (área maior)
+cl.tc.mod.derreter=Derreter (fundido e fogo no golpe)
+cl.tc.mod.inquebravel=Inquebrável
+cl.tc.mod.brilho=Brilho (toque para pôr luz)
+cl.tc.mod_habilidade=§6Habilidade
+cl.tc.mod_bigorna=§7(só na Bigorna)
+cl.tc.habilidades=§7Espaços de habilidade: %s
+cl.tc.mod_sem_habilidade=Sem espaço de habilidade.
+cl.tc.precisa_bigorna=Isso precisa da Bigorna do Tinker (mais de 3 peças ou itens).
+cl.tc.remover=Mesa de Modificadores: escolha o modificador para tirar (gasta 1 esponja molhada; o espaço volta).
+cl.tc.removeu=Tirou: %s
+cl.tc.sem_esponja=Precisa de 1 esponja molhada.
+cl.tc.bigorna_titulo=Bigorna do Tinker
+cl.tc.consertar_estacao=Consertar
+cl.tc.sem_ferramenta=Segure uma ferramenta do Tinker.
+cl.tc.sem_modificadores=Essa ferramenta não tem modificadores.
+cl.tc.bau_corpo=%s guardados. Toque com um item para guardar; escolha para tirar.
+cl.tc.bau_nao_aceita=Este baú não guarda isso.
+cl.tc.bau_cheio=O baú está cheio (54 pilhas).
+cl.livro.linha_material=§7Durab. %s · Veloc. %s · Dano %s · Nível %s
+cl.tc.porco_pegou=Animal na mochila: %s. Use de novo para soltar.
+cl.tc.porco_nada=Olhe para um animal perto (até 4 blocos).
+cl.tc.cajado_espera=Cajado carregando...
+cl.tc.livro_prox=Próxima ›
+cl.tc.livro_ant=‹ Anterior
+cl.tc.livro_fechar=Fechar
+cl.livro.livro_materiais.1=Materiais e Você.
+
+Toda ferramenta do Tinker é feita de peças, e cada peça de um material. A cabeça (a primeira peça) decide a velocidade, o dano e o nível de mineração; o cabo multiplica a durabilidade; a ligação (e os materiais) dão traços.
+
+Comece pela Mesa de Moldes (padrões), o Construtor de Peças (peças de madeira, pedra, sílex, osso...) e a Estação de Ferramentas.
+cl.livro.livro_materiais.2=As ferramentas grandes (Marreta, Martelo de Mineração, Escavadeira, Machado Grande, Foice, Espadão) têm 4 peças e precisam da Bigorna do Tinker (3 blocos de ferro e 4 lingotes).
+
+Nas próximas páginas, cada material: durabilidade, velocidade, dano, nível e traço.
+cl.livro.livro_fundicao_pequena.1=Fundição Pequena.
+
+O Fusor Refratário em cima de um Aquecedor derrete um item por vez: combustível no Aquecedor (carvão, bloco de carvão, vara de blaze, balde de lava), itens no baú em cima do Fusor ou tocando nele.
+
+A Torneira do lado do Fusor derrama na Mesa de Fundição (com molde) ou na Bacia (bloco).
+cl.livro.livro_fundicao_pequena.2=Moldes: derrame ouro sobre uma peça, lingote ou pepita na Mesa. Molde de areia: areia na Mesa e toque com a peça (serve uma vez).
+
+Tijolo Refratário: argamassa (argila, areia e cascalho) na fornalha.
+
+No Fusor, minério não dobra: para dobrar, use a Fundição.
+cl.livro.livro_fundicao_poderosa.1=Fundição Poderosa.
+
+Piso 3×3 de Tijolos Refratários, interior 3×3 vazio e paredes de blocos refratários (tijolos, vidro, tanque, dreno, calha, o controlador), até 4 camadas. Pelo menos um Tanque com lava (toque com balde de lava).
+
+Toque no Controlador para montar. Jogue os itens dentro: minério dobra.
+cl.livro.livro_fundicao_poderosa.2=Ligas: os líquidos se juntam sozinhos. Bronze (3 cobre + 1 estanho), Ouro Rosa, Bronze de Ametista, Ferro-Porco (ferro + sopa de carne de animais dentro da fundição + mel), Hepatizão, Manyullyn (3 cobalto + 1 detrito), Slime da Rainha, Aço de Slime, Slime de Brasa, Slime-Cavaleiro, obsidiana (água + lava).
+
+Calha: o baú encostado alimenta. Canal: a torneira enche várias mesas.
+
+Material composto: peça na Mesa + líquido = outro material.
+cl.livro.livro_geringoncas.1=Geringonças do Tinker.
+
+EFLN (pólvora + sílex): explode onde cai. Bola Brilhante (8 bolas de neve + pó de glowstone): luz onde cai. Estilingue de Slime: lança você para o lado contrário de onde olha (mire no chão para subir). Estacas Punji (cana-de-açúcar): ferem quem pisa. Mochila de Porco (sela + slime-do-céu): leva um animal com você.
+
+Cajados de slime (cristal + tronco de slime): Céu (salto), Terra (onda de choque), Icor (bola de fogo), Ender (teleporte).
+cl.livro.livro_geringoncas.2=Armaduras: Placa (o material e a Malha de correntes), Viajante (couro e cobre), Traje de Slime (as botas quicam, as Slimélitros planam). Escudos na mão secundária: agache para segurar.
+
+Arco Longo, Besta, Shuriken, Machado de Arremesso e Dardo.
+
+Ferramentas antigas (Picareta de Guerra, Placa de Batalha, Lavador, Machado do Minotauro, Panela de Fusão): nos baús da pirâmide.
+cl.livro.livro_fundicao_fantastica.1=Fundição Fantástica.
+
+Como a Fundição, mas de blocos chamuscados (tijolo chamuscado: argamassa do Nether — areia das almas, creme de magma e cascalho — na fornalha) e com o Controlador da Fundição Fantástica.
+
+Não faz liga, mas os minérios dão subproduto: ferro dá aço, ouro dá cobalto, cobre dá ouro, ósmio dá ferro.
+
+Ligador Chamuscado: junta os líquidos dos Fusores encostados e faz as ligas.
+cl.missao.tc3_bigorna.titulo=Bigorna do Tinker
+cl.missao.tc3_bigorna.desc=Faça a Bigorna do Tinker: ferramentas de 4 peças e modificadores grandes.
+cl.missao.tc3_habilidade.titulo=Habilidade
+cl.missao.tc3_habilidade.desc=Ponha uma habilidade numa ferramenta (Autofundir, Toque Sedoso, Expandido...) na Bigorna.
+cl.missao.tc3_enciclopedia.titulo=Enciclopédia
+cl.missao.tc3_enciclopedia.desc=Junte os 5 livros na Enciclopédia do Tinker.
+cl.missao.tc3_antiga.titulo=Ferramenta antiga
+cl.missao.tc3_antiga.desc=Ache uma ferramenta antiga nos baús da pirâmide do deserto.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

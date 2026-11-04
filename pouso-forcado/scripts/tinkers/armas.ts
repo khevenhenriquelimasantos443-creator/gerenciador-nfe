@@ -47,6 +47,8 @@ const lancou = new Map<string, { id: string; tick: number }>();
 const comBotas = new Set<string>(), comAsas = new Set<string>();
 const velAntes = new Map<string, number>();
 
+/** Escudos (e, 1.30.0, a Placa de Batalha e a Panela de Fusão das ferramentas antigas) na mão secundária. */
+const ehEscudo = (id: string) => id.startsWith("cl:escudo_") || id === "cl:placa_batalha" || id === "cl:panela_fusao";
 export function registrarArmas(): void {
   intervalo("tc_armas", () => {
     comBotas.clear();
@@ -56,7 +58,7 @@ export function registrarArmas(): void {
       if (equip(j, EquipmentSlot.Chest)?.typeId === "cl:slimelitros") comAsas.add(j.id);
       // Escudo na mão secundária, agachado.
       const esc = equip(j, EquipmentSlot.Offhand)?.typeId;
-      if (esc?.startsWith("cl:escudo_") && j.isSneaking) j.addEffect("resistance", 30, { amplifier: esc === "cl:escudo_viajante" ? 0 : 1, showParticles: false });
+      if (esc && ehEscudo(esc) && j.isSneaking) j.addEffect("resistance", 30, { amplifier: esc === "cl:escudo_viajante" ? 0 : 1, showParticles: false });
     }
   }, 20);
   intervalo("tc_slime_armadura", () => {
@@ -84,7 +86,8 @@ export function registrarArmas(): void {
   // Escudo: o golpe tomado agachado gasta o escudo.
   world.afterEvents.entityHurt.subscribe(({ hurtEntity, damageSource }) => {
     if (!(hurtEntity instanceof Player) || !hurtEntity.isSneaking || damageSource.cause === EntityDamageCause.fall) return;
-    if (equip(hurtEntity, EquipmentSlot.Offhand)?.typeId.startsWith("cl:escudo_")) gastar(hurtEntity, EquipmentSlot.Offhand);
+    const esc = equip(hurtEntity, EquipmentSlot.Offhand)?.typeId;
+    if (esc && ehEscudo(esc)) gastar(hurtEntity, EquipmentSlot.Offhand);
   });
   // Arremesso: guarda o que foi lançado; o projétil leva o material.
   world.afterEvents.itemUse.subscribe(({ source, itemStack }) => {

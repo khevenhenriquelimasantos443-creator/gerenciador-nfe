@@ -4308,6 +4308,124 @@ cl.missao.tc3_fantastica.titulo=Foundry
 cl.missao.tc3_fantastica.desc=Make the Foundry Controller (scorched bricks from nether grout + obsidian).
 cl.missao.tc3_molde_areia.titulo=Sand cast
 cl.missao.tc3_molde_areia.desc=Put sand on the Casting Table and tap with a part: you get a sand cast (single use).
+item.cl:livro_materiais.name=Materials and You
+item.cl:livro_fundicao_pequena.name=Puny Smelting
+item.cl:livro_fundicao_poderosa.name=Mighty Smelting
+item.cl:livro_geringoncas.name=Tinkers' Gadgetry
+item.cl:livro_fundicao_fantastica.name=Fantastic Foundry
+item.cl:livro_enciclopedia.name=Encyclopedia of Tinkering
+item.cl:picareta_guerra.name=War Pick
+item.cl:placa_batalha.name=Battlesign
+item.cl:lavador.name=Swasher
+item.cl:machado_minotauro.name=Minotaur Axe
+item.cl:panela_fusao.name=Melting Pan
+item.cl:cajado_ceu.name=Skyslime Staff
+item.cl:cajado_terra.name=Earthslime Staff
+item.cl:cajado_icor.name=Ichor Staff
+item.cl:cajado_ender.name=Enderslime Staff
+item.cl:efln.name=EFLN
+item.cl:bola_brilhante.name=Glow Ball
+item.cl:estilingue_slime.name=Slime Sling
+item.cl:pano_sedoso.name=Silky Cloth
+item.cl:mochila_porco.name=Piggybackpack
+tile.cl:bigorna.name=Tinker's Anvil
+tile.cl:bigorna_chamuscada.name=Scorched Anvil
+tile.cl:mesa_modificadores.name=Modifier Worktable
+tile.cl:estacao_criacao.name=Crafting Station
+tile.cl:bau_pecas.name=Part Chest
+tile.cl:bau_moldes.name=Cast Chest
+tile.cl:bau_tinker.name=Tinkers' Chest
+tile.cl:estacas_punji.name=Punji Sticks
+entity.cl:efln_proj.name=EFLN
+entity.cl:bola_brilhante_proj.name=Glow Ball
+cl.tc.mod.netherita=Netherite
+cl.tc.mod.golpeada=Smite
+cl.tc.mod.antiaquatico=Antiaquatic
+cl.tc.mod.magnetico=Magnetic
+cl.tc.mod.decapitacao=Severing
+cl.tc.mod.alma=Soulbound
+cl.tc.mod.slime=Overslime
+cl.tc.mod.autofundir=Autosmelt
+cl.tc.mod.seda=Silky
+cl.tc.mod.expandido=Expanded
+cl.tc.mod.derreter=Melting
+cl.tc.mod.inquebravel=Unbreakable
+cl.tc.mod.brilho=Glowing
+cl.tc.mod_habilidade=§6Ability
+cl.tc.mod_bigorna=§7(anvil only)
+cl.tc.habilidades=§7Ability slots: %s
+cl.tc.mod_sem_habilidade=No free ability slot.
+cl.tc.precisa_bigorna=This needs the Tinker's Anvil (more than 3 parts or items).
+cl.tc.remover=Modifier Worktable: choose the modifier to remove (uses 1 wet sponge; the slot comes back).
+cl.tc.removeu=Removed: %s
+cl.tc.sem_esponja=You need 1 wet sponge.
+cl.tc.bigorna_titulo=Tinker's Anvil
+cl.tc.consertar_estacao=Repair
+cl.tc.sem_ferramenta=Hold a Tinker tool.
+cl.tc.sem_modificadores=This tool has no modifiers.
+cl.tc.bau_corpo=%s stored. Tap with an item to store; choose to take.
+cl.tc.bau_nao_aceita=This chest doesn't hold that.
+cl.tc.bau_cheio=The chest is full (54 stacks).
+cl.livro.linha_material=§7Dur. %s · Speed %s · Dmg %s · Tier %s
+cl.tc.porco_pegou=Animal in the backpack: %s. Use again to release.
+cl.tc.porco_nada=Look at a nearby animal (up to 4 blocks).
+cl.tc.cajado_espera=Staff recharging...
+cl.tc.livro_prox=Next ›
+cl.tc.livro_ant=‹ Previous
+cl.tc.livro_fechar=Close
+cl.livro.livro_materiais.1=Materials and You.
+
+Every Tinker tool is made of parts, each part of a material. The head (first part) sets speed, damage and mining level; the handle multiplies durability; the binding (and the materials) give traits.
+
+Start with the Stencil Table (patterns), the Part Builder (wood, stone, flint, bone parts...) and the Tool Station.
+cl.livro.livro_materiais.2=Large tools (Sledge Hammer, Vein Hammer, Excavator, Broad Axe, Scythe, Cleaver) have 4 parts and need the Tinker's Anvil (3 iron blocks and 4 ingots).
+
+Next pages: each material's durability, speed, damage, level and trait.
+cl.livro.livro_fundicao_pequena.1=Puny Smelting.
+
+The Seared Melter on top of a Heater melts one item at a time: fuel in the Heater (coal, coal block, blaze rod, lava bucket), items in the chest above the Melter or by tapping it.
+
+The Faucet beside the Melter pours into the Casting Table (with a cast) or the Basin (block).
+cl.livro.livro_fundicao_pequena.2=Casts: pour gold over a part, ingot or nugget on the Table. Sand cast: sand on the Table and tap with the part (single use).
+
+Seared Brick: grout (clay, sand and gravel) in a furnace.
+
+In the Melter ore doesn't double: use the Smeltery for that.
+cl.livro.livro_fundicao_poderosa.1=Mighty Smelting.
+
+3×3 floor of Seared Bricks, empty 3×3 inside and walls of seared blocks (bricks, glass, tank, drain, chute, the controller), up to 4 layers. At least one Tank with lava (tap with a lava bucket).
+
+Tap the Controller to form it. Throw items inside: ore doubles.
+cl.livro.livro_fundicao_poderosa.2=Alloys: fluids combine by themselves. Bronze (3 copper + 1 tin), Rose Gold, Amethyst Bronze, Pig Iron (iron + meat soup from animals inside + honey), Hepatizon, Manyullyn (3 cobalt + 1 debris), Queen's Slime, Slimesteel, Cinderslime, Knightslime, obsidian (water + lava).
+
+Chute: the touching chest feeds it. Channel: the faucet fills several tables.
+
+Composite: part on the Table + fluid = another material.
+cl.livro.livro_geringoncas.1=Tinkers' Gadgetry.
+
+EFLN (gunpowder + flint): explodes where it lands. Glow Ball (8 snowballs + glowstone dust): light where it lands. Slime Sling: launches you opposite to where you look (aim at the ground to go up). Punji Sticks (sugar cane): hurt whoever steps on them. Piggybackpack (saddle + sky slime): carry an animal with you.
+
+Slime staffs (crystal + slime log): Sky (leap), Earth (shockwave), Ichor (fireball), Ender (teleport).
+cl.livro.livro_geringoncas.2=Armor: Plate (the material and the Maille from chains), Traveler's (leather and copper), Slimesuit (boots bounce, Slimelytra glide). Shields in the offhand: sneak to block.
+
+Longbow, Crossbow, Shuriken, Throwing Axe and Javelin.
+
+Ancient tools (War Pick, Battlesign, Swasher, Minotaur Axe, Melting Pan): in the pyramid chests.
+cl.livro.livro_fundicao_fantastica.1=Fantastic Foundry.
+
+Like the Smeltery, but of scorched blocks (scorched brick: nether grout — soul sand, magma cream and gravel — in a furnace) with the Foundry Controller.
+
+No alloys, but ores give byproducts: iron gives steel, gold gives cobalt, copper gives gold, osmium gives iron.
+
+Scorched Alloyer: joins the fluids of adjacent Melters and makes alloys.
+cl.missao.tc3_bigorna.titulo=Tinker's Anvil
+cl.missao.tc3_bigorna.desc=Make the Tinker's Anvil: 4-part tools and big modifiers.
+cl.missao.tc3_habilidade.titulo=Ability
+cl.missao.tc3_habilidade.desc=Put an ability on a tool (Autosmelt, Silky, Expanded...) at the Anvil.
+cl.missao.tc3_enciclopedia.titulo=Encyclopedia
+cl.missao.tc3_enciclopedia.desc=Combine the 5 books into the Encyclopedia of Tinkering.
+cl.missao.tc3_antiga.titulo=Ancient tool
+cl.missao.tc3_antiga.desc=Find an ancient tool in the desert pyramid chests.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado
