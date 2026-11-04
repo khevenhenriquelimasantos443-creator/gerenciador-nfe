@@ -5826,6 +5826,90 @@
     },
     "clc_ardosia_lunar_baixo": {
       "textures": "textures/blocks/cl/arte/ardosia_lunar_baixo"
+    },
+    "clc_dinamo_stirling_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_stirling_frente"
+    },
+    "clc_dinamo_stirling_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_stirling_lado"
+    },
+    "clc_dinamo_stirling_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_stirling_topo"
+    },
+    "clc_dinamo_stirling_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_stirling_baixo"
+    },
+    "clc_dinamo_magmatico_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_magmatico_frente"
+    },
+    "clc_dinamo_magmatico_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_magmatico_lado"
+    },
+    "clc_dinamo_magmatico_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_magmatico_topo"
+    },
+    "clc_dinamo_magmatico_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_magmatico_baixo"
+    },
+    "clc_dinamo_lapidario_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_lapidario_frente"
+    },
+    "clc_dinamo_lapidario_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_lapidario_lado"
+    },
+    "clc_dinamo_lapidario_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_lapidario_topo"
+    },
+    "clc_dinamo_lapidario_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_lapidario_baixo"
+    },
+    "clc_dinamo_gourmand_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_gourmand_frente"
+    },
+    "clc_dinamo_gourmand_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_gourmand_lado"
+    },
+    "clc_dinamo_gourmand_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_gourmand_topo"
+    },
+    "clc_dinamo_gourmand_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_gourmand_baixo"
+    },
+    "clc_dinamo_desencantamento_frente": {
+      "textures": "textures/blocks/cl/c/dinamo_desencantamento_frente"
+    },
+    "clc_dinamo_desencantamento_lado": {
+      "textures": "textures/blocks/cl/c/dinamo_desencantamento_lado"
+    },
+    "clc_dinamo_desencantamento_topo": {
+      "textures": "textures/blocks/cl/c/dinamo_desencantamento_topo"
+    },
+    "clc_dinamo_desencantamento_baixo": {
+      "textures": "textures/blocks/cl/c/dinamo_desencantamento_baixo"
+    },
+    "clc_insolador_frente": {
+      "textures": "textures/blocks/cl/c/insolador_frente"
+    },
+    "clc_insolador_lado": {
+      "textures": "textures/blocks/cl/c/insolador_lado"
+    },
+    "clc_insolador_topo": {
+      "textures": "textures/blocks/cl/c/insolador_topo"
+    },
+    "clc_insolador_baixo": {
+      "textures": "textures/blocks/cl/c/insolador_baixo"
+    },
+    "clc_pirolisador_frente": {
+      "textures": "textures/blocks/cl/c/pirolisador_frente"
+    },
+    "clc_pirolisador_lado": {
+      "textures": "textures/blocks/cl/c/pirolisador_lado"
+    },
+    "clc_pirolisador_topo": {
+      "textures": "textures/blocks/cl/c/pirolisador_topo"
+    },
+    "clc_pirolisador_baixo": {
+      "textures": "textures/blocks/cl/c/pirolisador_baixo"
     }
   }
 }

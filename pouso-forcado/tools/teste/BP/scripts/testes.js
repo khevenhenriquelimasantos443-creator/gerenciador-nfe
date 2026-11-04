@@ -2,7 +2,7 @@
 // Rodar no console do servidor (tools/testar-servidor.mjs explica):
 //   execute positioned <x> 46 <z> run gametest run pouso:<nome>
 // Cada teste usa a estrutura pouso:vazio (8x6x8, chão de pedra em y 0). Coordenadas relativas a ela.
-import { BlockPermutation, BlockVolume, Direction, EquipmentSlot, GameMode, ItemStack, system, world } from "@minecraft/server";
+import { BlockPermutation, BlockVolume, Direction, EnchantmentTypes, EquipmentSlot, GameMode, ItemStack, system, world } from "@minecraft/server";
 import { register } from "@minecraft/server-gametest";
 
 const log = (m) => console.warn(`[TESTE] ${m}`);
@@ -1888,6 +1888,43 @@ teste("waystone", 300, (t) => {
     log(`waystone: robô em ${p.x.toFixed(1)},${p.y.toFixed(1)},${p.z.toFixed(1)} pergaminhos=${quantos(j, "cl:pergaminho_retorno")}`);
     t.assert(Math.hypot(p.x - 6.5, p.z - 6.5) < 2.5, "o Pergaminho de Retorno não levou à última pedra ativada");
     t.assert(quantos(j, "cl:pergaminho_retorno") === 0, "o pergaminho não foi gasto");
+    t.succeed();
+  });
+});
+
+// 1.42.0: Thermal 11. Dínamos Stirling, Lapidário e de Desencantamento queimam e mandam energia para a célula; o
+// Pirolisador faz coque; o Insolador com água encostada vai juntando energia para a colheita.
+teste("th11", 300, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 6.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`th11: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const maquina = (id, x, z, itens, energia) => {
+    t.setBlockType("minecraft:chest", { x, y: 2, z });
+    t.setBlockType(id, { x, y: 3, z });
+    t.setBlockType("minecraft:chest", { x, y: 4, z });
+    const c = t.getBlock({ x, y: 4, z }).getComponent("inventory").container;
+    for (const i of itens) c.addItem(i);
+    if (energia === "bateria") t.setBlockPermutation(BlockPermutation.resolve("cl:bateria", { "cl:carga": 15 }), { x, y: 3, z: z + 1 });
+    else t.setBlockType(energia, { x, y: 3, z: z + 1 });
+  };
+  const livro = new ItemStack("minecraft:enchanted_book", 1);
+  try { livro.getComponent("enchantable").addEnchantment({ type: EnchantmentTypes.get("sharpness"), level: 3 }); } catch (e) { log(`th11: livro ${e}`); }
+  maquina("cl:dinamo_stirling", 0, 0, [new ItemStack("minecraft:coal", 2)], "cl:celula_powah_basico");
+  maquina("cl:dinamo_lapidario", 2, 0, [new ItemStack("minecraft:diamond", 1)], "cl:celula_powah_basico");
+  maquina("cl:dinamo_desencantamento", 4, 0, [livro], "cl:celula_powah_basico");
+  maquina("cl:pirolisador", 6, 0, [new ItemStack("minecraft:coal", 1)], "bateria");
+  maquina("cl:insolador", 2, 4, [new ItemStack("minecraft:wheat_seeds", 1)], "bateria");
+  t.setBlockType("minecraft:water", { x: 3, y: 3, z: 4 });
+  t.runAfterDelay(200, () => {
+    for (const [x, z] of [[0, 0], [2, 0], [4, 0], [6, 0], [2, 4]]) { const p = w({ x, y: 3, z }); cmd(`scriptevent cl:teste_th11 ${p.x} ${p.y} ${p.z}`); }
+  });
+  t.runAfterDelay(205, () => {
+    const saida = (x, z) => { const c = t.getBlock({ x, y: 2, z }).getComponent("inventory").container; const r = []; for (let s = 0; s < c.size; s++) if (c.getItem(s)) r.push(c.getItem(s).typeId); return r; };
+    const r = { desenc: saida(4, 0), piro: saida(6, 0), carvao: (() => { const c = t.getBlock({ x: 0, y: 4, z: 0 }).getComponent("inventory").container; let n = 0; for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === "minecraft:coal") n += c.getItem(s).amount; return n; })() };
+    log(`th11: ${JSON.stringify(r)}`);
+    t.assert(r.carvao === 1, "o dínamo Stirling não queimou o carvão");
+    t.assert(r.desenc.includes("minecraft:book"), "o dínamo de desencantamento não devolveu o livro");
+    t.assert(r.piro.includes("cl:coque"), "o pirolisador não fez coque");
     t.succeed();
   });
 });

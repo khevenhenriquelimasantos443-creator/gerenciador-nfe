@@ -3721,10 +3721,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Kinetic Dynamo",
   "icone": "textures/items/cl/blocos/dinamo_cinetico"
  },
+ "cl:dinamo_desencantamento": {
+  "pt": "Dínamo de Desencantamento",
+  "en": "Disenchantment Dynamo",
+  "icone": "textures/items/cl/blocos/dinamo_desencantamento"
+ },
+ "cl:dinamo_gourmand": {
+  "pt": "Dínamo Gourmand",
+  "en": "Gourmand Dynamo",
+  "icone": "textures/items/cl/blocos/dinamo_gourmand"
+ },
+ "cl:dinamo_lapidario": {
+  "pt": "Dínamo Lapidário",
+  "en": "Lapidary Dynamo",
+  "icone": "textures/items/cl/blocos/dinamo_lapidario"
+ },
+ "cl:dinamo_magmatico": {
+  "pt": "Dínamo Magmático",
+  "en": "Magmatic Dynamo",
+  "icone": "textures/items/cl/blocos/dinamo_magmatico"
+ },
  "cl:dinamo_redstone": {
   "pt": "Dínamo de Redstone",
   "en": "Enervation Dynamo",
   "icone": "textures/items/cl/arte/blocos/dinamo_redstone"
+ },
+ "cl:dinamo_stirling": {
+  "pt": "Dínamo Stirling",
+  "en": "Stirling Dynamo",
+  "icone": "textures/items/cl/blocos/dinamo_stirling"
  },
  "cl:diodo_guardiao": {
   "pt": "Diodo Guardião",
@@ -5610,6 +5635,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Inscritor",
   "en": "Inscriber",
   "icone": "textures/items/cl/blocos/inscritor"
+ },
+ "cl:insolador": {
+  "pt": "Insolador Fitogênico",
+  "en": "Phytogenic Insolator",
+  "icone": "textures/items/cl/blocos/insolador"
  },
  "cl:interface_camara": {
   "pt": "Interface da Câmara",
@@ -11611,6 +11641,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Popcorn",
   "icone": "textures/items/cl/arte/pipoca"
  },
+ "cl:pirolisador": {
+  "pt": "Pirolisador",
+  "en": "Pyrolyzer",
+  "icone": "textures/items/cl/blocos/pirolisador"
+ },
  "cl:pistao_bolso": {
   "pt": "Pistão de Bolso",
   "en": "Pocket Piston",
@@ -15082,6 +15117,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
  },
+ "minecraft:nether_brick": {
+  "pt": "Tijolos do Nether",
+  "en": "Nether Bricks",
+  "icone": "textures/blocks/nether_brick"
+ },
  "minecraft:nether_star": {
   "pt": "nether_star",
   "en": "nether_star",
@@ -15460,6 +15500,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Gosma de Slime",
   "en": "Slimeball",
   "icone": "textures/items/slimeball"
+ },
+ "minecraft:smoker": {
+  "pt": "Defumador",
+  "en": "Smoker",
+  "icone": "textures/blocks/smoker_side"
  },
  "minecraft:smooth_sandstone": {
   "pt": "Arenito Liso",
@@ -24131,6 +24176,86 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_dinamo_desencantamento",
+  "resultado": "cl:dinamo_desencantamento",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "IGI",
+   "IRI"
+  ],
+  "chaves": {
+   "C": "cl:bobina_fio_cobre",
+   "I": "minecraft:iron_ingot",
+   "G": "minecraft:book",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_dinamo_gourmand",
+  "resultado": "cl:dinamo_gourmand",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "IGI",
+   "IRI"
+  ],
+  "chaves": {
+   "C": "cl:bobina_fio_cobre",
+   "I": "minecraft:iron_ingot",
+   "G": "minecraft:smoker",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_dinamo_lapidario",
+  "resultado": "cl:dinamo_lapidario",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "IGI",
+   "IRI"
+  ],
+  "chaves": {
+   "C": "cl:bobina_fio_cobre",
+   "I": "minecraft:iron_ingot",
+   "G": "minecraft:diamond",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_dinamo_magmatico",
+  "resultado": "cl:dinamo_magmatico",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "IGI",
+   "IRI"
+  ],
+  "chaves": {
+   "C": "cl:bobina_fio_cobre",
+   "I": "minecraft:iron_ingot",
+   "G": "minecraft:magma",
+   "R": "minecraft:redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_dinamo_redstone",
   "resultado": "cl:dinamo_redstone",
   "qtd": 1,
@@ -24144,6 +24269,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "minecraft:copper_ingot",
    "E": "cl:estrutura_maquina",
    "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_dinamo_stirling",
+  "resultado": "cl:dinamo_stirling",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "IGI",
+   "IRI"
+  ],
+  "chaves": {
+   "C": "cl:bobina_fio_cobre",
+   "I": "minecraft:iron_ingot",
+   "G": "minecraft:furnace",
+   "R": "minecraft:redstone"
   },
   "estacoes": [
    "crafting_table"
@@ -28302,6 +28447,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "L": "cl:liga_enriquecida",
    "A": "cl:lingote_aco",
    "E": "cl:estrutura_maquina"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_insolador",
+  "resultado": "cl:insolador",
+  "qtd": 1,
+  "grade": [
+   "GDG",
+   "GFG",
+   "CRC"
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "D": "minecraft:dirt",
+   "F": "cl:estrutura_maquina",
+   "C": "minecraft:copper_ingot",
+   "R": "minecraft:redstone"
   },
   "estacoes": [
    "crafting_table"
@@ -34248,6 +34414,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "#": "cl:rocha_lunar_polida"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pirolisador",
+  "resultado": "cl:pirolisador",
+  "qtd": 1,
+  "grade": [
+   " B ",
+   "NFN",
+   "CRC"
+  ],
+  "chaves": {
+   "B": "minecraft:blaze_powder",
+   "N": "minecraft:nether_brick",
+   "F": "cl:estrutura_maquina",
+   "C": "minecraft:copper_ingot",
+   "R": "minecraft:redstone"
   },
   "estacoes": [
    "crafting_table"

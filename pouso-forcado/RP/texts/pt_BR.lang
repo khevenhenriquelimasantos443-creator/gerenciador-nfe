@@ -5116,6 +5116,27 @@ cl.missao.gc5_safira.titulo=Safira Lunar
 cl.missao.gc5_safira.desc=Ache 3 safiras lunares no fundo da Lua.
 cl.missao.gc5_basalto.titulo=Basalto Lunar
 cl.missao.gc5_basalto.desc=Construa com 8 Tijolos de Basalto Lunar.
+tile.cl:dinamo_stirling.name=Dínamo Stirling
+tile.cl:dinamo_magmatico.name=Dínamo Magmático
+tile.cl:dinamo_lapidario.name=Dínamo Lapidário
+tile.cl:dinamo_gourmand.name=Dínamo Gourmand
+tile.cl:dinamo_desencantamento.name=Dínamo de Desencantamento
+tile.cl:insolador.name=Insolador Fitogênico
+tile.cl:pirolisador.name=Pirolisador
+cl.th11.dinamo=Dínamo: %s RF guardados para queimar (40 RF/t)
+cl.th11.progresso=%s%% (%s RF de %s)
+cl.th11.creosoto=Creosoto: %s mB (baldes vazios no baú de cima saem cheios)
+cl.capitulo.thermal11.nome=Thermal 11
+cl.capitulo.thermal11.curto=Thermal 11
+cl.capitulo.thermal11.desc=Os dínamos do Thermal mais novo (Stirling, Magmático, Lapidário, Gourmand e Desencantamento), o Insolador Fitogênico e o Pirolisador.
+cl.missao.th11_dinamo.titulo=Dínamo
+cl.missao.th11_dinamo.desc=Gere energia com um dínamo do Thermal.
+cl.missao.th11_lapidario.titulo=Gemas viram energia
+cl.missao.th11_lapidario.desc=Queime uma gema no Dínamo Lapidário.
+cl.missao.th11_insolador.titulo=Insolador
+cl.missao.th11_insolador.desc=Colha no Insolador Fitogênico.
+cl.missao.th11_pirolisador.titulo=Pirolisador
+cl.missao.th11_pirolisador.desc=Faça coque no Pirolisador.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

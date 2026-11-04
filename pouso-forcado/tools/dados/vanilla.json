@@ -1204,6 +1204,11 @@
   "en": "Name Tag",
   "icone": "textures/items/name_tag"
  },
+ "minecraft:nether_brick": {
+  "pt": "Tijolos do Nether",
+  "en": "Nether Bricks",
+  "icone": "textures/blocks/nether_brick"
+ },
  "minecraft:nether_star": {
   "pt": "nether_star",
   "en": "nether_star",
@@ -1586,6 +1591,11 @@
   "pt": "Gosma de Slime",
   "en": "Slimeball",
   "icone": "textures/items/slimeball"
+ },
+ "minecraft:smoker": {
+  "pt": "Defumador",
+  "en": "Smoker",
+  "icone": "textures/blocks/smoker_side"
  },
  "minecraft:smooth_sandstone": {
   "pt": "Arenito Liso",

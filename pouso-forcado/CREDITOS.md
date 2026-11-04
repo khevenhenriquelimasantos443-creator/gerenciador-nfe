@@ -101,7 +101,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   `tools/importar-tinkers3.py`; o mundo dos slimes, as armaduras e armas, a fundição inteira e (1.30.0) os
   modificadores, a Bigorna, os livros, as ferramentas antigas, os cajados e as geringonças, com a arte do mod
   (`tools/importar-slime-tc3.py`, `-armas.py`, `-fundicao.py` e `-extras.py`). Os textos dos livros são próprios.
-- **Thermal Expansion** (Team CoFH): as máquinas da Fase 17 e os custos em RF. Código e desenhos próprios.
+- **Thermal Expansion** (Team CoFH): as máquinas da Fase 17 e os custos em RF. Código e desenhos próprios. Na 1.42.0, o
+  Thermal Expansion 11 (branch 1.20.x, `tools/importar-thermal11.py`): os dínamos com os combustíveis do ThermalCore
+  (data/thermal/recipes/fuels e basePower 40), o Insolador e o Pirolisador com as receitas e energias do mod.
 - **JABBA** (ProfMobius), **AutoPackager** (Wolf_IV), **Applied Energistics** (AlgorithmX2) e **ExtraCells** (M3gaFr3ak):
   barril e upgrades, carrinho, empacotador, células ME com os bytes do AE1, drive, baú ME e terminal sem fio.
   Código e desenhos próprios.

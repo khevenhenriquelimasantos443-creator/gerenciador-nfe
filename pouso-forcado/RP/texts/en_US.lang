@@ -5115,6 +5115,27 @@ cl.missao.gc5_safira.titulo=Lunar Sapphire
 cl.missao.gc5_safira.desc=Find 3 lunar sapphires deep in the Moon.
 cl.missao.gc5_basalto.titulo=Moon Basalt
 cl.missao.gc5_basalto.desc=Build with 8 Moon Basalt Bricks.
+tile.cl:dinamo_stirling.name=Stirling Dynamo
+tile.cl:dinamo_magmatico.name=Magmatic Dynamo
+tile.cl:dinamo_lapidario.name=Lapidary Dynamo
+tile.cl:dinamo_gourmand.name=Gourmand Dynamo
+tile.cl:dinamo_desencantamento.name=Disenchantment Dynamo
+tile.cl:insolador.name=Phytogenic Insolator
+tile.cl:pirolisador.name=Pyrolyzer
+cl.th11.dinamo=Dynamo: %s RF left to burn (40 RF/t)
+cl.th11.progresso=%s%% (%s of %s RF)
+cl.th11.creosoto=Creosote: %s mB (empty buckets in the chest above come out full)
+cl.capitulo.thermal11.nome=Thermal 11
+cl.capitulo.thermal11.curto=Thermal 11
+cl.capitulo.thermal11.desc=The dynamos of the latest Thermal (Stirling, Magmatic, Lapidary, Gourmand and Disenchantment), the Phytogenic Insolator and the Pyrolyzer.
+cl.missao.th11_dinamo.titulo=Dynamo
+cl.missao.th11_dinamo.desc=Make power with a Thermal dynamo.
+cl.missao.th11_lapidario.titulo=Gems into power
+cl.missao.th11_lapidario.desc=Burn a gem in the Lapidary Dynamo.
+cl.missao.th11_insolador.titulo=Insolator
+cl.missao.th11_insolador.desc=Harvest in the Phytogenic Insolator.
+cl.missao.th11_pirolisador.titulo=Pyrolyzer
+cl.missao.th11_pirolisador.desc=Make coal coke in the Pyrolyzer.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

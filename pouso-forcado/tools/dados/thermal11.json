@@ -1,0 +1,772 @@
+{
+ "insolador": [
+  {
+   "entrada": "minecraft:acacia_sapling",
+   "saidas": [
+    [
+     "minecraft:acacia_log",
+     6.0
+    ],
+    [
+     "minecraft:acacia_sapling",
+     1.1
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:allium",
+   "saidas": [
+    [
+     "minecraft:allium",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:azalea",
+   "saidas": [
+    [
+     "minecraft:oak_log",
+     6.0
+    ],
+    [
+     "minecraft:azalea",
+     1.1
+    ],
+    [
+     "minecraft:hanging_roots",
+     1.25
+    ]
+   ],
+   "energia": 65000
+  },
+  {
+   "entrada": "minecraft:azure_bluet",
+   "saidas": [
+    [
+     "minecraft:azure_bluet",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:bamboo",
+   "saidas": [
+    [
+     "minecraft:bamboo",
+     3.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:beetroot_seeds",
+   "saidas": [
+    [
+     "minecraft:beetroot",
+     2.0
+    ],
+    [
+     "minecraft:beetroot_seeds",
+     1.1
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:birch_sapling",
+   "saidas": [
+    [
+     "minecraft:birch_log",
+     6.0
+    ],
+    [
+     "minecraft:birch_sapling",
+     1.1
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:blue_orchid",
+   "saidas": [
+    [
+     "minecraft:blue_orchid",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:brain_coral",
+   "saidas": [
+    [
+     "minecraft:brain_coral",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:brain_coral_fan",
+   "saidas": [
+    [
+     "minecraft:brain_coral_fan",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:brown_mushroom",
+   "saidas": [
+    [
+     "minecraft:brown_mushroom",
+     2.0
+    ]
+   ],
+   "energia": 10000
+  },
+  {
+   "entrada": "minecraft:bubble_coral",
+   "saidas": [
+    [
+     "minecraft:bubble_coral",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:bubble_coral_fan",
+   "saidas": [
+    [
+     "minecraft:bubble_coral_fan",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:cactus",
+   "saidas": [
+    [
+     "minecraft:cactus",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:carrot",
+   "saidas": [
+    [
+     "minecraft:carrot",
+     2.5
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:cherry_sapling",
+   "saidas": [
+    [
+     "minecraft:cherry_log",
+     6.0
+    ],
+    [
+     "minecraft:cherry_sapling",
+     1.1
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:chorus_flower",
+   "saidas": [
+    [
+     "minecraft:chorus_fruit",
+     1.1
+    ],
+    [
+     "minecraft:chorus_flower",
+     1.1
+    ]
+   ],
+   "energia": 40000
+  },
+  {
+   "entrada": "minecraft:cocoa_beans",
+   "saidas": [
+    [
+     "minecraft:cocoa_beans",
+     2.5
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:cornflower",
+   "saidas": [
+    [
+     "minecraft:cornflower",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:dandelion",
+   "saidas": [
+    [
+     "minecraft:dandelion",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:dark_oak_sapling",
+   "saidas": [
+    [
+     "minecraft:dark_oak_log",
+     6.0
+    ],
+    [
+     "minecraft:dark_oak_sapling",
+     1.1
+    ],
+    [
+     "minecraft:apple",
+     0.5
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:fire_coral",
+   "saidas": [
+    [
+     "minecraft:fire_coral",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:fire_coral_fan",
+   "saidas": [
+    [
+     "minecraft:fire_coral_fan",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:flowering_azalea",
+   "saidas": [
+    [
+     "minecraft:oak_log",
+     6.0
+    ],
+    [
+     "minecraft:flowering_azalea",
+     1.1
+    ],
+    [
+     "minecraft:hanging_roots",
+     1.25
+    ]
+   ],
+   "energia": 65000
+  },
+  {
+   "entrada": "minecraft:glow_berries",
+   "saidas": [
+    [
+     "minecraft:glow_berries",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:glow_lichen",
+   "saidas": [
+    [
+     "minecraft:glow_lichen",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:horn_coral",
+   "saidas": [
+    [
+     "minecraft:horn_coral",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:horn_coral_fan",
+   "saidas": [
+    [
+     "minecraft:horn_coral_fan",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:jungle_sapling",
+   "saidas": [
+    [
+     "minecraft:jungle_log",
+     6.0
+    ],
+    [
+     "minecraft:jungle_sapling",
+     1.1
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:kelp",
+   "saidas": [
+    [
+     "minecraft:kelp",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:lilac",
+   "saidas": [
+    [
+     "minecraft:lilac",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:lily_of_the_valley",
+   "saidas": [
+    [
+     "minecraft:lily_of_the_valley",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:lily_pad",
+   "saidas": [
+    [
+     "minecraft:lily_pad",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:mangrove_propagule",
+   "saidas": [
+    [
+     "minecraft:mangrove_log",
+     6.0
+    ],
+    [
+     "minecraft:mangrove_propagule",
+     1.1
+    ],
+    [
+     "minecraft:mangrove_roots",
+     1.25
+    ]
+   ],
+   "energia": 65000
+  },
+  {
+   "entrada": "minecraft:melon_seeds",
+   "saidas": [
+    [
+     "minecraft:melon_block",
+     1.1
+    ],
+    [
+     "minecraft:melon_seeds",
+     1.1
+    ]
+   ],
+   "energia": 40000
+  },
+  {
+   "entrada": "minecraft:moss_block",
+   "saidas": [
+    [
+     "minecraft:moss_block",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:moss_carpet",
+   "saidas": [
+    [
+     "minecraft:moss_carpet",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:nether_wart",
+   "saidas": [
+    [
+     "minecraft:nether_wart",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:oak_sapling",
+   "saidas": [
+    [
+     "minecraft:oak_log",
+     6.0
+    ],
+    [
+     "minecraft:oak_sapling",
+     1.1
+    ],
+    [
+     "minecraft:apple",
+     0.5
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:orange_tulip",
+   "saidas": [
+    [
+     "minecraft:orange_tulip",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:oxeye_daisy",
+   "saidas": [
+    [
+     "minecraft:oxeye_daisy",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:peony",
+   "saidas": [
+    [
+     "minecraft:peony",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:pink_tulip",
+   "saidas": [
+    [
+     "minecraft:pink_tulip",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:poppy",
+   "saidas": [
+    [
+     "minecraft:poppy",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:potato",
+   "saidas": [
+    [
+     "minecraft:potato",
+     2.5
+    ],
+    [
+     "minecraft:poisonous_potato",
+     0.05
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:pumpkin_seeds",
+   "saidas": [
+    [
+     "minecraft:pumpkin",
+     1.1
+    ],
+    [
+     "minecraft:pumpkin_seeds",
+     1.1
+    ]
+   ],
+   "energia": 40000
+  },
+  {
+   "entrada": "minecraft:red_mushroom",
+   "saidas": [
+    [
+     "minecraft:red_mushroom",
+     2.0
+    ]
+   ],
+   "energia": 10000
+  },
+  {
+   "entrada": "minecraft:red_tulip",
+   "saidas": [
+    [
+     "minecraft:red_tulip",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:rose_bush",
+   "saidas": [
+    [
+     "minecraft:rose_bush",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:sea_pickle",
+   "saidas": [
+    [
+     "minecraft:sea_pickle",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:spruce_sapling",
+   "saidas": [
+    [
+     "minecraft:spruce_log",
+     6.0
+    ],
+    [
+     "minecraft:spruce_sapling",
+     1.1
+    ]
+   ],
+   "energia": 60000
+  },
+  {
+   "entrada": "minecraft:sugar_cane",
+   "saidas": [
+    [
+     "minecraft:sugar_cane",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:sunflower",
+   "saidas": [
+    [
+     "minecraft:sunflower",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:sweet_berries",
+   "saidas": [
+    [
+     "minecraft:sweet_berries",
+     2.5
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:tube_coral",
+   "saidas": [
+    [
+     "minecraft:tube_coral",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:tube_coral_fan",
+   "saidas": [
+    [
+     "minecraft:tube_coral_fan",
+     2.0
+    ]
+   ],
+   "energia": 30000
+  },
+  {
+   "entrada": "minecraft:twisting_vines",
+   "saidas": [
+    [
+     "minecraft:twisting_vines",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:vine",
+   "saidas": [
+    [
+     "minecraft:vine",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:weeping_vines",
+   "saidas": [
+    [
+     "minecraft:weeping_vines",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:wheat_seeds",
+   "saidas": [
+    [
+     "minecraft:wheat",
+     2.0
+    ],
+    [
+     "minecraft:wheat_seeds",
+     1.1
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:white_tulip",
+   "saidas": [
+    [
+     "minecraft:white_tulip",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  },
+  {
+   "entrada": "minecraft:wither_rose",
+   "saidas": [
+    [
+     "minecraft:wither_rose",
+     2.0
+    ]
+   ],
+   "energia": 20000
+  }
+ ],
+ "pirolisador": [
+  {
+   "entrada": [
+    "minecraft:coal"
+   ],
+   "saidas": [
+    [
+     "cl:coque",
+     1
+    ]
+   ],
+   "creosoto": 250,
+   "energia": 2000
+  },
+  {
+   "entrada": [
+    "minecraft:oak_log",
+    "minecraft:spruce_log",
+    "minecraft:birch_log",
+    "minecraft:jungle_log",
+    "minecraft:acacia_log",
+    "minecraft:dark_oak_log",
+    "minecraft:mangrove_log",
+    "minecraft:cherry_log"
+   ],
+   "saidas": [
+    [
+     "minecraft:charcoal",
+     1
+    ]
+   ],
+   "creosoto": 125,
+   "energia": 2000
+  }
+ ],
+ "stirling": {
+  "minecraft:blaze_powder": 12000,
+  "minecraft:coal": 24000,
+  "minecraft:coal_block": 240000,
+  "cl:coque": 40000,
+  "cl:bloco_coque": 400000
+ },
+ "lapidario": {
+  "minecraft:amethyst_shard": 40000,
+  "minecraft:diamond": 500000,
+  "minecraft:emerald": 125000,
+  "minecraft:lapis_lazuli": 40000,
+  "minecraft:prismarine_crystals": 40000,
+  "minecraft:quartz": 40000,
+  "cl:safira_lunar": 125000
+ },
+ "gourmand": {
+  "minecraft:cake": 25600,
+  "minecraft:dried_kelp_block": 32000
+ },
+ "magmatico": {
+  "minecraft:lava_bucket": 100000
+ },
+ "desencantamento": {
+  "minecraft:experience_bottle": 32000
+ },
+ "potencia": 40,
+ "gourmandPorFome": 1600,
+ "desencantamentoBase": 16000
+}

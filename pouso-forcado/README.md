@@ -154,6 +154,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.42.0 (Thermal Expansion 11, o mais novo)
+
+- **Dínamos novos** (40 RF/t, combustível no baú de cima): **Stirling** (carvão 24.000 RF, bloco de carvão 240.000,
+  coque 40.000, pó de blaze 12.000), **Magmático** (balde de lava 100.000, devolve o balde), **Lapidário** (diamante
+  500.000, esmeralda e safira lunar 125.000, lápis, quartzo, ametista e prismarinho 40.000), **Gourmand** (qualquer
+  comida: fome × 1.600 RF) e **Desencantamento** (tira os encantamentos do item e vira energia; o livro encantado volta
+  como livro).
+- **Insolador Fitogênico**: com água encostada, multiplica sementes, mudas e flores (as chances do mod; 20.000 RF por
+  colheita, mudas 60.000).
+- **Pirolisador**: toras → carvão vegetal + 125 mB de creosoto; carvão → coque + 250 mB (baldes vazios saem cheios).
+- As máquinas do Thermal trabalham a 20 RF/t, como no mod. Arte própria. Diário: capítulo Thermal 11.
+
 ## Novidades da 1.41.0 (Galacticraft 5, o mais novo)
 
 - O Galacticraft 5 (a versão nova, reescrita) é MIT, inclusive a arte: as máquinas (coletor, compressores, fabricador

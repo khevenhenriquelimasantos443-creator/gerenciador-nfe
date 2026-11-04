@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_insolador"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GDG",
+      "GFG",
+      "CRC"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "D": {
+        "item": "minecraft:dirt"
+      },
+      "F": {
+        "item": "cl:estrutura_maquina"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:insolador"
+    }
+  }
+}
