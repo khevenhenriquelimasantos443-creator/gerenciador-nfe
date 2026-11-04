@@ -1,56 +1,73 @@
-// Tabelas do Tinkers' Construct 1.6.4 (+ Iguana Tweaks) usadas pelas Fases 15 e 16.
-// dur = durabilidade da cabeça (TC), vel = velocidade (TC ÷ 100, inteiro no Bedrock), dano = ataque extra,
-// nivel = nível de mineração (Iguana), cabo = multiplicador da durabilidade quando é o cabo.
-// 1.24.0: números do Tinkers' Construct 3.12.1 (o mais novo; tinkering/materials/stats): durabilidade da cabeça,
-// velocidade (arredondada: o Bedrock só aceita inteiro), dano, nível (madeira/ouro 0, pedra 1, ferro 2, diamante 3,
-// netherite 4) e cabo = 1 + a durabilidade do cabo. Cacto e obsidiana não são cabeça no TC3: ficam os de antes.
-export const MATERIAIS = {
-  madeira: { pt: "Madeira", en: "Wood", dur: 60, vel: 2, dano: 0, nivel: 0, cabo: 1.0, cor: "#a07c48" },
-  pedra: { pt: "Pedra", en: "Stone", dur: 130, vel: 4, dano: 1, nivel: 1, cabo: 0.9, cor: "#8c8c8c" },
-  silex: { pt: "Sílex", en: "Flint", dur: 85, vel: 4, dano: 1, nivel: 1, cabo: 0.85, cor: "#55545e" },
-  cacto: { pt: "Cacto", en: "Cactus", dur: 150, vel: 5, dano: 2, nivel: 1, cabo: 1.0, cor: "#4f8f3a" },
-  osso: { pt: "Osso", en: "Bone", dur: 100, vel: 3, dano: 1, nivel: 1, cabo: 0.75, cor: "#e6dfc6" },
-  obsidiana: { pt: "Obsidiana", en: "Obsidian", dur: 89, vel: 7, dano: 2, nivel: 3, cabo: 0.8, cor: "#3d2c5e" },
-  ferro: { pt: "Ferro", en: "Iron", dur: 250, vel: 6, dano: 2, nivel: 2, cabo: 1.1, cor: "#d6d9dc", metal: true },
-  cobre: { pt: "Cobre", en: "Copper", dur: 210, vel: 5, dano: 1, nivel: 2, cabo: 0.8, cor: "#d4743c", metal: true },
-  bronze: { pt: "Bronze", en: "Bronze", dur: 760, vel: 7, dano: 2, nivel: 3, cabo: 1.1, cor: "#c8913a", metal: true },
-  aco: { pt: "Aço", en: "Steel", dur: 775, vel: 6, dano: 3, nivel: 3, cabo: 1.05, cor: "#8797a6", metal: true },
-  // Ligas novas do TC3 (Fundição): Ouro Rosa = cobre + ouro; Bronze de Ametista = cobre + fragmento de ametista.
-  ouro_rosa: { pt: "Ouro Rosa", en: "Rose Gold", dur: 175, vel: 9, dano: 1, nivel: 0, cabo: 0.7, cor: "#f0a090", metal: true },
-  bronze_ametista: { pt: "Bronze de Ametista", en: "Amethyst Bronze", dur: 720, vel: 7, dano: 2, nivel: 3, cabo: 1.0, cor: "#b07ad8", metal: true },
-};
-// Peças: custo em itens do material no Construtor de Peças (ou em lingotes, na fundição).
+// Tabelas do Tinkers' Construct usadas pelas Fases 15 e 16 (e pela 45, a do Tinkers completo).
+// 1.6.4 (+ Iguana Tweaks) no começo; 1.24.0 com os números do TC3; 1.26.0 (Tinkers completo, parte 1): tudo vem do
+// Tinkers' Construct 3.12.1 (o mais novo), lido por tools/importar-tinkers3.py em tinkers3.json:
+// - materiais: dur = durabilidade da cabeça, vel = velocidade de mineração (o item arredonda: o Bedrock só aceita
+//   inteiro), dano = ataque da cabeça, nivel (madeira/ouro 0, pedra 1, ferro 2, diamante 3, netherita 4),
+//   cabo = 1 + a durabilidade do cabo (multiplica a durabilidade), ligacao = serve de ligação, tracos = traços do mod;
+// - peças: custo no Construtor de Peças e o tipo de número que usam (cabeça, cabo, ligação);
+// - ferramentas: as peças (a primeira é a cabeça), os números base e os multiplicadores, os traços, a área e o que
+//   quebram. O item é "ferramenta × material da cabeça"; o resto fica em propriedades do item (scripts/tinkers).
+// IDs de antes continuam (cacto e obsidiana não são cabeça no TC3, mas as peças e ferramentas deles ficam; a Pá não
+// existe no TC3 e fica para quem já tem).
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const D = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), "tinkers3.json"), "utf8"));
+const ANTIGOS = ["madeira", "pedra", "silex", "cacto", "osso", "obsidiana", "ferro", "cobre", "bronze", "aco", "ouro_rosa", "bronze_ametista"];
+const PECAS_ANTIGAS = ["cabo", "ligacao", "cabeca_picareta", "cabeca_pa", "cabeca_machado", "lamina_espada", "guarda_larga", "travessa", "cabeca_martelo", "placa_grande", "cabo_resistente", "ligacao_resistente", "cabeca_machado_larga"];
+const FERR_ANTIGAS = ["picareta", "pa", "machadinha", "espada_larga", "marreta", "escavadeira", "machado_largo"];
+
+export const MATERIAIS = Object.fromEntries(
+  Object.entries(D.materiais).map(([id, m]) => [
+    id,
+    {
+      pt: m.pt, en: m.en, cor: m.cor, tier: m.tier, metal: m.metal, tracos: m.tracos, cabeca: m.cabeca, ligacao: m.ligacao,
+      ...(m.cabeca ? { dur: m.dur, vel: m.vel, dano: m.dano, nivel: m.nivel } : {}),
+      ...(m.cabo !== undefined ? { cabo: m.cabo } : {}),
+    },
+  ]),
+);
+// Peças: as do TC3 e as três que só o pack de antes tinha.
 export const PECAS = {
-  cabo: { pt: "Cabo", en: "Tool Rod", custo: 1 },
-  ligacao: { pt: "Ligação", en: "Binding", custo: 1 },
-  cabeca_picareta: { pt: "Cabeça de Picareta", en: "Pickaxe Head", custo: 2 },
-  cabeca_pa: { pt: "Cabeça de Pá", en: "Shovel Head", custo: 2 },
-  cabeca_machado: { pt: "Cabeça de Machado", en: "Hatchet Head", custo: 2 },
-  lamina_espada: { pt: "Lâmina de Espada", en: "Sword Blade", custo: 2 },
-  guarda_larga: { pt: "Guarda Larga", en: "Wide Guard", custo: 1 },
-  travessa: { pt: "Travessa", en: "Crossbar", custo: 1 },
-  // 1.24.0: peças das ferramentas grandes do TC3 (custo do Construtor de Peças do mod).
-  cabeca_martelo: { pt: "Cabeça de Martelo", en: "Hammer Head", custo: 8 },
-  placa_grande: { pt: "Placa Grande", en: "Large Plate", custo: 4 },
-  cabo_resistente: { pt: "Cabo Resistente", en: "Tough Handle", custo: 3 },
-  ligacao_resistente: { pt: "Ligação Resistente", en: "Tough Binding", custo: 3 },
-  cabeca_machado_larga: { pt: "Cabeça de Machado Largo", en: "Broad Axe Head", custo: 8 },
+  ...Object.fromEntries(Object.entries(D.pecas).map(([id, p]) => [id, { pt: p.pt, en: p.en, custo: p.custo, stat: p.stat }])),
+  cabeca_pa: { pt: "Cabeça de Pá", en: "Shovel Head", custo: 2, stat: "head" },
+  guarda_larga: { pt: "Guarda Larga", en: "Wide Guard", custo: 1, stat: "binding" },
+  travessa: { pt: "Travessa", en: "Crossbar", custo: 1, stat: "binding" },
 };
-// Ferramentas: peças (a primeira é a cabeça), dano base e o que quebram.
+// Ferramentas: as do TC3 e a Pá do pack de antes.
+const r = (v) => Math.round(v * 100) / 100;
 export const FERRAMENTAS = {
-  picareta: { pt: "Picareta", en: "Pickaxe", pecas: ["cabeca_picareta", "ligacao", "cabo"], dano: 2, tag: "minecraft:is_pickaxe_item_destructible" },
-  pa: { pt: "Pá", en: "Shovel", pecas: ["cabeca_pa", "cabo"], dano: 1, tag: "minecraft:is_shovel_item_destructible" },
-  machadinha: { pt: "Machadinha", en: "Hatchet", pecas: ["cabeca_machado", "cabo"], dano: 3, tag: "minecraft:is_axe_item_destructible" },
-  espada_larga: { pt: "Espada Larga", en: "Broadsword", pecas: ["lamina_espada", "guarda_larga", "cabo"], dano: 4 },
-  // 1.24.0: as ferramentas grandes do TC3 (tool_definitions): Marreta e Escavadeira quebram 3×3, o Machado Largo derruba a
-  // árvore inteira. dur = multiplicador da durabilidade, vel = da velocidade.
-  marreta: { pt: "Marreta", en: "Sledge Hammer", pecas: ["cabeca_martelo", "placa_grande", "cabo_resistente"], dano: 4, dur: 4, vel: 0.4, area: true, slot: "pickaxe",
-    tag: "minecraft:is_pickaxe_item_destructible" },
-  escavadeira: { pt: "Escavadeira", en: "Excavator", pecas: ["placa_grande", "ligacao_resistente", "cabo_resistente"], dano: 2, dur: 3.75, vel: 0.3, area: true, slot: "shovel",
-    tag: "minecraft:is_shovel_item_destructible" },
-  machado_largo: { pt: "Machado Largo", en: "Broad Axe", pecas: ["cabeca_machado_larga", "ligacao_resistente", "cabo_resistente"], dano: 8, dur: 4.25, vel: 0.3, arvore: true, slot: "axe",
-    tag: "minecraft:is_axe_item_destructible" },
+  ...Object.fromEntries(
+    Object.entries(D.ferramentas).map(([id, f]) => [
+      id,
+      {
+        pt: f.pt, en: f.en, pecas: f.pecas, tags: f.tags, slot: f.slot, tracos: f.tracos,
+        base: r(f.base.attack_damage ?? 0), mDano: r(f.mult.attack_damage ?? 1), dur: r(f.mult.durability ?? 1), vel: r(f.mult.mining_speed ?? 1),
+        ...(f.area ? { area: f.area } : {}),
+      },
+    ]),
+  ),
+  pa: { pt: "Pá", en: "Shovel", pecas: ["cabeca_pa", "cabo"], tags: ["minecraft:is_shovel_item_destructible"], slot: "shovel", tracos: [], base: 1, mDano: 1, dur: 1, vel: 1 },
 };
+export const TRACOS = D.tracos;
+
+/** A peça `p` de material `m` existe? (as de antes sempre; as novas se o material tem aquele tipo de número). */
+export function pecaServe(p, m) {
+  const d = MATERIAIS[m];
+  if (ANTIGOS.includes(m) && PECAS_ANTIGAS.includes(p)) return true;
+  if (["cabeca_pa", "guarda_larga", "travessa"].includes(p)) return false;
+  const stat = PECAS[p].stat;
+  if (["cacto", "obsidiana"].includes(m)) return false; // não são peça no TC3: só as de antes
+  return stat === "head" ? d.cabeca : stat === "handle" ? d.cabo !== undefined : d.ligacao;
+}
+/** A ferramenta `f` com cabeça `m` existe? */
+export function ferramentaServe(f, m) {
+  if (ANTIGOS.includes(m) && FERR_ANTIGAS.includes(f)) return true;
+  return f !== "pa" && !!MATERIAIS[m].cabeca && !["cacto", "obsidiana"].includes(m);
+}
+/** Dano do item (o que soma ao 1 do jogador): (base + ataque da cabeça) × multiplicador, como no TC3. */
+export const danoDe = (f, m) => Math.max(1, Math.round((FERRAMENTAS[f].base + (MATERIAIS[m].dano ?? 0)) * FERRAMENTAS[f].mDano));
 
 const de = (mat) => `de ${MATERIAIS[mat].pt}`;
 export function itensDe(mats) {
@@ -58,17 +75,22 @@ export function itensDe(mats) {
   for (const mat of mats) {
     const m = MATERIAIS[mat];
     for (const [p, d] of Object.entries(PECAS))
-      itens.push({ id: `peca_${p}_${mat}`, pt: `${d.pt} ${de(mat)}`, en: `${m.en} ${d.en}`, icone: `peca:${p}:${m.cor}` });
+      if (pecaServe(p, mat)) itens.push({ id: `peca_${p}_${mat}`, pt: `${d.pt} ${de(mat)}`, en: `${m.en} ${d.en}`, icone: `peca:${p}:${m.cor}` });
     for (const [f, d] of Object.entries(FERRAMENTAS)) {
+      if (!ferramentaServe(f, mat)) continue;
+      const vel = Math.max(1, Math.round((m.vel ?? 1) * d.vel));
       const comp = {
         "minecraft:hand_equipped": true,
         "minecraft:durability": { max_durability: 1000 },
-        "minecraft:damage": d.dano + m.dano,
-        "minecraft:enchantable": { slot: d.slot ?? (f === "espada_larga" ? "sword" : f === "pa" ? "shovel" : f === "machadinha" ? "axe" : "pickaxe"), value: 10 },
+        "minecraft:damage": danoDe(f, mat),
+        "minecraft:enchantable": { slot: d.slot, value: 10 },
+        "minecraft:digger": { use_efficiency: true, destroy_speeds: [...d.tags.map((t) => ({ block: { tags: `q.any_tag('${t}')` }, speed: vel })), ...(d.slot === "sword" ? [{ block: "minecraft:web", speed: 15 }] : [])] },
       };
-      if (d.tag) comp["minecraft:digger"] = { use_efficiency: true, destroy_speeds: [{ block: { tags: `q.any_tag('${d.tag}')` }, speed: Math.max(1, Math.round(m.vel * (d.vel ?? 1))) }] };
       itens.push({ id: `${f}_${mat}`, pt: `${d.pt} ${de(mat)}`, en: `${m.en} ${d.en}`, icone: `ferramenta:${f}:${m.cor}`, pilha: 1, cat: "equipment", comp });
     }
   }
   return itens;
 }
+/** Para os scripts: que materiais fazem cada peça e cada ferramenta. */
+export const PECA_MATS = Object.fromEntries(Object.keys(PECAS).map((p) => [p, Object.keys(MATERIAIS).filter((m) => pecaServe(p, m))]));
+export const FERR_MATS = Object.fromEntries(Object.keys(FERRAMENTAS).map((f) => [f, Object.keys(MATERIAIS).filter((m) => ferramentaServe(f, m))]));

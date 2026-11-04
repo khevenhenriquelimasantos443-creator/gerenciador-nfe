@@ -31,6 +31,156 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dark Steel Ingot",
   "icone": "textures/items/cl/arte/aco_negro"
  },
+ "cl:adaga_aco": {
+  "pt": "Adaga de Aço",
+  "en": "Steel Dagger",
+  "icone": "textures/items/cl/arte/adaga_aco"
+ },
+ "cl:adaga_aco_slime": {
+  "pt": "Adaga de Aço de Slime",
+  "en": "Slimesteel Dagger",
+  "icone": "textures/items/cl/arte/adaga_aco_slime"
+ },
+ "cl:adaga_bronze": {
+  "pt": "Adaga de Bronze",
+  "en": "Bronze Dagger",
+  "icone": "textures/items/cl/arte/adaga_bronze"
+ },
+ "cl:adaga_bronze_ametista": {
+  "pt": "Adaga de Bronze de Ametista",
+  "en": "Amethyst Bronze Dagger",
+  "icone": "textures/items/cl/arte/adaga_bronze_ametista"
+ },
+ "cl:adaga_cobalto": {
+  "pt": "Adaga de Cobalto",
+  "en": "Cobalt Dagger",
+  "icone": "textures/items/cl/arte/adaga_cobalto"
+ },
+ "cl:adaga_cobre": {
+  "pt": "Adaga de Cobre",
+  "en": "Copper Dagger",
+  "icone": "textures/items/cl/arte/adaga_cobre"
+ },
+ "cl:adaga_coro": {
+  "pt": "Adaga de Chorus",
+  "en": "Chorus Dagger",
+  "icone": "textures/items/cl/arte/adaga_coro"
+ },
+ "cl:adaga_ferro": {
+  "pt": "Adaga de Ferro",
+  "en": "Iron Dagger",
+  "icone": "textures/items/cl/arte/adaga_ferro"
+ },
+ "cl:adaga_ferro_porco": {
+  "pt": "Adaga de Ferro-Porco",
+  "en": "Pig Iron Dagger",
+  "icone": "textures/items/cl/arte/adaga_ferro_porco"
+ },
+ "cl:adaga_hepatizon": {
+  "pt": "Adaga de Hepatizão",
+  "en": "Hepatizon Dagger",
+  "icone": "textures/items/cl/arte/adaga_hepatizon"
+ },
+ "cl:adaga_madeira": {
+  "pt": "Adaga de Madeira",
+  "en": "Wood Dagger",
+  "icone": "textures/items/cl/arte/adaga_madeira"
+ },
+ "cl:adaga_madeira_slime": {
+  "pt": "Adaga de Madeira de Slime",
+  "en": "Slimewood Dagger",
+  "icone": "textures/items/cl/arte/adaga_madeira_slime"
+ },
+ "cl:adaga_madeira_slime_revestida": {
+  "pt": "Adaga de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Dagger",
+  "icone": "textures/items/cl/arte/adaga_madeira_slime_revestida"
+ },
+ "cl:adaga_madeira_tratada": {
+  "pt": "Adaga de Madeira Tratada",
+  "en": "Treated Wood Dagger",
+  "icone": "textures/items/cl/arte/adaga_madeira_tratada"
+ },
+ "cl:adaga_manyullyn": {
+  "pt": "Adaga de Manyullyn",
+  "en": "Manyullyn Dagger",
+  "icone": "textures/items/cl/arte/adaga_manyullyn"
+ },
+ "cl:adaga_nahuatl": {
+  "pt": "Adaga de Nahuatl",
+  "en": "Nahuatl Dagger",
+  "icone": "textures/items/cl/arte/adaga_nahuatl"
+ },
+ "cl:adaga_osmio": {
+  "pt": "Adaga de Ósmio",
+  "en": "Osmium Dagger",
+  "icone": "textures/items/cl/arte/adaga_osmio"
+ },
+ "cl:adaga_osso": {
+  "pt": "Adaga de Osso",
+  "en": "Bone Dagger",
+  "icone": "textures/items/cl/arte/adaga_osso"
+ },
+ "cl:adaga_osso_blaze": {
+  "pt": "Adaga de Osso de Blaze",
+  "en": "Blazing Bone Dagger",
+  "icone": "textures/items/cl/arte/adaga_osso_blaze"
+ },
+ "cl:adaga_osso_necrotico": {
+  "pt": "Adaga de Osso Necrótico",
+  "en": "Necrotic Bone Dagger",
+  "icone": "textures/items/cl/arte/adaga_osso_necrotico"
+ },
+ "cl:adaga_osso_venenoso": {
+  "pt": "Adaga de Osso Venenoso",
+  "en": "Venombone Dagger",
+  "icone": "textures/items/cl/arte/adaga_osso_venenoso"
+ },
+ "cl:adaga_ouro_rosa": {
+  "pt": "Adaga de Ouro Rosa",
+  "en": "Rose Gold Dagger",
+  "icone": "textures/items/cl/arte/adaga_ouro_rosa"
+ },
+ "cl:adaga_pedra": {
+  "pt": "Adaga de Pedra",
+  "en": "Stone Dagger",
+  "icone": "textures/items/cl/arte/adaga_pedra"
+ },
+ "cl:adaga_pedra_branca": {
+  "pt": "Adaga de Pedra Branca",
+  "en": "Whitestone Dagger",
+  "icone": "textures/items/cl/arte/adaga_pedra_branca"
+ },
+ "cl:adaga_pedra_chamuscada": {
+  "pt": "Adaga de Pedra Chamuscada",
+  "en": "Scorched Stone Dagger",
+  "icone": "textures/items/cl/arte/adaga_pedra_chamuscada"
+ },
+ "cl:adaga_pedra_refrataria": {
+  "pt": "Adaga de Pedra Carbonizada",
+  "en": "Seared Stone Dagger",
+  "icone": "textures/items/cl/arte/adaga_pedra_refrataria"
+ },
+ "cl:adaga_silex": {
+  "pt": "Adaga de Sílex",
+  "en": "Flint Dagger",
+  "icone": "textures/items/cl/arte/adaga_silex"
+ },
+ "cl:adaga_slime_brasa": {
+  "pt": "Adaga de Slime de Brasa",
+  "en": "Cinderslime Dagger",
+  "icone": "textures/items/cl/arte/adaga_slime_brasa"
+ },
+ "cl:adaga_slime_cavaleiro": {
+  "pt": "Adaga de Slime-Cavaleiro",
+  "en": "Knightslime Dagger",
+  "icone": "textures/items/cl/arte/adaga_slime_cavaleiro"
+ },
+ "cl:adaga_slime_rainha": {
+  "pt": "Adaga de Slime da Rainha",
+  "en": "Queen's Slime Dagger",
+  "icone": "textures/items/cl/arte/adaga_slime_rainha"
+ },
  "cl:aglutinante_conduite": {
   "pt": "Aglomerante de Condutor",
   "en": "Conduit Binder",
@@ -546,6 +696,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dark Steel Block",
   "icone": "textures/items/cl/blocos/bloco_aco_negro"
  },
+ "cl:bloco_aco_slime": {
+  "pt": "Bloco de Aço de Slime",
+  "en": "Block of Slimesteel",
+  "icone": "textures/blocks/cl/arte/bloco_aco_slime"
+ },
  "cl:bloco_almario": {
   "pt": "Bloco de Almário",
   "en": "Soularium Block",
@@ -580,6 +735,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Carvão Vegetal",
   "en": "Charcoal Block",
   "icone": "textures/items/cl/blocos/bloco_carvao_vegetal"
+ },
+ "cl:bloco_cobalto": {
+  "pt": "Bloco de Cobalto",
+  "en": "Block of Cobalt",
+  "icone": "textures/blocks/cl/arte/bloco_cobalto"
+ },
+ "cl:bloco_cobalto_bruto": {
+  "pt": "Bloco de Cobalto Bruto",
+  "en": "Block of Raw Cobalt",
+  "icone": "textures/blocks/cl/arte/bloco_cobalto_bruto"
  },
  "cl:bloco_coque": {
   "pt": "Bloco de Coque",
@@ -621,6 +786,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Conductive Alloy Block",
   "icone": "textures/items/cl/blocos/bloco_ferro_condutor"
  },
+ "cl:bloco_ferro_porco": {
+  "pt": "Bloco de Ferro-Porco",
+  "en": "Block of Pig Iron",
+  "icone": "textures/blocks/cl/arte/bloco_ferro_porco"
+ },
  "cl:bloco_ferro_pulsante": {
   "pt": "Bloco de Liga Pulsante",
   "en": "Pulsating Alloy Block",
@@ -641,6 +811,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stick Block",
   "icone": "textures/items/cl/blocos/bloco_gravetos"
  },
+ "cl:bloco_hepatizon": {
+  "pt": "Bloco de Hepatizão",
+  "en": "Block of Hepatizon",
+  "icone": "textures/blocks/cl/arte/bloco_hepatizon"
+ },
  "cl:bloco_liga_energetica": {
   "pt": "Bloco de Liga Energética",
   "en": "Energetic Alloy Block",
@@ -655,6 +830,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bloco de Liga Vibrante",
   "en": "Vibrant Alloy Block",
   "icone": "textures/items/cl/blocos/bloco_liga_vibrante"
+ },
+ "cl:bloco_manyullyn": {
+  "pt": "Bloco de Manyullyn",
+  "en": "Block of Manyullyn",
+  "icone": "textures/blocks/cl/arte/bloco_manyullyn"
  },
  "cl:bloco_maquina": {
   "pt": "Bloco de Máquina",
@@ -675,6 +855,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Placa de Ferro Enferrujada",
   "en": "Rusty Iron Plate",
   "icone": "textures/items/cl/blocos/bloco_placa_ferro_enferrujada"
+ },
+ "cl:bloco_slime_brasa": {
+  "pt": "Bloco de Slime de Brasa",
+  "en": "Block of Cinderslime",
+  "icone": "textures/blocks/cl/arte/bloco_slime_brasa"
+ },
+ "cl:bloco_slime_cavaleiro": {
+  "pt": "Bloco de Slime-Cavaleiro",
+  "en": "Block of Knightslime",
+  "icone": "textures/blocks/cl/arte/bloco_slime_cavaleiro"
+ },
+ "cl:bloco_slime_rainha": {
+  "pt": "Bloco de Slime da Rainha",
+  "en": "Block of Queen's Slime",
+  "icone": "textures/blocks/cl/arte/bloco_slime_rainha"
  },
  "cl:bloco_uraninita": {
   "pt": "Bloco de Uraninita",
@@ -1346,6 +1541,156 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Yeta Wrench",
   "icone": "textures/items/cl/arte/chave_yeta"
  },
+ "cl:chibanca_aco": {
+  "pt": "Chibanca de Aço",
+  "en": "Steel Mattock",
+  "icone": "textures/items/cl/arte/chibanca_aco"
+ },
+ "cl:chibanca_aco_slime": {
+  "pt": "Chibanca de Aço de Slime",
+  "en": "Slimesteel Mattock",
+  "icone": "textures/items/cl/arte/chibanca_aco_slime"
+ },
+ "cl:chibanca_bronze": {
+  "pt": "Chibanca de Bronze",
+  "en": "Bronze Mattock",
+  "icone": "textures/items/cl/arte/chibanca_bronze"
+ },
+ "cl:chibanca_bronze_ametista": {
+  "pt": "Chibanca de Bronze de Ametista",
+  "en": "Amethyst Bronze Mattock",
+  "icone": "textures/items/cl/arte/chibanca_bronze_ametista"
+ },
+ "cl:chibanca_cobalto": {
+  "pt": "Chibanca de Cobalto",
+  "en": "Cobalt Mattock",
+  "icone": "textures/items/cl/arte/chibanca_cobalto"
+ },
+ "cl:chibanca_cobre": {
+  "pt": "Chibanca de Cobre",
+  "en": "Copper Mattock",
+  "icone": "textures/items/cl/arte/chibanca_cobre"
+ },
+ "cl:chibanca_coro": {
+  "pt": "Chibanca de Chorus",
+  "en": "Chorus Mattock",
+  "icone": "textures/items/cl/arte/chibanca_coro"
+ },
+ "cl:chibanca_ferro": {
+  "pt": "Chibanca de Ferro",
+  "en": "Iron Mattock",
+  "icone": "textures/items/cl/arte/chibanca_ferro"
+ },
+ "cl:chibanca_ferro_porco": {
+  "pt": "Chibanca de Ferro-Porco",
+  "en": "Pig Iron Mattock",
+  "icone": "textures/items/cl/arte/chibanca_ferro_porco"
+ },
+ "cl:chibanca_hepatizon": {
+  "pt": "Chibanca de Hepatizão",
+  "en": "Hepatizon Mattock",
+  "icone": "textures/items/cl/arte/chibanca_hepatizon"
+ },
+ "cl:chibanca_madeira": {
+  "pt": "Chibanca de Madeira",
+  "en": "Wood Mattock",
+  "icone": "textures/items/cl/arte/chibanca_madeira"
+ },
+ "cl:chibanca_madeira_slime": {
+  "pt": "Chibanca de Madeira de Slime",
+  "en": "Slimewood Mattock",
+  "icone": "textures/items/cl/arte/chibanca_madeira_slime"
+ },
+ "cl:chibanca_madeira_slime_revestida": {
+  "pt": "Chibanca de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Mattock",
+  "icone": "textures/items/cl/arte/chibanca_madeira_slime_revestida"
+ },
+ "cl:chibanca_madeira_tratada": {
+  "pt": "Chibanca de Madeira Tratada",
+  "en": "Treated Wood Mattock",
+  "icone": "textures/items/cl/arte/chibanca_madeira_tratada"
+ },
+ "cl:chibanca_manyullyn": {
+  "pt": "Chibanca de Manyullyn",
+  "en": "Manyullyn Mattock",
+  "icone": "textures/items/cl/arte/chibanca_manyullyn"
+ },
+ "cl:chibanca_nahuatl": {
+  "pt": "Chibanca de Nahuatl",
+  "en": "Nahuatl Mattock",
+  "icone": "textures/items/cl/arte/chibanca_nahuatl"
+ },
+ "cl:chibanca_osmio": {
+  "pt": "Chibanca de Ósmio",
+  "en": "Osmium Mattock",
+  "icone": "textures/items/cl/arte/chibanca_osmio"
+ },
+ "cl:chibanca_osso": {
+  "pt": "Chibanca de Osso",
+  "en": "Bone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_osso"
+ },
+ "cl:chibanca_osso_blaze": {
+  "pt": "Chibanca de Osso de Blaze",
+  "en": "Blazing Bone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_osso_blaze"
+ },
+ "cl:chibanca_osso_necrotico": {
+  "pt": "Chibanca de Osso Necrótico",
+  "en": "Necrotic Bone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_osso_necrotico"
+ },
+ "cl:chibanca_osso_venenoso": {
+  "pt": "Chibanca de Osso Venenoso",
+  "en": "Venombone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_osso_venenoso"
+ },
+ "cl:chibanca_ouro_rosa": {
+  "pt": "Chibanca de Ouro Rosa",
+  "en": "Rose Gold Mattock",
+  "icone": "textures/items/cl/arte/chibanca_ouro_rosa"
+ },
+ "cl:chibanca_pedra": {
+  "pt": "Chibanca de Pedra",
+  "en": "Stone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_pedra"
+ },
+ "cl:chibanca_pedra_branca": {
+  "pt": "Chibanca de Pedra Branca",
+  "en": "Whitestone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_pedra_branca"
+ },
+ "cl:chibanca_pedra_chamuscada": {
+  "pt": "Chibanca de Pedra Chamuscada",
+  "en": "Scorched Stone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_pedra_chamuscada"
+ },
+ "cl:chibanca_pedra_refrataria": {
+  "pt": "Chibanca de Pedra Carbonizada",
+  "en": "Seared Stone Mattock",
+  "icone": "textures/items/cl/arte/chibanca_pedra_refrataria"
+ },
+ "cl:chibanca_silex": {
+  "pt": "Chibanca de Sílex",
+  "en": "Flint Mattock",
+  "icone": "textures/items/cl/arte/chibanca_silex"
+ },
+ "cl:chibanca_slime_brasa": {
+  "pt": "Chibanca de Slime de Brasa",
+  "en": "Cinderslime Mattock",
+  "icone": "textures/items/cl/arte/chibanca_slime_brasa"
+ },
+ "cl:chibanca_slime_cavaleiro": {
+  "pt": "Chibanca de Slime-Cavaleiro",
+  "en": "Knightslime Mattock",
+  "icone": "textures/items/cl/arte/chibanca_slime_cavaleiro"
+ },
+ "cl:chibanca_slime_rainha": {
+  "pt": "Chibanca de Slime da Rainha",
+  "en": "Queen's Slime Mattock",
+  "icone": "textures/items/cl/arte/chibanca_slime_rainha"
+ },
  "cl:chili_poppers": {
   "pt": "Pimentas Empanadas",
   "en": "Chili Poppers",
@@ -1425,6 +1770,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Coalhada de Queijo",
   "en": "Cheese Curd",
   "icone": "textures/items/cl/c/coalhada_queijo"
+ },
+ "cl:cobalto_bruto": {
+  "pt": "Cobalto Bruto",
+  "en": "Raw Cobalt",
+  "icone": "textures/items/cl/arte/cobalto_bruto"
  },
  "cl:cobre_po": {
   "pt": "Pó de Minério de Cobre",
@@ -1976,6 +2326,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steel Excavator",
   "icone": "textures/items/cl/arte/escavadeira_aco"
  },
+ "cl:escavadeira_aco_slime": {
+  "pt": "Escavadeira de Aço de Slime",
+  "en": "Slimesteel Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_aco_slime"
+ },
  "cl:escavadeira_bronze": {
   "pt": "Escavadeira de Bronze",
   "en": "Bronze Excavator",
@@ -1991,30 +2346,95 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Excavator",
   "icone": "textures/items/cl/arte/escavadeira_cacto"
  },
+ "cl:escavadeira_cobalto": {
+  "pt": "Escavadeira de Cobalto",
+  "en": "Cobalt Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_cobalto"
+ },
  "cl:escavadeira_cobre": {
   "pt": "Escavadeira de Cobre",
   "en": "Copper Excavator",
   "icone": "textures/items/cl/arte/escavadeira_cobre"
+ },
+ "cl:escavadeira_coro": {
+  "pt": "Escavadeira de Chorus",
+  "en": "Chorus Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_coro"
  },
  "cl:escavadeira_ferro": {
   "pt": "Escavadeira de Ferro",
   "en": "Iron Excavator",
   "icone": "textures/items/cl/arte/escavadeira_ferro"
  },
+ "cl:escavadeira_ferro_porco": {
+  "pt": "Escavadeira de Ferro-Porco",
+  "en": "Pig Iron Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_ferro_porco"
+ },
+ "cl:escavadeira_hepatizon": {
+  "pt": "Escavadeira de Hepatizão",
+  "en": "Hepatizon Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_hepatizon"
+ },
  "cl:escavadeira_madeira": {
   "pt": "Escavadeira de Madeira",
   "en": "Wood Excavator",
   "icone": "textures/items/cl/arte/escavadeira_madeira"
+ },
+ "cl:escavadeira_madeira_slime": {
+  "pt": "Escavadeira de Madeira de Slime",
+  "en": "Slimewood Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_madeira_slime"
+ },
+ "cl:escavadeira_madeira_slime_revestida": {
+  "pt": "Escavadeira de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_madeira_slime_revestida"
+ },
+ "cl:escavadeira_madeira_tratada": {
+  "pt": "Escavadeira de Madeira Tratada",
+  "en": "Treated Wood Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_madeira_tratada"
+ },
+ "cl:escavadeira_manyullyn": {
+  "pt": "Escavadeira de Manyullyn",
+  "en": "Manyullyn Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_manyullyn"
+ },
+ "cl:escavadeira_nahuatl": {
+  "pt": "Escavadeira de Nahuatl",
+  "en": "Nahuatl Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_nahuatl"
  },
  "cl:escavadeira_obsidiana": {
   "pt": "Escavadeira de Obsidiana",
   "en": "Obsidian Excavator",
   "icone": "textures/items/cl/arte/escavadeira_obsidiana"
  },
+ "cl:escavadeira_osmio": {
+  "pt": "Escavadeira de Ósmio",
+  "en": "Osmium Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_osmio"
+ },
  "cl:escavadeira_osso": {
   "pt": "Escavadeira de Osso",
   "en": "Bone Excavator",
   "icone": "textures/items/cl/arte/escavadeira_osso"
+ },
+ "cl:escavadeira_osso_blaze": {
+  "pt": "Escavadeira de Osso de Blaze",
+  "en": "Blazing Bone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_osso_blaze"
+ },
+ "cl:escavadeira_osso_necrotico": {
+  "pt": "Escavadeira de Osso Necrótico",
+  "en": "Necrotic Bone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_osso_necrotico"
+ },
+ "cl:escavadeira_osso_venenoso": {
+  "pt": "Escavadeira de Osso Venenoso",
+  "en": "Venombone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_osso_venenoso"
  },
  "cl:escavadeira_ouro_rosa": {
   "pt": "Escavadeira de Ouro Rosa",
@@ -2026,10 +2446,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Excavator",
   "icone": "textures/items/cl/arte/escavadeira_pedra"
  },
+ "cl:escavadeira_pedra_branca": {
+  "pt": "Escavadeira de Pedra Branca",
+  "en": "Whitestone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_pedra_branca"
+ },
+ "cl:escavadeira_pedra_chamuscada": {
+  "pt": "Escavadeira de Pedra Chamuscada",
+  "en": "Scorched Stone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_pedra_chamuscada"
+ },
+ "cl:escavadeira_pedra_refrataria": {
+  "pt": "Escavadeira de Pedra Carbonizada",
+  "en": "Seared Stone Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_pedra_refrataria"
+ },
  "cl:escavadeira_silex": {
   "pt": "Escavadeira de Sílex",
   "en": "Flint Excavator",
   "icone": "textures/items/cl/arte/escavadeira_silex"
+ },
+ "cl:escavadeira_slime_brasa": {
+  "pt": "Escavadeira de Slime de Brasa",
+  "en": "Cinderslime Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_slime_brasa"
+ },
+ "cl:escavadeira_slime_cavaleiro": {
+  "pt": "Escavadeira de Slime-Cavaleiro",
+  "en": "Knightslime Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_slime_cavaleiro"
+ },
+ "cl:escavadeira_slime_rainha": {
+  "pt": "Escavadeira de Slime da Rainha",
+  "en": "Queen's Slime Excavator",
+  "icone": "textures/items/cl/arte/escavadeira_slime_rainha"
  },
  "cl:escoria": {
   "pt": "Escória",
@@ -2082,64 +2532,314 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/blocos/esgoto"
  },
  "cl:espada_larga_aco": {
-  "pt": "Espada Larga de Aço",
-  "en": "Steel Broadsword",
+  "pt": "Espada de Aço",
+  "en": "Steel Sword",
   "icone": "textures/items/cl/arte/espada_larga_aco"
  },
+ "cl:espada_larga_aco_slime": {
+  "pt": "Espada de Aço de Slime",
+  "en": "Slimesteel Sword",
+  "icone": "textures/items/cl/arte/espada_larga_aco_slime"
+ },
  "cl:espada_larga_bronze": {
-  "pt": "Espada Larga de Bronze",
-  "en": "Bronze Broadsword",
+  "pt": "Espada de Bronze",
+  "en": "Bronze Sword",
   "icone": "textures/items/cl/arte/espada_larga_bronze"
  },
  "cl:espada_larga_bronze_ametista": {
-  "pt": "Espada Larga de Bronze de Ametista",
-  "en": "Amethyst Bronze Broadsword",
+  "pt": "Espada de Bronze de Ametista",
+  "en": "Amethyst Bronze Sword",
   "icone": "textures/items/cl/arte/espada_larga_bronze_ametista"
  },
  "cl:espada_larga_cacto": {
-  "pt": "Espada Larga de Cacto",
-  "en": "Cactus Broadsword",
+  "pt": "Espada de Cacto",
+  "en": "Cactus Sword",
   "icone": "textures/items/cl/arte/espada_larga_cacto"
  },
+ "cl:espada_larga_cobalto": {
+  "pt": "Espada de Cobalto",
+  "en": "Cobalt Sword",
+  "icone": "textures/items/cl/arte/espada_larga_cobalto"
+ },
  "cl:espada_larga_cobre": {
-  "pt": "Espada Larga de Cobre",
-  "en": "Copper Broadsword",
+  "pt": "Espada de Cobre",
+  "en": "Copper Sword",
   "icone": "textures/items/cl/arte/espada_larga_cobre"
  },
+ "cl:espada_larga_coro": {
+  "pt": "Espada de Chorus",
+  "en": "Chorus Sword",
+  "icone": "textures/items/cl/arte/espada_larga_coro"
+ },
  "cl:espada_larga_ferro": {
-  "pt": "Espada Larga de Ferro",
-  "en": "Iron Broadsword",
+  "pt": "Espada de Ferro",
+  "en": "Iron Sword",
   "icone": "textures/items/cl/arte/espada_larga_ferro"
  },
+ "cl:espada_larga_ferro_porco": {
+  "pt": "Espada de Ferro-Porco",
+  "en": "Pig Iron Sword",
+  "icone": "textures/items/cl/arte/espada_larga_ferro_porco"
+ },
+ "cl:espada_larga_hepatizon": {
+  "pt": "Espada de Hepatizão",
+  "en": "Hepatizon Sword",
+  "icone": "textures/items/cl/arte/espada_larga_hepatizon"
+ },
  "cl:espada_larga_madeira": {
-  "pt": "Espada Larga de Madeira",
-  "en": "Wood Broadsword",
+  "pt": "Espada de Madeira",
+  "en": "Wood Sword",
   "icone": "textures/items/cl/arte/espada_larga_madeira"
  },
+ "cl:espada_larga_madeira_slime": {
+  "pt": "Espada de Madeira de Slime",
+  "en": "Slimewood Sword",
+  "icone": "textures/items/cl/arte/espada_larga_madeira_slime"
+ },
+ "cl:espada_larga_madeira_slime_revestida": {
+  "pt": "Espada de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Sword",
+  "icone": "textures/items/cl/arte/espada_larga_madeira_slime_revestida"
+ },
+ "cl:espada_larga_madeira_tratada": {
+  "pt": "Espada de Madeira Tratada",
+  "en": "Treated Wood Sword",
+  "icone": "textures/items/cl/arte/espada_larga_madeira_tratada"
+ },
+ "cl:espada_larga_manyullyn": {
+  "pt": "Espada de Manyullyn",
+  "en": "Manyullyn Sword",
+  "icone": "textures/items/cl/arte/espada_larga_manyullyn"
+ },
+ "cl:espada_larga_nahuatl": {
+  "pt": "Espada de Nahuatl",
+  "en": "Nahuatl Sword",
+  "icone": "textures/items/cl/arte/espada_larga_nahuatl"
+ },
  "cl:espada_larga_obsidiana": {
-  "pt": "Espada Larga de Obsidiana",
-  "en": "Obsidian Broadsword",
+  "pt": "Espada de Obsidiana",
+  "en": "Obsidian Sword",
   "icone": "textures/items/cl/arte/espada_larga_obsidiana"
  },
+ "cl:espada_larga_osmio": {
+  "pt": "Espada de Ósmio",
+  "en": "Osmium Sword",
+  "icone": "textures/items/cl/arte/espada_larga_osmio"
+ },
  "cl:espada_larga_osso": {
-  "pt": "Espada Larga de Osso",
-  "en": "Bone Broadsword",
+  "pt": "Espada de Osso",
+  "en": "Bone Sword",
   "icone": "textures/items/cl/arte/espada_larga_osso"
  },
+ "cl:espada_larga_osso_blaze": {
+  "pt": "Espada de Osso de Blaze",
+  "en": "Blazing Bone Sword",
+  "icone": "textures/items/cl/arte/espada_larga_osso_blaze"
+ },
+ "cl:espada_larga_osso_necrotico": {
+  "pt": "Espada de Osso Necrótico",
+  "en": "Necrotic Bone Sword",
+  "icone": "textures/items/cl/arte/espada_larga_osso_necrotico"
+ },
+ "cl:espada_larga_osso_venenoso": {
+  "pt": "Espada de Osso Venenoso",
+  "en": "Venombone Sword",
+  "icone": "textures/items/cl/arte/espada_larga_osso_venenoso"
+ },
  "cl:espada_larga_ouro_rosa": {
-  "pt": "Espada Larga de Ouro Rosa",
-  "en": "Rose Gold Broadsword",
+  "pt": "Espada de Ouro Rosa",
+  "en": "Rose Gold Sword",
   "icone": "textures/items/cl/arte/espada_larga_ouro_rosa"
  },
  "cl:espada_larga_pedra": {
-  "pt": "Espada Larga de Pedra",
-  "en": "Stone Broadsword",
+  "pt": "Espada de Pedra",
+  "en": "Stone Sword",
   "icone": "textures/items/cl/arte/espada_larga_pedra"
  },
+ "cl:espada_larga_pedra_branca": {
+  "pt": "Espada de Pedra Branca",
+  "en": "Whitestone Sword",
+  "icone": "textures/items/cl/arte/espada_larga_pedra_branca"
+ },
+ "cl:espada_larga_pedra_chamuscada": {
+  "pt": "Espada de Pedra Chamuscada",
+  "en": "Scorched Stone Sword",
+  "icone": "textures/items/cl/arte/espada_larga_pedra_chamuscada"
+ },
+ "cl:espada_larga_pedra_refrataria": {
+  "pt": "Espada de Pedra Carbonizada",
+  "en": "Seared Stone Sword",
+  "icone": "textures/items/cl/arte/espada_larga_pedra_refrataria"
+ },
  "cl:espada_larga_silex": {
-  "pt": "Espada Larga de Sílex",
-  "en": "Flint Broadsword",
+  "pt": "Espada de Sílex",
+  "en": "Flint Sword",
   "icone": "textures/items/cl/arte/espada_larga_silex"
+ },
+ "cl:espada_larga_slime_brasa": {
+  "pt": "Espada de Slime de Brasa",
+  "en": "Cinderslime Sword",
+  "icone": "textures/items/cl/arte/espada_larga_slime_brasa"
+ },
+ "cl:espada_larga_slime_cavaleiro": {
+  "pt": "Espada de Slime-Cavaleiro",
+  "en": "Knightslime Sword",
+  "icone": "textures/items/cl/arte/espada_larga_slime_cavaleiro"
+ },
+ "cl:espada_larga_slime_rainha": {
+  "pt": "Espada de Slime da Rainha",
+  "en": "Queen's Slime Sword",
+  "icone": "textures/items/cl/arte/espada_larga_slime_rainha"
+ },
+ "cl:espadao_aco": {
+  "pt": "Espadão de Aço",
+  "en": "Steel Cleaver",
+  "icone": "textures/items/cl/arte/espadao_aco"
+ },
+ "cl:espadao_aco_slime": {
+  "pt": "Espadão de Aço de Slime",
+  "en": "Slimesteel Cleaver",
+  "icone": "textures/items/cl/arte/espadao_aco_slime"
+ },
+ "cl:espadao_bronze": {
+  "pt": "Espadão de Bronze",
+  "en": "Bronze Cleaver",
+  "icone": "textures/items/cl/arte/espadao_bronze"
+ },
+ "cl:espadao_bronze_ametista": {
+  "pt": "Espadão de Bronze de Ametista",
+  "en": "Amethyst Bronze Cleaver",
+  "icone": "textures/items/cl/arte/espadao_bronze_ametista"
+ },
+ "cl:espadao_cobalto": {
+  "pt": "Espadão de Cobalto",
+  "en": "Cobalt Cleaver",
+  "icone": "textures/items/cl/arte/espadao_cobalto"
+ },
+ "cl:espadao_cobre": {
+  "pt": "Espadão de Cobre",
+  "en": "Copper Cleaver",
+  "icone": "textures/items/cl/arte/espadao_cobre"
+ },
+ "cl:espadao_coro": {
+  "pt": "Espadão de Chorus",
+  "en": "Chorus Cleaver",
+  "icone": "textures/items/cl/arte/espadao_coro"
+ },
+ "cl:espadao_ferro": {
+  "pt": "Espadão de Ferro",
+  "en": "Iron Cleaver",
+  "icone": "textures/items/cl/arte/espadao_ferro"
+ },
+ "cl:espadao_ferro_porco": {
+  "pt": "Espadão de Ferro-Porco",
+  "en": "Pig Iron Cleaver",
+  "icone": "textures/items/cl/arte/espadao_ferro_porco"
+ },
+ "cl:espadao_hepatizon": {
+  "pt": "Espadão de Hepatizão",
+  "en": "Hepatizon Cleaver",
+  "icone": "textures/items/cl/arte/espadao_hepatizon"
+ },
+ "cl:espadao_madeira": {
+  "pt": "Espadão de Madeira",
+  "en": "Wood Cleaver",
+  "icone": "textures/items/cl/arte/espadao_madeira"
+ },
+ "cl:espadao_madeira_slime": {
+  "pt": "Espadão de Madeira de Slime",
+  "en": "Slimewood Cleaver",
+  "icone": "textures/items/cl/arte/espadao_madeira_slime"
+ },
+ "cl:espadao_madeira_slime_revestida": {
+  "pt": "Espadão de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Cleaver",
+  "icone": "textures/items/cl/arte/espadao_madeira_slime_revestida"
+ },
+ "cl:espadao_madeira_tratada": {
+  "pt": "Espadão de Madeira Tratada",
+  "en": "Treated Wood Cleaver",
+  "icone": "textures/items/cl/arte/espadao_madeira_tratada"
+ },
+ "cl:espadao_manyullyn": {
+  "pt": "Espadão de Manyullyn",
+  "en": "Manyullyn Cleaver",
+  "icone": "textures/items/cl/arte/espadao_manyullyn"
+ },
+ "cl:espadao_nahuatl": {
+  "pt": "Espadão de Nahuatl",
+  "en": "Nahuatl Cleaver",
+  "icone": "textures/items/cl/arte/espadao_nahuatl"
+ },
+ "cl:espadao_osmio": {
+  "pt": "Espadão de Ósmio",
+  "en": "Osmium Cleaver",
+  "icone": "textures/items/cl/arte/espadao_osmio"
+ },
+ "cl:espadao_osso": {
+  "pt": "Espadão de Osso",
+  "en": "Bone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_osso"
+ },
+ "cl:espadao_osso_blaze": {
+  "pt": "Espadão de Osso de Blaze",
+  "en": "Blazing Bone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_osso_blaze"
+ },
+ "cl:espadao_osso_necrotico": {
+  "pt": "Espadão de Osso Necrótico",
+  "en": "Necrotic Bone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_osso_necrotico"
+ },
+ "cl:espadao_osso_venenoso": {
+  "pt": "Espadão de Osso Venenoso",
+  "en": "Venombone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_osso_venenoso"
+ },
+ "cl:espadao_ouro_rosa": {
+  "pt": "Espadão de Ouro Rosa",
+  "en": "Rose Gold Cleaver",
+  "icone": "textures/items/cl/arte/espadao_ouro_rosa"
+ },
+ "cl:espadao_pedra": {
+  "pt": "Espadão de Pedra",
+  "en": "Stone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_pedra"
+ },
+ "cl:espadao_pedra_branca": {
+  "pt": "Espadão de Pedra Branca",
+  "en": "Whitestone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_pedra_branca"
+ },
+ "cl:espadao_pedra_chamuscada": {
+  "pt": "Espadão de Pedra Chamuscada",
+  "en": "Scorched Stone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_pedra_chamuscada"
+ },
+ "cl:espadao_pedra_refrataria": {
+  "pt": "Espadão de Pedra Carbonizada",
+  "en": "Seared Stone Cleaver",
+  "icone": "textures/items/cl/arte/espadao_pedra_refrataria"
+ },
+ "cl:espadao_silex": {
+  "pt": "Espadão de Sílex",
+  "en": "Flint Cleaver",
+  "icone": "textures/items/cl/arte/espadao_silex"
+ },
+ "cl:espadao_slime_brasa": {
+  "pt": "Espadão de Slime de Brasa",
+  "en": "Cinderslime Cleaver",
+  "icone": "textures/items/cl/arte/espadao_slime_brasa"
+ },
+ "cl:espadao_slime_cavaleiro": {
+  "pt": "Espadão de Slime-Cavaleiro",
+  "en": "Knightslime Cleaver",
+  "icone": "textures/items/cl/arte/espadao_slime_cavaleiro"
+ },
+ "cl:espadao_slime_rainha": {
+  "pt": "Espadão de Slime da Rainha",
+  "en": "Queen's Slime Cleaver",
+  "icone": "textures/items/cl/arte/espadao_slime_rainha"
  },
  "cl:espetinho": {
   "pt": "Espetinho",
@@ -2455,6 +3155,156 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Foguete Tier 1",
   "en": "Tier 1 Rocket",
   "icone": "textures/items/cl/arte/foguete_t1"
+ },
+ "cl:foice_aco": {
+  "pt": "Foice de Aço",
+  "en": "Steel Scythe",
+  "icone": "textures/items/cl/arte/foice_aco"
+ },
+ "cl:foice_aco_slime": {
+  "pt": "Foice de Aço de Slime",
+  "en": "Slimesteel Scythe",
+  "icone": "textures/items/cl/arte/foice_aco_slime"
+ },
+ "cl:foice_bronze": {
+  "pt": "Foice de Bronze",
+  "en": "Bronze Scythe",
+  "icone": "textures/items/cl/arte/foice_bronze"
+ },
+ "cl:foice_bronze_ametista": {
+  "pt": "Foice de Bronze de Ametista",
+  "en": "Amethyst Bronze Scythe",
+  "icone": "textures/items/cl/arte/foice_bronze_ametista"
+ },
+ "cl:foice_cobalto": {
+  "pt": "Foice de Cobalto",
+  "en": "Cobalt Scythe",
+  "icone": "textures/items/cl/arte/foice_cobalto"
+ },
+ "cl:foice_cobre": {
+  "pt": "Foice de Cobre",
+  "en": "Copper Scythe",
+  "icone": "textures/items/cl/arte/foice_cobre"
+ },
+ "cl:foice_coro": {
+  "pt": "Foice de Chorus",
+  "en": "Chorus Scythe",
+  "icone": "textures/items/cl/arte/foice_coro"
+ },
+ "cl:foice_ferro": {
+  "pt": "Foice de Ferro",
+  "en": "Iron Scythe",
+  "icone": "textures/items/cl/arte/foice_ferro"
+ },
+ "cl:foice_ferro_porco": {
+  "pt": "Foice de Ferro-Porco",
+  "en": "Pig Iron Scythe",
+  "icone": "textures/items/cl/arte/foice_ferro_porco"
+ },
+ "cl:foice_hepatizon": {
+  "pt": "Foice de Hepatizão",
+  "en": "Hepatizon Scythe",
+  "icone": "textures/items/cl/arte/foice_hepatizon"
+ },
+ "cl:foice_madeira": {
+  "pt": "Foice de Madeira",
+  "en": "Wood Scythe",
+  "icone": "textures/items/cl/arte/foice_madeira"
+ },
+ "cl:foice_madeira_slime": {
+  "pt": "Foice de Madeira de Slime",
+  "en": "Slimewood Scythe",
+  "icone": "textures/items/cl/arte/foice_madeira_slime"
+ },
+ "cl:foice_madeira_slime_revestida": {
+  "pt": "Foice de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Scythe",
+  "icone": "textures/items/cl/arte/foice_madeira_slime_revestida"
+ },
+ "cl:foice_madeira_tratada": {
+  "pt": "Foice de Madeira Tratada",
+  "en": "Treated Wood Scythe",
+  "icone": "textures/items/cl/arte/foice_madeira_tratada"
+ },
+ "cl:foice_manyullyn": {
+  "pt": "Foice de Manyullyn",
+  "en": "Manyullyn Scythe",
+  "icone": "textures/items/cl/arte/foice_manyullyn"
+ },
+ "cl:foice_nahuatl": {
+  "pt": "Foice de Nahuatl",
+  "en": "Nahuatl Scythe",
+  "icone": "textures/items/cl/arte/foice_nahuatl"
+ },
+ "cl:foice_osmio": {
+  "pt": "Foice de Ósmio",
+  "en": "Osmium Scythe",
+  "icone": "textures/items/cl/arte/foice_osmio"
+ },
+ "cl:foice_osso": {
+  "pt": "Foice de Osso",
+  "en": "Bone Scythe",
+  "icone": "textures/items/cl/arte/foice_osso"
+ },
+ "cl:foice_osso_blaze": {
+  "pt": "Foice de Osso de Blaze",
+  "en": "Blazing Bone Scythe",
+  "icone": "textures/items/cl/arte/foice_osso_blaze"
+ },
+ "cl:foice_osso_necrotico": {
+  "pt": "Foice de Osso Necrótico",
+  "en": "Necrotic Bone Scythe",
+  "icone": "textures/items/cl/arte/foice_osso_necrotico"
+ },
+ "cl:foice_osso_venenoso": {
+  "pt": "Foice de Osso Venenoso",
+  "en": "Venombone Scythe",
+  "icone": "textures/items/cl/arte/foice_osso_venenoso"
+ },
+ "cl:foice_ouro_rosa": {
+  "pt": "Foice de Ouro Rosa",
+  "en": "Rose Gold Scythe",
+  "icone": "textures/items/cl/arte/foice_ouro_rosa"
+ },
+ "cl:foice_pedra": {
+  "pt": "Foice de Pedra",
+  "en": "Stone Scythe",
+  "icone": "textures/items/cl/arte/foice_pedra"
+ },
+ "cl:foice_pedra_branca": {
+  "pt": "Foice de Pedra Branca",
+  "en": "Whitestone Scythe",
+  "icone": "textures/items/cl/arte/foice_pedra_branca"
+ },
+ "cl:foice_pedra_chamuscada": {
+  "pt": "Foice de Pedra Chamuscada",
+  "en": "Scorched Stone Scythe",
+  "icone": "textures/items/cl/arte/foice_pedra_chamuscada"
+ },
+ "cl:foice_pedra_refrataria": {
+  "pt": "Foice de Pedra Carbonizada",
+  "en": "Seared Stone Scythe",
+  "icone": "textures/items/cl/arte/foice_pedra_refrataria"
+ },
+ "cl:foice_silex": {
+  "pt": "Foice de Sílex",
+  "en": "Flint Scythe",
+  "icone": "textures/items/cl/arte/foice_silex"
+ },
+ "cl:foice_slime_brasa": {
+  "pt": "Foice de Slime de Brasa",
+  "en": "Cinderslime Scythe",
+  "icone": "textures/items/cl/arte/foice_slime_brasa"
+ },
+ "cl:foice_slime_cavaleiro": {
+  "pt": "Foice de Slime-Cavaleiro",
+  "en": "Knightslime Scythe",
+  "icone": "textures/items/cl/arte/foice_slime_cavaleiro"
+ },
+ "cl:foice_slime_rainha": {
+  "pt": "Foice de Slime da Rainha",
+  "en": "Queen's Slime Scythe",
+  "icone": "textures/items/cl/arte/foice_slime_rainha"
  },
  "cl:folha_infestada": {
   "pt": "Folha Infestada",
@@ -2881,6 +3731,156 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Jetpack",
   "icone": "textures/items/cl/arte/jetpack"
  },
+ "cl:kama_aco": {
+  "pt": "Kama de Aço",
+  "en": "Steel Kama",
+  "icone": "textures/items/cl/arte/kama_aco"
+ },
+ "cl:kama_aco_slime": {
+  "pt": "Kama de Aço de Slime",
+  "en": "Slimesteel Kama",
+  "icone": "textures/items/cl/arte/kama_aco_slime"
+ },
+ "cl:kama_bronze": {
+  "pt": "Kama de Bronze",
+  "en": "Bronze Kama",
+  "icone": "textures/items/cl/arte/kama_bronze"
+ },
+ "cl:kama_bronze_ametista": {
+  "pt": "Kama de Bronze de Ametista",
+  "en": "Amethyst Bronze Kama",
+  "icone": "textures/items/cl/arte/kama_bronze_ametista"
+ },
+ "cl:kama_cobalto": {
+  "pt": "Kama de Cobalto",
+  "en": "Cobalt Kama",
+  "icone": "textures/items/cl/arte/kama_cobalto"
+ },
+ "cl:kama_cobre": {
+  "pt": "Kama de Cobre",
+  "en": "Copper Kama",
+  "icone": "textures/items/cl/arte/kama_cobre"
+ },
+ "cl:kama_coro": {
+  "pt": "Kama de Chorus",
+  "en": "Chorus Kama",
+  "icone": "textures/items/cl/arte/kama_coro"
+ },
+ "cl:kama_ferro": {
+  "pt": "Kama de Ferro",
+  "en": "Iron Kama",
+  "icone": "textures/items/cl/arte/kama_ferro"
+ },
+ "cl:kama_ferro_porco": {
+  "pt": "Kama de Ferro-Porco",
+  "en": "Pig Iron Kama",
+  "icone": "textures/items/cl/arte/kama_ferro_porco"
+ },
+ "cl:kama_hepatizon": {
+  "pt": "Kama de Hepatizão",
+  "en": "Hepatizon Kama",
+  "icone": "textures/items/cl/arte/kama_hepatizon"
+ },
+ "cl:kama_madeira": {
+  "pt": "Kama de Madeira",
+  "en": "Wood Kama",
+  "icone": "textures/items/cl/arte/kama_madeira"
+ },
+ "cl:kama_madeira_slime": {
+  "pt": "Kama de Madeira de Slime",
+  "en": "Slimewood Kama",
+  "icone": "textures/items/cl/arte/kama_madeira_slime"
+ },
+ "cl:kama_madeira_slime_revestida": {
+  "pt": "Kama de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Kama",
+  "icone": "textures/items/cl/arte/kama_madeira_slime_revestida"
+ },
+ "cl:kama_madeira_tratada": {
+  "pt": "Kama de Madeira Tratada",
+  "en": "Treated Wood Kama",
+  "icone": "textures/items/cl/arte/kama_madeira_tratada"
+ },
+ "cl:kama_manyullyn": {
+  "pt": "Kama de Manyullyn",
+  "en": "Manyullyn Kama",
+  "icone": "textures/items/cl/arte/kama_manyullyn"
+ },
+ "cl:kama_nahuatl": {
+  "pt": "Kama de Nahuatl",
+  "en": "Nahuatl Kama",
+  "icone": "textures/items/cl/arte/kama_nahuatl"
+ },
+ "cl:kama_osmio": {
+  "pt": "Kama de Ósmio",
+  "en": "Osmium Kama",
+  "icone": "textures/items/cl/arte/kama_osmio"
+ },
+ "cl:kama_osso": {
+  "pt": "Kama de Osso",
+  "en": "Bone Kama",
+  "icone": "textures/items/cl/arte/kama_osso"
+ },
+ "cl:kama_osso_blaze": {
+  "pt": "Kama de Osso de Blaze",
+  "en": "Blazing Bone Kama",
+  "icone": "textures/items/cl/arte/kama_osso_blaze"
+ },
+ "cl:kama_osso_necrotico": {
+  "pt": "Kama de Osso Necrótico",
+  "en": "Necrotic Bone Kama",
+  "icone": "textures/items/cl/arte/kama_osso_necrotico"
+ },
+ "cl:kama_osso_venenoso": {
+  "pt": "Kama de Osso Venenoso",
+  "en": "Venombone Kama",
+  "icone": "textures/items/cl/arte/kama_osso_venenoso"
+ },
+ "cl:kama_ouro_rosa": {
+  "pt": "Kama de Ouro Rosa",
+  "en": "Rose Gold Kama",
+  "icone": "textures/items/cl/arte/kama_ouro_rosa"
+ },
+ "cl:kama_pedra": {
+  "pt": "Kama de Pedra",
+  "en": "Stone Kama",
+  "icone": "textures/items/cl/arte/kama_pedra"
+ },
+ "cl:kama_pedra_branca": {
+  "pt": "Kama de Pedra Branca",
+  "en": "Whitestone Kama",
+  "icone": "textures/items/cl/arte/kama_pedra_branca"
+ },
+ "cl:kama_pedra_chamuscada": {
+  "pt": "Kama de Pedra Chamuscada",
+  "en": "Scorched Stone Kama",
+  "icone": "textures/items/cl/arte/kama_pedra_chamuscada"
+ },
+ "cl:kama_pedra_refrataria": {
+  "pt": "Kama de Pedra Carbonizada",
+  "en": "Seared Stone Kama",
+  "icone": "textures/items/cl/arte/kama_pedra_refrataria"
+ },
+ "cl:kama_silex": {
+  "pt": "Kama de Sílex",
+  "en": "Flint Kama",
+  "icone": "textures/items/cl/arte/kama_silex"
+ },
+ "cl:kama_slime_brasa": {
+  "pt": "Kama de Slime de Brasa",
+  "en": "Cinderslime Kama",
+  "icone": "textures/items/cl/arte/kama_slime_brasa"
+ },
+ "cl:kama_slime_cavaleiro": {
+  "pt": "Kama de Slime-Cavaleiro",
+  "en": "Knightslime Kama",
+  "icone": "textures/items/cl/arte/kama_slime_cavaleiro"
+ },
+ "cl:kama_slime_rainha": {
+  "pt": "Kama de Slime da Rainha",
+  "en": "Queen's Slime Kama",
+  "icone": "textures/items/cl/arte/kama_slime_rainha"
+ },
  "cl:lampada": {
   "pt": "Lâmpada",
   "en": "Fancy Lamp",
@@ -2996,6 +3996,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steel Ingot",
   "icone": "textures/items/cl/arte/lingote_aco"
  },
+ "cl:lingote_aco_slime": {
+  "pt": "Lingote de Aço de Slime",
+  "en": "Slimesteel Ingot",
+  "icone": "textures/items/cl/arte/lingote_aco_slime"
+ },
  "cl:lingote_aluminio": {
   "pt": "Lingote de Alumínio",
   "en": "Aluminum Ingot",
@@ -3021,6 +4026,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cyanite Ingot",
   "icone": "textures/items/cl/arte/lingote_cianita"
  },
+ "cl:lingote_cobalto": {
+  "pt": "Lingote de Cobalto",
+  "en": "Cobalt Ingot",
+  "icone": "textures/items/cl/arte/lingote_cobalto"
+ },
  "cl:lingote_estanho": {
   "pt": "Lingote de Estanho",
   "en": "Tin Ingot",
@@ -3031,15 +4041,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Compressed Iron Ingot",
   "icone": "textures/items/cl/arte/lingote_ferro_comprimido"
  },
+ "cl:lingote_ferro_porco": {
+  "pt": "Lingote de Ferro-Porco",
+  "en": "Pig Iron Ingot",
+  "icone": "textures/items/cl/arte/lingote_ferro_porco"
+ },
  "cl:lingote_glowstone_refinado": {
   "pt": "Lingote de Glowstone Refinada",
   "en": "Refined Glowstone Ingot",
   "icone": "textures/items/cl/arte/lingote_glowstone_refinado"
  },
+ "cl:lingote_hepatizon": {
+  "pt": "Lingote de Hepatizão",
+  "en": "Hepatizon Ingot",
+  "icone": "textures/items/cl/arte/lingote_hepatizon"
+ },
  "cl:lingote_latao": {
   "pt": "Lingote de Latão",
   "en": "Brass Ingot",
   "icone": "textures/items/cl/c/lingote_latao"
+ },
+ "cl:lingote_manyullyn": {
+  "pt": "Lingote de Manyullyn",
+  "en": "Manyullyn Ingot",
+  "icone": "textures/items/cl/arte/lingote_manyullyn"
  },
  "cl:lingote_obsidiana_refinada": {
   "pt": "Lingote de Obsidiana Refinada",
@@ -3055,6 +4080,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Ouro Rosa",
   "en": "Rose Gold Ingot",
   "icone": "textures/items/cl/arte/lingote_ouro_rosa"
+ },
+ "cl:lingote_slime_brasa": {
+  "pt": "Lingote de Slime de Brasa",
+  "en": "Cinderslime Ingot",
+  "icone": "textures/items/cl/arte/lingote_slime_brasa"
+ },
+ "cl:lingote_slime_cavaleiro": {
+  "pt": "Lingote de Slime-Cavaleiro",
+  "en": "Knightslime Ingot",
+  "icone": "textures/items/cl/arte/lingote_slime_cavaleiro"
+ },
+ "cl:lingote_slime_rainha": {
+  "pt": "Lingote de Slime da Rainha",
+  "en": "Queen's Slime Ingot",
+  "icone": "textures/items/cl/arte/lingote_slime_rainha"
  },
  "cl:lingote_yellorium": {
   "pt": "Lingote de Yellorium",
@@ -3107,124 +4147,324 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/macarrao_tinta_lula"
  },
  "cl:machadinha_aco": {
-  "pt": "Machadinha de Aço",
-  "en": "Steel Hatchet",
+  "pt": "Machado de Mão de Aço",
+  "en": "Steel Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_aco"
  },
+ "cl:machadinha_aco_slime": {
+  "pt": "Machado de Mão de Aço de Slime",
+  "en": "Slimesteel Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_aco_slime"
+ },
  "cl:machadinha_bronze": {
-  "pt": "Machadinha de Bronze",
-  "en": "Bronze Hatchet",
+  "pt": "Machado de Mão de Bronze",
+  "en": "Bronze Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_bronze"
  },
  "cl:machadinha_bronze_ametista": {
-  "pt": "Machadinha de Bronze de Ametista",
-  "en": "Amethyst Bronze Hatchet",
+  "pt": "Machado de Mão de Bronze de Ametista",
+  "en": "Amethyst Bronze Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_bronze_ametista"
  },
  "cl:machadinha_cacto": {
-  "pt": "Machadinha de Cacto",
-  "en": "Cactus Hatchet",
+  "pt": "Machado de Mão de Cacto",
+  "en": "Cactus Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_cacto"
  },
+ "cl:machadinha_cobalto": {
+  "pt": "Machado de Mão de Cobalto",
+  "en": "Cobalt Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_cobalto"
+ },
  "cl:machadinha_cobre": {
-  "pt": "Machadinha de Cobre",
-  "en": "Copper Hatchet",
+  "pt": "Machado de Mão de Cobre",
+  "en": "Copper Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_cobre"
  },
+ "cl:machadinha_coro": {
+  "pt": "Machado de Mão de Chorus",
+  "en": "Chorus Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_coro"
+ },
  "cl:machadinha_ferro": {
-  "pt": "Machadinha de Ferro",
-  "en": "Iron Hatchet",
+  "pt": "Machado de Mão de Ferro",
+  "en": "Iron Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_ferro"
  },
+ "cl:machadinha_ferro_porco": {
+  "pt": "Machado de Mão de Ferro-Porco",
+  "en": "Pig Iron Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_ferro_porco"
+ },
+ "cl:machadinha_hepatizon": {
+  "pt": "Machado de Mão de Hepatizão",
+  "en": "Hepatizon Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_hepatizon"
+ },
  "cl:machadinha_madeira": {
-  "pt": "Machadinha de Madeira",
-  "en": "Wood Hatchet",
+  "pt": "Machado de Mão de Madeira",
+  "en": "Wood Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_madeira"
  },
+ "cl:machadinha_madeira_slime": {
+  "pt": "Machado de Mão de Madeira de Slime",
+  "en": "Slimewood Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_madeira_slime"
+ },
+ "cl:machadinha_madeira_slime_revestida": {
+  "pt": "Machado de Mão de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_madeira_slime_revestida"
+ },
+ "cl:machadinha_madeira_tratada": {
+  "pt": "Machado de Mão de Madeira Tratada",
+  "en": "Treated Wood Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_madeira_tratada"
+ },
+ "cl:machadinha_manyullyn": {
+  "pt": "Machado de Mão de Manyullyn",
+  "en": "Manyullyn Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_manyullyn"
+ },
+ "cl:machadinha_nahuatl": {
+  "pt": "Machado de Mão de Nahuatl",
+  "en": "Nahuatl Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_nahuatl"
+ },
  "cl:machadinha_obsidiana": {
-  "pt": "Machadinha de Obsidiana",
-  "en": "Obsidian Hatchet",
+  "pt": "Machado de Mão de Obsidiana",
+  "en": "Obsidian Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_obsidiana"
  },
+ "cl:machadinha_osmio": {
+  "pt": "Machado de Mão de Ósmio",
+  "en": "Osmium Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_osmio"
+ },
  "cl:machadinha_osso": {
-  "pt": "Machadinha de Osso",
-  "en": "Bone Hatchet",
+  "pt": "Machado de Mão de Osso",
+  "en": "Bone Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_osso"
  },
+ "cl:machadinha_osso_blaze": {
+  "pt": "Machado de Mão de Osso de Blaze",
+  "en": "Blazing Bone Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_osso_blaze"
+ },
+ "cl:machadinha_osso_necrotico": {
+  "pt": "Machado de Mão de Osso Necrótico",
+  "en": "Necrotic Bone Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_osso_necrotico"
+ },
+ "cl:machadinha_osso_venenoso": {
+  "pt": "Machado de Mão de Osso Venenoso",
+  "en": "Venombone Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_osso_venenoso"
+ },
  "cl:machadinha_ouro_rosa": {
-  "pt": "Machadinha de Ouro Rosa",
-  "en": "Rose Gold Hatchet",
+  "pt": "Machado de Mão de Ouro Rosa",
+  "en": "Rose Gold Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_ouro_rosa"
  },
  "cl:machadinha_pedra": {
-  "pt": "Machadinha de Pedra",
-  "en": "Stone Hatchet",
+  "pt": "Machado de Mão de Pedra",
+  "en": "Stone Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_pedra"
  },
+ "cl:machadinha_pedra_branca": {
+  "pt": "Machado de Mão de Pedra Branca",
+  "en": "Whitestone Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_pedra_branca"
+ },
+ "cl:machadinha_pedra_chamuscada": {
+  "pt": "Machado de Mão de Pedra Chamuscada",
+  "en": "Scorched Stone Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_pedra_chamuscada"
+ },
+ "cl:machadinha_pedra_refrataria": {
+  "pt": "Machado de Mão de Pedra Carbonizada",
+  "en": "Seared Stone Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_pedra_refrataria"
+ },
  "cl:machadinha_silex": {
-  "pt": "Machadinha de Sílex",
-  "en": "Flint Hatchet",
+  "pt": "Machado de Mão de Sílex",
+  "en": "Flint Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_silex"
  },
+ "cl:machadinha_slime_brasa": {
+  "pt": "Machado de Mão de Slime de Brasa",
+  "en": "Cinderslime Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_slime_brasa"
+ },
+ "cl:machadinha_slime_cavaleiro": {
+  "pt": "Machado de Mão de Slime-Cavaleiro",
+  "en": "Knightslime Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_slime_cavaleiro"
+ },
+ "cl:machadinha_slime_rainha": {
+  "pt": "Machado de Mão de Slime da Rainha",
+  "en": "Queen's Slime Hand Axe",
+  "icone": "textures/items/cl/arte/machadinha_slime_rainha"
+ },
  "cl:machado_largo_aco": {
-  "pt": "Machado Largo de Aço",
+  "pt": "Machado Grande de Aço",
   "en": "Steel Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_aco"
  },
+ "cl:machado_largo_aco_slime": {
+  "pt": "Machado Grande de Aço de Slime",
+  "en": "Slimesteel Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_aco_slime"
+ },
  "cl:machado_largo_bronze": {
-  "pt": "Machado Largo de Bronze",
+  "pt": "Machado Grande de Bronze",
   "en": "Bronze Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_bronze"
  },
  "cl:machado_largo_bronze_ametista": {
-  "pt": "Machado Largo de Bronze de Ametista",
+  "pt": "Machado Grande de Bronze de Ametista",
   "en": "Amethyst Bronze Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_bronze_ametista"
  },
  "cl:machado_largo_cacto": {
-  "pt": "Machado Largo de Cacto",
+  "pt": "Machado Grande de Cacto",
   "en": "Cactus Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_cacto"
  },
+ "cl:machado_largo_cobalto": {
+  "pt": "Machado Grande de Cobalto",
+  "en": "Cobalt Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_cobalto"
+ },
  "cl:machado_largo_cobre": {
-  "pt": "Machado Largo de Cobre",
+  "pt": "Machado Grande de Cobre",
   "en": "Copper Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_cobre"
  },
+ "cl:machado_largo_coro": {
+  "pt": "Machado Grande de Chorus",
+  "en": "Chorus Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_coro"
+ },
  "cl:machado_largo_ferro": {
-  "pt": "Machado Largo de Ferro",
+  "pt": "Machado Grande de Ferro",
   "en": "Iron Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_ferro"
  },
+ "cl:machado_largo_ferro_porco": {
+  "pt": "Machado Grande de Ferro-Porco",
+  "en": "Pig Iron Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_ferro_porco"
+ },
+ "cl:machado_largo_hepatizon": {
+  "pt": "Machado Grande de Hepatizão",
+  "en": "Hepatizon Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_hepatizon"
+ },
  "cl:machado_largo_madeira": {
-  "pt": "Machado Largo de Madeira",
+  "pt": "Machado Grande de Madeira",
   "en": "Wood Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_madeira"
  },
+ "cl:machado_largo_madeira_slime": {
+  "pt": "Machado Grande de Madeira de Slime",
+  "en": "Slimewood Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_madeira_slime"
+ },
+ "cl:machado_largo_madeira_slime_revestida": {
+  "pt": "Machado Grande de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_madeira_slime_revestida"
+ },
+ "cl:machado_largo_madeira_tratada": {
+  "pt": "Machado Grande de Madeira Tratada",
+  "en": "Treated Wood Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_madeira_tratada"
+ },
+ "cl:machado_largo_manyullyn": {
+  "pt": "Machado Grande de Manyullyn",
+  "en": "Manyullyn Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_manyullyn"
+ },
+ "cl:machado_largo_nahuatl": {
+  "pt": "Machado Grande de Nahuatl",
+  "en": "Nahuatl Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_nahuatl"
+ },
  "cl:machado_largo_obsidiana": {
-  "pt": "Machado Largo de Obsidiana",
+  "pt": "Machado Grande de Obsidiana",
   "en": "Obsidian Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_obsidiana"
  },
+ "cl:machado_largo_osmio": {
+  "pt": "Machado Grande de Ósmio",
+  "en": "Osmium Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_osmio"
+ },
  "cl:machado_largo_osso": {
-  "pt": "Machado Largo de Osso",
+  "pt": "Machado Grande de Osso",
   "en": "Bone Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_osso"
  },
+ "cl:machado_largo_osso_blaze": {
+  "pt": "Machado Grande de Osso de Blaze",
+  "en": "Blazing Bone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_osso_blaze"
+ },
+ "cl:machado_largo_osso_necrotico": {
+  "pt": "Machado Grande de Osso Necrótico",
+  "en": "Necrotic Bone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_osso_necrotico"
+ },
+ "cl:machado_largo_osso_venenoso": {
+  "pt": "Machado Grande de Osso Venenoso",
+  "en": "Venombone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_osso_venenoso"
+ },
  "cl:machado_largo_ouro_rosa": {
-  "pt": "Machado Largo de Ouro Rosa",
+  "pt": "Machado Grande de Ouro Rosa",
   "en": "Rose Gold Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_ouro_rosa"
  },
  "cl:machado_largo_pedra": {
-  "pt": "Machado Largo de Pedra",
+  "pt": "Machado Grande de Pedra",
   "en": "Stone Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_pedra"
  },
+ "cl:machado_largo_pedra_branca": {
+  "pt": "Machado Grande de Pedra Branca",
+  "en": "Whitestone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_pedra_branca"
+ },
+ "cl:machado_largo_pedra_chamuscada": {
+  "pt": "Machado Grande de Pedra Chamuscada",
+  "en": "Scorched Stone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_pedra_chamuscada"
+ },
+ "cl:machado_largo_pedra_refrataria": {
+  "pt": "Machado Grande de Pedra Carbonizada",
+  "en": "Seared Stone Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_pedra_refrataria"
+ },
  "cl:machado_largo_silex": {
-  "pt": "Machado Largo de Sílex",
+  "pt": "Machado Grande de Sílex",
   "en": "Flint Broad Axe",
   "icone": "textures/items/cl/arte/machado_largo_silex"
+ },
+ "cl:machado_largo_slime_brasa": {
+  "pt": "Machado Grande de Slime de Brasa",
+  "en": "Cinderslime Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_slime_brasa"
+ },
+ "cl:machado_largo_slime_cavaleiro": {
+  "pt": "Machado Grande de Slime-Cavaleiro",
+  "en": "Knightslime Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_slime_cavaleiro"
+ },
+ "cl:machado_largo_slime_rainha": {
+  "pt": "Machado Grande de Slime da Rainha",
+  "en": "Queen's Slime Broad Axe",
+  "icone": "textures/items/cl/arte/machado_largo_slime_rainha"
  },
  "cl:magmator_ardente": {
   "pt": "Magmator Ardente",
@@ -3346,6 +4586,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steel Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_aco"
  },
+ "cl:marreta_aco_slime": {
+  "pt": "Marreta de Aço de Slime",
+  "en": "Slimesteel Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_aco_slime"
+ },
  "cl:marreta_bronze": {
   "pt": "Marreta de Bronze",
   "en": "Bronze Sledge Hammer",
@@ -3361,30 +4606,95 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_cacto"
  },
+ "cl:marreta_cobalto": {
+  "pt": "Marreta de Cobalto",
+  "en": "Cobalt Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_cobalto"
+ },
  "cl:marreta_cobre": {
   "pt": "Marreta de Cobre",
   "en": "Copper Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_cobre"
+ },
+ "cl:marreta_coro": {
+  "pt": "Marreta de Chorus",
+  "en": "Chorus Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_coro"
  },
  "cl:marreta_ferro": {
   "pt": "Marreta de Ferro",
   "en": "Iron Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_ferro"
  },
+ "cl:marreta_ferro_porco": {
+  "pt": "Marreta de Ferro-Porco",
+  "en": "Pig Iron Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_ferro_porco"
+ },
+ "cl:marreta_hepatizon": {
+  "pt": "Marreta de Hepatizão",
+  "en": "Hepatizon Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_hepatizon"
+ },
  "cl:marreta_madeira": {
   "pt": "Marreta de Madeira",
   "en": "Wood Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_madeira"
+ },
+ "cl:marreta_madeira_slime": {
+  "pt": "Marreta de Madeira de Slime",
+  "en": "Slimewood Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_madeira_slime"
+ },
+ "cl:marreta_madeira_slime_revestida": {
+  "pt": "Marreta de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_madeira_slime_revestida"
+ },
+ "cl:marreta_madeira_tratada": {
+  "pt": "Marreta de Madeira Tratada",
+  "en": "Treated Wood Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_madeira_tratada"
+ },
+ "cl:marreta_manyullyn": {
+  "pt": "Marreta de Manyullyn",
+  "en": "Manyullyn Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_manyullyn"
+ },
+ "cl:marreta_nahuatl": {
+  "pt": "Marreta de Nahuatl",
+  "en": "Nahuatl Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_nahuatl"
  },
  "cl:marreta_obsidiana": {
   "pt": "Marreta de Obsidiana",
   "en": "Obsidian Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_obsidiana"
  },
+ "cl:marreta_osmio": {
+  "pt": "Marreta de Ósmio",
+  "en": "Osmium Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_osmio"
+ },
  "cl:marreta_osso": {
   "pt": "Marreta de Osso",
   "en": "Bone Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_osso"
+ },
+ "cl:marreta_osso_blaze": {
+  "pt": "Marreta de Osso de Blaze",
+  "en": "Blazing Bone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_osso_blaze"
+ },
+ "cl:marreta_osso_necrotico": {
+  "pt": "Marreta de Osso Necrótico",
+  "en": "Necrotic Bone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_osso_necrotico"
+ },
+ "cl:marreta_osso_venenoso": {
+  "pt": "Marreta de Osso Venenoso",
+  "en": "Venombone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_osso_venenoso"
  },
  "cl:marreta_ouro_rosa": {
   "pt": "Marreta de Ouro Rosa",
@@ -3396,10 +4706,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_pedra"
  },
+ "cl:marreta_pedra_branca": {
+  "pt": "Marreta de Pedra Branca",
+  "en": "Whitestone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_pedra_branca"
+ },
+ "cl:marreta_pedra_chamuscada": {
+  "pt": "Marreta de Pedra Chamuscada",
+  "en": "Scorched Stone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_pedra_chamuscada"
+ },
+ "cl:marreta_pedra_refrataria": {
+  "pt": "Marreta de Pedra Carbonizada",
+  "en": "Seared Stone Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_pedra_refrataria"
+ },
  "cl:marreta_silex": {
   "pt": "Marreta de Sílex",
   "en": "Flint Sledge Hammer",
   "icone": "textures/items/cl/arte/marreta_silex"
+ },
+ "cl:marreta_slime_brasa": {
+  "pt": "Marreta de Slime de Brasa",
+  "en": "Cinderslime Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_slime_brasa"
+ },
+ "cl:marreta_slime_cavaleiro": {
+  "pt": "Marreta de Slime-Cavaleiro",
+  "en": "Knightslime Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_slime_cavaleiro"
+ },
+ "cl:marreta_slime_rainha": {
+  "pt": "Marreta de Slime da Rainha",
+  "en": "Queen's Slime Sledge Hammer",
+  "icone": "textures/items/cl/arte/marreta_slime_rainha"
  },
  "cl:martelo_cobre": {
   "pt": "Martelo de Cobre",
@@ -3435,6 +4775,156 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Martelo de Pedra",
   "en": "Stone Hammer",
   "icone": "textures/items/cl/arte/martelo_pedra"
+ },
+ "cl:martelo_veio_aco": {
+  "pt": "Martelo de Mineração de Aço",
+  "en": "Steel Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_aco"
+ },
+ "cl:martelo_veio_aco_slime": {
+  "pt": "Martelo de Mineração de Aço de Slime",
+  "en": "Slimesteel Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_aco_slime"
+ },
+ "cl:martelo_veio_bronze": {
+  "pt": "Martelo de Mineração de Bronze",
+  "en": "Bronze Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_bronze"
+ },
+ "cl:martelo_veio_bronze_ametista": {
+  "pt": "Martelo de Mineração de Bronze de Ametista",
+  "en": "Amethyst Bronze Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_bronze_ametista"
+ },
+ "cl:martelo_veio_cobalto": {
+  "pt": "Martelo de Mineração de Cobalto",
+  "en": "Cobalt Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_cobalto"
+ },
+ "cl:martelo_veio_cobre": {
+  "pt": "Martelo de Mineração de Cobre",
+  "en": "Copper Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_cobre"
+ },
+ "cl:martelo_veio_coro": {
+  "pt": "Martelo de Mineração de Chorus",
+  "en": "Chorus Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_coro"
+ },
+ "cl:martelo_veio_ferro": {
+  "pt": "Martelo de Mineração de Ferro",
+  "en": "Iron Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_ferro"
+ },
+ "cl:martelo_veio_ferro_porco": {
+  "pt": "Martelo de Mineração de Ferro-Porco",
+  "en": "Pig Iron Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_ferro_porco"
+ },
+ "cl:martelo_veio_hepatizon": {
+  "pt": "Martelo de Mineração de Hepatizão",
+  "en": "Hepatizon Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_hepatizon"
+ },
+ "cl:martelo_veio_madeira": {
+  "pt": "Martelo de Mineração de Madeira",
+  "en": "Wood Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_madeira"
+ },
+ "cl:martelo_veio_madeira_slime": {
+  "pt": "Martelo de Mineração de Madeira de Slime",
+  "en": "Slimewood Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_madeira_slime"
+ },
+ "cl:martelo_veio_madeira_slime_revestida": {
+  "pt": "Martelo de Mineração de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_madeira_slime_revestida"
+ },
+ "cl:martelo_veio_madeira_tratada": {
+  "pt": "Martelo de Mineração de Madeira Tratada",
+  "en": "Treated Wood Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_madeira_tratada"
+ },
+ "cl:martelo_veio_manyullyn": {
+  "pt": "Martelo de Mineração de Manyullyn",
+  "en": "Manyullyn Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_manyullyn"
+ },
+ "cl:martelo_veio_nahuatl": {
+  "pt": "Martelo de Mineração de Nahuatl",
+  "en": "Nahuatl Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_nahuatl"
+ },
+ "cl:martelo_veio_osmio": {
+  "pt": "Martelo de Mineração de Ósmio",
+  "en": "Osmium Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_osmio"
+ },
+ "cl:martelo_veio_osso": {
+  "pt": "Martelo de Mineração de Osso",
+  "en": "Bone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_osso"
+ },
+ "cl:martelo_veio_osso_blaze": {
+  "pt": "Martelo de Mineração de Osso de Blaze",
+  "en": "Blazing Bone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_osso_blaze"
+ },
+ "cl:martelo_veio_osso_necrotico": {
+  "pt": "Martelo de Mineração de Osso Necrótico",
+  "en": "Necrotic Bone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_osso_necrotico"
+ },
+ "cl:martelo_veio_osso_venenoso": {
+  "pt": "Martelo de Mineração de Osso Venenoso",
+  "en": "Venombone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_osso_venenoso"
+ },
+ "cl:martelo_veio_ouro_rosa": {
+  "pt": "Martelo de Mineração de Ouro Rosa",
+  "en": "Rose Gold Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_ouro_rosa"
+ },
+ "cl:martelo_veio_pedra": {
+  "pt": "Martelo de Mineração de Pedra",
+  "en": "Stone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_pedra"
+ },
+ "cl:martelo_veio_pedra_branca": {
+  "pt": "Martelo de Mineração de Pedra Branca",
+  "en": "Whitestone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_pedra_branca"
+ },
+ "cl:martelo_veio_pedra_chamuscada": {
+  "pt": "Martelo de Mineração de Pedra Chamuscada",
+  "en": "Scorched Stone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_pedra_chamuscada"
+ },
+ "cl:martelo_veio_pedra_refrataria": {
+  "pt": "Martelo de Mineração de Pedra Carbonizada",
+  "en": "Seared Stone Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_pedra_refrataria"
+ },
+ "cl:martelo_veio_silex": {
+  "pt": "Martelo de Mineração de Sílex",
+  "en": "Flint Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_silex"
+ },
+ "cl:martelo_veio_slime_brasa": {
+  "pt": "Martelo de Mineração de Slime de Brasa",
+  "en": "Cinderslime Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_slime_brasa"
+ },
+ "cl:martelo_veio_slime_cavaleiro": {
+  "pt": "Martelo de Mineração de Slime-Cavaleiro",
+  "en": "Knightslime Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_slime_cavaleiro"
+ },
+ "cl:martelo_veio_slime_rainha": {
+  "pt": "Martelo de Mineração de Slime da Rainha",
+  "en": "Queen's Slime Vein Hammer",
+  "icone": "textures/items/cl/arte/martelo_veio_slime_rainha"
  },
  "cl:mascara": {
   "pt": "Máscara de Gás",
@@ -3560,6 +5050,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Milho na Espiga",
   "en": "Corn on the Cob",
   "icone": "textures/items/cl/arte/milho_espiga"
+ },
+ "cl:minerio_cobalto": {
+  "pt": "Minério de Cobalto",
+  "en": "Cobalt Ore",
+  "icone": "textures/blocks/cl/arte/minerio_cobalto"
  },
  "cl:minerio_cobre_lunar": {
   "pt": "Minério de Cobre Lunar",
@@ -3956,13 +5451,18 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Windmill",
   "icone": "textures/items/cl/blocos/moinho_vento"
  },
+ "cl:molde_cabeca_enxo": {
+  "pt": "Molde: Cabeça de Enxó",
+  "en": "Adze Head Cast",
+  "icone": "textures/items/cl/c/molde_cabeca_enxo"
+ },
  "cl:molde_cabeca_machado": {
-  "pt": "Molde: Cabeça de Machado",
-  "en": "Hatchet Head Cast",
+  "pt": "Molde: Cabeça de Machado Pequeno",
+  "en": "Small Axe Head Cast",
   "icone": "textures/items/cl/arte/molde_cabeca_machado"
  },
  "cl:molde_cabeca_machado_larga": {
-  "pt": "Molde: Cabeça de Machado Largo",
+  "pt": "Molde: Cabeça de Machado Grande",
   "en": "Broad Axe Head Cast",
   "icone": "textures/items/cl/c/molde_cabeca_machado_larga"
  },
@@ -3978,12 +5478,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:molde_cabeca_picareta": {
   "pt": "Molde: Cabeça de Picareta",
-  "en": "Pickaxe Head Cast",
+  "en": "Pick Head Cast",
   "icone": "textures/items/cl/arte/molde_cabeca_picareta"
  },
  "cl:molde_cabo": {
-  "pt": "Molde: Cabo",
-  "en": "Tool Rod Cast",
+  "pt": "Molde: Cabo de Ferramenta",
+  "en": "Tool Handle Cast",
   "icone": "textures/items/cl/arte/molde_cabo"
  },
  "cl:molde_cabo_resistente": {
@@ -3997,18 +5497,23 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/molde_guarda_larga"
  },
  "cl:molde_lamina_espada": {
-  "pt": "Molde: Lâmina de Espada",
-  "en": "Sword Blade Cast",
+  "pt": "Molde: Lâmina Pequena",
+  "en": "Small Blade Cast",
   "icone": "textures/items/cl/arte/molde_lamina_espada"
  },
+ "cl:molde_lamina_larga": {
+  "pt": "Molde: Lâmina Grande",
+  "en": "Broad Blade Cast",
+  "icone": "textures/items/cl/c/molde_lamina_larga"
+ },
  "cl:molde_ligacao": {
-  "pt": "Molde: Ligação",
-  "en": "Binding Cast",
+  "pt": "Molde: Ligamento de Ferramenta",
+  "en": "Tool Binding Cast",
   "icone": "textures/items/cl/arte/molde_ligacao"
  },
  "cl:molde_ligacao_resistente": {
-  "pt": "Molde: Ligação Resistente",
-  "en": "Tough Binding Cast",
+  "pt": "Molde: Colar Resistente",
+  "en": "Tough Collar Cast",
   "icone": "textures/items/cl/c/molde_ligacao_resistente"
  },
  "cl:molde_lingote": {
@@ -4075,6 +5580,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Muda de Tamareira",
   "en": "Date Palm Sapling",
   "icone": "textures/items/cl/blocos/muda_tamareira"
+ },
+ "cl:nahuatl": {
+  "pt": "Nahuatl",
+  "en": "Nahuatl",
+  "icone": "textures/blocks/cl/arte/nahuatl"
  },
  "cl:nucleo_aniquilacao": {
   "pt": "Núcleo de Aniquilação",
@@ -4181,6 +5691,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Osmium Ore",
   "icone": "textures/items/cl/c/osmio_triturado"
  },
+ "cl:osso_blaze": {
+  "pt": "Osso de Blaze",
+  "en": "Blazing Bone",
+  "icone": "textures/items/cl/arte/osso_blaze"
+ },
+ "cl:osso_necrotico": {
+  "pt": "Osso Necrótico",
+  "en": "Necrotic Bone",
+  "icone": "textures/items/cl/arte/osso_necrotico"
+ },
+ "cl:osso_venenoso": {
+  "pt": "Osso Venenoso",
+  "en": "Venombone",
+  "icone": "textures/items/cl/arte/osso_venenoso"
+ },
  "cl:ouro_enriquecido": {
   "pt": "Ouro Enriquecido",
   "en": "Enriched Gold",
@@ -4281,13 +5806,18 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Blank Pattern",
   "icone": "textures/items/cl/arte/padrao_branco"
  },
+ "cl:padrao_cabeca_enxo": {
+  "pt": "Padrão: Cabeça de Enxó",
+  "en": "Adze Head Pattern",
+  "icone": "textures/items/cl/c/padrao_cabeca_enxo"
+ },
  "cl:padrao_cabeca_machado": {
-  "pt": "Padrão: Cabeça de Machado",
-  "en": "Hatchet Head Pattern",
+  "pt": "Padrão: Cabeça de Machado Pequeno",
+  "en": "Small Axe Head Pattern",
   "icone": "textures/items/cl/arte/padrao_cabeca_machado"
  },
  "cl:padrao_cabeca_machado_larga": {
-  "pt": "Padrão: Cabeça de Machado Largo",
+  "pt": "Padrão: Cabeça de Machado Grande",
   "en": "Broad Axe Head Pattern",
   "icone": "textures/items/cl/c/padrao_cabeca_machado_larga"
  },
@@ -4303,12 +5833,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:padrao_cabeca_picareta": {
   "pt": "Padrão: Cabeça de Picareta",
-  "en": "Pickaxe Head Pattern",
+  "en": "Pick Head Pattern",
   "icone": "textures/items/cl/arte/padrao_cabeca_picareta"
  },
  "cl:padrao_cabo": {
-  "pt": "Padrão: Cabo",
-  "en": "Tool Rod Pattern",
+  "pt": "Padrão: Cabo de Ferramenta",
+  "en": "Tool Handle Pattern",
   "icone": "textures/items/cl/arte/padrao_cabo"
  },
  "cl:padrao_cabo_resistente": {
@@ -4322,18 +5852,23 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/padrao_guarda_larga"
  },
  "cl:padrao_lamina_espada": {
-  "pt": "Padrão: Lâmina de Espada",
-  "en": "Sword Blade Pattern",
+  "pt": "Padrão: Lâmina Pequena",
+  "en": "Small Blade Pattern",
   "icone": "textures/items/cl/arte/padrao_lamina_espada"
  },
+ "cl:padrao_lamina_larga": {
+  "pt": "Padrão: Lâmina Grande",
+  "en": "Broad Blade Pattern",
+  "icone": "textures/items/cl/c/padrao_lamina_larga"
+ },
  "cl:padrao_ligacao": {
-  "pt": "Padrão: Ligação",
-  "en": "Binding Pattern",
+  "pt": "Padrão: Ligamento de Ferramenta",
+  "en": "Tool Binding Pattern",
   "icone": "textures/items/cl/arte/padrao_ligacao"
  },
  "cl:padrao_ligacao_resistente": {
-  "pt": "Padrão: Ligação Resistente",
-  "en": "Tough Binding Pattern",
+  "pt": "Padrão: Colar Resistente",
+  "en": "Tough Collar Pattern",
   "icone": "textures/items/cl/c/padrao_ligacao_resistente"
  },
  "cl:padrao_me_vazio": {
@@ -4536,130 +6071,485 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dielectric Paste",
   "icone": "textures/items/cl/arte/pasta_dieletrica"
  },
+ "cl:peca_cabeca_enxo_aco": {
+  "pt": "Cabeça de Enxó de Aço",
+  "en": "Steel Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_aco"
+ },
+ "cl:peca_cabeca_enxo_aco_slime": {
+  "pt": "Cabeça de Enxó de Aço de Slime",
+  "en": "Slimesteel Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_aco_slime"
+ },
+ "cl:peca_cabeca_enxo_bronze": {
+  "pt": "Cabeça de Enxó de Bronze",
+  "en": "Bronze Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_bronze"
+ },
+ "cl:peca_cabeca_enxo_bronze_ametista": {
+  "pt": "Cabeça de Enxó de Bronze de Ametista",
+  "en": "Amethyst Bronze Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_bronze_ametista"
+ },
+ "cl:peca_cabeca_enxo_cobalto": {
+  "pt": "Cabeça de Enxó de Cobalto",
+  "en": "Cobalt Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_cobalto"
+ },
+ "cl:peca_cabeca_enxo_cobre": {
+  "pt": "Cabeça de Enxó de Cobre",
+  "en": "Copper Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_cobre"
+ },
+ "cl:peca_cabeca_enxo_coro": {
+  "pt": "Cabeça de Enxó de Chorus",
+  "en": "Chorus Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_coro"
+ },
+ "cl:peca_cabeca_enxo_ferro": {
+  "pt": "Cabeça de Enxó de Ferro",
+  "en": "Iron Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_ferro"
+ },
+ "cl:peca_cabeca_enxo_ferro_porco": {
+  "pt": "Cabeça de Enxó de Ferro-Porco",
+  "en": "Pig Iron Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_ferro_porco"
+ },
+ "cl:peca_cabeca_enxo_hepatizon": {
+  "pt": "Cabeça de Enxó de Hepatizão",
+  "en": "Hepatizon Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_hepatizon"
+ },
+ "cl:peca_cabeca_enxo_madeira": {
+  "pt": "Cabeça de Enxó de Madeira",
+  "en": "Wood Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_madeira"
+ },
+ "cl:peca_cabeca_enxo_madeira_slime": {
+  "pt": "Cabeça de Enxó de Madeira de Slime",
+  "en": "Slimewood Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_madeira_slime"
+ },
+ "cl:peca_cabeca_enxo_madeira_slime_revestida": {
+  "pt": "Cabeça de Enxó de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_madeira_slime_revestida"
+ },
+ "cl:peca_cabeca_enxo_madeira_tratada": {
+  "pt": "Cabeça de Enxó de Madeira Tratada",
+  "en": "Treated Wood Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_madeira_tratada"
+ },
+ "cl:peca_cabeca_enxo_manyullyn": {
+  "pt": "Cabeça de Enxó de Manyullyn",
+  "en": "Manyullyn Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_manyullyn"
+ },
+ "cl:peca_cabeca_enxo_nahuatl": {
+  "pt": "Cabeça de Enxó de Nahuatl",
+  "en": "Nahuatl Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_nahuatl"
+ },
+ "cl:peca_cabeca_enxo_osmio": {
+  "pt": "Cabeça de Enxó de Ósmio",
+  "en": "Osmium Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_osmio"
+ },
+ "cl:peca_cabeca_enxo_osso": {
+  "pt": "Cabeça de Enxó de Osso",
+  "en": "Bone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_osso"
+ },
+ "cl:peca_cabeca_enxo_osso_blaze": {
+  "pt": "Cabeça de Enxó de Osso de Blaze",
+  "en": "Blazing Bone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_osso_blaze"
+ },
+ "cl:peca_cabeca_enxo_osso_necrotico": {
+  "pt": "Cabeça de Enxó de Osso Necrótico",
+  "en": "Necrotic Bone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_osso_necrotico"
+ },
+ "cl:peca_cabeca_enxo_osso_venenoso": {
+  "pt": "Cabeça de Enxó de Osso Venenoso",
+  "en": "Venombone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_osso_venenoso"
+ },
+ "cl:peca_cabeca_enxo_ouro_rosa": {
+  "pt": "Cabeça de Enxó de Ouro Rosa",
+  "en": "Rose Gold Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_ouro_rosa"
+ },
+ "cl:peca_cabeca_enxo_pedra": {
+  "pt": "Cabeça de Enxó de Pedra",
+  "en": "Stone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_pedra"
+ },
+ "cl:peca_cabeca_enxo_pedra_branca": {
+  "pt": "Cabeça de Enxó de Pedra Branca",
+  "en": "Whitestone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_pedra_branca"
+ },
+ "cl:peca_cabeca_enxo_pedra_chamuscada": {
+  "pt": "Cabeça de Enxó de Pedra Chamuscada",
+  "en": "Scorched Stone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_pedra_chamuscada"
+ },
+ "cl:peca_cabeca_enxo_pedra_refrataria": {
+  "pt": "Cabeça de Enxó de Pedra Carbonizada",
+  "en": "Seared Stone Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_pedra_refrataria"
+ },
+ "cl:peca_cabeca_enxo_silex": {
+  "pt": "Cabeça de Enxó de Sílex",
+  "en": "Flint Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_silex"
+ },
+ "cl:peca_cabeca_enxo_slime_brasa": {
+  "pt": "Cabeça de Enxó de Slime de Brasa",
+  "en": "Cinderslime Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_slime_brasa"
+ },
+ "cl:peca_cabeca_enxo_slime_cavaleiro": {
+  "pt": "Cabeça de Enxó de Slime-Cavaleiro",
+  "en": "Knightslime Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_slime_cavaleiro"
+ },
+ "cl:peca_cabeca_enxo_slime_rainha": {
+  "pt": "Cabeça de Enxó de Slime da Rainha",
+  "en": "Queen's Slime Adze Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_enxo_slime_rainha"
+ },
  "cl:peca_cabeca_machado_aco": {
-  "pt": "Cabeça de Machado de Aço",
-  "en": "Steel Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Aço",
+  "en": "Steel Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_aco"
  },
+ "cl:peca_cabeca_machado_aco_slime": {
+  "pt": "Cabeça de Machado Pequeno de Aço de Slime",
+  "en": "Slimesteel Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_aco_slime"
+ },
  "cl:peca_cabeca_machado_bronze": {
-  "pt": "Cabeça de Machado de Bronze",
-  "en": "Bronze Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Bronze",
+  "en": "Bronze Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_bronze"
  },
  "cl:peca_cabeca_machado_bronze_ametista": {
-  "pt": "Cabeça de Machado de Bronze de Ametista",
-  "en": "Amethyst Bronze Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Bronze de Ametista",
+  "en": "Amethyst Bronze Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_bronze_ametista"
  },
  "cl:peca_cabeca_machado_cacto": {
-  "pt": "Cabeça de Machado de Cacto",
-  "en": "Cactus Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Cacto",
+  "en": "Cactus Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_cacto"
  },
+ "cl:peca_cabeca_machado_cobalto": {
+  "pt": "Cabeça de Machado Pequeno de Cobalto",
+  "en": "Cobalt Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_cobalto"
+ },
  "cl:peca_cabeca_machado_cobre": {
-  "pt": "Cabeça de Machado de Cobre",
-  "en": "Copper Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Cobre",
+  "en": "Copper Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_cobre"
  },
+ "cl:peca_cabeca_machado_coro": {
+  "pt": "Cabeça de Machado Pequeno de Chorus",
+  "en": "Chorus Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_coro"
+ },
  "cl:peca_cabeca_machado_ferro": {
-  "pt": "Cabeça de Machado de Ferro",
-  "en": "Iron Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Ferro",
+  "en": "Iron Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_ferro"
  },
+ "cl:peca_cabeca_machado_ferro_porco": {
+  "pt": "Cabeça de Machado Pequeno de Ferro-Porco",
+  "en": "Pig Iron Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_ferro_porco"
+ },
+ "cl:peca_cabeca_machado_hepatizon": {
+  "pt": "Cabeça de Machado Pequeno de Hepatizão",
+  "en": "Hepatizon Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_hepatizon"
+ },
  "cl:peca_cabeca_machado_larga_aco": {
-  "pt": "Cabeça de Machado Largo de Aço",
+  "pt": "Cabeça de Machado Grande de Aço",
   "en": "Steel Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_aco"
  },
+ "cl:peca_cabeca_machado_larga_aco_slime": {
+  "pt": "Cabeça de Machado Grande de Aço de Slime",
+  "en": "Slimesteel Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_aco_slime"
+ },
  "cl:peca_cabeca_machado_larga_bronze": {
-  "pt": "Cabeça de Machado Largo de Bronze",
+  "pt": "Cabeça de Machado Grande de Bronze",
   "en": "Bronze Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_bronze"
  },
  "cl:peca_cabeca_machado_larga_bronze_ametista": {
-  "pt": "Cabeça de Machado Largo de Bronze de Ametista",
+  "pt": "Cabeça de Machado Grande de Bronze de Ametista",
   "en": "Amethyst Bronze Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_bronze_ametista"
  },
  "cl:peca_cabeca_machado_larga_cacto": {
-  "pt": "Cabeça de Machado Largo de Cacto",
+  "pt": "Cabeça de Machado Grande de Cacto",
   "en": "Cactus Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_cacto"
  },
+ "cl:peca_cabeca_machado_larga_cobalto": {
+  "pt": "Cabeça de Machado Grande de Cobalto",
+  "en": "Cobalt Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_cobalto"
+ },
  "cl:peca_cabeca_machado_larga_cobre": {
-  "pt": "Cabeça de Machado Largo de Cobre",
+  "pt": "Cabeça de Machado Grande de Cobre",
   "en": "Copper Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_cobre"
  },
+ "cl:peca_cabeca_machado_larga_coro": {
+  "pt": "Cabeça de Machado Grande de Chorus",
+  "en": "Chorus Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_coro"
+ },
  "cl:peca_cabeca_machado_larga_ferro": {
-  "pt": "Cabeça de Machado Largo de Ferro",
+  "pt": "Cabeça de Machado Grande de Ferro",
   "en": "Iron Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_ferro"
  },
+ "cl:peca_cabeca_machado_larga_ferro_porco": {
+  "pt": "Cabeça de Machado Grande de Ferro-Porco",
+  "en": "Pig Iron Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_ferro_porco"
+ },
+ "cl:peca_cabeca_machado_larga_hepatizon": {
+  "pt": "Cabeça de Machado Grande de Hepatizão",
+  "en": "Hepatizon Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_hepatizon"
+ },
  "cl:peca_cabeca_machado_larga_madeira": {
-  "pt": "Cabeça de Machado Largo de Madeira",
+  "pt": "Cabeça de Machado Grande de Madeira",
   "en": "Wood Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_madeira"
  },
+ "cl:peca_cabeca_machado_larga_madeira_slime": {
+  "pt": "Cabeça de Machado Grande de Madeira de Slime",
+  "en": "Slimewood Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_madeira_slime"
+ },
+ "cl:peca_cabeca_machado_larga_madeira_slime_revestida": {
+  "pt": "Cabeça de Machado Grande de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_madeira_slime_revestida"
+ },
+ "cl:peca_cabeca_machado_larga_madeira_tratada": {
+  "pt": "Cabeça de Machado Grande de Madeira Tratada",
+  "en": "Treated Wood Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_madeira_tratada"
+ },
+ "cl:peca_cabeca_machado_larga_manyullyn": {
+  "pt": "Cabeça de Machado Grande de Manyullyn",
+  "en": "Manyullyn Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_manyullyn"
+ },
+ "cl:peca_cabeca_machado_larga_nahuatl": {
+  "pt": "Cabeça de Machado Grande de Nahuatl",
+  "en": "Nahuatl Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_nahuatl"
+ },
  "cl:peca_cabeca_machado_larga_obsidiana": {
-  "pt": "Cabeça de Machado Largo de Obsidiana",
+  "pt": "Cabeça de Machado Grande de Obsidiana",
   "en": "Obsidian Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_obsidiana"
  },
+ "cl:peca_cabeca_machado_larga_osmio": {
+  "pt": "Cabeça de Machado Grande de Ósmio",
+  "en": "Osmium Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_osmio"
+ },
  "cl:peca_cabeca_machado_larga_osso": {
-  "pt": "Cabeça de Machado Largo de Osso",
+  "pt": "Cabeça de Machado Grande de Osso",
   "en": "Bone Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_osso"
  },
+ "cl:peca_cabeca_machado_larga_osso_blaze": {
+  "pt": "Cabeça de Machado Grande de Osso de Blaze",
+  "en": "Blazing Bone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_osso_blaze"
+ },
+ "cl:peca_cabeca_machado_larga_osso_necrotico": {
+  "pt": "Cabeça de Machado Grande de Osso Necrótico",
+  "en": "Necrotic Bone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_osso_necrotico"
+ },
+ "cl:peca_cabeca_machado_larga_osso_venenoso": {
+  "pt": "Cabeça de Machado Grande de Osso Venenoso",
+  "en": "Venombone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_osso_venenoso"
+ },
  "cl:peca_cabeca_machado_larga_ouro_rosa": {
-  "pt": "Cabeça de Machado Largo de Ouro Rosa",
+  "pt": "Cabeça de Machado Grande de Ouro Rosa",
   "en": "Rose Gold Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_ouro_rosa"
  },
  "cl:peca_cabeca_machado_larga_pedra": {
-  "pt": "Cabeça de Machado Largo de Pedra",
+  "pt": "Cabeça de Machado Grande de Pedra",
   "en": "Stone Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_pedra"
  },
+ "cl:peca_cabeca_machado_larga_pedra_branca": {
+  "pt": "Cabeça de Machado Grande de Pedra Branca",
+  "en": "Whitestone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_pedra_branca"
+ },
+ "cl:peca_cabeca_machado_larga_pedra_chamuscada": {
+  "pt": "Cabeça de Machado Grande de Pedra Chamuscada",
+  "en": "Scorched Stone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_pedra_chamuscada"
+ },
+ "cl:peca_cabeca_machado_larga_pedra_refrataria": {
+  "pt": "Cabeça de Machado Grande de Pedra Carbonizada",
+  "en": "Seared Stone Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_pedra_refrataria"
+ },
  "cl:peca_cabeca_machado_larga_silex": {
-  "pt": "Cabeça de Machado Largo de Sílex",
+  "pt": "Cabeça de Machado Grande de Sílex",
   "en": "Flint Broad Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_silex"
  },
+ "cl:peca_cabeca_machado_larga_slime_brasa": {
+  "pt": "Cabeça de Machado Grande de Slime de Brasa",
+  "en": "Cinderslime Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_slime_brasa"
+ },
+ "cl:peca_cabeca_machado_larga_slime_cavaleiro": {
+  "pt": "Cabeça de Machado Grande de Slime-Cavaleiro",
+  "en": "Knightslime Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_slime_cavaleiro"
+ },
+ "cl:peca_cabeca_machado_larga_slime_rainha": {
+  "pt": "Cabeça de Machado Grande de Slime da Rainha",
+  "en": "Queen's Slime Broad Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_larga_slime_rainha"
+ },
  "cl:peca_cabeca_machado_madeira": {
-  "pt": "Cabeça de Machado de Madeira",
-  "en": "Wood Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Madeira",
+  "en": "Wood Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_madeira"
  },
+ "cl:peca_cabeca_machado_madeira_slime": {
+  "pt": "Cabeça de Machado Pequeno de Madeira de Slime",
+  "en": "Slimewood Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_madeira_slime"
+ },
+ "cl:peca_cabeca_machado_madeira_slime_revestida": {
+  "pt": "Cabeça de Machado Pequeno de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_madeira_slime_revestida"
+ },
+ "cl:peca_cabeca_machado_madeira_tratada": {
+  "pt": "Cabeça de Machado Pequeno de Madeira Tratada",
+  "en": "Treated Wood Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_madeira_tratada"
+ },
+ "cl:peca_cabeca_machado_manyullyn": {
+  "pt": "Cabeça de Machado Pequeno de Manyullyn",
+  "en": "Manyullyn Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_manyullyn"
+ },
+ "cl:peca_cabeca_machado_nahuatl": {
+  "pt": "Cabeça de Machado Pequeno de Nahuatl",
+  "en": "Nahuatl Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_nahuatl"
+ },
  "cl:peca_cabeca_machado_obsidiana": {
-  "pt": "Cabeça de Machado de Obsidiana",
-  "en": "Obsidian Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Obsidiana",
+  "en": "Obsidian Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_obsidiana"
  },
+ "cl:peca_cabeca_machado_osmio": {
+  "pt": "Cabeça de Machado Pequeno de Ósmio",
+  "en": "Osmium Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_osmio"
+ },
  "cl:peca_cabeca_machado_osso": {
-  "pt": "Cabeça de Machado de Osso",
-  "en": "Bone Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Osso",
+  "en": "Bone Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_osso"
  },
+ "cl:peca_cabeca_machado_osso_blaze": {
+  "pt": "Cabeça de Machado Pequeno de Osso de Blaze",
+  "en": "Blazing Bone Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_osso_blaze"
+ },
+ "cl:peca_cabeca_machado_osso_necrotico": {
+  "pt": "Cabeça de Machado Pequeno de Osso Necrótico",
+  "en": "Necrotic Bone Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_osso_necrotico"
+ },
+ "cl:peca_cabeca_machado_osso_venenoso": {
+  "pt": "Cabeça de Machado Pequeno de Osso Venenoso",
+  "en": "Venombone Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_osso_venenoso"
+ },
  "cl:peca_cabeca_machado_ouro_rosa": {
-  "pt": "Cabeça de Machado de Ouro Rosa",
-  "en": "Rose Gold Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Ouro Rosa",
+  "en": "Rose Gold Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_ouro_rosa"
  },
  "cl:peca_cabeca_machado_pedra": {
-  "pt": "Cabeça de Machado de Pedra",
-  "en": "Stone Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Pedra",
+  "en": "Stone Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_pedra"
  },
+ "cl:peca_cabeca_machado_pedra_branca": {
+  "pt": "Cabeça de Machado Pequeno de Pedra Branca",
+  "en": "Whitestone Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_pedra_branca"
+ },
+ "cl:peca_cabeca_machado_pedra_chamuscada": {
+  "pt": "Cabeça de Machado Pequeno de Pedra Chamuscada",
+  "en": "Scorched Stone Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_pedra_chamuscada"
+ },
+ "cl:peca_cabeca_machado_pedra_refrataria": {
+  "pt": "Cabeça de Machado Pequeno de Pedra Carbonizada",
+  "en": "Seared Stone Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_pedra_refrataria"
+ },
  "cl:peca_cabeca_machado_silex": {
-  "pt": "Cabeça de Machado de Sílex",
-  "en": "Flint Hatchet Head",
+  "pt": "Cabeça de Machado Pequeno de Sílex",
+  "en": "Flint Small Axe Head",
   "icone": "textures/items/cl/arte/peca_cabeca_machado_silex"
+ },
+ "cl:peca_cabeca_machado_slime_brasa": {
+  "pt": "Cabeça de Machado Pequeno de Slime de Brasa",
+  "en": "Cinderslime Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_slime_brasa"
+ },
+ "cl:peca_cabeca_machado_slime_cavaleiro": {
+  "pt": "Cabeça de Machado Pequeno de Slime-Cavaleiro",
+  "en": "Knightslime Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_slime_cavaleiro"
+ },
+ "cl:peca_cabeca_machado_slime_rainha": {
+  "pt": "Cabeça de Machado Pequeno de Slime da Rainha",
+  "en": "Queen's Slime Small Axe Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_machado_slime_rainha"
  },
  "cl:peca_cabeca_martelo_aco": {
   "pt": "Cabeça de Martelo de Aço",
   "en": "Steel Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_aco"
+ },
+ "cl:peca_cabeca_martelo_aco_slime": {
+  "pt": "Cabeça de Martelo de Aço de Slime",
+  "en": "Slimesteel Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_aco_slime"
  },
  "cl:peca_cabeca_martelo_bronze": {
   "pt": "Cabeça de Martelo de Bronze",
@@ -4676,30 +6566,95 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_cacto"
  },
+ "cl:peca_cabeca_martelo_cobalto": {
+  "pt": "Cabeça de Martelo de Cobalto",
+  "en": "Cobalt Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_cobalto"
+ },
  "cl:peca_cabeca_martelo_cobre": {
   "pt": "Cabeça de Martelo de Cobre",
   "en": "Copper Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_cobre"
+ },
+ "cl:peca_cabeca_martelo_coro": {
+  "pt": "Cabeça de Martelo de Chorus",
+  "en": "Chorus Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_coro"
  },
  "cl:peca_cabeca_martelo_ferro": {
   "pt": "Cabeça de Martelo de Ferro",
   "en": "Iron Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_ferro"
  },
+ "cl:peca_cabeca_martelo_ferro_porco": {
+  "pt": "Cabeça de Martelo de Ferro-Porco",
+  "en": "Pig Iron Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_ferro_porco"
+ },
+ "cl:peca_cabeca_martelo_hepatizon": {
+  "pt": "Cabeça de Martelo de Hepatizão",
+  "en": "Hepatizon Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_hepatizon"
+ },
  "cl:peca_cabeca_martelo_madeira": {
   "pt": "Cabeça de Martelo de Madeira",
   "en": "Wood Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_madeira"
+ },
+ "cl:peca_cabeca_martelo_madeira_slime": {
+  "pt": "Cabeça de Martelo de Madeira de Slime",
+  "en": "Slimewood Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_madeira_slime"
+ },
+ "cl:peca_cabeca_martelo_madeira_slime_revestida": {
+  "pt": "Cabeça de Martelo de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_madeira_slime_revestida"
+ },
+ "cl:peca_cabeca_martelo_madeira_tratada": {
+  "pt": "Cabeça de Martelo de Madeira Tratada",
+  "en": "Treated Wood Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_madeira_tratada"
+ },
+ "cl:peca_cabeca_martelo_manyullyn": {
+  "pt": "Cabeça de Martelo de Manyullyn",
+  "en": "Manyullyn Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_manyullyn"
+ },
+ "cl:peca_cabeca_martelo_nahuatl": {
+  "pt": "Cabeça de Martelo de Nahuatl",
+  "en": "Nahuatl Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_nahuatl"
  },
  "cl:peca_cabeca_martelo_obsidiana": {
   "pt": "Cabeça de Martelo de Obsidiana",
   "en": "Obsidian Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_obsidiana"
  },
+ "cl:peca_cabeca_martelo_osmio": {
+  "pt": "Cabeça de Martelo de Ósmio",
+  "en": "Osmium Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_osmio"
+ },
  "cl:peca_cabeca_martelo_osso": {
   "pt": "Cabeça de Martelo de Osso",
   "en": "Bone Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_osso"
+ },
+ "cl:peca_cabeca_martelo_osso_blaze": {
+  "pt": "Cabeça de Martelo de Osso de Blaze",
+  "en": "Blazing Bone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_osso_blaze"
+ },
+ "cl:peca_cabeca_martelo_osso_necrotico": {
+  "pt": "Cabeça de Martelo de Osso Necrótico",
+  "en": "Necrotic Bone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_osso_necrotico"
+ },
+ "cl:peca_cabeca_martelo_osso_venenoso": {
+  "pt": "Cabeça de Martelo de Osso Venenoso",
+  "en": "Venombone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_osso_venenoso"
  },
  "cl:peca_cabeca_martelo_ouro_rosa": {
   "pt": "Cabeça de Martelo de Ouro Rosa",
@@ -4711,10 +6666,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_pedra"
  },
+ "cl:peca_cabeca_martelo_pedra_branca": {
+  "pt": "Cabeça de Martelo de Pedra Branca",
+  "en": "Whitestone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_pedra_branca"
+ },
+ "cl:peca_cabeca_martelo_pedra_chamuscada": {
+  "pt": "Cabeça de Martelo de Pedra Chamuscada",
+  "en": "Scorched Stone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_pedra_chamuscada"
+ },
+ "cl:peca_cabeca_martelo_pedra_refrataria": {
+  "pt": "Cabeça de Martelo de Pedra Carbonizada",
+  "en": "Seared Stone Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_pedra_refrataria"
+ },
  "cl:peca_cabeca_martelo_silex": {
   "pt": "Cabeça de Martelo de Sílex",
   "en": "Flint Hammer Head",
   "icone": "textures/items/cl/arte/peca_cabeca_martelo_silex"
+ },
+ "cl:peca_cabeca_martelo_slime_brasa": {
+  "pt": "Cabeça de Martelo de Slime de Brasa",
+  "en": "Cinderslime Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_slime_brasa"
+ },
+ "cl:peca_cabeca_martelo_slime_cavaleiro": {
+  "pt": "Cabeça de Martelo de Slime-Cavaleiro",
+  "en": "Knightslime Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_slime_cavaleiro"
+ },
+ "cl:peca_cabeca_martelo_slime_rainha": {
+  "pt": "Cabeça de Martelo de Slime da Rainha",
+  "en": "Queen's Slime Hammer Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_martelo_slime_rainha"
  },
  "cl:peca_cabeca_pa_aco": {
   "pt": "Cabeça de Pá de Aço",
@@ -4778,123 +6763,313 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  },
  "cl:peca_cabeca_picareta_aco": {
   "pt": "Cabeça de Picareta de Aço",
-  "en": "Steel Pickaxe Head",
+  "en": "Steel Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_aco"
+ },
+ "cl:peca_cabeca_picareta_aco_slime": {
+  "pt": "Cabeça de Picareta de Aço de Slime",
+  "en": "Slimesteel Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_aco_slime"
  },
  "cl:peca_cabeca_picareta_bronze": {
   "pt": "Cabeça de Picareta de Bronze",
-  "en": "Bronze Pickaxe Head",
+  "en": "Bronze Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_bronze"
  },
  "cl:peca_cabeca_picareta_bronze_ametista": {
   "pt": "Cabeça de Picareta de Bronze de Ametista",
-  "en": "Amethyst Bronze Pickaxe Head",
+  "en": "Amethyst Bronze Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_bronze_ametista"
  },
  "cl:peca_cabeca_picareta_cacto": {
   "pt": "Cabeça de Picareta de Cacto",
-  "en": "Cactus Pickaxe Head",
+  "en": "Cactus Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_cacto"
+ },
+ "cl:peca_cabeca_picareta_cobalto": {
+  "pt": "Cabeça de Picareta de Cobalto",
+  "en": "Cobalt Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_cobalto"
  },
  "cl:peca_cabeca_picareta_cobre": {
   "pt": "Cabeça de Picareta de Cobre",
-  "en": "Copper Pickaxe Head",
+  "en": "Copper Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_cobre"
+ },
+ "cl:peca_cabeca_picareta_coro": {
+  "pt": "Cabeça de Picareta de Chorus",
+  "en": "Chorus Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_coro"
  },
  "cl:peca_cabeca_picareta_ferro": {
   "pt": "Cabeça de Picareta de Ferro",
-  "en": "Iron Pickaxe Head",
+  "en": "Iron Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_ferro"
+ },
+ "cl:peca_cabeca_picareta_ferro_porco": {
+  "pt": "Cabeça de Picareta de Ferro-Porco",
+  "en": "Pig Iron Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_ferro_porco"
+ },
+ "cl:peca_cabeca_picareta_hepatizon": {
+  "pt": "Cabeça de Picareta de Hepatizão",
+  "en": "Hepatizon Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_hepatizon"
  },
  "cl:peca_cabeca_picareta_madeira": {
   "pt": "Cabeça de Picareta de Madeira",
-  "en": "Wood Pickaxe Head",
+  "en": "Wood Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_madeira"
+ },
+ "cl:peca_cabeca_picareta_madeira_slime": {
+  "pt": "Cabeça de Picareta de Madeira de Slime",
+  "en": "Slimewood Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_madeira_slime"
+ },
+ "cl:peca_cabeca_picareta_madeira_slime_revestida": {
+  "pt": "Cabeça de Picareta de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_madeira_slime_revestida"
+ },
+ "cl:peca_cabeca_picareta_madeira_tratada": {
+  "pt": "Cabeça de Picareta de Madeira Tratada",
+  "en": "Treated Wood Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_madeira_tratada"
+ },
+ "cl:peca_cabeca_picareta_manyullyn": {
+  "pt": "Cabeça de Picareta de Manyullyn",
+  "en": "Manyullyn Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_manyullyn"
+ },
+ "cl:peca_cabeca_picareta_nahuatl": {
+  "pt": "Cabeça de Picareta de Nahuatl",
+  "en": "Nahuatl Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_nahuatl"
  },
  "cl:peca_cabeca_picareta_obsidiana": {
   "pt": "Cabeça de Picareta de Obsidiana",
-  "en": "Obsidian Pickaxe Head",
+  "en": "Obsidian Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_obsidiana"
+ },
+ "cl:peca_cabeca_picareta_osmio": {
+  "pt": "Cabeça de Picareta de Ósmio",
+  "en": "Osmium Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_osmio"
  },
  "cl:peca_cabeca_picareta_osso": {
   "pt": "Cabeça de Picareta de Osso",
-  "en": "Bone Pickaxe Head",
+  "en": "Bone Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_osso"
+ },
+ "cl:peca_cabeca_picareta_osso_blaze": {
+  "pt": "Cabeça de Picareta de Osso de Blaze",
+  "en": "Blazing Bone Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_osso_blaze"
+ },
+ "cl:peca_cabeca_picareta_osso_necrotico": {
+  "pt": "Cabeça de Picareta de Osso Necrótico",
+  "en": "Necrotic Bone Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_osso_necrotico"
+ },
+ "cl:peca_cabeca_picareta_osso_venenoso": {
+  "pt": "Cabeça de Picareta de Osso Venenoso",
+  "en": "Venombone Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_osso_venenoso"
  },
  "cl:peca_cabeca_picareta_ouro_rosa": {
   "pt": "Cabeça de Picareta de Ouro Rosa",
-  "en": "Rose Gold Pickaxe Head",
+  "en": "Rose Gold Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_ouro_rosa"
  },
  "cl:peca_cabeca_picareta_pedra": {
   "pt": "Cabeça de Picareta de Pedra",
-  "en": "Stone Pickaxe Head",
+  "en": "Stone Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_pedra"
+ },
+ "cl:peca_cabeca_picareta_pedra_branca": {
+  "pt": "Cabeça de Picareta de Pedra Branca",
+  "en": "Whitestone Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_pedra_branca"
+ },
+ "cl:peca_cabeca_picareta_pedra_chamuscada": {
+  "pt": "Cabeça de Picareta de Pedra Chamuscada",
+  "en": "Scorched Stone Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_pedra_chamuscada"
+ },
+ "cl:peca_cabeca_picareta_pedra_refrataria": {
+  "pt": "Cabeça de Picareta de Pedra Carbonizada",
+  "en": "Seared Stone Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_pedra_refrataria"
  },
  "cl:peca_cabeca_picareta_silex": {
   "pt": "Cabeça de Picareta de Sílex",
-  "en": "Flint Pickaxe Head",
+  "en": "Flint Pick Head",
   "icone": "textures/items/cl/arte/peca_cabeca_picareta_silex"
  },
+ "cl:peca_cabeca_picareta_slime_brasa": {
+  "pt": "Cabeça de Picareta de Slime de Brasa",
+  "en": "Cinderslime Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_slime_brasa"
+ },
+ "cl:peca_cabeca_picareta_slime_cavaleiro": {
+  "pt": "Cabeça de Picareta de Slime-Cavaleiro",
+  "en": "Knightslime Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_slime_cavaleiro"
+ },
+ "cl:peca_cabeca_picareta_slime_rainha": {
+  "pt": "Cabeça de Picareta de Slime da Rainha",
+  "en": "Queen's Slime Pick Head",
+  "icone": "textures/items/cl/arte/peca_cabeca_picareta_slime_rainha"
+ },
  "cl:peca_cabo_aco": {
-  "pt": "Cabo de Aço",
-  "en": "Steel Tool Rod",
+  "pt": "Cabo de Ferramenta de Aço",
+  "en": "Steel Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_aco"
  },
+ "cl:peca_cabo_aco_slime": {
+  "pt": "Cabo de Ferramenta de Aço de Slime",
+  "en": "Slimesteel Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_aco_slime"
+ },
  "cl:peca_cabo_bronze": {
-  "pt": "Cabo de Bronze",
-  "en": "Bronze Tool Rod",
+  "pt": "Cabo de Ferramenta de Bronze",
+  "en": "Bronze Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_bronze"
  },
  "cl:peca_cabo_bronze_ametista": {
-  "pt": "Cabo de Bronze de Ametista",
-  "en": "Amethyst Bronze Tool Rod",
+  "pt": "Cabo de Ferramenta de Bronze de Ametista",
+  "en": "Amethyst Bronze Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_bronze_ametista"
  },
  "cl:peca_cabo_cacto": {
-  "pt": "Cabo de Cacto",
-  "en": "Cactus Tool Rod",
+  "pt": "Cabo de Ferramenta de Cacto",
+  "en": "Cactus Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_cacto"
  },
+ "cl:peca_cabo_cobalto": {
+  "pt": "Cabo de Ferramenta de Cobalto",
+  "en": "Cobalt Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_cobalto"
+ },
  "cl:peca_cabo_cobre": {
-  "pt": "Cabo de Cobre",
-  "en": "Copper Tool Rod",
+  "pt": "Cabo de Ferramenta de Cobre",
+  "en": "Copper Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_cobre"
  },
+ "cl:peca_cabo_coro": {
+  "pt": "Cabo de Ferramenta de Chorus",
+  "en": "Chorus Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_coro"
+ },
  "cl:peca_cabo_ferro": {
-  "pt": "Cabo de Ferro",
-  "en": "Iron Tool Rod",
+  "pt": "Cabo de Ferramenta de Ferro",
+  "en": "Iron Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_ferro"
  },
+ "cl:peca_cabo_ferro_porco": {
+  "pt": "Cabo de Ferramenta de Ferro-Porco",
+  "en": "Pig Iron Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_ferro_porco"
+ },
+ "cl:peca_cabo_hepatizon": {
+  "pt": "Cabo de Ferramenta de Hepatizão",
+  "en": "Hepatizon Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_hepatizon"
+ },
  "cl:peca_cabo_madeira": {
-  "pt": "Cabo de Madeira",
-  "en": "Wood Tool Rod",
+  "pt": "Cabo de Ferramenta de Madeira",
+  "en": "Wood Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_madeira"
  },
+ "cl:peca_cabo_madeira_slime": {
+  "pt": "Cabo de Ferramenta de Madeira de Slime",
+  "en": "Slimewood Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_madeira_slime"
+ },
+ "cl:peca_cabo_madeira_slime_revestida": {
+  "pt": "Cabo de Ferramenta de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_madeira_slime_revestida"
+ },
+ "cl:peca_cabo_madeira_tratada": {
+  "pt": "Cabo de Ferramenta de Madeira Tratada",
+  "en": "Treated Wood Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_madeira_tratada"
+ },
+ "cl:peca_cabo_manyullyn": {
+  "pt": "Cabo de Ferramenta de Manyullyn",
+  "en": "Manyullyn Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_manyullyn"
+ },
+ "cl:peca_cabo_nahuatl": {
+  "pt": "Cabo de Ferramenta de Nahuatl",
+  "en": "Nahuatl Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_nahuatl"
+ },
  "cl:peca_cabo_obsidiana": {
-  "pt": "Cabo de Obsidiana",
-  "en": "Obsidian Tool Rod",
+  "pt": "Cabo de Ferramenta de Obsidiana",
+  "en": "Obsidian Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_obsidiana"
  },
+ "cl:peca_cabo_osmio": {
+  "pt": "Cabo de Ferramenta de Ósmio",
+  "en": "Osmium Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_osmio"
+ },
  "cl:peca_cabo_osso": {
-  "pt": "Cabo de Osso",
-  "en": "Bone Tool Rod",
+  "pt": "Cabo de Ferramenta de Osso",
+  "en": "Bone Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_osso"
  },
+ "cl:peca_cabo_osso_blaze": {
+  "pt": "Cabo de Ferramenta de Osso de Blaze",
+  "en": "Blazing Bone Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_osso_blaze"
+ },
+ "cl:peca_cabo_osso_necrotico": {
+  "pt": "Cabo de Ferramenta de Osso Necrótico",
+  "en": "Necrotic Bone Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_osso_necrotico"
+ },
+ "cl:peca_cabo_osso_venenoso": {
+  "pt": "Cabo de Ferramenta de Osso Venenoso",
+  "en": "Venombone Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_osso_venenoso"
+ },
  "cl:peca_cabo_ouro_rosa": {
-  "pt": "Cabo de Ouro Rosa",
-  "en": "Rose Gold Tool Rod",
+  "pt": "Cabo de Ferramenta de Ouro Rosa",
+  "en": "Rose Gold Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_ouro_rosa"
  },
  "cl:peca_cabo_pedra": {
-  "pt": "Cabo de Pedra",
-  "en": "Stone Tool Rod",
+  "pt": "Cabo de Ferramenta de Pedra",
+  "en": "Stone Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_pedra"
+ },
+ "cl:peca_cabo_pedra_branca": {
+  "pt": "Cabo de Ferramenta de Pedra Branca",
+  "en": "Whitestone Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_pedra_branca"
+ },
+ "cl:peca_cabo_pedra_chamuscada": {
+  "pt": "Cabo de Ferramenta de Pedra Chamuscada",
+  "en": "Scorched Stone Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_pedra_chamuscada"
+ },
+ "cl:peca_cabo_pedra_refrataria": {
+  "pt": "Cabo de Ferramenta de Pedra Carbonizada",
+  "en": "Seared Stone Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_pedra_refrataria"
  },
  "cl:peca_cabo_resistente_aco": {
   "pt": "Cabo Resistente de Aço",
   "en": "Steel Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_aco"
+ },
+ "cl:peca_cabo_resistente_aco_slime": {
+  "pt": "Cabo Resistente de Aço de Slime",
+  "en": "Slimesteel Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_aco_slime"
  },
  "cl:peca_cabo_resistente_bronze": {
   "pt": "Cabo Resistente de Bronze",
@@ -4911,30 +7086,95 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_cacto"
  },
+ "cl:peca_cabo_resistente_cobalto": {
+  "pt": "Cabo Resistente de Cobalto",
+  "en": "Cobalt Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_cobalto"
+ },
  "cl:peca_cabo_resistente_cobre": {
   "pt": "Cabo Resistente de Cobre",
   "en": "Copper Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_cobre"
+ },
+ "cl:peca_cabo_resistente_coro": {
+  "pt": "Cabo Resistente de Chorus",
+  "en": "Chorus Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_coro"
  },
  "cl:peca_cabo_resistente_ferro": {
   "pt": "Cabo Resistente de Ferro",
   "en": "Iron Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_ferro"
  },
+ "cl:peca_cabo_resistente_ferro_porco": {
+  "pt": "Cabo Resistente de Ferro-Porco",
+  "en": "Pig Iron Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_ferro_porco"
+ },
+ "cl:peca_cabo_resistente_hepatizon": {
+  "pt": "Cabo Resistente de Hepatizão",
+  "en": "Hepatizon Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_hepatizon"
+ },
  "cl:peca_cabo_resistente_madeira": {
   "pt": "Cabo Resistente de Madeira",
   "en": "Wood Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_madeira"
+ },
+ "cl:peca_cabo_resistente_madeira_slime": {
+  "pt": "Cabo Resistente de Madeira de Slime",
+  "en": "Slimewood Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_madeira_slime"
+ },
+ "cl:peca_cabo_resistente_madeira_slime_revestida": {
+  "pt": "Cabo Resistente de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_madeira_slime_revestida"
+ },
+ "cl:peca_cabo_resistente_madeira_tratada": {
+  "pt": "Cabo Resistente de Madeira Tratada",
+  "en": "Treated Wood Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_madeira_tratada"
+ },
+ "cl:peca_cabo_resistente_manyullyn": {
+  "pt": "Cabo Resistente de Manyullyn",
+  "en": "Manyullyn Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_manyullyn"
+ },
+ "cl:peca_cabo_resistente_nahuatl": {
+  "pt": "Cabo Resistente de Nahuatl",
+  "en": "Nahuatl Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_nahuatl"
  },
  "cl:peca_cabo_resistente_obsidiana": {
   "pt": "Cabo Resistente de Obsidiana",
   "en": "Obsidian Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_obsidiana"
  },
+ "cl:peca_cabo_resistente_osmio": {
+  "pt": "Cabo Resistente de Ósmio",
+  "en": "Osmium Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_osmio"
+ },
  "cl:peca_cabo_resistente_osso": {
   "pt": "Cabo Resistente de Osso",
   "en": "Bone Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_osso"
+ },
+ "cl:peca_cabo_resistente_osso_blaze": {
+  "pt": "Cabo Resistente de Osso de Blaze",
+  "en": "Blazing Bone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_osso_blaze"
+ },
+ "cl:peca_cabo_resistente_osso_necrotico": {
+  "pt": "Cabo Resistente de Osso Necrótico",
+  "en": "Necrotic Bone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_osso_necrotico"
+ },
+ "cl:peca_cabo_resistente_osso_venenoso": {
+  "pt": "Cabo Resistente de Osso Venenoso",
+  "en": "Venombone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_osso_venenoso"
  },
  "cl:peca_cabo_resistente_ouro_rosa": {
   "pt": "Cabo Resistente de Ouro Rosa",
@@ -4946,15 +7186,60 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_pedra"
  },
+ "cl:peca_cabo_resistente_pedra_branca": {
+  "pt": "Cabo Resistente de Pedra Branca",
+  "en": "Whitestone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_pedra_branca"
+ },
+ "cl:peca_cabo_resistente_pedra_chamuscada": {
+  "pt": "Cabo Resistente de Pedra Chamuscada",
+  "en": "Scorched Stone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_pedra_chamuscada"
+ },
+ "cl:peca_cabo_resistente_pedra_refrataria": {
+  "pt": "Cabo Resistente de Pedra Carbonizada",
+  "en": "Seared Stone Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_pedra_refrataria"
+ },
  "cl:peca_cabo_resistente_silex": {
   "pt": "Cabo Resistente de Sílex",
   "en": "Flint Tough Handle",
   "icone": "textures/items/cl/arte/peca_cabo_resistente_silex"
  },
+ "cl:peca_cabo_resistente_slime_brasa": {
+  "pt": "Cabo Resistente de Slime de Brasa",
+  "en": "Cinderslime Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_slime_brasa"
+ },
+ "cl:peca_cabo_resistente_slime_cavaleiro": {
+  "pt": "Cabo Resistente de Slime-Cavaleiro",
+  "en": "Knightslime Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_slime_cavaleiro"
+ },
+ "cl:peca_cabo_resistente_slime_rainha": {
+  "pt": "Cabo Resistente de Slime da Rainha",
+  "en": "Queen's Slime Tough Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_resistente_slime_rainha"
+ },
  "cl:peca_cabo_silex": {
-  "pt": "Cabo de Sílex",
-  "en": "Flint Tool Rod",
+  "pt": "Cabo de Ferramenta de Sílex",
+  "en": "Flint Tool Handle",
   "icone": "textures/items/cl/arte/peca_cabo_silex"
+ },
+ "cl:peca_cabo_slime_brasa": {
+  "pt": "Cabo de Ferramenta de Slime de Brasa",
+  "en": "Cinderslime Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_slime_brasa"
+ },
+ "cl:peca_cabo_slime_cavaleiro": {
+  "pt": "Cabo de Ferramenta de Slime-Cavaleiro",
+  "en": "Knightslime Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_slime_cavaleiro"
+ },
+ "cl:peca_cabo_slime_rainha": {
+  "pt": "Cabo de Ferramenta de Slime da Rainha",
+  "en": "Queen's Slime Tool Handle",
+  "icone": "textures/items/cl/arte/peca_cabo_slime_rainha"
  },
  "cl:peca_guarda_larga_aco": {
   "pt": "Guarda Larga de Aço",
@@ -5017,189 +7302,724 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "icone": "textures/items/cl/arte/peca_guarda_larga_silex"
  },
  "cl:peca_lamina_espada_aco": {
-  "pt": "Lâmina de Espada de Aço",
-  "en": "Steel Sword Blade",
+  "pt": "Lâmina Pequena de Aço",
+  "en": "Steel Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_aco"
  },
+ "cl:peca_lamina_espada_aco_slime": {
+  "pt": "Lâmina Pequena de Aço de Slime",
+  "en": "Slimesteel Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_aco_slime"
+ },
  "cl:peca_lamina_espada_bronze": {
-  "pt": "Lâmina de Espada de Bronze",
-  "en": "Bronze Sword Blade",
+  "pt": "Lâmina Pequena de Bronze",
+  "en": "Bronze Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_bronze"
  },
  "cl:peca_lamina_espada_bronze_ametista": {
-  "pt": "Lâmina de Espada de Bronze de Ametista",
-  "en": "Amethyst Bronze Sword Blade",
+  "pt": "Lâmina Pequena de Bronze de Ametista",
+  "en": "Amethyst Bronze Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_bronze_ametista"
  },
  "cl:peca_lamina_espada_cacto": {
-  "pt": "Lâmina de Espada de Cacto",
-  "en": "Cactus Sword Blade",
+  "pt": "Lâmina Pequena de Cacto",
+  "en": "Cactus Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_cacto"
  },
+ "cl:peca_lamina_espada_cobalto": {
+  "pt": "Lâmina Pequena de Cobalto",
+  "en": "Cobalt Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_cobalto"
+ },
  "cl:peca_lamina_espada_cobre": {
-  "pt": "Lâmina de Espada de Cobre",
-  "en": "Copper Sword Blade",
+  "pt": "Lâmina Pequena de Cobre",
+  "en": "Copper Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_cobre"
  },
+ "cl:peca_lamina_espada_coro": {
+  "pt": "Lâmina Pequena de Chorus",
+  "en": "Chorus Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_coro"
+ },
  "cl:peca_lamina_espada_ferro": {
-  "pt": "Lâmina de Espada de Ferro",
-  "en": "Iron Sword Blade",
+  "pt": "Lâmina Pequena de Ferro",
+  "en": "Iron Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_ferro"
  },
+ "cl:peca_lamina_espada_ferro_porco": {
+  "pt": "Lâmina Pequena de Ferro-Porco",
+  "en": "Pig Iron Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_ferro_porco"
+ },
+ "cl:peca_lamina_espada_hepatizon": {
+  "pt": "Lâmina Pequena de Hepatizão",
+  "en": "Hepatizon Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_hepatizon"
+ },
  "cl:peca_lamina_espada_madeira": {
-  "pt": "Lâmina de Espada de Madeira",
-  "en": "Wood Sword Blade",
+  "pt": "Lâmina Pequena de Madeira",
+  "en": "Wood Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_madeira"
  },
+ "cl:peca_lamina_espada_madeira_slime": {
+  "pt": "Lâmina Pequena de Madeira de Slime",
+  "en": "Slimewood Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_madeira_slime"
+ },
+ "cl:peca_lamina_espada_madeira_slime_revestida": {
+  "pt": "Lâmina Pequena de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_madeira_slime_revestida"
+ },
+ "cl:peca_lamina_espada_madeira_tratada": {
+  "pt": "Lâmina Pequena de Madeira Tratada",
+  "en": "Treated Wood Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_madeira_tratada"
+ },
+ "cl:peca_lamina_espada_manyullyn": {
+  "pt": "Lâmina Pequena de Manyullyn",
+  "en": "Manyullyn Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_manyullyn"
+ },
+ "cl:peca_lamina_espada_nahuatl": {
+  "pt": "Lâmina Pequena de Nahuatl",
+  "en": "Nahuatl Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_nahuatl"
+ },
  "cl:peca_lamina_espada_obsidiana": {
-  "pt": "Lâmina de Espada de Obsidiana",
-  "en": "Obsidian Sword Blade",
+  "pt": "Lâmina Pequena de Obsidiana",
+  "en": "Obsidian Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_obsidiana"
  },
+ "cl:peca_lamina_espada_osmio": {
+  "pt": "Lâmina Pequena de Ósmio",
+  "en": "Osmium Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_osmio"
+ },
  "cl:peca_lamina_espada_osso": {
-  "pt": "Lâmina de Espada de Osso",
-  "en": "Bone Sword Blade",
+  "pt": "Lâmina Pequena de Osso",
+  "en": "Bone Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_osso"
  },
+ "cl:peca_lamina_espada_osso_blaze": {
+  "pt": "Lâmina Pequena de Osso de Blaze",
+  "en": "Blazing Bone Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_osso_blaze"
+ },
+ "cl:peca_lamina_espada_osso_necrotico": {
+  "pt": "Lâmina Pequena de Osso Necrótico",
+  "en": "Necrotic Bone Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_osso_necrotico"
+ },
+ "cl:peca_lamina_espada_osso_venenoso": {
+  "pt": "Lâmina Pequena de Osso Venenoso",
+  "en": "Venombone Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_osso_venenoso"
+ },
  "cl:peca_lamina_espada_ouro_rosa": {
-  "pt": "Lâmina de Espada de Ouro Rosa",
-  "en": "Rose Gold Sword Blade",
+  "pt": "Lâmina Pequena de Ouro Rosa",
+  "en": "Rose Gold Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_ouro_rosa"
  },
  "cl:peca_lamina_espada_pedra": {
-  "pt": "Lâmina de Espada de Pedra",
-  "en": "Stone Sword Blade",
+  "pt": "Lâmina Pequena de Pedra",
+  "en": "Stone Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_pedra"
  },
+ "cl:peca_lamina_espada_pedra_branca": {
+  "pt": "Lâmina Pequena de Pedra Branca",
+  "en": "Whitestone Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_pedra_branca"
+ },
+ "cl:peca_lamina_espada_pedra_chamuscada": {
+  "pt": "Lâmina Pequena de Pedra Chamuscada",
+  "en": "Scorched Stone Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_pedra_chamuscada"
+ },
+ "cl:peca_lamina_espada_pedra_refrataria": {
+  "pt": "Lâmina Pequena de Pedra Carbonizada",
+  "en": "Seared Stone Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_pedra_refrataria"
+ },
  "cl:peca_lamina_espada_silex": {
-  "pt": "Lâmina de Espada de Sílex",
-  "en": "Flint Sword Blade",
+  "pt": "Lâmina Pequena de Sílex",
+  "en": "Flint Small Blade",
   "icone": "textures/items/cl/arte/peca_lamina_espada_silex"
  },
+ "cl:peca_lamina_espada_slime_brasa": {
+  "pt": "Lâmina Pequena de Slime de Brasa",
+  "en": "Cinderslime Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_slime_brasa"
+ },
+ "cl:peca_lamina_espada_slime_cavaleiro": {
+  "pt": "Lâmina Pequena de Slime-Cavaleiro",
+  "en": "Knightslime Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_slime_cavaleiro"
+ },
+ "cl:peca_lamina_espada_slime_rainha": {
+  "pt": "Lâmina Pequena de Slime da Rainha",
+  "en": "Queen's Slime Small Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_espada_slime_rainha"
+ },
+ "cl:peca_lamina_larga_aco": {
+  "pt": "Lâmina Grande de Aço",
+  "en": "Steel Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_aco"
+ },
+ "cl:peca_lamina_larga_aco_slime": {
+  "pt": "Lâmina Grande de Aço de Slime",
+  "en": "Slimesteel Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_aco_slime"
+ },
+ "cl:peca_lamina_larga_bronze": {
+  "pt": "Lâmina Grande de Bronze",
+  "en": "Bronze Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_bronze"
+ },
+ "cl:peca_lamina_larga_bronze_ametista": {
+  "pt": "Lâmina Grande de Bronze de Ametista",
+  "en": "Amethyst Bronze Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_bronze_ametista"
+ },
+ "cl:peca_lamina_larga_cobalto": {
+  "pt": "Lâmina Grande de Cobalto",
+  "en": "Cobalt Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_cobalto"
+ },
+ "cl:peca_lamina_larga_cobre": {
+  "pt": "Lâmina Grande de Cobre",
+  "en": "Copper Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_cobre"
+ },
+ "cl:peca_lamina_larga_coro": {
+  "pt": "Lâmina Grande de Chorus",
+  "en": "Chorus Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_coro"
+ },
+ "cl:peca_lamina_larga_ferro": {
+  "pt": "Lâmina Grande de Ferro",
+  "en": "Iron Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_ferro"
+ },
+ "cl:peca_lamina_larga_ferro_porco": {
+  "pt": "Lâmina Grande de Ferro-Porco",
+  "en": "Pig Iron Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_ferro_porco"
+ },
+ "cl:peca_lamina_larga_hepatizon": {
+  "pt": "Lâmina Grande de Hepatizão",
+  "en": "Hepatizon Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_hepatizon"
+ },
+ "cl:peca_lamina_larga_madeira": {
+  "pt": "Lâmina Grande de Madeira",
+  "en": "Wood Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_madeira"
+ },
+ "cl:peca_lamina_larga_madeira_slime": {
+  "pt": "Lâmina Grande de Madeira de Slime",
+  "en": "Slimewood Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_madeira_slime"
+ },
+ "cl:peca_lamina_larga_madeira_slime_revestida": {
+  "pt": "Lâmina Grande de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_madeira_slime_revestida"
+ },
+ "cl:peca_lamina_larga_madeira_tratada": {
+  "pt": "Lâmina Grande de Madeira Tratada",
+  "en": "Treated Wood Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_madeira_tratada"
+ },
+ "cl:peca_lamina_larga_manyullyn": {
+  "pt": "Lâmina Grande de Manyullyn",
+  "en": "Manyullyn Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_manyullyn"
+ },
+ "cl:peca_lamina_larga_nahuatl": {
+  "pt": "Lâmina Grande de Nahuatl",
+  "en": "Nahuatl Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_nahuatl"
+ },
+ "cl:peca_lamina_larga_osmio": {
+  "pt": "Lâmina Grande de Ósmio",
+  "en": "Osmium Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_osmio"
+ },
+ "cl:peca_lamina_larga_osso": {
+  "pt": "Lâmina Grande de Osso",
+  "en": "Bone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_osso"
+ },
+ "cl:peca_lamina_larga_osso_blaze": {
+  "pt": "Lâmina Grande de Osso de Blaze",
+  "en": "Blazing Bone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_osso_blaze"
+ },
+ "cl:peca_lamina_larga_osso_necrotico": {
+  "pt": "Lâmina Grande de Osso Necrótico",
+  "en": "Necrotic Bone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_osso_necrotico"
+ },
+ "cl:peca_lamina_larga_osso_venenoso": {
+  "pt": "Lâmina Grande de Osso Venenoso",
+  "en": "Venombone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_osso_venenoso"
+ },
+ "cl:peca_lamina_larga_ouro_rosa": {
+  "pt": "Lâmina Grande de Ouro Rosa",
+  "en": "Rose Gold Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_ouro_rosa"
+ },
+ "cl:peca_lamina_larga_pedra": {
+  "pt": "Lâmina Grande de Pedra",
+  "en": "Stone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_pedra"
+ },
+ "cl:peca_lamina_larga_pedra_branca": {
+  "pt": "Lâmina Grande de Pedra Branca",
+  "en": "Whitestone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_pedra_branca"
+ },
+ "cl:peca_lamina_larga_pedra_chamuscada": {
+  "pt": "Lâmina Grande de Pedra Chamuscada",
+  "en": "Scorched Stone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_pedra_chamuscada"
+ },
+ "cl:peca_lamina_larga_pedra_refrataria": {
+  "pt": "Lâmina Grande de Pedra Carbonizada",
+  "en": "Seared Stone Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_pedra_refrataria"
+ },
+ "cl:peca_lamina_larga_silex": {
+  "pt": "Lâmina Grande de Sílex",
+  "en": "Flint Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_silex"
+ },
+ "cl:peca_lamina_larga_slime_brasa": {
+  "pt": "Lâmina Grande de Slime de Brasa",
+  "en": "Cinderslime Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_slime_brasa"
+ },
+ "cl:peca_lamina_larga_slime_cavaleiro": {
+  "pt": "Lâmina Grande de Slime-Cavaleiro",
+  "en": "Knightslime Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_slime_cavaleiro"
+ },
+ "cl:peca_lamina_larga_slime_rainha": {
+  "pt": "Lâmina Grande de Slime da Rainha",
+  "en": "Queen's Slime Broad Blade",
+  "icone": "textures/items/cl/arte/peca_lamina_larga_slime_rainha"
+ },
  "cl:peca_ligacao_aco": {
-  "pt": "Ligação de Aço",
-  "en": "Steel Binding",
+  "pt": "Ligamento de Ferramenta de Aço",
+  "en": "Steel Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_aco"
  },
+ "cl:peca_ligacao_aco_slime": {
+  "pt": "Ligamento de Ferramenta de Aço de Slime",
+  "en": "Slimesteel Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_aco_slime"
+ },
  "cl:peca_ligacao_bronze": {
-  "pt": "Ligação de Bronze",
-  "en": "Bronze Binding",
+  "pt": "Ligamento de Ferramenta de Bronze",
+  "en": "Bronze Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_bronze"
  },
  "cl:peca_ligacao_bronze_ametista": {
-  "pt": "Ligação de Bronze de Ametista",
-  "en": "Amethyst Bronze Binding",
+  "pt": "Ligamento de Ferramenta de Bronze de Ametista",
+  "en": "Amethyst Bronze Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_bronze_ametista"
  },
  "cl:peca_ligacao_cacto": {
-  "pt": "Ligação de Cacto",
-  "en": "Cactus Binding",
+  "pt": "Ligamento de Ferramenta de Cacto",
+  "en": "Cactus Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_cacto"
  },
+ "cl:peca_ligacao_cobalto": {
+  "pt": "Ligamento de Ferramenta de Cobalto",
+  "en": "Cobalt Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_cobalto"
+ },
  "cl:peca_ligacao_cobre": {
-  "pt": "Ligação de Cobre",
-  "en": "Copper Binding",
+  "pt": "Ligamento de Ferramenta de Cobre",
+  "en": "Copper Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_cobre"
  },
+ "cl:peca_ligacao_corda": {
+  "pt": "Ligamento de Ferramenta de Corda",
+  "en": "String Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_corda"
+ },
+ "cl:peca_ligacao_coro": {
+  "pt": "Ligamento de Ferramenta de Chorus",
+  "en": "Chorus Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_coro"
+ },
+ "cl:peca_ligacao_couro": {
+  "pt": "Ligamento de Ferramenta de Couro",
+  "en": "Leather Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_couro"
+ },
  "cl:peca_ligacao_ferro": {
-  "pt": "Ligação de Ferro",
-  "en": "Iron Binding",
+  "pt": "Ligamento de Ferramenta de Ferro",
+  "en": "Iron Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_ferro"
  },
+ "cl:peca_ligacao_ferro_porco": {
+  "pt": "Ligamento de Ferramenta de Ferro-Porco",
+  "en": "Pig Iron Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_ferro_porco"
+ },
+ "cl:peca_ligacao_hepatizon": {
+  "pt": "Ligamento de Ferramenta de Hepatizão",
+  "en": "Hepatizon Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_hepatizon"
+ },
+ "cl:peca_ligacao_linha_negra": {
+  "pt": "Ligamento de Ferramenta de Linha Negra",
+  "en": "Darkthread Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_linha_negra"
+ },
  "cl:peca_ligacao_madeira": {
-  "pt": "Ligação de Madeira",
-  "en": "Wood Binding",
+  "pt": "Ligamento de Ferramenta de Madeira",
+  "en": "Wood Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_madeira"
  },
+ "cl:peca_ligacao_madeira_slime": {
+  "pt": "Ligamento de Ferramenta de Madeira de Slime",
+  "en": "Slimewood Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_madeira_slime"
+ },
+ "cl:peca_ligacao_madeira_slime_revestida": {
+  "pt": "Ligamento de Ferramenta de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_madeira_slime_revestida"
+ },
+ "cl:peca_ligacao_madeira_tratada": {
+  "pt": "Ligamento de Ferramenta de Madeira Tratada",
+  "en": "Treated Wood Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_madeira_tratada"
+ },
+ "cl:peca_ligacao_manyullyn": {
+  "pt": "Ligamento de Ferramenta de Manyullyn",
+  "en": "Manyullyn Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_manyullyn"
+ },
+ "cl:peca_ligacao_nahuatl": {
+  "pt": "Ligamento de Ferramenta de Nahuatl",
+  "en": "Nahuatl Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_nahuatl"
+ },
  "cl:peca_ligacao_obsidiana": {
-  "pt": "Ligação de Obsidiana",
-  "en": "Obsidian Binding",
+  "pt": "Ligamento de Ferramenta de Obsidiana",
+  "en": "Obsidian Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_obsidiana"
  },
+ "cl:peca_ligacao_osmio": {
+  "pt": "Ligamento de Ferramenta de Ósmio",
+  "en": "Osmium Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_osmio"
+ },
  "cl:peca_ligacao_osso": {
-  "pt": "Ligação de Osso",
-  "en": "Bone Binding",
+  "pt": "Ligamento de Ferramenta de Osso",
+  "en": "Bone Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_osso"
  },
+ "cl:peca_ligacao_osso_blaze": {
+  "pt": "Ligamento de Ferramenta de Osso de Blaze",
+  "en": "Blazing Bone Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_osso_blaze"
+ },
+ "cl:peca_ligacao_osso_necrotico": {
+  "pt": "Ligamento de Ferramenta de Osso Necrótico",
+  "en": "Necrotic Bone Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_osso_necrotico"
+ },
+ "cl:peca_ligacao_osso_venenoso": {
+  "pt": "Ligamento de Ferramenta de Osso Venenoso",
+  "en": "Venombone Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_osso_venenoso"
+ },
  "cl:peca_ligacao_ouro_rosa": {
-  "pt": "Ligação de Ouro Rosa",
-  "en": "Rose Gold Binding",
+  "pt": "Ligamento de Ferramenta de Ouro Rosa",
+  "en": "Rose Gold Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_ouro_rosa"
  },
  "cl:peca_ligacao_pedra": {
-  "pt": "Ligação de Pedra",
-  "en": "Stone Binding",
+  "pt": "Ligamento de Ferramenta de Pedra",
+  "en": "Stone Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_pedra"
  },
+ "cl:peca_ligacao_pedra_branca": {
+  "pt": "Ligamento de Ferramenta de Pedra Branca",
+  "en": "Whitestone Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_pedra_branca"
+ },
+ "cl:peca_ligacao_pedra_chamuscada": {
+  "pt": "Ligamento de Ferramenta de Pedra Chamuscada",
+  "en": "Scorched Stone Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_pedra_chamuscada"
+ },
+ "cl:peca_ligacao_pedra_refrataria": {
+  "pt": "Ligamento de Ferramenta de Pedra Carbonizada",
+  "en": "Seared Stone Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_pedra_refrataria"
+ },
  "cl:peca_ligacao_resistente_aco": {
-  "pt": "Ligação Resistente de Aço",
-  "en": "Steel Tough Binding",
+  "pt": "Colar Resistente de Aço",
+  "en": "Steel Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_aco"
  },
+ "cl:peca_ligacao_resistente_aco_slime": {
+  "pt": "Colar Resistente de Aço de Slime",
+  "en": "Slimesteel Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_aco_slime"
+ },
  "cl:peca_ligacao_resistente_bronze": {
-  "pt": "Ligação Resistente de Bronze",
-  "en": "Bronze Tough Binding",
+  "pt": "Colar Resistente de Bronze",
+  "en": "Bronze Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_bronze"
  },
  "cl:peca_ligacao_resistente_bronze_ametista": {
-  "pt": "Ligação Resistente de Bronze de Ametista",
-  "en": "Amethyst Bronze Tough Binding",
+  "pt": "Colar Resistente de Bronze de Ametista",
+  "en": "Amethyst Bronze Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_bronze_ametista"
  },
  "cl:peca_ligacao_resistente_cacto": {
-  "pt": "Ligação Resistente de Cacto",
-  "en": "Cactus Tough Binding",
+  "pt": "Colar Resistente de Cacto",
+  "en": "Cactus Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_cacto"
  },
+ "cl:peca_ligacao_resistente_cobalto": {
+  "pt": "Colar Resistente de Cobalto",
+  "en": "Cobalt Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_cobalto"
+ },
  "cl:peca_ligacao_resistente_cobre": {
-  "pt": "Ligação Resistente de Cobre",
-  "en": "Copper Tough Binding",
+  "pt": "Colar Resistente de Cobre",
+  "en": "Copper Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_cobre"
  },
+ "cl:peca_ligacao_resistente_corda": {
+  "pt": "Colar Resistente de Corda",
+  "en": "String Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_corda"
+ },
+ "cl:peca_ligacao_resistente_coro": {
+  "pt": "Colar Resistente de Chorus",
+  "en": "Chorus Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_coro"
+ },
+ "cl:peca_ligacao_resistente_couro": {
+  "pt": "Colar Resistente de Couro",
+  "en": "Leather Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_couro"
+ },
  "cl:peca_ligacao_resistente_ferro": {
-  "pt": "Ligação Resistente de Ferro",
-  "en": "Iron Tough Binding",
+  "pt": "Colar Resistente de Ferro",
+  "en": "Iron Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_ferro"
  },
+ "cl:peca_ligacao_resistente_ferro_porco": {
+  "pt": "Colar Resistente de Ferro-Porco",
+  "en": "Pig Iron Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_ferro_porco"
+ },
+ "cl:peca_ligacao_resistente_hepatizon": {
+  "pt": "Colar Resistente de Hepatizão",
+  "en": "Hepatizon Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_hepatizon"
+ },
+ "cl:peca_ligacao_resistente_linha_negra": {
+  "pt": "Colar Resistente de Linha Negra",
+  "en": "Darkthread Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_linha_negra"
+ },
  "cl:peca_ligacao_resistente_madeira": {
-  "pt": "Ligação Resistente de Madeira",
-  "en": "Wood Tough Binding",
+  "pt": "Colar Resistente de Madeira",
+  "en": "Wood Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_madeira"
  },
+ "cl:peca_ligacao_resistente_madeira_slime": {
+  "pt": "Colar Resistente de Madeira de Slime",
+  "en": "Slimewood Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_madeira_slime"
+ },
+ "cl:peca_ligacao_resistente_madeira_slime_revestida": {
+  "pt": "Colar Resistente de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_madeira_slime_revestida"
+ },
+ "cl:peca_ligacao_resistente_madeira_tratada": {
+  "pt": "Colar Resistente de Madeira Tratada",
+  "en": "Treated Wood Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_madeira_tratada"
+ },
+ "cl:peca_ligacao_resistente_manyullyn": {
+  "pt": "Colar Resistente de Manyullyn",
+  "en": "Manyullyn Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_manyullyn"
+ },
+ "cl:peca_ligacao_resistente_nahuatl": {
+  "pt": "Colar Resistente de Nahuatl",
+  "en": "Nahuatl Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_nahuatl"
+ },
  "cl:peca_ligacao_resistente_obsidiana": {
-  "pt": "Ligação Resistente de Obsidiana",
-  "en": "Obsidian Tough Binding",
+  "pt": "Colar Resistente de Obsidiana",
+  "en": "Obsidian Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_obsidiana"
  },
+ "cl:peca_ligacao_resistente_osmio": {
+  "pt": "Colar Resistente de Ósmio",
+  "en": "Osmium Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_osmio"
+ },
  "cl:peca_ligacao_resistente_osso": {
-  "pt": "Ligação Resistente de Osso",
-  "en": "Bone Tough Binding",
+  "pt": "Colar Resistente de Osso",
+  "en": "Bone Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_osso"
  },
+ "cl:peca_ligacao_resistente_osso_blaze": {
+  "pt": "Colar Resistente de Osso de Blaze",
+  "en": "Blazing Bone Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_osso_blaze"
+ },
+ "cl:peca_ligacao_resistente_osso_necrotico": {
+  "pt": "Colar Resistente de Osso Necrótico",
+  "en": "Necrotic Bone Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_osso_necrotico"
+ },
+ "cl:peca_ligacao_resistente_osso_venenoso": {
+  "pt": "Colar Resistente de Osso Venenoso",
+  "en": "Venombone Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_osso_venenoso"
+ },
  "cl:peca_ligacao_resistente_ouro_rosa": {
-  "pt": "Ligação Resistente de Ouro Rosa",
-  "en": "Rose Gold Tough Binding",
+  "pt": "Colar Resistente de Ouro Rosa",
+  "en": "Rose Gold Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_ouro_rosa"
  },
  "cl:peca_ligacao_resistente_pedra": {
-  "pt": "Ligação Resistente de Pedra",
-  "en": "Stone Tough Binding",
+  "pt": "Colar Resistente de Pedra",
+  "en": "Stone Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_pedra"
  },
+ "cl:peca_ligacao_resistente_pedra_branca": {
+  "pt": "Colar Resistente de Pedra Branca",
+  "en": "Whitestone Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_pedra_branca"
+ },
+ "cl:peca_ligacao_resistente_pedra_chamuscada": {
+  "pt": "Colar Resistente de Pedra Chamuscada",
+  "en": "Scorched Stone Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_pedra_chamuscada"
+ },
+ "cl:peca_ligacao_resistente_pedra_refrataria": {
+  "pt": "Colar Resistente de Pedra Carbonizada",
+  "en": "Seared Stone Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_pedra_refrataria"
+ },
  "cl:peca_ligacao_resistente_silex": {
-  "pt": "Ligação Resistente de Sílex",
-  "en": "Flint Tough Binding",
+  "pt": "Colar Resistente de Sílex",
+  "en": "Flint Tough Collar",
   "icone": "textures/items/cl/arte/peca_ligacao_resistente_silex"
  },
+ "cl:peca_ligacao_resistente_slime_brasa": {
+  "pt": "Colar Resistente de Slime de Brasa",
+  "en": "Cinderslime Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_slime_brasa"
+ },
+ "cl:peca_ligacao_resistente_slime_cavaleiro": {
+  "pt": "Colar Resistente de Slime-Cavaleiro",
+  "en": "Knightslime Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_slime_cavaleiro"
+ },
+ "cl:peca_ligacao_resistente_slime_rainha": {
+  "pt": "Colar Resistente de Slime da Rainha",
+  "en": "Queen's Slime Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_slime_rainha"
+ },
+ "cl:peca_ligacao_resistente_trepadeira": {
+  "pt": "Colar Resistente de Trepadeira",
+  "en": "Vine Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_trepadeira"
+ },
+ "cl:peca_ligacao_resistente_trepadeira_chorona": {
+  "pt": "Colar Resistente de Trepadeira Chorona",
+  "en": "Weeping Vine Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_trepadeira_chorona"
+ },
+ "cl:peca_ligacao_resistente_trepadeira_retorcida": {
+  "pt": "Colar Resistente de Trepadeira Retorcida",
+  "en": "Twisting Vine Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_trepadeira_retorcida"
+ },
+ "cl:peca_ligacao_resistente_trepadeira_slime_ceu": {
+  "pt": "Colar Resistente de Trepadeira de Slime-do-Céu",
+  "en": "Slimy Vine Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_trepadeira_slime_ceu"
+ },
+ "cl:peca_ligacao_resistente_trepadeira_slime_ender": {
+  "pt": "Colar Resistente de Trepadeira de Slime-do-Ender",
+  "en": "Slimy Vine Tough Collar",
+  "icone": "textures/items/cl/arte/peca_ligacao_resistente_trepadeira_slime_ender"
+ },
  "cl:peca_ligacao_silex": {
-  "pt": "Ligação de Sílex",
-  "en": "Flint Binding",
+  "pt": "Ligamento de Ferramenta de Sílex",
+  "en": "Flint Tool Binding",
   "icone": "textures/items/cl/arte/peca_ligacao_silex"
+ },
+ "cl:peca_ligacao_slime_brasa": {
+  "pt": "Ligamento de Ferramenta de Slime de Brasa",
+  "en": "Cinderslime Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_slime_brasa"
+ },
+ "cl:peca_ligacao_slime_cavaleiro": {
+  "pt": "Ligamento de Ferramenta de Slime-Cavaleiro",
+  "en": "Knightslime Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_slime_cavaleiro"
+ },
+ "cl:peca_ligacao_slime_rainha": {
+  "pt": "Ligamento de Ferramenta de Slime da Rainha",
+  "en": "Queen's Slime Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_slime_rainha"
+ },
+ "cl:peca_ligacao_trepadeira": {
+  "pt": "Ligamento de Ferramenta de Trepadeira",
+  "en": "Vine Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_trepadeira"
+ },
+ "cl:peca_ligacao_trepadeira_chorona": {
+  "pt": "Ligamento de Ferramenta de Trepadeira Chorona",
+  "en": "Weeping Vine Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_trepadeira_chorona"
+ },
+ "cl:peca_ligacao_trepadeira_retorcida": {
+  "pt": "Ligamento de Ferramenta de Trepadeira Retorcida",
+  "en": "Twisting Vine Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_trepadeira_retorcida"
+ },
+ "cl:peca_ligacao_trepadeira_slime_ceu": {
+  "pt": "Ligamento de Ferramenta de Trepadeira de Slime-do-Céu",
+  "en": "Slimy Vine Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_trepadeira_slime_ceu"
+ },
+ "cl:peca_ligacao_trepadeira_slime_ender": {
+  "pt": "Ligamento de Ferramenta de Trepadeira de Slime-do-Ender",
+  "en": "Slimy Vine Tool Binding",
+  "icone": "textures/items/cl/arte/peca_ligacao_trepadeira_slime_ender"
  },
  "cl:peca_placa_grande_aco": {
   "pt": "Placa Grande de Aço",
   "en": "Steel Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_aco"
+ },
+ "cl:peca_placa_grande_aco_slime": {
+  "pt": "Placa Grande de Aço de Slime",
+  "en": "Slimesteel Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_aco_slime"
  },
  "cl:peca_placa_grande_bronze": {
   "pt": "Placa Grande de Bronze",
@@ -5216,30 +8036,95 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_cacto"
  },
+ "cl:peca_placa_grande_cobalto": {
+  "pt": "Placa Grande de Cobalto",
+  "en": "Cobalt Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_cobalto"
+ },
  "cl:peca_placa_grande_cobre": {
   "pt": "Placa Grande de Cobre",
   "en": "Copper Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_cobre"
+ },
+ "cl:peca_placa_grande_coro": {
+  "pt": "Placa Grande de Chorus",
+  "en": "Chorus Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_coro"
  },
  "cl:peca_placa_grande_ferro": {
   "pt": "Placa Grande de Ferro",
   "en": "Iron Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_ferro"
  },
+ "cl:peca_placa_grande_ferro_porco": {
+  "pt": "Placa Grande de Ferro-Porco",
+  "en": "Pig Iron Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_ferro_porco"
+ },
+ "cl:peca_placa_grande_hepatizon": {
+  "pt": "Placa Grande de Hepatizão",
+  "en": "Hepatizon Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_hepatizon"
+ },
  "cl:peca_placa_grande_madeira": {
   "pt": "Placa Grande de Madeira",
   "en": "Wood Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_madeira"
+ },
+ "cl:peca_placa_grande_madeira_slime": {
+  "pt": "Placa Grande de Madeira de Slime",
+  "en": "Slimewood Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_madeira_slime"
+ },
+ "cl:peca_placa_grande_madeira_slime_revestida": {
+  "pt": "Placa Grande de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_madeira_slime_revestida"
+ },
+ "cl:peca_placa_grande_madeira_tratada": {
+  "pt": "Placa Grande de Madeira Tratada",
+  "en": "Treated Wood Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_madeira_tratada"
+ },
+ "cl:peca_placa_grande_manyullyn": {
+  "pt": "Placa Grande de Manyullyn",
+  "en": "Manyullyn Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_manyullyn"
+ },
+ "cl:peca_placa_grande_nahuatl": {
+  "pt": "Placa Grande de Nahuatl",
+  "en": "Nahuatl Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_nahuatl"
  },
  "cl:peca_placa_grande_obsidiana": {
   "pt": "Placa Grande de Obsidiana",
   "en": "Obsidian Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_obsidiana"
  },
+ "cl:peca_placa_grande_osmio": {
+  "pt": "Placa Grande de Ósmio",
+  "en": "Osmium Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_osmio"
+ },
  "cl:peca_placa_grande_osso": {
   "pt": "Placa Grande de Osso",
   "en": "Bone Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_osso"
+ },
+ "cl:peca_placa_grande_osso_blaze": {
+  "pt": "Placa Grande de Osso de Blaze",
+  "en": "Blazing Bone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_osso_blaze"
+ },
+ "cl:peca_placa_grande_osso_necrotico": {
+  "pt": "Placa Grande de Osso Necrótico",
+  "en": "Necrotic Bone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_osso_necrotico"
+ },
+ "cl:peca_placa_grande_osso_venenoso": {
+  "pt": "Placa Grande de Osso Venenoso",
+  "en": "Venombone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_osso_venenoso"
  },
  "cl:peca_placa_grande_ouro_rosa": {
   "pt": "Placa Grande de Ouro Rosa",
@@ -5251,10 +8136,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_pedra"
  },
+ "cl:peca_placa_grande_pedra_branca": {
+  "pt": "Placa Grande de Pedra Branca",
+  "en": "Whitestone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_pedra_branca"
+ },
+ "cl:peca_placa_grande_pedra_chamuscada": {
+  "pt": "Placa Grande de Pedra Chamuscada",
+  "en": "Scorched Stone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_pedra_chamuscada"
+ },
+ "cl:peca_placa_grande_pedra_refrataria": {
+  "pt": "Placa Grande de Pedra Carbonizada",
+  "en": "Seared Stone Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_pedra_refrataria"
+ },
  "cl:peca_placa_grande_silex": {
   "pt": "Placa Grande de Sílex",
   "en": "Flint Large Plate",
   "icone": "textures/items/cl/arte/peca_placa_grande_silex"
+ },
+ "cl:peca_placa_grande_slime_brasa": {
+  "pt": "Placa Grande de Slime de Brasa",
+  "en": "Cinderslime Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_slime_brasa"
+ },
+ "cl:peca_placa_grande_slime_cavaleiro": {
+  "pt": "Placa Grande de Slime-Cavaleiro",
+  "en": "Knightslime Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_slime_cavaleiro"
+ },
+ "cl:peca_placa_grande_slime_rainha": {
+  "pt": "Placa Grande de Slime da Rainha",
+  "en": "Queen's Slime Large Plate",
+  "icone": "textures/items/cl/arte/peca_placa_grande_slime_rainha"
  },
  "cl:peca_travessa_aco": {
   "pt": "Travessa de Aço",
@@ -5461,6 +8376,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Soularium Nugget",
   "icone": "textures/items/cl/arte/pepita_almario"
  },
+ "cl:pepita_cobalto": {
+  "pt": "Pepita de Cobalto",
+  "en": "Cobalt Nugget",
+  "icone": "textures/items/cl/arte/pepita_cobalto"
+ },
  "cl:pepita_experiencia": {
   "pt": "Pepita de Experiência",
   "en": "Nugget of Experience",
@@ -5526,10 +8446,165 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pickarang",
   "icone": "textures/items/cl/arte/picarango"
  },
+ "cl:picarenxo_aco": {
+  "pt": "Picarenxó de Aço",
+  "en": "Steel Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_aco"
+ },
+ "cl:picarenxo_aco_slime": {
+  "pt": "Picarenxó de Aço de Slime",
+  "en": "Slimesteel Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_aco_slime"
+ },
+ "cl:picarenxo_bronze": {
+  "pt": "Picarenxó de Bronze",
+  "en": "Bronze Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_bronze"
+ },
+ "cl:picarenxo_bronze_ametista": {
+  "pt": "Picarenxó de Bronze de Ametista",
+  "en": "Amethyst Bronze Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_bronze_ametista"
+ },
+ "cl:picarenxo_cobalto": {
+  "pt": "Picarenxó de Cobalto",
+  "en": "Cobalt Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_cobalto"
+ },
+ "cl:picarenxo_cobre": {
+  "pt": "Picarenxó de Cobre",
+  "en": "Copper Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_cobre"
+ },
+ "cl:picarenxo_coro": {
+  "pt": "Picarenxó de Chorus",
+  "en": "Chorus Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_coro"
+ },
+ "cl:picarenxo_ferro": {
+  "pt": "Picarenxó de Ferro",
+  "en": "Iron Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_ferro"
+ },
+ "cl:picarenxo_ferro_porco": {
+  "pt": "Picarenxó de Ferro-Porco",
+  "en": "Pig Iron Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_ferro_porco"
+ },
+ "cl:picarenxo_hepatizon": {
+  "pt": "Picarenxó de Hepatizão",
+  "en": "Hepatizon Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_hepatizon"
+ },
+ "cl:picarenxo_madeira": {
+  "pt": "Picarenxó de Madeira",
+  "en": "Wood Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_madeira"
+ },
+ "cl:picarenxo_madeira_slime": {
+  "pt": "Picarenxó de Madeira de Slime",
+  "en": "Slimewood Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_madeira_slime"
+ },
+ "cl:picarenxo_madeira_slime_revestida": {
+  "pt": "Picarenxó de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_madeira_slime_revestida"
+ },
+ "cl:picarenxo_madeira_tratada": {
+  "pt": "Picarenxó de Madeira Tratada",
+  "en": "Treated Wood Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_madeira_tratada"
+ },
+ "cl:picarenxo_manyullyn": {
+  "pt": "Picarenxó de Manyullyn",
+  "en": "Manyullyn Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_manyullyn"
+ },
+ "cl:picarenxo_nahuatl": {
+  "pt": "Picarenxó de Nahuatl",
+  "en": "Nahuatl Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_nahuatl"
+ },
+ "cl:picarenxo_osmio": {
+  "pt": "Picarenxó de Ósmio",
+  "en": "Osmium Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_osmio"
+ },
+ "cl:picarenxo_osso": {
+  "pt": "Picarenxó de Osso",
+  "en": "Bone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_osso"
+ },
+ "cl:picarenxo_osso_blaze": {
+  "pt": "Picarenxó de Osso de Blaze",
+  "en": "Blazing Bone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_osso_blaze"
+ },
+ "cl:picarenxo_osso_necrotico": {
+  "pt": "Picarenxó de Osso Necrótico",
+  "en": "Necrotic Bone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_osso_necrotico"
+ },
+ "cl:picarenxo_osso_venenoso": {
+  "pt": "Picarenxó de Osso Venenoso",
+  "en": "Venombone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_osso_venenoso"
+ },
+ "cl:picarenxo_ouro_rosa": {
+  "pt": "Picarenxó de Ouro Rosa",
+  "en": "Rose Gold Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_ouro_rosa"
+ },
+ "cl:picarenxo_pedra": {
+  "pt": "Picarenxó de Pedra",
+  "en": "Stone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_pedra"
+ },
+ "cl:picarenxo_pedra_branca": {
+  "pt": "Picarenxó de Pedra Branca",
+  "en": "Whitestone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_pedra_branca"
+ },
+ "cl:picarenxo_pedra_chamuscada": {
+  "pt": "Picarenxó de Pedra Chamuscada",
+  "en": "Scorched Stone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_pedra_chamuscada"
+ },
+ "cl:picarenxo_pedra_refrataria": {
+  "pt": "Picarenxó de Pedra Carbonizada",
+  "en": "Seared Stone Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_pedra_refrataria"
+ },
+ "cl:picarenxo_silex": {
+  "pt": "Picarenxó de Sílex",
+  "en": "Flint Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_silex"
+ },
+ "cl:picarenxo_slime_brasa": {
+  "pt": "Picarenxó de Slime de Brasa",
+  "en": "Cinderslime Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_slime_brasa"
+ },
+ "cl:picarenxo_slime_cavaleiro": {
+  "pt": "Picarenxó de Slime-Cavaleiro",
+  "en": "Knightslime Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_slime_cavaleiro"
+ },
+ "cl:picarenxo_slime_rainha": {
+  "pt": "Picarenxó de Slime da Rainha",
+  "en": "Queen's Slime Pickadze",
+  "icone": "textures/items/cl/arte/picarenxo_slime_rainha"
+ },
  "cl:picareta_aco": {
   "pt": "Picareta de Aço",
   "en": "Steel Pickaxe",
   "icone": "textures/items/cl/arte/picareta_aco"
+ },
+ "cl:picareta_aco_slime": {
+  "pt": "Picareta de Aço de Slime",
+  "en": "Slimesteel Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_aco_slime"
  },
  "cl:picareta_bronze": {
   "pt": "Picareta de Bronze",
@@ -5546,30 +8621,95 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Pickaxe",
   "icone": "textures/items/cl/arte/picareta_cacto"
  },
+ "cl:picareta_cobalto": {
+  "pt": "Picareta de Cobalto",
+  "en": "Cobalt Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_cobalto"
+ },
  "cl:picareta_cobre": {
   "pt": "Picareta de Cobre",
   "en": "Copper Pickaxe",
   "icone": "textures/items/cl/arte/picareta_cobre"
+ },
+ "cl:picareta_coro": {
+  "pt": "Picareta de Chorus",
+  "en": "Chorus Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_coro"
  },
  "cl:picareta_ferro": {
   "pt": "Picareta de Ferro",
   "en": "Iron Pickaxe",
   "icone": "textures/items/cl/arte/picareta_ferro"
  },
+ "cl:picareta_ferro_porco": {
+  "pt": "Picareta de Ferro-Porco",
+  "en": "Pig Iron Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_ferro_porco"
+ },
+ "cl:picareta_hepatizon": {
+  "pt": "Picareta de Hepatizão",
+  "en": "Hepatizon Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_hepatizon"
+ },
  "cl:picareta_madeira": {
   "pt": "Picareta de Madeira",
   "en": "Wood Pickaxe",
   "icone": "textures/items/cl/arte/picareta_madeira"
+ },
+ "cl:picareta_madeira_slime": {
+  "pt": "Picareta de Madeira de Slime",
+  "en": "Slimewood Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_madeira_slime"
+ },
+ "cl:picareta_madeira_slime_revestida": {
+  "pt": "Picareta de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_madeira_slime_revestida"
+ },
+ "cl:picareta_madeira_tratada": {
+  "pt": "Picareta de Madeira Tratada",
+  "en": "Treated Wood Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_madeira_tratada"
+ },
+ "cl:picareta_manyullyn": {
+  "pt": "Picareta de Manyullyn",
+  "en": "Manyullyn Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_manyullyn"
+ },
+ "cl:picareta_nahuatl": {
+  "pt": "Picareta de Nahuatl",
+  "en": "Nahuatl Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_nahuatl"
  },
  "cl:picareta_obsidiana": {
   "pt": "Picareta de Obsidiana",
   "en": "Obsidian Pickaxe",
   "icone": "textures/items/cl/arte/picareta_obsidiana"
  },
+ "cl:picareta_osmio": {
+  "pt": "Picareta de Ósmio",
+  "en": "Osmium Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_osmio"
+ },
  "cl:picareta_osso": {
   "pt": "Picareta de Osso",
   "en": "Bone Pickaxe",
   "icone": "textures/items/cl/arte/picareta_osso"
+ },
+ "cl:picareta_osso_blaze": {
+  "pt": "Picareta de Osso de Blaze",
+  "en": "Blazing Bone Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_osso_blaze"
+ },
+ "cl:picareta_osso_necrotico": {
+  "pt": "Picareta de Osso Necrótico",
+  "en": "Necrotic Bone Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_osso_necrotico"
+ },
+ "cl:picareta_osso_venenoso": {
+  "pt": "Picareta de Osso Venenoso",
+  "en": "Venombone Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_osso_venenoso"
  },
  "cl:picareta_ouro_rosa": {
   "pt": "Picareta de Ouro Rosa",
@@ -5581,10 +8721,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stone Pickaxe",
   "icone": "textures/items/cl/arte/picareta_pedra"
  },
+ "cl:picareta_pedra_branca": {
+  "pt": "Picareta de Pedra Branca",
+  "en": "Whitestone Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_pedra_branca"
+ },
+ "cl:picareta_pedra_chamuscada": {
+  "pt": "Picareta de Pedra Chamuscada",
+  "en": "Scorched Stone Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_pedra_chamuscada"
+ },
+ "cl:picareta_pedra_refrataria": {
+  "pt": "Picareta de Pedra Carbonizada",
+  "en": "Seared Stone Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_pedra_refrataria"
+ },
  "cl:picareta_silex": {
   "pt": "Picareta de Sílex",
   "en": "Flint Pickaxe",
   "icone": "textures/items/cl/arte/picareta_silex"
+ },
+ "cl:picareta_slime_brasa": {
+  "pt": "Picareta de Slime de Brasa",
+  "en": "Cinderslime Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_slime_brasa"
+ },
+ "cl:picareta_slime_cavaleiro": {
+  "pt": "Picareta de Slime-Cavaleiro",
+  "en": "Knightslime Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_slime_cavaleiro"
+ },
+ "cl:picareta_slime_rainha": {
+  "pt": "Picareta de Slime da Rainha",
+  "en": "Queen's Slime Pickaxe",
+  "icone": "textures/items/cl/arte/picareta_slime_rainha"
  },
  "cl:pilao": {
   "pt": "Pilão",
@@ -6851,6 +10021,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Blast Brick",
   "icone": "textures/items/cl/blocos/tijolo_alto_forno"
  },
+ "cl:tijolo_chamuscado": {
+  "pt": "Tijolo Chamuscado",
+  "en": "Scorched Brick",
+  "icone": "textures/items/cl/arte/tijolo_chamuscado"
+ },
  "cl:tijolo_coque": {
   "pt": "Tijolo de Coque",
   "en": "Coke Brick",
@@ -7366,6 +10541,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Barrel",
   "icone": "textures/blocks/barrel_side"
  },
+ "minecraft:basalt": {
+  "pt": "Basalto",
+  "en": "Basalt",
+  "icone": "textures/blocks/basalt_side"
+ },
  "minecraft:beef": {
   "pt": "Bife Cru",
   "en": "Raw Beef",
@@ -7414,6 +10594,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "minecraft:black_dye": {
   "pt": "black_dye",
   "en": "black_dye"
+ },
+ "minecraft:blackstone": {
+  "pt": "Pedra-Negra",
+  "en": "Blackstone",
+  "icone": "textures/blocks/blackstone"
  },
  "minecraft:blast_furnace": {
   "pt": "Fornalha Potente",
@@ -7498,6 +10683,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cacto",
   "en": "Cactus",
   "icone": "textures/blocks/cactus_side"
+ },
+ "minecraft:calcite": {
+  "pt": "Calcita",
+  "en": "Calcite",
+  "icone": "textures/blocks/calcite"
  },
  "minecraft:campfire": {
   "pt": "Fogueira",
@@ -7764,6 +10954,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Diamond Shovel",
   "icone": "textures/items/diamond_shovel"
  },
+ "minecraft:diorite": {
+  "pt": "diorite",
+  "en": "diorite",
+  "icone": "textures/blocks/stone_diorite"
+ },
  "minecraft:dirt": {
   "pt": "Terra",
   "en": "Dirt",
@@ -7942,6 +11137,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pá de Ouro",
   "en": "Golden Shovel",
   "icone": "textures/items/gold_shovel"
+ },
+ "minecraft:granite": {
+  "pt": "granite",
+  "en": "granite",
+  "icone": "textures/blocks/stone_granite"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",
@@ -8319,6 +11519,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Polished Andesite",
   "icone": "textures/blocks/stone_andesite_smooth"
  },
+ "minecraft:popped_chorus_fruit": {
+  "pt": "popped_chorus_fruit",
+  "en": "popped_chorus_fruit"
+ },
  "minecraft:porkchop": {
   "pt": "Carne de Porco Crua",
   "en": "Raw Porkchop",
@@ -8383,6 +11587,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Coelho Cru",
   "en": "Raw Rabbit",
   "icone": "textures/items/rabbit_raw"
+ },
+ "minecraft:rabbit_hide": {
+  "pt": "Pele de Coelho",
+  "en": "Rabbit Hide",
+  "icone": "textures/items/rabbit_hide"
  },
  "minecraft:rabbit_stew": {
   "pt": "Ensopado de Coelho",
@@ -8714,10 +11923,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Trapped Chest",
   "icone": "textures/blocks/chest_front"
  },
+ "minecraft:twisting_vines": {
+  "pt": "Trepadeiras Retorcidas",
+  "en": "Twisting Vines",
+  "icone": "textures/blocks/twisting_vines_base"
+ },
+ "minecraft:vine": {
+  "pt": "Trepadeiras",
+  "en": "Vines",
+  "icone": "textures/blocks/vine"
+ },
  "minecraft:water_bucket": {
   "pt": "Balde de Água",
   "en": "Water Bucket",
   "icone": "textures/items/bucket_water"
+ },
+ "minecraft:weeping_vines": {
+  "pt": "Trepadeiras Choronas",
+  "en": "Weeping Vines",
+  "icone": "textures/blocks/weeping_vines_base"
  },
  "minecraft:wheat": {
   "pt": "Trigo",
@@ -10581,6 +13805,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_aco_slime",
+  "resultado": "cl:bloco_aco_slime",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_aco_slime",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_bloco_angelical",
   "resultado": "cl:bloco_angelical",
@@ -10729,6 +13968,36 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_cobalto",
+  "resultado": "cl:bloco_cobalto",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_cobalto",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_cobalto_bruto",
+  "resultado": "cl:bloco_cobalto_bruto",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cobalto_bruto",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_bloco_coque",
   "resultado": "cl:bloco_coque",
@@ -10795,6 +14064,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_ferro_porco",
+  "resultado": "cl:bloco_ferro_porco",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_ferro_porco",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_bloco_grafite",
   "resultado": "cl:bloco_grafite",
@@ -10837,6 +14121,36 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    {
     "item": "cl:bloco_gravetos",
     "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_hepatizon",
+  "resultado": "cl:bloco_hepatizon",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_hepatizon",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_manyullyn",
+  "resultado": "cl:bloco_manyullyn",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_manyullyn",
+    "qtd": 9
    }
   ],
   "estacoes": [
@@ -10908,6 +14222,51 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    {
     "item": "minecraft:water_bucket",
     "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_brasa",
+  "resultado": "cl:bloco_slime_brasa",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_slime_brasa",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_cavaleiro",
+  "resultado": "cl:bloco_slime_cavaleiro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_slime_cavaleiro",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_rainha",
+  "resultado": "cl:bloco_slime_rainha",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_slime_rainha",
+    "qtd": 9
    }
   ],
   "estacoes": [
@@ -11658,6 +15017,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "F": "minecraft:iron_ingot",
    "S": "minecraft:stick"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_cobalto_bruto_do_bloco",
+  "resultado": "cl:cobalto_bruto",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_cobalto_bruto",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -16083,6 +19457,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_aco_slime_do_bloco",
+  "resultado": "cl:lingote_aco_slime",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_aco_slime",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_lingote_aluminio_po",
   "resultado": "cl:lingote_aluminio",
@@ -16095,6 +19484,126 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_cobalto_do_bloco",
+  "resultado": "cl:lingote_cobalto",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_cobalto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_cobalto_pepitas",
+  "resultado": "cl:lingote_cobalto",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:pepita_cobalto",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_ferro_porco_do_bloco",
+  "resultado": "cl:lingote_ferro_porco",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_ferro_porco",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_hepatizon_do_bloco",
+  "resultado": "cl:lingote_hepatizon",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_hepatizon",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_manyullyn_do_bloco",
+  "resultado": "cl:lingote_manyullyn",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_manyullyn",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_slime_brasa_do_bloco",
+  "resultado": "cl:lingote_slime_brasa",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_brasa",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_slime_cavaleiro_do_bloco",
+  "resultado": "cl:lingote_slime_cavaleiro",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_cavaleiro",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_lingote_slime_rainha_do_bloco",
+  "resultado": "cl:lingote_slime_rainha",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_rainha",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -18967,6 +22476,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "D": "cl:engrenagem_diamante",
    "P": "minecraft:diamond_pickaxe"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_pepitas_cobalto",
+  "resultado": "cl:pepita_cobalto",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_cobalto",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -27102,6 +30626,13 @@ export const DROPS: ReadonlyArray<{ fonte: string; item: string; min: number; ma
   "min": 1,
   "max": 2,
   "chance": 0.2
+ },
+ {
+  "fonte": "cl:minerio_cobalto",
+  "item": "cl:cobalto_bruto",
+  "min": 1,
+  "max": 1,
+  "chance": 1
  },
  {
   "fonte": "cl:minerio_queijo",

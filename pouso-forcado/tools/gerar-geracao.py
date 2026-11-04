@@ -238,4 +238,16 @@ regra("bolsao_petroleo_regra", "bolsao_petroleo", {"iterations": 1, "scatter_cha
     "x": {"distribution": "uniform", "extent": [0, 16]}, "z": {"distribution": "uniform", "extent": [0, 16]},
     "y": {"distribution": "uniform", "extent": [pt["yMin"], pt["yMax"]]}}, "underground_pass")
 
+# 1.26.0 (Tinkers completo): Minério de Cobalto no Nether, com os números do TC3 (worldgen/placed_feature): 5 veios de 4
+# blocos em toda a altura e 3 de 6 entre y 8 e 32, trocando netherrack.
+for nome, tam, veios, y0, y1 in (("cobalto_pequeno", 4, 5, 8, 119), ("cobalto_grande", 6, 3, 8, 32)):
+    escrever(f"BP/features/veio_{nome}.json", {"format_version": "1.13.0", "minecraft:ore_feature": {
+        "description": {"identifier": f"cl:veio_{nome}"}, "count": tam,
+        "replace_rules": [{"places_block": "cl:minerio_cobalto", "may_replace": ["minecraft:netherrack"]}]}})
+    escrever(f"BP/feature_rules/veio_{nome}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:veio_{nome}_regra", "places_feature": f"cl:veio_{nome}"},
+        "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "nether"}]},
+        "distribution": {"iterations": veios, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
+
 print(f"geração natural: {len(list((RAIZ / 'BP/features').iterdir()))} features, 3 tabelas de saque, templo e destroços com baú")

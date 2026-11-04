@@ -64,6 +64,9 @@ const S = {
   cabo_resistente: (x, y) => diag(x, y, 7, 26, 25, 6, 2.6),
   ligacao_resistente: (x, y) => elipse(x, y, 16, 16, 11, 11) && !elipse(x, y, 16, 16, 5, 5),
   cabeca_machado_larga: (x, y) => (x >= 7 && x <= 25 && y >= 5 && y <= 27 && x <= 7 + (y < 16 ? 18 - (16 - y) * 0.2 : 18 - (y - 16) * 0.2)),
+  // 1.26.0 (Tinkers completo): Cabeça de Enxó e Lâmina Grande (o ícone de verdade é a arte do TC3; isto é o reserva).
+  cabeca_enxo: (x, y) => (y >= 8 && y <= 13 && x >= 6 && x <= 26) || (x >= 20 && x <= 26 && y >= 8 && y <= 22),
+  lamina_larga: (x, y) => diag(x, y, 8, 24, 26, 6, 5),
 };
 // Ferramentas montadas: cabeça na cor do material, cabo de madeira.
 const CABO = (x, y) => diag(x, y, 5, 27, 20, 12, 1.4);
@@ -78,6 +81,15 @@ const FERR = {
   // 1.24.0 (Tinkers 3)
   marreta: (x, y) => x >= 14 && x <= 28 && y >= 3 && y <= 13,
   escavadeira: (x, y) => elipse(x, y, 22, 10, 8, 8),
+  // 1.26.0 (Tinkers completo; reserva da arte do TC3)
+  machado_largo: (x, y) => (x >= 15 && x <= 28 && y >= 3 && y <= 19 && (x - 15) + (y - 3) * 0.15 <= 13),
+  martelo_veio: (x, y) => (x >= 14 && x <= 28 && y >= 4 && y <= 11) || (x >= 18 && x <= 24 && y >= 2 && y <= 13),
+  chibanca: (x, y) => diag(x, y, 12, 5, 27, 20, 2.2) || (x >= 20 && x <= 27 && y >= 3 && y <= 12),
+  picarenxo: (x, y) => diag(x, y, 12, 5, 27, 20, 2.2) || (x >= 22 && x <= 27 && y >= 12 && y <= 20),
+  kama: (x, y) => (x >= 15 && x <= 27 && y >= 4 && y <= 7) || (x >= 24 && x <= 27 && y >= 4 && y <= 10),
+  foice: (x, y) => (elipse(x, y, 20, 10, 9, 6) && !elipse(x, y, 20, 13, 8, 5)),
+  adaga: (x, y) => diag(x, y, 15, 17, 26, 6, 2),
+  espadao: (x, y) => diag(x, y, 13, 19, 27, 5, 4),
   machado_largo: (x, y) => (x >= 14 && x <= 28 && y >= 2 && y <= 20 && (x - 14) + (y - 2) * 0.15 <= 14),
 };
 

@@ -1,0 +1,2320 @@
+{
+ "materiais": {
+  "madeira": {
+   "tc": "wood",
+   "pt": "Madeira",
+   "en": "Wood",
+   "tier": 0,
+   "cor": "#785a22",
+   "paleta": {
+    "000": "#000000",
+    "063": "#281e0b",
+    "102": "#493615",
+    "140": "#584014",
+    "178": "#684e1e",
+    "216": "#785a22",
+    "255": "#896727"
+   },
+   "variantes": [
+    "wood",
+    "stick",
+    "primitive"
+   ],
+   "tracos": [
+    "cultivated"
+   ],
+   "antigo": true,
+   "metal": false,
+   "dur": 60,
+   "vel": 2.0,
+   "dano": 0.0,
+   "nivel": 0,
+   "cabo": 1.0,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "pedra": {
+   "tc": "rock",
+   "pt": "Pedra",
+   "en": "Stone",
+   "tier": 1,
+   "cor": "#95918d",
+   "paleta": {
+    "000": "#000000",
+    "063": "#181818",
+    "102": "#494949",
+    "140": "#5a5a5a",
+    "178": "#787777",
+    "216": "#95918d",
+    "255": "#b3b1af"
+   },
+   "variantes": [],
+   "tracos": [
+    "stonebound"
+   ],
+   "antigo": true,
+   "metal": false,
+   "dur": 130,
+   "vel": 4.0,
+   "dano": 1.0,
+   "nivel": 1,
+   "cabo": 0.9,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "silex": {
+   "tc": "flint",
+   "pt": "Sílex",
+   "en": "Flint",
+   "tier": 1,
+   "cor": "#565656",
+   "paleta": {
+    "000": "#000000",
+    "063": "#0e0e0e",
+    "102": "#222020",
+    "140": "#2e2d2d",
+    "178": "#3d3c3c",
+    "216": "#565656",
+    "255": "#7f7f7f"
+   },
+   "variantes": [
+    "crystal",
+    "rock",
+    "stick"
+   ],
+   "tracos": [
+    "jagged"
+   ],
+   "antigo": true,
+   "metal": false,
+   "dur": 85,
+   "vel": 3.5,
+   "dano": 1.25,
+   "nivel": 1,
+   "cabo": 0.85,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "cacto": {
+   "tc": "cactus",
+   "pt": "Cacto",
+   "en": "Cactus",
+   "tier": 1,
+   "cor": "#649832",
+   "paleta": {
+    "000": "#000000",
+    "063": "#1e2d0f",
+    "102": "#324c19",
+    "140": "#416220",
+    "178": "#527c29",
+    "216": "#649832",
+    "255": "#9abc79"
+   },
+   "variantes": [
+    "wood",
+    "stick"
+   ],
+   "tracos": [
+    "spiny"
+   ],
+   "antigo": true,
+   "metal": false,
+   "dur": 150,
+   "vel": 5,
+   "dano": 2,
+   "nivel": 1,
+   "cabo": 1.0,
+   "ligacao": false,
+   "cabeca": true
+  },
+  "osso": {
+   "tc": "bone",
+   "pt": "Osso",
+   "en": "Bone",
+   "tier": 1,
+   "cor": "#e8e5d2",
+   "paleta": {
+    "000": "#000000",
+    "063": "#7b7e6b",
+    "102": "#a09f86",
+    "140": "#cbc6a5",
+    "178": "#dad6bc",
+    "216": "#e8e5d2",
+    "255": "#fcfbed"
+   },
+   "variantes": [
+    "bone",
+    "rock"
+   ],
+   "tracos": [
+    "pierce"
+   ],
+   "antigo": true,
+   "metal": false,
+   "dur": 100,
+   "vel": 2.5,
+   "dano": 1.25,
+   "nivel": 1,
+   "cabo": 0.75,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "obsidiana": {
+   "tc": "obsidian",
+   "pt": "Obsidiana",
+   "en": "Obsidian",
+   "tier": 3,
+   "cor": "#3b2754",
+   "paleta": {
+    "000": "#000000",
+    "063": "#000001",
+    "102": "#06030b",
+    "140": "#100c1c",
+    "178": "#271e3d",
+    "216": "#3b2754",
+    "255": "#503572"
+   },
+   "variantes": [
+    "rock"
+   ],
+   "tracos": [],
+   "antigo": true,
+   "metal": false,
+   "dur": 89,
+   "vel": 7,
+   "dano": 2,
+   "nivel": 3,
+   "cabo": 0.8,
+   "ligacao": false,
+   "cabeca": true
+  },
+  "ferro": {
+   "tc": "iron",
+   "pt": "Ferro",
+   "en": "Iron",
+   "tier": 2,
+   "cor": "#d8d8d8",
+   "paleta": {
+    "000": "#000000",
+    "063": "#353535",
+    "102": "#5e5e5e",
+    "140": "#828282",
+    "178": "#a8a8a8",
+    "216": "#d8d8d8",
+    "255": "#ffffff"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "magnetic"
+   ],
+   "antigo": true,
+   "metal": true,
+   "dur": 250,
+   "vel": 6.0,
+   "dano": 2.0,
+   "nivel": 2,
+   "cabo": 1.1,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "cobre": {
+   "tc": "copper",
+   "pt": "Cobre",
+   "en": "Copper",
+   "tier": 1,
+   "cor": "#e77c56",
+   "paleta": {
+    "000": "#000000",
+    "063": "#6d3421",
+    "102": "#8a4129",
+    "140": "#9c4e31",
+    "178": "#c15a36",
+    "216": "#e77c56",
+    "255": "#fc9982"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "dwarven"
+   ],
+   "antigo": true,
+   "metal": true,
+   "dur": 210,
+   "vel": 5.0,
+   "dano": 0.5,
+   "nivel": 2,
+   "cabo": 0.8,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "bronze": {
+   "tc": "bronze",
+   "pt": "Bronze",
+   "en": "Bronze",
+   "tier": 3,
+   "cor": "#c48c5e",
+   "paleta": {
+    "000": "#000000",
+    "063": "#3f261b",
+    "102": "#563221",
+    "140": "#7a4c35",
+    "178": "#a06a48",
+    "216": "#c48c5e",
+    "255": "#ddaf73"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "maintained"
+   ],
+   "antigo": true,
+   "metal": true,
+   "dur": 760,
+   "vel": 6.5,
+   "dano": 2.25,
+   "nivel": 3,
+   "cabo": 1.1,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "aco": {
+   "tc": "steel",
+   "pt": "Aço",
+   "en": "Steel",
+   "tier": 3,
+   "cor": "#495065",
+   "paleta": {
+    "000": "#000000",
+    "063": "#1b202d",
+    "102": "#252c3d",
+    "140": "#323847",
+    "178": "#3e4453",
+    "216": "#495065",
+    "255": "#67718c"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "ductile"
+   ],
+   "antigo": true,
+   "metal": true,
+   "dur": 775,
+   "vel": 6.0,
+   "dano": 2.75,
+   "nivel": 3,
+   "cabo": 1.05,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "ouro_rosa": {
+   "tc": "rose_gold",
+   "pt": "Ouro Rosa",
+   "en": "Rose Gold",
+   "tier": 3,
+   "cor": "#f7cdbb",
+   "paleta": {
+    "000": "#000000",
+    "063": "#ad685b",
+    "102": "#bf8070",
+    "140": "#db9a87",
+    "178": "#e8b3a0",
+    "216": "#f7cdbb",
+    "255": "#ffe7db"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "enhanced"
+   ],
+   "antigo": true,
+   "metal": true,
+   "dur": 175,
+   "vel": 9.0,
+   "dano": 1.0,
+   "nivel": 0,
+   "cabo": 0.7,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "bronze_ametista": {
+   "tc": "amethyst_bronze",
+   "pt": "Bronze de Ametista",
+   "en": "Amethyst Bronze",
+   "tier": 3,
+   "cor": "#dfa8cf",
+   "paleta": {
+    "000": "#000000",
+    "063": "#6a2d6f",
+    "102": "#8b4991",
+    "140": "#be76b8",
+    "178": "#d28cc5",
+    "216": "#dfa8cf",
+    "255": "#eec6de"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [],
+   "antigo": true,
+   "metal": true,
+   "dur": 720,
+   "vel": 7.0,
+   "dano": 1.5,
+   "nivel": 3,
+   "cabo": 1.0,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "coro": {
+   "tc": "chorus",
+   "pt": "Chorus",
+   "en": "Chorus",
+   "tier": 1,
+   "cor": "#8f648f",
+   "paleta": {
+    "000": "#000000",
+    "063": "#4f2a4f",
+    "102": "#593559",
+    "140": "#643c64",
+    "178": "#774d77",
+    "216": "#8f648f",
+    "255": "#a47ca4"
+   },
+   "variantes": [
+    "rock"
+   ],
+   "tracos": [
+    "enderference"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 180,
+   "vel": 3.0,
+   "dano": 1.0,
+   "nivel": 1,
+   "cabo": 1.1,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "pedra_refrataria": {
+   "tc": "seared_stone",
+   "pt": "Pedra Carbonizada",
+   "en": "Seared Stone",
+   "tier": 2,
+   "cor": "#4f4a47",
+   "paleta": {
+    "000": "#000000",
+    "063": "#242021",
+    "102": "#2f2c2a",
+    "140": "#383433",
+    "178": "#3f3c39",
+    "216": "#4f4a47",
+    "255": "#625b57"
+   },
+   "variantes": [
+    "rock"
+   ],
+   "tracos": [
+    "searing"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 225,
+   "vel": 6.5,
+   "dano": 1.5,
+   "nivel": 2,
+   "cabo": 0.85,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "pedra_chamuscada": {
+   "tc": "scorched_stone",
+   "pt": "Pedra Chamuscada",
+   "en": "Scorched Stone",
+   "tier": 2,
+   "cor": "#53453c",
+   "paleta": {
+    "000": "#000000",
+    "063": "#241d19",
+    "102": "#2d231d",
+    "140": "#3e3029",
+    "178": "#483a32",
+    "216": "#53453c",
+    "255": "#66554a"
+   },
+   "variantes": [
+    "rock"
+   ],
+   "tracos": [
+    "scorching"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 120,
+   "vel": 4.5,
+   "dano": 2.5,
+   "nivel": 2,
+   "cabo": 0.8,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "madeira_slime": {
+   "tc": "slimewood",
+   "pt": "Madeira de Slime",
+   "en": "Slimewood",
+   "tier": 2,
+   "cor": "#56cf4c",
+   "paleta": {
+    "000": "#000000",
+    "063": "#229630",
+    "102": "#24a033",
+    "140": "#27ab37",
+    "178": "#3ebd42",
+    "216": "#56cf4c",
+    "234": "#6fea60",
+    "255": "#82f86d"
+   },
+   "variantes": [],
+   "tracos": [
+    "overgrowth",
+    "overslime"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 375,
+   "vel": 4.0,
+   "dano": 1.0,
+   "nivel": 2,
+   "cabo": 1.3,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "osso_venenoso": {
+   "tc": "venombone",
+   "pt": "Osso Venenoso",
+   "en": "Venombone",
+   "tier": 2,
+   "cor": "#a2935e",
+   "paleta": {
+    "000": "#000000",
+    "063": "#594607",
+    "102": "#685308",
+    "140": "#947818",
+    "178": "#93834b",
+    "216": "#a2935e",
+    "255": "#c3afa7"
+   },
+   "variantes": [
+    "bone",
+    "rock"
+   ],
+   "tracos": [
+    "antitoxin"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 175,
+   "vel": 4.5,
+   "dano": 2.25,
+   "nivel": 2,
+   "cabo": 0.9,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "osso_necrotico": {
+   "tc": "necrotic_bone",
+   "pt": "Osso Necrótico",
+   "en": "Necrotic Bone",
+   "tier": 2,
+   "cor": "#292929",
+   "paleta": {
+    "000": "#000000",
+    "063": "#050505",
+    "102": "#0e0e0e",
+    "140": "#151515",
+    "178": "#1f1f1f",
+    "216": "#292929",
+    "255": "#343434"
+   },
+   "variantes": [
+    "bone",
+    "rock"
+   ],
+   "tracos": [
+    "necrotic"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 125,
+   "vel": 4.0,
+   "dano": 2.25,
+   "nivel": 2,
+   "cabo": 0.7,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "osmio": {
+   "tc": "osmium",
+   "pt": "Ósmio",
+   "en": "Osmium",
+   "tier": 2,
+   "cor": "#bbcedd",
+   "paleta": {
+    "000": "#000000",
+    "063": "#51586d",
+    "102": "#707c92",
+    "140": "#7c8ba6",
+    "178": "#9aacc1",
+    "216": "#bbcedd",
+    "255": "#e1f1f7"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "dense"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 500,
+   "vel": 4.5,
+   "dano": 2.0,
+   "nivel": 2,
+   "cabo": 1.2,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "ferro_porco": {
+   "tc": "pig_iron",
+   "pt": "Ferro-Porco",
+   "en": "Pig Iron",
+   "tier": 3,
+   "cor": "#f0a8a4",
+   "paleta": {
+    "000": "#000000",
+    "063": "#69363a",
+    "102": "#7e484c",
+    "140": "#af666c",
+    "178": "#c87d82",
+    "216": "#f0a8a4",
+    "255": "#fbcecc"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "tasty"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 580,
+   "vel": 6.0,
+   "dano": 2.5,
+   "nivel": 3,
+   "cabo": 1.1,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "cobalto": {
+   "tc": "cobalt",
+   "pt": "Cobalto",
+   "en": "Cobalt",
+   "tier": 3,
+   "cor": "#338fea",
+   "paleta": {
+    "000": "#000000",
+    "063": "#001944",
+    "102": "#00296d",
+    "140": "#0043a5",
+    "178": "#186ace",
+    "216": "#338fea",
+    "255": "#59a6ef"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "lightweight"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 800,
+   "vel": 6.5,
+   "dano": 2.25,
+   "nivel": 3,
+   "cabo": 1.05,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "aco_slime": {
+   "tc": "slimesteel",
+   "pt": "Aço de Slime",
+   "en": "Slimesteel",
+   "tier": 3,
+   "cor": "#47efea",
+   "paleta": {
+    "000": "#000000",
+    "063": "#157891",
+    "102": "#2094a4",
+    "140": "#2db3b9",
+    "178": "#35d3d6",
+    "216": "#47efea",
+    "255": "#aaffff"
+   },
+   "variantes": [
+    "slime_metal",
+    "metal"
+   ],
+   "tracos": [
+    "overcast",
+    "overslime"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 1040,
+   "vel": 6.0,
+   "dano": 2.5,
+   "nivel": 3,
+   "cabo": 1.2,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "nahuatl": {
+   "tc": "nahuatl",
+   "pt": "Nahuatl",
+   "en": "Nahuatl",
+   "tier": 3,
+   "cor": "#553f3a",
+   "paleta": {
+    "000": "#000000",
+    "063": "#100c1c",
+    "102": "#271e3d",
+    "140": "#2d2347",
+    "178": "#49332e",
+    "216": "#553f3a",
+    "234": "#5c4641",
+    "255": "#644e49"
+   },
+   "variantes": [
+    "wood",
+    "stick"
+   ],
+   "tracos": [
+    "lacerating"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 350,
+   "vel": 4.5,
+   "dano": 3.0,
+   "nivel": 3,
+   "cabo": 0.9,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "madeira_slime_revestida": {
+   "tc": "plated_slimewood",
+   "pt": "Madeira de Slime Revestida",
+   "en": "Plated Slimewood",
+   "tier": 3,
+   "cor": "#edd578",
+   "paleta": {
+    "000": "#000000",
+    "063": "#563b1f",
+    "102": "#775633",
+    "140": "#a0763e",
+    "178": "#cca353",
+    "216": "#edd578",
+    "255": "#fcf7ae"
+   },
+   "variantes": [
+    "slime_metal",
+    "metal"
+   ],
+   "tracos": [
+    "overworked",
+    "overslime"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 595,
+   "vel": 5.0,
+   "dano": 2.0,
+   "nivel": 3,
+   "cabo": 1.25,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "pedra_branca": {
+   "tc": "whitestone",
+   "pt": "Pedra Branca",
+   "en": "Whitestone",
+   "tier": 2,
+   "cor": "#b4b9be",
+   "paleta": {
+    "000": "#000000",
+    "063": "#717275",
+    "102": "#7f8084",
+    "140": "#989a9e",
+    "178": "#a0a1a1",
+    "216": "#b4b9be",
+    "255": "#cfd2d4"
+   },
+   "variantes": [],
+   "tracos": [
+    "stoneshield"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 275,
+   "vel": 6.0,
+   "dano": 1.25,
+   "nivel": 2,
+   "cabo": 0.95,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "hepatizon": {
+   "tc": "hepatizon",
+   "pt": "Hepatizão",
+   "en": "Hepatizon",
+   "tier": 4,
+   "cor": "#5f486a",
+   "paleta": {
+    "000": "#000000",
+    "063": "#1d0628",
+    "102": "#281133",
+    "140": "#311a3c",
+    "178": "#452e50",
+    "216": "#5f486a",
+    "255": "#725b7d"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "momentum"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 975,
+   "vel": 8.0,
+   "dano": 2.5,
+   "nivel": 4,
+   "cabo": 1.1,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "manyullyn": {
+   "tc": "manyullyn",
+   "pt": "Manyullyn",
+   "en": "Manyullyn",
+   "tier": 4,
+   "cor": "#9261cc",
+   "paleta": {
+    "000": "#000000",
+    "063": "#350c57",
+    "102": "#481d6d",
+    "140": "#5c268a",
+    "178": "#7141ac",
+    "216": "#9261cc",
+    "255": "#c299f3"
+   },
+   "variantes": [
+    "metal"
+   ],
+   "tracos": [
+    "ambush"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 1250,
+   "vel": 6.5,
+   "dano": 3.5,
+   "nivel": 4,
+   "cabo": 1.1,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "slime_rainha": {
+   "tc": "queens_slime",
+   "pt": "Slime da Rainha",
+   "en": "Queen's Slime",
+   "tier": 4,
+   "cor": "#809912",
+   "paleta": {
+    "000": "#000000",
+    "063": "#262d05",
+    "102": "#404c09",
+    "140": "#53630b",
+    "178": "#687d0e",
+    "216": "#809912",
+    "255": "#acbc64"
+   },
+   "variantes": [
+    "slime_metal",
+    "metal"
+   ],
+   "tracos": [
+    "overlord",
+    "overslime"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 1650,
+   "vel": 6.0,
+   "dano": 2.0,
+   "nivel": 4,
+   "cabo": 1.35,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "osso_blaze": {
+   "tc": "blazing_bone",
+   "pt": "Osso de Blaze",
+   "en": "Blazing Bone",
+   "tier": 4,
+   "cor": "#efc62f",
+   "paleta": {
+    "000": "#000000",
+    "063": "#7f3611",
+    "102": "#934114",
+    "140": "#b5671e",
+    "178": "#e28f28",
+    "216": "#efc62f",
+    "255": "#f4ea5a"
+   },
+   "variantes": [
+    "bone",
+    "rock"
+   ],
+   "tracos": [
+    "conducting"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 530,
+   "vel": 6.0,
+   "dano": 3.0,
+   "nivel": 2,
+   "cabo": 0.85,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "slime_brasa": {
+   "tc": "cinderslime",
+   "pt": "Slime de Brasa",
+   "en": "Cinderslime",
+   "tier": 4,
+   "cor": "#e82323",
+   "paleta": {
+    "000": "#000000",
+    "063": "#4a0000",
+    "102": "#5d0000",
+    "140": "#a00000",
+    "178": "#b80000",
+    "216": "#e82323",
+    "255": "#ff5e28"
+   },
+   "variantes": [
+    "slime_metal",
+    "metal"
+   ],
+   "tracos": [
+    "overburn",
+    "overslime"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 1221,
+   "vel": 6.5,
+   "dano": 2.25,
+   "nivel": 4,
+   "cabo": 1.2,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "slime_cavaleiro": {
+   "tc": "knightslime",
+   "pt": "Slime-Cavaleiro",
+   "en": "Knightslime",
+   "tier": 4,
+   "cor": "#243366",
+   "paleta": {
+    "000": "#000000",
+    "063": "#0a0f1e",
+    "102": "#121933",
+    "140": "#172142",
+    "178": "#1d2953",
+    "216": "#243366",
+    "255": "#707a9b"
+   },
+   "variantes": [
+    "metal_contrast",
+    "contrast",
+    "slime_metal",
+    "metal"
+   ],
+   "tracos": [
+    "overwield",
+    "overslime"
+   ],
+   "antigo": false,
+   "metal": true,
+   "dur": 1047,
+   "vel": 7.5,
+   "dano": 3.25,
+   "nivel": 4,
+   "cabo": 0.95,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "madeira_tratada": {
+   "tc": "treated_wood",
+   "pt": "Madeira Tratada",
+   "en": "Treated Wood",
+   "tier": 2,
+   "cor": "#5c3523",
+   "paleta": {
+    "000": "#000000",
+    "063": "#362015",
+    "102": "#402215",
+    "140": "#492a1b",
+    "178": "#55311f",
+    "216": "#5c3523",
+    "234": "#673c29",
+    "255": "#72422d"
+   },
+   "variantes": [
+    "wood",
+    "stick",
+    "primitive"
+   ],
+   "tracos": [
+    "preserved"
+   ],
+   "antigo": false,
+   "metal": false,
+   "dur": 300,
+   "vel": 3.5,
+   "dano": 1.5,
+   "nivel": 1,
+   "cabo": 1.25,
+   "ligacao": true,
+   "cabeca": true
+  },
+  "corda": {
+   "tc": "string",
+   "pt": "Corda",
+   "en": "String",
+   "tier": 0,
+   "cor": "#dbdbdb",
+   "paleta": {
+    "000": "#000000",
+    "063": "#2f4547",
+    "102": "#4d5859",
+    "140": "#838b8c",
+    "178": "#afb3b5",
+    "216": "#dbdbdb",
+    "255": "#f7f7f7"
+   },
+   "variantes": [
+    "primitive"
+   ],
+   "tracos": [
+    "stringy"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "couro": {
+   "tc": "leather",
+   "pt": "Couro",
+   "en": "Leather",
+   "tier": 0,
+   "cor": "#955e3b",
+   "paleta": {
+    "000": "#000000",
+    "063": "#21150d",
+    "102": "#342115",
+    "120": "#472c1b",
+    "140": "#553521",
+    "178": "#72482e",
+    "216": "#955e3b",
+    "255": "#a36e4e"
+   },
+   "variantes": [
+    "cloth"
+   ],
+   "tracos": [
+    "tanned"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "trepadeira": {
+   "tc": "vine",
+   "pt": "Trepadeira",
+   "en": "Vine",
+   "tier": 1,
+   "cor": "#2e730f",
+   "paleta": {
+    "000": "#000000",
+    "063": "#143306",
+    "102": "#183d08",
+    "140": "#1f4e0a",
+    "178": "#265f0d",
+    "216": "#2e730f",
+    "255": "#3a9313"
+   },
+   "variantes": [
+    "vine",
+    "primitive",
+    "cloth"
+   ],
+   "tracos": [
+    "solar_powered"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "trepadeira_chorona": {
+   "tc": "weeping_vine",
+   "pt": "Trepadeira Chorona",
+   "en": "Weeping Vine",
+   "tier": 2,
+   "cor": "#c53439",
+   "paleta": {
+    "000": "#000000",
+    "063": "#5a0000",
+    "102": "#6a0400",
+    "140": "#7b0000",
+    "178": "#a42429",
+    "216": "#c53439",
+    "255": "#ff6500"
+   },
+   "variantes": [
+    "vine",
+    "primitive",
+    "cloth"
+   ],
+   "tracos": [
+    "flamestance"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "trepadeira_retorcida": {
+   "tc": "twisting_vine",
+   "pt": "Trepadeira Retorcida",
+   "en": "Twisting Vine",
+   "tier": 2,
+   "cor": "#14b485",
+   "paleta": {
+    "000": "#000000",
+    "063": "#13544e",
+    "102": "#16615b",
+    "140": "#167e86",
+    "178": "#119b85",
+    "216": "#14b485",
+    "255": "#18cc96"
+   },
+   "variantes": [
+    "vine",
+    "primitive",
+    "cloth"
+   ],
+   "tracos": [
+    "entangled"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "linha_negra": {
+   "tc": "darkthread",
+   "pt": "Linha Negra",
+   "en": "Darkthread",
+   "tier": 3,
+   "cor": "#3b2754",
+   "paleta": {
+    "000": "#000000",
+    "063": "#000001",
+    "102": "#06030b",
+    "140": "#100c1c",
+    "178": "#271e3d",
+    "216": "#3b2754",
+    "255": "#503572"
+   },
+   "variantes": [
+    "primitive"
+   ],
+   "tracos": [
+    "looting"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "trepadeira_slime_ceu": {
+   "tc": "skyslime_vine",
+   "pt": "Trepadeira de Slime-do-Céu",
+   "en": "Slimy Vine",
+   "tier": 2,
+   "cor": "#6dbebd",
+   "paleta": {
+    "000": "#000000",
+    "063": "#2f5351",
+    "102": "#3c6a68",
+    "140": "#4f918f",
+    "178": "#63acab",
+    "216": "#6dbebd",
+    "255": "#82d7d5"
+   },
+   "variantes": [
+    "vine",
+    "primitive",
+    "cloth"
+   ],
+   "tracos": [
+    "airborne",
+    "overslime_friend"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  },
+  "trepadeira_slime_ender": {
+   "tc": "enderslime_vine",
+   "pt": "Trepadeira de Slime-do-Ender",
+   "en": "Slimy Vine",
+   "tier": 4,
+   "cor": "#bf58f7",
+   "paleta": {
+    "000": "#000000",
+    "063": "#6300b0",
+    "102": "#790cc9",
+    "140": "#9727dd",
+    "178": "#a936ed",
+    "216": "#bf58f7",
+    "255": "#d37cff"
+   },
+   "variantes": [
+    "vine",
+    "primitive",
+    "cloth"
+   ],
+   "tracos": [
+    "enderporting",
+    "overslime_friend"
+   ],
+   "antigo": false,
+   "metal": false,
+   "ligacao": true,
+   "cabeca": false
+  }
+ },
+ "pecas": {
+  "cabeca_picareta": {
+   "tc": "pick_head",
+   "pt": "Cabeça de Picareta",
+   "en": "Pick Head",
+   "custo": 2,
+   "stat": "head"
+  },
+  "cabeca_machado": {
+   "tc": "small_axe_head",
+   "pt": "Cabeça de Machado Pequeno",
+   "en": "Small Axe Head",
+   "custo": 2,
+   "stat": "head"
+  },
+  "lamina_espada": {
+   "tc": "small_blade",
+   "pt": "Lâmina Pequena",
+   "en": "Small Blade",
+   "custo": 2,
+   "stat": "head"
+  },
+  "cabeca_enxo": {
+   "tc": "adze_head",
+   "pt": "Cabeça de Enxó",
+   "en": "Adze Head",
+   "custo": 2,
+   "stat": "head"
+  },
+  "cabeca_martelo": {
+   "tc": "hammer_head",
+   "pt": "Cabeça de Martelo",
+   "en": "Hammer Head",
+   "custo": 8,
+   "stat": "head"
+  },
+  "lamina_larga": {
+   "tc": "broad_blade",
+   "pt": "Lâmina Grande",
+   "en": "Broad Blade",
+   "custo": 8,
+   "stat": "head"
+  },
+  "cabeca_machado_larga": {
+   "tc": "broad_axe_head",
+   "pt": "Cabeça de Machado Grande",
+   "en": "Broad Axe Head",
+   "custo": 8,
+   "stat": "head"
+  },
+  "placa_grande": {
+   "tc": "large_plate",
+   "pt": "Placa Grande",
+   "en": "Large Plate",
+   "custo": 4,
+   "stat": "head"
+  },
+  "ligacao": {
+   "tc": "tool_binding",
+   "pt": "Ligamento de Ferramenta",
+   "en": "Tool Binding",
+   "custo": 1,
+   "stat": "binding"
+  },
+  "ligacao_resistente": {
+   "tc": "tough_binding",
+   "pt": "Colar Resistente",
+   "en": "Tough Collar",
+   "custo": 3,
+   "stat": "binding"
+  },
+  "cabo": {
+   "tc": "tool_handle",
+   "pt": "Cabo de Ferramenta",
+   "en": "Tool Handle",
+   "custo": 1,
+   "stat": "handle"
+  },
+  "cabo_resistente": {
+   "tc": "tough_handle",
+   "pt": "Cabo Resistente",
+   "en": "Tough Handle",
+   "custo": 3,
+   "stat": "handle"
+  }
+ },
+ "ferramentas": {
+  "picareta": {
+   "tc": "pickaxe",
+   "pt": "Picareta",
+   "en": "Pickaxe",
+   "tags": [
+    "minecraft:is_pickaxe_item_destructible"
+   ],
+   "slot": "pickaxe",
+   "base": {
+    "attack_damage": 0.5,
+    "attack_speed": 1.2
+   },
+   "mult": {},
+   "tracos": [
+    [
+     "pierce",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "cabeca_picareta",
+    "cabo",
+    "ligacao"
+   ],
+   "camadas": [
+    [
+     "tool/pickaxe/handle",
+     1
+    ],
+    [
+     "tool/pickaxe/head",
+     0
+    ],
+    [
+     "tool/pickaxe/binding",
+     2
+    ]
+   ]
+  },
+  "marreta": {
+   "tc": "sledge_hammer",
+   "pt": "Marreta",
+   "en": "Sledge Hammer",
+   "tags": [
+    "minecraft:is_pickaxe_item_destructible"
+   ],
+   "slot": "pickaxe",
+   "base": {
+    "attack_damage": 3.0,
+    "attack_speed": 0.75
+   },
+   "mult": {
+    "attack_damage": 1.35,
+    "durability": 4.0,
+    "mining_speed": 0.4
+   },
+   "tracos": [
+    [
+     "smite",
+     2
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 2
+   },
+   "pecas": [
+    "cabeca_martelo",
+    "cabo_resistente",
+    "placa_grande",
+    "placa_grande"
+   ],
+   "area": {
+    "tipo": "caixa",
+    "l": 3,
+    "a": 3,
+    "p": 1
+   },
+   "camadas": [
+    [
+     "tool/sledge_hammer/handle",
+     1
+    ],
+    [
+     "tool/sledge_hammer/head",
+     0
+    ],
+    [
+     "tool/sledge_hammer/back",
+     2
+    ],
+    [
+     "tool/sledge_hammer/front",
+     3
+    ]
+   ]
+  },
+  "martelo_veio": {
+   "tc": "vein_hammer",
+   "pt": "Martelo de Mineração",
+   "en": "Vein Hammer",
+   "tags": [
+    "minecraft:is_pickaxe_item_destructible"
+   ],
+   "slot": "pickaxe",
+   "base": {
+    "attack_damage": 3.0,
+    "attack_speed": 0.85
+   },
+   "mult": {
+    "attack_damage": 1.25,
+    "durability": 5.0,
+    "mining_speed": 0.3
+   },
+   "tracos": [
+    [
+     "pierce",
+     2
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 2
+   },
+   "pecas": [
+    "cabeca_martelo",
+    "cabo_resistente",
+    "ligacao_resistente",
+    "placa_grande"
+   ],
+   "area": {
+    "tipo": "veio",
+    "dist": 2
+   },
+   "camadas": [
+    [
+     "tool/vein_hammer/handle",
+     1
+    ],
+    [
+     "tool/vein_hammer/head",
+     0
+    ],
+    [
+     "tool/vein_hammer/grip",
+     2
+    ],
+    [
+     "tool/vein_hammer/front",
+     3
+    ]
+   ]
+  },
+  "chibanca": {
+   "tc": "mattock",
+   "pt": "Chibanca",
+   "en": "Mattock",
+   "tags": [
+    "minecraft:is_axe_item_destructible",
+    "minecraft:is_shovel_item_destructible",
+    "minecraft:is_hoe_item_destructible"
+   ],
+   "slot": "axe",
+   "base": {
+    "attack_damage": 1.5,
+    "attack_speed": 0.9
+   },
+   "mult": {
+    "attack_damage": 1.1,
+    "durability": 1.25,
+    "mining_speed": 1.1
+   },
+   "tracos": [
+    [
+     "tilling",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "cabeca_machado",
+    "cabo",
+    "cabeca_enxo"
+   ],
+   "camadas": [
+    [
+     "tool/pickaxe/handle",
+     1
+    ],
+    [
+     "tool/mattock/axe",
+     0
+    ],
+    [
+     "tool/mattock/pick",
+     2
+    ]
+   ]
+  },
+  "picarenxo": {
+   "tc": "pickadze",
+   "pt": "Picarenxó",
+   "en": "Pickadze",
+   "tags": [
+    "minecraft:is_pickaxe_item_destructible",
+    "minecraft:is_shovel_item_destructible"
+   ],
+   "slot": "pickaxe",
+   "base": {
+    "attack_damage": 0.5,
+    "attack_speed": 1.3
+   },
+   "mult": {
+    "attack_damage": 1.15,
+    "durability": 1.3,
+    "mining_speed": 0.75
+   },
+   "tracos": [
+    [
+     "pathing",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "cabeca_picareta",
+    "cabo",
+    "cabeca_enxo"
+   ],
+   "camadas": [
+    [
+     "tool/pickaxe/handle",
+     1
+    ],
+    [
+     "tool/pickadze/pick",
+     0
+    ],
+    [
+     "tool/pickadze/adze",
+     2
+    ]
+   ]
+  },
+  "escavadeira": {
+   "tc": "excavator",
+   "pt": "Escavadeira",
+   "en": "Excavator",
+   "tags": [
+    "minecraft:is_shovel_item_destructible"
+   ],
+   "slot": "shovel",
+   "base": {
+    "attack_damage": 1.5,
+    "attack_speed": 1.0
+   },
+   "mult": {
+    "attack_damage": 1.2,
+    "durability": 3.75,
+    "mining_speed": 0.3
+   },
+   "tracos": [
+    [
+     "knockback",
+     2
+    ],
+    [
+     "pathing",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 2
+   },
+   "pecas": [
+    "placa_grande",
+    "cabo_resistente",
+    "ligacao_resistente",
+    "cabo_resistente"
+   ],
+   "area": {
+    "tipo": "caixa",
+    "l": 3,
+    "a": 3,
+    "p": 1
+   },
+   "camadas": [
+    [
+     "tool/excavator/handle",
+     1
+    ],
+    [
+     "tool/excavator/head",
+     0
+    ],
+    [
+     "tool/excavator/grip",
+     3
+    ],
+    [
+     "tool/excavator/binding",
+     2
+    ]
+   ]
+  },
+  "machadinha": {
+   "tc": "hand_axe",
+   "pt": "Machado de Mão",
+   "en": "Hand Axe",
+   "tags": [
+    "minecraft:is_axe_item_destructible"
+   ],
+   "slot": "axe",
+   "base": {
+    "attack_damage": 6.0,
+    "attack_speed": 0.9
+   },
+   "mult": {},
+   "tracos": [
+    [
+     "stripping",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "cabeca_machado",
+    "cabo",
+    "ligacao"
+   ],
+   "camadas": [
+    [
+     "tool/pickaxe/handle",
+     1
+    ],
+    [
+     "tool/hand_axe/head",
+     0
+    ],
+    [
+     "tool/hand_axe/binding",
+     2
+    ]
+   ]
+  },
+  "machado_largo": {
+   "tc": "broad_axe",
+   "pt": "Machado Grande",
+   "en": "Broad Axe",
+   "tags": [
+    "minecraft:is_axe_item_destructible"
+   ],
+   "slot": "axe",
+   "base": {
+    "attack_damage": 5.0,
+    "attack_speed": 0.6
+   },
+   "mult": {
+    "attack_damage": 1.65,
+    "durability": 4.25,
+    "mining_speed": 0.3
+   },
+   "tracos": [
+    [
+     "stripping",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 2
+   },
+   "pecas": [
+    "cabeca_machado_larga",
+    "cabo_resistente",
+    "cabeca_picareta",
+    "ligacao_resistente"
+   ],
+   "area": {
+    "tipo": "arvore",
+    "coluna": 6
+   },
+   "camadas": [
+    [
+     "tool/broad_axe/handle",
+     1
+    ],
+    [
+     "tool/broad_axe/blade",
+     0
+    ],
+    [
+     "tool/broad_axe/back",
+     2
+    ],
+    [
+     "tool/broad_axe/binding",
+     3
+    ]
+   ]
+  },
+  "kama": {
+   "tc": "kama",
+   "pt": "Kama",
+   "en": "Kama",
+   "tags": [
+    "minecraft:is_hoe_item_destructible"
+   ],
+   "slot": "hoe",
+   "base": {
+    "attack_damage": 1.0,
+    "attack_speed": 1.6
+   },
+   "mult": {
+    "attack_damage": 0.5
+   },
+   "tracos": [
+    [
+     "tilling",
+     1
+    ],
+    [
+     "shears",
+     1
+    ],
+    [
+     "harvest",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "lamina_espada",
+    "cabo",
+    "ligacao"
+   ],
+   "camadas": [
+    [
+     "tool/pickaxe/handle",
+     1
+    ],
+    [
+     "tool/kama/head",
+     0
+    ],
+    [
+     "tool/kama/binding",
+     2
+    ]
+   ]
+  },
+  "foice": {
+   "tc": "scythe",
+   "pt": "Foice",
+   "en": "Scythe",
+   "tags": [
+    "minecraft:is_hoe_item_destructible"
+   ],
+   "slot": "hoe",
+   "base": {
+    "attack_damage": 1.0,
+    "attack_speed": 0.7
+   },
+   "mult": {
+    "durability": 2.5,
+    "mining_speed": 0.45
+   },
+   "tracos": [
+    [
+     "tilling",
+     1
+    ],
+    [
+     "silky_shears",
+     2
+    ],
+    [
+     "harvest",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 2
+   },
+   "pecas": [
+    "lamina_larga",
+    "cabo_resistente",
+    "ligacao_resistente",
+    "cabo_resistente"
+   ],
+   "area": {
+    "tipo": "caixa",
+    "l": 3,
+    "a": 3,
+    "p": 3
+   },
+   "camadas": [
+    [
+     "tool/scythe/accessory",
+     3
+    ],
+    [
+     "tool/scythe/handle",
+     1
+    ],
+    [
+     "tool/scythe/head",
+     0
+    ],
+    [
+     "tool/scythe/binding",
+     2
+    ]
+   ]
+  },
+  "adaga": {
+   "tc": "dagger",
+   "pt": "Adaga",
+   "en": "Dagger",
+   "tags": [
+    "minecraft:is_sword_item_destructible"
+   ],
+   "slot": "sword",
+   "base": {
+    "attack_damage": 3.0,
+    "attack_speed": 2.0,
+    "block_amount": 10.0,
+    "use_item_speed": 1.0
+   },
+   "mult": {
+    "attack_damage": 0.65,
+    "durability": 0.75,
+    "mining_speed": 0.75
+   },
+   "tracos": [
+    [
+     "padded",
+     1
+    ],
+    [
+     "offhand_attack",
+     1
+    ],
+    [
+     "silky_shears",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "lamina_espada",
+    "cabo"
+   ],
+   "camadas": [
+    [
+     "tool/dagger/blade",
+     0
+    ],
+    [
+     "tool/dagger/crossguard",
+     1
+    ]
+   ]
+  },
+  "espada_larga": {
+   "tc": "sword",
+   "pt": "Espada",
+   "en": "Sword",
+   "tags": [
+    "minecraft:is_sword_item_destructible"
+   ],
+   "slot": "sword",
+   "base": {
+    "attack_damage": 3.0,
+    "attack_speed": 1.6,
+    "block_amount": 10.0
+   },
+   "mult": {
+    "durability": 1.1,
+    "mining_speed": 0.5
+   },
+   "tracos": [
+    [
+     "silky_shears",
+     1
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 3
+   },
+   "pecas": [
+    "lamina_espada",
+    "cabo",
+    "cabo"
+   ],
+   "camadas": [
+    [
+     "tool/sword/handle",
+     1
+    ],
+    [
+     "tool/sword/blade",
+     0
+    ],
+    [
+     "tool/sword/guard",
+     2
+    ]
+   ]
+  },
+  "espadao": {
+   "tc": "cleaver",
+   "pt": "Espadão",
+   "en": "Cleaver",
+   "tags": [
+    "minecraft:is_sword_item_destructible"
+   ],
+   "slot": "sword",
+   "base": {
+    "attack_damage": 3.0,
+    "attack_speed": 1.0,
+    "block_amount": 10.0
+   },
+   "mult": {
+    "attack_damage": 1.5,
+    "durability": 3.5,
+    "mining_speed": 0.25
+   },
+   "tracos": [
+    [
+     "severing",
+     2
+    ],
+    [
+     "silky_shears",
+     2
+    ]
+   ],
+   "espacos": {
+    "abilities": 1,
+    "upgrades": 2
+   },
+   "pecas": [
+    "lamina_larga",
+    "cabo_resistente",
+    "cabo_resistente",
+    "placa_grande"
+   ],
+   "camadas": [
+    [
+     "tool/cleaver/handle",
+     1
+    ],
+    [
+     "tool/cleaver/head",
+     0
+    ],
+    [
+     "tool/cleaver/shield",
+     3
+    ],
+    [
+     "tool/cleaver/guard",
+     2
+    ]
+   ]
+  }
+ },
+ "tracos": {
+  "airborne": {
+   "pt": "Aéreo",
+   "en": "Airborne",
+   "dpt": "A ferramenta não é mais penalizada ao minerar no ar e ganha um bônus de precisão de projétil",
+   "den": "Tool no longer is penalized when mining in the air and gains a projectile velocity bonus"
+  },
+  "ambush": {
+   "pt": "Ambush",
+   "en": "Ambush",
+   "dpt": "Deals more damage when you or the target is at full health.",
+   "den": "Deals more damage when you or the target is at full health."
+  },
+  "antitoxin": {
+   "pt": "Antitoxina",
+   "en": "Antitoxin",
+   "dpt": "A ferramenta causa mais dano e puxa mais rápido quando envenenado",
+   "den": "Tool does more damage and draws faster when poisoned"
+  },
+  "conducting": {
+   "pt": "Condutor",
+   "en": "Conducting",
+   "dpt": "A ferramenta causa dano multiplicado quando você está em chamas",
+   "den": "Tool deals multiplied damage when you are on fire"
+  },
+  "cultivated": {
+   "pt": "Cultivado",
+   "en": "Cultivated",
+   "dpt": "A ferramenta praticamente cultiva mais material ao reparar",
+   "den": "Tool practically grows more material when repairing"
+  },
+  "dense": {
+   "pt": "Denso",
+   "en": "Dense",
+   "dpt": "A ferramenta dura mais, mas é mais difícil de reparar",
+   "den": "Tool lasts longer, but is harder to repair"
+  },
+  "ductile": {
+   "pt": "Dúctil",
+   "en": "Ductile",
+   "dpt": "A ferramenta dura mais, minera mais rápido, causa mais dano e é mais resistente",
+   "den": "Tool is longer lasting, damages more and is tougher"
+  },
+  "dwarven": {
+   "pt": "Anão",
+   "en": "Dwarven",
+   "dpt": "A ferramenta minera mais rápido e tem mais velocidade de projétil quanto mais fundo você minera, mas perde eficácia se você subir muito",
+   "den": "Tool mines faster and has more projectile velocity the deeper you mine, but loses effectiveness if you go too high"
+  },
+  "enderference": {
+   "pt": "Enderferênciaer",
+   "en": "Enderference",
+   "dpt": "Impede o alvo de se teletransportar por um curto período",
+   "den": "Prevents target from teleporting for a short time"
+  },
+  "enderporting": {
+   "pt": "Teleportação Ender",
+   "en": "Enderporting",
+   "dpt": "A ferramenta teleporta o usuário para blocos minerados ou entidades mortas",
+   "den": "Tool teleports the holder to mined blocks or killed entities"
+  },
+  "enhanced": {
+   "pt": "Aprimorado",
+   "en": "Enhanced",
+   "dpt": "Ouro rosé combina ótimo com uma melhoria bônus!",
+   "den": "Rose gold goes great with a bonus upgrade slot!"
+  },
+  "entangled": {
+   "pt": "Entrelaçado",
+   "en": "Entangled",
+   "dpt": "Aumenta a velocidade e a resistência à repulsão, ao custo de sofrer dano ao desequipar",
+   "den": "Increases speed or knockback resistance at the cost of taking damage when unequipping"
+  },
+  "flamestance": {
+   "pt": "Flamestância",
+   "en": "Flamestance",
+   "dpt": "Aumenta o poder e a proteção em biomas quentes, mas os reduz em biomas frios",
+   "den": "Increases power and protection in hot biomes, but reduces it in cold biomes"
+  },
+  "harvest": {
+   "pt": "Coleta",
+   "en": "Harvest",
+   "dpt": "A ferramenta pode ser usada em plantações para coletar e replantar",
+   "den": "Tool can be used on crops to harvest and replant them"
+  },
+  "jagged": {
+   "pt": "Dentado",
+   "en": "Jagged",
+   "dpt": "Cada ponto de durabilidade perdido aumenta o dano, mas diminui a velocidade de mineração",
+   "den": "Every point durability lost increases damage, but decreases mining speed"
+  },
+  "knockback": {
+   "pt": "Repulsão",
+   "en": "Knockback",
+   "dpt": "Acertar nas coisas faz elas voarem mais longe!",
+   "den": "Hitting things in melee makes them go flying further!"
+  },
+  "lacerating": {
+   "pt": "Lacerante",
+   "en": "Lacerating",
+   "dpt": "Faz o alvo sangrar, causando dano adicional",
+   "den": "Causes the target to bleed, dealing additional damage"
+  },
+  "lightweight": {
+   "pt": "Leve",
+   "en": "Lightweight",
+   "dpt": "A ferramenta é incrivelmente leve para seu tamanho, permitindo que você ataque, minere e lance projéteis mais rápido",
+   "den": "Tool is incredibly light for its size, allowing you to attack, mine, and launch projectiles faster"
+  },
+  "looting": {
+   "pt": "Saque",
+   "en": "Looting",
+   "dpt": "Dá mais coisas legais ao matar mobs!",
+   "den": "Gives you more nice things when killing mobs!"
+  },
+  "magnetic": {
+   "pt": "Magnético",
+   "en": "Magnetic",
+   "dpt": "Acertar coisas atrai itens próximos?!",
+   "den": "Hitting things attracts nearby items?!"
+  },
+  "maintained": {
+   "pt": "Mantido",
+   "en": "Maintained",
+   "dpt": "A ferramenta minera mais rápido quando está com maior durabilidade",
+   "den": "Tool mines faster when at higher durability"
+  },
+  "momentum": {
+   "pt": "Impulso",
+   "en": "Momentum",
+   "dpt": "Mineração de blocos e disparo de flechas aumentam sua velocidade, desde que você continue",
+   "den": "Mining blocks and firing arrows increases your speed, as long as you keep going"
+  },
+  "necrotic": {
+   "pt": "Necromante",
+   "en": "Lifesteal",
+   "dpt": "Acertos críticos em inimigos drenam sua vida para curar você",
+   "den": "Critical hits on enemies drains their life to heal you"
+  },
+  "offhand_attack": {
+   "pt": "offhand_attack",
+   "en": "offhand_attack",
+   "dpt": "",
+   "den": ""
+  },
+  "overburn": {
+   "pt": "Superqueima",
+   "en": "Overburn",
+   "dpt": "A ferramenta converte combustível líquido em slimebilidade",
+   "den": "Tool converts liquid fuel into overslime"
+  },
+  "overcast": {
+   "pt": "Nublado",
+   "en": "Overcast",
+   "dpt": "Slimebilidade pode ser feito extra grosso nesta ferramenta",
+   "den": "Overslime can be made extra thick on this tool"
+  },
+  "overgrowth": {
+   "pt": "Crescimento Excessivo",
+   "en": "Overgrowth",
+   "dpt": "A ferramenta cresce slimebilidade lentamente",
+   "den": "Tool slowly grows overslime"
+  },
+  "overlord": {
+   "pt": "Soberano",
+   "en": "Overlord",
+   "dpt": "A ferramenta toma parte da durabilidade como novos súditos de slimebilidade",
+   "den": "Tool takes some of the durability as new overslime subjects"
+  },
+  "overslime": {
+   "pt": "Slimebilidade",
+   "en": "Overslime",
+   "dpt": "A ferramenta consome slimebilidade em vez de durabilidade, até que acabe! Não é amigável com ferramentas sem slime",
+   "den": "Tool consumes overslime instead of durability, until it runs out! Not friendly towards tools lacking slime"
+  },
+  "overslime_friend": {
+   "pt": "Amigo do Slimebilidade",
+   "en": "Overslime Friend",
+   "dpt": "Counts as a slimy material, preventing overslime from debuffing the tool",
+   "den": "Counts as a slimy material, preventing overslime from debuffing the tool"
+  },
+  "overwield": {
+   "pt": "Overwield",
+   "en": "Overwield",
+   "dpt": "Consumes overslime to boost mining speed, attack speed, drawspeed, and projectile velocity",
+   "den": "Consumes overslime to boost mining speed, attack speed, drawspeed, and projectile velocity"
+  },
+  "overworked": {
+   "pt": "Sobrecarregado",
+   "en": "Overworked",
+   "dpt": "Aumenta a quantidade de slimebilidade restaurada de todas as fontes",
+   "den": "Increases amount of overslime restored from all sources"
+  },
+  "padded": {
+   "pt": "Acolchoado",
+   "en": "Padded",
+   "dpt": "Reduz o recuo da ferramenta, para impedir que seus inimigos escapem",
+   "den": "Reduces the knockback of the tool, to stop your enemies from escaping"
+  },
+  "pathing": {
+   "pt": "Caminhando",
+   "en": "Pathing",
+   "dpt": "A ferramenta pode fazer caminhos",
+   "den": "Tool can make paths"
+  },
+  "pierce": {
+   "pt": "Perfuração",
+   "en": "Armor Pierce",
+   "dpt": "Ataques que furam e cancelam parte da armadura do alvo!",
+   "den": "Attacks cancels out some of the target's armor!"
+  },
+  "preserved": {
+   "pt": "Preservado",
+   "en": "Preserved",
+   "dpt": "Aumenta a durabilidade da ferramenta e facilita seu reparo",
+   "den": "Makes the tool more durable and easier to repair"
+  },
+  "scorching": {
+   "pt": "Escaldante",
+   "en": "Scorching",
+   "dpt": "A ferramenta causa dano bônus a alvos em chamas",
+   "den": "Tool does bonus damage to targets that are on fire"
+  },
+  "searing": {
+   "pt": "Queimante",
+   "en": "Searing",
+   "dpt": "A ferramenta minera blocos fundíveis como minérios metálicos mais rápido",
+   "den": "Tool mines meltable blocks such as metal ores faster"
+  },
+  "severing": {
+   "pt": "Decapitação",
+   "en": "Severing",
+   "dpt": "Pode arrancar cabeças ou outras partes de alvos em ataques corpo a corpo!",
+   "den": "Potentially blasts heads or other parts of targets of melee right off!"
+  },
+  "shears": {
+   "pt": "Tesoura",
+   "en": "Shearing",
+   "dpt": "A ferramenta pode ser usada para tosquiar mobs e desarmar arames",
+   "den": "Tool can be used to shear mobs and disarm tripwire"
+  },
+  "silky_shears": {
+   "pt": "Tesoura Sedosa",
+   "en": "Silky Shears",
+   "dpt": "A ferramenta pode tosquiar mobs se o modificador sedoso for adicionado",
+   "den": "Tool can shear mobs if the silky modifier is added"
+  },
+  "smite": {
+   "pt": "Golpeada",
+   "en": "Smite",
+   "dpt": "Mortos-vivos temem o poder do melão!",
+   "den": "Undead fear the might of the melon!"
+  },
+  "solar_powered": {
+   "pt": "Energia Solar",
+   "en": "Solar Powered",
+   "dpt": "A ferramenta resiste a danos sob a luz do sol",
+   "den": "Tool resists damage in sunlight"
+  },
+  "spiny": {
+   "pt": "Spiny",
+   "en": "Spiny",
+   "dpt": "Boosts the projectile's damage, but damages you when used.",
+   "den": "Boosts the projectile's damage, but damages you when used."
+  },
+  "stonebound": {
+   "pt": "Ligado à Pedra",
+   "en": "Stonebound",
+   "dpt": "A ferramenta minera mais rápido à medida que se desgasta, mas causa menos dano",
+   "den": "The tool mines faster as it wears out, but does less damage"
+  },
+  "stoneshield": {
+   "pt": "Escudo de Pedra",
+   "en": "Stoneshield",
+   "dpt": "Pedra minerada tem uma chance de proteger a ferramenta de danos futuros",
+   "den": "Mined stone has a chance to protect the tool from future damage"
+  },
+  "stringy": {
+   "pt": "Fibroso",
+   "en": "Stringy",
+   "dpt": "A ferramenta pode ser reparada usando corda",
+   "den": "Tool can be repaired using string"
+  },
+  "stripping": {
+   "pt": "Descascamento",
+   "en": "Stripping",
+   "dpt": "A ferramenta pode descascar madeira",
+   "den": "Tool can strip bark from wood"
+  },
+  "tanned": {
+   "pt": "Curtido",
+   "en": "Tanned",
+   "dpt": "A ferramenta não sofre mais o dobro ou mais de dano de certas ações",
+   "den": "Tool no longer takes double or more damage from certain actions"
+  },
+  "tasty": {
+   "pt": "Saboroso",
+   "en": "Tasty",
+   "dpt": "Cheira tão bem que você não resiste a dar algumas mordidas na sua ferramenta",
+   "den": "Smells so good, you cannot resist taking a few bites of your tool"
+  },
+  "tilling": {
+   "pt": "Aragem",
+   "en": "Tilling",
+   "dpt": "A ferramenta pode arar terra",
+   "den": "Tool can till dirt"
+  }
+ }
+}

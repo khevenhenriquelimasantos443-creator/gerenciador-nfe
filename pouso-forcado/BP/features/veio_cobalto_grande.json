@@ -1,0 +1,17 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:ore_feature": {
+  "description": {
+   "identifier": "cl:veio_cobalto_grande"
+  },
+  "count": 6,
+  "replace_rules": [
+   {
+    "places_block": "cl:minerio_cobalto",
+    "may_replace": [
+     "minecraft:netherrack"
+    ]
+   }
+  ]
+ }
+}

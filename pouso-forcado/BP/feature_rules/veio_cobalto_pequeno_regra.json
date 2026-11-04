@@ -1,0 +1,44 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:feature_rules": {
+  "description": {
+   "identifier": "cl:veio_cobalto_pequeno_regra",
+   "places_feature": "cl:veio_cobalto_pequeno"
+  },
+  "conditions": {
+   "placement_pass": "underground_pass",
+   "minecraft:biome_filter": [
+    {
+     "test": "has_biome_tag",
+     "operator": "==",
+     "value": "nether"
+    }
+   ]
+  },
+  "distribution": {
+   "iterations": 5,
+   "coordinate_eval_order": "xzy",
+   "x": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     16
+    ]
+   },
+   "z": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     16
+    ]
+   },
+   "y": {
+    "distribution": "uniform",
+    "extent": [
+     8,
+     119
+    ]
+   }
+  }
+ }
+}

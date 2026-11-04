@@ -3978,6 +3978,39 @@
     },
     "clc_bloco_bronze_ametista": {
       "textures": "textures/blocks/cl/c/bloco_bronze_ametista"
+    },
+    "clc_minerio_cobalto": {
+      "textures": "textures/blocks/cl/arte/minerio_cobalto"
+    },
+    "clc_bloco_cobalto": {
+      "textures": "textures/blocks/cl/arte/bloco_cobalto"
+    },
+    "clc_bloco_ferro_porco": {
+      "textures": "textures/blocks/cl/arte/bloco_ferro_porco"
+    },
+    "clc_bloco_hepatizon": {
+      "textures": "textures/blocks/cl/arte/bloco_hepatizon"
+    },
+    "clc_bloco_manyullyn": {
+      "textures": "textures/blocks/cl/arte/bloco_manyullyn"
+    },
+    "clc_bloco_slime_rainha": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_rainha"
+    },
+    "clc_bloco_aco_slime": {
+      "textures": "textures/blocks/cl/arte/bloco_aco_slime"
+    },
+    "clc_bloco_slime_brasa": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_brasa"
+    },
+    "clc_bloco_slime_cavaleiro": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_cavaleiro"
+    },
+    "clc_bloco_cobalto_bruto": {
+      "textures": "textures/blocks/cl/arte/bloco_cobalto_bruto"
+    },
+    "clc_nahuatl": {
+      "textures": "textures/blocks/cl/arte/nahuatl"
     }
   }
 }

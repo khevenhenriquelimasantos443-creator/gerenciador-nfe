@@ -1,8 +1,8 @@
 import { Block, BlockCustomComponent, Dimension, GameMode, ItemStack, Player, RawMessage, Vector3, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { FUNDICAO } from "../config.js";
-import { DADOS_F15 } from "../conteudo/gerado.js";
-import { registrarNoCatalogo } from "../catalogo/catalogo.js";
+import { DADOS_F15, DADOS_F45 } from "../conteudo/gerado.js";
+import { Receita, registrarNoCatalogo } from "../catalogo/catalogo.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { definirEstado, lerEstado } from "../util/blocos.js";
@@ -29,7 +29,26 @@ const T = "fundicao";
 const PAREDE = new Set(["cl:tijolos_refratarios", "cl:vidro_refratario", "cl:tanque_refratario", "cl:dreno_fundicao", "cl:controlador_fundicao"]);
 const DIRS: Readonly<Record<string, [number, number]>> = { north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0] };
 const PECAS = DADOS_F15.pecas as Readonly<Record<string, { custo: number }>>;
-const METAIS_FERRAMENTA = new Set(["ferro", "cobre", "bronze", "aco", "ouro_rosa", "bronze_ametista"]);
+// 1.26.0: os metais de ferramenta são os materiais de metal do Tinkers 3 (cobalto, manyullyn, ferro-porco...).
+const METAIS_FERRAMENTA = new Set(Object.entries(DADOS_F15.materiais as unknown as Record<string, { metal?: boolean }>).filter(([, m]) => m.metal).map(([k]) => k));
+type Liga = { entra: Readonly<Record<string, number>>; sai: readonly [string, number] };
+type Composto = { de: string; liquido: string; mb: number; vira: string };
+const D45 = DADOS_F45 as unknown as {
+  ligas: readonly Liga[]; derrete: Readonly<Record<string, readonly [string, number]>>; bichos: Readonly<Record<string, string>>; sopaPorGolpe: number;
+  compostos: readonly Composto[]; bacia: readonly { base: string; liquido: string; mb: number; vira: string }[]; ossoWither: string;
+};
+// Lingotes e blocos dos metais novos (o resto vem de FUNDICAO.lingote/bloco).
+const NOVOS = new Set(["cobalto", "ferro_porco", "hepatizon", "manyullyn", "slime_rainha", "aco_slime", "slime_brasa", "slime_cavaleiro"]);
+const lingoteDe = (m: string) => FUNDICAO.lingote[m] ?? (NOVOS.has(m) || ["osmio", "aluminio", "zinco", "latao"].includes(m) ? `cl:lingote_${m}` : undefined);
+const blocoDe = (m: string) => FUNDICAO.bloco[m] ?? (NOVOS.has(m) ? `cl:bloco_${m}` : undefined);
+const PECA_IDS = Object.keys(DADOS_F15.pecas).sort((a, b) => b.length - a.length);
+/** "cl:peca_cabeca_picareta_cobalto" -> ["cabeca_picareta", "cobalto"]. */
+function pecaDe(id: string): [string, string] | undefined {
+  if (!id.startsWith("cl:peca_")) return undefined;
+  const resto = id.slice(8);
+  const p = PECA_IDS.find((x) => resto.startsWith(`${x}_`));
+  return p ? [p, resto.slice(p.length + 1)] : undefined;
+}
 const nomeMetal = (m: string): RawMessage => ({ translate: `cl.fun.metal.${m}` });
 const nomeItem = (id: string): RawMessage => ({ translate: `item.${id}.name` });
 const indice = () => (JSON.parse((world.getDynamicProperty("cl:fundicoes") as string | undefined) ?? "[]") as string[]);
@@ -37,8 +56,11 @@ const indice = () => (JSON.parse((world.getDynamicProperty("cl:fundicoes") as st
 function valorDe(id: string): readonly [string, number] | undefined {
   const v = FUNDICAO.valores[id];
   if (v) return v;
-  const m = /^cl:peca_(.+)_(ferro|cobre|bronze|aco)$/.exec(id);
-  return m && PECAS[m[1]] ? [m[2], PECAS[m[1]].custo * 144] : undefined;
+  const d = D45.derrete[id];
+  if (d) return d;
+  // Peça de metal derrete de volta (custo × 144 mB).
+  const pm = pecaDe(id);
+  return pm && METAIS_FERRAMENTA.has(pm[1]) && PECAS[pm[0]] ? [pm[1], PECAS[pm[0]].custo * 144] : undefined;
 }
 
 function bloco(dim: Dimension, p: Vector3): Block | undefined {
@@ -135,6 +157,16 @@ function ligas(f: Fundicao): void {
     tirar(f, "ametista", a.ametista);
     somar(f, "bronze_ametista", a.sai);
   }
+  // 1.26.0: as ligas do Tinkers 3 (Ferro-Porco, Hepatizão, Manyullyn, Slime da Rainha, as de slime e a obsidiana).
+  for (const l of D45.ligas) {
+    const ent = Object.entries(l.entra);
+    let vezes = 0;
+    while (vezes < 64 && ent.every(([k, n]) => qtd(f, k) >= n)) {
+      for (const [k, n] of ent) tirar(f, k, n);
+      somar(f, l.sai[0], l.sai[1]);
+      vezes++;
+    }
+  }
 }
 
 function tick(c: Block): void {
@@ -142,9 +174,21 @@ function tick(c: Block): void {
   if (!f.ok) return;
   const [dx, dz] = DIRS[lerEstado<string>(c, "minecraft:cardinal_direction")] ?? [0, -1];
   const canto = { x: c.x + dx * 2 - 1, y: c.y, z: c.z + dz * 2 - 1 };
-  const itens = c.dimension.getEntities({ type: "minecraft:item", location: canto, volume: { x: 3, y: f.h, z: 3 } });
-  if (itens.length === 0) return;
   let derreteu = 0, mudou = false;
+  // 1.26.0 (TC3 entity_melting): animais de fazenda no interior tomam dano e viram sopa de carne.
+  for (const e of c.dimension.getEntities({ location: canto, volume: { x: 3, y: f.h, z: 3 }, excludeTypes: ["minecraft:item", "minecraft:player"] })) {
+    const liq = D45.bichos[e.typeId];
+    if (!liq || total(f) + D45.sopaPorGolpe > f.cap) continue;
+    try {
+      e.applyDamage(2);
+      somar(f, liq, D45.sopaPorGolpe);
+      mudou = true;
+    } catch {
+      // morreu
+    }
+  }
+  const itens = c.dimension.getEntities({ type: "minecraft:item", location: canto, volume: { x: 3, y: f.h, z: 3 } });
+  if (itens.length === 0 && !mudou) return;
   for (const e of itens) {
     if (derreteu >= FUNDICAO.derretePorSegundo) break;
     const pilha = e.getComponent("minecraft:item")?.itemStack;
@@ -282,6 +326,18 @@ function tocarMesa(j: Player, b: Block, bacia: boolean): void {
     return;
   }
   const mao = itemNaMao(j);
+  // 1.26.0: a bacia aceita tábua (Nahuatl).
+  if (bacia && !m.item && mao?.typeId.endsWith("_planks")) {
+    gastarDaMao(j);
+    gravar(tipo, b, { item: mao.typeId });
+    j.playSound("random.click");
+    return aviso(j, { translate: "cl.fun.na_mesa", with: { rawtext: [nomeItem(mao.typeId)] } });
+  }
+  if (bacia && m.item && !mao) {
+    darAoJogador(j, m.item);
+    gravar(tipo, b, undefined);
+    return;
+  }
   if (!bacia && !m.item && mao) {
     gastarDaMao(j);
     gravar(tipo, b, { item: mao.typeId });
@@ -302,9 +358,18 @@ export const baciaComp: BlockCustomComponent = { onPlayerInteract: (e) => e.play
 
 /** O que sai de `metal` sobre o que está na mesa (ou na bacia): [resultado, mB, consome o item?]. */
 function fundir(metal: string, item: string | undefined, bacia: boolean): [string, number, boolean] | undefined | "nao_serve" {
-  if (bacia) return FUNDICAO.bloco[metal] ? [FUNDICAO.bloco[metal], FUNDICAO.bacia, false] : "nao_serve";
+  if (bacia) {
+    // Bacia com tábua + obsidiana = Nahuatl (TC3); vazia = bloco do metal.
+    const b = D45.bacia.find((x) => x.liquido === metal && item?.endsWith(`_${x.base}`));
+    if (b) return [b.vira, b.mb, true];
+    return !item && blocoDe(metal) ? [blocoDe(metal)!, FUNDICAO.bacia, false] : "nao_serve";
+  }
   if (!item) return undefined;
-  if (item === "cl:molde_lingote") return [FUNDICAO.lingote[metal], 144, false];
+  // Material composto (TC3): a peça mergulhada no líquido vira a peça do outro material.
+  const pm = pecaDe(item);
+  const comp = pm && D45.compostos.find((x) => x.de === pm[1] && x.liquido === metal);
+  if (pm && comp && PECAS[pm[0]]) return [`cl:peca_${pm[0]}_${comp.vira}`, comp.mb * PECAS[pm[0]].custo, true];
+  if (item === "cl:molde_lingote") return lingoteDe(metal) ? [lingoteDe(metal)!, 144, false] : "nao_serve";
   if (item === "cl:molde_pepita") return FUNDICAO.pepita[metal] ? [FUNDICAO.pepita[metal], 16, false] : "nao_serve";
   if (item.startsWith("cl:molde_")) {
     const peca = item.slice("cl:molde_".length);
@@ -345,12 +410,33 @@ export const torneiraComp: BlockCustomComponent = {
     gravar(tipo, alvo, { item: consome ? undefined : m.item, pronto: sai });
     t.dimension.playSound("bucket.empty_lava", t.center(), { pitch: 1.4 });
     system.runTimeout(() => j.isValid && aviso(j, { translate: "cl.fun.pronto", with: { rawtext: [nomeItem(sai)] } }), 10);
-    if (consome) registrarAcao(j, "molde");
+    if (consome && sai.startsWith("cl:peca_")) registrarAcao(j, "tc_composto");
+    else if (consome && sai.startsWith("cl:molde_")) registrarAcao(j, "molde");
     if (sai === "cl:lingote_bronze") registrarAcao(j, "bronze");
   },
 };
 
 export function registrarFundicao(): void {
+  // 1.26.0 (TC3, loot_modifiers/wither_bone): os ossos do Esqueleto Wither viram Osso Necrótico.
+  world.afterEvents.entityDie.subscribe(
+    ({ deadEntity }) => {
+      const dim = deadEntity.dimension, onde = deadEntity.location;
+      system.runTimeout(() => {
+        try {
+          for (const e of dim.getEntities({ type: "minecraft:item", location: onde, maxDistance: 2.5 })) {
+            const it = e.getComponent("minecraft:item")?.itemStack;
+            if (it?.typeId !== "minecraft:bone") continue;
+            const l = e.location;
+            e.remove();
+            dim.spawnItem(new ItemStack(D45.ossoWither, it.amount), l);
+          }
+        } catch {
+          // chunk descarregado
+        }
+      }, 2);
+    },
+    { entityTypes: ["minecraft:wither_skeleton"] },
+  );
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
     const dim = block.dimension, p = block.location;
@@ -383,17 +469,38 @@ export function registrarFundicao(): void {
 
   registrarNoCatalogo(() => {
     const maquina = { translate: "tile.cl:controlador_fundicao.name" };
-    const r = [
+    const r: Receita[] = [
       { maquina, maquinaId: "cl:controlador_fundicao", entradas: [{ item: "minecraft:copper_ingot", qtd: 3 }, { item: "cl:lingote_estanho", qtd: 1 }], saidas: [{ item: "cl:lingote_bronze", qtd: 4 }], nota: { translate: "cl.fun.cat_liga" } },
       { maquina, maquinaId: "cl:controlador_fundicao", entradas: [{ item: "minecraft:iron_ingot", qtd: 1 }, { item: "minecraft:coal", qtd: 1 }], saidas: [{ item: "cl:lingote_aco", qtd: 1 }], nota: { translate: "cl.fun.cat_liga" } },
       { maquina, maquinaId: "cl:controlador_fundicao", entradas: [{ item: "minecraft:raw_iron", qtd: 1 }], saidas: [{ item: "minecraft:iron_ingot", qtd: 2 }], nota: { translate: "cl.fun.cat_dobra" } },
       { maquina, maquinaId: "cl:controlador_fundicao", entradas: [{ item: "cl:ferro_quebrado", qtd: 2 }], saidas: [{ item: "minecraft:iron_ingot", qtd: 1 }], nota: { translate: "cl.fun.cat_dobra" } },
     ];
+    // 1.26.0: as ligas do Tinkers 3, com um item de cada líquido (metal: lingotes; o resto, o item que derrete nele).
+    const ITEM: Readonly<Record<string, [string, number]>> = {
+      ferro: ["minecraft:iron_ingot", 144], cobre: ["minecraft:copper_ingot", 144], ouro: ["minecraft:gold_ingot", 144], cobalto: ["cl:lingote_cobalto", 144],
+      detrito: ["minecraft:netherite_scrap", 144], quartzo: ["minecraft:quartz", 100], magma: ["minecraft:magma_cream", 250], mel: ["minecraft:honey_bottle", 250],
+      obsidiana: ["minecraft:obsidian", 1000], pedra_refrataria: ["cl:tijolo_refratario", 250], pedra_chamuscada: ["cl:tijolo_chamuscado", 250],
+      sopa_carne: ["minecraft:beef", 50], agua: ["minecraft:water_bucket", 1000], lava: ["minecraft:lava_bucket", 1000],
+    };
+    for (const l of D45.ligas) {
+      const ent = Object.entries(l.entra);
+      if (!ent.every(([k]) => ITEM[k]) || !lingoteDe(l.sai[0])) continue;
+      r.push({ maquina, maquinaId: "cl:controlador_fundicao", entradas: ent.map(([k, n]) => ({ item: ITEM[k][0], qtd: Math.max(1, Math.round(n / ITEM[k][1])) })), saidas: [{ item: lingoteDe(l.sai[0])!, qtd: Math.round(l.sai[1] / 144) }], nota: { translate: l.entra.sopa_carne ? "cl.fun.cat_liga_sopa" : "cl.fun.cat_liga" } });
+    }
     const mesa = { translate: "tile.cl:mesa_fundicao.name" };
+    const pecaMats = DADOS_F15.pecaMats as unknown as Readonly<Record<string, readonly string[]>>;
     for (const p of Object.keys(PECAS)) {
-      r.push({ maquina: mesa, maquinaId: "cl:mesa_fundicao", entradas: [{ item: `cl:peca_${p}_silex`, qtd: 1 }, { item: "minecraft:gold_ingot", qtd: 2 }], saidas: [{ item: `cl:molde_${p}`, qtd: 1 }], nota: { translate: "cl.fun.cat_molde" } });
-      for (const m of METAIS_FERRAMENTA)
-        r.push({ maquina: mesa, maquinaId: "cl:mesa_fundicao", entradas: [{ item: `cl:molde_${p}`, qtd: 1 }, { item: FUNDICAO.lingote[m], qtd: PECAS[p].custo }], saidas: [{ item: `cl:peca_${p}_${m}`, qtd: 1 }], nota: { translate: "cl.fun.cat_peca" } });
+      const base = (pecaMats[p] ?? []).includes("silex") ? "silex" : pecaMats[p]?.[0];
+      if (base) r.push({ maquina: mesa, maquinaId: "cl:mesa_fundicao", entradas: [{ item: `cl:peca_${p}_${base}`, qtd: 1 }, { item: "minecraft:gold_ingot", qtd: 2 }], saidas: [{ item: `cl:molde_${p}`, qtd: 1 }], nota: { translate: "cl.fun.cat_molde" } });
+      for (const m of METAIS_FERRAMENTA) {
+        const l = lingoteDe(m);
+        if (l && (pecaMats[p] ?? []).includes(m))
+          r.push({ maquina: mesa, maquinaId: "cl:mesa_fundicao", entradas: [{ item: `cl:molde_${p}`, qtd: 1 }, { item: l, qtd: PECAS[p].custo }], saidas: [{ item: `cl:peca_${p}_${m}`, qtd: 1 }], nota: { translate: "cl.fun.cat_peca" } });
+      }
+      // 1.26.0: materiais compostos (peça + líquido).
+      for (const c of D45.compostos)
+        if ((pecaMats[p] ?? []).includes(c.de) && (pecaMats[p] ?? []).includes(c.vira))
+          r.push({ maquina: mesa, maquinaId: "cl:mesa_fundicao", entradas: [{ item: `cl:peca_${p}_${c.de}`, qtd: 1 }], saidas: [{ item: `cl:peca_${p}_${c.vira}`, qtd: 1 }], nota: { translate: "cl.fun.cat_composto_n", with: { rawtext: [{ text: String(c.mb * PECAS[p].custo) }, { translate: `cl.fun.metal.${c.liquido}` }] } } });
     }
     return r;
   });

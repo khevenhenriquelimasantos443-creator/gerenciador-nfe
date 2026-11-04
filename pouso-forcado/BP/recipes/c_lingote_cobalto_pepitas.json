@@ -1,0 +1,46 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_lingote_cobalto_pepitas"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      },
+      {
+        "item": "cl:pepita_cobalto"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:lingote_cobalto"
+    }
+  }
+}

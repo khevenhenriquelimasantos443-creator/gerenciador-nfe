@@ -974,6 +974,106 @@ teste("mochila_fornalha", 600, (t) => {
   });
 });
 
+// 1.26.0: Tinkers completo. Martelo de Mineração de cobalto quebra o veio de ferro inteiro; Chibanca ara a terra;
+// Kama colhe e replanta o trigo; Foice corta a grama em 3×3×3.
+teste("tinkers3_completo", 300, (t) => {
+  const j = robo(t, { x: 1.5, y: 1, z: 1.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const veio = [[3, 2, 5], [4, 2, 5], [5, 2, 5], [4, 3, 5], [4, 2, 6]];
+  for (const [x, y, z] of veio) t.setBlockType("minecraft:iron_ore", { x, y, z });
+  t.setBlockType("minecraft:dirt", { x: 2, y: 1, z: 3 });
+  t.setBlockType("minecraft:farmland", { x: 3, y: 1, z: 2 });
+  t.setBlockPermutation(BlockPermutation.resolve("minecraft:wheat", { growth: 7 }), { x: 3, y: 2, z: 2 });
+  for (let x = 7; x <= 9; x++) for (let z = 1; z <= 3; z++) {
+    t.setBlockType("minecraft:grass_block", { x, y: 1, z });
+    t.setBlockPermutation(BlockPermutation.resolve("minecraft:short_grass"), { x, y: 2, z });
+  }
+  t.runAfterDelay(10, () => {
+    inv.setItem(0, new ItemStack("cl:martelo_veio_cobalto", 1));
+    j.selectedSlotIndex = 0;
+    j.lookAtBlock({ x: 4, y: 2, z: 5 });
+    log(`tinkers3_completo: martelo de mineração ${j.breakBlock({ x: 4, y: 2, z: 5 }, Direction.North)}`);
+  });
+  t.runAfterDelay(100, () => {
+    inv.setItem(1, new ItemStack("cl:chibanca_ferro", 1));
+    j.lookAtBlock({ x: 2, y: 1, z: 3 });
+    log(`tinkers3_completo: chibanca ${j.useItemInSlotOnBlock(1, { x: 2, y: 1, z: 3 }, Direction.Up)}`);
+  });
+  t.runAfterDelay(120, () => {
+    inv.setItem(2, new ItemStack("cl:kama_ferro", 1));
+    j.lookAtBlock({ x: 3, y: 2, z: 2 });
+    log(`tinkers3_completo: kama ${j.useItemInSlotOnBlock(2, { x: 3, y: 2, z: 2 }, Direction.Up)}`);
+  });
+  t.runAfterDelay(140, () => {
+    inv.setItem(3, new ItemStack("cl:foice_ferro", 1));
+    j.selectedSlotIndex = 3;
+    j.teleport(t.worldLocation({ x: 5.5, y: 2, z: 2.5 }));
+    j.lookAtBlock({ x: 7, y: 2, z: 2 });
+    log(`tinkers3_completo: foice ${j.breakBlock({ x: 7, y: 2, z: 2 }, Direction.West)}`);
+  });
+  t.runAfterDelay(200, () => {
+    const ferro = veio.filter(([x, y, z]) => t.getBlock({ x, y, z }).typeId === "minecraft:iron_ore").length;
+    const arada = t.getBlock({ x: 2, y: 1, z: 3 }).typeId;
+    const trigo = t.getBlock({ x: 3, y: 2, z: 2 });
+    const fase = trigo.typeId === "minecraft:wheat" ? trigo.permutation.getState("growth") : trigo.typeId;
+    let grama = 0;
+    for (let x = 7; x <= 9; x++) for (let z = 1; z <= 3; z++) if (t.getBlock({ x, y: 2, z }).typeId === "minecraft:short_grass") grama++;
+    const colhido = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 3, y: 2, z: 2 }), maxDistance: 3 }).map((e) => e.getComponent("item")?.itemStack.typeId);
+    log(`tinkers3_completo: ferro que sobrou=${ferro}/5 terra=${arada} trigo=${fase} itens=${JSON.stringify(colhido)} grama que sobrou=${grama}/9`);
+    log(`tinkers3_completo: lore martelo=${JSON.stringify(inv.getItem(0)?.getLore())}`);
+    t.assert(ferro === 0, "o Martelo de Mineração não quebrou o veio");
+    t.assert(arada === "minecraft:farmland", "a Chibanca não arou");
+    t.assert(fase === 0, "a Kama não colheu e replantou");
+    t.assert(grama <= 1, "a Foice não cortou em área");
+    t.succeed();
+  });
+});
+
+// 1.26.0: Fundição com o Tinkers 3. Peça de pedra na Mesa + argila derretida = peça de pedra carbonizada (material
+// composto); 3 lingotes de cobalto + 1 sucata de netherita = Manyullyn, que sai como lingote no molde.
+teste("tinkers3_fundicao", 500, (t) => {
+  const j = robo(t, { x: 4.5, y: 2, z: 7.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  for (let x = 3; x <= 5; x++) for (let z = 2; z <= 4; z++) t.setBlockType("cl:tijolos_refratarios", { x, y: 1, z });
+  const anel = [];
+  for (let k = -1; k <= 1; k++) anel.push([4 + k, 1], [4 + k, 5], [2, 3 + k], [6, 3 + k]);
+  for (const [x, z] of anel) t.setBlockType("cl:tijolos_refratarios", { x, y: 2, z });
+  t.setBlockPermutation(BlockPermutation.resolve("cl:controlador_fundicao", { "minecraft:cardinal_direction": "south" }), { x: 4, y: 2, z: 1 });
+  t.setBlockType("cl:tanque_refratario", { x: 2, y: 2, z: 3 });
+  t.setBlockType("cl:dreno_fundicao", { x: 6, y: 2, z: 3 });
+  t.setBlockType("cl:torneira", { x: 7, y: 2, z: 3 });
+  t.setBlockType("cl:mesa_fundicao", { x: 7, y: 1, z: 3 });
+  const usar = (slot, item, pos) => {
+    inv.setItem(slot, item ? new ItemStack(item, 1) : undefined);
+    j.selectedSlotIndex = slot;
+    j.lookAtBlock(pos);
+    return j.interactWithBlock(pos, Direction.Up);
+  };
+  t.runAfterDelay(5, () => log(`tinkers3_fundicao: lava ${usar(0, "minecraft:lava_bucket", { x: 2, y: 2, z: 3 })}`));
+  t.runAfterDelay(15, () => log(`tinkers3_fundicao: controlador ${usar(1, undefined, { x: 4, y: 2, z: 1 })}`));
+  t.runAfterDelay(25, () => {
+    t.spawnItem(new ItemStack("minecraft:clay_ball", 1), { x: 4.5, y: 2.5, z: 3.5 });
+    log(`tinkers3_fundicao: peça na mesa ${usar(2, "cl:peca_cabeca_picareta_pedra", { x: 7, y: 1, z: 3 })}`);
+  });
+  t.runAfterDelay(90, () => log(`tinkers3_fundicao: torneira ${usar(3, undefined, { x: 7, y: 2, z: 3 })}`));
+  t.runAfterDelay(110, () => {
+    log(`tinkers3_fundicao: pegar ${usar(4, undefined, { x: 7, y: 1, z: 3 })}`);
+    t.spawnItem(new ItemStack("cl:lingote_cobalto", 3), { x: 4.5, y: 2.5, z: 3.5 });
+    t.spawnItem(new ItemStack("minecraft:netherite_scrap", 1), { x: 4.5, y: 2.5, z: 3.5 });
+  });
+  t.runAfterDelay(200, () => log(`tinkers3_fundicao: molde ${usar(5, "cl:molde_lingote", { x: 7, y: 1, z: 3 })}`));
+  t.runAfterDelay(210, () => log(`tinkers3_fundicao: torneira 2 ${usar(6, undefined, { x: 7, y: 2, z: 3 })}`));
+  t.runAfterDelay(230, () => log(`tinkers3_fundicao: pegar 2 ${usar(7, undefined, { x: 7, y: 1, z: 3 })}`));
+  t.runAfterDelay(250, () => {
+    const peca = quantos(j, "cl:peca_cabeca_picareta_pedra_refrataria");
+    const many = quantos(j, "cl:lingote_manyullyn");
+    log(`tinkers3_fundicao: peça carbonizada=${peca} manyullyn=${many}`);
+    t.assert(peca === 1, "o material composto não saiu");
+    t.assert(many === 1, "a liga Manyullyn não saiu");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

@@ -74,7 +74,11 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   qualidade do ar, Camel Pack e máscara de gás, com os números do mod. Código e texturas próprios.
 - **Hunger Overhaul** (iguanaman): valores de comida, regeneração, efeitos de status baixo e animais.
 - **Tinkers' Construct** (mDiyo e SlimeKnights; texturas CC BY 3.0) e **Iguana Tweaks** (iguanaman): peças,
-  ferramentas montadas, materiais, níveis de mineração e XP com os números do mod. Código e desenhos próprios.
+  ferramentas montadas, materiais, níveis de mineração e XP com os números do mod. Desde a 1.26.0, o **Tinkers'
+  Construct 3.12.1** completo (MIT, inclusive a arte; github.com/SlimeKnights/TinkersConstruct): os 40 materiais com
+  os números e os traços do mod, as peças e ferramentas de mão, as áreas, o cobalto, as ligas, os materiais compostos
+  e a arte das peças, ferramentas, lingotes e blocos (pintada com as paletas do mod), lidos por
+  `tools/importar-tinkers3.py`.
 - **Thermal Expansion** (Team CoFH): as máquinas da Fase 17 e os custos em RF. Código e desenhos próprios.
 - **JABBA** (ProfMobius), **AutoPackager** (Wolf_IV), **Applied Energistics** (AlgorithmX2) e **ExtraCells** (M3gaFr3ak):
   barril e upgrades, carrinho, empacotador, células ME com os bytes do AE1, drive, baú ME e terminal sem fio.

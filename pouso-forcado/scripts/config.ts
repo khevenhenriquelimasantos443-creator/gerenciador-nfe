@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.25.0";
+export const VERSAO = "1.26.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -462,18 +462,34 @@ export const TINKERS = {
   espacosIniciais: 1,
   niveisComEspaco: [2, 4, 6], // +1 espaço para modificador
   consertoPorItem: 0.25, // cada item do material conserta 25% da durabilidade
-  metais: ["ferro", "cobre", "bronze", "aco", "ouro_rosa", "bronze_ametista"],
+  metais: ["ferro", "cobre", "bronze", "aco", "ouro_rosa", "bronze_ametista", "osmio", "ferro_porco", "cobalto", "aco_slime", "hepatizon", "manyullyn", "slime_rainha", "slime_brasa", "slime_cavaleiro"],
   // Item -> material (Construtor de Peças e conserto). Tábuas de qualquer madeira = madeira.
   materialDeItem: {
     "minecraft:cobblestone": "pedra", "minecraft:stone": "pedra", "minecraft:cobbled_deepslate": "pedra", "minecraft:mossy_cobblestone": "pedra",
     "minecraft:flint": "silex", "minecraft:cactus": "cacto", "minecraft:bone": "osso", "minecraft:obsidian": "obsidiana",
     "minecraft:iron_ingot": "ferro", "minecraft:copper_ingot": "cobre", "cl:lingote_bronze": "bronze", "cl:lingote_aco": "aco",
     "cl:lingote_ouro_rosa": "ouro_rosa", "cl:lingote_bronze_ametista": "bronze_ametista",
+    // 1.26.0 (Tinkers 3 completo): os itens de material do TC3 (tools/materials).
+    "minecraft:andesite": "pedra", "minecraft:diorite": "pedra", "minecraft:granite": "pedra", "minecraft:blackstone": "pedra", "minecraft:calcite": "pedra",
+    "minecraft:basalt": "silex", "minecraft:deepslate": "silex", "minecraft:popped_chorus_fruit": "coro", "cl:tijolo_refratario": "pedra_refrataria",
+    "cl:tijolo_chamuscado": "pedra_chamuscada", "minecraft:end_stone": "pedra_branca", "cl:osso_necrotico": "osso_necrotico", "cl:osso_blaze": "osso_blaze",
+    "cl:osso_venenoso": "osso_venenoso", "cl:nahuatl": "nahuatl", "cl:tabuas_tratadas": "madeira_tratada", "minecraft:string": "corda",
+    "minecraft:leather": "couro", "minecraft:rabbit_hide": "couro", "minecraft:vine": "trepadeira", "minecraft:weeping_vines": "trepadeira_chorona",
+    "minecraft:twisting_vines": "trepadeira_retorcida",
+    "cl:lingote_osmio": "osmio", "cl:lingote_cobalto": "cobalto", "cl:lingote_ferro_porco": "ferro_porco", "cl:lingote_hepatizon": "hepatizon",
+    "cl:lingote_manyullyn": "manyullyn", "cl:lingote_slime_rainha": "slime_rainha", "cl:lingote_aco_slime": "aco_slime", "cl:lingote_slime_brasa": "slime_brasa",
+    "cl:lingote_slime_cavaleiro": "slime_cavaleiro",
   } as Readonly<Record<string, string>>,
   consertoCom: {
     pedra: "minecraft:cobblestone", silex: "minecraft:flint", cacto: "minecraft:cactus", osso: "minecraft:bone", obsidiana: "minecraft:obsidian",
     ferro: "minecraft:iron_ingot", cobre: "minecraft:copper_ingot", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco",
     ouro_rosa: "cl:lingote_ouro_rosa", bronze_ametista: "cl:lingote_bronze_ametista",
+    // 1.26.0 (Tinkers 3 completo)
+    coro: "minecraft:popped_chorus_fruit", pedra_refrataria: "cl:tijolo_refratario", pedra_chamuscada: "cl:tijolo_chamuscado", madeira_slime: "minecraft:slime_ball",
+    osso_venenoso: "cl:osso_venenoso", osso_necrotico: "cl:osso_necrotico", osmio: "cl:lingote_osmio", ferro_porco: "cl:lingote_ferro_porco", cobalto: "cl:lingote_cobalto",
+    aco_slime: "cl:lingote_aco_slime", nahuatl: "cl:nahuatl", madeira_slime_revestida: "cl:lingote_latao", pedra_branca: "minecraft:end_stone",
+    hepatizon: "cl:lingote_hepatizon", manyullyn: "cl:lingote_manyullyn", slime_rainha: "cl:lingote_slime_rainha", osso_blaze: "cl:osso_blaze",
+    slime_brasa: "cl:lingote_slime_brasa", slime_cavaleiro: "cl:lingote_slime_cavaleiro", madeira_tratada: "cl:tabuas_tratadas",
   } as Readonly<Record<string, string>>,
   // Iguana: nível de mineração que cada bloco pede (os outros: 0).
   nivelBloco: {
@@ -481,6 +497,7 @@ export const TINKERS = {
     ...Object.fromEntries(["gold_ore", "deepslate_gold_ore", "redstone_ore", "lit_redstone_ore", "deepslate_redstone_ore", "lit_deepslate_redstone_ore", "diamond_ore", "deepslate_diamond_ore", "emerald_ore", "deepslate_emerald_ore", "raw_gold_block"].map((b) => [`minecraft:${b}`, 2])),
     ...Object.fromEntries(["obsidian", "crying_obsidian", "ancient_debris", "respawn_anchor"].map((b) => [`minecraft:${b}`, 3])),
     [`${NS}:meteorito`]: 2, // 1.2.0
+    [`${NS}:minerio_cobalto`]: 2, // 1.26.0: o cobalto pede ferramenta de ferro (TC3)
   } as Readonly<Record<string, number>>,
   modificadores: {
     pressa: { item: "minecraft:redstone", qtd: 16, max: 2 }, // Pressa I/II com a ferramenta na mão

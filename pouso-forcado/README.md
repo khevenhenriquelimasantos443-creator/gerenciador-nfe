@@ -154,6 +154,27 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.26.0 (Tinkers' Construct 3 completo, parte 1 de 5)
+
+O Tinkers' Construct 3.12.1 (o mais novo) entrando inteiro, em partes. Nesta: materiais, peças e ferramentas de mão.
+- **40 materiais do TC3** com os números e o **traço** de cada um: Coro, Pedra Carbonizada, Pedra Chamuscada,
+  Madeira de Slime, Osso Venenoso, Osso Necrótico, Ósmio, Ferro-Porco, Cobalto, Aço de Slime, Nahuatl, Pedra Branca,
+  Hepatizão, Manyullyn, Slime da Rainha, Osso de Blaze, Slime de Brasa, Slime-Cavaleiro, Madeira Tratada e as cordas e
+  trepadeiras de ligação. Os traços funcionam: Magnético puxa itens, Lacerante faz sangrar, Saboroso dá para morder,
+  Anão minera mais rápido no fundo, Slimebilidade cria um escudo de slime... (veja "Traços desta ferramenta" na Estação).
+- **Ferramentas novas**: Martelo de Mineração (quebra o veio inteiro), Chibanca (machado + pá + enxada, ara a terra),
+  Picarenxó (picareta + pá, faz caminho), Kama (colhe e replanta), Foice (corta e colhe em 3×3×3), Adaga, Espadão
+  (arranca cabeças). Peças novas: Cabeça de Enxó e Lâmina Grande. As ferramentas usam as peças do TC3 (a Espada é
+  lâmina pequena + 2 cabos, por exemplo).
+- **Cobalto** no Nether (precisa de ferramenta de ferro) e as **ligas do TC3** na Fundição: Ferro-Porco (ferro + sopa de
+  carne de animais derretidos + mel), Hepatizão, Manyullyn, Slime da Rainha e obsidiana (água + lava).
+- **Materiais compostos**: peça na Mesa de Fundição + líquido = outro material (pedra + argila = pedra carbonizada,
+  madeira + obsidiana = nahuatl, pedra + estanho = pedra branca...). Bacia com tábua + obsidiana = bloco de Nahuatl.
+- Osso Necrótico dos Esqueletos Wither. Arte do TC3 em tudo (pintada com as paletas do mod).
+- Próximas partes: 2) mundo dos slimes (ilhas, geodos, árvores, slimes); 3) armaduras, escudos, arcos e arremessáveis;
+  4) a fundição inteira (Fusor, Fundição Fantástica, Ligador, dutos, canais, blocos); 5) modificadores, bigornas,
+  livros, ferramentas antigas e cajados.
+
 ## Novidades da 1.25.0 (Sophisticated Backpacks 3.26, o mais novo)
 
 A mochila ganhou os níveis e as melhorias novas do Sophisticated Backpacks 3.26.19 (com os números do mod; código e

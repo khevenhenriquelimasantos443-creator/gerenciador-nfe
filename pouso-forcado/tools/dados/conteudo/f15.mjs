@@ -1,5 +1,5 @@
 // Fase 15: Tinkers' Construct + Iguana Tweaks, parte 1 (padrões, mesas, peças e ferramentas sem metal).
-import { FERRAMENTAS, MATERIAIS, PECAS, itensDe } from "./tinkers.mjs";
+import { FERR_MATS, FERRAMENTAS, MATERIAIS, PECA_MATS, PECAS, itensDe } from "./tinkers.mjs";
 
 const NAO_METAIS = Object.keys(MATERIAIS).filter((m) => !MATERIAIS[m].metal);
 const mesa = (id, pt, en, comp, padrao, topo) => ({ id, pt, en, tipo: "cubo", cor: "#8a6a3e", padrao, topo, comp, dureza: 1.2 });
@@ -122,5 +122,8 @@ export default {
     materiais: MATERIAIS,
     pecas: PECAS,
     ferramentas: FERRAMENTAS,
+    // 1.26.0: que materiais fazem cada peça e cada ferramenta.
+    pecaMats: PECA_MATS,
+    ferrMats: FERR_MATS,
   },
 };

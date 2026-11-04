@@ -73,6 +73,11 @@
   "en": "Barrel",
   "icone": "textures/blocks/barrel_side"
  },
+ "minecraft:basalt": {
+  "pt": "Basalto",
+  "en": "Basalt",
+  "icone": "textures/blocks/basalt_side"
+ },
  "minecraft:beef": {
   "pt": "Bife Cru",
   "en": "Raw Beef",
@@ -121,6 +126,11 @@
  "minecraft:black_dye": {
   "pt": "black_dye",
   "en": "black_dye"
+ },
+ "minecraft:blackstone": {
+  "pt": "Pedra-Negra",
+  "en": "Blackstone",
+  "icone": "textures/blocks/blackstone"
  },
  "minecraft:blast_furnace": {
   "pt": "Fornalha Potente",
@@ -205,6 +215,11 @@
   "pt": "Cacto",
   "en": "Cactus",
   "icone": "textures/blocks/cactus_side"
+ },
+ "minecraft:calcite": {
+  "pt": "Calcita",
+  "en": "Calcite",
+  "icone": "textures/blocks/calcite"
  },
  "minecraft:campfire": {
   "pt": "Fogueira",
@@ -481,6 +496,11 @@
   "en": "Diamond Shovel",
   "icone": "textures/items/diamond_shovel"
  },
+ "minecraft:diorite": {
+  "pt": "diorite",
+  "en": "diorite",
+  "icone": "textures/blocks/stone_diorite"
+ },
  "minecraft:dirt": {
   "pt": "Terra",
   "en": "Dirt",
@@ -669,6 +689,11 @@
   "pt": "Pá de Ouro",
   "en": "Golden Shovel",
   "icone": "textures/items/gold_shovel"
+ },
+ "minecraft:granite": {
+  "pt": "granite",
+  "en": "granite",
+  "icone": "textures/blocks/stone_granite"
  },
  "minecraft:gravel": {
   "pt": "Cascalho",
@@ -1051,6 +1076,10 @@
   "en": "Polished Andesite",
   "icone": "textures/blocks/stone_andesite_smooth"
  },
+ "minecraft:popped_chorus_fruit": {
+  "pt": "popped_chorus_fruit",
+  "en": "popped_chorus_fruit"
+ },
  "minecraft:porkchop": {
   "pt": "Carne de Porco Crua",
   "en": "Raw Porkchop",
@@ -1115,6 +1144,11 @@
   "pt": "Coelho Cru",
   "en": "Raw Rabbit",
   "icone": "textures/items/rabbit_raw"
+ },
+ "minecraft:rabbit_hide": {
+  "pt": "Pele de Coelho",
+  "en": "Rabbit Hide",
+  "icone": "textures/items/rabbit_hide"
  },
  "minecraft:rabbit_stew": {
   "pt": "Ensopado de Coelho",
@@ -1446,6 +1480,16 @@
   "en": "Trapped Chest",
   "icone": "textures/blocks/chest_front"
  },
+ "minecraft:twisting_vines": {
+  "pt": "Trepadeiras Retorcidas",
+  "en": "Twisting Vines",
+  "icone": "textures/blocks/twisting_vines_base"
+ },
+ "minecraft:vine": {
+  "pt": "Trepadeiras",
+  "en": "Vines",
+  "icone": "textures/blocks/vine"
+ },
  "minecraft:water": {
   "pt": "Água",
   "en": "Water",
@@ -1455,6 +1499,11 @@
   "pt": "Balde de Água",
   "en": "Water Bucket",
   "icone": "textures/items/bucket_water"
+ },
+ "minecraft:weeping_vines": {
+  "pt": "Trepadeiras Choronas",
+  "en": "Weeping Vines",
+  "icone": "textures/blocks/weeping_vines_base"
  },
  "minecraft:wheat": {
   "pt": "Trigo",

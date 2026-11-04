@@ -51,6 +51,10 @@ export type Acao =
   | "montar_ferramenta"
   | "consertar"
   | "ferramenta_nivel"
+  | "tc_colher"
+  | "tc_mordida"
+  | "tc_cabeca"
+  | "tc_composto"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -320,6 +324,19 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
         escolha: [{ item: "minecraft:diamond", quantidade: 1 }, { item: "minecraft:emerald", quantidade: 2 }],
       },
       { id: "fu_modificar", requer: ["fu_controlador"], objetivo: { tipo: "acao", acao: "modificar", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+    ],
+  },
+  {
+    id: "tinkers3", // 1.26.0: Tinkers' Construct 3 completo, parte 1
+    icone: "cl:martelo_veio_cobalto",
+    requer: ["fundicao"],
+    missoes: [
+      { id: "tc3_colher", objetivo: { tipo: "acao", acao: "tc_colher", qtd: 8 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 16 }] },
+      { id: "tc3_composto", objetivo: { tipo: "acao", acao: "tc_composto", qtd: 1 }, recompensa: [{ item: "minecraft:clay_ball", quantidade: 16 }] },
+      { id: "tc3_ferro_porco", requer: ["tc3_composto"], objetivo: { tipo: "ter", item: "cl:lingote_ferro_porco", qtd: 1 }, recompensa: [{ item: "minecraft:honey_bottle", quantidade: 4 }] },
+      { id: "tc3_cobalto", objetivo: { tipo: "ter", item: "cl:lingote_cobalto", qtd: 4 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "tc3_manyullyn", requer: ["tc3_cobalto"], objetivo: { tipo: "ter", item: "cl:lingote_manyullyn", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "tc3_cabeca", objetivo: { tipo: "acao", acao: "tc_cabeca", qtd: 1 }, recompensa: [{ item: "minecraft:bone", quantidade: 16 }] },
     ],
   },
   {
