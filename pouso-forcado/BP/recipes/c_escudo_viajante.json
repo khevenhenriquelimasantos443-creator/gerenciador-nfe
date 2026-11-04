@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_escudo_viajante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "LCL",
+      "PPP",
+      " P "
+    ],
+    "key": {
+      "L": {
+        "item": "minecraft:leather"
+      },
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "P": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:escudo_viajante"
+    }
+  }
+}

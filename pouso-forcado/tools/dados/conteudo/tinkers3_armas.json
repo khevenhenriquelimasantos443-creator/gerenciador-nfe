@@ -1,0 +1,750 @@
+{
+ "placa": {
+  "cobre": {
+   "pt": "Cobre",
+   "en": "Copper",
+   "item": "minecraft:copper_ingot",
+   "kb": 0,
+   "dureza": 0,
+   "capacete": [
+    1.0,
+    143
+   ],
+   "peitoral": [
+    3.0,
+    208
+   ],
+   "calcas": [
+    2.0,
+    195
+   ],
+   "botas": [
+    1.0,
+    169
+   ],
+   "escudo": 234
+  },
+  "ferro": {
+   "pt": "Ferro",
+   "en": "Iron",
+   "item": "minecraft:iron_ingot",
+   "kb": 0,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    165
+   ],
+   "peitoral": [
+    5.0,
+    240
+   ],
+   "calcas": [
+    4.0,
+    225
+   ],
+   "botas": [
+    2.0,
+    195
+   ],
+   "escudo": 270
+  },
+  "ouro": {
+   "pt": "Ouro",
+   "en": "Gold",
+   "item": "minecraft:gold_ingot",
+   "kb": 0,
+   "dureza": 0,
+   "capacete": [
+    1.0,
+    77
+   ],
+   "peitoral": [
+    4.0,
+    112
+   ],
+   "calcas": [
+    3.0,
+    105
+   ],
+   "botas": [
+    1.0,
+    91
+   ],
+   "escudo": 126
+  },
+  "aluminio": {
+   "pt": "Alumínio",
+   "en": "Aluminum",
+   "item": "cl:lingote_aluminio",
+   "kb": 0,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    143
+   ],
+   "peitoral": [
+    6.0,
+    208
+   ],
+   "calcas": [
+    4.0,
+    195
+   ],
+   "botas": [
+    2.0,
+    169
+   ],
+   "escudo": 234
+  },
+  "pedra_refrataria": {
+   "pt": "Pedra Carbonizada",
+   "en": "Seared Stone",
+   "item": "cl:tijolo_refratario",
+   "kb": 0.1,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    154
+   ],
+   "peitoral": [
+    4.0,
+    224
+   ],
+   "calcas": [
+    3.0,
+    210
+   ],
+   "botas": [
+    1.0,
+    182
+   ],
+   "escudo": 252
+  },
+  "pedra_chamuscada": {
+   "pt": "Pedra Chamuscada",
+   "en": "Scorched Stone",
+   "item": "cl:tijolo_chamuscado",
+   "kb": 0.05,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    110
+   ],
+   "peitoral": [
+    5.0,
+    160
+   ],
+   "calcas": [
+    4.0,
+    150
+   ],
+   "botas": [
+    1.0,
+    130
+   ],
+   "escudo": 180
+  },
+  "obsidiana": {
+   "pt": "Obsidiana",
+   "en": "Obsidian",
+   "item": "minecraft:obsidian",
+   "kb": 0.15,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    121
+   ],
+   "peitoral": [
+    5.0,
+    176
+   ],
+   "calcas": [
+    4.0,
+    165
+   ],
+   "botas": [
+    2.0,
+    143
+   ],
+   "escudo": 198
+  },
+  "osmio": {
+   "pt": "Ósmio",
+   "en": "Osmium",
+   "item": "cl:lingote_osmio",
+   "kb": 0.05,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    275
+   ],
+   "peitoral": [
+    5.0,
+    400
+   ],
+   "calcas": [
+    3.0,
+    375
+   ],
+   "botas": [
+    1.0,
+    325
+   ],
+   "escudo": 450
+  },
+  "ferro_porco": {
+   "pt": "Ferro-Porco",
+   "en": "Pig Iron",
+   "item": "cl:lingote_ferro_porco",
+   "kb": 0.1,
+   "dureza": 1.0,
+   "capacete": [
+    1.0,
+    253
+   ],
+   "peitoral": [
+    4.0,
+    368
+   ],
+   "calcas": [
+    3.0,
+    345
+   ],
+   "botas": [
+    1.0,
+    299
+   ],
+   "escudo": 414
+  },
+  "ouro_rosa": {
+   "pt": "Ouro Rosa",
+   "en": "Rose Gold",
+   "item": "cl:lingote_ouro_rosa",
+   "kb": 0,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    99
+   ],
+   "peitoral": [
+    5.0,
+    144
+   ],
+   "calcas": [
+    3.0,
+    135
+   ],
+   "botas": [
+    1.0,
+    117
+   ],
+   "escudo": 162
+  },
+  "bronze_ametista": {
+   "pt": "Bronze de Ametista",
+   "en": "Amethyst Bronze",
+   "item": "cl:lingote_bronze_ametista",
+   "kb": 0,
+   "dureza": 2.0,
+   "capacete": [
+    2.0,
+    308
+   ],
+   "peitoral": [
+    6.0,
+    448
+   ],
+   "calcas": [
+    5.0,
+    420
+   ],
+   "botas": [
+    2.0,
+    364
+   ],
+   "escudo": 504
+  },
+  "bronze": {
+   "pt": "Bronze",
+   "en": "Bronze",
+   "item": "cl:lingote_bronze",
+   "kb": 0.1,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    308
+   ],
+   "peitoral": [
+    6.0,
+    448
+   ],
+   "calcas": [
+    5.0,
+    420
+   ],
+   "botas": [
+    2.0,
+    364
+   ],
+   "escudo": 504
+  },
+  "aco": {
+   "pt": "Aço",
+   "en": "Steel",
+   "item": "cl:lingote_aco",
+   "kb": 0,
+   "dureza": 2.0,
+   "capacete": [
+    2.0,
+    319
+   ],
+   "peitoral": [
+    7.0,
+    464
+   ],
+   "calcas": [
+    5.0,
+    435
+   ],
+   "botas": [
+    2.0,
+    377
+   ],
+   "escudo": 522
+  },
+  "cobalto": {
+   "pt": "Cobalto",
+   "en": "Cobalt",
+   "item": "cl:lingote_cobalto",
+   "kb": 0.05,
+   "dureza": 1.0,
+   "capacete": [
+    2.0,
+    330
+   ],
+   "peitoral": [
+    7.0,
+    480
+   ],
+   "calcas": [
+    5.0,
+    450
+   ],
+   "botas": [
+    2.0,
+    390
+   ],
+   "escudo": 540
+  },
+  "aco_slime": {
+   "pt": "Aço de Slime",
+   "en": "Slimesteel",
+   "item": "cl:lingote_aco_slime",
+   "kb": 0,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    440
+   ],
+   "peitoral": [
+    6.0,
+    640
+   ],
+   "calcas": [
+    5.0,
+    600
+   ],
+   "botas": [
+    2.0,
+    520
+   ],
+   "escudo": 720
+  },
+  "hepatizon": {
+   "pt": "Hepatizão",
+   "en": "Hepatizon",
+   "item": "cl:lingote_hepatizon",
+   "kb": 0.1,
+   "dureza": 2.0,
+   "capacete": [
+    2.0,
+    352
+   ],
+   "peitoral": [
+    7.0,
+    512
+   ],
+   "calcas": [
+    5.0,
+    480
+   ],
+   "botas": [
+    2.0,
+    416
+   ],
+   "escudo": 576
+  },
+  "manyullyn": {
+   "pt": "Manyullyn",
+   "en": "Manyullyn",
+   "item": "cl:lingote_manyullyn",
+   "kb": 0.05,
+   "dureza": 3.0,
+   "capacete": [
+    2.0,
+    385
+   ],
+   "peitoral": [
+    7.0,
+    560
+   ],
+   "calcas": [
+    5.0,
+    525
+   ],
+   "botas": [
+    2.0,
+    455
+   ],
+   "escudo": 630
+  },
+  "slime_rainha": {
+   "pt": "Slime da Rainha",
+   "en": "Queen's Slime",
+   "item": "cl:lingote_slime_rainha",
+   "kb": 0,
+   "dureza": 1.0,
+   "capacete": [
+    2.0,
+    550
+   ],
+   "peitoral": [
+    7.0,
+    800
+   ],
+   "calcas": [
+    5.0,
+    750
+   ],
+   "botas": [
+    2.0,
+    650
+   ],
+   "escudo": 900
+  },
+  "slime_brasa": {
+   "pt": "Slime de Brasa",
+   "en": "Cinderslime",
+   "item": "cl:lingote_slime_brasa",
+   "kb": 0.1,
+   "dureza": 0,
+   "capacete": [
+    2.0,
+    462
+   ],
+   "peitoral": [
+    7.0,
+    672
+   ],
+   "calcas": [
+    5.0,
+    630
+   ],
+   "botas": [
+    2.0,
+    546
+   ],
+   "escudo": 756
+  },
+  "slime_cavaleiro": {
+   "pt": "Slime-Cavaleiro",
+   "en": "Knightslime",
+   "item": "cl:lingote_slime_cavaleiro",
+   "kb": 0.1,
+   "dureza": 1.0,
+   "capacete": [
+    2.0,
+    363
+   ],
+   "peitoral": [
+    7.0,
+    528
+   ],
+   "calcas": [
+    5.0,
+    495
+   ],
+   "botas": [
+    2.0,
+    429
+   ],
+   "escudo": 594
+  }
+ },
+ "arco": {
+  "madeira": {
+   "pt": "Madeira",
+   "en": "Wood",
+   "item": "#minecraft:planks",
+   "dur": 60,
+   "vel": 0.0,
+   "saque": 0.0,
+   "tier": 0
+  },
+  "osso": {
+   "pt": "Osso",
+   "en": "Bone",
+   "item": "minecraft:bone",
+   "dur": 100,
+   "vel": -0.05,
+   "saque": 0.05,
+   "tier": 1
+  },
+  "cacto": {
+   "pt": "Cacto",
+   "en": "Cactus",
+   "item": "minecraft:cactus",
+   "dur": 110,
+   "vel": 0.05,
+   "saque": -0.05,
+   "tier": 1
+  },
+  "coro": {
+   "pt": "Chorus",
+   "en": "Chorus",
+   "item": "minecraft:popped_chorus_fruit",
+   "dur": 180,
+   "vel": -0.05,
+   "saque": -0.05,
+   "tier": 1
+  },
+  "madeira_slime": {
+   "pt": "Madeira de Slime",
+   "en": "Slimewood",
+   "item": "cl:tabuas_verdecoracao",
+   "dur": 375,
+   "vel": -0.05,
+   "saque": 0.0,
+   "tier": 2
+  },
+  "osso_venenoso": {
+   "pt": "Osso Venenoso",
+   "en": "Venombone",
+   "item": "cl:osso_venenoso",
+   "dur": 175,
+   "vel": -0.1,
+   "saque": 0.1,
+   "tier": 2
+  },
+  "osso_necrotico": {
+   "pt": "Osso Necrótico",
+   "en": "Necrotic Bone",
+   "item": "cl:osso_necrotico",
+   "dur": 125,
+   "vel": 0.05,
+   "saque": 0.05,
+   "tier": 2
+  },
+  "madeira_tratada": {
+   "pt": "Madeira Tratada",
+   "en": "Treated Wood",
+   "item": "cl:tabuas_tratadas",
+   "dur": 300,
+   "vel": -0.1,
+   "saque": 0.05,
+   "tier": 2
+  },
+  "nahuatl": {
+   "pt": "Nahuatl",
+   "en": "Nahuatl",
+   "item": "cl:nahuatl",
+   "dur": 350,
+   "vel": -0.15,
+   "saque": 0.2,
+   "tier": 3
+  },
+  "osso_blaze": {
+   "pt": "Osso de Blaze",
+   "en": "Blazing Bone",
+   "item": "cl:osso_blaze",
+   "dur": 530,
+   "vel": 0.1,
+   "saque": 0.1,
+   "tier": 4
+  },
+  "cobre": {
+   "pt": "Cobre",
+   "en": "Copper",
+   "item": "minecraft:copper_ingot",
+   "dur": 210,
+   "vel": 0.05,
+   "saque": -0.1,
+   "tier": 1
+  },
+  "ferro": {
+   "pt": "Ferro",
+   "en": "Iron",
+   "item": "minecraft:iron_ingot",
+   "dur": 250,
+   "vel": 0.1,
+   "saque": -0.2,
+   "tier": 2
+  },
+  "aluminio": {
+   "pt": "aluminio",
+   "en": "aluminio",
+   "item": "cl:lingote_aluminio",
+   "dur": 225,
+   "vel": -0.15,
+   "saque": 0.15,
+   "tier": 1
+  },
+  "ferro_porco": {
+   "pt": "Ferro-Porco",
+   "en": "Pig Iron",
+   "item": "cl:lingote_ferro_porco",
+   "dur": 580,
+   "vel": 0.0,
+   "saque": 0.0,
+   "tier": 3
+  },
+  "ouro_rosa": {
+   "pt": "Ouro Rosa",
+   "en": "Rose Gold",
+   "item": "cl:lingote_ouro_rosa",
+   "dur": 175,
+   "vel": -0.25,
+   "saque": 0.15,
+   "tier": 3
+  },
+  "bronze_ametista": {
+   "pt": "Bronze de Ametista",
+   "en": "Amethyst Bronze",
+   "item": "cl:lingote_bronze_ametista",
+   "dur": 720,
+   "vel": 0.15,
+   "saque": -0.15,
+   "tier": 3
+  },
+  "bronze": {
+   "pt": "Bronze",
+   "en": "Bronze",
+   "item": "cl:lingote_bronze",
+   "dur": 760,
+   "vel": 0.15,
+   "saque": -0.1,
+   "tier": 3
+  },
+  "aco": {
+   "pt": "Aço",
+   "en": "Steel",
+   "item": "cl:lingote_aco",
+   "dur": 775,
+   "vel": 0.2,
+   "saque": -0.2,
+   "tier": 3
+  },
+  "cobalto": {
+   "pt": "Cobalto",
+   "en": "Cobalt",
+   "item": "cl:lingote_cobalto",
+   "dur": 800,
+   "vel": 0.05,
+   "saque": 0.05,
+   "tier": 3
+  },
+  "aco_slime": {
+   "pt": "Aço de Slime",
+   "en": "Slimesteel",
+   "item": "cl:lingote_aco_slime",
+   "dur": 1040,
+   "vel": -0.05,
+   "saque": -0.05,
+   "tier": 3
+  },
+  "madeira_slime_revestida": {
+   "pt": "Madeira de Slime Revestida",
+   "en": "Plated Slimewood",
+   "item": "cl:lingote_latao",
+   "dur": 595,
+   "vel": -0.15,
+   "saque": 0.15,
+   "tier": 3
+  },
+  "hepatizon": {
+   "pt": "Hepatizão",
+   "en": "Hepatizon",
+   "item": "cl:lingote_hepatizon",
+   "dur": 975,
+   "vel": -0.05,
+   "saque": 0.25,
+   "tier": 4
+  },
+  "manyullyn": {
+   "pt": "Manyullyn",
+   "en": "Manyullyn",
+   "item": "cl:lingote_manyullyn",
+   "dur": 1250,
+   "vel": 0.25,
+   "saque": -0.2,
+   "tier": 4
+  },
+  "slime_rainha": {
+   "pt": "Slime da Rainha",
+   "en": "Queen's Slime",
+   "item": "cl:lingote_slime_rainha",
+   "dur": 1650,
+   "vel": -0.15,
+   "saque": 0.0,
+   "tier": 4
+  },
+  "slime_brasa": {
+   "pt": "Slime de Brasa",
+   "en": "Cinderslime",
+   "item": "cl:lingote_slime_brasa",
+   "dur": 1221,
+   "vel": 0.0,
+   "saque": -0.2,
+   "tier": 4
+  },
+  "slime_cavaleiro": {
+   "pt": "Slime-Cavaleiro",
+   "en": "Knightslime",
+   "item": "cl:lingote_slime_cavaleiro",
+   "dur": 1047,
+   "vel": 0.05,
+   "saque": 0.15,
+   "tier": 4
+  }
+ },
+ "arremesso": {
+  "silex": {
+   "pt": "Sílex",
+   "en": "Flint",
+   "item": "minecraft:flint",
+   "dano": 1.25,
+   "tier": 1
+  },
+  "ferro": {
+   "pt": "Ferro",
+   "en": "Iron",
+   "item": "minecraft:iron_ingot",
+   "dano": 2.0,
+   "tier": 2
+  },
+  "cobalto": {
+   "pt": "Cobalto",
+   "en": "Cobalt",
+   "item": "cl:lingote_cobalto",
+   "dano": 2.25,
+   "tier": 3
+  },
+  "manyullyn": {
+   "pt": "Manyullyn",
+   "en": "Manyullyn",
+   "item": "cl:lingote_manyullyn",
+   "dano": 3.5,
+   "tier": 4
+  }
+ }
+}

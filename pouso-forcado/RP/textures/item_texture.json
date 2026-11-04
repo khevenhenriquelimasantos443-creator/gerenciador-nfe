@@ -4585,6 +4585,531 @@
     },
     "clc_cristal_slime_ender": {
       "textures": "textures/items/cl/arte/cristal_slime_ender"
+    },
+    "clc_malha": {
+      "textures": "textures/items/cl/c/malha"
+    },
+    "clc_capacete_placa_cobre": {
+      "textures": "textures/items/cl/arte/capacete_placa_cobre"
+    },
+    "clc_peitoral_placa_cobre": {
+      "textures": "textures/items/cl/arte/peitoral_placa_cobre"
+    },
+    "clc_calcas_placa_cobre": {
+      "textures": "textures/items/cl/arte/calcas_placa_cobre"
+    },
+    "clc_botas_placa_cobre": {
+      "textures": "textures/items/cl/arte/botas_placa_cobre"
+    },
+    "clc_escudo_placa_cobre": {
+      "textures": "textures/items/cl/arte/escudo_placa_cobre"
+    },
+    "clc_capacete_placa_ferro": {
+      "textures": "textures/items/cl/arte/capacete_placa_ferro"
+    },
+    "clc_peitoral_placa_ferro": {
+      "textures": "textures/items/cl/arte/peitoral_placa_ferro"
+    },
+    "clc_calcas_placa_ferro": {
+      "textures": "textures/items/cl/arte/calcas_placa_ferro"
+    },
+    "clc_botas_placa_ferro": {
+      "textures": "textures/items/cl/arte/botas_placa_ferro"
+    },
+    "clc_escudo_placa_ferro": {
+      "textures": "textures/items/cl/arte/escudo_placa_ferro"
+    },
+    "clc_capacete_placa_ouro": {
+      "textures": "textures/items/cl/arte/capacete_placa_ouro"
+    },
+    "clc_peitoral_placa_ouro": {
+      "textures": "textures/items/cl/arte/peitoral_placa_ouro"
+    },
+    "clc_calcas_placa_ouro": {
+      "textures": "textures/items/cl/arte/calcas_placa_ouro"
+    },
+    "clc_botas_placa_ouro": {
+      "textures": "textures/items/cl/arte/botas_placa_ouro"
+    },
+    "clc_escudo_placa_ouro": {
+      "textures": "textures/items/cl/arte/escudo_placa_ouro"
+    },
+    "clc_capacete_placa_aluminio": {
+      "textures": "textures/items/cl/arte/capacete_placa_aluminio"
+    },
+    "clc_peitoral_placa_aluminio": {
+      "textures": "textures/items/cl/arte/peitoral_placa_aluminio"
+    },
+    "clc_calcas_placa_aluminio": {
+      "textures": "textures/items/cl/arte/calcas_placa_aluminio"
+    },
+    "clc_botas_placa_aluminio": {
+      "textures": "textures/items/cl/arte/botas_placa_aluminio"
+    },
+    "clc_escudo_placa_aluminio": {
+      "textures": "textures/items/cl/arte/escudo_placa_aluminio"
+    },
+    "clc_capacete_placa_pedra_refrataria": {
+      "textures": "textures/items/cl/arte/capacete_placa_pedra_refrataria"
+    },
+    "clc_peitoral_placa_pedra_refrataria": {
+      "textures": "textures/items/cl/arte/peitoral_placa_pedra_refrataria"
+    },
+    "clc_calcas_placa_pedra_refrataria": {
+      "textures": "textures/items/cl/arte/calcas_placa_pedra_refrataria"
+    },
+    "clc_botas_placa_pedra_refrataria": {
+      "textures": "textures/items/cl/arte/botas_placa_pedra_refrataria"
+    },
+    "clc_escudo_placa_pedra_refrataria": {
+      "textures": "textures/items/cl/arte/escudo_placa_pedra_refrataria"
+    },
+    "clc_capacete_placa_pedra_chamuscada": {
+      "textures": "textures/items/cl/arte/capacete_placa_pedra_chamuscada"
+    },
+    "clc_peitoral_placa_pedra_chamuscada": {
+      "textures": "textures/items/cl/arte/peitoral_placa_pedra_chamuscada"
+    },
+    "clc_calcas_placa_pedra_chamuscada": {
+      "textures": "textures/items/cl/arte/calcas_placa_pedra_chamuscada"
+    },
+    "clc_botas_placa_pedra_chamuscada": {
+      "textures": "textures/items/cl/arte/botas_placa_pedra_chamuscada"
+    },
+    "clc_escudo_placa_pedra_chamuscada": {
+      "textures": "textures/items/cl/arte/escudo_placa_pedra_chamuscada"
+    },
+    "clc_capacete_placa_obsidiana": {
+      "textures": "textures/items/cl/arte/capacete_placa_obsidiana"
+    },
+    "clc_peitoral_placa_obsidiana": {
+      "textures": "textures/items/cl/arte/peitoral_placa_obsidiana"
+    },
+    "clc_calcas_placa_obsidiana": {
+      "textures": "textures/items/cl/arte/calcas_placa_obsidiana"
+    },
+    "clc_botas_placa_obsidiana": {
+      "textures": "textures/items/cl/arte/botas_placa_obsidiana"
+    },
+    "clc_escudo_placa_obsidiana": {
+      "textures": "textures/items/cl/arte/escudo_placa_obsidiana"
+    },
+    "clc_capacete_placa_osmio": {
+      "textures": "textures/items/cl/arte/capacete_placa_osmio"
+    },
+    "clc_peitoral_placa_osmio": {
+      "textures": "textures/items/cl/arte/peitoral_placa_osmio"
+    },
+    "clc_calcas_placa_osmio": {
+      "textures": "textures/items/cl/arte/calcas_placa_osmio"
+    },
+    "clc_botas_placa_osmio": {
+      "textures": "textures/items/cl/arte/botas_placa_osmio"
+    },
+    "clc_escudo_placa_osmio": {
+      "textures": "textures/items/cl/arte/escudo_placa_osmio"
+    },
+    "clc_capacete_placa_ferro_porco": {
+      "textures": "textures/items/cl/arte/capacete_placa_ferro_porco"
+    },
+    "clc_peitoral_placa_ferro_porco": {
+      "textures": "textures/items/cl/arte/peitoral_placa_ferro_porco"
+    },
+    "clc_calcas_placa_ferro_porco": {
+      "textures": "textures/items/cl/arte/calcas_placa_ferro_porco"
+    },
+    "clc_botas_placa_ferro_porco": {
+      "textures": "textures/items/cl/arte/botas_placa_ferro_porco"
+    },
+    "clc_escudo_placa_ferro_porco": {
+      "textures": "textures/items/cl/arte/escudo_placa_ferro_porco"
+    },
+    "clc_capacete_placa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/capacete_placa_ouro_rosa"
+    },
+    "clc_peitoral_placa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/peitoral_placa_ouro_rosa"
+    },
+    "clc_calcas_placa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/calcas_placa_ouro_rosa"
+    },
+    "clc_botas_placa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/botas_placa_ouro_rosa"
+    },
+    "clc_escudo_placa_ouro_rosa": {
+      "textures": "textures/items/cl/arte/escudo_placa_ouro_rosa"
+    },
+    "clc_capacete_placa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/capacete_placa_bronze_ametista"
+    },
+    "clc_peitoral_placa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/peitoral_placa_bronze_ametista"
+    },
+    "clc_calcas_placa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/calcas_placa_bronze_ametista"
+    },
+    "clc_botas_placa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/botas_placa_bronze_ametista"
+    },
+    "clc_escudo_placa_bronze_ametista": {
+      "textures": "textures/items/cl/arte/escudo_placa_bronze_ametista"
+    },
+    "clc_capacete_placa_bronze": {
+      "textures": "textures/items/cl/arte/capacete_placa_bronze"
+    },
+    "clc_peitoral_placa_bronze": {
+      "textures": "textures/items/cl/arte/peitoral_placa_bronze"
+    },
+    "clc_calcas_placa_bronze": {
+      "textures": "textures/items/cl/arte/calcas_placa_bronze"
+    },
+    "clc_botas_placa_bronze": {
+      "textures": "textures/items/cl/arte/botas_placa_bronze"
+    },
+    "clc_escudo_placa_bronze": {
+      "textures": "textures/items/cl/arte/escudo_placa_bronze"
+    },
+    "clc_capacete_placa_aco": {
+      "textures": "textures/items/cl/arte/capacete_placa_aco"
+    },
+    "clc_peitoral_placa_aco": {
+      "textures": "textures/items/cl/arte/peitoral_placa_aco"
+    },
+    "clc_calcas_placa_aco": {
+      "textures": "textures/items/cl/arte/calcas_placa_aco"
+    },
+    "clc_botas_placa_aco": {
+      "textures": "textures/items/cl/arte/botas_placa_aco"
+    },
+    "clc_escudo_placa_aco": {
+      "textures": "textures/items/cl/arte/escudo_placa_aco"
+    },
+    "clc_capacete_placa_cobalto": {
+      "textures": "textures/items/cl/arte/capacete_placa_cobalto"
+    },
+    "clc_peitoral_placa_cobalto": {
+      "textures": "textures/items/cl/arte/peitoral_placa_cobalto"
+    },
+    "clc_calcas_placa_cobalto": {
+      "textures": "textures/items/cl/arte/calcas_placa_cobalto"
+    },
+    "clc_botas_placa_cobalto": {
+      "textures": "textures/items/cl/arte/botas_placa_cobalto"
+    },
+    "clc_escudo_placa_cobalto": {
+      "textures": "textures/items/cl/arte/escudo_placa_cobalto"
+    },
+    "clc_capacete_placa_aco_slime": {
+      "textures": "textures/items/cl/arte/capacete_placa_aco_slime"
+    },
+    "clc_peitoral_placa_aco_slime": {
+      "textures": "textures/items/cl/arte/peitoral_placa_aco_slime"
+    },
+    "clc_calcas_placa_aco_slime": {
+      "textures": "textures/items/cl/arte/calcas_placa_aco_slime"
+    },
+    "clc_botas_placa_aco_slime": {
+      "textures": "textures/items/cl/arte/botas_placa_aco_slime"
+    },
+    "clc_escudo_placa_aco_slime": {
+      "textures": "textures/items/cl/arte/escudo_placa_aco_slime"
+    },
+    "clc_capacete_placa_hepatizon": {
+      "textures": "textures/items/cl/arte/capacete_placa_hepatizon"
+    },
+    "clc_peitoral_placa_hepatizon": {
+      "textures": "textures/items/cl/arte/peitoral_placa_hepatizon"
+    },
+    "clc_calcas_placa_hepatizon": {
+      "textures": "textures/items/cl/arte/calcas_placa_hepatizon"
+    },
+    "clc_botas_placa_hepatizon": {
+      "textures": "textures/items/cl/arte/botas_placa_hepatizon"
+    },
+    "clc_escudo_placa_hepatizon": {
+      "textures": "textures/items/cl/arte/escudo_placa_hepatizon"
+    },
+    "clc_capacete_placa_manyullyn": {
+      "textures": "textures/items/cl/arte/capacete_placa_manyullyn"
+    },
+    "clc_peitoral_placa_manyullyn": {
+      "textures": "textures/items/cl/arte/peitoral_placa_manyullyn"
+    },
+    "clc_calcas_placa_manyullyn": {
+      "textures": "textures/items/cl/arte/calcas_placa_manyullyn"
+    },
+    "clc_botas_placa_manyullyn": {
+      "textures": "textures/items/cl/arte/botas_placa_manyullyn"
+    },
+    "clc_escudo_placa_manyullyn": {
+      "textures": "textures/items/cl/arte/escudo_placa_manyullyn"
+    },
+    "clc_capacete_placa_slime_rainha": {
+      "textures": "textures/items/cl/arte/capacete_placa_slime_rainha"
+    },
+    "clc_peitoral_placa_slime_rainha": {
+      "textures": "textures/items/cl/arte/peitoral_placa_slime_rainha"
+    },
+    "clc_calcas_placa_slime_rainha": {
+      "textures": "textures/items/cl/arte/calcas_placa_slime_rainha"
+    },
+    "clc_botas_placa_slime_rainha": {
+      "textures": "textures/items/cl/arte/botas_placa_slime_rainha"
+    },
+    "clc_escudo_placa_slime_rainha": {
+      "textures": "textures/items/cl/arte/escudo_placa_slime_rainha"
+    },
+    "clc_capacete_placa_slime_brasa": {
+      "textures": "textures/items/cl/arte/capacete_placa_slime_brasa"
+    },
+    "clc_peitoral_placa_slime_brasa": {
+      "textures": "textures/items/cl/arte/peitoral_placa_slime_brasa"
+    },
+    "clc_calcas_placa_slime_brasa": {
+      "textures": "textures/items/cl/arte/calcas_placa_slime_brasa"
+    },
+    "clc_botas_placa_slime_brasa": {
+      "textures": "textures/items/cl/arte/botas_placa_slime_brasa"
+    },
+    "clc_escudo_placa_slime_brasa": {
+      "textures": "textures/items/cl/arte/escudo_placa_slime_brasa"
+    },
+    "clc_capacete_placa_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/capacete_placa_slime_cavaleiro"
+    },
+    "clc_peitoral_placa_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/peitoral_placa_slime_cavaleiro"
+    },
+    "clc_calcas_placa_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/calcas_placa_slime_cavaleiro"
+    },
+    "clc_botas_placa_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/botas_placa_slime_cavaleiro"
+    },
+    "clc_escudo_placa_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/escudo_placa_slime_cavaleiro"
+    },
+    "clc_capacete_viajante": {
+      "textures": "textures/items/cl/arte/capacete_viajante"
+    },
+    "clc_peitoral_viajante": {
+      "textures": "textures/items/cl/arte/peitoral_viajante"
+    },
+    "clc_calcas_viajante": {
+      "textures": "textures/items/cl/arte/calcas_viajante"
+    },
+    "clc_botas_viajante": {
+      "textures": "textures/items/cl/arte/botas_viajante"
+    },
+    "clc_escudo_viajante": {
+      "textures": "textures/items/cl/arte/escudo_viajante"
+    },
+    "clc_capacete_slime": {
+      "textures": "textures/items/cl/arte/capacete_slime"
+    },
+    "clc_peitoral_slime": {
+      "textures": "textures/items/cl/arte/peitoral_slime"
+    },
+    "clc_calcas_slime": {
+      "textures": "textures/items/cl/arte/calcas_slime"
+    },
+    "clc_botas_slime": {
+      "textures": "textures/items/cl/arte/botas_slime"
+    },
+    "clc_slimelitros": {
+      "textures": "textures/items/cl/arte/slimelitros"
+    },
+    "clc_arco_longo_madeira": {
+      "textures": "textures/items/cl/arte/arco_longo_madeira"
+    },
+    "clc_besta_madeira": {
+      "textures": "textures/items/cl/arte/besta_madeira"
+    },
+    "clc_arco_longo_osso": {
+      "textures": "textures/items/cl/arte/arco_longo_osso"
+    },
+    "clc_besta_osso": {
+      "textures": "textures/items/cl/arte/besta_osso"
+    },
+    "clc_arco_longo_cacto": {
+      "textures": "textures/items/cl/arte/arco_longo_cacto"
+    },
+    "clc_besta_cacto": {
+      "textures": "textures/items/cl/arte/besta_cacto"
+    },
+    "clc_arco_longo_coro": {
+      "textures": "textures/items/cl/arte/arco_longo_coro"
+    },
+    "clc_besta_coro": {
+      "textures": "textures/items/cl/arte/besta_coro"
+    },
+    "clc_arco_longo_madeira_slime": {
+      "textures": "textures/items/cl/arte/arco_longo_madeira_slime"
+    },
+    "clc_besta_madeira_slime": {
+      "textures": "textures/items/cl/arte/besta_madeira_slime"
+    },
+    "clc_arco_longo_osso_venenoso": {
+      "textures": "textures/items/cl/arte/arco_longo_osso_venenoso"
+    },
+    "clc_besta_osso_venenoso": {
+      "textures": "textures/items/cl/arte/besta_osso_venenoso"
+    },
+    "clc_arco_longo_osso_necrotico": {
+      "textures": "textures/items/cl/arte/arco_longo_osso_necrotico"
+    },
+    "clc_besta_osso_necrotico": {
+      "textures": "textures/items/cl/arte/besta_osso_necrotico"
+    },
+    "clc_arco_longo_madeira_tratada": {
+      "textures": "textures/items/cl/arte/arco_longo_madeira_tratada"
+    },
+    "clc_besta_madeira_tratada": {
+      "textures": "textures/items/cl/arte/besta_madeira_tratada"
+    },
+    "clc_arco_longo_nahuatl": {
+      "textures": "textures/items/cl/arte/arco_longo_nahuatl"
+    },
+    "clc_besta_nahuatl": {
+      "textures": "textures/items/cl/arte/besta_nahuatl"
+    },
+    "clc_arco_longo_osso_blaze": {
+      "textures": "textures/items/cl/arte/arco_longo_osso_blaze"
+    },
+    "clc_besta_osso_blaze": {
+      "textures": "textures/items/cl/arte/besta_osso_blaze"
+    },
+    "clc_arco_longo_cobre": {
+      "textures": "textures/items/cl/arte/arco_longo_cobre"
+    },
+    "clc_besta_cobre": {
+      "textures": "textures/items/cl/arte/besta_cobre"
+    },
+    "clc_arco_longo_ferro": {
+      "textures": "textures/items/cl/arte/arco_longo_ferro"
+    },
+    "clc_besta_ferro": {
+      "textures": "textures/items/cl/arte/besta_ferro"
+    },
+    "clc_arco_longo_aluminio": {
+      "textures": "textures/items/cl/arte/arco_longo_aluminio"
+    },
+    "clc_besta_aluminio": {
+      "textures": "textures/items/cl/arte/besta_aluminio"
+    },
+    "clc_arco_longo_ferro_porco": {
+      "textures": "textures/items/cl/arte/arco_longo_ferro_porco"
+    },
+    "clc_besta_ferro_porco": {
+      "textures": "textures/items/cl/arte/besta_ferro_porco"
+    },
+    "clc_arco_longo_ouro_rosa": {
+      "textures": "textures/items/cl/arte/arco_longo_ouro_rosa"
+    },
+    "clc_besta_ouro_rosa": {
+      "textures": "textures/items/cl/arte/besta_ouro_rosa"
+    },
+    "clc_arco_longo_bronze_ametista": {
+      "textures": "textures/items/cl/arte/arco_longo_bronze_ametista"
+    },
+    "clc_besta_bronze_ametista": {
+      "textures": "textures/items/cl/arte/besta_bronze_ametista"
+    },
+    "clc_arco_longo_bronze": {
+      "textures": "textures/items/cl/arte/arco_longo_bronze"
+    },
+    "clc_besta_bronze": {
+      "textures": "textures/items/cl/arte/besta_bronze"
+    },
+    "clc_arco_longo_aco": {
+      "textures": "textures/items/cl/arte/arco_longo_aco"
+    },
+    "clc_besta_aco": {
+      "textures": "textures/items/cl/arte/besta_aco"
+    },
+    "clc_arco_longo_cobalto": {
+      "textures": "textures/items/cl/arte/arco_longo_cobalto"
+    },
+    "clc_besta_cobalto": {
+      "textures": "textures/items/cl/arte/besta_cobalto"
+    },
+    "clc_arco_longo_aco_slime": {
+      "textures": "textures/items/cl/arte/arco_longo_aco_slime"
+    },
+    "clc_besta_aco_slime": {
+      "textures": "textures/items/cl/arte/besta_aco_slime"
+    },
+    "clc_arco_longo_madeira_slime_revestida": {
+      "textures": "textures/items/cl/arte/arco_longo_madeira_slime_revestida"
+    },
+    "clc_besta_madeira_slime_revestida": {
+      "textures": "textures/items/cl/arte/besta_madeira_slime_revestida"
+    },
+    "clc_arco_longo_hepatizon": {
+      "textures": "textures/items/cl/arte/arco_longo_hepatizon"
+    },
+    "clc_besta_hepatizon": {
+      "textures": "textures/items/cl/arte/besta_hepatizon"
+    },
+    "clc_arco_longo_manyullyn": {
+      "textures": "textures/items/cl/arte/arco_longo_manyullyn"
+    },
+    "clc_besta_manyullyn": {
+      "textures": "textures/items/cl/arte/besta_manyullyn"
+    },
+    "clc_arco_longo_slime_rainha": {
+      "textures": "textures/items/cl/arte/arco_longo_slime_rainha"
+    },
+    "clc_besta_slime_rainha": {
+      "textures": "textures/items/cl/arte/besta_slime_rainha"
+    },
+    "clc_arco_longo_slime_brasa": {
+      "textures": "textures/items/cl/arte/arco_longo_slime_brasa"
+    },
+    "clc_besta_slime_brasa": {
+      "textures": "textures/items/cl/arte/besta_slime_brasa"
+    },
+    "clc_arco_longo_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/arco_longo_slime_cavaleiro"
+    },
+    "clc_besta_slime_cavaleiro": {
+      "textures": "textures/items/cl/arte/besta_slime_cavaleiro"
+    },
+    "clc_shuriken_silex": {
+      "textures": "textures/items/cl/arte/shuriken_silex"
+    },
+    "clc_machado_arremesso_silex": {
+      "textures": "textures/items/cl/arte/machado_arremesso_silex"
+    },
+    "clc_dardo_silex": {
+      "textures": "textures/items/cl/arte/dardo_silex"
+    },
+    "clc_shuriken_ferro": {
+      "textures": "textures/items/cl/arte/shuriken_ferro"
+    },
+    "clc_machado_arremesso_ferro": {
+      "textures": "textures/items/cl/arte/machado_arremesso_ferro"
+    },
+    "clc_dardo_ferro": {
+      "textures": "textures/items/cl/arte/dardo_ferro"
+    },
+    "clc_shuriken_cobalto": {
+      "textures": "textures/items/cl/arte/shuriken_cobalto"
+    },
+    "clc_machado_arremesso_cobalto": {
+      "textures": "textures/items/cl/arte/machado_arremesso_cobalto"
+    },
+    "clc_dardo_cobalto": {
+      "textures": "textures/items/cl/arte/dardo_cobalto"
+    },
+    "clc_shuriken_manyullyn": {
+      "textures": "textures/items/cl/arte/shuriken_manyullyn"
+    },
+    "clc_machado_arremesso_manyullyn": {
+      "textures": "textures/items/cl/arte/machado_arremesso_manyullyn"
+    },
+    "clc_dardo_manyullyn": {
+      "textures": "textures/items/cl/arte/dardo_manyullyn"
     }
   }
 }

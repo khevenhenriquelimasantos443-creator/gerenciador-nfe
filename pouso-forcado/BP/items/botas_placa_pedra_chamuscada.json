@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:botas_placa_pedra_chamuscada",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_botas_placa_pedra_chamuscada",
+      "minecraft:display_name": {
+        "value": "item.cl:botas_placa_pedra_chamuscada.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:wearable": {
+        "slot": "slot.armor.feet",
+        "protection": 1
+      },
+      "minecraft:durability": {
+        "max_durability": 130
+      },
+      "minecraft:enchantable": {
+        "slot": "armor_feet",
+        "value": 12
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "cl:tc_armadura"
+        ]
+      }
+    }
+  }
+}

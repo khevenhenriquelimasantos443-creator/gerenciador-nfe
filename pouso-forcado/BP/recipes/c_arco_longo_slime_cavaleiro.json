@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_arco_longo_slime_cavaleiro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " MS",
+      "G S",
+      " MS"
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_slime_cavaleiro"
+      },
+      "S": {
+        "item": "minecraft:string"
+      },
+      "G": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:arco_longo_slime_cavaleiro"
+    }
+  }
+}

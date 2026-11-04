@@ -154,6 +154,19 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.28.0 (Tinkers' Construct 3 completo, parte 3 de 5: armaduras e armas)
+
+- **Armadura de Placa** de 20 materiais (cobre, ferro, ouro, alumínio, pedra carbonizada, pedra chamuscada,
+  obsidiana, ósmio, ferro-porco, ouro rosa, bronze de ametista, bronze, aço, cobalto, aço de slime, hepatizão,
+  manyullyn, slime da rainha, slime de brasa, slime-cavaleiro), com a proteção e a durabilidade do mod e a aparência do
+  mod no corpo. Sai na bancada com o material e a **Malha** (4 correntes).
+- **Equipamento de Viajante** (couro e cobre) e **Traje de Slime** (slime do céu congelado): as **Botas de Slime**
+  não deixam se machucar na queda e fazem quicar; as **Slimélitros** planam.
+- **Escudos** (de Viajante e de Placa): na mão secundária, agache para segurar os golpes.
+- **Arco Longo** e **Besta** de 26 materiais: o material do braço muda a força, a durabilidade e a velocidade de puxar.
+- **Shuriken**, **Machado de Arremesso** e **Dardo** (sílex, ferro, cobalto, manyullyn): o machado e o dardo caem para
+  pegar de volta.
+
 ## Novidades da 1.27.0 (Tinkers' Construct 3 completo, parte 2 de 5: o mundo dos slimes)
 
 - **Ilhas de slime** com as 20 ilhas originais do mod (5 formatos de cada tipo): de Slime-do-Céu e de Slime-da-Terra

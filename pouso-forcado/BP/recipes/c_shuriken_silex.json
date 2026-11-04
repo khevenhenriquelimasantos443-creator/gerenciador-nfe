@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_shuriken_silex"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "M M",
+      " M "
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:flint"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:shuriken_silex",
+      "count": 4
+    }
+  }
+}

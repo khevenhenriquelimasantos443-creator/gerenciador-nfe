@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_shuriken_manyullyn"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "M M",
+      " M "
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_manyullyn"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:shuriken_manyullyn",
+      "count": 4
+    }
+  }
+}

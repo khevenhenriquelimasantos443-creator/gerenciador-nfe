@@ -56,6 +56,8 @@ export type Acao =
   | "tc_cabeca"
   | "tc_composto"
   | "tc_arvore_slime"
+  | "tc_quicar"
+  | "tc_shuriken"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -344,6 +346,11 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "tc3_aco_slime", requer: ["tc3_slime_ceu"], objetivo: { tipo: "ter", item: "cl:lingote_aco_slime", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "tc3_geodo", objetivo: { tipo: "ter", item: "cl:cristal_slime_terra", qtd: 4 }, recompensa: [{ item: "minecraft:amethyst_shard", quantidade: 8 }] },
       { id: "tc3_muda", objetivo: { tipo: "acao", acao: "tc_arvore_slime", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 16 }] },
+      // 1.28.0: armaduras, arcos e arremessáveis.
+      { id: "tc3_placa", objetivo: { tipo: "ter", item: "cl:malha", qtd: 1 }, recompensa: [{ item: "minecraft:chain", quantidade: 8 }] },
+      { id: "tc3_arco", objetivo: { tipo: "ter", item: "cl:arco_longo_madeira", qtd: 1 }, recompensa: [{ item: "minecraft:arrow", quantidade: 32 }] },
+      { id: "tc3_slime_botas", requer: ["tc3_slime_ceu"], objetivo: { tipo: "acao", acao: "tc_quicar", qtd: 1 }, recompensa: [{ item: "cl:bola_slime_ceu", quantidade: 8 }] },
+      { id: "tc3_shuriken", objetivo: { tipo: "acao", acao: "tc_shuriken", qtd: 1 }, recompensa: [{ item: "minecraft:flint", quantidade: 16 }] },
     ],
   },
   {

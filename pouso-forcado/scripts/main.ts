@@ -68,6 +68,7 @@ import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEnderIO, stirling } from "./maquinas/enderio.js";
 import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
 import { cristalBrotandoComp, mudaSlimeComp, slimeCongeladoComp } from "./tinkers/slime.js";
+import { registrarArmas } from "./tinkers/armas.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
 import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
@@ -288,6 +289,7 @@ registrarBase();
 registrarMekanismExtra();
 registrarEnderIO();
 registrarEnderIO9();
+registrarArmas(); // 1.28.0: armaduras, escudos, arcos e arremessáveis do Tinkers 3
 registrarMekanism10();
 registrarAE2();
 registrarCreate();

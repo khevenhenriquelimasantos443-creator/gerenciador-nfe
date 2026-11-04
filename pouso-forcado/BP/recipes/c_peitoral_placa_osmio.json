@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_peitoral_placa_osmio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MLM",
+      "MMM",
+      "MMM"
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_osmio"
+      },
+      "L": {
+        "item": "cl:malha"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:peitoral_placa_osmio"
+    }
+  }
+}

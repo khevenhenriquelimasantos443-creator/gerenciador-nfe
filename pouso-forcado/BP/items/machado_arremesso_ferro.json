@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:machado_arremesso_ferro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_machado_arremesso_ferro",
+      "minecraft:display_name": {
+        "value": "item.cl:machado_arremesso_ferro.name"
+      },
+      "minecraft:max_stack_size": 8,
+      "minecraft:throwable": {
+        "do_swing_animation": true,
+        "launch_power_scale": 1,
+        "max_launch_power": 1.6
+      },
+      "minecraft:projectile": {
+        "projectile_entity": "cl:machado_arremesso_proj",
+        "minimum_critical_power": 1
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:tc_arremesso"
+        ]
+      }
+    }
+  }
+}

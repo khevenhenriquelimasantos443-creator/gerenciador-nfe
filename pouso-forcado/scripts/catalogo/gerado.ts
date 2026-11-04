@@ -256,6 +256,136 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Travel Anchor",
   "icone": "textures/items/cl/blocos/ancora_viagem"
  },
+ "cl:arco_longo_aco": {
+  "pt": "Arco Longo de Aço",
+  "en": "Steel Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_aco"
+ },
+ "cl:arco_longo_aco_slime": {
+  "pt": "Arco Longo de Aço de Slime",
+  "en": "Slimesteel Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_aco_slime"
+ },
+ "cl:arco_longo_aluminio": {
+  "pt": "Arco Longo de aluminio",
+  "en": "aluminio Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_aluminio"
+ },
+ "cl:arco_longo_bronze": {
+  "pt": "Arco Longo de Bronze",
+  "en": "Bronze Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_bronze"
+ },
+ "cl:arco_longo_bronze_ametista": {
+  "pt": "Arco Longo de Bronze de Ametista",
+  "en": "Amethyst Bronze Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_bronze_ametista"
+ },
+ "cl:arco_longo_cacto": {
+  "pt": "Arco Longo de Cacto",
+  "en": "Cactus Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_cacto"
+ },
+ "cl:arco_longo_cobalto": {
+  "pt": "Arco Longo de Cobalto",
+  "en": "Cobalt Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_cobalto"
+ },
+ "cl:arco_longo_cobre": {
+  "pt": "Arco Longo de Cobre",
+  "en": "Copper Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_cobre"
+ },
+ "cl:arco_longo_coro": {
+  "pt": "Arco Longo de Chorus",
+  "en": "Chorus Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_coro"
+ },
+ "cl:arco_longo_ferro": {
+  "pt": "Arco Longo de Ferro",
+  "en": "Iron Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_ferro"
+ },
+ "cl:arco_longo_ferro_porco": {
+  "pt": "Arco Longo de Ferro-Porco",
+  "en": "Pig Iron Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_ferro_porco"
+ },
+ "cl:arco_longo_hepatizon": {
+  "pt": "Arco Longo de Hepatizão",
+  "en": "Hepatizon Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_hepatizon"
+ },
+ "cl:arco_longo_madeira": {
+  "pt": "Arco Longo de Madeira",
+  "en": "Wood Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_madeira"
+ },
+ "cl:arco_longo_madeira_slime": {
+  "pt": "Arco Longo de Madeira de Slime",
+  "en": "Slimewood Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_madeira_slime"
+ },
+ "cl:arco_longo_madeira_slime_revestida": {
+  "pt": "Arco Longo de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_madeira_slime_revestida"
+ },
+ "cl:arco_longo_madeira_tratada": {
+  "pt": "Arco Longo de Madeira Tratada",
+  "en": "Treated Wood Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_madeira_tratada"
+ },
+ "cl:arco_longo_manyullyn": {
+  "pt": "Arco Longo de Manyullyn",
+  "en": "Manyullyn Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_manyullyn"
+ },
+ "cl:arco_longo_nahuatl": {
+  "pt": "Arco Longo de Nahuatl",
+  "en": "Nahuatl Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_nahuatl"
+ },
+ "cl:arco_longo_osso": {
+  "pt": "Arco Longo de Osso",
+  "en": "Bone Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_osso"
+ },
+ "cl:arco_longo_osso_blaze": {
+  "pt": "Arco Longo de Osso de Blaze",
+  "en": "Blazing Bone Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_osso_blaze"
+ },
+ "cl:arco_longo_osso_necrotico": {
+  "pt": "Arco Longo de Osso Necrótico",
+  "en": "Necrotic Bone Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_osso_necrotico"
+ },
+ "cl:arco_longo_osso_venenoso": {
+  "pt": "Arco Longo de Osso Venenoso",
+  "en": "Venombone Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_osso_venenoso"
+ },
+ "cl:arco_longo_ouro_rosa": {
+  "pt": "Arco Longo de Ouro Rosa",
+  "en": "Rose Gold Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_ouro_rosa"
+ },
+ "cl:arco_longo_slime_brasa": {
+  "pt": "Arco Longo de Slime de Brasa",
+  "en": "Cinderslime Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_slime_brasa"
+ },
+ "cl:arco_longo_slime_cavaleiro": {
+  "pt": "Arco Longo de Slime-Cavaleiro",
+  "en": "Knightslime Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_slime_cavaleiro"
+ },
+ "cl:arco_longo_slime_rainha": {
+  "pt": "Arco Longo de Slime da Rainha",
+  "en": "Queen's Slime Longbow",
+  "icone": "textures/items/cl/arte/arco_longo_slime_rainha"
+ },
  "cl:arenito_entalhado": {
   "pt": "Arenito Entalhado",
   "en": "Carved Sandstone",
@@ -646,6 +776,136 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Vacuum Chest",
   "icone": "textures/items/cl/blocos/bau_vacuo"
  },
+ "cl:besta_aco": {
+  "pt": "Besta de Aço",
+  "en": "Steel Crossbow",
+  "icone": "textures/items/cl/arte/besta_aco"
+ },
+ "cl:besta_aco_slime": {
+  "pt": "Besta de Aço de Slime",
+  "en": "Slimesteel Crossbow",
+  "icone": "textures/items/cl/arte/besta_aco_slime"
+ },
+ "cl:besta_aluminio": {
+  "pt": "Besta de aluminio",
+  "en": "aluminio Crossbow",
+  "icone": "textures/items/cl/arte/besta_aluminio"
+ },
+ "cl:besta_bronze": {
+  "pt": "Besta de Bronze",
+  "en": "Bronze Crossbow",
+  "icone": "textures/items/cl/arte/besta_bronze"
+ },
+ "cl:besta_bronze_ametista": {
+  "pt": "Besta de Bronze de Ametista",
+  "en": "Amethyst Bronze Crossbow",
+  "icone": "textures/items/cl/arte/besta_bronze_ametista"
+ },
+ "cl:besta_cacto": {
+  "pt": "Besta de Cacto",
+  "en": "Cactus Crossbow",
+  "icone": "textures/items/cl/arte/besta_cacto"
+ },
+ "cl:besta_cobalto": {
+  "pt": "Besta de Cobalto",
+  "en": "Cobalt Crossbow",
+  "icone": "textures/items/cl/arte/besta_cobalto"
+ },
+ "cl:besta_cobre": {
+  "pt": "Besta de Cobre",
+  "en": "Copper Crossbow",
+  "icone": "textures/items/cl/arte/besta_cobre"
+ },
+ "cl:besta_coro": {
+  "pt": "Besta de Chorus",
+  "en": "Chorus Crossbow",
+  "icone": "textures/items/cl/arte/besta_coro"
+ },
+ "cl:besta_ferro": {
+  "pt": "Besta de Ferro",
+  "en": "Iron Crossbow",
+  "icone": "textures/items/cl/arte/besta_ferro"
+ },
+ "cl:besta_ferro_porco": {
+  "pt": "Besta de Ferro-Porco",
+  "en": "Pig Iron Crossbow",
+  "icone": "textures/items/cl/arte/besta_ferro_porco"
+ },
+ "cl:besta_hepatizon": {
+  "pt": "Besta de Hepatizão",
+  "en": "Hepatizon Crossbow",
+  "icone": "textures/items/cl/arte/besta_hepatizon"
+ },
+ "cl:besta_madeira": {
+  "pt": "Besta de Madeira",
+  "en": "Wood Crossbow",
+  "icone": "textures/items/cl/arte/besta_madeira"
+ },
+ "cl:besta_madeira_slime": {
+  "pt": "Besta de Madeira de Slime",
+  "en": "Slimewood Crossbow",
+  "icone": "textures/items/cl/arte/besta_madeira_slime"
+ },
+ "cl:besta_madeira_slime_revestida": {
+  "pt": "Besta de Madeira de Slime Revestida",
+  "en": "Plated Slimewood Crossbow",
+  "icone": "textures/items/cl/arte/besta_madeira_slime_revestida"
+ },
+ "cl:besta_madeira_tratada": {
+  "pt": "Besta de Madeira Tratada",
+  "en": "Treated Wood Crossbow",
+  "icone": "textures/items/cl/arte/besta_madeira_tratada"
+ },
+ "cl:besta_manyullyn": {
+  "pt": "Besta de Manyullyn",
+  "en": "Manyullyn Crossbow",
+  "icone": "textures/items/cl/arte/besta_manyullyn"
+ },
+ "cl:besta_nahuatl": {
+  "pt": "Besta de Nahuatl",
+  "en": "Nahuatl Crossbow",
+  "icone": "textures/items/cl/arte/besta_nahuatl"
+ },
+ "cl:besta_osso": {
+  "pt": "Besta de Osso",
+  "en": "Bone Crossbow",
+  "icone": "textures/items/cl/arte/besta_osso"
+ },
+ "cl:besta_osso_blaze": {
+  "pt": "Besta de Osso de Blaze",
+  "en": "Blazing Bone Crossbow",
+  "icone": "textures/items/cl/arte/besta_osso_blaze"
+ },
+ "cl:besta_osso_necrotico": {
+  "pt": "Besta de Osso Necrótico",
+  "en": "Necrotic Bone Crossbow",
+  "icone": "textures/items/cl/arte/besta_osso_necrotico"
+ },
+ "cl:besta_osso_venenoso": {
+  "pt": "Besta de Osso Venenoso",
+  "en": "Venombone Crossbow",
+  "icone": "textures/items/cl/arte/besta_osso_venenoso"
+ },
+ "cl:besta_ouro_rosa": {
+  "pt": "Besta de Ouro Rosa",
+  "en": "Rose Gold Crossbow",
+  "icone": "textures/items/cl/arte/besta_ouro_rosa"
+ },
+ "cl:besta_slime_brasa": {
+  "pt": "Besta de Slime de Brasa",
+  "en": "Cinderslime Crossbow",
+  "icone": "textures/items/cl/arte/besta_slime_brasa"
+ },
+ "cl:besta_slime_cavaleiro": {
+  "pt": "Besta de Slime-Cavaleiro",
+  "en": "Knightslime Crossbow",
+  "icone": "textures/items/cl/arte/besta_slime_cavaleiro"
+ },
+ "cl:besta_slime_rainha": {
+  "pt": "Besta de Slime da Rainha",
+  "en": "Queen's Slime Crossbow",
+  "icone": "textures/items/cl/arte/besta_slime_rainha"
+ },
  "cl:bicho_seda": {
   "pt": "Bicho-da-seda",
   "en": "Silkworm",
@@ -976,6 +1236,116 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pump",
   "icone": "textures/items/cl/blocos/bomba"
  },
+ "cl:botas_placa_aco": {
+  "pt": "Botas de Placa de Aço",
+  "en": "Steel Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_aco"
+ },
+ "cl:botas_placa_aco_slime": {
+  "pt": "Botas de Placa de Aço de Slime",
+  "en": "Slimesteel Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_aco_slime"
+ },
+ "cl:botas_placa_aluminio": {
+  "pt": "Botas de Placa de Alumínio",
+  "en": "Aluminum Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_aluminio"
+ },
+ "cl:botas_placa_bronze": {
+  "pt": "Botas de Placa de Bronze",
+  "en": "Bronze Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_bronze"
+ },
+ "cl:botas_placa_bronze_ametista": {
+  "pt": "Botas de Placa de Bronze de Ametista",
+  "en": "Amethyst Bronze Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_bronze_ametista"
+ },
+ "cl:botas_placa_cobalto": {
+  "pt": "Botas de Placa de Cobalto",
+  "en": "Cobalt Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_cobalto"
+ },
+ "cl:botas_placa_cobre": {
+  "pt": "Botas de Placa de Cobre",
+  "en": "Copper Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_cobre"
+ },
+ "cl:botas_placa_ferro": {
+  "pt": "Botas de Placa de Ferro",
+  "en": "Iron Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_ferro"
+ },
+ "cl:botas_placa_ferro_porco": {
+  "pt": "Botas de Placa de Ferro-Porco",
+  "en": "Pig Iron Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_ferro_porco"
+ },
+ "cl:botas_placa_hepatizon": {
+  "pt": "Botas de Placa de Hepatizão",
+  "en": "Hepatizon Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_hepatizon"
+ },
+ "cl:botas_placa_manyullyn": {
+  "pt": "Botas de Placa de Manyullyn",
+  "en": "Manyullyn Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_manyullyn"
+ },
+ "cl:botas_placa_obsidiana": {
+  "pt": "Botas de Placa de Obsidiana",
+  "en": "Obsidian Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_obsidiana"
+ },
+ "cl:botas_placa_osmio": {
+  "pt": "Botas de Placa de Ósmio",
+  "en": "Osmium Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_osmio"
+ },
+ "cl:botas_placa_ouro": {
+  "pt": "Botas de Placa de Ouro",
+  "en": "Gold Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_ouro"
+ },
+ "cl:botas_placa_ouro_rosa": {
+  "pt": "Botas de Placa de Ouro Rosa",
+  "en": "Rose Gold Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_ouro_rosa"
+ },
+ "cl:botas_placa_pedra_chamuscada": {
+  "pt": "Botas de Placa de Pedra Chamuscada",
+  "en": "Scorched Stone Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_pedra_chamuscada"
+ },
+ "cl:botas_placa_pedra_refrataria": {
+  "pt": "Botas de Placa de Pedra Carbonizada",
+  "en": "Seared Stone Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_pedra_refrataria"
+ },
+ "cl:botas_placa_slime_brasa": {
+  "pt": "Botas de Placa de Slime de Brasa",
+  "en": "Cinderslime Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_slime_brasa"
+ },
+ "cl:botas_placa_slime_cavaleiro": {
+  "pt": "Botas de Placa de Slime-Cavaleiro",
+  "en": "Knightslime Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_slime_cavaleiro"
+ },
+ "cl:botas_placa_slime_rainha": {
+  "pt": "Botas de Placa de Slime da Rainha",
+  "en": "Queen's Slime Plate Boots",
+  "icone": "textures/items/cl/arte/botas_placa_slime_rainha"
+ },
+ "cl:botas_slime": {
+  "pt": "Botas de Slime",
+  "en": "Slime Boots",
+  "icone": "textures/items/cl/arte/botas_slime"
+ },
+ "cl:botas_viajante": {
+  "pt": "Botas de Viajante",
+  "en": "Traveler's Boots",
+  "icone": "textures/items/cl/arte/botas_viajante"
+ },
  "cl:broa_milho": {
   "pt": "Broa de Milho",
   "en": "Cornbread",
@@ -1201,6 +1571,116 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Small Bricks Limestone",
   "icone": "textures/items/cl/blocos/calcario_tijolos_pequenos"
  },
+ "cl:calcas_placa_aco": {
+  "pt": "Calças de Placa de Aço",
+  "en": "Steel Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_aco"
+ },
+ "cl:calcas_placa_aco_slime": {
+  "pt": "Calças de Placa de Aço de Slime",
+  "en": "Slimesteel Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_aco_slime"
+ },
+ "cl:calcas_placa_aluminio": {
+  "pt": "Calças de Placa de Alumínio",
+  "en": "Aluminum Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_aluminio"
+ },
+ "cl:calcas_placa_bronze": {
+  "pt": "Calças de Placa de Bronze",
+  "en": "Bronze Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_bronze"
+ },
+ "cl:calcas_placa_bronze_ametista": {
+  "pt": "Calças de Placa de Bronze de Ametista",
+  "en": "Amethyst Bronze Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_bronze_ametista"
+ },
+ "cl:calcas_placa_cobalto": {
+  "pt": "Calças de Placa de Cobalto",
+  "en": "Cobalt Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_cobalto"
+ },
+ "cl:calcas_placa_cobre": {
+  "pt": "Calças de Placa de Cobre",
+  "en": "Copper Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_cobre"
+ },
+ "cl:calcas_placa_ferro": {
+  "pt": "Calças de Placa de Ferro",
+  "en": "Iron Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_ferro"
+ },
+ "cl:calcas_placa_ferro_porco": {
+  "pt": "Calças de Placa de Ferro-Porco",
+  "en": "Pig Iron Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_ferro_porco"
+ },
+ "cl:calcas_placa_hepatizon": {
+  "pt": "Calças de Placa de Hepatizão",
+  "en": "Hepatizon Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_hepatizon"
+ },
+ "cl:calcas_placa_manyullyn": {
+  "pt": "Calças de Placa de Manyullyn",
+  "en": "Manyullyn Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_manyullyn"
+ },
+ "cl:calcas_placa_obsidiana": {
+  "pt": "Calças de Placa de Obsidiana",
+  "en": "Obsidian Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_obsidiana"
+ },
+ "cl:calcas_placa_osmio": {
+  "pt": "Calças de Placa de Ósmio",
+  "en": "Osmium Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_osmio"
+ },
+ "cl:calcas_placa_ouro": {
+  "pt": "Calças de Placa de Ouro",
+  "en": "Gold Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_ouro"
+ },
+ "cl:calcas_placa_ouro_rosa": {
+  "pt": "Calças de Placa de Ouro Rosa",
+  "en": "Rose Gold Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_ouro_rosa"
+ },
+ "cl:calcas_placa_pedra_chamuscada": {
+  "pt": "Calças de Placa de Pedra Chamuscada",
+  "en": "Scorched Stone Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_pedra_chamuscada"
+ },
+ "cl:calcas_placa_pedra_refrataria": {
+  "pt": "Calças de Placa de Pedra Carbonizada",
+  "en": "Seared Stone Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_pedra_refrataria"
+ },
+ "cl:calcas_placa_slime_brasa": {
+  "pt": "Calças de Placa de Slime de Brasa",
+  "en": "Cinderslime Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_slime_brasa"
+ },
+ "cl:calcas_placa_slime_cavaleiro": {
+  "pt": "Calças de Placa de Slime-Cavaleiro",
+  "en": "Knightslime Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_slime_cavaleiro"
+ },
+ "cl:calcas_placa_slime_rainha": {
+  "pt": "Calças de Placa de Slime da Rainha",
+  "en": "Queen's Slime Plate Leggings",
+  "icone": "textures/items/cl/arte/calcas_placa_slime_rainha"
+ },
+ "cl:calcas_slime": {
+  "pt": "Calças de Slime",
+  "en": "Slimesuit Leggings",
+  "icone": "textures/items/cl/arte/calcas_slime"
+ },
+ "cl:calcas_viajante": {
+  "pt": "Calças de Viajante",
+  "en": "Traveler's Pants",
+  "icone": "textures/items/cl/arte/calcas_viajante"
+ },
  "cl:caldeira": {
   "pt": "Caldeira",
   "en": "Boiler",
@@ -1240,6 +1720,116 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cano de Oxigênio",
   "en": "Oxygen Pipe",
   "icone": "textures/items/cl/c/cano_oxigenio"
+ },
+ "cl:capacete_placa_aco": {
+  "pt": "Capacete de Placa de Aço",
+  "en": "Steel Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_aco"
+ },
+ "cl:capacete_placa_aco_slime": {
+  "pt": "Capacete de Placa de Aço de Slime",
+  "en": "Slimesteel Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_aco_slime"
+ },
+ "cl:capacete_placa_aluminio": {
+  "pt": "Capacete de Placa de Alumínio",
+  "en": "Aluminum Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_aluminio"
+ },
+ "cl:capacete_placa_bronze": {
+  "pt": "Capacete de Placa de Bronze",
+  "en": "Bronze Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_bronze"
+ },
+ "cl:capacete_placa_bronze_ametista": {
+  "pt": "Capacete de Placa de Bronze de Ametista",
+  "en": "Amethyst Bronze Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_bronze_ametista"
+ },
+ "cl:capacete_placa_cobalto": {
+  "pt": "Capacete de Placa de Cobalto",
+  "en": "Cobalt Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_cobalto"
+ },
+ "cl:capacete_placa_cobre": {
+  "pt": "Capacete de Placa de Cobre",
+  "en": "Copper Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_cobre"
+ },
+ "cl:capacete_placa_ferro": {
+  "pt": "Capacete de Placa de Ferro",
+  "en": "Iron Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_ferro"
+ },
+ "cl:capacete_placa_ferro_porco": {
+  "pt": "Capacete de Placa de Ferro-Porco",
+  "en": "Pig Iron Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_ferro_porco"
+ },
+ "cl:capacete_placa_hepatizon": {
+  "pt": "Capacete de Placa de Hepatizão",
+  "en": "Hepatizon Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_hepatizon"
+ },
+ "cl:capacete_placa_manyullyn": {
+  "pt": "Capacete de Placa de Manyullyn",
+  "en": "Manyullyn Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_manyullyn"
+ },
+ "cl:capacete_placa_obsidiana": {
+  "pt": "Capacete de Placa de Obsidiana",
+  "en": "Obsidian Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_obsidiana"
+ },
+ "cl:capacete_placa_osmio": {
+  "pt": "Capacete de Placa de Ósmio",
+  "en": "Osmium Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_osmio"
+ },
+ "cl:capacete_placa_ouro": {
+  "pt": "Capacete de Placa de Ouro",
+  "en": "Gold Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_ouro"
+ },
+ "cl:capacete_placa_ouro_rosa": {
+  "pt": "Capacete de Placa de Ouro Rosa",
+  "en": "Rose Gold Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_ouro_rosa"
+ },
+ "cl:capacete_placa_pedra_chamuscada": {
+  "pt": "Capacete de Placa de Pedra Chamuscada",
+  "en": "Scorched Stone Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_pedra_chamuscada"
+ },
+ "cl:capacete_placa_pedra_refrataria": {
+  "pt": "Capacete de Placa de Pedra Carbonizada",
+  "en": "Seared Stone Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_pedra_refrataria"
+ },
+ "cl:capacete_placa_slime_brasa": {
+  "pt": "Capacete de Placa de Slime de Brasa",
+  "en": "Cinderslime Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_slime_brasa"
+ },
+ "cl:capacete_placa_slime_cavaleiro": {
+  "pt": "Capacete de Placa de Slime-Cavaleiro",
+  "en": "Knightslime Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_slime_cavaleiro"
+ },
+ "cl:capacete_placa_slime_rainha": {
+  "pt": "Capacete de Placa de Slime da Rainha",
+  "en": "Queen's Slime Plate Helmet",
+  "icone": "textures/items/cl/arte/capacete_placa_slime_rainha"
+ },
+ "cl:capacete_slime": {
+  "pt": "Crânio de Slime",
+  "en": "Slimeskull",
+  "icone": "textures/items/cl/arte/capacete_slime"
+ },
+ "cl:capacete_viajante": {
+  "pt": "Óculos de Viajante",
+  "en": "Traveler's Goggles",
+  "icone": "textures/items/cl/arte/capacete_viajante"
  },
  "cl:capacitor": {
   "pt": "Capacitor",
@@ -2241,6 +2831,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Elite Energy Cube",
   "icone": "textures/items/cl/arte/blocos/cubo_energia_elite"
  },
+ "cl:dardo_cobalto": {
+  "pt": "Dardo de Cobalto",
+  "en": "Cobalt Javelin",
+  "icone": "textures/items/cl/arte/dardo_cobalto"
+ },
+ "cl:dardo_ferro": {
+  "pt": "Dardo de Ferro",
+  "en": "Iron Javelin",
+  "icone": "textures/items/cl/arte/dardo_ferro"
+ },
+ "cl:dardo_manyullyn": {
+  "pt": "Dardo de Manyullyn",
+  "en": "Manyullyn Javelin",
+  "icone": "textures/items/cl/arte/dardo_manyullyn"
+ },
+ "cl:dardo_silex": {
+  "pt": "Dardo de Sílex",
+  "en": "Flint Javelin",
+  "icone": "textures/items/cl/arte/dardo_silex"
+ },
  "cl:descarregador_ardente": {
   "pt": "Descarregador Ardente",
   "en": "Blazing Energy Discharger",
@@ -2630,6 +3240,111 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Escória",
   "en": "Slag",
   "icone": "textures/items/cl/c/escoria"
+ },
+ "cl:escudo_placa_aco": {
+  "pt": "Escudo de Placa de Aço",
+  "en": "Steel Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_aco"
+ },
+ "cl:escudo_placa_aco_slime": {
+  "pt": "Escudo de Placa de Aço de Slime",
+  "en": "Slimesteel Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_aco_slime"
+ },
+ "cl:escudo_placa_aluminio": {
+  "pt": "Escudo de Placa de Alumínio",
+  "en": "Aluminum Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_aluminio"
+ },
+ "cl:escudo_placa_bronze": {
+  "pt": "Escudo de Placa de Bronze",
+  "en": "Bronze Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_bronze"
+ },
+ "cl:escudo_placa_bronze_ametista": {
+  "pt": "Escudo de Placa de Bronze de Ametista",
+  "en": "Amethyst Bronze Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_bronze_ametista"
+ },
+ "cl:escudo_placa_cobalto": {
+  "pt": "Escudo de Placa de Cobalto",
+  "en": "Cobalt Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_cobalto"
+ },
+ "cl:escudo_placa_cobre": {
+  "pt": "Escudo de Placa de Cobre",
+  "en": "Copper Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_cobre"
+ },
+ "cl:escudo_placa_ferro": {
+  "pt": "Escudo de Placa de Ferro",
+  "en": "Iron Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_ferro"
+ },
+ "cl:escudo_placa_ferro_porco": {
+  "pt": "Escudo de Placa de Ferro-Porco",
+  "en": "Pig Iron Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_ferro_porco"
+ },
+ "cl:escudo_placa_hepatizon": {
+  "pt": "Escudo de Placa de Hepatizão",
+  "en": "Hepatizon Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_hepatizon"
+ },
+ "cl:escudo_placa_manyullyn": {
+  "pt": "Escudo de Placa de Manyullyn",
+  "en": "Manyullyn Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_manyullyn"
+ },
+ "cl:escudo_placa_obsidiana": {
+  "pt": "Escudo de Placa de Obsidiana",
+  "en": "Obsidian Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_obsidiana"
+ },
+ "cl:escudo_placa_osmio": {
+  "pt": "Escudo de Placa de Ósmio",
+  "en": "Osmium Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_osmio"
+ },
+ "cl:escudo_placa_ouro": {
+  "pt": "Escudo de Placa de Ouro",
+  "en": "Gold Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_ouro"
+ },
+ "cl:escudo_placa_ouro_rosa": {
+  "pt": "Escudo de Placa de Ouro Rosa",
+  "en": "Rose Gold Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_ouro_rosa"
+ },
+ "cl:escudo_placa_pedra_chamuscada": {
+  "pt": "Escudo de Placa de Pedra Chamuscada",
+  "en": "Scorched Stone Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_pedra_chamuscada"
+ },
+ "cl:escudo_placa_pedra_refrataria": {
+  "pt": "Escudo de Placa de Pedra Carbonizada",
+  "en": "Seared Stone Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_pedra_refrataria"
+ },
+ "cl:escudo_placa_slime_brasa": {
+  "pt": "Escudo de Placa de Slime de Brasa",
+  "en": "Cinderslime Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_slime_brasa"
+ },
+ "cl:escudo_placa_slime_cavaleiro": {
+  "pt": "Escudo de Placa de Slime-Cavaleiro",
+  "en": "Knightslime Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_slime_cavaleiro"
+ },
+ "cl:escudo_placa_slime_rainha": {
+  "pt": "Escudo de Placa de Slime da Rainha",
+  "en": "Queen's Slime Plate Shield",
+  "icone": "textures/items/cl/arte/escudo_placa_slime_rainha"
+ },
+ "cl:escudo_viajante": {
+  "pt": "Escudo de Viajante",
+  "en": "Traveler's Shield",
+  "icone": "textures/items/cl/arte/escudo_viajante"
  },
  "cl:esfera_aco_end": {
   "pt": "Esfera de Trituração de Aço do End",
@@ -4501,6 +5216,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Hand Axe",
   "icone": "textures/items/cl/arte/machadinha_slime_rainha"
  },
+ "cl:machado_arremesso_cobalto": {
+  "pt": "Machado de Arremesso de Cobalto",
+  "en": "Cobalt Throwing Axe",
+  "icone": "textures/items/cl/arte/machado_arremesso_cobalto"
+ },
+ "cl:machado_arremesso_ferro": {
+  "pt": "Machado de Arremesso de Ferro",
+  "en": "Iron Throwing Axe",
+  "icone": "textures/items/cl/arte/machado_arremesso_ferro"
+ },
+ "cl:machado_arremesso_manyullyn": {
+  "pt": "Machado de Arremesso de Manyullyn",
+  "en": "Manyullyn Throwing Axe",
+  "icone": "textures/items/cl/arte/machado_arremesso_manyullyn"
+ },
+ "cl:machado_arremesso_silex": {
+  "pt": "Machado de Arremesso de Sílex",
+  "en": "Flint Throwing Axe",
+  "icone": "textures/items/cl/arte/machado_arremesso_silex"
+ },
  "cl:machado_largo_aco": {
   "pt": "Machado Grande de Aço",
   "en": "Steel Broad Axe",
@@ -4700,6 +5435,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Maionese",
   "en": "Mayonnaise",
   "icone": "textures/items/cl/arte/maionese"
+ },
+ "cl:malha": {
+  "pt": "Malha",
+  "en": "Maille",
+  "icone": "textures/items/cl/c/malha"
  },
  "cl:manivela": {
   "pt": "Manivela",
@@ -8566,6 +9306,116 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pebble",
   "icone": "textures/items/cl/arte/pedrinha"
  },
+ "cl:peitoral_placa_aco": {
+  "pt": "Peitoral de Placa de Aço",
+  "en": "Steel Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_aco"
+ },
+ "cl:peitoral_placa_aco_slime": {
+  "pt": "Peitoral de Placa de Aço de Slime",
+  "en": "Slimesteel Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_aco_slime"
+ },
+ "cl:peitoral_placa_aluminio": {
+  "pt": "Peitoral de Placa de Alumínio",
+  "en": "Aluminum Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_aluminio"
+ },
+ "cl:peitoral_placa_bronze": {
+  "pt": "Peitoral de Placa de Bronze",
+  "en": "Bronze Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_bronze"
+ },
+ "cl:peitoral_placa_bronze_ametista": {
+  "pt": "Peitoral de Placa de Bronze de Ametista",
+  "en": "Amethyst Bronze Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_bronze_ametista"
+ },
+ "cl:peitoral_placa_cobalto": {
+  "pt": "Peitoral de Placa de Cobalto",
+  "en": "Cobalt Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_cobalto"
+ },
+ "cl:peitoral_placa_cobre": {
+  "pt": "Peitoral de Placa de Cobre",
+  "en": "Copper Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_cobre"
+ },
+ "cl:peitoral_placa_ferro": {
+  "pt": "Peitoral de Placa de Ferro",
+  "en": "Iron Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_ferro"
+ },
+ "cl:peitoral_placa_ferro_porco": {
+  "pt": "Peitoral de Placa de Ferro-Porco",
+  "en": "Pig Iron Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_ferro_porco"
+ },
+ "cl:peitoral_placa_hepatizon": {
+  "pt": "Peitoral de Placa de Hepatizão",
+  "en": "Hepatizon Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_hepatizon"
+ },
+ "cl:peitoral_placa_manyullyn": {
+  "pt": "Peitoral de Placa de Manyullyn",
+  "en": "Manyullyn Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_manyullyn"
+ },
+ "cl:peitoral_placa_obsidiana": {
+  "pt": "Peitoral de Placa de Obsidiana",
+  "en": "Obsidian Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_obsidiana"
+ },
+ "cl:peitoral_placa_osmio": {
+  "pt": "Peitoral de Placa de Ósmio",
+  "en": "Osmium Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_osmio"
+ },
+ "cl:peitoral_placa_ouro": {
+  "pt": "Peitoral de Placa de Ouro",
+  "en": "Gold Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_ouro"
+ },
+ "cl:peitoral_placa_ouro_rosa": {
+  "pt": "Peitoral de Placa de Ouro Rosa",
+  "en": "Rose Gold Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_ouro_rosa"
+ },
+ "cl:peitoral_placa_pedra_chamuscada": {
+  "pt": "Peitoral de Placa de Pedra Chamuscada",
+  "en": "Scorched Stone Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_pedra_chamuscada"
+ },
+ "cl:peitoral_placa_pedra_refrataria": {
+  "pt": "Peitoral de Placa de Pedra Carbonizada",
+  "en": "Seared Stone Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_pedra_refrataria"
+ },
+ "cl:peitoral_placa_slime_brasa": {
+  "pt": "Peitoral de Placa de Slime de Brasa",
+  "en": "Cinderslime Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_slime_brasa"
+ },
+ "cl:peitoral_placa_slime_cavaleiro": {
+  "pt": "Peitoral de Placa de Slime-Cavaleiro",
+  "en": "Knightslime Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_slime_cavaleiro"
+ },
+ "cl:peitoral_placa_slime_rainha": {
+  "pt": "Peitoral de Placa de Slime da Rainha",
+  "en": "Queen's Slime Plate Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_placa_slime_rainha"
+ },
+ "cl:peitoral_slime": {
+  "pt": "Peitoral de Slime",
+  "en": "Slimesuit Chestplate",
+  "icone": "textures/items/cl/arte/peitoral_slime"
+ },
+ "cl:peitoral_viajante": {
+  "pt": "Colete de Viajante",
+  "en": "Traveler's Vest",
+  "icone": "textures/items/cl/arte/peitoral_viajante"
+ },
  "cl:pemmican": {
   "pt": "Pemmican",
   "en": "Pemmican",
@@ -10026,6 +10876,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Precision Sawmill",
   "icone": "textures/blocks/cl/arte/serraria_precisao_topo"
  },
+ "cl:shuriken_cobalto": {
+  "pt": "Shuriken de Cobalto",
+  "en": "Cobalt Shuriken",
+  "icone": "textures/items/cl/arte/shuriken_cobalto"
+ },
+ "cl:shuriken_ferro": {
+  "pt": "Shuriken de Ferro",
+  "en": "Iron Shuriken",
+  "icone": "textures/items/cl/arte/shuriken_ferro"
+ },
+ "cl:shuriken_manyullyn": {
+  "pt": "Shuriken de Manyullyn",
+  "en": "Manyullyn Shuriken",
+  "icone": "textures/items/cl/arte/shuriken_manyullyn"
+ },
+ "cl:shuriken_silex": {
+  "pt": "Shuriken de Sílex",
+  "en": "Flint Shuriken",
+  "icone": "textures/items/cl/arte/shuriken_silex"
+ },
  "cl:silicio": {
   "pt": "Silício",
   "en": "Silicon",
@@ -10075,6 +10945,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Slime-da-Terra Congelado",
   "en": "Congealed Earthslime",
   "icone": "textures/blocks/cl/arte/slime_congelado_terra"
+ },
+ "cl:slimelitros": {
+  "pt": "Slimélitros",
+  "en": "Slimelytra",
+  "icone": "textures/items/cl/arte/slimelitros"
  },
  "cl:solo_lunar": {
   "pt": "Solo Lunar",
@@ -11019,6 +11894,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Carrots",
   "icone": "textures/blocks/carrots_stage_0"
  },
+ "minecraft:chain": {
+  "pt": "Corrente",
+  "en": "Chain",
+  "icone": "textures/items/chain"
+ },
  "minecraft:charcoal": {
   "pt": "Carvão Vegetal",
   "en": "Charcoal",
@@ -11814,6 +12694,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Paper",
   "icone": "textures/items/paper"
  },
+ "minecraft:phantom_membrane": {
+  "pt": "Membrana de Fantasma",
+  "en": "Phantom Membrane",
+  "icone": "textures/items/phantom_membrane"
+ },
  "minecraft:pink_dye": {
   "pt": "Corante Rosa",
   "en": "Pink Dye",
@@ -12237,6 +13122,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",
   "icone": "textures/blocks/chest_front"
+ },
+ "minecraft:tripwire_hook": {
+  "pt": "Gancho Disparador",
+  "en": "Tripwire Hook",
+  "icone": "textures/blocks/trip_wire_source"
  },
  "minecraft:twisting_vines": {
   "pt": "Trepadeiras Retorcidas",
@@ -13367,6 +14257,500 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_arco_longo_aco",
+  "resultado": "cl:arco_longo_aco",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_aco_slime",
+  "resultado": "cl:arco_longo_aco_slime",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_aluminio",
+  "resultado": "cl:arco_longo_aluminio",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_bronze",
+  "resultado": "cl:arco_longo_bronze",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_bronze_ametista",
+  "resultado": "cl:arco_longo_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_cacto",
+  "resultado": "cl:arco_longo_cacto",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "minecraft:cactus",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_cobalto",
+  "resultado": "cl:arco_longo_cobalto",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_cobre",
+  "resultado": "cl:arco_longo_cobre",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_coro",
+  "resultado": "cl:arco_longo_coro",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "minecraft:popped_chorus_fruit",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_ferro",
+  "resultado": "cl:arco_longo_ferro",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_ferro_porco",
+  "resultado": "cl:arco_longo_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_hepatizon",
+  "resultado": "cl:arco_longo_hepatizon",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_madeira",
+  "resultado": "cl:arco_longo_madeira",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "#minecraft:planks",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_madeira_slime",
+  "resultado": "cl:arco_longo_madeira_slime",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:tabuas_verdecoracao",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_madeira_slime_revestida",
+  "resultado": "cl:arco_longo_madeira_slime_revestida",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_latao",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_madeira_tratada",
+  "resultado": "cl:arco_longo_madeira_tratada",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:tabuas_tratadas",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_manyullyn",
+  "resultado": "cl:arco_longo_manyullyn",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_nahuatl",
+  "resultado": "cl:arco_longo_nahuatl",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:nahuatl",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_osso",
+  "resultado": "cl:arco_longo_osso",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "minecraft:bone",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_osso_blaze",
+  "resultado": "cl:arco_longo_osso_blaze",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:osso_blaze",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_osso_necrotico",
+  "resultado": "cl:arco_longo_osso_necrotico",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:osso_necrotico",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_osso_venenoso",
+  "resultado": "cl:arco_longo_osso_venenoso",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:osso_venenoso",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_ouro_rosa",
+  "resultado": "cl:arco_longo_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_slime_brasa",
+  "resultado": "cl:arco_longo_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_slime_cavaleiro",
+  "resultado": "cl:arco_longo_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arco_longo_slime_rainha",
+  "resultado": "cl:arco_longo_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   " MS",
+   "G S",
+   " MS"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "S": "minecraft:string",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_arenito_liso",
   "resultado": "cl:arenito_liso",
   "qtd": 4,
@@ -14030,6 +15414,526 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_aco",
+  "resultado": "cl:besta_aco",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_aco_slime",
+  "resultado": "cl:besta_aco_slime",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_aluminio",
+  "resultado": "cl:besta_aluminio",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_bronze",
+  "resultado": "cl:besta_bronze",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_bronze_ametista",
+  "resultado": "cl:besta_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_cacto",
+  "resultado": "cl:besta_cacto",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "minecraft:cactus",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_cobalto",
+  "resultado": "cl:besta_cobalto",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_cobre",
+  "resultado": "cl:besta_cobre",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_coro",
+  "resultado": "cl:besta_coro",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "minecraft:popped_chorus_fruit",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_ferro",
+  "resultado": "cl:besta_ferro",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_ferro_porco",
+  "resultado": "cl:besta_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_hepatizon",
+  "resultado": "cl:besta_hepatizon",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_madeira",
+  "resultado": "cl:besta_madeira",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "#minecraft:planks",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_madeira_slime",
+  "resultado": "cl:besta_madeira_slime",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:tabuas_verdecoracao",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_madeira_slime_revestida",
+  "resultado": "cl:besta_madeira_slime_revestida",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_latao",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_madeira_tratada",
+  "resultado": "cl:besta_madeira_tratada",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:tabuas_tratadas",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_manyullyn",
+  "resultado": "cl:besta_manyullyn",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_nahuatl",
+  "resultado": "cl:besta_nahuatl",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:nahuatl",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_osso",
+  "resultado": "cl:besta_osso",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "minecraft:bone",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_osso_blaze",
+  "resultado": "cl:besta_osso_blaze",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:osso_blaze",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_osso_necrotico",
+  "resultado": "cl:besta_osso_necrotico",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:osso_necrotico",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_osso_venenoso",
+  "resultado": "cl:besta_osso_venenoso",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:osso_venenoso",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_ouro_rosa",
+  "resultado": "cl:besta_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_slime_brasa",
+  "resultado": "cl:besta_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_slime_cavaleiro",
+  "resultado": "cl:besta_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_besta_slime_rainha",
+  "resultado": "cl:besta_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   "MSM",
+   "STS",
+   " G "
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "S": "minecraft:string",
+   "T": "minecraft:tripwire_hook",
+   "G": "minecraft:stick"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -14864,6 +16768,379 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_botas_placa_aco",
+  "resultado": "cl:botas_placa_aco",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_aco_slime",
+  "resultado": "cl:botas_placa_aco_slime",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_aluminio",
+  "resultado": "cl:botas_placa_aluminio",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_bronze",
+  "resultado": "cl:botas_placa_bronze",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_bronze_ametista",
+  "resultado": "cl:botas_placa_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_cobalto",
+  "resultado": "cl:botas_placa_cobalto",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_cobre",
+  "resultado": "cl:botas_placa_cobre",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_ferro",
+  "resultado": "cl:botas_placa_ferro",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_ferro_porco",
+  "resultado": "cl:botas_placa_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_hepatizon",
+  "resultado": "cl:botas_placa_hepatizon",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_manyullyn",
+  "resultado": "cl:botas_placa_manyullyn",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_obsidiana",
+  "resultado": "cl:botas_placa_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:obsidian",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_osmio",
+  "resultado": "cl:botas_placa_osmio",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_osmio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_ouro",
+  "resultado": "cl:botas_placa_ouro",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_ouro_rosa",
+  "resultado": "cl:botas_placa_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_pedra_chamuscada",
+  "resultado": "cl:botas_placa_pedra_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_chamuscado",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_pedra_refrataria",
+  "resultado": "cl:botas_placa_pedra_refrataria",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_refratario",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_slime_brasa",
+  "resultado": "cl:botas_placa_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_slime_cavaleiro",
+  "resultado": "cl:botas_placa_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_placa_slime_rainha",
+  "resultado": "cl:botas_placa_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_slime",
+  "resultado": "cl:botas_slime",
+  "qtd": 1,
+  "grade": [
+   "S S",
+   "S S"
+  ],
+  "chaves": {
+   "S": "cl:slime_congelado_ceu"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_botas_viajante",
+  "resultado": "cl:botas_viajante",
+  "qtd": 1,
+  "grade": [
+   "L L",
+   "C C"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "C": "minecraft:copper_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bussola_aviao",
   "resultado": "cl:bussola_aviao",
   "qtd": 1,
@@ -15193,6 +17470,401 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_calcas_placa_aco",
+  "resultado": "cl:calcas_placa_aco",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_aco_slime",
+  "resultado": "cl:calcas_placa_aco_slime",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_aluminio",
+  "resultado": "cl:calcas_placa_aluminio",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_bronze",
+  "resultado": "cl:calcas_placa_bronze",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_bronze_ametista",
+  "resultado": "cl:calcas_placa_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_cobalto",
+  "resultado": "cl:calcas_placa_cobalto",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_cobre",
+  "resultado": "cl:calcas_placa_cobre",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_ferro",
+  "resultado": "cl:calcas_placa_ferro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_ferro_porco",
+  "resultado": "cl:calcas_placa_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_hepatizon",
+  "resultado": "cl:calcas_placa_hepatizon",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_manyullyn",
+  "resultado": "cl:calcas_placa_manyullyn",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_obsidiana",
+  "resultado": "cl:calcas_placa_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:obsidian",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_osmio",
+  "resultado": "cl:calcas_placa_osmio",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_osmio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_ouro",
+  "resultado": "cl:calcas_placa_ouro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_ouro_rosa",
+  "resultado": "cl:calcas_placa_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_pedra_chamuscada",
+  "resultado": "cl:calcas_placa_pedra_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_chamuscado",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_pedra_refrataria",
+  "resultado": "cl:calcas_placa_pedra_refrataria",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_refratario",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_slime_brasa",
+  "resultado": "cl:calcas_placa_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_slime_cavaleiro",
+  "resultado": "cl:calcas_placa_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_placa_slime_rainha",
+  "resultado": "cl:calcas_placa_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM",
+   "M M"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_slime",
+  "resultado": "cl:calcas_slime",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "S S",
+   "S S"
+  ],
+  "chaves": {
+   "S": "cl:slime_congelado_ceu"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_calcas_viajante",
+  "resultado": "cl:calcas_viajante",
+  "qtd": 1,
+  "grade": [
+   "LCL",
+   "L L",
+   "L L"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "C": "minecraft:copper_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_caldeira",
   "resultado": "cl:caldeira",
   "qtd": 1,
@@ -15221,6 +17893,381 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "X": "minecraft:glass_pane"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_aco",
+  "resultado": "cl:capacete_placa_aco",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_aco_slime",
+  "resultado": "cl:capacete_placa_aco_slime",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_aluminio",
+  "resultado": "cl:capacete_placa_aluminio",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_bronze",
+  "resultado": "cl:capacete_placa_bronze",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_bronze_ametista",
+  "resultado": "cl:capacete_placa_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_cobalto",
+  "resultado": "cl:capacete_placa_cobalto",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_cobre",
+  "resultado": "cl:capacete_placa_cobre",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_ferro",
+  "resultado": "cl:capacete_placa_ferro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_ferro_porco",
+  "resultado": "cl:capacete_placa_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_hepatizon",
+  "resultado": "cl:capacete_placa_hepatizon",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_manyullyn",
+  "resultado": "cl:capacete_placa_manyullyn",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_obsidiana",
+  "resultado": "cl:capacete_placa_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "minecraft:obsidian",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_osmio",
+  "resultado": "cl:capacete_placa_osmio",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_osmio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_ouro",
+  "resultado": "cl:capacete_placa_ouro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_ouro_rosa",
+  "resultado": "cl:capacete_placa_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_pedra_chamuscada",
+  "resultado": "cl:capacete_placa_pedra_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_chamuscado",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_pedra_refrataria",
+  "resultado": "cl:capacete_placa_pedra_refrataria",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_refratario",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_slime_brasa",
+  "resultado": "cl:capacete_placa_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_slime_cavaleiro",
+  "resultado": "cl:capacete_placa_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_placa_slime_rainha",
+  "resultado": "cl:capacete_placa_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   "MMM",
+   "MLM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_slime",
+  "resultado": "cl:capacete_slime",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SBS"
+  ],
+  "chaves": {
+   "S": "cl:slime_congelado_ceu",
+   "B": "minecraft:bone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacete_viajante",
+  "resultado": "cl:capacete_viajante",
+  "qtd": 1,
+  "grade": [
+   "LCL",
+   "G G"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "C": "minecraft:copper_ingot",
+   "G": "minecraft:glass"
   },
   "estacoes": [
    "crafting_table"
@@ -16159,6 +19206,98 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "minecraft:stone",
    "I": "cl:eixo"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_dardo_cobalto",
+  "resultado": "cl:dardo_cobalto",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_cobalto",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:feather",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_dardo_ferro",
+  "resultado": "cl:dardo_ferro",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:iron_ingot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:feather",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_dardo_manyullyn",
+  "resultado": "cl:dardo_manyullyn",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_manyullyn",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:feather",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_dardo_silex",
+  "resultado": "cl:dardo_silex",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:flint",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:feather",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -18518,6 +21657,385 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_escudo_placa_aco",
+  "resultado": "cl:escudo_placa_aco",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_aco_slime",
+  "resultado": "cl:escudo_placa_aco_slime",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_aluminio",
+  "resultado": "cl:escudo_placa_aluminio",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_bronze",
+  "resultado": "cl:escudo_placa_bronze",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_bronze_ametista",
+  "resultado": "cl:escudo_placa_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_cobalto",
+  "resultado": "cl:escudo_placa_cobalto",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_cobre",
+  "resultado": "cl:escudo_placa_cobre",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_ferro",
+  "resultado": "cl:escudo_placa_ferro",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_ferro_porco",
+  "resultado": "cl:escudo_placa_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_hepatizon",
+  "resultado": "cl:escudo_placa_hepatizon",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_manyullyn",
+  "resultado": "cl:escudo_placa_manyullyn",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_obsidiana",
+  "resultado": "cl:escudo_placa_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:obsidian",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_osmio",
+  "resultado": "cl:escudo_placa_osmio",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_osmio",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_ouro",
+  "resultado": "cl:escudo_placa_ouro",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_ouro_rosa",
+  "resultado": "cl:escudo_placa_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_pedra_chamuscada",
+  "resultado": "cl:escudo_placa_pedra_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:tijolo_chamuscado",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_pedra_refrataria",
+  "resultado": "cl:escudo_placa_pedra_refrataria",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:tijolo_refratario",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_slime_brasa",
+  "resultado": "cl:escudo_placa_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_slime_cavaleiro",
+  "resultado": "cl:escudo_placa_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_placa_slime_rainha",
+  "resultado": "cl:escudo_placa_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   "MPM",
+   "MPM",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_escudo_viajante",
+  "resultado": "cl:escudo_viajante",
+  "qtd": 1,
+  "grade": [
+   "LCL",
+   "PPP",
+   " P "
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "C": "minecraft:copper_ingot",
+   "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_esgoto",
   "resultado": "cl:esgoto",
   "qtd": 1,
@@ -20255,6 +23773,115 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "#": "cl:palha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_machado_arremesso_cobalto",
+  "resultado": "cl:machado_arremesso_cobalto",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_cobalto",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_machado_arremesso_ferro",
+  "resultado": "cl:machado_arremesso_ferro",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:iron_ingot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_machado_arremesso_manyullyn",
+  "resultado": "cl:machado_arremesso_manyullyn",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:lingote_manyullyn",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_machado_arremesso_silex",
+  "resultado": "cl:machado_arremesso_silex",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "minecraft:flint",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:stick",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:string",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_malha",
+  "resultado": "cl:malha",
+  "qtd": 1,
+  "grade": [
+   " C ",
+   "C C",
+   " C "
+  ],
+  "chaves": {
+   "C": "minecraft:chain"
   },
   "estacoes": [
    "crafting_table"
@@ -22974,6 +26601,401 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "G": "cl:engrenagem_ouro",
    "D": "cl:engrenagem_diamante",
    "P": "minecraft:diamond_pickaxe"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_aco",
+  "resultado": "cl:peitoral_placa_aco",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_aco_slime",
+  "resultado": "cl:peitoral_placa_aco_slime",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco_slime",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_aluminio",
+  "resultado": "cl:peitoral_placa_aluminio",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aluminio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_bronze",
+  "resultado": "cl:peitoral_placa_bronze",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_bronze_ametista",
+  "resultado": "cl:peitoral_placa_bronze_ametista",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze_ametista",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_cobalto",
+  "resultado": "cl:peitoral_placa_cobalto",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_cobre",
+  "resultado": "cl:peitoral_placa_cobre",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_ferro",
+  "resultado": "cl:peitoral_placa_ferro",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_ferro_porco",
+  "resultado": "cl:peitoral_placa_ferro_porco",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ferro_porco",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_hepatizon",
+  "resultado": "cl:peitoral_placa_hepatizon",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_hepatizon",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_manyullyn",
+  "resultado": "cl:peitoral_placa_manyullyn",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_obsidiana",
+  "resultado": "cl:peitoral_placa_obsidiana",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:obsidian",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_osmio",
+  "resultado": "cl:peitoral_placa_osmio",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_osmio",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_ouro",
+  "resultado": "cl:peitoral_placa_ouro",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_ouro_rosa",
+  "resultado": "cl:peitoral_placa_ouro_rosa",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_ouro_rosa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_pedra_chamuscada",
+  "resultado": "cl:peitoral_placa_pedra_chamuscada",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_chamuscado",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_pedra_refrataria",
+  "resultado": "cl:peitoral_placa_pedra_refrataria",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:tijolo_refratario",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_slime_brasa",
+  "resultado": "cl:peitoral_placa_slime_brasa",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_brasa",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_slime_cavaleiro",
+  "resultado": "cl:peitoral_placa_slime_cavaleiro",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_cavaleiro",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_placa_slime_rainha",
+  "resultado": "cl:peitoral_placa_slime_rainha",
+  "qtd": 1,
+  "grade": [
+   "MLM",
+   "MMM",
+   "MMM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_slime_rainha",
+   "L": "cl:malha"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_slime",
+  "resultado": "cl:peitoral_slime",
+  "qtd": 1,
+  "grade": [
+   "S S",
+   "SSS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "cl:slime_congelado_ceu"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_peitoral_viajante",
+  "resultado": "cl:peitoral_viajante",
+  "qtd": 1,
+  "grade": [
+   "L L",
+   "LCL",
+   "LLL"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "C": "minecraft:copper_ingot"
   },
   "estacoes": [
    "crafting_table"
@@ -28052,6 +32074,74 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_shuriken_cobalto",
+  "resultado": "cl:shuriken_cobalto",
+  "qtd": 4,
+  "grade": [
+   " M ",
+   "M M",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_cobalto"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_shuriken_ferro",
+  "resultado": "cl:shuriken_ferro",
+  "qtd": 4,
+  "grade": [
+   " M ",
+   "M M",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_shuriken_manyullyn",
+  "resultado": "cl:shuriken_manyullyn",
+  "qtd": 4,
+  "grade": [
+   " M ",
+   "M M",
+   " M "
+  ],
+  "chaves": {
+   "M": "cl:lingote_manyullyn"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_shuriken_silex",
+  "resultado": "cl:shuriken_silex",
+  "qtd": 4,
+  "grade": [
+   " M ",
+   "M M",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:flint"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_silex_de_cascalho",
   "resultado": "minecraft:flint",
@@ -28156,6 +32246,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_slimelitros",
+  "resultado": "cl:slimelitros",
+  "qtd": 1,
+  "grade": [
+   "SMS",
+   "S S"
+  ],
+  "chaves": {
+   "S": "cl:slime_congelado_ender",
+   "M": "minecraft:phantom_membrane"
   },
   "estacoes": [
    "crafting_table"

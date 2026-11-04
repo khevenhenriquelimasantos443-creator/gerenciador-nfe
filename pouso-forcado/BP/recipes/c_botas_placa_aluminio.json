@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_botas_placa_aluminio"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MLM",
+      "M M"
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_aluminio"
+      },
+      "L": {
+        "item": "cl:malha"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:botas_placa_aluminio"
+    }
+  }
+}

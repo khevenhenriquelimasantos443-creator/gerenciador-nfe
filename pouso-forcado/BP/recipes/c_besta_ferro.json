@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_besta_ferro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MSM",
+      "STS",
+      " G "
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:iron_ingot"
+      },
+      "S": {
+        "item": "minecraft:string"
+      },
+      "T": {
+        "item": "minecraft:tripwire_hook"
+      },
+      "G": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:besta_ferro"
+    }
+  }
+}

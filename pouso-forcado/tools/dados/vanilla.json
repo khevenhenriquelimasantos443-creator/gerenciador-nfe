@@ -241,6 +241,11 @@
   "en": "Cauldron",
   "icone": "textures/items/cauldron"
  },
+ "minecraft:chain": {
+  "pt": "Corrente",
+  "en": "Chain",
+  "icone": "textures/items/chain"
+ },
  "minecraft:charcoal": {
   "pt": "Carvão Vegetal",
   "en": "Charcoal",
@@ -1056,6 +1061,11 @@
   "en": "Paper",
   "icone": "textures/items/paper"
  },
+ "minecraft:phantom_membrane": {
+  "pt": "Membrana de Fantasma",
+  "en": "Phantom Membrane",
+  "icone": "textures/items/phantom_membrane"
+ },
  "minecraft:pink_dye": {
   "pt": "Corante Rosa",
   "en": "Pink Dye",
@@ -1479,6 +1489,11 @@
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",
   "icone": "textures/blocks/chest_front"
+ },
+ "minecraft:tripwire_hook": {
+  "pt": "Gancho Disparador",
+  "en": "Tripwire Hook",
+  "icone": "textures/blocks/trip_wire_source"
  },
  "minecraft:twisting_vines": {
   "pt": "Trepadeiras Retorcidas",

@@ -2,7 +2,7 @@
 // Rodar no console do servidor (tools/testar-servidor.mjs explica):
 //   execute positioned <x> 46 <z> run gametest run pouso:<nome>
 // Cada teste usa a estrutura pouso:vazio (8x6x8, chão de pedra em y 0). Coordenadas relativas a ela.
-import { BlockPermutation, BlockVolume, Direction, GameMode, ItemStack, system, world } from "@minecraft/server";
+import { BlockPermutation, BlockVolume, Direction, EquipmentSlot, GameMode, ItemStack, system, world } from "@minecraft/server";
 import { register } from "@minecraft/server-gametest";
 
 const log = (m) => console.warn(`[TESTE] ${m}`);
@@ -1110,6 +1110,42 @@ teste("tinkers3_slime", 2400, (t) => {
     log(`tinkers3_slime: troncos=${troncos} folhas=${folhas} cachos=${cachos}`);
     t.assert(troncos >= 5 && folhas >= 10, "a muda de slime não virou árvore");
     t.assert(cachos >= 1, "a drusa não brotou cristal");
+    t.succeed();
+  });
+});
+
+// 1.28.0: armas do Tinkers 3. O robô veste o Peitoral de Placa de cobalto, joga um Shuriken e atira com o Arco Longo.
+teste("tinkers3_armas", 160, (t) => {
+  const j = robo(t, { x: 2.5, y: 1, z: 2.5 });
+  const inv = j.getComponent("inventory").container;
+  t.runAfterDelay(5, () => {
+    j.getComponent("equippable").setEquipment(EquipmentSlot.Chest, new ItemStack("cl:peitoral_placa_cobalto", 1));
+    inv.setItem(0, new ItemStack("cl:shuriken_ferro", 4));
+    inv.setItem(1, new ItemStack("cl:arco_longo_ferro", 1));
+    inv.setItem(2, new ItemStack("minecraft:arrow", 8));
+    j.selectedSlotIndex = 0;
+    j.lookAtLocation(t.worldLocation({ x: 6.5, y: 2, z: 6.5 }));
+    log(`tinkers3_armas: shuriken ${j.useItemInSlot(0)}`);
+  });
+  let viu = false;
+  const ouvir = world.afterEvents.entitySpawn.subscribe(({ entity }) => {
+    if (entity.typeId === "cl:shuriken_proj") viu = true;
+  });
+  t.runAfterDelay(30, () => {
+    j.selectedSlotIndex = 1;
+    log(`tinkers3_armas: arco ${j.useItemInSlot(1)}`);
+  });
+  t.runAfterDelay(60, () => j.stopUsingItem());
+  let flecha = false;
+  t.runAfterDelay(63, () => { flecha = t.getDimension().getEntities({ type: "minecraft:arrow", location: j.location, maxDistance: 30 }).length > 0; });
+  t.runAfterDelay(80, () => {
+    const peito = j.getComponent("equippable").getEquipment(EquipmentSlot.Chest)?.typeId;
+    const arco = inv.getItem(1);
+    world.afterEvents.entitySpawn.unsubscribe(ouvir);
+    log(`tinkers3_armas: peito=${peito} shuriken voou=${viu} shurikens=${quantos(j, "cl:shuriken_ferro")} flecha=${flecha} arco gasto=${arco?.getComponent("durability")?.damage} flechas=${quantos(j, "minecraft:arrow")}`);
+    t.assert(peito === "cl:peitoral_placa_cobalto", "não vestiu a armadura");
+    t.assert(viu, "o shuriken não voou");
+    t.assert(flecha || quantos(j, "minecraft:arrow") < 8, "o arco não atirou");
     t.succeed();
   });
 });

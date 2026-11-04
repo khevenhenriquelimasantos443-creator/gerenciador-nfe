@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:calcas_placa_osmio",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_calcas_placa_osmio",
+      "minecraft:display_name": {
+        "value": "item.cl:calcas_placa_osmio.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:wearable": {
+        "slot": "slot.armor.legs",
+        "protection": 3
+      },
+      "minecraft:durability": {
+        "max_durability": 375
+      },
+      "minecraft:enchantable": {
+        "slot": "armor_legs",
+        "value": 12
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "cl:tc_armadura"
+        ]
+      }
+    }
+  }
+}

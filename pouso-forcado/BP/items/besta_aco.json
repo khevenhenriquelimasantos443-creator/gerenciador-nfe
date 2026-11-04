@@ -1,0 +1,49 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:besta_aco",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_besta_aco",
+      "minecraft:display_name": {
+        "value": "item.cl:besta_aco.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:use_animation": "bow",
+      "minecraft:use_modifiers": {
+        "use_duration": 3600,
+        "movement_modifier": 0.35
+      },
+      "minecraft:shooter": {
+        "ammunition": [
+          {
+            "item": "minecraft:arrow",
+            "use_offhand": true,
+            "search_inventory": true,
+            "use_in_creative": true
+          }
+        ],
+        "max_draw_duration": 1.56,
+        "scale_power_by_draw_duration": true,
+        "charge_on_draw": false
+      },
+      "minecraft:durability": {
+        "max_durability": 1550
+      },
+      "minecraft:enchantable": {
+        "slot": "crossbow",
+        "value": 1
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:tc_arco"
+        ]
+      }
+    }
+  }
+}

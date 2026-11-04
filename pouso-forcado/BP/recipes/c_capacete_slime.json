@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_capacete_slime"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "SBS"
+    ],
+    "key": {
+      "S": {
+        "item": "cl:slime_congelado_ceu"
+      },
+      "B": {
+        "item": "minecraft:bone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:capacete_slime"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_capacete_placa_cobalto"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MMM",
+      "MLM"
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_cobalto"
+      },
+      "L": {
+        "item": "cl:malha"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:capacete_placa_cobalto"
+    }
+  }
+}
