@@ -7728,6 +7728,579 @@
     },
     "clc_mkm_rotary_condensentrator": {
       "textures": "textures/blocks/cl/arte/mkm_rotary_condensentrator"
+    },
+    "clc_fabrica_fundicao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_basica_frente"
+    },
+    "clc_fabrica_fundicao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_basica_lado"
+    },
+    "clc_fabrica_fundicao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_basica_topo"
+    },
+    "clc_fabrica_fundicao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_basica_baixo"
+    },
+    "clc_fabrica_fundicao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_avancada_frente"
+    },
+    "clc_fabrica_fundicao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_avancada_lado"
+    },
+    "clc_fabrica_fundicao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_avancada_topo"
+    },
+    "clc_fabrica_fundicao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_avancada_baixo"
+    },
+    "clc_fabrica_fundicao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_elite_frente"
+    },
+    "clc_fabrica_fundicao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_elite_lado"
+    },
+    "clc_fabrica_fundicao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_elite_topo"
+    },
+    "clc_fabrica_fundicao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_elite_baixo"
+    },
+    "clc_fabrica_fundicao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_definitiva_frente"
+    },
+    "clc_fabrica_fundicao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_definitiva_lado"
+    },
+    "clc_fabrica_fundicao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_definitiva_topo"
+    },
+    "clc_fabrica_fundicao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_fundicao_definitiva_baixo"
+    },
+    "clc_fabrica_enriquecimento_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_basica_frente"
+    },
+    "clc_fabrica_enriquecimento_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_basica_lado"
+    },
+    "clc_fabrica_enriquecimento_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_basica_topo"
+    },
+    "clc_fabrica_enriquecimento_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_basica_baixo"
+    },
+    "clc_fabrica_enriquecimento_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_avancada_frente"
+    },
+    "clc_fabrica_enriquecimento_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_avancada_lado"
+    },
+    "clc_fabrica_enriquecimento_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_avancada_topo"
+    },
+    "clc_fabrica_enriquecimento_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_avancada_baixo"
+    },
+    "clc_fabrica_enriquecimento_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_elite_frente"
+    },
+    "clc_fabrica_enriquecimento_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_elite_lado"
+    },
+    "clc_fabrica_enriquecimento_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_elite_topo"
+    },
+    "clc_fabrica_enriquecimento_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_elite_baixo"
+    },
+    "clc_fabrica_enriquecimento_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_definitiva_frente"
+    },
+    "clc_fabrica_enriquecimento_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_definitiva_lado"
+    },
+    "clc_fabrica_enriquecimento_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_definitiva_topo"
+    },
+    "clc_fabrica_enriquecimento_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_enriquecimento_definitiva_baixo"
+    },
+    "clc_fabrica_trituracao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_basica_frente"
+    },
+    "clc_fabrica_trituracao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_basica_lado"
+    },
+    "clc_fabrica_trituracao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_basica_topo"
+    },
+    "clc_fabrica_trituracao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_basica_baixo"
+    },
+    "clc_fabrica_trituracao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_avancada_frente"
+    },
+    "clc_fabrica_trituracao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_avancada_lado"
+    },
+    "clc_fabrica_trituracao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_avancada_topo"
+    },
+    "clc_fabrica_trituracao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_avancada_baixo"
+    },
+    "clc_fabrica_trituracao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_elite_frente"
+    },
+    "clc_fabrica_trituracao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_elite_lado"
+    },
+    "clc_fabrica_trituracao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_elite_topo"
+    },
+    "clc_fabrica_trituracao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_elite_baixo"
+    },
+    "clc_fabrica_trituracao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_definitiva_frente"
+    },
+    "clc_fabrica_trituracao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_definitiva_lado"
+    },
+    "clc_fabrica_trituracao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_definitiva_topo"
+    },
+    "clc_fabrica_trituracao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_trituracao_definitiva_baixo"
+    },
+    "clc_fabrica_compressao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_basica_frente"
+    },
+    "clc_fabrica_compressao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_basica_lado"
+    },
+    "clc_fabrica_compressao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_basica_topo"
+    },
+    "clc_fabrica_compressao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_basica_baixo"
+    },
+    "clc_fabrica_compressao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_avancada_frente"
+    },
+    "clc_fabrica_compressao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_avancada_lado"
+    },
+    "clc_fabrica_compressao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_avancada_topo"
+    },
+    "clc_fabrica_compressao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_avancada_baixo"
+    },
+    "clc_fabrica_compressao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_elite_frente"
+    },
+    "clc_fabrica_compressao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_elite_lado"
+    },
+    "clc_fabrica_compressao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_elite_topo"
+    },
+    "clc_fabrica_compressao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_elite_baixo"
+    },
+    "clc_fabrica_compressao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_definitiva_frente"
+    },
+    "clc_fabrica_compressao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_definitiva_lado"
+    },
+    "clc_fabrica_compressao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_definitiva_topo"
+    },
+    "clc_fabrica_compressao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_compressao_definitiva_baixo"
+    },
+    "clc_fabrica_combinacao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_basica_frente"
+    },
+    "clc_fabrica_combinacao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_basica_lado"
+    },
+    "clc_fabrica_combinacao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_basica_topo"
+    },
+    "clc_fabrica_combinacao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_basica_baixo"
+    },
+    "clc_fabrica_combinacao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_avancada_frente"
+    },
+    "clc_fabrica_combinacao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_avancada_lado"
+    },
+    "clc_fabrica_combinacao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_avancada_topo"
+    },
+    "clc_fabrica_combinacao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_avancada_baixo"
+    },
+    "clc_fabrica_combinacao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_elite_frente"
+    },
+    "clc_fabrica_combinacao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_elite_lado"
+    },
+    "clc_fabrica_combinacao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_elite_topo"
+    },
+    "clc_fabrica_combinacao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_elite_baixo"
+    },
+    "clc_fabrica_combinacao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_definitiva_frente"
+    },
+    "clc_fabrica_combinacao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_definitiva_lado"
+    },
+    "clc_fabrica_combinacao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_definitiva_topo"
+    },
+    "clc_fabrica_combinacao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_combinacao_definitiva_baixo"
+    },
+    "clc_fabrica_purificacao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_basica_frente"
+    },
+    "clc_fabrica_purificacao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_basica_lado"
+    },
+    "clc_fabrica_purificacao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_basica_topo"
+    },
+    "clc_fabrica_purificacao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_basica_baixo"
+    },
+    "clc_fabrica_purificacao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_avancada_frente"
+    },
+    "clc_fabrica_purificacao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_avancada_lado"
+    },
+    "clc_fabrica_purificacao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_avancada_topo"
+    },
+    "clc_fabrica_purificacao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_avancada_baixo"
+    },
+    "clc_fabrica_purificacao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_elite_frente"
+    },
+    "clc_fabrica_purificacao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_elite_lado"
+    },
+    "clc_fabrica_purificacao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_elite_topo"
+    },
+    "clc_fabrica_purificacao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_elite_baixo"
+    },
+    "clc_fabrica_purificacao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_definitiva_frente"
+    },
+    "clc_fabrica_purificacao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_definitiva_lado"
+    },
+    "clc_fabrica_purificacao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_definitiva_topo"
+    },
+    "clc_fabrica_purificacao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_purificacao_definitiva_baixo"
+    },
+    "clc_fabrica_injecao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_basica_frente"
+    },
+    "clc_fabrica_injecao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_basica_lado"
+    },
+    "clc_fabrica_injecao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_basica_topo"
+    },
+    "clc_fabrica_injecao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_basica_baixo"
+    },
+    "clc_fabrica_injecao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_avancada_frente"
+    },
+    "clc_fabrica_injecao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_avancada_lado"
+    },
+    "clc_fabrica_injecao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_avancada_topo"
+    },
+    "clc_fabrica_injecao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_avancada_baixo"
+    },
+    "clc_fabrica_injecao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_elite_frente"
+    },
+    "clc_fabrica_injecao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_elite_lado"
+    },
+    "clc_fabrica_injecao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_elite_topo"
+    },
+    "clc_fabrica_injecao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_elite_baixo"
+    },
+    "clc_fabrica_injecao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_definitiva_frente"
+    },
+    "clc_fabrica_injecao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_definitiva_lado"
+    },
+    "clc_fabrica_injecao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_definitiva_topo"
+    },
+    "clc_fabrica_injecao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_injecao_definitiva_baixo"
+    },
+    "clc_fabrica_infusao_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_basica_frente"
+    },
+    "clc_fabrica_infusao_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_basica_lado"
+    },
+    "clc_fabrica_infusao_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_basica_topo"
+    },
+    "clc_fabrica_infusao_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_basica_baixo"
+    },
+    "clc_fabrica_infusao_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_avancada_frente"
+    },
+    "clc_fabrica_infusao_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_avancada_lado"
+    },
+    "clc_fabrica_infusao_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_avancada_topo"
+    },
+    "clc_fabrica_infusao_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_avancada_baixo"
+    },
+    "clc_fabrica_infusao_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_elite_frente"
+    },
+    "clc_fabrica_infusao_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_elite_lado"
+    },
+    "clc_fabrica_infusao_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_elite_topo"
+    },
+    "clc_fabrica_infusao_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_elite_baixo"
+    },
+    "clc_fabrica_infusao_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_definitiva_frente"
+    },
+    "clc_fabrica_infusao_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_definitiva_lado"
+    },
+    "clc_fabrica_infusao_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_definitiva_topo"
+    },
+    "clc_fabrica_infusao_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_infusao_definitiva_baixo"
+    },
+    "clc_fabrica_serragem_basica_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_basica_frente"
+    },
+    "clc_fabrica_serragem_basica_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_basica_lado"
+    },
+    "clc_fabrica_serragem_basica_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_basica_topo"
+    },
+    "clc_fabrica_serragem_basica_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_basica_baixo"
+    },
+    "clc_fabrica_serragem_avancada_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_avancada_frente"
+    },
+    "clc_fabrica_serragem_avancada_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_avancada_lado"
+    },
+    "clc_fabrica_serragem_avancada_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_avancada_topo"
+    },
+    "clc_fabrica_serragem_avancada_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_avancada_baixo"
+    },
+    "clc_fabrica_serragem_elite_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_elite_frente"
+    },
+    "clc_fabrica_serragem_elite_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_elite_lado"
+    },
+    "clc_fabrica_serragem_elite_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_elite_topo"
+    },
+    "clc_fabrica_serragem_elite_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_elite_baixo"
+    },
+    "clc_fabrica_serragem_definitiva_frente": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_definitiva_frente"
+    },
+    "clc_fabrica_serragem_definitiva_lado": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_definitiva_lado"
+    },
+    "clc_fabrica_serragem_definitiva_topo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_definitiva_topo"
+    },
+    "clc_fabrica_serragem_definitiva_baixo": {
+      "textures": "textures/blocks/cl/c/fabrica_serragem_definitiva_baixo"
+    },
+    "clc_mkm_combining_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_combining_factory_back"
+    },
+    "clc_mkm_combining_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_combining_factory_bottom"
+    },
+    "clc_mkm_combining_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_combining_factory_front"
+    },
+    "clc_mkm_combining_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_combining_factory_side"
+    },
+    "clc_mkm_combining_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_combining_factory_top"
+    },
+    "clc_mkm_compressing_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_compressing_factory_back"
+    },
+    "clc_mkm_compressing_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_compressing_factory_bottom"
+    },
+    "clc_mkm_compressing_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+    },
+    "clc_mkm_compressing_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_compressing_factory_side"
+    },
+    "clc_mkm_compressing_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_compressing_factory_top"
+    },
+    "clc_mkm_crushing_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_crushing_factory_back"
+    },
+    "clc_mkm_crushing_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_crushing_factory_bottom"
+    },
+    "clc_mkm_crushing_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+    },
+    "clc_mkm_crushing_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_crushing_factory_side"
+    },
+    "clc_mkm_crushing_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_crushing_factory_top"
+    },
+    "clc_mkm_enriching_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_enriching_factory_back"
+    },
+    "clc_mkm_enriching_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_enriching_factory_bottom"
+    },
+    "clc_mkm_enriching_factory_elements": {
+      "textures": "textures/blocks/cl/arte/mkm_enriching_factory_elements"
+    },
+    "clc_mkm_enriching_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+    },
+    "clc_mkm_enriching_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_enriching_factory_side"
+    },
+    "clc_mkm_enriching_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_enriching_factory_top"
+    },
+    "clc_mkm_factory_front_back": {
+      "textures": "textures/blocks/cl/arte/mkm_factory_front_back"
+    },
+    "clc_mkm_infusing_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_infusing_factory_back"
+    },
+    "clc_mkm_infusing_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_infusing_factory_bottom"
+    },
+    "clc_mkm_infusing_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_infusing_factory_front"
+    },
+    "clc_mkm_infusing_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+    },
+    "clc_mkm_infusing_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_infusing_factory_top"
+    },
+    "clc_mkm_injecting_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_injecting_factory_back"
+    },
+    "clc_mkm_injecting_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_injecting_factory_bottom"
+    },
+    "clc_mkm_injecting_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+    },
+    "clc_mkm_injecting_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_injecting_factory_side"
+    },
+    "clc_mkm_injecting_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_injecting_factory_top"
+    },
+    "clc_mkm_led": {
+      "textures": "textures/blocks/cl/arte/mkm_led"
+    },
+    "clc_mkm_purifying_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_purifying_factory_back"
+    },
+    "clc_mkm_purifying_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_purifying_factory_bottom"
+    },
+    "clc_mkm_purifying_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_purifying_factory_front"
+    },
+    "clc_mkm_purifying_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+    },
+    "clc_mkm_purifying_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_purifying_factory_top"
+    },
+    "clc_mkm_sawing_factory_back": {
+      "textures": "textures/blocks/cl/arte/mkm_sawing_factory_back"
+    },
+    "clc_mkm_sawing_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_sawing_factory_bottom"
+    },
+    "clc_mkm_sawing_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+    },
+    "clc_mkm_sawing_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_sawing_factory_side"
+    },
+    "clc_mkm_sawing_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_sawing_factory_top"
+    },
+    "clc_mkm_smelting_factory_bottom": {
+      "textures": "textures/blocks/cl/arte/mkm_smelting_factory_bottom"
+    },
+    "clc_mkm_smelting_factory_front": {
+      "textures": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+    },
+    "clc_mkm_smelting_factory_side": {
+      "textures": "textures/blocks/cl/arte/mkm_smelting_factory_side"
+    },
+    "clc_mkm_smelting_factory_top": {
+      "textures": "textures/blocks/cl/arte/mkm_smelting_factory_top"
     }
   }
 }

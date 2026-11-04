@@ -3,7 +3,7 @@ import { THERMAL } from "../config.js";
 import { registrarNoCatalogo, Receita } from "../catalogo/catalogo.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
-import { gravar, ler, registrarDetalhe } from "../util/dados.js";
+import { gravar, ler } from "../util/dados.js";
 import { darAoJogador } from "../util/inventario.js";
 import { cabe, contar, entrada, entregar, gastarCE, primeiro, tirar } from "../util/maquina.js";
 import { peitoDe } from "../util/jogadores.js";
@@ -191,10 +191,7 @@ export function registrarMekanism(): void {
     j.playSound("random.fizz");
     aviso(j, { translate: "cl.mk.jetpack_cheio", with: [String(novo), String(JET.max)] }, 3);
   });
-  registrarDetalhe(["cl:camara_purificacao", "cl:camara_injecao"], (b) => {
-    const t = ler<Record<string, number>>("mk10_q", b, {});
-    return { text: `§7${Object.entries(t).map(([q, mb]) => `${q.replace("hydrogen_chloride", "HCl").replace("oxygen", "O₂")}: ${mb} mB`).join(", ") || "—"}` };
-  });
+  // (o WAILA da Purificação e da Injeção, com as melhorias, está em mekanism10.ts desde a 1.50.0)
   registrarNoCatalogo(() => {
     const r: Receita[] = [];
     const m = (id: string) => ({ maquina: { translate: `tile.${id}.name` }, maquinaId: id });

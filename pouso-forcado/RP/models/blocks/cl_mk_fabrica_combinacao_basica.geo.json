@@ -1,0 +1,669 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_fabrica_combinacao_basica",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        12,
+        -4
+       ],
+       "size": [
+        16,
+        4,
+        12
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          16,
+          0
+         ],
+         "uv_size": [
+          -12,
+          4
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          4
+         ],
+         "material_instance": "m_combining_factory_back"
+        },
+        "west": {
+         "uv": [
+          4,
+          0
+         ],
+         "uv_size": [
+          12,
+          4
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_combining_factory_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          15
+         ],
+         "uv_size": [
+          -16,
+          -11
+         ],
+         "material_instance": "m_combining_factory_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3,
+        4,
+        -4
+       ],
+       "size": [
+        6,
+        8,
+        10
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          4,
+          4
+         ],
+         "uv_size": [
+          10,
+          8
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "west": {
+         "uv": [
+          4,
+          4
+         ],
+         "uv_size": [
+          10,
+          8
+         ],
+         "material_instance": "m_combining_factory_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        16,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_combining_factory_front"
+        },
+        "east": {
+         "uv": [
+          4,
+          0
+         ],
+         "uv_size": [
+          -4,
+          16
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_combining_factory_back"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          4,
+          16
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -4
+         ],
+         "material_instance": "m_combining_factory_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          4
+         ],
+         "uv_size": [
+          -16,
+          -4
+         ],
+         "material_instance": "m_combining_factory_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        4,
+        6
+       ],
+       "size": [
+        8,
+        8,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "east": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          2,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "west": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          2,
+          8
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        4,
+        8
+       ],
+       "size": [
+        8,
+        8,
+        0
+       ],
+       "uv": {
+        "south": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -4
+       ],
+       "size": [
+        16,
+        4,
+        12
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -12,
+          4
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          12
+         ],
+         "uv_size": [
+          16,
+          4
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "west": {
+         "uv": [
+          4,
+          12
+         ],
+         "uv_size": [
+          12,
+          4
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_combining_factory_bottom"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_combining_factory_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        4,
+        -3
+       ],
+       "size": [
+        14,
+        3,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          9
+         ],
+         "uv_size": [
+          14,
+          3
+         ],
+         "material_instance": "m_combining_factory_back"
+        },
+        "east": {
+         "uv": [
+          5,
+          9
+         ],
+         "uv_size": [
+          10,
+          3
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          9
+         ],
+         "uv_size": [
+          14,
+          3
+         ],
+         "material_instance": "m_combining_factory_back"
+        },
+        "west": {
+         "uv": [
+          5,
+          9
+         ],
+         "uv_size": [
+          10,
+          3
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "up": {
+         "uv": [
+          7,
+          10
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_combining_factory_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        8,
+        -3
+       ],
+       "size": [
+        14,
+        3,
+        10
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          1,
+          5
+         ],
+         "uv_size": [
+          14,
+          3
+         ],
+         "material_instance": "m_combining_factory_back"
+        },
+        "east": {
+         "uv": [
+          5,
+          5
+         ],
+         "uv_size": [
+          10,
+          3
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          1,
+          5
+         ],
+         "uv_size": [
+          14,
+          3
+         ],
+         "material_instance": "m_combining_factory_back"
+        },
+        "west": {
+         "uv": [
+          5,
+          5
+         ],
+         "uv_size": [
+          10,
+          3
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "up": {
+         "uv": [
+          7,
+          6
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "down": {
+         "uv": [
+          7,
+          9
+         ],
+         "uv_size": [
+          -1,
+          -1
+         ],
+         "material_instance": "m_combining_factory_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        11,
+        4
+       ],
+       "size": [
+        10,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "east": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "west": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -5,
+        11,
+        -2
+       ],
+       "size": [
+        10,
+        1,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "east": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        },
+        "west": {
+         "uv": [
+          0,
+          9
+         ],
+         "uv_size": [
+          1,
+          1
+         ],
+         "material_instance": "m_combining_factory_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.0199999999999996,
+        14.99,
+        -7.99
+       ],
+       "size": [
+        6.039999999999999,
+        1.0,
+        1.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          6,
+          1
+         ],
+         "material_instance": "m_led"
+        },
+        "up": {
+         "uv": [
+          6,
+          1
+         ],
+         "uv_size": [
+          -6,
+          -1
+         ],
+         "material_instance": "m_led"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

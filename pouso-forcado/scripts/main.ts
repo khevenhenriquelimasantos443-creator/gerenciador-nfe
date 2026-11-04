@@ -56,7 +56,8 @@ import { registrarExtras } from "./mundo/extras.js";
 import { bomba, motor, pedreira, refinaria, registrarBuildcraft } from "./maquinas/buildcraft.js";
 import { componenteElevador, registrarOpenBlocks, tumulo } from "./jogador/openblocks.js";
 import { evaporador, registrarMekanism, separador } from "./maquinas/mekanism.js";
-import { COMPONENTES_MK10, infusor10, injecao10, purificacao10, registrarMekanism10, triturador10 } from "./maquinas/mekanism10.js";
+import { COMPONENTES_MK10, fabricaComp, infusor10, injecao10, purificacao10, registrarMekanism10, triturador10 } from "./maquinas/mekanism10.js";
+import { registrarMelhorias } from "./maquinas/mekanism_upgrades.js";
 import { registrarTempestade } from "./mundo/tempestade.js";
 import { registrarMissoes } from "./missoes/diario.js";
 import { registrarHordaNoturna } from "./mundo/horda_noturna.js";
@@ -217,6 +218,7 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:fruto_hc", frutoHc);
   blockComponentRegistry.registerCustomComponent("cl:mk_quimica", quimicaComp);
   blockComponentRegistry.registerCustomComponent("cl:mk_tanque", tanqueMkComp);
+  blockComponentRegistry.registerCustomComponent("cl:mk_fabrica", fabricaComp);
   blockComponentRegistry.registerCustomComponent("cl:caixa_entrega", caixaEntrega);
   for (const [id, comp] of Object.entries({
     "cl:separador_eletrolitico": separador, "cl:evaporador": evaporador,
@@ -346,6 +348,7 @@ registrarAutocraft();
 registrarTamareira();
 registrarHc2();
 registrarMekanismQuimica();
+registrarMelhorias();
 registrarEntrega();
 registrarVariedade();
 registrarCaldeirao();

@@ -125,6 +125,8 @@ export type Acao =
   | "hc2_horta"
   | "hc2_arvore"
   | "hc2_fruta"
+  | "mk_melhoria"
+  | "mk_fabrica"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -475,6 +477,9 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "mkq_acido", requer: ["mkq_oxidador"], objetivo: { tipo: "ter", item: "cl:cilindro_acido_sulfurico", qtd: 1 }, recompensa: [{ item: "cl:cilindro_vazio", quantidade: 8 }] },
       { id: "mkq_cristal", requer: ["mkq_acido"], objetivo: { tipo: "ter", item: "cl:cristal_ferro", qtd: 5 }, recompensa: [{ item: "minecraft:iron_ore", quantidade: 8 }] },
       { id: "mkq_pead", requer: ["mkq_oxidador"], objetivo: { tipo: "ter", item: "cl:pellet_pead", qtd: 1 }, recompensa: [{ item: "cl:biocombustivel", quantidade: 16 }] },
+      // 1.50.0: Mekanism completo, parte 2 (melhorias e fábricas)
+      { id: "mk_melhoria", requer: ["mk10_circuito"], objetivo: { tipo: "acao", acao: "mk_melhoria", qtd: 1 }, recompensa: [{ item: "cl:po_osmio", quantidade: 4 }] },
+      { id: "mk_fabrica", requer: ["mk_melhoria"], objetivo: { tipo: "acao", acao: "mk_fabrica", qtd: 1 }, recompensa: [{ item: "cl:circuito_controle_basico", quantidade: 4 }] },
     ],
   },
   {

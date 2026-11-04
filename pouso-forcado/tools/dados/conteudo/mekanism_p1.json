@@ -681,6 +681,22 @@
    }
   },
   {
+   "id": "mkc_chemical_infuser",
+   "resultado": "cl:infusor_quimico",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "TXT",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_basico",
+    "T": "cl:tanque_quimico_basico",
+    "X": "cl:revestimento_aco"
+   }
+  },
+  {
    "id": "mkc_chemical_oxidizer",
    "resultado": "cl:oxidador_quimico",
    "tipo": "shaped",

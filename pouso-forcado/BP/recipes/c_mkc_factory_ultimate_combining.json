@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_factory_ultimate_combining"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "IPI",
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_atomica"
+      },
+      "C": {
+        "item": "cl:circuito_controle_supremo"
+      },
+      "I": {
+        "item": "minecraft:diamond"
+      },
+      "P": {
+        "item": "cl:fabrica_combinacao_elite"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fabrica_combinacao_definitiva"
+    }
+  }
+}

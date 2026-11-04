@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_chemical_infuser"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "TXT",
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_enriquecida"
+      },
+      "C": {
+        "item": "cl:circuito_controle_basico"
+      },
+      "T": {
+        "item": "cl:tanque_quimico_basico"
+      },
+      "X": {
+        "item": "cl:revestimento_aco"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:infusor_quimico"
+    }
+  }
+}

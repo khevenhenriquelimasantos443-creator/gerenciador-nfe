@@ -1,0 +1,150 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:fabrica_serragem_definitiva",
+      "menu_category": {
+        "category": "nature"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.mk_fabrica_serragem_definitiva",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_mkm_sawing_factory_front",
+          "render_method": "alpha_test"
+        },
+        "m_sawing_factory_front": {
+          "texture": "clc_mkm_sawing_factory_front",
+          "render_method": "alpha_test"
+        },
+        "m_sawing_factory_side": {
+          "texture": "clc_mkm_sawing_factory_side",
+          "render_method": "alpha_test"
+        },
+        "m_sawing_factory_bottom": {
+          "texture": "clc_mkm_sawing_factory_bottom",
+          "render_method": "alpha_test"
+        },
+        "m_sawing_factory_top": {
+          "texture": "clc_mkm_sawing_factory_top",
+          "render_method": "alpha_test"
+        },
+        "m_ports": {
+          "texture": "clc_mkm_ports",
+          "render_method": "alpha_test"
+        },
+        "m_ports_led": {
+          "texture": "clc_mkm_ports_led",
+          "render_method": "alpha_test"
+        },
+        "m_sawing_factory_back": {
+          "texture": "clc_mkm_sawing_factory_back",
+          "render_method": "alpha_test"
+        },
+        "m_led": {
+          "texture": "clc_mkm_led",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c9ced3",
+      "minecraft:tick": {
+        "interval_range": [
+          100,
+          100
+        ],
+        "looping": true
+      },
+      "cl:mk_fabrica": {},
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,636 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.mk_fabrica_enriquecimento_elite",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "mk",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -8,
+        0,
+        -8
+       ],
+       "size": [
+        16,
+        16,
+        4
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_enriching_factory_front"
+        },
+        "east": {
+         "uv": [
+          4,
+          0
+         ],
+         "uv_size": [
+          -4,
+          16
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          16
+         ],
+         "material_instance": "m_factory_front_back"
+        },
+        "west": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          4,
+          16
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -4
+         ],
+         "material_instance": "m_enriching_factory_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          4
+         ],
+         "uv_size": [
+          -16,
+          -4
+         ],
+         "material_instance": "m_enriching_factory_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        4,
+        6
+       ],
+       "size": [
+        8,
+        8,
+        2
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "east": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          2,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "south": {
+         "uv": [
+          0,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "west": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          2,
+          8
+         ],
+         "material_instance": "m_ports"
+        },
+        "up": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          -8,
+          -2
+         ],
+         "material_instance": "m_ports"
+        },
+        "down": {
+         "uv": [
+          8,
+          9
+         ],
+         "uv_size": [
+          -8,
+          -2
+         ],
+         "material_instance": "m_ports"
+        }
+       }
+      },
+      {
+       "origin": [
+        -4,
+        4,
+        6
+       ],
+       "size": [
+        8,
+        8,
+        2
+       ],
+       "uv": {
+        "south": {
+         "uv": [
+          8,
+          8
+         ],
+         "uv_size": [
+          8,
+          8
+         ],
+         "material_instance": "m_ports_led"
+        }
+       }
+      },
+      {
+       "origin": [
+        -7,
+        7,
+        -4
+       ],
+       "size": [
+        14,
+        7,
+        10
+       ],
+       "uv": {
+        "south": {
+         "uv": [
+          1,
+          2
+         ],
+         "uv_size": [
+          14,
+          7
+         ],
+         "material_instance": "m_enriching_factory_back"
+        },
+        "down": {
+         "uv": [
+          15,
+          12
+         ],
+         "uv_size": [
+          -14,
+          -10
+         ],
+         "material_instance": "m_enriching_factory_back"
+        }
+       }
+      },
+      {
+       "origin": [
+        -6,
+        4,
+        -4
+       ],
+       "size": [
+        12,
+        3,
+        6
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          10,
+          9
+         ],
+         "uv_size": [
+          -6,
+          3
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "south": {
+         "uv": [
+          2,
+          9
+         ],
+         "uv_size": [
+          12,
+          3
+         ],
+         "material_instance": "m_enriching_factory_back"
+        },
+        "west": {
+         "uv": [
+          4,
+          9
+         ],
+         "uv_size": [
+          6,
+          3
+         ],
+         "material_instance": "m_enriching_factory_side"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3,
+        5,
+        2
+       ],
+       "size": [
+        6,
+        2,
+        4
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          14,
+          10
+         ],
+         "uv_size": [
+          -4,
+          2
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "west": {
+         "uv": [
+          10,
+          10
+         ],
+         "uv_size": [
+          4,
+          2
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "down": {
+         "uv": [
+          10,
+          12
+         ],
+         "uv_size": [
+          -4,
+          -1
+         ],
+         "material_instance": "m_enriching_factory_back"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        0,
+        -4
+       ],
+       "size": [
+        16,
+        4,
+        12
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -11,
+          4
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          12
+         ],
+         "uv_size": [
+          16,
+          4
+         ],
+         "material_instance": "m_enriching_factory_back"
+        },
+        "west": {
+         "uv": [
+          5,
+          12
+         ],
+         "uv_size": [
+          11,
+          4
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_enriching_factory_elements"
+        },
+        "down": {
+         "uv": [
+          16,
+          16
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_enriching_factory_bottom"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        14,
+        -4
+       ],
+       "size": [
+        16,
+        2,
+        12
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          16,
+          0
+         ],
+         "uv_size": [
+          -12,
+          2
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          0
+         ],
+         "uv_size": [
+          16,
+          2
+         ],
+         "material_instance": "m_enriching_factory_back"
+        },
+        "west": {
+         "uv": [
+          4,
+          0
+         ],
+         "uv_size": [
+          12,
+          2
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "up": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_enriching_factory_top"
+        },
+        "down": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -16,
+          -12
+         ],
+         "material_instance": "m_enriching_factory_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -8,
+        6,
+        -4
+       ],
+       "size": [
+        2,
+        8,
+        12
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          16,
+          2
+         ],
+         "uv_size": [
+          -12,
+          8
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "south": {
+         "uv": [
+          0,
+          2
+         ],
+         "uv_size": [
+          2,
+          8
+         ],
+         "material_instance": "m_enriching_factory_back"
+        },
+        "west": {
+         "uv": [
+          4,
+          2
+         ],
+         "uv_size": [
+          12,
+          8
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "down": {
+         "uv": [
+          2,
+          12
+         ],
+         "uv_size": [
+          -2,
+          -12
+         ],
+         "material_instance": "m_enriching_factory_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        6,
+        6,
+        -4
+       ],
+       "size": [
+        2,
+        8,
+        12
+       ],
+       "uv": {
+        "east": {
+         "uv": [
+          16,
+          2
+         ],
+         "uv_size": [
+          -12,
+          8
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "south": {
+         "uv": [
+          14,
+          2
+         ],
+         "uv_size": [
+          2,
+          8
+         ],
+         "material_instance": "m_enriching_factory_back"
+        },
+        "west": {
+         "uv": [
+          4,
+          0
+         ],
+         "uv_size": [
+          12,
+          8
+         ],
+         "material_instance": "m_enriching_factory_side"
+        },
+        "down": {
+         "uv": [
+          16,
+          12
+         ],
+         "uv_size": [
+          -2,
+          -12
+         ],
+         "material_instance": "m_enriching_factory_top"
+        }
+       }
+      },
+      {
+       "origin": [
+        -3.0199999999999996,
+        14.99,
+        -7.99
+       ],
+       "size": [
+        6.039999999999999,
+        1.0,
+        1.0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          0,
+          2
+         ],
+         "uv_size": [
+          6,
+          1
+         ],
+         "material_instance": "m_led"
+        },
+        "up": {
+         "uv": [
+          6,
+          3
+         ],
+         "uv_size": [
+          -6,
+          -1
+         ],
+         "material_instance": "m_led"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

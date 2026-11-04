@@ -5641,10 +5641,130 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Factory Circuit",
   "icone": "textures/items/cl/blocos/fabrica_circuito"
  },
+ "cl:fabrica_combinacao_avancada": {
+  "pt": "Fábrica de Combinação Avançada",
+  "en": "Advanced Combining Factory",
+  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+ },
+ "cl:fabrica_combinacao_basica": {
+  "pt": "Fábrica de Combinação Básica",
+  "en": "Basic Combining Factory",
+  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+ },
+ "cl:fabrica_combinacao_definitiva": {
+  "pt": "Fábrica de Combinação Definitiva",
+  "en": "Ultimate Combining Factory",
+  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+ },
+ "cl:fabrica_combinacao_elite": {
+  "pt": "Fábrica de Combinação Elite",
+  "en": "Elite Combining Factory",
+  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+ },
+ "cl:fabrica_compressao_avancada": {
+  "pt": "Fábrica de Compressão Avançada",
+  "en": "Advanced Compressing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+ },
+ "cl:fabrica_compressao_basica": {
+  "pt": "Fábrica de Compressão Básica",
+  "en": "Basic Compressing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+ },
+ "cl:fabrica_compressao_definitiva": {
+  "pt": "Fábrica de Compressão Definitiva",
+  "en": "Ultimate Compressing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+ },
+ "cl:fabrica_compressao_elite": {
+  "pt": "Fábrica de Compressão Elite",
+  "en": "Elite Compressing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+ },
+ "cl:fabrica_enriquecimento_avancada": {
+  "pt": "Fábrica de Enriquecimento Avançada",
+  "en": "Advanced Enriching Factory",
+  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+ },
+ "cl:fabrica_enriquecimento_basica": {
+  "pt": "Fábrica de Enriquecimento Básica",
+  "en": "Basic Enriching Factory",
+  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+ },
+ "cl:fabrica_enriquecimento_definitiva": {
+  "pt": "Fábrica de Enriquecimento Definitiva",
+  "en": "Ultimate Enriching Factory",
+  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+ },
+ "cl:fabrica_enriquecimento_elite": {
+  "pt": "Fábrica de Enriquecimento Elite",
+  "en": "Elite Enriching Factory",
+  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+ },
  "cl:fabrica_ferrugem": {
   "pt": "Ferrugem",
   "en": "Rust",
   "icone": "textures/items/cl/blocos/fabrica_ferrugem"
+ },
+ "cl:fabrica_fundicao_avancada": {
+  "pt": "Fábrica de Fundição Avançada",
+  "en": "Advanced Smelting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+ },
+ "cl:fabrica_fundicao_basica": {
+  "pt": "Fábrica de Fundição Básica",
+  "en": "Basic Smelting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+ },
+ "cl:fabrica_fundicao_definitiva": {
+  "pt": "Fábrica de Fundição Definitiva",
+  "en": "Ultimate Smelting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+ },
+ "cl:fabrica_fundicao_elite": {
+  "pt": "Fábrica de Fundição Elite",
+  "en": "Elite Smelting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+ },
+ "cl:fabrica_infusao_avancada": {
+  "pt": "Fábrica de Infusão Avançada",
+  "en": "Advanced Infusing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+ },
+ "cl:fabrica_infusao_basica": {
+  "pt": "Fábrica de Infusão Básica",
+  "en": "Basic Infusing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+ },
+ "cl:fabrica_infusao_definitiva": {
+  "pt": "Fábrica de Infusão Definitiva",
+  "en": "Ultimate Infusing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+ },
+ "cl:fabrica_infusao_elite": {
+  "pt": "Fábrica de Infusão Elite",
+  "en": "Elite Infusing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+ },
+ "cl:fabrica_injecao_avancada": {
+  "pt": "Fábrica de Injeção Avançada",
+  "en": "Advanced Injecting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+ },
+ "cl:fabrica_injecao_basica": {
+  "pt": "Fábrica de Injeção Básica",
+  "en": "Basic Injecting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+ },
+ "cl:fabrica_injecao_definitiva": {
+  "pt": "Fábrica de Injeção Definitiva",
+  "en": "Ultimate Injecting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+ },
+ "cl:fabrica_injecao_elite": {
+  "pt": "Fábrica de Injeção Elite",
+  "en": "Elite Injecting Factory",
+  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
  },
  "cl:fabrica_mosaico": {
   "pt": "Mosaico de Fábrica",
@@ -5660,6 +5780,66 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pontilhado de Fábrica",
   "en": "Factory Dots",
   "icone": "textures/items/cl/blocos/fabrica_pontilhado"
+ },
+ "cl:fabrica_purificacao_avancada": {
+  "pt": "Fábrica de Purificação Avançada",
+  "en": "Advanced Purifying Factory",
+  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+ },
+ "cl:fabrica_purificacao_basica": {
+  "pt": "Fábrica de Purificação Básica",
+  "en": "Basic Purifying Factory",
+  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+ },
+ "cl:fabrica_purificacao_definitiva": {
+  "pt": "Fábrica de Purificação Definitiva",
+  "en": "Ultimate Purifying Factory",
+  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+ },
+ "cl:fabrica_purificacao_elite": {
+  "pt": "Fábrica de Purificação Elite",
+  "en": "Elite Purifying Factory",
+  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+ },
+ "cl:fabrica_serragem_avancada": {
+  "pt": "Fábrica de Serragem Avançada",
+  "en": "Advanced Sawing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+ },
+ "cl:fabrica_serragem_basica": {
+  "pt": "Fábrica de Serragem Básica",
+  "en": "Basic Sawing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+ },
+ "cl:fabrica_serragem_definitiva": {
+  "pt": "Fábrica de Serragem Definitiva",
+  "en": "Ultimate Sawing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+ },
+ "cl:fabrica_serragem_elite": {
+  "pt": "Fábrica de Serragem Elite",
+  "en": "Elite Sawing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+ },
+ "cl:fabrica_trituracao_avancada": {
+  "pt": "Fábrica de Trituração Avançada",
+  "en": "Advanced Crushing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+ },
+ "cl:fabrica_trituracao_basica": {
+  "pt": "Fábrica de Trituração Básica",
+  "en": "Basic Crushing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+ },
+ "cl:fabrica_trituracao_definitiva": {
+  "pt": "Fábrica de Trituração Definitiva",
+  "en": "Ultimate Crushing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+ },
+ "cl:fabrica_trituracao_elite": {
+  "pt": "Fábrica de Trituração Elite",
+  "en": "Elite Crushing Factory",
+  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
  },
  "cl:fabricador_circuitos": {
   "pt": "Fabricador de Circuitos",
@@ -6950,6 +7130,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Insolador Fitogênico",
   "en": "Phytogenic Insolator",
   "icone": "textures/items/cl/blocos/insolador"
+ },
+ "cl:instalador_nivel_avancado": {
+  "pt": "Instalador de Nível Avançado",
+  "en": "Advanced Tier Installer",
+  "icone": "textures/items/cl/arte/instalador_nivel_avancado"
+ },
+ "cl:instalador_nivel_basico": {
+  "pt": "Instalador de Nível Básico",
+  "en": "Basic Tier Installer",
+  "icone": "textures/items/cl/arte/instalador_nivel_basico"
+ },
+ "cl:instalador_nivel_definitivo": {
+  "pt": "Instalador de Nível Definitivo",
+  "en": "Ultimate Tier Installer",
+  "icone": "textures/items/cl/arte/instalador_nivel_definitivo"
+ },
+ "cl:instalador_nivel_elite": {
+  "pt": "Instalador de Nível Elite",
+  "en": "Elite Tier Installer",
+  "icone": "textures/items/cl/arte/instalador_nivel_elite"
  },
  "cl:interface_camara": {
   "pt": "Interface da Câmara",
@@ -8756,6 +8956,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Advanced Feeding Upgrade",
   "icone": "textures/items/cl/c/melhoria_alimentacao_avancada"
  },
+ "cl:melhoria_ancora": {
+  "pt": "Melhoria de Âncora",
+  "en": "Anchor Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_ancora"
+ },
  "cl:melhoria_base": {
   "pt": "Base de Melhoria",
   "en": "Upgrade Base",
@@ -8816,6 +9021,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Deposit Upgrade",
   "icone": "textures/items/cl/c/melhoria_deposito"
  },
+ "cl:melhoria_energia": {
+  "pt": "Melhoria de Energia",
+  "en": "Energy Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_energia"
+ },
+ "cl:melhoria_filtro": {
+  "pt": "Melhoria de Filtro",
+  "en": "Filter Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_filtro"
+ },
  "cl:melhoria_fornalha": {
   "pt": "Melhoria: Fornalha",
   "en": "Smelting Upgrade",
@@ -8871,6 +9086,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Void Upgrade",
   "icone": "textures/items/cl/arte/melhoria_gaveta_vazio"
  },
+ "cl:melhoria_gerador_pedra": {
+  "pt": "Melhoria de Gerador de Pedra",
+  "en": "Stone Generator Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_gerador_pedra"
+ },
  "cl:melhoria_ima": {
   "pt": "Melhoria: Ímã",
   "en": "Magnet Upgrade",
@@ -8881,6 +9101,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Advanced Magnet Upgrade",
   "icone": "textures/items/cl/c/melhoria_ima_avancada"
  },
+ "cl:melhoria_quimica": {
+  "pt": "Melhoria Química",
+  "en": "Chemical Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_quimica"
+ },
  "cl:melhoria_reabastecer": {
   "pt": "Melhoria: Reabastecer",
   "en": "Restock Upgrade",
@@ -8890,6 +9115,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Melhoria: Reposição",
   "en": "Refill Upgrade",
   "icone": "textures/items/cl/c/melhoria_recarga"
+ },
+ "cl:melhoria_silenciador": {
+  "pt": "Melhoria de Silenciador",
+  "en": "Muffling Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_silenciador"
+ },
+ "cl:melhoria_velocidade": {
+  "pt": "Melhoria de Velocidade",
+  "en": "Speed Upgrade",
+  "icone": "textures/items/cl/arte/melhoria_velocidade"
  },
  "cl:mesa_fundicao": {
   "pt": "Mesa de Fundição",
@@ -36170,6 +36405,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_mkc_chemical_infuser",
+  "resultado": "cl:infusor_quimico",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "TXT",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_basico",
+   "T": "cl:tanque_quimico_basico",
+   "X": "cl:revestimento_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_mkc_chemical_oxidizer",
   "resultado": "cl:oxidador_quimico",
   "qtd": 1,
@@ -36298,6 +36553,726 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "B": "minecraft:bucket",
    "S": "cl:lingote_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_combining",
+  "resultado": "cl:fabrica_combinacao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_combinacao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_compressing",
+  "resultado": "cl:fabrica_compressao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_compressao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_crushing",
+  "resultado": "cl:fabrica_trituracao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_trituracao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_enriching",
+  "resultado": "cl:fabrica_enriquecimento_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_enriquecimento_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_infusing",
+  "resultado": "cl:fabrica_infusao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_infusao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_injecting",
+  "resultado": "cl:fabrica_injecao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_injecao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_purifying",
+  "resultado": "cl:fabrica_purificacao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_purificacao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_sawing",
+  "resultado": "cl:fabrica_serragem_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_serragem_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_advanced_smelting",
+  "resultado": "cl:fabrica_fundicao_avancada",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_enriquecida",
+   "C": "cl:circuito_controle_avancado",
+   "I": "cl:lingote_osmio",
+   "P": "cl:fabrica_fundicao_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_combining",
+  "resultado": "cl:fabrica_combinacao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:combinador"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_compressing",
+  "resultado": "cl:fabrica_compressao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:compressor_osmio"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_crushing",
+  "resultado": "cl:fabrica_trituracao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:triturador_mk"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_enriching",
+  "resultado": "cl:fabrica_enriquecimento_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:camara_enriquecimento"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_infusing",
+  "resultado": "cl:fabrica_infusao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:infusor_metalurgico"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_injecting",
+  "resultado": "cl:fabrica_injecao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:camara_injecao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_purifying",
+  "resultado": "cl:fabrica_purificacao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:camara_purificacao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_sawing",
+  "resultado": "cl:fabrica_serragem_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:serraria_precisao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_basic_smelting",
+  "resultado": "cl:fabrica_fundicao_basica",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "minecraft:redstone",
+   "C": "cl:circuito_controle_basico",
+   "I": "minecraft:iron_ingot",
+   "P": "cl:fundidor_energizado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_combining",
+  "resultado": "cl:fabrica_combinacao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_combinacao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_compressing",
+  "resultado": "cl:fabrica_compressao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_compressao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_crushing",
+  "resultado": "cl:fabrica_trituracao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_trituracao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_enriching",
+  "resultado": "cl:fabrica_enriquecimento_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_enriquecimento_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_infusing",
+  "resultado": "cl:fabrica_infusao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_infusao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_injecting",
+  "resultado": "cl:fabrica_injecao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_injecao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_purifying",
+  "resultado": "cl:fabrica_purificacao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_purificacao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_sawing",
+  "resultado": "cl:fabrica_serragem_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_serragem_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_elite_smelting",
+  "resultado": "cl:fabrica_fundicao_elite",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_reforcada",
+   "C": "cl:circuito_controle_elite",
+   "I": "minecraft:gold_ingot",
+   "P": "cl:fabrica_fundicao_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_combining",
+  "resultado": "cl:fabrica_combinacao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_combinacao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_compressing",
+  "resultado": "cl:fabrica_compressao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_compressao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_crushing",
+  "resultado": "cl:fabrica_trituracao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_trituracao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_enriching",
+  "resultado": "cl:fabrica_enriquecimento_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_enriquecimento_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_infusing",
+  "resultado": "cl:fabrica_infusao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_infusao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_injecting",
+  "resultado": "cl:fabrica_injecao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_injecao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_purifying",
+  "resultado": "cl:fabrica_purificacao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_purificacao_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_sawing",
+  "resultado": "cl:fabrica_serragem_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_serragem_elite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_factory_ultimate_smelting",
+  "resultado": "cl:fabrica_fundicao_definitiva",
+  "qtd": 1,
+  "grade": [
+   "ACA",
+   "IPI",
+   "ACA"
+  ],
+  "chaves": {
+   "A": "cl:liga_atomica",
+   "C": "cl:circuito_controle_supremo",
+   "I": "minecraft:diamond",
+   "P": "cl:fabrica_fundicao_elite"
   },
   "estacoes": [
    "crafting_table"
@@ -36501,6 +37476,101 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "#": "cl:fluorita",
    "P": "cl:fluorita"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_upgrade_anchor",
+  "resultado": "cl:melhoria_ancora",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "A#A",
+   " G "
+  ],
+  "chaves": {
+   "#": "cl:po_diamante",
+   "A": "cl:liga_enriquecida",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_upgrade_chemical",
+  "resultado": "cl:melhoria_quimica",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "A#A",
+   " G "
+  ],
+  "chaves": {
+   "#": "cl:po_ferro",
+   "A": "cl:liga_enriquecida",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_upgrade_energy",
+  "resultado": "cl:melhoria_energia",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "A#A",
+   " G "
+  ],
+  "chaves": {
+   "#": "cl:po_ouro",
+   "A": "cl:liga_enriquecida",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_upgrade_filter",
+  "resultado": "cl:melhoria_filtro",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "A#A",
+   " G "
+  ],
+  "chaves": {
+   "#": "cl:po_estanho",
+   "A": "cl:liga_enriquecida",
+   "G": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_mkc_upgrade_speed",
+  "resultado": "cl:melhoria_velocidade",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "A#A",
+   " G "
+  ],
+  "chaves": {
+   "#": "cl:po_osmio",
+   "A": "cl:liga_enriquecida",
+   "G": "minecraft:glass"
   },
   "estacoes": [
    "crafting_table"

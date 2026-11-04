@@ -91,6 +91,15 @@ NOVOS = {
     "fluorite_ore": "minerio_fluorita", "deepslate_fluorite_ore": "minerio_fluorita_profundo", "block_fluorite": "bloco_fluorita",
     "salt": "sal",
 }
+# Parte 2 (1.50.0): fábricas, melhorias e instaladores de nível.
+FABRICA_TIPO = {"smelting": "fundicao", "enriching": "enriquecimento", "crushing": "trituracao", "compressing": "compressao", "combining": "combinacao",
+                "purifying": "purificacao", "injecting": "injecao", "infusing": "infusao", "sawing": "serragem"}
+NIVEL_F = {"basic": "basica", "advanced": "avancada", "elite": "elite", "ultimate": "definitiva"}
+NOVOS.update({f"{t}_{tipo}_factory": f"fabrica_{tp}_{n}" for tipo, tp in FABRICA_TIPO.items() for t, n in NIVEL_F.items()})
+NOVOS.update({"upgrade_speed": "melhoria_velocidade", "upgrade_energy": "melhoria_energia", "upgrade_chemical": "melhoria_quimica",
+              "upgrade_muffling": "melhoria_silenciador", "upgrade_anchor": "melhoria_ancora", "upgrade_stone_generator": "melhoria_gerador_pedra",
+              "upgrade_filter": "melhoria_filtro"})
+NOVOS.update({f"{t}_tier_installer": f"instalador_nivel_{p}" for t, p in (("basic", "basico"), ("advanced", "avancado"), ("elite", "elite"), ("ultimate", "definitivo"))})
 TODOS.update(NOVOS)
 for en, pt in METAIS.items():
     TAGS[f"mekanism:crystals/{en}"] = f"cl:cristal_{pt}"

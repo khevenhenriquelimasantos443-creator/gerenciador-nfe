@@ -7129,6 +7129,39 @@
     },
     "clc_cilindro_pasta_limpa_osmio": {
       "textures": "textures/items/cl/c/cilindro_pasta_limpa_osmio"
+    },
+    "clc_melhoria_velocidade": {
+      "textures": "textures/items/cl/arte/melhoria_velocidade"
+    },
+    "clc_melhoria_energia": {
+      "textures": "textures/items/cl/arte/melhoria_energia"
+    },
+    "clc_melhoria_quimica": {
+      "textures": "textures/items/cl/arte/melhoria_quimica"
+    },
+    "clc_melhoria_silenciador": {
+      "textures": "textures/items/cl/arte/melhoria_silenciador"
+    },
+    "clc_melhoria_ancora": {
+      "textures": "textures/items/cl/arte/melhoria_ancora"
+    },
+    "clc_melhoria_gerador_pedra": {
+      "textures": "textures/items/cl/arte/melhoria_gerador_pedra"
+    },
+    "clc_melhoria_filtro": {
+      "textures": "textures/items/cl/arte/melhoria_filtro"
+    },
+    "clc_instalador_nivel_basico": {
+      "textures": "textures/items/cl/arte/instalador_nivel_basico"
+    },
+    "clc_instalador_nivel_avancado": {
+      "textures": "textures/items/cl/arte/instalador_nivel_avancado"
+    },
+    "clc_instalador_nivel_elite": {
+      "textures": "textures/items/cl/arte/instalador_nivel_elite"
+    },
+    "clc_instalador_nivel_definitivo": {
+      "textures": "textures/items/cl/arte/instalador_nivel_definitivo"
     }
   }
 }

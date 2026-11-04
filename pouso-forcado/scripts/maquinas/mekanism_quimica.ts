@@ -4,8 +4,9 @@ import { DADOS_F66 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { gravar, gravarEm, ler, lerEm, registrarDetalhe } from "../util/dados.js";
 import { codigoDoItem, guardarNoItem, lerCodigo } from "../util/item_guarda.js";
-import { cabe, contar, entrada, entregar, gastarCE, tirar } from "../util/maquina.js";
-import { feito, maquina } from "./thermal.js";
+import { cabe, contar, entrada, entregar, tirar } from "../util/maquina.js";
+import { aceitarMelhorias, gastarMk, rodarMk, textoMelhorias } from "./mekanism_upgrades.js";
+import { maquina } from "./thermal.js";
 
 /*
  * Mekanism completo, parte 1 (1.49.0): a química do Mekanism 10.7.19 (DADOS_F66, de tools/importar-mekanism-completo.py).
@@ -113,7 +114,7 @@ function porItem(lista: R[], ce: (r: R) => number) {
         if ((r.entra_q ?? []).some(([q, mb]) => tem(e, q) < mb) || tem(e, "water") < (r.agua ?? 0)) continue;
         if (r.sai_q && tem(e, r.sai_q[0]) + r.sai_q[1] > CAP) continue;
         if (r.sai && !cabe(b)) continue;
-        if (!gastarCE(b, ce(r))) return "sem_energia";
+        if (!gastarMk(b, ce(r))) return "sem_energia";
         tirar(ent, p.typeId, r.qtd ?? 1);
         for (const [q, mb] of r.entra_q ?? []) mexer(e, q, -mb);
         if (r.agua) mexer(e, "water", -r.agua);
@@ -130,7 +131,7 @@ function cristalizar(b: Block, _ent: Container, e: Estado): Status {
   for (const r of PROC.crystallizing) {
     const [q, mb] = r.entra_q![0];
     if (tem(e, q) < mb || !cabe(b)) continue;
-    if (!gastarCE(b, D.ce.crystallizing)) return "sem_energia";
+    if (!gastarMk(b, D.ce.crystallizing)) return "sem_energia";
     mexer(e, q, -mb);
     entregar(b, [new ItemStack(r.sai![0], r.sai![1])]);
     return "ok";
@@ -146,7 +147,7 @@ function fluxo(lista: R[], ce: number) {
       for (const [q, mb] of ent) n = Math.min(n, Math.floor(tem(e, q) / mb));
       if (r.sai_q) n = Math.min(n, Math.floor((CAP - tem(e, r.sai_q[0])) / r.sai_q[1]));
       if (n <= 0) continue;
-      if (!gastarCE(_b, ce)) return "sem_energia";
+      if (!gastarMk(_b, ce)) return "sem_energia";
       for (const [q, mb] of ent) mexer(e, q, -mb * n);
       if (r.sai_q) mexer(e, r.sai_q[0], r.sai_q[1] * n);
       return "ok";
@@ -160,7 +161,7 @@ function rotativo(b: Block, _ent: Container, e: Estado): Status {
     const [de, para] = e.modo === "liquido" ? [r.gas!, r.liquido!] : [r.liquido!, r.gas!];
     const n = Math.min(FLUXO, tem(e, de), CAP - tem(e, para));
     if (n <= 0) continue;
-    if (!gastarCE(b, D.ce.rotary)) return "sem_energia";
+    if (!gastarMk(b, D.ce.rotary)) return "sem_energia";
     mexer(e, de, -n);
     mexer(e, para, n);
     return "ok";
@@ -189,12 +190,13 @@ const base = maquina((b) => {
   if (!m || !ent) return "parada";
   const e = ler<Estado>("mkq", b, novo());
   abastecer(b, ent, e, m.usa(e));
-  const s = m.faz(b, ent, e);
+  // Melhorias (parte 2): a Velocidade repete a operação (ou o fluxo de 100) no mesmo ciclo.
+  const s = rodarMk(b, (x) => m.faz(x, ent, e), 1, m.som);
   const encheu = encher(b, ent, e, m.sai(e));
   gravar("mkq", b, e);
-  if (s === "ok") feito(b, m.som);
   return s === "parada" && encheu ? "ok" : s;
 }, "cl.mkq.dica");
+aceitarMelhorias(Object.keys(MAQ));
 
 export const quimicaComp: BlockCustomComponent = {
   onTick: base.onTick,
@@ -264,7 +266,10 @@ export function registrarMekanismQuimica(): void {
     if (!partes.length) return undefined;
     return { rawtext: partes.flatMap(([q, mb], k) => [{ text: `${k ? ", " : ""}${mb} mB ` }, nomeQ(q)]) };
   };
-  registrarDetalhe(Object.keys(MAQ), (b) => resumo(ler<Estado>("mkq", b, novo())));
+  registrarDetalhe(Object.keys(MAQ), (b) => {
+    const q = resumo(ler<Estado>("mkq", b, novo())), u = textoMelhorias(b);
+    return q && u ? { rawtext: [q, { text: " | " }, u] } : q ?? u;
+  });
   registrarDetalhe(Object.keys(D.tanques), (b) => {
     const t = ler<Tanque>("mkt", b, { mb: 0 });
     return t.q && t.mb > 0 ? { rawtext: [{ text: `${t.mb} mB ` }, nomeQ(t.q)] } : { translate: "cl.mkq.vazio" };

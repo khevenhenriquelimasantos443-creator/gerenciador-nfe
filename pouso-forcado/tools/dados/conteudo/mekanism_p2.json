@@ -1,0 +1,1914 @@
+{
+ "fabricas": [
+  {
+   "id": "fabrica_fundicao_basica",
+   "pt": "Fábrica de Fundição Básica",
+   "en": "Basic Smelting Factory",
+   "base": "fundidor_energizado",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_fundicao_basica",
+    "materiais": {
+     "m_smelting_factory_front": "clc_mkm_smelting_factory_front",
+     "m_smelting_factory_side": "clc_mkm_smelting_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_smelting_factory_top": "clc_mkm_smelting_factory_top",
+     "m_smelting_factory_bottom": "clc_mkm_smelting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_fundicao_avancada",
+   "pt": "Fábrica de fundição avançada",
+   "en": "Advanced Smelting Factory",
+   "base": "fundidor_energizado",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_fundicao_avancada",
+    "materiais": {
+     "m_smelting_factory_front": "clc_mkm_smelting_factory_front",
+     "m_smelting_factory_side": "clc_mkm_smelting_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_smelting_factory_top": "clc_mkm_smelting_factory_top",
+     "m_smelting_factory_bottom": "clc_mkm_smelting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_fundicao_elite",
+   "pt": "Fábrica Elite de Fundição",
+   "en": "Elite Smelting Factory",
+   "base": "fundidor_energizado",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_fundicao_elite",
+    "materiais": {
+     "m_smelting_factory_front": "clc_mkm_smelting_factory_front",
+     "m_smelting_factory_side": "clc_mkm_smelting_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_smelting_factory_top": "clc_mkm_smelting_factory_top",
+     "m_smelting_factory_bottom": "clc_mkm_smelting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_fundicao_definitiva",
+   "pt": "Fábrica de Fundição Ultimate",
+   "en": "Ultimate Smelting Factory",
+   "base": "fundidor_energizado",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_fundicao_definitiva",
+    "materiais": {
+     "m_smelting_factory_front": "clc_mkm_smelting_factory_front",
+     "m_smelting_factory_side": "clc_mkm_smelting_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_smelting_factory_top": "clc_mkm_smelting_factory_top",
+     "m_smelting_factory_bottom": "clc_mkm_smelting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_enriquecimento_basica",
+   "pt": "Fábrica de Enriquecimento Básica",
+   "en": "Basic Enriching Factory",
+   "base": "camara_enriquecimento",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_enriquecimento_basica",
+    "materiais": {
+     "m_enriching_factory_front": "clc_mkm_enriching_factory_front",
+     "m_enriching_factory_side": "clc_mkm_enriching_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_enriching_factory_top": "clc_mkm_enriching_factory_top",
+     "m_enriching_factory_bottom": "clc_mkm_enriching_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_enriching_factory_back": "clc_mkm_enriching_factory_back",
+     "m_enriching_factory_elements": "clc_mkm_enriching_factory_elements",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_enriquecimento_avancada",
+   "pt": "Fábrica de enriquecimento avançada",
+   "en": "Advanced Enriching Factory",
+   "base": "camara_enriquecimento",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_enriquecimento_avancada",
+    "materiais": {
+     "m_enriching_factory_front": "clc_mkm_enriching_factory_front",
+     "m_enriching_factory_side": "clc_mkm_enriching_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_enriching_factory_top": "clc_mkm_enriching_factory_top",
+     "m_enriching_factory_bottom": "clc_mkm_enriching_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_enriching_factory_back": "clc_mkm_enriching_factory_back",
+     "m_enriching_factory_elements": "clc_mkm_enriching_factory_elements",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_enriquecimento_elite",
+   "pt": "Fábrica de Enriquecimento Elite",
+   "en": "Elite Enriching Factory",
+   "base": "camara_enriquecimento",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_enriquecimento_elite",
+    "materiais": {
+     "m_enriching_factory_front": "clc_mkm_enriching_factory_front",
+     "m_enriching_factory_side": "clc_mkm_enriching_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_enriching_factory_top": "clc_mkm_enriching_factory_top",
+     "m_enriching_factory_bottom": "clc_mkm_enriching_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_enriching_factory_back": "clc_mkm_enriching_factory_back",
+     "m_enriching_factory_elements": "clc_mkm_enriching_factory_elements",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_enriquecimento_definitiva",
+   "pt": "Fábrica de Enriquecimento Ultimate",
+   "en": "Ultimate Enriching Factory",
+   "base": "camara_enriquecimento",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_enriquecimento_definitiva",
+    "materiais": {
+     "m_enriching_factory_front": "clc_mkm_enriching_factory_front",
+     "m_enriching_factory_side": "clc_mkm_enriching_factory_side",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_enriching_factory_top": "clc_mkm_enriching_factory_top",
+     "m_enriching_factory_bottom": "clc_mkm_enriching_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_enriching_factory_back": "clc_mkm_enriching_factory_back",
+     "m_enriching_factory_elements": "clc_mkm_enriching_factory_elements",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_trituracao_basica",
+   "pt": "Fábrica de Trituração Básica",
+   "en": "Basic Crushing Factory",
+   "base": "triturador_mk",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_trituracao_basica",
+    "materiais": {
+     "m_crushing_factory_front": "clc_mkm_crushing_factory_front",
+     "m_crushing_factory_side": "clc_mkm_crushing_factory_side",
+     "m_crushing_factory_back": "clc_mkm_crushing_factory_back",
+     "m_crushing_factory_top": "clc_mkm_crushing_factory_top",
+     "m_crushing_factory_bottom": "clc_mkm_crushing_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_trituracao_avancada",
+   "pt": "Fábrica de trituração avançada",
+   "en": "Advanced Crushing Factory",
+   "base": "triturador_mk",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_trituracao_avancada",
+    "materiais": {
+     "m_crushing_factory_front": "clc_mkm_crushing_factory_front",
+     "m_crushing_factory_side": "clc_mkm_crushing_factory_side",
+     "m_crushing_factory_back": "clc_mkm_crushing_factory_back",
+     "m_crushing_factory_top": "clc_mkm_crushing_factory_top",
+     "m_crushing_factory_bottom": "clc_mkm_crushing_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_trituracao_elite",
+   "pt": "Fábrica de Trituração Elite",
+   "en": "Elite Crushing Factory",
+   "base": "triturador_mk",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_trituracao_elite",
+    "materiais": {
+     "m_crushing_factory_front": "clc_mkm_crushing_factory_front",
+     "m_crushing_factory_side": "clc_mkm_crushing_factory_side",
+     "m_crushing_factory_back": "clc_mkm_crushing_factory_back",
+     "m_crushing_factory_top": "clc_mkm_crushing_factory_top",
+     "m_crushing_factory_bottom": "clc_mkm_crushing_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_trituracao_definitiva",
+   "pt": "Fábrica de Trituração Ultimate",
+   "en": "Ultimate Crushing Factory",
+   "base": "triturador_mk",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_trituracao_definitiva",
+    "materiais": {
+     "m_crushing_factory_front": "clc_mkm_crushing_factory_front",
+     "m_crushing_factory_side": "clc_mkm_crushing_factory_side",
+     "m_crushing_factory_back": "clc_mkm_crushing_factory_back",
+     "m_crushing_factory_top": "clc_mkm_crushing_factory_top",
+     "m_crushing_factory_bottom": "clc_mkm_crushing_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_compressao_basica",
+   "pt": "Fábrica de Compressão Básica",
+   "en": "Basic Compressing Factory",
+   "base": "compressor_osmio",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_compressao_basica",
+    "materiais": {
+     "m_compressing_factory_front": "clc_mkm_compressing_factory_front",
+     "m_compressing_factory_side": "clc_mkm_compressing_factory_side",
+     "m_compressing_factory_top": "clc_mkm_compressing_factory_top",
+     "m_compressing_factory_bottom": "clc_mkm_compressing_factory_bottom",
+     "m_compressing_factory_back": "clc_mkm_compressing_factory_back",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_compressao_avancada",
+   "pt": "Fábrica de compressão avançada",
+   "en": "Advanced Compressing Factory",
+   "base": "compressor_osmio",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_compressao_avancada",
+    "materiais": {
+     "m_compressing_factory_front": "clc_mkm_compressing_factory_front",
+     "m_compressing_factory_side": "clc_mkm_compressing_factory_side",
+     "m_compressing_factory_top": "clc_mkm_compressing_factory_top",
+     "m_compressing_factory_bottom": "clc_mkm_compressing_factory_bottom",
+     "m_compressing_factory_back": "clc_mkm_compressing_factory_back",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_compressao_elite",
+   "pt": "Fábrica de Compressão Elite",
+   "en": "Elite Compressing Factory",
+   "base": "compressor_osmio",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_compressao_elite",
+    "materiais": {
+     "m_compressing_factory_front": "clc_mkm_compressing_factory_front",
+     "m_compressing_factory_side": "clc_mkm_compressing_factory_side",
+     "m_compressing_factory_top": "clc_mkm_compressing_factory_top",
+     "m_compressing_factory_bottom": "clc_mkm_compressing_factory_bottom",
+     "m_compressing_factory_back": "clc_mkm_compressing_factory_back",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_compressao_definitiva",
+   "pt": "Fábrica de Compressão Ultimate",
+   "en": "Ultimate Compressing Factory",
+   "base": "compressor_osmio",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_compressao_definitiva",
+    "materiais": {
+     "m_compressing_factory_front": "clc_mkm_compressing_factory_front",
+     "m_compressing_factory_side": "clc_mkm_compressing_factory_side",
+     "m_compressing_factory_top": "clc_mkm_compressing_factory_top",
+     "m_compressing_factory_bottom": "clc_mkm_compressing_factory_bottom",
+     "m_compressing_factory_back": "clc_mkm_compressing_factory_back",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_combinacao_basica",
+   "pt": "Fábrica de Combinação Básica",
+   "en": "Basic Combining Factory",
+   "base": "combinador",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_combinacao_basica",
+    "materiais": {
+     "m_combining_factory_side": "clc_mkm_combining_factory_side",
+     "m_combining_factory_back": "clc_mkm_combining_factory_back",
+     "m_combining_factory_top": "clc_mkm_combining_factory_top",
+     "m_combining_factory_bottom": "clc_mkm_combining_factory_bottom",
+     "m_combining_factory_front": "clc_mkm_combining_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_combinacao_avancada",
+   "pt": "Fábrica de combinação avançada",
+   "en": "Advanced Combining Factory",
+   "base": "combinador",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_combinacao_avancada",
+    "materiais": {
+     "m_combining_factory_side": "clc_mkm_combining_factory_side",
+     "m_combining_factory_back": "clc_mkm_combining_factory_back",
+     "m_combining_factory_top": "clc_mkm_combining_factory_top",
+     "m_combining_factory_bottom": "clc_mkm_combining_factory_bottom",
+     "m_combining_factory_front": "clc_mkm_combining_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_combinacao_elite",
+   "pt": "Fábrica de Combinação Elite",
+   "en": "Elite Combining Factory",
+   "base": "combinador",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_combinacao_elite",
+    "materiais": {
+     "m_combining_factory_side": "clc_mkm_combining_factory_side",
+     "m_combining_factory_back": "clc_mkm_combining_factory_back",
+     "m_combining_factory_top": "clc_mkm_combining_factory_top",
+     "m_combining_factory_bottom": "clc_mkm_combining_factory_bottom",
+     "m_combining_factory_front": "clc_mkm_combining_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_combinacao_definitiva",
+   "pt": "Fábrica de Combinação Ultimate",
+   "en": "Ultimate Combining Factory",
+   "base": "combinador",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_combinacao_definitiva",
+    "materiais": {
+     "m_combining_factory_side": "clc_mkm_combining_factory_side",
+     "m_combining_factory_back": "clc_mkm_combining_factory_back",
+     "m_combining_factory_top": "clc_mkm_combining_factory_top",
+     "m_combining_factory_bottom": "clc_mkm_combining_factory_bottom",
+     "m_combining_factory_front": "clc_mkm_combining_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_purificacao_basica",
+   "pt": "Fábrica de Purificação Básica",
+   "en": "Basic Purifying Factory",
+   "base": "camara_purificacao",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_purificacao_basica",
+    "materiais": {
+     "m_purifying_factory_side": "clc_mkm_purifying_factory_side",
+     "m_purifying_factory_back": "clc_mkm_purifying_factory_back",
+     "m_purifying_factory_top": "clc_mkm_purifying_factory_top",
+     "m_purifying_factory_bottom": "clc_mkm_purifying_factory_bottom",
+     "m_purifying_factory_front": "clc_mkm_purifying_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_purificacao_avancada",
+   "pt": "Fábrica de Purificação Avançada",
+   "en": "Advanced Purifying Factory",
+   "base": "camara_purificacao",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_purificacao_avancada",
+    "materiais": {
+     "m_purifying_factory_side": "clc_mkm_purifying_factory_side",
+     "m_purifying_factory_back": "clc_mkm_purifying_factory_back",
+     "m_purifying_factory_top": "clc_mkm_purifying_factory_top",
+     "m_purifying_factory_bottom": "clc_mkm_purifying_factory_bottom",
+     "m_purifying_factory_front": "clc_mkm_purifying_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_purificacao_elite",
+   "pt": "Fábrica de Purificação Elite",
+   "en": "Elite Purifying Factory",
+   "base": "camara_purificacao",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_purificacao_elite",
+    "materiais": {
+     "m_purifying_factory_side": "clc_mkm_purifying_factory_side",
+     "m_purifying_factory_back": "clc_mkm_purifying_factory_back",
+     "m_purifying_factory_top": "clc_mkm_purifying_factory_top",
+     "m_purifying_factory_bottom": "clc_mkm_purifying_factory_bottom",
+     "m_purifying_factory_front": "clc_mkm_purifying_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_purificacao_definitiva",
+   "pt": "Fábrica de Purificação Ultimate",
+   "en": "Ultimate Purifying Factory",
+   "base": "camara_purificacao",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_purificacao_definitiva",
+    "materiais": {
+     "m_purifying_factory_side": "clc_mkm_purifying_factory_side",
+     "m_purifying_factory_back": "clc_mkm_purifying_factory_back",
+     "m_purifying_factory_top": "clc_mkm_purifying_factory_top",
+     "m_purifying_factory_bottom": "clc_mkm_purifying_factory_bottom",
+     "m_purifying_factory_front": "clc_mkm_purifying_factory_front",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_injecao_basica",
+   "pt": "Fábrica de Injeção Básica",
+   "en": "Basic Injecting Factory",
+   "base": "camara_injecao",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_injecao_basica",
+    "materiais": {
+     "m_injecting_factory_front": "clc_mkm_injecting_factory_front",
+     "m_injecting_factory_side": "clc_mkm_injecting_factory_side",
+     "m_injecting_factory_back": "clc_mkm_injecting_factory_back",
+     "m_injecting_factory_top": "clc_mkm_injecting_factory_top",
+     "m_injecting_factory_bottom": "clc_mkm_injecting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_injecao_avancada",
+   "pt": "Fábrica de injeção avançada",
+   "en": "Advanced Injecting Factory",
+   "base": "camara_injecao",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_injecao_avancada",
+    "materiais": {
+     "m_injecting_factory_front": "clc_mkm_injecting_factory_front",
+     "m_injecting_factory_side": "clc_mkm_injecting_factory_side",
+     "m_injecting_factory_back": "clc_mkm_injecting_factory_back",
+     "m_injecting_factory_top": "clc_mkm_injecting_factory_top",
+     "m_injecting_factory_bottom": "clc_mkm_injecting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_injecao_elite",
+   "pt": "Fábrica de Injeção Elite",
+   "en": "Elite Injecting Factory",
+   "base": "camara_injecao",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_injecao_elite",
+    "materiais": {
+     "m_injecting_factory_front": "clc_mkm_injecting_factory_front",
+     "m_injecting_factory_side": "clc_mkm_injecting_factory_side",
+     "m_injecting_factory_back": "clc_mkm_injecting_factory_back",
+     "m_injecting_factory_top": "clc_mkm_injecting_factory_top",
+     "m_injecting_factory_bottom": "clc_mkm_injecting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_injecao_definitiva",
+   "pt": "Fábrica Ultimate de Injeção",
+   "en": "Ultimate Injecting Factory",
+   "base": "camara_injecao",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_injecao_definitiva",
+    "materiais": {
+     "m_injecting_factory_front": "clc_mkm_injecting_factory_front",
+     "m_injecting_factory_side": "clc_mkm_injecting_factory_side",
+     "m_injecting_factory_back": "clc_mkm_injecting_factory_back",
+     "m_injecting_factory_top": "clc_mkm_injecting_factory_top",
+     "m_injecting_factory_bottom": "clc_mkm_injecting_factory_bottom",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_infusao_basica",
+   "pt": "Fábrica de Infusão Básica",
+   "en": "Basic Infusing Factory",
+   "base": "infusor_metalurgico",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_infusao_basica",
+    "materiais": {
+     "m_infusing_factory_side": "clc_mkm_infusing_factory_side",
+     "m_infusing_factory_back": "clc_mkm_infusing_factory_back",
+     "m_infusing_factory_bottom": "clc_mkm_infusing_factory_bottom",
+     "m_infusing_factory_front": "clc_mkm_infusing_factory_front",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_infusing_factory_top": "clc_mkm_infusing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_infusao_avancada",
+   "pt": "Fábrica de infusão avançada",
+   "en": "Advanced Infusing Factory",
+   "base": "infusor_metalurgico",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_infusao_avancada",
+    "materiais": {
+     "m_infusing_factory_side": "clc_mkm_infusing_factory_side",
+     "m_infusing_factory_back": "clc_mkm_infusing_factory_back",
+     "m_infusing_factory_bottom": "clc_mkm_infusing_factory_bottom",
+     "m_infusing_factory_front": "clc_mkm_infusing_factory_front",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_infusing_factory_top": "clc_mkm_infusing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_infusao_elite",
+   "pt": "Fábrica de Infusão Elite",
+   "en": "Elite Infusing Factory",
+   "base": "infusor_metalurgico",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_infusao_elite",
+    "materiais": {
+     "m_infusing_factory_side": "clc_mkm_infusing_factory_side",
+     "m_infusing_factory_back": "clc_mkm_infusing_factory_back",
+     "m_infusing_factory_bottom": "clc_mkm_infusing_factory_bottom",
+     "m_infusing_factory_front": "clc_mkm_infusing_factory_front",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_infusing_factory_top": "clc_mkm_infusing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_infusao_definitiva",
+   "pt": "Fábrica de Infusão Ultimate",
+   "en": "Ultimate Infusing Factory",
+   "base": "infusor_metalurgico",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_infusao_definitiva",
+    "materiais": {
+     "m_infusing_factory_side": "clc_mkm_infusing_factory_side",
+     "m_infusing_factory_back": "clc_mkm_infusing_factory_back",
+     "m_infusing_factory_bottom": "clc_mkm_infusing_factory_bottom",
+     "m_infusing_factory_front": "clc_mkm_infusing_factory_front",
+     "m_factory_front_back": "clc_mkm_factory_front_back",
+     "m_infusing_factory_top": "clc_mkm_infusing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_serragem_basica",
+   "pt": "Fábrica Básica de Serração",
+   "en": "Basic Sawing Factory",
+   "base": "serraria_precisao",
+   "processos": 3,
+   "nivel": 0,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_serragem_basica",
+    "materiais": {
+     "m_sawing_factory_front": "clc_mkm_sawing_factory_front",
+     "m_sawing_factory_side": "clc_mkm_sawing_factory_side",
+     "m_sawing_factory_bottom": "clc_mkm_sawing_factory_bottom",
+     "m_sawing_factory_top": "clc_mkm_sawing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_sawing_factory_back": "clc_mkm_sawing_factory_back",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_serragem_avancada",
+   "pt": "Fábrica de serragem avançada",
+   "en": "Advanced Sawing Factory",
+   "base": "serraria_precisao",
+   "processos": 5,
+   "nivel": 1,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_serragem_avancada",
+    "materiais": {
+     "m_sawing_factory_front": "clc_mkm_sawing_factory_front",
+     "m_sawing_factory_side": "clc_mkm_sawing_factory_side",
+     "m_sawing_factory_bottom": "clc_mkm_sawing_factory_bottom",
+     "m_sawing_factory_top": "clc_mkm_sawing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_sawing_factory_back": "clc_mkm_sawing_factory_back",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_serragem_elite",
+   "pt": "Fábrica de Serração Elite",
+   "en": "Elite Sawing Factory",
+   "base": "serraria_precisao",
+   "processos": 7,
+   "nivel": 2,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_serragem_elite",
+    "materiais": {
+     "m_sawing_factory_front": "clc_mkm_sawing_factory_front",
+     "m_sawing_factory_side": "clc_mkm_sawing_factory_side",
+     "m_sawing_factory_bottom": "clc_mkm_sawing_factory_bottom",
+     "m_sawing_factory_top": "clc_mkm_sawing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_sawing_factory_back": "clc_mkm_sawing_factory_back",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  },
+  {
+   "id": "fabrica_serragem_definitiva",
+   "pt": "Fábrica de Serração Ultimate",
+   "en": "Ultimate Sawing Factory",
+   "base": "serraria_precisao",
+   "processos": 9,
+   "nivel": 3,
+   "modelo": {
+    "geometria": "geometry.cl.mk_fabrica_serragem_definitiva",
+    "materiais": {
+     "m_sawing_factory_front": "clc_mkm_sawing_factory_front",
+     "m_sawing_factory_side": "clc_mkm_sawing_factory_side",
+     "m_sawing_factory_bottom": "clc_mkm_sawing_factory_bottom",
+     "m_sawing_factory_top": "clc_mkm_sawing_factory_top",
+     "m_ports": "clc_mkm_ports",
+     "m_ports_led": "clc_mkm_ports_led",
+     "m_sawing_factory_back": "clc_mkm_sawing_factory_back",
+     "m_led": "clc_mkm_led"
+    },
+    "caixa": {
+     "origin": [
+      -8,
+      0,
+      -8
+     ],
+     "size": [
+      16,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ],
+ "itens": [
+  {
+   "id": "melhoria_velocidade",
+   "pt": "Melhoria de Velocidade",
+   "en": "Speed Upgrade"
+  },
+  {
+   "id": "melhoria_energia",
+   "pt": "Melhoria de Energia",
+   "en": "Energy Upgrade"
+  },
+  {
+   "id": "melhoria_quimica",
+   "pt": "Chemical Upgrade",
+   "en": "Chemical Upgrade"
+  },
+  {
+   "id": "melhoria_silenciador",
+   "pt": "Melhoria de Silenciamento",
+   "en": "Muffling Upgrade"
+  },
+  {
+   "id": "melhoria_ancora",
+   "pt": "Melhoria de Âncora",
+   "en": "Anchor Upgrade"
+  },
+  {
+   "id": "melhoria_gerador_pedra",
+   "pt": "Melhoria do Gerador de Pedra",
+   "en": "Stone Generator Upgrade"
+  },
+  {
+   "id": "melhoria_filtro",
+   "pt": "Melhoria de Filtro",
+   "en": "Filter Upgrade"
+  },
+  {
+   "id": "instalador_nivel_basico",
+   "pt": "Instalador de Nível Básico",
+   "en": "Basic Tier Installer"
+  },
+  {
+   "id": "instalador_nivel_avancado",
+   "pt": "Instalador de Nível Avançado",
+   "en": "Advanced Tier Installer"
+  },
+  {
+   "id": "instalador_nivel_elite",
+   "pt": "Instalador de Nível Elite",
+   "en": "Elite Tier Installer"
+  },
+  {
+   "id": "instalador_nivel_definitivo",
+   "pt": "Instalador de Nível Ultimate",
+   "en": "Ultimate Tier Installer"
+  }
+ ],
+ "receitas": [
+  {
+   "id": "mkc_upgrade_anchor",
+   "resultado": "cl:melhoria_ancora",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "A#A",
+    " G "
+   ],
+   "chave": {
+    "#": "cl:po_diamante",
+    "A": "cl:liga_enriquecida",
+    "G": "minecraft:glass"
+   }
+  },
+  {
+   "id": "mkc_upgrade_chemical",
+   "resultado": "cl:melhoria_quimica",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "A#A",
+    " G "
+   ],
+   "chave": {
+    "#": "cl:po_ferro",
+    "A": "cl:liga_enriquecida",
+    "G": "minecraft:glass"
+   }
+  },
+  {
+   "id": "mkc_upgrade_energy",
+   "resultado": "cl:melhoria_energia",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "A#A",
+    " G "
+   ],
+   "chave": {
+    "#": "cl:po_ouro",
+    "A": "cl:liga_enriquecida",
+    "G": "minecraft:glass"
+   }
+  },
+  {
+   "id": "mkc_upgrade_filter",
+   "resultado": "cl:melhoria_filtro",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "A#A",
+    " G "
+   ],
+   "chave": {
+    "#": "cl:po_estanho",
+    "A": "cl:liga_enriquecida",
+    "G": "minecraft:glass"
+   }
+  },
+  {
+   "id": "mkc_upgrade_speed",
+   "resultado": "cl:melhoria_velocidade",
+   "tipo": "shaped",
+   "padrao": [
+    " G ",
+    "A#A",
+    " G "
+   ],
+   "chave": {
+    "#": "cl:po_osmio",
+    "A": "cl:liga_enriquecida",
+    "G": "minecraft:glass"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_combining",
+   "resultado": "cl:fabrica_combinacao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_combinacao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_compressing",
+   "resultado": "cl:fabrica_compressao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_compressao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_crushing",
+   "resultado": "cl:fabrica_trituracao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_trituracao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_enriching",
+   "resultado": "cl:fabrica_enriquecimento_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_enriquecimento_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_infusing",
+   "resultado": "cl:fabrica_infusao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_infusao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_injecting",
+   "resultado": "cl:fabrica_injecao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_injecao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_purifying",
+   "resultado": "cl:fabrica_purificacao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_purificacao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_sawing",
+   "resultado": "cl:fabrica_serragem_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_serragem_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_elite_smelting",
+   "resultado": "cl:fabrica_fundicao_elite",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_reforcada",
+    "C": "cl:circuito_controle_elite",
+    "I": "minecraft:gold_ingot",
+    "P": "cl:fabrica_fundicao_avancada"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_combining",
+   "resultado": "cl:fabrica_combinacao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_combinacao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_compressing",
+   "resultado": "cl:fabrica_compressao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_compressao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_crushing",
+   "resultado": "cl:fabrica_trituracao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_trituracao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_enriching",
+   "resultado": "cl:fabrica_enriquecimento_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_enriquecimento_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_infusing",
+   "resultado": "cl:fabrica_infusao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_infusao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_injecting",
+   "resultado": "cl:fabrica_injecao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_injecao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_purifying",
+   "resultado": "cl:fabrica_purificacao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_purificacao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_sawing",
+   "resultado": "cl:fabrica_serragem_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_serragem_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_ultimate_smelting",
+   "resultado": "cl:fabrica_fundicao_definitiva",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_atomica",
+    "C": "cl:circuito_controle_supremo",
+    "I": "minecraft:diamond",
+    "P": "cl:fabrica_fundicao_elite"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_combining",
+   "resultado": "cl:fabrica_combinacao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_combinacao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_compressing",
+   "resultado": "cl:fabrica_compressao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_compressao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_crushing",
+   "resultado": "cl:fabrica_trituracao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_trituracao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_enriching",
+   "resultado": "cl:fabrica_enriquecimento_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_enriquecimento_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_infusing",
+   "resultado": "cl:fabrica_infusao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_infusao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_injecting",
+   "resultado": "cl:fabrica_injecao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_injecao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_purifying",
+   "resultado": "cl:fabrica_purificacao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_purificacao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_sawing",
+   "resultado": "cl:fabrica_serragem_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_serragem_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_advanced_smelting",
+   "resultado": "cl:fabrica_fundicao_avancada",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "cl:liga_enriquecida",
+    "C": "cl:circuito_controle_avancado",
+    "I": "cl:lingote_osmio",
+    "P": "cl:fabrica_fundicao_basica"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_combining",
+   "resultado": "cl:fabrica_combinacao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:combinador"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_compressing",
+   "resultado": "cl:fabrica_compressao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:compressor_osmio"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_crushing",
+   "resultado": "cl:fabrica_trituracao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:triturador_mk"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_enriching",
+   "resultado": "cl:fabrica_enriquecimento_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:camara_enriquecimento"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_infusing",
+   "resultado": "cl:fabrica_infusao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:infusor_metalurgico"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_injecting",
+   "resultado": "cl:fabrica_injecao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:camara_injecao"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_purifying",
+   "resultado": "cl:fabrica_purificacao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:camara_purificacao"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_sawing",
+   "resultado": "cl:fabrica_serragem_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:serraria_precisao"
+   }
+  },
+  {
+   "id": "mkc_factory_basic_smelting",
+   "resultado": "cl:fabrica_fundicao_basica",
+   "tipo": "shaped",
+   "padrao": [
+    "ACA",
+    "IPI",
+    "ACA"
+   ],
+   "chave": {
+    "A": "minecraft:redstone",
+    "C": "cl:circuito_controle_basico",
+    "I": "minecraft:iron_ingot",
+    "P": "cl:fundidor_energizado"
+   }
+  }
+ ]
+}

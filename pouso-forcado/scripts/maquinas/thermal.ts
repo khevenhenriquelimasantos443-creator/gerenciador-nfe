@@ -23,7 +23,7 @@ const chave = (b: Block) => `${b.x},${b.y},${b.z}`;
 
 export function feito(b: Block, som = "random.click"): void {
   ultimo.set(chave(b), "ok");
-  b.dimension.playSound(som, b.center(), { volume: 0.3 });
+  if (som) b.dimension.playSound(som, b.center(), { volume: 0.3 }); // sem som: Silenciador do Mekanism (1.50.0)
   particula(b.dimension, "cl:energia", { x: b.x + 0.5, y: b.y + 1, z: b.z + 0.5 });
   creditar(b, "te_operacao");
 }

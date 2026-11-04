@@ -11,7 +11,7 @@ import json, os, re, sys
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from mek_mapa import METAIS, NOVOS, TAGS, TODOS, simples, um  # noqa: E402
+from mek_mapa import FABRICA_TIPO, METAIS, NIVEL_F, NOVOS, TAGS, TODOS, simples, um  # noqa: E402
 
 R = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 SRC = sys.argv[1] if len(sys.argv) > 1 else sys.exit("uso: python3 tools/importar-mekanism-completo.py <pasta do Mekanism>")
@@ -52,15 +52,15 @@ def modelo_java(nome):
     base = modelo_java(pai.split(":", 1)[1]) if pai.startswith("mekanism:") else {"textures": {}, "elements": []}
     tex = {**base.get("textures", {}), **d.get("textures", {})}
     elems = d.get("elements")
-    if "children" in d:  # neoforge:composite: cada parte com as suas texturas
+    if "children" in d:  # neoforge:composite: cada parte com as suas texturas (ou com o seu modelo pai)
         elems = []
         for filho in d["children"].values():
-            t = {**tex, **filho.get("textures", {})}
-            for e in filho.get("elements", []):
+            sub = modelo_java(filho["parent"].split(":", 1)[1]) if filho.get("parent", "").startswith("mekanism:") else {"textures": {}, "elements": []}
+            t = {**tex, **sub["textures"], **filho.get("textures", {})}
+            for e in [*sub["elements"], *filho.get("elements", [])]:
                 e = json.loads(json.dumps(e))
                 for f in e["faces"].values():
-                    v = f.get("texture", "#all").lstrip("#")
-                    f["texture"] = t.get(v, v)
+                    f["texture"] = resolver(f.get("texture", "#all"), t)
                 elems.append(e)
     elif elems is not None:
         elems = json.loads(json.dumps(elems))
@@ -269,34 +269,41 @@ for nome, j in todos_json():
         proc[t].append(r)
 
 # ---------- receitas de bancada ----------
-receitas = []
-for nome, j in todos_json():
-    tp = j.get("type", "")
-    res = j.get("result", {})
-    rid = res.get("id", "")
-    if not (tp.endswith("shaped") or tp.endswith("shapeless") or tp == "mekanism:mek_data") or not rid.startswith("mekanism:"):
-        continue
-    if rid.split(":", 1)[1] not in NOVOS:
-        continue
-    saida = um(rid)
-    r = {"id": "mkc_" + re.sub(r"[^a-z0-9_]", "_", nome), "resultado": saida}
-    if res.get("count", 1) > 1:
-        r["qtd"] = res["count"]
-    if "pattern" in j:
-        chave = {k: simples(v) for k, v in j["key"].items()}
-        if None in chave.values():
-            pulou.append("bancada/" + nome + " " + str([k for k, v in chave.items() if v is None]))
+def receitas_de(ids):
+    rs = []
+    for nome, j in todos_json():
+        tp = j.get("type", "")
+        res = j.get("result", {})
+        rid = res.get("id", "")
+        if not (tp.endswith("shaped") or tp.endswith("shapeless") or tp == "mekanism:mek_data") or not rid.startswith("mekanism:"):
             continue
-        r.update(tipo="shaped", padrao=j["pattern"], chave=chave)
-    elif "ingredients" in j:
-        ings = [simples(i) for i in j["ingredients"]]
-        if None in ings:
-            pulou.append("bancada/" + nome)
+        if rid.split(":", 1)[1] not in ids:
             continue
-        r.update(tipo="shapeless", ingredientes=ings)
-    else:
-        continue
-    receitas.append(r)
+        saida = um(rid)
+        r = {"id": "mkc_" + re.sub(r"[^a-z0-9_]", "_", nome), "resultado": saida}
+        if res.get("count", 1) > 1:
+            r["qtd"] = res["count"]
+        if "pattern" in j:
+            chave = {k: simples(v) for k, v in j["key"].items()}
+            if None in chave.values():
+                pulou.append("bancada/" + nome + " " + str([k for k, v in chave.items() if v is None]))
+                continue
+            r.update(tipo="shaped", padrao=j["pattern"], chave=chave)
+        elif "ingredients" in j:
+            ings = [simples(i) for i in j["ingredients"]]
+            if None in ings:
+                pulou.append("bancada/" + nome)
+                continue
+            r.update(tipo="shapeless", ingredientes=ings)
+        else:
+            continue
+        rs.append(r)
+    return rs
+
+
+P1 = set(ITENS_P1) | set(MAQ) | {"dynamic_tank", "fluorite_ore", "deepslate_fluorite_ore", "block_fluorite", "personal_barrel", "salt"} | \
+    {f"{t}_{k}_tank" for t, _p, _n in TIERS for k in ("chemical", "fluid")}
+receitas = receitas_de(P1)
 
 # ---------- energia ----------
 uso = open(os.path.join(SRC, "src/main/java/mekanism/common/config/UsageConfig.java")).read()
@@ -306,6 +313,31 @@ ce = lambda jt, ticks: max(1, round(jt * ticks / 2.5 / 40))
 CE = {"oxidizing": ce(J["chemicalOxidizer"], 100), "dissolution": ce(J["chemicalDissolutionChamber"], 100), "crystallizing": ce(J["chemicalCrystallizer"], 200),
       "washing": ce(J["chemicalWasher"], 100), "chemical_infusing": ce(J["chemicalInfuser"], 100), "rotary": ce(J["rotaryCondensentrator"], 100),
       "reaction": J["pressurizedReactionBase"]}
+
+# ---------- Parte 2 (1.50.0): fábricas, melhorias e instaladores de nível ----------
+BASE_FAB = {"smelting": "fundidor_energizado", "enriching": "camara_enriquecimento", "crushing": "triturador_mk", "compressing": "compressor_osmio",
+            "combining": "combinador", "purifying": "camara_purificacao", "injecting": "camara_injecao", "infusing": "infusor_metalurgico",
+            "sawing": "serraria_precisao"}
+proc_f = {m.group(1).lower(): int(m.group(2)) for m in re.finditer(r"(BASIC|ADVANCED|ELITE|ULTIMATE)\(BaseTier\.\w+, (\d+)\)",
+                                                                    open(os.path.join(SRC, "src/main/java/mekanism/common/tier/FactoryTier.java")).read())}
+fabricas = []
+for tipo, tp in FABRICA_TIPO.items():
+    for t, n in NIVEL_F.items():
+        m = f"{t}_{tipo}_factory"
+        pt, en = nome_de(m)
+        fabricas.append({"id": f"fabrica_{tp}_{n}", "pt": pt, "en": en, "base": BASE_FAB[tipo], "processos": proc_f[t], "nivel": list(NIVEL_F).index(t),
+                         "modelo": geometria(f"fabrica_{tp}_{n}", f"block/factory/{tipo}/{t}")})
+itens2 = []
+for m in [*(k for k in NOVOS if k.startswith("upgrade_")), *(k for k in NOVOS if k.endswith("_tier_installer"))]:
+    pid = NOVOS[m]
+    pt, en = nome_de(m)
+    salvar(abrir(f"item/{m}.png"), f"RP/textures/items/cl/arte/{pid}.png")
+    usados.append(pid)
+    itens2.append({"id": pid, "pt": pt, "en": en})
+P2 = {f"{t}_{tipo}_factory" for tipo in FABRICA_TIPO for t in NIVEL_F} | {k for k in NOVOS if k.startswith("upgrade_") or k.endswith("_tier_installer")}
+receitas2 = receitas_de(P2)
+json.dump({"fabricas": fabricas, "itens": itens2, "receitas": receitas2}, open(os.path.join(R, "tools/dados/conteudo/mekanism_p2.json"), "w"), ensure_ascii=False, indent=1)
+print(f"mekanism completo p2: {len(fabricas)} fábricas, {len(itens2)} itens, {len(receitas2)} receitas, processos {proc_f}")
 
 saida = {"itens": itens, "cilindros": cilindros, "cilindroDe": CILINDRO, "maquinas": maquinas, "tanques": tanques, "blocos": blocos,
          "receitas": receitas, "processos": proc, "ce": CE}

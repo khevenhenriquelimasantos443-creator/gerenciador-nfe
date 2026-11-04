@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_mkc_factory_elite_infusing"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ACA",
+      "IPI",
+      "ACA"
+    ],
+    "key": {
+      "A": {
+        "item": "cl:liga_reforcada"
+      },
+      "C": {
+        "item": "cl:circuito_controle_elite"
+      },
+      "I": {
+        "item": "minecraft:gold_ingot"
+      },
+      "P": {
+        "item": "cl:fabrica_infusao_avancada"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:fabrica_infusao_elite"
+    }
+  }
+}

@@ -2770,3 +2770,50 @@ teste("mkq", 1400, (t) => {
     t.succeed();
   });
 });
+
+// 1.50.0: Mekanism completo, parte 2. A Câmara de Enriquecimento com 8 Melhorias de Velocidade faz 10 operações num
+// ciclo; o Instalador de Nível Básico a troca pela Fábrica de Enriquecimento Básica (3 por ciclo) sem perder as melhorias;
+// o Combinador com o Gerador de Pedra não precisa de pedregulho.
+teste("mku", 400, (t) => {
+  const j = robo(t, { x: 7.5, y: 2, z: 7.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`mku: ${c} -> ${e}`); } };
+  const bat = (pos) => {
+    for (const p of [pos, { ...pos, z: pos.z + 1 }]) {
+      t.setBlockType("cl:bateria", p);
+      const b = t.getBlock(p);
+      b.setPermutation(b.permutation.withState("cl:carga", 15));
+    }
+  };
+  const maquina = (x, z, id, itens) => {
+    t.setBlockType("minecraft:chest", { x, y: 1, z });
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    for (const [i, n] of itens) bau(t, { x, y: 3, z }).addItem(new ItemStack(i, n));
+    bat({ x: x + 1, y: 2, z });
+  };
+  maquina(0, 0, "cl:camara_enriquecimento", [["minecraft:iron_ore", 30]]);
+  maquina(3, 0, "cl:camara_enriquecimento", [["minecraft:iron_ore", 30]]);
+  maquina(0, 4, "cl:combinador", [["cl:po_ferro", 8]]);
+  const em = (x, z) => { const p = t.worldBlockLocation({ x, y: 2, z }); return `${p.x} ${p.y} ${p.z}`; };
+  t.runAfterDelay(5, () => {
+    for (let k = 0; k < 8; k++) cmd(`scriptevent cl:teste_mku instalar cl:melhoria_velocidade ${em(0, 0)}`);
+    cmd(`scriptevent cl:teste_mku subir cl:instalador_nivel_basico ${em(3, 0)}`);
+    cmd(`scriptevent cl:teste_mku instalar cl:melhoria_gerador_pedra ${em(0, 4)}`);
+  });
+  t.runAfterDelay(12, () => cmd(`scriptevent cl:teste_mku ver ${em(0, 0)}`));
+  t.runAfterDelay(240, () => {
+    const r = {
+      rapida: noBau(bau(t, { x: 0, y: 1, z: 0 }), "cl:po_ferro"),
+      fabrica: t.getBlock({ x: 3, y: 2, z: 0 }).typeId,
+      daFabrica: noBau(bau(t, { x: 3, y: 1, z: 0 }), "cl:po_ferro"),
+      minerio: noBau(bau(t, { x: 0, y: 1, z: 4 }), "minecraft:iron_ore"),
+    };
+    log(`mku: ${JSON.stringify(r)}`);
+    t.assert(r.fabrica === "cl:fabrica_enriquecimento_basica", "o Instalador de Nível não fez a fábrica");
+    // 2 ciclos de 5 s: a de 8 velocidades faz ~20 operações (40 pós); a fábrica, 6 (12 pós).
+    t.assert(r.rapida >= 30, "a Melhoria de Velocidade não acelerou a máquina");
+    t.assert(r.daFabrica >= 8 && r.daFabrica <= 16, "a Fábrica Básica não fez 3 operações por ciclo");
+    t.assert(r.minerio === 1, "o Gerador de Pedra não supriu o pedregulho");
+    t.succeed();
+  });
+});
