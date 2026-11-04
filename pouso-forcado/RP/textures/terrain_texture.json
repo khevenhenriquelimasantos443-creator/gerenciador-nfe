@@ -6000,6 +6000,150 @@
     },
     "clc_pedra_comprimida": {
       "textures": "textures/blocks/cl/c/pedra_comprimida"
+    },
+    "clc_arenito_ch_trancado": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_trancado"
+    },
+    "clc_arenito_ch_caotico": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_caotico"
+    },
+    "clc_arenito_ch_circular": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_circular"
+    },
+    "clc_arenito_ch_ornamentado": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_ornamentado"
+    },
+    "clc_arenito_ch_prisma": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_prisma"
+    },
+    "clc_arenito_ch_ladrilhos": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_ladrilhos"
+    },
+    "clc_arenito_ch_tecido": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_tecido"
+    },
+    "clc_arenito_ch_camadas": {
+      "textures": "textures/blocks/cl/arte/arenito_ch_camadas"
+    },
+    "clc_arenito_vermelho_ch_trancado": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_trancado"
+    },
+    "clc_arenito_vermelho_ch_caotico": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_caotico"
+    },
+    "clc_arenito_vermelho_ch_circular": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_circular"
+    },
+    "clc_arenito_vermelho_ch_mosaico": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_mosaico"
+    },
+    "clc_arenito_vermelho_ch_ornamentado": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_ornamentado"
+    },
+    "clc_arenito_vermelho_ch_prisma": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_prisma"
+    },
+    "clc_arenito_vermelho_ch_ladrilhos": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_ladrilhos"
+    },
+    "clc_arenito_vermelho_ch_tecido": {
+      "textures": "textures/blocks/cl/arte/arenito_vermelho_ch_tecido"
+    },
+    "clc_templo_tijolos": {
+      "textures": "textures/blocks/cl/arte/templo_tijolos"
+    },
+    "clc_templo_tijolos_grandes": {
+      "textures": "textures/blocks/cl/arte/templo_tijolos_grandes"
+    },
+    "clc_templo_ornamentado": {
+      "textures": "textures/blocks/cl/arte/templo_ornamentado"
+    },
+    "clc_templo_placa": {
+      "textures": "textures/blocks/cl/arte/templo_placa"
+    },
+    "clc_templo_ladrilhos_pequenos": {
+      "textures": "textures/blocks/cl/arte/templo_ladrilhos_pequenos"
+    },
+    "clc_templo_ladrilhos": {
+      "textures": "textures/blocks/cl/arte/templo_ladrilhos"
+    },
+    "clc_templo_tijolos_gastos": {
+      "textures": "textures/blocks/cl/arte/templo_tijolos_gastos"
+    },
+    "clc_templo_coluna": {
+      "textures": "textures/blocks/cl/c/templo_coluna"
+    },
+    "clc_fabrica_chapeado": {
+      "textures": "textures/blocks/cl/arte/fabrica_chapeado"
+    },
+    "clc_fabrica_circuito": {
+      "textures": "textures/blocks/cl/arte/fabrica_circuito"
+    },
+    "clc_fabrica_pontilhado": {
+      "textures": "textures/blocks/cl/arte/fabrica_pontilhado"
+    },
+    "clc_fabrica_chapeado_ouro": {
+      "textures": "textures/blocks/cl/arte/fabrica_chapeado_ouro"
+    },
+    "clc_fabrica_perigo": {
+      "textures": "textures/blocks/cl/arte/fabrica_perigo"
+    },
+    "clc_fabrica_ferrugem": {
+      "textures": "textures/blocks/cl/arte/fabrica_ferrugem"
+    },
+    "clc_fabrica_mosaico": {
+      "textures": "textures/blocks/cl/arte/fabrica_mosaico"
+    },
+    "clc_fabrica_armacao": {
+      "textures": "textures/blocks/cl/arte/fabrica_armacao"
+    },
+    "clc_laboratorio_ladrilho_grande": {
+      "textures": "textures/blocks/cl/arte/laboratorio_ladrilho_grande"
+    },
+    "clc_laboratorio_xadrez": {
+      "textures": "textures/blocks/cl/arte/laboratorio_xadrez"
+    },
+    "clc_laboratorio_painel_pontilhado": {
+      "textures": "textures/blocks/cl/arte/laboratorio_painel_pontilhado"
+    },
+    "clc_laboratorio_piso": {
+      "textures": "textures/blocks/cl/arte/laboratorio_piso"
+    },
+    "clc_laboratorio_parede": {
+      "textures": "textures/blocks/cl/arte/laboratorio_parede"
+    },
+    "clc_laboratorio_medalhao": {
+      "textures": "textures/blocks/cl/arte/laboratorio_medalhao"
+    },
+    "clc_laboratorio_ladrilho_pequeno": {
+      "textures": "textures/blocks/cl/arte/laboratorio_ladrilho_pequeno"
+    },
+    "clc_laboratorio_painel": {
+      "textures": "textures/blocks/cl/arte/laboratorio_painel"
+    },
+    "clc_cinzel_automatico_frente": {
+      "textures": "textures/blocks/cl/c/cinzel_automatico_frente"
+    },
+    "clc_cinzel_automatico_lado": {
+      "textures": "textures/blocks/cl/c/cinzel_automatico_lado"
+    },
+    "clc_cinzel_automatico_topo": {
+      "textures": "textures/blocks/cl/c/cinzel_automatico_topo"
+    },
+    "clc_cinzel_automatico_baixo": {
+      "textures": "textures/blocks/cl/c/cinzel_automatico_baixo"
+    },
+    "clc_templo_coluna_frente": {
+      "textures": "textures/blocks/cl/arte/templo_coluna_frente"
+    },
+    "clc_templo_coluna_lado": {
+      "textures": "textures/blocks/cl/arte/templo_coluna_lado"
+    },
+    "clc_templo_coluna_topo": {
+      "textures": "textures/blocks/cl/arte/templo_coluna_topo"
+    },
+    "clc_templo_coluna_baixo": {
+      "textures": "textures/blocks/cl/arte/templo_coluna_baixo"
     }
   }
 }

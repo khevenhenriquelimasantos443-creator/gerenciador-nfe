@@ -1,0 +1,22 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cinzel_hitech",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cinzel_hitech",
+      "minecraft:display_name": {
+        "value": "item.cl:cinzel_hitech.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 10048
+      },
+      "minecraft:hand_equipped": true
+    }
+  }
+}

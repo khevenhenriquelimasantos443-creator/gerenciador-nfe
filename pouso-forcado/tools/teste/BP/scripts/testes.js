@@ -1892,6 +1892,41 @@ teste("waystone", 300, (t) => {
   });
 });
 
+// 1.45.0: Chisel 1.18. O Cinzel de Diamante no modo painel troca 9 arenitos de uma vez; o Cinzel Automático transforma
+// o arenito do baú de cima na variante escolhida.
+teste("ch18", 200, (t) => {
+  const j = robo(t, { x: 1.5, y: 2, z: 6.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`ch18: ${c} -> ${e}`); } };
+  for (let x = 2; x <= 4; x++) for (let z = 2; z <= 4; z++) t.setBlockType("minecraft:sandstone", { x, y: 2, z });
+  t.setBlockType("minecraft:chest", { x: 6, y: 2, z: 6 });
+  t.setBlockType("cl:cinzel_automatico", { x: 6, y: 3, z: 6 });
+  t.setBlockType("minecraft:chest", { x: 6, y: 4, z: 6 });
+  t.getBlock({ x: 6, y: 4, z: 6 }).getComponent("inventory").container.addItem(new ItemStack("minecraft:sandstone", 4));
+  t.runAfterDelay(5, () => {
+    j.setItem(new ItemStack("cl:cinzel_diamante", 1), 0, true);
+    cmd("scriptevent cl:teste_ch modo painel");
+  });
+  t.runAfterDelay(8, () => { const p = t.worldBlockLocation({ x: 3, y: 2, z: 3 }); cmd(`scriptevent cl:teste_ch cinzelar ${p.x} ${p.y} ${p.z}`); });
+  t.runAfterDelay(12, () => {
+    j.setItem(new ItemStack("cl:arenito_ch_trancado", 1), 0, true);
+    j.lookAtBlock({ x: 6, y: 3, z: 6 });
+    j.interactWithBlock({ x: 6, y: 3, z: 6 }, Direction.West);
+  });
+  t.runAfterDelay(120, () => {
+    const tipos = {};
+    for (let x = 2; x <= 4; x++) for (let z = 2; z <= 4; z++) { const id = t.getBlock({ x, y: 2, z }).typeId; tipos[id] = (tipos[id] ?? 0) + 1; }
+    const c = t.getBlock({ x: 6, y: 2, z: 6 }).getComponent("inventory").container;
+    let feitos = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === "cl:arenito_ch_trancado") feitos += c.getItem(s).amount;
+    const dur = j.getComponent("inventory").container.getItem(0);
+    log(`ch18: painel=${JSON.stringify(tipos)} auto=${feitos}`);
+    const [[id, n]] = Object.entries(tipos);
+    t.assert(Object.keys(tipos).length === 1 && n === 9 && id !== "minecraft:sandstone", "o cinzel de diamante não fez o painel 3×3");
+    t.assert(feitos === 4, "o Cinzel Automático não converteu");
+    t.succeed();
+  });
+});
+
 // 1.44.0: PneumaticCraft: Repressurized. O Compressor Avançado faz 5× o ar do comum; o Líquido queima biodiesel e
 // devolve o balde.
 teste("pnc", 200, (t) => {

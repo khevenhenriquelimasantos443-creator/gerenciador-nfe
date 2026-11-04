@@ -119,6 +119,7 @@ export type Acao =
   | "bc8_comporta"
   | "pnc_pressao10"
   | "pnc_liquido"
+  | "ch18_auto"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -933,6 +934,10 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     requer: ["tinkers"],
     missoes: [
       { id: "dc_cinzel", objetivo: { tipo: "acao", acao: "cinzelar", qtd: 32 }, recompensa: [{ item: "cl:marmore_liso", quantidade: 16 }] },
+      // 1.45.0: Chisel 1.18.
+      { id: "ch18_diamante", requer: ["dc_cinzel"], objetivo: { tipo: "ter", item: "cl:cinzel_diamante", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
+      { id: "ch18_auto", requer: ["dc_cinzel"], objetivo: { tipo: "acao", acao: "ch18_auto", qtd: 16 }, recompensa: [{ item: "minecraft:sandstone", quantidade: 32 }] },
+      { id: "ch18_templo", objetivo: { tipo: "colocar", bloco: "cl:templo_tijolos", qtd: 16 }, recompensa: [{ item: "minecraft:cyan_dye", quantidade: 8 }] },
       { id: "dc_marmore", objetivo: { tipo: "ter", item: "cl:marmore", qtd: 32 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "dc_estante", objetivo: { tipo: "acao", acao: "estante", qtd: 1 }, recompensa: [{ item: "minecraft:book", quantidade: 4 }, { item: "minecraft:experience_bottle", quantidade: 8 }] },
       { id: "dc_cabide", objetivo: { tipo: "acao", acao: "cabide", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },

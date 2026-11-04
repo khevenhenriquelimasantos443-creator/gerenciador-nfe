@@ -33,7 +33,7 @@ const luz = (id, pt, en, cor) => ({
 export default {
   fase: 23,
   mod: "Chisel",
-  itens: [{ id: "cinzel", pt: "Cinzel", en: "Chisel", icone: "cinzel", pilha: 1, comp: { "minecraft:durability": { max_durability: 500 }, "minecraft:hand_equipped": true } }],
+  itens: [{ id: "cinzel", pt: "Cinzel", en: "Chisel", icone: "cinzel", pilha: 1, comp: { "minecraft:durability": { max_durability: 512 }, "minecraft:hand_equipped": true } }],
   blocos: [
     { id: "marmore", pt: "Mármore", en: "Marble", tipo: "cubo", cor: "#ece9e2", padrao: "liso", dureza: 1.5 },
     { id: "calcario", pt: "Calcário", en: "Limestone", tipo: "cubo", cor: "#d9cfae", padrao: "liso", dureza: 1.5 },

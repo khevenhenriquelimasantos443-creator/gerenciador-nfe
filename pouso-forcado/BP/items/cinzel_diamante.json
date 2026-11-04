@@ -1,0 +1,22 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:cinzel_diamante",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_cinzel_diamante",
+      "minecraft:display_name": {
+        "value": "item.cl:cinzel_diamante.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 5056
+      },
+      "minecraft:hand_equipped": true
+    }
+  }
+}

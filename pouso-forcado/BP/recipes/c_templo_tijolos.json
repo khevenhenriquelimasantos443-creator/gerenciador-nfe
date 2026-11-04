@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_templo_tijolos"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "#C#",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:stone_bricks"
+      },
+      "C": {
+        "item": "minecraft:cyan_dye"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:templo_tijolos",
+      "count": 8
+    }
+  }
+}

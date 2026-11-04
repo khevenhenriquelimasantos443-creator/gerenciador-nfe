@@ -1,0 +1,55 @@
+{
+ "familias": {
+  "arenito": [
+   ["arenito_ch_trancado", "Arenito Trançado", "Braided Sandstone", "braid"],
+   ["arenito_ch_caotico", "Arenito em Tijolos Caóticos", "Chaotic Sandstone Bricks", "chaotic_bricks"],
+   ["arenito_ch_circular", "Arenito Circular", "Circular Sandstone", "circular"],
+   ["arenito_ch_ornamentado", "Arenito Ornamentado", "Ornate Sandstone", "ornate"],
+   ["arenito_ch_prisma", "Arenito Prisma", "Prism Sandstone", "prism"],
+   ["arenito_ch_ladrilhos", "Arenito em Ladrilhos Grandes", "Large Sandstone Tiles", "tiles_large"],
+   ["arenito_ch_tecido", "Arenito Tecido", "Woven Sandstone", "weaver"],
+   ["arenito_ch_camadas", "Arenito em Camadas", "Layered Sandstone", "layers"]
+  ],
+  "arenito_vermelho": [
+   ["arenito_vermelho_ch_trancado", "Arenito Vermelho Trançado", "Braided Red Sandstone", "braid"],
+   ["arenito_vermelho_ch_caotico", "Arenito Vermelho em Tijolos Caóticos", "Chaotic Red Sandstone Bricks", "chaotic_bricks"],
+   ["arenito_vermelho_ch_circular", "Arenito Vermelho Circular", "Circular Red Sandstone", "circular"],
+   ["arenito_vermelho_ch_mosaico", "Arenito Vermelho Mosaico", "Red Sandstone Mosaic", "mosaic"],
+   ["arenito_vermelho_ch_ornamentado", "Arenito Vermelho Ornamentado", "Ornate Red Sandstone", "ornate"],
+   ["arenito_vermelho_ch_prisma", "Arenito Vermelho Prisma", "Prism Red Sandstone", "prism"],
+   ["arenito_vermelho_ch_ladrilhos", "Arenito Vermelho em Ladrilhos", "Large Red Sandstone Tiles", "tiles_large"],
+   ["arenito_vermelho_ch_tecido", "Arenito Vermelho Tecido", "Woven Red Sandstone", "weaver"]
+  ],
+  "templo": [
+   ["templo_tijolos", "Tijolos de Templo", "Temple Bricks", "bricks"],
+   ["templo_tijolos_grandes", "Tijolos Grandes de Templo", "Large Temple Bricks", "large_bricks"],
+   ["templo_ornamentado", "Templo Ornamentado", "Ornate Temple Block", "ornate"],
+   ["templo_placa", "Placa de Templo", "Temple Plate", "plate"],
+   ["templo_ladrilhos_pequenos", "Ladrilhos Pequenos de Templo", "Small Temple Tiles", "smalltiles"],
+   ["templo_ladrilhos", "Ladrilhos de Templo", "Temple Tiles", "tiles"],
+   ["templo_tijolos_gastos", "Tijolos Gastos de Templo", "Weathered Temple Bricks", "weared_bricks"],
+   ["templo_coluna", "Coluna de Templo", "Temple Column", "column-side"]
+  ],
+  "fabrica": [
+   ["fabrica_chapeado", "Chapeado de Fábrica", "Factory Plating", "plating"],
+   ["fabrica_circuito", "Circuito de Fábrica", "Factory Circuit", "circuit"],
+   ["fabrica_pontilhado", "Pontilhado de Fábrica", "Factory Dots", "dots"],
+   ["fabrica_chapeado_ouro", "Chapeado de Ouro", "Gold Plating", "goldplating"],
+   ["fabrica_perigo", "Faixa de Perigo", "Hazard Stripes", "hazard"],
+   ["fabrica_ferrugem", "Ferrugem", "Rust", "rust"],
+   ["fabrica_mosaico", "Mosaico de Fábrica", "Factory Tile Mosaic", "tilemosaic"],
+   ["fabrica_armacao", "Armação", "Wireframe", "wireframe"]
+  ],
+  "laboratorio": [
+   ["laboratorio_ladrilho_grande", "Ladrilho Grande de Laboratório", "Large Lab Tile", "largetile"],
+   ["laboratorio_xadrez", "Xadrez de Laboratório", "Lab Checker Tile", "checkertile"],
+   ["laboratorio_painel_pontilhado", "Painel Pontilhado", "Dotted Panel", "dottedpanel"],
+   ["laboratorio_piso", "Piso de Laboratório", "Lab Floor Tile", "floortile"],
+   ["laboratorio_parede", "Parede Grande de Laboratório", "Large Lab Wall", "largewall"],
+   ["laboratorio_medalhao", "Medalhão de Laboratório", "Lab Roundel", "roundel"],
+   ["laboratorio_ladrilho_pequeno", "Ladrilho Pequeno de Laboratório", "Small Lab Tile", "smalltile"],
+   ["laboratorio_painel", "Painel de Parede", "Wall Panel", "wallpanel"]
+  ]
+ },
+ "base": {"arenito": "minecraft:sandstone", "arenito_vermelho": "minecraft:red_sandstone"}
+}

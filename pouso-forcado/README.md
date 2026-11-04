@@ -154,6 +154,18 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.45.0 (Chisel 1.18, o mais novo)
+
+- **Cinzel de Diamante** (5.056 usos) e **Cinzel Hi-Tech** (10.048) com os modos do mod: um bloco, **painel 3×3**,
+  coluna 3×1 e linha 1×3; o Hi-Tech também troca os blocos iguais ligados (até 10 de distância). Agachado e usando no
+  ar, escolhe o modo. O Cinzel de ferro passa a 512 usos, como no mod.
+- **Cinzel Automático**: toque nele com a variante que quer; os blocos da mesma família no baú de cima saem trocados no
+  de baixo.
+- **40 variantes novas** com a arte do Chisel: arenito e arenito vermelho (trançado, caótico, circular, ornamentado,
+  prisma, ladrilhos...), **templo** (tijolos, coluna, placa, ornamentado...), **fábrica** (chapeado, circuito, perigo,
+  ferrugem, armação...) e **laboratório** (xadrez, piso, medalhão, painéis...).
+- Diário: três missões novas no capítulo de decoração.
+
 ## Novidades da 1.44.0 (PneumaticCraft: Repressurized 8.2, o mais novo)
 
 - **Compressor de Ar Avançado**: 50 mL/t (5× o comum) com o mesmo combustível; aguenta a rede de tubos avançados.

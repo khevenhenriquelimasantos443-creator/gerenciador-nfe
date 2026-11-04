@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cinzel_automatico"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GGG",
+      "GCG",
+      "III"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "C": {
+        "item": "cl:cinzel"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cinzel_automatico"
+    }
+  }
+}

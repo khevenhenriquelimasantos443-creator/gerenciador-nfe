@@ -521,6 +521,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Chiseled Soul Sandstone",
   "icone": "textures/items/cl/blocos/arenito_almas_entalhado"
  },
+ "cl:arenito_ch_camadas": {
+  "pt": "Arenito em Camadas",
+  "en": "Layered Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_ch_camadas"
+ },
+ "cl:arenito_ch_caotico": {
+  "pt": "Arenito em Tijolos Caóticos",
+  "en": "Chaotic Sandstone Bricks",
+  "icone": "textures/items/cl/blocos/arenito_ch_caotico"
+ },
+ "cl:arenito_ch_circular": {
+  "pt": "Arenito Circular",
+  "en": "Circular Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_ch_circular"
+ },
+ "cl:arenito_ch_ladrilhos": {
+  "pt": "Arenito em Ladrilhos Grandes",
+  "en": "Large Sandstone Tiles",
+  "icone": "textures/items/cl/blocos/arenito_ch_ladrilhos"
+ },
+ "cl:arenito_ch_ornamentado": {
+  "pt": "Arenito Ornamentado",
+  "en": "Ornate Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_ch_ornamentado"
+ },
+ "cl:arenito_ch_prisma": {
+  "pt": "Arenito Prisma",
+  "en": "Prism Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_ch_prisma"
+ },
+ "cl:arenito_ch_tecido": {
+  "pt": "Arenito Tecido",
+  "en": "Woven Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_ch_tecido"
+ },
+ "cl:arenito_ch_trancado": {
+  "pt": "Arenito Trançado",
+  "en": "Braided Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_ch_trancado"
+ },
  "cl:arenito_entalhado": {
   "pt": "Arenito Entalhado",
   "en": "Carved Sandstone",
@@ -560,6 +600,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Arenito Tijolinhos",
   "en": "Small Bricks Sandstone",
   "icone": "textures/items/cl/blocos/arenito_tijolos_pequenos"
+ },
+ "cl:arenito_vermelho_ch_caotico": {
+  "pt": "Arenito Vermelho em Tijolos Caóticos",
+  "en": "Chaotic Red Sandstone Bricks",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_caotico"
+ },
+ "cl:arenito_vermelho_ch_circular": {
+  "pt": "Arenito Vermelho Circular",
+  "en": "Circular Red Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_circular"
+ },
+ "cl:arenito_vermelho_ch_ladrilhos": {
+  "pt": "Arenito Vermelho em Ladrilhos",
+  "en": "Large Red Sandstone Tiles",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_ladrilhos"
+ },
+ "cl:arenito_vermelho_ch_mosaico": {
+  "pt": "Arenito Vermelho Mosaico",
+  "en": "Red Sandstone Mosaic",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_mosaico"
+ },
+ "cl:arenito_vermelho_ch_ornamentado": {
+  "pt": "Arenito Vermelho Ornamentado",
+  "en": "Ornate Red Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_ornamentado"
+ },
+ "cl:arenito_vermelho_ch_prisma": {
+  "pt": "Arenito Vermelho Prisma",
+  "en": "Prism Red Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_prisma"
+ },
+ "cl:arenito_vermelho_ch_tecido": {
+  "pt": "Arenito Vermelho Tecido",
+  "en": "Woven Red Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_tecido"
+ },
+ "cl:arenito_vermelho_ch_trancado": {
+  "pt": "Arenito Vermelho Trançado",
+  "en": "Braided Red Sandstone",
+  "icone": "textures/items/cl/blocos/arenito_vermelho_ch_trancado"
  },
  "cl:argamassa": {
   "pt": "Argamassa",
@@ -3131,6 +3211,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Chisel",
   "icone": "textures/items/cl/arte/cinzel"
  },
+ "cl:cinzel_automatico": {
+  "pt": "Cinzel Automático",
+  "en": "Auto Chisel",
+  "icone": "textures/items/cl/blocos/cinzel_automatico"
+ },
+ "cl:cinzel_diamante": {
+  "pt": "Cinzel de Diamante",
+  "en": "Diamond Chisel",
+  "icone": "textures/items/cl/c/cinzel_diamante"
+ },
+ "cl:cinzel_hitech": {
+  "pt": "Cinzel Hi-Tech",
+  "en": "iChisel",
+  "icone": "textures/items/cl/c/cinzel_hitech"
+ },
  "cl:circuito": {
   "pt": "Circuito",
   "en": "Circuit",
@@ -4796,6 +4891,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Igneous Extruder",
   "icone": "textures/items/cl/arte/blocos/extrusora_ignea"
  },
+ "cl:fabrica_armacao": {
+  "pt": "Armação",
+  "en": "Wireframe",
+  "icone": "textures/items/cl/blocos/fabrica_armacao"
+ },
+ "cl:fabrica_chapeado": {
+  "pt": "Chapeado de Fábrica",
+  "en": "Factory Plating",
+  "icone": "textures/items/cl/blocos/fabrica_chapeado"
+ },
+ "cl:fabrica_chapeado_ouro": {
+  "pt": "Chapeado de Ouro",
+  "en": "Gold Plating",
+  "icone": "textures/items/cl/blocos/fabrica_chapeado_ouro"
+ },
+ "cl:fabrica_circuito": {
+  "pt": "Circuito de Fábrica",
+  "en": "Factory Circuit",
+  "icone": "textures/items/cl/blocos/fabrica_circuito"
+ },
+ "cl:fabrica_ferrugem": {
+  "pt": "Ferrugem",
+  "en": "Rust",
+  "icone": "textures/items/cl/blocos/fabrica_ferrugem"
+ },
+ "cl:fabrica_mosaico": {
+  "pt": "Mosaico de Fábrica",
+  "en": "Factory Tile Mosaic",
+  "icone": "textures/items/cl/blocos/fabrica_mosaico"
+ },
+ "cl:fabrica_perigo": {
+  "pt": "Faixa de Perigo",
+  "en": "Hazard Stripes",
+  "icone": "textures/items/cl/blocos/fabrica_perigo"
+ },
+ "cl:fabrica_pontilhado": {
+  "pt": "Pontilhado de Fábrica",
+  "en": "Factory Dots",
+  "icone": "textures/items/cl/blocos/fabrica_pontilhado"
+ },
  "cl:fabricador_circuitos": {
   "pt": "Fabricador de Circuitos",
   "en": "Circuit Fabricator",
@@ -5910,6 +6045,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Kama de Slime da Rainha",
   "en": "Queen's Slime Kama",
   "icone": "textures/items/cl/arte/kama_slime_rainha"
+ },
+ "cl:laboratorio_ladrilho_grande": {
+  "pt": "Ladrilho Grande de Laboratório",
+  "en": "Large Lab Tile",
+  "icone": "textures/items/cl/blocos/laboratorio_ladrilho_grande"
+ },
+ "cl:laboratorio_ladrilho_pequeno": {
+  "pt": "Ladrilho Pequeno de Laboratório",
+  "en": "Small Lab Tile",
+  "icone": "textures/items/cl/blocos/laboratorio_ladrilho_pequeno"
+ },
+ "cl:laboratorio_medalhao": {
+  "pt": "Medalhão de Laboratório",
+  "en": "Lab Roundel",
+  "icone": "textures/items/cl/blocos/laboratorio_medalhao"
+ },
+ "cl:laboratorio_painel": {
+  "pt": "Painel de Parede",
+  "en": "Wall Panel",
+  "icone": "textures/items/cl/blocos/laboratorio_painel"
+ },
+ "cl:laboratorio_painel_pontilhado": {
+  "pt": "Painel Pontilhado",
+  "en": "Dotted Panel",
+  "icone": "textures/items/cl/blocos/laboratorio_painel_pontilhado"
+ },
+ "cl:laboratorio_parede": {
+  "pt": "Parede Grande de Laboratório",
+  "en": "Large Lab Wall",
+  "icone": "textures/items/cl/blocos/laboratorio_parede"
+ },
+ "cl:laboratorio_piso": {
+  "pt": "Piso de Laboratório",
+  "en": "Lab Floor Tile",
+  "icone": "textures/items/cl/blocos/laboratorio_piso"
+ },
+ "cl:laboratorio_xadrez": {
+  "pt": "Xadrez de Laboratório",
+  "en": "Lab Checker Tile",
+  "icone": "textures/items/cl/blocos/laboratorio_xadrez"
  },
  "cl:laco_amaldicoado": {
   "pt": "Laço Amaldiçoado",
@@ -13205,6 +13380,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tecido de Cânhamo",
   "en": "Hemp Fabric",
   "icone": "textures/items/cl/c/tecido_canhamo"
+ },
+ "cl:templo_coluna": {
+  "pt": "Coluna de Templo",
+  "en": "Temple Column",
+  "icone": "textures/items/cl/blocos/templo_coluna"
+ },
+ "cl:templo_ladrilhos": {
+  "pt": "Ladrilhos de Templo",
+  "en": "Temple Tiles",
+  "icone": "textures/items/cl/blocos/templo_ladrilhos"
+ },
+ "cl:templo_ladrilhos_pequenos": {
+  "pt": "Ladrilhos Pequenos de Templo",
+  "en": "Small Temple Tiles",
+  "icone": "textures/items/cl/blocos/templo_ladrilhos_pequenos"
+ },
+ "cl:templo_ornamentado": {
+  "pt": "Templo Ornamentado",
+  "en": "Ornate Temple Block",
+  "icone": "textures/items/cl/blocos/templo_ornamentado"
+ },
+ "cl:templo_placa": {
+  "pt": "Placa de Templo",
+  "en": "Temple Plate",
+  "icone": "textures/items/cl/blocos/templo_placa"
+ },
+ "cl:templo_tijolos": {
+  "pt": "Tijolos de Templo",
+  "en": "Temple Bricks",
+  "icone": "textures/items/cl/blocos/templo_tijolos"
+ },
+ "cl:templo_tijolos_gastos": {
+  "pt": "Tijolos Gastos de Templo",
+  "en": "Weathered Temple Bricks",
+  "icone": "textures/items/cl/blocos/templo_tijolos_gastos"
+ },
+ "cl:templo_tijolos_grandes": {
+  "pt": "Tijolos Grandes de Templo",
+  "en": "Large Temple Bricks",
+  "icone": "textures/items/cl/blocos/templo_tijolos_grandes"
  },
  "cl:tenis_aquatico": {
   "pt": "Tênis Aquático",
@@ -22951,6 +23166,65 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_cinzel_automatico",
+  "resultado": "cl:cinzel_automatico",
+  "qtd": 1,
+  "grade": [
+   "GGG",
+   "GCG",
+   "III"
+  ],
+  "chaves": {
+   "G": "minecraft:glass",
+   "C": "cl:cinzel",
+   "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_cinzel_diamante",
+  "resultado": "cl:cinzel_diamante",
+  "qtd": 1,
+  "grade": [
+   " D",
+   "S "
+  ],
+  "chaves": {
+   "D": "minecraft:diamond",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_cinzel_hitech",
+  "resultado": "cl:cinzel_hitech",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cinzel_diamante",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:redstone",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:gold_ingot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_cobalto_bruto_do_bloco",
   "resultado": "cl:cobalto_bruto",
@@ -27752,6 +28026,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_fabrica_chapeado",
+  "resultado": "cl:fabrica_chapeado",
+  "qtd": 8,
+  "grade": [
+   "###",
+   "#C#",
+   "###"
+  ],
+  "chaves": {
+   "#": "minecraft:stone",
+   "C": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_fabricador_circuitos",
   "resultado": "cl:fabricador_circuitos",
   "qtd": 1,
@@ -28939,6 +29231,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "#": "minecraft:dried_kelp",
    "R": "cl:arroz_cozido",
    "X": "minecraft:carrot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_laboratorio_ladrilho_grande",
+  "resultado": "cl:laboratorio_ladrilho_grande",
+  "qtd": 8,
+  "grade": [
+   "###",
+   "#C#",
+   "###"
+  ],
+  "chaves": {
+   "#": "minecraft:stone",
+   "C": "minecraft:quartz"
   },
   "estacoes": [
    "crafting_table"
@@ -40762,6 +41072,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "f": "cl:fibra_canhamo",
    "s": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_templo_tijolos",
+  "resultado": "cl:templo_tijolos",
+  "qtd": 8,
+  "grade": [
+   "###",
+   "#C#",
+   "###"
+  ],
+  "chaves": {
+   "#": "minecraft:stone_bricks",
+   "C": "minecraft:cyan_dye"
   },
   "estacoes": [
    "crafting_table"

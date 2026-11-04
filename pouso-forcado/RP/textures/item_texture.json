@@ -5749,6 +5749,12 @@
     },
     "clc_pa_turbina_pneumatica": {
       "textures": "textures/items/cl/c/pa_turbina_pneumatica"
+    },
+    "clc_cinzel_diamante": {
+      "textures": "textures/items/cl/c/cinzel_diamante"
+    },
+    "clc_cinzel_hitech": {
+      "textures": "textures/items/cl/c/cinzel_hitech"
     }
   }
 }
