@@ -110,10 +110,11 @@ const NIVEIS = ["basica", "avancada", "elite", "definitiva"] as const;
 let BASE_DE: Readonly<Record<string, string>> = {}; // fábrica -> máquina
 let FABRICA_DE: Readonly<Record<string, string>> = {}; // máquina ou fábrica -> a do próximo nível
 const INSTALADOR: Readonly<Record<string, number>> = { "cl:instalador_nivel_basico": 0, "cl:instalador_nivel_avancado": 1, "cl:instalador_nivel_elite": 2, "cl:instalador_nivel_definitivo": 3 };
-export function registrarNiveis(fabricas: Readonly<Record<string, readonly [string, number]>>): void {
+/** fabricas: id -> [máquina de origem, processos, nível (0 a 3)]. */
+export function registrarNiveis(fabricas: Readonly<Record<string, readonly [string, number, number]>>): void {
   const base: Record<string, string> = {}, prox: Record<string, string> = {};
   const porTipo = new Map<string, string[]>();
-  for (const [id, [maq, nivel]] of Object.entries(fabricas)) {
+  for (const [id, [maq, , nivel]] of Object.entries(fabricas)) {
     base[id] = maq;
     const l = porTipo.get(maq) ?? [];
     l[nivel] = id;
@@ -194,7 +195,9 @@ export function registrarMelhorias(): void {
   // Teste no servidor: scriptevent cl:teste_mku <instalar <item>|subir <instalador>|ver> <x y z>.
   system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: j }) => {
     if (id !== "cl:teste_mku" || !(j instanceof Player)) return;
-    const [acao, arg, x, y, z] = message.split(" ");
+    const partes = message.split(" ");
+    const acao = partes[0];
+    const [arg, x, y, z] = acao === "ver" ? ["", ...partes.slice(1)] : partes.slice(1);
     const b = j.dimension.getBlock({ x: Number(x), y: Number(y), z: Number(z) });
     if (!b) return;
     if (acao === "instalar") console.warn(`[teste_mku] instalar ${instalar(j, b, arg)}`);

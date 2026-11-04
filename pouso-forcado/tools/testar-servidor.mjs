@@ -31,7 +31,11 @@ for (const d of m.dependencies) {
 m.dependencies.push({ module_name: "@minecraft/server-gametest", version: "1.0.0-beta" });
 writeFileSync(manifesto, JSON.stringify(m, null, 2));
 const main = join(MUNDO, "behavior_packs", "bp0", "scripts", "main.js");
-writeFileSync(main, `import "@minecraft/server-gametest";\n${readFileSync(main, "utf8")}`);
+// O avião caído (95 x 59) é posto ao lado do primeiro jogador, que nos testes é o robô: às vezes cobria a área do teste e
+// o GameTest perdia o bloco de estrutura ("Could not find StructureBlockActor"). Sem o avião, a não ser com COM_AVIAO=1
+// (o teste "aviao").
+const semAviao = process.env.COM_AVIAO ? "" : `import { world as __w } from "@minecraft/server";\n__w.afterEvents.worldLoad.subscribe(() => __w.setDynamicProperty("cl:nave_colocada", true));\n`;
+writeFileSync(main, `import "@minecraft/server-gametest";\n${semAviao}${readFileSync(main, "utf8")}`);
 cpSync(join(RAIZ, "RP"), join(MUNDO, "resource_packs", "rp0"), { recursive: true });
 writeFileSync(join(MUNDO, "world_behavior_packs.json"), JSON.stringify(bps.map((p) => ({ pack_id: pacote(p).uuid, version: pacote(p).version }))));
 writeFileSync(join(MUNDO, "world_resource_packs.json"), JSON.stringify([{ pack_id: pacote(join(RAIZ, "RP")).uuid, version: pacote(join(RAIZ, "RP")).version }]));

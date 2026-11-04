@@ -2771,8 +2771,8 @@ teste("mkq", 1400, (t) => {
   });
 });
 
-// 1.50.0: Mekanism completo, parte 2. A Câmara de Enriquecimento com 8 Melhorias de Velocidade faz 10 operações num
-// ciclo; o Instalador de Nível Básico a troca pela Fábrica de Enriquecimento Básica (3 por ciclo) sem perder as melhorias;
+// 1.50.0: Mekanism completo, parte 2. A Câmara de Enriquecimento com 8 Melhorias de Velocidade (e 8 de Energia, senão
+// cada operação gasta 10×, como no mod) faz 10 operações num ciclo; o Instalador de Nível Básico a troca pela Fábrica de Enriquecimento Básica (3 por ciclo) sem perder as melhorias;
 // o Combinador com o Gerador de Pedra não precisa de pedregulho.
 teste("mku", 400, (t) => {
   const j = robo(t, { x: 7.5, y: 2, z: 7.5 });
@@ -2793,10 +2793,11 @@ teste("mku", 400, (t) => {
   };
   maquina(0, 0, "cl:camara_enriquecimento", [["minecraft:iron_ore", 30]]);
   maquina(3, 0, "cl:camara_enriquecimento", [["minecraft:iron_ore", 30]]);
-  maquina(0, 4, "cl:combinador", [["cl:po_ferro", 8]]);
+  maquina(0, 4, "cl:combinador", [["minecraft:raw_iron", 8]]);
   const em = (x, z) => { const p = t.worldBlockLocation({ x, y: 2, z }); return `${p.x} ${p.y} ${p.z}`; };
   t.runAfterDelay(5, () => {
     for (let k = 0; k < 8; k++) cmd(`scriptevent cl:teste_mku instalar cl:melhoria_velocidade ${em(0, 0)}`);
+    for (let k = 0; k < 8; k++) cmd(`scriptevent cl:teste_mku instalar cl:melhoria_energia ${em(0, 0)}`);
     cmd(`scriptevent cl:teste_mku subir cl:instalador_nivel_basico ${em(3, 0)}`);
     cmd(`scriptevent cl:teste_mku instalar cl:melhoria_gerador_pedra ${em(0, 4)}`);
   });

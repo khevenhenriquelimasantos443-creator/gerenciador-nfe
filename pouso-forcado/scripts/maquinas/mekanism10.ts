@@ -117,7 +117,7 @@ const FORNO: Simples[] = Object.entries(THERMAL.fornalha as Record<string, strin
 // Combinador: o item principal mais o extra (8 pós + pedregulho = minério, por exemplo). Com o Gerador de Pedra, o
 // pedregulho (e a pedra) não sai do baú.
 const IDX_COMB = indice(P.combining);
-const PEDRAS = new Set(["minecraft:cobblestone", "minecraft:stone", "minecraft:cobbled_deepslate"]);
+const PEDRAS = new Set(["minecraft:cobblestone", "minecraft:stone"]); // o Gerador de Pedra do mod dá pedra ou pedregulho
 const combinar: Proc = (b) => {
   const ent = entrada(b);
   if (!ent || !cabe(b)) return "parada";
@@ -176,7 +176,7 @@ const QUIMICAS = new Set(["cl:camara_purificacao", "cl:camara_injecao"]);
 aceitarMelhorias([...Object.keys(PROCS), ...Object.keys(FABRICAS)]);
 aceitarMelhorias([...QUIMICAS, ...Object.keys(FABRICAS).filter((id) => QUIMICAS.has(FABRICAS[id][0]))], ["quimica"]);
 aceitarMelhorias(["cl:combinador", ...Object.keys(FABRICAS).filter((id) => FABRICAS[id][0] === "cl:combinador")], ["pedra"]);
-registrarNiveis(FABRICAS as unknown as Readonly<Record<string, readonly [string, number]>>);
+registrarNiveis(FABRICAS);
 
 /** Componentes novos (main.ts registra) e os que trocam os de antes. */
 export const COMPONENTES_MK10: Readonly<Record<string, BlockCustomComponent>> = {

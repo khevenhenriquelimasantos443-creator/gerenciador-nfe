@@ -5644,62 +5644,62 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fabrica_combinacao_avancada": {
   "pt": "Fábrica de Combinação Avançada",
   "en": "Advanced Combining Factory",
-  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_combinacao_avancada"
  },
  "cl:fabrica_combinacao_basica": {
   "pt": "Fábrica de Combinação Básica",
   "en": "Basic Combining Factory",
-  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_combinacao_basica"
  },
  "cl:fabrica_combinacao_definitiva": {
   "pt": "Fábrica de Combinação Definitiva",
   "en": "Ultimate Combining Factory",
-  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_combinacao_definitiva"
  },
  "cl:fabrica_combinacao_elite": {
   "pt": "Fábrica de Combinação Elite",
   "en": "Elite Combining Factory",
-  "icone": "textures/blocks/cl/arte/mkm_combining_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_combinacao_elite"
  },
  "cl:fabrica_compressao_avancada": {
   "pt": "Fábrica de Compressão Avançada",
   "en": "Advanced Compressing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_compressao_avancada"
  },
  "cl:fabrica_compressao_basica": {
   "pt": "Fábrica de Compressão Básica",
   "en": "Basic Compressing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_compressao_basica"
  },
  "cl:fabrica_compressao_definitiva": {
   "pt": "Fábrica de Compressão Definitiva",
   "en": "Ultimate Compressing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_compressao_definitiva"
  },
  "cl:fabrica_compressao_elite": {
   "pt": "Fábrica de Compressão Elite",
   "en": "Elite Compressing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_compressing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_compressao_elite"
  },
  "cl:fabrica_enriquecimento_avancada": {
   "pt": "Fábrica de Enriquecimento Avançada",
   "en": "Advanced Enriching Factory",
-  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_enriquecimento_avancada"
  },
  "cl:fabrica_enriquecimento_basica": {
   "pt": "Fábrica de Enriquecimento Básica",
   "en": "Basic Enriching Factory",
-  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_enriquecimento_basica"
  },
  "cl:fabrica_enriquecimento_definitiva": {
   "pt": "Fábrica de Enriquecimento Definitiva",
   "en": "Ultimate Enriching Factory",
-  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_enriquecimento_definitiva"
  },
  "cl:fabrica_enriquecimento_elite": {
   "pt": "Fábrica de Enriquecimento Elite",
   "en": "Elite Enriching Factory",
-  "icone": "textures/blocks/cl/arte/mkm_enriching_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_enriquecimento_elite"
  },
  "cl:fabrica_ferrugem": {
   "pt": "Ferrugem",
@@ -5709,62 +5709,62 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fabrica_fundicao_avancada": {
   "pt": "Fábrica de Fundição Avançada",
   "en": "Advanced Smelting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_fundicao_avancada"
  },
  "cl:fabrica_fundicao_basica": {
   "pt": "Fábrica de Fundição Básica",
   "en": "Basic Smelting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_fundicao_basica"
  },
  "cl:fabrica_fundicao_definitiva": {
   "pt": "Fábrica de Fundição Definitiva",
   "en": "Ultimate Smelting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_fundicao_definitiva"
  },
  "cl:fabrica_fundicao_elite": {
   "pt": "Fábrica de Fundição Elite",
   "en": "Elite Smelting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_smelting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_fundicao_elite"
  },
  "cl:fabrica_infusao_avancada": {
   "pt": "Fábrica de Infusão Avançada",
   "en": "Advanced Infusing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_infusao_avancada"
  },
  "cl:fabrica_infusao_basica": {
   "pt": "Fábrica de Infusão Básica",
   "en": "Basic Infusing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_infusao_basica"
  },
  "cl:fabrica_infusao_definitiva": {
   "pt": "Fábrica de Infusão Definitiva",
   "en": "Ultimate Infusing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_infusao_definitiva"
  },
  "cl:fabrica_infusao_elite": {
   "pt": "Fábrica de Infusão Elite",
   "en": "Elite Infusing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_infusing_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_infusao_elite"
  },
  "cl:fabrica_injecao_avancada": {
   "pt": "Fábrica de Injeção Avançada",
   "en": "Advanced Injecting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_injecao_avancada"
  },
  "cl:fabrica_injecao_basica": {
   "pt": "Fábrica de Injeção Básica",
   "en": "Basic Injecting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_injecao_basica"
  },
  "cl:fabrica_injecao_definitiva": {
   "pt": "Fábrica de Injeção Definitiva",
   "en": "Ultimate Injecting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_injecao_definitiva"
  },
  "cl:fabrica_injecao_elite": {
   "pt": "Fábrica de Injeção Elite",
   "en": "Elite Injecting Factory",
-  "icone": "textures/blocks/cl/arte/mkm_injecting_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_injecao_elite"
  },
  "cl:fabrica_mosaico": {
   "pt": "Mosaico de Fábrica",
@@ -5784,62 +5784,62 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fabrica_purificacao_avancada": {
   "pt": "Fábrica de Purificação Avançada",
   "en": "Advanced Purifying Factory",
-  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_purificacao_avancada"
  },
  "cl:fabrica_purificacao_basica": {
   "pt": "Fábrica de Purificação Básica",
   "en": "Basic Purifying Factory",
-  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_purificacao_basica"
  },
  "cl:fabrica_purificacao_definitiva": {
   "pt": "Fábrica de Purificação Definitiva",
   "en": "Ultimate Purifying Factory",
-  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_purificacao_definitiva"
  },
  "cl:fabrica_purificacao_elite": {
   "pt": "Fábrica de Purificação Elite",
   "en": "Elite Purifying Factory",
-  "icone": "textures/blocks/cl/arte/mkm_purifying_factory_side"
+  "icone": "textures/items/cl/blocos/fabrica_purificacao_elite"
  },
  "cl:fabrica_serragem_avancada": {
   "pt": "Fábrica de Serragem Avançada",
   "en": "Advanced Sawing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_serragem_avancada"
  },
  "cl:fabrica_serragem_basica": {
   "pt": "Fábrica de Serragem Básica",
   "en": "Basic Sawing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_serragem_basica"
  },
  "cl:fabrica_serragem_definitiva": {
   "pt": "Fábrica de Serragem Definitiva",
   "en": "Ultimate Sawing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_serragem_definitiva"
  },
  "cl:fabrica_serragem_elite": {
   "pt": "Fábrica de Serragem Elite",
   "en": "Elite Sawing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_sawing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_serragem_elite"
  },
  "cl:fabrica_trituracao_avancada": {
   "pt": "Fábrica de Trituração Avançada",
   "en": "Advanced Crushing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_trituracao_avancada"
  },
  "cl:fabrica_trituracao_basica": {
   "pt": "Fábrica de Trituração Básica",
   "en": "Basic Crushing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_trituracao_basica"
  },
  "cl:fabrica_trituracao_definitiva": {
   "pt": "Fábrica de Trituração Definitiva",
   "en": "Ultimate Crushing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_trituracao_definitiva"
  },
  "cl:fabrica_trituracao_elite": {
   "pt": "Fábrica de Trituração Elite",
   "en": "Elite Crushing Factory",
-  "icone": "textures/blocks/cl/arte/mkm_crushing_factory_front"
+  "icone": "textures/items/cl/blocos/fabrica_trituracao_elite"
  },
  "cl:fabricador_circuitos": {
   "pt": "Fabricador de Circuitos",

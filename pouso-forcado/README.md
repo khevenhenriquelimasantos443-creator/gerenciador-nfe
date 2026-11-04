@@ -154,6 +154,24 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.50.0 (Mekanism completo, parte 2: fábricas, melhorias e instaladores de nível)
+
+- **Fábricas** (as 9 do mod: Fundição, Enriquecimento, Trituração, Compressão, Combinação, Purificação, Injeção, Infusão e
+  Serragem), nos níveis **Básica, Avançada, Elite e Definitiva**: fazem 3, 5, 7 ou 9 operações por ciclo, com as receitas
+  e o gasto da máquina de origem. Modelos 3D e arte do mod.
+- **Instaladores de Nível**: tocar a máquina com o Básico a troca pela Fábrica Básica; o Avançado sobe a Básica, e assim
+  por diante. Nada se perde (energia, químicos e melhorias ficam).
+- **Melhorias** (tocar a máquina com a melhoria instala; quebrar a máquina devolve):
+  - **Velocidade** (até 8): 8 deixam a máquina 10× mais rápida, como no mod, mas cada operação gasta mais energia.
+  - **Energia** (até 8): corta esse gasto (8 de velocidade com 8 de energia gastam o mesmo por operação).
+  - **Química** (até 8): a Purificação e a Injeção gastam menos gás.
+  - **Silenciador**: sem som.
+  - **Âncora**: mantém o chunk da máquina carregado (o Bedrock deixa só 10 áreas no mundo).
+  - **Gerador de Pedra**: o Combinador não precisa de pedregulho.
+  - **Filtro**: fica para a Bomba Elétrica (parte 3).
+- Valem para todas as máquinas do Mekanism (as de antes e as da química). O WAILA mostra as melhorias instaladas.
+- Diário: missões novas de melhoria e de fábrica.
+
 ## Novidades da 1.49.0 (Mekanism completo, parte 1: minério ×5 e a química)
 
 Começo do Mekanism completo (10.7.19, o mais novo), com as receitas, os números, a arte e os modelos 3D do mod:
