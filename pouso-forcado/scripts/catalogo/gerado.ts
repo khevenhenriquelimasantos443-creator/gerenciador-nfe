@@ -226,6 +226,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Soularium Ingot",
   "icone": "textures/items/cl/arte/almario"
  },
+ "cl:almofada_pum": {
+  "pt": "Almofada de Pum",
+  "en": "Whoopee Cushion",
+  "icone": "textures/items/cl/arte/almofada_pum"
+ },
  "cl:alto_forno": {
   "pt": "Alto-Forno",
   "en": "Blast Furnace",
@@ -251,15 +256,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Peanut",
   "icone": "textures/items/cl/arte/amendoim"
  },
+ "cl:amuleto_afundar": {
+  "pt": "Amuleto de Afundar",
+  "en": "Charm of Sinking",
+  "icone": "textures/items/cl/arte/amuleto_afundar"
+ },
+ "cl:amuleto_encolher": {
+  "pt": "Amuleto de Encolher",
+  "en": "Charm of Shrinking",
+  "icone": "textures/items/cl/arte/amuleto_encolher"
+ },
  "cl:ancora_viagem": {
   "pt": "Âncora de Viagem",
   "en": "Travel Anchor",
   "icone": "textures/items/cl/blocos/ancora_viagem"
  },
+ "cl:anel_cebola": {
+  "pt": "Anel de Cebola",
+  "en": "Onion Ring",
+  "icone": "textures/items/cl/arte/anel_cebola"
+ },
+ "cl:anzol_dourado": {
+  "pt": "Anzol Dourado",
+  "en": "Golden Hook",
+  "icone": "textures/items/cl/arte/anzol_dourado"
+ },
  "cl:aquecedor": {
   "pt": "Aquecedor Refratário",
   "en": "Seared Heater",
   "icone": "textures/blocks/cl/arte/aquecedor_topo"
+ },
+ "cl:aquecedor_picareta": {
+  "pt": "Aquecedor de Picareta",
+  "en": "Pickaxe Heater",
+  "icone": "textures/items/cl/arte/aquecedor_picareta"
  },
  "cl:arco_longo_aco": {
   "pt": "Arco Longo de Aço",
@@ -480,6 +510,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Assadeira",
   "en": "Bakeware",
   "icone": "textures/items/cl/arte/blocos/assadeira"
+ },
+ "cl:atrator_universal": {
+  "pt": "Atrator Universal",
+  "en": "Universal Attractor",
+  "icone": "textures/items/cl/arte/atrator_universal"
  },
  "cl:bacia_fundicao": {
   "pt": "Bacia de Fundição",
@@ -956,6 +991,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Steak and Potatoes",
   "icone": "textures/items/cl/arte/bife_batatas"
  },
+ "cl:bife_eterno": {
+  "pt": "Bife Eterno",
+  "en": "Eternal Steak",
+  "icone": "textures/items/cl/arte/bife_eterno"
+ },
  "cl:bigorna": {
   "pt": "Bigorna do Tinker",
   "en": "Tinker's Anvil",
@@ -1381,6 +1421,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Plate Boots",
   "icone": "textures/items/cl/arte/botas_placa_slime_rainha"
  },
+ "cl:botas_raizes": {
+  "pt": "Botas de Raízes",
+  "en": "Rooted Boots",
+  "icone": "textures/items/cl/arte/botas_raizes"
+ },
  "cl:botas_slime": {
   "pt": "Botas de Slime",
   "en": "Slime Boots",
@@ -1465,6 +1510,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Caçarola",
   "en": "Saucepan",
   "icone": "textures/items/cl/arte/blocos/cacarola"
+ },
+ "cl:cachecol_invisibilidade": {
+  "pt": "Cachecol da Invisibilidade",
+  "en": "Scarf of Invisibility",
+  "icone": "textures/items/cl/arte/cachecol_invisibilidade"
+ },
+ "cl:cachecol_sorte": {
+  "pt": "Cachecol da Sorte",
+  "en": "Lucky Scarf",
+  "icone": "textures/items/cl/arte/cachecol_sorte"
  },
  "cl:cacho_cristal_slime_ceu": {
   "pt": "Aglomerado de Cristal de Slime-do-Céu",
@@ -2006,6 +2061,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Casing",
   "icone": "textures/items/cl/blocos/carcaca_reator"
  },
+ "cl:carne_infinita": {
+  "pt": "Carne Infinita",
+  "en": "Everlasting Beef",
+  "icone": "textures/items/cl/arte/carne_infinita"
+ },
  "cl:carne_moida": {
   "pt": "Carne Moída",
   "en": "Minced Beef",
@@ -2120,6 +2180,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Catálogo",
   "en": "Catalog",
   "icone": "textures/items/cl/arte/catalogo"
+ },
+ "cl:caveira_obsidiana": {
+  "pt": "Caveira de Obsidiana",
+  "en": "Obsidian Skull",
+  "icone": "textures/items/cl/arte/caveira_obsidiana"
  },
  "cl:cebola": {
   "pt": "Cebola",
@@ -2280,6 +2345,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Chapa de Ouro",
   "en": "Golden Sheet",
   "icone": "textures/items/cl/c/chapa_ouro"
+ },
+ "cl:chapeu_aldeao": {
+  "pt": "Chapéu de Aldeão",
+  "en": "Villager Hat",
+  "icone": "textures/items/cl/arte/chapeu_aldeao"
+ },
+ "cl:chapeu_bebida_novidade": {
+  "pt": "Chapéu de Bebida Novidade",
+  "en": "Novelty Drinking Hat",
+  "icone": "textures/items/cl/arte/chapeu_bebida_novidade"
+ },
+ "cl:chapeu_bebida_plastico": {
+  "pt": "Chapéu de Bebida de Plástico",
+  "en": "Plastic Drinking Hat",
+  "icone": "textures/items/cl/arte/chapeu_bebida_plastico"
+ },
+ "cl:chapeu_pescador": {
+  "pt": "Chapéu de Pescador",
+  "en": "Angler's Hat",
+  "icone": "textures/items/cl/arte/chapeu_pescador"
+ },
+ "cl:chapeu_supersticioso": {
+  "pt": "Chapéu Supersticioso",
+  "en": "Superstitious Hat",
+  "icone": "textures/items/cl/arte/chapeu_supersticioso"
+ },
+ "cl:chapeu_vaqueiro": {
+  "pt": "Chapéu de Vaqueiro",
+  "en": "Cowboy Hat",
+  "icone": "textures/items/cl/arte/chapeu_vaqueiro"
  },
  "cl:charque": {
   "pt": "Charque",
@@ -2566,6 +2661,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Copper Ore",
   "icone": "textures/items/cl/arte/cobre_triturado"
  },
+ "cl:colar_cruz": {
+  "pt": "Colar de Cruz",
+  "en": "Cross Necklace",
+  "icone": "textures/items/cl/arte/colar_cruz"
+ },
+ "cl:colar_panico": {
+  "pt": "Colar do Pânico",
+  "en": "Panic Necklace",
+  "icone": "textures/items/cl/arte/colar_panico"
+ },
  "cl:coletor_oxigenio": {
   "pt": "Coletor de Oxigênio",
   "en": "Oxygen Collector",
@@ -2756,6 +2861,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Coal Coke",
   "icone": "textures/items/cl/c/coque"
  },
+ "cl:coracao_cristal": {
+  "pt": "Coração de Cristal",
+  "en": "Crystal Heart",
+  "icone": "textures/items/cl/arte/coracao_cristal"
+ },
  "cl:coracao_farao": {
   "pt": "Coração do Faraó",
   "en": "Pharaoh's Heart",
@@ -2785,6 +2895,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Costeletas Assadas",
   "en": "Roasted Mutton Chops",
   "icone": "textures/items/cl/arte/costeletas_assadas"
+ },
+ "cl:cravos_firmes": {
+  "pt": "Cravos Firmes",
+  "en": "Steadfast Spikes",
+  "icone": "textures/items/cl/arte/cravos_firmes"
  },
  "cl:crisol_fermentacao": {
   "pt": "Crisol de Fermentação (VAT)",
@@ -3866,6 +3981,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Slime Sling",
   "icone": "textures/items/cl/c/estilingue_slime"
  },
+ "cl:estojo_artefatos": {
+  "pt": "Estojo de Artefatos",
+  "en": "Artifact Case",
+  "icone": "textures/items/cl/c/estojo_artefatos"
+ },
  "cl:estrada_chamuscada": {
   "pt": "Estrada Chamuscada",
   "en": "Scorched Road",
@@ -4126,6 +4246,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Air Filter",
   "icone": "textures/items/cl/arte/filtro"
  },
+ "cl:flamingo_helio": {
+  "pt": "Flamingo de Hélio",
+  "en": "Helium Flamingo",
+  "icone": "textures/items/cl/arte/flamingo_helio"
+ },
  "cl:fogao": {
   "pt": "Fogão",
   "en": "Stove",
@@ -4381,6 +4506,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Soul Vial (filled)",
   "icone": "textures/items/cl/arte/frasco_alma_cheio"
  },
+ "cl:frasco_antidoto": {
+  "pt": "Frasco de Antídoto",
+  "en": "Antidote Vessel",
+  "icone": "textures/items/cl/arte/frasco_antidoto"
+ },
  "cl:frasco_vazio": {
   "pt": "Frasco do Vazio",
   "en": "Vial of the Void",
@@ -4500,6 +4630,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Fusor Refratário",
   "en": "Seared Melter",
   "icone": "textures/blocks/cl/arte/fusor_topo"
+ },
+ "cl:garras_cavar": {
+  "pt": "Garras de Cavar",
+  "en": "Digging Claws",
+  "icone": "textures/items/cl/arte/garras_cavar"
+ },
+ "cl:garras_ferozes": {
+  "pt": "Garras Ferozes",
+  "en": "Feral Claws",
+  "icone": "textures/items/cl/arte/garras_ferozes"
  },
  "cl:gelo_seco": {
   "pt": "Gelo Seco",
@@ -4635,6 +4775,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Graveto de Madeira Tratada",
   "en": "Treated Stick",
   "icone": "textures/items/cl/c/graveto_tratado"
+ },
+ "cl:guarda_chuva": {
+  "pt": "Guarda-Chuva",
+  "en": "Umbrella",
+  "icone": "textures/items/cl/arte/guarda_chuva"
  },
  "cl:hamburguer": {
   "pt": "Hambúrguer",
@@ -5211,6 +5356,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Canvas",
   "icone": "textures/items/cl/arte/lona"
  },
+ "cl:luva_forca": {
+  "pt": "Luva de Força",
+  "en": "Power Glove",
+  "icone": "textures/items/cl/arte/luva_forca"
+ },
+ "cl:luva_vampirica": {
+  "pt": "Luva Vampírica",
+  "en": "Vampiric Glove",
+  "icone": "textures/items/cl/arte/luva_vampirica"
+ },
  "cl:macarrao_almondegas": {
   "pt": "Macarrão com Almôndegas",
   "en": "Pasta with Meatballs",
@@ -5635,6 +5790,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Manômetro",
   "en": "Pressure Gauge",
   "icone": "textures/items/cl/arte/manometro"
+ },
+ "cl:manopla_fogo": {
+  "pt": "Manopla de Fogo",
+  "en": "Fire Gauntlet",
+  "icone": "textures/items/cl/arte/manopla_fogo"
  },
  "cl:manteiga": {
   "pt": "Manteiga",
@@ -6781,6 +6941,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Combustion Engine",
   "icone": "textures/items/cl/arte/blocos/motor_combustao"
  },
+ "cl:motor_dobra": {
+  "pt": "Motor de Dobra",
+  "en": "Warp Drive",
+  "icone": "textures/items/cl/arte/motor_dobra"
+ },
  "cl:motor_foguete": {
   "pt": "Motor do Foguete Tier 1",
   "en": "Tier 1 Rocket Engine",
@@ -6820,6 +6985,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Muda de Tamareira",
   "en": "Date Palm Sapling",
   "icone": "textures/items/cl/blocos/muda_tamareira"
+ },
+ "cl:nadadeiras": {
+  "pt": "Nadadeiras",
+  "en": "Flippers",
+  "icone": "textures/items/cl/arte/nadadeiras"
  },
  "cl:nahuatl": {
   "pt": "Nahuatl",
@@ -6861,6 +7031,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Sync Core",
   "icone": "textures/items/cl/arte/nucleo_sync"
  },
+ "cl:nuvem_garrafa": {
+  "pt": "Nuvem na Garrafa",
+  "en": "Cloud in a Bottle",
+  "icone": "textures/items/cl/arte/nuvem_garrafa"
+ },
  "cl:obelisco_atracao": {
   "pt": "Obelisco de Atração",
   "en": "Attractor Obelisk",
@@ -6900,6 +7075,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Obsidiana Reforçada",
   "en": "Reinforced Obsidian",
   "icone": "textures/items/cl/blocos/obsidiana_reforcada"
+ },
+ "cl:oculos_visao_noturna": {
+  "pt": "Óculos de Visão Noturna",
+  "en": "Night Vision Goggles",
+  "icone": "textures/items/cl/arte/oculos_visao_noturna"
  },
  "cl:omelete": {
   "pt": "Omelete",
@@ -7310,6 +7490,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Panquecas",
   "en": "Pancakes",
   "icone": "textures/items/cl/arte/panquecas"
+ },
+ "cl:pantufas_coelho": {
+  "pt": "Pantufas de Coelho",
+  "en": "Bunny Hoppers",
+  "icone": "textures/items/cl/arte/pantufas_coelho"
+ },
+ "cl:pantufas_gatinho": {
+  "pt": "Pantufas de Gatinho",
+  "en": "Kitty Slippers",
+  "icone": "textures/items/cl/arte/pantufas_gatinho"
  },
  "cl:parede_camara": {
   "pt": "Parede da Câmara de Pressão",
@@ -10171,10 +10361,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stuffed Pepper",
   "icone": "textures/items/cl/arte/pimentao_recheado"
  },
+ "cl:pingente_chama": {
+  "pt": "Pingente de Chama",
+  "en": "Flame Pendant",
+  "icone": "textures/items/cl/arte/pingente_chama"
+ },
+ "cl:pingente_choque": {
+  "pt": "Pingente de Choque",
+  "en": "Shock Pendant",
+  "icone": "textures/items/cl/arte/pingente_choque"
+ },
+ "cl:pingente_espinhos": {
+  "pt": "Pingente de Espinhos",
+  "en": "Thorn Pendant",
+  "icone": "textures/items/cl/arte/pingente_espinhos"
+ },
  "cl:pipoca": {
   "pt": "Pipoca",
   "en": "Popcorn",
   "icone": "textures/items/cl/arte/pipoca"
+ },
+ "cl:pistao_bolso": {
+  "pt": "Pistão de Bolso",
+  "en": "Pocket Piston",
+  "icone": "textures/items/cl/arte/pistao_bolso"
  },
  "cl:placa_aco": {
   "pt": "Placa Comprimida de Aço",
@@ -10861,6 +11071,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Calculation Processor",
   "icone": "textures/items/cl/arte/processador_calculo"
  },
+ "cl:pulseira_murcha": {
+  "pt": "Pulseira Murcha",
+  "en": "Withered Bracelet",
+  "icone": "textures/items/cl/arte/pulseira_murcha"
+ },
  "cl:pulverizador": {
   "pt": "Pulverizador",
   "en": "Pulverizer",
@@ -10900,6 +11115,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Rancheiro",
   "en": "Rancher",
   "icone": "textures/items/cl/arte/blocos/rancheiro"
+ },
+ "cl:raquetes_neve": {
+  "pt": "Raquetes de Neve",
+  "en": "Snowshoes",
+  "icone": "textures/items/cl/arte/raquetes_neve"
  },
  "cl:ratatouille": {
   "pt": "Ratatouille",
@@ -11116,6 +11336,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Egg Sandwich",
   "icone": "textures/items/cl/arte/sanduiche_ovo"
  },
+ "cl:sapatos_lavagante": {
+  "pt": "Sapatos de Lavagante",
+  "en": "Strider Shoes",
+  "icone": "textures/items/cl/arte/sapatos_lavagante"
+ },
  "cl:segmento_roda": {
   "pt": "Segmento de Roda d'Água",
   "en": "Waterwheel Segment",
@@ -11281,6 +11506,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Slimelytra",
   "icone": "textures/items/cl/arte/slimelitros"
  },
+ "cl:snorkel": {
+  "pt": "Snorkel",
+  "en": "Snorkel",
+  "icone": "textures/items/cl/arte/snorkel"
+ },
  "cl:solo_lunar": {
   "pt": "Solo Lunar",
   "en": "Moon Turf",
@@ -11430,6 +11660,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tecido de Cânhamo",
   "en": "Hemp Fabric",
   "icone": "textures/items/cl/c/tecido_canhamo"
+ },
+ "cl:tenis_aquatico": {
+  "pt": "Tênis Aquático",
+  "en": "Aqua-Dashers",
+  "icone": "textures/items/cl/arte/tenis_aquatico"
+ },
+ "cl:tenis_corrida": {
+  "pt": "Tênis de Corrida",
+  "en": "Running Shoes",
+  "icone": "textures/items/cl/arte/tenis_corrida"
  },
  "cl:terminal": {
   "pt": "Terminal de Armazenamento",
@@ -11630,6 +11870,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tortilha",
   "en": "Tortilla",
   "icone": "textures/items/cl/arte/tortilha"
+ },
+ "cl:totem_coro": {
+  "pt": "Totem de Coro",
+  "en": "Chorus Totem",
+  "icone": "textures/items/cl/arte/totem_coro"
  },
  "cl:transistor": {
   "pt": "Transistor",
@@ -23285,6 +23530,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "S": "minecraft:string",
    "L": "minecraft:slime_ball",
    "T": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_estojo_artefatos",
+  "resultado": "cl:estojo_artefatos",
+  "qtd": 1,
+  "grade": [
+   "LGL",
+   "L L",
+   "LLL"
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "G": "minecraft:gold_ingot"
   },
   "estacoes": [
    "crafting_table"

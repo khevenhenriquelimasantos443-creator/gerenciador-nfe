@@ -154,6 +154,25 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.31.0 (Artifacts 15.1 e a mochila que abre na mão)
+
+- **Mochila na mão**: usar a mochila abre um menu sem pôr no chão: guardar tudo da mochila do jogador (a barra rápida
+  fica), guardar um item, tirar um item ou tudo. Agachado, usar põe no chão (a tela completa de antes).
+- **Artifacts** (o mais novo, com a arte do mod): os 46 artefatos com os números do mod — Nuvem na Garrafa (pulo
+  duplo), Pantufas de Coelho (sem dano de queda), Tênis de Corrida, Nadadeiras, Tênis Aquático (corre sobre a água),
+  Flamingo de Hélio (voa 8 s), Óculos de Visão Noturna, Snorkel, Luva de Força, Luva Vampírica, Manopla de Fogo,
+  Pistão de Bolso, Pulseira Murcha, Garras, Anzol Dourado (+50% de XP), Cachecol da Sorte (Fortuna +1), Aquecedor de
+  Picareta (funde minério), Chapéu Supersticioso (Saque +1), Chapéu de Aldeão (preços menores), pingentes de Choque,
+  Chama e Espinhos, Colar do Pânico, Colar de Cruz, Caveira de Obsidiana, Frasco de Antídoto, Atrator Universal,
+  Coração de Cristal, Totem de Coro (salva de um golpe fatal), Motor de Dobra (pérola sem gasto), Pantufas de Gatinho
+  (creepers fogem), Botas de Raízes, Sapatos de Lavagante e mais; Guarda-Chuva, Almofada de Pum, Carne Infinita e Bife
+  Eterno (não acabam).
+- **Tela de Artefatos**: 7 espaços (cabeça, rosto, pescoço, cinto, 2 de mãos e pés). Usar o artefato equipa; usar
+  agachado ou o **Estojo de Artefatos** (couro e ouro) abre a tela. Achados nos baús das masmorras, da pirâmide, do
+  templo e dos destroços.
+- Conserto: as ferramentas antigas do Tinkers (1.30.0) não estavam saindo na pirâmide; agora saem.
+- Diário: capítulo Artefatos e a missão Mochila na mão.
+
 ## Novidades da 1.30.0 (Tinkers' Construct 3 completo, parte 5 de 5: modificadores, Bigorna e o resto do mod)
 
 - **Modificadores do TC3** com os números do mod: Pressa (até 5), Diamante (nível 3), Esmeralda, Netherita (+20% de

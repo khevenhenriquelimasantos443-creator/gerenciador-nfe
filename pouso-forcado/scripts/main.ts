@@ -69,6 +69,7 @@ import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEn
 import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
 import { cristalBrotandoComp, mudaSlimeComp, slimeCongeladoComp } from "./tinkers/slime.js";
 import { registrarArmas } from "./tinkers/armas.js";
+import { registrarArtefatos } from "./utilidades/artefatos.js";
 import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
@@ -301,6 +302,7 @@ registrarEnderIO();
 registrarEnderIO9();
 registrarArmas(); // 1.28.0: armaduras, escudos, arcos e arremessáveis do Tinkers 3
 registrarTesteModificadores();
+registrarArtefatos(); // 1.31.0: Artifacts (Tela de Artefatos)
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();

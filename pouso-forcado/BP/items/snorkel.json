@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:snorkel",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_snorkel",
+      "minecraft:display_name": {
+        "value": "item.cl:snorkel.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "cl:artefato"
+        ]
+      }
+    }
+  }
+}

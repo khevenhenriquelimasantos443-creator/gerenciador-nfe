@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:colar_panico",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_colar_panico",
+      "minecraft:display_name": {
+        "value": "item.cl:colar_panico.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "cl:artefato"
+        ]
+      }
+    }
+  }
+}

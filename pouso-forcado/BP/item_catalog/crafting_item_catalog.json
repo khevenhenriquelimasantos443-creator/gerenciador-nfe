@@ -845,6 +845,59 @@
               "cl:tanque_oxigenio_medio",
               "cl:tanque_oxigenio_pesado"
             ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:amuleto_afundar",
+              "name": "cl:itemGroup.name.equipment_artifacts"
+            },
+            "items": [
+              "cl:amuleto_afundar",
+              "cl:amuleto_encolher",
+              "cl:anel_cebola",
+              "cl:anzol_dourado",
+              "cl:aquecedor_picareta",
+              "cl:atrator_universal",
+              "cl:botas_raizes",
+              "cl:cachecol_invisibilidade",
+              "cl:cachecol_sorte",
+              "cl:caveira_obsidiana",
+              "cl:chapeu_aldeao",
+              "cl:chapeu_bebida_novidade",
+              "cl:chapeu_bebida_plastico",
+              "cl:chapeu_pescador",
+              "cl:chapeu_supersticioso",
+              "cl:chapeu_vaqueiro",
+              "cl:colar_cruz",
+              "cl:colar_panico",
+              "cl:coracao_cristal",
+              "cl:cravos_firmes",
+              "cl:flamingo_helio",
+              "cl:frasco_antidoto",
+              "cl:garras_cavar",
+              "cl:garras_ferozes",
+              "cl:guarda_chuva",
+              "cl:luva_forca",
+              "cl:luva_vampirica",
+              "cl:manopla_fogo",
+              "cl:motor_dobra",
+              "cl:nadadeiras",
+              "cl:nuvem_garrafa",
+              "cl:oculos_visao_noturna",
+              "cl:pantufas_coelho",
+              "cl:pantufas_gatinho",
+              "cl:pingente_chama",
+              "cl:pingente_choque",
+              "cl:pingente_espinhos",
+              "cl:pistao_bolso",
+              "cl:pulseira_murcha",
+              "cl:raquetes_neve",
+              "cl:sapatos_lavagante",
+              "cl:snorkel",
+              "cl:tenis_aquatico",
+              "cl:tenis_corrida",
+              "cl:totem_coro"
+            ]
           }
         ]
       },
@@ -2746,6 +2799,18 @@
               "cl:solo_lunar",
               "cl:terra_lunar",
               "cl:tijolo_lunar"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:almofada_pum",
+              "name": "cl:itemGroup.name.items_artifacts"
+            },
+            "items": [
+              "cl:almofada_pum",
+              "cl:bife_eterno",
+              "cl:carne_infinita",
+              "cl:estojo_artefatos"
             ]
           }
         ]

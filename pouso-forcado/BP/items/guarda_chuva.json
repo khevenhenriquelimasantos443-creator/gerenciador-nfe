@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:guarda_chuva",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_guarda_chuva",
+      "minecraft:display_name": {
+        "value": "item.cl:guarda_chuva.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:allow_off_hand": true,
+      "minecraft:damage": 1
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:frasco_antidoto",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_frasco_antidoto",
+      "minecraft:display_name": {
+        "value": "item.cl:frasco_antidoto.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "cl:artefato"
+        ]
+      }
+    }
+  }
+}

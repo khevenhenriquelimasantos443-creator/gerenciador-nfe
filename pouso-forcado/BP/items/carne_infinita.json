@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:carne_infinita",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_carne_infinita",
+      "minecraft:display_name": {
+        "value": "item.cl:carne_infinita.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:food": {
+        "nutrition": 3,
+        "saturation_modifier": 0.3,
+        "using_converts_to": "cl:carne_infinita"
+      },
+      "minecraft:cooldown": {
+        "category": "cl_comida_eterna",
+        "duration": 15
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      }
+    }
+  }
+}

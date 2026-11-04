@@ -343,6 +343,250 @@
      "chance": 0.35
     }
    ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "cl:chapeu_bebida_plastico",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:chapeu_bebida_novidade",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:chapeu_aldeao",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:chapeu_supersticioso",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:chapeu_vaqueiro",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:chapeu_pescador",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:snorkel",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:oculos_visao_noturna",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:cachecol_sorte",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:cachecol_invisibilidade",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:colar_cruz",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:colar_panico",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pingente_choque",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pingente_chama",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pingente_espinhos",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:amuleto_afundar",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:amuleto_encolher",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:nuvem_garrafa",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:caveira_obsidiana",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:frasco_antidoto",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:atrator_universal",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:coracao_cristal",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:flamingo_helio",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:totem_coro",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:motor_dobra",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:garras_cavar",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:garras_ferozes",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:luva_forca",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:manopla_fogo",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pistao_bolso",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:luva_vampirica",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:anzol_dourado",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:anel_cebola",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:aquecedor_picareta",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pulseira_murcha",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:tenis_aquatico",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pantufas_coelho",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:pantufas_gatinho",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:tenis_corrida",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:raquetes_neve",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:cravos_firmes",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:nadadeiras",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:botas_raizes",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:sapatos_lavagante",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:guarda_chuva",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:almofada_pum",
+     "weight": 1
+    },
+    {
+     "type": "item",
+     "name": "cl:bife_eterno",
+     "weight": 1
+    },
+    {
+     "type": "empty",
+     "weight": 423
+    }
+   ]
   }
  ]
 }

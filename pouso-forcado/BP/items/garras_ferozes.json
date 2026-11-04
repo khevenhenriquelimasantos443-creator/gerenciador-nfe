@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:garras_ferozes",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_garras_ferozes",
+      "minecraft:display_name": {
+        "value": "item.cl:garras_ferozes.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "cl:artefato"
+        ]
+      }
+    }
+  }
+}

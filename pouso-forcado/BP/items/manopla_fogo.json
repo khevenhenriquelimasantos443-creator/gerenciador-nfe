@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:manopla_fogo",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_manopla_fogo",
+      "minecraft:display_name": {
+        "value": "item.cl:manopla_fogo.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "cl:artefato"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:bife_eterno",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_bife_eterno",
+      "minecraft:display_name": {
+        "value": "item.cl:bife_eterno.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:food": {
+        "nutrition": 8,
+        "saturation_modifier": 0.8,
+        "using_converts_to": "cl:bife_eterno"
+      },
+      "minecraft:cooldown": {
+        "category": "cl_comida_eterna",
+        "duration": 15
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      }
+    }
+  }
+}

@@ -1,5 +1,8 @@
 import { Entity, EquipmentSlot, ItemStack, Player, system, world } from "@minecraft/server";
-import { registrarNoCatalogo } from "../catalogo/catalogo.js";
+import { ActionFormData } from "@minecraft/server-ui";
+import { iconeDe, nomeDe, registrarNoCatalogo } from "../catalogo/catalogo.js";
+import { abrirUmMenu } from "../util/menus.js";
+import { registrarAcao } from "../missoes/progresso.js";
 import { aviso } from "../jogador/hud.js";
 import { darAoJogador } from "../util/inventario.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
@@ -167,6 +170,158 @@ function tocar(j: Player, m: Entity, mao: ItemStack | undefined): boolean {
   return true;
 }
 
+// ---------- 1.31.0: a mochila que abre na mão (sem pôr no chão) ----------
+// O Bedrock não abre a tela de um item; a mochila na mão abre um menu: guardar (tudo da mochila do jogador, ou um
+// item), tirar (um ou tudo) e "pôr no chão" para a tela completa de antes. Agachado, usar põe direto no chão.
+const simples = (s: ItemSalvo) => !s.dp && !s.nome && !s.lore && !s.dano && !s.enc;
+function slotsDaMochila(i: ItemStack): Slots {
+  const slots = conteudoDe(i);
+  const total = espacosDe(i.typeId);
+  while (slots.length < total) slots.push(null);
+  slots.length = total;
+  return slots;
+}
+/** Grava o conteúdo na mochila da mão (se ainda for a mesma). Devolve se coube na propriedade do item. */
+function gravarNaMao(j: Player, tipo: string, slots: Slots): boolean {
+  const inv = j.getComponent("minecraft:inventory")?.container;
+  const i = inv?.getItem(j.selectedSlotIndex);
+  if (!inv || !i || i.typeId !== tipo) return false;
+  const usados = slots.filter(Boolean).length;
+  try {
+    i.setDynamicProperty(CONTEUDO, usados ? JSON.stringify(slots) : undefined);
+  } catch {
+    aviso(j, "cl.mochila.cheia_dados", 4);
+    return false;
+  }
+  i.setLore([`§7${usados}/${espacosDe(tipo)}`]);
+  inv.setItem(j.selectedSlotIndex, i);
+  return true;
+}
+/** Põe a pilha nos espaços (junta com as iguais); devolve o que sobrou. */
+function enfiar(slots: Slots, it: ItemStack): number {
+  const s = salvarItem(it);
+  if (!s) return 0;
+  let resto = s.n;
+  if (simples(s))
+    for (const x of slots) {
+      if (!x || x.t !== s.t || !simples(x) || x.n >= it.maxAmount) continue;
+      const n = Math.min(it.maxAmount - x.n, resto);
+      x.n += n;
+      resto -= n;
+      if (!resto) return 0;
+    }
+  const k = slots.indexOf(null);
+  if (k < 0) return resto;
+  slots[k] = { ...s, n: resto };
+  return 0;
+}
+/** Guarda a mochila do jogador (espaços 9 a 35) na mochila da mão; a barra rápida fica. */
+function guardarTudo(j: Player, tipo: string): void {
+  const inv = j.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
+  const agora = inv.getItem(j.selectedSlotIndex);
+  if (agora?.typeId !== tipo) return;
+  const s2 = slotsDaMochila(agora);
+  let n = 0;
+  const antes: [number, ItemStack][] = [];
+  for (let k = 9; k < inv.size; k++) {
+    const it = inv.getItem(k);
+    if (!it) continue;
+    const resto = enfiar(s2, it);
+    if (resto === it.amount) continue;
+    antes.push([k, it.clone()]);
+    if (resto) {
+      it.amount = resto;
+      inv.setItem(k, it);
+    } else inv.setItem(k, undefined);
+    n++;
+  }
+  if (!gravarNaMao(j, tipo, s2)) {
+    for (const [k, it] of antes) inv.setItem(k, it); // não coube: devolve tudo
+    return;
+  }
+  j.playSound("armor.equip_leather");
+  if (n) registrarAcao(j, "mochila_mao");
+  return aviso(j, { translate: "cl.mochila.mao_guardou", with: [String(n)] }, 3);
+}
+
+async function menuMochila(j: Player): Promise<void> {
+  const i = j.getComponent("minecraft:inventory")?.container?.getItem(j.selectedSlotIndex);
+  if (!i || !ehMochila(i.typeId)) return;
+  const tipo = i.typeId;
+  const slots = slotsDaMochila(i);
+  const usados = slots.filter(Boolean).length;
+  const f = new ActionFormData()
+    .title({ rawtext: [{ translate: new ItemStack(tipo).localizationKey }, { text: ` §8${usados}/${slots.length}` }] })
+    .button({ translate: "cl.mochila.mao_guardar_tudo" }, iconeDe("minecraft:chest"))
+    .button({ translate: "cl.mochila.mao_guardar_um" }, iconeDe("minecraft:hopper"))
+    .button({ translate: "cl.mochila.mao_tirar", with: [String(usados)] }, iconeDe(tipo))
+    .button({ translate: "cl.mochila.mao_tirar_tudo" }, iconeDe("minecraft:dropper"))
+    .button({ translate: "cl.mochila.mao_chao" }, iconeDe("minecraft:barrel"));
+  const r = await f.show(j);
+  if (r.canceled || r.selection === undefined) return;
+  const inv = j.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
+  if (r.selection === 4) return por(j);
+  if (r.selection === 0) return guardarTudo(j, tipo);
+  if (r.selection === 1) {
+    const lista: number[] = [];
+    const g = new ActionFormData().title({ translate: "cl.mochila.mao_guardar_um" });
+    for (let k = 0; k < inv.size; k++) {
+      const it = inv.getItem(k);
+      if (!it || k === j.selectedSlotIndex) continue;
+      lista.push(k);
+      g.button({ rawtext: [nomeDe(it.typeId), { text: ` §8x${it.amount}` }] }, iconeDe(it.typeId));
+    }
+    if (!lista.length) return aviso(j, "cl.mochila.mao_nada", 2);
+    const r2 = await g.show(j);
+    if (r2.canceled || r2.selection === undefined) return;
+    const k = lista[r2.selection];
+    const it = inv.getItem(k);
+    const agora = inv.getItem(j.selectedSlotIndex);
+    if (!it || agora?.typeId !== tipo) return;
+    const s2 = slotsDaMochila(agora);
+    const resto = enfiar(s2, it);
+    if (resto === it.amount) return aviso(j, "cl.mochila.mao_cheia", 2);
+    const copia = it.clone();
+    if (resto) {
+      it.amount = resto;
+      inv.setItem(k, it);
+    } else inv.setItem(k, undefined);
+    if (!gravarNaMao(j, tipo, s2)) inv.setItem(k, copia);
+    else (j.playSound("armor.equip_leather"), registrarAcao(j, "mochila_mao"));
+    return;
+  }
+  if (r.selection === 2 || r.selection === 3) {
+    let quais: number[] = slots.map((x, k) => (x ? k : -1)).filter((k) => k >= 0);
+    if (!quais.length) return aviso(j, "cl.mochila.mao_vazia", 2);
+    if (r.selection === 2) {
+      const t = new ActionFormData().title({ translate: "cl.mochila.mao_tirar", with: [String(quais.length)] });
+      for (const k of quais) t.button({ rawtext: [nomeDe(slots[k]!.t), { text: ` §8x${slots[k]!.n}` }] }, iconeDe(slots[k]!.t));
+      const r2 = await t.show(j);
+      if (r2.canceled || r2.selection === undefined) return;
+      quais = [quais[r2.selection]];
+    }
+    const agora = inv.getItem(j.selectedSlotIndex);
+    if (agora?.typeId !== tipo) return;
+    const s2 = slotsDaMochila(agora);
+    let n = 0;
+    for (const k of quais) {
+      const it = carregarItem(s2[k]);
+      if (!it) {
+        s2[k] = null;
+        continue;
+      }
+      const sobra = inv.addItem(it);
+      if (sobra && sobra.amount === it.amount) break; // mochila do jogador cheia
+      s2[k] = sobra ? { ...s2[k]!, n: sobra.amount } : null;
+      n++;
+    }
+    if (gravarNaMao(j, tipo, s2)) j.playSound("armor.equip_leather");
+    if (!n) aviso(j, "cl.mochila.mao_jogador_cheio", 2);
+  }
+}
+
 export function registrarMochila(): void {
   // No Catálogo: cada nível, com o material que se toca na mochila aberta no chão.
   registrarNoCatalogo(() =>
@@ -180,11 +335,19 @@ export function registrarMochila(): void {
       })),
   );
   world.afterEvents.itemUse.subscribe(({ itemStack, source }) => {
-    if (ehMochila(itemStack.typeId) && !mochilaUsadaEmBau(source)) system.run(() => por(source));
+    if (!ehMochila(itemStack.typeId) || mochilaUsadaEmBau(source)) return;
+    // 1.31.0: usar abre o menu na mão; agachado, põe no chão (a tela completa).
+    if (source.isSneaking) system.run(() => por(source));
+    else abrirUmMenu(source, () => menuMochila(source));
   });
   // 1.25.0: agachado e tocando, troca de página; com o material na mão, sobe de nível (sem perder nada).
   world.beforeEvents.playerInteractWithEntity.subscribe((ev) => {
     if (ev.target.typeId === ENTIDADE && tocar(ev.player, ev.target, ev.itemStack)) ev.cancel = true;
+  });
+  // Teste no servidor (o jogador simulado não responde menu): scriptevent cl:teste_mochila_mao guarda tudo na da mão.
+  system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: j }) => {
+    const i = j instanceof Player ? j.getComponent("minecraft:inventory")?.container?.getItem(j.selectedSlotIndex) : undefined;
+    if (id === "cl:teste_mochila_mao" && j instanceof Player && i && ehMochila(i.typeId)) guardarTudo(j, i.typeId);
   });
   // Teste no servidor (o jogador simulado não dispara o toque): scriptevent cl:teste_mochila_tocar.
   system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: j }) => {

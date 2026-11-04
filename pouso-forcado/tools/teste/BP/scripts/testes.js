@@ -1298,6 +1298,63 @@ teste("tinkers3_extras", 420, (t) => {
   });
 });
 
+// 1.31.0: Artefatos (Visão Noturna e Força pelos óculos e pela luva; Pantufas de Coelho tiram o dano de queda;
+// Frasco de Antídoto corta o veneno para 5 s; Aquecedor de Picareta funde o minério) e a mochila que guarda na mão.
+teste("artefatos", 260, (t) => {
+  const j = robo(t, { x: 2.5, y: 2, z: 2.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`artefatos: ${c} -> ${e}`); } };
+  t.setBlockType("minecraft:iron_ore", { x: 2, y: 2, z: 5 });
+  const equipar = (id, k) => t.runAfterDelay(4 + k * 3, () => {
+    inv.setItem(0, new ItemStack(`cl:${id}`, 1));
+    j.selectedSlotIndex = 0;
+    cmd(`scriptevent cl:teste_artefato ${id}`);
+  });
+  ["oculos_visao_noturna", "luva_forca", "pantufas_coelho", "frasco_antidoto", "aquecedor_picareta"].forEach(equipar);
+  let efeitos = {};
+  t.runAfterDelay(50, () => {
+    cmd("scriptevent cl:teste_artefato lista");
+    efeitos = { visao: !!j.getEffect("night_vision"), forca: !!j.getEffect("strength") };
+    j.addEffect("poison", 600, { amplifier: 0 });
+  });
+  let veneno = -1;
+  t.runAfterDelay(72, () => (veneno = j.getEffect("poison")?.duration ?? -1));
+  t.runAfterDelay(73, () => {
+    j.removeEffect("poison");
+    j.getComponent("health").resetToMaxValue();
+    j.teleport(t.worldLocation({ x: 2.5, y: 14, z: 2.5 }));
+  });
+  let vida = -1;
+  t.runAfterDelay(115, () => {
+    vida = j.getComponent("health").currentValue;
+    inv.setItem(1, new ItemStack("minecraft:iron_pickaxe", 1));
+    j.selectedSlotIndex = 1;
+    j.lookAtBlock({ x: 2, y: 2, z: 5 });
+    j.breakBlock({ x: 2, y: 2, z: 5 }, Direction.North);
+  });
+  let drops = [];
+  t.runAfterDelay(170, () => {
+    drops = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 2.5, y: 2.5, z: 5.5 }), maxDistance: 3 }).map((e) => e.getComponent("item")?.itemStack.typeId);
+    // Mochila na mão: guarda o que está fora da barra rápida.
+    inv.setItem(2, new ItemStack("cl:mochila", 1));
+    inv.setItem(12, new ItemStack("minecraft:cobblestone", 40));
+    inv.setItem(20, new ItemStack("minecraft:cobblestone", 30));
+    j.selectedSlotIndex = 2;
+    cmd("scriptevent cl:teste_mochila_mao");
+  });
+  t.runAfterDelay(180, () => {
+    const pedra = quantos(j, "minecraft:cobblestone");
+    const lore = inv.getItem(2)?.getLore() ?? [];
+    log(`artefatos: efeitos=${JSON.stringify(efeitos)} veneno=${veneno} vida depois da queda=${vida} drops=${JSON.stringify(drops)} lingote no robô=${quantos(j, "minecraft:iron_ingot")} cru=${quantos(j, "minecraft:raw_iron")} minério=${t.getBlock({ x: 2, y: 2, z: 5 }).typeId} pedra no robô=${pedra} mochila=${JSON.stringify(lore)}`);
+    t.assert(efeitos.visao && efeitos.forca, "óculos/luva sem efeito");
+    t.assert(veneno > 0 && veneno <= 100, "o Frasco de Antídoto não cortou o veneno");
+    t.assert(vida >= 20, "as Pantufas de Coelho não tiraram o dano de queda");
+    t.assert(drops.includes("minecraft:iron_ingot") || quantos(j, "minecraft:iron_ingot") > 0, "o Aquecedor de Picareta não fundiu");
+    t.assert(pedra === 0 && lore.join("").includes("2/27"), "a mochila da mão não guardou");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

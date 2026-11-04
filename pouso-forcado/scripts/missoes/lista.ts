@@ -61,6 +61,10 @@ export type Acao =
   | "tc3_habilidade"
   | "tc_cajado"
   | "tc_antiga"
+  | "art_equipar"
+  | "art_diferente"
+  | "art_cheio"
+  | "mochila_mao"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -561,6 +565,19 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "sb_fornalha", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "fundir_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:coal", quantidade: 16 }] },
       { id: "sb_recarga", requer: ["sb_base"], objetivo: { tipo: "acao", acao: "recarga_mochila", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 32 }] },
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      // 1.31.0: a mochila que abre na mão.
+      { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "artefatos", // 1.31.0: Artifacts
+    icone: "cl:nuvem_garrafa",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "art_estojo", objetivo: { tipo: "ter", item: "cl:estojo_artefatos", qtd: 1 }, recompensa: [{ item: "minecraft:gold_ingot", quantidade: 4 }] },
+      { id: "art_primeiro", objetivo: { tipo: "acao", acao: "art_equipar", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "art_cinco", requer: ["art_primeiro"], objetivo: { tipo: "acao", acao: "art_diferente", qtd: 5 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
+      { id: "art_cheio", requer: ["art_cinco"], objetivo: { tipo: "acao", acao: "art_cheio", qtd: 1 }, recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }] },
     ],
   },
   {

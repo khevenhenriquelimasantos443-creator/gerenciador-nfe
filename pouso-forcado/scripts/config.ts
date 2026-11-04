@@ -1,12 +1,12 @@
 // Configuração central do add-on. Tudo que for "número de balanceamento" fica aqui.
 
-import { ORIGEM_CONTEUDO } from "./conteudo/gerado.js";
+import { DADOS_F50, ORIGEM_CONTEUDO } from "./conteudo/gerado.js";
 import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gerado.js";
 
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.30.0";
+export const VERSAO = "1.31.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1113,6 +1113,20 @@ export const MASMORRA_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "cl:agua_boa", min: 1, max: 2, chance: 0.4 },
   { item: "minecraft:diamond", min: 1, max: 2, chance: 0.08 },
 ];
+// Sorteios a mais nos baús das estruturas (tools/gerar-geracao.py): um item da lista ou nada (peso "vazio").
+// 1.30.0: as ferramentas antigas do Tinkers 3 na pirâmide. 1.31.0: os artefatos do Artifacts (o mod põe nos baús
+// das masmorras, minas, templos e pirâmides).
+const ARTEFATOS_SAQUE = Object.keys(DADOS_F50.artefatos).map((id) => `${NS}:${id}`).concat([`${NS}:guarda_chuva`, `${NS}:almofada_pum`, `${NS}:bife_eterno`]);
+export const SAQUE_SORTEIO: Readonly<Record<string, ReadonlyArray<{ itens: readonly string[]; vazio: number }>>> = {
+  cl_piramide: [
+    { itens: ["picareta_guerra", "placa_batalha", "lavador", "machado_minotauro", "panela_fusao"].map((x) => `${NS}:${x}`), vazio: 17 },
+    { itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 3 },
+  ],
+  cl_templo: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 3 }],
+  cl_masmorra: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 5 }],
+  cl_masmorra_funda: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 2 }],
+  cl_destrocos: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 9 }],
+};
 export const MASMORRA_FUNDA_SAQUE: ReadonlyArray<LinhaSaque> = [
   { item: "minecraft:diamond", min: 1, max: 3, chance: 0.6 },
   { item: "minecraft:gold_ingot", min: 2, max: 6, chance: 0.7 },

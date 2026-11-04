@@ -28,6 +28,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
   só as ideias e os números (1.10.0). Código, modelos e arte próprios.
 
+- **Artifacts** (Wouter Pauwels/ochotonida; MIT, inclusive a arte; github.com/ochotonida/artifacts, 15.1.3): os
+  artefatos com os números do mod e a arte dos itens (`tools/importar-artifacts.py`). A Tela de Artefatos e os
+  efeitos são código próprio.
 - **Sophisticated Backpacks** (P3pp3rF1y; código e arte com todos os direitos reservados): as melhorias da mochila
   (1.14.0) e, desde a 1.25.0, a versão 3.26.19 (a mais nova): os níveis Couro, Cobre, Ferro, Ouro, Diamante e Netherita
   com os espaços e as melhorias de cada um, o raio dos ímãs e o formato das receitas. Só as ideias e os números; código
@@ -137,6 +140,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
+| Artifacts | Wouter Pauwels (ochotonida) | MIT | github.com/ochotonida/artifacts (15.1.3, 26.1) |
 | Tinkers' Construct | mDiyo e SlimeKnights | MIT (TC3) e CC BY 3.0 (1.7.10) | github.com/SlimeKnights/TinkersConstruct (3.12.1, 1.20.1; e 1.7.10) |
 | Applied Energistics 2 | AlgorithmX2, Ridanisaurus Rid e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (main, 26.3; e rv3) |
 | PneumaticCraft | MineMaarten | GPLv3 | github.com/MineMaarten/PneumaticCraft |

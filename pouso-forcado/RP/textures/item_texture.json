@@ -5221,6 +5221,153 @@
     },
     "clc_mochila_porco": {
       "textures": "textures/items/cl/arte/mochila_porco"
+    },
+    "clc_chapeu_bebida_plastico": {
+      "textures": "textures/items/cl/arte/chapeu_bebida_plastico"
+    },
+    "clc_chapeu_bebida_novidade": {
+      "textures": "textures/items/cl/arte/chapeu_bebida_novidade"
+    },
+    "clc_chapeu_aldeao": {
+      "textures": "textures/items/cl/arte/chapeu_aldeao"
+    },
+    "clc_chapeu_supersticioso": {
+      "textures": "textures/items/cl/arte/chapeu_supersticioso"
+    },
+    "clc_chapeu_vaqueiro": {
+      "textures": "textures/items/cl/arte/chapeu_vaqueiro"
+    },
+    "clc_chapeu_pescador": {
+      "textures": "textures/items/cl/arte/chapeu_pescador"
+    },
+    "clc_snorkel": {
+      "textures": "textures/items/cl/arte/snorkel"
+    },
+    "clc_oculos_visao_noturna": {
+      "textures": "textures/items/cl/arte/oculos_visao_noturna"
+    },
+    "clc_cachecol_sorte": {
+      "textures": "textures/items/cl/arte/cachecol_sorte"
+    },
+    "clc_cachecol_invisibilidade": {
+      "textures": "textures/items/cl/arte/cachecol_invisibilidade"
+    },
+    "clc_colar_cruz": {
+      "textures": "textures/items/cl/arte/colar_cruz"
+    },
+    "clc_colar_panico": {
+      "textures": "textures/items/cl/arte/colar_panico"
+    },
+    "clc_pingente_choque": {
+      "textures": "textures/items/cl/arte/pingente_choque"
+    },
+    "clc_pingente_chama": {
+      "textures": "textures/items/cl/arte/pingente_chama"
+    },
+    "clc_pingente_espinhos": {
+      "textures": "textures/items/cl/arte/pingente_espinhos"
+    },
+    "clc_amuleto_afundar": {
+      "textures": "textures/items/cl/arte/amuleto_afundar"
+    },
+    "clc_amuleto_encolher": {
+      "textures": "textures/items/cl/arte/amuleto_encolher"
+    },
+    "clc_nuvem_garrafa": {
+      "textures": "textures/items/cl/arte/nuvem_garrafa"
+    },
+    "clc_caveira_obsidiana": {
+      "textures": "textures/items/cl/arte/caveira_obsidiana"
+    },
+    "clc_frasco_antidoto": {
+      "textures": "textures/items/cl/arte/frasco_antidoto"
+    },
+    "clc_atrator_universal": {
+      "textures": "textures/items/cl/arte/atrator_universal"
+    },
+    "clc_coracao_cristal": {
+      "textures": "textures/items/cl/arte/coracao_cristal"
+    },
+    "clc_flamingo_helio": {
+      "textures": "textures/items/cl/arte/flamingo_helio"
+    },
+    "clc_totem_coro": {
+      "textures": "textures/items/cl/arte/totem_coro"
+    },
+    "clc_motor_dobra": {
+      "textures": "textures/items/cl/arte/motor_dobra"
+    },
+    "clc_garras_cavar": {
+      "textures": "textures/items/cl/arte/garras_cavar"
+    },
+    "clc_garras_ferozes": {
+      "textures": "textures/items/cl/arte/garras_ferozes"
+    },
+    "clc_luva_forca": {
+      "textures": "textures/items/cl/arte/luva_forca"
+    },
+    "clc_manopla_fogo": {
+      "textures": "textures/items/cl/arte/manopla_fogo"
+    },
+    "clc_pistao_bolso": {
+      "textures": "textures/items/cl/arte/pistao_bolso"
+    },
+    "clc_luva_vampirica": {
+      "textures": "textures/items/cl/arte/luva_vampirica"
+    },
+    "clc_anzol_dourado": {
+      "textures": "textures/items/cl/arte/anzol_dourado"
+    },
+    "clc_anel_cebola": {
+      "textures": "textures/items/cl/arte/anel_cebola"
+    },
+    "clc_aquecedor_picareta": {
+      "textures": "textures/items/cl/arte/aquecedor_picareta"
+    },
+    "clc_pulseira_murcha": {
+      "textures": "textures/items/cl/arte/pulseira_murcha"
+    },
+    "clc_tenis_aquatico": {
+      "textures": "textures/items/cl/arte/tenis_aquatico"
+    },
+    "clc_pantufas_coelho": {
+      "textures": "textures/items/cl/arte/pantufas_coelho"
+    },
+    "clc_pantufas_gatinho": {
+      "textures": "textures/items/cl/arte/pantufas_gatinho"
+    },
+    "clc_tenis_corrida": {
+      "textures": "textures/items/cl/arte/tenis_corrida"
+    },
+    "clc_raquetes_neve": {
+      "textures": "textures/items/cl/arte/raquetes_neve"
+    },
+    "clc_cravos_firmes": {
+      "textures": "textures/items/cl/arte/cravos_firmes"
+    },
+    "clc_nadadeiras": {
+      "textures": "textures/items/cl/arte/nadadeiras"
+    },
+    "clc_botas_raizes": {
+      "textures": "textures/items/cl/arte/botas_raizes"
+    },
+    "clc_sapatos_lavagante": {
+      "textures": "textures/items/cl/arte/sapatos_lavagante"
+    },
+    "clc_guarda_chuva": {
+      "textures": "textures/items/cl/arte/guarda_chuva"
+    },
+    "clc_almofada_pum": {
+      "textures": "textures/items/cl/arte/almofada_pum"
+    },
+    "clc_carne_infinita": {
+      "textures": "textures/items/cl/arte/carne_infinita"
+    },
+    "clc_bife_eterno": {
+      "textures": "textures/items/cl/arte/bife_eterno"
+    },
+    "clc_estojo_artefatos": {
+      "textures": "textures/items/cl/c/estojo_artefatos"
     }
   }
 }

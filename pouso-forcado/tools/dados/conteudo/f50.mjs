@@ -1,0 +1,106 @@
+// Fase 50 (1.31.0): Artifacts 15.1.3 (o mais novo, MC 26.1; Wouter Pauwels/ochotonida, MIT, inclusive a arte, copiada
+// por tools/importar-artifacts.py). Os 46 artefatos com os números do ItemConfigs.java do mod, achados nos baús das
+// estruturas (masmorras, pirâmide, templo, destroços). O Bedrock não tem os espaços do Curios: os artefatos vão na
+// Tela de Artefatos (usar o artefato equipa; o Estojo de Artefatos ou usar agachado abre a tela) com os 7 espaços do
+// mod: cabeça, rosto, pescoço, cinto, 2 de mãos e pés. Efeitos em scripts/utilidades/artefatos.ts.
+// E os textos da mochila que abre na mão (scripts/utilidades/mochila.ts).
+const AR = { mod: "Artifacts", pilha: 1 };
+// [id, id do mod, espaço, pt, en, descrição pt, descrição en]
+export const ARTEFATOS = [
+  ["chapeu_bebida_plastico", "plastic_drinking_hat", "cabeca", "Chapéu de Bebida de Plástico", "Plastic Drinking Hat", "Bebe e come mais rápido (no Bedrock: enfeite).", "Drink and eat faster (cosmetic on Bedrock)."],
+  ["chapeu_bebida_novidade", "novelty_drinking_hat", "cabeca", "Chapéu de Bebida Novidade", "Novelty Drinking Hat", "Bebe e come mais rápido (no Bedrock: enfeite).", "Drink and eat faster (cosmetic on Bedrock)."],
+  ["chapeu_aldeao", "villager_hat", "cabeca", "Chapéu de Aldeão", "Villager Hat", "Aldeões cobram menos (Herói da Vila).", "Villagers charge less (Hero of the Village)."],
+  ["chapeu_supersticioso", "superstitious_hat", "cabeca", "Chapéu Supersticioso", "Superstitious Hat", "Saque +1: mais drops dos bichos.", "Looting +1: more mob drops."],
+  ["chapeu_vaqueiro", "cowboy_hat", "cabeca", "Chapéu de Vaqueiro", "Cowboy Hat", "A montaria corre 40% mais.", "Your mount runs 40% faster."],
+  ["chapeu_pescador", "anglers_hat", "cabeca", "Chapéu de Pescador", "Angler's Hat", "Sorte do Mar e Isca +1 (no Bedrock: enfeite; a pesca não aceita script).", "Luck of the Sea and Lure +1 (cosmetic on Bedrock)."],
+  ["snorkel", "snorkel", "rosto", "Snorkel", "Snorkel", "Respira debaixo d'água por 30 s.", "Breathe underwater for 30 s."],
+  ["oculos_visao_noturna", "night_vision_goggles", "rosto", "Óculos de Visão Noturna", "Night Vision Goggles", "Enxerga no escuro.", "See in the dark."],
+  ["cachecol_sorte", "lucky_scarf", "pescoco", "Cachecol da Sorte", "Lucky Scarf", "Fortuna +1 nos minérios.", "Fortune +1 on ores."],
+  ["cachecol_invisibilidade", "scarf_of_invisibility", "pescoco", "Cachecol da Invisibilidade", "Scarf of Invisibility", "Deixa você invisível.", "Turns you invisible."],
+  ["colar_cruz", "cross_necklace", "pescoco", "Colar de Cruz", "Cross Necklace", "Mais tempo invencível depois de um golpe (+1 s).", "Longer invincibility after a hit (+1 s)."],
+  ["colar_panico", "panic_necklace", "pescoco", "Colar do Pânico", "Panic Necklace", "Velocidade I por 8 s ao levar dano.", "Speed I for 8 s when hurt."],
+  ["pingente_choque", "shock_pendant", "pescoco", "Pingente de Choque", "Shock Pendant", "25% de chance de raio em quem bate em você; imune a raio.", "25% chance to strike attackers with lightning; lightning immunity."],
+  ["pingente_chama", "flame_pendant", "pescoco", "Pingente de Chama", "Flame Pendant", "40% de chance de pôr fogo (10 s) em quem bate em você e ganhar Resistência ao Fogo.", "40% chance to set attackers on fire (10 s) and gain Fire Resistance."],
+  ["pingente_espinhos", "thorn_pendant", "pescoco", "Pingente de Espinhos", "Thorn Pendant", "50% de chance de devolver 2 a 6 de dano.", "50% chance to deal 2-6 damage back."],
+  ["amuleto_afundar", "charm_of_sinking", "pescoco", "Amuleto de Afundar", "Charm of Sinking", "Anda livre debaixo d'água (Poder do Conduto).", "Move freely underwater (Conduit Power)."],
+  ["amuleto_encolher", "charm_of_shrinking", "pescoco", "Amuleto de Encolher", "Charm of Shrinking", "Encolhe você (no Bedrock: enfeite).", "Shrinks you (cosmetic on Bedrock)."],
+  ["nuvem_garrafa", "cloud_in_a_bottle", "cinto", "Nuvem na Garrafa", "Cloud in a Bottle", "Pulo duplo (pule de novo no ar).", "Double jump (jump again in the air)."],
+  ["caveira_obsidiana", "obsidian_skull", "cinto", "Caveira de Obsidiana", "Obsidian Skull", "Resistência ao Fogo por 30 s ao se queimar (espera 60 s).", "Fire Resistance for 30 s when burned (60 s cooldown)."],
+  ["frasco_antidoto", "antidote_vessel", "cinto", "Frasco de Antídoto", "Antidote Vessel", "Efeitos ruins duram no máximo 5 s.", "Negative effects last at most 5 s."],
+  ["atrator_universal", "universal_attractor", "cinto", "Atrator Universal", "Universal Attractor", "Puxa os itens em volta.", "Pulls nearby items."],
+  ["coracao_cristal", "crystal_heart", "cinto", "Coração de Cristal", "Crystal Heart", "Mais vida (+4 corações).", "More health (+4 hearts)."],
+  ["flamingo_helio", "helium_flamingo", "cinto", "Flamingo de Hélio", "Helium Flamingo", "Segure o pulo no ar para voar por 8 s (recarrega em 15 s).", "Hold jump in the air to fly for 8 s (15 s recharge)."],
+  ["totem_coro", "chorus_totem", "cinto", "Totem de Coro", "Chorus Totem", "Um golpe quase fatal teleporta você para longe e cura 9 (espera 2 min).", "A near-fatal hit teleports you away and heals 9 (2 min cooldown)."],
+  ["motor_dobra", "warp_drive", "cinto", "Motor de Dobra", "Warp Drive", "Pérolas do Ender não dão dano e não gastam: custam 2 de fome.", "Ender Pearls deal no damage and aren't used up: they cost 2 hunger."],
+  ["garras_cavar", "digging_claws", "maos", "Garras de Cavar", "Digging Claws", "Minera 30% mais rápido (Pressa I).", "Mine 30% faster (Haste I)."],
+  ["garras_ferozes", "feral_claws", "maos", "Garras Ferozes", "Feral Claws", "Ataca mais rápido (no Bedrock: Pressa I).", "Attack faster (Haste I on Bedrock)."],
+  ["luva_forca", "power_glove", "maos", "Luva de Força", "Power Glove", "Mais dano (Força I).", "More damage (Strength I)."],
+  ["manopla_fogo", "fire_gauntlet", "maos", "Manopla de Fogo", "Fire Gauntlet", "Seus golpes põem fogo por 8 s.", "Your hits set targets on fire for 8 s."],
+  ["pistao_bolso", "pocket_piston", "maos", "Pistão de Bolso", "Pocket Piston", "Seus golpes empurram mais.", "Your hits knock back more."],
+  ["luva_vampirica", "vampiric_glove", "maos", "Luva Vampírica", "Vampiric Glove", "Cura 20% do dano que você dá (até 6).", "Heals 20% of the damage you deal (up to 6)."],
+  ["anzol_dourado", "golden_hook", "maos", "Anzol Dourado", "Golden Hook", "Os bichos dão 50% mais experiência.", "Mobs drop 50% more experience."],
+  ["anel_cebola", "onion_ring", "maos", "Anel de Cebola", "Onion Ring", "Comer dá Pressa II (6 s por ponto de fome).", "Eating grants Haste II (6 s per food point)."],
+  ["aquecedor_picareta", "pickaxe_heater", "maos", "Aquecedor de Picareta", "Pickaxe Heater", "Os minérios saem fundidos.", "Ores come out smelted."],
+  ["pulseira_murcha", "withered_bracelet", "maos", "Pulseira Murcha", "Withered Bracelet", "30% de chance de Definhar II por 8 s no golpe.", "30% chance of Wither II for 8 s on hit."],
+  ["tenis_aquatico", "aqua_dashers", "pes", "Tênis Aquático", "Aqua-Dashers", "Correndo, anda sobre a água.", "Walk on water while sprinting."],
+  ["pantufas_coelho", "bunny_hoppers", "pes", "Pantufas de Coelho", "Bunny Hoppers", "Pula mais alto e não toma dano de queda.", "Jump higher and take no fall damage."],
+  ["pantufas_gatinho", "kitty_slippers", "pes", "Pantufas de Gatinho", "Kitty Slippers", "Creepers e phantoms fogem de você.", "Creepers and phantoms flee from you."],
+  ["tenis_corrida", "running_shoes", "pes", "Tênis de Corrida", "Running Shoes", "Correndo, vai 40% mais rápido.", "40% faster while sprinting."],
+  ["raquetes_neve", "snowshoes", "pes", "Raquetes de Neve", "Snowshoes", "Mais rápido na neve; não afunda na neve fofa.", "Faster on snow; don't sink in powder snow."],
+  ["cravos_firmes", "steadfast_spikes", "pes", "Cravos Firmes", "Steadfast Spikes", "Não é empurrado pelos golpes.", "Immune to knockback."],
+  ["nadadeiras", "flippers", "pes", "Nadadeiras", "Flippers", "Nada muito mais rápido.", "Swim much faster."],
+  ["botas_raizes", "rooted_boots", "pes", "Botas de Raízes", "Rooted Boots", "Na grama, recupera fome a cada 10 s.", "On grass, restores hunger every 10 s."],
+  ["sapatos_lavagante", "strider_shoes", "pes", "Sapatos de Lavagante", "Strider Shoes", "Agachado, fica em pé na lava; o magma não queima.", "Sneak to stand on lava; magma doesn't burn."],
+];
+const usar = { "minecraft:use_animation": "eat", "minecraft:use_modifiers": { use_duration: 1.6, movement_modifier: 0.35 } };
+
+export default {
+  fase: 50,
+  mod: "Artifacts",
+  itens: [
+    ...ARTEFATOS.map(([id, , , pt, en]) => ({ id, pt, en, icone: "bola:#d8b04a", cat: "equipment", ...AR, comp: { "minecraft:tags": { tags: ["cl:artefato"] } } })),
+    { id: "guarda_chuva", pt: "Guarda-Chuva", en: "Umbrella", icone: "bola:#c83a3a", cat: "equipment", ...AR, comp: { "minecraft:hand_equipped": true, "minecraft:allow_off_hand": true, "minecraft:damage": 1 } },
+    { id: "almofada_pum", pt: "Almofada de Pum", en: "Whoopee Cushion", icone: "bola:#e86aa0", ...AR },
+    // Comida que não acaba: volta para a mão depois de comer, com 15 s de espera (o cooldown do mod).
+    { id: "carne_infinita", pt: "Carne Infinita", en: "Everlasting Beef", icone: "bola:#c84a4a", ...AR,
+      comp: { "minecraft:food": { nutrition: 3, saturation_modifier: 0.3, using_converts_to: "cl:carne_infinita" }, "minecraft:cooldown": { category: "cl_comida_eterna", duration: 15 }, ...usar } },
+    { id: "bife_eterno", pt: "Bife Eterno", en: "Eternal Steak", icone: "bola:#8a4a2a", ...AR,
+      comp: { "minecraft:food": { nutrition: 8, saturation_modifier: 0.8, using_converts_to: "cl:bife_eterno" }, "minecraft:cooldown": { category: "cl_comida_eterna", duration: 15 }, ...usar } },
+    { id: "estojo_artefatos", pt: "Estojo de Artefatos", en: "Artifact Case", icone: "bola:#8a5a2a", ...AR },
+  ],
+  receitas: [
+    { id: "estojo_artefatos", tipo: "shaped", padrao: ["LGL", "L L", "LLL"], chave: { L: "minecraft:leather", G: "minecraft:gold_ingot" }, resultado: "cl:estojo_artefatos" },
+  ],
+  textos: {
+    ...Object.fromEntries(ARTEFATOS.map(([id, , , , , dpt, den]) => [`cl.art.desc.${id}`, [dpt, den]])),
+    "cl.art.desc.guarda_chuva": ["Na mão, cai devagar; na mão secundária e agachado, é escudo.", "In hand, slows your fall; in the offhand while sneaking, it's a shield."],
+    "cl.art.desc.almofada_pum": ["Use para fazer barulho. Agachar com ela no inventário às vezes também faz.", "Use it to make a noise. Sneaking with it in your inventory sometimes does too."],
+    "cl.art.espaco.cabeca": ["Cabeça", "Head"], "cl.art.espaco.rosto": ["Rosto", "Face"], "cl.art.espaco.pescoco": ["Pescoço", "Necklace"],
+    "cl.art.espaco.cinto": ["Cinto", "Belt"], "cl.art.espaco.maos": ["Mãos", "Hands"], "cl.art.espaco.pes": ["Pés", "Feet"],
+    "cl.art.titulo": ["Artefatos", "Artifacts"],
+    "cl.art.corpo": ["Use um artefato para pôr no espaço dele (o que estava lá volta para a mochila). Toque num espaço para tirar.", "Use an artifact to put it in its slot (the old one goes back to your inventory). Tap a slot to take it off."],
+    "cl.art.vazio": ["§8(vazio)", "§8(empty)"], "cl.art.equipou": ["Artefato posto: %s", "Artifact equipped: %s"], "cl.art.tirou": ["Artefato tirado: %s", "Artifact removed: %s"],
+    "cl.art.totem": ["O Totem de Coro te salvou!", "The Chorus Totem saved you!"],
+    "cl.art.flamingo": ["Flamingo recarregando...", "Flamingo recharging..."],
+    // Mochila na mão (1.31.0)
+    "cl.mochila.mao_guardar_tudo": ["Guardar a mochila do jogador\n§8(a barra rápida fica)", "Store your inventory\n§8(hotbar stays)"],
+    "cl.mochila.mao_guardar_um": ["Guardar um item…", "Store one item…"],
+    "cl.mochila.mao_tirar": ["Tirar um item… §8(%s)", "Take one item… §8(%s)"],
+    "cl.mochila.mao_tirar_tudo": ["Tirar tudo", "Take everything"],
+    "cl.mochila.mao_chao": ["Pôr no chão (tela completa)\n§8(ou use agachado)", "Place on the ground (full screen)\n§8(or use while sneaking)"],
+    "cl.mochila.mao_guardou": ["Guardou %s pilhas na mochila.", "Stored %s stacks in the backpack."],
+    "cl.mochila.mao_nada": ["Nada para guardar.", "Nothing to store."], "cl.mochila.mao_vazia": ["A mochila está vazia.", "The backpack is empty."],
+    "cl.mochila.mao_cheia": ["A mochila está cheia.", "The backpack is full."], "cl.mochila.mao_jogador_cheio": ["Seu inventário está cheio.", "Your inventory is full."],
+    "cl.mochila.cheia_dados": ["Coisa demais para caber no item: ponha a mochila no chão.", "Too much to fit in the item: place the backpack on the ground."],
+    "cl.capitulo.artefatos.nome": ["Artefatos (Artifacts)", "Artifacts"], "cl.capitulo.artefatos.curto": ["Artefatos", "Artifacts"],
+    "cl.capitulo.artefatos.desc": ["Os 46 artefatos do mod Artifacts, achados nos baús das masmorras, da pirâmide, do templo e dos destroços. Use para pôr na Tela de Artefatos (7 espaços: cabeça, rosto, pescoço, cinto, 2 de mãos e pés).", "The 46 artifacts of the Artifacts mod, found in dungeon, pyramid, temple and wreck chests. Use one to put it in the Artifact Screen (7 slots: head, face, necklace, belt, 2 hands and feet)."],
+    "cl.missao.art_estojo.titulo": ["Estojo de Artefatos", "Artifact Case"], "cl.missao.art_estojo.desc": ["Faça o Estojo de Artefatos (couro e ouro): abre a Tela de Artefatos.", "Make the Artifact Case (leather and gold): opens the Artifact Screen."],
+    "cl.missao.art_primeiro.titulo": ["Primeiro artefato", "First artifact"], "cl.missao.art_primeiro.desc": ["Ache um artefato num baú de estrutura e use para equipar.", "Find an artifact in a structure chest and use it to equip."],
+    "cl.missao.art_cinco.titulo": ["Colecionador", "Collector"], "cl.missao.art_cinco.desc": ["Equipe 5 artefatos diferentes.", "Equip 5 different artifacts."],
+    "cl.missao.art_cheio.titulo": ["Todos os espaços", "Every slot"], "cl.missao.art_cheio.desc": ["Fique com os 7 espaços de artefato cheios.", "Fill all 7 artifact slots."],
+    "cl.missao.mochila_mao.titulo": ["Mochila na mão", "Backpack in hand"], "cl.missao.mochila_mao.desc": ["Use a mochila (sem agachar) e guarde algo direto da mão.", "Use the backpack (without sneaking) and store something straight from your hand."],
+  },
+  dados: {
+    artefatos: Object.fromEntries(ARTEFATOS.map(([id, , espaco]) => [id, espaco])),
+  },
+};

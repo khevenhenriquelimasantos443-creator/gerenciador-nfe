@@ -25,7 +25,7 @@ CFG = json.loads(subprocess.check_output(["node", "-e", """
 import('./BP/scripts/config.js').then((m) => console.log(JSON.stringify({
   templo: m.TEMPLO_SAQUE, destrocos: m.DESTROCOS_SAQUE, pecas: m.RELEVO.pecas, nativo: m.NATIVO, raras: m.RARAS,
   minerios: m.MINERIOS.filter((x) => x.bloco), petroleo: m.PETROLEO, masmorra: m.MASMORRA,
-  saqueMasmorra: m.MASMORRA_SAQUE, saqueFunda: m.MASMORRA_FUNDA_SAQUE, gerador: m.IDS.geradorMonstros, mobs: m.GERADOR_MONSTROS })));
+  saqueMasmorra: m.MASMORRA_SAQUE, saqueFunda: m.MASMORRA_FUNDA_SAQUE, sorteio: m.SAQUE_SORTEIO, gerador: m.IDS.geradorMonstros, mobs: m.GERADOR_MONSTROS })));
 """], cwd=RAIZ, text=True))
 FILTRO = [{"test": "has_biome_tag", "operator": "==", "value": "desert"}]
 
@@ -54,11 +54,19 @@ def tabela(linhas):
     return {"pools": pools}
 
 
-escrever("BP/loot_tables/chests/cl_templo.json", tabela(CFG["templo"]))
-escrever("BP/loot_tables/chests/cl_destrocos.json", tabela(CFG["destrocos"]))
-escrever("BP/loot_tables/chests/cl_piramide.json", tabela(CFG["templo"]))
-escrever("BP/loot_tables/chests/cl_masmorra.json", tabela(CFG["saqueMasmorra"]))
-escrever("BP/loot_tables/chests/cl_masmorra_funda.json", tabela(CFG["saqueFunda"]))
+def com_sorteio(nome, t):
+    # 1.30.0/1.31.0: SAQUE_SORTEIO (config.ts): um item da lista ou nada, por baú.
+    for s in CFG["sorteio"].get(nome, []):
+        entradas = [{"type": "item", "name": i, "weight": 1} for i in s["itens"]] + [{"type": "empty", "weight": s["vazio"]}]
+        t["pools"].append({"rolls": 1, "entries": entradas})
+    return t
+
+
+escrever("BP/loot_tables/chests/cl_templo.json", com_sorteio("cl_templo", tabela(CFG["templo"])))
+escrever("BP/loot_tables/chests/cl_destrocos.json", com_sorteio("cl_destrocos", tabela(CFG["destrocos"])))
+escrever("BP/loot_tables/chests/cl_piramide.json", com_sorteio("cl_piramide", tabela(CFG["templo"])))
+escrever("BP/loot_tables/chests/cl_masmorra.json", com_sorteio("cl_masmorra", tabela(CFG["saqueMasmorra"])))
+escrever("BP/loot_tables/chests/cl_masmorra_funda.json", com_sorteio("cl_masmorra_funda", tabela(CFG["saqueFunda"])))
 
 
 # ---------- Spawners do Minecraft (1.15.1): uma estrutura de um bloco para cada mob ----------
