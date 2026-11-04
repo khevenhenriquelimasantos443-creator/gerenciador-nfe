@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:lirio_ender_planta",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:estagio": [

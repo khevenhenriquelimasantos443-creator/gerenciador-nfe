@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:caixa_engrenagens",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:girando": [

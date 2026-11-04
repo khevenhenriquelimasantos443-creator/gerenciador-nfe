@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:concentrador_oxigenio",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

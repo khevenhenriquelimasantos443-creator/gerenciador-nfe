@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:simbolo_monstro",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:gerador_monstros",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

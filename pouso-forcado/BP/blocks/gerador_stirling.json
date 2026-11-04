@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:gerador_stirling",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "traits": {
         "minecraft:placement_direction": {

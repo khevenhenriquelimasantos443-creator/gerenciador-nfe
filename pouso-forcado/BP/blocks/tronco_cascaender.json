@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:tronco_cascaender",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "traits": {
         "minecraft:placement_position": {

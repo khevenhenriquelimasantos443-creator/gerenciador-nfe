@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:controlador_reator",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

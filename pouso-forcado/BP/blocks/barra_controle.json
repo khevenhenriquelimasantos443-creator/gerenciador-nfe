@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:barra_controle",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:insercao": {

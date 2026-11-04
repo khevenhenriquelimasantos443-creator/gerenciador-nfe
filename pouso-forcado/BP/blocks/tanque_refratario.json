@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:tanque_refratario",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:nivel": {

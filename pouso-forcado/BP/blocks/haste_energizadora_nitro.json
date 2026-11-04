@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:haste_energizadora_nitro",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:upgrade_estrutural_7",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

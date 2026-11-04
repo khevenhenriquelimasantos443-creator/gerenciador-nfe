@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:porta_acesso_reator",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

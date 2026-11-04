@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:reator_ardente",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:parte": [

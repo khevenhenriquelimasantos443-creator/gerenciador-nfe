@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:racao_cachorro",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

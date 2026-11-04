@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:peca_cabo_osso",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

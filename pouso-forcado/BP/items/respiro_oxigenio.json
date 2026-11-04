@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:respiro_oxigenio",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

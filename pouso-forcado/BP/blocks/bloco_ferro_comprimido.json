@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:bloco_ferro_comprimido",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

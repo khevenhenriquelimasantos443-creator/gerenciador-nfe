@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:peca_lamina_espada_slime_brasa",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

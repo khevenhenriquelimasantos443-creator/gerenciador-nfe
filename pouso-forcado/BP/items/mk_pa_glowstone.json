@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:mk_pa_glowstone",
       "menu_category": {
-        "category": "equipment"
+        "category": "nature"
       }
     },
     "components": {

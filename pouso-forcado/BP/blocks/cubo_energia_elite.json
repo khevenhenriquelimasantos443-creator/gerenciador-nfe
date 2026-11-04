@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:cubo_energia_elite",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

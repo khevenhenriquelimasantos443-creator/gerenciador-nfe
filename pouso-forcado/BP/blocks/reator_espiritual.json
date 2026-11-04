@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:reator_espiritual",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:parte": [

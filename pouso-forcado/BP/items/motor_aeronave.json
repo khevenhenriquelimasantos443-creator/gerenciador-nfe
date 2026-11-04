@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:motor_aeronave",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

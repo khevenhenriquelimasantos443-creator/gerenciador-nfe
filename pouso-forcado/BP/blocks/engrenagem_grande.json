@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:engrenagem_grande",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:girando": [

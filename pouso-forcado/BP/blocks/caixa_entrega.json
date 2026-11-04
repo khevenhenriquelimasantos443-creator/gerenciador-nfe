@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:caixa_entrega",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

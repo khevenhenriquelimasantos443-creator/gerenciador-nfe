@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:pedra_caminho_nether",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

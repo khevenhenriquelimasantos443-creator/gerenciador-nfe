@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:controlador_logico_z",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

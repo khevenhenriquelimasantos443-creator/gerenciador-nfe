@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:templo_tijolos_gastos",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

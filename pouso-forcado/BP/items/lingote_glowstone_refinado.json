@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:lingote_glowstone_refinado",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

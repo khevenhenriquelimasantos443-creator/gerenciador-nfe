@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:orbe_energizador",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

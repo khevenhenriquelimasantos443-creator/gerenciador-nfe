@@ -154,6 +154,14 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.48.0 (inventário do criativo por mod)
+
+- O Bedrock não deixa criar aba nova no criativo. Então **tudo do modpack fica numa aba só, a última (Natureza)**, depois
+  das coisas do jogo: um grupo recolhível por mod, na ordem do pack, com os add-ons logo depois do mod deles (Mekanism,
+  Generators, Additions, Tools). Os mods enormes têm alguns subgrupos seguidos (Tinkers: ferramentas, peças, moldes e
+  padrões; Chisel por família; HarvestCraft: comidas, sementes e mudas). O livro de receitas segue a mesma arrumação.
+- Ícones planos para todos os blocos de planos cruzados (cristais, plantas silvestres, mudas, hortas).
+
 ## Novidades da 1.47.0 (Pam's HarvestCraft 2, o mais novo)
 
 - **86 plantações novas** (todas do HarvestCraft 2 Crops), de agave a abobrinha, cada uma com semente, os 3 estágios e o

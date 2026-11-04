@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:cartao_vinculo_dimensional",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

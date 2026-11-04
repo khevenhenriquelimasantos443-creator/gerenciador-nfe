@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:carne_moida",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

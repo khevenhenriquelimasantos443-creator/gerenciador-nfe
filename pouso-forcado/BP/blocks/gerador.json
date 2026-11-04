@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:gerador",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:combustivel": {

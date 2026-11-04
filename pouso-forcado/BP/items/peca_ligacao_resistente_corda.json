@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:peca_ligacao_resistente_corda",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

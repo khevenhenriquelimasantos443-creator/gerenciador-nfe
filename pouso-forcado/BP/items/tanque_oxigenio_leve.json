@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:tanque_oxigenio_leve",
       "menu_category": {
-        "category": "equipment"
+        "category": "nature"
       }
     },
     "components": {

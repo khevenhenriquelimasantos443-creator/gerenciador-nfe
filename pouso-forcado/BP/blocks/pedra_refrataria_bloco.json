@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:pedra_refrataria_bloco",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

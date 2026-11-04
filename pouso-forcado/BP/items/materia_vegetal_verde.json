@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:materia_vegetal_verde",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

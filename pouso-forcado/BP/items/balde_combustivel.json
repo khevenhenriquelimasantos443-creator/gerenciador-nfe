@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:balde_combustivel",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

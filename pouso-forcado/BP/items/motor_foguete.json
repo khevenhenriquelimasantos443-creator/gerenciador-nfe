@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:motor_foguete",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

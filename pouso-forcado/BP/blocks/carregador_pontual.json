@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:carregador_pontual",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:ligado": [

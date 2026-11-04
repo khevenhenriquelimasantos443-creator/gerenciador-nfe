@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:poste_selva",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "traits": {
         "minecraft:placement_position": {

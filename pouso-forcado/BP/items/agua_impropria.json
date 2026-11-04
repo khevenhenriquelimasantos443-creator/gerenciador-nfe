@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:agua_impropria",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:painel_solar_nitro",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "traits": {
         "minecraft:placement_direction": {

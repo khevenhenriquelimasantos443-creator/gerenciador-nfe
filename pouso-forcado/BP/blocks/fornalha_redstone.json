@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:fornalha_redstone",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "traits": {
         "minecraft:placement_direction": {

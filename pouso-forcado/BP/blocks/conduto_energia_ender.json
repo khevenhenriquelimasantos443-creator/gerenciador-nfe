@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:conduto_energia_ender",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "states": {
         "cl:n": [

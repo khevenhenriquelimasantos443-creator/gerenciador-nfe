@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:composto_fotovoltaico",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       }
     },
     "components": {

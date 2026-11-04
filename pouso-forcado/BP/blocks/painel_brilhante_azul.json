@@ -4,7 +4,7 @@
     "description": {
       "identifier": "cl:painel_brilhante_azul",
       "menu_category": {
-        "category": "items"
+        "category": "nature"
       },
       "traits": {
         "minecraft:placement_position": {
