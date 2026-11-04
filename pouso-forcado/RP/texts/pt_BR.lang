@@ -5233,6 +5233,18 @@ cl.missao.ch18_auto.titulo=Cinzel Automático
 cl.missao.ch18_auto.desc=Deixe o Cinzel Automático trocar 16 blocos.
 cl.missao.ch18_templo.titulo=Templo no deserto
 cl.missao.ch18_templo.desc=Construa com 16 blocos de templo.
+item.cl:malha_barbante.name=Malha de Barbante
+item.cl:malha_silex.name=Malha de Sílex
+item.cl:malha_ferro.name=Malha de Ferro
+item.cl:malha_diamante.name=Malha de Diamante
+item.cl:malha_esmeralda.name=Malha de Esmeralda
+item.cl:malha_netherita.name=Malha de Netherita
+cl.peneira.malha=Peneira com %s.
+cl.peneira.sem_malha=Peneira sem malha (tabela antiga). Toque com uma malha para trocar.
+cl.missao.ens_malha.titulo=Malha de Ferro
+cl.missao.ens_malha.desc=Ponha uma Malha de Ferro numa peneira.
+cl.missao.ens_diamante.titulo=Diamante da peneira
+cl.missao.ens_diamante.desc=Ache um diamante peneirando cascalho com malha.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

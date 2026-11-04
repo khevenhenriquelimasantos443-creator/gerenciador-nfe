@@ -90,6 +90,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
 - **Ex Nihilo** (Erasmus_Crowley) e **Ex Aliquo** (Zerokyuuni, MIT): peneira, martelo, barril, cadinho,
   cajado e bicho-da-seda, com as tabelas e tempos do mod. Texturas e modelos próprios (as do Ex Nihilo
   não têm licença encontrada).
+- **Ex Nihilo: Sequentia** (NovaMachina; CC BY-NC-SA 4.0, inclusive a arte; github.com/NovaMachina-Mods/ExNihiloSequentia,
+  branch 1.21): as malhas (arte e receitas), a tabela da peneira por malha e as peneiras em grupo (1.46.0,
+  `tools/importar-ens.py`).
 - **EnviroMine** (Funwayguy, TimbuckTato, GenDeathrow; CC BY-NC-SA 4.0): hidratação, temperatura do corpo,
   qualidade do ar, Camel Pack e máscara de gás, com os números do mod. Código e texturas próprios.
 - **Hunger Overhaul** (iguanaman): valores de comida, regeneração, efeitos de status baixo e animais.

@@ -437,6 +437,14 @@
   "mascara",
   "filtro"
  ],
+ "exnihilo_sequentia": [
+  "malha_barbante",
+  "malha_diamante",
+  "malha_esmeralda",
+  "malha_ferro",
+  "malha_netherita",
+  "malha_silex"
+ ],
  "farmers": [
   "faca_silex",
   "faca_ferro",

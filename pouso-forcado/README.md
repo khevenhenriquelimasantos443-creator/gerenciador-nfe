@@ -154,6 +154,15 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.46.0 (Ex Nihilo: Sequentia, o mais novo)
+
+- **Malhas da peneira**: barbante, sílex, ferro, diamante, esmeralda e netherita (arte do mod). Toque na peneira com a
+  malha para pôr; agachado de mão vazia tira. Com malha, a peneira usa a tabela do Sequentia: cada achado sai com a
+  chance da melhor malha até a sua (ex.: no cascalho, pedaços de ferro 25% com malha de diamante; diamante e
+  esmeralda 0,8% com malha de ferro e 1,6% com malha de diamante). Sem malha, continua a tabela de antes.
+- **Peneiras em grupo**: tocar uma peneira também peneira as carregadas até 2 blocos dela, como no mod.
+- Diário: duas missões novas (malha de ferro e diamante da peneira).
+
 ## Novidades da 1.45.0 (Chisel 1.18, o mais novo)
 
 - **Cinzel de Diamante** (5.056 usos) e **Cinzel Hi-Tech** (10.048) com os modos do mod: um bloco, **painel 3×3**,

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:malha_diamante",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_malha_diamante",
+      "minecraft:display_name": {
+        "value": "item.cl:malha_diamante.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

@@ -6891,6 +6891,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Maille",
   "icone": "textures/items/cl/arte/malha"
  },
+ "cl:malha_barbante": {
+  "pt": "Malha de Barbante",
+  "en": "String Mesh",
+  "icone": "textures/items/cl/arte/malha_barbante"
+ },
+ "cl:malha_diamante": {
+  "pt": "Malha de Diamante",
+  "en": "Diamond Mesh",
+  "icone": "textures/items/cl/arte/malha_diamante"
+ },
+ "cl:malha_esmeralda": {
+  "pt": "Malha de Esmeralda",
+  "en": "Emerald Mesh",
+  "icone": "textures/items/cl/arte/malha_esmeralda"
+ },
+ "cl:malha_ferro": {
+  "pt": "Malha de Ferro",
+  "en": "Iron Mesh",
+  "icone": "textures/items/cl/arte/malha_ferro"
+ },
+ "cl:malha_netherita": {
+  "pt": "Malha de Netherita",
+  "en": "Netherite Mesh",
+  "icone": "textures/items/cl/arte/malha_netherita"
+ },
+ "cl:malha_silex": {
+  "pt": "Malha de Sílex",
+  "en": "Flint Mesh",
+  "icone": "textures/items/cl/arte/malha_silex"
+ },
  "cl:mancal_rotor": {
   "pt": "Mancal do Rotor",
   "en": "Rotor Bearing",
@@ -15421,6 +15451,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Fragmentos de Netherita",
   "en": "Netherite Scrap",
   "icone": "textures/items/netherite_scrap"
+ },
+ "minecraft:netherite_upgrade_smithing_template": {
+  "pt": "Atualização Netherita",
+  "en": "Netherite Upgrade",
+  "icone": "textures/items/netherite_upgrade_smithing_template"
  },
  "minecraft:netherrack": {
   "pt": "Netherrack",
@@ -30287,6 +30322,118 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "C": "minecraft:chain"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_malha_barbante",
+  "resultado": "cl:malha_barbante",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SSS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:string"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_malha_diamante",
+  "resultado": "cl:malha_diamante",
+  "qtd": 1,
+  "grade": [
+   "I I",
+   "IMI",
+   "I I"
+  ],
+  "chaves": {
+   "I": "minecraft:diamond",
+   "M": "cl:malha_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_malha_esmeralda",
+  "resultado": "cl:malha_esmeralda",
+  "qtd": 1,
+  "grade": [
+   "I I",
+   "IMI",
+   "I I"
+  ],
+  "chaves": {
+   "I": "minecraft:emerald",
+   "M": "cl:malha_diamante"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_malha_ferro",
+  "resultado": "cl:malha_ferro",
+  "qtd": 1,
+  "grade": [
+   "I I",
+   "IMI",
+   "I I"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "M": "cl:malha_silex"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_malha_netherita",
+  "resultado": "cl:malha_netherita",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:malha_esmeralda",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:netherite_ingot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:netherite_upgrade_smithing_template",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_malha_silex",
+  "resultado": "cl:malha_silex",
+  "qtd": 1,
+  "grade": [
+   "I I",
+   "IMI",
+   "I I"
+  ],
+  "chaves": {
+   "I": "minecraft:flint",
+   "M": "cl:malha_barbante"
   },
   "estacoes": [
    "crafting_table"

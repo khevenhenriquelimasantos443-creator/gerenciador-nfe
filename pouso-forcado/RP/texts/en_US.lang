@@ -5232,6 +5232,18 @@ cl.missao.ch18_auto.titulo=Auto Chisel
 cl.missao.ch18_auto.desc=Let the Auto Chisel convert 16 blocks.
 cl.missao.ch18_templo.titulo=Desert temple
 cl.missao.ch18_templo.desc=Build with 16 temple blocks.
+item.cl:malha_barbante.name=String Mesh
+item.cl:malha_silex.name=Flint Mesh
+item.cl:malha_ferro.name=Iron Mesh
+item.cl:malha_diamante.name=Diamond Mesh
+item.cl:malha_esmeralda.name=Emerald Mesh
+item.cl:malha_netherita.name=Netherite Mesh
+cl.peneira.malha=Sieve with %s.
+cl.peneira.sem_malha=Sieve without a mesh (old table). Tap with a mesh to change.
+cl.missao.ens_malha.titulo=Iron Mesh
+cl.missao.ens_malha.desc=Put an Iron Mesh in a sieve.
+cl.missao.ens_diamante.titulo=Sieved diamond
+cl.missao.ens_diamante.desc=Find a diamond sifting gravel with a mesh.
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

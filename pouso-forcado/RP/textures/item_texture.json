@@ -5755,6 +5755,24 @@
     },
     "clc_cinzel_hitech": {
       "textures": "textures/items/cl/c/cinzel_hitech"
+    },
+    "clc_malha_barbante": {
+      "textures": "textures/items/cl/arte/malha_barbante"
+    },
+    "clc_malha_silex": {
+      "textures": "textures/items/cl/arte/malha_silex"
+    },
+    "clc_malha_ferro": {
+      "textures": "textures/items/cl/arte/malha_ferro"
+    },
+    "clc_malha_diamante": {
+      "textures": "textures/items/cl/arte/malha_diamante"
+    },
+    "clc_malha_esmeralda": {
+      "textures": "textures/items/cl/arte/malha_esmeralda"
+    },
+    "clc_malha_netherita": {
+      "textures": "textures/items/cl/arte/malha_netherita"
     }
   }
 }

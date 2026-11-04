@@ -1244,6 +1244,11 @@
   "en": "Netherite Scrap",
   "icone": "textures/items/netherite_scrap"
  },
+ "minecraft:netherite_upgrade_smithing_template": {
+  "pt": "Atualização Netherita",
+  "en": "Netherite Upgrade",
+  "icone": "textures/items/netherite_upgrade_smithing_template"
+ },
  "minecraft:netherrack": {
   "pt": "Netherrack",
   "en": "Netherrack",

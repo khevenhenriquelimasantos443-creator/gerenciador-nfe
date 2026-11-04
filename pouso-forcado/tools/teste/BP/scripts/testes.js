@@ -1892,6 +1892,34 @@ teste("waystone", 300, (t) => {
   });
 });
 
+// 1.46.0: Ex Nihilo: Sequentia. A malha de ferro entra na peneira; tocar uma peneira também peneira a vizinha
+// carregada; agachado de mão vazia, a malha volta.
+teste("ens", 300, (t) => {
+  const j = robo(t, { x: 2.5, y: 2, z: 4.5 });
+  t.setBlockType("cl:peneira", { x: 2, y: 2, z: 2 });
+  t.setBlockType("cl:peneira", { x: 3, y: 2, z: 2 });
+  const toca = (x) => { j.lookAtBlock({ x, y: 2, z: 2 }); j.interactWithBlock({ x, y: 2, z: 2 }, Direction.Up); };
+  t.runAfterDelay(5, () => { j.setItem(new ItemStack("cl:malha_ferro", 1), 0, true); toca(2); });
+  t.runAfterDelay(12, () => { j.setItem(new ItemStack("minecraft:gravel", 2), 0, true); toca(2); });
+  t.runAfterDelay(18, () => toca(3));
+  for (let k = 0; k < 14; k++) t.runAfterDelay(26 + k * 6, () => toca(2));
+  t.runAfterDelay(120, () => {
+    const r = { carga2: t.getBlock({ x: 2, y: 2, z: 2 }).permutation.getState("cl:carga"), carga3: t.getBlock({ x: 3, y: 2, z: 2 }).permutation.getState("cl:carga") };
+    j.getComponent("inventory").container.setItem(0, undefined);
+    j.selectedSlotIndex = 0;
+    j.isSneaking = true;
+    toca(2);
+    t.runAfterDelay(4, () => {
+      j.isSneaking = false;
+      r.malhaVoltou = t.getDimension().getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 2.5, y: 3, z: 2.5 }), maxDistance: 3 }).some((e) => e.getComponent("item").itemStack.typeId === "cl:malha_ferro");
+      log(`ens: ${JSON.stringify(r)}`);
+      t.assert(r.carga2 === 0 && r.carga3 === 0, "a peneira em grupo não peneirou as duas");
+      t.assert(r.malhaVoltou, "a malha não voltou");
+      t.succeed();
+    });
+  });
+});
+
 // 1.45.0: Chisel 1.18. O Cinzel de Diamante no modo painel troca 9 arenitos de uma vez; o Cinzel Automático transforma
 // o arenito do baú de cima na variante escolhida.
 teste("ch18", 200, (t) => {

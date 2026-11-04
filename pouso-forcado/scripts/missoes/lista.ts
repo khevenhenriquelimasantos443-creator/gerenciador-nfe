@@ -120,6 +120,8 @@ export type Acao =
   | "pnc_pressao10"
   | "pnc_liquido"
   | "ch18_auto"
+  | "ens_malha"
+  | "ens_diamante"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -282,6 +284,9 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     missoes: [
       { id: "peneira", objetivo: { tipo: "colocar", bloco: IDS.peneira, qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 4 }] },
       { id: "garimpo", objetivo: { tipo: "acao", acao: "peneirar", qtd: 20 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 2 }] },
+      // 1.46.0: as malhas do Ex Nihilo: Sequentia.
+      { id: "ens_malha", requer: ["garimpo"], objetivo: { tipo: "acao", acao: "ens_malha", qtd: 1 }, recompensa: [{ item: "minecraft:gravel", quantidade: 32 }] },
+      { id: "ens_diamante", requer: ["ens_malha"], objetivo: { tipo: "acao", acao: "ens_diamante", qtd: 1 }, recompensa: [{ item: "minecraft:diamond", quantidade: 1 }] },
       { id: "argila", objetivo: { tipo: "ter", item: "minecraft:clay_ball", qtd: 8 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 6 }] },
       { id: "compostor", objetivo: { tipo: "colocar", bloco: IDS.compostor, qtd: 1 }, recompensa: [{ item: "minecraft:rotten_flesh", quantidade: 8 }] },
       { id: "adubo", objetivo: { tipo: "acao", acao: "compostar", qtd: 3 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 2 }] },
