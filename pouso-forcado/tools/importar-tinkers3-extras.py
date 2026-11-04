@@ -93,6 +93,11 @@ item("panela_fusao", camadas([cabo("item/tool/melting_pan/handle"), pintar(abrir
 item("efln", abrir("item/gadgets/efln"))
 item("bola_brilhante", abrir("item/gadgets/glowball"))
 item("mochila_porco", abrir("item/gadgets/piggy_backpack"))
+# 1.33.0 (ícones mais bonitos): Pano Sedoso, Argamassa do Nether e Malha com a arte do TC3.
+item("pano_sedoso", abrir("item/materials/silky_cloth"))
+item("argamassa_nether", abrir("block/nether_grout"))
+_m = SRC / "src/generated/resources/assets/tconstruct/textures/item/tool/parts/maille_tconstruct_iron.png"
+item("malha", Image.open(_m).convert("RGBA") if _m.exists() else None)
 # Moldes de ouro e de areia com a arte do TC3.
 PECA_TC = {"cabo": "tool_handle", "ligacao": "tool_binding", "cabeca_picareta": "pick_head", "cabeca_machado": "small_axe_head", "lamina_espada": "small_blade",
            "cabeca_enxo": "adze_head", "cabeca_martelo": "hammer_head", "lamina_larga": "broad_blade", "cabeca_machado_larga": "broad_axe_head",

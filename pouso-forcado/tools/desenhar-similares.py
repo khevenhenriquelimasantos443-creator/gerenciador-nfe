@@ -189,7 +189,83 @@ for c, cor in (("branco", "#f9fffe"), ("laranja", "#f9801d"), ("magenta", "#c74e
                ("lima", "#80c71f"), ("rosa", "#f38baa"), ("cinza", "#474f52"), ("cinza_claro", "#9d9d97"), ("ciano", "#169c9c"),
                ("roxo", "#8932b8"), ("azul", "#3c44aa"), ("marrom", "#835432"), ("verde", "#5e7c16"), ("vermelho", "#b02e26"), ("preto", "#1d1d21")):
     balao(f"balao_{c}", cor)
-for f in (foguete, mascara, equipamento, bico, aleta, motor, helice, batedor, regador, robo):
+# ---------- 1.33.0: os últimos ícones que eram bolinhas ----------
+def estojo_artefatos():
+    # Estojo de couro com fecho dourado e alça.
+    im, d = novo()
+    couro, escuro = (150, 98, 52, 255), (110, 70, 36, 255)
+    d.rectangle([5, 10, 26, 25], fill=couro)
+    d.rectangle([5, 10, 26, 13], fill=(172, 116, 64, 255))
+    d.line([5, 14, 26, 14], fill=escuro)
+    d.rectangle([14, 13, 17, 17], fill=(232, 196, 80, 255))
+    d.point((15, 15), fill=(160, 120, 30, 255))
+    d.arc([11, 4, 20, 13], 180, 360, fill=escuro, width=2)
+    for x in range(7, 26, 3):
+        d.point((x, 23), fill=escuro)
+    salvar(contornar(im), "estojo_artefatos")
+
+
+def cabo_me_fluix():
+    # Rolo de cabo ME de fluix: espiral roxa brilhante.
+    im, d = novo()
+    for r, c in ((11, (120, 60, 190, 255)), (9, (178, 107, 255, 255)), (7, (120, 60, 190, 255)), (5, (178, 107, 255, 255)), (3, (220, 180, 255, 255))):
+        d.ellipse([16 - r, 16 - r, 16 + r, 16 + r], outline=c, width=2)
+    d.line([16, 5, 27, 5], fill=(178, 107, 255, 255), width=2)
+    d.point((14, 12), fill=(255, 240, 255, 255))
+    salvar(contornar(im), "cabo_me_fluix")
+
+
+def fibra_quartzo():
+    # Feixe de fibras de quartzo (fios brancos com ponta lilás).
+    im, d = novo()
+    for k, dx in enumerate((-4, -2, 0, 2, 4)):
+        d.line([9 + dx, 26, 23 + dx, 6], fill=(236, 236, 248, 255) if k % 2 else (208, 210, 230, 255), width=1)
+    d.line([12, 18, 18, 14], fill=(150, 120, 200, 255), width=3)
+    for x, y in ((22, 6), (25, 8), (19, 5)):
+        d.point((x, y), fill=(200, 160, 255, 255))
+    salvar(contornar(im), "fibra_quartzo")
+
+
+def coalhada_queijo():
+    # Fatia de queijo (cunha amarela com furos).
+    im, d = novo()
+    d.polygon([(5, 22), (27, 22), (27, 12), (8, 18)], fill=(242, 205, 80, 255))
+    d.polygon([(5, 22), (27, 22), (27, 26), (5, 26)], fill=(214, 172, 52, 255))
+    d.polygon([(8, 18), (27, 12), (27, 13), (9, 19)], fill=(255, 230, 130, 255))
+    for x, y, r in ((20, 23, 1.5), (12, 24, 1), (24, 17, 1.2)):
+        d.ellipse([x - r, y - r, x + r, y + r], fill=(196, 150, 40, 255))
+    salvar(contornar(im), "coalhada_queijo")
+
+
+def bobina_fio_cobre():
+    # Carretel de madeira com fio de cobre enrolado.
+    im, d = novo()
+    madeira = (150, 110, 60, 255)
+    d.ellipse([6, 4, 26, 10], fill=madeira)
+    d.ellipse([6, 22, 26, 28], fill=(120, 86, 46, 255))
+    d.rectangle([9, 7, 23, 25], fill=(216, 130, 60, 255))
+    for y in range(9, 25, 2):
+        d.line([9, y, 23, y], fill=(178, 96, 40, 255))
+    d.line([11, 9, 11, 24], fill=(240, 170, 100, 255))
+    d.ellipse([13, 5, 19, 8], fill=(90, 64, 34, 255))
+    salvar(contornar(im), "bobina_fio_cobre")
+
+
+def estilingue_slime():
+    # Estilingue: forquilha de madeira com o elástico verde de slime.
+    im, d = novo()
+    madeira = (140, 100, 54, 255)
+    d.line([16, 28, 16, 17], fill=madeira, width=3)
+    d.line([16, 18, 9, 7], fill=madeira, width=3)
+    d.line([16, 18, 23, 7], fill=madeira, width=3)
+    d.line([9, 7, 16, 14], fill=(110, 200, 100, 255), width=2)
+    d.line([23, 7, 16, 14], fill=(110, 200, 100, 255), width=2)
+    d.ellipse([14, 12, 18, 16], fill=(140, 215, 130, 255))
+    salvar(contornar(im), "estilingue_slime")
+
+
+for f in (foguete, mascara, equipamento, bico, aleta, motor, helice, batedor, regador, robo,
+          estojo_artefatos, cabo_me_fluix, fibra_quartzo, coalhada_queijo, bobina_fio_cobre, estilingue_slime):
     f()
 tanque("tanque_oxigenio_leve", (80, 190, 90, 255))
 tanque("tanque_oxigenio_medio", (235, 150, 50, 255))

@@ -93,19 +93,61 @@ const FERR = {
   machado_largo: (x, y) => (x >= 14 && x <= 28 && y >= 2 && y <= 20 && (x - 14) + (y - 2) * 0.15 <= 14),
 };
 
+// Símbolos das melhorias (máscaras dentro do cartão, de 8 a 23).
+const SIMBOLO = {
+  seta: (x, y) => (Math.abs(x - 16) <= 7 - (y - 8) && y >= 8 && y <= 15) || (Math.abs(x - 16) <= 2 && y >= 15 && y <= 23),
+  vazio: (x, y) => (x === 9 || x === 22) && y >= 9 && y <= 22,
+  ima: (x, y) => (elipse(x, y, 16, 13, 7, 6) && !elipse(x, y, 16, 13, 3.5, 3)) && y <= 13 || ((x >= 9 && x <= 12) || (x >= 20 && x <= 23)) && y >= 13 && y <= 22,
+  comida: (x, y) => elipse(x, y, 17, 13, 6, 5) || diag(x, y, 13, 17, 9, 22, 1.2) || elipse(x, y, 9, 22, 1.8, 1.8),
+  compactar: (x, y) => [9, 14, 19].some((a) => [9, 14, 19].some((b) => x >= a && x <= a + 3 && y >= b && y <= b + 3)),
+  bau: (x, y) => (x >= 9 && x <= 22 && y >= 11 && y <= 21) && !(y === 15 && x > 9 && x < 22) || (x >= 15 && x <= 16 && y >= 14 && y <= 16),
+  ciclo: (x, y) => (elipse(x, y, 16, 16, 7, 7) && !elipse(x, y, 16, 16, 4, 4) && !(x > 16 && y < 14)) || (x >= 18 && x <= 22 && y >= 8 && y <= 12 && x - 18 >= y - 8),
+  chama: (x, y) => (elipse(x, y, 16, 18, 5, 5) || (y >= 8 && y < 18 && Math.abs(x - 16 - (y < 12 ? 1 : 0)) <= (y - 8) * 0.5)),
+  raio: (x, y) => diag(x, y, 19, 8, 13, 16, 1.4) || diag(x, y, 13, 16, 19, 16, 1) || diag(x, y, 19, 16, 13, 24, 1.4),
+  deposito: (x, y) => (x >= 9 && x <= 22 && y >= 16 && y <= 22 && !(y > 16 && y < 22 && x > 9 && x < 22)) || (Math.abs(x - 16) <= 4 - (y - 10) * 0.8 && y >= 10 && y <= 15) || (Math.abs(x - 16) <= 1 && y >= 6 && y <= 11),
+};
+
 // ---------- ícones de item ----------
 const silhueta = (m, cor) => (x, y) => solido(m, cor, x, y);
 export const ICONE = {
-  lingote: (c) => silhueta((x, y) => y >= 11 && y <= 22 && x >= 4 + (22 - y) * 0.35 && x <= 27 - (22 - y) * 0.35, c),
-  pepita: (c) => silhueta((x, y) => elipse(x, y, 16, 17, 7, 5), c),
+  // 1.33.0 (ícones mais bonitos): lingote com o tampo claro e a face da frente, como os do jogo.
+  lingote: (c) => (x, y) => {
+    const m = (a, b) => b >= 10 && b <= 22 && a >= 4 + (22 - b) * 0.35 && a <= 27 - (22 - b) * 0.35;
+    if (!m(x, y)) return null;
+    if (borda(m, x, y)) return mul(c, 0.45);
+    if (y <= 13) return mix(c, [255, 255, 255], 0.45 - (y - 10) * 0.08); // tampo
+    if (y === 14) return mul(c, 0.78);
+    const l = 0.18 - ((x + y) / 64) * 0.36;
+    return x + y === 26 || x + y === 27 ? mix(c, [255, 255, 255], 0.5) : l >= 0 ? mix(c, [255, 255, 255], l) : mul(c, 1 + l);
+  },
+  // Pepita irregular com um brilho.
+  pepita: (c) => (x, y) => {
+    const m = (a, b) => elipse(a, b, 16, 17, 8, 6) && !(a > 21 && b < 14) && !(a < 11 && b > 20);
+    const p = solido(m, c, x, y, 0.35);
+    if (p && !borda(m, x, y) && ((x === 13 && y === 15) || (x === 14 && y === 14))) return mix(c, [255, 255, 255], 0.75);
+    return p;
+  },
+  // Monte de pó com contorno, grãos e brilhos.
   po: (c) => (x, y) => {
-    const h = 25 - 10 * Math.max(0, 1 - ((x - 16) / 12) ** 2);
-    if (y < h || y > 25 || x < 4 || x > 28) return null;
-    return y < h + 1 ? mul(c, 0.8) : mix(c, mul(c, 0.82), ruido(x, y, 7));
+    const m = (a, b) => b <= 25 && a >= 4 && a <= 28 && b >= 25 - 11 * Math.max(0, 1 - ((a - 16) / 12) ** 2);
+    if (!m(x, y)) return null;
+    if (borda(m, x, y)) return mul(c, 0.5);
+    const r = ruido(x, y, 7);
+    if (r > 0.93) return mix(c, [255, 255, 255], 0.55);
+    if (r < 0.12) return mul(c, 0.72);
+    return mix(c, mul(c, 0.85), (y - 14) / 12);
   },
   cristal: (c) => silhueta((x, y) => Math.abs(x - 16) <= 6 - Math.max(0, 8 - y) * 0.9 && y >= 4 && y <= 27 - Math.max(0, Math.abs(x - 16) - 2) * 1.2, c),
   barra: (c) => silhueta((x, y) => diag(x, y, 6, 25, 26, 7, 2.5), c),
-  placa: (c) => silhueta((x, y) => x >= 5 && x <= 26 && y >= 8 && y <= 23, c),
+  placa: (c) => (x, y) => {
+    const m = (a, b) => a >= 5 && a <= 26 && b >= 8 && b <= 23;
+    const p = solido(m, c, x, y, 0.25);
+    if (!p || borda(m, x, y)) return p;
+    const d = x - y;
+    if (d === 2 || d === 3 || d === 9) return mix(c, [255, 255, 255], 0.45); // reflexo
+    if (y === 9) return mix(c, [255, 255, 255], 0.3);
+    return p;
+  },
   bloco: (c) => silhueta((x, y) => x >= 6 && x <= 25 && y >= 6 && y <= 25, c),
   bola: (c) => silhueta((x, y) => elipse(x, y, 16, 17, 9, 9), c),
   gota: (c) => silhueta((x, y) => elipse(x, y, 16, 19, 7, 7) || (y >= 6 && y < 16 && Math.abs(x - 16) <= (y - 6) * 0.7), c),
@@ -135,18 +177,34 @@ export const ICONE = {
     if (y < 13) return hex("#dcecf2");
     return mix(c, [255, 255, 255], x === 12 ? 0.35 : 0.05);
   },
-  saco: (c) => silhueta((x, y) => elipse(x, y, 16, 19, 10, 9) || (y >= 6 && y <= 11 && Math.abs(x - 16) <= 3), c),
+  saco: (c) => (x, y) => {
+    const couro = hex("#8b5a2b");
+    const corpo = (a, b) => a >= 7 && a <= 24 && b >= 7 && b <= 28 && !((a === 7 || a === 24) && (b === 7 || b === 28));
+    const alca = (a, b) => b >= 3 && b <= 7 && (a === 11 || a === 20 || (b === 3 && a >= 11 && a <= 20));
+    if (alca(x, y)) return mul(couro, 0.55);
+    if (!corpo(x, y)) return null;
+    if (borda(corpo, x, y)) return mul(couro, 0.45);
+    const aba = (a, b) => b >= 8 && b <= 15 && a >= 8 && a <= 23;
+    const bolso = (a, b) => a >= 11 && a <= 20 && b >= 19 && b <= 26;
+    if (aba(x, y)) return y === 15 ? mul(c, 0.55) : y === 8 ? mix(c, [255, 255, 255], 0.35) : c;
+    if (x >= 15 && x <= 16 && y >= 15 && y <= 18) return hex("#e8c860"); // fivela
+    if (bolso(x, y)) return borda(bolso, x, y) ? mul(c, 0.6) : mul(c, 0.9);
+    const l = 0.12 - ((x + y) / 64) * 0.3;
+    return l >= 0 ? mix(couro, [255, 255, 255], l) : mul(couro, 1 + l);
+  },
   engrenagem: (c) => silhueta((x, y) => {
     const r = Math.hypot(x - 15.5, y - 15.5), a = Math.atan2(y - 15.5, x - 15.5);
     return (r <= 9 || (r <= 12 && Math.cos(a * 8) > 0.3)) && r >= 3.5;
   }, c),
-  upgrade: (c) => (x, y) => {
-    const m = (a, b) => a >= 5 && a <= 26 && b >= 5 && b <= 26;
-    const p = solido(m, COR.grafiteLuz, x, y, 0.2);
-    if (!p || borda(m, x, y)) return p;
-    if (Math.abs(x - 16) <= 7 - (y - 8) && y >= 8 && y <= 15) return c; // seta
-    if (Math.abs(x - 16) <= 2 && y >= 15 && y <= 23) return c;
-    return p;
+  upgrade: (c, simbolo = "seta") => (x, y) => {
+    const m = (a, b) => a >= 4 && a <= 27 && b >= 4 && b <= 27 && !((a === 4 || a === 27) && (b === 4 || b === 27));
+    if (!m(x, y)) return null;
+    if (borda(m, x, y)) return mul(c, 0.45);
+    if (x === 5 || y === 5 || x === 26 || y === 26) return mul(c, 0.85); // moldura na cor da melhoria
+    const fundo = mix(COR.grafiteLuz, [255, 255, 255], 0.06 - (x + y) / 900);
+    const sm = SIMBOLO[simbolo] ?? SIMBOLO.seta;
+    if (!sm(x, y)) return fundo;
+    return borda(sm, x, y) ? mix(c, [255, 255, 255], 0.35) : c;
   },
   nucleo: (c) => (x, y) => {
     if (!elipse(x, y, 16, 16, 11, 11)) return null;
@@ -219,6 +277,7 @@ export function icone(spec) {
   if (forma === "padrao" || forma === "molde") return ICONE[forma](a);
   if (forma === "cinzel") return ICONE.cinzel();
   if (!ICONE[forma]) throw new Error(`ícone desconhecido: ${spec}`);
+  if (forma === "upgrade") return ICONE.upgrade(cor(a), b);
   return ICONE[forma](cor(a));
 }
 

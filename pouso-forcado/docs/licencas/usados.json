@@ -2184,6 +2184,7 @@
   "slimelitros"
  ],
  "tinkers3_extras": [
+  "argamassa_nether",
   "bau_moldes_baixo",
   "bau_moldes_frente",
   "bau_moldes_lado",
@@ -2230,6 +2231,7 @@
   "livro_geringoncas",
   "livro_materiais",
   "machado_minotauro",
+  "malha",
   "mesa_modificadores_baixo",
   "mesa_modificadores_frente",
   "mesa_modificadores_lado",
@@ -2267,6 +2269,7 @@
   "molde_pepita",
   "molde_placa_grande",
   "panela_fusao",
+  "pano_sedoso",
   "picareta_guerra",
   "placa_batalha"
  ],

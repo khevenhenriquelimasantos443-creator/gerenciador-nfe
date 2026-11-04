@@ -479,7 +479,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:argamassa_nether": {
   "pt": "Argamassa do Nether",
   "en": "Nether Grout",
-  "icone": "textures/items/cl/c/argamassa_nether"
+  "icone": "textures/items/cl/arte/argamassa_nether"
  },
  "cl:armazem_corpos": {
   "pt": "Armazém de Corpos",
@@ -1329,7 +1329,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:bobina_fio_cobre": {
   "pt": "Bobina de Fio de Cobre",
   "en": "LV Wire Coil",
-  "icone": "textures/items/cl/c/bobina_fio_cobre"
+  "icone": "textures/items/cl/arte/bobina_fio_cobre"
  },
  "cl:bobina_suprema": {
   "pt": "Bobina Suprema",
@@ -1534,7 +1534,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:cabo_me_fluix": {
   "pt": "Cabo ME Fluix",
   "en": "Fluix ME Glass Cable",
-  "icone": "textures/items/cl/c/cabo_me_fluix"
+  "icone": "textures/items/cl/arte/cabo_me_fluix"
  },
  "cl:cabo_powah_ardente": {
   "pt": "Cabo de Energia Ardente",
@@ -2799,7 +2799,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:coalhada_queijo": {
   "pt": "Coalhada de Queijo",
   "en": "Cheese Curd",
-  "icone": "textures/items/cl/c/coalhada_queijo"
+  "icone": "textures/items/cl/arte/coalhada_queijo"
  },
  "cl:cobalto_bruto": {
   "pt": "Cobalto Bruto",
@@ -4144,12 +4144,12 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:estilingue_slime": {
   "pt": "Estilingue de Slime",
   "en": "Slime Sling",
-  "icone": "textures/items/cl/c/estilingue_slime"
+  "icone": "textures/items/cl/arte/estilingue_slime"
  },
  "cl:estojo_artefatos": {
   "pt": "Estojo de Artefatos",
   "en": "Artifact Case",
-  "icone": "textures/items/cl/c/estojo_artefatos"
+  "icone": "textures/items/cl/arte/estojo_artefatos"
  },
  "cl:estrada_chamuscada": {
   "pt": "Estrada Chamuscada",
@@ -4404,7 +4404,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:fibra_quartzo": {
   "pt": "Fibra de Quartzo",
   "en": "Quartz Fiber",
-  "icone": "textures/items/cl/c/fibra_quartzo"
+  "icone": "textures/items/cl/arte/fibra_quartzo"
  },
  "cl:filtro": {
   "pt": "Filtro de Ar",
@@ -6019,7 +6019,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:malha": {
   "pt": "Malha",
   "en": "Maille",
-  "icone": "textures/items/cl/c/malha"
+  "icone": "textures/items/cl/arte/malha"
  },
  "cl:manivela": {
   "pt": "Manivela",
@@ -7804,7 +7804,7 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "cl:pano_sedoso": {
   "pt": "Pano Sedoso",
   "en": "Silky Cloth",
-  "icone": "textures/items/cl/c/pano_sedoso"
+  "icone": "textures/items/cl/arte/pano_sedoso"
  },
  "cl:panquecas": {
   "pt": "Panquecas",

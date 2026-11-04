@@ -1086,7 +1086,7 @@
       "textures": "textures/items/cl/arte/foguete_t1"
     },
     "clc_coalhada_queijo": {
-      "textures": "textures/items/cl/c/coalhada_queijo"
+      "textures": "textures/items/cl/arte/coalhada_queijo"
     },
     "clc_nucleo_salto": {
       "textures": "textures/items/cl/c/nucleo_salto"
@@ -1719,7 +1719,7 @@
       "textures": "textures/items/cl/c/componente_ferro"
     },
     "clc_bobina_fio_cobre": {
-      "textures": "textures/items/cl/c/bobina_fio_cobre"
+      "textures": "textures/items/cl/arte/bobina_fio_cobre"
     },
     "clc_bobina_bt": {
       "textures": "textures/items/cl/c/bobina_bt"
@@ -2238,10 +2238,10 @@
       "textures": "textures/items/cl/arte/involucro_celula_me"
     },
     "clc_cabo_me_fluix": {
-      "textures": "textures/items/cl/c/cabo_me_fluix"
+      "textures": "textures/items/cl/arte/cabo_me_fluix"
     },
     "clc_fibra_quartzo": {
-      "textures": "textures/items/cl/c/fibra_quartzo"
+      "textures": "textures/items/cl/arte/fibra_quartzo"
     },
     "clc_receptor_sem_fio": {
       "textures": "textures/items/cl/arte/receptor_sem_fio"
@@ -4587,7 +4587,7 @@
       "textures": "textures/items/cl/arte/cristal_slime_ender"
     },
     "clc_malha": {
-      "textures": "textures/items/cl/c/malha"
+      "textures": "textures/items/cl/arte/malha"
     },
     "clc_capacete_placa_cobre": {
       "textures": "textures/items/cl/arte/capacete_placa_cobre"
@@ -5112,7 +5112,7 @@
       "textures": "textures/items/cl/arte/dardo_manyullyn"
     },
     "clc_argamassa_nether": {
-      "textures": "textures/items/cl/c/argamassa_nether"
+      "textures": "textures/items/cl/arte/argamassa_nether"
     },
     "clc_molde_areia_lingote": {
       "textures": "textures/items/cl/arte/molde_areia_lingote"
@@ -5214,10 +5214,10 @@
       "textures": "textures/items/cl/arte/bola_brilhante"
     },
     "clc_estilingue_slime": {
-      "textures": "textures/items/cl/c/estilingue_slime"
+      "textures": "textures/items/cl/arte/estilingue_slime"
     },
     "clc_pano_sedoso": {
-      "textures": "textures/items/cl/c/pano_sedoso"
+      "textures": "textures/items/cl/arte/pano_sedoso"
     },
     "clc_mochila_porco": {
       "textures": "textures/items/cl/arte/mochila_porco"
@@ -5367,7 +5367,7 @@
       "textures": "textures/items/cl/arte/bife_eterno"
     },
     "clc_estojo_artefatos": {
-      "textures": "textures/items/cl/c/estojo_artefatos"
+      "textures": "textures/items/cl/arte/estojo_artefatos"
     },
     "clc_melhoria_bau_madeira_cobre": {
       "textures": "textures/items/cl/arte/melhoria_bau_madeira_cobre"

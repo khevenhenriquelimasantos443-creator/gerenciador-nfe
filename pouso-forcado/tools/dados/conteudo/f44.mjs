@@ -7,7 +7,9 @@
 // de netherita). Scripts em scripts/utilidades/mochila.ts, mochila_niveis.ts e melhorias_mochila.ts.
 const SB = { mod: "Sophisticated Backpacks", pilha: 1 };
 const mochila = (id, pt, en, cor) => ({ id: `mochila_${id}`, pt, en, icone: `saco:${cor}`, ...SB });
-const melhoria = (id, pt, en, cor) => ({ id: `melhoria_${id}`, pt: `Melhoria: ${pt}`, en: `${en} Upgrade`, icone: `upgrade:${cor}`, ...SB });
+// 1.33.0: o cartão leva o símbolo de cada melhoria.
+const SIMBOLO = { coleta: "seta", ima: "ima", alimentacao: "comida", compactacao: "compactar", compactacao_avancada: "compactar", deposito: "deposito", reabastecer: "ciclo", ima_avancada: "ima", alimentacao_avancada: "comida", fornalha: "chama", fundicao_auto: "chama", recarga: "ciclo" };
+const melhoria = (id, pt, en, cor) => ({ id: `melhoria_${id}`, pt: `Melhoria: ${pt}`, en: `${en} Upgrade`, icone: `upgrade:${cor}:${SIMBOLO[id] ?? "seta"}`, ...SB });
 const BASE = "cl:melhoria_base";
 const missao = (id, pt, en, dpt, den) => ({ [`cl.missao.${id}.titulo`]: [pt, en], [`cl.missao.${id}.desc`]: [dpt, den] });
 

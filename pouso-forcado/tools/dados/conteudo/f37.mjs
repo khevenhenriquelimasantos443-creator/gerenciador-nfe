@@ -4,14 +4,16 @@
 // montado das peças originais por tools/gerar-templo-yung.py. Scripts em scripts/utilidades/melhorias_mochila.ts e
 // scripts/mundo/templo_yung.ts.
 const SB = { mod: "Sophisticated Backpacks", pilha: 1 };
-const melhoria = (id, pt, en, cor) => ({ id: `melhoria_${id}`, pt: `Melhoria: ${pt}`, en: `${en} Upgrade`, icone: `upgrade:${cor}`, ...SB });
+// 1.33.0: o cartão leva o símbolo de cada melhoria.
+const SIMBOLO = { coleta: "seta", ima: "ima", alimentacao: "comida", compactacao: "compactar", compactacao_avancada: "compactar", deposito: "deposito", reabastecer: "ciclo", ima_avancada: "ima", alimentacao_avancada: "comida", fornalha: "chama", fundicao_auto: "chama", recarga: "ciclo" };
+const melhoria = (id, pt, en, cor) => ({ id: `melhoria_${id}`, pt: `Melhoria: ${pt}`, en: `${en} Upgrade`, icone: `upgrade:${cor}:${SIMBOLO[id] ?? "seta"}`, ...SB });
 const BASE = "cl:melhoria_base";
 
 export default {
   fase: 37,
   mod: "Sophisticated Backpacks",
   itens: [
-    { id: "melhoria_base", pt: "Base de Melhoria", en: "Upgrade Base", icone: "upgrade:#8b5a2b", mod: "Sophisticated Backpacks", pilha: 16 },
+    { id: "melhoria_base", pt: "Base de Melhoria", en: "Upgrade Base", icone: "upgrade:#8b5a2b:vazio", mod: "Sophisticated Backpacks", pilha: 16 },
     melhoria("coleta", "Coleta", "Pickup", "#7fbf4a"),
     melhoria("ima", "Ímã", "Magnet", "#c0392b"),
     melhoria("alimentacao", "Alimentação", "Feeding", "#e8a33c"),
