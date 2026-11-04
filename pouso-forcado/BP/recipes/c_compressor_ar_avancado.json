@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_compressor_ar_avancado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "III",
+      "ICI",
+      "ITI"
+    ],
+    "key": {
+      "I": {
+        "item": "cl:lingote_ferro_comprimido"
+      },
+      "C": {
+        "item": "cl:compressor_ar"
+      },
+      "T": {
+        "item": "cl:tubo_pressao_avancado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:compressor_ar_avancado"
+    }
+  }
+}

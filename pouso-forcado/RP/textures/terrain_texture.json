@@ -5973,6 +5973,33 @@
     },
     "clc_marco": {
       "textures": "textures/blocks/cl/arte/marco"
+    },
+    "clc_compressor_ar_avancado_frente": {
+      "textures": "textures/blocks/cl/c/compressor_ar_avancado_frente"
+    },
+    "clc_compressor_ar_avancado_lado": {
+      "textures": "textures/blocks/cl/c/compressor_ar_avancado_lado"
+    },
+    "clc_compressor_ar_avancado_topo": {
+      "textures": "textures/blocks/cl/c/compressor_ar_avancado_topo"
+    },
+    "clc_compressor_ar_avancado_baixo": {
+      "textures": "textures/blocks/cl/c/compressor_ar_avancado_baixo"
+    },
+    "clc_compressor_liquido_frente": {
+      "textures": "textures/blocks/cl/c/compressor_liquido_frente"
+    },
+    "clc_compressor_liquido_lado": {
+      "textures": "textures/blocks/cl/c/compressor_liquido_lado"
+    },
+    "clc_compressor_liquido_topo": {
+      "textures": "textures/blocks/cl/c/compressor_liquido_topo"
+    },
+    "clc_compressor_liquido_baixo": {
+      "textures": "textures/blocks/cl/c/compressor_liquido_baixo"
+    },
+    "clc_pedra_comprimida": {
+      "textures": "textures/blocks/cl/c/pedra_comprimida"
     }
   }
 }

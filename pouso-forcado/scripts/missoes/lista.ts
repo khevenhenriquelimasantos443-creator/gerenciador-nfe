@@ -117,6 +117,8 @@ export type Acao =
   | "bc8_poco"
   | "bc8_enchedor"
   | "bc8_comporta"
+  | "pnc_pressao10"
+  | "pnc_liquido"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -880,6 +882,10 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
     requer: ["thermal"],
     missoes: [
       { id: "pn_compressor", objetivo: { tipo: "acao", acao: "pressao2", qtd: 1 }, recompensa: [{ item: "minecraft:coal_block", quantidade: 2 }] },
+      // 1.44.0: PneumaticCraft: Repressurized 8.2.
+      { id: "pnc_pressao10", requer: ["pn_compressor"], objetivo: { tipo: "acao", acao: "pnc_pressao10", qtd: 1 }, recompensa: [{ item: "cl:lingote_ferro_comprimido", quantidade: 8 }] },
+      { id: "pnc_liquido", requer: ["pn_compressor"], objetivo: { tipo: "acao", acao: "pnc_liquido", qtd: 1 }, recompensa: [{ item: "minecraft:bucket", quantidade: 4 }] },
+      { id: "pnc_gelo_azul", objetivo: { tipo: "ter", item: "minecraft:blue_ice", qtd: 1 }, recompensa: [{ item: "minecraft:packed_ice", quantidade: 16 }] },
       { id: "pn_camara", requer: ["pn_compressor"], objetivo: { tipo: "acao", acao: "camara", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "pn_ferro", requer: ["pn_camara"], objetivo: { tipo: "acao", acao: "ferro_comprimido", qtd: 8 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
       { id: "pn_eletronica", requer: ["pn_ferro"], objetivo: { tipo: "acao", acao: "eletronica", qtd: 2 }, recompensa: [{ item: IDS.sacolaOtima, quantidade: 1 }] },

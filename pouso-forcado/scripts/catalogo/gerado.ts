@@ -3316,10 +3316,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Air Compressor",
   "icone": "textures/items/cl/arte/blocos/compressor_ar"
  },
+ "cl:compressor_ar_avancado": {
+  "pt": "Compressor de Ar Avançado",
+  "en": "Advanced Air Compressor",
+  "icone": "textures/items/cl/blocos/compressor_ar_avancado"
+ },
  "cl:compressor_eletrico": {
   "pt": "Compressor Elétrico",
   "en": "Electric Compressor",
   "icone": "textures/items/cl/blocos/compressor_eletrico"
+ },
+ "cl:compressor_liquido": {
+  "pt": "Compressor Líquido",
+  "en": "Liquid Compressor",
+  "icone": "textures/items/cl/blocos/compressor_liquido"
  },
  "cl:compressor_osmio": {
   "pt": "Compressor de Ósmio",
@@ -8306,6 +8316,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Shovel",
   "icone": "textures/items/cl/arte/pa_silex"
  },
+ "cl:pa_turbina_pneumatica": {
+  "pt": "Pá de Turbina",
+  "en": "Turbine Blade",
+  "icone": "textures/items/cl/c/pa_turbina_pneumatica"
+ },
  "cl:padrao_branco": {
   "pt": "Padrão em Branco",
   "en": "Blank Pattern",
@@ -10845,6 +10860,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pedra Chamuscada Polida",
   "en": "Polished Scorched Stone",
   "icone": "textures/items/cl/blocos/pedra_chamuscada_polida"
+ },
+ "cl:pedra_comprimida": {
+  "pt": "Pedra Comprimida",
+  "en": "Compressed Stone",
+  "icone": "textures/items/cl/blocos/pedra_comprimida"
  },
  "cl:pedra_entalhado": {
   "pt": "Pedra Entalhado",
@@ -14144,6 +14164,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Azul",
   "en": "Blue Dye",
   "icone": "textures/items/dye_powder_blue_new"
+ },
+ "minecraft:blue_ice": {
+  "pt": "Gelo Azul",
+  "en": "Blue Ice",
+  "icone": "textures/blocks/blue_ice"
  },
  "minecraft:blue_wool": {
   "pt": "blue_wool",
@@ -23169,6 +23194,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_compressor_ar_avancado",
+  "resultado": "cl:compressor_ar_avancado",
+  "qtd": 1,
+  "grade": [
+   "III",
+   "ICI",
+   "ITI"
+  ],
+  "chaves": {
+   "I": "cl:lingote_ferro_comprimido",
+   "C": "cl:compressor_ar",
+   "T": "cl:tubo_pressao_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_compressor_eletrico",
   "resultado": "cl:compressor_eletrico",
   "qtd": 1,
@@ -23183,6 +23227,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "X": "minecraft:anvil",
    "Y": "cl:placa_bronze",
    "Z": "cl:wafer_avancado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_compressor_liquido",
+  "resultado": "cl:compressor_liquido",
+  "qtd": 1,
+  "grade": [
+   "IBI",
+   "ICI",
+   "ITI"
+  ],
+  "chaves": {
+   "I": "cl:lingote_ferro_comprimido",
+   "B": "minecraft:bucket",
+   "C": "cl:compressor_ar",
+   "T": "cl:tubo_pressao"
   },
   "estacoes": [
    "crafting_table"

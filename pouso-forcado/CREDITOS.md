@@ -168,6 +168,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Tinkers' Construct | mDiyo e SlimeKnights | MIT (TC3) e CC BY 3.0 (1.7.10) | github.com/SlimeKnights/TinkersConstruct (3.12.1, 1.20.1; e 1.7.10) |
 | Applied Energistics 2 | AlgorithmX2, Ridanisaurus Rid e equipe | CC BY-NC-SA 3.0 | github.com/AppliedEnergistics/Applied-Energistics-2 (main, 26.3; e rv3) |
 | PneumaticCraft | MineMaarten | GPLv3 | github.com/MineMaarten/PneumaticCraft |
+| PneumaticCraft: Repressurized 8.2 (1.44.0: compressores Avançado e Líquido, combustíveis e receitas da câmara; PneumaticValues) | desht e TeamPneumatic | GPLv3 | github.com/TeamPneumatic/pnc-repressurized (1.21) |
 | Big Reactors | Erogenous Beef | MIT | github.com/erogenousbeef/BigReactors |
 | BuildCraft | SpaceToad e equipe | Minecraft Mod Public License | github.com/BuildCraft/BuildCraft (7.1) |
 | BuildCraft 8 (1.43.0: motores de Redstone e Stirling, Poço de Mineração, Comporta, Enchedor e Marco; números de TileEngine*_BC8, BlockUtil e SnapshotBuilder) | SpaceToad e equipe | Minecraft Mod Public License | github.com/BuildCraft/BuildCraft (8.0.x-1.12.2) |

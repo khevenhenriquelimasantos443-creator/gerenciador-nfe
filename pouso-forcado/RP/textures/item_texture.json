@@ -5746,6 +5746,9 @@
     },
     "clc_safira_lunar": {
       "textures": "textures/items/cl/arte/safira_lunar"
+    },
+    "clc_pa_turbina_pneumatica": {
+      "textures": "textures/items/cl/c/pa_turbina_pneumatica"
     }
   }
 }

@@ -5164,6 +5164,16 @@ cl.missao.bc8_enchedor.titulo=Filler
 cl.missao.bc8_enchedor.desc=Finish an area with the Filler.
 cl.missao.bc8_comporta.titulo=Flood Gate
 cl.missao.bc8_comporta.desc=Fill a hole with the Flood Gate.
+item.cl:pa_turbina_pneumatica.name=Turbine Blade
+tile.cl:compressor_ar_avancado.name=Advanced Air Compressor
+tile.cl:compressor_liquido.name=Liquid Compressor
+tile.cl:pedra_comprimida.name=Compressed Stone
+cl.missao.pnc_pressao10.titulo=10 bar
+cl.missao.pnc_pressao10.desc=Reach 10 bar with the Advanced Compressor and advanced tubes.
+cl.missao.pnc_liquido.titulo=Liquid Compressor
+cl.missao.pnc_liquido.desc=Make pressure burning liquid fuel in the Liquid Compressor.
+cl.missao.pnc_gelo_azul.titulo=Blue ice
+cl.missao.pnc_gelo_azul.desc=Make blue ice in the Pressure Chamber (4 packed ice at 2.5 bar).
 ## fim Conteúdo
 ## Grupos do inventário (gerado por tools/gerar-grupos.mjs)
 cl:itemGroup.name.items_pouso_forcado=Pouso Forçado

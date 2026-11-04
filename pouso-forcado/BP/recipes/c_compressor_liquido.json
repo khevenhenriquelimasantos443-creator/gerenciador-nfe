@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_compressor_liquido"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "IBI",
+      "ICI",
+      "ITI"
+    ],
+    "key": {
+      "I": {
+        "item": "cl:lingote_ferro_comprimido"
+      },
+      "B": {
+        "item": "minecraft:bucket"
+      },
+      "C": {
+        "item": "cl:compressor_ar"
+      },
+      "T": {
+        "item": "cl:tubo_pressao"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:compressor_liquido"
+    }
+  }
+}

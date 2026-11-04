@@ -187,6 +187,11 @@
   "en": "Blue Dye",
   "icone": "textures/items/dye_powder_blue_new"
  },
+ "minecraft:blue_ice": {
+  "pt": "Gelo Azul",
+  "en": "Blue Ice",
+  "icone": "textures/blocks/blue_ice"
+ },
  "minecraft:blue_wool": {
   "pt": "blue_wool",
   "en": "blue_wool",

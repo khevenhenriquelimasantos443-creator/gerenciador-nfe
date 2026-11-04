@@ -21,7 +21,7 @@ import { entrada, inv, primeiro, tirar } from "../util/maquina.js";
  * - Manômetro: toque num bloco de ar comprimido para ver a pressão.
  * Custo: uma busca pela rede de tubos (até PNEUMATIC.maxBlocosRede) por compressor por segundo.
  */
-type Compressor = { ar: number; comb: number; desligado?: boolean };
+type Compressor = { ar: number; comb: number; desligado?: boolean; taxa?: number };
 type Camara = { min: Vector3; max: Vector3; vol: number; ar: number; principal: Vector3 };
 const TUBOS = new Set(["cl:tubo_pressao", "cl:tubo_pressao_avancado"]);
 const CAMARA = new Set(["cl:parede_camara", "cl:vidro_camara", "cl:valvula_camara", "cl:interface_camara"]);
@@ -61,35 +61,64 @@ function rede(c: Block): { comuns: Block[]; avancados: Block[]; camaras: Vector3
   return { comuns, avancados, camaras: [...camaras.values()] };
 }
 
+// 1.44.0 (PneumaticCraft: Repressurized 8.2): os três compressores (PneumaticValues): o comum (10 mL/t, 5.000 mL), o
+// Avançado (50 mL/t, 10.000 mL; o mesmo tempo de queima) e o Líquido (10 mL/t × a taxa de queima do combustível, até
+// acabar o ar do balde: biodiesel e combustível 1.000.000 mL a 0,8; petróleo 200.000 a 0,25; etanol 400.000).
+type Tipo = { vol: number; ml: (d: Compressor) => number; combustivel: (id: string) => number | undefined; liquido?: boolean };
+const LIQUIDOS: Readonly<Record<string, readonly [number, number]>> = PNEUMATIC.liquidos;
+const TIPOS: Readonly<Record<string, Tipo>> = {
+  "cl:compressor_ar": { vol: PNEUMATIC.volumeCompressor, ml: () => PNEUMATIC.mlPorSegundo, combustivel: (id) => PNEUMATIC.combustivel[id] },
+  "cl:compressor_ar_avancado": { vol: PNEUMATIC.volumeCompressorAvancado, ml: () => PNEUMATIC.mlPorSegundoAvancado, combustivel: (id) => PNEUMATIC.combustivel[id] },
+  "cl:compressor_liquido": {
+    vol: PNEUMATIC.volumeCompressor, liquido: true,
+    ml: (d) => PNEUMATIC.mlPorSegundo * (d.taxa ?? 1),
+    // Segundos de queima de um balde: o ar do balde ÷ o ar por segundo.
+    combustivel: (id) => (LIQUIDOS[id] ? Math.round(LIQUIDOS[id][0] / (PNEUMATIC.mlPorSegundo * LIQUIDOS[id][1])) : undefined),
+  },
+};
+export const COMPRESSORES = new Set(Object.keys(TIPOS));
+const tipoDe = (c: Block) => TIPOS[c.typeId] ?? TIPOS["cl:compressor_ar"];
+
 function pressaoDoCompressor(c: Block): { p: number; limite: "comum" | "avancado"; r: ReturnType<typeof rede> } {
   const r = rede(c);
   const d = ler<Compressor>("comp", c, { ar: 0, comb: 0 });
-  const vol = PNEUMATIC.volumeCompressor + r.comuns.length * PNEUMATIC.volumeTubo + r.avancados.length * PNEUMATIC.volumeTuboAvancado;
+  const vol = tipoDe(c).vol + r.comuns.length * PNEUMATIC.volumeTubo + r.avancados.length * PNEUMATIC.volumeTuboAvancado;
   return { p: bar(d.ar, vol), limite: r.comuns.length === 0 && r.avancados.length > 0 ? "avancado" : "comum", r };
 }
+
+function abastecer(c: Block, d: Compressor, id: string): boolean {
+  const t = tipoDe(c);
+  const seg = t.combustivel(id);
+  if (!seg) return false;
+  d.comb += seg;
+  if (t.liquido) d.taxa = LIQUIDOS[id][1];
+  return true;
+}
+const balde = (id: string) => id === "minecraft:lava_bucket" || !!LIQUIDOS[id];
 
 export const compressor: BlockCustomComponent = {
   onTick(e) {
     const c = e.block;
+    const t = tipoDe(c);
     const d = ler<Compressor>("comp", c, { ar: 0, comb: 0 });
     const r = rede(c);
-    const volRede = PNEUMATIC.volumeCompressor + r.comuns.length * PNEUMATIC.volumeTubo + r.avancados.length * PNEUMATIC.volumeTuboAvancado;
+    const volRede = t.vol + r.comuns.length * PNEUMATIC.volumeTubo + r.avancados.length * PNEUMATIC.volumeTuboAvancado;
     const camaras = r.camaras.map((ch) => [ch, camaraEm(c.dimension, ch)!] as const);
     const limite = r.comuns.length === 0 && r.avancados.length > 0 ? "avancado" : "comum";
     // Combustível
     if (!d.desligado && d.comb <= 0) {
       const ent = entrada(c);
-      const f = ent && primeiro(ent, (id) => PNEUMATIC.combustivel[id] !== undefined);
+      const f = ent && primeiro(ent, (id) => t.combustivel(id) !== undefined);
       if (ent && f) {
         tirar(ent, f.typeId);
-        d.comb += PNEUMATIC.combustivel[f.typeId];
-        if (f.typeId === "minecraft:lava_bucket") ent.addItem(new ItemStack("minecraft:bucket", 1));
+        abastecer(c, d, f.typeId);
+        if (balde(f.typeId)) ent.addItem(new ItemStack("minecraft:bucket", 1));
       }
     }
     let total = d.ar + camaras.reduce((s, [, cam]) => s + cam.ar, 0);
     const vol = volRede + camaras.reduce((s, [, cam]) => s + cam.vol, 0);
     if (!d.desligado && d.comb > 0 && bar(total, vol) < PNEUMATIC.critico[limite]) {
-      total += PNEUMATIC.mlPorSegundo;
+      total += t.ml(d);
       d.comb--;
     }
     // Pressão igual na rede toda.
@@ -108,7 +137,11 @@ export const compressor: BlockCustomComponent = {
     }
     if (p >= 2) {
       const quem = c.dimension.getPlayers({ location: c.center(), maxDistance: 16, closest: 1 })[0];
-      if (quem) registrarAcao(quem, "pressao2");
+      if (quem) {
+        registrarAcao(quem, "pressao2");
+        if (p >= 10) registrarAcao(quem, "pnc_pressao10");
+        if (t.liquido) registrarAcao(quem, "pnc_liquido");
+      }
     }
   },
   onPlayerInteract(e) {
@@ -117,10 +150,9 @@ export const compressor: BlockCustomComponent = {
     const c = e.block;
     const d = ler<Compressor>("comp", c, { ar: 0, comb: 0 });
     const mao = itemNaMao(j);
-    const valor = mao ? PNEUMATIC.combustivel[mao.typeId] : undefined;
-    if (valor) {
+    if (mao && abastecer(c, d, mao.typeId)) {
       gastarDaMao(j);
-      d.comb += valor;
+      if (balde(mao.typeId)) j.getComponent("minecraft:inventory")?.container?.addItem(new ItemStack("minecraft:bucket", 1));
     } else if (!mao) d.desligado = !d.desligado;
     gravar("comp", c, d);
     const { p, limite } = pressaoDoCompressor(c);
@@ -266,7 +298,7 @@ export const interfaceCamara: BlockCustomComponent = {
 };
 
 function mostrarPressao(j: Player, b: Block): void {
-  if (b.typeId === "cl:compressor_ar") return aviso(j, { translate: "cl.pn.pressao", with: [fmt(pressaoDoCompressor(b).p)] });
+  if (COMPRESSORES.has(b.typeId)) return aviso(j, { translate: "cl.pn.pressao", with: [fmt(pressaoDoCompressor(b).p)] });
   const cam = camaraDe(b);
   if (cam) return aviso(j, textoCamara(cam));
   if (TUBOS.has(b.typeId)) {
@@ -276,7 +308,7 @@ function mostrarPressao(j: Player, b: Block): void {
       const t = fila.shift()!;
       if (vistos.has(k3(t.location))) continue;
       vistos.add(k3(t.location));
-      if (t.typeId === "cl:compressor_ar") return aviso(j, { translate: "cl.pn.pressao", with: [fmt(pressaoDoCompressor(t).p)] });
+      if (COMPRESSORES.has(t.typeId)) return aviso(j, { translate: "cl.pn.pressao", with: [fmt(pressaoDoCompressor(t).p)] });
       if (TUBOS.has(t.typeId)) fila.push(...vizinhos(t));
     }
   }
@@ -284,6 +316,14 @@ function mostrarPressao(j: Player, b: Block): void {
 }
 
 export function registrarPneumatic(): void {
+  // Teste no servidor: scriptevent cl:teste_pnc x y z (pressão e combustível do compressor).
+  system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: j }) => {
+    if (id !== "cl:teste_pnc" || !(j instanceof Player)) return;
+    const [x, y, z] = message.split(" ").map(Number);
+    const b = j.dimension.getBlock({ x, y, z });
+    if (!b || !COMPRESSORES.has(b.typeId)) return;
+    console.warn(`[teste_pnc] ${b.typeId} bar=${fmt(pressaoDoCompressor(b).p)} ${JSON.stringify(ler("comp", b, null))}`);
+  });
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
     if (ev.itemStack?.typeId !== "cl:manometro" || !toqueNovo(ev)) return;
     ev.cancel = true;
@@ -292,7 +332,7 @@ export function registrarPneumatic(): void {
   });
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     const id = brokenBlockPermutation.type.id;
-    if (id === "cl:compressor_ar") gravarEm("comp", block.dimension, block.location, undefined);
+    if (COMPRESSORES.has(id)) gravarEm("comp", block.dimension, block.location, undefined);
     if (!CAMARA.has(id)) return;
     gravarEm("valv", block.dimension, block.location, undefined);
     const vivas: string[] = [];
@@ -306,7 +346,7 @@ export function registrarPneumatic(): void {
     }
     world.setDynamicProperty("cl:camaras", JSON.stringify(vivas));
   });
-  registrarDetalhe("cl:compressor_ar", (b) => ({ translate: "cl.pn.pressao", with: [fmt(pressaoDoCompressor(b).p)] }));
+  registrarDetalhe([...COMPRESSORES], (b) => ({ translate: "cl.pn.pressao", with: [fmt(pressaoDoCompressor(b).p)] }));
   registrarDetalhe(["cl:valvula_camara", "cl:interface_camara"], (b) => {
     const cam = camaraDe(b);
     return cam ? textoCamara(cam) : undefined;

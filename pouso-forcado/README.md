@@ -154,6 +154,16 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.44.0 (PneumaticCraft: Repressurized 8.2, o mais novo)
+
+- **Compressor de Ar Avançado**: 50 mL/t (5× o comum) com o mesmo combustível; aguenta a rede de tubos avançados.
+- **Compressor Líquido**: baldes de combustível líquido viram ar (biodiesel e combustível do BuildCraft 1.000.000 mL,
+  etanol 400.000, petróleo 200.000) e o balde volta vazio.
+- **Câmara de Pressão** com as receitas novas do mod: 4 neves → gelo (1,5 bar), 4 gelos → gelo compacto (2 bar),
+  4 gelos compactos → **gelo azul** (2,5 bar), pedra → **Pedra Comprimida** (1 bar), trigo → 3 farinhas (1,5 bar) e
+  ouro + 2 redstones → Pá de Turbina.
+- Diário: três missões novas no capítulo do PneumaticCraft.
+
 ## Novidades da 1.43.0 (BuildCraft 8, o mais novo)
 
 - **Motor de Redstone** (com sinal de redstone, 0,05 MJ/t) e **Motor Stirling** (com redstone, queima o combustível do

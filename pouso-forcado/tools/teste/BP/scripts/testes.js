@@ -1892,6 +1892,29 @@ teste("waystone", 300, (t) => {
   });
 });
 
+// 1.44.0: PneumaticCraft: Repressurized. O Compressor Avançado faz 5× o ar do comum; o Líquido queima biodiesel e
+// devolve o balde.
+teste("pnc", 200, (t) => {
+  const j = robo(t, { x: 4.5, y: 2, z: 6.5 });
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`pnc: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const comp = (id, x, z, item) => {
+    t.setBlockType(id, { x, y: 2, z });
+    t.setBlockType("minecraft:chest", { x, y: 3, z });
+    t.getBlock({ x, y: 3, z }).getComponent("inventory").container.addItem(item);
+  };
+  comp("cl:compressor_ar", 1, 1, new ItemStack("minecraft:coal", 1));
+  comp("cl:compressor_ar_avancado", 4, 1, new ItemStack("minecraft:coal", 1));
+  comp("cl:compressor_liquido", 7, 1, new ItemStack("cl:balde_biodiesel", 1));
+  t.runAfterDelay(110, () => { for (const x of [1, 4, 7]) { const p = w({ x, y: 2, z: 1 }); cmd(`scriptevent cl:teste_pnc ${p.x} ${p.y} ${p.z}`); } });
+  t.runAfterDelay(115, () => {
+    const balde = t.getBlock({ x: 7, y: 3, z: 1 }).getComponent("inventory").container.getItem(0)?.typeId;
+    log(`pnc: balde=${balde}`);
+    t.assert(balde === "minecraft:bucket", "o Compressor Líquido não devolveu o balde");
+    t.succeed();
+  });
+});
+
 // 1.43.0: BuildCraft 8. Motor Stirling com redstone queima carvão; Poço de Mineração cava até a rocha-mãe; Comporta
 // enche o buraco mais fundo; Enchedor enche a área entre dois Marcos com pedregulho.
 teste("bc8", 300, (t) => {

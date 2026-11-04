@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.43.0";
+export const VERSAO = "1.44.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -797,6 +797,13 @@ export const MFR = {
 export const PNEUMATIC = {
   mlPorSegundo: 200, // compressor queimando (10 mL/t no PneumaticCraft)
   volumeCompressor: 5000,
+  // 1.44.0 (PneumaticCraft: Repressurized 8.2, PneumaticValues e data/pneumaticcraft/recipe/pneumaticcraft_fuels):
+  mlPorSegundoAvancado: 1000, // Compressor de Ar Avançado: 50 mL/t
+  volumeCompressorAvancado: 10000,
+  // Compressor Líquido: [mL de ar por balde, taxa de queima]
+  liquidos: {
+    "cl:balde_biodiesel": [1000000, 0.8], "cl:balde_combustivel": [1000000, 0.8], "cl:balde_petroleo": [200000, 0.25], "cl:balde_etanol": [400000, 1],
+  } as Readonly<Record<string, readonly [number, number]>>,
   volumeTubo: 1000,
   volumeTuboAvancado: 4000,
   volumePorBlocoInterno: 16000, // câmara de pressão
@@ -816,6 +823,13 @@ export const PNEUMATIC = {
     { entra: [["cl:folha_plastico", 1], ["minecraft:copper_ingot", 1]], sai: ["cl:placa_circuito_vazia", 1], bar: 1.5 },
     { entra: [["minecraft:redstone", 1], ["cl:lingote_ferro_comprimido", 1]], sai: ["cl:transistor", 1], bar: 1 },
     { entra: [["minecraft:redstone", 1], ["minecraft:clay_ball", 1], ["cl:lingote_ferro_comprimido", 1]], sai: ["cl:capacitor", 1], bar: 1 },
+    // 1.44.0: receitas novas da câmara do PneumaticCraft: Repressurized 8.2 (data/pneumaticcraft/recipe/pressure_chamber).
+    { entra: [["minecraft:packed_ice", 4]], sai: ["minecraft:blue_ice", 1], bar: 2.5 },
+    { entra: [["minecraft:ice", 4]], sai: ["minecraft:packed_ice", 1], bar: 2 },
+    { entra: [["minecraft:snow", 4]], sai: ["minecraft:ice", 1], bar: 1.5 },
+    { entra: [["minecraft:stone", 1]], sai: ["cl:pedra_comprimida", 1], bar: 1 },
+    { entra: [["minecraft:wheat", 1]], sai: ["cl:farinha", 3], bar: 1.5 },
+    { entra: [["minecraft:gold_ingot", 1], ["minecraft:redstone", 2]], sai: ["cl:pa_turbina_pneumatica", 1], bar: 1 },
   ] as ReadonlyArray<{ entra: ReadonlyArray<readonly [string, number]>; sai: readonly [string, number]; bar: number }>,
 } as const;
 
