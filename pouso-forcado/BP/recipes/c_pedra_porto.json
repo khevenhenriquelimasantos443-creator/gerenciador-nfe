@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pedra_porto"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "SWS",
+      "BBB"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:stone_bricks"
+      },
+      "S": {
+        "item": "minecraft:stone_brick_slab"
+      },
+      "W": {
+        "item": "cl:pedra_viagem"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:pedra_porto"
+    }
+  }
+}

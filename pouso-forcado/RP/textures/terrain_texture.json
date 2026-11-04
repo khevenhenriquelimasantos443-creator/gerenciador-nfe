@@ -5052,6 +5052,87 @@
     },
     "clc_torta_maca_topo": {
       "textures": "textures/blocks/cl/arte/torta_maca_topo"
+    },
+    "clc_pedra_caminho_musgo": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_musgo"
+    },
+    "clc_pedra_caminho_arenito": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_arenito"
+    },
+    "clc_pedra_caminho_negra": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_negra"
+    },
+    "clc_pedra_caminho_ardosia": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_ardosia"
+    },
+    "clc_pedra_caminho_ender": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_ender"
+    },
+    "clc_pedra_caminho_nether": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_nether"
+    },
+    "clc_pedra_caminho_purpura": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_purpura"
+    },
+    "clc_pedra_caminho_prismarinho": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_prismarinho"
+    },
+    "clc_pedra_caminho_lama": {
+      "textures": "textures/blocks/cl/c/pedra_caminho_lama"
+    },
+    "clc_pedra_partilha_cobre": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_cobre"
+    },
+    "clc_pedra_partilha_prismarinho": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_prismarinho"
+    },
+    "clc_pedra_partilha_ouro": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_ouro"
+    },
+    "clc_pedra_partilha_diamante": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_diamante"
+    },
+    "clc_pedra_partilha_ametista": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_ametista"
+    },
+    "clc_pedra_partilha_lapis": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_lapis"
+    },
+    "clc_pedra_partilha_esmeralda": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_esmeralda"
+    },
+    "clc_pedra_partilha_redstone": {
+      "textures": "textures/blocks/cl/c/pedra_partilha_redstone"
+    },
+    "clc_pedra_porto": {
+      "textures": "textures/blocks/cl/c/pedra_porto"
+    },
+    "clc_pedra_porto_cobre": {
+      "textures": "textures/blocks/cl/c/pedra_porto_cobre"
+    },
+    "clc_pedra_porto_prismarinho": {
+      "textures": "textures/blocks/cl/c/pedra_porto_prismarinho"
+    },
+    "clc_pedra_porto_ouro": {
+      "textures": "textures/blocks/cl/c/pedra_porto_ouro"
+    },
+    "clc_pedra_porto_diamante": {
+      "textures": "textures/blocks/cl/c/pedra_porto_diamante"
+    },
+    "clc_pedra_porto_ametista": {
+      "textures": "textures/blocks/cl/c/pedra_porto_ametista"
+    },
+    "clc_pedra_porto_lapis": {
+      "textures": "textures/blocks/cl/c/pedra_porto_lapis"
+    },
+    "clc_pedra_porto_esmeralda": {
+      "textures": "textures/blocks/cl/c/pedra_porto_esmeralda"
+    },
+    "clc_pedra_porto_redstone": {
+      "textures": "textures/blocks/cl/c/pedra_porto_redstone"
+    },
+    "clc_placa_dobra": {
+      "textures": "textures/blocks/cl/c/placa_dobra"
     }
   }
 }

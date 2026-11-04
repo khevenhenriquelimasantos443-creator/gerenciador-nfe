@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_placa_dobra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SAS",
+      "AFA",
+      "SAS"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:amethyst_shard"
+      },
+      "F": {
+        "item": "minecraft:flint"
+      },
+      "S": {
+        "item": "minecraft:stone_bricks"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:placa_dobra"
+    }
+  }
+}

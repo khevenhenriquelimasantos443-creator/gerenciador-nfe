@@ -1599,6 +1599,51 @@ teste("farmers2", 320, (t) => {
   });
 });
 
+// 1.35.0: Waystones 26: Placa de Dobra ligada por fragmento leva de uma à outra; Pergaminho em Branco se vincula à
+// Pedra do Caminho e leva até ela.
+teste("waystones2", 260, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 3.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const r = {};
+  t.setBlockType("cl:placa_dobra", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:placa_dobra", { x: 6, y: 2, z: 6 });
+  t.setBlockType("cl:pedra_caminho_musgo", { x: 6, y: 2, z: 1 });
+  const tocar = (pos, item, slot = 0) => {
+    if (item) inv.setItem(slot, new ItemStack(item, 1));
+    j.selectedSlotIndex = item ? slot : 8;
+    j.lookAtBlock(pos);
+    j.interactWithBlock(pos, Direction.Up);
+  };
+  t.runAfterDelay(5, () => tocar({ x: 1, y: 2, z: 1 }, "cl:fragmento_dormente"));
+  t.runAfterDelay(10, () => {
+    for (let k = 0; k < 9; k++) if (inv.getItem(k)?.typeId === "cl:fragmento_sintonizado") j.selectedSlotIndex = k;
+    r.fragmento = inv.getItem(j.selectedSlotIndex)?.typeId;
+    j.lookAtBlock({ x: 6, y: 2, z: 6 });
+    j.interactWithBlock({ x: 6, y: 2, z: 6 }, Direction.Up);
+  });
+  t.runAfterDelay(15, () => j.teleport(t.worldLocation({ x: 1.5, y: 2.2, z: 1.5 })));
+  t.runAfterDelay(75, () => {
+    r.depoisPlaca = t.relativeLocation(j.location);
+    j.teleport(t.worldLocation({ x: 4.5, y: 2, z: 1.5 }));
+    tocar({ x: 6, y: 2, z: 1 }); // ativa a pedra
+  });
+  t.runAfterDelay(82, () => tocar({ x: 6, y: 2, z: 1 }, "cl:pergaminho_vazio", 1));
+  t.runAfterDelay(90, () => {
+    for (let k = 0; k < 9; k++) if (inv.getItem(k)?.typeId === "cl:pergaminho_vinculado") (r.slot = k), (r.lore = JSON.stringify(inv.getItem(k).getLore()));
+    j.teleport(t.worldLocation({ x: 1.5, y: 2, z: 6.5 }));
+  });
+  t.runAfterDelay(95, () => r.slot !== undefined && j.useItemInSlot(r.slot));
+  t.runAfterDelay(110, () => {
+    r.depoisPergaminho = t.relativeLocation(j.location);
+    log(`waystones2: ${JSON.stringify(r)}`);
+    t.assert(r.fragmento === "cl:fragmento_sintonizado", "a placa não sintonizou o fragmento");
+    t.assert(!!r.depoisPlaca && Math.abs(r.depoisPlaca.x - 6.5) < 1 && Math.abs(r.depoisPlaca.z - 6.5) < 1, "a Placa de Dobra não levou à outra");
+    t.assert(!!r.lore && r.lore.includes("@"), "o pergaminho não se vinculou");
+    t.assert(!!r.depoisPergaminho && Math.abs(r.depoisPergaminho.x - 6.5) <= 1.5 && Math.abs(r.depoisPergaminho.z - 1.5) <= 1.5, "o pergaminho não levou à pedra");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

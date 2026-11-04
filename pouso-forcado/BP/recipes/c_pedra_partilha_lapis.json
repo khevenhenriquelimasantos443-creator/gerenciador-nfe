@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pedra_partilha_lapis"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "DWD",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stone_bricks"
+      },
+      "D": {
+        "item": "minecraft:lapis_lazuli"
+      },
+      "W": {
+        "item": "cl:pedra_viagem"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:pedra_partilha_lapis"
+    }
+  }
+}

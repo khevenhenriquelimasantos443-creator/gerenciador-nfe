@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:pergaminho_vinculado",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_pergaminho_vinculado",
+      "minecraft:display_name": {
+        "value": "item.cl:pergaminho_vinculado.name"
+      },
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

@@ -149,7 +149,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Quark | Vazkii e equipe | CC BY-NC-SA 3.0 | github.com/VazkiiMods/Quark |
 | Immersive Aircraft (ícones, modelos 3D e texturas das aeronaves) | Luke100000 e equipe | GPLv3 | github.com/Luke100000/ImmersiveAircraft |
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
-| Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
+| Waystones | BlayTheNinth | MIT (1.7.10; a 26.3 é "todos os direitos reservados": só ideias e números, arte própria) | github.com/blay09/Waystones (1.7.10; e 26.3) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
 | Iron Jetpacks | BlakeBr0 | MIT | github.com/BlakeBr0/IronJetpacks (26.1) |
 | TorchMaster | xalcon | MIT | github.com/xalcon/TorchMaster (21.9) |

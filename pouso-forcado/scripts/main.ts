@@ -78,7 +78,7 @@ import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tocha
 import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
-import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
+import { pedraCaminho, pedraPartilha, pedraPorto, placaDobra, registrarWaystones } from "./utilidades/waystones.js";
 import { registrarMochila } from "./utilidades/mochila.js";
 import { registrarRobo } from "./utilidades/robo.js";
 import { lixeira, registrarExtraUtils } from "./utilidades/extrautils.js";
@@ -245,6 +245,9 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:controlador_velocidade", controladorVelocidade);
   blockComponentRegistry.registerCustomComponent("cl:ancora_viagem", ancora);
   blockComponentRegistry.registerCustomComponent("cl:pedra_caminho", pedraCaminho);
+  blockComponentRegistry.registerCustomComponent("cl:pedra_partilha", pedraPartilha); // 1.35.0: Waystones 26
+  blockComponentRegistry.registerCustomComponent("cl:pedra_porto", pedraPorto);
+  blockComponentRegistry.registerCustomComponent("cl:placa_dobra", placaDobra);
   blockComponentRegistry.registerCustomComponent("cl:conduto_item", comPerfil("cl:conduto_item", condutoItem));
   blockComponentRegistry.registerCustomComponent("cl:tnt_obsidiana", tntObsidiana);
   blockComponentRegistry.registerCustomComponent("cl:panela_cozinha", comPerfil("cl:panela_cozinha", panela));

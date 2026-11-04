@@ -496,6 +496,11 @@
   "en": "Deepslate",
   "icone": "textures/blocks/deepslate/deepslate"
  },
+ "minecraft:deepslate_bricks": {
+  "pt": "Tijolos de Ardosiabissal",
+  "en": "Deepslate Bricks",
+  "icone": "textures/blocks/deepslate/deepslate_bricks"
+ },
  "minecraft:deepslate_coal_ore": {
   "pt": "Minério de Carvão de Ardosiabissal",
   "en": "Deepslate Coal Ore",
@@ -630,6 +635,11 @@
   "pt": "Mesa de Encantamentos",
   "en": "Enchanting Table",
   "icone": "textures/blocks/enchanting_table_side"
+ },
+ "minecraft:end_bricks": {
+  "pt": "Tijolos de pedra do End",
+  "en": "End Stone Bricks",
+  "icone": "textures/blocks/end_bricks"
  },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
@@ -1081,6 +1091,11 @@
   "en": "Mossy Stone Bricks",
   "icone": "textures/blocks/stonebrick_mossy"
  },
+ "minecraft:mud_bricks": {
+  "pt": "Tijolos de Barro",
+  "en": "Mud Bricks",
+  "icone": "textures/blocks/mud_bricks"
+ },
  "minecraft:mushroom_stew": {
   "pt": "Ensopado de Cogumelos",
   "en": "Mushroom Stew",
@@ -1200,6 +1215,11 @@
   "en": "Polished Andesite",
   "icone": "textures/blocks/stone_andesite_smooth"
  },
+ "minecraft:polished_blackstone_bricks": {
+  "pt": "Tijolos de Pedra-Negra Polida",
+  "en": "Polished Blackstone Bricks",
+  "icone": "textures/blocks/polished_blackstone_bricks"
+ },
  "minecraft:popped_chorus_fruit": {
   "pt": "popped_chorus_fruit",
   "en": "popped_chorus_fruit"
@@ -1228,6 +1248,16 @@
   "pt": "prismarine",
   "en": "prismarine",
   "icone": "textures/blocks/prismarine_rough"
+ },
+ "minecraft:prismarine_bricks": {
+  "pt": "prismarine_bricks",
+  "en": "prismarine_bricks",
+  "icone": "textures/blocks/prismarine_bricks"
+ },
+ "minecraft:prismarine_crystals": {
+  "pt": "Cristais de Prismarinho",
+  "en": "Prismarine Crystals",
+  "icone": "textures/items/prismarine_crystals"
  },
  "minecraft:pufferfish": {
   "pt": "Baiacu",
@@ -1258,6 +1288,11 @@
   "pt": "Corante Roxo",
   "en": "Purple Dye",
   "icone": "textures/items/dye_powder_purple"
+ },
+ "minecraft:purpur_block": {
+  "pt": "purpur_block",
+  "en": "purpur_block",
+  "icone": "textures/blocks/purpur_block"
  },
  "minecraft:quartz": {
   "pt": "Quartzo do Nether",
@@ -1328,6 +1363,11 @@
   "pt": "Corante Vermelho",
   "en": "Red Dye",
   "icone": "textures/items/dye_powder_red"
+ },
+ "minecraft:red_nether_brick": {
+  "pt": "Tijolos Vermelhos do Nether",
+  "en": "Red Nether Bricks",
+  "icone": "textures/blocks/red_nether_brick"
  },
  "minecraft:red_sand": {
   "pt": "Areia Vermelha",

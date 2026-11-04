@@ -4816,6 +4816,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Copper Shard",
   "icone": "textures/items/cl/arte/fragmento_cobre"
  },
+ "cl:fragmento_dormente": {
+  "pt": "Fragmento Dormente",
+  "en": "Dormant Shard",
+  "icone": "textures/items/cl/c/fragmento_dormente"
+ },
  "cl:fragmento_estanho": {
   "pt": "Estilhaço de estanho",
   "en": "Tin Shard",
@@ -4840,6 +4845,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Estilhaço de ouro",
   "en": "Gold Shard",
   "icone": "textures/items/cl/arte/fragmento_ouro"
+ },
+ "cl:fragmento_sintonizado": {
+  "pt": "Fragmento Sintonizado",
+  "en": "Attuned Shard",
+  "icone": "textures/items/cl/c/fragmento_sintonizado"
  },
  "cl:frango_assado": {
   "pt": "Frango Assado",
@@ -10211,6 +10221,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Waystone",
   "icone": "textures/items/cl/blocos/pedra_caminho"
  },
+ "cl:pedra_caminho_ardosia": {
+  "pt": "Pedra do Caminho de Ardósia",
+  "en": "Deepslate Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_ardosia"
+ },
+ "cl:pedra_caminho_arenito": {
+  "pt": "Pedra do Caminho de Arenito",
+  "en": "Sandy Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_arenito"
+ },
+ "cl:pedra_caminho_ender": {
+  "pt": "Pedra do Caminho do Ender",
+  "en": "Ender Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_ender"
+ },
+ "cl:pedra_caminho_lama": {
+  "pt": "Pedra do Caminho de Lama",
+  "en": "Muddy Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_lama"
+ },
+ "cl:pedra_caminho_musgo": {
+  "pt": "Pedra do Caminho Musgosa",
+  "en": "Mossy Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_musgo"
+ },
+ "cl:pedra_caminho_negra": {
+  "pt": "Pedra do Caminho Negra",
+  "en": "Black Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_negra"
+ },
+ "cl:pedra_caminho_nether": {
+  "pt": "Pedra do Caminho do Nether",
+  "en": "Nether Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_nether"
+ },
+ "cl:pedra_caminho_prismarinho": {
+  "pt": "Pedra do Caminho de Prismarinho",
+  "en": "Prismarine Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_prismarinho"
+ },
+ "cl:pedra_caminho_purpura": {
+  "pt": "Pedra do Caminho Púrpura",
+  "en": "Purpur Waystone",
+  "icone": "textures/blocks/cl/c/pedra_caminho_purpura"
+ },
  "cl:pedra_ceu_lisa": {
   "pt": "Pedra do Céu Lisa",
   "en": "Sky Stone Block",
@@ -10251,6 +10306,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Mosaic Stone",
   "icone": "textures/items/cl/blocos/pedra_mosaico"
  },
+ "cl:pedra_partilha_ametista": {
+  "pt": "Pedra de Partilha de Ametista",
+  "en": "Amethyst Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_ametista"
+ },
+ "cl:pedra_partilha_cobre": {
+  "pt": "Pedra de Partilha de Cobre",
+  "en": "Copper Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_cobre"
+ },
+ "cl:pedra_partilha_diamante": {
+  "pt": "Pedra de Partilha de Diamante",
+  "en": "Diamond Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_diamante"
+ },
+ "cl:pedra_partilha_esmeralda": {
+  "pt": "Pedra de Partilha de Esmeralda",
+  "en": "Emerald Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_esmeralda"
+ },
+ "cl:pedra_partilha_lapis": {
+  "pt": "Pedra de Partilha de Lápis",
+  "en": "Lapis Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_lapis"
+ },
+ "cl:pedra_partilha_ouro": {
+  "pt": "Pedra de Partilha de Ouro",
+  "en": "Gold Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_ouro"
+ },
+ "cl:pedra_partilha_prismarinho": {
+  "pt": "Pedra de Partilha de Prismarinho",
+  "en": "Prismarine Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_prismarinho"
+ },
+ "cl:pedra_partilha_redstone": {
+  "pt": "Pedra de Partilha de Redstone",
+  "en": "Redstone Sharestone",
+  "icone": "textures/blocks/cl/c/pedra_partilha_redstone"
+ },
  "cl:pedra_pilar": {
   "pt": "Pedra Pilar",
   "en": "Pillar Stone",
@@ -10260,6 +10355,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pedra Polido",
   "en": "Polished Stone",
   "icone": "textures/items/cl/blocos/pedra_polido"
+ },
+ "cl:pedra_porto": {
+  "pt": "Pedra-Porto",
+  "en": "Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto"
+ },
+ "cl:pedra_porto_ametista": {
+  "pt": "Pedra-Porto de Ametista",
+  "en": "Amethyst Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_ametista"
+ },
+ "cl:pedra_porto_cobre": {
+  "pt": "Pedra-Porto de Cobre",
+  "en": "Copper Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_cobre"
+ },
+ "cl:pedra_porto_diamante": {
+  "pt": "Pedra-Porto de Diamante",
+  "en": "Diamond Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_diamante"
+ },
+ "cl:pedra_porto_esmeralda": {
+  "pt": "Pedra-Porto de Esmeralda",
+  "en": "Emerald Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_esmeralda"
+ },
+ "cl:pedra_porto_lapis": {
+  "pt": "Pedra-Porto de Lápis",
+  "en": "Lapis Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_lapis"
+ },
+ "cl:pedra_porto_ouro": {
+  "pt": "Pedra-Porto de Ouro",
+  "en": "Gold Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_ouro"
+ },
+ "cl:pedra_porto_prismarinho": {
+  "pt": "Pedra-Porto de Prismarinho",
+  "en": "Prismarine Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_prismarinho"
+ },
+ "cl:pedra_porto_redstone": {
+  "pt": "Pedra-Porto de Redstone",
+  "en": "Redstone Portstone",
+  "icone": "textures/blocks/cl/c/pedra_porto_redstone"
  },
  "cl:pedra_refrataria_bloco": {
   "pt": "Pedra Refratária",
@@ -10280,6 +10420,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pedra de Viagem",
   "en": "Warp Stone",
   "icone": "textures/items/cl/arte/pedra_viagem"
+ },
+ "cl:pedra_viagem_ametista": {
+  "pt": "Pedra de Viagem de Ametista",
+  "en": "Amethyst Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_ametista"
+ },
+ "cl:pedra_viagem_cobre": {
+  "pt": "Pedra de Viagem de Cobre",
+  "en": "Copper Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_cobre"
+ },
+ "cl:pedra_viagem_diamante": {
+  "pt": "Pedra de Viagem de Diamante",
+  "en": "Diamond Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_diamante"
+ },
+ "cl:pedra_viagem_esmeralda": {
+  "pt": "Pedra de Viagem de Esmeralda",
+  "en": "Emerald Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_esmeralda"
+ },
+ "cl:pedra_viagem_lapis": {
+  "pt": "Pedra de Viagem de Lápis",
+  "en": "Lapis Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_lapis"
+ },
+ "cl:pedra_viagem_ouro": {
+  "pt": "Pedra de Viagem de Ouro",
+  "en": "Gold Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_ouro"
+ },
+ "cl:pedra_viagem_prismarinho": {
+  "pt": "Pedra de Viagem de Prismarinho",
+  "en": "Prismarine Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_prismarinho"
+ },
+ "cl:pedra_viagem_redstone": {
+  "pt": "Pedra de Viagem de Redstone",
+  "en": "Redstone Warp Stone",
+  "icone": "textures/items/cl/c/pedra_viagem_redstone"
  },
  "cl:pedregulho_comprimido_1": {
   "pt": "Pedregulho Comprimido (1x)",
@@ -10516,10 +10696,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Return Scroll",
   "icone": "textures/items/cl/arte/pergaminho_retorno"
  },
+ "cl:pergaminho_vazio": {
+  "pt": "Pergaminho em Branco",
+  "en": "Unbound Scroll",
+  "icone": "textures/items/cl/c/pergaminho_vazio"
+ },
  "cl:pergaminho_viagem": {
   "pt": "Pergaminho de Viagem",
   "en": "Warp Scroll",
   "icone": "textures/items/cl/arte/pergaminho_viagem"
+ },
+ "cl:pergaminho_vinculado": {
+  "pt": "Pergaminho Vinculado",
+  "en": "Bound Scroll",
+  "icone": "textures/items/cl/c/pergaminho_vinculado"
  },
  "cl:perola_aerea": {
   "pt": "Pérola Aérea",
@@ -10945,6 +11135,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Placa Comprimida de Cobre",
   "en": "Compressed Copper",
   "icone": "textures/items/cl/c/placa_cobre"
+ },
+ "cl:placa_dobra": {
+  "pt": "Placa de Dobra",
+  "en": "Warp Plate",
+  "icone": "textures/blocks/cl/c/placa_dobra"
  },
  "cl:placa_estanho": {
   "pt": "Placa Comprimida de Estanho",
@@ -13484,6 +13679,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Deepslate",
   "icone": "textures/blocks/deepslate/deepslate"
  },
+ "minecraft:deepslate_bricks": {
+  "pt": "Tijolos de Ardosiabissal",
+  "en": "Deepslate Bricks",
+  "icone": "textures/blocks/deepslate/deepslate_bricks"
+ },
  "minecraft:deepslate_coal_ore": {
   "pt": "Minério de Carvão de Ardosiabissal",
   "en": "Deepslate Coal Ore",
@@ -13618,6 +13818,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Mesa de Encantamentos",
   "en": "Enchanting Table",
   "icone": "textures/blocks/enchanting_table_side"
+ },
+ "minecraft:end_bricks": {
+  "pt": "Tijolos de pedra do End",
+  "en": "End Stone Bricks",
+  "icone": "textures/blocks/end_bricks"
  },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
@@ -14054,6 +14259,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Mossy Stone Bricks",
   "icone": "textures/blocks/stonebrick_mossy"
  },
+ "minecraft:mud_bricks": {
+  "pt": "Tijolos de Barro",
+  "en": "Mud Bricks",
+  "icone": "textures/blocks/mud_bricks"
+ },
  "minecraft:mushroom_stew": {
   "pt": "Ensopado de Cogumelos",
   "en": "Mushroom Stew",
@@ -14169,6 +14379,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Polished Andesite",
   "icone": "textures/blocks/stone_andesite_smooth"
  },
+ "minecraft:polished_blackstone_bricks": {
+  "pt": "Tijolos de Pedra-Negra Polida",
+  "en": "Polished Blackstone Bricks",
+  "icone": "textures/blocks/polished_blackstone_bricks"
+ },
  "minecraft:popped_chorus_fruit": {
   "pt": "popped_chorus_fruit",
   "en": "popped_chorus_fruit"
@@ -14197,6 +14412,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "prismarine",
   "en": "prismarine",
   "icone": "textures/blocks/prismarine_rough"
+ },
+ "minecraft:prismarine_bricks": {
+  "pt": "prismarine_bricks",
+  "en": "prismarine_bricks",
+  "icone": "textures/blocks/prismarine_bricks"
+ },
+ "minecraft:prismarine_crystals": {
+  "pt": "Cristais de Prismarinho",
+  "en": "Prismarine Crystals",
+  "icone": "textures/items/prismarine_crystals"
  },
  "minecraft:pufferfish": {
   "pt": "Baiacu",
@@ -14227,6 +14452,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Roxo",
   "en": "Purple Dye",
   "icone": "textures/items/dye_powder_purple"
+ },
+ "minecraft:purpur_block": {
+  "pt": "purpur_block",
+  "en": "purpur_block",
+  "icone": "textures/blocks/purpur_block"
  },
  "minecraft:quartz": {
   "pt": "Quartzo do Nether",
@@ -14297,6 +14527,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Vermelho",
   "en": "Red Dye",
   "icone": "textures/items/dye_powder_red"
+ },
+ "minecraft:red_nether_brick": {
+  "pt": "Tijolos Vermelhos do Nether",
+  "en": "Red Nether Bricks",
+  "icone": "textures/blocks/red_nether_brick"
  },
  "minecraft:red_sand": {
   "pt": "Areia Vermelha",
@@ -25903,6 +26138,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_fragmento_dormente",
+  "resultado": "cl:fragmento_dormente",
+  "qtd": 1,
+  "grade": [
+   " A ",
+   "AFA",
+   " A "
+  ],
+  "chaves": {
+   "A": "minecraft:amethyst_shard",
+   "F": "minecraft:flint"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_fundidora_inducao",
   "resultado": "cl:fundidora_inducao",
   "qtd": 1,
@@ -30579,6 +30832,168 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_ardosia",
+  "resultado": "cl:pedra_caminho_ardosia",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:deepslate_bricks",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_arenito",
+  "resultado": "cl:pedra_caminho_arenito",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:chiseled_sandstone",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_ender",
+  "resultado": "cl:pedra_caminho_ender",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:end_bricks",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_lama",
+  "resultado": "cl:pedra_caminho_lama",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:mud_bricks",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_musgo",
+  "resultado": "cl:pedra_caminho_musgo",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:mossy_stone_bricks",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_negra",
+  "resultado": "cl:pedra_caminho_negra",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:polished_blackstone_bricks",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_nether",
+  "resultado": "cl:pedra_caminho_nether",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:red_nether_brick",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_prismarinho",
+  "resultado": "cl:pedra_caminho_prismarinho",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:prismarine_bricks",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_caminho_purpura",
+  "resultado": "cl:pedra_caminho_purpura",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:purpur_block",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_pedra_liso",
   "resultado": "cl:pedra_liso",
   "qtd": 4,
@@ -30588,6 +31003,337 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "B": "minecraft:stone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_ametista",
+  "resultado": "cl:pedra_partilha_ametista",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:amethyst_shard",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_cobre",
+  "resultado": "cl:pedra_partilha_cobre",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:copper_ingot",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_diamante",
+  "resultado": "cl:pedra_partilha_diamante",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:diamond",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_esmeralda",
+  "resultado": "cl:pedra_partilha_esmeralda",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:emerald",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_lapis",
+  "resultado": "cl:pedra_partilha_lapis",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:lapis_lazuli",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_ouro",
+  "resultado": "cl:pedra_partilha_ouro",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:gold_ingot",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_prismarinho",
+  "resultado": "cl:pedra_partilha_prismarinho",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:prismarine_crystals",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_partilha_redstone",
+  "resultado": "cl:pedra_partilha_redstone",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "DWD",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone_bricks",
+   "D": "minecraft:redstone",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto",
+  "resultado": "cl:pedra_porto",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_ametista",
+  "resultado": "cl:pedra_porto_ametista",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:amethyst_shard",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_cobre",
+  "resultado": "cl:pedra_porto_cobre",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:copper_ingot",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_diamante",
+  "resultado": "cl:pedra_porto_diamante",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:diamond",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_esmeralda",
+  "resultado": "cl:pedra_porto_esmeralda",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:emerald",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_lapis",
+  "resultado": "cl:pedra_porto_lapis",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:lapis_lazuli",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_ouro",
+  "resultado": "cl:pedra_porto_ouro",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:gold_ingot",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_prismarinho",
+  "resultado": "cl:pedra_porto_prismarinho",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:prismarine_crystals",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_porto_redstone",
+  "resultado": "cl:pedra_porto_redstone",
+  "qtd": 1,
+  "grade": [
+   "DSD",
+   "SWS",
+   "BBB"
+  ],
+  "chaves": {
+   "B": "minecraft:stone_bricks",
+   "D": "minecraft:redstone",
+   "S": "minecraft:stone_brick_slab",
+   "W": "cl:pedra_viagem"
   },
   "estacoes": [
    "crafting_table"
@@ -30607,6 +31353,150 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "D": "minecraft:purple_dye",
    "E": "minecraft:emerald",
    "P": "minecraft:ender_pearl"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_ametista",
+  "resultado": "cl:pedra_viagem_ametista",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:amethyst_shard",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_cobre",
+  "resultado": "cl:pedra_viagem_cobre",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_diamante",
+  "resultado": "cl:pedra_viagem_diamante",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:diamond",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_esmeralda",
+  "resultado": "cl:pedra_viagem_esmeralda",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:emerald",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_lapis",
+  "resultado": "cl:pedra_viagem_lapis",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:lapis_lazuli",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_ouro",
+  "resultado": "cl:pedra_viagem_ouro",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_prismarinho",
+  "resultado": "cl:pedra_viagem_prismarinho",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:prismarine_crystals",
+   "W": "cl:pedra_viagem"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pedra_viagem_redstone",
+  "resultado": "cl:pedra_viagem_redstone",
+  "qtd": 1,
+  "grade": [
+   " M ",
+   "MWM",
+   " M "
+  ],
+  "chaves": {
+   "M": "minecraft:redstone",
+   "W": "cl:pedra_viagem"
   },
   "estacoes": [
    "crafting_table"
@@ -31203,6 +32093,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_pergaminho_vazio",
+  "resultado": "cl:pergaminho_vazio",
+  "qtd": 1,
+  "grade": [
+   "GFG",
+   "PPP"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_nugget",
+   "F": "minecraft:feather",
+   "P": "minecraft:paper"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_pergaminho_viagem",
   "resultado": "cl:pergaminho_viagem",
@@ -31255,6 +32163,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "M": "minecraft:milk_bucket",
    "w": "minecraft:wheat"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_placa_dobra",
+  "resultado": "cl:placa_dobra",
+  "qtd": 1,
+  "grade": [
+   "SAS",
+   "AFA",
+   "SAS"
+  ],
+  "chaves": {
+   "A": "minecraft:amethyst_shard",
+   "F": "minecraft:flint",
+   "S": "minecraft:stone_bricks"
   },
   "estacoes": [
    "crafting_table"

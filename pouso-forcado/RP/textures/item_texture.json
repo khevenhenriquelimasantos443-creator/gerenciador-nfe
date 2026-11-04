@@ -5635,6 +5635,42 @@
     },
     "clc_faca_netherita": {
       "textures": "textures/items/cl/arte/faca_netherita"
+    },
+    "clc_pedra_viagem_cobre": {
+      "textures": "textures/items/cl/c/pedra_viagem_cobre"
+    },
+    "clc_pedra_viagem_prismarinho": {
+      "textures": "textures/items/cl/c/pedra_viagem_prismarinho"
+    },
+    "clc_pedra_viagem_ouro": {
+      "textures": "textures/items/cl/c/pedra_viagem_ouro"
+    },
+    "clc_pedra_viagem_diamante": {
+      "textures": "textures/items/cl/c/pedra_viagem_diamante"
+    },
+    "clc_pedra_viagem_ametista": {
+      "textures": "textures/items/cl/c/pedra_viagem_ametista"
+    },
+    "clc_pedra_viagem_lapis": {
+      "textures": "textures/items/cl/c/pedra_viagem_lapis"
+    },
+    "clc_pedra_viagem_esmeralda": {
+      "textures": "textures/items/cl/c/pedra_viagem_esmeralda"
+    },
+    "clc_pedra_viagem_redstone": {
+      "textures": "textures/items/cl/c/pedra_viagem_redstone"
+    },
+    "clc_fragmento_dormente": {
+      "textures": "textures/items/cl/c/fragmento_dormente"
+    },
+    "clc_fragmento_sintonizado": {
+      "textures": "textures/items/cl/c/fragmento_sintonizado"
+    },
+    "clc_pergaminho_vazio": {
+      "textures": "textures/items/cl/c/pergaminho_vazio"
+    },
+    "clc_pergaminho_vinculado": {
+      "textures": "textures/items/cl/c/pergaminho_vinculado"
     }
   }
 }

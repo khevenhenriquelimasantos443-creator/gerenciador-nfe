@@ -18,7 +18,7 @@ export default {
   fase: 31,
   mod: "Extra Utilities",
   itens: [
-    { id: "pedra_viagem", pt: "Pedra de Viagem", en: "Warp Stone", icone: "cristal:#b072ff", pilha: 1, mod: "Waystones" },
+    { id: "pedra_viagem", pt: "Pedra de Viagem", en: "Warp Stone", icone: "cristal:#b072ff", pilha: 1, mod: "Waystones", comp: { "minecraft:durability": { max_durability: 10000 } } }, // 1.35.0: 10.000 de durabilidade, 80 por viagem (Waystones 26)
     { id: "pergaminho_retorno", pt: "Pergaminho de Retorno", en: "Return Scroll", icone: "placa:#e9dfc0", pilha: 16, mod: "Waystones" },
     { id: "pergaminho_viagem", pt: "Pergaminho de Viagem", en: "Warp Scroll", icone: "placa:#c9a8f0", pilha: 16, mod: "Waystones" },
     { id: "mochila", pt: "Mochila", en: "Backpack", icone: "saco:#8b5a2b", pilha: 1, mod: "Backpacks" },

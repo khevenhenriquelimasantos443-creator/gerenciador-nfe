@@ -78,6 +78,9 @@ export type Acao =
   | "fd2_banquete"
   | "fd2_solo"
   | "fd2_selvagem"
+  | "wy2_partilha"
+  | "wy2_placa"
+  | "wy2_pergaminho"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -580,6 +583,16 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "waystones2", // 1.35.0: Waystones 26
+    icone: "cl:pedra_partilha_ametista",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "wy2_partilha", objetivo: { tipo: "acao", acao: "wy2_partilha", qtd: 1 }, recompensa: [{ item: "minecraft:amethyst_shard", quantidade: 8 }] },
+      { id: "wy2_placa", objetivo: { tipo: "acao", acao: "wy2_placa", qtd: 1 }, recompensa: [{ item: "cl:fragmento_dormente", quantidade: 2 }] },
+      { id: "wy2_pergaminho", objetivo: { tipo: "acao", acao: "wy2_pergaminho", qtd: 1 }, recompensa: [{ item: "cl:pergaminho_vazio", quantidade: 4 }] },
     ],
   },
   {

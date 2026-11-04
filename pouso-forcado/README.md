@@ -154,6 +154,21 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.35.0 (Waystones 26.3, o mais novo)
+
+- **Viajar custa experiência** como no mod novo: 0,01 ponto por bloco (até 27; outra dimensão 27), saindo de uma
+  Pedra do Caminho ou da Pedra de Viagem. A **Pedra de Viagem** não tem mais espera: tem 10.000 de durabilidade e gasta
+  80 por viagem.
+- **9 variantes** da Pedra do Caminho (musgosa, de arenito, negra, de ardósia, do Ender, do Nether, púrpura, de
+  prismarinho e de lama).
+- **Pedras de Partilha** de 8 cores (cobre, prismarinho, ouro, diamante, ametista, lápis, esmeralda, redstone): toda
+  pedra da mesma cor leva a qualquer outra, sem precisar ativar e sem custo.
+- **Pedras-Porto** (abrem a lista, mas ninguém viaja para elas) e as **Pedras de Viagem coloridas** (a rede da cor).
+- **Placa de Dobra**: toque com um **Fragmento Dormente** (vira Sintonizado) e leve-o a outra placa para ligar as duas;
+  fique 2,5 s em cima de uma para ir à outra.
+- **Pergaminho em Branco**: toque numa Pedra do Caminho e ele vira **Pergaminho Vinculado** àquela pedra (uma viagem).
+- O Waystones novo é "todos os direitos reservados": ideias e números do mod, arte própria. Diário: capítulo Viagens+.
+
 ## Novidades da 1.34.0 (Farmer's Delight 1.3.0, o mais novo)
 
 - **Tortas em bloco** (Maçã, Cheesecake de Frutas Vermelhas, Chocolate): põe na mesa e toque para servir 4 fatias

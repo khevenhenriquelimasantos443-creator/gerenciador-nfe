@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pedra_caminho_negra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "SWS",
+      "SSS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:polished_blackstone_bricks"
+      },
+      "W": {
+        "item": "cl:pedra_viagem"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:pedra_caminho_negra"
+    }
+  }
+}

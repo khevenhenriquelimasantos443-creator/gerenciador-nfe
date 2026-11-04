@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:pedra_viagem_cobre",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_pedra_viagem_cobre",
+      "minecraft:display_name": {
+        "value": "item.cl:pedra_viagem_cobre.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 10000
+      }
+    }
+  }
+}
