@@ -361,4 +361,28 @@ for pedra, filtro in (("jaspe", [{"any_of": [{"test": "has_biome_tag", "operator
         "distribution": {"iterations": 1, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
                          "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [0, 64]}}}})
 
+# 1.40.0 (Extra Utilities 2): a Orquídea Vermelha madura em cima do minério de redstone nas cavernas abaixo de y 16 e o
+# Lírio Ender maduro no chão do End.
+escrever("BP/features/xu2_orquidea.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+    "description": {"identifier": "cl:xu2_orquidea"}, "places_block": {"name": "cl:orquidea_planta", "states": {"cl:estagio": 6}},
+    "enforce_placement_rules": False, "enforce_survivability_rules": False,
+    "may_attach_to": {"bottom": ["minecraft:redstone_ore", "minecraft:deepslate_redstone_ore"]}, "may_replace": ["minecraft:air"]}})
+escrever("BP/features/xu2_orquidea_tufo.json", {"format_version": "1.13.0", "minecraft:scatter_feature": {
+    "description": {"identifier": "cl:xu2_orquidea_tufo"}, "places_feature": "cl:xu2_orquidea", "iterations": 48, "coordinate_eval_order": "xzy",
+    "x": {"distribution": "uniform", "extent": [-6, 6]}, "y": {"distribution": "uniform", "extent": [-6, 6]}, "z": {"distribution": "uniform", "extent": [-6, 6]}}})
+escrever("BP/feature_rules/xu2_orquidea_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+    "description": {"identifier": "cl:xu2_orquidea_regra", "places_feature": "cl:xu2_orquidea_tufo"},
+    "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "overworld"}]},
+    "distribution": {"iterations": 2, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                     "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [-58, 16]}}}})
+escrever("BP/features/xu2_lirio.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+    "description": {"identifier": "cl:xu2_lirio"}, "places_block": {"name": "cl:lirio_ender_planta", "states": {"cl:estagio": 7}},
+    "enforce_placement_rules": False, "enforce_survivability_rules": False,
+    "may_attach_to": {"bottom": ["minecraft:end_stone"]}, "may_replace": ["minecraft:air"]}})
+escrever("BP/feature_rules/xu2_lirio_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+    "description": {"identifier": "cl:xu2_lirio_regra", "places_feature": "cl:xu2_lirio"},
+    "conditions": {"placement_pass": "surface_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "the_end"}]},
+    "distribution": {"iterations": 1, "scatter_chance": chance(1 / 8), "x": {"distribution": "uniform", "extent": [0, 16]},
+                     "y": "query.heightmap(variable.worldx, variable.worldz)", "z": {"distribution": "uniform", "extent": [0, 16]}}}})
+
 print(f"geração natural: {len(list((RAIZ / 'BP/features').iterdir()))} features, 3 tabelas de saque, templo e destroços com baú")

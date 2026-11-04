@@ -5731,6 +5731,18 @@
     },
     "clc_livro_impresso": {
       "textures": "textures/items/cl/arte/livro_impresso"
+    },
+    "clc_semente_lirio_ender": {
+      "textures": "textures/items/cl/arte/semente_lirio_ender"
+    },
+    "clc_orquidea_vermelha": {
+      "textures": "textures/items/cl/arte/orquidea_vermelha"
+    },
+    "clc_laco_dourado": {
+      "textures": "textures/items/cl/arte/laco_dourado"
+    },
+    "clc_laco_amaldicoado": {
+      "textures": "textures/items/cl/arte/laco_amaldicoado"
     }
   }
 }

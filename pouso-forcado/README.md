@@ -154,6 +154,19 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.40.0 (Extra Utilities 2, o mais novo)
+
+- **Espinhos** de madeira, ferro, ouro e diamante: a cada 0,5 s ferem quem está em cima (1, 4, 2 e 8). Os de madeira
+  não matam; quem morre nos de ouro solta XP; os de diamante contam como golpe do jogador (sai o saque de jogador).
+- **Lírio Ender**: semente das masmorras (e o lírio nasce no End). Cresce num relógio, 8 estágios, ~2,3 h no end stone
+  e 4× mais devagar em outro chão; farinha de osso faz ele voltar. Maduro: toque e colha uma **pérola do Ender**.
+- **Orquídea Vermelha**: nasce nas cavernas abaixo de y 16 em cima do minério de redstone e só cresce nele; aceita
+  farinha de osso; madura dá **redstone**.
+- **Laço Dourado** (bichos pacíficos) e **Laço Amaldiçoado** (monstros): toque no bicho para guardar, num bloco para
+  soltar.
+- **Tocha Magnum** (nenhum monstro nasce num raio de 64, 32 de altura) e **Candelabro** (raio de 16).
+- Arte própria (o Extra Utilities é fechado); números das páginas do mod no wiki do FTB. Diário: capítulo XU 2.
+
 ## Novidades da 1.39.0 (CC: Tweaked 1.121, o mais novo)
 
 - **Robô com ferramentas trocáveis** (os upgrades das turtles): toque o robô parado com uma ferramenta de diamante ou

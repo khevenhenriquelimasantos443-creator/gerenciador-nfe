@@ -1,0 +1,56 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:candelabro",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.planta",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_candelabro",
+          "render_method": "alpha_test",
+          "ambient_occlusion": 0,
+          "face_dimming": false
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#dcb43c",
+      "minecraft:light_emission": 15,
+      "cl:candelabro": {},
+      "minecraft:collision_box": {
+        "origin": [
+          -6,
+          6,
+          -6
+        ],
+        "size": [
+          12,
+          10,
+          12
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          6,
+          -6
+        ],
+        "size": [
+          12,
+          10,
+          12
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}

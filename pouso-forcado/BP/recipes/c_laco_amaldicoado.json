@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_laco_amaldicoado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FBF",
+      "BLB",
+      "FBF"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:fermented_spider_eye"
+      },
+      "B": {
+        "item": "minecraft:blaze_powder"
+      },
+      "L": {
+        "item": "cl:laco_dourado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:laco_amaldicoado"
+    }
+  }
+}

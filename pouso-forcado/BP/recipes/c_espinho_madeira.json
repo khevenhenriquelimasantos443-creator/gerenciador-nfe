@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_espinho_madeira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "SMS",
+      "MMM"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:wooden_sword"
+      },
+      "M": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:espinho_madeira",
+      "count": 4
+    }
+  }
+}

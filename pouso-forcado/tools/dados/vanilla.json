@@ -611,6 +611,11 @@
   "en": "Diamond Shovel",
   "icone": "textures/items/diamond_shovel"
  },
+ "minecraft:diamond_sword": {
+  "pt": "Espada de Diamante",
+  "en": "Diamond Sword",
+  "icone": "textures/items/diamond_sword"
+ },
  "minecraft:diorite": {
   "pt": "diorite",
   "en": "diorite",
@@ -834,6 +839,10 @@
   "pt": "Pá de Ouro",
   "en": "Golden Shovel",
   "icone": "textures/items/gold_shovel"
+ },
+ "minecraft:golden_sword": {
+  "pt": "Espada de Ouro",
+  "en": "Golden Sword"
  },
  "minecraft:granite": {
   "pt": "granite",
@@ -1886,6 +1895,10 @@
   "pt": "Pá de Madeira",
   "en": "Wooden Shovel",
   "icone": "textures/items/wood_shovel"
+ },
+ "minecraft:wooden_sword": {
+  "pt": "Espada de Madeira",
+  "en": "Wooden Sword"
  },
  "minecraft:yellow_dye": {
   "pt": "Corante Amarelo",

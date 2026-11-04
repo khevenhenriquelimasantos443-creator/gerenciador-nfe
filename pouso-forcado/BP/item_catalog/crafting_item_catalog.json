@@ -2965,11 +2965,22 @@
               "name": "cl:itemGroup.name.items_extra_utilities"
             },
             "items": [
+              "cl:laco_amaldicoado",
+              "cl:laco_dourado",
+              "cl:orquidea_vermelha",
               "cl:regador",
+              "cl:semente_lirio_ender",
               "cl:super_varinha_construtor",
               "cl:varinha_construtor",
               "cl:bloco_angelical",
+              "cl:candelabro",
+              "cl:espinho_diamante",
+              "cl:espinho_ferro",
+              "cl:espinho_madeira",
+              "cl:espinho_ouro",
+              "cl:lirio_ender_planta",
               "cl:lixeira",
+              "cl:orquidea_planta",
               "cl:pedregulho_comprimido_1",
               "cl:pedregulho_comprimido_2",
               "cl:pedregulho_comprimido_3",
@@ -2977,7 +2988,8 @@
               "cl:pedregulho_comprimido_5",
               "cl:pedregulho_comprimido_6",
               "cl:pedregulho_comprimido_7",
-              "cl:pedregulho_comprimido_8"
+              "cl:pedregulho_comprimido_8",
+              "cl:tocha_magnum"
             ]
           },
           {

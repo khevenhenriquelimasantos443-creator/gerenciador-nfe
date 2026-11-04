@@ -2226,6 +2226,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Channel",
   "icone": "textures/blocks/cl/arte/canal"
  },
+ "cl:candelabro": {
+  "pt": "Candelabro",
+  "en": "Chandelier",
+  "icone": "textures/blocks/cl/arte/candelabro"
+ },
  "cl:cano_oxigenio": {
   "pt": "Cano de Oxigênio",
   "en": "Oxygen Pipe",
@@ -4516,6 +4521,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Barbecue on a Stick",
   "icone": "textures/items/cl/arte/espetinho"
  },
+ "cl:espinho_diamante": {
+  "pt": "Espinhos de Diamante",
+  "en": "Diamond Spikes",
+  "icone": "textures/blocks/cl/arte/espinho_diamante"
+ },
+ "cl:espinho_ferro": {
+  "pt": "Espinhos de Ferro",
+  "en": "Iron Spikes",
+  "icone": "textures/blocks/cl/arte/espinho_ferro"
+ },
+ "cl:espinho_madeira": {
+  "pt": "Espinhos de Madeira",
+  "en": "Wooden Spikes",
+  "icone": "textures/blocks/cl/arte/espinho_madeira"
+ },
+ "cl:espinho_ouro": {
+  "pt": "Espinhos de Ouro",
+  "en": "Golden Spikes",
+  "icone": "textures/blocks/cl/arte/espinho_ouro"
+ },
  "cl:espremedor": {
   "pt": "Espremedor",
   "en": "Juicer",
@@ -5816,6 +5841,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Kama",
   "icone": "textures/items/cl/arte/kama_slime_rainha"
  },
+ "cl:laco_amaldicoado": {
+  "pt": "Laço Amaldiçoado",
+  "en": "Cursed Lasso",
+  "icone": "textures/items/cl/arte/laco_amaldicoado"
+ },
+ "cl:laco_dourado": {
+  "pt": "Laço Dourado",
+  "en": "Golden Lasso",
+  "icone": "textures/items/cl/arte/laco_dourado"
+ },
  "cl:ladrilho_refratario": {
   "pt": "Ladrilho Refratário",
   "en": "Seared Tiles",
@@ -6130,6 +6165,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lingote de Zinco",
   "en": "Zinc Ingot",
   "icone": "textures/items/cl/c/lingote_zinco"
+ },
+ "cl:lirio_ender_planta": {
+  "pt": "Lírio Ender",
+  "en": "Ender Lily",
+  "icone": "textures/blocks/cl/arte/lirio_ender_planta_0"
  },
  "cl:livro_enciclopedia": {
   "pt": "Enciclopédia do Tinker",
@@ -8045,6 +8085,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Organizador",
   "en": "Organizer",
   "icone": "textures/items/cl/arte/organizador"
+ },
+ "cl:orquidea_planta": {
+  "pt": "Orquídea Vermelha",
+  "en": "Red Orchid",
+  "icone": "textures/blocks/cl/arte/orquidea_planta_0"
+ },
+ "cl:orquidea_vermelha": {
+  "pt": "Orquídea Vermelha",
+  "en": "Red Orchid",
+  "icone": "textures/items/cl/arte/orquidea_vermelha"
  },
  "cl:osmio_po": {
   "pt": "Pó de Minério de Ósmio",
@@ -12706,6 +12756,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cactus Fruit Seeds",
   "icone": "textures/items/cl/arte/semente_fruta_cacto"
  },
+ "cl:semente_lirio_ender": {
+  "pt": "Sementes de Lírio Ender",
+  "en": "Ender-Lily Seeds",
+  "icone": "textures/items/cl/arte/semente_lirio_ender"
+ },
  "cl:semente_milho": {
   "pt": "Sementes de Milho",
   "en": "Corn Seeds",
@@ -13215,6 +13270,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "TNT de Obsidiana",
   "en": "Obsidian TNT",
   "icone": "textures/items/cl/blocos/tnt_obsidiana"
+ },
+ "cl:tocha_magnum": {
+  "pt": "Tocha Magnum",
+  "en": "Magnum Torch",
+  "icone": "textures/blocks/cl/arte/tocha_magnum"
  },
  "cl:tocha_mega": {
   "pt": "Mega Tocha",
@@ -14369,6 +14429,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Diamond Shovel",
   "icone": "textures/items/diamond_shovel"
  },
+ "minecraft:diamond_sword": {
+  "pt": "Espada de Diamante",
+  "en": "Diamond Sword",
+  "icone": "textures/items/diamond_sword"
+ },
  "minecraft:diorite": {
   "pt": "diorite",
   "en": "diorite",
@@ -14582,6 +14647,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pá de Ouro",
   "en": "Golden Shovel",
   "icone": "textures/items/gold_shovel"
+ },
+ "minecraft:golden_sword": {
+  "pt": "Espada de Ouro",
+  "en": "Golden Sword"
  },
  "minecraft:granite": {
   "pt": "granite",
@@ -15620,6 +15689,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Pá de Madeira",
   "en": "Wooden Shovel",
   "icone": "textures/items/wood_shovel"
+ },
+ "minecraft:wooden_sword": {
+  "pt": "Espada de Madeira",
+  "en": "Wooden Sword"
  },
  "minecraft:yellow_dye": {
   "pt": "Corante Amarelo",
@@ -21514,6 +21587,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_candelabro",
+  "resultado": "cl:candelabro",
+  "qtd": 1,
+  "grade": [
+   " T ",
+   "TGT",
+   "GGG"
+  ],
+  "chaves": {
+   "T": "minecraft:torch",
+   "G": "minecraft:gold_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_cano_oxigenio",
   "resultado": "cl:cano_oxigenio",
   "qtd": 6,
@@ -26595,6 +26686,78 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_espinho_diamante",
+  "resultado": "cl:espinho_diamante",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SMS",
+   "MMM"
+  ],
+  "chaves": {
+   "S": "minecraft:diamond_sword",
+   "M": "minecraft:diamond"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_espinho_ferro",
+  "resultado": "cl:espinho_ferro",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SMS",
+   "MMM"
+  ],
+  "chaves": {
+   "S": "minecraft:iron_sword",
+   "M": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_espinho_madeira",
+  "resultado": "cl:espinho_madeira",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SMS",
+   "MMM"
+  ],
+  "chaves": {
+   "S": "minecraft:wooden_sword",
+   "M": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_espinho_ouro",
+  "resultado": "cl:espinho_ouro",
+  "qtd": 4,
+  "grade": [
+   " S ",
+   "SMS",
+   "MMM"
+  ],
+  "chaves": {
+   "S": "minecraft:golden_sword",
+   "M": "minecraft:gold_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_espremedor_ie",
   "resultado": "cl:espremedor_ie",
   "qtd": 1,
@@ -28352,6 +28515,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "#": "minecraft:dried_kelp",
    "R": "cl:arroz_cozido",
    "X": "minecraft:carrot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_laco_amaldicoado",
+  "resultado": "cl:laco_amaldicoado",
+  "qtd": 1,
+  "grade": [
+   "FBF",
+   "BLB",
+   "FBF"
+  ],
+  "chaves": {
+   "F": "minecraft:fermented_spider_eye",
+   "B": "minecraft:blaze_powder",
+   "L": "cl:laco_dourado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_laco_dourado",
+  "resultado": "cl:laco_dourado",
+  "qtd": 1,
+  "grade": [
+   "GSG",
+   "SES",
+   "GSG"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "S": "minecraft:string",
+   "E": "minecraft:ender_pearl"
   },
   "estacoes": [
    "crafting_table"
@@ -40212,6 +40413,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "O": "minecraft:obsidian",
    "T": "minecraft:tnt"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tocha_magnum",
+  "resultado": "cl:tocha_magnum",
+  "qtd": 1,
+  "grade": [
+   "CDC",
+   "CLC",
+   "LLL"
+  ],
+  "chaves": {
+   "C": "cl:candelabro",
+   "D": "minecraft:diamond",
+   "L": "#minecraft:logs"
   },
   "estacoes": [
    "crafting_table"

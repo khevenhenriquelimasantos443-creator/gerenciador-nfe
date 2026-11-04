@@ -27,6 +27,9 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
 - **Waystones** (BlayTheNinth), **Backpacks** (Eydamos), **ComputerCraft** (Daniel Ratcliffe, os programas "tunnel" e
   "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
   só as ideias e os números (1.10.0). Código, modelos e arte próprios.
+- **Extra Utilities 2** (RWTema; código e arte fechados): espinhos, Lírio Ender, Orquídea Vermelha, laços, Tocha Magnum e
+  Candelabro (1.40.0), com os números das páginas do mod no wiki do FTB (ftb.fandom.com e ftbwiki.org). Código e arte
+  próprios (`tools/desenhar-xu2.py`).
 
 - **Extreme Reactors** (ZeroNoRyouki; sem licença publicada para a arte): a turbina, a refrigeração ativa, os
   moderadores e as bobinas com os números de ReactorGameData.java e TurbineGameData.java (2.4.18,

@@ -5688,6 +5688,54 @@
     },
     "clc_alto_falante_baixo": {
       "textures": "textures/blocks/cl/arte/alto_falante_baixo"
+    },
+    "clc_espinho_madeira": {
+      "textures": "textures/blocks/cl/arte/espinho_madeira"
+    },
+    "clc_espinho_ferro": {
+      "textures": "textures/blocks/cl/arte/espinho_ferro"
+    },
+    "clc_espinho_ouro": {
+      "textures": "textures/blocks/cl/arte/espinho_ouro"
+    },
+    "clc_espinho_diamante": {
+      "textures": "textures/blocks/cl/arte/espinho_diamante"
+    },
+    "clc_lirio_ender_planta": {
+      "textures": "textures/blocks/cl/c/lirio_ender_planta"
+    },
+    "clc_orquidea_planta": {
+      "textures": "textures/blocks/cl/c/orquidea_planta"
+    },
+    "clc_tocha_magnum": {
+      "textures": "textures/blocks/cl/arte/tocha_magnum"
+    },
+    "clc_candelabro": {
+      "textures": "textures/blocks/cl/arte/candelabro"
+    },
+    "clc_lirio_ender_planta_0": {
+      "textures": "textures/blocks/cl/arte/lirio_ender_planta_0"
+    },
+    "clc_lirio_ender_planta_1": {
+      "textures": "textures/blocks/cl/arte/lirio_ender_planta_1"
+    },
+    "clc_lirio_ender_planta_2": {
+      "textures": "textures/blocks/cl/arte/lirio_ender_planta_2"
+    },
+    "clc_lirio_ender_planta_3": {
+      "textures": "textures/blocks/cl/arte/lirio_ender_planta_3"
+    },
+    "clc_orquidea_planta_0": {
+      "textures": "textures/blocks/cl/arte/orquidea_planta_0"
+    },
+    "clc_orquidea_planta_1": {
+      "textures": "textures/blocks/cl/arte/orquidea_planta_1"
+    },
+    "clc_orquidea_planta_2": {
+      "textures": "textures/blocks/cl/arte/orquidea_planta_2"
+    },
+    "clc_orquidea_planta_3": {
+      "textures": "textures/blocks/cl/arte/orquidea_planta_3"
     }
   }
 }

@@ -1,0 +1,44 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:feature_rules": {
+  "description": {
+   "identifier": "cl:xu2_orquidea_regra",
+   "places_feature": "cl:xu2_orquidea_tufo"
+  },
+  "conditions": {
+   "placement_pass": "underground_pass",
+   "minecraft:biome_filter": [
+    {
+     "test": "has_biome_tag",
+     "operator": "==",
+     "value": "overworld"
+    }
+   ]
+  },
+  "distribution": {
+   "iterations": 2,
+   "coordinate_eval_order": "xzy",
+   "x": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     16
+    ]
+   },
+   "z": {
+    "distribution": "uniform",
+    "extent": [
+     0,
+     16
+    ]
+   },
+   "y": {
+    "distribution": "uniform",
+    "extent": [
+     -58,
+     16
+    ]
+   }
+  }
+ }
+}

@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.39.0";
+export const VERSAO = "1.40.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -1146,8 +1146,9 @@ export const SAQUE_SORTEIO: Readonly<Record<string, ReadonlyArray<{ itens: reado
     { itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 3 },
   ],
   cl_templo: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 3 }],
-  cl_masmorra: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 5 }],
-  cl_masmorra_funda: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 2 }],
+  // 1.40.0: as sementes de Lírio Ender do Extra Utilities 2 vêm das masmorras.
+  cl_masmorra: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 5 }, { itens: [`${NS}:semente_lirio_ender`], vazio: 3 }],
+  cl_masmorra_funda: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 2 }, { itens: [`${NS}:semente_lirio_ender`], vazio: 2 }],
   cl_destrocos: [{ itens: ARTEFATOS_SAQUE, vazio: ARTEFATOS_SAQUE.length * 9 }],
 };
 export const MASMORRA_FUNDA_SAQUE: ReadonlyArray<LinhaSaque> = [

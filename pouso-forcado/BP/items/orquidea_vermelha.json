@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:orquidea_vermelha",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_orquidea_vermelha",
+      "minecraft:display_name": {
+        "value": "item.cl:orquidea_vermelha.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

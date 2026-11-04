@@ -1,0 +1,97 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:orquidea_planta",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "cl:estagio": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.planta",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_orquidea_planta_0",
+          "render_method": "alpha_test",
+          "ambient_occlusion": 0,
+          "face_dimming": false
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#c81e24",
+      "minecraft:loot": "loot_tables/empty.json",
+      "cl:orquidea": {},
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          12,
+          10
+        ]
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cl:estagio') >= 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clc_orquidea_planta_1",
+              "render_method": "alpha_test",
+              "ambient_occlusion": 0,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:estagio') >= 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clc_orquidea_planta_2",
+              "render_method": "alpha_test",
+              "ambient_occlusion": 0,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cl:estagio') >= 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "clc_orquidea_planta_3",
+              "render_method": "alpha_test",
+              "ambient_occlusion": 0,
+              "face_dimming": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

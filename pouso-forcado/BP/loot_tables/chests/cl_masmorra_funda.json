@@ -400,6 +400,20 @@
      "weight": 94
     }
    ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "cl:semente_lirio_ender",
+     "weight": 1
+    },
+    {
+     "type": "empty",
+     "weight": 2
+    }
+   ]
   }
  ]
 }

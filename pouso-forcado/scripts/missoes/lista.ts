@@ -104,6 +104,11 @@ export type Acao =
   | "cct_guarda"
   | "cct_monitor"
   | "cct_impressora"
+  | "xu2_espinho"
+  | "xu2_lirio"
+  | "xu2_orquidea"
+  | "xu2_laco"
+  | "xu2_magnum"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -606,6 +611,18 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "xu2", // 1.40.0: Extra Utilities 2
+    icone: "cl:tocha_magnum",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "xu2_espinho", objetivo: { tipo: "acao", acao: "xu2_espinho", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "xu2_laco", objetivo: { tipo: "acao", acao: "xu2_laco", qtd: 1 }, recompensa: [{ item: "minecraft:lead", quantidade: 2 }] },
+      { id: "xu2_lirio", objetivo: { tipo: "acao", acao: "xu2_lirio", qtd: 1 }, recompensa: [{ item: "minecraft:end_stone", quantidade: 16 }] },
+      { id: "xu2_orquidea", objetivo: { tipo: "acao", acao: "xu2_orquidea", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+      { id: "xu2_magnum", objetivo: { tipo: "acao", acao: "xu2_magnum", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
     ],
   },
   {

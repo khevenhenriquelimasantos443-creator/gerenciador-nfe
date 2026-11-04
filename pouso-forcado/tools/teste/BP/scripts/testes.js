@@ -1885,6 +1885,75 @@ teste("waystone", 300, (t) => {
   });
 });
 
+// 1.40.0: Extra Utilities 2. Espinhos de diamante matam o zumbi e os de madeira deixam o porco com 1 de vida; Lírio
+// Ender e Orquídea Vermelha maduros dão pérola e redstone; o laço dourado pega e solta a vaca; Tocha Magnum protege.
+teste("xu2", 300, (t) => {
+  const j = robo(t, { x: 4.5, y: 2, z: 4.5 });
+  const dim = t.getDimension();
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`xu2: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const ev = (acao, a, p) => { const q = w(p); cmd(`scriptevent cl:teste_xu2 ${acao} ${a} ${q.x} ${q.y} ${q.z}`); };
+  const r = {};
+  t.setBlockType("cl:espinho_diamante", { x: 1, y: 2, z: 1 });
+  t.setBlockType("cl:espinho_madeira", { x: 3, y: 2, z: 1 });
+  for (const [x, z] of [[2, 1], [4, 1], [3, 0], [3, 2]]) t.setBlockType("minecraft:oak_fence", { x, y: 3, z }); // o porco não sai
+  t.setBlockType("minecraft:redstone_ore", { x: 7, y: 1, z: 1 });
+  t.setBlockType("cl:tocha_magnum", { x: 0, y: 2, z: 7 });
+  let zumbi, porco;
+  t.runAfterDelay(4, () => {
+    zumbi = t.spawn("minecraft:zombie", { x: 1.5, y: 3, z: 1.5 });
+    porco = t.spawn("minecraft:pig", { x: 3.5, y: 3, z: 1.5 });
+    ev("plantar", "cl:semente_lirio_ender", { x: 5, y: 1, z: 1 });
+    ev("plantar", "cl:orquidea_vermelha", { x: 7, y: 1, z: 1 });
+  });
+  t.runAfterDelay(8, () => {
+    r.lirio = t.getBlock({ x: 5, y: 2, z: 1 }).typeId;
+    r.orquidea = t.getBlock({ x: 7, y: 2, z: 1 }).typeId;
+    ev("estagio", "3", { x: 5, y: 2, z: 1 });
+  });
+  t.runAfterDelay(10, () => ev("farinha", "-", { x: 5, y: 2, z: 1 }));
+  t.runAfterDelay(12, () => {
+    r.lirioDepoisFarinha = t.getBlock({ x: 5, y: 2, z: 1 }).permutation.getState("cl:estagio");
+    ev("estagio", "7", { x: 5, y: 2, z: 1 });
+    ev("estagio", "6", { x: 7, y: 2, z: 1 });
+  });
+  t.runAfterDelay(14, () => {
+    j.interactWithBlock({ x: 5, y: 2, z: 1 }, Direction.Up);
+    j.interactWithBlock({ x: 7, y: 2, z: 1 }, Direction.Up);
+    // Laço: vaca perto do robô.
+    t.spawn("minecraft:cow", { x: 4.5, y: 2, z: 6.5 });
+    j.setItem(new ItemStack("cl:laco_dourado", 1), 0, true);
+  });
+  t.runAfterDelay(18, () => {
+    const itens = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 6, y: 2, z: 1.5 }), maxDistance: 3 }).map((e) => e.getComponent("item").itemStack.typeId);
+    r.perola = itens.includes("minecraft:ender_pearl");
+    r.redstone = itens.includes("minecraft:redstone");
+    r.lirioReplantou = t.getBlock({ x: 5, y: 2, z: 1 }).permutation.getState("cl:estagio");
+    cmd("scriptevent cl:teste_xu2 pegar minecraft:cow 0 0 0");
+  });
+  t.runAfterDelay(22, () => {
+    r.vacasDepoisPegar = dim.getEntities({ type: "minecraft:cow", location: t.worldLocation({ x: 4.5, y: 2, z: 6.5 }), maxDistance: 6 }).length;
+    r.lore = JSON.stringify(j.getComponent("inventory").container.getItem(0)?.getLore());
+    ev("soltar", "-", { x: 6, y: 1, z: 6 });
+    const longe = t.worldLocation({ x: 30, y: 2, z: 7 }), muitoLonge = t.worldLocation({ x: 80, y: 2, z: 7 });
+    cmd(`scriptevent cl:teste_xu2 protegido - ${longe.x} ${longe.y} ${longe.z}`);
+    cmd(`scriptevent cl:teste_xu2 protegido - ${muitoLonge.x} ${muitoLonge.y} ${muitoLonge.z}`);
+  });
+  t.runAfterDelay(25, () => (r.vacasDepoisSoltar = dim.getEntities({ type: "minecraft:cow", location: t.worldLocation({ x: 6.5, y: 2, z: 6.5 }), maxDistance: 4 }).length));
+  t.runAfterDelay(160, () => {
+    r.zumbiVivo = zumbi.isValid;
+    r.porcoVida = porco.isValid ? porco.getComponent("health").currentValue : -1;
+    log(`xu2: ${JSON.stringify(r)}`);
+    t.assert(r.lirio === "cl:lirio_ender_planta" && r.orquidea === "cl:orquidea_planta", "não plantou o lírio/orquídea");
+    t.assert(r.lirioDepoisFarinha === 2, "a farinha não fez o lírio voltar um estágio");
+    t.assert(r.perola && r.redstone && r.lirioReplantou === 0, "o lírio/orquídea maduros não deram pérola/redstone");
+    t.assert(r.vacasDepoisPegar === 0 && r.vacasDepoisSoltar === 1, "o laço não pegou/soltou a vaca");
+    t.assert(!r.zumbiVivo, "os espinhos de diamante não mataram o zumbi");
+    t.assert(r.porcoVida === 1, "os espinhos de madeira não deixaram o porco com 1 de vida");
+    t.succeed();
+  });
+});
+
 // 1.39.0: CC: Tweaked. Robô Avançado com machado corta uma árvore e replanta; outro robô com enxada colhe 3×3 e, com
 // espada, derruba um zumbi; Monitor com texto; Impressora faz páginas e um livro.
 teste("cct", 500, (t) => {

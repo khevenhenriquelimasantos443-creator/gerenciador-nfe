@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tocha_magnum"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CDC",
+      "CLC",
+      "LLL"
+    ],
+    "key": {
+      "C": {
+        "item": "cl:candelabro"
+      },
+      "D": {
+        "item": "minecraft:diamond"
+      },
+      "L": {
+        "tag": "minecraft:logs"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tocha_magnum"
+    }
+  }
+}
