@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_impressora"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "SSS",
+      "SRS",
+      "SDS"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:stone"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "D": {
+        "item": "minecraft:ink_sac"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:impressora"
+    }
+  }
+}

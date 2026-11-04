@@ -899,6 +899,10 @@
   "en": "Ice",
   "icone": "textures/blocks/ice"
  },
+ "minecraft:ink_sac": {
+  "pt": "ink_sac",
+  "en": "ink_sac"
+ },
  "minecraft:iron_axe": {
   "pt": "Machado de Ferro",
   "en": "Iron Axe",
@@ -1225,6 +1229,11 @@
   "pt": "Netherrack",
   "en": "Netherrack",
   "icone": "textures/blocks/netherrack"
+ },
+ "minecraft:noteblock": {
+  "pt": "Bloco Musical",
+  "en": "Note Block",
+  "icone": "textures/blocks/noteblock"
  },
  "minecraft:oak_leaves": {
   "pt": "Folhas de Carvalho",

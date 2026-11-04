@@ -2950,7 +2950,13 @@
             },
             "items": [
               "cl:computador",
-              "cl:robo_minerador"
+              "cl:livro_impresso",
+              "cl:pagina_impressa",
+              "cl:robo_avancado",
+              "cl:robo_minerador",
+              "cl:alto_falante",
+              "cl:impressora",
+              "cl:monitor"
             ]
           },
           {

@@ -5722,6 +5722,15 @@
     },
     "clc_balde_biodiesel": {
       "textures": "textures/items/cl/c/balde_biodiesel"
+    },
+    "clc_robo_avancado": {
+      "textures": "textures/items/cl/c/robo_avancado"
+    },
+    "clc_pagina_impressa": {
+      "textures": "textures/items/cl/arte/pagina_impressa"
+    },
+    "clc_livro_impresso": {
+      "textures": "textures/items/cl/arte/livro_impresso"
     }
   }
 }

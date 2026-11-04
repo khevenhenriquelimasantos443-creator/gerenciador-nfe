@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_robo_avancado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "GPG",
+      "GCG",
+      "GBG"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:gold_ingot"
+      },
+      "P": {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      "C": {
+        "item": "cl:computador"
+      },
+      "B": {
+        "item": "minecraft:chest"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:robo_avancado"
+    }
+  }
+}

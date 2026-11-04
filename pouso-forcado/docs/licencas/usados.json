@@ -209,7 +209,21 @@
   "vidro_mosaico"
  ],
  "computercraft": [
-  "computador"
+  "alto_falante_baixo",
+  "alto_falante_frente",
+  "alto_falante_lado",
+  "alto_falante_topo",
+  "computador",
+  "impressora_baixo",
+  "impressora_frente",
+  "impressora_lado",
+  "impressora_topo",
+  "livro_impresso",
+  "monitor_baixo",
+  "monitor_frente",
+  "monitor_lado",
+  "monitor_topo",
+  "pagina_impressa"
  ],
  "enderio": [
   "aco_end",

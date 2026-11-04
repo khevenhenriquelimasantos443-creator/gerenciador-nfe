@@ -154,6 +154,19 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.39.0 (CC: Tweaked 1.121, o mais novo)
+
+- **Robô com ferramentas trocáveis** (os upgrades das turtles): toque o robô parado com uma ferramenta de diamante ou
+  netherita e ele troca (a antiga volta para você). **Picareta**: túnel e escavar, como antes. **Machado**: anda numa
+  linha de 16 ou 32 cortando as árvores inteiras e replantando as mudas que tiver. **Enxada**: colhe e replanta a
+  plantação 5×5 ou 9×9 à frente (ele anda por cima). **Espada**: guarda a área, 8 de dano nos monstros a 3 blocos.
+- **Combustível com limite**, como no mod: 20.000 no robô comum e 100.000 no **Robô Minerador Avançado** (de ouro).
+- **Monitor**: toque e escreva; o texto aparece grande na frente da tela (`|` quebra a linha).
+- **Impressora**: com papel e tinta (corante preto ou bolsa de tinta), imprime uma **Página Impressa** com título e
+  texto; agachado com couro, junta as páginas num **Livro Impresso**.
+- **Alto-falante**: toque toca a nota (sobe meio tom); agachado troca o instrumento (16); com redstone, toca sozinho.
+- Arte do CC: Tweaked (CCPL e MPL-2.0). Diário: capítulo CC: Tweaked.
+
 ## Novidades da 1.38.0 (Immersive Engineering 12.4, o mais novo)
 
 - Máquinas novas do IE (aqui em bloco único: baú de entrada em cima, de saída embaixo, energia da rede), com os RF por

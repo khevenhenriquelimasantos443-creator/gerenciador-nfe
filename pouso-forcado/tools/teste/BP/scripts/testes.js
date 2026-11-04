@@ -1885,6 +1885,105 @@ teste("waystone", 300, (t) => {
   });
 });
 
+// 1.39.0: CC: Tweaked. Robô Avançado com machado corta uma árvore e replanta; outro robô com enxada colhe 3×3 e, com
+// espada, derruba um zumbi; Monitor com texto; Impressora faz páginas e um livro.
+teste("cct", 500, (t) => {
+  const j = robo(t, { x: 3, y: 2, z: 0 });
+  const dim = t.getDimension();
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`cct: ${c} -> ${e}`); } };
+  const w = (p) => t.worldBlockLocation(p);
+  const r = {};
+  // Árvore à frente do robô A e o baú atrás dele.
+  t.setBlockType("minecraft:dirt", { x: 3, y: 1, z: 3 });
+  for (let y = 2; y <= 5; y++) t.setBlockType("minecraft:oak_log", { x: 3, y, z: 3 });
+  // Plantação do robô B (altura 3, terra arada na 2) e a plataforma dele.
+  for (let x = 4; x <= 6; x++) for (let z = 2; z <= 4; z++) {
+    t.setBlockType("minecraft:farmland", { x, y: 2, z });
+    t.setBlockPermutation(BlockPermutation.resolve("minecraft:wheat", { growth: 7 }), { x, y: 3, z });
+  }
+  for (let x = 4; x <= 6; x++) for (let z = 0; z <= 1; z++) t.setBlockType("minecraft:stone", { x, y: 3, z });
+  t.setBlockType("minecraft:chest", { x: 6, y: 4, z: 0 });
+  t.setBlockType("cl:monitor", { x: 0, y: 2, z: 6 });
+  t.runAfterDelay(10, () => {
+    j.setItem(new ItemStack("cl:robo_avancado", 1), 0, true);
+    j.lookAtBlock({ x: 3, y: 1, z: 1 });
+    j.useItemInSlotOnBlock(0, { x: 3, y: 1, z: 1 }, Direction.Up);
+  });
+  t.runAfterDelay(20, () => {
+    t.setBlockType("minecraft:chest", { x: 3, y: 2, z: 0 });
+    j.teleport(t.worldLocation({ x: 1.5, y: 2, z: 1.5 }));
+    const a = dim.getEntities({ type: "cl:robo_minerador", location: t.worldLocation({ x: 3.5, y: 2, z: 1.5 }), maxDistance: 2 })[0];
+    if (!a) return t.fail("o robô avançado não apareceu");
+    a.getComponent("inventory").container.addItem(new ItemStack("minecraft:oak_sapling", 2));
+    cmd("scriptevent cl:teste_robo equipar minecraft:diamond_axe");
+    cmd("scriptevent cl:teste_robo abastecer 200000");
+    // Monitor e impressora.
+    const m = w({ x: 0, y: 2, z: 6 });
+    cmd(`scriptevent cl:teste_cct monitor ${m.x} ${m.y} ${m.z} Ola|mundo`);
+    j.setItem(new ItemStack("minecraft:paper", 3), 1, false);
+    j.setItem(new ItemStack("minecraft:black_dye", 3), 2, false);
+    j.setItem(new ItemStack("minecraft:leather", 1), 3, false);
+    cmd("scriptevent cl:teste_cct imprimir Pagina um#linha 1|linha 2");
+    cmd("scriptevent cl:teste_cct imprimir Pagina dois#oi");
+  });
+  t.runAfterDelay(26, () => {
+    r.ferramentaVolta = quantos(j, "minecraft:diamond_pickaxe");
+    r.paginas = quantos(j, "cl:pagina_impressa");
+    cmd("scriptevent cl:teste_cct livro");
+    cmd("scriptevent cl:teste_robo lenhador 4");
+  });
+  t.runAfterDelay(30, () => {
+    r.livro = quantos(j, "cl:livro_impresso");
+    const ents = dim.getEntities({ type: "cl:texto_monitor", location: t.worldLocation({ x: 0.5, y: 2, z: 6.5 }), maxDistance: 2 });
+    r.monitor = ents.map((e) => e.nameTag);
+  });
+  t.runAfterDelay(120, () => {
+    let troncos = 0;
+    for (let y = 2; y <= 5; y++) if (t.getBlock({ x: 3, y, z: 3 }).typeId === "minecraft:oak_log") troncos++;
+    r.troncos = troncos;
+    r.muda = t.getBlock({ x: 3, y: 2, z: 3 }).typeId;
+    const c = t.getBlock({ x: 3, y: 2, z: 0 }).getComponent("inventory").container;
+    let toras = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === "minecraft:oak_log") toras += c.getItem(s).amount;
+    r.toras = toras;
+    // Robô B (comum) com enxada.
+    dim.spawnEntity("cl:robo_minerador", t.worldLocation({ x: 6.5, y: 4, z: 1.5 }));
+    j.teleport(t.worldLocation({ x: 7.5, y: 4, z: 0.5 }));
+  });
+  t.runAfterDelay(125, () => {
+    cmd("scriptevent cl:teste_robo equipar minecraft:diamond_hoe");
+    cmd("scriptevent cl:teste_robo abastecer 500");
+    cmd("scriptevent cl:teste_robo agricultor 3");
+  });
+  t.runAfterDelay(230, () => {
+    let novas = 0;
+    for (let x = 4; x <= 6; x++) for (let z = 2; z <= 4; z++) {
+      const b = t.getBlock({ x, y: 3, z });
+      if (b.typeId === "minecraft:wheat" && b.permutation.getState("growth") === 0) novas++;
+    }
+    r.replantou = novas;
+    const c = t.getBlock({ x: 6, y: 4, z: 0 }).getComponent("inventory").container;
+    let trigo = 0;
+    for (let s = 0; s < c.size; s++) if (c.getItem(s)?.typeId === "minecraft:wheat") trigo += c.getItem(s).amount;
+    r.trigo = trigo;
+    cmd("scriptevent cl:teste_robo equipar minecraft:diamond_sword");
+    r.zumbi = t.spawn("minecraft:zombie", { x: 5.5, y: 4, z: 1.5 });
+    cmd("scriptevent cl:teste_robo guarda 1");
+  });
+  t.runAfterDelay(320, () => {
+    r.zumbiVivo = r.zumbi.isValid;
+    delete r.zumbi;
+    log(`cct: ${JSON.stringify(r)}`);
+    t.assert(r.ferramentaVolta === 1, "a picareta não voltou ao trocar pelo machado");
+    t.assert(r.troncos === 0 && r.muda === "minecraft:oak_sapling" && r.toras >= 4, "o robô lenhador não cortou e replantou");
+    t.assert(r.replantou === 9 && r.trigo >= 9, "o robô agricultor não colheu e replantou");
+    t.assert(!r.zumbiVivo, "o robô guarda não derrubou o zumbi");
+    t.assert(r.monitor.length === 1 && r.monitor[0] === "Ola\nmundo", "o monitor não mostrou o texto");
+    t.assert(r.paginas === 2 && r.livro === 1, "a impressora não fez as páginas e o livro");
+    t.succeed();
+  });
+});
+
 // 1.10.0: Robô Minerador: pôr com o item, abastecer com carvão e fazer um túnel de 4 numa parede de pedregulho.
 teste("robo", 600, (t) => {
   // Nesta área o chão de pedra fica na altura 1: o robô anda na altura 2.

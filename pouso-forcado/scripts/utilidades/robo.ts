@@ -1,4 +1,4 @@
-import { Block, Dimension, Direction, Entity, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
+import { Block, BlockPermutation, Dimension, Direction, Entity, EntityDamageCause, ItemStack, Player, RawMessage, system, Vector3, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
@@ -21,6 +21,25 @@ const ROBO = "cl:robo_minerador";
 const COMB = "cl:comb";
 const PROG = "cl:prog";
 const DONO = "cl:dono";
+/*
+ * 1.39.0 (CC: Tweaked 1.121): o Robô Avançado (item cl:robo_avancado, a mesma entidade com cl:av) e o limite de
+ * combustível do mod (turtleFuelLimit 20.000, advancedTurtleFuelLimit 100.000). Ferramentas trocáveis como os upgrades
+ * das turtles: tocar o robô parado com uma picareta, machado, enxada ou espada (de diamante ou netherita) troca a
+ * ferramenta (a antiga volta para você) e muda os programas: machado corta as árvores numa linha e replanta as mudas,
+ * enxada colhe e replanta a plantação à frente, espada guarda a área (8 de dano a monstros a 3 blocos, 1 de combustível
+ * por golpe).
+ */
+const ROBO_AV = "cl:robo_avancado";
+const AV = "cl:av";
+const FERR = "cl:ferr";
+const LIMITE = 20000, LIMITE_AV = 100000;
+type Ferramenta = "picareta" | "machado" | "enxada" | "espada";
+const FERRAMENTAS: Readonly<Record<string, Ferramenta>> = {
+  "minecraft:diamond_pickaxe": "picareta", "minecraft:netherite_pickaxe": "picareta", "minecraft:diamond_axe": "machado", "minecraft:netherite_axe": "machado",
+  "minecraft:diamond_hoe": "enxada", "minecraft:netherite_hoe": "enxada", "minecraft:diamond_sword": "espada", "minecraft:netherite_sword": "espada",
+};
+const ferramentaDe = (r: Entity): string => (r.getDynamicProperty(FERR) as string | undefined) ?? "minecraft:diamond_pickaxe";
+const limite = (r: Entity) => (r.getDynamicProperty(AV) ? LIMITE_AV : LIMITE);
 const COMBUSTIVEL: Readonly<Record<string, number>> = {
   "minecraft:coal": 80, "minecraft:charcoal": 80, "minecraft:coal_block": 800, "minecraft:lava_bucket": 1000,
   "minecraft:blaze_rod": 120, "minecraft:stick": 5,
@@ -33,7 +52,7 @@ const INQUEBRAVEIS = new Set([
 // Frente e direita de cada direção (0 norte, 1 leste, 2 sul, 3 oeste) e o giro do modelo.
 const FRENTE: ReadonlyArray<[number, number]> = [[0, -1], [1, 0], [0, 1], [-1, 0]];
 const GIRO = [180, -90, 0, 90];
-type Prog = { t: "tunel" | "escavar"; n: number; o: [number, number, number]; f: number; i: number; m: number; fundo?: boolean };
+type Prog = { t: "tunel" | "escavar" | "lenhador" | "agricultor" | "guarda"; n: number; o: [number, number, number]; f: number; i: number; m: number; fundo?: boolean };
 
 const lerProg = (r: Entity): Prog | undefined => {
   try {
@@ -131,6 +150,9 @@ const quebravel = (b: Block) => !b.isAir && !b.isLiquid && !INQUEBRAVEIS.has(b.t
 function passo(r: Entity): void {
   const p = lerProg(r);
   if (!p) return;
+  if (p.t === "lenhador") return passoLenhador(r, p);
+  if (p.t === "agricultor") return passoAgricultor(r, p);
+  if (p.t === "guarda") return passoGuarda(r, p);
   const dim = r.dimension;
   for (let tentativas = 0; tentativas < 6; tentativas++) {
     const a = alvo(p, dim);
@@ -191,8 +213,152 @@ function pisar(r: Entity, pos: Vector3): void {
   }
 }
 
+// ---------- 1.39.0: machado, enxada e espada ----------
+const tronco = (id: string) => (id.endsWith("_log") || id.endsWith("_stem")) && !id.includes("stripped");
+const MUDA: Readonly<Record<string, string>> = {
+  "minecraft:oak_log": "minecraft:oak_sapling", "minecraft:spruce_log": "minecraft:spruce_sapling", "minecraft:birch_log": "minecraft:birch_sapling",
+  "minecraft:jungle_log": "minecraft:jungle_sapling", "minecraft:acacia_log": "minecraft:acacia_sapling", "minecraft:dark_oak_log": "minecraft:dark_oak_sapling",
+  "minecraft:cherry_log": "minecraft:cherry_sapling", "minecraft:mangrove_log": "minecraft:mangrove_propagule",
+};
+const TERRA = new Set(["minecraft:grass_block", "minecraft:dirt", "minecraft:podzol", "minecraft:coarse_dirt", "minecraft:rooted_dirt", "minecraft:mud"]);
+const passavel = (b: Block) => b.isAir || b.typeId.endsWith("_sapling") || b.typeId === "minecraft:mangrove_propagule" || b.typeId === "minecraft:short_grass" || b.typeId === "minecraft:tall_grass";
+function tirarDoRobo(r: Entity, id: string): boolean {
+  const c = container(r);
+  if (!c) return false;
+  for (let k = 0; k < c.size; k++) {
+    const i = c.getItem(k);
+    if (i?.typeId !== id) continue;
+    if (i.amount > 1) {
+      i.amount--;
+      c.setItem(k, i);
+    } else c.setItem(k, undefined);
+    return true;
+  }
+  return false;
+}
+function cheioDespeja(r: Entity, p: Prog): void {
+  const c = container(r);
+  if (c && c.emptySlotsCount === 0) {
+    const aqui = blocoDo(r);
+    despejar(r, p);
+    r.setDynamicProperty(COMB, Math.max(0, comb(r) - 2 * dist(aqui, origem(p))));
+  }
+}
+function passoLenhador(r: Entity, p: Prog): void {
+  const [fx, fz] = FRENTE[p.f];
+  const o = origem(p);
+  const s = p.i + 1;
+  if (s > p.n) return terminar(r, p, "cl.robo.terminou");
+  const pos = { x: o.x + fx * s, y: o.y, z: o.z + fz * s };
+  const dim = r.dimension;
+  const b = dim.getBlock(pos);
+  if (!b) return;
+  if (tronco(b.typeId)) {
+    // Corta o tronco inteiro (até 32 de altura) e replanta a muda se tiver uma e o chão for de terra.
+    const tipo = b.typeId;
+    for (let h = 0; h < 32; h++) {
+      const t = dim.getBlock({ x: pos.x, y: pos.y + h, z: pos.z });
+      if (!t || !tronco(t.typeId)) break;
+      dim.runCommand(`setblock ${t.x} ${t.y} ${t.z} air destroy`);
+      p.m++;
+      const onde = { x: t.x, y: t.y, z: t.z };
+      system.runTimeout(() => recolher(r, onde), 2);
+    }
+    system.runTimeout(() => {
+      const chao = dim.getBlock({ x: pos.x, y: pos.y - 1, z: pos.z });
+      const aqui = dim.getBlock(pos);
+      if (MUDA[tipo] && aqui?.isAir && chao && TERRA.has(chao.typeId) && tirarDoRobo(r, MUDA[tipo])) aqui.setType(MUDA[tipo]);
+    }, 4);
+    const j = dono(r);
+    if (j) registrarAcao(j, "cct_lenhador");
+    gravarProg(r, p);
+    return;
+  }
+  if (b.typeId.endsWith("_leaves")) {
+    dim.runCommand(`setblock ${b.x} ${b.y} ${b.z} air destroy`);
+    return;
+  }
+  if (!passavel(b)) return terminar(r, p, "cl.robo.terminou");
+  if (comb(r) - 1 < dist(pos, o)) return terminar(r, p, "cl.robo.sem_combustivel");
+  r.setDynamicProperty(COMB, comb(r) - 1);
+  mover(r, pos, p.f);
+  p.i++;
+  cheioDespeja(r, p);
+  gravarProg(r, p);
+}
+const MADURA: Readonly<Record<string, string>> = {
+  "minecraft:wheat": "minecraft:wheat_seeds", "minecraft:carrots": "minecraft:carrot", "minecraft:potatoes": "minecraft:potato", "minecraft:beetroot": "minecraft:beetroot_seeds",
+};
+function passoAgricultor(r: Entity, p: Prog): void {
+  const area = p.n * p.n;
+  if (p.i >= area) return terminar(r, p, "cl.robo.terminou");
+  const [fx, fz] = FRENTE[p.f];
+  const [dx, dz] = FRENTE[(p.f + 1) % 4];
+  const o = origem(p);
+  const linha = Math.floor(p.i / p.n);
+  const col = linha % 2 ? p.n - 1 - (p.i % p.n) : p.i % p.n;
+  const pos = { x: o.x + fx * (col + 1) + dx * linha, y: o.y, z: o.z + fz * (col + 1) + dz * linha };
+  const dim = r.dimension;
+  const b = dim.getBlock(pos);
+  if (!b) return;
+  p.i++;
+  if (!passavel(b)) return gravarProg(r, p);
+  if (comb(r) - 1 < dist(pos, o)) return terminar(r, p, "cl.robo.sem_combustivel");
+  r.setDynamicProperty(COMB, comb(r) - 1);
+  mover(r, pos, p.f);
+  const planta = dim.getBlock({ x: pos.x, y: pos.y - 1, z: pos.z });
+  const semente = planta && MADURA[planta.typeId];
+  if (planta && semente && planta.permutation.getState("growth" as never) === 7) {
+    const tipo = planta.typeId;
+    const onde = { x: planta.x, y: planta.y, z: planta.z };
+    dim.runCommand(`setblock ${onde.x} ${onde.y} ${onde.z} air destroy`);
+    dim.getBlock(onde)?.setPermutation(BlockPermutation.resolve(tipo, { growth: 0 }));
+    p.m++;
+    system.runTimeout(() => {
+      recolher(r, onde);
+      tirarDoRobo(r, semente); // a semente replantada
+    }, 2);
+    const j = dono(r);
+    if (j) registrarAcao(j, "cct_agricultor");
+  }
+  cheioDespeja(r, p);
+  gravarProg(r, p);
+}
+function passoGuarda(r: Entity, p: Prog): void {
+  if (comb(r) < 1) return terminar(r, p, "cl.robo.sem_combustivel");
+  p.i++;
+  const alvo = r.dimension.getEntities({ location: r.location, maxDistance: 3, families: ["monster"], closest: 1 })[0];
+  if (alvo) {
+    alvo.applyDamage(8, { cause: EntityDamageCause.entityAttack, damagingEntity: r });
+    r.setDynamicProperty(COMB, comb(r) - 1);
+    p.m++;
+    if (!alvo.isValid || (alvo.getComponent("minecraft:health")?.currentValue ?? 1) <= 0) {
+      const j = dono(r);
+      if (j) registrarAcao(j, "cct_guarda");
+    }
+  }
+  if (p.i % 10 === 0) recolher(r, blocoDo(r));
+  gravarProg(r, p);
+}
+/** Troca a ferramenta do robô parado pela da mão do jogador (a antiga volta para ele). */
+function equipar(j: Player, r: Entity, id: string): boolean {
+  if (!FERRAMENTAS[id] || lerProg(r)) return false;
+  const antiga = ferramentaDe(r);
+  r.setDynamicProperty(FERR, id);
+  const inv = j.getComponent("minecraft:inventory")?.container;
+  const mao = inv?.getItem(j.selectedSlotIndex);
+  if (inv && mao?.typeId === id) inv.setItem(j.selectedSlotIndex, new ItemStack(antiga, 1));
+  else {
+    const sobra = inv?.addItem(new ItemStack(antiga, 1));
+    if (sobra) j.dimension.spawnItem(sobra, j.location);
+  }
+  j.playSound("random.anvil_use", { volume: 0.4, pitch: 1.4 });
+  aviso(j, { translate: "cl.cc.ferramenta", with: { rawtext: [{ translate: `cl.cc.${FERRAMENTAS[id]}` }] } }, 3);
+  return true;
+}
+
 function comecar(j: Player, r: Entity, t: Prog["t"], n: number): void {
-  const precisa = t === "tunel" ? n * 4 : n * n + 2 * n;
+  const precisa = t === "tunel" ? n * 4 : t === "lenhador" ? n * 2 : t === "guarda" ? 1 : n * n + 2 * n;
   if (comb(r) < precisa) return aviso(j, { translate: "cl.robo.pouco", with: [String(precisa)] }, 4);
   const o = blocoDo(r);
   const yaw = r.getRotation().y;
@@ -209,12 +375,13 @@ function guardarRobo(j: Player, r: Entity): void {
     if (i) r.dimension.spawnItem(i, r.location);
   }
   c?.clearAll();
-  const item = new ItemStack(ROBO, 1);
+  const item = new ItemStack(r.getDynamicProperty(AV) ? ROBO_AV : ROBO, 1);
   const n = comb(r);
   if (n) {
     item.setDynamicProperty(COMB, n);
     item.setLore([`§7${n}`]);
   }
+  if (r.getDynamicProperty(FERR)) item.setDynamicProperty(FERR, r.getDynamicProperty(FERR));
   r.remove();
   const sobra = j.getComponent("minecraft:inventory")?.container?.addItem(item);
   if (sobra) j.dimension.spawnItem(sobra, j.location);
@@ -224,19 +391,26 @@ async function menu(j: Player, r: Entity): Promise<void> {
   const p = lerProg(r);
   const c = container(r);
   const usados = c ? c.size - c.emptySlotsCount : 0;
-  const estado = p
-    ? { translate: "cl.robo.trabalhando", with: { rawtext: [p.t === "tunel" ? { translate: "cl.robo.tunel", with: [String(p.n)] } : { translate: "cl.robo.escavar", with: [String(p.n), String(p.n)] }, { text: String(p.m) }] } }
-    : { translate: "cl.robo.parado" };
-  const f = new ActionFormData().title({ translate: "cl.robo.titulo" }).body({ translate: "cl.robo.corpo", with: { rawtext: [{ text: String(comb(r)) }, { text: String(usados) }, estado] } });
+  const nome = (q: Prog): RawMessage =>
+    q.t === "tunel" ? { translate: "cl.robo.tunel", with: [String(q.n)] }
+    : q.t === "escavar" ? { translate: "cl.robo.escavar", with: [String(q.n), String(q.n)] }
+    : q.t === "lenhador" ? { translate: "cl.cc.lenhador", with: [String(q.n)] }
+    : q.t === "agricultor" ? { translate: "cl.cc.agricultor", with: [String(q.n), String(q.n)] }
+    : { translate: "cl.cc.guarda" };
+  const estado = p ? { translate: "cl.robo.trabalhando", with: { rawtext: [nome(p), { text: String(p.m) }] } } : { translate: "cl.robo.parado" };
+  const f = new ActionFormData().title({ translate: "cl.robo.titulo" }).body({ translate: "cl.robo.corpo", with: { rawtext: [{ text: `${comb(r)} / ${limite(r)}` }, { text: String(usados) }, estado] } });
   const acoes: Array<() => void> = [];
   if (!p) {
-    for (const n of [16, 32, 64]) {
-      f.button({ translate: "cl.robo.tunel", with: [String(n)] });
-      acoes.push(() => comecar(j, r, "tunel", n));
-    }
-    for (const n of [3, 5, 9]) {
-      f.button({ translate: "cl.robo.escavar", with: [String(n), String(n)] });
-      acoes.push(() => comecar(j, r, "escavar", n));
+    // 1.39.0: os programas dependem da ferramenta.
+    const ferr = FERRAMENTAS[ferramentaDe(r)] ?? "picareta";
+    const opcoes: Array<[Prog["t"], number]> =
+      ferr === "machado" ? [["lenhador", 16], ["lenhador", 32]]
+      : ferr === "enxada" ? [["agricultor", 5], ["agricultor", 9]]
+      : ferr === "espada" ? [["guarda", 1]]
+      : [["tunel", 16], ["tunel", 32], ["tunel", 64], ["escavar", 3], ["escavar", 5], ["escavar", 9]];
+    for (const [t, n] of opcoes) {
+      f.button(nome({ t, n, o: [0, 0, 0], f: 0, i: 0, m: 0 }));
+      acoes.push(() => comecar(j, r, t, n));
     }
   } else {
     f.button({ translate: "cl.robo.parar" });
@@ -268,11 +442,13 @@ const AO_LADO: Readonly<Record<string, [number, number, number]>> = {
 export function registrarRobo(): void {
   // Pôr o robô: toque num bloco com o item; ele fica de costas para o jogador.
   world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    if (ev.itemStack?.typeId !== ROBO || !toqueNovo(ev)) return;
+    const tipo = ev.itemStack?.typeId;
+    if ((tipo !== ROBO && tipo !== ROBO_AV) || !toqueNovo(ev)) return;
     ev.cancel = true;
     const { player: j, block: b } = ev;
     const d = AO_LADO[ev.blockFace] ?? [0, 1, 0];
-    const n = (ev.itemStack.getDynamicProperty(COMB) as number | undefined) ?? 0;
+    const n = (ev.itemStack!.getDynamicProperty(COMB) as number | undefined) ?? 0;
+    const ferr = ev.itemStack!.getDynamicProperty(FERR) as string | undefined;
     system.run(() => {
       const pos = { x: b.x + d[0], y: b.y + d[1], z: b.z + d[2] };
       if (!j.dimension.getBlock(pos)?.isAir) return;
@@ -282,6 +458,8 @@ export function registrarRobo(): void {
       r.setRotation({ x: 0, y: GIRO[f] });
       r.setDynamicProperty(COMB, n);
       r.setDynamicProperty(DONO, j.id);
+      if (tipo === ROBO_AV) r.setDynamicProperty(AV, true);
+      if (ferr) r.setDynamicProperty(FERR, ferr);
       gastarDaMao(j);
       j.playSound("random.anvil_land", { volume: 0.3, pitch: 1.6 });
     });
@@ -293,14 +471,24 @@ export function registrarRobo(): void {
     const { player: j, target: r } = ev;
     const mao = ev.itemStack;
     system.run(() => {
+      if (mao && FERRAMENTAS[mao.typeId] && equipar(j, r, mao.typeId)) return;
       const valor = mao ? COMBUSTIVEL[mao.typeId] : undefined;
       if (mao && valor) {
         const inv = j.getComponent("minecraft:inventory")?.container;
         const slot = j.selectedSlotIndex;
         const i = inv?.getItem(slot);
         if (!inv || i?.typeId !== mao.typeId) return;
-        r.setDynamicProperty(COMB, comb(r) + valor * i.amount);
-        inv.setItem(slot, i.typeId === "minecraft:lava_bucket" ? new ItemStack("minecraft:bucket", i.amount) : undefined);
+        // 1.39.0: até o limite do robô; o que não cabe fica na mão.
+        const cabem = Math.min(i.amount, Math.floor((limite(r) - comb(r)) / valor));
+        if (cabem <= 0) return aviso(j, { translate: "cl.cc.limite", with: [String(comb(r))] }, 3);
+        r.setDynamicProperty(COMB, comb(r) + valor * cabem);
+        const lava = i.typeId === "minecraft:lava_bucket";
+        if (cabem === i.amount) inv.setItem(slot, lava ? new ItemStack("minecraft:bucket", i.amount) : undefined);
+        else {
+          i.amount -= cabem;
+          inv.setItem(slot, i);
+          if (lava) inv.addItem(new ItemStack("minecraft:bucket", cabem));
+        }
         j.playSound("random.burp", { pitch: 1.5 });
         return aviso(j, { translate: "cl.robo.abasteceu", with: [String(comb(r))] }, 3);
       }
@@ -314,8 +502,18 @@ export function registrarRobo(): void {
     const r = j.dimension.getEntities({ type: ROBO, location: j.location, maxDistance: 12, closest: 1 })[0];
     const [t, n, c] = message.split(" ");
     if (!r) return;
+    if (t === "equipar") {
+      console.warn(`[teste_robo] equipar ${n}: ${equipar(j, r, n)} ferr=${ferramentaDe(r)}`);
+      return;
+    }
+    if (t === "abastecer") {
+      r.setDynamicProperty(COMB, Math.min(limite(r), comb(r) + Number(n)));
+      console.warn(`[teste_robo] combustivel=${comb(r)} limite=${limite(r)}`);
+      return;
+    }
     if (Number(c)) r.setDynamicProperty(COMB, Number(c));
-    comecar(j, r, t === "escavar" ? "escavar" : "tunel", Number(n) || 4);
+    const tipos: Prog["t"][] = ["tunel", "escavar", "lenhador", "agricultor", "guarda"];
+    comecar(j, r, tipos.includes(t as Prog["t"]) ? (t as Prog["t"]) : "tunel", Number(n) || 4);
   });
   intervalo("robô", () => {
     for (const [id, r] of trabalhando) {

@@ -296,6 +296,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Whoopee Cushion",
   "icone": "textures/items/cl/arte/almofada_pum"
  },
+ "cl:alto_falante": {
+  "pt": "Alto-falante",
+  "en": "Speaker",
+  "icone": "textures/blocks/cl/arte/alto_falante_topo"
+ },
  "cl:alto_forno": {
   "pt": "Alto-Forno",
   "en": "Blast Furnace",
@@ -5541,6 +5546,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cursed Idol",
   "icone": "textures/items/cl/arte/blocos/idolo_amaldicoado"
  },
+ "cl:impressora": {
+  "pt": "Impressora",
+  "en": "Printer",
+  "icone": "textures/blocks/cl/arte/impressora_topo"
+ },
  "cl:infusor_metalurgico": {
   "pt": "Infusor Metalúrgico",
   "en": "Metallurgic Infuser",
@@ -6145,6 +6155,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Geringonças do Tinker",
   "en": "Tinkers' Gadgetry",
   "icone": "textures/items/cl/arte/livro_geringoncas"
+ },
+ "cl:livro_impresso": {
+  "pt": "Livro Impresso",
+  "en": "Printed Book",
+  "icone": "textures/items/cl/arte/livro_impresso"
  },
  "cl:livro_materiais": {
   "pt": "Materiais e Você",
@@ -7836,6 +7851,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tomato Sauce",
   "icone": "textures/items/cl/arte/molho_tomate"
  },
+ "cl:monitor": {
+  "pt": "Monitor",
+  "en": "Monitor",
+  "icone": "textures/blocks/cl/arte/monitor_topo"
+ },
  "cl:montador_molecular": {
   "pt": "Montador Molecular",
   "en": "Molecular Assembler",
@@ -8240,6 +8260,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Padrão: Travessa",
   "en": "Crossbar Pattern",
   "icone": "textures/items/cl/arte/padrao_travessa"
+ },
+ "cl:pagina_impressa": {
+  "pt": "Página Impressa",
+  "en": "Printed Page",
+  "icone": "textures/items/cl/arte/pagina_impressa"
  },
  "cl:painel_brilhante_amarelo": {
   "pt": "Painel Brilhante Amarelo",
@@ -12486,6 +12511,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Andesite Casing",
   "icone": "textures/items/cl/blocos/revestimento_andesita"
  },
+ "cl:robo_avancado": {
+  "pt": "Robô Minerador Avançado",
+  "en": "Advanced Mining Turtle",
+  "icone": "textures/items/cl/c/robo_avancado"
+ },
  "cl:robo_minerador": {
   "pt": "Robô Minerador",
   "en": "Mining Turtle",
@@ -14617,6 +14647,10 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Ice",
   "icone": "textures/blocks/ice"
  },
+ "minecraft:ink_sac": {
+  "pt": "ink_sac",
+  "en": "ink_sac"
+ },
  "minecraft:iron_axe": {
   "pt": "Machado de Ferro",
   "en": "Iron Axe",
@@ -14938,6 +14972,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Netherrack",
   "en": "Netherrack",
   "icone": "textures/blocks/netherrack"
+ },
+ "minecraft:noteblock": {
+  "pt": "Bloco Musical",
+  "en": "Note Block",
+  "icone": "textures/blocks/noteblock"
  },
  "minecraft:oak_leaves": {
   "pt": "Folhas de Carvalho",
@@ -16678,6 +16717,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "X": "cl:placa_reforcada",
    "Y": "cl:placa_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_alto_falante",
+  "resultado": "cl:alto_falante",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SNS",
+   "SRS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "N": "minecraft:noteblock",
+   "R": "minecraft:redstone"
   },
   "estacoes": [
    "crafting_table"
@@ -27927,6 +27985,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_impressora",
+  "resultado": "cl:impressora",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SRS",
+   "SDS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "R": "minecraft:redstone",
+   "D": "minecraft:ink_sac"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_infusor_quimico",
   "resultado": "cl:infusor_quimico",
   "qtd": 1,
@@ -31711,6 +31788,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "S": "cl:placa_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_monitor",
+  "resultado": "cl:monitor",
+  "qtd": 1,
+  "grade": [
+   "SSS",
+   "SGS",
+   "SSS"
+  ],
+  "chaves": {
+   "S": "minecraft:stone",
+   "G": "minecraft:glass_pane"
   },
   "estacoes": [
    "crafting_table"
@@ -38836,6 +38931,26 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_robo_avancado",
+  "resultado": "cl:robo_avancado",
+  "qtd": 1,
+  "grade": [
+   "GPG",
+   "GCG",
+   "GBG"
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "P": "minecraft:diamond_pickaxe",
+   "C": "cl:computador",
+   "B": "minecraft:chest"
+  },
   "estacoes": [
    "crafting_table"
   ]

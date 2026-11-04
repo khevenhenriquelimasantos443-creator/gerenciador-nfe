@@ -154,6 +154,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
 | Waystones | BlayTheNinth | MIT (1.7.10; a 26.3 é "todos os direitos reservados": só ideias e números, arte própria) | github.com/blay09/Waystones (1.7.10; e 26.3) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
+| CC: Tweaked 1.121 (1.39.0: monitor, impressora, alto-falante, páginas e livro; limites de combustível do Config.java) | Daniel Ratcliffe e os desenvolvedores do CC: Tweaked | CCPL (texturas) e MPL-2.0 (alto-falante) | github.com/cc-tweaked/CC-Tweaked (mc-1.21.x) |
 | Iron Jetpacks | BlakeBr0 | MIT | github.com/BlakeBr0/IronJetpacks (26.1) |
 | TorchMaster | xalcon | MIT | github.com/xalcon/TorchMaster (21.9) |
 | Iron Chests | progwml6 | GPL-3 | github.com/progwml6/ironchest (1.21.9) |

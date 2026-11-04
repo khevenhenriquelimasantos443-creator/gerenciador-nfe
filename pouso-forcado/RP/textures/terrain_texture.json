@@ -5643,6 +5643,51 @@
     },
     "clc_campanula_baixo": {
       "textures": "textures/blocks/cl/c/campanula_baixo"
+    },
+    "clc_monitor": {
+      "textures": "textures/blocks/cl/c/monitor"
+    },
+    "clc_monitor_frente": {
+      "textures": "textures/blocks/cl/arte/monitor_frente"
+    },
+    "clc_monitor_lado": {
+      "textures": "textures/blocks/cl/arte/monitor_lado"
+    },
+    "clc_monitor_topo": {
+      "textures": "textures/blocks/cl/arte/monitor_topo"
+    },
+    "clc_monitor_baixo": {
+      "textures": "textures/blocks/cl/arte/monitor_baixo"
+    },
+    "clc_impressora": {
+      "textures": "textures/blocks/cl/c/impressora"
+    },
+    "clc_impressora_frente": {
+      "textures": "textures/blocks/cl/arte/impressora_frente"
+    },
+    "clc_impressora_lado": {
+      "textures": "textures/blocks/cl/arte/impressora_lado"
+    },
+    "clc_impressora_topo": {
+      "textures": "textures/blocks/cl/arte/impressora_topo"
+    },
+    "clc_impressora_baixo": {
+      "textures": "textures/blocks/cl/arte/impressora_baixo"
+    },
+    "clc_alto_falante": {
+      "textures": "textures/blocks/cl/c/alto_falante"
+    },
+    "clc_alto_falante_frente": {
+      "textures": "textures/blocks/cl/arte/alto_falante_frente"
+    },
+    "clc_alto_falante_lado": {
+      "textures": "textures/blocks/cl/arte/alto_falante_lado"
+    },
+    "clc_alto_falante_topo": {
+      "textures": "textures/blocks/cl/arte/alto_falante_topo"
+    },
+    "clc_alto_falante_baixo": {
+      "textures": "textures/blocks/cl/arte/alto_falante_baixo"
     }
   }
 }

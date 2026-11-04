@@ -99,6 +99,11 @@ export type Acao =
   | "ie12_diesel"
   | "ie12_termo"
   | "ie12_campanula"
+  | "cct_lenhador"
+  | "cct_agricultor"
+  | "cct_guarda"
+  | "cct_monitor"
+  | "cct_impressora"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -601,6 +606,19 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "cct", // 1.39.0: CC: Tweaked 1.121
+    icone: "cl:monitor",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "cct_lenhador", objetivo: { tipo: "acao", acao: "cct_lenhador", qtd: 1 }, recompensa: [{ item: "minecraft:oak_sapling", quantidade: 16 }] },
+      { id: "cct_agricultor", objetivo: { tipo: "acao", acao: "cct_agricultor", qtd: 8 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 32 }] },
+      { id: "cct_guarda", objetivo: { tipo: "acao", acao: "cct_guarda", qtd: 1 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 8 }] },
+      { id: "cct_avancado", objetivo: { tipo: "ter", item: "cl:robo_avancado", qtd: 1 }, recompensa: [{ item: "minecraft:coal_block", quantidade: 16 }] },
+      { id: "cct_monitor", objetivo: { tipo: "acao", acao: "cct_monitor", qtd: 1 }, recompensa: [{ item: "minecraft:glass_pane", quantidade: 16 }] },
+      { id: "cct_impressora", objetivo: { tipo: "acao", acao: "cct_impressora", qtd: 1 }, recompensa: [{ item: "minecraft:paper", quantidade: 32 }] },
     ],
   },
   {

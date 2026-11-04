@@ -74,6 +74,7 @@ import { bauGrandeComp, registrarBausGrandes } from "./utilidades/baus_grandes.j
 import { gavetaComp, registrarGavetas } from "./utilidades/gavetas.js";
 import { registrarJetpacks } from "./utilidades/jetpacks.js";
 import { registrarTurbina, turbina, turbinaParte } from "./maquinas/turbina.js";
+import { altoFalanteComp, impressoraComp, monitorComp, registrarCcTweaked } from "./utilidades/cctweaked.js";
 import { campanula, espremedorIe, fermentador, geradorDiesel, geradorTermeletrico, prensaMetal, refinariaIe, registrarImmersive12, serrariaIe, trituradorIe } from "./maquinas/immersive12.js";
 import { cestoComp, porcoesComp, redeComp, registrarFarmersNovo, soloComp } from "./maquinas/farmers_novo.js";
 import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tochas.js";
@@ -141,6 +142,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   // 1.32.0: Iron Chests e Storage Drawers.
   blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
   blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
+  // 1.39.0: CC: Tweaked 1.121.
+  blockComponentRegistry.registerCustomComponent("cl:monitor", monitorComp);
+  blockComponentRegistry.registerCustomComponent("cl:impressora", impressoraComp);
+  blockComponentRegistry.registerCustomComponent("cl:alto_falante", altoFalanteComp);
   // 1.38.0: Immersive Engineering 12.4.
   for (const [nome, comp] of [["cl:prensa_metal", prensaMetal], ["cl:triturador_ie", trituradorIe], ["cl:serraria_ie", serrariaIe], ["cl:espremedor_ie", espremedorIe],
     ["cl:fermentador", fermentador], ["cl:refinaria_ie", refinariaIe], ["cl:gerador_diesel", geradorDiesel], ["cl:gerador_termeletrico", geradorTermeletrico], ["cl:campanula", campanula]] as const)
@@ -344,6 +349,7 @@ registrarTurbina(); // 1.36.0: Extreme Reactors
 registrarTochas(); // 1.33.0: TorchMaster
 registrarQuark4(); // 1.37.0: Quark 4.1
 registrarImmersive12(); // 1.38.0: Immersive Engineering 12.4
+registrarCcTweaked(); // 1.39.0: CC: Tweaked 1.121
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();
