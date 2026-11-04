@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_cocho"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#W#",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "tag": "minecraft:planks"
+      },
+      "W": {
+        "item": "minecraft:wheat"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cocho"
+    }
+  }
+}

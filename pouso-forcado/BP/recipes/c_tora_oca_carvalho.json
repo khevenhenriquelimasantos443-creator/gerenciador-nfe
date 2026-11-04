@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tora_oca_carvalho"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " L ",
+      "L L",
+      " L "
+    ],
+    "key": {
+      "L": {
+        "item": "minecraft:oak_log"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tora_oca_carvalho",
+      "count": 4
+    }
+  }
+}

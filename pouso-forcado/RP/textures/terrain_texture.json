@@ -5175,6 +5175,366 @@
     },
     "clc_porta_fluido_turbina": {
       "textures": "textures/blocks/cl/c/porta_fluido_turbina"
+    },
+    "clv_log_oak": {
+      "textures": "textures/blocks/log_oak"
+    },
+    "clv_log_oak_top": {
+      "textures": "textures/blocks/log_oak_top"
+    },
+    "clv_stripped_oak_log": {
+      "textures": "textures/blocks/stripped_oak_log"
+    },
+    "clv_log_spruce": {
+      "textures": "textures/blocks/log_spruce"
+    },
+    "clv_log_spruce_top": {
+      "textures": "textures/blocks/log_spruce_top"
+    },
+    "clv_stripped_spruce_log": {
+      "textures": "textures/blocks/stripped_spruce_log"
+    },
+    "clv_log_birch": {
+      "textures": "textures/blocks/log_birch"
+    },
+    "clv_log_birch_top": {
+      "textures": "textures/blocks/log_birch_top"
+    },
+    "clv_stripped_birch_log": {
+      "textures": "textures/blocks/stripped_birch_log"
+    },
+    "clv_log_jungle": {
+      "textures": "textures/blocks/log_jungle"
+    },
+    "clv_log_jungle_top": {
+      "textures": "textures/blocks/log_jungle_top"
+    },
+    "clv_stripped_jungle_log": {
+      "textures": "textures/blocks/stripped_jungle_log"
+    },
+    "clv_log_acacia": {
+      "textures": "textures/blocks/log_acacia"
+    },
+    "clv_log_acacia_top": {
+      "textures": "textures/blocks/log_acacia_top"
+    },
+    "clv_stripped_acacia_log": {
+      "textures": "textures/blocks/stripped_acacia_log"
+    },
+    "clv_log_big_oak": {
+      "textures": "textures/blocks/log_big_oak"
+    },
+    "clv_log_big_oak_top": {
+      "textures": "textures/blocks/log_big_oak_top"
+    },
+    "clv_stripped_dark_oak_log": {
+      "textures": "textures/blocks/stripped_dark_oak_log"
+    },
+    "clc_tijolos_arenito": {
+      "textures": "textures/blocks/cl/arte/tijolos_arenito"
+    },
+    "clc_tijolos_arenito_vermelho": {
+      "textures": "textures/blocks/cl/arte/tijolos_arenito_vermelho"
+    },
+    "clc_arenito_almas": {
+      "textures": "textures/blocks/cl/c/arenito_almas"
+    },
+    "clc_arenito_almas_frente": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_frente"
+    },
+    "clc_arenito_almas_lado": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_lado"
+    },
+    "clc_arenito_almas_topo": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_topo"
+    },
+    "clc_arenito_almas_baixo": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_baixo"
+    },
+    "clc_arenito_almas_cortado": {
+      "textures": "textures/blocks/cl/c/arenito_almas_cortado"
+    },
+    "clc_arenito_almas_cortado_frente": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_cortado_frente"
+    },
+    "clc_arenito_almas_cortado_lado": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_cortado_lado"
+    },
+    "clc_arenito_almas_cortado_topo": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_cortado_topo"
+    },
+    "clc_arenito_almas_cortado_baixo": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_cortado_baixo"
+    },
+    "clc_arenito_almas_entalhado": {
+      "textures": "textures/blocks/cl/c/arenito_almas_entalhado"
+    },
+    "clc_arenito_almas_entalhado_frente": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_entalhado_frente"
+    },
+    "clc_arenito_almas_entalhado_lado": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_entalhado_lado"
+    },
+    "clc_arenito_almas_entalhado_topo": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_entalhado_topo"
+    },
+    "clc_arenito_almas_entalhado_baixo": {
+      "textures": "textures/blocks/cl/arte/arenito_almas_entalhado_baixo"
+    },
+    "clc_tijolos_arenito_almas": {
+      "textures": "textures/blocks/cl/arte/tijolos_arenito_almas"
+    },
+    "clc_tijolos_ferro_bruto": {
+      "textures": "textures/blocks/cl/arte/tijolos_ferro_bruto"
+    },
+    "clc_tijolos_ouro_bruto": {
+      "textures": "textures/blocks/cl/arte/tijolos_ouro_bruto"
+    },
+    "clc_tijolos_cobre_bruto": {
+      "textures": "textures/blocks/cl/arte/tijolos_cobre_bruto"
+    },
+    "clc_corindo_vermelho": {
+      "textures": "textures/blocks/cl/arte/corindo_vermelho"
+    },
+    "clc_aglomerado_corindo_vermelho": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_vermelho"
+    },
+    "clc_lampada_cristal_vermelho": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_vermelho"
+    },
+    "clc_corindo_laranja": {
+      "textures": "textures/blocks/cl/arte/corindo_laranja"
+    },
+    "clc_aglomerado_corindo_laranja": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_laranja"
+    },
+    "clc_lampada_cristal_laranja": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_laranja"
+    },
+    "clc_corindo_amarelo": {
+      "textures": "textures/blocks/cl/arte/corindo_amarelo"
+    },
+    "clc_aglomerado_corindo_amarelo": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_amarelo"
+    },
+    "clc_lampada_cristal_amarelo": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_amarelo"
+    },
+    "clc_corindo_verde": {
+      "textures": "textures/blocks/cl/arte/corindo_verde"
+    },
+    "clc_aglomerado_corindo_verde": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_verde"
+    },
+    "clc_lampada_cristal_verde": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_verde"
+    },
+    "clc_corindo_azul": {
+      "textures": "textures/blocks/cl/arte/corindo_azul"
+    },
+    "clc_aglomerado_corindo_azul": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_azul"
+    },
+    "clc_lampada_cristal_azul": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_azul"
+    },
+    "clc_corindo_anil": {
+      "textures": "textures/blocks/cl/arte/corindo_anil"
+    },
+    "clc_aglomerado_corindo_anil": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_anil"
+    },
+    "clc_lampada_cristal_anil": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_anil"
+    },
+    "clc_corindo_violeta": {
+      "textures": "textures/blocks/cl/arte/corindo_violeta"
+    },
+    "clc_aglomerado_corindo_violeta": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_violeta"
+    },
+    "clc_lampada_cristal_violeta": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_violeta"
+    },
+    "clc_corindo_branco": {
+      "textures": "textures/blocks/cl/arte/corindo_branco"
+    },
+    "clc_aglomerado_corindo_branco": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_branco"
+    },
+    "clc_lampada_cristal_branco": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_branco"
+    },
+    "clc_corindo_preto": {
+      "textures": "textures/blocks/cl/arte/corindo_preto"
+    },
+    "clc_aglomerado_corindo_preto": {
+      "textures": "textures/blocks/cl/arte/aglomerado_corindo_preto"
+    },
+    "clc_lampada_cristal_preto": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_preto"
+    },
+    "clc_banquinho_branco": {
+      "textures": "textures/blocks/cl/arte/banquinho_branco"
+    },
+    "clc_banquinho_laranja": {
+      "textures": "textures/blocks/cl/arte/banquinho_laranja"
+    },
+    "clc_banquinho_magenta": {
+      "textures": "textures/blocks/cl/arte/banquinho_magenta"
+    },
+    "clc_banquinho_azul_claro": {
+      "textures": "textures/blocks/cl/arte/banquinho_azul_claro"
+    },
+    "clc_banquinho_amarelo": {
+      "textures": "textures/blocks/cl/arte/banquinho_amarelo"
+    },
+    "clc_banquinho_lima": {
+      "textures": "textures/blocks/cl/arte/banquinho_lima"
+    },
+    "clc_banquinho_rosa": {
+      "textures": "textures/blocks/cl/arte/banquinho_rosa"
+    },
+    "clc_banquinho_cinza": {
+      "textures": "textures/blocks/cl/arte/banquinho_cinza"
+    },
+    "clc_banquinho_cinza_claro": {
+      "textures": "textures/blocks/cl/arte/banquinho_cinza_claro"
+    },
+    "clc_banquinho_ciano": {
+      "textures": "textures/blocks/cl/arte/banquinho_ciano"
+    },
+    "clc_banquinho_roxo": {
+      "textures": "textures/blocks/cl/arte/banquinho_roxo"
+    },
+    "clc_banquinho_azul": {
+      "textures": "textures/blocks/cl/arte/banquinho_azul"
+    },
+    "clc_banquinho_marrom": {
+      "textures": "textures/blocks/cl/arte/banquinho_marrom"
+    },
+    "clc_banquinho_verde": {
+      "textures": "textures/blocks/cl/arte/banquinho_verde"
+    },
+    "clc_banquinho_vermelho": {
+      "textures": "textures/blocks/cl/arte/banquinho_vermelho"
+    },
+    "clc_banquinho_preto": {
+      "textures": "textures/blocks/cl/arte/banquinho_preto"
+    },
+    "clc_batatinha": {
+      "textures": "textures/blocks/cl/arte/batatinha"
+    },
+    "clc_calha_itens": {
+      "textures": "textures/blocks/cl/c/calha_itens"
+    },
+    "clc_cocho": {
+      "textures": "textures/blocks/cl/c/cocho"
+    },
+    "clc_barra_ferro": {
+      "textures": "textures/blocks/cl/c/barra_ferro"
+    },
+    "clc_barras_ouro": {
+      "textures": "textures/blocks/cl/c/barras_ouro"
+    },
+    "clc_tora_oca_carvalho": {
+      "textures": "textures/blocks/cl/c/tora_oca_carvalho"
+    },
+    "clc_poste_carvalho": {
+      "textures": "textures/blocks/cl/c/poste_carvalho"
+    },
+    "clc_tora_oca_pinheiro": {
+      "textures": "textures/blocks/cl/c/tora_oca_pinheiro"
+    },
+    "clc_poste_pinheiro": {
+      "textures": "textures/blocks/cl/c/poste_pinheiro"
+    },
+    "clc_tora_oca_betula": {
+      "textures": "textures/blocks/cl/c/tora_oca_betula"
+    },
+    "clc_poste_betula": {
+      "textures": "textures/blocks/cl/c/poste_betula"
+    },
+    "clc_tora_oca_selva": {
+      "textures": "textures/blocks/cl/c/tora_oca_selva"
+    },
+    "clc_poste_selva": {
+      "textures": "textures/blocks/cl/c/poste_selva"
+    },
+    "clc_tora_oca_acacia": {
+      "textures": "textures/blocks/cl/c/tora_oca_acacia"
+    },
+    "clc_poste_acacia": {
+      "textures": "textures/blocks/cl/c/poste_acacia"
+    },
+    "clc_tora_oca_carvalho_escuro": {
+      "textures": "textures/blocks/cl/c/tora_oca_carvalho_escuro"
+    },
+    "clc_poste_carvalho_escuro": {
+      "textures": "textures/blocks/cl/c/poste_carvalho_escuro"
+    },
+    "clc_caixa_monstros": {
+      "textures": "textures/blocks/cl/arte/caixa_monstros"
+    },
+    "clc_nuvem": {
+      "textures": "textures/blocks/cl/arte/nuvem"
+    },
+    "clc_barra_ferro_qiron_rod": {
+      "textures": "textures/blocks/cl/arte/barra_ferro_qiron_rod"
+    },
+    "clc_barras_ouro_qbars": {
+      "textures": "textures/blocks/cl/arte/barras_ouro_qbars"
+    },
+    "clc_calha_itens_qbottom": {
+      "textures": "textures/blocks/cl/arte/calha_itens_qbottom"
+    },
+    "clc_calha_itens_qside": {
+      "textures": "textures/blocks/cl/arte/calha_itens_qside"
+    },
+    "clc_calha_itens_qtop": {
+      "textures": "textures/blocks/cl/arte/calha_itens_qtop"
+    },
+    "clc_cocho_qbottom": {
+      "textures": "textures/blocks/cl/arte/cocho_qbottom"
+    },
+    "clc_cocho_qinner": {
+      "textures": "textures/blocks/cl/arte/cocho_qinner"
+    },
+    "clc_cocho_qinside": {
+      "textures": "textures/blocks/cl/arte/cocho_qinside"
+    },
+    "clc_cocho_qside": {
+      "textures": "textures/blocks/cl/arte/cocho_qside"
+    },
+    "clc_cocho_qtop": {
+      "textures": "textures/blocks/cl/arte/cocho_qtop"
+    },
+    "clc_lampada_cristal_amarelo_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_amarelo_acesa"
+    },
+    "clc_lampada_cristal_anil_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_anil_acesa"
+    },
+    "clc_lampada_cristal_azul_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_azul_acesa"
+    },
+    "clc_lampada_cristal_branco_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_branco_acesa"
+    },
+    "clc_lampada_cristal_laranja_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_laranja_acesa"
+    },
+    "clc_lampada_cristal_preto_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_preto_acesa"
+    },
+    "clc_lampada_cristal_verde_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_verde_acesa"
+    },
+    "clc_lampada_cristal_vermelho_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_vermelho_acesa"
+    },
+    "clc_lampada_cristal_violeta_acesa": {
+      "textures": "textures/blocks/cl/arte/lampada_cristal_violeta_acesa"
     }
   }
 }

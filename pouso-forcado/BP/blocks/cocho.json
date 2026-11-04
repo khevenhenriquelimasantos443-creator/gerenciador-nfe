@@ -1,0 +1,80 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:cocho",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.q_cocho",
+      "minecraft:material_instances": {
+        "*": {
+          "render_method": "alpha_test",
+          "texture": "clc_cocho_qbottom"
+        },
+        "bottom": {
+          "render_method": "alpha_test",
+          "texture": "clc_cocho_qbottom"
+        },
+        "inner": {
+          "render_method": "alpha_test",
+          "texture": "clc_cocho_qinner"
+        },
+        "inside": {
+          "render_method": "alpha_test",
+          "texture": "clc_cocho_qinside"
+        },
+        "side": {
+          "render_method": "alpha_test",
+          "texture": "clc_cocho_qside"
+        },
+        "top": {
+          "render_method": "alpha_test",
+          "texture": "clc_cocho_qtop"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.6
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#9a7a4a",
+      "minecraft:tick": {
+        "interval_range": [
+          30,
+          30
+        ],
+        "looping": true
+      },
+      "cl:cocho": {},
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          8,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          8,
+          16
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}

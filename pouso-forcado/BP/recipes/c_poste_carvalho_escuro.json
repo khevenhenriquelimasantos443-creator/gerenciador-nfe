@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_poste_carvalho_escuro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "F",
+      "F",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:dark_oak_wood"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:poste_carvalho_escuro",
+      "count": 8
+    }
+  }
+}

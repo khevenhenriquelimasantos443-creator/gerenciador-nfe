@@ -11,6 +11,11 @@ export type ReceitaJson = {
 };
 export type InfoItem = { pt: string; en: string; icone?: string };
 export const ITENS: Readonly<Record<string, InfoItem>> = {
+ "cl:abaco": {
+  "pt": "Ábaco",
+  "en": "Abacus",
+  "icone": "textures/items/cl/arte/abaco"
+ },
  "cl:abobora_recheada": {
   "pt": "Abóbora Recheada",
   "en": "Stuffed Pumpkin",
@@ -190,6 +195,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Adaga de Slime da Rainha",
   "en": "Queen's Slime Dagger",
   "icone": "textures/items/cl/arte/adaga_slime_rainha"
+ },
+ "cl:aglomerado_corindo_amarelo": {
+  "pt": "Aglomerado de Corindo Amarelo",
+  "en": "Yellow Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_amarelo"
+ },
+ "cl:aglomerado_corindo_anil": {
+  "pt": "Aglomerado de Corindo Anil",
+  "en": "Indigo Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_anil"
+ },
+ "cl:aglomerado_corindo_azul": {
+  "pt": "Aglomerado de Corindo Azul",
+  "en": "Blue Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_azul"
+ },
+ "cl:aglomerado_corindo_branco": {
+  "pt": "Aglomerado de Corindo Branco",
+  "en": "White Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_branco"
+ },
+ "cl:aglomerado_corindo_laranja": {
+  "pt": "Aglomerado de Corindo Laranja",
+  "en": "Orange Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_laranja"
+ },
+ "cl:aglomerado_corindo_preto": {
+  "pt": "Aglomerado de Corindo Preto",
+  "en": "Black Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_preto"
+ },
+ "cl:aglomerado_corindo_verde": {
+  "pt": "Aglomerado de Corindo Verde",
+  "en": "Green Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_verde"
+ },
+ "cl:aglomerado_corindo_vermelho": {
+  "pt": "Aglomerado de Corindo Vermelho",
+  "en": "Red Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_vermelho"
+ },
+ "cl:aglomerado_corindo_violeta": {
+  "pt": "Aglomerado de Corindo Violeta",
+  "en": "Violet Corundum Cluster",
+  "icone": "textures/blocks/cl/arte/aglomerado_corindo_violeta"
  },
  "cl:aglutinante_conduite": {
   "pt": "Aglomerante de Condutor",
@@ -440,6 +490,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Arco Longo de Slime da Rainha",
   "en": "Queen's Slime Longbow",
   "icone": "textures/items/cl/arte/arco_longo_slime_rainha"
+ },
+ "cl:arenito_almas": {
+  "pt": "Arenito de Almas",
+  "en": "Soul Sandstone",
+  "icone": "textures/blocks/cl/arte/arenito_almas_topo"
+ },
+ "cl:arenito_almas_cortado": {
+  "pt": "Arenito de Almas Cortado",
+  "en": "Cut Soul Sandstone",
+  "icone": "textures/blocks/cl/arte/arenito_almas_cortado_topo"
+ },
+ "cl:arenito_almas_entalhado": {
+  "pt": "Arenito de Almas Entalhado",
+  "en": "Chiseled Soul Sandstone",
+  "icone": "textures/blocks/cl/arte/arenito_almas_entalhado_topo"
  },
  "cl:arenito_entalhado": {
   "pt": "Arenito Entalhado",
@@ -796,6 +861,86 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Vibrant Capacitor Bank",
   "icone": "textures/items/cl/blocos/banco_capacitores_vibrante"
  },
+ "cl:banquinho_amarelo": {
+  "pt": "Banquinho Amarelo",
+  "en": "Yellow Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_amarelo"
+ },
+ "cl:banquinho_azul": {
+  "pt": "Banquinho Azul",
+  "en": "Blue Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_azul"
+ },
+ "cl:banquinho_azul_claro": {
+  "pt": "Banquinho Azul-Claro",
+  "en": "Light Blue Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_azul_claro"
+ },
+ "cl:banquinho_branco": {
+  "pt": "Banquinho Branco",
+  "en": "White Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_branco"
+ },
+ "cl:banquinho_ciano": {
+  "pt": "Banquinho Ciano",
+  "en": "Cyan Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_ciano"
+ },
+ "cl:banquinho_cinza": {
+  "pt": "Banquinho Cinza",
+  "en": "Gray Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_cinza"
+ },
+ "cl:banquinho_cinza_claro": {
+  "pt": "Banquinho Cinza-Claro",
+  "en": "Light Gray Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_cinza_claro"
+ },
+ "cl:banquinho_laranja": {
+  "pt": "Banquinho Laranja",
+  "en": "Orange Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_laranja"
+ },
+ "cl:banquinho_lima": {
+  "pt": "Banquinho Lima",
+  "en": "Lime Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_lima"
+ },
+ "cl:banquinho_magenta": {
+  "pt": "Banquinho Magenta",
+  "en": "Magenta Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_magenta"
+ },
+ "cl:banquinho_marrom": {
+  "pt": "Banquinho Marrom",
+  "en": "Brown Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_marrom"
+ },
+ "cl:banquinho_preto": {
+  "pt": "Banquinho Preto",
+  "en": "Black Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_preto"
+ },
+ "cl:banquinho_rosa": {
+  "pt": "Banquinho Rosa",
+  "en": "Pink Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_rosa"
+ },
+ "cl:banquinho_roxo": {
+  "pt": "Banquinho Roxo",
+  "en": "Purple Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_roxo"
+ },
+ "cl:banquinho_verde": {
+  "pt": "Banquinho Verde",
+  "en": "Green Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_verde"
+ },
+ "cl:banquinho_vermelho": {
+  "pt": "Banquinho Vermelho",
+  "en": "Red Stool",
+  "icone": "textures/blocks/cl/arte/banquinho_vermelho"
+ },
  "cl:barra_borracha": {
   "pt": "Barra de Borracha",
   "en": "Rubber Bar",
@@ -811,6 +956,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Reactor Control Rod",
   "icone": "textures/items/cl/blocos/barra_controle"
  },
+ "cl:barra_ferro": {
+  "pt": "Barra de Ferro",
+  "en": "Iron Rod",
+  "icone": "textures/blocks/cl/arte/barra_ferro_qiron_rod"
+ },
  "cl:barra_grafite": {
   "pt": "Barra de Grafite",
   "en": "Graphite Bar",
@@ -825,6 +975,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Barras de Aço Sombrio",
   "en": "Dark Steel Bars",
   "icone": "textures/items/cl/blocos/barras_aco_negro"
+ },
+ "cl:barras_ouro": {
+  "pt": "Barras de Ouro",
+  "en": "Gold Bars",
+  "icone": "textures/blocks/cl/arte/barras_ouro_qbars"
  },
  "cl:barril_armazenamento": {
   "pt": "Barril de Armazenamento",
@@ -850,6 +1005,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Batata Selvagem",
   "en": "Wild Potato",
   "icone": "textures/blocks/cl/arte/batata_selvagem"
+ },
+ "cl:batatinha": {
+  "pt": "Batatinha",
+  "en": "Tiny Potato",
+  "icone": "textures/blocks/cl/arte/batatinha"
  },
  "cl:batedor": {
   "pt": "Batedor",
@@ -1486,6 +1646,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dumplings",
   "icone": "textures/items/cl/arte/bolinhos"
  },
+ "cl:bolsa_sementes": {
+  "pt": "Bolsa de Sementes",
+  "en": "Seed Pouch",
+  "icone": "textures/items/cl/arte/bolsa_sementes"
+ },
  "cl:bomba": {
   "pt": "Bomba",
   "en": "Pump",
@@ -1716,6 +1881,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Date Bunch",
   "icone": "textures/items/cl/blocos/cacho_tamaras"
  },
+ "cl:caco_vidro": {
+  "pt": "Caco de Vidro",
+  "en": "Glass Shard",
+  "icone": "textures/items/cl/arte/caco_vidro"
+ },
  "cl:cadinho": {
   "pt": "Cadinho",
   "en": "Crucible",
@@ -1735,6 +1905,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Caixa de Entrega",
   "en": "Quest Delivery System",
   "icone": "textures/items/cl/arte/blocos/caixa_entrega"
+ },
+ "cl:caixa_monstros": {
+  "pt": "Caixa de Monstros",
+  "en": "Monster Box",
+  "icone": "textures/blocks/cl/arte/caixa_monstros"
  },
  "cl:caixote_batata": {
   "pt": "Caixote de Batata",
@@ -1990,6 +2165,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Calha Chamuscada",
   "en": "Scorched Chute",
   "icone": "textures/blocks/cl/arte/calha_chamuscada"
+ },
+ "cl:calha_itens": {
+  "pt": "Calha",
+  "en": "Chute",
+  "icone": "textures/blocks/cl/arte/calha_itens_qbottom"
  },
  "cl:calha_refrataria": {
   "pt": "Calha Refratária",
@@ -2966,6 +3146,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crushed Copper Ore",
   "icone": "textures/items/cl/arte/cobre_triturado"
  },
+ "cl:cocho": {
+  "pt": "Cocho",
+  "en": "Feeding Trough",
+  "icone": "textures/blocks/cl/arte/cocho_qbottom"
+ },
  "cl:colar_cruz": {
   "pt": "Colar de Cruz",
   "en": "Cross Necklace",
@@ -2985,6 +3170,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Colheitadeira",
   "en": "Harvester",
   "icone": "textures/items/cl/arte/blocos/colheitadeira"
+ },
+ "cl:colher_pedreiro": {
+  "pt": "Colher de Pedreiro",
+  "en": "Trowel",
+  "icone": "textures/items/cl/arte/colher_pedreiro"
  },
  "cl:colocador_blocos": {
   "pt": "Colocador de Blocos",
@@ -3205,6 +3395,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corda",
   "en": "Rope",
   "icone": "textures/items/cl/blocos/corda"
+ },
+ "cl:corindo_amarelo": {
+  "pt": "Corindo Amarelo",
+  "en": "Yellow Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_amarelo"
+ },
+ "cl:corindo_anil": {
+  "pt": "Corindo Anil",
+  "en": "Indigo Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_anil"
+ },
+ "cl:corindo_azul": {
+  "pt": "Corindo Azul",
+  "en": "Blue Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_azul"
+ },
+ "cl:corindo_branco": {
+  "pt": "Corindo Branco",
+  "en": "White Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_branco"
+ },
+ "cl:corindo_laranja": {
+  "pt": "Corindo Laranja",
+  "en": "Orange Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_laranja"
+ },
+ "cl:corindo_preto": {
+  "pt": "Corindo Preto",
+  "en": "Black Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_preto"
+ },
+ "cl:corindo_verde": {
+  "pt": "Corindo Verde",
+  "en": "Green Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_verde"
+ },
+ "cl:corindo_vermelho": {
+  "pt": "Corindo Vermelho",
+  "en": "Red Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_vermelho"
+ },
+ "cl:corindo_violeta": {
+  "pt": "Corindo Violeta",
+  "en": "Violet Corundum",
+  "icone": "textures/blocks/cl/arte/corindo_violeta"
  },
  "cl:corrente_almas": {
   "pt": "Corrente de Almas",
@@ -5556,6 +5791,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cyan Fancy Lamp",
   "icone": "textures/items/cl/arte/blocos/lampada_ciano"
  },
+ "cl:lampada_cristal_amarelo": {
+  "pt": "Lâmpada de Cristal Amarelo",
+  "en": "Yellow Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_amarelo"
+ },
+ "cl:lampada_cristal_anil": {
+  "pt": "Lâmpada de Cristal Anil",
+  "en": "Indigo Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_anil"
+ },
+ "cl:lampada_cristal_azul": {
+  "pt": "Lâmpada de Cristal Azul",
+  "en": "Blue Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_azul"
+ },
+ "cl:lampada_cristal_branco": {
+  "pt": "Lâmpada de Cristal Branco",
+  "en": "White Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_branco"
+ },
+ "cl:lampada_cristal_laranja": {
+  "pt": "Lâmpada de Cristal Laranja",
+  "en": "Orange Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_laranja"
+ },
+ "cl:lampada_cristal_preto": {
+  "pt": "Lâmpada de Cristal Preto",
+  "en": "Black Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_preto"
+ },
+ "cl:lampada_cristal_verde": {
+  "pt": "Lâmpada de Cristal Verde",
+  "en": "Green Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_verde"
+ },
+ "cl:lampada_cristal_vermelho": {
+  "pt": "Lâmpada de Cristal Vermelho",
+  "en": "Red Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_vermelho"
+ },
+ "cl:lampada_cristal_violeta": {
+  "pt": "Lâmpada de Cristal Violeta",
+  "en": "Violet Crystal Lamp",
+  "icone": "textures/blocks/cl/arte/lampada_cristal_violeta"
+ },
  "cl:lampada_laranja": {
   "pt": "Lâmpada Laranja",
   "en": "Orange Fancy Lamp",
@@ -7610,6 +7890,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Núcleo Sync",
   "en": "Sync Core",
   "icone": "textures/items/cl/arte/nucleo_sync"
+ },
+ "cl:nuvem": {
+  "pt": "Nuvem",
+  "en": "Cloud",
+  "icone": "textures/blocks/cl/arte/nuvem"
+ },
+ "cl:nuvem_engarrafada": {
+  "pt": "Nuvem Engarrafada",
+  "en": "Bottled Cloud",
+  "icone": "textures/items/cl/arte/nuvem_engarrafada"
  },
  "cl:nuvem_garrafa": {
   "pt": "Nuvem na Garrafa",
@@ -11801,6 +12091,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Ender Gate",
   "icone": "textures/items/cl/blocos/portao_ender_nitro"
  },
+ "cl:poste_acacia": {
+  "pt": "Poste de Acácia",
+  "en": "Acacia Post",
+  "icone": "textures/blocks/log_acacia"
+ },
+ "cl:poste_betula": {
+  "pt": "Poste de Bétula",
+  "en": "Birch Post",
+  "icone": "textures/blocks/log_birch"
+ },
+ "cl:poste_carvalho": {
+  "pt": "Poste de Carvalho",
+  "en": "Oak Post",
+  "icone": "textures/blocks/log_oak"
+ },
+ "cl:poste_carvalho_escuro": {
+  "pt": "Poste de Carvalho Escuro",
+  "en": "Dark Oak Post",
+  "icone": "textures/blocks/log_big_oak"
+ },
+ "cl:poste_pinheiro": {
+  "pt": "Poste de Pinheiro",
+  "en": "Spruce Post",
+  "icone": "textures/blocks/log_spruce"
+ },
+ "cl:poste_selva": {
+  "pt": "Poste de Selva",
+  "en": "Jungle Post",
+  "icone": "textures/blocks/log_jungle"
+ },
  "cl:prateleira": {
   "pt": "Prateleira",
   "en": "Shelf",
@@ -12381,6 +12701,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Monster Token",
   "icone": "textures/items/cl/arte/simbolo_monstro"
  },
+ "cl:slime_balde": {
+  "pt": "Slime no Balde",
+  "en": "Slime in a Bucket",
+  "icone": "textures/items/cl/arte/slime_balde"
+ },
  "cl:slime_congelado_ceu": {
   "pt": "Slime-do-Céu Congelado",
   "en": "Congealed Skyslime",
@@ -12711,10 +13036,40 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Brick",
   "icone": "textures/items/cl/arte/tijolo_refratario"
  },
+ "cl:tijolos_arenito": {
+  "pt": "Tijolos de Arenito",
+  "en": "Sandstone Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_arenito"
+ },
+ "cl:tijolos_arenito_almas": {
+  "pt": "Tijolos de Arenito de Almas",
+  "en": "Soul Sandstone Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_arenito_almas"
+ },
+ "cl:tijolos_arenito_vermelho": {
+  "pt": "Tijolos de Arenito Vermelho",
+  "en": "Red Sandstone Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_arenito_vermelho"
+ },
  "cl:tijolos_chamuscados": {
   "pt": "Tijolos Chamuscados",
   "en": "Scorched Bricks",
   "icone": "textures/blocks/cl/arte/tijolos_chamuscados"
+ },
+ "cl:tijolos_cobre_bruto": {
+  "pt": "Tijolos de Cobre Bruto",
+  "en": "Raw Copper Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_cobre_bruto"
+ },
+ "cl:tijolos_ferro_bruto": {
+  "pt": "Tijolos de Ferro Bruto",
+  "en": "Raw Iron Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_ferro_bruto"
+ },
+ "cl:tijolos_ouro_bruto": {
+  "pt": "Tijolos de Ouro Bruto",
+  "en": "Raw Gold Bricks",
+  "icone": "textures/blocks/cl/arte/tijolos_ouro_bruto"
  },
  "cl:tijolos_refratarios": {
   "pt": "Tijolos Refratários",
@@ -12775,6 +13130,36 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tomateiro Selvagem",
   "en": "Tomato Shrub",
   "icone": "textures/blocks/cl/arte/tomateiro_selvagem"
+ },
+ "cl:tora_oca_acacia": {
+  "pt": "Tora Oca de Acácia",
+  "en": "Hollow Acacia Log",
+  "icone": "textures/blocks/log_acacia_top"
+ },
+ "cl:tora_oca_betula": {
+  "pt": "Tora Oca de Bétula",
+  "en": "Hollow Birch Log",
+  "icone": "textures/blocks/log_birch_top"
+ },
+ "cl:tora_oca_carvalho": {
+  "pt": "Tora Oca de Carvalho",
+  "en": "Hollow Oak Log",
+  "icone": "textures/blocks/log_oak_top"
+ },
+ "cl:tora_oca_carvalho_escuro": {
+  "pt": "Tora Oca de Carvalho Escuro",
+  "en": "Hollow Dark Oak Log",
+  "icone": "textures/blocks/log_big_oak_top"
+ },
+ "cl:tora_oca_pinheiro": {
+  "pt": "Tora Oca de Pinheiro",
+  "en": "Hollow Spruce Log",
+  "icone": "textures/blocks/log_spruce_top"
+ },
+ "cl:tora_oca_selva": {
+  "pt": "Tora Oca de Selva",
+  "en": "Hollow Jungle Log",
+  "icone": "textures/blocks/log_jungle_top"
  },
  "cl:torneira": {
   "pt": "Torneira",
@@ -13291,6 +13676,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Acacia Trapdoor",
   "icone": "textures/blocks/acacia_trapdoor"
  },
+ "minecraft:acacia_wood": {
+  "pt": "acacia_wood",
+  "en": "acacia_wood",
+  "icone": "textures/blocks/log_acacia"
+ },
  "minecraft:amethyst_block": {
   "pt": "Bloco de Ametista",
   "en": "Block of Amethyst",
@@ -13401,9 +13791,19 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Birch Trapdoor",
   "icone": "textures/blocks/birch_trapdoor"
  },
+ "minecraft:birch_wood": {
+  "pt": "birch_wood",
+  "en": "birch_wood",
+  "icone": "textures/blocks/log_birch"
+ },
  "minecraft:black_dye": {
   "pt": "black_dye",
   "en": "black_dye"
+ },
+ "minecraft:black_wool": {
+  "pt": "black_wool",
+  "en": "black_wool",
+  "icone": "textures/blocks/wool_colored_black"
  },
  "minecraft:blackstone": {
   "pt": "Pedra-Negra",
@@ -13429,6 +13829,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Azul",
   "en": "Blue Dye",
   "icone": "textures/items/dye_powder_blue_new"
+ },
+ "minecraft:blue_wool": {
+  "pt": "blue_wool",
+  "en": "blue_wool",
+  "icone": "textures/blocks/wool_colored_blue"
  },
  "minecraft:bone": {
   "pt": "Osso",
@@ -13483,6 +13888,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cogumelo Marrom",
   "en": "Brown Mushroom",
   "icone": "textures/blocks/mushroom_brown"
+ },
+ "minecraft:brown_wool": {
+  "pt": "brown_wool",
+  "en": "brown_wool",
+  "icone": "textures/blocks/wool_colored_brown"
  },
  "minecraft:bucket": {
   "pt": "Balde",
@@ -13704,6 +14114,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crimson Trapdoor",
   "icone": "textures/blocks/huge_fungus/crimson_trapdoor"
  },
+ "minecraft:cut_red_sandstone": {
+  "pt": "cut_red_sandstone",
+  "en": "cut_red_sandstone",
+  "icone": "textures/blocks/red_sandstone_smooth"
+ },
  "minecraft:cut_sandstone": {
   "pt": "Arenito Lapidado",
   "en": "Cut Sandstone",
@@ -13713,6 +14128,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Ciano",
   "en": "Cyan Dye",
   "icone": "textures/items/dye_powder_cyan"
+ },
+ "minecraft:cyan_wool": {
+  "pt": "cyan_wool",
+  "en": "cyan_wool",
+  "icone": "textures/blocks/wool_colored_cyan"
  },
  "minecraft:dark_oak_log": {
   "pt": "Tora de Carvalho Escuro",
@@ -13733,6 +14153,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Alçapão de carvalho escuro",
   "en": "Dark Oak Trapdoor",
   "icone": "textures/blocks/dark_oak_trapdoor"
+ },
+ "minecraft:dark_oak_wood": {
+  "pt": "dark_oak_wood",
+  "en": "dark_oak_wood",
+  "icone": "textures/blocks/log_big_oak"
  },
  "minecraft:daylight_detector": {
   "pt": "Detector de Luz Solar",
@@ -13899,6 +14324,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "End Crystal",
   "icone": "textures/items/end_crystal"
  },
+ "minecraft:end_rod": {
+  "pt": "Vara do End",
+  "en": "End Rod",
+  "icone": "textures/blocks/end_rod"
+ },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
   "en": "End Stone",
@@ -14052,10 +14482,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "gray_dye",
   "en": "gray_dye"
  },
+ "minecraft:gray_wool": {
+  "pt": "gray_wool",
+  "en": "gray_wool",
+  "icone": "textures/blocks/wool_colored_gray"
+ },
  "minecraft:green_dye": {
   "pt": "Corante Verde",
   "en": "Green Dye",
   "icone": "textures/items/dye_powder_green_new"
+ },
+ "minecraft:green_wool": {
+  "pt": "green_wool",
+  "en": "green_wool",
+  "icone": "textures/blocks/wool_colored_green"
  },
  "minecraft:gunpowder": {
   "pt": "Pólvora",
@@ -14172,6 +14612,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Jungle Trapdoor",
   "icone": "textures/blocks/jungle_trapdoor"
  },
+ "minecraft:jungle_wood": {
+  "pt": "jungle_wood",
+  "en": "jungle_wood",
+  "icone": "textures/blocks/log_jungle"
+ },
  "minecraft:kelp": {
   "pt": "Alga",
   "en": "Kelp",
@@ -14221,6 +14666,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "light_blue_dye",
   "en": "light_blue_dye"
  },
+ "minecraft:light_blue_wool": {
+  "pt": "light_blue_wool",
+  "en": "light_blue_wool",
+  "icone": "textures/blocks/wool_colored_light_blue"
+ },
  "minecraft:light_gray_carpet": {
   "pt": "Carpete Cinza-claro",
   "en": "Light Gray Carpet",
@@ -14229,6 +14679,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "minecraft:light_gray_dye": {
   "pt": "light_gray_dye",
   "en": "light_gray_dye"
+ },
+ "minecraft:light_gray_wool": {
+  "pt": "light_gray_wool",
+  "en": "light_gray_wool",
+  "icone": "textures/blocks/wool_colored_silver"
  },
  "minecraft:lightning_rod": {
   "pt": "Para-raios",
@@ -14268,6 +14723,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
  "minecraft:magenta_dye": {
   "pt": "magenta_dye",
   "en": "magenta_dye"
+ },
+ "minecraft:magenta_wool": {
+  "pt": "magenta_wool",
+  "en": "magenta_wool",
+  "icone": "textures/blocks/wool_colored_magenta"
  },
  "minecraft:magma": {
   "pt": "Bloco de Magma",
@@ -14414,6 +14874,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Oak Slab",
   "icone": "textures/blocks/planks_oak"
  },
+ "minecraft:oak_wood": {
+  "pt": "oak_wood",
+  "en": "oak_wood",
+  "icone": "textures/blocks/log_oak"
+ },
  "minecraft:obsidian": {
   "pt": "Obsidiana",
   "en": "Obsidian",
@@ -14448,6 +14913,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Rosa",
   "en": "Pink Dye",
   "icone": "textures/items/dye_powder_pink"
+ },
+ "minecraft:pink_wool": {
+  "pt": "pink_wool",
+  "en": "pink_wool",
+  "icone": "textures/blocks/wool_colored_pink"
  },
  "minecraft:piston": {
   "pt": "Pistão",
@@ -14537,6 +15007,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Roxo",
   "en": "Purple Dye",
   "icone": "textures/items/dye_powder_purple"
+ },
+ "minecraft:purple_wool": {
+  "pt": "purple_wool",
+  "en": "purple_wool",
+  "icone": "textures/blocks/wool_colored_purple"
  },
  "minecraft:purpur_block": {
   "pt": "purpur_block",
@@ -14788,6 +15263,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Spruce Trapdoor",
   "icone": "textures/blocks/spruce_trapdoor"
  },
+ "minecraft:spruce_wood": {
+  "pt": "spruce_wood",
+  "en": "spruce_wood",
+  "icone": "textures/blocks/log_spruce"
+ },
  "minecraft:stick": {
   "pt": "Graveto",
   "en": "Stick",
@@ -15011,6 +15491,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Corante Amarelo",
   "en": "Yellow Dye",
   "icone": "textures/items/dye_powder_yellow"
+ },
+ "minecraft:yellow_wool": {
+  "pt": "yellow_wool",
+  "en": "yellow_wool",
+  "icone": "textures/blocks/wool_colored_yellow"
  }
 };
 export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
@@ -15286,6 +15771,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_abaco",
+  "resultado": "cl:abaco",
+  "qtd": 1,
+  "grade": [
+   "WSW",
+   "WIW",
+   "WSW"
+  ],
+  "chaves": {
+   "W": "#minecraft:planks",
+   "S": "minecraft:stick",
+   "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -16679,6 +17183,54 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_arenito_almas",
+  "resultado": "cl:arenito_almas",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "minecraft:soul_sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arenito_almas_cortado",
+  "resultado": "cl:arenito_almas_cortado",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:arenito_almas"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_arenito_almas_entalhado",
+  "resultado": "cl:arenito_almas_entalhado",
+  "qtd": 1,
+  "grade": [
+   "#",
+   "#"
+  ],
+  "chaves": {
+   "#": "cl:arenito_almas_cortado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_arenito_liso",
   "resultado": "cl:arenito_liso",
   "qtd": 4,
@@ -17280,6 +17832,278 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_amarelo",
+  "resultado": "cl:banquinho_amarelo",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:yellow_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_azul",
+  "resultado": "cl:banquinho_azul",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:blue_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_azul_claro",
+  "resultado": "cl:banquinho_azul_claro",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:light_blue_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_branco",
+  "resultado": "cl:banquinho_branco",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:white_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_ciano",
+  "resultado": "cl:banquinho_ciano",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:cyan_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_cinza",
+  "resultado": "cl:banquinho_cinza",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:gray_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_cinza_claro",
+  "resultado": "cl:banquinho_cinza_claro",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:light_gray_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_laranja",
+  "resultado": "cl:banquinho_laranja",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:orange_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_lima",
+  "resultado": "cl:banquinho_lima",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:lime_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_magenta",
+  "resultado": "cl:banquinho_magenta",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:magenta_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_marrom",
+  "resultado": "cl:banquinho_marrom",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:brown_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_preto",
+  "resultado": "cl:banquinho_preto",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:black_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_rosa",
+  "resultado": "cl:banquinho_rosa",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:pink_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_roxo",
+  "resultado": "cl:banquinho_roxo",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:purple_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_verde",
+  "resultado": "cl:banquinho_verde",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:green_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_banquinho_vermelho",
+  "resultado": "cl:banquinho_vermelho",
+  "qtd": 4,
+  "grade": [
+   "###",
+   "WWW"
+  ],
+  "chaves": {
+   "#": "minecraft:red_wool",
+   "W": "#minecraft:wooden_slabs"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "fornalha",
   "id": "cl:c_barra_borracha",
   "resultado": "cl:barra_borracha",
@@ -17327,6 +18151,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:carcaca_reator",
    "R": "minecraft:redstone",
    "G": "cl:barra_grafite"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_barra_ferro",
+  "resultado": "cl:barra_ferro",
+  "qtd": 1,
+  "grade": [
+   "I",
+   "I",
+   "R"
+  ],
+  "chaves": {
+   "I": "minecraft:iron_ingot",
+   "R": "minecraft:end_rod"
   },
   "estacoes": [
    "crafting_table"
@@ -17383,6 +18225,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_barras_ouro",
+  "resultado": "cl:barras_ouro",
+  "qtd": 16,
+  "grade": [
+   "###",
+   "###"
+  ],
+  "chaves": {
+   "#": "minecraft:gold_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_barril_armazenamento",
   "resultado": "cl:barril_armazenamento",
   "qtd": 1,
@@ -17418,6 +18276,40 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_batatinha",
+  "resultado": "cl:batatinha",
+  "qtd": 1,
+  "grade": [
+   "D",
+   "P"
+  ],
+  "chaves": {
+   "D": "minecraft:diamond",
+   "P": "minecraft:potato"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_batatinha_esmeralda",
+  "resultado": "cl:batatinha",
+  "qtd": 1,
+  "grade": [
+   "D",
+   "P"
+  ],
+  "chaves": {
+   "D": "minecraft:emerald",
+   "P": "minecraft:potato"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -19156,6 +20048,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bolsa_sementes",
+  "resultado": "cl:bolsa_sementes",
+  "qtd": 1,
+  "grade": [
+   " S ",
+   "HXH",
+   " H "
+  ],
+  "chaves": {
+   "S": "minecraft:string",
+   "H": "minecraft:leather",
+   "X": "minecraft:wheat_seeds"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bomba",
   "resultado": "cl:bomba",
   "qtd": 1,
@@ -20380,6 +21291,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_calha_itens",
+  "resultado": "cl:calha_itens",
+  "qtd": 1,
+  "grade": [
+   "WWW",
+   "SWS",
+   " S "
+  ],
+  "chaves": {
+   "W": "#minecraft:planks",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_calha_refrataria",
   "resultado": "cl:calha_refrataria",
   "qtd": 1,
@@ -21567,6 +22496,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_cocho",
+  "resultado": "cl:cocho",
+  "qtd": 1,
+  "grade": [
+   "#W#",
+   "###"
+  ],
+  "chaves": {
+   "#": "#minecraft:planks",
+   "W": "minecraft:wheat"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_cod_roll",
   "resultado": "cl:rolinho_bacalhau",
@@ -21622,6 +22568,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "minecraft:copper_ingot",
    "B": "cl:bloco_maquina",
    "R": "cl:circuito"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_colher_pedreiro",
+  "resultado": "cl:colher_pedreiro",
+  "qtd": 1,
+  "grade": [
+   "S  ",
+   " II"
+  ],
+  "chaves": {
+   "S": "minecraft:stick",
+   "I": "minecraft:iron_ingot"
   },
   "estacoes": [
    "crafting_table"
@@ -27193,6 +28156,168 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_amarelo",
+  "resultado": "cl:lampada_cristal_amarelo",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_amarelo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_anil",
+  "resultado": "cl:lampada_cristal_anil",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_anil"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_azul",
+  "resultado": "cl:lampada_cristal_azul",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_azul"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_branco",
+  "resultado": "cl:lampada_cristal_branco",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_branco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_laranja",
+  "resultado": "cl:lampada_cristal_laranja",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_laranja"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_preto",
+  "resultado": "cl:lampada_cristal_preto",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_preto"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_verde",
+  "resultado": "cl:lampada_cristal_verde",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_verde"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_vermelho",
+  "resultado": "cl:lampada_cristal_vermelho",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_vermelho"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lampada_cristal_violeta",
+  "resultado": "cl:lampada_cristal_violeta",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "RCR",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "C": "cl:corindo_violeta"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -33779,6 +34904,108 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_poste_acacia",
+  "resultado": "cl:poste_acacia",
+  "qtd": 8,
+  "grade": [
+   "F",
+   "F",
+   "F"
+  ],
+  "chaves": {
+   "F": "minecraft:acacia_wood"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_poste_betula",
+  "resultado": "cl:poste_betula",
+  "qtd": 8,
+  "grade": [
+   "F",
+   "F",
+   "F"
+  ],
+  "chaves": {
+   "F": "minecraft:birch_wood"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_poste_carvalho",
+  "resultado": "cl:poste_carvalho",
+  "qtd": 8,
+  "grade": [
+   "F",
+   "F",
+   "F"
+  ],
+  "chaves": {
+   "F": "minecraft:oak_wood"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_poste_carvalho_escuro",
+  "resultado": "cl:poste_carvalho_escuro",
+  "qtd": 8,
+  "grade": [
+   "F",
+   "F",
+   "F"
+  ],
+  "chaves": {
+   "F": "minecraft:dark_oak_wood"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_poste_pinheiro",
+  "resultado": "cl:poste_pinheiro",
+  "qtd": 8,
+  "grade": [
+   "F",
+   "F",
+   "F"
+  ],
+  "chaves": {
+   "F": "minecraft:spruce_wood"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_poste_selva",
+  "resultado": "cl:poste_selva",
+  "qtd": 8,
+  "grade": [
+   "F",
+   "F",
+   "F"
+  ],
+  "chaves": {
+   "F": "minecraft:jungle_wood"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_prateleira",
   "resultado": "cl:prateleira",
   "qtd": 1,
@@ -38406,6 +39633,54 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_tijolos_arenito",
+  "resultado": "cl:tijolos_arenito",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "minecraft:cut_sandstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolos_arenito_almas",
+  "resultado": "cl:tijolos_arenito_almas",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:arenito_almas_cortado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolos_arenito_vermelho",
+  "resultado": "cl:tijolos_arenito_vermelho",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "minecraft:cut_red_sandstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_tijolos_chamuscados",
   "resultado": "cl:tijolos_chamuscados",
   "qtd": 1,
@@ -38415,6 +39690,54 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "chaves": {
    "T": "cl:tijolo_chamuscado"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolos_cobre_bruto",
+  "resultado": "cl:tijolos_cobre_bruto",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "minecraft:raw_copper_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolos_ferro_bruto",
+  "resultado": "cl:tijolos_ferro_bruto",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "minecraft:raw_iron_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tijolos_ouro_bruto",
+  "resultado": "cl:tijolos_ouro_bruto",
+  "qtd": 4,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "minecraft:raw_gold_block"
   },
   "estacoes": [
    "crafting_table"
@@ -38489,6 +39812,108 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:carcaca_turbina",
    "S": "minecraft:redstone",
    "B": "minecraft:redstone_block"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tora_oca_acacia",
+  "resultado": "cl:tora_oca_acacia",
+  "qtd": 4,
+  "grade": [
+   " L ",
+   "L L",
+   " L "
+  ],
+  "chaves": {
+   "L": "minecraft:acacia_log"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tora_oca_betula",
+  "resultado": "cl:tora_oca_betula",
+  "qtd": 4,
+  "grade": [
+   " L ",
+   "L L",
+   " L "
+  ],
+  "chaves": {
+   "L": "minecraft:birch_log"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tora_oca_carvalho",
+  "resultado": "cl:tora_oca_carvalho",
+  "qtd": 4,
+  "grade": [
+   " L ",
+   "L L",
+   " L "
+  ],
+  "chaves": {
+   "L": "minecraft:oak_log"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tora_oca_carvalho_escuro",
+  "resultado": "cl:tora_oca_carvalho_escuro",
+  "qtd": 4,
+  "grade": [
+   " L ",
+   "L L",
+   " L "
+  ],
+  "chaves": {
+   "L": "minecraft:dark_oak_log"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tora_oca_pinheiro",
+  "resultado": "cl:tora_oca_pinheiro",
+  "qtd": 4,
+  "grade": [
+   " L ",
+   "L L",
+   " L "
+  ],
+  "chaves": {
+   "L": "minecraft:spruce_log"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tora_oca_selva",
+  "resultado": "cl:tora_oca_selva",
+  "qtd": 4,
+  "grade": [
+   " L ",
+   "L L",
+   " L "
+  ],
+  "chaves": {
+   "L": "minecraft:jungle_log"
   },
   "estacoes": [
    "crafting_table"
@@ -39020,6 +40445,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "T": "cl:tijolo_refratario",
    "S": "minecraft:soul_sand"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_vidro_cacos",
+  "resultado": "minecraft:glass",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:caco_vidro"
   },
   "estacoes": [
    "crafting_table"

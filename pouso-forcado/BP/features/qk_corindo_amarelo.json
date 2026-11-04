@@ -1,0 +1,44 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:single_block_feature": {
+  "description": {
+   "identifier": "cl:qk_corindo_amarelo"
+  },
+  "places_block": "cl:corindo_amarelo",
+  "enforce_placement_rules": false,
+  "enforce_survivability_rules": false,
+  "may_attach_to": {
+   "min_sides_must_attach": 1,
+   "sides": [
+    "minecraft:stone",
+    "minecraft:deepslate",
+    "minecraft:tuff",
+    "minecraft:andesite",
+    "minecraft:diorite",
+    "minecraft:granite",
+    "minecraft:cobblestone"
+   ],
+   "top": [
+    "minecraft:stone",
+    "minecraft:deepslate",
+    "minecraft:tuff",
+    "minecraft:andesite",
+    "minecraft:diorite",
+    "minecraft:granite",
+    "minecraft:cobblestone"
+   ],
+   "bottom": [
+    "minecraft:stone",
+    "minecraft:deepslate",
+    "minecraft:tuff",
+    "minecraft:andesite",
+    "minecraft:diorite",
+    "minecraft:granite",
+    "minecraft:cobblestone"
+   ]
+  },
+  "may_replace": [
+   "minecraft:air"
+  ]
+ }
+}

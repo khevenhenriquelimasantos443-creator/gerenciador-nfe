@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tijolos_arenito"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:cut_sandstone"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tijolos_arenito",
+      "count": 4
+    }
+  }
+}

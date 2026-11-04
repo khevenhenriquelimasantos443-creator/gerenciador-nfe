@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tijolos_cobre_bruto"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:raw_copper_block"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tijolos_cobre_bruto",
+      "count": 4
+    }
+  }
+}

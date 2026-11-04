@@ -1,0 +1,103 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.q_barras_ouro",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "q",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        0,
+        0,
+        -1
+       ],
+       "size": [
+        0,
+        16,
+        2
+       ],
+       "uv": {
+        "west": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          2,
+          16
+         ],
+         "material_instance": "bars"
+        },
+        "east": {
+         "uv": [
+          9,
+          0
+         ],
+         "uv_size": [
+          -2,
+          16
+         ],
+         "material_instance": "bars"
+        }
+       }
+      },
+      {
+       "origin": [
+        -1,
+        0,
+        0
+       ],
+       "size": [
+        2,
+        16,
+        0
+       ],
+       "uv": {
+        "north": {
+         "uv": [
+          7,
+          0
+         ],
+         "uv_size": [
+          2,
+          16
+         ],
+         "material_instance": "bars"
+        },
+        "south": {
+         "uv": [
+          9,
+          0
+         ],
+         "uv_size": [
+          -2,
+          16
+         ],
+         "material_instance": "bars"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

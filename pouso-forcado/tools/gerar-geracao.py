@@ -315,4 +315,50 @@ for t, fora, filtro, y0, y1, raridade, raio in (("terra", "minecraft:clay", FILT
                          "x": {"distribution": "uniform", "extent": [0, 16]}, "z": {"distribution": "uniform", "extent": [0, 16]},
                          "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
 
+# 1.37.0 (Quark 4.1): cristais de Corindo nas paredes das cavernas (com aglomerados em cima), a Caixa de Monstros no chão
+# das cavernas fundas (MonsterBoxModule: 20% dos chunks, y -50 a 0, procurando 15 blocos para cima e para baixo) e os
+# veios de jaspe (deserto e mesa) e xisto (frio) do NewStoneTypes.
+PEDRAS_CAVERNA = ["minecraft:stone", "minecraft:deepslate", "minecraft:tuff", "minecraft:andesite", "minecraft:diorite", "minecraft:granite", "minecraft:cobblestone"]
+CORES_CORINDO = ["vermelho", "laranja", "amarelo", "verde", "azul", "anil", "violeta", "branco", "preto"]  # f56.mjs
+SUBTERRANEO = [{"test": "has_biome_tag", "operator": "==", "value": "overworld"}]
+for cor in CORES_CORINDO:
+    escrever(f"BP/features/qk_corindo_{cor}.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+        "description": {"identifier": f"cl:qk_corindo_{cor}"}, "places_block": f"cl:corindo_{cor}", "enforce_placement_rules": False, "enforce_survivability_rules": False,
+        "may_attach_to": {"min_sides_must_attach": 1, "sides": PEDRAS_CAVERNA, "top": PEDRAS_CAVERNA, "bottom": PEDRAS_CAVERNA}, "may_replace": ["minecraft:air"]}})
+    escrever(f"BP/features/qk_aglomerado_{cor}.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+        "description": {"identifier": f"cl:qk_aglomerado_{cor}"}, "places_block": f"cl:aglomerado_corindo_{cor}", "enforce_placement_rules": False, "enforce_survivability_rules": False,
+        "may_attach_to": {"bottom": [f"cl:corindo_{cor}"]}, "may_replace": ["minecraft:air"]}})
+    escrever(f"BP/features/qk_cristais_{cor}.json", {"format_version": "1.13.0", "minecraft:aggregate_feature": {
+        "description": {"identifier": f"cl:qk_cristais_{cor}"}, "features": [f"cl:qk_cristais_{cor}_blocos", f"cl:qk_cristais_{cor}_cachos"]}})
+    for parte, alvo, n in (("blocos", f"cl:qk_corindo_{cor}", 48), ("cachos", f"cl:qk_aglomerado_{cor}", 32)):
+        escrever(f"BP/features/qk_cristais_{cor}_{parte}.json", {"format_version": "1.13.0", "minecraft:scatter_feature": {
+            "description": {"identifier": f"cl:qk_cristais_{cor}_{parte}"}, "places_feature": alvo, "iterations": n, "coordinate_eval_order": "xzy",
+            "x": {"distribution": "uniform", "extent": [-4, 4]}, "y": {"distribution": "uniform", "extent": [-4, 4]}, "z": {"distribution": "uniform", "extent": [-4, 4]}}})
+    escrever(f"BP/feature_rules/qk_cristais_{cor}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:qk_cristais_{cor}_regra", "places_feature": f"cl:qk_cristais_{cor}"},
+        "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": SUBTERRANEO},
+        "distribution": {"iterations": 1, "scatter_chance": chance(1 / 12), "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [-40, 30]}}}})
+escrever("BP/features/qk_caixa_monstros.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+    "description": {"identifier": "cl:qk_caixa_monstros"}, "places_block": "cl:caixa_monstros", "enforce_placement_rules": False, "enforce_survivability_rules": False,
+    "may_attach_to": {"bottom": PEDRAS_CAVERNA + ["minecraft:gravel", "minecraft:dirt"]}, "may_replace": ["minecraft:air"]}})
+escrever("BP/features/qk_caixa_monstros_busca.json", {"format_version": "1.13.0", "minecraft:search_feature": {
+    "description": {"identifier": "cl:qk_caixa_monstros_busca"}, "places_feature": "cl:qk_caixa_monstros",
+    "search_volume": {"min": [0, -15, 0], "max": [0, 15, 0]}, "search_axis": "-y", "required_successes": 1}})
+escrever("BP/feature_rules/qk_caixa_monstros_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+    "description": {"identifier": "cl:qk_caixa_monstros_regra", "places_feature": "cl:qk_caixa_monstros_busca"},
+    "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": SUBTERRANEO},
+    "distribution": {"iterations": 1, "scatter_chance": chance(0.2), "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                     "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [-50, 0]}}}})
+for pedra, filtro in (("jaspe", [{"any_of": [{"test": "has_biome_tag", "operator": "==", "value": "desert"}, {"test": "has_biome_tag", "operator": "==", "value": "mesa"}]}]),
+                      ("xisto", [{"test": "has_biome_tag", "operator": "==", "value": "cold"}])):
+    escrever(f"BP/features/qk_veio_{pedra}.json", {"format_version": "1.13.0", "minecraft:ore_feature": {
+        "description": {"identifier": f"cl:qk_veio_{pedra}"}, "count": 48,
+        "replace_rules": [{"places_block": f"cl:{pedra}", "may_replace": ["minecraft:stone", "minecraft:andesite", "minecraft:diorite", "minecraft:granite"]}]}})
+    escrever(f"BP/feature_rules/qk_veio_{pedra}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:qk_veio_{pedra}_regra", "places_feature": f"cl:qk_veio_{pedra}"},
+        "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": filtro},
+        "distribution": {"iterations": 1, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [0, 64]}}}})
+
 print(f"geração natural: {len(list((RAIZ / 'BP/features').iterdir()))} features, 3 tabelas de saque, templo e destroços com baú")

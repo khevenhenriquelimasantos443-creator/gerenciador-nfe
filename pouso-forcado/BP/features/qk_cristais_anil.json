@@ -1,0 +1,12 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:aggregate_feature": {
+  "description": {
+   "identifier": "cl:qk_cristais_anil"
+  },
+  "features": [
+   "cl:qk_cristais_anil_blocos",
+   "cl:qk_cristais_anil_cachos"
+  ]
+ }
+}

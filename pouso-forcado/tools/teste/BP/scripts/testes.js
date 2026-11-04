@@ -1675,6 +1675,99 @@ teste("turbina", 160, (t) => {
   t.runAfterDelay(20, () => t.succeed());
 });
 
+// 1.37.0: Quark 4.1. Colher de Pedreiro, Bolsa de Sementes (3×3), Cocho (vacas procriam), Caixa de Monstros, Nuvem
+// Engarrafada, Banquinho, Lâmpada de Cristal com redstone e a Barra de Ferro empurrada pelo pistão.
+teste("quark4", 300, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 3.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const dim = t.getDimension();
+  const w = (p) => t.worldBlockLocation(p);
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`quark4: ${c} -> ${e}`); } };
+  const ev = (acao, p) => { const q = w(p); cmd(`scriptevent cl:teste_qk4 ${acao} ${q.x} ${q.y} ${q.z}`); };
+  const r = {};
+  t.setBlockType("minecraft:stone", { x: 1, y: 2, z: 1 });
+  for (let x = 4; x <= 6; x++) for (let z = 1; z <= 3; z++) t.setBlockType("minecraft:farmland", { x, y: 2, z });
+  t.setBlockType("cl:cocho", { x: 1, y: 2, z: 6 });
+  t.setBlockType("cl:banquinho_vermelho", { x: 0, y: 2, z: 3 });
+  t.setBlockType("cl:lampada_cristal_azul", { x: 7, y: 2, z: 5 });
+  t.setBlockType("minecraft:redstone_block", { x: 7, y: 3, z: 5 });
+  t.setBlockPermutation(BlockPermutation.resolve("minecraft:piston", { facing_direction: 1 }), { x: 5, y: 2, z: 6 });
+  t.setBlockType("cl:barra_ferro", { x: 5, y: 3, z: 6 });
+  t.setBlockType("minecraft:oak_planks", { x: 5, y: 4, z: 6 });
+  const passos = [
+    () => {
+      inv.setItem(0, new ItemStack("cl:colher_pedreiro", 1));
+      inv.setItem(1, new ItemStack("minecraft:cobblestone", 10));
+      ev("colher", { x: 1, y: 2, z: 1 });
+    },
+    () => {
+      r.colher = t.getBlock({ x: 1, y: 3, z: 1 }).typeId;
+      r.pedras = quantos(j, "minecraft:cobblestone");
+      inv.setItem(0, new ItemStack("cl:bolsa_sementes", 1));
+      inv.setItem(2, new ItemStack("minecraft:wheat_seeds", 20));
+      ev("bolsa", { x: 0, y: 0, z: 0 });
+    },
+    () => {
+      r.sementesFora = quantos(j, "minecraft:wheat_seeds");
+      j.isSneaking = true;
+      ev("plantar", { x: 5, y: 2, z: 2 });
+    },
+    () => {
+      j.isSneaking = false;
+      let trigo = 0;
+      for (let x = 4; x <= 6; x++) for (let z = 1; z <= 3; z++) if (t.getBlock({ x, y: 3, z }).typeId === "minecraft:wheat") trigo++;
+      r.trigo = trigo;
+      inv.setItem(0, new ItemStack("minecraft:wheat", 10));
+      j.lookAtBlock({ x: 1, y: 2, z: 6 });
+      j.interactWithBlock({ x: 1, y: 2, z: 6 }, Direction.Up);
+      t.spawn("minecraft:cow", { x: 2.5, y: 2, z: 6.5 });
+      t.spawn("minecraft:cow", { x: 1.5, y: 2, z: 5.5 });
+    },
+    () => {
+      r.trigoMao = quantos(j, "minecraft:wheat");
+      ev("cocho", { x: 1, y: 2, z: 6 });
+    },
+    () => {
+      r.vacas = dim.getEntities({ type: "minecraft:cow", location: t.worldLocation({ x: 2, y: 2, z: 6 }), maxDistance: 6 }).length;
+      r.lampada = t.getBlock({ x: 7, y: 2, z: 5 }).permutation.getState("cl:acesa");
+      ev("sentar", { x: 0, y: 2, z: 3 });
+    },
+    () => {
+      r.sentou = !!j.getComponent("minecraft:riding");
+      try { j.getComponent("minecraft:riding")?.entityRidingOn?.getComponent("rideable")?.ejectRiders(); } catch { /* */ }
+      t.setBlockType("minecraft:redstone_block", { x: 6, y: 2, z: 6 });
+    },
+    () => {
+      t.setBlockType("cl:caixa_monstros", { x: 3, y: 2, z: 0 });
+      ev("caixa", { x: 3, y: 2, z: 0 });
+      inv.setItem(0, new ItemStack("cl:nuvem_engarrafada", 2));
+      j.lookAtBlock({ x: 3, y: 4, z: 7 });
+    },
+    () => ev("nuvem", { x: 0, y: 0, z: 0 }),
+  ];
+  passos.forEach((f, i) => t.runAfterDelay(4 + i * 6, f));
+  t.runAfterDelay(110, () => {
+    r.caixa = t.getBlock({ x: 3, y: 2, z: 0 }).typeId;
+    r.monstros = dim.getEntities({ tags: ["cl:caixa_monstros"], location: t.worldLocation({ x: 3, y: 2, z: 1 }), maxDistance: 12 }).length;
+    let nuvens = 0;
+    for (let x = -3; x <= 10; x++) for (let y = 0; y <= 8; y++) for (let z = -3; z <= 10; z++) { try { if (dim.getBlock(t.worldBlockLocation({ x, y, z }))?.typeId === "cl:nuvem") nuvens++; } catch { /* */ } }
+    r.nuvens = nuvens;
+    r.garrafas = quantos(j, "minecraft:glass_bottle");
+    r.barra = [t.getBlock({ x: 5, y: 3, z: 6 }).typeId, t.getBlock({ x: 5, y: 4, z: 6 }).typeId, t.getBlock({ x: 5, y: 5, z: 6 }).typeId];
+    r.tabua = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 5, y: 5, z: 6 }), maxDistance: 4 }).map((e) => e.getComponent("item").itemStack.typeId);
+    log(`quark4: ${JSON.stringify(r)}`);
+    t.assert(r.barra[1] === "cl:barra_ferro" && r.barra[2] === "minecraft:air" && r.tabua.includes("minecraft:oak_planks"), "a barra de ferro não quebrou a tábua");
+    t.assert(r.colher === "minecraft:cobblestone" && r.pedras === 9, "a colher de pedreiro não pôs o bloco");
+    t.assert(r.sementesFora === 0 && r.trigo === 9, "a bolsa não guardou/plantou 3×3");
+    t.assert(r.trigoMao === 0 && r.vacas >= 3, "o cocho não fez as vacas procriarem");
+    t.assert(r.caixa === "minecraft:air" && r.monstros >= 5, "a caixa de monstros não abriu");
+    t.assert(r.nuvens === 1 && r.garrafas === 1, "a nuvem engarrafada não pôs a nuvem");
+    t.assert(!!r.sentou, "o banquinho não sentou");
+    t.assert(r.lampada === true, "a lâmpada de cristal não acendeu");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

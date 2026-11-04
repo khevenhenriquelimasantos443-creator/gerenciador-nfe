@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bolsa_sementes"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " S ",
+      "HXH",
+      " H "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:string"
+      },
+      "H": {
+        "item": "minecraft:leather"
+      },
+      "X": {
+        "item": "minecraft:wheat_seeds"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:bolsa_sementes"
+    }
+  }
+}

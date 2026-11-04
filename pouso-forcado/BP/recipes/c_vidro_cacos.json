@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_vidro_cacos"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:caco_vidro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "minecraft:glass"
+    }
+  }
+}

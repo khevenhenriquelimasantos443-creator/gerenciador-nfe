@@ -5680,6 +5680,24 @@
     },
     "clc_lingote_inanita": {
       "textures": "textures/items/cl/c/lingote_inanita"
+    },
+    "clc_colher_pedreiro": {
+      "textures": "textures/items/cl/arte/colher_pedreiro"
+    },
+    "clc_bolsa_sementes": {
+      "textures": "textures/items/cl/arte/bolsa_sementes"
+    },
+    "clc_abaco": {
+      "textures": "textures/items/cl/arte/abaco"
+    },
+    "clc_nuvem_engarrafada": {
+      "textures": "textures/items/cl/arte/nuvem_engarrafada"
+    },
+    "clc_slime_balde": {
+      "textures": "textures/items/cl/arte/slime_balde"
+    },
+    "clc_caco_vidro": {
+      "textures": "textures/items/cl/arte/caco_vidro"
     }
   }
 }

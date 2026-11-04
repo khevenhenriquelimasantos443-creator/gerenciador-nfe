@@ -1,0 +1,19 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:single_block_feature": {
+  "description": {
+   "identifier": "cl:qk_aglomerado_laranja"
+  },
+  "places_block": "cl:aglomerado_corindo_laranja",
+  "enforce_placement_rules": false,
+  "enforce_survivability_rules": false,
+  "may_attach_to": {
+   "bottom": [
+    "cl:corindo_laranja"
+   ]
+  },
+  "may_replace": [
+   "minecraft:air"
+  ]
+ }
+}

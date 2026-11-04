@@ -29,6 +29,11 @@
   "en": "Acacia Trapdoor",
   "icone": "textures/blocks/acacia_trapdoor"
  },
+ "minecraft:acacia_wood": {
+  "pt": "acacia_wood",
+  "en": "acacia_wood",
+  "icone": "textures/blocks/log_acacia"
+ },
  "minecraft:air": {
   "pt": "Ar",
   "en": "Air"
@@ -143,9 +148,19 @@
   "en": "Birch Trapdoor",
   "icone": "textures/blocks/birch_trapdoor"
  },
+ "minecraft:birch_wood": {
+  "pt": "birch_wood",
+  "en": "birch_wood",
+  "icone": "textures/blocks/log_birch"
+ },
  "minecraft:black_dye": {
   "pt": "black_dye",
   "en": "black_dye"
+ },
+ "minecraft:black_wool": {
+  "pt": "black_wool",
+  "en": "black_wool",
+  "icone": "textures/blocks/wool_colored_black"
  },
  "minecraft:blackstone": {
   "pt": "Pedra-Negra",
@@ -171,6 +186,11 @@
   "pt": "Corante Azul",
   "en": "Blue Dye",
   "icone": "textures/items/dye_powder_blue_new"
+ },
+ "minecraft:blue_wool": {
+  "pt": "blue_wool",
+  "en": "blue_wool",
+  "icone": "textures/blocks/wool_colored_blue"
  },
  "minecraft:bone": {
   "pt": "Osso",
@@ -225,6 +245,11 @@
   "pt": "Cogumelo Marrom",
   "en": "Brown Mushroom",
   "icone": "textures/blocks/mushroom_brown"
+ },
+ "minecraft:brown_wool": {
+  "pt": "brown_wool",
+  "en": "brown_wool",
+  "icone": "textures/blocks/wool_colored_brown"
  },
  "minecraft:bucket": {
   "pt": "Balde",
@@ -451,6 +476,11 @@
   "en": "Crimson Trapdoor",
   "icone": "textures/blocks/huge_fungus/crimson_trapdoor"
  },
+ "minecraft:cut_red_sandstone": {
+  "pt": "cut_red_sandstone",
+  "en": "cut_red_sandstone",
+  "icone": "textures/blocks/red_sandstone_smooth"
+ },
  "minecraft:cut_sandstone": {
   "pt": "Arenito Lapidado",
   "en": "Cut Sandstone",
@@ -460,6 +490,11 @@
   "pt": "Corante Ciano",
   "en": "Cyan Dye",
   "icone": "textures/items/dye_powder_cyan"
+ },
+ "minecraft:cyan_wool": {
+  "pt": "cyan_wool",
+  "en": "cyan_wool",
+  "icone": "textures/blocks/wool_colored_cyan"
  },
  "minecraft:dark_oak_log": {
   "pt": "Tora de Carvalho Escuro",
@@ -480,6 +515,11 @@
   "pt": "Alçapão de carvalho escuro",
   "en": "Dark Oak Trapdoor",
   "icone": "textures/blocks/dark_oak_trapdoor"
+ },
+ "minecraft:dark_oak_wood": {
+  "pt": "dark_oak_wood",
+  "en": "dark_oak_wood",
+  "icone": "textures/blocks/log_big_oak"
  },
  "minecraft:daylight_detector": {
   "pt": "Detector de Luz Solar",
@@ -646,6 +686,11 @@
   "en": "End Crystal",
   "icone": "textures/items/end_crystal"
  },
+ "minecraft:end_rod": {
+  "pt": "Vara do End",
+  "en": "End Rod",
+  "icone": "textures/blocks/end_rod"
+ },
  "minecraft:end_stone": {
   "pt": "Pedra do End",
   "en": "End Stone",
@@ -809,10 +854,20 @@
   "pt": "gray_dye",
   "en": "gray_dye"
  },
+ "minecraft:gray_wool": {
+  "pt": "gray_wool",
+  "en": "gray_wool",
+  "icone": "textures/blocks/wool_colored_gray"
+ },
  "minecraft:green_dye": {
   "pt": "Corante Verde",
   "en": "Green Dye",
   "icone": "textures/items/dye_powder_green_new"
+ },
+ "minecraft:green_wool": {
+  "pt": "green_wool",
+  "en": "green_wool",
+  "icone": "textures/blocks/wool_colored_green"
  },
  "minecraft:gunpowder": {
   "pt": "Pólvora",
@@ -929,6 +984,11 @@
   "en": "Jungle Trapdoor",
   "icone": "textures/blocks/jungle_trapdoor"
  },
+ "minecraft:jungle_wood": {
+  "pt": "jungle_wood",
+  "en": "jungle_wood",
+  "icone": "textures/blocks/log_jungle"
+ },
  "minecraft:kelp": {
   "pt": "Alga",
   "en": "Kelp",
@@ -983,6 +1043,11 @@
   "pt": "light_blue_dye",
   "en": "light_blue_dye"
  },
+ "minecraft:light_blue_wool": {
+  "pt": "light_blue_wool",
+  "en": "light_blue_wool",
+  "icone": "textures/blocks/wool_colored_light_blue"
+ },
  "minecraft:light_gray_carpet": {
   "pt": "Carpete Cinza-claro",
   "en": "Light Gray Carpet",
@@ -991,6 +1056,11 @@
  "minecraft:light_gray_dye": {
   "pt": "light_gray_dye",
   "en": "light_gray_dye"
+ },
+ "minecraft:light_gray_wool": {
+  "pt": "light_gray_wool",
+  "en": "light_gray_wool",
+  "icone": "textures/blocks/wool_colored_silver"
  },
  "minecraft:lightning_rod": {
   "pt": "Para-raios",
@@ -1030,6 +1100,11 @@
  "minecraft:magenta_dye": {
   "pt": "magenta_dye",
   "en": "magenta_dye"
+ },
+ "minecraft:magenta_wool": {
+  "pt": "magenta_wool",
+  "en": "magenta_wool",
+  "icone": "textures/blocks/wool_colored_magenta"
  },
  "minecraft:magma": {
   "pt": "Bloco de Magma",
@@ -1180,6 +1255,11 @@
   "pt": "oak_trapdoor",
   "en": "oak_trapdoor"
  },
+ "minecraft:oak_wood": {
+  "pt": "oak_wood",
+  "en": "oak_wood",
+  "icone": "textures/blocks/log_oak"
+ },
  "minecraft:obsidian": {
   "pt": "Obsidiana",
   "en": "Obsidian",
@@ -1214,6 +1294,11 @@
   "pt": "Corante Rosa",
   "en": "Pink Dye",
   "icone": "textures/items/dye_powder_pink"
+ },
+ "minecraft:pink_wool": {
+  "pt": "pink_wool",
+  "en": "pink_wool",
+  "icone": "textures/blocks/wool_colored_pink"
  },
  "minecraft:piston": {
   "pt": "Pistão",
@@ -1303,6 +1388,11 @@
   "pt": "Corante Roxo",
   "en": "Purple Dye",
   "icone": "textures/items/dye_powder_purple"
+ },
+ "minecraft:purple_wool": {
+  "pt": "purple_wool",
+  "en": "purple_wool",
+  "icone": "textures/blocks/wool_colored_purple"
  },
  "minecraft:purpur_block": {
   "pt": "purpur_block",
@@ -1554,6 +1644,11 @@
   "en": "Spruce Trapdoor",
   "icone": "textures/blocks/spruce_trapdoor"
  },
+ "minecraft:spruce_wood": {
+  "pt": "spruce_wood",
+  "en": "spruce_wood",
+  "icone": "textures/blocks/log_spruce"
+ },
  "minecraft:stick": {
   "pt": "Graveto",
   "en": "Stick",
@@ -1782,5 +1877,10 @@
   "pt": "Corante Amarelo",
   "en": "Yellow Dye",
   "icone": "textures/items/dye_powder_yellow"
+ },
+ "minecraft:yellow_wool": {
+  "pt": "yellow_wool",
+  "en": "yellow_wool",
+  "icone": "textures/blocks/wool_colored_yellow"
  }
 }

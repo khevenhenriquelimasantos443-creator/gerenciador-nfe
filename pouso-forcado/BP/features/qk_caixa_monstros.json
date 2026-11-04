@@ -1,0 +1,27 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:single_block_feature": {
+  "description": {
+   "identifier": "cl:qk_caixa_monstros"
+  },
+  "places_block": "cl:caixa_monstros",
+  "enforce_placement_rules": false,
+  "enforce_survivability_rules": false,
+  "may_attach_to": {
+   "bottom": [
+    "minecraft:stone",
+    "minecraft:deepslate",
+    "minecraft:tuff",
+    "minecraft:andesite",
+    "minecraft:diorite",
+    "minecraft:granite",
+    "minecraft:cobblestone",
+    "minecraft:gravel",
+    "minecraft:dirt"
+   ]
+  },
+  "may_replace": [
+   "minecraft:air"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:scatter_feature": {
+  "description": {
+   "identifier": "cl:qk_cristais_vermelho_blocos"
+  },
+  "places_feature": "cl:qk_corindo_vermelho",
+  "iterations": 48,
+  "coordinate_eval_order": "xzy",
+  "x": {
+   "distribution": "uniform",
+   "extent": [
+    -4,
+    4
+   ]
+  },
+  "y": {
+   "distribution": "uniform",
+   "extent": [
+    -4,
+    4
+   ]
+  },
+  "z": {
+   "distribution": "uniform",
+   "extent": [
+    -4,
+    4
+   ]
+  }
+ }
+}

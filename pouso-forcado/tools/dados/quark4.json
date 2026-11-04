@@ -1,0 +1,767 @@
+{
+ "banquinho_amarelo": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_amarelo"
+   }
+  }
+ },
+ "banquinho_azul": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_azul"
+   }
+  }
+ },
+ "banquinho_azul_claro": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_azul_claro"
+   }
+  }
+ },
+ "banquinho_branco": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_branco"
+   }
+  }
+ },
+ "banquinho_ciano": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_ciano"
+   }
+  }
+ },
+ "banquinho_cinza": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_cinza"
+   }
+  }
+ },
+ "banquinho_cinza_claro": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_cinza_claro"
+   }
+  }
+ },
+ "banquinho_laranja": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_laranja"
+   }
+  }
+ },
+ "banquinho_lima": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_lima"
+   }
+  }
+ },
+ "banquinho_magenta": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_magenta"
+   }
+  }
+ },
+ "banquinho_marrom": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_marrom"
+   }
+  }
+ },
+ "banquinho_preto": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_preto"
+   }
+  }
+ },
+ "banquinho_rosa": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_rosa"
+   }
+  }
+ },
+ "banquinho_roxo": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_roxo"
+   }
+  }
+ },
+ "banquinho_verde": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_verde"
+   }
+  }
+ },
+ "banquinho_vermelho": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    9,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_banquinho",
+  "materiais": {
+   "main": {
+    "render_method": "alpha_test",
+    "texture": "clc_banquinho_vermelho"
+   }
+  }
+ },
+ "barra_ferro": {
+  "caixa": {
+   "origin": [
+    -1,
+    0,
+    -1
+   ],
+   "size": [
+    2,
+    16,
+    2
+   ]
+  },
+  "geometria": "geometry.cl.q_barra_ferro",
+  "materiais": {
+   "iron_rod": {
+    "render_method": "alpha_test",
+    "texture": "clc_barra_ferro_qiron_rod"
+   }
+  }
+ },
+ "barras_ouro": {
+  "caixa": {
+   "origin": [
+    -1,
+    0,
+    -1
+   ],
+   "size": [
+    2,
+    16,
+    2
+   ]
+  },
+  "geometria": "geometry.cl.q_barras_ouro",
+  "materiais": {
+   "bars": {
+    "render_method": "alpha_test",
+    "texture": "clc_barras_ouro_qbars"
+   }
+  }
+ },
+ "batatinha": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    6,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_batatinha",
+  "materiais": {
+   "all": {
+    "render_method": "alpha_test",
+    "texture": "clc_batatinha"
+   }
+  }
+ },
+ "calha_itens": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_calha_itens",
+  "materiais": {
+   "bottom": {
+    "render_method": "alpha_test",
+    "texture": "clc_calha_itens_qbottom"
+   },
+   "side": {
+    "render_method": "alpha_test",
+    "texture": "clc_calha_itens_qside"
+   },
+   "top": {
+    "render_method": "alpha_test",
+    "texture": "clc_calha_itens_qtop"
+   }
+  }
+ },
+ "cocho": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    8,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_cocho",
+  "materiais": {
+   "bottom": {
+    "render_method": "alpha_test",
+    "texture": "clc_cocho_qbottom"
+   },
+   "inner": {
+    "render_method": "alpha_test",
+    "texture": "clc_cocho_qinner"
+   },
+   "inside": {
+    "render_method": "alpha_test",
+    "texture": "clc_cocho_qinside"
+   },
+   "side": {
+    "render_method": "alpha_test",
+    "texture": "clc_cocho_qside"
+   },
+   "top": {
+    "render_method": "alpha_test",
+    "texture": "clc_cocho_qtop"
+   }
+  }
+ },
+ "poste_acacia": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    16,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_poste",
+  "materiais": {
+   "texture": {
+    "render_method": "opaque",
+    "texture": "clv_log_acacia"
+   }
+  }
+ },
+ "poste_betula": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    16,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_poste",
+  "materiais": {
+   "texture": {
+    "render_method": "opaque",
+    "texture": "clv_log_birch"
+   }
+  }
+ },
+ "poste_carvalho": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    16,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_poste",
+  "materiais": {
+   "texture": {
+    "render_method": "opaque",
+    "texture": "clv_log_oak"
+   }
+  }
+ },
+ "poste_carvalho_escuro": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    16,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_poste",
+  "materiais": {
+   "texture": {
+    "render_method": "opaque",
+    "texture": "clv_log_big_oak"
+   }
+  }
+ },
+ "poste_pinheiro": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    16,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_poste",
+  "materiais": {
+   "texture": {
+    "render_method": "opaque",
+    "texture": "clv_log_spruce"
+   }
+  }
+ },
+ "poste_selva": {
+  "caixa": {
+   "origin": [
+    -2,
+    0,
+    -2
+   ],
+   "size": [
+    4,
+    16,
+    4
+   ]
+  },
+  "geometria": "geometry.cl.q_poste",
+  "materiais": {
+   "texture": {
+    "render_method": "opaque",
+    "texture": "clv_log_jungle"
+   }
+  }
+ },
+ "tora_oca_acacia": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_tora_oca",
+  "materiais": {
+   "end": {
+    "render_method": "opaque",
+    "texture": "clv_log_acacia_top"
+   },
+   "inside": {
+    "render_method": "opaque",
+    "texture": "clv_stripped_acacia_log"
+   },
+   "side": {
+    "render_method": "opaque",
+    "texture": "clv_log_acacia"
+   }
+  }
+ },
+ "tora_oca_betula": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_tora_oca",
+  "materiais": {
+   "end": {
+    "render_method": "opaque",
+    "texture": "clv_log_birch_top"
+   },
+   "inside": {
+    "render_method": "opaque",
+    "texture": "clv_stripped_birch_log"
+   },
+   "side": {
+    "render_method": "opaque",
+    "texture": "clv_log_birch"
+   }
+  }
+ },
+ "tora_oca_carvalho": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_tora_oca",
+  "materiais": {
+   "end": {
+    "render_method": "opaque",
+    "texture": "clv_log_oak_top"
+   },
+   "inside": {
+    "render_method": "opaque",
+    "texture": "clv_stripped_oak_log"
+   },
+   "side": {
+    "render_method": "opaque",
+    "texture": "clv_log_oak"
+   }
+  }
+ },
+ "tora_oca_carvalho_escuro": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_tora_oca",
+  "materiais": {
+   "end": {
+    "render_method": "opaque",
+    "texture": "clv_log_big_oak_top"
+   },
+   "inside": {
+    "render_method": "opaque",
+    "texture": "clv_stripped_dark_oak_log"
+   },
+   "side": {
+    "render_method": "opaque",
+    "texture": "clv_log_big_oak"
+   }
+  }
+ },
+ "tora_oca_pinheiro": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_tora_oca",
+  "materiais": {
+   "end": {
+    "render_method": "opaque",
+    "texture": "clv_log_spruce_top"
+   },
+   "inside": {
+    "render_method": "opaque",
+    "texture": "clv_stripped_spruce_log"
+   },
+   "side": {
+    "render_method": "opaque",
+    "texture": "clv_log_spruce"
+   }
+  }
+ },
+ "tora_oca_selva": {
+  "caixa": {
+   "origin": [
+    -8,
+    0,
+    -8
+   ],
+   "size": [
+    16,
+    16,
+    16
+   ]
+  },
+  "geometria": "geometry.cl.q_tora_oca",
+  "materiais": {
+   "end": {
+    "render_method": "opaque",
+    "texture": "clv_log_jungle_top"
+   },
+   "inside": {
+    "render_method": "opaque",
+    "texture": "clv_stripped_jungle_log"
+   },
+   "side": {
+    "render_method": "opaque",
+    "texture": "clv_log_jungle"
+   }
+  }
+ }
+}

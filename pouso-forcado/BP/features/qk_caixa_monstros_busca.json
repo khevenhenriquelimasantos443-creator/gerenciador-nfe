@@ -1,0 +1,23 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:search_feature": {
+  "description": {
+   "identifier": "cl:qk_caixa_monstros_busca"
+  },
+  "places_feature": "cl:qk_caixa_monstros",
+  "search_volume": {
+   "min": [
+    0,
+    -15,
+    0
+   ],
+   "max": [
+    0,
+    15,
+    0
+   ]
+  },
+  "search_axis": "-y",
+  "required_successes": 1
+ }
+}

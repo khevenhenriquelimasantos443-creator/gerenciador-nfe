@@ -154,6 +154,25 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.37.0 (Quark 4.1, o mais novo)
+
+- **Corindo** em 9 cores: cristais que brilham nas paredes das cavernas e crescem aglomerados; **Lâmpadas de Cristal**
+  (corindo + redstone) acendem com redstone (luz 15).
+- **Caixa de Monstros** nas cavernas fundas: chegou perto (2,5 blocos), ela rosna e solta 5 a 8 monstros; quem cai para
+  você deixa um saque extra (minério bruto, diamante, discos, maçã dourada...).
+- **Cocho**: ponha comida (trigo, cenoura, sementes, feno, cacto...) e os bichos em volta procriam sozinhos.
+- **Calha** (deixa cair o que vem do funil/baú de cima) e **Barra de Ferro** (o pistão que a empurra quebra o bloco da
+  frente).
+- **Colher de Pedreiro** (põe um bloco ao acaso da barra de itens), **Bolsa de Sementes** (640 sementes; use no ar para
+  guardar, na terra arada para plantar, agachado planta 3×3), **Ábaco** (mede distâncias), **Nuvem Engarrafada**
+  (garrafa vazia na altura das nuvens; põe um bloco no ar por 10 s), **Slime no Balde** e **Cacos de Vidro**.
+- Construção: **banquinhos** de 16 cores (dá para sentar), tijolos de arenito (normal, vermelho e de almas), arenito de
+  almas, tijolos de ferro, ouro e cobre brutos, barras de ouro, toras ocas, postes e a **Batatinha**.
+- Ajustes do mod: enxada colhe capim e flores em 3×3 (5×5 de diamante), ferramenta quebrada é trocada por outra igual do
+  inventário, porcos têm 2 a 3 filhotes, élitro sobre fogueira com feno embaixo sobe, escada na escada estende para
+  baixo, vexes somem com o evocador. Jaspe agora nasce no deserto e xisto no frio.
+- Arte e modelos 3D do próprio Quark (CC BY-NC-SA 3.0). Diário: capítulo Quark 4.1.
+
 ## Novidades da 1.36.0 (Extreme Reactors 2.4, o mais novo)
 
 - **Turbina** (multibloco de 3 a 9 de lado): Carcaça nas arestas; nas faces Vidro, Controlador, **Mancal do Rotor**,

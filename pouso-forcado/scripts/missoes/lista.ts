@@ -84,6 +84,16 @@ export type Acao =
   | "er_turbina"
   | "er_vapor"
   | "er_ludicrita"
+  | "qk4_corindo"
+  | "qk4_lampada"
+  | "qk4_caixa"
+  | "qk4_banquinho"
+  | "qk4_colher"
+  | "qk4_bolsa"
+  | "qk4_cocho"
+  | "qk4_barra"
+  | "qk4_nuvem"
+  | "qk4_batatinha"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -586,6 +596,23 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "quark4", // 1.37.0: Quark 4.1
+    icone: "cl:corindo_violeta",
+    requer: ["quark"],
+    missoes: [
+      { id: "qk4_corindo", objetivo: { tipo: "acao", acao: "qk4_corindo", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 16 }] },
+      { id: "qk4_lampada", requer: ["qk4_corindo"], objetivo: { tipo: "acao", acao: "qk4_lampada", qtd: 1 }, recompensa: [{ item: "minecraft:glowstone", quantidade: 4 }] },
+      { id: "qk4_caixa", objetivo: { tipo: "acao", acao: "qk4_caixa", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "qk4_banquinho", objetivo: { tipo: "acao", acao: "qk4_banquinho", qtd: 1 }, recompensa: [{ item: "minecraft:white_wool", quantidade: 8 }] },
+      { id: "qk4_colher", objetivo: { tipo: "acao", acao: "qk4_colher", qtd: 16 }, recompensa: [{ item: "minecraft:iron_ingot", quantidade: 4 }] },
+      { id: "qk4_bolsa", objetivo: { tipo: "acao", acao: "qk4_bolsa", qtd: 32 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 32 }] },
+      { id: "qk4_cocho", objetivo: { tipo: "acao", acao: "qk4_cocho", qtd: 1 }, recompensa: [{ item: "minecraft:wheat", quantidade: 32 }] },
+      { id: "qk4_barra", objetivo: { tipo: "acao", acao: "qk4_barra", qtd: 1 }, recompensa: [{ item: "minecraft:piston", quantidade: 4 }] },
+      { id: "qk4_nuvem", objetivo: { tipo: "acao", acao: "qk4_nuvem", qtd: 1 }, recompensa: [{ item: "minecraft:glass_bottle", quantidade: 8 }] },
+      { id: "qk4_batatinha", objetivo: { tipo: "acao", acao: "qk4_batatinha", qtd: 1 }, recompensa: [{ item: "minecraft:baked_potato", quantidade: 16 }] },
     ],
   },
   {

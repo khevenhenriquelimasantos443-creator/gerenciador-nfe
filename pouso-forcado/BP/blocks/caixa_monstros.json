@@ -1,0 +1,36 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:caixa_monstros",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_caixa_monstros",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 25
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1200
+      },
+      "minecraft:map_color": "#3a3a3a",
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:tick": {
+        "interval_range": [
+          10,
+          10
+        ],
+        "looping": true
+      },
+      "cl:caixa_monstros": {}
+    }
+  }
+}

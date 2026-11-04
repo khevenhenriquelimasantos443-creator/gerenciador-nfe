@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_arenito_almas_entalhado"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#",
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:arenito_almas_cortado"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:arenito_almas_entalhado"
+    }
+  }
+}

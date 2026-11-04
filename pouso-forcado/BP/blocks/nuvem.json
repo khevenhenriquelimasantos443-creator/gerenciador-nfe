@@ -1,0 +1,38 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:nuvem",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:light_dampening": 0,
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_nuvem",
+          "render_method": "blend",
+          "ambient_occlusion": 0
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#f4f8fc",
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:tick": {
+        "interval_range": [
+          200,
+          200
+        ],
+        "looping": true
+      },
+      "cl:nuvem": {}
+    }
+  }
+}

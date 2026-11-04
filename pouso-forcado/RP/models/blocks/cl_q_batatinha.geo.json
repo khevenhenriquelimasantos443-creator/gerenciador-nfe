@@ -1,0 +1,111 @@
+{
+ "format_version": "1.12.0",
+ "minecraft:geometry": [
+  {
+   "description": {
+    "identifier": "geometry.cl.q_batatinha",
+    "texture_width": 16,
+    "texture_height": 16,
+    "visible_bounds_width": 2,
+    "visible_bounds_height": 2,
+    "visible_bounds_offset": [
+     0,
+     0.5,
+     0
+    ]
+   },
+   "bones": [
+    {
+     "name": "q",
+     "pivot": [
+      0,
+      0,
+      0
+     ],
+     "cubes": [
+      {
+       "origin": [
+        -2,
+        0,
+        -2
+       ],
+       "size": [
+        4,
+        6,
+        4
+       ],
+       "uv": {
+        "down": {
+         "uv": [
+          8.0,
+          0.0
+         ],
+         "uv_size": [
+          4.0,
+          4.0
+         ],
+         "material_instance": "all"
+        },
+        "up": {
+         "uv": [
+          4.0,
+          0.0
+         ],
+         "uv_size": [
+          4.0,
+          4.0
+         ],
+         "material_instance": "all"
+        },
+        "north": {
+         "uv": [
+          4.0,
+          4.0
+         ],
+         "uv_size": [
+          4.0,
+          6.0
+         ],
+         "material_instance": "all"
+        },
+        "south": {
+         "uv": [
+          12.0,
+          4.0
+         ],
+         "uv_size": [
+          4.0,
+          6.0
+         ],
+         "material_instance": "all"
+        },
+        "west": {
+         "uv": [
+          8.0,
+          4.0
+         ],
+         "uv_size": [
+          4.0,
+          6.0
+         ],
+         "material_instance": "all"
+        },
+        "east": {
+         "uv": [
+          0.0,
+          4.0
+         ],
+         "uv_size": [
+          4.0,
+          6.0
+         ],
+         "material_instance": "all"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

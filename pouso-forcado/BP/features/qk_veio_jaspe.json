@@ -1,0 +1,20 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:ore_feature": {
+  "description": {
+   "identifier": "cl:qk_veio_jaspe"
+  },
+  "count": 48,
+  "replace_rules": [
+   {
+    "places_block": "cl:jaspe",
+    "may_replace": [
+     "minecraft:stone",
+     "minecraft:andesite",
+     "minecraft:diorite",
+     "minecraft:granite"
+    ]
+   }
+  ]
+ }
+}

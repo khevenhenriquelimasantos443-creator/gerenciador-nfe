@@ -76,6 +76,7 @@ import { registrarJetpacks } from "./utilidades/jetpacks.js";
 import { registrarTurbina, turbina, turbinaParte } from "./maquinas/turbina.js";
 import { cestoComp, porcoesComp, redeComp, registrarFarmersNovo, soloComp } from "./maquinas/farmers_novo.js";
 import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tochas.js";
+import { banquinhoComp, batatinhaComp, caixaMonstrosComp, calhaComp, cochoComp, corindoComp, lampadaCristalComp, nuvemComp, registrarQuark4 } from "./utilidades/quark4.js";
 import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
@@ -139,6 +140,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   // 1.32.0: Iron Chests e Storage Drawers.
   blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
   blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
+  // 1.37.0: Quark 4.1.
+  for (const [nome, comp] of [["cl:corindo", corindoComp], ["cl:lampada_cristal", lampadaCristalComp], ["cl:banquinho", banquinhoComp], ["cl:batatinha", batatinhaComp],
+    ["cl:caixa_monstros", caixaMonstrosComp], ["cl:calha_itens", calhaComp], ["cl:cocho", cochoComp], ["cl:nuvem", nuvemComp]] as const)
+    blockComponentRegistry.registerCustomComponent(nome, comp);
   // 1.36.0: turbina do Extreme Reactors.
   blockComponentRegistry.registerCustomComponent("cl:turbina", turbina);
   blockComponentRegistry.registerCustomComponent("cl:turbina_parte", turbinaParte);
@@ -332,6 +337,7 @@ registrarJetpacks(); // 1.33.0: Iron Jetpacks
 registrarFarmersNovo(); // 1.34.0: Farmer's Delight 1.3.0
 registrarTurbina(); // 1.36.0: Extreme Reactors
 registrarTochas(); // 1.33.0: TorchMaster
+registrarQuark4(); // 1.37.0: Quark 4.1
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();
 registrarAE2();

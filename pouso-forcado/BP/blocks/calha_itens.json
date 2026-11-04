@@ -1,0 +1,72 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:calha_itens",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.cl.q_calha_itens",
+      "minecraft:material_instances": {
+        "*": {
+          "render_method": "alpha_test",
+          "texture": "clc_calha_itens_qbottom"
+        },
+        "bottom": {
+          "render_method": "alpha_test",
+          "texture": "clc_calha_itens_qbottom"
+        },
+        "side": {
+          "render_method": "alpha_test",
+          "texture": "clc_calha_itens_qside"
+        },
+        "top": {
+          "render_method": "alpha_test",
+          "texture": "clc_calha_itens_qtop"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#9a7a4a",
+      "minecraft:tick": {
+        "interval_range": [
+          8,
+          8
+        ],
+        "looping": true
+      },
+      "cl:calha_itens": {},
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:light_dampening": 0
+    }
+  }
+}
