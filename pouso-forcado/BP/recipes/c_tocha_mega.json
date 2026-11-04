@@ -1,0 +1,39 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_tocha_mega"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "TTT",
+      "WDW",
+      "GLG"
+    ],
+    "key": {
+      "T": {
+        "item": "minecraft:torch"
+      },
+      "W": {
+        "tag": "minecraft:logs"
+      },
+      "D": {
+        "item": "minecraft:diamond_block"
+      },
+      "G": {
+        "item": "minecraft:gold_block"
+      },
+      "L": {
+        "tag": "minecraft:logs"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:tocha_mega"
+    }
+  }
+}

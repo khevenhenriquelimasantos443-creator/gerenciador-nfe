@@ -1,0 +1,56 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:lanterna_feral",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.lanterna_feral"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_lanterna_feral",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#f2c84b",
+      "minecraft:light_emission": 15,
+      "cl:lanterna_feral": {},
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          0,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          0,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      }
+    }
+  }
+}

@@ -169,13 +169,14 @@ export function registrarOpenBlocks(): void {
     pisou.delete(playerId);
     antes.delete(playerId);
   });
-  // Os itens caem no tick da morte; recolhe logo depois.
+  // Os itens caem no tick da morte; recolhe 3 ticks depois (1.33.0: depois de as ferramentas Vinculadas à Alma
+  // voltarem para o jogador, em 2 ticks; os artefatos do Artifacts vão junto para o túmulo).
   world.afterEvents.entityDie.subscribe(({ deadEntity }) => {
-    if (!(deadEntity instanceof Player)) return;
+    if (!(deadEntity instanceof Player) || world.gameRules.keepInventory) return;
     const j = deadEntity, dim = j.dimension, onde = { ...j.location };
     system.runTimeout(() => {
       if (j.isValid) enterrar(j, dim, onde);
-    }, 2);
+    }, 3);
   });
   world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation }) => {
     if (brokenBlockPermutation.type.id === TUMULO) esvaziar(block);

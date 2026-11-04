@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_capacitor_esmeralda"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MEM",
+      "MEM",
+      "MEM"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:emerald"
+      },
+      "E": {
+        "item": "cl:celula_esmeralda"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:capacitor_esmeralda"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_propulsor_ouro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "CEC",
+      "MFM"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:gold_ingot"
+      },
+      "C": {
+        "item": "cl:bobina_avancada"
+      },
+      "E": {
+        "item": "cl:celula_ouro"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:propulsor_ouro"
+    }
+  }
+}

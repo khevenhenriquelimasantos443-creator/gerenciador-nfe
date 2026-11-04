@@ -154,6 +154,21 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.33.0 (Iron Jetpacks e TorchMaster)
+
+- **Jetpacks** (Iron Jetpacks, o mais novo, com a arte do mod): Madeira, Pedra, Cobre, Ferro, Bronze, Ouro, Aço,
+  Diamante, Esmeralda e Criativo, com a capacidade, o gasto de RF e as velocidades do mod. Vestido no peito: **segure o
+  pulo para subir**; no ar, sem pular, ele **paira** (agachado desce mais rápido; agache duas vezes no ar para
+  ligar/desligar o pairar). Correndo vai mais rápido e gasta mais. Pousar depois de voar não machuca.
+- Peças do mod para fazer: Célula, Propulsor e Capacitor de cada material, as 4 Bobinas e a Alça (receitas do mod);
+  cada jetpack é feito com o do tier de baixo.
+- Carregam nos **Carregadores do Ender IO** (o com fio e o sem fio; o sem fio carrega até o jetpack vestido).
+- **Mega Tocha** (TorchMaster, com a arte do mod): nenhum monstro nasce sozinho a 64 blocos dela.
+- **Lanterna Sinalizadora**: acende o escuro num raio de 24 blocos com luzes invisíveis (quebrar apaga).
+- O **Túmulo** já existia (OpenBlocks, 1.3.0): agora espera as ferramentas Vinculadas à Alma voltarem e leva os
+  artefatos junto; com "manter inventário" ligado, não faz túmulo.
+- Diário: capítulo Jetpacks e Tochas.
+
 ## Novidades da 1.32.0 (Iron Chests e Storage Drawers 13.2)
 
 - **Baús maiores** (Iron Chests, com a arte do mod): Cobre 45, Ferro 54, Ouro 81, Diamante, Cristal e Obsidiana 108

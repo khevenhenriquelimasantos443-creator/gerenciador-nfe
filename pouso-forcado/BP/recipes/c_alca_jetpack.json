@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_alca_jetpack"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " I ",
+      "LLL",
+      " I "
+    ],
+    "key": {
+      "L": {
+        "item": "minecraft:leather"
+      },
+      "I": {
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:alca_jetpack"
+    }
+  }
+}

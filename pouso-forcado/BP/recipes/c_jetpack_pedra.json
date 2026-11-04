@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack_pedra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "MJM",
+      "T T"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:cobblestone"
+      },
+      "C": {
+        "item": "cl:capacitor_pedra"
+      },
+      "J": {
+        "tag": "cl:jetpack_t0"
+      },
+      "T": {
+        "item": "cl:propulsor_pedra"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_pedra"
+    }
+  }
+}

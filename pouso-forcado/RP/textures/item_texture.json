@@ -5419,6 +5419,132 @@
     },
     "clc_chave_gaveta": {
       "textures": "textures/items/cl/arte/chave_gaveta"
+    },
+    "clc_alca_jetpack": {
+      "textures": "textures/items/cl/arte/alca_jetpack"
+    },
+    "clc_bobina_basica": {
+      "textures": "textures/items/cl/arte/bobina_basica"
+    },
+    "clc_bobina_avancada": {
+      "textures": "textures/items/cl/arte/bobina_avancada"
+    },
+    "clc_bobina_elite": {
+      "textures": "textures/items/cl/arte/bobina_elite"
+    },
+    "clc_bobina_suprema": {
+      "textures": "textures/items/cl/arte/bobina_suprema"
+    },
+    "clc_celula_madeira": {
+      "textures": "textures/items/cl/arte/celula_madeira"
+    },
+    "clc_propulsor_madeira": {
+      "textures": "textures/items/cl/arte/propulsor_madeira"
+    },
+    "clc_capacitor_madeira": {
+      "textures": "textures/items/cl/arte/capacitor_madeira"
+    },
+    "clc_celula_pedra": {
+      "textures": "textures/items/cl/arte/celula_pedra"
+    },
+    "clc_propulsor_pedra": {
+      "textures": "textures/items/cl/arte/propulsor_pedra"
+    },
+    "clc_capacitor_pedra": {
+      "textures": "textures/items/cl/arte/capacitor_pedra"
+    },
+    "clc_celula_cobre": {
+      "textures": "textures/items/cl/arte/celula_cobre"
+    },
+    "clc_propulsor_cobre": {
+      "textures": "textures/items/cl/arte/propulsor_cobre"
+    },
+    "clc_capacitor_cobre": {
+      "textures": "textures/items/cl/arte/capacitor_cobre"
+    },
+    "clc_celula_ferro": {
+      "textures": "textures/items/cl/arte/celula_ferro"
+    },
+    "clc_propulsor_ferro": {
+      "textures": "textures/items/cl/arte/propulsor_ferro"
+    },
+    "clc_capacitor_ferro": {
+      "textures": "textures/items/cl/arte/capacitor_ferro"
+    },
+    "clc_celula_bronze": {
+      "textures": "textures/items/cl/arte/celula_bronze"
+    },
+    "clc_propulsor_bronze": {
+      "textures": "textures/items/cl/arte/propulsor_bronze"
+    },
+    "clc_capacitor_bronze": {
+      "textures": "textures/items/cl/arte/capacitor_bronze"
+    },
+    "clc_celula_ouro": {
+      "textures": "textures/items/cl/arte/celula_ouro"
+    },
+    "clc_propulsor_ouro": {
+      "textures": "textures/items/cl/arte/propulsor_ouro"
+    },
+    "clc_capacitor_ouro": {
+      "textures": "textures/items/cl/arte/capacitor_ouro"
+    },
+    "clc_celula_aco": {
+      "textures": "textures/items/cl/arte/celula_aco"
+    },
+    "clc_propulsor_aco": {
+      "textures": "textures/items/cl/arte/propulsor_aco"
+    },
+    "clc_capacitor_aco": {
+      "textures": "textures/items/cl/arte/capacitor_aco"
+    },
+    "clc_celula_diamante": {
+      "textures": "textures/items/cl/arte/celula_diamante"
+    },
+    "clc_propulsor_diamante": {
+      "textures": "textures/items/cl/arte/propulsor_diamante"
+    },
+    "clc_capacitor_diamante": {
+      "textures": "textures/items/cl/arte/capacitor_diamante"
+    },
+    "clc_celula_esmeralda": {
+      "textures": "textures/items/cl/arte/celula_esmeralda"
+    },
+    "clc_propulsor_esmeralda": {
+      "textures": "textures/items/cl/arte/propulsor_esmeralda"
+    },
+    "clc_capacitor_esmeralda": {
+      "textures": "textures/items/cl/arte/capacitor_esmeralda"
+    },
+    "clc_jetpack_madeira": {
+      "textures": "textures/items/cl/arte/jetpack_madeira"
+    },
+    "clc_jetpack_pedra": {
+      "textures": "textures/items/cl/arte/jetpack_pedra"
+    },
+    "clc_jetpack_cobre": {
+      "textures": "textures/items/cl/arte/jetpack_cobre"
+    },
+    "clc_jetpack_ferro": {
+      "textures": "textures/items/cl/arte/jetpack_ferro"
+    },
+    "clc_jetpack_bronze": {
+      "textures": "textures/items/cl/arte/jetpack_bronze"
+    },
+    "clc_jetpack_ouro": {
+      "textures": "textures/items/cl/arte/jetpack_ouro"
+    },
+    "clc_jetpack_aco": {
+      "textures": "textures/items/cl/arte/jetpack_aco"
+    },
+    "clc_jetpack_diamante": {
+      "textures": "textures/items/cl/arte/jetpack_diamante"
+    },
+    "clc_jetpack_esmeralda": {
+      "textures": "textures/items/cl/arte/jetpack_esmeralda"
+    },
+    "clc_jetpack_criativo": {
+      "textures": "textures/items/cl/arte/jetpack_criativo"
     }
   }
 }

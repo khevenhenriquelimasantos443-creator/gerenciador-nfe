@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:jetpack_pedra",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_jetpack_pedra",
+      "minecraft:display_name": {
+        "value": "item.cl:jetpack_pedra.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:wearable": {
+        "slot": "slot.armor.chest",
+        "protection": 2
+      },
+      "minecraft:tags": {
+        "tags": [
+          "cl:jetpack",
+          "cl:jetpack_t1"
+        ]
+      }
+    }
+  }
+}

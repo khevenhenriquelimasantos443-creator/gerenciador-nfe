@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack_ouro"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "MJM",
+      "T T"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:gold_ingot"
+      },
+      "C": {
+        "item": "cl:capacitor_ouro"
+      },
+      "J": {
+        "tag": "cl:jetpack_t2"
+      },
+      "T": {
+        "item": "cl:propulsor_ouro"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_ouro"
+    }
+  }
+}

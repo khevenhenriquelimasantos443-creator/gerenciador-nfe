@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_propulsor_pedra"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "CEC",
+      "MFM"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:cobblestone"
+      },
+      "C": {
+        "item": "cl:bobina_basica"
+      },
+      "E": {
+        "item": "cl:celula_pedra"
+      },
+      "F": {
+        "item": "minecraft:furnace"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:propulsor_pedra"
+    }
+  }
+}

@@ -216,6 +216,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dirty Water",
   "icone": "textures/items/cl/arte/agua_suja"
  },
+ "cl:alca_jetpack": {
+  "pt": "Alça de Jetpack",
+  "en": "Strap",
+  "icone": "textures/items/cl/arte/alca_jetpack"
+ },
  "cl:aleta_foguete": {
   "pt": "Aleta do Foguete",
   "en": "Rocket Fins",
@@ -1301,15 +1306,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Yellorium Block",
   "icone": "textures/items/cl/blocos/bloco_yellorium"
  },
+ "cl:bobina_avancada": {
+  "pt": "Bobina Avançada",
+  "en": "Advanced Coil",
+  "icone": "textures/items/cl/arte/bobina_avancada"
+ },
+ "cl:bobina_basica": {
+  "pt": "Bobina Básica",
+  "en": "Basic Coil",
+  "icone": "textures/items/cl/arte/bobina_basica"
+ },
  "cl:bobina_bt": {
   "pt": "Bobina de Baixa Tensão",
   "en": "LV Coil Block Item",
   "icone": "textures/items/cl/c/bobina_bt"
  },
+ "cl:bobina_elite": {
+  "pt": "Bobina de Elite",
+  "en": "Elite Coil",
+  "icone": "textures/items/cl/arte/bobina_elite"
+ },
  "cl:bobina_fio_cobre": {
   "pt": "Bobina de Fio de Cobre",
   "en": "LV Wire Coil",
   "icone": "textures/items/cl/c/bobina_fio_cobre"
+ },
+ "cl:bobina_suprema": {
+  "pt": "Bobina Suprema",
+  "en": "Ultimate Coil",
+  "icone": "textures/items/cl/arte/bobina_suprema"
  },
  "cl:bola_brilhante": {
   "pt": "Bola Brilhante",
@@ -2011,20 +2036,65 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Capacitor",
   "icone": "textures/items/cl/arte/capacitor"
  },
+ "cl:capacitor_aco": {
+  "pt": "Capacitor de Aço",
+  "en": "Steel Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_aco"
+ },
  "cl:capacitor_basico": {
   "pt": "Capacitor Básico",
   "en": "Basic Capacitor",
   "icone": "textures/items/cl/arte/capacitor_basico"
+ },
+ "cl:capacitor_bronze": {
+  "pt": "Capacitor de Bronze",
+  "en": "Bronze Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_bronze"
+ },
+ "cl:capacitor_cobre": {
+  "pt": "Capacitor de Cobre",
+  "en": "Copper Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_cobre"
+ },
+ "cl:capacitor_diamante": {
+  "pt": "Capacitor de Diamante",
+  "en": "Diamond Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_diamante"
  },
  "cl:capacitor_duplo": {
   "pt": "Capacitor de Camada Dupla",
   "en": "Double-Layer Capacitor",
   "icone": "textures/items/cl/arte/capacitor_duplo"
  },
+ "cl:capacitor_esmeralda": {
+  "pt": "Capacitor de Esmeralda",
+  "en": "Emerald Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_esmeralda"
+ },
+ "cl:capacitor_ferro": {
+  "pt": "Capacitor de Ferro",
+  "en": "Iron Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_ferro"
+ },
+ "cl:capacitor_madeira": {
+  "pt": "Capacitor de Madeira",
+  "en": "Wood Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_madeira"
+ },
  "cl:capacitor_octadico": {
   "pt": "Capacitor Octádico",
   "en": "Octadic Capacitor",
   "icone": "textures/items/cl/arte/capacitor_octadico"
+ },
+ "cl:capacitor_ouro": {
+  "pt": "Capacitor de Ouro",
+  "en": "Gold Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_ouro"
+ },
+ "cl:capacitor_pedra": {
+  "pt": "Capacitor de Pedra",
+  "en": "Stone Capacitor",
+  "icone": "textures/items/cl/arte/capacitor_pedra"
  },
  "cl:capacitor_pw_ardente": {
   "pt": "Capacitor Ardente",
@@ -2231,15 +2301,35 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Onion",
   "icone": "textures/items/cl/arte/cebola"
  },
+ "cl:celula_aco": {
+  "pt": "Célula de Aço",
+  "en": "Steel Cell",
+  "icone": "textures/items/cl/arte/celula_aco"
+ },
  "cl:celula_agua": {
   "pt": "Célula de Água",
   "en": "Water Storage Cell",
   "icone": "textures/items/cl/arte/celula_agua"
  },
+ "cl:celula_bronze": {
+  "pt": "Célula de Bronze",
+  "en": "Bronze Cell",
+  "icone": "textures/items/cl/arte/celula_bronze"
+ },
+ "cl:celula_cobre": {
+  "pt": "Célula de Cobre",
+  "en": "Copper Cell",
+  "icone": "textures/items/cl/arte/celula_cobre"
+ },
  "cl:celula_combustivel": {
   "pt": "Célula de Combustível",
   "en": "Fuel Cell",
   "icone": "textures/items/cl/arte/celula_combustivel"
+ },
+ "cl:celula_diamante": {
+  "pt": "Célula de Diamante",
+  "en": "Diamond Cell",
+  "icone": "textures/items/cl/arte/celula_diamante"
  },
  "cl:celula_ender_ardente": {
   "pt": "Célula Ender Ardente",
@@ -2306,6 +2396,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Resonant Energy Cell",
   "icone": "textures/items/cl/arte/blocos/celula_energia_ressonante"
  },
+ "cl:celula_esmeralda": {
+  "pt": "Célula de Esmeralda",
+  "en": "Emerald Cell",
+  "icone": "textures/items/cl/arte/celula_esmeralda"
+ },
+ "cl:celula_ferro": {
+  "pt": "Célula de Ferro",
+  "en": "Iron Cell",
+  "icone": "textures/items/cl/arte/celula_ferro"
+ },
+ "cl:celula_madeira": {
+  "pt": "Célula de Madeira",
+  "en": "Wood Cell",
+  "icone": "textures/items/cl/arte/celula_madeira"
+ },
  "cl:celula_me_16k": {
   "pt": "Célula de Armazenamento de 16k para Itens",
   "en": "16k ME Item Storage Cell",
@@ -2330,6 +2435,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Célula de 64k de Armazenamento para Itens",
   "en": "64k ME Item Storage Cell",
   "icone": "textures/items/cl/arte/celula_me_64k"
+ },
+ "cl:celula_ouro": {
+  "pt": "Célula de Ouro",
+  "en": "Gold Cell",
+  "icone": "textures/items/cl/arte/celula_ouro"
+ },
+ "cl:celula_pedra": {
+  "pt": "Célula de Pedra",
+  "en": "Stone Cell",
+  "icone": "textures/items/cl/arte/celula_pedra"
  },
  "cl:celula_powah_ardente": {
   "pt": "Célula de Energia Ardente (Powah)",
@@ -4981,6 +5096,56 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Jetpack",
   "icone": "textures/items/cl/arte/jetpack"
  },
+ "cl:jetpack_aco": {
+  "pt": "Jetpack de Aço",
+  "en": "Steel Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_aco"
+ },
+ "cl:jetpack_bronze": {
+  "pt": "Jetpack de Bronze",
+  "en": "Bronze Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_bronze"
+ },
+ "cl:jetpack_cobre": {
+  "pt": "Jetpack de Cobre",
+  "en": "Copper Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_cobre"
+ },
+ "cl:jetpack_criativo": {
+  "pt": "Jetpack de Criativo",
+  "en": "Creative Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_criativo"
+ },
+ "cl:jetpack_diamante": {
+  "pt": "Jetpack de Diamante",
+  "en": "Diamond Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_diamante"
+ },
+ "cl:jetpack_esmeralda": {
+  "pt": "Jetpack de Esmeralda",
+  "en": "Emerald Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_esmeralda"
+ },
+ "cl:jetpack_ferro": {
+  "pt": "Jetpack de Ferro",
+  "en": "Iron Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_ferro"
+ },
+ "cl:jetpack_madeira": {
+  "pt": "Jetpack de Madeira",
+  "en": "Wood Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_madeira"
+ },
+ "cl:jetpack_ouro": {
+  "pt": "Jetpack de Ouro",
+  "en": "Gold Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_ouro"
+ },
+ "cl:jetpack_pedra": {
+  "pt": "Jetpack de Pedra",
+  "en": "Stone Jetpack",
+  "icone": "textures/items/cl/arte/jetpack_pedra"
+ },
  "cl:kama_aco": {
   "pt": "Kama de Aço",
   "en": "Steel Kama",
@@ -5195,6 +5360,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Lanterna Chamuscada",
   "en": "Scorched Lantern",
   "icone": "textures/blocks/cl/arte/lanterna_chamuscada"
+ },
+ "cl:lanterna_feral": {
+  "pt": "Lanterna Sinalizadora",
+  "en": "Feral Flare Lantern",
+  "icone": "textures/blocks/cl/arte/lanterna_feral"
  },
  "cl:lanterna_papel": {
   "pt": "Lanterna de Papel",
@@ -11221,6 +11391,51 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Calculation Processor",
   "icone": "textures/items/cl/arte/processador_calculo"
  },
+ "cl:propulsor_aco": {
+  "pt": "Propulsor de Aço",
+  "en": "Steel Thruster",
+  "icone": "textures/items/cl/arte/propulsor_aco"
+ },
+ "cl:propulsor_bronze": {
+  "pt": "Propulsor de Bronze",
+  "en": "Bronze Thruster",
+  "icone": "textures/items/cl/arte/propulsor_bronze"
+ },
+ "cl:propulsor_cobre": {
+  "pt": "Propulsor de Cobre",
+  "en": "Copper Thruster",
+  "icone": "textures/items/cl/arte/propulsor_cobre"
+ },
+ "cl:propulsor_diamante": {
+  "pt": "Propulsor de Diamante",
+  "en": "Diamond Thruster",
+  "icone": "textures/items/cl/arte/propulsor_diamante"
+ },
+ "cl:propulsor_esmeralda": {
+  "pt": "Propulsor de Esmeralda",
+  "en": "Emerald Thruster",
+  "icone": "textures/items/cl/arte/propulsor_esmeralda"
+ },
+ "cl:propulsor_ferro": {
+  "pt": "Propulsor de Ferro",
+  "en": "Iron Thruster",
+  "icone": "textures/items/cl/arte/propulsor_ferro"
+ },
+ "cl:propulsor_madeira": {
+  "pt": "Propulsor de Madeira",
+  "en": "Wood Thruster",
+  "icone": "textures/items/cl/arte/propulsor_madeira"
+ },
+ "cl:propulsor_ouro": {
+  "pt": "Propulsor de Ouro",
+  "en": "Gold Thruster",
+  "icone": "textures/items/cl/arte/propulsor_ouro"
+ },
+ "cl:propulsor_pedra": {
+  "pt": "Propulsor de Pedra",
+  "en": "Stone Thruster",
+  "icone": "textures/items/cl/arte/propulsor_pedra"
+ },
  "cl:pulseira_murcha": {
   "pt": "Pulseira Murcha",
   "en": "Withered Bracelet",
@@ -11965,6 +12180,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "TNT de Obsidiana",
   "en": "Obsidian TNT",
   "icone": "textures/items/cl/blocos/tnt_obsidiana"
+ },
+ "cl:tocha_mega": {
+  "pt": "Mega Tocha",
+  "en": "Mega Torch",
+  "icone": "textures/blocks/cl/arte/tocha_mega"
  },
  "cl:tomada_energia": {
   "pt": "Tomada de Energia",
@@ -15052,6 +15272,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_alca_jetpack",
+  "resultado": "cl:alca_jetpack",
+  "qtd": 1,
+  "grade": [
+   " I ",
+   "LLL",
+   " I "
+  ],
+  "chaves": {
+   "L": "minecraft:leather",
+   "I": "minecraft:iron_nugget"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_aleta_foguete",
   "resultado": "cl:aleta_foguete",
   "qtd": 1,
@@ -17789,6 +18027,44 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bobina_avancada",
+  "resultado": "cl:bobina_avancada",
+  "qtd": 1,
+  "grade": [
+   " DR",
+   "DSD",
+   "RD "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "D": "minecraft:gold_ingot",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bobina_basica",
+  "resultado": "cl:bobina_basica",
+  "qtd": 1,
+  "grade": [
+   " DR",
+   "DSD",
+   "RD "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "D": "minecraft:iron_ingot",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bobina_bt",
   "resultado": "cl:bobina_bt",
   "qtd": 1,
@@ -17807,6 +18083,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bobina_elite",
+  "resultado": "cl:bobina_elite",
+  "qtd": 1,
+  "grade": [
+   " DR",
+   "DSD",
+   "RD "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "D": "minecraft:diamond",
+   "S": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bobina_fio_cobre",
   "resultado": "cl:bobina_fio_cobre",
   "qtd": 4,
@@ -17818,6 +18113,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "w": "minecraft:copper_ingot",
    "s": "minecraft:stick"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bobina_suprema",
+  "resultado": "cl:bobina_suprema",
+  "qtd": 1,
+  "grade": [
+   " DR",
+   "DSD",
+   "RD "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "D": "minecraft:emerald",
+   "S": "minecraft:stick"
   },
   "estacoes": [
    "crafting_table"
@@ -19569,6 +19883,168 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_capacitor_aco",
+  "resultado": "cl:capacitor_aco",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "E": "cl:celula_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_bronze",
+  "resultado": "cl:capacitor_bronze",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "E": "cl:celula_bronze"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_cobre",
+  "resultado": "cl:capacitor_cobre",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "E": "cl:celula_cobre"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_diamante",
+  "resultado": "cl:capacitor_diamante",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "minecraft:diamond",
+   "E": "cl:celula_diamante"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_esmeralda",
+  "resultado": "cl:capacitor_esmeralda",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "minecraft:emerald",
+   "E": "cl:celula_esmeralda"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_ferro",
+  "resultado": "cl:capacitor_ferro",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "E": "cl:celula_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_madeira",
+  "resultado": "cl:capacitor_madeira",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "#minecraft:planks",
+   "E": "cl:celula_madeira"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_ouro",
+  "resultado": "cl:capacitor_ouro",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "E": "cl:celula_ouro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_capacitor_pedra",
+  "resultado": "cl:capacitor_pedra",
+  "qtd": 1,
+  "grade": [
+   "MEM",
+   "MEM",
+   "MEM"
+  ],
+  "chaves": {
+   "M": "minecraft:cobblestone",
+   "E": "cl:celula_pedra"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_carcaca_reator",
   "resultado": "cl:carcaca_reator",
   "qtd": 4,
@@ -19714,6 +20190,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_celula_aco",
+  "resultado": "cl:celula_aco",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "cl:lingote_aco",
+   "C": "cl:bobina_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_celula_agua",
   "resultado": "cl:celula_agua",
   "qtd": 1,
@@ -19727,6 +20222,63 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "R": "minecraft:redstone",
    "B": "minecraft:bucket",
    "F": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_bronze",
+  "resultado": "cl:celula_bronze",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "cl:lingote_bronze",
+   "C": "cl:bobina_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_cobre",
+  "resultado": "cl:celula_cobre",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "minecraft:copper_ingot",
+   "C": "cl:bobina_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_diamante",
+  "resultado": "cl:celula_diamante",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "minecraft:diamond",
+   "C": "cl:bobina_elite"
   },
   "estacoes": [
    "crafting_table"
@@ -19803,6 +20355,101 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "D": "minecraft:diamond",
    "E": "minecraft:emerald",
    "C": "cl:celula_energia_redstone"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_esmeralda",
+  "resultado": "cl:celula_esmeralda",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "minecraft:emerald",
+   "C": "cl:bobina_suprema"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_ferro",
+  "resultado": "cl:celula_ferro",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "minecraft:iron_ingot",
+   "C": "cl:bobina_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_madeira",
+  "resultado": "cl:celula_madeira",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "#minecraft:planks",
+   "C": "cl:bobina_basica"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_ouro",
+  "resultado": "cl:celula_ouro",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "minecraft:gold_ingot",
+   "C": "cl:bobina_avancada"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_celula_pedra",
+  "resultado": "cl:celula_pedra",
+  "qtd": 1,
+  "grade": [
+   " R ",
+   "MCM",
+   " R "
+  ],
+  "chaves": {
+   "R": "minecraft:redstone",
+   "M": "minecraft:cobblestone",
+   "C": "cl:bobina_basica"
   },
   "estacoes": [
    "crafting_table"
@@ -25007,6 +25654,186 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_jetpack_aco",
+  "resultado": "cl:jetpack_aco",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "C": "cl:capacitor_aco",
+   "J": "#cl:jetpack_t2",
+   "T": "cl:propulsor_aco"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_bronze",
+  "resultado": "cl:jetpack_bronze",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "C": "cl:capacitor_bronze",
+   "J": "#cl:jetpack_t1",
+   "T": "cl:propulsor_bronze"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_cobre",
+  "resultado": "cl:jetpack_cobre",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "C": "cl:capacitor_cobre",
+   "J": "#cl:jetpack_t0",
+   "T": "cl:propulsor_cobre"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_diamante",
+  "resultado": "cl:jetpack_diamante",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "minecraft:diamond",
+   "C": "cl:capacitor_diamante",
+   "J": "#cl:jetpack_t3",
+   "T": "cl:propulsor_diamante"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_esmeralda",
+  "resultado": "cl:jetpack_esmeralda",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "minecraft:emerald",
+   "C": "cl:capacitor_esmeralda",
+   "J": "#cl:jetpack_t4",
+   "T": "cl:propulsor_esmeralda"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_ferro",
+  "resultado": "cl:jetpack_ferro",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "C": "cl:capacitor_ferro",
+   "J": "#cl:jetpack_t1",
+   "T": "cl:propulsor_ferro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_madeira",
+  "resultado": "cl:jetpack_madeira",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MSM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "#minecraft:planks",
+   "C": "cl:capacitor_madeira",
+   "S": "cl:alca_jetpack",
+   "T": "cl:propulsor_madeira"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_ouro",
+  "resultado": "cl:jetpack_ouro",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "C": "cl:capacitor_ouro",
+   "J": "#cl:jetpack_t2",
+   "T": "cl:propulsor_ouro"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jetpack_pedra",
+  "resultado": "cl:jetpack_pedra",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "MJM",
+   "T T"
+  ],
+  "chaves": {
+   "M": "minecraft:cobblestone",
+   "C": "cl:capacitor_pedra",
+   "J": "#cl:jetpack_t0",
+   "T": "cl:propulsor_pedra"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_lampada",
   "resultado": "cl:lampada",
   "qtd": 1,
@@ -25208,6 +26035,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "F": "minecraft:iron_nugget",
    "V": "minecraft:glass",
    "T": "minecraft:torch"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_lanterna_feral",
+  "resultado": "cl:lanterna_feral",
+  "qtd": 1,
+  "grade": [
+   " G ",
+   "GLG",
+   " O "
+  ],
+  "chaves": {
+   "G": "minecraft:gold_ingot",
+   "L": "minecraft:glowstone",
+   "O": "minecraft:obsidian"
   },
   "estacoes": [
    "crafting_table"
@@ -30782,6 +31628,186 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_propulsor_aco",
+  "resultado": "cl:propulsor_aco",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_aco",
+   "C": "cl:bobina_avancada",
+   "E": "cl:celula_aco",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_bronze",
+  "resultado": "cl:propulsor_bronze",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "cl:lingote_bronze",
+   "C": "cl:bobina_avancada",
+   "E": "cl:celula_bronze",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_cobre",
+  "resultado": "cl:propulsor_cobre",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "minecraft:copper_ingot",
+   "C": "cl:bobina_basica",
+   "E": "cl:celula_cobre",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_diamante",
+  "resultado": "cl:propulsor_diamante",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "minecraft:diamond",
+   "C": "cl:bobina_elite",
+   "E": "cl:celula_diamante",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_esmeralda",
+  "resultado": "cl:propulsor_esmeralda",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "minecraft:emerald",
+   "C": "cl:bobina_suprema",
+   "E": "cl:celula_esmeralda",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_ferro",
+  "resultado": "cl:propulsor_ferro",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "minecraft:iron_ingot",
+   "C": "cl:bobina_avancada",
+   "E": "cl:celula_ferro",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_madeira",
+  "resultado": "cl:propulsor_madeira",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "#minecraft:planks",
+   "C": "cl:bobina_basica",
+   "E": "cl:celula_madeira",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_ouro",
+  "resultado": "cl:propulsor_ouro",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "minecraft:gold_ingot",
+   "C": "cl:bobina_avancada",
+   "E": "cl:celula_ouro",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_propulsor_pedra",
+  "resultado": "cl:propulsor_pedra",
+  "qtd": 1,
+  "grade": [
+   "MCM",
+   "CEC",
+   "MFM"
+  ],
+  "chaves": {
+   "M": "minecraft:cobblestone",
+   "C": "cl:bobina_basica",
+   "E": "cl:celula_pedra",
+   "F": "minecraft:furnace"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_pulverizador",
   "resultado": "cl:pulverizador",
   "qtd": 1,
@@ -34962,6 +35988,27 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "O": "minecraft:obsidian",
    "T": "minecraft:tnt"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tocha_mega",
+  "resultado": "cl:tocha_mega",
+  "qtd": 1,
+  "grade": [
+   "TTT",
+   "WDW",
+   "GLG"
+  ],
+  "chaves": {
+   "T": "minecraft:torch",
+   "W": "#minecraft:logs",
+   "D": "minecraft:diamond_block",
+   "G": "minecraft:gold_block",
+   "L": "#minecraft:logs"
   },
   "estacoes": [
    "crafting_table"

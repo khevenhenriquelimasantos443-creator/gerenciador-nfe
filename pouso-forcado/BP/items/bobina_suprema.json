@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:bobina_suprema",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_bobina_suprema",
+      "minecraft:display_name": {
+        "value": "item.cl:bobina_suprema.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

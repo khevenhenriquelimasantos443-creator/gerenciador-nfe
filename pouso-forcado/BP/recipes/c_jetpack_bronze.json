@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack_bronze"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "MJM",
+      "T T"
+    ],
+    "key": {
+      "M": {
+        "item": "cl:lingote_bronze"
+      },
+      "C": {
+        "item": "cl:capacitor_bronze"
+      },
+      "J": {
+        "tag": "cl:jetpack_t1"
+      },
+      "T": {
+        "item": "cl:propulsor_bronze"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_bronze"
+    }
+  }
+}

@@ -28,6 +28,11 @@ CC BY-NC-SA e compatíveis (CC BY, MIT, Apache 2.0), sempre creditadas abaixo. A
   "excavate" e a conta do combustível), **Extra Utilities** (RWTema) e **Weather2** (Corosauce, os redemoinhos de poeira):
   só as ideias e os números (1.10.0). Código, modelos e arte próprios.
 
+- **Iron Jetpacks** (BlakeBr0; MIT, inclusive a arte; github.com/BlakeBr0/IronJetpacks, 26.1): os jetpacks com os
+  números do mod e as receitas geradas por ele; a arte das peças (tingida com a cor de cada tier, como o mod faz). O
+  modelo vestido e o voo são código próprio (`tools/importar-jetpacks-tochas.py`).
+- **TorchMaster** (xalcon; MIT, inclusive a arte; github.com/xalcon/TorchMaster, 21.9): a Mega Tocha e a Lanterna
+  Sinalizadora com os raios do mod e a arte do mod. Código próprio.
 - **Iron Chests** (progwml6; GPL-3, inclusive a arte; github.com/progwml6/ironchest): os baús com os tamanhos do mod
   e as melhorias; a arte dos baús (o atlas do modelo vira as faces do bloco) e das melhorias
   (`tools/importar-baus-gavetas.py`). A licença está em `docs/licencas/ironchest.txt`.
@@ -146,6 +151,8 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |
 | Waystones | BlayTheNinth | MIT | github.com/blay09/Waystones (1.7.10) |
 | ComputerCraft | Daniel Ratcliffe | ComputerCraft Public License (uso em mods sem fins comerciais) | github.com/dan200/ComputerCraft |
+| Iron Jetpacks | BlakeBr0 | MIT | github.com/BlakeBr0/IronJetpacks (26.1) |
+| TorchMaster | xalcon | MIT | github.com/xalcon/TorchMaster (21.9) |
 | Iron Chests | progwml6 | GPL-3 | github.com/progwml6/ironchest (1.21.9) |
 | Storage Drawers | jaquadro | MIT | github.com/jaquadro/StorageDrawers (13.2, 26.3) |
 | Artifacts | Wouter Pauwels (ochotonida) | MIT | github.com/ochotonida/artifacts (15.1.3, 26.1) |

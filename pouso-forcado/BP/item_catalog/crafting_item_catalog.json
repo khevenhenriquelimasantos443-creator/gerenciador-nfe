@@ -898,6 +898,24 @@
               "cl:tenis_corrida",
               "cl:totem_coro"
             ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:jetpack_aco",
+              "name": "cl:itemGroup.name.equipment_iron_jetpacks"
+            },
+            "items": [
+              "cl:jetpack_aco",
+              "cl:jetpack_bronze",
+              "cl:jetpack_cobre",
+              "cl:jetpack_criativo",
+              "cl:jetpack_diamante",
+              "cl:jetpack_esmeralda",
+              "cl:jetpack_ferro",
+              "cl:jetpack_madeira",
+              "cl:jetpack_ouro",
+              "cl:jetpack_pedra"
+            ]
           }
         ]
       },
@@ -2837,6 +2855,46 @@
           },
           {
             "group_identifier": {
+              "icon": "cl:alca_jetpack",
+              "name": "cl:itemGroup.name.items_iron_jetpacks"
+            },
+            "items": [
+              "cl:alca_jetpack",
+              "cl:bobina_avancada",
+              "cl:bobina_basica",
+              "cl:bobina_elite",
+              "cl:bobina_suprema",
+              "cl:capacitor_aco",
+              "cl:capacitor_bronze",
+              "cl:capacitor_cobre",
+              "cl:capacitor_diamante",
+              "cl:capacitor_esmeralda",
+              "cl:capacitor_ferro",
+              "cl:capacitor_madeira",
+              "cl:capacitor_ouro",
+              "cl:capacitor_pedra",
+              "cl:celula_aco",
+              "cl:celula_bronze",
+              "cl:celula_cobre",
+              "cl:celula_diamante",
+              "cl:celula_esmeralda",
+              "cl:celula_ferro",
+              "cl:celula_madeira",
+              "cl:celula_ouro",
+              "cl:celula_pedra",
+              "cl:propulsor_aco",
+              "cl:propulsor_bronze",
+              "cl:propulsor_cobre",
+              "cl:propulsor_diamante",
+              "cl:propulsor_esmeralda",
+              "cl:propulsor_ferro",
+              "cl:propulsor_madeira",
+              "cl:propulsor_ouro",
+              "cl:propulsor_pedra"
+            ]
+          },
+          {
+            "group_identifier": {
               "icon": "cl:chave_gaveta",
               "name": "cl:itemGroup.name.items_storage_drawers"
             },
@@ -2857,6 +2915,16 @@
               "cl:gaveta_2",
               "cl:gaveta_4",
               "cl:gaveta_compactadora"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "cl:lanterna_feral",
+              "name": "cl:itemGroup.name.items_torchmaster"
+            },
+            "items": [
+              "cl:lanterna_feral",
+              "cl:tocha_mega"
             ]
           }
         ]

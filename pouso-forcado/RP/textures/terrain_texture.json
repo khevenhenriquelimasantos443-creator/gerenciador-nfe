@@ -4671,6 +4671,12 @@
     },
     "clc_acabamento_gaveta_baixo": {
       "textures": "textures/blocks/cl/arte/acabamento_gaveta_baixo"
+    },
+    "clc_tocha_mega": {
+      "textures": "textures/blocks/cl/arte/tocha_mega"
+    },
+    "clc_lanterna_feral": {
+      "textures": "textures/blocks/cl/arte/lanterna_feral"
     }
   }
 }

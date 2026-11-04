@@ -1469,6 +1469,69 @@ teste("armazenamento", 420, (t) => {
   });
 });
 
+// 1.33.0: Jetpack de Ferro carregado sobe e gasta RF; Mega Tocha tira o zumbi que nasce; Lanterna Sinalizadora põe
+// luzes; morrer deixa um Túmulo que devolve tudo.
+teste("jetpack_tocha_tumulo", 300, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 3.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const dim = t.getDimension();
+  const cmd = (c) => { try { j.runCommand(c); } catch (e) { log(`jetpack: ${c} -> ${e}`); } };
+  const r = {};
+  t.setBlockType("cl:tocha_mega", { x: 6, y: 2, z: 6 });
+  t.setBlockType("cl:lanterna_feral", { x: 1, y: 2, z: 6 });
+  t.runAfterDelay(4, () => {
+    j.getComponent("equippable").setEquipment(EquipmentSlot.Chest, new ItemStack("cl:jetpack_ferro", 1));
+    cmd("scriptevent cl:teste_jetpack carregar");
+    const z = t.spawn("minecraft:zombie", { x: 6.5, y: 2, z: 2.5 });
+    t.runAfterDelay(3, () => (r.zumbiSumiu = !z.isValid));
+  });
+  t.runAfterDelay(30, () => {
+    r.y0 = j.location.y;
+    cmd("scriptevent cl:teste_jetpack voar 30");
+  });
+  t.runAfterDelay(58, () => {
+    r.subiu = Math.round((j.location.y - r.y0) * 10) / 10;
+  });
+  t.runAfterDelay(90, () => {
+    r.lore = JSON.stringify(j.getComponent("equippable").getEquipment(EquipmentSlot.Chest)?.getLore());
+    r.vida = j.getComponent("health").currentValue;
+    let luzes = 0;
+    for (let x = -6; x <= 8; x++) for (let y = 1; y <= 9; y++) for (let z = -6; z <= 12; z++) {
+      try {
+        if (dim.getBlock(t.worldBlockLocation({ x, y, z }))?.typeId.startsWith("minecraft:light_block")) luzes++;
+      } catch { /* */ }
+    }
+    r.luzes = luzes;
+    // Túmulo: o robô morre com 10 terras.
+    j.getComponent("equippable").setEquipment(EquipmentSlot.Chest, undefined);
+    inv.setItem(0, new ItemStack("minecraft:dirt", 10));
+    j.teleport(t.worldLocation({ x: 3.5, y: 2, z: 3.5 }));
+  });
+  t.runAfterDelay(96, () => j.kill());
+  t.runAfterDelay(110, () => {
+    for (let x = 0; x <= 7; x++) for (let y = 1; y <= 5; y++) for (let z = 0; z <= 7; z++)
+      if (t.getBlock({ x, y, z }).typeId === "cl:tumulo") r.tumulo = t.worldBlockLocation({ x, y, z });
+    try { j.respawn(); } catch (e) { log(`jetpack: respawn ${e}`); }
+  });
+  t.runAfterDelay(140, () => {
+    if (!r.tumulo) return;
+    const p = { x: r.tumulo.x - t.worldBlockLocation({ x: 0, y: 0, z: 0 }).x, y: r.tumulo.y - t.worldBlockLocation({ x: 0, y: 0, z: 0 }).y, z: r.tumulo.z - t.worldBlockLocation({ x: 0, y: 0, z: 0 }).z };
+    j.teleport(t.worldLocation({ x: p.x + 0.5, y: p.y, z: p.z - 1.5 }));
+    j.lookAtBlock(p);
+    j.interactWithBlock(p, Direction.North);
+  });
+  t.runAfterDelay(150, () => {
+    r.terra = quantos(j, "minecraft:dirt");
+    log(`jetpack_tocha_tumulo: ${JSON.stringify(r)}`);
+    t.assert(r.subiu > 3, "o jetpack não subiu");
+    t.assert(r.lore && !r.lore.includes("800.000 / 800.000"), "o jetpack não gastou RF");
+    t.assert(r.zumbiSumiu, "a Mega Tocha não segurou o zumbi");
+    t.assert(r.luzes > 0, "a Lanterna Sinalizadora não pôs luz");
+    t.assert(r.tumulo && r.terra === 10, "o túmulo não guardou/devolveu");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

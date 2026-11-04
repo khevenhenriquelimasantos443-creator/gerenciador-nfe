@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack_madeira"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "MSM",
+      "T T"
+    ],
+    "key": {
+      "M": {
+        "tag": "minecraft:planks"
+      },
+      "C": {
+        "item": "cl:capacitor_madeira"
+      },
+      "S": {
+        "item": "cl:alca_jetpack"
+      },
+      "T": {
+        "item": "cl:propulsor_madeira"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_madeira"
+    }
+  }
+}

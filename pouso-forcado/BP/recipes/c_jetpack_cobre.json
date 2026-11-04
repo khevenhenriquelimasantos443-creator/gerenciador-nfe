@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack_cobre"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "MJM",
+      "T T"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:copper_ingot"
+      },
+      "C": {
+        "item": "cl:capacitor_cobre"
+      },
+      "J": {
+        "tag": "cl:jetpack_t0"
+      },
+      "T": {
+        "item": "cl:propulsor_cobre"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_cobre"
+    }
+  }
+}

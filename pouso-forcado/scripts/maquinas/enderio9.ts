@@ -56,12 +56,16 @@ const BALDE = "minecraft:bucket";
 const vazioAcima = (b: Block) => entrada(b);
 
 // ---------- Itens com energia (cajados, Eletroímã): RF no item, com a carga na descrição ----------
-const CAPACIDADE: Readonly<Record<string, number>> = {
+const CAPACIDADE: Record<string, number> = {
   [`${NS}:cajado_viagem`]: D.viagem.capacidade, [`${NS}:cajado_levitacao`]: D.levitacao.capacidade, [`${NS}:eletroima`]: D.eletroima.capacidade,
 };
+/** 1.33.0: outros itens com RF (os jetpacks) carregam nos mesmos carregadores. */
+export function registrarItemComEnergia(id: string, capacidade: number): void {
+  CAPACIDADE[id] = capacidade;
+}
 const PROP_RF = "eio_rf";
 export const cargaItem = (i: ItemStack): number => (i.getDynamicProperty(PROP_RF) as number | undefined) ?? 0;
-function definirCarga(i: ItemStack, v: number): void {
+export function definirCarga(i: ItemStack, v: number): void {
   const cap = CAPACIDADE[i.typeId] ?? 0;
   i.setDynamicProperty(PROP_RF, Math.max(0, Math.min(cap, Math.round(v))));
   i.setLore([`§7${cargaItem(i).toLocaleString("pt-BR")} / ${cap.toLocaleString("pt-BR")} RF`]);
@@ -362,6 +366,17 @@ export const carregadorSemFio = maquina((b) => {
   for (const j of b.dimension.getPlayers({ location: b.center(), maxDistance: D.carregador.alcance })) {
     const inv = j.getComponent("minecraft:inventory")?.container;
     if (!inv) continue;
+    // 1.33.0: o que está vestido (o jetpack) também carrega.
+    const eq = j.getComponent("minecraft:equippable");
+    const peito = eq?.getEquipment(EquipmentSlot.Chest);
+    const capP = peito ? CAPACIDADE[peito.typeId] : undefined;
+    if (peito && capP && cargaItem(peito) < capP) {
+      if (!gastarCE(b, Math.round(CARREGA_SF / 40))) return n ? "ok" : "sem_energia";
+      definirCarga(peito, cargaItem(peito) + CARREGA_SF);
+      eq!.setEquipment(EquipmentSlot.Chest, peito);
+      n++;
+      continue;
+    }
     for (let s = 0; s < inv.size; s++) {
       const p = inv.getItem(s);
       const cap = p ? CAPACIDADE[p.typeId] : undefined;

@@ -71,6 +71,9 @@ export type Acao =
   | "sd_compacta"
   | "sd_controlador"
   | "sd_melhoria"
+  | "ij_voar"
+  | "tm_mega"
+  | "tm_lanterna"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -573,6 +576,17 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "jetpacks", // 1.33.0: Iron Jetpacks, TorchMaster e Túmulo
+    icone: "cl:jetpack_ferro",
+    requer: ["utilidades"],
+    missoes: [
+      { id: "ij_jetpack", objetivo: { tipo: "acao", acao: "ij_voar", qtd: 1 }, recompensa: [{ item: "minecraft:redstone", quantidade: 32 }] },
+      { id: "ij_diamante", requer: ["ij_jetpack"], objetivo: { tipo: "ter", item: "cl:jetpack_diamante", qtd: 1 }, recompensa: [{ item: IDS.sacolaLendaria, quantidade: 1 }] },
+      { id: "tm_mega", objetivo: { tipo: "acao", acao: "tm_mega", qtd: 1 }, recompensa: [{ item: "minecraft:torch", quantidade: 64 }] },
+      { id: "tm_lanterna", objetivo: { tipo: "acao", acao: "tm_lanterna", qtd: 1 }, recompensa: [{ item: "minecraft:glowstone", quantidade: 8 }] },
     ],
   },
   {

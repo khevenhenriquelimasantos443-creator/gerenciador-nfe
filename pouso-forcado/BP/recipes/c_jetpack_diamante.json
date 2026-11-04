@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_jetpack_diamante"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "MCM",
+      "MJM",
+      "T T"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:diamond"
+      },
+      "C": {
+        "item": "cl:capacitor_diamante"
+      },
+      "J": {
+        "tag": "cl:jetpack_t3"
+      },
+      "T": {
+        "item": "cl:propulsor_diamante"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:jetpack_diamante"
+    }
+  }
+}
