@@ -1,0 +1,32 @@
+{
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "cl:muda_slime_icor",
+     "weight": 5
+    },
+    {
+     "type": "empty",
+     "weight": 95
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "cl:bola_slime_icor",
+     "weight": 2
+    },
+    {
+     "type": "empty",
+     "weight": 98
+    }
+   ]
+  }
+ ]
+}

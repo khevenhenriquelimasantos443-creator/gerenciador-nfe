@@ -1,0 +1,170 @@
+{
+ "earth": [
+  {
+   "nome": "ilha_slime_terra_0",
+   "tamanho": [
+    21,
+    19,
+    21
+   ]
+  },
+  {
+   "nome": "ilha_slime_terra_1",
+   "tamanho": [
+    32,
+    21,
+    32
+   ]
+  },
+  {
+   "nome": "ilha_slime_terra_2",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_terra_3",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_terra_4",
+   "tamanho": [
+    29,
+    22,
+    32
+   ]
+  }
+ ],
+ "sky": [
+  {
+   "nome": "ilha_slime_ceu_0",
+   "tamanho": [
+    21,
+    19,
+    21
+   ]
+  },
+  {
+   "nome": "ilha_slime_ceu_1",
+   "tamanho": [
+    32,
+    21,
+    32
+   ]
+  },
+  {
+   "nome": "ilha_slime_ceu_2",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_ceu_3",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_ceu_4",
+   "tamanho": [
+    29,
+    22,
+    32
+   ]
+  }
+ ],
+ "ender": [
+  {
+   "nome": "ilha_slime_ender_0",
+   "tamanho": [
+    21,
+    19,
+    21
+   ]
+  },
+  {
+   "nome": "ilha_slime_ender_1",
+   "tamanho": [
+    32,
+    21,
+    32
+   ]
+  },
+  {
+   "nome": "ilha_slime_ender_2",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_ender_3",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_ender_4",
+   "tamanho": [
+    29,
+    22,
+    32
+   ]
+  }
+ ],
+ "blood": [
+  {
+   "nome": "ilha_slime_sangue_0",
+   "tamanho": [
+    21,
+    19,
+    21
+   ]
+  },
+  {
+   "nome": "ilha_slime_sangue_1",
+   "tamanho": [
+    32,
+    21,
+    32
+   ]
+  },
+  {
+   "nome": "ilha_slime_sangue_2",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_sangue_3",
+   "tamanho": [
+    23,
+    21,
+    25
+   ]
+  },
+  {
+   "nome": "ilha_slime_sangue_4",
+   "tamanho": [
+    29,
+    22,
+    32
+   ]
+  }
+ ]
+}

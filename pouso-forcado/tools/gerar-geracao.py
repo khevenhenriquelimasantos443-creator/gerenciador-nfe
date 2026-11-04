@@ -250,4 +250,43 @@ for nome, tam, veios, y0, y1 in (("cobalto_pequeno", 4, 5, 8, 119), ("cobalto_gr
         "distribution": {"iterations": veios, "coordinate_eval_order": "xzy", "x": {"distribution": "uniform", "extent": [0, 16]},
                          "z": {"distribution": "uniform", "extent": [0, 16]}, "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
 
+# 1.27.0 (Tinkers completo, parte 2): as ilhas de slime (tools/importar-slime-tc3.py fez as estruturas, 5 formatos por
+# tipo) e os geodos de slime (worldgen do TC3). Ilhas: céu e terra no céu do deserto, sangue no mar de lava do Nether,
+# ender no End; raras como no mod (uma a cada 35×35 chunks, metade das vezes).
+ILHAS = json.loads((RAIZ / "tools/dados/ilhas_slime.json").read_text(encoding="utf-8"))
+for tipo, pt, filtro, y0, y1, chance_ in (("sky", "ceu", FILTRO, 100, 116, 0.0007), ("earth", "terra", FILTRO, 76, 90, 0.0005),
+                                           ("blood", "sangue", [{"test": "has_biome_tag", "operator": "==", "value": "nether"}], 29, 30, 0.002),
+                                           ("ender", "ender", [{"test": "has_biome_tag", "operator": "==", "value": "the_end"}], 58, 74, 0.003)):
+    nomes = []
+    for il in ILHAS[tipo]:
+        escrever(f"BP/features/{il['nome']}.json", {"format_version": "1.13.0", "minecraft:structure_template_feature": {
+            "description": {"identifier": f"cl:{il['nome']}"}, "structure_name": f"cl:{il['nome']}", "adjustment_radius": 0,
+            "facing_direction": "random", "constraints": {"block_intersection": {"block_allowlist": ["minecraft:air", "minecraft:lava", "minecraft:flowing_lava"]}}}})
+        nomes.append(il["nome"])
+    escrever(f"BP/features/ilha_slime_{pt}.json", {"format_version": "1.13.0", "minecraft:weighted_random_feature": {
+        "description": {"identifier": f"cl:ilha_slime_{pt}"}, "features": [[f"cl:{n}", 1] for n in nomes]}})
+    escrever(f"BP/feature_rules/ilha_slime_{pt}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:ilha_slime_{pt}_regra", "places_feature": f"cl:ilha_slime_{pt}"},
+        "conditions": {"placement_pass": "surface_pass", "minecraft:biome_filter": filtro},
+        "distribution": {"iterations": 1, "scatter_chance": chance(chance_), "coordinate_eval_order": "xzy",
+                         "x": {"distribution": "uniform", "extent": [0, 16]}, "z": {"distribution": "uniform", "extent": [0, 16]},
+                         "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
+for t, fora, filtro, y0, y1, raridade, raio in (("terra", "minecraft:clay", FILTRO, -58, -10, 256, 9), ("ceu", "minecraft:mossy_cobblestone", FILTRO, -40, 30, 128, 7),
+                                               ("icor", "minecraft:netherrack", [{"test": "has_biome_tag", "operator": "==", "value": "nether"}], 80, 112, 52, 6),
+                                               ("ender", "minecraft:end_stone", [{"test": "has_biome_tag", "operator": "==", "value": "the_end"}], 16, 64, 256, 10)):
+    escrever(f"BP/features/geodo_slime_{t}.json", {"format_version": "1.13.0", "minecraft:geode_feature": {
+        "description": {"identifier": f"cl:geodo_slime_{t}"}, "filler": "minecraft:air", "inner_layer": f"cl:bloco_cristal_slime_{t}",
+        "alternate_inner_layer": f"cl:cristal_slime_brotando_{t}", "middle_layer": "minecraft:calcite", "outer_layer": fora,
+        "inner_placements": [f"cl:cacho_cristal_slime_{t}"], "min_outer_wall_distance": 4, "max_outer_wall_distance": raio,
+        "min_distribution_points": 3, "max_distribution_points": 4, "min_point_offset": 1, "max_point_offset": 2, "max_radius": 16,
+        "crack_point_offset": 2.0, "generate_crack_chance": 0.0, "base_crack_size": 2.0, "noise_multiplier": 0.05,
+        "use_potential_placements_chance": 0.35, "use_alternate_layer0_chance": 0.083, "placements_require_layer0_alternate": True,
+        "invalid_blocks_threshold": 1}})
+    escrever(f"BP/feature_rules/geodo_slime_{t}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:geodo_slime_{t}_regra", "places_feature": f"cl:geodo_slime_{t}"},
+        "conditions": {"placement_pass": "underground_pass", "minecraft:biome_filter": filtro},
+        "distribution": {"iterations": 1, "scatter_chance": chance(1 / raridade), "coordinate_eval_order": "xzy",
+                         "x": {"distribution": "uniform", "extent": [0, 16]}, "z": {"distribution": "uniform", "extent": [0, 16]},
+                         "y": {"distribution": "uniform", "extent": [y0, y1]}}}})
+
 print(f"geração natural: {len(list((RAIZ / 'BP/features').iterdir()))} features, 3 tabelas de saque, templo e destroços com baú")

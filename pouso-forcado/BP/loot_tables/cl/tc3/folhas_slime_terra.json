@@ -1,0 +1,32 @@
+{
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "cl:muda_slime_terra",
+     "weight": 5
+    },
+    {
+     "type": "empty",
+     "weight": 95
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "minecraft:slime_ball",
+     "weight": 2
+    },
+    {
+     "type": "empty",
+     "weight": 98
+    }
+   ]
+  }
+ ]
+}

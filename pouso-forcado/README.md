@@ -154,6 +154,20 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.27.0 (Tinkers' Construct 3 completo, parte 2 de 5: o mundo dos slimes)
+
+- **Ilhas de slime** com as 20 ilhas originais do mod (5 formatos de cada tipo): de Slime-do-Céu e de Slime-da-Terra
+  flutuando no céu do deserto, de Sangue no mar de lava do Nether e de Slime-do-Ender no End, com árvores, capim,
+  trepadeiras, lagos de slime e slime congelado. Raras, como no mod.
+- **Blocos novos**: terra, grama, folhas, capim, mudas e trepadeiras de slime nas cinco cores do mod (terra, céu, icor,
+  ender, sangue); troncos e tábuas de Coração-Verde, Raízes-do-Céu, Cogumelo Sangrento e Casca-Ender; slime
+  congelado e blocos de slime (amortecem a queda e fazem quicar).
+- **Mudas de slime** viram árvore sozinhas (ou com farinha de osso). **Geodos de slime** no subsolo, no Nether e no
+  End: as drusas fazem brotar cristais.
+- **Slimes novos**: Slime-do-Céu (nas ilhas do céu, solta bolas de slime do céu), Slime-do-Ender (teleporta) e
+  Terracubo. As bolas e os cristais derretem na Fundição: com eles saem o Aço de Slime (ferro + slime do céu + pedra
+  carbonizada), o Slime de Brasa e o Slime-Cavaleiro, e a madeira de slime vira material de ferramenta.
+
 ## Novidades da 1.26.0 (Tinkers' Construct 3 completo, parte 1 de 5)
 
 O Tinkers' Construct 3.12.1 (o mais novo) entrando inteiro, em partes. Nesta: materiais, peças e ferramentas de mão.

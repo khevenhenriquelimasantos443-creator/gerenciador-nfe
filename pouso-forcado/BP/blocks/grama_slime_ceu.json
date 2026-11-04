@@ -1,0 +1,36 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:grama_slime_ceu",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_grama_slime_ceu",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "clc_grama_slime_ceu_topo",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "clc_grama_slime_ceu_baixo",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.7
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#00f4da",
+      "minecraft:loot": "loot_tables/cl/tc3/grama_slime_ceu.json"
+    }
+  }
+}

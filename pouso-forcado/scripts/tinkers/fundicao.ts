@@ -1,7 +1,7 @@
 import { Block, BlockCustomComponent, Dimension, GameMode, ItemStack, Player, RawMessage, Vector3, system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { FUNDICAO } from "../config.js";
-import { DADOS_F15, DADOS_F45 } from "../conteudo/gerado.js";
+import { DADOS_F15, DADOS_F45, DADOS_F46 } from "../conteudo/gerado.js";
 import { Receita, registrarNoCatalogo } from "../catalogo/catalogo.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
@@ -56,7 +56,7 @@ const indice = () => (JSON.parse((world.getDynamicProperty("cl:fundicoes") as st
 function valorDe(id: string): readonly [string, number] | undefined {
   const v = FUNDICAO.valores[id];
   if (v) return v;
-  const d = D45.derrete[id];
+  const d = D45.derrete[id] ?? (DADOS_F46.derrete as unknown as Readonly<Record<string, readonly [string, number]>>)[id];
   if (d) return d;
   // Peça de metal derrete de volta (custo × 144 mB).
   const pm = pecaDe(id);
@@ -481,6 +481,7 @@ export function registrarFundicao(): void {
       detrito: ["minecraft:netherite_scrap", 144], quartzo: ["minecraft:quartz", 100], magma: ["minecraft:magma_cream", 250], mel: ["minecraft:honey_bottle", 250],
       obsidiana: ["minecraft:obsidian", 1000], pedra_refrataria: ["cl:tijolo_refratario", 250], pedra_chamuscada: ["cl:tijolo_chamuscado", 250],
       sopa_carne: ["minecraft:beef", 50], agua: ["minecraft:water_bucket", 1000], lava: ["minecraft:lava_bucket", 1000],
+      slime_ceu: ["cl:bola_slime_ceu", 250], slime_ender: ["cl:bola_slime_ender", 250], icor: ["cl:bola_slime_icor", 250],
     };
     for (const l of D45.ligas) {
       const ent = Object.entries(l.entra);

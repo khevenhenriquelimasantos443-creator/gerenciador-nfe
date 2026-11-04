@@ -1,0 +1,18 @@
+{
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "cl:bola_slime_ender",
+     "weight": 1
+    },
+    {
+     "type": "empty",
+     "weight": 7
+    }
+   ]
+  }
+ ]
+}

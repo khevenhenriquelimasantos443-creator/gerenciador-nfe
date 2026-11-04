@@ -1,0 +1,20 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:structure_template_feature": {
+  "description": {
+   "identifier": "cl:ilha_slime_ender_3"
+  },
+  "structure_name": "cl:ilha_slime_ender_3",
+  "adjustment_radius": 0,
+  "facing_direction": "random",
+  "constraints": {
+   "block_intersection": {
+    "block_allowlist": [
+     "minecraft:air",
+     "minecraft:lava",
+     "minecraft:flowing_lava"
+    ]
+   }
+  }
+ }
+}

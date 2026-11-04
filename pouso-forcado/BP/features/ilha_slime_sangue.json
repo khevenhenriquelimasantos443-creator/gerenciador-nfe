@@ -1,0 +1,30 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:weighted_random_feature": {
+  "description": {
+   "identifier": "cl:ilha_slime_sangue"
+  },
+  "features": [
+   [
+    "cl:ilha_slime_sangue_0",
+    1
+   ],
+   [
+    "cl:ilha_slime_sangue_1",
+    1
+   ],
+   [
+    "cl:ilha_slime_sangue_2",
+    1
+   ],
+   [
+    "cl:ilha_slime_sangue_3",
+    1
+   ],
+   [
+    "cl:ilha_slime_sangue_4",
+    1
+   ]
+  ]
+ }
+}

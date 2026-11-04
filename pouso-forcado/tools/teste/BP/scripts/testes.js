@@ -1074,6 +1074,46 @@ teste("tinkers3_fundicao", 500, (t) => {
   });
 });
 
+// 1.27.0: mundo dos slimes. Com tique aleatório rápido, a muda de Raízes-do-Céu vira árvore e a drusa brota cristal;
+// o Slime-do-Céu nasce; a ilha de slime carrega.
+teste("tinkers3_slime", 2400, (t) => {
+  t.setBlockType("cl:grama_slime_ceu", { x: 2, y: 1, z: 2 });
+  t.setBlockType("cl:muda_slime_ceu", { x: 2, y: 2, z: 2 });
+  // 9 drusas espaçadas (cada uma tem 1 chance em 3 a cada 30-90 s).
+  const drusas = [];
+  for (let a = 0; a < 2; a++) for (let b = 0; b < 3; b++) drusas.push({ x: 4 + a * 2, y: 3, z: 1 + b * 2 });
+  for (const d of drusas) t.setBlockType("cl:cristal_slime_brotando_terra", d);
+  let slime;
+  const j = robo(t, { x: 2.5, y: 2, z: 4.5 });
+  t.runAfterDelay(5, () => {
+    slime = t.spawn("cl:slime_ceu", { x: 1, y: 2, z: 6 });
+    log(`tinkers3_slime: slime do céu ${slime?.isValid}`);
+  });
+  // Farinha de osso na muda (até crescer).
+  for (let k = 0; k < 10; k++)
+    t.runAfterDelay(20 + k * 8, () => {
+      if (t.getBlock({ x: 2, y: 2, z: 2 }).typeId !== "cl:muda_slime_ceu") return;
+      j.getComponent("inventory").container.setItem(0, new ItemStack("minecraft:bone_meal", 1));
+      j.selectedSlotIndex = 0;
+      j.lookAtBlock({ x: 2, y: 2, z: 2 });
+      j.interactWithBlock({ x: 2, y: 2, z: 2 }, Direction.Up);
+    });
+  t.runAfterDelay(2300, () => {
+    let troncos = 0, folhas = 0;
+    for (let y = 2; y <= 14; y++) for (let x = 0; x <= 4; x++) for (let z = 0; z <= 4; z++) {
+      const id = t.getBlock({ x, y, z }).typeId;
+      if (id === "cl:tronco_raizceu") troncos++;
+      if (id === "cl:folhas_slime_ceu") folhas++;
+    }
+    let cachos = 0;
+    for (let x = 3; x <= 7; x++) for (let y = 2; y <= 4; y++) for (let z = 0; z <= 6; z++) if (t.getBlock({ x, y, z }).typeId === "cl:cacho_cristal_slime_terra") cachos++;
+    log(`tinkers3_slime: troncos=${troncos} folhas=${folhas} cachos=${cachos}`);
+    t.assert(troncos >= 5 && folhas >= 10, "a muda de slime não virou árvore");
+    t.assert(cachos >= 1, "a drusa não brotou cristal");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

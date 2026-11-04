@@ -67,6 +67,7 @@ import { registrarFoguete } from "./galacticraft/foguete.js";
 import { bauTesouro, registrarBase } from "./galacticraft/base.js";
 import { ancora, fundidora, moinhoSag, painel as painelFotovoltaico, registrarEnderIO, stirling } from "./maquinas/enderio.js";
 import { COMPONENTES_EIO9, registrarEnderIO9 } from "./maquinas/enderio9.js";
+import { cristalBrotandoComp, mudaSlimeComp, slimeCongeladoComp } from "./tinkers/slime.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
 import { controlador as controladorVelocidade, fonteGenerica as fonteCinetica, furadeira, manivela, misturador, mo, prensa, registrarCreate, rodas as rodasTrituradoras, ventilador } from "./maquinas/create.js";
 import { pedraCaminho, registrarWaystones } from "./utilidades/waystones.js";
@@ -117,6 +118,10 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   blockComponentRegistry.registerCustomComponent("cl:pw_transmissor", comPerfil("powah: transmissor", transmissorPw));
   // 1.20.0: Ender IO 9
   for (const [id, c] of Object.entries(COMPONENTES_EIO9)) blockComponentRegistry.registerCustomComponent(id, comPerfil(`eio: ${id.slice(7)}`, c));
+  // 1.27.0: mundo dos slimes do Tinkers 3.
+  blockComponentRegistry.registerCustomComponent("cl:muda_slime", mudaSlimeComp);
+  blockComponentRegistry.registerCustomComponent("cl:cristal_brotando", cristalBrotandoComp);
+  blockComponentRegistry.registerCustomComponent("cl:slime_congelado", slimeCongeladoComp);
   // O nome do componente é o mesmo ID do bloco (ver "cl:..." em BP/blocks/*.json).
   // comPerfil: o tick de cada máquina entra no /cl:diagnostico.
   blockComponentRegistry.registerCustomComponent(IDS.condensadorAgua, comPerfil(IDS.condensadorAgua, condensadorAgua));

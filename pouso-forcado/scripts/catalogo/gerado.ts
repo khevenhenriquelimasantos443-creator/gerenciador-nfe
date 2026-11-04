@@ -771,6 +771,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Crystal Block",
   "icone": "textures/items/cl/blocos/bloco_cristal_nitro"
  },
+ "cl:bloco_cristal_slime_ceu": {
+  "pt": "Bloco de Cristal de Slime-do-Céu",
+  "en": "Skyslime Crystal Block",
+  "icone": "textures/blocks/cl/arte/bloco_cristal_slime_ceu"
+ },
+ "cl:bloco_cristal_slime_ender": {
+  "pt": "Bloco de Cristal de Slime-do-Ender",
+  "en": "Enderslime Crystal Block",
+  "icone": "textures/blocks/cl/arte/bloco_cristal_slime_ender"
+ },
+ "cl:bloco_cristal_slime_icor": {
+  "pt": "Bloco de Cristal de Icor",
+  "en": "Ichor Crystal Block",
+  "icone": "textures/blocks/cl/arte/bloco_cristal_slime_icor"
+ },
+ "cl:bloco_cristal_slime_terra": {
+  "pt": "Bloco de Cristal de Slime-da-Terra",
+  "en": "Earthslime Crystal Block",
+  "icone": "textures/blocks/cl/arte/bloco_cristal_slime_terra"
+ },
  "cl:bloco_estanho": {
   "pt": "Bloco de Estanho",
   "en": "Block of Tin",
@@ -866,10 +886,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block of Knightslime",
   "icone": "textures/blocks/cl/arte/bloco_slime_cavaleiro"
  },
+ "cl:bloco_slime_ceu": {
+  "pt": "Bloco de Slime-do-Céu",
+  "en": "Skyslime Block",
+  "icone": "textures/blocks/cl/arte/bloco_slime_ceu"
+ },
+ "cl:bloco_slime_ender": {
+  "pt": "Bloco de Slime-do-Ender",
+  "en": "Enderslime Block",
+  "icone": "textures/blocks/cl/arte/bloco_slime_ender"
+ },
+ "cl:bloco_slime_icor": {
+  "pt": "Bloco de Icor",
+  "en": "Ichor Block",
+  "icone": "textures/blocks/cl/arte/bloco_slime_icor"
+ },
  "cl:bloco_slime_rainha": {
   "pt": "Bloco de Slime da Rainha",
   "en": "Block of Queen's Slime",
   "icone": "textures/blocks/cl/arte/bloco_slime_rainha"
+ },
+ "cl:bloco_slime_sangue": {
+  "pt": "Bloco de Sangue",
+  "en": "Blood Block",
+  "icone": "textures/blocks/cl/arte/bloco_slime_sangue"
  },
  "cl:bloco_uraninita": {
   "pt": "Bloco de Uraninita",
@@ -900,6 +940,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bola de Neve Carregada",
   "en": "Charged Snowball",
   "icone": "textures/items/cl/arte/bola_neve_carregada"
+ },
+ "cl:bola_slime_ceu": {
+  "pt": "Bola de Slime-do-Céu",
+  "en": "Skyslime Ball",
+  "icone": "textures/items/cl/arte/bola_slime_ceu"
+ },
+ "cl:bola_slime_ender": {
+  "pt": "Bola de Slime-do-Ender",
+  "en": "Enderslime Ball",
+  "icone": "textures/items/cl/arte/bola_slime_ender"
+ },
+ "cl:bola_slime_icor": {
+  "pt": "Bola de Icor",
+  "en": "Ichor Ball",
+  "icone": "textures/items/cl/arte/bola_slime_icor"
+ },
+ "cl:bola_slime_sangue": {
+  "pt": "Bola de Sangue",
+  "en": "Blood Ball",
+  "icone": "textures/items/cl/arte/bola_slime_sangue"
  },
  "cl:bolinho_arroz": {
   "pt": "Bolinho de Arroz",
@@ -990,6 +1050,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Caçarola",
   "en": "Saucepan",
   "icone": "textures/items/cl/arte/blocos/cacarola"
+ },
+ "cl:cacho_cristal_slime_ceu": {
+  "pt": "Aglomerado de Cristal de Slime-do-Céu",
+  "en": "Skyslime Crystal Cluster",
+  "icone": "textures/blocks/cl/arte/cacho_cristal_slime_ceu"
+ },
+ "cl:cacho_cristal_slime_ender": {
+  "pt": "Aglomerado de Cristal de Slime-do-Ender",
+  "en": "Enderslime Crystal Cluster",
+  "icone": "textures/blocks/cl/arte/cacho_cristal_slime_ender"
+ },
+ "cl:cacho_cristal_slime_icor": {
+  "pt": "Aglomerado de Cristal de Icor",
+  "en": "Ichor Crystal Cluster",
+  "icone": "textures/blocks/cl/arte/cacho_cristal_slime_icor"
+ },
+ "cl:cacho_cristal_slime_terra": {
+  "pt": "Aglomerado de Cristal de Slime-da-Terra",
+  "en": "Earthslime Crystal Cluster",
+  "icone": "textures/blocks/cl/arte/cacho_cristal_slime_terra"
  },
  "cl:cacho_tamaras": {
   "pt": "Cacho de Tâmaras",
@@ -1220,6 +1300,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Capacitor Nitro",
   "en": "Nitro Capacitor",
   "icone": "textures/items/cl/arte/capacitor_pw_nitro"
+ },
+ "cl:capim_slime_ceu": {
+  "pt": "Capim de Slime-do-Céu",
+  "en": "Skyslime Tall Grass",
+  "icone": "textures/blocks/cl/arte/capim_slime_ceu"
+ },
+ "cl:capim_slime_ender": {
+  "pt": "Capim de Slime-do-Ender",
+  "en": "Enderslime Tall Grass",
+  "icone": "textures/blocks/cl/arte/capim_slime_ender"
+ },
+ "cl:capim_slime_icor": {
+  "pt": "Capim de Icor",
+  "en": "Ichor Tall Grass",
+  "icone": "textures/blocks/cl/arte/capim_slime_icor"
+ },
+ "cl:capim_slime_sangue": {
+  "pt": "Capim de Sangue",
+  "en": "Blood Tall Grass",
+  "icone": "textures/blocks/cl/arte/capim_slime_sangue"
+ },
+ "cl:capim_slime_terra": {
+  "pt": "Capim de Slime-da-Terra",
+  "en": "Earthslime Tall Grass",
+  "icone": "textures/blocks/cl/arte/capim_slime_terra"
  },
  "cl:carbono_enriquecido": {
   "pt": "Carbono Enriquecido",
@@ -2070,6 +2175,46 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cristal Sedutor",
   "en": "Enticing Crystal",
   "icone": "textures/items/cl/arte/cristal_sedutor"
+ },
+ "cl:cristal_slime_brotando_ceu": {
+  "pt": "Drusa de Cristal de Slime-do-Céu",
+  "en": "Budding Skyslime Crystal",
+  "icone": "textures/blocks/cl/arte/cristal_slime_brotando_ceu"
+ },
+ "cl:cristal_slime_brotando_ender": {
+  "pt": "Drusa de Cristal de Slime-do-Ender",
+  "en": "Budding Enderslime Crystal",
+  "icone": "textures/blocks/cl/arte/cristal_slime_brotando_ender"
+ },
+ "cl:cristal_slime_brotando_icor": {
+  "pt": "Drusa de Cristal de Icor",
+  "en": "Budding Ichor Crystal",
+  "icone": "textures/blocks/cl/arte/cristal_slime_brotando_icor"
+ },
+ "cl:cristal_slime_brotando_terra": {
+  "pt": "Drusa de Cristal de Slime-da-Terra",
+  "en": "Budding Earthslime Crystal",
+  "icone": "textures/blocks/cl/arte/cristal_slime_brotando_terra"
+ },
+ "cl:cristal_slime_ceu": {
+  "pt": "Cristal de Slime-do-Céu",
+  "en": "Skyslime Crystal",
+  "icone": "textures/items/cl/arte/cristal_slime_ceu"
+ },
+ "cl:cristal_slime_ender": {
+  "pt": "Cristal de Slime-do-Ender",
+  "en": "Enderslime Crystal",
+  "icone": "textures/items/cl/arte/cristal_slime_ender"
+ },
+ "cl:cristal_slime_icor": {
+  "pt": "Cristal de Icor",
+  "en": "Ichor Crystal",
+  "icone": "textures/items/cl/arte/cristal_slime_icor"
+ },
+ "cl:cristal_slime_terra": {
+  "pt": "Cristal de Slime-da-Terra",
+  "en": "Earthslime Crystal",
+  "icone": "textures/items/cl/arte/cristal_slime_terra"
  },
  "cl:cristal_vibrante": {
   "pt": "Cristal Vibrante",
@@ -3321,6 +3466,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cabbage Leaf",
   "icone": "textures/items/cl/arte/folha_repolho"
  },
+ "cl:folhas_slime_ceu": {
+  "pt": "Folhas de Slime-do-Céu",
+  "en": "Skyslime Leaves",
+  "icone": "textures/blocks/cl/arte/folhas_slime_ceu"
+ },
+ "cl:folhas_slime_ender": {
+  "pt": "Folhas de Slime-do-Ender",
+  "en": "Enderslime Leaves",
+  "icone": "textures/blocks/cl/arte/folhas_slime_ender"
+ },
+ "cl:folhas_slime_icor": {
+  "pt": "Verrugas de Icor",
+  "en": "Ichor Leaves",
+  "icone": "textures/blocks/cl/arte/folhas_slime_icor"
+ },
+ "cl:folhas_slime_sangue": {
+  "pt": "Verrugas de Sangue",
+  "en": "Blood Leaves",
+  "icone": "textures/blocks/cl/arte/folhas_slime_sangue"
+ },
+ "cl:folhas_slime_terra": {
+  "pt": "Folhas de Slime-da-Terra",
+  "en": "Earthslime Leaves",
+  "icone": "textures/blocks/cl/arte/folhas_slime_terra"
+ },
  "cl:fornalha_redstone": {
   "pt": "Fornalha de Redstone",
   "en": "Redstone Furnace",
@@ -3565,6 +3735,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Grade",
   "en": "Grate",
   "icone": "textures/items/cl/blocos/grade"
+ },
+ "cl:grama_slime_ceu": {
+  "pt": "Grama de Slime-do-Céu",
+  "en": "Skyslime Grass",
+  "icone": "textures/blocks/cl/arte/grama_slime_ceu_topo"
+ },
+ "cl:grama_slime_ender": {
+  "pt": "Grama de Slime-do-Ender",
+  "en": "Enderslime Grass",
+  "icone": "textures/blocks/cl/arte/grama_slime_ender_topo"
+ },
+ "cl:grama_slime_icor": {
+  "pt": "Grama de Icor",
+  "en": "Ichor Grass",
+  "icone": "textures/blocks/cl/arte/grama_slime_icor_topo"
+ },
+ "cl:grama_slime_sangue": {
+  "pt": "Grama de Sangue",
+  "en": "Blood Grass",
+  "icone": "textures/blocks/cl/arte/grama_slime_sangue_topo"
+ },
+ "cl:grama_slime_terra": {
+  "pt": "Grama de Slime-da-Terra",
+  "en": "Earthslime Grass",
+  "icone": "textures/blocks/cl/arte/grama_slime_terra_topo"
  },
  "cl:graos_end": {
   "pt": "Grãos do End",
@@ -5575,6 +5770,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Motor da Nave",
   "en": "Ship Engine",
   "icone": "textures/items/cl/arte/motor_nave"
+ },
+ "cl:muda_slime_ceu": {
+  "pt": "Muda de Slime-do-Céu",
+  "en": "Skyslime Sapling",
+  "icone": "textures/blocks/cl/arte/muda_slime_ceu"
+ },
+ "cl:muda_slime_ender": {
+  "pt": "Muda de Slime-do-Ender",
+  "en": "Enderslime Sapling",
+  "icone": "textures/blocks/cl/arte/muda_slime_ender"
+ },
+ "cl:muda_slime_icor": {
+  "pt": "Muda de Icor",
+  "en": "Ichor Sapling",
+  "icone": "textures/blocks/cl/arte/muda_slime_icor"
+ },
+ "cl:muda_slime_sangue": {
+  "pt": "Muda de Sangue",
+  "en": "Blood Sapling",
+  "icone": "textures/blocks/cl/arte/muda_slime_sangue"
+ },
+ "cl:muda_slime_terra": {
+  "pt": "Muda de Slime-da-Terra",
+  "en": "Earthslime Sapling",
+  "icone": "textures/blocks/cl/arte/muda_slime_terra"
  },
  "cl:muda_tamareira": {
   "pt": "Muda de Tamareira",
@@ -9831,6 +10051,31 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Monster Token",
   "icone": "textures/items/cl/arte/simbolo_monstro"
  },
+ "cl:slime_congelado_ceu": {
+  "pt": "Slime-do-Céu Congelado",
+  "en": "Congealed Skyslime",
+  "icone": "textures/blocks/cl/arte/slime_congelado_ceu"
+ },
+ "cl:slime_congelado_ender": {
+  "pt": "Slime-do-Ender Congelado",
+  "en": "Congealed Enderslime",
+  "icone": "textures/blocks/cl/arte/slime_congelado_ender"
+ },
+ "cl:slime_congelado_icor": {
+  "pt": "Icor Congelado",
+  "en": "Congealed Ichor",
+  "icone": "textures/blocks/cl/arte/slime_congelado_icor"
+ },
+ "cl:slime_congelado_sangue": {
+  "pt": "Sangue Congelado",
+  "en": "Congealed Blood",
+  "icone": "textures/blocks/cl/arte/slime_congelado_sangue"
+ },
+ "cl:slime_congelado_terra": {
+  "pt": "Slime-da-Terra Congelado",
+  "en": "Congealed Earthslime",
+  "icone": "textures/blocks/cl/arte/slime_congelado_terra"
+ },
  "cl:solo_lunar": {
   "pt": "Solo Lunar",
   "en": "Moon Turf",
@@ -9906,10 +10151,30 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cutting Board",
   "icone": "textures/items/cl/arte/blocos/tabua_corte"
  },
+ "cl:tabuas_cascaender": {
+  "pt": "Tábuas de Casca-Ender",
+  "en": "Enderbark Planks",
+  "icone": "textures/blocks/cl/arte/tabuas_cascaender"
+ },
+ "cl:tabuas_cogusangue": {
+  "pt": "Tábuas de Cogumelo Sangrento",
+  "en": "Bloodshroom Planks",
+  "icone": "textures/blocks/cl/arte/tabuas_cogusangue"
+ },
+ "cl:tabuas_raizceu": {
+  "pt": "Tábuas de Raízes-do-Céu",
+  "en": "Skyroot Planks",
+  "icone": "textures/blocks/cl/arte/tabuas_raizceu"
+ },
  "cl:tabuas_tratadas": {
   "pt": "Tábuas Tratadas",
   "en": "Treated Wood",
   "icone": "textures/items/cl/blocos/tabuas_tratadas"
+ },
+ "cl:tabuas_verdecoracao": {
+  "pt": "Tábuas de Coração-Verde",
+  "en": "Greenheart Planks",
+  "icone": "textures/blocks/cl/arte/tabuas_verdecoracao"
  },
  "cl:taco": {
   "pt": "Taco",
@@ -10005,6 +10270,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Terra Lunar",
   "en": "Moon Dirt",
   "icone": "textures/items/cl/blocos/terra_lunar"
+ },
+ "cl:terra_slime_ceu": {
+  "pt": "Terra de Slime-do-Céu",
+  "en": "Skyslime Dirt",
+  "icone": "textures/blocks/cl/arte/terra_slime_ceu"
+ },
+ "cl:terra_slime_ender": {
+  "pt": "Terra de Slime-do-Ender",
+  "en": "Enderslime Dirt",
+  "icone": "textures/blocks/cl/arte/terra_slime_ender"
+ },
+ "cl:terra_slime_icor": {
+  "pt": "Terra de Icor",
+  "en": "Ichor Dirt",
+  "icone": "textures/blocks/cl/arte/terra_slime_icor"
+ },
+ "cl:terra_slime_terra": {
+  "pt": "Terra de Slime-da-Terra",
+  "en": "Earthslime Dirt",
+  "icone": "textures/blocks/cl/arte/terra_slime_terra"
  },
  "cl:tesseract": {
   "pt": "Tesseract",
@@ -10146,6 +10431,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Player Transmitter",
   "icone": "textures/items/cl/blocos/transmissor_nitro"
  },
+ "cl:trepadeira_slime_ceu": {
+  "pt": "Trepadeira de Slime-do-Céu",
+  "en": "Skyslime Vine",
+  "icone": "textures/blocks/cl/arte/trepadeira_slime_ceu"
+ },
+ "cl:trepadeira_slime_ender": {
+  "pt": "Trepadeira de Slime-do-Ender",
+  "en": "Enderslime Vine",
+  "icone": "textures/blocks/cl/arte/trepadeira_slime_ender"
+ },
  "cl:triturado_cobre": {
   "pt": "Cobre Bruto Triturado",
   "en": "Crushed Raw Copper",
@@ -10175,6 +10470,26 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Triturador de Monstros",
   "en": "Mob Grinder",
   "icone": "textures/items/cl/arte/blocos/triturador_monstros"
+ },
+ "cl:tronco_cascaender": {
+  "pt": "Tronco de Casca-Ender",
+  "en": "Enderbark Log",
+  "icone": "textures/blocks/cl/arte/tronco_cascaender_topo"
+ },
+ "cl:tronco_cogusangue": {
+  "pt": "Tronco de Cogumelo Sangrento",
+  "en": "Bloodshroom Log",
+  "icone": "textures/blocks/cl/arte/tronco_cogusangue_topo"
+ },
+ "cl:tronco_raizceu": {
+  "pt": "Tronco de Raízes-do-Céu",
+  "en": "Skyroot Log",
+  "icone": "textures/blocks/cl/arte/tronco_raizceu_topo"
+ },
+ "cl:tronco_verdecoracao": {
+  "pt": "Tronco de Coração-Verde",
+  "en": "Greenheart Log",
+  "icone": "textures/blocks/cl/arte/tronco_verdecoracao_topo"
  },
  "cl:tubo_pressao": {
   "pt": "Tubo de Pressão",
@@ -14031,6 +14346,70 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bloco_cristal_slime_ceu",
+  "resultado": "cl:bloco_cristal_slime_ceu",
+  "qtd": 1,
+  "grade": [
+   "CC",
+   "CC"
+  ],
+  "chaves": {
+   "C": "cl:cristal_slime_ceu"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_cristal_slime_ender",
+  "resultado": "cl:bloco_cristal_slime_ender",
+  "qtd": 1,
+  "grade": [
+   "CC",
+   "CC"
+  ],
+  "chaves": {
+   "C": "cl:cristal_slime_ender"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_cristal_slime_icor",
+  "resultado": "cl:bloco_cristal_slime_icor",
+  "qtd": 1,
+  "grade": [
+   "CC",
+   "CC"
+  ],
+  "chaves": {
+   "C": "cl:cristal_slime_icor"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bloco_cristal_slime_terra",
+  "resultado": "cl:bloco_cristal_slime_terra",
+  "qtd": 1,
+  "grade": [
+   "CC",
+   "CC"
+  ],
+  "chaves": {
+   "C": "cl:cristal_slime_terra"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bloco_estanho",
   "resultado": "cl:bloco_estanho",
   "qtd": 1,
@@ -14260,12 +14639,72 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_ceu",
+  "resultado": "cl:bloco_slime_ceu",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bola_slime_ceu",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_ender",
+  "resultado": "cl:bloco_slime_ender",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bola_slime_ender",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_icor",
+  "resultado": "cl:bloco_slime_icor",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bola_slime_icor",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:c_bloco_slime_rainha",
   "resultado": "cl:bloco_slime_rainha",
   "qtd": 1,
   "ingredientes": [
    {
     "item": "cl:lingote_slime_rainha",
+    "qtd": 9
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bloco_slime_sangue",
+  "resultado": "cl:bloco_slime_sangue",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:bola_slime_sangue",
     "qtd": 9
    }
   ],
@@ -14339,6 +14778,66 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "M": "minecraft:mossy_cobblestone"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bolas_slime_ceu",
+  "resultado": "cl:bola_slime_ceu",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_ceu",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bolas_slime_ender",
+  "resultado": "cl:bola_slime_ender",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_ender",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bolas_slime_icor",
+  "resultado": "cl:bola_slime_icor",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_icor",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_bolas_slime_sangue",
+  "resultado": "cl:bola_slime_sangue",
+  "qtd": 9,
+  "ingredientes": [
+   {
+    "item": "cl:bloco_slime_sangue",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -27584,6 +28083,86 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_slime_congelado_ceu",
+  "resultado": "cl:slime_congelado_ceu",
+  "qtd": 1,
+  "grade": [
+   "SS",
+   "SS"
+  ],
+  "chaves": {
+   "S": "cl:bola_slime_ceu"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_slime_congelado_ender",
+  "resultado": "cl:slime_congelado_ender",
+  "qtd": 1,
+  "grade": [
+   "SS",
+   "SS"
+  ],
+  "chaves": {
+   "S": "cl:bola_slime_ender"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_slime_congelado_icor",
+  "resultado": "cl:slime_congelado_icor",
+  "qtd": 1,
+  "grade": [
+   "SS",
+   "SS"
+  ],
+  "chaves": {
+   "S": "cl:bola_slime_icor"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_slime_congelado_sangue",
+  "resultado": "cl:slime_congelado_sangue",
+  "qtd": 1,
+  "grade": [
+   "SS",
+   "SS"
+  ],
+  "chaves": {
+   "S": "cl:bola_slime_sangue"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_slime_congelado_terra",
+  "resultado": "cl:slime_congelado_terra",
+  "qtd": 1,
+  "grade": [
+   "SS",
+   "SS"
+  ],
+  "chaves": {
+   "S": "minecraft:slime_ball"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_super_varinha_construtor",
   "resultado": "cl:super_varinha_construtor",
   "qtd": 1,
@@ -27635,6 +28214,51 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_tabuas_cascaender",
+  "resultado": "cl:tabuas_cascaender",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:tronco_cascaender",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_tabuas_cogusangue",
+  "resultado": "cl:tabuas_cogusangue",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:tronco_cogusangue",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_tabuas_raizceu",
+  "resultado": "cl:tabuas_raizceu",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:tronco_raizceu",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_tabuas_tratadas",
   "resultado": "?",
@@ -27648,6 +28272,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "w": "#minecraft:planks",
    "b": "cl:balde_creosoto"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_tabuas_verdecoracao",
+  "resultado": "cl:tabuas_verdecoracao",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "cl:tronco_verdecoracao",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]

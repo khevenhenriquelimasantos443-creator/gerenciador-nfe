@@ -6,7 +6,7 @@ import { BEBIDAS_HC, COMIDAS_HC, ITENS_HC, TEMPERATURA_HC } from "./harvest/gera
 export const NS = "cl";
 
 // Mesma versão dos manifests (mostrada no diagnóstico do chat).
-export const VERSAO = "1.26.0";
+export const VERSAO = "1.27.0";
 
 // Variantes do bioma de deserto (ver README: "Por que dois arquivos de bioma").
 export const BIOMAS_DESERTO = [`${NS}:deserto_seco`, `${NS}:deserto_seco_ns`] as const;
@@ -479,13 +479,16 @@ export const TINKERS = {
     "cl:lingote_osmio": "osmio", "cl:lingote_cobalto": "cobalto", "cl:lingote_ferro_porco": "ferro_porco", "cl:lingote_hepatizon": "hepatizon",
     "cl:lingote_manyullyn": "manyullyn", "cl:lingote_slime_rainha": "slime_rainha", "cl:lingote_aco_slime": "aco_slime", "cl:lingote_slime_brasa": "slime_brasa",
     "cl:lingote_slime_cavaleiro": "slime_cavaleiro",
+    // 1.27.0: madeiras e trepadeiras de slime.
+    "cl:tabuas_verdecoracao": "madeira_slime", "cl:tabuas_raizceu": "madeira_slime", "cl:tabuas_cogusangue": "madeira_slime", "cl:tabuas_cascaender": "madeira_slime",
+    "cl:trepadeira_slime_ceu": "trepadeira_slime_ceu", "cl:trepadeira_slime_ender": "trepadeira_slime_ender",
   } as Readonly<Record<string, string>>,
   consertoCom: {
     pedra: "minecraft:cobblestone", silex: "minecraft:flint", cacto: "minecraft:cactus", osso: "minecraft:bone", obsidiana: "minecraft:obsidian",
     ferro: "minecraft:iron_ingot", cobre: "minecraft:copper_ingot", bronze: "cl:lingote_bronze", aco: "cl:lingote_aco",
     ouro_rosa: "cl:lingote_ouro_rosa", bronze_ametista: "cl:lingote_bronze_ametista",
     // 1.26.0 (Tinkers 3 completo)
-    coro: "minecraft:popped_chorus_fruit", pedra_refrataria: "cl:tijolo_refratario", pedra_chamuscada: "cl:tijolo_chamuscado", madeira_slime: "minecraft:slime_ball",
+    coro: "minecraft:popped_chorus_fruit", pedra_refrataria: "cl:tijolo_refratario", pedra_chamuscada: "cl:tijolo_chamuscado", madeira_slime: "cl:tabuas_verdecoracao",
     osso_venenoso: "cl:osso_venenoso", osso_necrotico: "cl:osso_necrotico", osmio: "cl:lingote_osmio", ferro_porco: "cl:lingote_ferro_porco", cobalto: "cl:lingote_cobalto",
     aco_slime: "cl:lingote_aco_slime", nahuatl: "cl:nahuatl", madeira_slime_revestida: "cl:lingote_latao", pedra_branca: "minecraft:end_stone",
     hepatizon: "cl:lingote_hepatizon", manyullyn: "cl:lingote_manyullyn", slime_rainha: "cl:lingote_slime_rainha", osso_blaze: "cl:osso_blaze",

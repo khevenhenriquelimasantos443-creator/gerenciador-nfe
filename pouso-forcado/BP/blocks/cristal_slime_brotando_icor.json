@@ -1,0 +1,36 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:cristal_slime_brotando_icor",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_cristal_slime_brotando_icor",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#d09800",
+      "minecraft:loot": "loot_tables/cl/vazio.json",
+      "minecraft:tick": {
+        "interval_range": [
+          600,
+          1800
+        ],
+        "looping": true
+      },
+      "cl:cristal_brotando": {}
+    }
+  }
+}

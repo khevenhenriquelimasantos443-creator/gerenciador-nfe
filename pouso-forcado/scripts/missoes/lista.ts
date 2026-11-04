@@ -55,6 +55,7 @@ export type Acao =
   | "tc_mordida"
   | "tc_cabeca"
   | "tc_composto"
+  | "tc_arvore_slime"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -337,6 +338,12 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "tc3_cobalto", objetivo: { tipo: "ter", item: "cl:lingote_cobalto", qtd: 4 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
       { id: "tc3_manyullyn", requer: ["tc3_cobalto"], objetivo: { tipo: "ter", item: "cl:lingote_manyullyn", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       { id: "tc3_cabeca", objetivo: { tipo: "acao", acao: "tc_cabeca", qtd: 1 }, recompensa: [{ item: "minecraft:bone", quantidade: 16 }] },
+      // 1.27.0: o mundo dos slimes.
+      { id: "tc3_ilha", objetivo: { tipo: "ter", item: "cl:terra_slime_terra", qtd: 1 }, recompensa: [{ item: "minecraft:slime_ball", quantidade: 8 }] },
+      { id: "tc3_slime_ceu", objetivo: { tipo: "ter", item: "cl:bola_slime_ceu", qtd: 8 }, recompensa: [{ item: "cl:tijolo_refratario", quantidade: 16 }] },
+      { id: "tc3_aco_slime", requer: ["tc3_slime_ceu"], objetivo: { tipo: "ter", item: "cl:lingote_aco_slime", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
+      { id: "tc3_geodo", objetivo: { tipo: "ter", item: "cl:cristal_slime_terra", qtd: 4 }, recompensa: [{ item: "minecraft:amethyst_shard", quantidade: 8 }] },
+      { id: "tc3_muda", objetivo: { tipo: "acao", acao: "tc_arvore_slime", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 16 }] },
     ],
   },
   {

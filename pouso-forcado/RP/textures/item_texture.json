@@ -4561,6 +4561,30 @@
     },
     "clc_tijolo_chamuscado": {
       "textures": "textures/items/cl/arte/tijolo_chamuscado"
+    },
+    "clc_bola_slime_ceu": {
+      "textures": "textures/items/cl/arte/bola_slime_ceu"
+    },
+    "clc_bola_slime_icor": {
+      "textures": "textures/items/cl/arte/bola_slime_icor"
+    },
+    "clc_bola_slime_ender": {
+      "textures": "textures/items/cl/arte/bola_slime_ender"
+    },
+    "clc_bola_slime_sangue": {
+      "textures": "textures/items/cl/arte/bola_slime_sangue"
+    },
+    "clc_cristal_slime_terra": {
+      "textures": "textures/items/cl/arte/cristal_slime_terra"
+    },
+    "clc_cristal_slime_ceu": {
+      "textures": "textures/items/cl/arte/cristal_slime_ceu"
+    },
+    "clc_cristal_slime_icor": {
+      "textures": "textures/items/cl/arte/cristal_slime_icor"
+    },
+    "clc_cristal_slime_ender": {
+      "textures": "textures/items/cl/arte/cristal_slime_ender"
     }
   }
 }

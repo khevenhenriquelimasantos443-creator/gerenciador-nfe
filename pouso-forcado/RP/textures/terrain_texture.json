@@ -4011,6 +4011,213 @@
     },
     "clc_nahuatl": {
       "textures": "textures/blocks/cl/arte/nahuatl"
+    },
+    "clc_terra_slime_terra": {
+      "textures": "textures/blocks/cl/arte/terra_slime_terra"
+    },
+    "clc_terra_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/terra_slime_ceu"
+    },
+    "clc_terra_slime_icor": {
+      "textures": "textures/blocks/cl/arte/terra_slime_icor"
+    },
+    "clc_terra_slime_ender": {
+      "textures": "textures/blocks/cl/arte/terra_slime_ender"
+    },
+    "clc_grama_slime_terra": {
+      "textures": "textures/blocks/cl/arte/grama_slime_terra"
+    },
+    "clc_grama_slime_terra_topo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_terra_topo"
+    },
+    "clc_grama_slime_terra_baixo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_terra_baixo"
+    },
+    "clc_grama_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/grama_slime_ceu"
+    },
+    "clc_grama_slime_ceu_topo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_ceu_topo"
+    },
+    "clc_grama_slime_ceu_baixo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_ceu_baixo"
+    },
+    "clc_grama_slime_icor": {
+      "textures": "textures/blocks/cl/arte/grama_slime_icor"
+    },
+    "clc_grama_slime_icor_topo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_icor_topo"
+    },
+    "clc_grama_slime_icor_baixo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_icor_baixo"
+    },
+    "clc_grama_slime_ender": {
+      "textures": "textures/blocks/cl/arte/grama_slime_ender"
+    },
+    "clc_grama_slime_ender_topo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_ender_topo"
+    },
+    "clc_grama_slime_ender_baixo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_ender_baixo"
+    },
+    "clc_grama_slime_sangue": {
+      "textures": "textures/blocks/cl/arte/grama_slime_sangue"
+    },
+    "clc_grama_slime_sangue_topo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_sangue_topo"
+    },
+    "clc_grama_slime_sangue_baixo": {
+      "textures": "textures/blocks/cl/arte/grama_slime_sangue_baixo"
+    },
+    "clc_tronco_verdecoracao": {
+      "textures": "textures/blocks/cl/arte/tronco_verdecoracao"
+    },
+    "clc_tronco_verdecoracao_topo": {
+      "textures": "textures/blocks/cl/arte/tronco_verdecoracao_topo"
+    },
+    "clc_tabuas_verdecoracao": {
+      "textures": "textures/blocks/cl/arte/tabuas_verdecoracao"
+    },
+    "clc_tronco_raizceu": {
+      "textures": "textures/blocks/cl/arte/tronco_raizceu"
+    },
+    "clc_tronco_raizceu_topo": {
+      "textures": "textures/blocks/cl/arte/tronco_raizceu_topo"
+    },
+    "clc_tabuas_raizceu": {
+      "textures": "textures/blocks/cl/arte/tabuas_raizceu"
+    },
+    "clc_tronco_cogusangue": {
+      "textures": "textures/blocks/cl/arte/tronco_cogusangue"
+    },
+    "clc_tronco_cogusangue_topo": {
+      "textures": "textures/blocks/cl/arte/tronco_cogusangue_topo"
+    },
+    "clc_tabuas_cogusangue": {
+      "textures": "textures/blocks/cl/arte/tabuas_cogusangue"
+    },
+    "clc_tronco_cascaender": {
+      "textures": "textures/blocks/cl/arte/tronco_cascaender"
+    },
+    "clc_tronco_cascaender_topo": {
+      "textures": "textures/blocks/cl/arte/tronco_cascaender_topo"
+    },
+    "clc_tabuas_cascaender": {
+      "textures": "textures/blocks/cl/arte/tabuas_cascaender"
+    },
+    "clc_folhas_slime_terra": {
+      "textures": "textures/blocks/cl/arte/folhas_slime_terra"
+    },
+    "clc_folhas_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/folhas_slime_ceu"
+    },
+    "clc_folhas_slime_icor": {
+      "textures": "textures/blocks/cl/arte/folhas_slime_icor"
+    },
+    "clc_folhas_slime_ender": {
+      "textures": "textures/blocks/cl/arte/folhas_slime_ender"
+    },
+    "clc_folhas_slime_sangue": {
+      "textures": "textures/blocks/cl/arte/folhas_slime_sangue"
+    },
+    "clc_capim_slime_terra": {
+      "textures": "textures/blocks/cl/arte/capim_slime_terra"
+    },
+    "clc_capim_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/capim_slime_ceu"
+    },
+    "clc_capim_slime_icor": {
+      "textures": "textures/blocks/cl/arte/capim_slime_icor"
+    },
+    "clc_capim_slime_ender": {
+      "textures": "textures/blocks/cl/arte/capim_slime_ender"
+    },
+    "clc_capim_slime_sangue": {
+      "textures": "textures/blocks/cl/arte/capim_slime_sangue"
+    },
+    "clc_muda_slime_terra": {
+      "textures": "textures/blocks/cl/arte/muda_slime_terra"
+    },
+    "clc_muda_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/muda_slime_ceu"
+    },
+    "clc_muda_slime_icor": {
+      "textures": "textures/blocks/cl/arte/muda_slime_icor"
+    },
+    "clc_muda_slime_ender": {
+      "textures": "textures/blocks/cl/arte/muda_slime_ender"
+    },
+    "clc_muda_slime_sangue": {
+      "textures": "textures/blocks/cl/arte/muda_slime_sangue"
+    },
+    "clc_trepadeira_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/trepadeira_slime_ceu"
+    },
+    "clc_trepadeira_slime_ender": {
+      "textures": "textures/blocks/cl/arte/trepadeira_slime_ender"
+    },
+    "clc_slime_congelado_terra": {
+      "textures": "textures/blocks/cl/arte/slime_congelado_terra"
+    },
+    "clc_slime_congelado_ceu": {
+      "textures": "textures/blocks/cl/arte/slime_congelado_ceu"
+    },
+    "clc_slime_congelado_icor": {
+      "textures": "textures/blocks/cl/arte/slime_congelado_icor"
+    },
+    "clc_slime_congelado_ender": {
+      "textures": "textures/blocks/cl/arte/slime_congelado_ender"
+    },
+    "clc_slime_congelado_sangue": {
+      "textures": "textures/blocks/cl/arte/slime_congelado_sangue"
+    },
+    "clc_bloco_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_ceu"
+    },
+    "clc_bloco_slime_icor": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_icor"
+    },
+    "clc_bloco_slime_ender": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_ender"
+    },
+    "clc_bloco_slime_sangue": {
+      "textures": "textures/blocks/cl/arte/bloco_slime_sangue"
+    },
+    "clc_bloco_cristal_slime_terra": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_slime_terra"
+    },
+    "clc_cristal_slime_brotando_terra": {
+      "textures": "textures/blocks/cl/arte/cristal_slime_brotando_terra"
+    },
+    "clc_cacho_cristal_slime_terra": {
+      "textures": "textures/blocks/cl/arte/cacho_cristal_slime_terra"
+    },
+    "clc_bloco_cristal_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_slime_ceu"
+    },
+    "clc_cristal_slime_brotando_ceu": {
+      "textures": "textures/blocks/cl/arte/cristal_slime_brotando_ceu"
+    },
+    "clc_cacho_cristal_slime_ceu": {
+      "textures": "textures/blocks/cl/arte/cacho_cristal_slime_ceu"
+    },
+    "clc_bloco_cristal_slime_icor": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_slime_icor"
+    },
+    "clc_cristal_slime_brotando_icor": {
+      "textures": "textures/blocks/cl/arte/cristal_slime_brotando_icor"
+    },
+    "clc_cacho_cristal_slime_icor": {
+      "textures": "textures/blocks/cl/arte/cacho_cristal_slime_icor"
+    },
+    "clc_bloco_cristal_slime_ender": {
+      "textures": "textures/blocks/cl/arte/bloco_cristal_slime_ender"
+    },
+    "clc_cristal_slime_brotando_ender": {
+      "textures": "textures/blocks/cl/arte/cristal_slime_brotando_ender"
+    },
+    "clc_cacho_cristal_slime_ender": {
+      "textures": "textures/blocks/cl/arte/cacho_cristal_slime_ender"
     }
   }
 }
