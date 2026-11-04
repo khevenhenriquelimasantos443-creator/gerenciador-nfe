@@ -1,0 +1,26 @@
+{
+ "format_version": "1.13.0",
+ "minecraft:scatter_feature": {
+  "description": {
+   "identifier": "cl:fd_beterraba_marinha_tufo"
+  },
+  "places_feature": "cl:fd_beterraba_marinha",
+  "iterations": 6,
+  "coordinate_eval_order": "xzy",
+  "x": {
+   "distribution": "gaussian",
+   "extent": [
+    -3,
+    3
+   ]
+  },
+  "z": {
+   "distribution": "gaussian",
+   "extent": [
+    -3,
+    3
+   ]
+  },
+  "y": 0
+ }
+}

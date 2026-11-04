@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_salmon_roll"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:fatia_salmao"
+      },
+      {
+        "item": "cl:fatia_salmao"
+      },
+      {
+        "item": "cl:arroz_cozido"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:rolinho_salmao",
+      "count": 2
+    }
+  }
+}

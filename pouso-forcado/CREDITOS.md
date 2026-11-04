@@ -145,7 +145,7 @@ as camadas do próprio mod sobrepostas. Cada arquivo continua com a licença do 
 |---|---|---|---|
 | Mekanism, Generators e Tools | aidancbrady e equipe (arte: Cheapshot, Archadia e outros) | MIT | github.com/mekanism/Mekanism (10.7, 1.21.1; e 1.7.10) |
 | Mekanism Additions | aidancbrady e equipe | MIT | github.com/mekanism/Mekanism (1.20) |
-| Farmer's Delight | vectorwing e equipe | MIT | github.com/vectorwing/FarmersDelight (1.20) |
+| Farmer's Delight | vectorwing e equipe | MIT | github.com/vectorwing/FarmersDelight (1.3.0, 26.1; e 1.20) |
 | Quark | Vazkii e equipe | CC BY-NC-SA 3.0 | github.com/VazkiiMods/Quark |
 | Immersive Aircraft (ícones, modelos 3D e texturas das aeronaves) | Luke100000 e equipe | GPLv3 | github.com/Luke100000/ImmersiveAircraft |
 | Ender IO 9 (e os condutos) | CrazyPants, SleepyTrousers e Team Ender IO | Unlicense / CC0 | github.com/Team-EnderIO/EnderIO (26.3) |

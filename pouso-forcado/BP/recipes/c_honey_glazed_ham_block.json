@@ -1,0 +1,47 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_honey_glazed_ham_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:sweet_berries"
+      },
+      {
+        "item": "minecraft:honey_bottle"
+      },
+      {
+        "item": "minecraft:sweet_berries"
+      },
+      {
+        "item": "minecraft:sweet_berries"
+      },
+      {
+        "item": "cl:presunto_defumado"
+      },
+      {
+        "item": "minecraft:sweet_berries"
+      },
+      {
+        "item": "cl:arroz_cozido"
+      },
+      {
+        "item": "minecraft:bowl"
+      },
+      {
+        "item": "cl:arroz_cozido"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:presunto_mel",
+      "count": 1
+    }
+  }
+}

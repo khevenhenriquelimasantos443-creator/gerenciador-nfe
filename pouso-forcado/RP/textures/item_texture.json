@@ -5545,6 +5545,96 @@
     },
     "clc_jetpack_criativo": {
       "textures": "textures/items/cl/arte/jetpack_criativo"
+    },
+    "clc_presunto": {
+      "textures": "textures/items/cl/arte/presunto"
+    },
+    "clc_presunto_defumado": {
+      "textures": "textures/items/cl/arte/presunto_defumado"
+    },
+    "clc_massa_torta": {
+      "textures": "textures/items/cl/arte/massa_torta"
+    },
+    "clc_garrafa_leite": {
+      "textures": "textures/items/cl/arte/garrafa_leite"
+    },
+    "clc_chocolate_quente": {
+      "textures": "textures/items/cl/arte/chocolate_quente"
+    },
+    "clc_sidra_maca": {
+      "textures": "textures/items/cl/arte/sidra_maca"
+    },
+    "clc_suco_melancia": {
+      "textures": "textures/items/cl/arte/suco_melancia"
+    },
+    "clc_fatia_bolo": {
+      "textures": "textures/items/cl/arte/fatia_bolo"
+    },
+    "clc_fatia_torta_maca": {
+      "textures": "textures/items/cl/arte/fatia_torta_maca"
+    },
+    "clc_fatia_cheesecake": {
+      "textures": "textures/items/cl/arte/fatia_cheesecake"
+    },
+    "clc_fatia_torta_chocolate": {
+      "textures": "textures/items/cl/arte/fatia_torta_chocolate"
+    },
+    "clc_fatia_torta_abobora": {
+      "textures": "textures/items/cl/arte/fatia_torta_abobora"
+    },
+    "clc_biscoito_frutas": {
+      "textures": "textures/items/cl/arte/biscoito_frutas"
+    },
+    "clc_biscoito_mel": {
+      "textures": "textures/items/cl/arte/biscoito_mel"
+    },
+    "clc_picole_melancia": {
+      "textures": "textures/items/cl/arte/picole_melancia"
+    },
+    "clc_creme_baga_brilhante": {
+      "textures": "textures/items/cl/arte/creme_baga_brilhante"
+    },
+    "clc_rolinho_salmao": {
+      "textures": "textures/items/cl/arte/rolinho_salmao"
+    },
+    "clc_rolinho_bacalhau": {
+      "textures": "textures/items/cl/arte/rolinho_bacalhau"
+    },
+    "clc_rolo_alga": {
+      "textures": "textures/items/cl/arte/rolo_alga"
+    },
+    "clc_fatia_rolo_alga": {
+      "textures": "textures/items/cl/arte/fatia_rolo_alga"
+    },
+    "clc_salada_nether": {
+      "textures": "textures/items/cl/arte/salada_nether"
+    },
+    "clc_prato_frango_assado": {
+      "textures": "textures/items/cl/arte/prato_frango_assado"
+    },
+    "clc_tigela_abobora_recheada": {
+      "textures": "textures/items/cl/arte/tigela_abobora_recheada"
+    },
+    "clc_prato_presunto_mel": {
+      "textures": "textures/items/cl/arte/prato_presunto_mel"
+    },
+    "clc_prato_torta_pastor": {
+      "textures": "textures/items/cl/arte/prato_torta_pastor"
+    },
+    "clc_tigela_salada_brilhante": {
+      "textures": "textures/items/cl/arte/tigela_salada_brilhante"
+    },
+    "clc_racao_cachorro": {
+      "textures": "textures/items/cl/arte/racao_cachorro"
+    },
+    "clc_racao_cavalo": {
+      "textures": "textures/items/cl/arte/racao_cavalo"
+    },
+    "clc_casca_arvore": {
+      "textures": "textures/items/cl/arte/casca_arvore"
+    },
+    "clc_faca_netherita": {
+      "textures": "textures/items/cl/arte/faca_netherita"
     }
   }
 }

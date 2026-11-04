@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_melon_juice"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:melon_slice"
+      },
+      {
+        "item": "minecraft:melon_slice"
+      },
+      {
+        "item": "minecraft:sugar"
+      },
+      {
+        "item": "minecraft:melon_slice"
+      },
+      {
+        "item": "minecraft:melon_slice"
+      },
+      {
+        "item": "minecraft:glass_bottle"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:suco_melancia",
+      "count": 1
+    }
+  }
+}

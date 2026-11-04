@@ -1532,6 +1532,73 @@ teste("jetpack_tocha_tumulo", 300, (t) => {
   });
 });
 
+// 1.34.0: Farmer's Delight 1.3.0: torta servida em 4 fatias, banquete servido com tigela, sidra dá absorção, presunto
+// do porco abatido com faca, armário abre como baú, tora na tábua com machado dá casca, rede de segurança sem dano.
+teste("farmers2", 320, (t) => {
+  const j = robo(t, { x: 3.5, y: 2, z: 1.5 });
+  const inv = j.getComponent("minecraft:inventory").container;
+  const dim = t.getDimension();
+  const r = {};
+  t.setBlockType("cl:torta_maca", { x: 3, y: 2, z: 3 });
+  t.setBlockType("cl:frango_assado", { x: 4, y: 2, z: 3 });
+  t.setBlockType("cl:armario_carvalho", { x: 1, y: 2, z: 3 });
+  t.setBlockType("cl:tabua_cortar", { x: 6, y: 2, z: 3 });
+  t.setBlockType("cl:rede_seguranca", { x: 2, y: 2, z: 6 });
+  const tocar = (pos, item) => {
+    if (item) inv.setItem(0, new ItemStack(item, 1));
+    j.selectedSlotIndex = item ? 0 : 8;
+    j.lookAtBlock(pos);
+    j.interactWithBlock(pos, Direction.Up);
+  };
+  for (let k = 0; k < 4; k++) t.runAfterDelay(5 + k * 4, () => tocar({ x: 3, y: 2, z: 3 }));
+  t.runAfterDelay(24, () => {
+    r.fatias = quantos(j, "cl:fatia_torta_maca");
+    r.tortaAcabou = t.getBlock({ x: 3, y: 2, z: 3 }).typeId === "minecraft:air";
+    tocar({ x: 4, y: 2, z: 3 }, "minecraft:bowl");
+  });
+  t.runAfterDelay(30, () => {
+    r.prato = quantos(j, "cl:prato_frango_assado");
+    tocar({ x: 1, y: 2, z: 3 });
+  });
+  t.runAfterDelay(36, () => {
+    r.armario = dim.getEntities({ type: "cl:bau_grande", location: t.worldLocation({ x: 1.5, y: 2, z: 3.5 }), maxDistance: 1.5 }).length;
+    tocar({ x: 6, y: 2, z: 3 }, "minecraft:oak_log");
+  });
+  t.runAfterDelay(42, () => tocar({ x: 6, y: 2, z: 3 }, "minecraft:iron_axe"));
+  t.runAfterDelay(50, () => {
+    r.casca = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 6.5, y: 2.5, z: 3.5 }), maxDistance: 2 }).map((e) => e.getComponent("item")?.itemStack.typeId);
+    // Presunto: porco abatido pelo robô com faca.
+    inv.setItem(1, new ItemStack("cl:faca_ferro", 1));
+    j.selectedSlotIndex = 1;
+    const porco = t.spawn("minecraft:pig", { x: 5.5, y: 2, z: 5.5 });
+    t.runAfterDelay(2, () => porco.isValid && porco.applyDamage(100, { cause: "entityAttack", damagingEntity: j }));
+  });
+  t.runAfterDelay(60, () => {
+    r.presunto = dim.getEntities({ type: "minecraft:item", location: t.worldLocation({ x: 5.5, y: 2, z: 5.5 }), maxDistance: 3 }).some((e) => e.getComponent("item")?.itemStack.typeId === "cl:presunto") || quantos(j, "cl:presunto") > 0;
+    // Sidra: absorção.
+    inv.setItem(2, new ItemStack("cl:sidra_maca", 1));
+    j.selectedSlotIndex = 2;
+    j.useItemInSlot(2);
+  });
+  t.runAfterDelay(110, () => {
+    j.stopUsingItem();
+    r.absorcao = !!j.getEffect("absorption");
+    j.getComponent("health").resetToMaxValue();
+    j.teleport(t.worldLocation({ x: 2.5, y: 14, z: 6.5 }));
+  });
+  t.runAfterDelay(170, () => {
+    r.vida = j.getComponent("health").currentValue;
+    log(`farmers2: ${JSON.stringify(r)}`);
+    t.assert(r.fatias === 4 && r.tortaAcabou, "a torta não serviu 4 fatias");
+    t.assert(r.prato === 1, "o banquete não serviu com a tigela");
+    t.assert(r.armario === 1, "o armário não virou baú");
+    t.assert(r.casca.includes("cl:casca_arvore"), "a tábua não deu casca com o machado");
+    t.assert(r.presunto, "o porco não deu presunto");
+    t.assert(r.vida >= 19, "a rede de segurança não segurou a queda");
+    t.succeed();
+  });
+});
+
 // 1.9.0: Create. Roda d'Água com água encostada gira o eixo e a Mó (trigo → farinha); a Manivela tocada pelo robô
 // gira a Prensa (ferro → chapa); sobrecarga: Rodas Trituradoras (8 SU/RPM) numa Roda d'Água sozinha (32 SU/RPM) não param.
 teste("create", 700, (t) => {

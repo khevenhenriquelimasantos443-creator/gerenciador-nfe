@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_cod_roll"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:fatia_bacalhau"
+      },
+      {
+        "item": "cl:fatia_bacalhau"
+      },
+      {
+        "item": "cl:arroz_cozido"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:rolinho_bacalhau",
+      "count": 2
+    }
+  }
+}

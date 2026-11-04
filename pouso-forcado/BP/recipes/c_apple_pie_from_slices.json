@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_apple_pie_from_slices"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:fatia_torta_maca"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:torta_maca",
+      "count": 1
+    }
+  }
+}

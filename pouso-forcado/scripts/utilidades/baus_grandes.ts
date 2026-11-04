@@ -1,5 +1,5 @@
 import { Block, BlockCustomComponent, BlockPermutation, Dimension, Entity, ItemStack, Player, system, Vector3, world } from "@minecraft/server";
-import { DADOS_F51 } from "../conteudo/gerado.js";
+import { DADOS_F51, DADOS_F53 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { carregarItem, ItemSalvo, salvarItem } from "../util/itens.js";
@@ -12,7 +12,8 @@ import { codigoDoItem, guardarNoItem, lerCodigo } from "../util/item_guarda.js";
  * baú de volta devolve tudo. As melhorias do mod trocam o baú (inclusive o baú normal) sem tirar nada.
  */
 const ENT = "cl:bau_grande";
-const TAMANHO = DADOS_F51.baus as Readonly<Record<string, number>>;
+// 1.34.0: os armários do Farmer's Delight (27 espaços) usam a mesma tela de baú.
+const TAMANHO = { ...(DADOS_F51.baus as Readonly<Record<string, number>>), ...(DADOS_F53.armarios as Readonly<Record<string, number>>) } as Readonly<Record<string, number>>;
 const MELHORIAS = DADOS_F51.melhoriasBau as unknown as Readonly<Record<string, readonly [string, string]>>;
 const POR_PAG = 27;
 const P_TIPO = "cl:bau_tipo", P_PAG = "cl:pag", P_TUDO = "cl:paginas";

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_bamboo_basket"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "/ /",
+      "# #",
+      "/#/"
+    ],
+    "key": {
+      "#": {
+        "item": "cl:lona"
+      },
+      "/": {
+        "item": "minecraft:bamboo"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:cesto_bambu",
+      "count": 1
+    }
+  }
+}

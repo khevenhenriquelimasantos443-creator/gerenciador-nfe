@@ -4677,6 +4677,381 @@
     },
     "clc_lanterna_feral": {
       "textures": "textures/blocks/cl/arte/lanterna_feral"
+    },
+    "clc_torta_maca": {
+      "textures": "textures/blocks/cl/c/torta_maca"
+    },
+    "clc_cheesecake": {
+      "textures": "textures/blocks/cl/c/cheesecake"
+    },
+    "clc_torta_chocolate": {
+      "textures": "textures/blocks/cl/c/torta_chocolate"
+    },
+    "clc_frango_assado": {
+      "textures": "textures/blocks/cl/arte/frango_assado"
+    },
+    "clc_abobora_recheada": {
+      "textures": "textures/blocks/cl/arte/abobora_recheada"
+    },
+    "clc_presunto_mel": {
+      "textures": "textures/blocks/cl/arte/presunto_mel"
+    },
+    "clc_torta_pastor": {
+      "textures": "textures/blocks/cl/arte/torta_pastor"
+    },
+    "clc_salada_brilhante": {
+      "textures": "textures/blocks/cl/arte/salada_brilhante"
+    },
+    "clc_travessa_rolinhos": {
+      "textures": "textures/blocks/cl/arte/travessa_rolinhos"
+    },
+    "clc_composto_organico": {
+      "textures": "textures/blocks/cl/arte/composto_organico"
+    },
+    "clc_solo_rico": {
+      "textures": "textures/blocks/cl/arte/solo_rico"
+    },
+    "clc_rede_seguranca": {
+      "textures": "textures/blocks/cl/arte/rede_seguranca"
+    },
+    "clc_tapete_lona": {
+      "textures": "textures/blocks/cl/arte/tapete_lona"
+    },
+    "clc_tatame": {
+      "textures": "textures/blocks/cl/arte/tatame"
+    },
+    "clc_fardo_arroz": {
+      "textures": "textures/blocks/cl/c/fardo_arroz"
+    },
+    "clc_fardo_arroz_frente": {
+      "textures": "textures/blocks/cl/arte/fardo_arroz_frente"
+    },
+    "clc_fardo_arroz_lado": {
+      "textures": "textures/blocks/cl/arte/fardo_arroz_lado"
+    },
+    "clc_fardo_arroz_topo": {
+      "textures": "textures/blocks/cl/arte/fardo_arroz_topo"
+    },
+    "clc_fardo_arroz_baixo": {
+      "textures": "textures/blocks/cl/arte/fardo_arroz_baixo"
+    },
+    "clc_cesto": {
+      "textures": "textures/blocks/cl/c/cesto"
+    },
+    "clc_cesto_frente": {
+      "textures": "textures/blocks/cl/arte/cesto_frente"
+    },
+    "clc_cesto_lado": {
+      "textures": "textures/blocks/cl/arte/cesto_lado"
+    },
+    "clc_cesto_topo": {
+      "textures": "textures/blocks/cl/arte/cesto_topo"
+    },
+    "clc_cesto_baixo": {
+      "textures": "textures/blocks/cl/arte/cesto_baixo"
+    },
+    "clc_cesto_bambu": {
+      "textures": "textures/blocks/cl/c/cesto_bambu"
+    },
+    "clc_cesto_bambu_frente": {
+      "textures": "textures/blocks/cl/arte/cesto_bambu_frente"
+    },
+    "clc_cesto_bambu_lado": {
+      "textures": "textures/blocks/cl/arte/cesto_bambu_lado"
+    },
+    "clc_cesto_bambu_topo": {
+      "textures": "textures/blocks/cl/arte/cesto_bambu_topo"
+    },
+    "clc_cesto_bambu_baixo": {
+      "textures": "textures/blocks/cl/arte/cesto_bambu_baixo"
+    },
+    "clc_armario_carvalho": {
+      "textures": "textures/blocks/cl/c/armario_carvalho"
+    },
+    "clc_armario_carvalho_frente": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_frente"
+    },
+    "clc_armario_carvalho_lado": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_lado"
+    },
+    "clc_armario_carvalho_topo": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_topo"
+    },
+    "clc_armario_carvalho_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_baixo"
+    },
+    "clc_armario_betula": {
+      "textures": "textures/blocks/cl/c/armario_betula"
+    },
+    "clc_armario_betula_frente": {
+      "textures": "textures/blocks/cl/arte/armario_betula_frente"
+    },
+    "clc_armario_betula_lado": {
+      "textures": "textures/blocks/cl/arte/armario_betula_lado"
+    },
+    "clc_armario_betula_topo": {
+      "textures": "textures/blocks/cl/arte/armario_betula_topo"
+    },
+    "clc_armario_betula_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_betula_baixo"
+    },
+    "clc_armario_pinheiro": {
+      "textures": "textures/blocks/cl/c/armario_pinheiro"
+    },
+    "clc_armario_pinheiro_frente": {
+      "textures": "textures/blocks/cl/arte/armario_pinheiro_frente"
+    },
+    "clc_armario_pinheiro_lado": {
+      "textures": "textures/blocks/cl/arte/armario_pinheiro_lado"
+    },
+    "clc_armario_pinheiro_topo": {
+      "textures": "textures/blocks/cl/arte/armario_pinheiro_topo"
+    },
+    "clc_armario_pinheiro_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_pinheiro_baixo"
+    },
+    "clc_armario_selva": {
+      "textures": "textures/blocks/cl/c/armario_selva"
+    },
+    "clc_armario_selva_frente": {
+      "textures": "textures/blocks/cl/arte/armario_selva_frente"
+    },
+    "clc_armario_selva_lado": {
+      "textures": "textures/blocks/cl/arte/armario_selva_lado"
+    },
+    "clc_armario_selva_topo": {
+      "textures": "textures/blocks/cl/arte/armario_selva_topo"
+    },
+    "clc_armario_selva_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_selva_baixo"
+    },
+    "clc_armario_acacia": {
+      "textures": "textures/blocks/cl/c/armario_acacia"
+    },
+    "clc_armario_acacia_frente": {
+      "textures": "textures/blocks/cl/arte/armario_acacia_frente"
+    },
+    "clc_armario_acacia_lado": {
+      "textures": "textures/blocks/cl/arte/armario_acacia_lado"
+    },
+    "clc_armario_acacia_topo": {
+      "textures": "textures/blocks/cl/arte/armario_acacia_topo"
+    },
+    "clc_armario_acacia_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_acacia_baixo"
+    },
+    "clc_armario_carvalho_escuro": {
+      "textures": "textures/blocks/cl/c/armario_carvalho_escuro"
+    },
+    "clc_armario_carvalho_escuro_frente": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_escuro_frente"
+    },
+    "clc_armario_carvalho_escuro_lado": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_escuro_lado"
+    },
+    "clc_armario_carvalho_escuro_topo": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_escuro_topo"
+    },
+    "clc_armario_carvalho_escuro_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_carvalho_escuro_baixo"
+    },
+    "clc_armario_mangue": {
+      "textures": "textures/blocks/cl/c/armario_mangue"
+    },
+    "clc_armario_mangue_frente": {
+      "textures": "textures/blocks/cl/arte/armario_mangue_frente"
+    },
+    "clc_armario_mangue_lado": {
+      "textures": "textures/blocks/cl/arte/armario_mangue_lado"
+    },
+    "clc_armario_mangue_topo": {
+      "textures": "textures/blocks/cl/arte/armario_mangue_topo"
+    },
+    "clc_armario_mangue_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_mangue_baixo"
+    },
+    "clc_armario_cerejeira": {
+      "textures": "textures/blocks/cl/c/armario_cerejeira"
+    },
+    "clc_armario_cerejeira_frente": {
+      "textures": "textures/blocks/cl/arte/armario_cerejeira_frente"
+    },
+    "clc_armario_cerejeira_lado": {
+      "textures": "textures/blocks/cl/arte/armario_cerejeira_lado"
+    },
+    "clc_armario_cerejeira_topo": {
+      "textures": "textures/blocks/cl/arte/armario_cerejeira_topo"
+    },
+    "clc_armario_cerejeira_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_cerejeira_baixo"
+    },
+    "clc_armario_bambu": {
+      "textures": "textures/blocks/cl/c/armario_bambu"
+    },
+    "clc_armario_bambu_frente": {
+      "textures": "textures/blocks/cl/arte/armario_bambu_frente"
+    },
+    "clc_armario_bambu_lado": {
+      "textures": "textures/blocks/cl/arte/armario_bambu_lado"
+    },
+    "clc_armario_bambu_topo": {
+      "textures": "textures/blocks/cl/arte/armario_bambu_topo"
+    },
+    "clc_armario_bambu_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_bambu_baixo"
+    },
+    "clc_armario_carmesim": {
+      "textures": "textures/blocks/cl/c/armario_carmesim"
+    },
+    "clc_armario_carmesim_frente": {
+      "textures": "textures/blocks/cl/arte/armario_carmesim_frente"
+    },
+    "clc_armario_carmesim_lado": {
+      "textures": "textures/blocks/cl/arte/armario_carmesim_lado"
+    },
+    "clc_armario_carmesim_topo": {
+      "textures": "textures/blocks/cl/arte/armario_carmesim_topo"
+    },
+    "clc_armario_carmesim_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_carmesim_baixo"
+    },
+    "clc_armario_distorcido": {
+      "textures": "textures/blocks/cl/c/armario_distorcido"
+    },
+    "clc_armario_distorcido_frente": {
+      "textures": "textures/blocks/cl/arte/armario_distorcido_frente"
+    },
+    "clc_armario_distorcido_lado": {
+      "textures": "textures/blocks/cl/arte/armario_distorcido_lado"
+    },
+    "clc_armario_distorcido_topo": {
+      "textures": "textures/blocks/cl/arte/armario_distorcido_topo"
+    },
+    "clc_armario_distorcido_baixo": {
+      "textures": "textures/blocks/cl/arte/armario_distorcido_baixo"
+    },
+    "clc_repolho_selvagem": {
+      "textures": "textures/blocks/cl/arte/repolho_selvagem"
+    },
+    "clc_tomateiro_selvagem": {
+      "textures": "textures/blocks/cl/arte/tomateiro_selvagem"
+    },
+    "clc_cebola_selvagem": {
+      "textures": "textures/blocks/cl/arte/cebola_selvagem"
+    },
+    "clc_cenoura_selvagem": {
+      "textures": "textures/blocks/cl/arte/cenoura_selvagem"
+    },
+    "clc_batata_selvagem": {
+      "textures": "textures/blocks/cl/arte/batata_selvagem"
+    },
+    "clc_beterraba_marinha": {
+      "textures": "textures/blocks/cl/arte/beterraba_marinha"
+    },
+    "clc_arroz_selvagem": {
+      "textures": "textures/blocks/cl/arte/arroz_selvagem"
+    },
+    "clc_arbusto_arenoso": {
+      "textures": "textures/blocks/cl/arte/arbusto_arenoso"
+    },
+    "clc_colonia_cogumelo_marrom": {
+      "textures": "textures/blocks/cl/arte/colonia_cogumelo_marrom"
+    },
+    "clc_colonia_cogumelo_vermelho": {
+      "textures": "textures/blocks/cl/arte/colonia_cogumelo_vermelho"
+    },
+    "clc_arroz_selvagem_baixo": {
+      "textures": "textures/blocks/cl/arte/arroz_selvagem_baixo"
+    },
+    "clc_arroz_selvagem_topo": {
+      "textures": "textures/blocks/cl/arte/arroz_selvagem_topo"
+    },
+    "clc_celula_energia_ae": {
+      "textures": "textures/blocks/cl/arte/celula_energia_ae"
+    },
+    "clc_celula_energia_ae_densa": {
+      "textures": "textures/blocks/cl/arte/celula_energia_ae_densa"
+    },
+    "clc_chassi_almas": {
+      "textures": "textures/blocks/cl/arte/chassi_almas"
+    },
+    "clc_cheesecake_topo": {
+      "textures": "textures/blocks/cl/arte/cheesecake_topo"
+    },
+    "clc_fd_bandeja": {
+      "textures": "textures/blocks/cl/arte/fd_bandeja"
+    },
+    "clc_fd_canvas_rug": {
+      "textures": "textures/blocks/cl/arte/fd_canvas_rug"
+    },
+    "clc_fd_rice_bale_side": {
+      "textures": "textures/blocks/cl/arte/fd_rice_bale_side"
+    },
+    "clc_fd_rice_bale_top": {
+      "textures": "textures/blocks/cl/arte/fd_rice_bale_top"
+    },
+    "clc_fd_rich_soil": {
+      "textures": "textures/blocks/cl/arte/fd_rich_soil"
+    },
+    "clc_fd_rich_soil_farmland_moist": {
+      "textures": "textures/blocks/cl/arte/fd_rich_soil_farmland_moist"
+    },
+    "clc_fd_safety_net": {
+      "textures": "textures/blocks/cl/arte/fd_safety_net"
+    },
+    "clc_fd_torta_baixo": {
+      "textures": "textures/blocks/cl/arte/fd_torta_baixo"
+    },
+    "clc_fd_torta_lado": {
+      "textures": "textures/blocks/cl/arte/fd_torta_lado"
+    },
+    "clc_fd_travessa": {
+      "textures": "textures/blocks/cl/arte/fd_travessa"
+    },
+    "clc_prato_frango_assado": {
+      "textures": "textures/blocks/cl/arte/prato_frango_assado"
+    },
+    "clc_prato_presunto_mel": {
+      "textures": "textures/blocks/cl/arte/prato_presunto_mel"
+    },
+    "clc_prato_torta_pastor_baixo": {
+      "textures": "textures/blocks/cl/arte/prato_torta_pastor_baixo"
+    },
+    "clc_prato_torta_pastor_frente": {
+      "textures": "textures/blocks/cl/arte/prato_torta_pastor_frente"
+    },
+    "clc_prato_torta_pastor_lado": {
+      "textures": "textures/blocks/cl/arte/prato_torta_pastor_lado"
+    },
+    "clc_prato_torta_pastor_topo": {
+      "textures": "textures/blocks/cl/arte/prato_torta_pastor_topo"
+    },
+    "clc_terra_arada_rica": {
+      "textures": "textures/blocks/cl/arte/terra_arada_rica"
+    },
+    "clc_tigela_abobora_recheada_baixo": {
+      "textures": "textures/blocks/cl/arte/tigela_abobora_recheada_baixo"
+    },
+    "clc_tigela_abobora_recheada_frente": {
+      "textures": "textures/blocks/cl/arte/tigela_abobora_recheada_frente"
+    },
+    "clc_tigela_abobora_recheada_lado": {
+      "textures": "textures/blocks/cl/arte/tigela_abobora_recheada_lado"
+    },
+    "clc_tigela_abobora_recheada_topo": {
+      "textures": "textures/blocks/cl/arte/tigela_abobora_recheada_topo"
+    },
+    "clc_tigela_salada_brilhante": {
+      "textures": "textures/blocks/cl/arte/tigela_salada_brilhante"
+    },
+    "clc_torta_abobora_fd_topo": {
+      "textures": "textures/blocks/cl/arte/torta_abobora_fd_topo"
+    },
+    "clc_torta_chocolate_topo": {
+      "textures": "textures/blocks/cl/arte/torta_chocolate_topo"
+    },
+    "clc_torta_maca_topo": {
+      "textures": "textures/blocks/cl/arte/torta_maca_topo"
     }
   }
 }

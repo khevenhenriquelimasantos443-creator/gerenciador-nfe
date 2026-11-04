@@ -11,6 +11,11 @@ export type ReceitaJson = {
 };
 export type InfoItem = { pt: string; en: string; icone?: string };
 export const ITENS: Readonly<Record<string, InfoItem>> = {
+ "cl:abobora_recheada": {
+  "pt": "Abóbora Recheada",
+  "en": "Stuffed Pumpkin",
+  "icone": "textures/blocks/cl/arte/fd_travessa"
+ },
  "cl:acabamento_gaveta": {
   "pt": "Acabamento de Gaveta",
   "en": "Drawer Trim",
@@ -301,6 +306,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Pickaxe Heater",
   "icone": "textures/items/cl/arte/aquecedor_picareta"
  },
+ "cl:arbusto_arenoso": {
+  "pt": "Arbusto Arenoso",
+  "en": "Sandy Shrub",
+  "icone": "textures/blocks/cl/arte/arbusto_arenoso"
+ },
  "cl:arco_longo_aco": {
   "pt": "Arco Longo de Aço",
   "en": "Steel Longbow",
@@ -481,6 +491,61 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nether Grout",
   "icone": "textures/items/cl/arte/argamassa_nether"
  },
+ "cl:armario_acacia": {
+  "pt": "Armário de Acácia",
+  "en": "Acacia Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_acacia_topo"
+ },
+ "cl:armario_bambu": {
+  "pt": "Armário de Bambu",
+  "en": "Bamboo Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_bambu_topo"
+ },
+ "cl:armario_betula": {
+  "pt": "Armário de Bétula",
+  "en": "Birch Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_betula_topo"
+ },
+ "cl:armario_carmesim": {
+  "pt": "Armário de Carmesim",
+  "en": "Crimson Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_carmesim_topo"
+ },
+ "cl:armario_carvalho": {
+  "pt": "Armário de Carvalho",
+  "en": "Oak Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_carvalho_topo"
+ },
+ "cl:armario_carvalho_escuro": {
+  "pt": "Armário de Carvalho Escuro",
+  "en": "Dark Oak Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_carvalho_escuro_topo"
+ },
+ "cl:armario_cerejeira": {
+  "pt": "Armário de Cerejeira",
+  "en": "Cherry Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_cerejeira_topo"
+ },
+ "cl:armario_distorcido": {
+  "pt": "Armário de Distorcido",
+  "en": "Warped Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_distorcido_topo"
+ },
+ "cl:armario_mangue": {
+  "pt": "Armário de Mangue",
+  "en": "Mangrove Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_mangue_topo"
+ },
+ "cl:armario_pinheiro": {
+  "pt": "Armário de Pinheiro",
+  "en": "Spruce Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_pinheiro_topo"
+ },
+ "cl:armario_selva": {
+  "pt": "Armário de Selva",
+  "en": "Jungle Cabinet",
+  "icone": "textures/blocks/cl/arte/armario_selva_topo"
+ },
  "cl:armazem_corpos": {
   "pt": "Armazém de Corpos",
   "en": "Shell Storage",
@@ -505,6 +570,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Arroz Frito",
   "en": "Fried Rice",
   "icone": "textures/items/cl/arte/arroz_frito"
+ },
+ "cl:arroz_selvagem": {
+  "pt": "Arroz Selvagem",
+  "en": "Wild Rice",
+  "icone": "textures/blocks/cl/arte/arroz_selvagem"
  },
  "cl:asa_delta": {
   "pt": "Asa-Delta",
@@ -776,6 +846,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Stuffed Potato",
   "icone": "textures/items/cl/arte/batata_recheada"
  },
+ "cl:batata_selvagem": {
+  "pt": "Batata Selvagem",
+  "en": "Wild Potato",
+  "icone": "textures/blocks/cl/arte/batata_selvagem"
+ },
  "cl:batedor": {
   "pt": "Batedor",
   "en": "Whisk",
@@ -1016,6 +1091,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Crossbow",
   "icone": "textures/items/cl/arte/besta_slime_rainha"
  },
+ "cl:beterraba_marinha": {
+  "pt": "Beterraba Marinha",
+  "en": "Sea Beet",
+  "icone": "textures/blocks/cl/arte/beterraba_marinha"
+ },
  "cl:bicho_seda": {
   "pt": "Bicho-da-seda",
   "en": "Silkworm",
@@ -1060,6 +1140,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Biplano",
   "en": "Biplane",
   "icone": "textures/items/cl/arte/biplano"
+ },
+ "cl:biscoito_frutas": {
+  "pt": "Biscoito de Frutas Vermelhas",
+  "en": "Sweet Berry Cookie",
+  "icone": "textures/items/cl/arte/biscoito_frutas"
+ },
+ "cl:biscoito_mel": {
+  "pt": "Biscoito de Mel",
+  "en": "Honey Cookie",
+  "icone": "textures/items/cl/arte/biscoito_mel"
  },
  "cl:bloco_aco": {
   "pt": "Bloco de Aço",
@@ -2236,6 +2326,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Dimensional Binding Card",
   "icone": "textures/items/cl/arte/cartao_vinculo_dimensional"
  },
+ "cl:casca_arvore": {
+  "pt": "Casca de Árvore",
+  "en": "Tree Bark",
+  "icone": "textures/items/cl/arte/casca_arvore"
+ },
  "cl:cascalho_nether": {
   "pt": "Cascalho do Nether",
   "en": "Nether Gravel",
@@ -2300,6 +2395,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cebola",
   "en": "Onion",
   "icone": "textures/items/cl/arte/cebola"
+ },
+ "cl:cebola_selvagem": {
+  "pt": "Cebola Selvagem",
+  "en": "Wild Onion",
+  "icone": "textures/blocks/cl/arte/cebola_selvagem"
  },
  "cl:celula_aco": {
   "pt": "Célula de Aço",
@@ -2481,6 +2581,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Nitro Energy Cell (Powah)",
   "icone": "textures/items/cl/blocos/celula_powah_nitro"
  },
+ "cl:cenoura_selvagem": {
+  "pt": "Cenoura Selvagem",
+  "en": "Wild Carrot",
+  "icone": "textures/blocks/cl/arte/cenoura_selvagem"
+ },
+ "cl:cesto": {
+  "pt": "Cesto",
+  "en": "Basket",
+  "icone": "textures/blocks/cl/arte/cesto_topo"
+ },
+ "cl:cesto_bambu": {
+  "pt": "Cesto de Bambu",
+  "en": "Bamboo Basket",
+  "icone": "textures/blocks/cl/arte/cesto_bambu_topo"
+ },
  "cl:chapa_cobre": {
   "pt": "Chapa de Cobre",
   "en": "Copper Sheet",
@@ -2570,6 +2685,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Chave Yeta",
   "en": "Yeta Wrench",
   "icone": "textures/items/cl/arte/chave_yeta"
+ },
+ "cl:cheesecake": {
+  "pt": "Cheesecake de Frutas Vermelhas",
+  "en": "Sweet Berry Cheesecake",
+  "icone": "textures/blocks/cl/arte/fd_torta_lado"
  },
  "cl:chibanca_aco": {
   "pt": "Chibanca de Aço",
@@ -2726,6 +2846,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Chili Poppers",
   "icone": "textures/items/cl/arte/chili_poppers"
  },
+ "cl:chocolate_quente": {
+  "pt": "Chocolate Quente",
+  "en": "Hot Cocoa",
+  "icone": "textures/items/cl/arte/chocolate_quente"
+ },
  "cl:cilindro_acido": {
   "pt": "Cilindro de Ácido Clorídrico",
   "en": "Hydrogen Chloride Tank",
@@ -2846,6 +2971,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Block Placer",
   "icone": "textures/items/cl/arte/blocos/colocador_blocos"
  },
+ "cl:colonia_cogumelo_marrom": {
+  "pt": "Colônia de Cogumelo Marrom",
+  "en": "Brown Mushroom Colony",
+  "icone": "textures/blocks/cl/arte/colonia_cogumelo_marrom"
+ },
+ "cl:colonia_cogumelo_vermelho": {
+  "pt": "Colônia de Cogumelo Vermelho",
+  "en": "Red Mushroom Colony",
+  "icone": "textures/blocks/cl/arte/colonia_cogumelo_vermelho"
+ },
  "cl:combinador": {
   "pt": "Combinador",
   "en": "Combiner",
@@ -2895,6 +3030,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Composto Fotovoltaico",
   "en": "Photovoltaic Composite",
   "icone": "textures/items/cl/arte/composto_fotovoltaico"
+ },
+ "cl:composto_organico": {
+  "pt": "Composto Orgânico",
+  "en": "Organic Compost",
+  "icone": "textures/blocks/cl/arte/composto_organico"
  },
  "cl:compostor": {
   "pt": "Compostor de Terra",
@@ -3065,6 +3205,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Cravos Firmes",
   "en": "Steadfast Spikes",
   "icone": "textures/items/cl/arte/cravos_firmes"
+ },
+ "cl:creme_baga_brilhante": {
+  "pt": "Creme de Baga Brilhante",
+  "en": "Glow Berry Custard",
+  "icone": "textures/items/cl/arte/creme_baga_brilhante"
  },
  "cl:crisol_fermentacao": {
   "pt": "Crisol de Fermentação (VAT)",
@@ -4286,6 +4431,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Iron Knife",
   "icone": "textures/items/cl/arte/faca_ferro"
  },
+ "cl:faca_netherita": {
+  "pt": "Faca de Netherita",
+  "en": "Netherite Knife",
+  "icone": "textures/items/cl/arte/faca_netherita"
+ },
  "cl:faca_ouro": {
   "pt": "Faca de Ouro",
   "en": "Golden Knife",
@@ -4300,6 +4450,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Faixa de Múmia",
   "en": "Mummy Wrap",
   "icone": "textures/items/cl/arte/faixa_mumia"
+ },
+ "cl:fardo_arroz": {
+  "pt": "Fardo de Arroz",
+  "en": "Rice Bale",
+  "icone": "textures/blocks/cl/arte/fardo_arroz_topo"
  },
  "cl:fardo_palha": {
   "pt": "Fardo de Palha",
@@ -4331,6 +4486,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cooked Cod Slice",
   "icone": "textures/items/cl/arte/fatia_bacalhau_cozida"
  },
+ "cl:fatia_bolo": {
+  "pt": "Fatia de Bolo",
+  "en": "Slice of Cake",
+  "icone": "textures/items/cl/arte/fatia_bolo"
+ },
+ "cl:fatia_cheesecake": {
+  "pt": "Fatia de Cheesecake de Frutas Vermelhas",
+  "en": "Slice of Sweet Berry Cheesecake",
+  "icone": "textures/items/cl/arte/fatia_cheesecake"
+ },
+ "cl:fatia_rolo_alga": {
+  "pt": "Fatia de Rolo de Alga",
+  "en": "Kelp Roll Slice",
+  "icone": "textures/items/cl/arte/fatia_rolo_alga"
+ },
  "cl:fatia_salmao": {
   "pt": "Fatia de Salmão",
   "en": "Salmon Slice",
@@ -4340,6 +4510,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Fatia de Salmão Cozida",
   "en": "Cooked Salmon Slice",
   "icone": "textures/items/cl/arte/fatia_salmao_cozida"
+ },
+ "cl:fatia_torta_abobora": {
+  "pt": "Fatia de Torta de Abóbora",
+  "en": "Slice of Pumpkin Pie",
+  "icone": "textures/items/cl/arte/fatia_torta_abobora"
+ },
+ "cl:fatia_torta_chocolate": {
+  "pt": "Fatia de Torta de Chocolate",
+  "en": "Slice of Chocolate Pie",
+  "icone": "textures/items/cl/arte/fatia_torta_chocolate"
+ },
+ "cl:fatia_torta_maca": {
+  "pt": "Fatia de Torta de Maçã",
+  "en": "Slice of Apple Pie",
+  "icone": "textures/items/cl/arte/fatia_torta_maca"
  },
  "cl:fatiar_emendar": {
   "pt": "Fatiar e Emendar",
@@ -4656,6 +4841,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Gold Shard",
   "icone": "textures/items/cl/arte/fragmento_ouro"
  },
+ "cl:frango_assado": {
+  "pt": "Frango Assado",
+  "en": "Roast Chicken",
+  "icone": "textures/blocks/cl/arte/fd_travessa"
+ },
  "cl:frank_n_zumbi": {
   "pt": "Frank'N'Zumbi",
   "en": "Frank'N'Zombie",
@@ -4795,6 +4985,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Fusor Refratário",
   "en": "Seared Melter",
   "icone": "textures/blocks/cl/arte/fusor_topo"
+ },
+ "cl:garrafa_leite": {
+  "pt": "Garrafa de Leite",
+  "en": "Milk Bottle",
+  "icone": "textures/items/cl/arte/garrafa_leite"
  },
  "cl:garras_cavar": {
   "pt": "Garras de Cavar",
@@ -6465,6 +6660,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Massa Líquida",
   "en": "Batter",
   "icone": "textures/items/cl/arte/massa_liquida"
+ },
+ "cl:massa_torta": {
+  "pt": "Massa de Torta",
+  "en": "Pie Crust",
+  "icone": "textures/items/cl/arte/massa_torta"
  },
  "cl:materia_vegetal_marrom": {
   "pt": "Galhos e Podas",
@@ -10661,6 +10861,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Queen's Slime Pickaxe",
   "icone": "textures/items/cl/arte/picareta_slime_rainha"
  },
+ "cl:picole_melancia": {
+  "pt": "Picolé de Melancia",
+  "en": "Melon Popsicle",
+  "icone": "textures/items/cl/arte/picole_melancia"
+ },
  "cl:pilao": {
   "pt": "Pilão",
   "en": "Mortar and Pestle",
@@ -11346,6 +11551,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Shelf",
   "icone": "textures/items/cl/arte/blocos/prateleira"
  },
+ "cl:prato_frango_assado": {
+  "pt": "Prato de Frango Assado",
+  "en": "Plate of Roast Chicken",
+  "icone": "textures/items/cl/arte/prato_frango_assado"
+ },
+ "cl:prato_presunto_mel": {
+  "pt": "Prato de Presunto com Mel",
+  "en": "Plate of Honey Glazed Ham",
+  "icone": "textures/items/cl/arte/prato_presunto_mel"
+ },
+ "cl:prato_torta_pastor": {
+  "pt": "Prato de Torta do Pastor",
+  "en": "Plate of Shepherd's Pie",
+  "icone": "textures/items/cl/arte/prato_torta_pastor"
+ },
  "cl:precipitador_glacial": {
   "pt": "Precipitador Glacial",
   "en": "Glacial Precipitator",
@@ -11375,6 +11595,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Prensa Inscritora de Silício",
   "en": "Inscriber Silicon Press",
   "icone": "textures/items/cl/arte/prensa_silicio"
+ },
+ "cl:presunto": {
+  "pt": "Presunto",
+  "en": "Ham",
+  "icone": "textures/items/cl/arte/presunto"
+ },
+ "cl:presunto_defumado": {
+  "pt": "Presunto Defumado",
+  "en": "Smoked Ham",
+  "icone": "textures/items/cl/arte/presunto_defumado"
+ },
+ "cl:presunto_mel": {
+  "pt": "Presunto com Mel",
+  "en": "Honey Glazed Ham",
+  "icone": "textures/blocks/cl/arte/fd_travessa"
  },
  "cl:processador_avancado": {
   "pt": "Processador de Engenharia",
@@ -11476,6 +11711,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Cheese",
   "icone": "textures/items/cl/arte/queijo"
  },
+ "cl:racao_cachorro": {
+  "pt": "Ração de Cachorro",
+  "en": "Dog Food",
+  "icone": "textures/items/cl/arte/racao_cachorro"
+ },
+ "cl:racao_cavalo": {
+  "pt": "Ração de Cavalo",
+  "en": "Horse Feed",
+  "icone": "textures/items/cl/arte/racao_cavalo"
+ },
  "cl:rancheiro": {
   "pt": "Rancheiro",
   "en": "Rancher",
@@ -11531,6 +11776,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Wireless Receiver",
   "icone": "textures/items/cl/arte/receptor_sem_fio"
  },
+ "cl:rede_seguranca": {
+  "pt": "Rede de Segurança",
+  "en": "Safety Net",
+  "icone": "textures/blocks/cl/arte/rede_seguranca"
+ },
  "cl:redstone_enriquecida": {
   "pt": "Redstone Enriquecida",
   "en": "Enriched Redstone",
@@ -11550,6 +11800,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Repolho",
   "en": "Cabbage",
   "icone": "textures/items/cl/arte/repolho"
+ },
+ "cl:repolho_selvagem": {
+  "pt": "Repolho Selvagem",
+  "en": "Wild Cabbage",
+  "icone": "textures/blocks/cl/arte/repolho_selvagem"
  },
  "cl:reprocessador_cianita": {
   "pt": "Reprocessador de Cianita",
@@ -11611,10 +11866,25 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Windmill Bearing",
   "icone": "textures/items/cl/blocos/rolamento_moinho"
  },
+ "cl:rolinho_bacalhau": {
+  "pt": "Rolinho de Bacalhau",
+  "en": "Cod Roll",
+  "icone": "textures/items/cl/arte/rolinho_bacalhau"
+ },
+ "cl:rolinho_salmao": {
+  "pt": "Rolinho de Salmão",
+  "en": "Salmon Roll",
+  "icone": "textures/items/cl/arte/rolinho_salmao"
+ },
  "cl:rolinhos_repolho": {
   "pt": "Rolinhos de Repolho",
   "en": "Cabbage Rolls",
   "icone": "textures/items/cl/arte/rolinhos_repolho"
+ },
+ "cl:rolo_alga": {
+  "pt": "Rolo de Alga",
+  "en": "Kelp Roll",
+  "icone": "textures/items/cl/arte/rolo_alga"
  },
  "cl:saco_arroz": {
   "pt": "Saco de Arroz",
@@ -11671,6 +11941,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Salt",
   "icone": "textures/items/cl/arte/sal"
  },
+ "cl:salada_brilhante": {
+  "pt": "Salada Brilhante",
+  "en": "Gleaming Salad",
+  "icone": "textures/blocks/cl/arte/fd_travessa"
+ },
  "cl:salada_frutas": {
   "pt": "Salada de Frutas",
   "en": "Fruit Salad",
@@ -11680,6 +11955,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Salada Mista",
   "en": "Mixed Salad",
   "icone": "textures/items/cl/arte/salada_mista"
+ },
+ "cl:salada_nether": {
+  "pt": "Salada do Nether",
+  "en": "Nether Salad",
+  "icone": "textures/items/cl/arte/salada_nether"
  },
  "cl:salmao_grelhado": {
   "pt": "Salmão Grelhado",
@@ -11816,6 +12096,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Flint Shuriken",
   "icone": "textures/items/cl/arte/shuriken_silex"
  },
+ "cl:sidra_maca": {
+  "pt": "Sidra de Maçã",
+  "en": "Apple Cider",
+  "icone": "textures/items/cl/arte/sidra_maca"
+ },
  "cl:silicio": {
   "pt": "Silício",
   "en": "Silicon",
@@ -11881,6 +12166,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Moon Turf",
   "icone": "textures/items/cl/blocos/solo_lunar"
  },
+ "cl:solo_rico": {
+  "pt": "Solo Rico",
+  "en": "Rich Soil",
+  "icone": "textures/blocks/cl/arte/solo_rico"
+ },
  "cl:sopa_abobora": {
   "pt": "Sopa de Abóbora",
   "en": "Pumpkin Soup",
@@ -11925,6 +12215,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Suco de Fruta do Cacto",
   "en": "Cactus Fruit Juice",
   "icone": "textures/items/cl/arte/suco_cacto"
+ },
+ "cl:suco_melancia": {
+  "pt": "Suco de Melancia",
+  "en": "Melon Juice",
+  "icone": "textures/items/cl/arte/suco_melancia"
  },
  "cl:super_varinha_construtor": {
   "pt": "Super Varinha do Construtor",
@@ -12021,6 +12316,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Seared Tank",
   "icone": "textures/items/cl/blocos/tanque_refratario"
  },
+ "cl:tapete_lona": {
+  "pt": "Tapete de Lona",
+  "en": "Canvas Rug",
+  "icone": "textures/blocks/cl/arte/tapete_lona"
+ },
+ "cl:tatame": {
+  "pt": "Tatame",
+  "en": "Tatami Block",
+  "icone": "textures/blocks/cl/arte/tatame"
+ },
  "cl:tecido_canhamo": {
   "pt": "Tecido de Cânhamo",
   "en": "Hemp Fabric",
@@ -12111,10 +12416,20 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tesseract",
   "icone": "textures/items/cl/arte/blocos/tesseract"
  },
+ "cl:tigela_abobora_recheada": {
+  "pt": "Tigela de Abóbora Recheada",
+  "en": "Bowl of Stuffed Pumpkin",
+  "icone": "textures/items/cl/arte/tigela_abobora_recheada"
+ },
  "cl:tigela_mistura": {
   "pt": "Tigela de Mistura",
   "en": "Mixing Bowl",
   "icone": "textures/items/cl/arte/blocos/tigela_mistura"
+ },
+ "cl:tigela_salada_brilhante": {
+  "pt": "Tigela de Salada Brilhante",
+  "en": "Bowl of Gleaming Salad",
+  "icone": "textures/items/cl/arte/tigela_salada_brilhante"
  },
  "cl:tijolo_alto_forno": {
   "pt": "Tijolo de Alto-Forno",
@@ -12196,6 +12511,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Tomato",
   "icone": "textures/items/cl/arte/tomate"
  },
+ "cl:tomateiro_selvagem": {
+  "pt": "Tomateiro Selvagem",
+  "en": "Tomato Shrub",
+  "icone": "textures/blocks/cl/arte/tomateiro_selvagem"
+ },
  "cl:torneira": {
   "pt": "Torneira",
   "en": "Faucet",
@@ -12235,6 +12555,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Torre de Defesa",
   "en": "Defense Turret",
   "icone": "textures/items/cl/arte/blocos/torre_defesa"
+ },
+ "cl:torta_chocolate": {
+  "pt": "Torta de Chocolate",
+  "en": "Chocolate Pie",
+  "icone": "textures/blocks/cl/arte/fd_torta_lado"
+ },
+ "cl:torta_maca": {
+  "pt": "Torta de Maçã",
+  "en": "Apple Pie",
+  "icone": "textures/blocks/cl/arte/fd_torta_lado"
+ },
+ "cl:torta_pastor": {
+  "pt": "Torta do Pastor",
+  "en": "Shepherd's Pie",
+  "icone": "textures/blocks/cl/arte/fd_travessa"
  },
  "cl:tortilha": {
   "pt": "Tortilha",
@@ -12285,6 +12620,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Transmissor de Jogador Nitro",
   "en": "Nitro Player Transmitter",
   "icone": "textures/items/cl/blocos/transmissor_nitro"
+ },
+ "cl:travessa_rolinhos": {
+  "pt": "Travessa de Rolinhos",
+  "en": "Rice Roll Medley",
+  "icone": "textures/blocks/cl/arte/fd_travessa"
  },
  "cl:trepadeira_slime_ceu": {
   "pt": "Trepadeira de Slime-do-Céu",
@@ -12681,6 +13021,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Acacia Slab",
   "icone": "textures/blocks/planks_acacia"
  },
+ "minecraft:acacia_trapdoor": {
+  "pt": "Alçapão de acácia",
+  "en": "Acacia Trapdoor",
+  "icone": "textures/blocks/acacia_trapdoor"
+ },
  "minecraft:amethyst_block": {
   "pt": "Bloco de Ametista",
   "en": "Block of Amethyst",
@@ -12720,6 +13065,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Bambu",
   "en": "Bamboo",
   "icone": "textures/blocks/bamboo_stem"
+ },
+ "minecraft:bamboo_slab": {
+  "pt": "Laje de Bambu",
+  "en": "Bamboo Slab",
+  "icone": "textures/blocks/bamboo_planks"
+ },
+ "minecraft:bamboo_trapdoor": {
+  "pt": "Alçapão de Bambu",
+  "en": "Bamboo Trapdoor",
+  "icone": "textures/blocks/bamboo_trapdoor"
  },
  "minecraft:barrel": {
   "pt": "Barril",
@@ -12775,6 +13130,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Laje de Bétula",
   "en": "Birch Slab",
   "icone": "textures/blocks/planks_birch"
+ },
+ "minecraft:birch_trapdoor": {
+  "pt": "Alçapão de bétula",
+  "en": "Birch Trapdoor",
+  "icone": "textures/blocks/birch_trapdoor"
  },
  "minecraft:black_dye": {
   "pt": "black_dye",
@@ -12908,6 +13268,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tábuas de Cerejeira",
   "en": "Cherry Planks",
   "icone": "textures/blocks/cherry_planks"
+ },
+ "minecraft:cherry_slab": {
+  "pt": "Laje de Cerejeira",
+  "en": "Cherry Slab",
+  "icone": "textures/blocks/cherry_planks"
+ },
+ "minecraft:cherry_trapdoor": {
+  "pt": "Alçapão de Cerejeira",
+  "en": "Cherry Trapdoor",
+  "icone": "textures/blocks/cherry_trapdoor"
  },
  "minecraft:chest": {
   "pt": "Baú",
@@ -13054,6 +13424,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Crafting Table",
   "icone": "textures/blocks/crafting_table_front"
  },
+ "minecraft:crimson_fungus": {
+  "pt": "Fungo Carmesim",
+  "en": "Crimson Fungus",
+  "icone": "textures/blocks/crimson_fungus"
+ },
+ "minecraft:crimson_slab": {
+  "pt": "Laje Carmesim",
+  "en": "Crimson Slab",
+  "icone": "textures/blocks/huge_fungus/crimson_planks"
+ },
+ "minecraft:crimson_trapdoor": {
+  "pt": "Alçapão Carmesim",
+  "en": "Crimson Trapdoor",
+  "icone": "textures/blocks/huge_fungus/crimson_trapdoor"
+ },
  "minecraft:cut_sandstone": {
   "pt": "Arenito Lapidado",
   "en": "Cut Sandstone",
@@ -13073,6 +13458,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tábuas de Carvalho Escuro",
   "en": "Dark Oak Planks",
   "icone": "textures/blocks/planks_big_oak"
+ },
+ "minecraft:dark_oak_slab": {
+  "pt": "dark_oak_slab",
+  "en": "dark_oak_slab",
+  "icone": "textures/blocks/planks_big_oak"
+ },
+ "minecraft:dark_oak_trapdoor": {
+  "pt": "Alçapão de carvalho escuro",
+  "en": "Dark Oak Trapdoor",
+  "icone": "textures/blocks/dark_oak_trapdoor"
  },
  "minecraft:daylight_detector": {
   "pt": "Detector de Luz Solar",
@@ -13293,6 +13688,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "glistering_melon_slice",
   "en": "glistering_melon_slice"
  },
+ "minecraft:glow_berries": {
+  "pt": "Bagas Brilhantes",
+  "en": "Glow Berries",
+  "icone": "textures/items/glow_berries"
+ },
  "minecraft:glowstone": {
   "pt": "Pedra Luminosa",
   "en": "Glowstone",
@@ -13487,6 +13887,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Jungle Slab",
   "icone": "textures/blocks/planks_jungle"
  },
+ "minecraft:jungle_trapdoor": {
+  "pt": "Alçapão da selva",
+  "en": "Jungle Trapdoor",
+  "icone": "textures/blocks/jungle_trapdoor"
+ },
  "minecraft:kelp": {
   "pt": "Alga",
   "en": "Kelp",
@@ -13603,6 +14008,16 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Tábuas de Mangue",
   "en": "Mangrove Planks",
   "icone": "textures/blocks/mangrove_planks"
+ },
+ "minecraft:mangrove_slab": {
+  "pt": "Laje de Mangue",
+  "en": "Mangrove Slab",
+  "icone": "textures/blocks/mangrove_planks"
+ },
+ "minecraft:mangrove_trapdoor": {
+  "pt": "Alçapão de Mangue",
+  "en": "Mangrove Trapdoor",
+  "icone": "textures/blocks/mangrove_trapdoor"
  },
  "minecraft:melon_block": {
   "pt": "Melancia",
@@ -14048,6 +14463,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Spruce Slab",
   "icone": "textures/blocks/planks_spruce"
  },
+ "minecraft:spruce_trapdoor": {
+  "pt": "Alçapão de Pinheiro",
+  "en": "Spruce Trapdoor",
+  "icone": "textures/blocks/spruce_trapdoor"
+ },
  "minecraft:stick": {
   "pt": "Graveto",
   "en": "Stick",
@@ -14178,6 +14598,11 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "en": "Totem of Undying",
   "icone": "textures/items/totem"
  },
+ "minecraft:trapdoor": {
+  "pt": "Alçapão de carvalho",
+  "en": "Oak Trapdoor",
+  "icone": "textures/blocks/trapdoor"
+ },
  "minecraft:trapped_chest": {
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",
@@ -14197,6 +14622,21 @@ export const ITENS: Readonly<Record<string, InfoItem>> = {
   "pt": "Trepadeiras",
   "en": "Vines",
   "icone": "textures/blocks/vine"
+ },
+ "minecraft:warped_fungus": {
+  "pt": "Fungo Distorcido",
+  "en": "Warped Fungus",
+  "icone": "textures/blocks/warped_fungus"
+ },
+ "minecraft:warped_slab": {
+  "pt": "Laje Distorcida",
+  "en": "Warped Slab",
+  "icone": "textures/blocks/huge_fungus/warped_planks"
+ },
+ "minecraft:warped_trapdoor": {
+  "pt": "Alçapão Distorcido",
+  "en": "Warped Trapdoor",
+  "icone": "textures/blocks/huge_fungus/warped_trapdoor"
  },
  "minecraft:water_bucket": {
   "pt": "Balde de Água",
@@ -14541,6 +14981,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "S": "minecraft:stick",
    "P": "#minecraft:planks"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_acacia_cabinet",
+  "resultado": "cl:armario_acacia",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:acacia_trapdoor",
+   "_": "minecraft:acacia_slab"
   },
   "estacoes": [
    "crafting_table"
@@ -15347,6 +15805,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 4
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_apple_pie",
+  "resultado": "cl:torta_maca",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "aaa",
+   "xOx"
+  ],
+  "chaves": {
+   "#": "minecraft:wheat",
+   "O": "cl:massa_torta",
+   "a": "minecraft:apple",
+   "x": "minecraft:sugar"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_apple_pie_from_slices",
+  "resultado": "cl:torta_maca",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:fatia_torta_maca"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -16390,6 +16884,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_bamboo_basket",
+  "resultado": "cl:cesto_bambu",
+  "qtd": 1,
+  "grade": [
+   "/ /",
+   "# #",
+   "/#/"
+  ],
+  "chaves": {
+   "#": "cl:lona",
+   "/": "minecraft:bamboo"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_bamboo_cabinet",
+  "resultado": "cl:armario_bambu",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:bamboo_trapdoor",
+   "_": "minecraft:bamboo_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_bancada_nasa",
   "resultado": "cl:bancada_nasa",
   "qtd": 1,
@@ -17393,6 +17923,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "H": "cl:casco_aeronave",
    "E": "cl:motor_aeronave",
    "P": "cl:helice_aviao"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_birch_cabinet",
+  "resultado": "cl:armario_betula",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:birch_trapdoor",
+   "_": "minecraft:birch_slab"
   },
   "estacoes": [
    "crafting_table"
@@ -19507,6 +20055,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_canvas_rug",
+  "resultado": "cl:tapete_lona",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:lona",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_capacete_placa_aco",
   "resultado": "cl:capacete_placa_aco",
@@ -20493,6 +21056,60 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_cherry_cabinet",
+  "resultado": "cl:armario_cerejeira",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:cherry_trapdoor",
+   "_": "minecraft:cherry_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_chocolate_pie",
+  "resultado": "cl:torta_chocolate",
+  "qtd": 1,
+  "grade": [
+   "ccc",
+   "mmm",
+   "xOx"
+  ],
+  "chaves": {
+   "O": "cl:massa_torta",
+   "c": "minecraft:cocoa_beans",
+   "m": "minecraft:milk_bucket",
+   "x": "minecraft:sugar"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_chocolate_pie_from_slices",
+  "resultado": "cl:torta_chocolate",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:fatia_torta_chocolate"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_cilindro_vazio",
   "resultado": "cl:cilindro_vazio",
   "qtd": 4,
@@ -20554,6 +21171,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ],
   "estacoes": [
    "furnace"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_cod_roll",
+  "resultado": "cl:rolinho_bacalhau",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:fatia_bacalhau",
+    "qtd": 2
+   },
+   {
+    "item": "cl:arroz_cozido",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
   ]
  },
  {
@@ -21448,6 +22084,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_crimson_cabinet",
+  "resultado": "cl:armario_carmesim",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:crimson_trapdoor",
+   "_": "minecraft:crimson_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_dardo_cobalto",
   "resultado": "cl:dardo_cobalto",
@@ -21535,6 +22189,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
     "qtd": 1
    }
   ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_dark_oak_cabinet",
+  "resultado": "cl:armario_carvalho_escuro",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:dark_oak_trapdoor",
+   "_": "minecraft:dark_oak_slab"
+  },
   "estacoes": [
    "crafting_table"
   ]
@@ -24981,6 +25653,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_faca_netherita",
+  "resultado": "cl:faca_netherita",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:faca_diamante",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:netherite_ingot",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_faca_ouro",
   "resultado": "cl:faca_ouro",
@@ -25465,6 +26156,45 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_gleaming_salad_block",
+  "resultado": "cl:salada_brilhante",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:glow_berries",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   },
+   {
+    "item": "cl:tomate",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:golden_carrot",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:beetroot",
+    "qtd": 1
+   },
+   {
+    "item": "cl:repolho",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bowl",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_grade",
   "resultado": "cl:grade",
@@ -25509,6 +26239,79 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "I": "minecraft:iron_ingot"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_honey_cookie",
+  "resultado": "cl:biscoito_mel",
+  "qtd": 8,
+  "ingredientes": [
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:wheat",
+    "qtd": 2
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_honey_glazed_ham_block",
+  "resultado": "cl:presunto_mel",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 4
+   },
+   {
+    "item": "minecraft:honey_bottle",
+    "qtd": 1
+   },
+   {
+    "item": "cl:presunto_defumado",
+    "qtd": 1
+   },
+   {
+    "item": "cl:arroz_cozido",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bowl",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_horse_feed",
+  "resultado": "cl:racao_cavalo",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:hay_block",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:apple",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:golden_carrot",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -25827,6 +26630,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "C": "cl:capacitor_pedra",
    "J": "#cl:jetpack_t0",
    "T": "cl:propulsor_pedra"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_jungle_cabinet",
+  "resultado": "cl:armario_selva",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:jungle_trapdoor",
+   "_": "minecraft:jungle_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_kelp_roll",
+  "resultado": "cl:rolo_alga",
+  "qtd": 1,
+  "grade": [
+   "RXR",
+   "###"
+  ],
+  "chaves": {
+   "#": "minecraft:dried_kelp",
+   "R": "cl:arroz_cozido",
+   "X": "minecraft:carrot"
   },
   "estacoes": [
    "crafting_table"
@@ -26671,6 +27510,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_mangrove_cabinet",
+  "resultado": "cl:armario_mangue",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:mangrove_trapdoor",
+   "_": "minecraft:mangrove_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_manometro",
   "resultado": "cl:manometro",
@@ -27330,6 +28187,48 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "sem_forma",
+  "id": "cl:c_melon_juice",
+  "resultado": "cl:suco_melancia",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:melon_slice",
+    "qtd": 4
+   },
+   {
+    "item": "minecraft:sugar",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glass_bottle",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_melon_popsicle",
+  "resultado": "cl:picole_melancia",
+  "qtd": 1,
+  "grade": [
+   " mm",
+   "imm",
+   "-i "
+  ],
+  "chaves": {
+   "-": "minecraft:stick",
+   "i": "minecraft:ice",
+   "m": "minecraft:melon_slice"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "bancada",
   "id": "cl:c_mesa_fundicao",
   "resultado": "cl:mesa_fundicao",
@@ -27394,6 +28293,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "B": "cl:padrao_branco",
    "P": "#minecraft:planks"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_milk_bottle",
+  "resultado": "cl:garrafa_leite",
+  "qtd": 4,
+  "ingredientes": [
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:glass_bottle",
+    "qtd": 4
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -29003,6 +29921,29 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "sem_forma",
+  "id": "cl:c_nether_salad",
+  "resultado": "cl:salada_nether",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:crimson_fungus",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:warped_fungus",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bowl",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
   "id": "cl:c_nucleo_funil",
   "resultado": "cl:nucleo_funil",
   "qtd": 1,
@@ -29035,6 +29976,78 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "D": "minecraft:diamond",
    "C": "cl:coracao_farao"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_oak_cabinet",
+  "resultado": "cl:armario_carvalho",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:trapdoor",
+   "_": "minecraft:oak_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_organic_compost_from_rotten_flesh",
+  "resultado": "cl:composto_organico",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:dirt",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:rotten_flesh",
+    "qtd": 2
+   },
+   {
+    "item": "cl:palha",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bone_meal",
+    "qtd": 4
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_organic_compost_from_tree_bark",
+  "resultado": "cl:composto_organico",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:dirt",
+    "qtd": 1
+   },
+   {
+    "item": "cl:palha",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bone_meal",
+    "qtd": 2
+   },
+   {
+    "item": "cl:casca_arvore",
+    "qtd": 4
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -30225,6 +31238,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "D": "minecraft:diamond",
    "I": "minecraft:iron_ingot"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_pie_crust",
+  "resultado": "cl:massa_torta",
+  "qtd": 1,
+  "grade": [
+   "wMw",
+   " w "
+  ],
+  "chaves": {
+   "M": "minecraft:milk_bucket",
+   "w": "minecraft:wheat"
   },
   "estacoes": [
    "crafting_table"
@@ -31624,6 +32654,21 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   },
   "estacoes": [
    "crafting_table"
+  ]
+ },
+ {
+  "tipo": "fornalha",
+  "id": "cl:c_presunto_defumado",
+  "resultado": "cl:presunto_defumado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:presunto",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "furnace"
   ]
  },
  {
@@ -35004,6 +36049,89 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_rice_bale",
+  "resultado": "cl:fardo_arroz",
+  "qtd": 1,
+  "grade": [
+   "###",
+   "###",
+   "###"
+  ],
+  "chaves": {
+   "#": "cl:semente_arroz"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_rice_roll_medley_block",
+  "resultado": "cl:travessa_rolinhos",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:fatia_rolo_alga",
+    "qtd": 3
+   },
+   {
+    "item": "cl:rolinho_salmao",
+    "qtd": 3
+   },
+   {
+    "item": "cl:rolinho_bacalhau",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bowl",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_roast_chicken_block",
+  "resultado": "cl:frango_assado",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "cl:cebola",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:egg",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:bread",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:carrot",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:cooked_chicken",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:baked_potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bowl",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_robo_minerador",
   "resultado": "cl:robo_minerador",
   "qtd": 1,
@@ -35204,6 +36332,22 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   ]
  },
  {
+  "tipo": "bancada",
+  "id": "cl:c_safety_net",
+  "resultado": "cl:rede_seguranca",
+  "qtd": 1,
+  "grade": [
+   "rr",
+   "rr"
+  ],
+  "chaves": {
+   "r": "cl:corda"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
   "tipo": "sem_forma",
   "id": "cl:c_salada_frutas",
   "resultado": "cl:salada_frutas",
@@ -35285,6 +36429,25 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    },
    {
     "item": "cl:cebola",
+    "qtd": 1
+   }
+  ],
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_salmon_roll",
+  "resultado": "cl:rolinho_salmao",
+  "qtd": 2,
+  "ingredientes": [
+   {
+    "item": "cl:fatia_salmao",
+    "qtd": 2
+   },
+   {
+    "item": "cl:arroz_cozido",
     "qtd": 1
    }
   ],
@@ -35399,6 +36562,37 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "E": "cl:estrutura_maquina",
    "R": "cl:circuito"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_shepherds_pie_block",
+  "resultado": "cl:torta_pastor",
+  "qtd": 1,
+  "ingredientes": [
+   {
+    "item": "minecraft:baked_potato",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:milk_bucket",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:cooked_mutton",
+    "qtd": 3
+   },
+   {
+    "item": "cl:cebola",
+    "qtd": 2
+   },
+   {
+    "item": "minecraft:bowl",
+    "qtd": 1
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -35600,6 +36794,24 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
  },
  {
   "tipo": "bancada",
+  "id": "cl:c_spruce_cabinet",
+  "resultado": "cl:armario_pinheiro",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:spruce_trapdoor",
+   "_": "minecraft:spruce_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
   "id": "cl:c_super_varinha_construtor",
   "resultado": "cl:super_varinha_construtor",
   "qtd": 1,
@@ -35629,6 +36841,60 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
    "S": "minecraft:oak_slab",
    "F": "minecraft:iron_ingot"
   },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_sweet_berry_cheesecake",
+  "resultado": "cl:cheesecake",
+  "qtd": 1,
+  "grade": [
+   "sss",
+   "sss",
+   "mOm"
+  ],
+  "chaves": {
+   "O": "cl:massa_torta",
+   "m": "minecraft:milk_bucket",
+   "s": "minecraft:sweet_berries"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_sweet_berry_cheesecake_from_slices",
+  "resultado": "cl:cheesecake",
+  "qtd": 1,
+  "grade": [
+   "##",
+   "##"
+  ],
+  "chaves": {
+   "#": "cl:fatia_cheesecake"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "sem_forma",
+  "id": "cl:c_sweet_berry_cookie",
+  "resultado": "cl:biscoito_frutas",
+  "qtd": 8,
+  "ingredientes": [
+   {
+    "item": "minecraft:sweet_berries",
+    "qtd": 1
+   },
+   {
+    "item": "minecraft:wheat",
+    "qtd": 2
+   }
+  ],
   "estacoes": [
    "crafting_table"
   ]
@@ -35816,6 +37082,23 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "T": "cl:tijolo_refratario",
    "V": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_tatami",
+  "resultado": "cl:tatame",
+  "qtd": 2,
+  "grade": [
+   "cs",
+   "sc"
+  ],
+  "chaves": {
+   "c": "cl:lona",
+   "s": "cl:palha"
   },
   "estacoes": [
    "crafting_table"
@@ -36666,6 +37949,42 @@ export const RECEITAS_JSON: ReadonlyArray<ReceitaJson> = [
   "chaves": {
    "T": "cl:tijolo_refratario",
    "V": "minecraft:glass"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_warped_cabinet",
+  "resultado": "cl:armario_distorcido",
+  "qtd": 1,
+  "grade": [
+   "___",
+   "D D",
+   "___"
+  ],
+  "chaves": {
+   "D": "minecraft:warped_trapdoor",
+   "_": "minecraft:warped_slab"
+  },
+  "estacoes": [
+   "crafting_table"
+  ]
+ },
+ {
+  "tipo": "bancada",
+  "id": "cl:c_wooden_basket",
+  "resultado": "cl:cesto",
+  "qtd": 1,
+  "grade": [
+   "/ /",
+   "# #",
+   "/#/"
+  ],
+  "chaves": {
+   "#": "cl:lona",
+   "/": "minecraft:stick"
   },
   "estacoes": [
    "crafting_table"

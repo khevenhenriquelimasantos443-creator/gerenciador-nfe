@@ -1,0 +1,47 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_shepherds_pie_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:baked_potato"
+      },
+      {
+        "item": "minecraft:milk_bucket"
+      },
+      {
+        "item": "minecraft:baked_potato"
+      },
+      {
+        "item": "minecraft:cooked_mutton"
+      },
+      {
+        "item": "minecraft:cooked_mutton"
+      },
+      {
+        "item": "minecraft:cooked_mutton"
+      },
+      {
+        "item": "cl:cebola"
+      },
+      {
+        "item": "minecraft:bowl"
+      },
+      {
+        "item": "cl:cebola"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:torta_pastor",
+      "count": 1
+    }
+  }
+}

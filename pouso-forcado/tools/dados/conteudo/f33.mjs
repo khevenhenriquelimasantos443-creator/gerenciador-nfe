@@ -176,7 +176,7 @@ export default {
     "cl.fd.cozinhando": ["Cozinhando %s (%s%%).", "Cooking %s (%s%%)."],
     "cl.fd.sem_fogo": ["Ponha fogo, fogueira, lava, magma ou um Fogão embaixo.", "Put fire, a campfire, lava, magma or a Stove underneath."],
     "cl.fd.sem_receita": ["Nenhuma receita com esses ingredientes (agache e toque para esvaziar).", "No recipe with these ingredients (sneak and tap to empty)."],
-    "cl.fd.pronto": ["Pronto: %s× %s. Toque com uma tigela para servir.", "Done: %s× %s. Tap with a bowl to serve."],
+    "cl.fd.pronto": ["Pronto: %s× %s. Toque com o recipiente (tigela ou garrafa) para servir.", "Done: %s× %s. Tap with the container (bowl or bottle) to serve."],
     "cl.fd.pronto_mao": ["Pronto: %s× %s. Toque para pegar.", "Done: %s× %s. Tap to take."],
     "cl.fd.tabua": ["Tábua de Cortar: %s. Toque com uma faca para cortar.", "Cutting Board: %s. Tap with a knife to cut."],
     "cl.fd.tabua_vazia": ["Ponha um ingrediente na tábua e corte com uma faca.", "Put an ingredient on the board and cut it with a knife."],

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:picole_melancia",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_picole_melancia",
+      "minecraft:display_name": {
+        "value": "item.cl:picole_melancia.name"
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 0.8,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 2,
+        "saturation_modifier": 0.3,
+        "can_always_eat": true
+      }
+    }
+  }
+}

@@ -1,0 +1,1380 @@
+{
+ "comidas": {
+  "cl:presunto": [
+   5,
+   0.3
+  ],
+  "cl:presunto_defumado": [
+   10,
+   0.8
+  ],
+  "cl:massa_torta": [
+   2,
+   0.2
+  ],
+  "cl:fatia_bolo": [
+   2,
+   0.1
+  ],
+  "cl:creme_baga_brilhante": [
+   7,
+   0.6
+  ],
+  "cl:rolinho_salmao": [
+   7,
+   0.6
+  ],
+  "cl:rolinho_bacalhau": [
+   7,
+   0.6
+  ],
+  "cl:fatia_rolo_alga": [
+   6,
+   0.5
+  ],
+  "cl:salada_nether": [
+   5,
+   0.4
+  ],
+  "cl:prato_frango_assado": [
+   14,
+   0.75
+  ],
+  "cl:tigela_abobora_recheada": [
+   14,
+   0.75
+  ],
+  "cl:prato_presunto_mel": [
+   14,
+   0.75
+  ],
+  "cl:prato_torta_pastor": [
+   14,
+   0.75
+  ],
+  "cl:tigela_salada_brilhante": [
+   14,
+   0.75
+  ],
+  "cl:racao_cachorro": [
+   4,
+   0.2
+  ]
+ },
+ "nomes": {
+  "cl:presunto": [
+   "Presunto",
+   "Ham"
+  ],
+  "cl:presunto_defumado": [
+   "Presunto Defumado",
+   "Smoked Ham"
+  ],
+  "cl:massa_torta": [
+   "Massa de Torta",
+   "Pie Crust"
+  ],
+  "cl:garrafa_leite": [
+   "Garrafa de Leite",
+   "Milk Bottle"
+  ],
+  "cl:chocolate_quente": [
+   "Chocolate Quente",
+   "Hot Cocoa"
+  ],
+  "cl:sidra_maca": [
+   "Sidra de Maçã",
+   "Apple Cider"
+  ],
+  "cl:suco_melancia": [
+   "Suco de Melancia",
+   "Melon Juice"
+  ],
+  "cl:fatia_bolo": [
+   "Fatia de Bolo",
+   "Slice of Cake"
+  ],
+  "cl:fatia_torta_maca": [
+   "Fatia de Torta de Maçã",
+   "Slice of Apple Pie"
+  ],
+  "cl:fatia_cheesecake": [
+   "Fatia de Cheesecake de Frutas Vermelhas",
+   "Slice of Sweet Berry Cheesecake"
+  ],
+  "cl:fatia_torta_chocolate": [
+   "Fatia de Torta de Chocolate",
+   "Slice of Chocolate Pie"
+  ],
+  "cl:fatia_torta_abobora": [
+   "Fatia de Torta de Abóbora",
+   "Slice of Pumpkin Pie"
+  ],
+  "cl:biscoito_frutas": [
+   "Biscoito de Frutas Vermelhas",
+   "Sweet Berry Cookie"
+  ],
+  "cl:biscoito_mel": [
+   "Biscoito de Mel",
+   "Honey Cookie"
+  ],
+  "cl:picole_melancia": [
+   "Picolé de Melancia",
+   "Melon Popsicle"
+  ],
+  "cl:creme_baga_brilhante": [
+   "Creme de Baga Brilhante",
+   "Glow Berry Custard"
+  ],
+  "cl:rolinho_salmao": [
+   "Rolinho de Salmão",
+   "Salmon Roll"
+  ],
+  "cl:rolinho_bacalhau": [
+   "Rolinho de Bacalhau",
+   "Cod Roll"
+  ],
+  "cl:rolo_alga": [
+   "Rolo de Alga",
+   "Kelp Roll"
+  ],
+  "cl:fatia_rolo_alga": [
+   "Fatia de Rolo de Alga",
+   "Kelp Roll Slice"
+  ],
+  "cl:salada_nether": [
+   "Salada do Nether",
+   "Nether Salad"
+  ],
+  "cl:prato_frango_assado": [
+   "Prato de Frango Assado",
+   "Plate of Roast Chicken"
+  ],
+  "cl:tigela_abobora_recheada": [
+   "Tigela de Abóbora Recheada",
+   "Bowl of Stuffed Pumpkin"
+  ],
+  "cl:prato_presunto_mel": [
+   "Prato de Presunto com Mel",
+   "Plate of Honey Glazed Ham"
+  ],
+  "cl:prato_torta_pastor": [
+   "Prato de Torta do Pastor",
+   "Plate of Shepherd's Pie"
+  ],
+  "cl:tigela_salada_brilhante": [
+   "Tigela de Salada Brilhante",
+   "Bowl of Gleaming Salad"
+  ],
+  "cl:racao_cachorro": [
+   "Ração de Cachorro",
+   "Dog Food"
+  ],
+  "cl:racao_cavalo": [
+   "Ração de Cavalo",
+   "Horse Feed"
+  ],
+  "cl:tomate_podre": [
+   "Tomate Podre",
+   "Rotten Tomato"
+  ],
+  "cl:casca_arvore": [
+   "Casca de Árvore",
+   "Tree Bark"
+  ],
+  "cl:faca_netherita": [
+   "Faca de Netherita",
+   "Netherite Knife"
+  ],
+  "cl:composto_organico": [
+   "Composto Orgânico",
+   "Organic Compost"
+  ],
+  "cl:solo_rico": [
+   "Solo Rico",
+   "Rich Soil"
+  ],
+  "cl:terra_arada_rica": [
+   "Terra Arada Rica",
+   "Rich Soil Farmland"
+  ],
+  "cl:rede_seguranca": [
+   "Rede de Segurança",
+   "Safety Net"
+  ],
+  "cl:tapete_lona": [
+   "Tapete de Lona",
+   "Canvas Rug"
+  ],
+  "cl:tatame": [
+   "Tatame",
+   "Tatami Block"
+  ],
+  "cl:fardo_arroz": [
+   "Fardo de Arroz",
+   "Rice Bale"
+  ],
+  "cl:cesto": [
+   "Cesto",
+   "Basket"
+  ],
+  "cl:cesto_bambu": [
+   "Cesto de Bambu",
+   "Bamboo Basket"
+  ],
+  "cl:torta_maca": [
+   "Torta de Maçã",
+   "Apple Pie"
+  ],
+  "cl:cheesecake": [
+   "Cheesecake de Frutas Vermelhas",
+   "Sweet Berry Cheesecake"
+  ],
+  "cl:torta_chocolate": [
+   "Torta de Chocolate",
+   "Chocolate Pie"
+  ],
+  "cl:torta_abobora_fd": [
+   "Torta de Abóbora",
+   "Pumpkin Pie"
+  ],
+  "cl:frango_assado": [
+   "Frango Assado",
+   "Roast Chicken"
+  ],
+  "cl:abobora_recheada": [
+   "Abóbora Recheada",
+   "Stuffed Pumpkin"
+  ],
+  "cl:presunto_mel": [
+   "Presunto com Mel",
+   "Honey Glazed Ham"
+  ],
+  "cl:torta_pastor": [
+   "Torta do Pastor",
+   "Shepherd's Pie"
+  ],
+  "cl:salada_brilhante": [
+   "Salada Brilhante",
+   "Gleaming Salad"
+  ],
+  "cl:travessa_rolinhos": [
+   "Travessa de Rolinhos",
+   "Rice Roll Medley"
+  ],
+  "cl:colonia_cogumelo_marrom": [
+   "Colônia de Cogumelo Marrom",
+   "Brown Mushroom Colony"
+  ],
+  "cl:colonia_cogumelo_vermelho": [
+   "Colônia de Cogumelo Vermelho",
+   "Red Mushroom Colony"
+  ],
+  "cl:arbusto_arenoso": [
+   "Arbusto Arenoso",
+   "Sandy Shrub"
+  ],
+  "cl:repolho_selvagem": [
+   "Repolho Selvagem",
+   "Wild Cabbage"
+  ],
+  "cl:tomateiro_selvagem": [
+   "Tomateiro Selvagem",
+   "Tomato Shrub"
+  ],
+  "cl:cebola_selvagem": [
+   "Cebola Selvagem",
+   "Wild Onion"
+  ],
+  "cl:cenoura_selvagem": [
+   "Cenoura Selvagem",
+   "Wild Carrot"
+  ],
+  "cl:batata_selvagem": [
+   "Batata Selvagem",
+   "Wild Potato"
+  ],
+  "cl:beterraba_marinha": [
+   "Beterraba Marinha",
+   "Sea Beet"
+  ],
+  "cl:arroz_selvagem": [
+   "Arroz Selvagem",
+   "Wild Rice"
+  ],
+  "cl:armario_carvalho": [
+   "Armário de Carvalho",
+   "Oak Cabinet"
+  ],
+  "cl:armario_betula": [
+   "Armário de Bétula",
+   "Birch Cabinet"
+  ],
+  "cl:armario_pinheiro": [
+   "Armário de Pinheiro",
+   "Spruce Cabinet"
+  ],
+  "cl:armario_selva": [
+   "Armário de Selva",
+   "Jungle Cabinet"
+  ],
+  "cl:armario_acacia": [
+   "Armário de Acácia",
+   "Acacia Cabinet"
+  ],
+  "cl:armario_carvalho_escuro": [
+   "Armário de Carvalho Escuro",
+   "Dark Oak Cabinet"
+  ],
+  "cl:armario_mangue": [
+   "Armário de Mangue",
+   "Mangrove Cabinet"
+  ],
+  "cl:armario_cerejeira": [
+   "Armário de Cerejeira",
+   "Cherry Cabinet"
+  ],
+  "cl:armario_bambu": [
+   "Armário de Bambu",
+   "Bamboo Cabinet"
+  ],
+  "cl:armario_carmesim": [
+   "Armário de Carmesim",
+   "Crimson Cabinet"
+  ],
+  "cl:armario_distorcido": [
+   "Armário de Distorcido",
+   "Warped Cabinet"
+  ]
+ },
+ "fd": {
+  "ham": "cl:presunto",
+  "smoked_ham": "cl:presunto_defumado",
+  "pie_crust": "cl:massa_torta",
+  "milk_bottle": "cl:garrafa_leite",
+  "hot_cocoa": "cl:chocolate_quente",
+  "apple_cider": "cl:sidra_maca",
+  "melon_juice": "cl:suco_melancia",
+  "cake_slice": "cl:fatia_bolo",
+  "apple_pie_slice": "cl:fatia_torta_maca",
+  "sweet_berry_cheesecake_slice": "cl:fatia_cheesecake",
+  "chocolate_pie_slice": "cl:fatia_torta_chocolate",
+  "pumpkin_pie_slice": "cl:fatia_torta_abobora",
+  "sweet_berry_cookie": "cl:biscoito_frutas",
+  "honey_cookie": "cl:biscoito_mel",
+  "melon_popsicle": "cl:picole_melancia",
+  "glow_berry_custard": "cl:creme_baga_brilhante",
+  "salmon_roll": "cl:rolinho_salmao",
+  "cod_roll": "cl:rolinho_bacalhau",
+  "kelp_roll": "cl:rolo_alga",
+  "kelp_roll_slice": "cl:fatia_rolo_alga",
+  "nether_salad": "cl:salada_nether",
+  "roast_chicken": "cl:prato_frango_assado",
+  "stuffed_pumpkin": "cl:tigela_abobora_recheada",
+  "honey_glazed_ham": "cl:prato_presunto_mel",
+  "shepherds_pie": "cl:prato_torta_pastor",
+  "gleaming_salad": "cl:tigela_salada_brilhante",
+  "dog_food": "cl:racao_cachorro",
+  "horse_feed": "cl:racao_cavalo",
+  "rotten_tomato": "cl:tomate_podre",
+  "tree_bark": "cl:casca_arvore",
+  "netherite_knife": "cl:faca_netherita",
+  "organic_compost": "cl:composto_organico",
+  "rich_soil": "cl:solo_rico",
+  "rich_soil_farmland": "cl:terra_arada_rica",
+  "safety_net": "cl:rede_seguranca",
+  "canvas_rug": "cl:tapete_lona",
+  "tatami": "cl:tatame",
+  "rice_bale": "cl:fardo_arroz",
+  "wooden_basket": "cl:cesto",
+  "bamboo_basket": "cl:cesto_bambu",
+  "apple_pie": "cl:torta_maca",
+  "sweet_berry_cheesecake": "cl:cheesecake",
+  "chocolate_pie": "cl:torta_chocolate",
+  "pumpkin_pie": "cl:torta_abobora_fd",
+  "roast_chicken_block": "cl:frango_assado",
+  "stuffed_pumpkin_block": "cl:abobora_recheada",
+  "honey_glazed_ham_block": "cl:presunto_mel",
+  "shepherds_pie_block": "cl:torta_pastor",
+  "gleaming_salad_block": "cl:salada_brilhante",
+  "rice_roll_medley_block": "cl:travessa_rolinhos",
+  "brown_mushroom_colony": "cl:colonia_cogumelo_marrom",
+  "red_mushroom_colony": "cl:colonia_cogumelo_vermelho",
+  "sandy_shrub": "cl:arbusto_arenoso",
+  "wild_cabbages": "cl:repolho_selvagem",
+  "wild_tomatoes": "cl:tomateiro_selvagem",
+  "wild_onions": "cl:cebola_selvagem",
+  "wild_carrots": "cl:cenoura_selvagem",
+  "wild_potatoes": "cl:batata_selvagem",
+  "wild_beetroots": "cl:beterraba_marinha",
+  "wild_rice": "cl:arroz_selvagem",
+  "oak_cabinet": "cl:armario_carvalho",
+  "birch_cabinet": "cl:armario_betula",
+  "spruce_cabinet": "cl:armario_pinheiro",
+  "jungle_cabinet": "cl:armario_selva",
+  "acacia_cabinet": "cl:armario_acacia",
+  "dark_oak_cabinet": "cl:armario_carvalho_escuro",
+  "mangrove_cabinet": "cl:armario_mangue",
+  "cherry_cabinet": "cl:armario_cerejeira",
+  "bamboo_cabinet": "cl:armario_bambu",
+  "crimson_cabinet": "cl:armario_carmesim",
+  "warped_cabinet": "cl:armario_distorcido"
+ },
+ "receitas": [
+  {
+   "id": "cherry_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:cherry_trapdoor",
+    "_": "minecraft:cherry_slab"
+   },
+   "resultado": "cl:armario_cerejeira",
+   "qtd": 1
+  },
+  {
+   "id": "nether_salad",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:crimson_fungus",
+    "minecraft:warped_fungus",
+    "minecraft:bowl"
+   ],
+   "resultado": "cl:salada_nether",
+   "qtd": 1
+  },
+  {
+   "id": "oak_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:trapdoor",
+    "_": "minecraft:oak_slab"
+   },
+   "resultado": "cl:armario_carvalho",
+   "qtd": 1
+  },
+  {
+   "id": "birch_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:birch_trapdoor",
+    "_": "minecraft:birch_slab"
+   },
+   "resultado": "cl:armario_betula",
+   "qtd": 1
+  },
+  {
+   "id": "kelp_roll",
+   "tipo": "shaped",
+   "padrao": [
+    "RXR",
+    "###"
+   ],
+   "chave": {
+    "#": "minecraft:dried_kelp",
+    "R": "cl:arroz_cozido",
+    "X": "minecraft:carrot"
+   },
+   "resultado": "cl:rolo_alga",
+   "qtd": 1
+  },
+  {
+   "id": "tatami",
+   "tipo": "shaped",
+   "padrao": [
+    "cs",
+    "sc"
+   ],
+   "chave": {
+    "c": "cl:lona",
+    "s": "cl:palha"
+   },
+   "resultado": "cl:tatame",
+   "qtd": 2
+  },
+  {
+   "id": "horse_feed",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:hay_block",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:golden_carrot"
+   ],
+   "resultado": "cl:racao_cavalo",
+   "qtd": 1
+  },
+  {
+   "id": "bamboo_basket",
+   "tipo": "shaped",
+   "padrao": [
+    "/ /",
+    "# #",
+    "/#/"
+   ],
+   "chave": {
+    "#": "cl:lona",
+    "/": "minecraft:bamboo"
+   },
+   "resultado": "cl:cesto_bambu",
+   "qtd": 1
+  },
+  {
+   "id": "organic_compost_from_tree_bark",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:dirt",
+    "cl:palha",
+    "cl:palha",
+    "minecraft:bone_meal",
+    "minecraft:bone_meal",
+    "cl:casca_arvore",
+    "cl:casca_arvore",
+    "cl:casca_arvore",
+    "cl:casca_arvore"
+   ],
+   "resultado": "cl:composto_organico",
+   "qtd": 1
+  },
+  {
+   "id": "apple_pie",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "aaa",
+    "xOx"
+   ],
+   "chave": {
+    "#": "minecraft:wheat",
+    "O": "cl:massa_torta",
+    "a": "minecraft:apple",
+    "x": "minecraft:sugar"
+   },
+   "resultado": "cl:torta_maca",
+   "qtd": 1
+  },
+  {
+   "id": "melon_juice",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:melon_slice",
+    "minecraft:melon_slice",
+    "minecraft:sugar",
+    "minecraft:melon_slice",
+    "minecraft:melon_slice",
+    "minecraft:glass_bottle"
+   ],
+   "resultado": "cl:suco_melancia",
+   "qtd": 1
+  },
+  {
+   "id": "safety_net",
+   "tipo": "shaped",
+   "padrao": [
+    "rr",
+    "rr"
+   ],
+   "chave": {
+    "r": "cl:corda"
+   },
+   "resultado": "cl:rede_seguranca",
+   "qtd": 1
+  },
+  {
+   "id": "rice_bale",
+   "tipo": "shaped",
+   "padrao": [
+    "###",
+    "###",
+    "###"
+   ],
+   "chave": {
+    "#": "cl:semente_arroz"
+   },
+   "resultado": "cl:fardo_arroz",
+   "qtd": 1
+  },
+  {
+   "id": "warped_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:warped_trapdoor",
+    "_": "minecraft:warped_slab"
+   },
+   "resultado": "cl:armario_distorcido",
+   "qtd": 1
+  },
+  {
+   "id": "roast_chicken_block",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:cebola",
+    "minecraft:egg",
+    "minecraft:bread",
+    "minecraft:carrot",
+    "minecraft:cooked_chicken",
+    "minecraft:baked_potato",
+    "minecraft:carrot",
+    "minecraft:bowl",
+    "minecraft:baked_potato"
+   ],
+   "resultado": "cl:frango_assado",
+   "qtd": 1
+  },
+  {
+   "id": "dark_oak_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:dark_oak_trapdoor",
+    "_": "minecraft:dark_oak_slab"
+   },
+   "resultado": "cl:armario_carvalho_escuro",
+   "qtd": 1
+  },
+  {
+   "id": "sweet_berry_cheesecake",
+   "tipo": "shaped",
+   "padrao": [
+    "sss",
+    "sss",
+    "mOm"
+   ],
+   "chave": {
+    "O": "cl:massa_torta",
+    "m": "minecraft:milk_bucket",
+    "s": "minecraft:sweet_berries"
+   },
+   "resultado": "cl:cheesecake",
+   "qtd": 1
+  },
+  {
+   "id": "mangrove_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:mangrove_trapdoor",
+    "_": "minecraft:mangrove_slab"
+   },
+   "resultado": "cl:armario_mangue",
+   "qtd": 1
+  },
+  {
+   "id": "jungle_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:jungle_trapdoor",
+    "_": "minecraft:jungle_slab"
+   },
+   "resultado": "cl:armario_selva",
+   "qtd": 1
+  },
+  {
+   "id": "honey_glazed_ham_block",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:sweet_berries",
+    "minecraft:honey_bottle",
+    "minecraft:sweet_berries",
+    "minecraft:sweet_berries",
+    "cl:presunto_defumado",
+    "minecraft:sweet_berries",
+    "cl:arroz_cozido",
+    "minecraft:bowl",
+    "cl:arroz_cozido"
+   ],
+   "resultado": "cl:presunto_mel",
+   "qtd": 1
+  },
+  {
+   "id": "canvas_rug",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:lona"
+   ],
+   "resultado": "cl:tapete_lona",
+   "qtd": 2
+  },
+  {
+   "id": "chocolate_pie",
+   "tipo": "shaped",
+   "padrao": [
+    "ccc",
+    "mmm",
+    "xOx"
+   ],
+   "chave": {
+    "O": "cl:massa_torta",
+    "c": "minecraft:cocoa_beans",
+    "m": "minecraft:milk_bucket",
+    "x": "minecraft:sugar"
+   },
+   "resultado": "cl:torta_chocolate",
+   "qtd": 1
+  },
+  {
+   "id": "organic_compost_from_rotten_flesh",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:dirt",
+    "minecraft:rotten_flesh",
+    "minecraft:rotten_flesh",
+    "cl:palha",
+    "cl:palha",
+    "minecraft:bone_meal",
+    "minecraft:bone_meal",
+    "minecraft:bone_meal",
+    "minecraft:bone_meal"
+   ],
+   "resultado": "cl:composto_organico",
+   "qtd": 1
+  },
+  {
+   "id": "salmon_roll",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:fatia_salmao",
+    "cl:fatia_salmao",
+    "cl:arroz_cozido"
+   ],
+   "resultado": "cl:rolinho_salmao",
+   "qtd": 2
+  },
+  {
+   "id": "bamboo_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:bamboo_trapdoor",
+    "_": "minecraft:bamboo_slab"
+   },
+   "resultado": "cl:armario_bambu",
+   "qtd": 1
+  },
+  {
+   "id": "melon_popsicle",
+   "tipo": "shaped",
+   "padrao": [
+    " mm",
+    "imm",
+    "-i "
+   ],
+   "chave": {
+    "-": "minecraft:stick",
+    "i": "minecraft:ice",
+    "m": "minecraft:melon_slice"
+   },
+   "resultado": "cl:picole_melancia",
+   "qtd": 1
+  },
+  {
+   "id": "honey_cookie",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:honey_bottle",
+    "minecraft:wheat",
+    "minecraft:wheat"
+   ],
+   "resultado": "cl:biscoito_mel",
+   "qtd": 8
+  },
+  {
+   "id": "milk_bottle",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:milk_bucket",
+    "minecraft:glass_bottle",
+    "minecraft:glass_bottle",
+    "minecraft:glass_bottle",
+    "minecraft:glass_bottle"
+   ],
+   "resultado": "cl:garrafa_leite",
+   "qtd": 4
+  },
+  {
+   "id": "apple_pie_from_slices",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:fatia_torta_maca"
+   },
+   "resultado": "cl:torta_maca",
+   "qtd": 1
+  },
+  {
+   "id": "pie_crust",
+   "tipo": "shaped",
+   "padrao": [
+    "wMw",
+    " w "
+   ],
+   "chave": {
+    "M": "minecraft:milk_bucket",
+    "w": "minecraft:wheat"
+   },
+   "resultado": "cl:massa_torta",
+   "qtd": 1
+  },
+  {
+   "id": "wooden_basket",
+   "tipo": "shaped",
+   "padrao": [
+    "/ /",
+    "# #",
+    "/#/"
+   ],
+   "chave": {
+    "#": "cl:lona",
+    "/": "minecraft:stick"
+   },
+   "resultado": "cl:cesto",
+   "qtd": 1
+  },
+  {
+   "id": "sweet_berry_cheesecake_from_slices",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:fatia_cheesecake"
+   },
+   "resultado": "cl:cheesecake",
+   "qtd": 1
+  },
+  {
+   "id": "spruce_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:spruce_trapdoor",
+    "_": "minecraft:spruce_slab"
+   },
+   "resultado": "cl:armario_pinheiro",
+   "qtd": 1
+  },
+  {
+   "id": "cod_roll",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:fatia_bacalhau",
+    "cl:fatia_bacalhau",
+    "cl:arroz_cozido"
+   ],
+   "resultado": "cl:rolinho_bacalhau",
+   "qtd": 2
+  },
+  {
+   "id": "shepherds_pie_block",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:baked_potato",
+    "minecraft:milk_bucket",
+    "minecraft:baked_potato",
+    "minecraft:cooked_mutton",
+    "minecraft:cooked_mutton",
+    "minecraft:cooked_mutton",
+    "cl:cebola",
+    "minecraft:bowl",
+    "cl:cebola"
+   ],
+   "resultado": "cl:torta_pastor",
+   "qtd": 1
+  },
+  {
+   "id": "rice_roll_medley_block",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "cl:fatia_rolo_alga",
+    "cl:fatia_rolo_alga",
+    "cl:fatia_rolo_alga",
+    "cl:rolinho_salmao",
+    "cl:rolinho_salmao",
+    "cl:rolinho_salmao",
+    "cl:rolinho_bacalhau",
+    "minecraft:bowl",
+    "cl:rolinho_bacalhau"
+   ],
+   "resultado": "cl:travessa_rolinhos",
+   "qtd": 1
+  },
+  {
+   "id": "gleaming_salad_block",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:glow_berries",
+    "minecraft:honey_bottle",
+    "minecraft:glow_berries",
+    "cl:tomate",
+    "minecraft:golden_carrot",
+    "minecraft:beetroot",
+    "cl:repolho",
+    "minecraft:bowl",
+    "cl:repolho"
+   ],
+   "resultado": "cl:salada_brilhante",
+   "qtd": 1
+  },
+  {
+   "id": "chocolate_pie_from_slices",
+   "tipo": "shaped",
+   "padrao": [
+    "##",
+    "##"
+   ],
+   "chave": {
+    "#": "cl:fatia_torta_chocolate"
+   },
+   "resultado": "cl:torta_chocolate",
+   "qtd": 1
+  },
+  {
+   "id": "sweet_berry_cookie",
+   "tipo": "shapeless",
+   "ingredientes": [
+    "minecraft:sweet_berries",
+    "minecraft:wheat",
+    "minecraft:wheat"
+   ],
+   "resultado": "cl:biscoito_frutas",
+   "qtd": 8
+  },
+  {
+   "id": "acacia_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:acacia_trapdoor",
+    "_": "minecraft:acacia_slab"
+   },
+   "resultado": "cl:armario_acacia",
+   "qtd": 1
+  },
+  {
+   "id": "crimson_cabinet",
+   "tipo": "shaped",
+   "padrao": [
+    "___",
+    "D D",
+    "___"
+   ],
+   "chave": {
+    "D": "minecraft:crimson_trapdoor",
+    "_": "minecraft:crimson_slab"
+   },
+   "resultado": "cl:armario_carmesim",
+   "qtd": 1
+  }
+ ],
+ "panela": [
+  {
+   "sai": "cl:sidra_maca",
+   "n": 1,
+   "ingr": [
+    [
+     "minecraft:apple"
+    ],
+    [
+     "minecraft:apple"
+    ],
+    [
+     "minecraft:sugar"
+    ]
+   ],
+   "tempo": 200,
+   "recipiente": null
+  },
+  {
+   "sai": "cl:creme_baga_brilhante",
+   "n": 1,
+   "ingr": [
+    [
+     "minecraft:glow_berries"
+    ],
+    [
+     "minecraft:milk_bucket"
+    ],
+    [
+     "minecraft:egg"
+    ],
+    [
+     "minecraft:sugar"
+    ]
+   ],
+   "tempo": 200,
+   "recipiente": null
+  },
+  {
+   "sai": "cl:chocolate_quente",
+   "n": 1,
+   "ingr": [
+    [
+     "minecraft:milk_bucket"
+    ],
+    [
+     "minecraft:sugar"
+    ],
+    [
+     "minecraft:cocoa_beans"
+    ],
+    [
+     "minecraft:cocoa_beans"
+    ]
+   ],
+   "tempo": 200,
+   "recipiente": null
+  },
+  {
+   "sai": "cl:racao_cachorro",
+   "n": 1,
+   "ingr": [
+    [
+     "minecraft:rotten_flesh"
+    ],
+    [
+     "minecraft:bone_meal"
+    ],
+    [
+     "minecraft:beef"
+    ],
+    [
+     "cl:arroz"
+    ]
+   ],
+   "tempo": 200,
+   "recipiente": null
+  }
+ ],
+ "corte": {
+  "minecraft:jungle_wood": [
+   [
+    "minecraft:stripped_jungle_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "cl:rolo_alga": [
+   [
+    "cl:fatia_rolo_alga",
+    3,
+    1
+   ]
+  ],
+  "minecraft:cake": [
+   [
+    "cl:fatia_bolo",
+    7,
+    1
+   ]
+  ],
+  "minecraft:oak_wood": [
+   [
+    "minecraft:stripped_oak_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "cl:torta_maca": [
+   [
+    "cl:fatia_torta_maca",
+    4,
+    1
+   ]
+  ],
+  "minecraft:pumpkin_pie": [
+   [
+    "cl:fatia_torta_abobora",
+    4,
+    1
+   ]
+  ],
+  "minecraft:crimson_stem": [
+   [
+    "minecraft:stripped_crimson_stem",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:spruce_wood": [
+   [
+    "minecraft:stripped_spruce_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:cherry_log": [
+   [
+    "minecraft:stripped_cherry_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:cherry_wood": [
+   [
+    "minecraft:stripped_cherry_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:dark_oak_log": [
+   [
+    "minecraft:stripped_dark_oak_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:birch_log": [
+   [
+    "minecraft:stripped_birch_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "cl:cheesecake": [
+   [
+    "cl:fatia_cheesecake",
+    4,
+    1
+   ]
+  ],
+  "cl:torta_chocolate": [
+   [
+    "cl:fatia_torta_chocolate",
+    4,
+    1
+   ]
+  ],
+  "minecraft:jungle_log": [
+   [
+    "minecraft:stripped_jungle_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:birch_wood": [
+   [
+    "minecraft:stripped_birch_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:acacia_log": [
+   [
+    "minecraft:stripped_acacia_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:warped_hyphae": [
+   [
+    "minecraft:stripped_warped_hyphae",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:warped_stem": [
+   [
+    "minecraft:stripped_warped_stem",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:dark_oak_wood": [
+   [
+    "minecraft:stripped_dark_oak_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:mangrove_log": [
+   [
+    "minecraft:stripped_mangrove_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:spruce_log": [
+   [
+    "minecraft:stripped_spruce_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:acacia_wood": [
+   [
+    "minecraft:stripped_acacia_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:oak_log": [
+   [
+    "minecraft:stripped_oak_log",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:crimson_hyphae": [
+   [
+    "minecraft:stripped_crimson_hyphae",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ],
+  "minecraft:mangrove_wood": [
+   [
+    "minecraft:stripped_mangrove_wood",
+    1,
+    1
+   ],
+   [
+    "cl:casca_arvore",
+    1,
+    1
+   ]
+  ]
+ }
+}

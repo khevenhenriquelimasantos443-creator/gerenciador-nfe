@@ -1,0 +1,191 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.torta_maca",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2,
+        "visible_bounds_offset": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "torta",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7,
+                0,
+                -7
+              ],
+              "size": [
+                14,
+                4,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    4
+                  ],
+                  "material_instance": "lado"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    4
+                  ],
+                  "material_instance": "lado"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    4
+                  ],
+                  "material_instance": "lado"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    4
+                  ],
+                  "material_instance": "lado"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "lado"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "lado"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7,
+                3.99,
+                -7
+              ],
+              "size": [
+                14,
+                0.02,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "topo"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "topo"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "topo"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "topo"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "topo"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "topo"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_apple_pie"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "aaa",
+      "xOx"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:wheat"
+      },
+      "O": {
+        "item": "cl:massa_torta"
+      },
+      "a": {
+        "item": "minecraft:apple"
+      },
+      "x": {
+        "item": "minecraft:sugar"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:torta_maca",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_organic_compost_from_tree_bark"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:dirt"
+      },
+      {
+        "item": "cl:palha"
+      },
+      {
+        "item": "cl:palha"
+      },
+      {
+        "item": "minecraft:bone_meal"
+      },
+      {
+        "item": "minecraft:bone_meal"
+      },
+      {
+        "item": "cl:casca_arvore"
+      },
+      {
+        "item": "cl:casca_arvore"
+      },
+      {
+        "item": "cl:casca_arvore"
+      },
+      {
+        "item": "cl:casca_arvore"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:composto_organico",
+      "count": 1
+    }
+  }
+}

@@ -24,6 +24,11 @@
   "en": "Acacia Slab",
   "icone": "textures/blocks/planks_acacia"
  },
+ "minecraft:acacia_trapdoor": {
+  "pt": "Alçapão de acácia",
+  "en": "Acacia Trapdoor",
+  "icone": "textures/blocks/acacia_trapdoor"
+ },
  "minecraft:air": {
   "pt": "Ar",
   "en": "Air"
@@ -67,6 +72,16 @@
   "pt": "Bambu",
   "en": "Bamboo",
   "icone": "textures/blocks/bamboo_stem"
+ },
+ "minecraft:bamboo_slab": {
+  "pt": "Laje de Bambu",
+  "en": "Bamboo Slab",
+  "icone": "textures/blocks/bamboo_planks"
+ },
+ "minecraft:bamboo_trapdoor": {
+  "pt": "Alçapão de Bambu",
+  "en": "Bamboo Trapdoor",
+  "icone": "textures/blocks/bamboo_trapdoor"
  },
  "minecraft:barrel": {
   "pt": "Barril",
@@ -122,6 +137,11 @@
   "pt": "Laje de Bétula",
   "en": "Birch Slab",
   "icone": "textures/blocks/planks_birch"
+ },
+ "minecraft:birch_trapdoor": {
+  "pt": "Alçapão de bétula",
+  "en": "Birch Trapdoor",
+  "icone": "textures/blocks/birch_trapdoor"
  },
  "minecraft:black_dye": {
   "pt": "black_dye",
@@ -260,6 +280,16 @@
   "pt": "Tábuas de Cerejeira",
   "en": "Cherry Planks",
   "icone": "textures/blocks/cherry_planks"
+ },
+ "minecraft:cherry_slab": {
+  "pt": "Laje de Cerejeira",
+  "en": "Cherry Slab",
+  "icone": "textures/blocks/cherry_planks"
+ },
+ "minecraft:cherry_trapdoor": {
+  "pt": "Alçapão de Cerejeira",
+  "en": "Cherry Trapdoor",
+  "icone": "textures/blocks/cherry_trapdoor"
  },
  "minecraft:chest": {
   "pt": "Baú",
@@ -406,6 +436,21 @@
   "en": "Crafting Table",
   "icone": "textures/blocks/crafting_table_front"
  },
+ "minecraft:crimson_fungus": {
+  "pt": "Fungo Carmesim",
+  "en": "Crimson Fungus",
+  "icone": "textures/blocks/crimson_fungus"
+ },
+ "minecraft:crimson_slab": {
+  "pt": "Laje Carmesim",
+  "en": "Crimson Slab",
+  "icone": "textures/blocks/huge_fungus/crimson_planks"
+ },
+ "minecraft:crimson_trapdoor": {
+  "pt": "Alçapão Carmesim",
+  "en": "Crimson Trapdoor",
+  "icone": "textures/blocks/huge_fungus/crimson_trapdoor"
+ },
  "minecraft:cut_sandstone": {
   "pt": "Arenito Lapidado",
   "en": "Cut Sandstone",
@@ -425,6 +470,16 @@
   "pt": "Tábuas de Carvalho Escuro",
   "en": "Dark Oak Planks",
   "icone": "textures/blocks/planks_big_oak"
+ },
+ "minecraft:dark_oak_slab": {
+  "pt": "dark_oak_slab",
+  "en": "dark_oak_slab",
+  "icone": "textures/blocks/planks_big_oak"
+ },
+ "minecraft:dark_oak_trapdoor": {
+  "pt": "Alçapão de carvalho escuro",
+  "en": "Dark Oak Trapdoor",
+  "icone": "textures/blocks/dark_oak_trapdoor"
  },
  "minecraft:daylight_detector": {
   "pt": "Detector de Luz Solar",
@@ -655,6 +710,11 @@
   "pt": "glistering_melon_slice",
   "en": "glistering_melon_slice"
  },
+ "minecraft:glow_berries": {
+  "pt": "Bagas Brilhantes",
+  "en": "Glow Berries",
+  "icone": "textures/items/glow_berries"
+ },
  "minecraft:glowstone": {
   "pt": "Pedra Luminosa",
   "en": "Glowstone",
@@ -849,6 +909,11 @@
   "en": "Jungle Slab",
   "icone": "textures/blocks/planks_jungle"
  },
+ "minecraft:jungle_trapdoor": {
+  "pt": "Alçapão da selva",
+  "en": "Jungle Trapdoor",
+  "icone": "textures/blocks/jungle_trapdoor"
+ },
  "minecraft:kelp": {
   "pt": "Alga",
   "en": "Kelp",
@@ -971,6 +1036,16 @@
   "en": "Mangrove Planks",
   "icone": "textures/blocks/mangrove_planks"
  },
+ "minecraft:mangrove_slab": {
+  "pt": "Laje de Mangue",
+  "en": "Mangrove Slab",
+  "icone": "textures/blocks/mangrove_planks"
+ },
+ "minecraft:mangrove_trapdoor": {
+  "pt": "Alçapão de Mangue",
+  "en": "Mangrove Trapdoor",
+  "icone": "textures/blocks/mangrove_trapdoor"
+ },
  "minecraft:melon_block": {
   "pt": "Melancia",
   "en": "Melon",
@@ -1070,6 +1145,10 @@
   "pt": "Laje de Carvalho",
   "en": "Oak Slab",
   "icone": "textures/blocks/planks_oak"
+ },
+ "minecraft:oak_trapdoor": {
+  "pt": "oak_trapdoor",
+  "en": "oak_trapdoor"
  },
  "minecraft:obsidian": {
   "pt": "Obsidiana",
@@ -1415,6 +1494,11 @@
   "en": "Spruce Slab",
   "icone": "textures/blocks/planks_spruce"
  },
+ "minecraft:spruce_trapdoor": {
+  "pt": "Alçapão de Pinheiro",
+  "en": "Spruce Trapdoor",
+  "icone": "textures/blocks/spruce_trapdoor"
+ },
  "minecraft:stick": {
   "pt": "Graveto",
   "en": "Stick",
@@ -1545,6 +1629,11 @@
   "en": "Totem of Undying",
   "icone": "textures/items/totem"
  },
+ "minecraft:trapdoor": {
+  "pt": "Alçapão de carvalho",
+  "en": "Oak Trapdoor",
+  "icone": "textures/blocks/trapdoor"
+ },
  "minecraft:trapped_chest": {
   "pt": "Baú com Armadilha",
   "en": "Trapped Chest",
@@ -1564,6 +1653,21 @@
   "pt": "Trepadeiras",
   "en": "Vines",
   "icone": "textures/blocks/vine"
+ },
+ "minecraft:warped_fungus": {
+  "pt": "Fungo Distorcido",
+  "en": "Warped Fungus",
+  "icone": "textures/blocks/warped_fungus"
+ },
+ "minecraft:warped_slab": {
+  "pt": "Laje Distorcida",
+  "en": "Warped Slab",
+  "icone": "textures/blocks/huge_fungus/warped_planks"
+ },
+ "minecraft:warped_trapdoor": {
+  "pt": "Alçapão Distorcido",
+  "en": "Warped Trapdoor",
+  "icone": "textures/blocks/huge_fungus/warped_trapdoor"
  },
  "minecraft:water": {
   "pt": "Água",

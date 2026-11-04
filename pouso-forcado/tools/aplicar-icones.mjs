@@ -42,7 +42,7 @@ for (const arq of existsSync(FACES) ? readdirSync(FACES).filter((a) => a.endsWit
   const nome = arq.slice(0, -4);
   // planta_<id>_<estágio> substitui a plantação do HarvestCraft (clhc_<id>_<estágio>).
   const chave = nome.startsWith("planta_") ? `clhc_${nome.slice(7)}` : `clc_${nome}`;
-  if (!ter.texture_data[chave]) continue;
+  // 1.34.0: texturas avulsas (as faces dos blocos com modelo, como as tortas do Farmer's Delight) também ganham a chave.
   ter.texture_data[chave] = { textures: `textures/blocks/cl/arte/${nome}` };
   f++;
 }

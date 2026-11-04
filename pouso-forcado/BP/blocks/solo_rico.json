@@ -1,0 +1,35 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:solo_rico",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_solo_rico",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.6
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#3a2a18",
+      "minecraft:tick": {
+        "interval_range": [
+          300,
+          700
+        ],
+        "looping": true
+      },
+      "cl:fd_solo": {}
+    }
+  }
+}

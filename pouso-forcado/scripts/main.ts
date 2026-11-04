@@ -73,6 +73,7 @@ import { registrarArtefatos } from "./utilidades/artefatos.js";
 import { bauGrandeComp, registrarBausGrandes } from "./utilidades/baus_grandes.js";
 import { gavetaComp, registrarGavetas } from "./utilidades/gavetas.js";
 import { registrarJetpacks } from "./utilidades/jetpacks.js";
+import { cestoComp, porcoesComp, redeComp, registrarFarmersNovo, soloComp } from "./maquinas/farmers_novo.js";
 import { lanternaComp, megaTochaComp, registrarTochas } from "./utilidades/tochas.js";
 import { bauTcComp, punjiComp, registrarExtrasTC } from "./tinkers/extras_tc.js";
 import { carregador as carregadorAe, inscritor, registrarAE2 } from "./armazenamento/ae2.js";
@@ -137,6 +138,11 @@ system.beforeEvents.startup.subscribe(({ blockComponentRegistry, customCommandRe
   // 1.32.0: Iron Chests e Storage Drawers.
   blockComponentRegistry.registerCustomComponent("cl:bau_grande", bauGrandeComp);
   blockComponentRegistry.registerCustomComponent("cl:gaveta", gavetaComp);
+  // 1.34.0: Farmer's Delight 1.3.0.
+  blockComponentRegistry.registerCustomComponent("cl:fd_porcoes", porcoesComp);
+  blockComponentRegistry.registerCustomComponent("cl:fd_solo", soloComp);
+  blockComponentRegistry.registerCustomComponent("cl:fd_rede", redeComp);
+  blockComponentRegistry.registerCustomComponent("cl:fd_cesto", cestoComp);
   // 1.33.0: TorchMaster.
   blockComponentRegistry.registerCustomComponent("cl:tocha_mega", megaTochaComp);
   blockComponentRegistry.registerCustomComponent("cl:lanterna_feral", lanternaComp);
@@ -316,6 +322,7 @@ registrarArtefatos(); // 1.31.0: Artifacts (Tela de Artefatos)
 registrarBausGrandes(); // 1.32.0: Iron Chests
 registrarGavetas(); // 1.32.0: Storage Drawers
 registrarJetpacks(); // 1.33.0: Iron Jetpacks
+registrarFarmersNovo(); // 1.34.0: Farmer's Delight 1.3.0
 registrarTochas(); // 1.33.0: TorchMaster
 registrarExtrasTC(); // 1.30.0: livros, ferramentas antigas, cajados, geringonças e baús do Tinkers 3
 registrarMekanism10();

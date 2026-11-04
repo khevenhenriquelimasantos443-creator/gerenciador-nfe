@@ -74,6 +74,10 @@ export type Acao =
   | "ij_voar"
   | "tm_mega"
   | "tm_lanterna"
+  | "fd2_torta"
+  | "fd2_banquete"
+  | "fd2_solo"
+  | "fd2_selvagem"
   | "modificar"
   | "derreter"
   | "fundicao"
@@ -576,6 +580,17 @@ export const CAPITULOS: ReadonlyArray<Capitulo> = [
       { id: "yung_piramide", objetivo: { tipo: "acao", acao: "templo_yung", qtd: 1 }, recompensa: [{ item: IDS.sacolaEpica, quantidade: 1 }] },
       // 1.31.0: a mochila que abre na mão.
       { id: "mochila_mao", objetivo: { tipo: "acao", acao: "mochila_mao", qtd: 1 }, recompensa: [{ item: "minecraft:leather", quantidade: 8 }] },
+    ],
+  },
+  {
+    id: "farmers2", // 1.34.0: Farmer's Delight 1.3.0
+    icone: "cl:torta_maca",
+    requer: ["farmers"],
+    missoes: [
+      { id: "fd2_torta", objetivo: { tipo: "acao", acao: "fd2_torta", qtd: 1 }, recompensa: [{ item: "minecraft:apple", quantidade: 8 }] },
+      { id: "fd2_banquete", objetivo: { tipo: "acao", acao: "fd2_banquete", qtd: 1 }, recompensa: [{ item: "minecraft:bowl", quantidade: 8 }] },
+      { id: "fd2_solo", objetivo: { tipo: "acao", acao: "fd2_solo", qtd: 1 }, recompensa: [{ item: "minecraft:bone_meal", quantidade: 32 }] },
+      { id: "fd2_selvagem", objetivo: { tipo: "acao", acao: "fd2_selvagem", qtd: 1 }, recompensa: [{ item: IDS.sacolaBoa, quantidade: 1 }] },
     ],
   },
   {

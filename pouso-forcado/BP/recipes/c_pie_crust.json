@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_pie_crust"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "wMw",
+      " w "
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:milk_bucket"
+      },
+      "w": {
+        "item": "minecraft:wheat"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:massa_torta",
+      "count": 1
+    }
+  }
+}

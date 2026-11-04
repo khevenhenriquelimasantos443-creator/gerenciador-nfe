@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cl:c_kelp_roll"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "RXR",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:dried_kelp"
+      },
+      "R": {
+        "item": "cl:arroz_cozido"
+      },
+      "X": {
+        "item": "minecraft:carrot"
+      }
+    },
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:rolo_alga",
+      "count": 1
+    }
+  }
+}

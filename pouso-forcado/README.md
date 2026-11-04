@@ -154,6 +154,24 @@ Ele não mexe em nada dentro dos mundos (vale para todos, até os normais). Dent
 - **Atualizar um mundo exportado (PC/iPhone)**: no jogo, Editar o mundo → Exportar Mundo; no PC, `python3 tools/atualizar-mundo.py <mundo>.mcworld` troca só os packs do Pouso Forçado dentro dele pelos do build atual (o mapa, os baús e o progresso ficam). Importe o arquivo gerado: entra uma cópia chamada "Pouso Forçado (versão)" e o mundo antigo continua lá.
 - Confira a versão na linha cinza do chat ao entrar: `[Pouso Forçado 0.16.0] mundo: plano | ...`.
 
+## Novidades da 1.34.0 (Farmer's Delight 1.3.0, o mais novo)
+
+- **Tortas em bloco** (Maçã, Cheesecake de Frutas Vermelhas, Chocolate): põe na mesa e toque para servir 4 fatias
+  (cada fatia dá velocidade, como no mod). A torta de abóbora e o bolo do jogo cortam na tábua.
+- **Banquetes**: Frango Assado, Abóbora Recheada (feita na panela, servida na abóbora), Presunto com Mel, Torta do
+  Pastor, Salada Brilhante (4 pratos cada, com tigela) e a Travessa de Rolinhos (8 rolinhos).
+- Bebidas: Garrafa de Leite, Chocolate Quente (tira um efeito ruim), Sidra de Maçã (absorção), Suco de Melancia (cura),
+  Picolé de Melancia (apaga o fogo), Creme de Baga Brilhante; biscoitos de frutas e de mel, rolinhos de salmão e de
+  bacalhau, rolo de alga, Salada do Nether, presunto (porco abatido com faca) e presunto defumado, Massa de Torta.
+- **Composto Orgânico** vira **Solo Rico** com o tempo; o Solo Rico faz crescer mais rápido o que está em cima e as
+  plantações encostadas, e cogumelo em cima vira **colônia** (dá vários cogumelos).
+- **Rede de Segurança** (sem dano de queda, quica), Tapete de Lona, Tatame, Fardo de Arroz, **armários** de 11 madeiras
+  (a tela de baú do jogo), **cestos** que juntam o que cai em cima, Faca de Netherita, Ração de Cachorro e de Cavalo
+  (vida e força por 5 min) e a casca de árvore (tora na tábua com machado).
+- **Plantas selvagens** pelo mundo: repolho e beterraba marinha na praia, tomate na savana, cebola na floresta, cenoura
+  na planície, batata na taiga, arroz no pântano e o arbusto arenoso no deserto.
+- Arte original do mod (MIT). Diário: capítulo Banquetes.
+
 ## Novidades da 1.33.0 (Iron Jetpacks e TorchMaster)
 
 - **Jetpacks** (Iron Jetpacks, o mais novo, com a arte do mod): Madeira, Pedra, Cobre, Ferro, Bronze, Ouro, Aço,

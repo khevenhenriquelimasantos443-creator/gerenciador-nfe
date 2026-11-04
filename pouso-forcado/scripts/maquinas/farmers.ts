@@ -1,5 +1,5 @@
 import { Block, BlockCustomComponent, GameMode, ItemStack, Player, system, world } from "@minecraft/server";
-import { DADOS_F33 } from "../conteudo/gerado.js";
+import { DADOS_F33, DADOS_F53 } from "../conteudo/gerado.js";
 import { aviso } from "../jogador/hud.js";
 import { registrarAcao } from "../missoes/progresso.js";
 import { gravar, ler, registrarDetalhe } from "../util/dados.js";
@@ -16,13 +16,21 @@ import { intervalo } from "../util/perfil.js";
  * - Efeitos: Nutrição (a fome não baixa: 1 ponto de saturação a cada 30 s) e Conforto (tira lentidão, fraqueza e fome).
  * - Faca quebrando grama: 1 em 5 dá Palha; trigo dá Palha.
  */
-type Receita = { sai: string; n?: number; ingr: ReadonlyArray<ReadonlyArray<string>>; tempo: number };
-const RECEITAS: ReadonlyArray<Receita> = DADOS_F33.panela;
-const CORTE: Readonly<Record<string, ReadonlyArray<readonly [string, number, number]>>> = DADOS_F33.corte;
-const EFEITOS: Readonly<Record<string, readonly [number, number]>> = DADOS_F33.efeitos;
-const REGENERA = new Set<string>(DADOS_F33.regenera);
-// Pratos de tigela pedem uma tigela para servir (os rolinhos e os bolinhos não).
-const TIGELA = new Set(RECEITAS.map((r) => r.sai).filter((id) => id !== "cl:rolinhos_repolho" && id !== "cl:bolinhos"));
+type Receita = { sai: string; n?: number; ingr: ReadonlyArray<ReadonlyArray<string>>; tempo: number; recipiente?: string | null };
+// 1.34.0: as receitas do Farmer's Delight 1.3.0 (fase 53) juntam-se às de antes.
+const NOVAS = DADOS_F53 as unknown as { panela: Receita[]; corte: Record<string, [string, number, number][]>; efeitos: Record<string, [number, number]>; regenera: string[] };
+const RECEITAS: ReadonlyArray<Receita> = [...(DADOS_F33.panela as unknown as Receita[]), ...NOVAS.panela];
+const CORTE: Readonly<Record<string, ReadonlyArray<readonly [string, number, number]>>> = { ...DADOS_F33.corte, ...NOVAS.corte };
+const EFEITOS: Readonly<Record<string, readonly [number, number]>> = { ...DADOS_F33.efeitos, ...NOVAS.efeitos };
+const REGENERA = new Set<string>([...DADOS_F33.regenera, ...NOVAS.regenera]);
+// O que se põe na mão para servir: tigela nos pratos de antes (não nos rolinhos e bolinhos); nos novos, o recipiente do FD.
+const RECIPIENTE = new Map<string, string>([
+  ...(DADOS_F33.panela as unknown as Receita[]).filter((r) => r.sai !== "cl:rolinhos_repolho" && r.sai !== "cl:bolinhos").map((r) => [r.sai, "minecraft:bowl"] as [string, string]),
+  ...NOVAS.panela.filter((r) => r.recipiente).map((r) => [r.sai, r.recipiente!] as [string, string]),
+]);
+// Toras na tábua: com machado (dá a casca de árvore).
+const TORA = /_(log|wood|stem|hyphae)$/;
+const ehMachado = (i?: ItemStack) => !!i && (i.hasTag("minecraft:is_axe") || /_axe$/.test(i.typeId) || i.typeId.startsWith("cl:machad"));
 const CALOR = new Set(["minecraft:fire", "minecraft:soul_fire", "minecraft:lava", "minecraft:flowing_lava", "minecraft:magma", "minecraft:campfire", "minecraft:soul_campfire", "cl:fogao"]);
 const ASSAR: Readonly<Record<string, string>> = {
   "minecraft:beef": "minecraft:cooked_beef", "minecraft:porkchop": "minecraft:cooked_porkchop", "minecraft:chicken": "minecraft:cooked_chicken",
@@ -78,8 +86,9 @@ export const panela: BlockCustomComponent = {
     const p = lerPanela(b);
     const item = mao(j);
     if (p.pronto) {
-      const precisa = TIGELA.has(p.pronto.id);
-      if (precisa && item?.typeId !== "minecraft:bowl") return aviso(j, { translate: "cl.fd.pronto", with: { rawtext: [{ text: String(p.pronto.n) }, nome(p.pronto.id)] } }, 3);
+      const rec = RECIPIENTE.get(p.pronto.id);
+      const precisa = !!rec;
+      if (rec && item?.typeId !== rec) return aviso(j, { translate: "cl.fd.pronto", with: { rawtext: [{ text: String(p.pronto.n) }, nome(p.pronto.id)] } }, 3);
       if (precisa && j.getGameMode() !== GameMode.Creative) gastarDaMao(j);
       darAoJogador(j, p.pronto.id, 1);
       p.pronto.n--;
@@ -118,7 +127,7 @@ export const tabua: BlockCustomComponent = {
     const b = e.block;
     const em = ler<string | undefined>("tabua", b, undefined);
     const item = mao(j);
-    if (em && ehFaca(item?.typeId)) {
+    if (em && (TORA.test(em) ? ehMachado(item) : ehFaca(item?.typeId))) {
       const saidas = CORTE[em];
       if (!saidas) return;
       for (const [id, n, chance] of saidas) if (Math.random() < chance) b.dimension.spawnItem(new ItemStack(id, n), { x: b.x + 0.5, y: b.y + 0.5, z: b.z + 0.5 });

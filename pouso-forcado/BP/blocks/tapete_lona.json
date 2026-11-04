@@ -1,0 +1,54 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:block": {
+    "description": {
+      "identifier": "cl:tapete_lona",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.cl.tapete_lona"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "clc_tapete_lona",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.2
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:map_color": "#e8dcb5",
+      "minecraft:light_dampening": 0,
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          1,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          1,
+          16
+        ]
+      }
+    }
+  }
+}

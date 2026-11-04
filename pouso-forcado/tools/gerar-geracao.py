@@ -173,6 +173,24 @@ masmorra("masmorra_n", False)
 masmorra("masmorra_funda_n", True)
 
 
+# ---------- 1.34.0: plantas selvagens do Farmer's Delight (raridade do mod: 1 em 30 chunks; cada vez, um punhado) ----------
+SELVAGENS = [("repolho_selvagem", "beach"), ("beterraba_marinha", "beach"), ("tomateiro_selvagem", "savanna"), ("cebola_selvagem", "forest"),
+             ("cenoura_selvagem", "plains"), ("batata_selvagem", "taiga"), ("arroz_selvagem", "swamp"), ("arbusto_arenoso", "desert")]
+for planta, bioma in SELVAGENS:
+    escrever(f"BP/features/fd_{planta}.json", {"format_version": "1.13.0", "minecraft:single_block_feature": {
+        "description": {"identifier": f"cl:fd_{planta}"}, "places_block": f"cl:{planta}", "enforce_placement_rules": False, "enforce_survivability_rules": False,
+        "may_attach_to": {"bottom": ["minecraft:grass_block", "minecraft:sand", "minecraft:dirt", "minecraft:podzol", "minecraft:mud", "minecraft:coarse_dirt"]},
+        "may_replace": ["minecraft:air", "minecraft:short_grass"]}})
+    escrever(f"BP/features/fd_{planta}_tufo.json", {"format_version": "1.13.0", "minecraft:scatter_feature": {
+        "description": {"identifier": f"cl:fd_{planta}_tufo"}, "places_feature": f"cl:fd_{planta}", "iterations": 6, "coordinate_eval_order": "xzy",
+        "x": {"distribution": "gaussian", "extent": [-3, 3]}, "z": {"distribution": "gaussian", "extent": [-3, 3]}, "y": 0}})
+    escrever(f"BP/feature_rules/fd_{planta}_regra.json", {"format_version": "1.13.0", "minecraft:feature_rules": {
+        "description": {"identifier": f"cl:fd_{planta}_regra", "places_feature": f"cl:fd_{planta}_tufo"},
+        "conditions": {"placement_pass": "surface_pass", "minecraft:biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": bioma}]},
+        "distribution": {"iterations": 1, "scatter_chance": {"numerator": 1, "denominator": 30}, "x": {"distribution": "uniform", "extent": [0, 16]},
+                         "y": "query.heightmap(variable.worldx, variable.worldz)", "z": {"distribution": "uniform", "extent": [0, 16]}}}})
+
+
 # ---------- Features ----------
 def feature_estrutura(nome, estrutura, girar=True, chao=True):
     escrever(f"BP/features/{nome}.json", {"format_version": "1.13.0", "minecraft:structure_template_feature": {

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "cl:creme_baga_brilhante",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "clc_creme_baga_brilhante",
+      "minecraft:display_name": {
+        "value": "item.cl:creme_baga_brilhante.name"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:use_animation": "drink",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "minecraft:food": {
+        "nutrition": 7,
+        "saturation_modifier": 0.6,
+        "can_always_eat": true,
+        "using_converts_to": "minecraft:glass_bottle"
+      }
+    }
+  }
+}

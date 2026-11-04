@@ -1,0 +1,47 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cl:c_roast_chicken_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "cl:cebola"
+      },
+      {
+        "item": "minecraft:egg"
+      },
+      {
+        "item": "minecraft:bread"
+      },
+      {
+        "item": "minecraft:carrot"
+      },
+      {
+        "item": "minecraft:cooked_chicken"
+      },
+      {
+        "item": "minecraft:baked_potato"
+      },
+      {
+        "item": "minecraft:carrot"
+      },
+      {
+        "item": "minecraft:bowl"
+      },
+      {
+        "item": "minecraft:baked_potato"
+      }
+    ],
+    "unlock": {
+      "context": "AlwaysUnlocked"
+    },
+    "result": {
+      "item": "cl:frango_assado",
+      "count": 1
+    }
+  }
+}

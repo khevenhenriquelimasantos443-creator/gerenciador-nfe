@@ -1,0 +1,191 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.cl.presunto_mel",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2,
+        "visible_bounds_offset": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "banquete",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7,
+                0,
+                -7
+              ],
+              "size": [
+                14,
+                1,
+                14
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "travessa"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "travessa"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "travessa"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    1
+                  ],
+                  "material_instance": "travessa"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "travessa"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    14,
+                    14
+                  ],
+                  "material_instance": "travessa"
+                }
+              }
+            },
+            {
+              "origin": [
+                -5,
+                1,
+                -4
+              ],
+              "size": [
+                10,
+                6,
+                8
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    10,
+                    6
+                  ],
+                  "material_instance": "comida"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    10,
+                    6
+                  ],
+                  "material_instance": "comida"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    8,
+                    6
+                  ],
+                  "material_instance": "comida"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    8,
+                    6
+                  ],
+                  "material_instance": "comida"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    10,
+                    8
+                  ],
+                  "material_instance": "comida"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    10,
+                    8
+                  ],
+                  "material_instance": "comida"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
